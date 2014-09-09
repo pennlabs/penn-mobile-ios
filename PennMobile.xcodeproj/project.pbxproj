@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		82982FB919735ECC00DB2AE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FB819735ECC00DB2AE3 /* AppDelegate.swift */; };
-		82982FBB19735ECC00DB2AE3 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FBA19735ECC00DB2AE3 /* FirstViewController.swift */; };
+		82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */; };
 		82982FBD19735ECC00DB2AE3 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FBC19735ECC00DB2AE3 /* SecondViewController.swift */; };
 		82982FC019735ECC00DB2AE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82982FBE19735ECC00DB2AE3 /* Main.storyboard */; };
 		82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82982FC119735ECC00DB2AE3 /* Images.xcassets */; };
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
+		EBCE174919A715210008C332 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCE174819A715210008C332 /* Course.swift */; };
+		EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCE174A19A993900008C332 /* MapKit.framework */; };
+		EBCE174D19A994360008C332 /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCE174C19A994360008C332 /* Agent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +32,16 @@
 		82982FB319735ECC00DB2AE3 /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FB719735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82982FB819735ECC00DB2AE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		82982FBA19735ECC00DB2AE3 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrarSearchViewController.swift; sourceTree = "<group>"; };
 		82982FBC19735ECC00DB2AE3 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		82982FBF19735ECC00DB2AE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		82982FC119735ECC00DB2AE3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		82982FC719735ECC00DB2AE3 /* PennMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PennMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FCC19735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobileTests.swift; sourceTree = "<group>"; };
+		EBCE174819A715210008C332 /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		EBCE174A19A993900008C332 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		EBCE174C19A994360008C332 /* Agent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Agent.swift; path = "../../../Downloads/agent-master/Agent/Agent.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +66,7 @@
 		82982FAA19735ECC00DB2AE3 = {
 			isa = PBXGroup;
 			children = (
+				EBCE174A19A993900008C332 /* MapKit.framework */,
 				82982FB519735ECC00DB2AE3 /* PennMobile */,
 				82982FCA19735ECC00DB2AE3 /* PennMobileTests */,
 				82982FB419735ECC00DB2AE3 /* Products */,
@@ -77,8 +85,10 @@
 		82982FB519735ECC00DB2AE3 /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
+				EBCE174C19A994360008C332 /* Agent.swift */,
 				82982FB819735ECC00DB2AE3 /* AppDelegate.swift */,
-				82982FBA19735ECC00DB2AE3 /* FirstViewController.swift */,
+				82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */,
+				EBCE174819A715210008C332 /* Course.swift */,
 				82982FBC19735ECC00DB2AE3 /* SecondViewController.swift */,
 				82982FBE19735ECC00DB2AE3 /* Main.storyboard */,
 				82982FC119735ECC00DB2AE3 /* Images.xcassets */,
@@ -161,6 +171,11 @@
 				TargetAttributes = {
 					82982FB219735ECC00DB2AE3 = {
 						CreatedOnToolsVersion = 6.0;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					82982FC619735ECC00DB2AE3 = {
 						CreatedOnToolsVersion = 6.0;
@@ -211,9 +226,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBCE174919A715210008C332 /* Course.swift in Sources */,
+				EBCE174D19A994360008C332 /* Agent.swift in Sources */,
 				82982FBD19735ECC00DB2AE3 /* SecondViewController.swift in Sources */,
 				82982FB919735ECC00DB2AE3 /* AppDelegate.swift in Sources */,
-				82982FBB19735ECC00DB2AE3 /* FirstViewController.swift in Sources */,
+				82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +420,7 @@
 				82982FD319735ECC00DB2AE3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		82982FD419735ECC00DB2AE3 /* Build configuration list for PBXNativeTarget "PennMobileTests" */ = {
 			isa = XCConfigurationList;
@@ -411,6 +429,7 @@
 				82982FD619735ECC00DB2AE3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
