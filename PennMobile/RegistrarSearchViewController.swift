@@ -28,7 +28,7 @@ class RegistrarSearchViewController: UITableViewController, UISearchBarDelegate,
     override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
         return self.courses.count
     }
-
+    /*
     override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         //ask for a reusable cell from the tableview, the tableview will create a new one if it doesn't have any
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
@@ -47,7 +47,7 @@ class RegistrarSearchViewController: UITableViewController, UISearchBarDelegate,
         
         return cell
     }
-
+    */
     
     func searchBarSearchButtonClicked( searchBar: UISearchBar!)
     {

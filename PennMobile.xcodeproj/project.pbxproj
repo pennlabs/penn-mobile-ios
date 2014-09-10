@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D940219BFC22900C6C8FA /* DiningViewController.m */; };
+		195D940819BFC40200C6C8FA /* penn-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940519BFC40200C6C8FA /* penn-logo.png */; };
+		195D940919BFC40200C6C8FA /* penn-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940619BFC40200C6C8FA /* penn-logo@2x.png */; };
+		195D940A19BFC40200C6C8FA /* penn-logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940719BFC40200C6C8FA /* penn-logo@3x.png */; };
+		195D940D19BFC44E00C6C8FA /* PennNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D940C19BFC44E00C6C8FA /* PennNavController.m */; };
+		195D940F19BFC58B00C6C8FA /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D940E19BFC58B00C6C8FA /* Agent.swift */; };
+		195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D941119BFC76200C6C8FA /* DiningTableViewCell.m */; };
+		195D941419BFDB6200C6C8FA /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D941319BFDB6200C6C8FA /* Venue.swift */; };
 		82982FB919735ECC00DB2AE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FB819735ECC00DB2AE3 /* AppDelegate.swift */; };
 		82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */; };
 		82982FBD19735ECC00DB2AE3 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FBC19735ECC00DB2AE3 /* SecondViewController.swift */; };
@@ -15,7 +23,6 @@
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
 		EBCE174919A715210008C332 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCE174819A715210008C332 /* Course.swift */; };
 		EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCE174A19A993900008C332 /* MapKit.framework */; };
-		EBCE174D19A994360008C332 /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCE174C19A994360008C332 /* Agent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +36,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
+		195D940119BFC22900C6C8FA /* DiningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningViewController.h; sourceTree = "<group>"; };
+		195D940219BFC22900C6C8FA /* DiningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningViewController.m; sourceTree = "<group>"; };
+		195D940519BFC40200C6C8FA /* penn-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "penn-logo.png"; sourceTree = "<group>"; };
+		195D940619BFC40200C6C8FA /* penn-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "penn-logo@2x.png"; sourceTree = "<group>"; };
+		195D940719BFC40200C6C8FA /* penn-logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "penn-logo@3x.png"; sourceTree = "<group>"; };
+		195D940B19BFC44E00C6C8FA /* PennNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PennNavController.h; sourceTree = "<group>"; };
+		195D940C19BFC44E00C6C8FA /* PennNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PennNavController.m; sourceTree = "<group>"; };
+		195D940E19BFC58B00C6C8FA /* Agent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
+		195D941019BFC76200C6C8FA /* DiningTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningTableViewCell.h; sourceTree = "<group>"; };
+		195D941119BFC76200C6C8FA /* DiningTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningTableViewCell.m; sourceTree = "<group>"; };
+		195D941319BFDB6200C6C8FA /* Venue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
 		82982FB319735ECC00DB2AE3 /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FB719735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82982FB819735ECC00DB2AE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,7 +60,6 @@
 		82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobileTests.swift; sourceTree = "<group>"; };
 		EBCE174819A715210008C332 /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		EBCE174A19A993900008C332 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		EBCE174C19A994360008C332 /* Agent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Agent.swift; path = "../../../Downloads/agent-master/Agent/Agent.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,9 +81,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		195D940419BFC40200C6C8FA /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				195D940519BFC40200C6C8FA /* penn-logo.png */,
+				195D940619BFC40200C6C8FA /* penn-logo@2x.png */,
+				195D940719BFC40200C6C8FA /* penn-logo@3x.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		82982FAA19735ECC00DB2AE3 = {
 			isa = PBXGroup;
 			children = (
+				195D940419BFC40200C6C8FA /* Assets */,
 				EBCE174A19A993900008C332 /* MapKit.framework */,
 				82982FB519735ECC00DB2AE3 /* PennMobile */,
 				82982FCA19735ECC00DB2AE3 /* PennMobileTests */,
@@ -85,14 +114,22 @@
 		82982FB519735ECC00DB2AE3 /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
-				EBCE174C19A994360008C332 /* Agent.swift */,
 				82982FB819735ECC00DB2AE3 /* AppDelegate.swift */,
 				82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */,
 				EBCE174819A715210008C332 /* Course.swift */,
+				195D940E19BFC58B00C6C8FA /* Agent.swift */,
+				195D941319BFDB6200C6C8FA /* Venue.swift */,
 				82982FBC19735ECC00DB2AE3 /* SecondViewController.swift */,
 				82982FBE19735ECC00DB2AE3 /* Main.storyboard */,
 				82982FC119735ECC00DB2AE3 /* Images.xcassets */,
 				82982FB619735ECC00DB2AE3 /* Supporting Files */,
+				195D940119BFC22900C6C8FA /* DiningViewController.h */,
+				195D940219BFC22900C6C8FA /* DiningViewController.m */,
+				195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */,
+				195D940B19BFC44E00C6C8FA /* PennNavController.h */,
+				195D940C19BFC44E00C6C8FA /* PennNavController.m */,
+				195D941019BFC76200C6C8FA /* DiningTableViewCell.h */,
+				195D941119BFC76200C6C8FA /* DiningTableViewCell.m */,
 			);
 			path = PennMobile;
 			sourceTree = "<group>";
@@ -207,8 +244,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				195D940919BFC40200C6C8FA /* penn-logo@2x.png in Resources */,
+				195D940819BFC40200C6C8FA /* penn-logo.png in Resources */,
 				82982FC019735ECC00DB2AE3 /* Main.storyboard in Resources */,
 				82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */,
+				195D940A19BFC40200C6C8FA /* penn-logo@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,8 +266,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				195D940F19BFC58B00C6C8FA /* Agent.swift in Sources */,
 				EBCE174919A715210008C332 /* Course.swift in Sources */,
-				EBCE174D19A994360008C332 /* Agent.swift in Sources */,
+				195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */,
+				195D940D19BFC44E00C6C8FA /* PennNavController.m in Sources */,
+				195D941419BFDB6200C6C8FA /* Venue.swift in Sources */,
+				195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */,
 				82982FBD19735ECC00DB2AE3 /* SecondViewController.swift in Sources */,
 				82982FB919735ECC00DB2AE3 /* AppDelegate.swift in Sources */,
 				82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */,
@@ -348,10 +392,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -360,10 +407,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 			};
 			name = Release;
 		};
