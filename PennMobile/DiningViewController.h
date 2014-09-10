@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "DiningTableViewCell.h"
 
+#define kTitleKey @"title"
+#define kAddressKey @"address"
+
 @interface DiningViewController : UITableViewController
 
-@property NSDictionary *venues;
+@property NSArray *venues;
 
+- (bool)loadFromAPI;
+- (bool)loadFromAPIwithTarget:(id)target selector:(SEL)selector;
 @end
