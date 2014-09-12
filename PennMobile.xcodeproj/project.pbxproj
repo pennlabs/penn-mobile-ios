@@ -15,6 +15,8 @@
 		195D940F19BFC58B00C6C8FA /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D940E19BFC58B00C6C8FA /* Agent.swift */; };
 		195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D941119BFC76200C6C8FA /* DiningTableViewCell.m */; };
 		195D941419BFDB6200C6C8FA /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D941319BFDB6200C6C8FA /* Venue.swift */; };
+		1964BC8619C25EDA00CEB1E1 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 1964BC8519C25EDA00CEB1E1 /* placeholder.png */; };
+		1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1964BC8819C277DD00CEB1E1 /* MenuViewController.m */; };
 		82982FB919735ECC00DB2AE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FB819735ECC00DB2AE3 /* AppDelegate.swift */; };
 		82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */; };
 		82982FBD19735ECC00DB2AE3 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FBC19735ECC00DB2AE3 /* SecondViewController.swift */; };
@@ -48,6 +50,9 @@
 		195D941019BFC76200C6C8FA /* DiningTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningTableViewCell.h; sourceTree = "<group>"; };
 		195D941119BFC76200C6C8FA /* DiningTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningTableViewCell.m; sourceTree = "<group>"; };
 		195D941319BFDB6200C6C8FA /* Venue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
+		1964BC8519C25EDA00CEB1E1 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		1964BC8719C277DD00CEB1E1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		1964BC8819C277DD00CEB1E1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		82982FB319735ECC00DB2AE3 /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FB719735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82982FB819735ECC00DB2AE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +91,7 @@
 			children = (
 				195D940519BFC40200C6C8FA /* penn-logo.png */,
 				195D940619BFC40200C6C8FA /* penn-logo@2x.png */,
+				1964BC8519C25EDA00CEB1E1 /* placeholder.png */,
 				195D940719BFC40200C6C8FA /* penn-logo@3x.png */,
 			);
 			path = Assets;
@@ -123,6 +129,8 @@
 				82982FBE19735ECC00DB2AE3 /* Main.storyboard */,
 				82982FC119735ECC00DB2AE3 /* Images.xcassets */,
 				82982FB619735ECC00DB2AE3 /* Supporting Files */,
+				1964BC8719C277DD00CEB1E1 /* MenuViewController.h */,
+				1964BC8819C277DD00CEB1E1 /* MenuViewController.m */,
 				195D940119BFC22900C6C8FA /* DiningViewController.h */,
 				195D940219BFC22900C6C8FA /* DiningViewController.m */,
 				195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */,
@@ -245,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				195D940919BFC40200C6C8FA /* penn-logo@2x.png in Resources */,
+				1964BC8619C25EDA00CEB1E1 /* placeholder.png in Resources */,
 				195D940819BFC40200C6C8FA /* penn-logo.png in Resources */,
 				82982FC019735ECC00DB2AE3 /* Main.storyboard in Resources */,
 				82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */,
@@ -275,6 +284,7 @@
 				82982FBD19735ECC00DB2AE3 /* SecondViewController.swift in Sources */,
 				82982FB919735ECC00DB2AE3 /* AppDelegate.swift in Sources */,
 				82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */,
+				1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

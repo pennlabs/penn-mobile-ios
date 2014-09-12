@@ -16,6 +16,6 @@
 
 @property NSArray *venues;
 
-- (bool)loadFromAPI;
-- (bool)loadFromAPIwithTarget:(id)target selector:(SEL)selector;
+- (void)loadFromAPI;
+- (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector;
 @end

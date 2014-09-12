@@ -1,30 +1,22 @@
 //
-//  DiningViewController.m
+//  MenuViewController.m
 //  PennMobile
 //
-//  Created by Sacha Best on 9/9/14.
+//  Created by Sacha Best on 9/11/14.
 //  Copyright (c) 2014 PennLabs. All rights reserved.
 //
 
-#import "DiningViewController.h"
+#import "MenuViewController.h"
 
-@interface DiningViewController ()
+@interface MenuViewController ()
 
 @end
 
-@implementation DiningViewController
-
-bool usingTempData;
+@implementation MenuViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo"]];
-    self.navigationItem.titleView = logo;
-    self.tableView.rowHeight = 100.0f;
-
-    if (!_venues) {
-        usingTempData = true;
-    }
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -42,40 +34,32 @@ bool usingTempData;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return _food.allKeys.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of dining halls available
-    return 3;
+#warning Incomplete method implementation.
+    // Return the number of rows in the section.
+    return 0;
 }
 
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    DiningTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"hall" forIndexPath:indexPath];
-    if (!cell) {
-        cell = [[DiningTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"hall"];
-
-    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    
     // Configure the cell...
-    if (usingTempData) {
-        cell.venueLabel.text = @"Hill House";
-        cell.addressLabel.text = @"1000 Sacha St, Best, CA 90210";
-    } else {
-        cell.venueLabel.text = _venues[indexPath.row][kTitleKey];
-        cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
-    }
+    
     return cell;
 }
+*/
 
-
-
+/*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
-    return NO;
+    return YES;
 }
-
+*/
 
 /*
 // Override to support editing the table view.
@@ -113,27 +97,4 @@ bool usingTempData;
 }
 */
 
-#pragma mark - API-loading
-
-- (void)loadFromAPI {
-    [self loadFromAPIwithTarget:nil selector:nil];
-}
-
-// TODO : instert API loading code here
-// Clarra - this is backgrounded with a callback. Any code you put here will execute
-// asynchronously and then call the function listed in target and selector
-
-- (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        if (target && selector) {
-            // Go back to main thread to perform callback
-            // TEMP
-            NSData *data;
-            NSError *error = [NSError alloc];
-            NSMutableArray *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-            NSArray *innerJSON = raw[0][1][[0]][0];
-            [target performSelectorOnMainThread:selector withObject:nil waitUntilDone:NO];
-        }
-    });
-}
 @end

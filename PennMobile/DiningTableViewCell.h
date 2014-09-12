@@ -10,8 +10,9 @@
 
 @interface DiningTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UILabel *venueLabel;
-@property (strong, nonatomic) IBOutlet UILabel *addressLabel;
-@property IBOutlet UIImageView *venueImage;
+@property (weak, nonatomic) IBOutlet UILabel *venueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *openLabel;
+@property (weak, nonatomic) IBOutlet UILabel *hoursLabel;
 
 @end
