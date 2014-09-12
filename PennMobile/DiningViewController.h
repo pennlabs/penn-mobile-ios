@@ -11,11 +11,19 @@
 
 #define kTitleKey @"title"
 #define kAddressKey @"address"
+#define kSampleVenueJSON @"venue_sample.txt"
 
-@interface DiningViewController : UITableViewController
+@interface DiningViewController : UITableViewController {
+    NSDictionary *innerJSON;
+    NSString *menuMessage;
+    NSString *currentVenue;
+}
 
-@property NSArray *venues;
+@property NSMutableDictionary *venues;
+
 
 - (void)loadFromAPI;
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector;
+- (NSDictionary *)getMealsForVenue:(NSString *)venue forDate:(NSString *)date;
+
 @end

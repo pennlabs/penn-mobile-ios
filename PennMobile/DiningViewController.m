@@ -21,7 +21,7 @@ bool usingTempData;
     UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo"]];
     self.navigationItem.titleView = logo;
     self.tableView.rowHeight = 100.0f;
-
+    [self loadFromAPI];
     if (!_venues) {
         usingTempData = true;
     }
@@ -125,15 +125,31 @@ bool usingTempData;
 
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        // TEMP - this code reads from an included sample JSON file
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"venue_sample" ofType:@"txt"];
+        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+        NSError *error = [NSError alloc];
+        NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
+        innerJSON = raw[@"Document"][@"tblMenu"];
+        menuMessage = raw[@"Document"][@"tblMessages"][@"txtNoMenuMessage"];
+        currentVenue = @"Hill House";
+        [_venues setObject:innerJSON forKey:currentVenue];
+        if (error.code != 0) {
+            [NSException raise:@"JSON parse error" format:@"%@", error];
+        }
         if (target && selector) {
             // Go back to main thread to perform callback
-            // TEMP
-            NSData *data;
-            NSError *error = [NSError alloc];
-            NSMutableArray *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-            NSArray *innerJSON = raw[0][1][[0]][0];
             [target performSelectorOnMainThread:selector withObject:nil waitUntilDone:NO];
         }
     });
+}
+- (NSDictionary *)getMealsForVenue:(NSString *)venue forDate:(NSString *)date {
+    NSMutableDictionary *toReturn = [[NSMutableDictionary alloc] init];
+    NSDictionary *venueContents = _venues[venue];
+    for (NSString *key in venueContents) {
+        if ([venueContents[key][@"menudate"] isEqualToString:date]) {
+            NSDictionary *currentDay = venueContents[key][@"tblDayPart"];
+        }
+    }
 }
 @end
