@@ -138,7 +138,6 @@
                                     <outlet property="hoursLabel" destination="Hvi-Pg-mhW" id="8FY-ty-Lci"/>
                                     <outlet property="openLabel" destination="uT5-mI-REg" id="TdV-I8-dzM"/>
                                     <outlet property="venueLabel" destination="Qir-jD-5ZS" id="PfK-4B-XZT"/>
-                                    <segue destination="DSH-Mj-qtj" kind="show" id="JWI-m8-Rwd"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -150,6 +149,9 @@
                     <tabBarItem key="tabBarItem" title="Item" id="6WA-Zl-D0m"/>
                     <navigationItem key="navigationItem" title="Title" id="ta1-SP-2n5"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <segue destination="DSH-Mj-qtj" kind="show" identifier="cellClick" id="Zcg-Gv-wYv"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KGh-tc-NU7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -164,19 +166,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="60" id="CE8-I9-oGv">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="60" id="CE8-I9-oGv" customClass="FoodItemTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CE8-I9-oGv" id="AHV-kH-Vet">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Food Title and elaboration because the data is shit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lT-mX-0hK">
-                                            <rect key="frame" x="10" y="9" width="550" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOOD TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lT-mX-0hK">
+                                            <rect key="frame" x="18" y="10" width="97" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="food description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wI5-V9-SLl">
+                                            <rect key="frame" x="18" y="32" width="126" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="wI5-V9-SLl" firstAttribute="top" secondItem="6lT-mX-0hK" secondAttribute="bottom" constant="1" id="3hk-hU-rf4"/>
+                                        <constraint firstItem="6lT-mX-0hK" firstAttribute="leading" secondItem="AHV-kH-Vet" secondAttribute="leadingMargin" constant="10" id="7Eo-1r-Ven"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="6lT-mX-0hK" secondAttribute="trailing" constant="10" id="Kfh-BT-Cpg"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="wI5-V9-SLl" secondAttribute="trailing" constant="10" id="X5f-8b-kcA"/>
+                                        <constraint firstItem="6lT-mX-0hK" firstAttribute="top" secondItem="AHV-kH-Vet" secondAttribute="topMargin" constant="2" id="kGh-lE-Y4u"/>
+                                        <constraint firstItem="wI5-V9-SLl" firstAttribute="leading" secondItem="AHV-kH-Vet" secondAttribute="leadingMargin" constant="10" id="kyU-gD-Pdo"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="wI5-V9-SLl" id="QK5-Bf-BEv"/>
+                                    <outlet property="titleLabel" destination="6lT-mX-0hK" id="f9x-xW-M44"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -187,7 +207,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VZh-mx-ouQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1886" y="323"/>
+            <point key="canvasLocation" x="1959" y="328"/>
         </scene>
         <!--Item-->
         <scene sceneID="Ked-9s-tQC">

@@ -21,6 +21,8 @@ bool usingTempData;
     UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo"]];
     self.navigationItem.titleView = logo;
     self.tableView.rowHeight = 100.0f;
+    _venues = [[NSMutableDictionary alloc] initWithCapacity:4];
+
     [self loadFromAPI];
     if (!_venues) {
         usingTempData = true;
@@ -47,7 +49,7 @@ bool usingTempData;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of dining halls available
-    return 3;
+    return 4;
 }
 
 
@@ -57,13 +59,29 @@ bool usingTempData;
         cell = [[DiningTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"hall"];
 
     }
+    switch (indexPath.row) {
+        case 0:
+            cell.venueLabel.text = @"Hill House";
+            break;
+        case 1:
+            cell.venueLabel.text = @"Kings Court English House";
+            break;
+        case 2:
+            cell.venueLabel.text = @"1920 Commons";
+            break;
+        case 3:
+            cell.venueLabel.text = @"McCleland Hall";
+            break;
+        default:
+            break;
+    }
     // Configure the cell...
     if (usingTempData) {
-        cell.venueLabel.text = @"Hill House";
+        cell.venueLabel.text = @"University of Pennsylvania Hill House";
         cell.addressLabel.text = @"1000 Sacha St, Best, CA 90210";
     } else {
-        cell.venueLabel.text = _venues[indexPath.row][kTitleKey];
-        cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
+        //cell.venueLabel.text = _venues[indexPath.row])[kTitleKey];
+        //cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
     }
     return cell;
 }
@@ -102,16 +120,24 @@ bool usingTempData;
     return YES;
 }
 */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *venueName = ((DiningTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).venueLabel.text;
+    venueName = [@"University of Pennsylvania " stringByAppendingString:venueName];
+    dataForNextView = [self getMealsForVenue:venueName forDate:@"9/8/2014" atMeal:Lunch];
+    [self performSegueWithIdentifier:@"cellClick" sender:[tableView cellForRowAtIndexPath:indexPath]];
+}
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"cellClick"]) {
+        ((MenuViewController *)segue.destinationViewController).food = dataForNextView;
+    }
 }
-*/
+
 
 #pragma mark - API-loading
 
@@ -130,10 +156,17 @@ bool usingTempData;
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
         NSError *error = [NSError alloc];
         NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
-        innerJSON = raw[@"Document"][@"tblMenu"];
+        NSArray *currentDay;
+        NSMutableDictionary *days = [[NSMutableDictionary alloc] init];
+        for (int num = 0; num < ((NSArray *) raw[@"Document"][@"tblMenu"]).count; num++) {
+            currentDay = [raw[@"Document"][@"tblMenu"][num] objectForKey:kTableDayPart];
+            // Data validation - this works ;;;;;
+            // NSLog(@"%@", currentDay[0][@"txtDayPartDescription"]);
+            [days setObject: currentDay forKey:raw[@"Document"][@"tblMenu"][num][@"menudate"]];
+        }
         menuMessage = raw[@"Document"][@"tblMessages"][@"txtNoMenuMessage"];
-        currentVenue = @"Hill House";
-        [_venues setObject:innerJSON forKey:currentVenue];
+        currentVenue = raw[@"Document"][@"location"];
+        [_venues setObject:days forKey:currentVenue];
         if (error.code != 0) {
             [NSException raise:@"JSON parse error" format:@"%@", error];
         }
@@ -143,13 +176,39 @@ bool usingTempData;
         }
     });
 }
-- (NSDictionary *)getMealsForVenue:(NSString *)venue forDate:(NSString *)date {
-    NSMutableDictionary *toReturn = [[NSMutableDictionary alloc] init];
+- (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSString *)date atMeal:(Meal)meal {
+    NSMutableArray *toReturn = [[NSMutableArray alloc] init];
     NSDictionary *venueContents = _venues[venue];
-    for (NSString *key in venueContents) {
-        if ([venueContents[key][@"menudate"] isEqualToString:date]) {
-            NSDictionary *currentDay = venueContents[key][@"tblDayPart"];
+    NSArray *mealOptions;
+    for (NSString *day in [venueContents allKeys]) {
+        if ([day isEqualToString:date]) {
+            mealOptions = venueContents[day][meal][kStation];
+            for (int station = 0; station < mealOptions.count; station++) {
+                NSMutableDictionary *currentStation = [[NSMutableDictionary alloc] initWithCapacity:3];
+                id stationItems = mealOptions[station][@"tblItem"];
+                [currentStation setObject:mealOptions[station][@"txtStationDescription"] forKey:@"station"];
+                NSMutableArray *food = [[NSMutableArray alloc] init];
+                // This is absolutely ridiculous
+                // If the station only has 1 item, they don't include it in an array in JSON
+                // so the two cases (1 item vs 1+) have to be handled individually
+                if ([stationItems isKindOfClass:[NSArray class]]) {
+                    for (int item = 0; item < ((NSArray *)stationItems).count; item++) {
+                        NSString *description = stationItems[item][@"txtDescription"];
+                        NSString *title = stationItems[item][@"txtTitle"];
+                        NSDictionary *foodItem = [[NSDictionary alloc] initWithObjectsAndKeys:title, @"title", description, @"description", nil];
+                        [food addObject:foodItem];
+                    }
+                } else {
+                    NSString *description = stationItems[@"txtDescription"];
+                    NSString *title = stationItems[@"txtTitle"];
+                    NSDictionary *foodItem = [[NSDictionary alloc] initWithObjectsAndKeys:title, @"title", description, @"description", nil];
+                    [food addObject:foodItem];
+                }
+                [currentStation setObject:food forKey:@"food"];
+                [toReturn addObject:currentStation];
+            }
         }
     }
+    return toReturn;
 }
 @end
