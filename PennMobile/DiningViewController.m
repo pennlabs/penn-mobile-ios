@@ -22,7 +22,8 @@ bool usingTempData;
     self.navigationItem.titleView = logo;
     self.tableView.rowHeight = 100.0f;
     _venues = [[NSMutableDictionary alloc] initWithCapacity:4];
-
+    _days = [[NSMutableSet alloc] initWithCapacity:5];
+    _mealTimes = [[NSMutableSet alloc] initWithCapacity:4];
     [self loadFromAPI];
     if (!_venues) {
         usingTempData = true;
@@ -135,6 +136,8 @@ bool usingTempData;
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"cellClick"]) {
         ((MenuViewController *)segue.destinationViewController).food = dataForNextView;
+        ((MenuViewController *)segue.destinationViewController).dates = [self getDates];
+
     }
 }
 
@@ -162,7 +165,9 @@ bool usingTempData;
             currentDay = [raw[@"Document"][@"tblMenu"][num] objectForKey:kTableDayPart];
             // Data validation - this works ;;;;;
             // NSLog(@"%@", currentDay[0][@"txtDayPartDescription"]);
-            [days setObject: currentDay forKey:raw[@"Document"][@"tblMenu"][num][@"menudate"]];
+            NSString *date = raw[@"Document"][@"tblMenu"][num][@"menudate"];
+            [days setObject: currentDay forKey:date];
+            [_days addObject:date];
         }
         menuMessage = raw[@"Document"][@"tblMessages"][@"txtNoMenuMessage"];
         currentVenue = raw[@"Document"][@"location"];
@@ -210,5 +215,11 @@ bool usingTempData;
         }
     }
     return toReturn;
+}
+
+#pragma mark - Data Acessors
+
+- (NSArray *)getDates {
+    return [_days allObjects];
 }
 @end

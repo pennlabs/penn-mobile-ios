@@ -17,6 +17,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.rowHeight = 60.0f;
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"mm/dd/yy"];
+    _dummyText = [[UITextField alloc] initWithFrame:CGRectZero];
+    UIDatePicker *picker = [[UIDatePicker alloc] init];
+    picker.datePickerMode = UIDatePickerModeDate;
+    picker.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    picker.minimumDate = [dateFormatter dateFromString:_dates[0]];
+    picker.maximumDate = [dateFormatter dateFromString:_dates[_dates.count - 1]];
+    [self.view addSubview:_dummyText];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -46,7 +55,6 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FoodItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:indexPath.section];
     cell.titleLabel.text = _food[indexPath.section][@"food"][indexPath.row][@"title"];
     cell.descriptionLabel.text = _food[indexPath.section][@"food"][indexPath.row][@"description"];
     // Configure the cell...
@@ -88,6 +96,55 @@
     return YES;
 }
 */
+#pragma mark - Button Controls
+
+// This needs to show a picker that allows the user to select which meal time they want to see
+- (IBAction)timeButtonClicked:(id)sender {
+    
+}
+
+// This needs to show a picker that allows the user to choose the date for which they want to see
+- (IBAction)dateButtonClicked:(id)sender {
+    [_dummyText becomeFirstResponder];
+}
+
+// Call this method somewhere in your view controller setup code.
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    _dummyText.inputView.frame = CGRectMake(0, 0, kbSize.width, kbSize.height);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your app might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+}
 
 /*
 #pragma mark - Navigation

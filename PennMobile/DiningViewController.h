@@ -30,8 +30,16 @@ typedef NS_ENUM(NSInteger, Meal) {
 
 @property NSMutableDictionary *venues;
 
+/**
+ * The data stored in these two arrays adds to overall space required but gives a performance increase on accessing.
+ **/
+
+@property NSMutableSet *days;
+@property NSMutableSet *mealTimes;
+
 - (void)loadFromAPI;
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector;
 - (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSString *)date atMeal:(Meal)meal;
-
+- (NSArray *)getDates;
+- (NSArray *)getMealTimes;
 @end
