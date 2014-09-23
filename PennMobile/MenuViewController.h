@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FoodItemTableViewCell.h"
 
-@interface MenuViewController : UITableViewController {
-    NSDateFormatter *dateFormatter;
+@interface MenuViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource> {
 
 }
 

@@ -20,6 +20,8 @@
     NSString *menuMessage;
     NSString *currentVenue;
     NSArray *dataForNextView;
+    CGRect titleSuperviewBounds;
+    UIEdgeInsets titleViewMargins;
 }
 
 typedef NS_ENUM(NSInteger, Meal) {

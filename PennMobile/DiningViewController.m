@@ -18,8 +18,6 @@ bool usingTempData;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImageView *logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo"]];
-    self.navigationItem.titleView = logo;
     self.tableView.rowHeight = 100.0f;
     _venues = [[NSMutableDictionary alloc] initWithCapacity:4];
     _days = [[NSMutableSet alloc] initWithCapacity:5];
@@ -219,7 +217,21 @@ bool usingTempData;
 
 #pragma mark - Data Acessors
 
+// O(n) :(
 - (NSArray *)getDates {
-    return [_days allObjects];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM/dd/yyyy"];
+    NSMutableOrderedSet *asNSDate = [[NSMutableOrderedSet alloc] init];
+    for (NSString *day in _days) {
+        // Because stupid API doesnt follow standardized date sytem (i.e. pads months with 0)
+        if ([day characterAtIndex:0] != '1') {
+            NSString* toAdd = [NSString stringWithFormat:@"0%@", day];
+            [asNSDate addObject:[dateFormatter dateFromString:toAdd]];
+        }
+        [asNSDate addObject:[dateFormatter dateFromString:day]];
+    }
+    return [asNSDate sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [(NSDate *)obj1 compare:(NSDate *)obj2];
+    }];
 }
 @end

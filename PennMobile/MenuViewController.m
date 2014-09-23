@@ -17,15 +17,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.rowHeight = 60.0f;
-    dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"mm/dd/yy"];
     _dummyText = [[UITextField alloc] initWithFrame:CGRectZero];
     UIDatePicker *picker = [[UIDatePicker alloc] init];
     picker.datePickerMode = UIDatePickerModeDate;
     picker.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    picker.minimumDate = [dateFormatter dateFromString:_dates[0]];
-    picker.maximumDate = [dateFormatter dateFromString:_dates[_dates.count - 1]];
+    picker.minimumDate = _dates[0];
+    picker.maximumDate = _dates[_dates.count - 1];
     [self.view addSubview:_dummyText];
+    UIPickerView *timePicker = [[UIPickerView alloc] init];
+    timePicker.dataSource = self;
+    timePicker.delegate = self;
+    [_dummyText setInputView:picker];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -58,7 +60,7 @@
     cell.titleLabel.text = _food[indexPath.section][@"food"][indexPath.row][@"title"];
     cell.descriptionLabel.text = _food[indexPath.section][@"food"][indexPath.row][@"description"];
     // Configure the cell...
-    
+    NSLog(@"%@ and last %@", _dates[0], _dates[_dates.count - 1]);
     return cell;
 }
 
@@ -145,6 +147,7 @@
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
+
 
 /*
 #pragma mark - Navigation
