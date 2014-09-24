@@ -17,17 +17,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.rowHeight = 60.0f;
-    _dummyText = [[UITextField alloc] initWithFrame:CGRectZero];
-    UIDatePicker *picker = [[UIDatePicker alloc] init];
+    _dummyText = [[UITextField alloc] init];
+    picker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.view.window.bounds.size.width, self.view.window.bounds.size.height / 2.5)];
     picker.datePickerMode = UIDatePickerModeDate;
     picker.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     picker.minimumDate = _dates[0];
     picker.maximumDate = _dates[_dates.count - 1];
-    [self.view addSubview:_dummyText];
-    UIPickerView *timePicker = [[UIPickerView alloc] init];
-    timePicker.dataSource = self;
-    timePicker.delegate = self;
+    pickerTopBar = [[UIToolbar alloc] init];
+    pickerTopBar.backgroundColor = [UIColor whiteColor];
+    UIBarButtonItem *confirm = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(confirmChooser:)];
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelChooser:)];
+    [pickerTopBar setItems:@[cancel, confirm]];
+    
+    mealPicker = [[UIPickerView alloc] init];
+    mealPicker.dataSource = self;
+    mealPicker.delegate = self;
     [_dummyText setInputView:picker];
+    _dummyText.inputAccessoryView = pickerTopBar;
+    [self.view addSubview:_dummyText];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -39,7 +47,16 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark - Picker View Stuff
 
+- (void)confirmChooser:(id)sender {
+    [_dummyText resignFirstResponder];
+    // Now switch date
+    _food = [_source getMealsForVenue:_currentVenue forDate:_currentDate atMeal:_currentMeal];
+}
+- (void)cancelChooser:(id)sender {
+    [_dummyText resignFirstResponder];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -107,45 +124,9 @@
 // This needs to show a picker that allows the user to choose the date for which they want to see
 - (IBAction)dateButtonClicked:(id)sender {
     [_dummyText becomeFirstResponder];
-}
-
-// Call this method somewhere in your view controller setup code.
-- (void)registerForKeyboardNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
-}
-
-// Called when the UIKeyboardDidShowNotification is sent.
-- (void)keyboardWasShown:(NSNotification*)aNotification
-{
-    NSDictionary* info = [aNotification userInfo];
-    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    _dummyText.inputView.frame = CGRectMake(0, 0, kbSize.width, kbSize.height);
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-    self.tableView.contentInset = contentInsets;
-    self.tableView.scrollIndicatorInsets = contentInsets;
-    
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your app might not need or want this behavior.
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= kbSize.height;
 
 }
 
-// Called when the UIKeyboardWillHideNotification is sent
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
-{
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-    self.tableView.contentInset = contentInsets;
-    self.tableView.scrollIndicatorInsets = contentInsets;
-}
 
 
 /*

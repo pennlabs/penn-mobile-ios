@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "FoodItemTableViewCell.h"
+#import "DiningViewController.h"
 
 @interface MenuViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource> {
-
+    UIDatePicker *picker;
+    UIPickerView *mealPicker;
+    UIToolbar *pickerTopBar;
 }
 
 /**
@@ -21,12 +24,16 @@
  **/
 @property NSArray *food;
 @property NSArray *dates;
+@property NSDate *currentDate;
+@property Meal currentMeal;
+@property NSString *currentVenue;
 
-@property (strong, nonatomic) UITextField *dummyText;
 @property (weak, nonatomic) IBOutlet UIButton *timeButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *dateButton;
-
+@property (strong, nonatomic) UITextField *dummyText;
+@property DiningViewController *source;
 
 - (void)populateSectionTypes;
-
+- (void)cancelChooser:(id)sender;
+- (void)confirmChooser:(id)sender;
 @end

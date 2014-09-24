@@ -32,7 +32,7 @@ bool usingTempData;
     [hoursJSONFormatter setDateFormat:@"HH:mm::ss"];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    
+    _selectedDate = [NSDate date];
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -87,10 +87,11 @@ bool usingTempData;
         //cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
         int open = [self isOpen:cell.venueLabel.text];
         if (open != -1) {
-            cell.openLabel.text = [self enumToStringTime:open];
-            cell.openLabel.backgroundColor = [UIColor greenColor];
+            cell.openLabel.text = @" OPEN NOW ";
+            cell.addressLabel.text = [NSString stringWithFormat:@"Currently serving: %@", [self enumToStringTime:open]];
+            cell.openLabel.backgroundColor = [UIColor colorWithRed:29/255.0 green:207/255.0 blue:40/255.0 alpha:1.0];
         } else {
-            cell.openLabel.text = @"closed";
+            cell.openLabel.text = @" closed ";
             cell.openLabel.backgroundColor = [UIColor grayColor];
         }
     }
@@ -134,7 +135,7 @@ bool usingTempData;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *venueName = ((DiningTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).venueLabel.text;
     venueName = [@"University of Pennsylvania " stringByAppendingString:venueName];
-    dataForNextView = [self getMealsForVenue:venueName forDate:@"9/8/2014" atMeal:Lunch];
+    dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:_selectedMeal];
     [self performSegueWithIdentifier:@"cellClick" sender:[tableView cellForRowAtIndexPath:indexPath]];
 }
 
@@ -145,9 +146,13 @@ bool usingTempData;
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"cellClick"]) {
-        ((MenuViewController *)segue.destinationViewController).food = dataForNextView;
-        ((MenuViewController *)segue.destinationViewController).dates = [self getDates];
-
+        MenuViewController *child = ((MenuViewController *)segue.destinationViewController);
+        child.food = dataForNextView;
+        child.dates = [self getDates];
+        child.source = self;
+        child.currentDate = _selectedDate;
+        child.currentMeal = _selectedMeal;
+        // set selected venue too
     }
 }
 
@@ -166,6 +171,7 @@ bool usingTempData;
     [self loadVenues];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         // TEMP - this code reads from an included sample JSON file
+        
         NSString *path = [[NSBundle mainBundle] pathForResource:@"venue_sample" ofType:@"txt"];
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
         NSError *error = [NSError alloc];
@@ -193,15 +199,18 @@ bool usingTempData;
     });
 }
 - (void)loadVenues {
+    /** Local Load
     NSString *path = [[NSBundle mainBundle] pathForResource:@"list_sample" ofType:@"txt"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+     **/
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://localhost:5000/v1/dining/venues"]];
     NSError *error = [NSError alloc];
     NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
     if (error.code != 0) {
         [NSException raise:@"JSON parse error" format:@"%@", error];
     }
-
-    _mealTimes = raw[@"result_data"][@"document"][@"venue"];
+    NSLog(@"Venue JSON loaded.");
+    _mealTimes = raw[@"document"][@"venue"];
     /** Unused for now, just using accessor b/c very little restructuring needed
     for (NSDictionary *venueData in venueList) {
         NSMutableDictionary *currentVenue = [[NSMutableDictionary alloc] init];
@@ -284,19 +293,24 @@ bool usingTempData;
             // in correct venue
             for (NSDictionary *date in venueTree[@"dateHours"]) {
                 NSCalendar *calendar = [NSCalendar currentCalendar];
-                NSDateComponents *componentsForFirstDate = [calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
-                NSDateComponents *componentsForSecondDate = [calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[venueJSONFormatter dateFromString: date[@"date"]]];
+                NSDateComponents *componentsForFirstDate = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
+                NSDateComponents *componentsForSecondDate = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[venueJSONFormatter dateFromString: date[@"date"]]];
                 if ([componentsForFirstDate year] == [componentsForSecondDate year] &&
                     [componentsForFirstDate month] == [componentsForSecondDate month] &&
                     [componentsForFirstDate day] == [componentsForSecondDate day]) {
                     // in correct day
                     for (NSDictionary *mealTime in date[@"meal"]) {
-                        componentsForFirstDate = [calendar components:NSMinuteCalendarUnit|NSHourCalendarUnit fromDate:[hoursJSONFormatter dateFromString:mealTime[@"open"]]];
-                        NSDateComponents *now = [calendar components:NSMinuteCalendarUnit|NSHourCalendarUnit fromDate:[NSDate date]];
-                        componentsForSecondDate = [calendar components:NSMinuteCalendarUnit|NSHourCalendarUnit fromDate:[hoursJSONFormatter dateFromString:mealTime[@"close"]]];
-                        if ([componentsForFirstDate hour] <= [now hour] &&
-                            [now hour] <= [componentsForSecondDate hour]) {
-                            return [self stringTimeToEnum:mealTime[@"type"]];
+                        componentsForFirstDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:mealTime[@"open"]]];
+                        NSDateComponents *now = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[NSDate date]];
+                        componentsForSecondDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:mealTime[@"close"]]];
+                        long startHour = [componentsForFirstDate hour];
+                        long endHour = [componentsForSecondDate hour];
+                        if (endHour == 0) endHour = 24;
+                        if (startHour == 0) startHour = 24;
+                        if (startHour <= [now hour] &&
+                            [now hour] <= endHour) {
+                            _selectedMeal = [self stringTimeToEnum:mealTime[@"type"]];
+                            return _selectedMeal;
                         }
                     }
                 }
@@ -317,6 +331,8 @@ bool usingTempData;
         return Lunch;
     } else if ([upper isEqualToString:@"DINNER"]) {
         return Dinner;
+    } else if ([upper isEqualToString:@"EXPRESS"]) {
+        return Express;
     } else {
         [NSException raise:@"Invalid meal type" format:@"type given was %@", mealTime];
         return -1;
@@ -331,6 +347,8 @@ bool usingTempData;
         return @"Brunch";
     } else if (mealTime == Dinner) {
         return @"Dinner";
+    } else if (mealTime == Express) {
+        return @"Express";
     } else {
         [NSException raise:@"Invalid meal type" format:@"type given was %ld", mealTime];
         return nil;

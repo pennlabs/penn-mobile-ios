@@ -16,6 +16,9 @@
 #define kStation @"tblStation"
 #define kSampleVenueJSON @"venue_sample.txt"
 
+#define SERVER_PATH @"v1/dining/venues"
+#define SERVER_ROOT @"http://172.0.0.1:5000/"
+
 @interface DiningViewController : UITableViewController {
     NSString *menuMessage;
     NSString *currentVenue;
@@ -30,7 +33,8 @@ typedef NS_ENUM(NSInteger, Meal) {
     Breakfast = 0,
     Lunch,
     Dinner,
-    Brunch
+    Brunch,
+    Express
 };
 
 /**
@@ -56,6 +60,9 @@ typedef NS_ENUM(NSInteger, Meal) {
  **/
 
 @property NSMutableSet *days;
+
+@property Meal selectedMeal;
+@property NSDate *selectedDate;
 
 - (void)loadFromAPI;
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector;
