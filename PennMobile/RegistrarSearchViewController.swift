@@ -28,26 +28,26 @@ class RegistrarSearchViewController: UITableViewController, UISearchBarDelegate,
     override func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
         return self.courses.count
     }
-    /*
-    override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+    
+    func cellForRowAtIndexPath(indexPath: NSIndexPath) -> UITableViewCell? {
         //ask for a reusable cell from the tableview, the tableview will create a new one if it doesn't have any
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
         var course : Course
         // Check to see whether the normal table or search results table is being displayed and set the Candy object from the appropriate array
-        if tableView == self.searchDisplayController.searchResultsTableView {
+        if tableView == self.searchDisplayController?.searchResultsTableView {
             course = self.courses[indexPath.row]
         } else {
             course = self.courses[indexPath.row]
         }
         
         // Configure the cell
-        cell.textLabel.text = course.title
+        cell.textLabel?.text = course.title
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         return cell
     }
-    */
+    
     
     func searchBarSearchButtonClicked( searchBar: UISearchBar!)
     {
