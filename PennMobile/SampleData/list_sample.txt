@@ -1,0 +1,127 @@
+{
+  "result_data" : {"document": {"venue": [
+ {
+  "id": 593,
+  "facilityURL": "http://cms.business-services.upenn.edu/dining/hours-locations-a-menus/residential-dining/1920-commons.html",
+  "dateHours": [
+   {
+    "date": "2014-09-11",
+    "meal": [
+     {
+      "open": "11:00:00",
+      "type": "lunch",
+      "close": "14:00:00"
+     },
+     {
+      "open": "17:00:00",
+      "type": "dinner",
+      "close": "21:00:00"
+     }
+    ]
+   },
+   {
+    "date": "2014-09-12",
+    "meal": [
+     {
+      "open": "11:00:00",
+      "type": "lunch",
+      "close": "14:00:00"
+     },
+     {
+      "open": "17:00:00",
+      "type": "dinner",
+      "close": "19:30:00"
+     }
+    ]
+   },
+   {
+    "date": "2014-09-13",
+    "meal": [
+     {
+      "open": "11:00:00",
+      "type": "brunch",
+      "close": "15:00:00"
+     },
+     {
+      "open": "17:00:00",
+      "type": "dinner",
+      "close": "19:00:00"
+     }
+    ]
+   },
+   {
+    "date": "2014-09-14",
+    "meal": [
+     {
+      "open": "11:00:00",
+      "type": "brunch",
+      "close": "15:00:00"
+     },
+     {
+      "open": "17:00:00",
+      "type": "dinner",
+      "close": "20:00:00"
+     }
+    ]
+   },
+   {
+    "date": "2014-09-15",
+    "meal": [
+     {
+      "open": "11:00:00",
+      "type": "lunch",
+      "close": "14:00:00"
+     },
+     {
+      "open": "17:00:00",
+      "type": "dinner",
+      "close": "21:00:00"
+     }
+    ]
+   },
+   {
+    "date": "2014-09-16",
+    "meal": [
+     {
+      "open": "11:00:00",
+      "type": "lunch",
+      "close": "14:00:00"
+     },
+     {
+      "open": "17:00:00",
+      "type": "dinner",
+      "close": "21:00:00"
+     }
+    ]
+   },
+   {
+    "date": "2014-09-17",
+    "meal": [
+     {
+      "open": "11:00:00",
+      "type": "lunch",
+      "close": "14:00:00"
+     },
+     {
+      "open": "17:00:00",
+      "type": "dinner",
+      "close": "21:00:00"
+     }
+    ]
+   }
+  ],
+  "weeklyMenuURL": "hhttps://esb.isc-seo.upenn.edu/8091/open_data/dining/menus/weekly/593",
+  "dailyMenuURL": "https://esb.isc-seo.upenn.edu/8091/open_data/dining/menus/daily/593",
+  "name": "1920 Commons",
+  "venueType": "residential"
+ }
+]}},
+  "service_meta" : {
+    "current_page_number" : 0,
+    "error_text" : "",
+    "next_page_number" : 0,
+    "number_of_pages" : 0,
+    "previous_page_number" : 0,
+    "results_per_page" : 0
+  }
+}

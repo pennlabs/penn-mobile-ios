@@ -60,7 +60,6 @@
     cell.titleLabel.text = _food[indexPath.section][@"food"][indexPath.row][@"title"];
     cell.descriptionLabel.text = _food[indexPath.section][@"food"][indexPath.row][@"description"];
     // Configure the cell...
-    NSLog(@"%@ and last %@", _dates[0], _dates[_dates.count - 1]);
     return cell;
 }
 
