@@ -1,3 +1,4 @@
+
 //
 //  DiningViewController.m
 //  PennMobile
@@ -22,17 +23,19 @@ bool usingTempData;
     _venues = [[NSMutableDictionary alloc] initWithCapacity:4];
     _days = [[NSMutableSet alloc] initWithCapacity:5];
     _mealTimes = [[NSMutableArray alloc] initWithCapacity:4];
-    [self loadFromAPI];
-    if (!_venues) {
-        usingTempData = true;
-    }
+    residential = [[NSMutableArray alloc] init];
+    retail = [[NSMutableArray alloc] init];
+    _selectedDate = [NSDate date];
     venueJSONFormatter = [[NSDateFormatter alloc] init];
     [venueJSONFormatter setDateFormat:@"yyyy-MM-dd"];
     hoursJSONFormatter = [[NSDateFormatter alloc] init];
     [hoursJSONFormatter setDateFormat:@"HH:mm::ss"];
+    roundingFormatter = [[NSDateFormatter alloc] init];
+    [roundingFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [self loadFromAPI];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-    _selectedDate = [NSDate date];
+
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -45,14 +48,33 @@ bool usingTempData;
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 1;
+    // Return the number of types of dining locaitons
+    return 2;
 }
-
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return @"Residential";
+            break;
+        case 1:
+            return @"Retail";
+        default:
+            break;
+    }
+    return 0;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of dining halls available
-    return 4;
+    switch (section) {
+        case 0:
+            return residential.count;
+            break;
+        case 1:
+            return retail.count;
+        default:
+            break;
+    }
+    return 0;
 }
 
 
@@ -62,19 +84,12 @@ bool usingTempData;
         cell = [[DiningTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"hall"];
 
     }
-    switch (indexPath.row) {
+    switch (indexPath.section) {
         case 0:
-            cell.venueLabel.text = @"Hill House";
+            cell.venueLabel.text = residential[indexPath.row][@"name"];
             break;
         case 1:
-            cell.venueLabel.text = @"Kings Court English House";
-            break;
-        case 2:
-            cell.venueLabel.text = @"1920 Commons";
-            break;
-        case 3:
-            cell.venueLabel.text = @"McCleland Hall";
-            break;
+            cell.venueLabel.text = retail[indexPath.row][@"name"];
         default:
             break;
     }
@@ -86,13 +101,14 @@ bool usingTempData;
         //cell.venueLabel.text = _venues[indexPath.row])[kTitleKey];
         //cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
         int open = [self isOpen:cell.venueLabel.text];
-        if (open != -1) {
+        if (open > 0) {
             cell.openLabel.text = @" OPEN NOW ";
             cell.addressLabel.text = [NSString stringWithFormat:@"Currently serving: %@", [self enumToStringTime:open]];
             cell.openLabel.backgroundColor = [UIColor colorWithRed:29/255.0 green:207/255.0 blue:40/255.0 alpha:1.0];
         } else {
             cell.openLabel.text = @" closed ";
             cell.openLabel.backgroundColor = [UIColor grayColor];
+            cell.addressLabel.text = [NSString stringWithFormat:@"Next serving: %@", [[self enumToStringTime:open] substringFromIndex:1]];
         }
     }
     return cell;
@@ -152,7 +168,7 @@ bool usingTempData;
         child.source = self;
         child.currentDate = _selectedDate;
         child.currentMeal = _selectedMeal;
-        // set selected venue too
+    
     }
 }
 
@@ -163,41 +179,57 @@ bool usingTempData;
     [self loadFromAPIwithTarget:nil selector:nil];
 }
 
-// TODO : insert API loading code here
-// Clara - this is backgrounded with a callback. Any code you put here will execute
-// asynchronously and then call the function listed in target and selector
+- (void)parseAPIMeals:(NSDictionary *)raw selector:(SEL)selector target:(id)target {
+    NSArray *currentDay;
+    NSMutableDictionary *days = [[NSMutableDictionary alloc] init];
+    for (int num = 0; num < ((NSArray *) raw[@"Document"][@"tblMenu"]).count; num++) {
+        currentDay = [raw[@"Document"][@"tblMenu"][num] objectForKey:kTableDayPart];
+        // Data validation - this works ;;;;;
+        // NSLog(@"%@", currentDay[0][@"txtDayPartDescription"]);
+        NSString *date = raw[@"Document"][@"tblMenu"][num][@"menudate"];
+        [days setObject: currentDay forKey:date];
+        [_days addObject:date];
+    }
+    menuMessage = raw[@"Document"][@"tblMessages"][@"txtNoMenuMessage"];
+    currentVenue = raw[@"Document"][@"location"];
+    [_venues setObject:days forKey:currentVenue];
+    if (target && selector) {
+        // Go back to main thread to perform callback
+        [target performSelectorOnMainThread:selector withObject:nil waitUntilDone:NO];
+    }
+}
+
+- (NSDictionary *)loadMealsForVenueIndex:(int)index {
+    // TEMP - this code reads from an included sample JSON file
+    NSString *path;
+    NSData *data;
+    if (usingTempData) {
+        path = [[NSBundle mainBundle] pathForResource:@"venue_sample" ofType:@"txt"];
+        data = [[NSFileManager defaultManager] contentsAtPath:path];
+    } else {
+        path = [NSString stringWithFormat:@"%@%@", SERVER_ROOT, MEAL_PATH];
+        path = [path stringByAppendingFormat:@"%d", [self getIDForVenueWithIndex:index]];
+        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
+    }
+    NSError *error = [NSError alloc];
+    NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
+    if (error.code != 0) {
+        [NSException raise:@"JSON parse error" format:@"%@", error];
+    }
+    return raw;
+}
 
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector {
     [self loadVenues];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        // TEMP - this code reads from an included sample JSON file
-        
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"venue_sample" ofType:@"txt"];
-        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
-        NSError *error = [NSError alloc];
-        NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
-        if (error.code != 0) {
-            [NSException raise:@"JSON parse error" format:@"%@", error];
-        }
-        NSArray *currentDay;
-        NSMutableDictionary *days = [[NSMutableDictionary alloc] init];
-        for (int num = 0; num < ((NSArray *) raw[@"Document"][@"tblMenu"]).count; num++) {
-            currentDay = [raw[@"Document"][@"tblMenu"][num] objectForKey:kTableDayPart];
-            // Data validation - this works ;;;;;
-            // NSLog(@"%@", currentDay[0][@"txtDayPartDescription"]);
-            NSString *date = raw[@"Document"][@"tblMenu"][num][@"menudate"];
-            [days setObject: currentDay forKey:date];
-            [_days addObject:date];
-        }
-        menuMessage = raw[@"Document"][@"tblMessages"][@"txtNoMenuMessage"];
-        currentVenue = raw[@"Document"][@"location"];
-        [_venues setObject:days forKey:currentVenue];
-        if (target && selector) {
-            // Go back to main thread to perform callback
-            [target performSelectorOnMainThread:selector withObject:nil waitUntilDone:NO];
-        }
-    });
+    NSDictionary *raw;
+    for (int count = 0; count < _mealTimes.count; count++) {
+        // raw = [self loadMealsForVenueIndex:count];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+           // [self parseAPIMeals:raw selector:selector target:target];
+        });
+    }
 }
+
 - (void)loadVenues {
     /** Local Load
     NSString *path = [[NSBundle mainBundle] pathForResource:@"list_sample" ofType:@"txt"];
@@ -211,6 +243,12 @@ bool usingTempData;
     }
     NSLog(@"Venue JSON loaded.");
     _mealTimes = raw[@"document"][@"venue"];
+    for (NSDictionary *venue in _mealTimes) {
+        if ([venue[@"venueType"] isEqualToString:@"residential"]) {
+            [residential addObject:venue];
+        } else
+            [retail addObject:venue];
+    }
     /** Unused for now, just using accessor b/c very little restructuring needed
     for (NSDictionary *venueData in venueList) {
         NSMutableDictionary *currentVenue = [[NSMutableDictionary alloc] init];
@@ -267,7 +305,29 @@ bool usingTempData;
     return toReturn;
 }
 
-#pragma mark - Data Acessors
+#pragma mark - Data Accessors
+
+// O(n) :(
+- (int)getIDForVenue:(NSString *)venue {
+    for (NSDictionary *venue in _mealTimes) {
+        if ([self matchVenue:venue[@"name"] withOther:venue]) {
+            return (int) venue[@"id"];
+        }
+    }
+    return -1;
+}
+- (NSString *)getVenueByID:(int)identifier {
+    for (NSDictionary *venue in _mealTimes) {
+        if (identifier == (int)venue[@"id"]) {
+            return (NSString *) venue[@"name"];
+        }
+    }
+    [NSException raise:@"Venue ID invalid" format:@"ID passed: %d", identifier];
+    return nil;
+}
+- (int)getIDForVenueWithIndex:(int)index {
+    return (int) _mealTimes[index][@"id"];
+}
 
 // O(n) :(
 - (NSArray *)getDates {
@@ -287,7 +347,11 @@ bool usingTempData;
     }];
 }
 
+// Returns the meal the venue is open for, -1 * the next open meal otherwise
+// OOOOOHHHH this implementation is genius!!!
 -(Meal)isOpen:(NSString *)venue {
+    long shortestDuration = INFINITY;
+    Meal closestMeal = -1;
     for (NSDictionary *venueTree in _mealTimes) {
         if ([self matchVenue:venueTree[@"name"] withOther:venue]){
             // in correct venue
@@ -299,25 +363,63 @@ bool usingTempData;
                     [componentsForFirstDate month] == [componentsForSecondDate month] &&
                     [componentsForFirstDate day] == [componentsForSecondDate day]) {
                     // in correct day
-                    for (NSDictionary *mealTime in date[@"meal"]) {
-                        componentsForFirstDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:mealTime[@"open"]]];
+                    if ([date[@"meal"] isKindOfClass:[NSArray class]]) {
+                        for (NSDictionary *mealTime in date[@"meal"]) {
+                            componentsForFirstDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:mealTime[@"open"]]];
+                            NSDateComponents *now = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[NSDate date]];
+                            componentsForSecondDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:mealTime[@"close"]]];
+                            long startHour = [componentsForFirstDate hour];
+                            long endHour = [componentsForSecondDate hour];
+                            if (endHour == 0) endHour = 24;
+                            if (startHour == 0) startHour = 24;
+                            if (startHour <= [now hour] &&
+                                [now hour] <= endHour) {
+                                _selectedMeal = [self stringTimeToEnum:mealTime[@"type"]];
+                                return _selectedMeal;
+                            }
+                        }
+                    } else {
+                        componentsForFirstDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:date[@"meal"][@"open"]]];
                         NSDateComponents *now = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[NSDate date]];
-                        componentsForSecondDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:mealTime[@"close"]]];
+                        componentsForSecondDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:date[@"meal"][@"open"]]];
                         long startHour = [componentsForFirstDate hour];
                         long endHour = [componentsForSecondDate hour];
                         if (endHour == 0) endHour = 24;
                         if (startHour == 0) startHour = 24;
                         if (startHour <= [now hour] &&
                             [now hour] <= endHour) {
-                            _selectedMeal = [self stringTimeToEnum:mealTime[@"type"]];
+                            _selectedMeal = [self stringTimeToEnum:date[@"meal"][@"type"]];
                             return _selectedMeal;
                         }
                     }
                 }
             }
+            // at this point we know this venue has nothing open
+            // now we have to go through again and find nearest starting time
+            for (NSDictionary *date in venueTree[@"dateHours"]) {
+                NSString *currentDay = date[@"date"];
+                if ([date[@"meal"] isKindOfClass:[NSArray class]]) {
+                    for (NSDictionary *meal in date[@"meal"]) {
+                        NSDate *mealStart = [roundingFormatter dateFromString:[currentDay stringByAppendingFormat:@" %@", meal[@"open"]]];
+                        long interval = [mealStart timeIntervalSinceNow];
+                        if (interval > 0 && interval < shortestDuration) {
+                            shortestDuration = interval;
+                            closestMeal = -1 * [self stringTimeToEnum:meal[@"type"]];
+                        }
+                    }
+                } else {
+                    NSDate *mealStart = [roundingFormatter dateFromString:[currentDay stringByAppendingFormat:@" %@", date[@"meal"][@"open"]]];
+                    long interval = [mealStart timeIntervalSinceNow];
+                    if (interval > 0 && interval < shortestDuration) {
+                        shortestDuration = interval;
+                        closestMeal = -1 * [self stringTimeToEnum:date[@"meal"][@"type"]];
+                    }
+                }
+            }
         }
     }
-    return -1;
+    _selectedMeal = closestMeal;
+    return closestMeal;
 }
 #pragma mark - Global Helpers
 
@@ -333,7 +435,11 @@ bool usingTempData;
         return Dinner;
     } else if ([upper isEqualToString:@"EXPRESS"]) {
         return Express;
-    } else {
+    } else if ([upper isEqualToString:@"ALL"]) {
+        return All;
+    } else if ([upper isEqualToString:@"RETAIL"]) {
+        return Retail;
+    }else {
         [NSException raise:@"Invalid meal type" format:@"type given was %@", mealTime];
         return -1;
     }
@@ -349,9 +455,17 @@ bool usingTempData;
         return @"Dinner";
     } else if (mealTime == Express) {
         return @"Express";
+    } else if (mealTime == All) {
+        return @"All";
+    } else if (mealTime == Retail) {
+        return @"Retail";
     } else {
-        [NSException raise:@"Invalid meal type" format:@"type given was %ld", mealTime];
-        return nil;
+        if (fabs(mealTime) < 7)
+            return [@"c" stringByAppendingString:[self enumToStringTime:(-1 * mealTime)]];
+        else {
+            [NSException raise:@"Invalid meal type" format:@"type given was %ld", mealTime];
+            return nil;
+        }
     }
 }
 -(bool)matchVenue:(NSString *)one withOther:(NSString *)two {

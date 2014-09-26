@@ -68,6 +68,8 @@
 		1964BC8519C25EDA00CEB1E1 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		1964BC8719C277DD00CEB1E1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		1964BC8819C277DD00CEB1E1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		199C2A7419D4C97C0020B153 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = PennMobile/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
+		199C2A7519D4CA250020B153 /* Meal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meal.h; sourceTree = "<group>"; };
 		19EDDC8419D2289E0088C4DC /* list_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = list_sample.txt; sourceTree = "<group>"; };
 		19EDDC8819D24D230088C4DC /* PersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableViewCell.h; sourceTree = "<group>"; };
 		19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableViewCell.m; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				195D940219BFC22900C6C8FA /* DiningViewController.m */,
 				195D941019BFC76200C6C8FA /* DiningTableViewCell.h */,
 				195D941119BFC76200C6C8FA /* DiningTableViewCell.m */,
+				199C2A7519D4CA250020B153 /* Meal.h */,
 			);
 			name = Dining;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				82982FCC19735ECC00DB2AE3 /* Info.plist */,
+				199C2A7419D4C97C0020B153 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -487,6 +491,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PREFIX_HEADER = PennMobile/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -502,6 +507,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PREFIX_HEADER = PennMobile/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

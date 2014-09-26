@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DiningTableViewCell.h"
 #import "MenuViewController.h"
+#import "Meal.h"
 
 #define kTitleKey @"title"
 #define kAddressKey @"address"
@@ -17,7 +18,8 @@
 #define kSampleVenueJSON @"venue_sample.txt"
 
 #define SERVER_PATH @"v1/dining/venues"
-#define SERVER_ROOT @"http://172.0.0.1:5000/"
+#define SERVER_ROOT @"http://localhost:5000/"
+#define MEAL_PATH @"v1/dining/venues/"
 
 @interface DiningViewController : UITableViewController {
     NSString *menuMessage;
@@ -27,15 +29,10 @@
     UIEdgeInsets titleViewMargins;
     NSDateFormatter *venueJSONFormatter;
     NSDateFormatter *hoursJSONFormatter;
+    NSDateFormatter *roundingFormatter;
+    NSMutableArray *residential; // for table view layout
+    NSMutableArray *retail; // for table view layout
 }
-
-typedef NS_ENUM(NSInteger, Meal) {
-    Breakfast = 0,
-    Lunch,
-    Dinner,
-    Brunch,
-    Express
-};
 
 /**
  * FORMAT:
@@ -76,6 +73,9 @@ typedef NS_ENUM(NSInteger, Meal) {
 - (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSString *)date atMeal:(Meal)meal;
 - (NSArray *)getDates;
 - (NSArray *)getMealTimes;
+- (NSString *)getVenueByID:(int)identifier;
+- (int)getIDForVenue:(NSString *)venue;
+- (int)getIDForVenueWithIndex:(int)index;
 
 // Global helpers
 

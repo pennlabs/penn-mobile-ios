@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "FoodItemTableViewCell.h"
 #import "DiningViewController.h"
+#import "Meal.h"
+
+@class DiningViewController;
 
 @interface MenuViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource> {
     UIDatePicker *picker;
