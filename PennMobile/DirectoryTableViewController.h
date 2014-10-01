@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Person.h"
+#import "PersonTableViewCell.h"
 
-@interface DirectoryTableViewController : UITableViewController
+@interface DirectoryTableViewController : UITableViewController <UISearchBarDelegate>
+
+@property NSArray *people;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
+-(NSSet *)searchForName:(NSString *)name;
 
 @end

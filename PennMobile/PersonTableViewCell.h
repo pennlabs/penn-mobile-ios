@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Person.h"
 
 @interface PersonTableViewCell : UITableViewCell
 
@@ -15,5 +16,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *buttonCall;
 @property (weak, nonatomic) IBOutlet UIButton *buttonText;
 @property (weak, nonatomic) IBOutlet UIButton *buttonEmail;
+
+@property Person *person;
+
+-(void)configure:(Person *)person;
 
 @end

@@ -13,6 +13,11 @@
 
 @end
 
+/**
+ 
+ TODO: uncomment the code preventing menu code pulls
+ 
+ **/
 @implementation DiningViewController
 
 bool usingTempData;
@@ -32,6 +37,7 @@ bool usingTempData;
     [hoursJSONFormatter setDateFormat:@"HH:mm::ss"];
     roundingFormatter = [[NSDateFormatter alloc] init];
     [roundingFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    usingTempData = true;
     [self loadFromAPI];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -84,12 +90,14 @@ bool usingTempData;
         cell = [[DiningTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"hall"];
 
     }
+    // This pick from the correct array of dining halls to display on the table
     switch (indexPath.section) {
         case 0:
             cell.venueLabel.text = residential[indexPath.row][@"name"];
             break;
         case 1:
             cell.venueLabel.text = retail[indexPath.row][@"name"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         default:
             break;
     }
@@ -109,11 +117,11 @@ bool usingTempData;
             cell.openLabel.text = @" closed ";
             cell.openLabel.backgroundColor = [UIColor grayColor];
             cell.addressLabel.text = [NSString stringWithFormat:@"Next serving: %@", [[self enumToStringTime:open] substringFromIndex:1]];
+            // This code shows the regions from the xml to query
         }
     }
     return cell;
 }
-
 
 
 // Override to support conditional editing of the table view.
@@ -149,10 +157,13 @@ bool usingTempData;
 }
 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *venueName = ((DiningTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).venueLabel.text;
-    venueName = [@"University of Pennsylvania " stringByAppendingString:venueName];
-    dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:_selectedMeal];
-    [self performSegueWithIdentifier:@"cellClick" sender:[tableView cellForRowAtIndexPath:indexPath]];
+    if (indexPath.section == 0) {
+        NSString *venueName = ((DiningTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).venueLabel.text;
+        venueName = [@"University of Pennsylvania " stringByAppendingString:venueName];
+        dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:_selectedMeal];
+        [self performSegueWithIdentifier:@"cellClick" sender:[tableView cellForRowAtIndexPath:indexPath]];
+    }
+    
 }
 
 #pragma mark - Navigation
@@ -208,7 +219,7 @@ bool usingTempData;
         data = [[NSFileManager defaultManager] contentsAtPath:path];
     } else {
         path = [NSString stringWithFormat:@"%@%@", SERVER_ROOT, MEAL_PATH];
-        path = [path stringByAppendingFormat:@"%d", [self getIDForVenueWithIndex:index]];
+        path = [path stringByAppendingFormat:@"%d", [self getResidentialVenueID:index]];
         data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
     }
     NSError *error = [NSError alloc];
@@ -222,10 +233,11 @@ bool usingTempData;
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector {
     [self loadVenues];
     NSDictionary *raw;
-    for (int count = 0; count < _mealTimes.count; count++) {
-        // raw = [self loadMealsForVenueIndex:count];
+    for (int count = 0; count < residential.count; count++) {
+        NSLog(@"%d", [self getResidentialVenueID:count]);
+        raw = [self loadMealsForVenueIndex:count];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-           // [self parseAPIMeals:raw selector:selector target:target];
+            [self parseAPIMeals:raw selector:selector target:target];
         });
     }
 }
@@ -328,7 +340,9 @@ bool usingTempData;
 - (int)getIDForVenueWithIndex:(int)index {
     return (int) _mealTimes[index][@"id"];
 }
-
+- (int)getResidentialVenueID:(int)index {
+    return (int) residential[index][@"id"];
+}
 // O(n) :(
 - (NSArray *)getDates {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -439,7 +453,9 @@ bool usingTempData;
         return All;
     } else if ([upper isEqualToString:@"RETAIL"]) {
         return Retail;
-    }else {
+    } else if ([upper isEqualToString:@"MEAL EQUIVALENCY"]) {
+        return MealEquivalency;
+    } else {
         [NSException raise:@"Invalid meal type" format:@"type given was %@", mealTime];
         return -1;
     }
@@ -459,8 +475,10 @@ bool usingTempData;
         return @"All";
     } else if (mealTime == Retail) {
         return @"Retail";
+    } else if (mealTime == MealEquivalency) {
+        return @"Meal Equivalency";
     } else {
-        if (fabs(mealTime) < 7)
+        if (fabs(mealTime) < 9)
             return [@"c" stringByAppendingString:[self enumToStringTime:(-1 * mealTime)]];
         else {
             [NSException raise:@"Invalid meal type" format:@"type given was %ld", mealTime];

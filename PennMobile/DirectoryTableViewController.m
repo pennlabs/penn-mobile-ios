@@ -29,30 +29,68 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - API
+
+-(NSSet *)searchForName:(NSString *)name {
+    // This is a set because multiple terms qre queried and we don't want duplicate results
+    NSMutableSet *results = [[NSMutableSet alloc] init];
+    if ([name containsString:@" "]) {
+        NSArray *split = [name componentsSeparatedByString:@" "];
+        for (NSString *queryTerm in split) {
+            [results addObjectsFromArray:[self queryAPI:queryTerm]];
+        }
+    }
+    return results;
+}
+
+-(NSArray *)queryAPI:(NSString *)term {
+    // insert API querying code here
+    return nil;
+}
+
+-(void)importData:(NSSet *)raw {
+    NSMutableSet *tempSet = [[NSMutableSet alloc] initWithCapacity:raw.count];
+    for (NSDictionary *personData in raw) {
+        Person *new = [[Person alloc] init];
+        new.lastName = personData[@"last_name"];
+        new.firstName = personData[@"first_name"];
+        new.phone = personData[@"list_phone"];
+        new.email = personData[@"list_email"];
+        new.identifier = personData[@"person_id"];
+        new.organization = personData[@"list_organization"];
+        new.affiliation = personData[@"list_affiliation"];
+        [tempSet addObject:new];
+    }
+    _people = [tempSet allObjects];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 1;
+    return _people.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"person" forIndexPath:indexPath];
+    PersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"person" forIndexPath:indexPath];
     
-    // Configure the cell...
+    [cell configure:_people[indexPath.row]];
     
     return cell;
 }
 
-
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self queryAPI:searchBar.text];
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [self queryAPI:searchText];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -20,4 +20,10 @@
     // Configure the view for the selected state
 }
 
+-(void)configure:(Person *)person {
+    _person = person;
+    _labelName.text = [_person.firstName stringByAppendingString:_person.lastName];
+    _labelRole.text = _person.affiliation;
+}
+
 @end
