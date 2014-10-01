@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929ACFF19DBA21E00B15C5B /* TransitViewController.m */; };
 		192AEF3519C934F10068ABA6 /* FoodItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 192AEF3419C934F10068ABA6 /* FoodItemTableViewCell.m */; };
 		1937623419C2882A007158E6 /* venue_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1937623319C2882A007158E6 /* venue_sample.txt */; };
 		195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D940219BFC22900C6C8FA /* DiningViewController.m */; };
@@ -52,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1929ACFE19DBA21E00B15C5B /* TransitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitViewController.h; sourceTree = "<group>"; };
+		1929ACFF19DBA21E00B15C5B /* TransitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitViewController.m; sourceTree = "<group>"; };
 		192AEF3319C934F10068ABA6 /* FoodItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodItemTableViewCell.h; sourceTree = "<group>"; };
 		192AEF3419C934F10068ABA6 /* FoodItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoodItemTableViewCell.m; sourceTree = "<group>"; };
 		1937623319C2882A007158E6 /* venue_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = venue_sample.txt; sourceTree = "<group>"; };
@@ -120,6 +123,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1929ACFD19DBA20C00B15C5B /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				1929ACFE19DBA21E00B15C5B /* TransitViewController.h */,
+				1929ACFF19DBA21E00B15C5B /* TransitViewController.m */,
+			);
+			name = Map;
+			sourceTree = "<group>";
+		};
 		195D940419BFC40200C6C8FA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +224,7 @@
 				82982FC119735ECC00DB2AE3 /* Images.xcassets */,
 				82982FB619735ECC00DB2AE3 /* Supporting Files */,
 				19EDDC8719D24D030088C4DC /* Directory */,
+				1929ACFD19DBA20C00B15C5B /* Map */,
 				19EDDC8619D24CEF0088C4DC /* Dining */,
 				195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */,
 				195D940B19BFC44E00C6C8FA /* PennNavController.h */,
@@ -365,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */,
 				195D940F19BFC58B00C6C8FA /* Agent.swift in Sources */,
 				EBCE174919A715210008C332 /* Course.swift in Sources */,
 				195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */,
