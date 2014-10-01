@@ -22,6 +22,10 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    // to dismiss the keyboard when the user taps on the table
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
+    [self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,6 +33,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)dismissKeyboard:(id)sender {
+    [_searchBar resignFirstResponder];
+}
 #pragma mark - API
 
 -(NSSet *)searchForName:(NSString *)name {

@@ -6,11 +6,11 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--Registrar-->
         <scene sceneID="887-81-BTc">
             <objects>
                 <navigationController id="SHn-7r-8Ex" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Hnk-3a-OyG"/>
+                    <tabBarItem key="tabBarItem" title="Registrar" id="Hnk-3a-OyG"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="B54-dW-7yl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -31,14 +31,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableFooterView" contentMode="redraw" placeholder="Search" id="LMs-k2-CV5">
-                            <rect key="frame" x="0.0" y="22" width="600" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                            <connections>
-                                <outlet property="delegate" destination="Bt1-jR-oVE" id="Ydx-SZ-ius"/>
-                            </connections>
-                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1Rq-9z-uhF">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -61,6 +53,14 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MOa-G6-9c5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchBar contentMode="redraw" placeholder="Search" id="LMs-k2-CV5">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                    <connections>
+                        <outlet property="delegate" destination="Bt1-jR-oVE" id="Ydx-SZ-ius"/>
+                    </connections>
+                </searchBar>
                 <searchDisplayController id="Qo2-Sr-Djr">
                     <connections>
                         <outlet property="delegate" destination="Bt1-jR-oVE" id="wIM-vb-cFp"/>
@@ -221,13 +221,13 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VZh-mx-ouQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1959" y="328"/>
+            <point key="canvasLocation" x="1957" y="333"/>
         </scene>
-        <!--Item-->
+        <!--Dining-->
         <scene sceneID="Ked-9s-tQC">
             <objects>
                 <navigationController id="w5t-e3-mz3" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="J2R-mq-DOQ"/>
+                    <tabBarItem key="tabBarItem" title="Dining" id="J2R-mq-DOQ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VnU-RD-c0P">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -361,11 +361,11 @@
             </objects>
             <point key="canvasLocation" x="1248" y="997"/>
         </scene>
-        <!--Item-->
+        <!--Directory-->
         <scene sceneID="5wG-16-1Bo">
             <objects>
                 <navigationController id="ehR-dm-2U4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="fxh-Vj-vXo"/>
+                    <tabBarItem key="tabBarItem" title="Directory" id="fxh-Vj-vXo"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="36y-qi-SvC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

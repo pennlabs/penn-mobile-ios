@@ -12,6 +12,10 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [[_buttonCall imageView] setContentMode: UIViewContentModeScaleAspectFit];
+    [[_buttonText imageView] setContentMode: UIViewContentModeScaleAspectFit];
+    [[_buttonEmail imageView] setContentMode: UIViewContentModeScaleAspectFit];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -24,6 +28,13 @@
     _person = person;
     _labelName.text = [_person.firstName stringByAppendingString:_person.lastName];
     _labelRole.text = _person.affiliation;
+    if (!_person.email) {
+        _buttonEmail.enabled = false;
+    }
+    if (!_person.phone) {
+        _buttonCall.enabled = false;
+        _buttonText.enabled = false;
+    }
 }
 
 @end
