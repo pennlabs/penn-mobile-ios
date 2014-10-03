@@ -37,7 +37,9 @@ bool usingTempData;
     [hoursJSONFormatter setDateFormat:@"HH:mm::ss"];
     roundingFormatter = [[NSDateFormatter alloc] init];
     [roundingFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    usingTempData = true;
+    mealJSONFormatter = [[NSDateFormatter alloc] init];
+    [mealJSONFormatter setDateFormat:@"MM/dd/yyyy"];
+    //usingTempData = true;
     [self loadFromAPI];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -97,7 +99,7 @@ bool usingTempData;
             break;
         case 1:
             cell.venueLabel.text = retail[indexPath.row][@"name"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            //cell.selectionStyle = UITableViewCellSelectionStyleNone;
         default:
             break;
     }
@@ -157,11 +159,18 @@ bool usingTempData;
 }
 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
+    if (indexPath.section /*== 0 */) {
         NSString *venueName = ((DiningTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).venueLabel.text;
         venueName = [@"University of Pennsylvania " stringByAppendingString:venueName];
-        dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:_selectedMeal];
-        [self performSegueWithIdentifier:@"cellClick" sender:[tableView cellForRowAtIndexPath:indexPath]];
+        dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:[self isOpen:venueName]];
+        if (!dataForNextView || dataForNextView.count == 0) {
+            UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations :(\nIf you don't like this limitation, please call (215) 555-5555 to complain." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Call", nil];
+            [new show];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        }
+        else {
+            [self performSegueWithIdentifier:@"cellClick" sender:[tableView cellForRowAtIndexPath:indexPath]];
+        }
     }
     
 }
@@ -219,7 +228,7 @@ bool usingTempData;
         data = [[NSFileManager defaultManager] contentsAtPath:path];
     } else {
         path = [NSString stringWithFormat:@"%@%@", SERVER_ROOT, MEAL_PATH];
-        path = [path stringByAppendingFormat:@"%d", [self getResidentialVenueID:index]];
+        path = [path stringByAppendingFormat:@"%d", [self getIDForVenueWithIndex:index]];
         data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
     }
     NSError *error = [NSError alloc];
@@ -233,12 +242,14 @@ bool usingTempData;
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector {
     [self loadVenues];
     NSDictionary *raw;
-    for (int count = 0; count < residential.count; count++) {
-        NSLog(@"%d", [self getResidentialVenueID:count]);
-        raw = [self loadMealsForVenueIndex:count];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [self parseAPIMeals:raw selector:selector target:target];
-        });
+    for (int count = 0; count < _mealTimes.count; count++) {
+        NSString *menuURL = _mealTimes[count][@"dailyMenuURL"];
+        if (menuURL && ![menuURL isEqualToString:@""]) {
+            raw = [self loadMealsForVenueIndex:count];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                [self parseAPIMeals:raw selector:selector target:target];
+            });
+        }
     }
 }
 
@@ -247,7 +258,7 @@ bool usingTempData;
     NSString *path = [[NSBundle mainBundle] pathForResource:@"list_sample" ofType:@"txt"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
      **/
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://localhost:5000/v1/dining/venues"]];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[SERVER_ROOT stringByAppendingString:SERVER_PATH]]];
     NSError *error = [NSError alloc];
     NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
     if (error.code != 0) {
@@ -281,13 +292,31 @@ bool usingTempData;
     }
     **/
 }
-- (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSString *)date atMeal:(Meal)meal {
+- (BOOL)isSameDayWithDate1:(NSDate*)date1 date2:(NSDate*)date2 {
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    NSDateComponents* comp1 = [calendar components:unitFlags fromDate:date1];
+    NSDateComponents* comp2 = [calendar components:unitFlags fromDate:date2];
+    
+    return [comp1 day]   == [comp2 day] &&
+    [comp1 month] == [comp2 month] &&
+    [comp1 year]  == [comp2 year];
+}
+
+- (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSDate *)date atMeal:(Meal)meal {
     NSMutableArray *toReturn = [[NSMutableArray alloc] init];
     NSDictionary *venueContents = _venues[venue];
     NSArray *mealOptions;
     for (NSString *day in [venueContents allKeys]) {
-        if ([day isEqualToString:date]) {
-            mealOptions = venueContents[day][meal][kStation];
+        NSDate *normalizedDay = [mealJSONFormatter dateFromString:day];
+        if ([self isSameDayWithDate1:normalizedDay date2:date]) {
+            for (int possibleMeal = 0; possibleMeal < ((NSArray *)venueContents[day]).count; possibleMeal++) {
+                NSString *trandlatedMeal = [self enumToStringTime:meal];
+                if ([trandlatedMeal containsString:venueContents[day][possibleMeal][@"txtDayPartDescription"]]) {
+                    mealOptions = venueContents[day][possibleMeal][kStation];
+                }
+            }
             for (int station = 0; station < mealOptions.count; station++) {
                 NSMutableDictionary *currentStation = [[NSMutableDictionary alloc] initWithCapacity:3];
                 id stationItems = mealOptions[station][@"tblItem"];
@@ -323,7 +352,7 @@ bool usingTempData;
 - (int)getIDForVenue:(NSString *)venue {
     for (NSDictionary *venue in _mealTimes) {
         if ([self matchVenue:venue[@"name"] withOther:venue]) {
-            return (int) venue[@"id"];
+            return [venue[@"id"] intValue];
         }
     }
     return -1;
@@ -338,10 +367,10 @@ bool usingTempData;
     return nil;
 }
 - (int)getIDForVenueWithIndex:(int)index {
-    return (int) _mealTimes[index][@"id"];
+    return [_mealTimes[index][@"id"] intValue];
 }
 - (int)getResidentialVenueID:(int)index {
-    return (int) residential[index][@"id"];
+    return [residential[index][@"id"] intValue];
 }
 // O(n) :(
 - (NSArray *)getDates {

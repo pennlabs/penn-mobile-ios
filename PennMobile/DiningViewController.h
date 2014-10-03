@@ -17,9 +17,9 @@
 #define kStation @"tblStation"
 #define kSampleVenueJSON @"venue_sample.txt"
 
-#define SERVER_PATH @"v1/dining/venues"
-#define SERVER_ROOT @"http://localhost:5000/"
-#define MEAL_PATH @"v1/dining/venues/"
+#define SERVER_PATH @"dining/venues"
+#define SERVER_ROOT @"http://api.pennlabs.org:5000/"
+#define MEAL_PATH @"dining/weekly_menu/"
 
 @interface DiningViewController : UITableViewController {
     NSString *menuMessage;
@@ -29,6 +29,7 @@
     UIEdgeInsets titleViewMargins;
     NSDateFormatter *venueJSONFormatter;
     NSDateFormatter *hoursJSONFormatter;
+    NSDateFormatter *mealJSONFormatter;
     NSDateFormatter *roundingFormatter;
     NSMutableArray *residential; // for table view layout
     NSMutableArray *retail; // for table view layout
@@ -70,7 +71,7 @@
 
 // Data Accessors
 
-- (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSString *)date atMeal:(Meal)meal;
+- (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSDate *)date atMeal:(Meal)meal;
 - (NSArray *)getDates;
 - (NSArray *)getMealTimes;
 - (NSString *)getVenueByID:(int)identifier;
