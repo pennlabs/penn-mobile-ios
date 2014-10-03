@@ -159,7 +159,7 @@ bool usingTempData;
 }
 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section /*== 0 */) {
+   /** if (indexPath.section *== 0) { **/
         NSString *venueName = ((DiningTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).venueLabel.text;
         venueName = [@"University of Pennsylvania " stringByAppendingString:venueName];
         dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:[self isOpen:venueName]];
@@ -171,7 +171,7 @@ bool usingTempData;
         else {
             [self performSegueWithIdentifier:@"cellClick" sender:[tableView cellForRowAtIndexPath:indexPath]];
         }
-    }
+   /* } */
     
 }
 
