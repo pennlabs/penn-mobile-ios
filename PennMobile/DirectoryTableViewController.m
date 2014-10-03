@@ -51,8 +51,13 @@
 }
 
 -(NSArray *)queryAPI:(NSString *)term {
-    // insert API querying code here
-    return nil;
+    NSData *result = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:DIRECTORY_PATH, term, term] relativeToURL:[NSURL URLWithString:SERVER_ROOT]]];
+    NSError *error;
+    NSArray *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
+    if (error.code != 0) {
+        [NSException raise:@"JSON parse error" format:@"%@", error];
+    }
+    return returned;
 }
 
 -(void)importData:(NSSet *)raw {

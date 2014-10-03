@@ -18,7 +18,6 @@
 #define kSampleVenueJSON @"venue_sample.txt"
 
 #define SERVER_PATH @"dining/venues"
-#define SERVER_ROOT @"http://api.pennlabs.org:5000/"
 #define MEAL_PATH @"dining/weekly_menu/"
 
 @interface DiningViewController : UITableViewController {
