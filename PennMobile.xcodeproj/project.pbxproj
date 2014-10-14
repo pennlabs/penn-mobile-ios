@@ -10,6 +10,9 @@
 		1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929ACFF19DBA21E00B15C5B /* TransitViewController.m */; };
 		192AEF3519C934F10068ABA6 /* FoodItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 192AEF3419C934F10068ABA6 /* FoodItemTableViewCell.m */; };
 		1937623419C2882A007158E6 /* venue_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1937623319C2882A007158E6 /* venue_sample.txt */; };
+		1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3419EDE20B00DBF9EE /* RegistrarTableViewController.m */; };
+		1944CD3819EDE3C800DBF9EE /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3719EDE3C800DBF9EE /* Course.m */; };
+		1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3A19EDE84F00DBF9EE /* RegistrarTableViewCell.m */; };
 		195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D940219BFC22900C6C8FA /* DiningViewController.m */; };
 		195D940819BFC40200C6C8FA /* penn-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940519BFC40200C6C8FA /* penn-logo.png */; };
 		195D940919BFC40200C6C8FA /* penn-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940619BFC40200C6C8FA /* penn-logo@2x.png */; };
@@ -35,7 +38,6 @@
 		19EDDC9F19D252B80088C4DC /* DirectoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC9E19D252B80088C4DC /* DirectoryTableViewController.m */; };
 		82982FB919735ECC00DB2AE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FB819735ECC00DB2AE3 /* AppDelegate.swift */; };
 		82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */; };
-		82982FBD19735ECC00DB2AE3 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FBC19735ECC00DB2AE3 /* SecondViewController.swift */; };
 		82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82982FC119735ECC00DB2AE3 /* Images.xcassets */; };
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
 		EBCE174919A715210008C332 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCE174819A715210008C332 /* Course.swift */; };
@@ -58,6 +60,12 @@
 		192AEF3319C934F10068ABA6 /* FoodItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodItemTableViewCell.h; sourceTree = "<group>"; };
 		192AEF3419C934F10068ABA6 /* FoodItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoodItemTableViewCell.m; sourceTree = "<group>"; };
 		1937623319C2882A007158E6 /* venue_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = venue_sample.txt; sourceTree = "<group>"; };
+		1944CD3319EDE20B00DBF9EE /* RegistrarTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrarTableViewController.h; sourceTree = "<group>"; };
+		1944CD3419EDE20B00DBF9EE /* RegistrarTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrarTableViewController.m; sourceTree = "<group>"; };
+		1944CD3619EDE3C800DBF9EE /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
+		1944CD3719EDE3C800DBF9EE /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
+		1944CD3919EDE84F00DBF9EE /* RegistrarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrarTableViewCell.h; sourceTree = "<group>"; };
+		1944CD3A19EDE84F00DBF9EE /* RegistrarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrarTableViewCell.m; sourceTree = "<group>"; };
 		195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		195D940119BFC22900C6C8FA /* DiningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningViewController.h; sourceTree = "<group>"; };
 		195D940219BFC22900C6C8FA /* DiningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningViewController.m; sourceTree = "<group>"; };
@@ -94,7 +102,6 @@
 		82982FB719735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82982FB819735ECC00DB2AE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrarSearchViewController.swift; sourceTree = "<group>"; };
-		82982FBC19735ECC00DB2AE3 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		82982FBF19735ECC00DB2AE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		82982FC119735ECC00DB2AE3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		82982FC719735ECC00DB2AE3 /* PennMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PennMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +137,19 @@
 				1929ACFF19DBA21E00B15C5B /* TransitViewController.m */,
 			);
 			name = Map;
+			sourceTree = "<group>";
+		};
+		1944CD3219EDE1DA00DBF9EE /* Registrar */ = {
+			isa = PBXGroup;
+			children = (
+				1944CD3319EDE20B00DBF9EE /* RegistrarTableViewController.h */,
+				1944CD3419EDE20B00DBF9EE /* RegistrarTableViewController.m */,
+				1944CD3619EDE3C800DBF9EE /* Course.h */,
+				1944CD3719EDE3C800DBF9EE /* Course.m */,
+				1944CD3919EDE84F00DBF9EE /* RegistrarTableViewCell.h */,
+				1944CD3A19EDE84F00DBF9EE /* RegistrarTableViewCell.m */,
+			);
+			name = Registrar;
 			sourceTree = "<group>";
 		};
 		195D940419BFC40200C6C8FA /* Assets */ = {
@@ -219,10 +239,10 @@
 				82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */,
 				EBCE174819A715210008C332 /* Course.swift */,
 				195D940E19BFC58B00C6C8FA /* Agent.swift */,
-				82982FBC19735ECC00DB2AE3 /* SecondViewController.swift */,
 				82982FBE19735ECC00DB2AE3 /* Main.storyboard */,
 				82982FC119735ECC00DB2AE3 /* Images.xcassets */,
 				82982FB619735ECC00DB2AE3 /* Supporting Files */,
+				1944CD3219EDE1DA00DBF9EE /* Registrar */,
 				19EDDC8719D24D030088C4DC /* Directory */,
 				1929ACFD19DBA20C00B15C5B /* Map */,
 				19EDDC8619D24CEF0088C4DC /* Dining */,
@@ -382,10 +402,12 @@
 				195D940F19BFC58B00C6C8FA /* Agent.swift in Sources */,
 				EBCE174919A715210008C332 /* Course.swift in Sources */,
 				195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */,
+				1944CD3819EDE3C800DBF9EE /* Course.m in Sources */,
 				195D940D19BFC44E00C6C8FA /* PennNavController.m in Sources */,
+				1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */,
 				195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */,
 				19EDDC9F19D252B80088C4DC /* DirectoryTableViewController.m in Sources */,
-				82982FBD19735ECC00DB2AE3 /* SecondViewController.swift in Sources */,
+				1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */,
 				82982FB919735ECC00DB2AE3 /* AppDelegate.swift in Sources */,
 				82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
