@@ -23,6 +23,7 @@
 		1964BC8619C25EDA00CEB1E1 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 1964BC8519C25EDA00CEB1E1 /* placeholder.png */; };
 		1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1964BC8819C277DD00CEB1E1 /* MenuViewController.m */; };
 		1964BC8D19C281AD00CEB1E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82982FBE19735ECC00DB2AE3 /* Main.storyboard */; };
+		1978259619EDEE1F00284799 /* labs.png in Resources */ = {isa = PBXBuildFile; fileRef = 1978259519EDEE1F00284799 /* labs.png */; };
 		199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 199B90CE19DB7FCD0018CDE3 /* Person.m */; };
 		19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8419D2289E0088C4DC /* list_sample.txt */; };
 		19EDDC8A19D24D230088C4DC /* PersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */; };
@@ -80,6 +81,7 @@
 		1964BC8519C25EDA00CEB1E1 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		1964BC8719C277DD00CEB1E1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		1964BC8819C277DD00CEB1E1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		1978259519EDEE1F00284799 /* labs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labs.png; sourceTree = "<group>"; };
 		199B90CD19DB7FCD0018CDE3 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		199B90CE19DB7FCD0018CDE3 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		199C2A7419D4C97C0020B153 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = PennMobile/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
@@ -155,6 +157,7 @@
 		195D940419BFC40200C6C8FA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1978259519EDEE1F00284799 /* labs.png */,
 				19EDDC9119D24FDD0088C4DC /* callbutton.png */,
 				19EDDC9219D24FDD0088C4DC /* callbutton@2x.png */,
 				19EDDC9319D24FDD0088C4DC /* callbutton@3x.png */,
@@ -375,6 +378,7 @@
 				19EDDC8F19D24F4B0088C4DC /* contactbutton@2x.png in Resources */,
 				19EDDC9919D24FDD0088C4DC /* callbutton@3x.png in Resources */,
 				19EDDC9019D24F4B0088C4DC /* contactbutton@3x.png in Resources */,
+				1978259619EDEE1F00284799 /* labs.png in Resources */,
 				19EDDC9719D24FDD0088C4DC /* callbutton.png in Resources */,
 				19EDDC9C19D24FDD0088C4DC /* textbutton@3x.png in Resources */,
 				19EDDC9A19D24FDD0088C4DC /* textbutton.png in Resources */,
