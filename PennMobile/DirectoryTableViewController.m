@@ -26,6 +26,8 @@
     // to dismiss the keyboard when the user taps on the table
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
     [self.view addGestureRecognizer:tap];
+    _searchBar.delegate = self;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,7 +53,9 @@
 }
 
 -(NSArray *)queryAPI:(NSString *)term {
-    NSData *result = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:DIRECTORY_PATH, term, term] relativeToURL:[NSURL URLWithString:SERVER_ROOT]]];
+    
+    NSURL *url = [NSURL URLWithString:[SERVER_ROOT stringByAppendingString:[NSString stringWithFormat:DIRECTORY_PATH, term, term] ]];
+    NSData *result = [NSData dataWithContentsOfURL:url];
     NSError *error;
     NSArray *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
     if (error.code != 0) {

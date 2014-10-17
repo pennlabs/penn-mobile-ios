@@ -10,12 +10,13 @@
 
 @implementation Course
 
+// This used to be done by identifier - but for now Title will suffice
 -(bool)isEqual:(id)object {
-    return [_identifier isEqualToString:((Course *)object).identifier];
+    return [_title isEqualToString:((Course *)object).title];
 }
 
 - (NSUInteger)hash {
-    return [_identifier hash];
+    return [_title hash];
 }
 
 @end

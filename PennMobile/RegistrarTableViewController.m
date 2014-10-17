@@ -26,6 +26,11 @@
     // to dismiss the keyboard when the user taps on the table
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
     [self.view addGestureRecognizer:tap];
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+    activityIndicator.hidesWhenStopped = YES;
+    [self.view addSubview: activityIndicator];
+    _searchBar.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,28 +58,32 @@
 -(NSArray *)queryAPI:(NSString *)term {
     NSData *result = [NSData dataWithContentsOfURL:[NSURL URLWithString:[REGISTRAR_PATH stringByAppendingString:term] relativeToURL:[NSURL URLWithString:SERVER_ROOT]]];
     NSError *error;
-    NSArray *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
+    NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
     if (error.code != 0) {
         [NSException raise:@"JSON parse error" format:@"%@", error];
     }
-    return returned;
+    return returned[@"courses"];
 }
 
--(void)importData:(NSSet *)raw {
+-(void)importData:(NSArray *)raw {
     NSMutableSet *tempSet = [[NSMutableSet alloc] initWithCapacity:raw.count];
     for (NSDictionary *courseData in raw) {
         Course *new = [[Course alloc] init];
         new.identifier = courseData[@"_id"];
-        new.dept = courseData[@"dept"];
-        new.title = courseData[@"title"];
-        new.courseNum = courseData[@"courseNumber"];
+        new.dept = courseData[@"course_department"];
+        new.title = courseData[@"course_title"];
+        new.courseNum = courseData[@"course_number"];
         new.credits = courseData[@"credits"];
-        new.sectionNum = courseData[@"sectionNumber"];
+        new.sectionNum = courseData[@"section_number"];
         new.type = courseData[@"type"];
         new.times = courseData[@"times"];
         new.building = courseData[@"building"];
         new.roomBum = courseData[@"roomNumber"];
-        new.prof = courseData[@"prof"];
+        NSMutableArray *profs = [[NSMutableArray alloc] init];
+        for (NSDictionary *prof in courseData[@"prof"]) {
+            [profs addObject:prof[@"name"]];
+        }
+        new.professors = [profs copy];
         [tempSet addObject:new];
     }
     _courses = [tempSet allObjects];
@@ -96,16 +105,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RegistrarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"class" forIndexPath:indexPath];
     Course *inQuestion = _courses[indexPath.row];
-    cell.textLabel.text = inQuestion.title;
-    cell.detailTextLabel.text = inQuestion.prof;
+    cell.detailTextLabel.text = inQuestion.title;
+    cell.textLabel.text = inQuestion.courseNum;
+    CGRect cellFrame = cell.textLabel.frame;
+    cell.textLabel.frame = CGRectMake(cellFrame.origin.x, cellFrame.origin.y, 20.0f, cellFrame.size.height);
     return cell;
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [self queryAPI:searchBar.text];
+    [_searchBar resignFirstResponder];
+    [activityIndicator startAnimating];
+    [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
 }
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    [self queryAPI:searchText];
+- (void)queryHandler:(NSString *)search {
+    [self importData:[self queryAPI:search]];
+    [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
+}
+- (void)reloadView {
+    [self.tableView reloadData];
+    [activityIndicator stopAnimating];
 }
 /*
  // Override to support conditional editing of the table view.

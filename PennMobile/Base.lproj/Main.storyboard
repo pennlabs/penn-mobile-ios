@@ -35,12 +35,29 @@
                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="ny0-2L-RBc" id="aUE-X5-ynu"/>
+                            </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="class" id="1Rq-9z-uhF" customClass="RegistrarTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="class" textLabel="TV9-LH-bai" detailTextLabel="SIb-nf-4bB" style="IBUITableViewCellStyleValue2" id="1Rq-9z-uhF" customClass="RegistrarTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Rq-9z-uhF" id="a9W-Pr-c7P">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="30" id="TV9-LH-bai">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SIb-nf-4bB">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -53,7 +70,7 @@
                     <navigationItem key="navigationItem" id="xhT-dE-egj"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
-                        <outlet property="searchBar" destination="LMs-k2-CV5" id="MTs-7d-fJK"/>
+                        <outlet property="searchBar" destination="7yU-Li-JXL" id="v0k-J6-vbg"/>
                         <outlet property="searchDisplayController" destination="Qo2-Sr-Djr" id="Q6r-7r-pZM"/>
                     </connections>
                 </tableViewController>
@@ -258,7 +275,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="search"/>
                             <connections>
-                                <outlet property="delegate" destination="RtA-aV-BAo" id="9cH-jX-EWD"/>
+                                <outlet property="delegate" destination="RtA-aV-BAo" id="2Lm-hA-gYC"/>
                             </connections>
                         </searchBar>
                         <prototypes>
@@ -439,10 +456,10 @@
             </objects>
             <point key="canvasLocation" x="607" y="1001"/>
         </scene>
-        <!--View Controller-->
+        <!--About View Controller-->
         <scene sceneID="gQ8-JN-7xz">
             <objects>
-                <viewController id="Pwi-0Z-QYc" sceneMemberID="viewController">
+                <viewController id="Pwi-0Z-QYc" customClass="AboutViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="u1R-qu-m5r"/>
                         <viewControllerLayoutGuide type="bottom" id="Tfy-gJ-Box"/>
@@ -539,6 +556,10 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                     </navigationItem>
+                    <connections>
+                        <outlet property="labsHeader" destination="iQp-rW-VFf" id="dps-IM-xIJ"/>
+                        <outlet property="labsLogo" destination="DYq-jU-kZ7" id="F8A-sx-L3S"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jlx-dO-iDF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

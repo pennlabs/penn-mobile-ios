@@ -24,6 +24,7 @@
 		1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1964BC8819C277DD00CEB1E1 /* MenuViewController.m */; };
 		1964BC8D19C281AD00CEB1E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82982FBE19735ECC00DB2AE3 /* Main.storyboard */; };
 		1978259619EDEE1F00284799 /* labs.png in Resources */ = {isa = PBXBuildFile; fileRef = 1978259519EDEE1F00284799 /* labs.png */; };
+		1978259A19EDFAB400284799 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978259919EDFAB400284799 /* AboutViewController.m */; };
 		199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 199B90CE19DB7FCD0018CDE3 /* Person.m */; };
 		19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8419D2289E0088C4DC /* list_sample.txt */; };
 		19EDDC8A19D24D230088C4DC /* PersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */; };
@@ -82,6 +83,8 @@
 		1964BC8719C277DD00CEB1E1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		1964BC8819C277DD00CEB1E1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		1978259519EDEE1F00284799 /* labs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labs.png; sourceTree = "<group>"; };
+		1978259819EDFAB400284799 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		1978259919EDFAB400284799 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		199B90CD19DB7FCD0018CDE3 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		199B90CE19DB7FCD0018CDE3 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		199C2A7419D4C97C0020B153 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = PennMobile/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
@@ -185,6 +188,15 @@
 			path = PennMobile/SampleData;
 			sourceTree = "<group>";
 		};
+		1978259719EDFAA500284799 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				1978259819EDFAB400284799 /* AboutViewController.h */,
+				1978259919EDFAB400284799 /* AboutViewController.m */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
 		19EDDC8619D24CEF0088C4DC /* Dining */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +256,7 @@
 				195D940E19BFC58B00C6C8FA /* Agent.swift */,
 				82982FBE19735ECC00DB2AE3 /* Main.storyboard */,
 				82982FC119735ECC00DB2AE3 /* Images.xcassets */,
+				1978259719EDFAA500284799 /* About */,
 				82982FB619735ECC00DB2AE3 /* Supporting Files */,
 				1944CD3219EDE1DA00DBF9EE /* Registrar */,
 				19EDDC8719D24D030088C4DC /* Directory */,
@@ -411,6 +424,7 @@
 				1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */,
 				195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */,
 				19EDDC9F19D252B80088C4DC /* DirectoryTableViewController.m in Sources */,
+				1978259A19EDFAB400284799 /* AboutViewController.m in Sources */,
 				1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */,
 				82982FB919735ECC00DB2AE3 /* AppDelegate.swift in Sources */,
 				82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */,

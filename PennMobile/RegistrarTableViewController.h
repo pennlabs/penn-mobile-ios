@@ -12,7 +12,9 @@
 
 #define REGISTRAR_PATH @"registrar/"
 
-@interface RegistrarTableViewController : UITableViewController
+@interface RegistrarTableViewController : UITableViewController <UISearchBarDelegate> {
+    UIActivityIndicatorView *activityIndicator;
+}
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property NSArray *courses;

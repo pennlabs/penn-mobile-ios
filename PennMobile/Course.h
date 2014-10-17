@@ -19,7 +19,7 @@
 @property NSString *times;
 @property NSString *building;
 @property NSString *roomBum;
-@property NSString *prof;
+@property NSArray *professors;
 
 @property NSString *identifier;
 
