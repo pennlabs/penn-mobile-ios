@@ -10,4 +10,9 @@
 
 @interface RegistrarTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *labelProf;
+@property (weak, nonatomic) IBOutlet UILabel *labelName;
+@property (weak, nonatomic) IBOutlet UILabel *labelNumber;
+
+
 @end

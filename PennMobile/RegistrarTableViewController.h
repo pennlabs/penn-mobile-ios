@@ -10,10 +10,11 @@
 #import "Course.h"
 #import "RegistrarTableViewCell.h"
 
-#define REGISTRAR_PATH @"registrar/"
+#define REGISTRAR_PATH @"registrar/search?q="
 
 @interface RegistrarTableViewController : UITableViewController <UISearchBarDelegate> {
     UIActivityIndicatorView *activityIndicator;
+    NSMutableOrderedSet *tempSet;
 }
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

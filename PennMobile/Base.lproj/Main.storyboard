@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -40,25 +40,50 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="class" textLabel="TV9-LH-bai" detailTextLabel="SIb-nf-4bB" style="IBUITableViewCellStyleValue2" id="1Rq-9z-uhF" customClass="RegistrarTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="class" id="1Rq-9z-uhF" customClass="RegistrarTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Rq-9z-uhF" id="a9W-Pr-c7P">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="30" id="TV9-LH-bai">
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ACCT 750" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIK-WZ-MJb" userLabel="courseNumber">
+                                            <rect key="frame" x="14" y="1" width="80" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="vpU-Xv-Wnn"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SIb-nf-4bB">
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7b-b8-mLI" userLabel="professor">
+                                            <rect key="frame" x="14" y="22" width="570" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YDw-Az-P7c" userLabel="courseTitle">
+                                            <rect key="frame" x="102" y="1" width="482" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="YDw-Az-P7c" firstAttribute="leading" secondItem="sIK-WZ-MJb" secondAttribute="trailing" constant="8" id="K1n-b5-Bge"/>
+                                        <constraint firstItem="b7b-b8-mLI" firstAttribute="top" secondItem="sIK-WZ-MJb" secondAttribute="bottom" id="RjY-ZU-O4q"/>
+                                        <constraint firstItem="sIK-WZ-MJb" firstAttribute="top" secondItem="a9W-Pr-c7P" secondAttribute="topMargin" constant="-7" id="SDp-mm-SbX"/>
+                                        <constraint firstItem="b7b-b8-mLI" firstAttribute="leading" secondItem="a9W-Pr-c7P" secondAttribute="leadingMargin" constant="6" id="dse-5b-FXD"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="b7b-b8-mLI" secondAttribute="trailing" constant="8" id="gHl-WQ-tbb"/>
+                                        <constraint firstItem="b7b-b8-mLI" firstAttribute="top" secondItem="YDw-Az-P7c" secondAttribute="bottom" id="gfF-vQ-1Au"/>
+                                        <constraint firstItem="sIK-WZ-MJb" firstAttribute="leading" secondItem="a9W-Pr-c7P" secondAttribute="leadingMargin" constant="6" id="hQ3-qJ-lsE"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="YDw-Az-P7c" secondAttribute="trailing" constant="8" id="sc3-nU-hJC"/>
+                                        <constraint firstItem="YDw-Az-P7c" firstAttribute="top" secondItem="a9W-Pr-c7P" secondAttribute="topMargin" constant="-7" id="ujF-bI-fbA"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="labelName" destination="YDw-Az-P7c" id="Wsq-m5-SHi"/>
+                                    <outlet property="labelNumber" destination="sIK-WZ-MJb" id="pAf-Jh-LA7"/>
+                                    <outlet property="labelProf" destination="b7b-b8-mLI" id="9aU-XQ-m40"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -93,7 +118,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1240" y="-331"/>
+            <point key="canvasLocation" x="1240" y="-332"/>
         </scene>
         <!--Dining View-->
         <scene sceneID="LK2-nN-43l">

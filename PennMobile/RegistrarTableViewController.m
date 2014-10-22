@@ -31,6 +31,7 @@
     activityIndicator.hidesWhenStopped = YES;
     [self.view addSubview: activityIndicator];
     _searchBar.delegate = self;
+    tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:20];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,17 +57,17 @@
 }
 
 -(NSArray *)queryAPI:(NSString *)term {
-    NSData *result = [NSData dataWithContentsOfURL:[NSURL URLWithString:[REGISTRAR_PATH stringByAppendingString:term] relativeToURL:[NSURL URLWithString:SERVER_ROOT]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, REGISTRAR_PATH, term]];
+    NSData *result = [NSData dataWithContentsOfURL:url];
     NSError *error;
     NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
-    if (error.code != 0) {
+    if (error) {
         [NSException raise:@"JSON parse error" format:@"%@", error];
     }
     return returned[@"courses"];
 }
 
 -(void)importData:(NSArray *)raw {
-    NSMutableSet *tempSet = [[NSMutableSet alloc] initWithCapacity:raw.count];
     for (NSDictionary *courseData in raw) {
         Course *new = [[Course alloc] init];
         new.identifier = courseData[@"_id"];
@@ -80,13 +81,18 @@
         new.building = courseData[@"building"];
         new.roomBum = courseData[@"roomNumber"];
         NSMutableArray *profs = [[NSMutableArray alloc] init];
-        for (NSDictionary *prof in courseData[@"prof"]) {
+        for (NSDictionary *prof in courseData[@"instructors"]) {
             [profs addObject:prof[@"name"]];
         }
         new.professors = [profs copy];
         [tempSet addObject:new];
     }
-    _courses = [tempSet allObjects];
+    _courses = [tempSet sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        int courseNum1 = [((Course *)obj1).courseNum intValue];
+        int courseNum2 = [((Course *)obj2).courseNum intValue];
+        return courseNum1 > courseNum2;
+    }];
+    [tempSet removeAllObjects];
 }
 
 #pragma mark - Table view data source
@@ -105,8 +111,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RegistrarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"class" forIndexPath:indexPath];
     Course *inQuestion = _courses[indexPath.row];
-    cell.detailTextLabel.text = inQuestion.title;
-    cell.textLabel.text = inQuestion.courseNum;
+    cell.labelName.text = inQuestion.title;
+    cell.labelNumber.text = [NSString stringWithFormat:@"%@ %@", inQuestion.dept, inQuestion.courseNum];
+    if (inQuestion.professors && inQuestion.professors.count > 0) {
+        cell.labelProf.text = inQuestion.professors[0];
+    }
     CGRect cellFrame = cell.textLabel.frame;
     cell.textLabel.frame = CGRectMake(cellFrame.origin.x, cellFrame.origin.y, 20.0f, cellFrame.size.height);
     return cell;

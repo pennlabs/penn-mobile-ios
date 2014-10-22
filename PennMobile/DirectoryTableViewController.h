@@ -10,9 +10,11 @@
 #import "Person.h"
 #import "PersonTableViewCell.h"
 
-#define DIRECTORY_PATH @"directory/search?first_name=%@&last_name=%@"
+#define DIRECTORY_PATH @"directory/search?name="
 
-@interface DirectoryTableViewController : UITableViewController <UISearchBarDelegate>
+@interface DirectoryTableViewController : UITableViewController <UISearchBarDelegate> {
+    NSMutableOrderedSet *tempSet;
+}
 
 @property NSArray *people;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

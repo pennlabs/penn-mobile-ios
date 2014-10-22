@@ -27,7 +27,7 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
     [self.view addGestureRecognizer:tap];
     _searchBar.delegate = self;
-
+    tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:20];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,18 +54,17 @@
 
 -(NSArray *)queryAPI:(NSString *)term {
     
-    NSURL *url = [NSURL URLWithString:[SERVER_ROOT stringByAppendingString:[NSString stringWithFormat:DIRECTORY_PATH, term, term] ]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, DIRECTORY_PATH, term]];
     NSData *result = [NSData dataWithContentsOfURL:url];
     NSError *error;
     NSArray *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
-    if (error.code != 0) {
+    if (error) {
         [NSException raise:@"JSON parse error" format:@"%@", error];
     }
     return returned;
 }
 
--(void)importData:(NSSet *)raw {
-    NSMutableSet *tempSet = [[NSMutableSet alloc] initWithCapacity:raw.count];
+-(void)importData:(NSArray *)raw {
     for (NSDictionary *personData in raw) {
         Person *new = [[Person alloc] init];
         new.lastName = personData[@"last_name"];
@@ -77,7 +76,11 @@
         new.affiliation = personData[@"list_affiliation"];
         [tempSet addObject:new];
     }
-    _people = [tempSet allObjects];
+    _people = [tempSet sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSString *courseNum1 = ((Person *)obj1).lastName;
+        NSString *courseNum2 = ((Person *)obj1).lastName;
+        return [courseNum1 compare:courseNum2];
+    }];
 }
 
 #pragma mark - Table view data source
@@ -102,10 +105,11 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [self queryAPI:searchBar.text];
+    [self importData:[self queryAPI:searchBar.text]];
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    [self queryAPI:searchText];
+    if (searchText.length >= 2)
+        [self importData:[self queryAPI:searchBar.text]];
 }
 /*
 // Override to support conditional editing of the table view.
