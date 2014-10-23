@@ -10,8 +10,7 @@
 
 @interface Person : NSObject
 
-@property NSString *firstName;
-@property NSString *lastName;
+@property NSString *name;
 @property NSString *phone;
 @property NSString *affiliation;
 @property NSString *email;

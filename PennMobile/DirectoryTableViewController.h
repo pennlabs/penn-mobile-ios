@@ -14,6 +14,7 @@
 
 @interface DirectoryTableViewController : UITableViewController <UISearchBarDelegate> {
     NSMutableOrderedSet *tempSet;
+    UIActivityIndicatorView *activityIndicator;
 }
 
 @property NSArray *people;

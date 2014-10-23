@@ -28,6 +28,10 @@
     [self.view addGestureRecognizer:tap];
     _searchBar.delegate = self;
     tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:20];
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+    activityIndicator.hidesWhenStopped = YES;
+    [self.view addSubview: activityIndicator];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,28 +61,27 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, DIRECTORY_PATH, term]];
     NSData *result = [NSData dataWithContentsOfURL:url];
     NSError *error;
-    NSArray *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
+    NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
     if (error) {
         [NSException raise:@"JSON parse error" format:@"%@", error];
     }
-    return returned;
+    return returned[@"result_data"];
 }
 
 -(void)importData:(NSArray *)raw {
     for (NSDictionary *personData in raw) {
         Person *new = [[Person alloc] init];
-        new.lastName = personData[@"last_name"];
-        new.firstName = personData[@"first_name"];
+        new.name = personData[@"list_name"];
         new.phone = personData[@"list_phone"];
         new.email = personData[@"list_email"];
         new.identifier = personData[@"person_id"];
         new.organization = personData[@"list_organization"];
-        new.affiliation = personData[@"list_affiliation"];
+        //new.affiliation = personData[@"list_affiliation"];
         [tempSet addObject:new];
     }
     _people = [tempSet sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSString *courseNum1 = ((Person *)obj1).lastName;
-        NSString *courseNum2 = ((Person *)obj1).lastName;
+        NSString *courseNum1 = ((Person *)obj1).name;
+        NSString *courseNum2 = ((Person *)obj1).name;
         return [courseNum1 compare:courseNum2];
     }];
 }
@@ -105,11 +108,28 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [self importData:[self queryAPI:searchBar.text]];
+    if (searchBar.text.length <= 2) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Search" message:@"Please search by at least 3 characters." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else {
+        [_searchBar resignFirstResponder];
+        [activityIndicator startAnimating];
+        [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
+    }
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length >= 2)
-        [self importData:[self queryAPI:searchBar.text]];
+    if (searchText.length > 2) {
+        [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
+    }
+}
+- (void)queryHandler:(NSString *)search {
+    [self importData:[self queryAPI:search]];
+    [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
+}
+- (void)reloadView {
+    [self.tableView reloadData];
+    [activityIndicator stopAnimating];
 }
 /*
 // Override to support conditional editing of the table view.
