@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "Course.h"
 #import "RegistrarTableViewCell.h"
+#import "DetailViewController.h"
 
 #define REGISTRAR_PATH @"registrar/search?q="
 
-@interface RegistrarTableViewController : UITableViewController <UISearchBarDelegate> {
+@interface RegistrarTableViewController : UITableViewController <UITableViewDelegate, UISearchBarDelegate> {
     UIActivityIndicatorView *activityIndicator;
     NSMutableOrderedSet *tempSet;
+    Course *forSegue;
 }
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

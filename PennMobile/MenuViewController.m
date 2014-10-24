@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.rowHeight = 60.0f;
+    /*
     _dummyText = [[UITextField alloc] init];
     picker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.view.window.bounds.size.width, self.view.window.bounds.size.height / 2.5)];
     picker.datePickerMode = UIDatePickerModeDate;
@@ -35,6 +36,7 @@
     [_dummyText setInputView:picker];
     _dummyText.inputAccessoryView = pickerTopBar;
     [self.view addSubview:_dummyText];
+     */
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

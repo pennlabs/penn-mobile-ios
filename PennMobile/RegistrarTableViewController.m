@@ -25,6 +25,7 @@
     
     // to dismiss the keyboard when the user taps on the table
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
+    tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
@@ -32,6 +33,7 @@
     [self.view addSubview: activityIndicator];
     _searchBar.delegate = self;
     tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:20];
+    self.tableView.allowsSelection = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,7 +80,8 @@
         new.sectionNum = courseData[@"section_number"];
         new.type = courseData[@"type"];
         new.times = courseData[@"times"];
-        new.building = courseData[@"building"];
+        if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0)
+            new.building = courseData[@"meetings"][0][@"buildingName"];
         new.roomBum = courseData[@"roomNumber"];
         NSMutableArray *profs = [[NSMutableArray alloc] init];
         for (NSDictionary *prof in courseData[@"instructors"]) {
@@ -106,12 +109,16 @@
     // Return the number of rows in the section.
     return _courses.count;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    forSegue = _courses[indexPath.row];
+    [self performSegueWithIdentifier:@"detail" sender:self];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RegistrarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"class" forIndexPath:indexPath];
     Course *inQuestion = _courses[indexPath.row];
     cell.labelName.text = inQuestion.title;
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     cell.labelNumber.text = [NSString stringWithFormat:@"%@ %@", inQuestion.dept, inQuestion.courseNum];
     if (inQuestion.professors && inQuestion.professors.count > 0) {
         cell.labelProf.text = inQuestion.professors[0];
@@ -168,14 +175,20 @@
  }
  */
 
-/*
- #pragma mark - Navigation
- 
+#pragma mark - Navigation
+
+
  // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
+        if (forSegue.building) {
+            [((DetailViewController *)segue.destinationViewController) configureUsingCover:forSegue.building title:forSegue.title sub:forSegue.professors[0] detail:nil];
+        } else {
+            [((DetailViewController *)segue.destinationViewController) configureUsingCover:@"" title:forSegue.title sub:forSegue.professors[0] detail:nil];
+        }
+    }
+}
 
 @end

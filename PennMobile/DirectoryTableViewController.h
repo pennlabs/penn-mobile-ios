@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "Person.h"
 #import "PersonTableViewCell.h"
+#import "DetailViewController.h"
 
 #define DIRECTORY_PATH @"directory/search?name="
 
 @interface DirectoryTableViewController : UITableViewController <UISearchBarDelegate> {
     NSMutableOrderedSet *tempSet;
     UIActivityIndicatorView *activityIndicator;
+    Person *forSegue;
 }
 
 @property NSArray *people;
