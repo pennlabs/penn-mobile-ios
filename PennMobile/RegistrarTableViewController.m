@@ -73,7 +73,7 @@
     for (NSDictionary *courseData in raw) {
         Course *new = [[Course alloc] init];
         new.identifier = courseData[@"_id"];
-        new.dept = [courseData[@"course_department"] capitalizedString];
+        new.dept = courseData[@"course_department"];
         new.title = [courseData[@"course_title"] capitalizedString];
         new.courseNum = courseData[@"course_number"];
         new.credits = courseData[@"credits"];
