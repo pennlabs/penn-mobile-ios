@@ -647,6 +647,7 @@
 				);
 				GCC_PREFIX_HEADER = PennMobile/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "bd98381a-fef6-4756-90e3-a240cd6369f9";
@@ -669,6 +670,7 @@
 				);
 				GCC_PREFIX_HEADER = PennMobile/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "bd98381a-fef6-4756-90e3-a240cd6369f9";
