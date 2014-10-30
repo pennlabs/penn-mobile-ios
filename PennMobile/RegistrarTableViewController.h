@@ -10,6 +10,7 @@
 #import "Course.h"
 #import "RegistrarTableViewCell.h"
 #import "DetailViewController.h"
+#import "MBProgressHUD.h"
 
 #define REGISTRAR_PATH @"registrar/search?q="
 

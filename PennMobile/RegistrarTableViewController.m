@@ -27,10 +27,6 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
-    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
-    activityIndicator.hidesWhenStopped = YES;
-    [self.view addSubview: activityIndicator];
     _searchBar.delegate = self;
     tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:20];
     self.tableView.allowsSelection = YES;
@@ -130,7 +126,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [_searchBar resignFirstResponder];
-    [activityIndicator startAnimating];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
 }
 - (void)queryHandler:(NSString *)search {
@@ -139,7 +135,7 @@
 }
 - (void)reloadView {
     [self.tableView reloadData];
-    [activityIndicator stopAnimating];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 /*
  // Override to support conditional editing of the table view.

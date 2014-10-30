@@ -29,10 +29,6 @@
     [self.view addGestureRecognizer:tap];
     _searchBar.delegate = self;
     tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:20];
-    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
-    activityIndicator.hidesWhenStopped = YES;
-    [self.view addSubview: activityIndicator];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,7 +116,7 @@
     }
     else {
         [_searchBar resignFirstResponder];
-        [activityIndicator startAnimating];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
     }
 }
@@ -135,7 +131,7 @@
 }
 - (void)reloadView {
     [self.tableView reloadData];
-    [activityIndicator stopAnimating];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 /*
 // Override to support conditional editing of the table view.

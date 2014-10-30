@@ -46,7 +46,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Rq-9z-uhF" id="a9W-Pr-c7P">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ACCT 750" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIK-WZ-MJb" userLabel="courseNumber">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ACCT 750" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="sIK-WZ-MJb" userLabel="courseNumber">
                                             <rect key="frame" x="14" y="1" width="80" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="80" id="vpU-Xv-Wnn"/>
@@ -719,6 +719,6 @@
         <image name="logo" width="200" height="66"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0p9-yV-sh9"/>
+        <segue reference="80h-oy-JmP"/>
     </inferredMetricsTieBreakers>
 </document>

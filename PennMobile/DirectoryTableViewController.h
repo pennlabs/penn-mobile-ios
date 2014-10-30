@@ -10,6 +10,7 @@
 #import "Person.h"
 #import "PersonTableViewCell.h"
 #import "DetailViewController.h"
+#import "MBProgressHUD.h"
 
 #define DIRECTORY_PATH @"directory/search?name="
 
