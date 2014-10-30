@@ -45,7 +45,7 @@
 -(NSSet *)searchForName:(NSString *)name {
     // This is a set because multiple terms qre queried and we don't want duplicate results
     NSMutableSet *results = [[NSMutableSet alloc] init];
-    if ([name containsString:@" "]) {
+    if ([name rangeOfString:@" "].length != 0) {
         NSArray *split = [name componentsSeparatedByString:@" "];
         for (NSString *queryTerm in split) {
             [results addObjectsFromArray:[self queryAPI:queryTerm]];

@@ -337,7 +337,7 @@ bool usingTempData;
         if ([self isSameDayWithDate1:normalizedDay date2:date]) {
             for (int possibleMeal = 0; possibleMeal < ((NSArray *)venueContents[day]).count; possibleMeal++) {
                 NSString *trandlatedMeal = [self enumToStringTime:meal];
-                if ([trandlatedMeal containsString:venueContents[day][possibleMeal][@"txtDayPartDescription"]]) {
+                if ([trandlatedMeal rangeOfString:venueContents[day][possibleMeal][@"txtDayPartDescription"]].length != 0) {
                     mealOptions = venueContents[day][possibleMeal][kStation];
                 }
             }
@@ -540,7 +540,7 @@ bool usingTempData;
     }
 }
 -(bool)matchVenue:(NSString *)one withOther:(NSString *)two {
-    return [[one uppercaseString] containsString:[two uppercaseString]] || [[two uppercaseString] containsString:[one uppercaseString]];
+    return [[one uppercaseString] rangeOfString:[two uppercaseString]].length != 0 || [[two uppercaseString] rangeOfString:[one uppercaseString]].length != 0;
 }
 
 
