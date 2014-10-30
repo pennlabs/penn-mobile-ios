@@ -11,9 +11,10 @@
             <objects>
                 <navigationController id="SHn-7r-8Ex" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="bookmarks" id="Hnk-3a-OyG"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="B54-dW-7yl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="B54-dW-7yl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Bt1-jR-oVE" kind="relationship" relationship="rootViewController" id="EgY-q8-Uhc"/>
@@ -28,7 +29,7 @@
             <objects>
                 <tableViewController id="Bt1-jR-oVE" customClass="RegistrarTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ny0-2L-RBc">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search for Courses" id="7yU-Li-JXL">
@@ -92,8 +93,18 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Course Search" id="fFK-JY-6hg"/>
-                    <navigationItem key="navigationItem" id="xhT-dE-egj"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationItem key="navigationItem" id="xhT-dE-egj">
+                        <nil key="title"/>
+                        <view key="titleView" contentMode="scaleToFill" id="nMX-R2-rlK">
+                            <rect key="frame" x="180" y="6" width="240" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="h5m-r0-dJj">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                                </imageView>
+                            </subviews>
+                        </view>
+                    </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="7yU-Li-JXL" id="v0k-J6-vbg"/>
                         <outlet property="searchDisplayController" destination="Qo2-Sr-Djr" id="Q6r-7r-pZM"/>
@@ -224,7 +235,7 @@
             <objects>
                 <tableViewController id="X8R-ls-6Mg" userLabel="Dining View" customClass="DiningViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pwR-zr-0fe">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -290,13 +301,13 @@
                             <rect key="frame" x="180" y="6" width="240" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="OUK-Mx-ZYp">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="OUK-Mx-ZYp">
                                     <rect key="frame" x="60" y="0.0" width="120" height="33"/>
                                 </imageView>
                             </subviews>
                         </view>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="DSH-Mj-qtj" kind="show" identifier="cellClick" id="Zcg-Gv-wYv"/>
                     </connections>
@@ -310,7 +321,7 @@
             <objects>
                 <tableViewController id="DSH-Mj-qtj" customClass="MenuViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tDB-cr-PBv">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -374,9 +385,10 @@
             <objects>
                 <navigationController id="w5t-e3-mz3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="contacts" id="J2R-mq-DOQ"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VnU-RD-c0P">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="VnU-RD-c0P">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="X8R-ls-6Mg" kind="relationship" relationship="rootViewController" id="qbx-Of-onD"/>
@@ -391,7 +403,7 @@
             <objects>
                 <tableViewController id="RiY-ZA-iME" customClass="DirectoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" id="RtA-aV-BAo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search for People" id="wpL-VY-etq">
@@ -484,7 +496,7 @@
                             <rect key="frame" x="180" y="6" width="240" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="G9v-Wj-68S">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="G9v-Wj-68S">
                                     <rect key="frame" x="65" y="0.0" width="120" height="33"/>
                                 </imageView>
                             </subviews>
@@ -513,9 +525,10 @@
             <objects>
                 <navigationController id="1D0-pC-d68" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="more" id="Lub-LB-LYh"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9YC-mi-Nyr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="9YC-mi-Nyr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="guj-Kx-i0U" kind="relationship" relationship="rootViewController" id="bHI-py-GGR"/>
@@ -534,11 +547,10 @@
                         <viewControllerLayoutGuide type="bottom" id="LeZ-t5-Bqz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9Cg-gb-Juy">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" fixedFrame="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="055-2x-qTS">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
                         </subviews>
@@ -550,7 +562,7 @@
                             <rect key="frame" x="180" y="6" width="240" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="NyF-h6-kI0">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="NyF-h6-kI0">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
                                 </imageView>
                             </subviews>
@@ -569,9 +581,10 @@
             <objects>
                 <navigationController id="ehR-dm-2U4" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="search" id="fxh-Vj-vXo"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="36y-qi-SvC">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="36y-qi-SvC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="RiY-ZA-iME" kind="relationship" relationship="rootViewController" id="mh4-c1-bV5"/>
@@ -590,17 +603,17 @@
                         <viewControllerLayoutGuide type="bottom" id="Tfy-gJ-Box"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HmJ-az-LeH">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="DYq-jU-kZ7">
-                                <rect key="frame" x="212" y="114" width="177" height="177"/>
+                                <rect key="frame" x="212" y="50" width="177" height="177"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DYq-jU-kZ7" secondAttribute="height" multiplier="1:1" id="VNX-jj-aWM"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Built by Penn Labs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQp-rW-VFf">
-                                <rect key="frame" x="138" y="316" width="325" height="28"/>
+                                <rect key="frame" x="138" y="252" width="325" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="325" id="qdX-DC-h5u"/>
                                 </constraints>
@@ -609,7 +622,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="nMV-Lo-YKM">
-                                <rect key="frame" x="150" y="359" width="300" height="63"/>
+                                <rect key="frame" x="150" y="295" width="300" height="63"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="qYY-fH-y2w"/>
                                 </constraints>
@@ -619,7 +632,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGb-5n-9sn">
-                                <rect key="frame" x="184" y="432" width="113" height="30"/>
+                                <rect key="frame" x="184" y="368" width="113" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="113" id="NqE-g6-8NG"/>
                                     <constraint firstAttribute="height" constant="30" id="fUg-ZS-JZV"/>
@@ -630,7 +643,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnK-EO-3Eg">
-                                <rect key="frame" x="347" y="432" width="66" height="30"/>
+                                <rect key="frame" x="347" y="368" width="66" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="66" id="eAb-mk-Zvg"/>
                                     <constraint firstAttribute="height" constant="30" id="jkn-VQ-kpx"/>
@@ -641,7 +654,7 @@
                                 </state>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(c) 2014" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rav-h7-yPc">
-                                <rect key="frame" x="271" y="472" width="58" height="21"/>
+                                <rect key="frame" x="271" y="408" width="58" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="MIq-w9-Asa"/>
                                     <constraint firstAttribute="width" constant="58" id="TY3-6g-OJT"/>
@@ -673,11 +686,6 @@
                         <view key="titleView" contentMode="scaleToFill" id="zFX-o2-hnO">
                             <rect key="frame" x="180" y="6" width="240" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="t92-bQ-hFw">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
-                                </imageView>
-                            </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                     </navigationItem>
@@ -696,7 +704,7 @@
                 <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="I9Q-EI-o67"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
+                    <tabBar key="tabBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -718,15 +726,28 @@
             <objects>
                 <navigationController id="oVB-9K-p2y" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="bookmarks" id="ifQ-Dk-9qZ"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="rJc-wc-W2a">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="rJc-wc-W2a">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="YtY-Yb-eOK">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="Pwi-0Z-QYc" kind="relationship" relationship="rootViewController" id="wP0-Ab-KHw"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jAX-Ft-j2h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="sa3-c0-3cS">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="6xE-On-i2r">
+                            <rect key="frame" x="65" y="0.0" width="120" height="33"/>
+                        </imageView>
+                    </subviews>
+                </view>
             </objects>
             <point key="canvasLocation" x="615" y="-991"/>
         </scene>
@@ -739,6 +760,6 @@
         <image name="textButton" width="20" height="13"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0p9-yV-sh9"/>
+        <segue reference="80h-oy-JmP"/>
     </inferredMetricsTieBreakers>
 </document>
