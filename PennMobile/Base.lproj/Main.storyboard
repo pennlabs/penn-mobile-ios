@@ -493,6 +493,7 @@
                     <connections>
                         <outlet property="searchBar" destination="wpL-VY-etq" id="FHa-3N-f07"/>
                         <outlet property="searchDisplayController" destination="tNG-ky-UTc" id="ddQ-cg-JnO"/>
+                        <segue destination="HKG-NO-KBC" kind="presentation" identifier="detail" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="0p9-yV-sh9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PZi-Ci-1lV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -737,4 +738,7 @@
         <image name="logo" width="200" height="66"/>
         <image name="textButton" width="20" height="13"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="0p9-yV-sh9"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -73,12 +73,12 @@
     for (NSDictionary *courseData in raw) {
         Course *new = [[Course alloc] init];
         new.identifier = courseData[@"_id"];
-        new.dept = courseData[@"course_department"];
-        new.title = courseData[@"course_title"];
+        new.dept = [courseData[@"course_department"] capitalizedString];
+        new.title = [courseData[@"course_title"] capitalizedString];
         new.courseNum = courseData[@"course_number"];
         new.credits = courseData[@"credits"];
         new.sectionNum = courseData[@"section_number"];
-        new.type = courseData[@"type"];
+        new.type = [courseData[@"type"] capitalizedString];
         new.times = courseData[@"times"];
         if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0)
             new.building = courseData[@"meetings"][0][@"buildingName"];
@@ -183,10 +183,11 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
+        NSString *detail = [forSegue createDetail];
         if (forSegue.building) {
-            [((DetailViewController *)segue.destinationViewController) configureUsingCover:forSegue.building title:forSegue.title sub:forSegue.professors[0] detail:nil];
+            [((DetailViewController *)segue.destinationViewController) configureUsingCover:forSegue.building title:forSegue.title sub:forSegue.professors[0] detail:detail];
         } else {
-            [((DetailViewController *)segue.destinationViewController) configureUsingCover:@"" title:forSegue.title sub:forSegue.professors[0] detail:nil];
+            [((DetailViewController *)segue.destinationViewController) configureUsingCover:@"" title:forSegue.title sub:forSegue.professors[0] detail:detail];
         }
     }
 }

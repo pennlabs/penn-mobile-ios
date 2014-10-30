@@ -19,4 +19,7 @@
     return [_title hash];
 }
 
+- (NSString *)createDetail {
+    return [NSString stringWithFormat:@"%@ - %@\n%@-%@\n%@", _dept, _credits, _courseNum, _sectionNum, _professors];
+}
 @end

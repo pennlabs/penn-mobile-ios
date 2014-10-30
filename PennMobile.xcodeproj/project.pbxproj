@@ -28,6 +28,7 @@
 		1978259A19EDFAB400284799 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978259919EDFAB400284799 /* AboutViewController.m */; };
 		198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198E232119F9C8E8000D33FD /* DetailViewController.m */; };
 		199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 199B90CE19DB7FCD0018CDE3 /* Person.m */; };
+		19B4BDBD1A01DE73008DD69C /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 19B4BDBC1A01DE73008DD69C /* avatar.jpg */; };
 		19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8419D2289E0088C4DC /* list_sample.txt */; };
 		19EDDC8A19D24D230088C4DC /* PersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */; };
 		19EDDC8E19D24F4B0088C4DC /* contactbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8B19D24F4B0088C4DC /* contactbutton.png */; };
@@ -94,6 +95,7 @@
 		199B90CE19DB7FCD0018CDE3 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		199C2A7419D4C97C0020B153 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = PennMobile/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
 		199C2A7519D4CA250020B153 /* Meal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meal.h; sourceTree = "<group>"; };
+		19B4BDBC1A01DE73008DD69C /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
 		19EDDC8419D2289E0088C4DC /* list_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = list_sample.txt; sourceTree = "<group>"; };
 		19EDDC8819D24D230088C4DC /* PersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableViewCell.h; sourceTree = "<group>"; };
 		19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableViewCell.m; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 		195D940419BFC40200C6C8FA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				19B4BDBC1A01DE73008DD69C /* avatar.jpg */,
 				1978259519EDEE1F00284799 /* labs.png */,
 				19EDDC9119D24FDD0088C4DC /* callbutton.png */,
 				19EDDC9219D24FDD0088C4DC /* callbutton@2x.png */,
@@ -401,6 +404,7 @@
 				1964BC8D19C281AD00CEB1E1 /* Main.storyboard in Resources */,
 				19EDDC8F19D24F4B0088C4DC /* contactbutton@2x.png in Resources */,
 				19EDDC9919D24FDD0088C4DC /* callbutton@3x.png in Resources */,
+				19B4BDBD1A01DE73008DD69C /* avatar.jpg in Resources */,
 				19EDDC9019D24F4B0088C4DC /* contactbutton@3x.png in Resources */,
 				1978259619EDEE1F00284799 /* labs.png in Resources */,
 				19EDDC9719D24FDD0088C4DC /* callbutton.png in Resources */,

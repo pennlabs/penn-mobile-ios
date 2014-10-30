@@ -18,4 +18,7 @@
     return [_identifier hash];
 }
 
+- (NSString *)createDetail {
+    return [NSString stringWithFormat:@"%@\nphone: %@\nemail: %@", _title, _email, _phone];
+}
 @end

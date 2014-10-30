@@ -25,6 +25,7 @@
     
     // to dismiss the keyboard when the user taps on the table
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
+    tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
     _searchBar.delegate = self;
     tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:20];
@@ -71,11 +72,11 @@
 -(void)importData:(NSArray *)raw {
     for (NSDictionary *personData in raw) {
         Person *new = [[Person alloc] init];
-        new.name = personData[@"list_name"];
+        new.name = [personData[@"list_name"] capitalizedString];
         new.phone = personData[@"list_phone"];
         new.email = personData[@"list_email"];
         new.identifier = personData[@"person_id"];
-        new.organization = personData[@"list_organization"];
+        new.organization = [personData[@"list_organization"] capitalizedString];
         //new.affiliation = personData[@"list_affiliation"];
         [tempSet addObject:new];
     }
@@ -98,6 +99,10 @@
     return _people.count;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    forSegue = _people[indexPath.row];
+    [self performSegueWithIdentifier:@"detail" sender:self];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"person" forIndexPath:indexPath];
@@ -115,7 +120,8 @@
     else {
         [_searchBar resignFirstResponder];
         [activityIndicator startAnimating];
-        [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
+        [self importData:[self queryAPI:searchBar.text]];
+        [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
     }
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -174,7 +180,9 @@
     // Pass the selected object to the new view controller.
     
     if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
-        [((DetailViewController *)segue.destinationViewController) configureUsingCover:nil title:forSegue.name sub:forSegue.organization detail:nil];
+        NSString *detail = [forSegue createDetail];
+        UIImage *placeholder = [UIImage imageNamed:@"avatar"];
+        [((DetailViewController *)segue.destinationViewController) configureUsingCover:placeholder title:forSegue.name sub:forSegue.organization detail:detail];
     }
 }
 

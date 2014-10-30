@@ -23,4 +23,6 @@
 
 @property NSString *identifier;
 
+- (NSString *)createDetail;
+
 @end
