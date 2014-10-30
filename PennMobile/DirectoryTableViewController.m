@@ -84,6 +84,24 @@
     }];
 }
 
+- (NSDictionary *)requetPersonDetails:(NSString *)name {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, DETAIL_PATH, name]];
+    NSData *result = [NSData dataWithContentsOfURL:url];
+    NSError *error;
+    NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
+    if (error) {
+        [NSException raise:@"JSON parse error" format:@"%@", error];
+    }
+    return returned;
+}
+- (Person *)parsePersonData:(NSDictionary *)data {
+    Person *new = [[Person alloc] init];
+    new.name = data[@"detail_name"];
+    new.title = data[@"title"];
+    new.organization = data[@"list_organization_pub"];
+    new.affiliation = data[@"list_affiliation"];
+    return new;
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -176,8 +194,12 @@
     // Pass the selected object to the new view controller.
     
     if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         NSString *detail = [forSegue createDetail];
         UIImage *placeholder = [UIImage imageNamed:@"avatar"];
+        // insert query for person
+        forSegue = [self parsePersonData:[self requetPersonDetails:forSegue.identifier]];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [((DetailViewController *)segue.destinationViewController) configureUsingCover:placeholder title:forSegue.name sub:forSegue.organization detail:detail];
     }
 }
