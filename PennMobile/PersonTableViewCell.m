@@ -27,7 +27,7 @@
 -(void)configure:(Person *)person {
     _person = person;
     _labelName.text = _person.name;
-    _labelRole.text = _person.affiliation;
+    _labelRole.text = _person.organization;
     if (!_person.email) {
         _buttonEmail.enabled = false;
     }

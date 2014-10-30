@@ -70,6 +70,7 @@
 }
 
 -(void)importData:(NSArray *)raw {
+    [tempSet removeAllObjects];
     for (NSDictionary *personData in raw) {
         Person *new = [[Person alloc] init];
         new.name = [personData[@"list_name"] capitalizedString];
@@ -120,8 +121,7 @@
     else {
         [_searchBar resignFirstResponder];
         [activityIndicator startAnimating];
-        [self importData:[self queryAPI:searchBar.text]];
-        [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
+        [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
     }
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
