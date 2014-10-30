@@ -10,11 +10,16 @@
 #import <MapKit/MapKit.h>
 
 @interface DetailViewController : UIViewController {
-
+    NSString *titleText;
+    NSString *subText;
+    NSString *detailText;
+    UIImage *coverUIImage;
+    MKMapItem *center;
 }
 
-@property (weak, nonatomic) IBOutlet UITextField *titleText;
-@property (weak, nonatomic) IBOutlet UITextField *subText;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *viewTitle;
+@property (weak, nonatomic) IBOutlet UILabel *titleText;
+@property (weak, nonatomic) IBOutlet UILabel*subText;
 @property (weak, nonatomic) IBOutlet UIImageView *imageCover;
 @property (weak, nonatomic) IBOutlet MKMapView *mapCover;
 @property (weak, nonatomic) IBOutlet UITextView *detailText;

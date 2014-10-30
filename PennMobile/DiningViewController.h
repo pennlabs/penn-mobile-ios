@@ -66,7 +66,7 @@
 
 // API loading helpers
 
-- (void)loadVenues;
+- (BOOL)loadVenues;
 
 // Data Accessors
 

@@ -40,7 +40,7 @@ bool usingTempData;
     mealJSONFormatter = [[NSDateFormatter alloc] init];
     [mealJSONFormatter setDateFormat:@"MM/dd/yyyy"];
     //usingTempData = true;
-    [self loadFromAPI];
+    [self loadFromAPIwithTarget:self selector:@selector(refresh)];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
 
@@ -53,6 +53,9 @@ bool usingTempData;
     // Dispose of any resources that can be recreated.
 }
 
+- (void)refresh {
+    [[self tableView] reloadData];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -195,6 +198,14 @@ bool usingTempData;
 
 #pragma mark - API-loading
 
+- (BOOL)confirmConnection:(NSData *)data {
+    if (!data) {
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [new show];
+        return false;
+    }
+    return true;
+}
 - (void)loadFromAPI {
     [self loadFromAPIwithTarget:nil selector:nil];
 }
@@ -230,22 +241,31 @@ bool usingTempData;
         path = [NSString stringWithFormat:@"%@%@", SERVER_ROOT, MEAL_PATH];
         path = [path stringByAppendingFormat:@"%d", [self getIDForVenueWithIndex:index]];
         data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
+        if (![self confirmConnection:data])
+            return nil;
     }
     NSError *error = [NSError alloc];
     NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
-    if (error.code != 0) {
-        [NSException raise:@"JSON parse error" format:@"%@", error];
+    if (!raw || error.code != 0) {
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        NSLog(@"JSON Parse error code: %ld", (long)error.code);
+        [new show];
+        return nil;
     }
     return raw;
 }
 
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector {
-    [self loadVenues];
+    if (![self loadVenues]) {
+        return;
+    }
     NSDictionary *raw;
     for (int count = 0; count < _mealTimes.count; count++) {
         NSString *menuURL = _mealTimes[count][@"dailyMenuURL"];
         if (menuURL && ![menuURL isEqualToString:@""]) {
             raw = [self loadMealsForVenueIndex:count];
+            if (!raw)
+                return;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 [self parseAPIMeals:raw selector:selector target:target];
             });
@@ -253,12 +273,15 @@ bool usingTempData;
     }
 }
 
-- (void)loadVenues {
+- (BOOL)loadVenues {
     /** Local Load
     NSString *path = [[NSBundle mainBundle] pathForResource:@"list_sample" ofType:@"txt"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
      **/
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[SERVER_ROOT stringByAppendingString:SERVER_PATH]]];
+    if (![self confirmConnection:data]) {
+        return false;
+    }
     NSError *error = [NSError alloc];
     NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
     if (error.code != 0) {
@@ -272,6 +295,7 @@ bool usingTempData;
         } else
             [retail addObject:venue];
     }
+    return true;
     /** Unused for now, just using accessor b/c very little restructuring needed
     for (NSDictionary *venueData in venueList) {
         NSMutableDictionary *currentVenue = [[NSMutableDictionary alloc] init];

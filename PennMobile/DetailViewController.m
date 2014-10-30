@@ -19,7 +19,26 @@ static MKLocalSearch *search;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    _imageCover.contentMode = UIViewContentModeScaleAspectFill;
+    _mapCover.hidden = YES;
+    _imageCover.hidden = NO;
+    _titleText.text = titleText;
+    _subText.text = subText;
+    _detailText.text = detailText;
+    if (coverUIImage) {
+        _mapCover.hidden = YES;
+        _imageCover.hidden = NO;
+        _imageCover.image = coverUIImage;
+    } else {
+        _mapCover.hidden = NO;
+        _imageCover.hidden = YES;
+        [_mapCover setCenterCoordinate:center.placemark.coordinate animated:NO];
+    }
+    [_viewTitle.layer setMasksToBounds:YES];
+    [_viewTitle.layer setCornerRadius:20.0f];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalViewControllerAnimated:)];
+    tap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tap];
     // Do any additional setup after loading the view.
 }
 
@@ -31,29 +50,24 @@ static MKLocalSearch *search;
 -(void)configureUsingCover:(id)cover title:(NSString *)title sub:(NSString *)sub detail:(NSString *)detail {
     if ([cover isKindOfClass:[UIImage class]]) {
         UIImage *coverImage = cover;
-        _mapCover.hidden = YES;
-        _imageCover.hidden = NO;
-        _imageCover.image = coverImage;
-        _imageCover.contentMode = UIViewContentModeScaleAspectFill;
-        _titleText.text = title;
-        _detailText.text = detail;
+        coverUIImage = coverImage;
+        titleText = title;
+        detailText = detail;
         if (sub)
-            _subText.text = sub;
+            subText = sub;
         
     } else if ([cover isKindOfClass:[NSString class]]) {
         [DetailViewController searchForBuilding:cover sender:self completion:@selector(setupMap:)];
-        _mapCover.hidden = NO;
-        _imageCover.hidden = YES;
-        _titleText.text = title;
-        _detailText.text = detail;
+        titleText = title;
+        detailText = detail;
         if (sub)
-            _subText.text = sub;
+            subText = sub;
     } else {
         [NSException raise:@"Invalid DetailView Configuation" format:@"Type %@ passed. Expecting MKMapItem or UIImage.", [cover class]];
     }
 }
 - (void)setupMap:(MKMapItem *)point {
-    [_mapCover setCenterCoordinate:point.placemark.coordinate animated:NO];
+    center = point;
 }
 #pragma mark - Navigation
 

@@ -23,6 +23,7 @@
 		1964BC8619C25EDA00CEB1E1 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 1964BC8519C25EDA00CEB1E1 /* placeholder.png */; };
 		1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1964BC8819C277DD00CEB1E1 /* MenuViewController.m */; };
 		1964BC8D19C281AD00CEB1E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82982FBE19735ECC00DB2AE3 /* Main.storyboard */; };
+		1969DA1B19F9F8E6000C7076 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */; };
 		1978259619EDEE1F00284799 /* labs.png in Resources */ = {isa = PBXBuildFile; fileRef = 1978259519EDEE1F00284799 /* labs.png */; };
 		1978259A19EDFAB400284799 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978259919EDFAB400284799 /* AboutViewController.m */; };
 		198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198E232119F9C8E8000D33FD /* DetailViewController.m */; };
@@ -83,6 +84,7 @@
 		1964BC8519C25EDA00CEB1E1 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		1964BC8719C277DD00CEB1E1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		1964BC8819C277DD00CEB1E1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		1978259519EDEE1F00284799 /* labs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labs.png; sourceTree = "<group>"; };
 		1978259819EDFAB400284799 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		1978259919EDFAB400284799 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1969DA1B19F9F8E6000C7076 /* Crashlytics.framework in Frameworks */,
 				EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,6 +235,7 @@
 		82982FAA19735ECC00DB2AE3 = {
 			isa = PBXGroup;
 			children = (
+				1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */,
 				1964BC8A19C2818300CEB1E1 /* SampleData */,
 				195D940419BFC40200C6C8FA /* Assets */,
 				EBCE174A19A993900008C332 /* MapKit.framework */,
@@ -310,6 +314,7 @@
 				82982FAF19735ECC00DB2AE3 /* Sources */,
 				82982FB019735ECC00DB2AE3 /* Frameworks */,
 				82982FB119735ECC00DB2AE3 /* Resources */,
+				1969DA1919F9F8CF000C7076 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -349,6 +354,7 @@
 				TargetAttributes = {
 					82982FB219735ECC00DB2AE3 = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = Q4N479MPW3;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -414,6 +420,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1969DA1919F9F8CF000C7076 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 18a765536e6539a73a15dd36c369ed29cfb91aa1 eadaa5316fedefe9c8fbf0ed70e87c140cba02735fa0e93742c3ecfd4466765c";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		82982FAF19735ECC00DB2AE3 /* Sources */ = {
@@ -557,10 +580,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = PennMobile/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "bd98381a-fef6-4756-90e3-a240cd6369f9";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -573,10 +601,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = PennMobile/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "bd98381a-fef6-4756-90e3-a240cd6369f9";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 			};
 			name = Release;
