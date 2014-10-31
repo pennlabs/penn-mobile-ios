@@ -40,12 +40,21 @@ bool usingTempData;
     mealJSONFormatter = [[NSDateFormatter alloc] init];
     [mealJSONFormatter setDateFormat:@"MM/dd/yyyy"];
     //usingTempData = true;
-    [self loadFromAPIwithTarget:self selector:@selector(refresh)];
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    if (_venues && _venues.count > 0) {
+        [_venues removeAllObjects];
+        [residential removeAllObjects];
+        [retail removeAllObjects];
+    }
+    [self performSelectorInBackground:@selector(loadFromAPI) withObject:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -272,8 +281,12 @@ bool usingTempData;
             });
         }
     }
+    [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
+    [self refresh];
 }
-
+- (void)hideActivity {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
 - (BOOL)loadVenues {
     /** Local Load
     NSString *path = [[NSBundle mainBundle] pathForResource:@"list_sample" ofType:@"txt"];

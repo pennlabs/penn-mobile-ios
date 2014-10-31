@@ -57,6 +57,9 @@
 -(NSArray *)queryAPI:(NSString *)term {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, REGISTRAR_PATH, term]];
     NSData *result = [NSData dataWithContentsOfURL:url];
+    if (!result) {
+        CLS_LOG(@"Data parameter was nil for query..proceeding anyway");
+    }
     NSError *error;
     NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
     if (error) {
@@ -91,7 +94,8 @@
         int courseNum2 = [((Course *)obj2).courseNum intValue];
         return courseNum1 > courseNum2;
     }];
-    [tempSet removeAllObjects];
+    if (tempSet && tempSet.count > 0)
+        [tempSet removeAllObjects];
 }
 
 #pragma mark - Table view data source

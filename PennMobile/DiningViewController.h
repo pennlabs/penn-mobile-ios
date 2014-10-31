@@ -72,7 +72,6 @@
 
 - (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSDate *)date atMeal:(Meal)meal;
 - (NSArray *)getDates;
-- (NSArray *)getMealTimes;
 - (NSString *)getVenueByID:(int)identifier;
 - (int)getIDForVenue:(NSString *)venue;
 - (int)getIDForVenueWithIndex:(int)index;

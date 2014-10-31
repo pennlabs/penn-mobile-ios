@@ -14,4 +14,6 @@
 
 #define SERVER_ROOT @"http://api.pennlabs.org:5000/"
 
+#import <Crashlytics/Crashlytics.h>
+#import "MBProgressHUD.h"
 #endif

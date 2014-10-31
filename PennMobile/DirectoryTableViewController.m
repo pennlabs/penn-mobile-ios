@@ -28,6 +28,7 @@
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
     _searchBar.delegate = self;
+    [self.tableView setTableHeaderView:_searchBar];
     tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:20];
 }
 
@@ -58,6 +59,9 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, DIRECTORY_PATH, term]];
     NSData *result = [NSData dataWithContentsOfURL:url];
     NSError *error;
+    if (!result) {
+        CLS_LOG(@"Data parameter was nil for query..proceeding anyway");
+    }
     NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
     if (error) {
         [NSException raise:@"JSON parse error" format:@"%@", error];
@@ -66,8 +70,6 @@
 }
 
 -(void)importData:(NSArray *)raw {
-    if (tempSet && tempSet.count > 0)
-        [tempSet removeAllObjects];
     for (NSDictionary *personData in raw) {
         Person *new = [[Person alloc] init];
         new.name = [personData[@"list_name"] capitalizedString];
@@ -83,6 +85,8 @@
         NSString *courseNum2 = ((Person *)obj1).name;
         return [courseNum1 compare:courseNum2];
     }];
+    if (tempSet && tempSet.count > 0)
+        [tempSet removeAllObjects];
 }
 
 - (NSDictionary *)requetPersonDetails:(NSString *)name {
@@ -148,6 +152,9 @@
     [self importData:[self queryAPI:search]];
     [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
 }
+- (void)detailQueryHandler:(NSString *)search {
+    forSegue = [self parsePersonData:[self requetPersonDetails:forSegue.identifier]];
+}
 - (void)reloadView {
     [self.tableView reloadData];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -198,8 +205,7 @@
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         NSString *detail = [forSegue createDetail];
         UIImage *placeholder = [UIImage imageNamed:@"avatar"];
-        // insert query for person
-        forSegue = [self parsePersonData:[self requetPersonDetails:forSegue.identifier]];
+        [self performSelectorInBackground:@selector(detailQueryHandler:) withObject:forSegue.identifier];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [((DetailViewController *)segue.destinationViewController) configureUsingCover:placeholder title:forSegue.name sub:forSegue.organization detail:detail];
     }

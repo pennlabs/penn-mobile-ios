@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
 
 @end
 
