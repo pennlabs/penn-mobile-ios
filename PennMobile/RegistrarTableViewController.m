@@ -185,7 +185,7 @@
     if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
         NSString *detail = [forSegue createDetail];
         NSString *prof = Nil;
-        if (forSegue.professors) {
+        if (forSegue.professors && forSegue.professors.count > 0) {
             prof = forSegue.professors[0];
         }
         if (forSegue.building) {
