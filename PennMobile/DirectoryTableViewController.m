@@ -66,7 +66,8 @@
 }
 
 -(void)importData:(NSArray *)raw {
-    [tempSet removeAllObjects];
+    if (tempSet && tempSet.count > 0)
+        [tempSet removeAllObjects];
     for (NSDictionary *personData in raw) {
         Person *new = [[Person alloc] init];
         new.name = [personData[@"list_name"] capitalizedString];
