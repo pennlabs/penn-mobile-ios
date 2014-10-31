@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [_webView loadHTMLString:@"" baseURL:[NSURL URLWithString:@"http://www.pennrides.com/map?showHeader=0&route=229,230&silent_disable_timeout=1"]];
+    [_webView loadHTMLString:@"" baseURL:[NSURL URLWithString:@"http://www.pennrides.com/map?showHeader=0"]];
 }
 
 - (void)didReceiveMemoryWarning {
