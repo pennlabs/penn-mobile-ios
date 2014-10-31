@@ -374,15 +374,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="Cga-JQ-GD3">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="Kvo-9c-tR3">
-                            <rect key="frame" x="180" y="6" width="240" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="vGZ-NZ-Ifo">
-                                    <rect key="frame" x="60" y="0.0" width="120" height="33"/>
-                                </imageView>
-                            </subviews>
-                        </view>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VZh-mx-ouQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -732,7 +723,6 @@
     </scenes>
     <resources>
         <image name="labs" width="500" height="500"/>
-        <image name="logo" width="200" height="66"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="80h-oy-JmP"/>

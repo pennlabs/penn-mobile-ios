@@ -186,6 +186,7 @@ bool usingTempData;
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"cellClick"]) {
         MenuViewController *child = ((MenuViewController *)segue.destinationViewController);
+        child.navigationItem.title = currentVenue;
         child.food = dataForNextView;
         child.dates = [self getDates];
         child.source = self;
