@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 
+#define kMapSize 1000
+
 @interface DetailViewController : UIViewController {
     NSString *titleText;
     NSString *subText;

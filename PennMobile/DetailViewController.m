@@ -32,14 +32,27 @@ static MKLocalSearch *search;
     } else {
         _mapCover.hidden = NO;
         _imageCover.hidden = YES;
-        [_mapCover setCenterCoordinate:center.placemark.coordinate animated:NO];
+        _mapCover.showsUserLocation = YES;
     }
     [_viewTitle.layer setMasksToBounds:YES];
     [_viewTitle.layer setCornerRadius:20.0f];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalViewControllerAnimated:)];
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
-    // Do any additional setup after loading the view.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if (!_mapCover.hidden) {
+        if (!center) {
+            CLLocation *user = _mapCover.userLocation.location;
+            [_mapCover setCenterCoordinate:user.coordinate animated:YES];
+            _mapCover.region = MKCoordinateRegionMakeWithDistance(_mapCover.userLocation.location.coordinate, kMapSize, kMapSize);
+        }
+        else {
+            [_mapCover setCenterCoordinate:center.placemark.coordinate animated:YES];
+            _mapCover.region = MKCoordinateRegionMakeWithDistance(center.placemark.location.coordinate, kMapSize, kMapSize);
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,6 +94,10 @@ static MKLocalSearch *search;
     if (!req) {
         req = [[MKLocalSearchRequest alloc] init];
         req.region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(39.952219, -75.193214), MKCoordinateSpanMake(10, 10));
+    }
+    // for no building location
+    if ([query isEqualToString:@""]) {
+        [sender performSelector:completion withObject:nil];
     }
     req.naturalLanguageQuery = query;
     search = [[MKLocalSearch alloc] initWithRequest:req];
