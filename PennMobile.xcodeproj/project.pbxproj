@@ -154,6 +154,8 @@
 		0F8F995CDFE7B714B314515F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */,
+				EBCE174A19A993900008C332 /* MapKit.framework */,
 				16E1C19330F2CC1E8F480AD7 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -263,10 +265,8 @@
 		82982FAA19735ECC00DB2AE3 = {
 			isa = PBXGroup;
 			children = (
-				1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */,
 				1964BC8A19C2818300CEB1E1 /* SampleData */,
 				195D940419BFC40200C6C8FA /* Assets */,
-				EBCE174A19A993900008C332 /* MapKit.framework */,
 				82982FB519735ECC00DB2AE3 /* PennMobile */,
 				82982FCA19735ECC00DB2AE3 /* PennMobileTests */,
 				82982FB419735ECC00DB2AE3 /* Products */,
@@ -647,6 +647,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -656,7 +657,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bd98381a-fef6-4756-90e3-a240cd6369f9";
+				PROVISIONING_PROFILE = "6f6165c8-4baa-4635-98b8-a3c1974b1d55";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -670,6 +671,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -679,7 +681,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bd98381a-fef6-4756-90e3-a240cd6369f9";
+				PROVISIONING_PROFILE = "6f6165c8-4baa-4635-98b8-a3c1974b1d55";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 			};
 			name = Release;
