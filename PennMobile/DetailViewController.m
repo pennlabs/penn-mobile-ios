@@ -45,14 +45,40 @@ static MKLocalSearch *search;
     if (!_mapCover.hidden) {
         if (!center) {
             CLLocation *user = _mapCover.userLocation.location;
+            if (!user) {
+                user = [[CLLocation alloc] initWithLatitude:39.9520689 longitude:-75.1910786];
+            }
             [_mapCover setCenterCoordinate:user.coordinate animated:YES];
-            _mapCover.region = MKCoordinateRegionMakeWithDistance(_mapCover.userLocation.location.coordinate, kMapSize, kMapSize);
+            _mapCover.region = MKCoordinateRegionMakeWithDistance(user.coordinate, kMapSize, kMapSize);
         }
         else {
             [_mapCover setCenterCoordinate:center.placemark.coordinate animated:YES];
             _mapCover.region = MKCoordinateRegionMakeWithDistance(center.placemark.location.coordinate, kMapSize, kMapSize);
         }
     }
+   // [self startStandardUpdates];
+}
+- (void)startStandardUpdates
+{
+    // Create the location manager if this object does not
+    // already have one.
+    if (!locationManager)
+        locationManager = [[CLLocationManager alloc] init];
+    [locationManager requestWhenInUseAuthorization];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+    
+    // Set a movement threshold for new events.
+    locationManager.distanceFilter = 500; // meters
+    
+    [locationManager startUpdatingLocation];
+}
+
+// Delegate method from the CLLocationManagerDelegate protocol.
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    // If it's a relatively recent event, turn off updates to save power.
+    CLLocation* location = [locations lastObject];
+    [_mapCover setCenterCoordinate:location.coordinate];
 }
 
 - (void)didReceiveMemoryWarning {

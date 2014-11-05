@@ -11,12 +11,13 @@
 
 #define kMapSize 1000
 
-@interface DetailViewController : UIViewController {
+@interface DetailViewController : UIViewController <CLLocationManagerDelegate> {
     NSString *titleText;
     NSString *subText;
     NSString *detailText;
     UIImage *coverUIImage;
     MKMapItem *center;
+    CLLocationManager *locationManager;
 }
 
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *viewTitle;
