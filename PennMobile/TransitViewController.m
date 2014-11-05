@@ -17,7 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [_webView loadHTMLString:@"" baseURL:[NSURL URLWithString:@"http://www.pennrides.com/map?showHeader=0"]];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.pennrides.com/map?showHeader=0"]];
+    [_webView loadRequest:req];
 }
 
 - (void)didReceiveMemoryWarning {
