@@ -20,6 +20,14 @@
 }
 
 - (NSString *)createDetail {
-    return [NSString stringWithFormat:@"%@ - %@\n%@-%@\n%@", _dept, _credits, _courseNum, _sectionNum, _professors];
+    NSString *returned = [NSString stringWithFormat:@"%@ - %@\n%@-%@\n", _dept, _credits, _courseNum, _sectionNum];
+    for (NSString *professor in _professors) {
+        returned = [returned stringByAppendingString:professor];
+        returned = [returned stringByAppendingString:@", "];
+    }
+    returned = [returned substringToIndex:returned.length - 2];
+    returned = [returned stringByAppendingString:@"\n\n"];
+    returned = [returned stringByAppendingString:_desc];
+    return returned;
 }
 @end

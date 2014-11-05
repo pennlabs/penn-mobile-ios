@@ -20,6 +20,7 @@
 @property NSString *building;
 @property NSString *roomBum;
 @property NSArray *professors;
+@property NSString *desc;
 
 @property NSString *identifier;
 

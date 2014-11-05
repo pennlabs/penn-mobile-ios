@@ -77,6 +77,7 @@
         new.courseNum = courseData[@"course_number"];
         new.credits = courseData[@"credits"];
         new.sectionNum = courseData[@"section_number"];
+        new.desc = courseData[@"course_description"];
         new.type = [courseData[@"type"] capitalizedString];
         new.times = courseData[@"times"];
         if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0)
