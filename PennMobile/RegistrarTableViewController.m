@@ -42,16 +42,21 @@
 }
 #pragma mark - API
 
--(NSSet *)searchForName:(NSString *)name {
-    // This is a set because multiple terms qre queried and we don't want duplicate results
+-(NSArray *)searchForName:(NSString *)name {
     NSMutableSet *results = [[NSMutableSet alloc] init];
     if ([name rangeOfString:@" "].length != 0) {
         NSArray *split = [name componentsSeparatedByString:@" "];
-        for (NSString *queryTerm in split) {
-            [results addObjectsFromArray:[self queryAPI:queryTerm]];
+        if (split.count > 1) {
+            for (NSString *queryTerm in split) {
+                if (queryTerm.length > 1) {
+                    [results addObjectsFromArray:[self queryAPI:queryTerm]];
+                }
+            }
         }
+    } else {
+        [results addObjectsFromArray:[self queryAPI:name]];
     }
-    return results;
+    return [results allObjects];
 }
 
 -(NSArray *)queryAPI:(NSString *)term {
@@ -135,7 +140,7 @@
     [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
 }
 - (void)queryHandler:(NSString *)search {
-    [self importData:[self queryAPI:search]];
+    [self importData:[self searchForName:search]];
     [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
 }
 - (void)reloadView {

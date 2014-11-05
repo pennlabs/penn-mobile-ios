@@ -24,7 +24,7 @@
 @property NSArray *people;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
--(NSSet *)searchForName:(NSString *)name;
+-(NSArray *)searchForName:(NSString *)name;
 -(NSDictionary *)requetPersonDetails:(NSString *)name;
 - (Person *)parsePersonData:(NSDictionary *)data;
 
