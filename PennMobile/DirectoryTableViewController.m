@@ -164,6 +164,14 @@
     if (searchText.length > 2) {
         [self performSelectorInBackground:@selector(queryHandler:) withObject:searchText];
     }
+    if(![_searchBar isFirstResponder]) {
+        [self searchBarCancelButtonClicked:_searchBar];
+    }
+}
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    _people = [[NSArray alloc] init];
+    [self.tableView reloadData];
+    [_searchBar resignFirstResponder];
 }
 - (void)queryHandler:(NSString *)search {
     [self importData:[self searchForName:search]];
