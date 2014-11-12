@@ -6,6 +6,12 @@
 // project.
 
 
+// HMLauncherView
+#define COCOAPODS_POD_AVAILABLE_HMLauncherView
+#define COCOAPODS_VERSION_MAJOR_HMLauncherView 1
+#define COCOAPODS_VERSION_MINOR_HMLauncherView 0
+#define COCOAPODS_VERSION_PATCH_HMLauncherView 3
+
 // MBProgressHUD
 #define COCOAPODS_POD_AVAILABLE_MBProgressHUD
 #define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0

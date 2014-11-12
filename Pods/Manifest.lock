@@ -1,10 +1,13 @@
 PODS:
+  - HMLauncherView (1.0.3)
   - MBProgressHUD (0.9)
 
 DEPENDENCIES:
+  - HMLauncherView
   - MBProgressHUD (~> 0.8)
 
 SPEC CHECKSUMS:
+  HMLauncherView: 7f022dd6b7f90be4b08f0eef2c39cccc49acd09f
   MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
 
 COCOAPODS: 0.34.4

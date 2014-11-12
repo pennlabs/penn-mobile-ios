@@ -15,7 +15,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="B54-dW-7yl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.11372549019607843" green="0.24313725490196078" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Bt1-jR-oVE" kind="relationship" relationship="rootViewController" id="EgY-q8-Uhc"/>
@@ -30,7 +30,7 @@
             <objects>
                 <tableViewController id="Bt1-jR-oVE" customClass="RegistrarTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ny0-2L-RBc">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search for Courses" id="7yU-Li-JXL">
@@ -388,7 +388,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="VnU-RD-c0P">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.1137254902" green="0.24313725489999999" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="X8R-ls-6Mg" kind="relationship" relationship="rootViewController" id="qbx-Of-onD"/>
@@ -488,7 +488,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="9YC-mi-Nyr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.1137254902" green="0.24313725489999999" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="guj-Kx-i0U" kind="relationship" relationship="rootViewController" id="bHI-py-GGR"/>
@@ -551,7 +551,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="36y-qi-SvC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.1137254902" green="0.24313725489999999" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="RiY-ZA-iME" kind="relationship" relationship="rootViewController" id="mh4-c1-bV5"/>
@@ -692,6 +692,40 @@
             </objects>
             <point key="canvasLocation" x="-119" y="-331"/>
         </scene>
+        <!--Collection View Controller-->
+        <scene sceneID="fMt-05-8bO">
+            <objects>
+                <collectionViewController id="sSJ-qT-e3Q" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Eby-a6-EqH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="L1t-Ge-QpA">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="UQp-q2-cpg">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="sSJ-qT-e3Q" id="md8-sy-efp"/>
+                            <outlet property="delegate" destination="sSJ-qT-e3Q" id="Ref-Nw-7mb"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SI3-cR-TZE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-336" y="340"/>
+        </scene>
         <!--About-->
         <scene sceneID="xej-3i-6R7">
             <objects>
@@ -700,7 +734,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="rJc-wc-W2a">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.1137254902" green="0.24313725489999999" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="YtY-Yb-eOK">
                         <autoresizingMask key="autoresizingMask"/>
