@@ -32,6 +32,7 @@
 		198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198E232119F9C8E8000D33FD /* DetailViewController.m */; };
 		199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 199B90CE19DB7FCD0018CDE3 /* Person.m */; };
 		19B4BDBD1A01DE73008DD69C /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 19B4BDBC1A01DE73008DD69C /* avatar.jpg */; };
+		19CB3E1E1A130C3400AF11D9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19CB3E1D1A130C3400AF11D9 /* Crashlytics.framework */; };
 		19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8419D2289E0088C4DC /* list_sample.txt */; };
 		19EDDC8A19D24D230088C4DC /* PersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */; };
 		19EDDC8E19D24F4B0088C4DC /* contactbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8B19D24F4B0088C4DC /* contactbutton.png */; };
@@ -107,6 +108,7 @@
 		199C2A7419D4C97C0020B153 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = PennMobile/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
 		199C2A7519D4CA250020B153 /* Meal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meal.h; sourceTree = "<group>"; };
 		19B4BDBC1A01DE73008DD69C /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
+		19CB3E1D1A130C3400AF11D9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		19EDDC8419D2289E0088C4DC /* list_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = list_sample.txt; sourceTree = "<group>"; };
 		19EDDC8819D24D230088C4DC /* PersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableViewCell.h; sourceTree = "<group>"; };
 		19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableViewCell.m; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			files = (
 				1969DA1B19F9F8E6000C7076 /* Crashlytics.framework in Frameworks */,
 				EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */,
+				19CB3E1E1A130C3400AF11D9 /* Crashlytics.framework in Frameworks */,
 				F248D02664387BE000890A72 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +285,7 @@
 		82982FAA19735ECC00DB2AE3 = {
 			isa = PBXGroup;
 			children = (
+				19CB3E1D1A130C3400AF11D9 /* Crashlytics.framework */,
 				1964BC8A19C2818300CEB1E1 /* SampleData */,
 				195D940419BFC40200C6C8FA /* Assets */,
 				82982FB519735ECC00DB2AE3 /* PennMobile */,
