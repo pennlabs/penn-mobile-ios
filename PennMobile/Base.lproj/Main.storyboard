@@ -466,7 +466,6 @@
                     <connections>
                         <outlet property="searchBar" destination="wpL-VY-etq" id="FHa-3N-f07"/>
                         <outlet property="searchDisplayController" destination="tNG-ky-UTc" id="ddQ-cg-JnO"/>
-                        <segue destination="HKG-NO-KBC" kind="presentation" identifier="detail" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="0p9-yV-sh9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PZi-Ci-1lV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -512,13 +511,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="055-2x-qTS">
-                                <rect key="frame" x="-6" y="0.0" width="606" height="487"/>
+                                <rect key="frame" x="-6" y="0.0" width="606" height="537"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="LeZ-t5-Bqz" firstAttribute="top" secondItem="055-2x-qTS" secondAttribute="bottom" id="05d-7j-Zfj"/>
+                            <constraint firstItem="LeZ-t5-Bqz" firstAttribute="top" secondItem="055-2x-qTS" secondAttribute="bottom" constant="-50" id="05d-7j-Zfj"/>
                             <constraint firstItem="055-2x-qTS" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leadingMargin" constant="-22" id="9LN-mN-uSz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="055-2x-qTS" secondAttribute="trailing" constant="-16" id="OOh-sL-h2U"/>
                             <constraint firstItem="055-2x-qTS" firstAttribute="top" secondItem="BtY-LY-h2c" secondAttribute="bottom" id="Ybt-Dg-fro"/>
@@ -609,6 +608,9 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="featureRequest:" destination="Pwi-0Z-QYc" eventType="touchUpInside" id="Vdv-rI-Tyd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnK-EO-3Eg">
                                 <rect key="frame" x="347" y="368" width="66" height="30"/>
@@ -724,7 +726,4 @@
     <resources>
         <image name="labs" width="500" height="500"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="80h-oy-JmP"/>
-    </inferredMetricsTieBreakers>
 </document>

@@ -17,8 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.pennrides.com/map?showHeader=0"]];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.pennrides.com/map?showHeader=0&route=229,230&silent_disable_timeout=1"]];
     [_webView loadRequest:req];
+    _webView.scalesPageToFit = NO;
 }
 
 - (void)didReceiveMemoryWarning {

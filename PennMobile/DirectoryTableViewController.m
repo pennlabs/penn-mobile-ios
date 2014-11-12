@@ -64,6 +64,9 @@
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, DIRECTORY_PATH, term]];
     NSData *result = [NSData dataWithContentsOfURL:url];
+    if (![self confirmConnection:result]) {
+        return nil;
+    }
     NSError *error;
     if (!result) {
         CLS_LOG(@"Data parameter was nil for query..proceeding anyway");
@@ -75,6 +78,14 @@
     return returned[@"result_data"];
 }
 
+- (BOOL)confirmConnection:(NSData *)data {
+    if (!data) {
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [new show];
+        return false;
+    }
+    return true;
+}
 -(void)importData:(NSArray *)raw {
     for (NSDictionary *personData in raw) {
         Person *new = [[Person alloc] init];
@@ -126,15 +137,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    forSegue = _people[indexPath.row];
-    [self performSegueWithIdentifier:@"detail" sender:self];
+    //forSegue = _people[indexPath.row];
+    //[self performSegueWithIdentifier:@"detail" sender:self];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"person" forIndexPath:indexPath];
     
     [cell configure:_people[indexPath.row]];
-    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 

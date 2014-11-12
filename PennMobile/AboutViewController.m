@@ -29,6 +29,23 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)featureRequest:(id)sender {
+    // Email Subject
+    NSString *messageSubject = @"[Penn iOS] Request: ";
+    // To address
+    NSArray *toRecipents = [NSArray arrayWithObject:@"sachab@seas.upenn.edu"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    //mc.mailComposeDelegate = self;
+    [mc setSubject:messageSubject];
+    [mc setToRecipients:toRecipents];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
+}
+- (IBAction)moreInfo:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://pennlabs.org"]];
+}
 
 /*
 #pragma mark - Navigation

@@ -211,6 +211,7 @@ bool usingTempData;
 - (BOOL)confirmConnection:(NSData *)data {
     if (!data) {
         UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [new show];
         return false;
     }

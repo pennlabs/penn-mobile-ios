@@ -62,6 +62,9 @@
 -(NSArray *)queryAPI:(NSString *)term {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, REGISTRAR_PATH, term]];
     NSData *result = [NSData dataWithContentsOfURL:url];
+    if (![self confirmConnection:result]) {
+        return nil;
+    }
     if (!result) {
         CLS_LOG(@"Data parameter was nil for query..proceeding anyway");
     }
@@ -72,7 +75,14 @@
     }
     return returned[@"courses"];
 }
-
+- (BOOL)confirmConnection:(NSData *)data {
+    if (!data) {
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [new show];
+        return false;
+    }
+    return true;
+}
 -(void)importData:(NSArray *)raw {
     for (NSDictionary *courseData in raw) {
         Course *new = [[Course alloc] init];
@@ -133,7 +143,16 @@
     cell.textLabel.frame = CGRectMake(cellFrame.origin.x, cellFrame.origin.y, 20.0f, cellFrame.size.height);
     return cell;
 }
-
+- (void)searchBar:(UISearchBar *)bar textDidChange:(NSString *)searchText {
+    if(![_searchBar isFirstResponder]) {
+        [self searchBarCancelButtonClicked:_searchBar];
+    }
+}
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    _courses = [[NSArray alloc] init];
+    [self.tableView reloadData];
+    [_searchBar resignFirstResponder];
+}
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [_searchBar resignFirstResponder];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
