@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 
-@interface AboutViewController : UIViewController
+@interface AboutViewController : UIViewController <MFMailComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *labsLogo;
 @property (weak, nonatomic) IBOutlet UILabel *labsHeader;
