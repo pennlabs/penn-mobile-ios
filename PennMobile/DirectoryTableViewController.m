@@ -29,7 +29,7 @@
     [self.view addGestureRecognizer:tap];
     _searchBar.delegate = self;
     [self.tableView setTableHeaderView:_searchBar];
-    tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:20];
+    tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:50];
 }
 
 - (void)didReceiveMemoryWarning {
