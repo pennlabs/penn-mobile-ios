@@ -34,7 +34,7 @@ bool usingTempData;
     venueJSONFormatter = [[NSDateFormatter alloc] init];
     [venueJSONFormatter setDateFormat:@"yyyy-MM-dd"];
     hoursJSONFormatter = [[NSDateFormatter alloc] init];
-    [hoursJSONFormatter setDateFormat:@"HH:mm::ss"];
+    [hoursJSONFormatter setDateFormat:@"HH:mm:ss"];
     roundingFormatter = [[NSDateFormatter alloc] init];
     [roundingFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     mealJSONFormatter = [[NSDateFormatter alloc] init];
