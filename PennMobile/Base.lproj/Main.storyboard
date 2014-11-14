@@ -631,13 +631,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="DYq-jU-kZ7">
-                                <rect key="frame" x="212" y="50" width="177" height="177"/>
+                                <rect key="frame" x="232" y="50" width="137" height="137"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DYq-jU-kZ7" secondAttribute="height" multiplier="1:1" id="VNX-jj-aWM"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Built by Penn Labs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQp-rW-VFf">
-                                <rect key="frame" x="138" y="252" width="325" height="28"/>
+                                <rect key="frame" x="138" y="212" width="325" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="325" id="qdX-DC-h5u"/>
                                 </constraints>
@@ -645,9 +645,10 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="nMV-Lo-YKM">
-                                <rect key="frame" x="150" y="295" width="300" height="63"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="nMV-Lo-YKM">
+                                <rect key="frame" x="150" y="255" width="300" height="110"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="110" id="Rs8-4g-bHz"/>
                                     <constraint firstAttribute="width" constant="300" id="qYY-fH-y2w"/>
                                 </constraints>
                                 <string key="text">PennLabs is a non-profit, student-run organization at the University of Pennsylvania dedicated to building technology for student use and supporting an open-source development environment on-campus. PennLabs is sponsored by the UA, the Provost's Office and VPUL.</string>
@@ -656,7 +657,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGb-5n-9sn">
-                                <rect key="frame" x="184" y="368" width="113" height="30"/>
+                                <rect key="frame" x="184" y="375" width="113" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="113" id="NqE-g6-8NG"/>
                                     <constraint firstAttribute="height" constant="30" id="fUg-ZS-JZV"/>
@@ -670,7 +671,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GnK-EO-3Eg">
-                                <rect key="frame" x="347" y="368" width="66" height="30"/>
+                                <rect key="frame" x="347" y="375" width="66" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="66" id="eAb-mk-Zvg"/>
                                     <constraint firstAttribute="height" constant="30" id="jkn-VQ-kpx"/>
@@ -684,7 +685,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(c) 2014" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rav-h7-yPc">
-                                <rect key="frame" x="271" y="408" width="58" height="21"/>
+                                <rect key="frame" x="271" y="415" width="58" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="MIq-w9-Asa"/>
                                     <constraint firstAttribute="width" constant="58" id="TY3-6g-OJT"/>
@@ -697,7 +698,7 @@
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="nMV-Lo-YKM" secondAttribute="centerX" id="G4Z-Uq-MD3"/>
-                            <constraint firstItem="Tfy-gJ-Box" firstAttribute="top" secondItem="DYq-jU-kZ7" secondAttribute="bottom" constant="260" id="TA4-AT-MXO"/>
+                            <constraint firstItem="Tfy-gJ-Box" firstAttribute="top" secondItem="DYq-jU-kZ7" secondAttribute="bottom" constant="300" id="TA4-AT-MXO"/>
                             <constraint firstAttribute="centerX" secondItem="DYq-jU-kZ7" secondAttribute="centerX" id="WUl-Bw-gNL"/>
                             <constraint firstAttribute="centerX" secondItem="Rav-h7-yPc" secondAttribute="centerX" id="ZHD-tK-JWS"/>
                             <constraint firstItem="nMV-Lo-YKM" firstAttribute="top" secondItem="iQp-rW-VFf" secondAttribute="bottom" constant="15" id="b7T-kg-3mH"/>
