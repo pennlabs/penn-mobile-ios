@@ -385,6 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				82982FB719735ECC00DB2AE3 /* Info.plist */,
+				199C2A7419D4C97C0020B153 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -402,7 +403,6 @@
 			isa = PBXGroup;
 			children = (
 				82982FCC19735ECC00DB2AE3 /* Info.plist */,
-				199C2A7419D4C97C0020B153 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
