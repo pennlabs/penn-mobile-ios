@@ -523,6 +523,8 @@ bool usingTempData;
         return Retail;
     } else if ([upper isEqualToString:@"MEAL EQUIVALENCY"]) {
         return MealEquivalency;
+    } else if ([upper isEqualToString:@"LITE BREAKFAST"]) {
+        return LiteBreakfast;
     } else {
         [NSException raise:@"Invalid meal type" format:@"type given was %@", mealTime];
         return -1;
@@ -545,6 +547,8 @@ bool usingTempData;
         return @"Retail";
     } else if (mealTime == MealEquivalency) {
         return @"Meal Equivalency";
+    } else if (mealTime == LiteBreakfast) {
+        return @"Lite Breakfast";
     } else {
         if (fabs(mealTime) < 9)
             return [@"c" stringByAppendingString:[self enumToStringTime:(-1 * mealTime)]];
