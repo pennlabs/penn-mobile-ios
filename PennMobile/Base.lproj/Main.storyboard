@@ -559,17 +559,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="055-2x-qTS">
-                                <rect key="frame" x="-6" y="0.0" width="606" height="537"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="LeZ-t5-Bqz" firstAttribute="top" secondItem="055-2x-qTS" secondAttribute="bottom" constant="-50" id="05d-7j-Zfj"/>
+                            <constraint firstItem="055-2x-qTS" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="52O-A2-Faz"/>
                             <constraint firstItem="055-2x-qTS" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leadingMargin" constant="-22" id="9LN-mN-uSz"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="055-2x-qTS" secondAttribute="trailing" constant="-16" id="OOh-sL-h2U"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="055-2x-qTS" secondAttribute="trailing" id="OOh-sL-h2U"/>
+                            <constraint firstAttribute="bottom" secondItem="055-2x-qTS" secondAttribute="bottom" id="VHb-kC-TLG"/>
                             <constraint firstItem="055-2x-qTS" firstAttribute="top" secondItem="BtY-LY-h2c" secondAttribute="bottom" id="Ybt-Dg-fro"/>
+                            <constraint firstItem="055-2x-qTS" firstAttribute="top" secondItem="BtY-LY-h2c" secondAttribute="bottom" id="djj-Uw-bU2"/>
+                            <constraint firstAttribute="trailing" secondItem="055-2x-qTS" secondAttribute="trailing" id="j8y-gm-si8"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="9LN-mN-uSz"/>
+                                <exclude reference="OOh-sL-h2U"/>
+                                <exclude reference="Ybt-Dg-fro"/>
+                                <exclude reference="05d-7j-Zfj"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="3Uh-zb-6kv">
                         <nil key="title"/>
