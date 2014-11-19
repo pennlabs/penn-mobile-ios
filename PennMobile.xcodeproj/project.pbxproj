@@ -14,7 +14,6 @@
 		1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3419EDE20B00DBF9EE /* RegistrarTableViewController.m */; };
 		1944CD3819EDE3C800DBF9EE /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3719EDE3C800DBF9EE /* Course.m */; };
 		1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3A19EDE84F00DBF9EE /* RegistrarTableViewCell.m */; };
-		194E820D1A03039400F4267E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 194E820C1A03039400F4267E /* AppDelegate.m */; };
 		195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D940219BFC22900C6C8FA /* DiningViewController.m */; };
 		195D940819BFC40200C6C8FA /* penn-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940519BFC40200C6C8FA /* penn-logo.png */; };
 		195D940919BFC40200C6C8FA /* penn-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940619BFC40200C6C8FA /* penn-logo@2x.png */; };
@@ -46,6 +45,7 @@
 		19B6BC411A159CEC002BFEA5 /* News-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC3F1A159CEC002BFEA5 /* News-selected.png */; };
 		19B6BC431A159D71002BFEA5 /* AGaramond.otf in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC421A159D3B002BFEA5 /* AGaramond.otf */; };
 		19B6BC461A15A08E002BFEA5 /* TabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B6BC451A15A08E002BFEA5 /* TabViewController.m */; };
+		19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */; };
 		19CB3E1E1A130C3400AF11D9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19CB3E1D1A130C3400AF11D9 /* Crashlytics.framework */; };
 		19CB3E201A1576D600AF11D9 /* Book.png in Resources */ = {isa = PBXBuildFile; fileRef = 19CB3E1F1A1576D600AF11D9 /* Book.png */; };
 		19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8419D2289E0088C4DC /* list_sample.txt */; };
@@ -94,8 +94,6 @@
 		1944CD3719EDE3C800DBF9EE /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
 		1944CD3919EDE84F00DBF9EE /* RegistrarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrarTableViewCell.h; sourceTree = "<group>"; };
 		1944CD3A19EDE84F00DBF9EE /* RegistrarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrarTableViewCell.m; sourceTree = "<group>"; };
-		194E820B1A03039400F4267E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		194E820C1A03039400F4267E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		195D940119BFC22900C6C8FA /* DiningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningViewController.h; sourceTree = "<group>"; };
 		195D940219BFC22900C6C8FA /* DiningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningViewController.m; sourceTree = "<group>"; };
@@ -139,6 +137,8 @@
 		19B6BC421A159D3B002BFEA5 /* AGaramond.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AGaramond.otf; sourceTree = "<group>"; };
 		19B6BC441A15A08E002BFEA5 /* TabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabViewController.h; sourceTree = "<group>"; };
 		19B6BC451A15A08E002BFEA5 /* TabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabViewController.m; sourceTree = "<group>"; };
+		19C3A8B41A1C30B300D32D8A /* PennTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PennTableViewController.h; sourceTree = "<group>"; };
+		19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PennTableViewController.m; sourceTree = "<group>"; };
 		19CB3E1D1A130C3400AF11D9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		19CB3E1F1A1576D600AF11D9 /* Book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Book.png; path = Tabs/Book.png; sourceTree = "<group>"; };
 		19EDDC8419D2289E0088C4DC /* list_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = list_sample.txt; sourceTree = "<group>"; };
@@ -288,6 +288,15 @@
 			name = PCR;
 			sourceTree = "<group>";
 		};
+		19C3A8B31A1C309700D32D8A /* ListView */ = {
+			isa = PBXGroup;
+			children = (
+				19C3A8B41A1C30B300D32D8A /* PennTableViewController.h */,
+				19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */,
+			);
+			name = ListView;
+			sourceTree = "<group>";
+		};
 		19EDDC8619D24CEF0088C4DC /* Dining */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,9 +362,8 @@
 		82982FB519735ECC00DB2AE3 /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
+				19C3A8B31A1C309700D32D8A /* ListView */,
 				82982FB819735ECC00DB2AE3 /* AppDelegate.swift */,
-				194E820B1A03039400F4267E /* AppDelegate.h */,
-				194E820C1A03039400F4267E /* AppDelegate.m */,
 				82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */,
 				EBCE174819A715210008C332 /* Course.swift */,
 				195D940E19BFC58B00C6C8FA /* Agent.swift */,
@@ -592,10 +600,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				194E820D1A03039400F4267E /* AppDelegate.m in Sources */,
 				1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */,
 				1979A72C1A0C586000E1B7EB /* PCRAggregaotr.m in Sources */,
 				195D940F19BFC58B00C6C8FA /* Agent.swift in Sources */,
+				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
 				EBCE174919A715210008C332 /* Course.swift in Sources */,
 				192C6F2F1A158533008D507C /* NewsViewController.m in Sources */,
 				195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */,

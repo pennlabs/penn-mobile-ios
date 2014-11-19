@@ -24,40 +24,13 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // to dismiss the keyboard when the user taps on the table
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
-    tap.cancelsTouchesInView = NO;
-    [self.view addGestureRecognizer:tap];
-    _searchBar.delegate = self;
-    tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:20];
-    self.tableView.allowsSelection = YES;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
--(void)dismissKeyboard:(id)sender {
-    [_searchBar resignFirstResponder];
-}
 #pragma mark - API
-
--(NSArray *)searchForName:(NSString *)name {
-    NSMutableSet *results = [[NSMutableSet alloc] init];
-    if ([name rangeOfString:@" "].length != 0) {
-        NSArray *split = [name componentsSeparatedByString:@" "];
-        if (split.count > 1) {
-            for (NSString *queryTerm in split) {
-                if (queryTerm.length > 1) {
-                    [results addObjectsFromArray:[self queryAPI:queryTerm]];
-                }
-            }
-        }
-    } else {
-        [results addObjectsFromArray:[self queryAPI:name]];
-    }
-    return [results allObjects];
-}
 
 -(NSArray *)queryAPI:(NSString *)term {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, REGISTRAR_PATH, term]];
@@ -74,14 +47,6 @@
         [NSException raise:@"JSON parse error" format:@"%@", error];
     }
     return returned[@"courses"];
-}
-- (BOOL)confirmConnection:(NSData *)data {
-    if (!data) {
-        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [new show];
-        return false;
-    }
-    return true;
 }
 -(void)importData:(NSArray *)raw {
     for (NSDictionary *courseData in raw) {
@@ -105,7 +70,7 @@
         new.professors = [profs copy];
         [tempSet addObject:new];
     }
-    _courses = [tempSet sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    super.objects = [tempSet sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         int courseNum1 = [((Course *)obj1).courseNum intValue];
         int courseNum2 = [((Course *)obj2).courseNum intValue];
         return courseNum1 > courseNum2;
@@ -123,16 +88,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return _courses.count;
+    return super.objects.count;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    forSegue = _courses[indexPath.row];
+    super.forSegue = super.objects[indexPath.row];
     [self performSegueWithIdentifier:@"detail" sender:self];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RegistrarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"class" forIndexPath:indexPath];
-    Course *inQuestion = _courses[indexPath.row];
+    Course *inQuestion = super.objects[indexPath.row];
     cell.labelName.text = inQuestion.title;
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     cell.labelNumber.text = [NSString stringWithFormat:@"%@ %@", inQuestion.dept, inQuestion.courseNum];
@@ -144,27 +109,9 @@
     return cell;
 }
 - (void)searchBar:(UISearchBar *)bar textDidChange:(NSString *)searchText {
-    if(![_searchBar isFirstResponder]) {
-        [self searchBarCancelButtonClicked:_searchBar];
+    if(![super.searchBar isFirstResponder]) {
+        [self searchBarCancelButtonClicked:super.searchBar];
     }
-}
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    _courses = [[NSArray alloc] init];
-    [self.tableView reloadData];
-    [_searchBar resignFirstResponder];
-}
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [_searchBar resignFirstResponder];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
-}
-- (void)queryHandler:(NSString *)search {
-    [self importData:[self searchForName:search]];
-    [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
-}
-- (void)reloadView {
-    [self.tableView reloadData];
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 /*
  // Override to support conditional editing of the table view.
@@ -208,6 +155,7 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
+        Course *forSegue = super.forSegue;
         NSString *detail = [forSegue createDetail];
         NSString *prof = Nil;
         if (forSegue.professors && forSegue.professors.count > 0) {

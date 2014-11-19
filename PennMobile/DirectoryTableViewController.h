@@ -10,19 +10,14 @@
 #import "Person.h"
 #import "PersonTableViewCell.h"
 #import "DetailViewController.h"
-#import "MBProgressHUD.h"
+#import "PennTableViewController.h"
 
 #define DIRECTORY_PATH @"directory/search?name="
 #define DETAIL_PATH @"directory/person/"
 
-@interface DirectoryTableViewController : UITableViewController <UISearchBarDelegate> {
-    NSMutableOrderedSet *tempSet;
-    UIActivityIndicatorView *activityIndicator;
-    Person *forSegue;
-}
+@interface DirectoryTableViewController : PennTableViewController <UISearchBarDelegate> {
 
-@property NSArray *people;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+}
 
 -(NSArray *)searchForName:(NSString *)name;
 -(NSDictionary *)requetPersonDetails:(NSString *)name;
