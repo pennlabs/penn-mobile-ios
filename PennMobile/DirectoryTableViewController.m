@@ -187,7 +187,7 @@
         UIImage *placeholder = [UIImage imageNamed:@"avatar"];
         [self performSelectorInBackground:@selector(detailQueryHandler:) withObject:((Person *) super.forSegue).identifier];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [((DetailViewController *)segue.destinationViewController) configureUsingCover:placeholder title:((Person *) super.forSegue).name sub:((Person *) super.forSegue).organization detail:detail];
+        //[((DetailViewController *)segue.destinationViewController) configureUsingCover:placeholder title:((Person *) super.forSegue).name sub:((Person *) super.forSegue).organization detail:detail];
     }
 }
 

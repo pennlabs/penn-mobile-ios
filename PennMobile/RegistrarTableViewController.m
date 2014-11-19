@@ -162,9 +162,9 @@
             prof = forSegue.professors[0];
         }
         if (forSegue.building) {
-            [((DetailViewController *)segue.destinationViewController) configureUsingCover:forSegue.building title:forSegue.title sub:prof detail:detail];
+            [((DetailViewController *)segue.destinationViewController) configureUsingCover:forSegue.building title:forSegue.title sub:prof number:forSegue.courseNum credits:forSegue.credits detail:detail];
         } else {
-            [((DetailViewController *)segue.destinationViewController) configureUsingCover:@"" title:forSegue.title sub:prof detail:detail];
+            [((DetailViewController *)segue.destinationViewController) configureUsingCover:@"" title:forSegue.title sub:prof number:forSegue.courseNum credits:forSegue.credits detail:detail];
         }
     }
 }

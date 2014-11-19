@@ -731,7 +731,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "99"
             endingLineNumber = "99"
-            landmarkName = "-configureUsingCover:title:sub:detail:"
+            landmarkName = "-configureUsingCover:title:sub:number:credits:detail:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -747,7 +747,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "100"
             endingLineNumber = "100"
-            landmarkName = "-configureUsingCover:title:sub:detail:"
+            landmarkName = "-configureUsingCover:title:sub:number:credits:detail:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

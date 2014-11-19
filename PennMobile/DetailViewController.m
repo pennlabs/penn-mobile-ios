@@ -86,7 +86,7 @@ static MKLocalSearch *search;
     // Dispose of any resources that can be recreated.
 }
 
--(void)configureUsingCover:(id)cover title:(NSString *)title sub:(NSString *)sub detail:(NSString *)detail {
+-(void)configureUsingCover:(id)cover title:(NSString *)title sub:(NSString *)sub number:(NSString *)num credits:(NSString *)credits detail:(NSString *)detail {
     if ([cover isKindOfClass:[UIImage class]]) {
         UIImage *coverImage = cover;
         coverUIImage = coverImage;
@@ -101,6 +101,8 @@ static MKLocalSearch *search;
         detailText = detail;
         if (sub)
             subText = sub;
+        _credits.text = [credits stringByAppendingString:@" CU"];
+        _courseNumber.text = num;
     } else {
         [NSException raise:@"Invalid DetailView Configuation" format:@"Type %@ passed. Expecting MKMapItem or UIImage.", [cover class]];
     }
