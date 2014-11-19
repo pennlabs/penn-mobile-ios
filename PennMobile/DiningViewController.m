@@ -513,6 +513,8 @@ bool usingTempData;
         return Brunch;
     } else if ([upper isEqualToString:@"LUNCH"]) {
         return Lunch;
+    } else if ([upper isEqualToString:@"LITE LUNCH"]) {
+        return LiteLunch;
     } else if ([upper isEqualToString:@"DINNER"]) {
         return Dinner;
     } else if ([upper isEqualToString:@"EXPRESS"]) {
@@ -535,7 +537,9 @@ bool usingTempData;
         return @"Breakfast";
     } else if (mealTime == Lunch) {
         return @"Lunch";
-    } else if (mealTime == Brunch) {
+    } else if (mealTime == LiteLunch) {
+        return @"Lite Lunch";
+    }  else if (mealTime == Brunch) {
         return @"Brunch";
     } else if (mealTime == Dinner) {
         return @"Dinner";

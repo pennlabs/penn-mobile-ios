@@ -18,7 +18,8 @@ typedef NS_ENUM(NSInteger, Meal) {
     All,
     Retail,
     MealEquivalency,
-    LiteBreakfast
+    LiteBreakfast,
+    LiteLunch
 };
 
 #endif
