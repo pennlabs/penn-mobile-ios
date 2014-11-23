@@ -155,17 +155,15 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
-        Course *forSegue = super.forSegue;
-        NSString *detail = [forSegue createDetail];
-        NSString *prof = Nil;
-        if (forSegue.professors && forSegue.professors.count > 0) {
-            prof = forSegue.professors[0];
-        }
+        Course *forSegue = (Course *)super.forSegue;
+        [((DetailViewController *)segue.destinationViewController) configureWithCourse:forSegue];
+        /*
         if (forSegue.building) {
             [((DetailViewController *)segue.destinationViewController) configureUsingCover:forSegue.building title:forSegue.title sub:prof number:forSegue.courseNum credits:forSegue.credits detail:detail];
         } else {
             [((DetailViewController *)segue.destinationViewController) configureUsingCover:@"" title:forSegue.title sub:prof number:forSegue.courseNum credits:forSegue.credits detail:detail];
         }
+         */
     }
 }
 

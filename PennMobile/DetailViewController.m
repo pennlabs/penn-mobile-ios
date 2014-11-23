@@ -22,9 +22,6 @@ static MKLocalSearch *search;
     _imageCover.contentMode = UIViewContentModeScaleAspectFill;
     _mapCover.hidden = YES;
     _imageCover.hidden = NO;
-    _titleText.text = titleText;
-    _subText.text = subText;
-    _detailText.text = detailText;
     if (coverUIImage) {
         _mapCover.hidden = YES;
         _imageCover.hidden = NO;
@@ -106,6 +103,15 @@ static MKLocalSearch *search;
     } else {
         [NSException raise:@"Invalid DetailView Configuation" format:@"Type %@ passed. Expecting MKMapItem or UIImage.", [cover class]];
     }
+}
+-(void)configureWithCourse:(Course *)course {
+    _titleText.text = course.title;
+    _detailText.text = course.description;
+    _subText.text = @"";
+    if (course.professors && course.professors.count > 0)
+        _subText.text = course.professors[0];
+    _credits.text = [course.credits stringByAppendingString:@" CU"];
+    _sectionNum.text = [@"Section " stringByAppendingString:course.sectionNum];
 }
 - (void)setupMap:(MKMapItem *)point {
     center = point;

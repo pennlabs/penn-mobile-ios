@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "Course.h"
 
 #define kMapSize 1000
 
@@ -33,4 +34,5 @@
 -(void)configureUsingCover:(id)cover title:(NSString *)title sub:(NSString *)sub number:(NSString *)num credits:(NSString *)credits detail:(NSString *)detail;
 
 +(void)searchForBuilding:(NSString *)query sender:(id)sender completion:(SEL)completion;
+-(void)configureWithCourse:(Course *)course;
 @end
