@@ -459,6 +459,11 @@ bool usingTempData;
                                 _selectedMeal = [self stringTimeToEnum:mealTime[@"type"]];
                                 return _selectedMeal;
                             }
+                            // fix for Starbucks (hours rolled over from prev day (open 6am close 2am)
+                            else if (startHour == 6 && endHour == 2 && ([now hour] > 6 || [now hour] < 2)) {
+                                _selectedMeal = [self stringTimeToEnum:mealTime[@"type"]];
+                                return _selectedMeal;
+                            }
                         }
                     } else {
                         componentsForFirstDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:date[@"meal"][@"open"]]];
@@ -470,6 +475,11 @@ bool usingTempData;
                         if (startHour == 0) startHour = 24;
                         if (startHour <= [now hour] &&
                             [now hour] <= endHour) {
+                            _selectedMeal = [self stringTimeToEnum:date[@"meal"][@"type"]];
+                            return _selectedMeal;
+                        }
+                        // fix for Starbucks (hours rolled over from prev day (open 6am close 2am)
+                        else if (startHour == 6 && endHour == 2 && ([now hour] > 6 || [now hour] < 2)) {
                             _selectedMeal = [self stringTimeToEnum:date[@"meal"][@"type"]];
                             return _selectedMeal;
                         }
