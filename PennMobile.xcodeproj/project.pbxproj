@@ -46,7 +46,6 @@
 		19B6BC431A159D71002BFEA5 /* AGaramond.otf in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC421A159D3B002BFEA5 /* AGaramond.otf */; };
 		19B6BC461A15A08E002BFEA5 /* TabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B6BC451A15A08E002BFEA5 /* TabViewController.m */; };
 		19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */; };
-		19CB3E1E1A130C3400AF11D9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19CB3E1D1A130C3400AF11D9 /* Crashlytics.framework */; };
 		19CB3E201A1576D600AF11D9 /* Book.png in Resources */ = {isa = PBXBuildFile; fileRef = 19CB3E1F1A1576D600AF11D9 /* Book.png */; };
 		19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8419D2289E0088C4DC /* list_sample.txt */; };
 		19EDDC8A19D24D230088C4DC /* PersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */; };
@@ -177,7 +176,6 @@
 			files = (
 				1969DA1B19F9F8E6000C7076 /* Crashlytics.framework in Frameworks */,
 				EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */,
-				19CB3E1E1A130C3400AF11D9 /* Crashlytics.framework in Frameworks */,
 				F248D02664387BE000890A72 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,7 +460,7 @@
 		82982FAB19735ECC00DB2AE3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
 					82982FB219735ECC00DB2AE3 = {
@@ -753,7 +751,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6f6165c8-4baa-4635-98b8-a3c1974b1d55";
+				PROVISIONING_PROFILE = "0862f08f-1cc0-482d-8cb1-04b2021935d1";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -777,7 +775,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6f6165c8-4baa-4635-98b8-a3c1974b1d55";
+				PROVISIONING_PROFILE = "0862f08f-1cc0-482d-8cb1-04b2021935d1";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 			};
 			name = Release;

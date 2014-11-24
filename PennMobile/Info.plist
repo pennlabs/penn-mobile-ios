@@ -26,11 +26,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0f</string>
+	<string>0.9</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>beta-1</string>
+	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MKDirectionsApplicationSupportedModes</key>
