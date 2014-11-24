@@ -229,12 +229,14 @@ bool usingTempData;
         // Data validation - this works ;;;;;
         // NSLog(@"%@", currentDay[0][@"txtDayPartDescription"]);
         NSString *date = raw[@"Document"][@"tblMenu"][num][@"menudate"];
-        [days setObject: currentDay forKey:date];
+        if (currentDay)
+            [days setObject: currentDay forKey:date];
         [_days addObject:date];
     }
     menuMessage = raw[@"Document"][@"tblMessages"][@"txtNoMenuMessage"];
     currentVenue = raw[@"Document"][@"location"];
-    [_venues setObject:days forKey:currentVenue];
+    if (days)
+        [_venues setObject:days forKey:currentVenue];
     if (target && selector) {
         // Go back to main thread to perform callback
         [target performSelectorOnMainThread:selector withObject:nil waitUntilDone:NO];
@@ -273,7 +275,8 @@ bool usingTempData;
     NSDictionary *raw;
     for (int count = 0; count < _mealTimes.count; count++) {
         NSString *menuURL = _mealTimes[count][@"dailyMenuURL"];
-        if (menuURL && ![menuURL isEqualToString:@""]) {
+        // fix for McCleland bullshit
+        if (menuURL && ![menuURL isEqualToString:@""] && ![[menuURL substringFromIndex:[menuURL length]-3] isEqualToString:@"737"]) {
             raw = [self loadMealsForVenueIndex:count];
             if (!raw)
                 return;

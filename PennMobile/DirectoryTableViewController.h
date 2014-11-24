@@ -19,8 +19,6 @@
 
 }
 
--(NSArray *)searchForName:(NSString *)name;
 -(NSDictionary *)requetPersonDetails:(NSString *)name;
-- (Person *)parsePersonData:(NSDictionary *)data;
 
 @end

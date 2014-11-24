@@ -87,17 +87,17 @@ static MKLocalSearch *search;
     if ([cover isKindOfClass:[UIImage class]]) {
         UIImage *coverImage = cover;
         coverUIImage = coverImage;
-        titleText = title;
-        detailText = detail;
-        if (sub)
-            subText = sub;
+        //titleText = title;
+        //detailText = detail;
+        //if (sub)
+          //  subText = sub;
         
     } else if ([cover isKindOfClass:[NSString class]]) {
         [DetailViewController searchForBuilding:cover sender:self completion:@selector(setupMap:)];
-        titleText = title;
-        detailText = detail;
-        if (sub)
-            subText = sub;
+        //titleText = title;
+        //detailText = detail;
+        //if (sub)
+          //  subText = sub;
         _credits.text = [credits stringByAppendingString:@" CU"];
         _courseNumber.text = num;
     } else {
