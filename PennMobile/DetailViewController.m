@@ -33,6 +33,13 @@ static MKLocalSearch *search;
     }
     [_viewTitle.layer setMasksToBounds:YES];
     [_viewTitle.layer setCornerRadius:20.0f];
+    _titleText.text = info.title;
+    _detailText.text = info.desc;
+    _courseNumber.text = [[info.dept stringByAppendingString:@" "] stringByAppendingString:info.courseNum];
+    if (info.professors && info.professors.count > 0)
+        _subText.text = info.professors[0];
+    _credits.text = info.credits;
+    _sectionNum.text = [@"Section " stringByAppendingString:info.sectionNum];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalViewControllerAnimated:)];
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
@@ -105,13 +112,7 @@ static MKLocalSearch *search;
     }
 }
 -(void)configureWithCourse:(Course *)course {
-    _titleText.text = course.title;
-    _detailText.text = course.description;
-    _subText.text = @"";
-    if (course.professors && course.professors.count > 0)
-        _subText.text = course.professors[0];
-    _credits.text = [course.credits stringByAppendingString:@" CU"];
-    _sectionNum.text = [@"Section " stringByAppendingString:course.sectionNum];
+    info = course;
 }
 - (void)setupMap:(MKMapItem *)point {
     center = point;

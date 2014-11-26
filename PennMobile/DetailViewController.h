@@ -16,6 +16,7 @@
     UIImage *coverUIImage;
     MKMapItem *center;
     CLLocationManager *locationManager;
+    Course *info;
 }
 
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *viewTitle;
