@@ -100,12 +100,13 @@
     Course *inQuestion = super.objects[indexPath.row];
     cell.labelName.text = inQuestion.title;
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-    cell.labelNumber.text = [NSString stringWithFormat:@"%@ %@", inQuestion.dept, inQuestion.courseNum];
+    cell.labelNumber.text = [NSString stringWithFormat:@"%@ %@ ", inQuestion.dept, inQuestion.courseNum];
     if (inQuestion.professors && inQuestion.professors.count > 0) {
         cell.labelProf.text = inQuestion.professors[0];
     }
-    CGRect cellFrame = cell.textLabel.frame;
-    cell.textLabel.frame = CGRectMake(cellFrame.origin.x, cellFrame.origin.y, 20.0f, cellFrame.size.height);
+    cell.labelSection.text = [@"Section " stringByAppendingString:inQuestion.sectionNum];
+    //CGRect cellFrame = cell.textLabel.frame;
+    //cell.textLabel.frame = CGRectMake(cellFrame.origin.x, cellFrame.origin.y, 20.0f, cellFrame.size.height);
     return cell;
 }
 - (void)searchBar:(UISearchBar *)bar textDidChange:(NSString *)searchText {

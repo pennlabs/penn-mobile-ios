@@ -13,6 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelProf;
 @property (weak, nonatomic) IBOutlet UILabel *labelName;
 @property (weak, nonatomic) IBOutlet UILabel *labelNumber;
-
+@property (weak, nonatomic) IBOutlet UILabel *labelSection;
 
 @end
