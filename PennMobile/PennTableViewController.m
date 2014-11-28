@@ -52,6 +52,8 @@
                     }
                 }
             }
+        } else {
+            [results addObjectsFromArray:[self queryAPI:name]];
         }
     } else {
         // to support new Directory API
@@ -75,7 +77,6 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
 }
-
 - (void)reloadView {
     [self.tableView reloadData];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
