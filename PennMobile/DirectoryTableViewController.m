@@ -42,7 +42,10 @@
     return cell;
 }
 
-
+- (void)queryHandler:(NSString *)search {
+    [self importData:[self searchFor:search split:NO]];
+    [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
+}
 -(void)importData:(NSArray *)raw {
     if (!raw)
         return;

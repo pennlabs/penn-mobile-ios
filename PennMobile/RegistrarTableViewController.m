@@ -94,7 +94,10 @@
     super.forSegue = super.objects[indexPath.row];
     [self performSegueWithIdentifier:@"detail" sender:self];
 }
-
+- (void)queryHandler:(NSString *)search {
+    [self importData:[self searchFor:search split:YES]];
+    [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RegistrarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"class" forIndexPath:indexPath];
     Course *inQuestion = super.objects[indexPath.row];

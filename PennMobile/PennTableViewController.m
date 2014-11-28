@@ -39,20 +39,23 @@
     [_searchBar resignFirstResponder];
 }
 
--(NSArray *)searchFor:(NSString *)name {
+-(NSArray *)searchFor:(NSString *)name split:(BOOL)split {
     // This is a set because multiple terms qre queried and we don't want duplicate results
     NSMutableSet *results = [[NSMutableSet alloc] init];
-    if ([name rangeOfString:@" "].length != 0) {
-        NSArray *split = [name componentsSeparatedByString:@" "];
-        if (split.count > 1) {
-            for (NSString *queryTerm in split) {
-                if (queryTerm.length > 1) {
-                    [results addObjectsFromArray:[self queryAPI:queryTerm]];
+    if (split) {
+        if ([name rangeOfString:@" "].length != 0) {
+            NSArray *split = [name componentsSeparatedByString:@" "];
+            if (split.count > 1) {
+                for (NSString *queryTerm in split) {
+                    if (queryTerm.length > 1) {
+                        [results addObjectsFromArray:[self queryAPI:queryTerm]];
+                    }
                 }
             }
         }
     } else {
-        [results addObjectsFromArray:[self queryAPI:name]];
+        // to support new Directory API
+        [results addObjectsFromArray:[self queryAPI:[name stringByReplacingOccurrencesOfString:@" " withString:@"%20"]]];
     }
     return [results allObjects];
 }
@@ -72,10 +75,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
 }
-- (void)queryHandler:(NSString *)search {
-    [self importData:[self searchFor:search]];
-    [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
-}
+
 - (void)reloadView {
     [self.tableView reloadData];
     [MBProgressHUD hideHUDForView:self.view animated:YES];

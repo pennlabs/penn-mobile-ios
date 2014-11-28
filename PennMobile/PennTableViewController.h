@@ -18,7 +18,7 @@
 @property NSObject *forSegue;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
-- (NSArray *)searchFor:(NSString *)name;
+- (NSArray *)searchFor:(NSString *)name split:(BOOL)split;
 - (NSDictionary *)requestDetail:(NSString *)name;
 - (NSObject *)parseData:(NSDictionary *)data;
 - (void)importData:(NSArray *)data;
