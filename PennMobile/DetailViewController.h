@@ -25,12 +25,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *credits;
 @property (weak, nonatomic) IBOutlet UILabel *courseNumber;
 @property (weak, nonatomic) IBOutlet UILabel *sectionNum;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIImageView *imageCover;
 @property (weak, nonatomic) IBOutlet MKMapView *mapCover;
 @property (weak, nonatomic) IBOutlet UITextView *detailText;
 
 -(void)configureUsingCover:(id)cover title:(NSString *)title sub:(NSString *)sub number:(NSString *)num credits:(NSString *)credits detail:(NSString *)detail;
-
+-(IBAction)back:(id)sender;
 +(void)searchForBuilding:(NSString *)query sender:(id)sender completion:(SEL)completion;
 -(void)configureWithCourse:(Course *)course;
 @end

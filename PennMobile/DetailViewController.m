@@ -42,11 +42,12 @@ static MKLocalSearch *search;
         _subText.text = info.professors[0];
     _credits.text = info.credits;
     _sectionNum.text = [@"Section " stringByAppendingString:info.sectionNum];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissModalViewControllerAnimated:)];
-    tap.cancelsTouchesInView = NO;
-    [self.view addGestureRecognizer:tap];
+    [_backButton.layer setMasksToBounds:YES];
+    [_backButton.layer setCornerRadius:BORDER_RADIUS];
 }
-
+-(IBAction)back:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
 - (void)viewDidAppear:(BOOL)animated {
     if (!_mapCover.hidden) {
         if (!center) {

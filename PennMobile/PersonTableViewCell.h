@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Person.h"
 
-@interface PersonTableViewCell : UITableViewCell
+@interface PersonTableViewCell : UITableViewCell <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *labelName;
 @property (weak, nonatomic) IBOutlet UILabel *labelRole;
@@ -20,5 +20,6 @@
 @property Person *person;
 
 -(void)configure:(Person *)person;
-
+-(IBAction)promptPhone:(id)sender;
+-(IBAction)promptEmail:(id)sender;
 @end

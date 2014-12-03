@@ -369,12 +369,28 @@
                                     </mask>
                                 </variation>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y8B-3j-qKJ">
+                                <rect key="frame" x="322" y="28" width="45" height="30"/>
+                                <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="voL-AB-2VK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="HKG-NO-KBC" eventType="touchUpInside" id="Ccv-vv-MRF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Ydb-NF-cdh" firstAttribute="top" secondItem="IBn-GR-zrS" secondAttribute="bottom" constant="10" id="2PK-77-xdb"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="top" secondItem="Ydb-NF-cdh" secondAttribute="bottom" constant="10" id="2WE-Zu-hMm"/>
                             <constraint firstItem="Ydb-NF-cdh" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" constant="15" id="30g-D5-5Fl"/>
+                            <constraint firstAttribute="trailing" secondItem="Y8B-3j-qKJ" secondAttribute="trailing" constant="8" id="4kc-2K-SL4"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" constant="10" id="79p-i2-oxK"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="top" secondItem="Ydb-NF-cdh" secondAttribute="bottom" id="7Ry-Ff-y2Y"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leadingMargin" constant="45" id="Bea-9O-3br"/>
@@ -397,6 +413,7 @@
                             <constraint firstItem="IBn-GR-zrS" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" id="qJj-fu-hqV"/>
                             <constraint firstItem="BEf-6H-Uae" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" id="vNk-lJ-q1M"/>
                             <constraint firstAttribute="trailing" secondItem="Y2w-N1-T72" secondAttribute="trailing" constant="10" id="x2X-gQ-JvD"/>
+                            <constraint firstItem="Y8B-3j-qKJ" firstAttribute="top" secondItem="sBX-cz-nln" secondAttribute="bottom" constant="8" id="xjf-3g-IKW"/>
                             <constraint firstAttribute="trailing" secondItem="Ydb-NF-cdh" secondAttribute="trailing" constant="15" id="yPj-Se-4il"/>
                             <constraint firstItem="NUr-nw-KiH" firstAttribute="top" secondItem="Y2w-N1-T72" secondAttribute="bottom" constant="50" id="ytv-1f-bwW"/>
                         </constraints>
@@ -422,6 +439,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="backButton" destination="Y8B-3j-qKJ" id="F5A-RT-6nr"/>
                         <outlet property="courseNumber" destination="2bo-ZC-LgU" id="rZi-sj-DsP"/>
                         <outlet property="credits" destination="65k-UQ-yD1" id="g2o-cM-ont"/>
                         <outlet property="detailText" destination="Y2w-N1-T72" id="h1X-Lb-kqP"/>
@@ -617,7 +635,7 @@
         <scene sceneID="Gus-t6-pJn">
             <objects>
                 <tableViewController id="RiY-ZA-iME" customClass="DirectoryTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" id="RtA-aV-BAo">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" id="RtA-aV-BAo">
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -642,20 +660,52 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Final Boss" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RXk-i6-Num">
-                                            <rect key="frame" x="18" y="27" width="107" height="20"/>
+                                            <rect key="frame" x="18" y="28" width="107" height="20"/>
                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UYo-KN-adf">
+                                            <rect key="frame" x="18" y="40" width="127" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="ubD-Ia-X9T"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                                            <state key="normal" title="No Phone Number">
+                                                <color key="titleColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="promptPhone:" destination="tSn-WE-5ij" eventType="touchUpInside" id="gLa-HJ-atq"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SGp-Q1-xqf">
+                                            <rect key="frame" x="18" y="59" width="107" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="qkL-yu-jAn"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
+                                            <state key="normal" title="No Email Listed">
+                                                <color key="titleColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="promptEmail:" destination="tSn-WE-5ij" eventType="touchUpInside" id="K1E-JH-znX"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="UYo-KN-adf" firstAttribute="top" secondItem="sFu-tj-FiG" secondAttribute="bottom" constant="10" id="FQu-CM-15z"/>
                                         <constraint firstItem="sFu-tj-FiG" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leadingMargin" constant="10" id="N92-Mf-Crp"/>
-                                        <constraint firstItem="RXk-i6-Num" firstAttribute="top" secondItem="YDc-yS-xRc" secondAttribute="topMargin" constant="19" id="UuE-AY-8Sz"/>
+                                        <constraint firstItem="SGp-Q1-xqf" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leading" constant="18" id="Ouq-kU-bnl"/>
+                                        <constraint firstItem="UYo-KN-adf" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leading" constant="18" id="UVH-1K-n2g"/>
+                                        <constraint firstItem="RXk-i6-Num" firstAttribute="top" secondItem="YDc-yS-xRc" secondAttribute="topMargin" constant="20" id="UuE-AY-8Sz"/>
                                         <constraint firstItem="RXk-i6-Num" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leadingMargin" constant="10" id="XHs-57-JWI"/>
+                                        <constraint firstItem="SGp-Q1-xqf" firstAttribute="top" secondItem="RXk-i6-Num" secondAttribute="bottom" constant="11" id="kGm-w0-FIp"/>
                                         <constraint firstItem="sFu-tj-FiG" firstAttribute="top" secondItem="YDc-yS-xRc" secondAttribute="topMargin" constant="1" id="nVy-qd-0NH"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="buttonCall" destination="UYo-KN-adf" id="5VZ-Br-3ZD"/>
+                                    <outlet property="buttonEmail" destination="SGp-Q1-xqf" id="lif-pd-x8T"/>
                                     <outlet property="labelName" destination="sFu-tj-FiG" id="fOh-Tu-VEh"/>
                                     <outlet property="labelRole" destination="RXk-i6-Num" id="r9b-TX-UJt"/>
                                 </connections>
@@ -702,7 +752,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1248" y="1001"/>
+            <point key="canvasLocation" x="1248" y="997"/>
         </scene>
         <!--Transit-->
         <scene sceneID="db7-h8-xGd">
