@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 #import "Person.h"
 #import "PersonTableViewCell.h"
 #import "DetailViewController.h"
@@ -15,7 +17,7 @@
 #define DIRECTORY_PATH @"directory/search?name="
 #define DETAIL_PATH @"directory/person/"
 
-@interface DirectoryTableViewController : PennTableViewController <UISearchBarDelegate> {
+@interface DirectoryTableViewController : PennTableViewController <UISearchBarDelegate, ABNewPersonViewControllerDelegate> {
 
 }
 

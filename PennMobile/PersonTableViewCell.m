@@ -28,19 +28,19 @@
     [phoneAlert show];
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSString *phoneNumber = [@"tel:" stringByAppendingString:_person.phone];
-    NSString *textNumber = [@"sms:" stringByAppendingString:_person.phone];
+    NSString *phoneNumber = [@"tel://" stringByAppendingString:_person.phone];
+    NSString *textNumber = [@"sms://" stringByAppendingString:_person.phone];
     switch (buttonIndex) {
-        case 0:
+        case 1:
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
             break;
-        case 1:
+        case 2:
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:textNumber]];
             break;
     }
 }
 -(IBAction)promptEmail:(id)sender {
-    NSString *email = [@"mailto:" stringByAppendingString:_person.email];
+    NSString *email = [@"mailto://" stringByAppendingString:_person.email];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
 }
 -(void)configure:(Person *)person {
@@ -54,5 +54,4 @@
         [_buttonCall setTitle:_person.phone forState:UIControlStateNormal];
     }
 }
-
 @end

@@ -41,7 +41,9 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
-
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    [self addContact:(Person *)super.objects[indexPath.row]];
+}
 - (void)queryHandler:(NSString *)search {
     [self importData:[self searchFor:search split:NO]];
     [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
@@ -176,6 +178,91 @@
 }
 */
 
+#pragma mark -
+#pragma mark Address Book Access
+
+static ABAddressBookRef addressBook;
+
+- (void)addContact:(Person *)inQuestion {
+    [self requestAddressBookAccess:inQuestion];
+}
+- (void)accessGrantedForAddressBook:(Person *)inQuestion {
+    [self showNewPersonViewController:inQuestion];
+}
+// Check the authorization status of our application for Address Book
+-(void)checkAddressBookAccess:(Person *)inQuestion
+{
+    switch (ABAddressBookGetAuthorizationStatus())
+    {
+            // Update our UI if the user has granted access to their Contacts
+        case  kABAuthorizationStatusAuthorized:
+            [self accessGrantedForAddressBook:inQuestion];
+            break;
+            // Prompt the user for access to Contacts if there is no definitive answer
+        case  kABAuthorizationStatusNotDetermined:
+            [self requestAddressBookAccess:inQuestion];
+            break;
+            // Display a message if the user has denied or restricted access to Contacts
+        case  kABAuthorizationStatusDenied:
+        case  kABAuthorizationStatusRestricted:
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Privacy Warning" message:@"Permission was not granted for Contacts." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+// Prompt the user for access to their Address Book data
+- (void)requestAddressBookAccess:(Person *)inQuestion
+{
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        if (granted) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self accessGrantedForAddressBook:inQuestion];
+            });
+        }
+    });
+}
+- (void)newPersonViewController:(ABNewPersonViewController *)newPersonViewController
+       didCompleteWithNewPerson:(ABRecordRef)person {
+    NSString *name = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    if (name) {
+        name = [name stringByAppendingString:@" was successfully added to your contacts."];
+        UIAlertView *toShow = [[UIAlertView alloc] initWithTitle:@"Contact Added" message:name delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [newPersonViewController dismissViewControllerAnimated:YES completion:^{
+            [toShow show];
+        }];
+    } else {
+        [newPersonViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+- (void)showNewPersonViewController:(Person *)inQuestion
+{
+    ABNewPersonViewController *picker = [[ABNewPersonViewController alloc] init];
+    picker.newPersonViewDelegate = self;
+    ABRecordRef person = ABPersonCreate();
+    if (inQuestion.phone) {
+        ABMutableMultiValueRef phoneNumberMultiValue = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+        ABMultiValueAddValueAndLabel(phoneNumberMultiValue, (__bridge CFTypeRef)(inQuestion.phone) ,kABPersonPhoneMobileLabel, NULL);
+        ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumberMultiValue, nil); // set the phone number property
+    } if (inQuestion.email) {
+        ABMutableMultiValueRef emailMulti = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+        ABMultiValueAddValueAndLabel(emailMulti, (__bridge CFTypeRef)(inQuestion.email) ,kABWorkLabel, NULL);
+        ABRecordSetValue(person, kABPersonEmailProperty, emailMulti, nil); // set the phone number property
+    }
+    NSArray *nameSplit = [inQuestion.name componentsSeparatedByString:@","];
+    NSString *first = [nameSplit[1] substringToIndex:((NSString *)nameSplit[1]).length - 1];
+    first = [first substringFromIndex:1];
+    NSString *last = nameSplit[0];
+    ABRecordSetValue(person, kABPersonFirstNameProperty, (__bridge CFTypeRef)(first), nil); // first name of the new person
+    ABRecordSetValue(person, kABPersonLastNameProperty, (__bridge CFTypeRef)(last), nil); // his last name
+    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:picker];
+    picker.displayedPerson = person;
+    [self presentViewController:navigation animated:YES completion:nil];
+}
 
 #pragma mark - Navigation
 
