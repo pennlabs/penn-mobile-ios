@@ -11,6 +11,8 @@
 @implementation RegistrarTableViewCell
 
 - (void)awakeFromNib {
+    [_labelNumber.layer setMasksToBounds:YES];
+    _labelNumber.layer.cornerRadius = BORDER_RADIUS;
     // Initialization code
 }
 

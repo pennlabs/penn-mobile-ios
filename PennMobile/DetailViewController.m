@@ -35,6 +35,8 @@ static MKLocalSearch *search;
     [_viewTitle.layer setCornerRadius:20.0f];
     _titleText.text = info.title;
     _detailText.text = info.desc;
+    [_courseNumber.layer setMasksToBounds:YES];
+    _courseNumber.layer.cornerRadius = BORDER_RADIUS;
     _courseNumber.text = [[info.dept stringByAppendingString:@" "] stringByAppendingString:info.courseNum];
     if (info.professors && info.professors.count > 0)
         _subText.text = info.professors[0];

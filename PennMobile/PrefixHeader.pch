@@ -13,7 +13,7 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
 #define SERVER_ROOT @"http://api.pennlabs.org/"
-
+#define BORDER_RADIUS 4
 #import <Crashlytics/Crashlytics.h>
 #import "MBProgressHUD.h"
 #endif
