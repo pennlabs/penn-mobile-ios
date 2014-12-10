@@ -44,10 +44,10 @@
 		19B6BC401A159CEC002BFEA5 /* News.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC3E1A159CEC002BFEA5 /* News.png */; };
 		19B6BC411A159CEC002BFEA5 /* News-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC3F1A159CEC002BFEA5 /* News-selected.png */; };
 		19B6BC431A159D71002BFEA5 /* AGaramond.otf in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC421A159D3B002BFEA5 /* AGaramond.otf */; };
-		19B6BC461A15A08E002BFEA5 /* TabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B6BC451A15A08E002BFEA5 /* TabViewController.m */; };
 		19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */; };
 		19C62D791A2EAFBC00AC59F5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */; };
 		19C62D7A1A2EAFBC00AC59F5 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D781A2EAFBC00AC59F5 /* AddressBookUI.framework */; };
+		19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */; };
 		19CB3E201A1576D600AF11D9 /* Book.png in Resources */ = {isa = PBXBuildFile; fileRef = 19CB3E1F1A1576D600AF11D9 /* Book.png */; };
 		19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8419D2289E0088C4DC /* list_sample.txt */; };
 		19EDDC8A19D24D230088C4DC /* PersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */; };
@@ -136,12 +136,12 @@
 		19B6BC3E1A159CEC002BFEA5 /* News.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = News.png; path = Tabs/News.png; sourceTree = "<group>"; };
 		19B6BC3F1A159CEC002BFEA5 /* News-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "News-selected.png"; path = "Tabs/News-selected.png"; sourceTree = "<group>"; };
 		19B6BC421A159D3B002BFEA5 /* AGaramond.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AGaramond.otf; sourceTree = "<group>"; };
-		19B6BC441A15A08E002BFEA5 /* TabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabViewController.h; sourceTree = "<group>"; };
-		19B6BC451A15A08E002BFEA5 /* TabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabViewController.m; sourceTree = "<group>"; };
 		19C3A8B41A1C30B300D32D8A /* PennTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PennTableViewController.h; sourceTree = "<group>"; };
 		19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PennTableViewController.m; sourceTree = "<group>"; };
 		19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		19C62D781A2EAFBC00AC59F5 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
+		19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		19CB3E1D1A130C3400AF11D9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		19CB3E1F1A1576D600AF11D9 /* Book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Book.png; path = Tabs/Book.png; sourceTree = "<group>"; };
 		19EDDC8419D2289E0088C4DC /* list_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = list_sample.txt; sourceTree = "<group>"; };
@@ -389,8 +389,8 @@
 				198E232119F9C8E8000D33FD /* DetailViewController.m */,
 				192C6F2D1A158533008D507C /* NewsViewController.h */,
 				192C6F2E1A158533008D507C /* NewsViewController.m */,
-				19B6BC441A15A08E002BFEA5 /* TabViewController.h */,
-				19B6BC451A15A08E002BFEA5 /* TabViewController.m */,
+				19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */,
+				19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */,
 			);
 			path = PennMobile;
 			sourceTree = "<group>";
@@ -610,11 +610,11 @@
 				1979A72C1A0C586000E1B7EB /* PCRAggregaotr.m in Sources */,
 				195D940F19BFC58B00C6C8FA /* Agent.swift in Sources */,
 				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
+				19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */,
 				EBCE174919A715210008C332 /* Course.swift in Sources */,
 				192C6F2F1A158533008D507C /* NewsViewController.m in Sources */,
 				195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */,
 				1944CD3819EDE3C800DBF9EE /* Course.m in Sources */,
-				19B6BC461A15A08E002BFEA5 /* TabViewController.m in Sources */,
 				195D940D19BFC44E00C6C8FA /* PennNavController.m in Sources */,
 				1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */,
 				1979A72F1A0C595C00E1B7EB /* PCReview.m in Sources */,
