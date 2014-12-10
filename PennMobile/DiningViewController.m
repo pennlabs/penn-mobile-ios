@@ -31,6 +31,7 @@ bool usingTempData;
     residential = [[NSMutableArray alloc] init];
     retail = [[NSMutableArray alloc] init];
     _selectedDate = [NSDate date];
+    _mealsServed = [[NSMutableArray alloc] init];
     venueJSONFormatter = [[NSDateFormatter alloc] init];
     [venueJSONFormatter setDateFormat:@"yyyy-MM-dd"];
     hoursJSONFormatter = [[NSDateFormatter alloc] init];
@@ -172,17 +173,18 @@ bool usingTempData;
 */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
    /** if (indexPath.section *== 0) { **/
-        NSString *venueName = ((DiningTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).venueLabel.text;
-        venueName = [@"University of Pennsylvania " stringByAppendingString:venueName];
-        dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:[self isOpen:venueName]];
-        if (!dataForNextView || dataForNextView.count == 0) {
-            UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations :(\nIf you don't like this limitation, please call (215) 555-5555 to complain." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Call", nil];
-            [new show];
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        }
-        else {
-            [self performSegueWithIdentifier:@"cellClick" sender:[tableView cellForRowAtIndexPath:indexPath]];
-        }
+    NSString *venueName = ((DiningTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).venueLabel.text;
+    venueName = [@"University of Pennsylvania " stringByAppendingString:venueName];
+    _selectedVenue = venueName;
+    _dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:[self isOpen:venueName]];
+    if (!_dataForNextView || _dataForNextView.count == 0) {
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations :(\nIf you don't like this limitation, please call (215) 555-5555 to complain." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Call", nil];
+        [new show];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+       }
+    else {
+        [self performSegueWithIdentifier:@"cellClick" sender:[tableView cellForRowAtIndexPath:indexPath]];
+    }
    /* } */
     
 }
@@ -195,17 +197,15 @@ bool usingTempData;
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"cellClick"]) {
         MenuViewController *child = ((MenuViewController *)segue.destinationViewController);
-        child.navigationItem.title = currentVenue;
-        child.food = dataForNextView;
-        child.dates = [self getDates];
+        //child.navigationItem.title = currentVenue;
         child.source = self;
-        child.currentDate = _selectedDate;
-        child.currentMeal = _selectedMeal;
-    
+        // need to send over available times qq
     }
 }
 
-
+-(NSArray *)switchMeal:(NSDate *)date meal:(Meal)meal {
+    return [self getMealsForVenue:_selectedVenue forDate:date atMeal:meal];
+}
 #pragma mark - API-loading
 
 - (BOOL)confirmConnection:(NSData *)data {
@@ -234,9 +234,9 @@ bool usingTempData;
         [_days addObject:date];
     }
     menuMessage = raw[@"Document"][@"tblMessages"][@"txtNoMenuMessage"];
-    currentVenue = raw[@"Document"][@"location"];
+    _currentVenue = raw[@"Document"][@"location"];
     if (days)
-        [_venues setObject:days forKey:currentVenue];
+        [_venues setObject:days forKey:_currentVenue];
     if (target && selector) {
         // Go back to main thread to perform callback
         [target performSelectorOnMainThread:selector withObject:nil waitUntilDone:NO];
@@ -345,8 +345,10 @@ bool usingTempData;
     [comp1 month] == [comp2 month] &&
     [comp1 year]  == [comp2 year];
 }
-
+// This now also updates the available meals array
 - (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSDate *)date atMeal:(Meal)meal {
+    // to clear the list of open times for switching veneus
+    [_mealsServed removeAllObjects];
     NSMutableArray *toReturn = [[NSMutableArray alloc] init];
     NSDictionary *venueContents = _venues[venue];
     NSArray *mealOptions;
@@ -354,8 +356,10 @@ bool usingTempData;
         NSDate *normalizedDay = [mealJSONFormatter dateFromString:day];
         if ([self isSameDayWithDate1:normalizedDay date2:date]) {
             for (int possibleMeal = 0; possibleMeal < ((NSArray *)venueContents[day]).count; possibleMeal++) {
-                NSString *trandlatedMeal = [self enumToStringTime:meal];
-                if ([trandlatedMeal rangeOfString:venueContents[day][possibleMeal][@"txtDayPartDescription"]].length != 0) {
+                NSString *translatedMeal = [self enumToStringTime:meal];
+                NSString *possibleMealString = [venueContents[day][possibleMeal][@"txtDayPartDescription"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                [_mealsServed addObject:possibleMealString];
+                if ([translatedMeal rangeOfString:possibleMealString].length != 0) {
                     mealOptions = venueContents[day][possibleMeal][kStation];
                 }
             }

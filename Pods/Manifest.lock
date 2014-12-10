@@ -1,12 +1,15 @@
 PODS:
+  - DropdownMenu (1.0.0)
   - HMLauncherView (1.0.3)
   - MBProgressHUD (0.9)
 
 DEPENDENCIES:
+  - DropdownMenu
   - HMLauncherView
   - MBProgressHUD (~> 0.8)
 
 SPEC CHECKSUMS:
+  DropdownMenu: ad71a2fcb932cc04a4f7c29aadaf2e8ed0c08e42
   HMLauncherView: 7f022dd6b7f90be4b08f0eef2c39cccc49acd09f
   MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
 

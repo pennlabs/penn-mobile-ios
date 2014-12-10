@@ -42,7 +42,7 @@ class RegistrarSearchViewController: UITableViewController, UISearchBarDelegate,
         }
         
         // Configure the cell
-        cell.textLabel.text = course.title
+        //cell.textLabel.text = course.title
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         return cell

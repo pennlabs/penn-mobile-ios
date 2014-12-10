@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-DropdownMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-HMLauncherView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>048F3351B6C731C662D7AB35</key>
+		<key>4B7FA0B92A6D34508F5E84C0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5003A42B9673CE5F6F0EDA5C</key>
+		<key>6B462CCE3FA7E238451BB34F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EEE9F1D482679C2DCC521E50</key>
+		<key>757910A528C529EAABFE450B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E844AE96382C5BE9712C0235</key>
 		<dict>
 			<key>primary</key>
 			<true/>

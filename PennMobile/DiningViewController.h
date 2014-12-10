@@ -22,8 +22,6 @@
 
 @interface DiningViewController : UITableViewController {
     NSString *menuMessage;
-    NSString *currentVenue;
-    NSArray *dataForNextView;
     CGRect titleSuperviewBounds;
     UIEdgeInsets titleViewMargins;
     NSDateFormatter *venueJSONFormatter;
@@ -60,6 +58,12 @@
 
 @property Meal selectedMeal;
 @property NSDate *selectedDate;
+@property NSString *selectedVenue;
+@property NSMutableArray *mealsServed;
+@property NSArray *dataForNextView;
+@property NSString *currentVenue;
+@property NSString *current;
+
 
 - (void)loadFromAPI;
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector;
@@ -75,6 +79,8 @@
 - (NSString *)getVenueByID:(int)identifier;
 - (int)getIDForVenue:(NSString *)venue;
 - (int)getIDForVenueWithIndex:(int)index;
+- (NSArray *)switchMeal:(NSDate *) date meal:(Meal)meal;
+- (NSArray *)findOpenMealsForVenue:(NSString *)venue forDate:(NSDate *)date;
 
 // Global helpers
 

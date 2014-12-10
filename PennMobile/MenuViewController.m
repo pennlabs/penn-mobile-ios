@@ -17,26 +17,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.rowHeight = 60.0f;
-    /*
+    dates = [_source getDates];
     _dummyText = [[UITextField alloc] init];
-    picker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.view.window.bounds.size.width, self.view.window.bounds.size.height / 2.5)];
-    picker.datePickerMode = UIDatePickerModeDate;
-    picker.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    picker.minimumDate = _dates[0];
-    picker.maximumDate = _dates[_dates.count - 1];
-    pickerTopBar = [[UIToolbar alloc] init];
-    pickerTopBar.backgroundColor = [UIColor whiteColor];
+    mealPicker.delegate = self;
+    mealPicker.dataSource = self;
+    pickerTopBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40)];
+    pickerTopBar.backgroundColor = PENN_BLUE;
     UIBarButtonItem *confirm = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(confirmChooser:)];
+    confirm.tintColor = [UIColor whiteColor];
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelChooser:)];
-    [pickerTopBar setItems:@[cancel, confirm]];
-    
+    cancel.tintColor = [UIColor whiteColor];
+    NSMutableArray *buttons = [[NSMutableArray alloc] initWithObjects:confirm, cancel, nil];
+    UIToolbar *bar = [[UIToolbar alloc] initWithFrame:pickerTopBar.frame];
+    weekday = [[NSDateFormatter alloc] init];
+    [weekday setDateFormat:@"EEEE"];
+    bar.barStyle = UIBarStyleDefault;
+    bar.barTintColor = PENN_BLUE;
+    [bar setItems:buttons];
+    [pickerTopBar addSubview:bar];
     mealPicker = [[UIPickerView alloc] init];
     mealPicker.dataSource = self;
     mealPicker.delegate = self;
-    [_dummyText setInputView:picker];
+    [_dummyText setInputView:mealPicker];
     _dummyText.inputAccessoryView = pickerTopBar;
     [self.view addSubview:_dummyText];
-     */
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -51,10 +55,51 @@
 }
 #pragma mark - Picker View Stuff
 
+- (int)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 2;
+}
+
+- (int)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    switch (component) {
+        case 0:
+            return dates.count;
+        case 1:
+            return _source.mealsServed.count;
+        default:
+            return 0;
+    }
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    switch (component) {
+        case 0:
+            return [weekday stringFromDate:dates[row]];
+        case 1:
+            return _source.mealsServed[row];
+        default:
+            return @"";
+    }
+}
 - (void)confirmChooser:(id)sender {
+    NSInteger dateRow = [mealPicker selectedRowInComponent:0];
+    NSInteger mealRow = [mealPicker selectedRowInComponent:1];
+    if (dateRow < 0 || mealRow < 0 || dateRow >= dates.count || mealRow >= _source.mealsServed.count) {
+        UIAlertView *invalid = [[UIAlertView alloc] initWithTitle:@"Invalid Choice" message:@"That was not a valid selection. Please make sure you choose the correct meal and date." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [invalid show];
+        return;
+    }
     [_dummyText resignFirstResponder];
     // Now switch date
-    _food = [_source getMealsForVenue:_currentVenue forDate:_currentDate atMeal:_currentMeal];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        // _currentVeneu is null here
+        // don't think its ever set
+        _source.dataForNextView = [_source switchMeal:dates[dateRow] meal:[_source stringTimeToEnum:_source.mealsServed[mealRow] ]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[self tableView] reloadData];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        });
+    });
 }
 - (void)cancelChooser:(id)sender {
     [_dummyText resignFirstResponder];
@@ -63,21 +108,21 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return _food.count;
+    return _source.dataForNextView.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return ((NSArray *)_food[section][@"food"]).count;
+    return ((NSArray *)_source.dataForNextView[section][@"food"]).count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return _food[section][@"station"];
+    return _source.dataForNextView[section][@"station"];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FoodItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.titleLabel.text = _food[indexPath.section][@"food"][indexPath.row][@"title"];
-    cell.descriptionLabel.text = _food[indexPath.section][@"food"][indexPath.row][@"description"];
+    cell.titleLabel.text = _source.dataForNextView[indexPath.section][@"food"][indexPath.row][@"title"];
+    cell.descriptionLabel.text = _source.dataForNextView[indexPath.section][@"food"][indexPath.row][@"description"];
     // Configure the cell...
     return cell;
 }

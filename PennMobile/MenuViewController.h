@@ -14,9 +14,10 @@
 @class DiningViewController;
 
 @interface MenuViewController : UITableViewController <UIPickerViewDelegate, UIPickerViewDataSource> {
-    UIDatePicker *picker;
     UIPickerView *mealPicker;
-    UIToolbar *pickerTopBar;
+    UIView *pickerTopBar;
+    NSArray *dates;
+    NSDateFormatter *weekday;
 }
 
 /**
@@ -24,12 +25,8 @@
  * @"station" with the name of the station and then there is another NSDictionary
  * with the food items in it.
  * This implementation is somewhat precarious but gets the job done for now. 
+ * MOVED: now pulled from previous view using source.*
  **/
-@property NSArray *food;
-@property NSArray *dates;
-@property NSDate *currentDate;
-@property Meal currentMeal;
-@property NSString *currentVenue;
 
 @property (weak, nonatomic) IBOutlet UIButton *timeButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *dateButton;
@@ -39,4 +36,6 @@
 - (void)populateSectionTypes;
 - (void)cancelChooser:(id)sender;
 - (void)confirmChooser:(id)sender;
+- (IBAction)timeButtonClicked:(id)sender;
+- (IBAction)dateButtonClicked:(id)sender;
 @end

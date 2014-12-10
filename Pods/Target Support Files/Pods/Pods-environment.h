@@ -6,6 +6,12 @@
 // project.
 
 
+// DropdownMenu
+#define COCOAPODS_POD_AVAILABLE_DropdownMenu
+#define COCOAPODS_VERSION_MAJOR_DropdownMenu 1
+#define COCOAPODS_VERSION_MINOR_DropdownMenu 0
+#define COCOAPODS_VERSION_PATCH_DropdownMenu 0
+
 // HMLauncherView
 #define COCOAPODS_POD_AVAILABLE_HMLauncherView
 #define COCOAPODS_VERSION_MAJOR_HMLauncherView 1
