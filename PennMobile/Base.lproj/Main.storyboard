@@ -700,6 +700,7 @@
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="RXk-i6-Num" secondAttribute="trailing" constant="30" id="5hd-Pv-xyT"/>
                                         <constraint firstItem="UYo-KN-adf" firstAttribute="top" secondItem="sFu-tj-FiG" secondAttribute="bottom" constant="10" id="FQu-CM-15z"/>
                                         <constraint firstItem="sFu-tj-FiG" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leadingMargin" constant="10" id="N92-Mf-Crp"/>
                                         <constraint firstItem="SGp-Q1-xqf" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leading" constant="18" id="Ouq-kU-bnl"/>
