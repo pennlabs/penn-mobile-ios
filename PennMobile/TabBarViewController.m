@@ -18,6 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [[UITabBar appearance] setSelectedImageTintColor:PENN_BLUE];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     //[[UITabBar appearance] setAlpha:0.25];
 }
 - (void)didReceiveMemoryWarning {
