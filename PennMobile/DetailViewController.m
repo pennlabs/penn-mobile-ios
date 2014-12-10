@@ -46,7 +46,9 @@ static MKLocalSearch *search;
     [_backButton.layer setCornerRadius:BORDER_RADIUS];
 }
 -(IBAction)back:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{}];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.presentingViewController performSelector:@selector(deselect)];
+    }];
 }
 - (void)viewDidAppear:(BOOL)animated {
     if (!_mapCover.hidden) {

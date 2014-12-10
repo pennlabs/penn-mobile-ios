@@ -29,7 +29,6 @@
     [self.tableView setTableHeaderView:_searchBar];
     tempSet = [[NSMutableOrderedSet alloc] initWithCapacity:50];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -80,6 +79,8 @@
 - (void)reloadView {
     [self.tableView reloadData];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 - (BOOL)confirmConnection:(NSData *)data {
     if (!data) {

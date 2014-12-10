@@ -25,7 +25,6 @@
     
     // to dismiss the keyboard when the user taps on the table
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -92,6 +91,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     super.forSegue = super.objects[indexPath.row];
+    selected = indexPath;
     [self performSegueWithIdentifier:@"detail" sender:self];
 }
 - (void)queryHandler:(NSString *)search {
@@ -115,6 +115,12 @@
 - (void)searchBar:(UISearchBar *)bar textDidChange:(NSString *)searchText {
     if(![super.searchBar isFirstResponder]) {
         [self searchBarCancelButtonClicked:super.searchBar];
+    }
+}
+- (void)deselect {
+    if (selected) {
+        [self.tableView deselectRowAtIndexPath:selected animated:YES];
+        selected = nil;
     }
 }
 /*

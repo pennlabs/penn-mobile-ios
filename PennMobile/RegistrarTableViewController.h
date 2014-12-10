@@ -15,6 +15,7 @@
 #define REGISTRAR_PATH @"registrar/search?q="
 
 @interface RegistrarTableViewController : PennTableViewController <UITableViewDelegate, UISearchBarDelegate> {
+    NSIndexPath *selected;
 }
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

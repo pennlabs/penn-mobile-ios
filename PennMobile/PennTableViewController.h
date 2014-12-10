@@ -11,7 +11,6 @@
 
 @interface PennTableViewController : UITableViewController <UISearchBarDelegate> {
     NSMutableOrderedSet *tempSet;
-    UIActivityIndicatorView *activityIndicator;
 }
 
 @property NSArray *objects;
