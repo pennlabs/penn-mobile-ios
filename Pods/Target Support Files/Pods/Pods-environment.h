@@ -12,6 +12,12 @@
 #define COCOAPODS_VERSION_MINOR_DropdownMenu 0
 #define COCOAPODS_VERSION_PATCH_DropdownMenu 0
 
+// ECSlidingViewController
+#define COCOAPODS_POD_AVAILABLE_ECSlidingViewController
+#define COCOAPODS_VERSION_MAJOR_ECSlidingViewController 2
+#define COCOAPODS_VERSION_MINOR_ECSlidingViewController 0
+#define COCOAPODS_VERSION_PATCH_ECSlidingViewController 3
+
 // HMLauncherView
 #define COCOAPODS_POD_AVAILABLE_HMLauncherView
 #define COCOAPODS_VERSION_MAJOR_HMLauncherView 1
