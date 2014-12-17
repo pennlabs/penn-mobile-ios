@@ -1081,8 +1081,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="nEE-Hs-eIk">
-                                <rect key="frame" x="0.0" y="50" width="375" height="537"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="nEE-Hs-eIk">
+                                <rect key="frame" x="0.0" y="64" width="375" height="523"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="400" id="HO1-kk-GOj"/>
@@ -1178,7 +1178,7 @@
                             <constraint firstItem="q34-md-teo" firstAttribute="top" secondItem="nEE-Hs-eIk" secondAttribute="bottom" constant="80" id="c9M-QG-38K"/>
                             <constraint firstItem="nEE-Hs-eIk" firstAttribute="leading" secondItem="Dit-ap-GXF" secondAttribute="leading" id="hVF-dT-ohF"/>
                             <constraint firstAttribute="trailing" secondItem="nEE-Hs-eIk" secondAttribute="trailing" id="iKg-qm-L8u"/>
-                            <constraint firstItem="nEE-Hs-eIk" firstAttribute="top" secondItem="r5x-Qm-aoP" secondAttribute="bottom" constant="30" id="lsW-Ni-Oq1"/>
+                            <constraint firstItem="nEE-Hs-eIk" firstAttribute="top" secondItem="r5x-Qm-aoP" secondAttribute="bottom" constant="44" id="lsW-Ni-Oq1"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

@@ -35,6 +35,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:title];
     }
     cell.textLabel.text = title;
+    if ([title isEqualToString:@"About"]) {
+        [cell setSelected:YES];
+    }
+    cell.textLabel.font = [UIFont systemFontOfSize:18];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.tintColor = [UIColor whiteColor];
     cell.imageView.image = image;
