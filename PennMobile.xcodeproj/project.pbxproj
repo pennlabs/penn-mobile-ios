@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */; };
 		1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929ACFF19DBA21E00B15C5B /* TransitViewController.m */; };
 		192AEF3519C934F10068ABA6 /* FoodItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 192AEF3419C934F10068ABA6 /* FoodItemTableViewCell.m */; };
 		192C6F2F1A158533008D507C /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192C6F2E1A158533008D507C /* NewsViewController.m */; };
@@ -88,6 +89,8 @@
 
 /* Begin PBXFileReference section */
 		16E1C19330F2CC1E8F480AD7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1901F10D1A41FDAC00DDFA9A /* SlideOutMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideOutMenuViewController.h; sourceTree = "<group>"; };
+		1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideOutMenuViewController.m; sourceTree = "<group>"; };
 		1929ACFE19DBA21E00B15C5B /* TransitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitViewController.h; sourceTree = "<group>"; };
 		1929ACFF19DBA21E00B15C5B /* TransitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitViewController.m; sourceTree = "<group>"; };
 		192AEF3319C934F10068ABA6 /* FoodItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodItemTableViewCell.h; sourceTree = "<group>"; };
@@ -218,6 +221,15 @@
 				16E1C19330F2CC1E8F480AD7 /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1901F10C1A41FD9500DDFA9A /* SlideOut */ = {
+			isa = PBXGroup;
+			children = (
+				1901F10D1A41FDAC00DDFA9A /* SlideOutMenuViewController.h */,
+				1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */,
+			);
+			name = SlideOut;
 			sourceTree = "<group>";
 		};
 		1929ACFD19DBA20C00B15C5B /* Map */ = {
@@ -386,6 +398,7 @@
 		82982FB519735ECC00DB2AE3 /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
+				1901F10C1A41FD9500DDFA9A /* SlideOut */,
 				19C3A8B31A1C309700D32D8A /* ListView */,
 				82982FB819735ECC00DB2AE3 /* AppDelegate.swift */,
 				82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */,
@@ -650,6 +663,7 @@
 				82982FB919735ECC00DB2AE3 /* AppDelegate.swift in Sources */,
 				82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
+				1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */,
 				19EDDC8A19D24D230088C4DC /* PersonTableViewCell.m in Sources */,
 				192AEF3519C934F10068ABA6 /* FoodItemTableViewCell.m in Sources */,
 				1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */,
