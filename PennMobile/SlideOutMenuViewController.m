@@ -20,8 +20,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _views = @[@"Dining", @"Directory", @"Registrar", @"Transit", @"News", @"About"];
+    UITapGestureRecognizer *labsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLabsURL:)];
+    [_labsImage addGestureRecognizer:labsTap];
+    UISwipeGestureRecognizer *returnSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(returnToView:)];
+    returnSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:returnSwipe];
 }
-
+- (void)returnToView:(id)sender {
+    [self performSegueWithIdentifier:currentView sender:self];
+}
+- (void)showLabsURL:(id)sender {
+    // open labs URL here
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -35,21 +45,26 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:title];
     }
     cell.textLabel.text = title;
-    if ([title isEqualToString:@"About"]) {
-        [cell setSelected:YES];
-    }
     cell.textLabel.font = [UIFont systemFontOfSize:18];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.tintColor = [UIColor whiteColor];
     cell.imageView.image = image;
     cell.imageView.tintColor = [UIColor whiteColor];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    if (!start && [title isEqualToString:@"About"]) {
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
+        cell.textLabel.textColor = PENN_BLUE;
+        cell.imageView.image = [UIImage imageNamed:[cell.textLabel.text stringByAppendingString:@"-selected"]];
+        currentView = cell.textLabel.text;
+        start = indexPath;
+    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.textLabel.textColor = PENN_BLUE;
     cell.imageView.image = [UIImage imageNamed:[cell.textLabel.text stringByAppendingString:@"-selected"]];
+    currentView = cell.textLabel.text;
 }
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];

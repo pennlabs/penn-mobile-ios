@@ -175,11 +175,11 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" opaque="NO" contentMode="scaleToFill" id="axE-hW-GWa">
-                            <rect key="frame" x="67.5" y="5.5" width="240" height="33"/>
+                            <rect key="frame" x="135.5" y="5.5" width="104" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Courses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="Mvl-he-8tW">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="104" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -222,7 +222,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1037.5" y="-494.5"/>
+            <point key="canvasLocation" x="970.5" y="-494.5"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="RfR-Ne-Qt3">
@@ -573,11 +573,11 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="I0f-rB-bDY">
-                            <rect key="frame" x="67.5" y="5.5" width="240" height="33"/>
+                            <rect key="frame" x="138.5" y="5.5" width="98" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dining" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="HKO-aV-UJ9">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="98" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -609,7 +609,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KGh-tc-NU7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="x8x-Yl-Yeq" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1037.5" y="232.5"/>
+            <point key="canvasLocation" x="967.5" y="232.5"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="N6O-wJ-VTC">
@@ -788,11 +788,11 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="c0g-4U-BIU">
-                            <rect key="frame" x="67.5" y="5.5" width="240" height="33"/>
+                            <rect key="frame" x="122.5" y="5.5" width="130" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Directory" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="Iac-tq-sml">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="130" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -823,7 +823,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1025.5" y="956.5"/>
+            <point key="canvasLocation" x="971.5" y="956.5"/>
         </scene>
         <!--Transit-->
         <scene sceneID="db7-h8-xGd">
@@ -891,11 +891,11 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="1Ba-tz-L4s">
-                            <rect key="frame" x="67.5" y="5.5" width="240" height="33"/>
+                            <rect key="frame" x="139.5" y="5.5" width="96" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="LVv-A4-wmD">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="96" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -917,7 +917,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ShU-Gh-2RB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="iWV-Iq-yZq" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1025.5" y="1674.5"/>
+            <point key="canvasLocation" x="952.5" y="1674.5"/>
         </scene>
         <!--Directory-->
         <scene sceneID="5wG-16-1Bo">
@@ -1041,11 +1041,11 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" opaque="NO" contentMode="scaleToFill" id="2I7-cQ-1aL">
-                            <rect key="frame" x="67.5" y="5.5" width="240" height="33"/>
+                            <rect key="frame" x="137.5" y="5.5" width="100" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="648-zW-pTx">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -1067,7 +1067,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jlx-dO-iDF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="k5h-yz-QYd" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1037.5" y="-1223.5"/>
+            <point key="canvasLocation" x="968.5" y="-1223.5"/>
         </scene>
         <!--Slide Out Menu View Controller-->
         <scene sceneID="fod-6H-kec">
@@ -1081,7 +1081,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="nEE-Hs-eIk">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="nEE-Hs-eIk">
                                 <rect key="frame" x="0.0" y="64" width="375" height="523"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1098,7 +1098,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="w5t-e3-mz3" kind="custom" customClass="ECSlidingSegue" id="DxE-nF-GHx"/>
+                                            <segue destination="w5t-e3-mz3" kind="custom" identifier="Dining" customClass="ECSlidingSegue" id="DxE-nF-GHx"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Directory" id="vNl-Zk-XTB">
@@ -1108,7 +1108,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="ehR-dm-2U4" kind="custom" customClass="ECSlidingSegue" id="l54-Fg-TGN"/>
+                                            <segue destination="ehR-dm-2U4" kind="custom" identifier="Directory" customClass="ECSlidingSegue" id="l54-Fg-TGN"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Registrar" id="7Xk-dE-28j">
@@ -1118,7 +1118,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="SHn-7r-8Ex" kind="custom" customClass="ECSlidingSegue" id="MQi-pv-2Lx"/>
+                                            <segue destination="SHn-7r-8Ex" kind="custom" identifier="Registrar" customClass="ECSlidingSegue" id="MQi-pv-2Lx"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Transit" id="vbl-sp-ih0">
@@ -1128,7 +1128,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="1D0-pC-d68" kind="custom" customClass="ECSlidingSegue" id="UpK-cQ-Ame"/>
+                                            <segue destination="1D0-pC-d68" kind="custom" identifier="Transit" customClass="ECSlidingSegue" id="UpK-cQ-Ame"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="News" id="VPN-Mh-3uH">
@@ -1138,7 +1138,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="6ac-z3-oqW" kind="custom" customClass="ECSlidingSegue" id="cdf-0C-yMV"/>
+                                            <segue destination="6ac-z3-oqW" kind="custom" identifier="News" customClass="ECSlidingSegue" id="cdf-0C-yMV"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="About" id="t9h-I4-0QY">
@@ -1148,7 +1148,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="oVB-9K-p2y" kind="custom" customClass="ECSlidingSegue" id="tjb-aZ-RC0"/>
+                                            <segue destination="oVB-9K-p2y" kind="custom" identifier="About" customClass="ECSlidingSegue" id="tjb-aZ-RC0"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1170,18 +1170,32 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="DMg-5W-8YF">
+                                <rect key="frame" x="10" y="597" width="68" height="65"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="Pie-hw-YmL"/>
+                                    <constraint firstAttribute="width" secondItem="DMg-5W-8YF" secondAttribute="height" multiplier="68:65" id="e9J-Dg-3rB"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="DMg-5W-8YF" firstAttribute="leading" secondItem="Dit-ap-GXF" secondAttribute="leading" constant="10" id="E2G-WT-QSc"/>
                             <constraint firstItem="fSJ-A1-MKt" firstAttribute="top" secondItem="r5x-Qm-aoP" secondAttribute="bottom" constant="8" id="JKx-d5-fIg"/>
                             <constraint firstItem="fSJ-A1-MKt" firstAttribute="leading" secondItem="Dit-ap-GXF" secondAttribute="leading" constant="24" id="KH2-6u-PlF"/>
                             <constraint firstItem="q34-md-teo" firstAttribute="top" secondItem="nEE-Hs-eIk" secondAttribute="bottom" constant="80" id="c9M-QG-38K"/>
                             <constraint firstItem="nEE-Hs-eIk" firstAttribute="leading" secondItem="Dit-ap-GXF" secondAttribute="leading" id="hVF-dT-ohF"/>
                             <constraint firstAttribute="trailing" secondItem="nEE-Hs-eIk" secondAttribute="trailing" id="iKg-qm-L8u"/>
                             <constraint firstItem="nEE-Hs-eIk" firstAttribute="top" secondItem="r5x-Qm-aoP" secondAttribute="bottom" constant="44" id="lsW-Ni-Oq1"/>
+                            <constraint firstItem="DMg-5W-8YF" firstAttribute="top" secondItem="nEE-Hs-eIk" secondAttribute="bottom" constant="10" id="siB-MW-8dM"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="labsImage" destination="DMg-5W-8YF" id="i1g-i0-giq"/>
+                        <outlet property="tableView" destination="nEE-Hs-eIk" id="YvY-Ii-VxZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X3i-ds-FGi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1272,11 +1286,11 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="1VT-fd-RAz">
-                            <rect key="frame" x="67.5" y="5.5" width="240" height="33"/>
+                            <rect key="frame" x="146.5" y="5.5" width="82" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="News" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="dDD-hc-gZX">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="82" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -1298,7 +1312,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ho-bW-OiQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ez7-pS-rfX" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1025.5" y="2393.5"/>
+            <point key="canvasLocation" x="945.5" y="2393.5"/>
         </scene>
     </scenes>
     <resources>

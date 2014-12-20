@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SlideOutMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SlideOutMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+    NSString *currentView;
+    NSIndexPath *start;
+}
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIImageView *labsImage;
 @property NSArray *views;
+
 - (IBAction)unwindToMenuViewController:(UIStoryboardSegue *)segue;
 @end
