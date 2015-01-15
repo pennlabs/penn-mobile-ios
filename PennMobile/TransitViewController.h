@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TransitViewController : UIViewController
+@interface TransitViewController : UIViewController <UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end

@@ -20,8 +20,17 @@
     NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.pennrides.com/map?showHeader=0&route=229,230&silent_disable_timeout=1"]];
     [_webView loadRequest:req];
     _webView.scalesPageToFit = NO;
+    _webView.delegate = self;
+}
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (!webView.loading) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
