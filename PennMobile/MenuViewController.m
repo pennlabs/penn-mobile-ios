@@ -92,6 +92,7 @@
     [_dummyText resignFirstResponder];
     // Now switch date
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.tableView.userInteractionEnabled = NO;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         // _currentVeneu is null here
         // don't think its ever set
@@ -99,6 +100,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [[self tableView] reloadData];
             [MBProgressHUD hideHUDForView:self.view animated:YES];
+            self.tableView.userInteractionEnabled = YES;
         });
     });
 }

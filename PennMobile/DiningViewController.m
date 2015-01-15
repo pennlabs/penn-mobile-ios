@@ -50,6 +50,7 @@ bool usingTempData;
 }
 - (void)viewDidAppear:(BOOL)animated {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.tableView.userInteractionEnabled = NO;
     if (_venues && _venues.count > 0) {
         [_venues removeAllObjects];
         [residential removeAllObjects];
@@ -211,6 +212,7 @@ bool usingTempData;
 - (BOOL)confirmConnection:(NSData *)data {
     if (!data) {
         UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        self.tableView.userInteractionEnabled = YES;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [new show];
         return false;
@@ -289,6 +291,7 @@ bool usingTempData;
     [self refresh];
 }
 - (void)hideActivity {
+    self.tableView.userInteractionEnabled = YES;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 - (BOOL)loadVenues {

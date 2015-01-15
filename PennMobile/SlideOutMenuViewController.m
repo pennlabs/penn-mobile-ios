@@ -74,14 +74,19 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _views.count;
 }
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    PennNavController *nav = segue.destinationViewController;
+    if (/* nav.grayedOut */ false) {
+        [[[nav.view subviews] objectAtIndex:0] removeFromSuperview];
+        nav.grayedOut = NO;
+    }
 }
-*/
+
 
 @end

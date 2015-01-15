@@ -74,11 +74,13 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [_searchBar resignFirstResponder];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.tableView.userInteractionEnabled = NO;
     [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
 }
 - (void)reloadView {
     [self.tableView reloadData];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+    self.tableView.userInteractionEnabled = YES;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }

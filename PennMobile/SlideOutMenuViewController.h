@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PennNavController.h"
 
 @interface SlideOutMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     NSString *currentView;

@@ -52,7 +52,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="topViewControllerStoryboardId" value="AboutNavController"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="topViewControllerStoryboardId" value="DiningNavController"/>
                         <userDefinedRuntimeAttribute type="string" keyPath="underLeftViewControllerStoryboardId" value="PullOutMenu"/>
                     </userDefinedRuntimeAttributes>
                 </viewController>
@@ -676,7 +676,7 @@
         <!--Dining-->
         <scene sceneID="Ked-9s-tQC">
             <objects>
-                <navigationController id="w5t-e3-mz3" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DiningNavController" id="w5t-e3-mz3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Dining" image="Dining" id="J2R-mq-DOQ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="VnU-RD-c0P">

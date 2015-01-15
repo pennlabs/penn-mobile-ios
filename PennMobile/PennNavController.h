@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PennNavController : UINavigationController
+@interface PennNavController : UIViewController
+
+@property BOOL grayedOut;
 
 @end

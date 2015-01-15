@@ -110,6 +110,7 @@
     else {
         [super.searchBar resignFirstResponder];
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.tableView.userInteractionEnabled = NO;
         [super performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
     }
 }
@@ -273,10 +274,12 @@ static ABAddressBookRef addressBook;
     
     if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.tableView.userInteractionEnabled = NO;
         NSString *detail = [(Person *)super.forSegue createDetail];
         UIImage *placeholder = [UIImage imageNamed:@"avatar"];
         [self performSelectorInBackground:@selector(detailQueryHandler:) withObject:((Person *) super.forSegue).identifier];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        self.tableView.userInteractionEnabled = YES;
         //[((DetailViewController *)segue.destinationViewController) configureUsingCover:placeholder title:((Person *) super.forSegue).name sub:((Person *) super.forSegue).organization detail:detail];
     }
 }
