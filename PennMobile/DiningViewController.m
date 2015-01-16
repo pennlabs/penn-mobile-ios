@@ -627,14 +627,13 @@ bool usingTempData;
     } else if ([upper isEqualToString:@"LITE BREAKFAST"]) {
         return LiteBreakfast;
     } else if ([upper isEqualToString:@"BRUNCH/LUNCH"]) {
-        return Brunch;
+        return Lunch;
     } else if ([upper isEqualToString:@"BREAKFAST/LUNCH"]) {
         return Brunch;
     } else if ([upper isEqualToString:@"LUNCH/DINNER"] || [upper isEqualToString:@"BREAKFAST/LUNCH/DINNER"]) {
         return All;
     } else {
-        [NSException raise:@"Invalid meal type" format:@"type given was %@", mealTime];
-        return -1;
+        return All;
     }
 }
 -(NSString *)enumToStringTime:(Meal)mealTime {
@@ -662,8 +661,7 @@ bool usingTempData;
         if (fabs(mealTime) < 10)
             return [@"c" stringByAppendingString:[self enumToStringTime:(-1 * mealTime)]];
         else {
-            [NSException raise:@"Invalid meal type" format:@"type given was %ld", mealTime];
-            return nil;
+            return @"All";
         }
     }
 }
