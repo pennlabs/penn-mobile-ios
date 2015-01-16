@@ -20,6 +20,9 @@
 #define SERVER_PATH @"dining/venues"
 #define MEAL_PATH @"dining/weekly_menu/"
 
+#define kTitleFontSize 30.0f
+#define kSubtitleFontSize 16.0f
+
 @interface DiningViewController : UITableViewController {
     NSString *menuMessage;
     CGRect titleSuperviewBounds;
@@ -30,6 +33,9 @@
     NSDateFormatter *roundingFormatter;
     NSMutableArray *residential; // for table view layout
     NSMutableArray *retail; // for table view layout
+    NSArray *images;
+    NSArray *grayImages;
+    bool ipad;
 }
 
 /**

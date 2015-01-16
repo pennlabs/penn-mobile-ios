@@ -14,10 +14,12 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     [self.viewForBaselineLayout addSubview:_addressLabel];
     [self.viewForBaselineLayout addSubview:_venueLabel];
+    /*
     [self.viewForBaselineLayout addSubview:_openLabel];
     [_openLabel.layer setCornerRadius:108];
     [_openLabel.layer setBorderWidth:0];
     [_openLabel.layer setMasksToBounds:YES];
+     */
     [self.viewForBaselineLayout addSubview:_hoursLabel];
     return self;
 }

@@ -41,7 +41,11 @@ bool usingTempData;
     mealJSONFormatter = [[NSDateFormatter alloc] init];
     [mealJSONFormatter setDateFormat:@"MM/dd/yyyy"];
     //usingTempData = true;
-
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        ipad = true;
+        self.tableView.rowHeight = 240.0f;
+        // insert other changes for iPad here - to be refactored
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
 
@@ -99,13 +103,76 @@ bool usingTempData;
     return 0;
 }
 
-
+- (UIImage *) convertToGreyscale:(UIImage *)i {
+    
+    int kRed = 1;
+    int kGreen = 2;
+    int kBlue = 4;
+    
+    int colors = kGreen | kBlue | kRed;
+    int m_width = i.size.width;
+    int m_height = i.size.height;
+    
+    uint32_t *rgbImage = (uint32_t *) malloc(m_width * m_height * sizeof(uint32_t));
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(rgbImage, m_width, m_height, 8, m_width * 4, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
+    CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
+    CGContextSetShouldAntialias(context, NO);
+    CGContextDrawImage(context, CGRectMake(0, 0, m_width, m_height), [i CGImage]);
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    
+    // now convert to grayscale
+    uint8_t *m_imageData = (uint8_t *) malloc(m_width * m_height);
+    for(int y = 0; y < m_height; y++) {
+        for(int x = 0; x < m_width; x++) {
+            uint32_t rgbPixel=rgbImage[y*m_width+x];
+            uint32_t sum=0,count=0;
+            if (colors & kRed) {sum += (rgbPixel>>24)&255; count++;}
+            if (colors & kGreen) {sum += (rgbPixel>>16)&255; count++;}
+            if (colors & kBlue) {sum += (rgbPixel>>8)&255; count++;}
+            m_imageData[y*m_width+x]=sum/count;
+        }
+    }
+    free(rgbImage);
+    
+    // convert from a gray scale image back into a UIImage
+    uint8_t *result = (uint8_t *) calloc(m_width * m_height *sizeof(uint32_t), 1);
+    
+    // process the image back to rgb
+    for(int i = 0; i < m_height * m_width; i++) {
+        result[i*4]=0;
+        int val=m_imageData[i];
+        result[i*4+1]=val;
+        result[i*4+2]=val;
+        result[i*4+3]=val;
+    }
+    
+    // create a UIImage
+    colorSpace = CGColorSpaceCreateDeviceRGB();
+    context = CGBitmapContextCreate(result, m_width, m_height, 8, m_width * sizeof(uint32_t), colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
+    CGImageRef image = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    UIImage *resultUIImage = [UIImage imageWithCGImage:image];
+    CGImageRelease(image);
+    
+    free(m_imageData);
+    
+    // make sure the data will be released by giving it to an autoreleased NSData
+    [NSData dataWithBytesNoCopy:result length:m_width * m_height];
+    
+    return resultUIImage;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DiningTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"hall" forIndexPath:indexPath];
     if (!cell) {
         cell = [[DiningTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"hall"];
-
+        
     }
+    cell.back.clipsToBounds = YES;
+    // [cell.back setImage:[UIImage imageNamed:@"dining-placeholder"]];
+    cell.venueLabel.textColor = [UIColor whiteColor];
     // This pick from the correct array of dining halls to display on the table
     switch (indexPath.section) {
         case 0:
@@ -122,17 +189,22 @@ bool usingTempData;
         cell.venueLabel.text = @"University of Pennsylvania Hill House";
         cell.addressLabel.text = @"1000 Sacha St, Best, CA 90210";
     } else {
+        if (ipad) {
+            cell.venueLabel.font = [UIFont fontWithName:@"Adobe Garamond Pro" size:kTitleFontSize * 2];
+            cell.addressLabel.font = [UIFont systemFontOfSize:kSubtitleFontSize * 2];
+        }
         //cell.venueLabel.text = _venues[indexPath.row])[kTitleKey];
         //cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
         int open = [self isOpen:cell.venueLabel.text];
         if (open > 0) {
-            cell.openLabel.text = @" OPEN NOW ";
+            [cell.back setImage:images[0]];
+            cell.addressLabel.textColor = [UIColor whiteColor];
             cell.addressLabel.text = [NSString stringWithFormat:@"Currently serving: %@", [self enumToStringTime:open]];
-            cell.openLabel.backgroundColor = [UIColor colorWithRed:29/255.0 green:207/255.0 blue:40/255.0 alpha:1.0];
         } else {
-            cell.openLabel.text = @" closed ";
-            cell.openLabel.backgroundColor = [UIColor grayColor];
-            cell.addressLabel.text = [NSString stringWithFormat:@"Next serving: %@", [[self enumToStringTime:open] substringFromIndex:1]];
+            [cell.back setImage:grayImages[0]];
+            [cell layoutIfNeeded];
+            cell.addressLabel.textColor = [UIColor redColor];
+            cell.addressLabel.text = [NSString stringWithFormat:@"Next serving %@", [[self enumToStringTime:open] substringFromIndex:1]];
             // This code shows the regions from the xml to query
         }
     }
