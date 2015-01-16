@@ -51,7 +51,8 @@
     cell.imageView.image = image;
     cell.imageView.tintColor = [UIColor whiteColor];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    if (!start && [title isEqualToString:@"About"]) {
+    cell.backgroundColor = [UIColor clearColor];
+    if (!start && [title isEqualToString:@"Dining"]) {
         [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
         cell.textLabel.textColor = PENN_BLUE;
         cell.imageView.image = [UIImage imageNamed:[cell.textLabel.text stringByAppendingString:@"-selected"]];

@@ -171,7 +171,6 @@ bool usingTempData;
         
     }
     cell.back.clipsToBounds = YES;
-    // [cell.back setImage:[UIImage imageNamed:@"dining-placeholder"]];
     cell.venueLabel.textColor = [UIColor whiteColor];
     // This pick from the correct array of dining halls to display on the table
     switch (indexPath.section) {
@@ -183,6 +182,10 @@ bool usingTempData;
             //cell.selectionStyle = UITableViewCellSelectionStyleNone;
         default:
             break;
+    }
+    [cell.back setImage:[UIImage imageNamed:cell.venueLabel.text]];
+    if (![UIImage imageNamed:cell.venueLabel.text]) {
+        [cell.back setImage:[UIImage imageNamed:@"Penn"]];
     }
     // Configure the cell...
     if (usingTempData) {
@@ -197,11 +200,15 @@ bool usingTempData;
         //cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
         int open = [self isOpen:cell.venueLabel.text];
         if (open > 0) {
-            [cell.back setImage:images[0]];
+            //[cell.back setImage:images[0]];
             cell.addressLabel.textColor = [UIColor whiteColor];
             cell.addressLabel.text = [NSString stringWithFormat:@"Currently serving: %@", [self enumToStringTime:open]];
         } else {
-            [cell.back setImage:grayImages[0]];
+            [cell.back setImage:[self convertToGreyscale:[UIImage imageNamed:cell.venueLabel.text]]];
+            if (![UIImage imageNamed:cell.venueLabel.text]) {
+                [cell.back setImage:[self convertToGreyscale:[UIImage imageNamed:@"Penn"]]];
+            }
+            //[cell.back setImage:grayImages[0]];
             [cell layoutIfNeeded];
             cell.addressLabel.textColor = [UIColor redColor];
             cell.addressLabel.text = [NSString stringWithFormat:@"Next serving %@", [[self enumToStringTime:open] substringFromIndex:1]];
@@ -251,7 +258,7 @@ bool usingTempData;
     _selectedVenue = venueName;
     _dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:[self isOpen:venueName]];
     if (!_dataForNextView || _dataForNextView.count == 0) {
-        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations :(\nIf you don't like this limitation, please call (215) 555-5555 to complain." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Call", nil];
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Call", nil];
         [new show];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
        }
@@ -619,6 +626,12 @@ bool usingTempData;
         return MealEquivalency;
     } else if ([upper isEqualToString:@"LITE BREAKFAST"]) {
         return LiteBreakfast;
+    } else if ([upper isEqualToString:@"BRUNCH/LUNCH"]) {
+        return Brunch;
+    } else if ([upper isEqualToString:@"BREAKFAST/LUNCH"]) {
+        return Brunch;
+    } else if ([upper isEqualToString:@"LUNCH/DINNER"] || [upper isEqualToString:@"BREAKFAST/LUNCH/DINNER"]) {
+        return All;
     } else {
         [NSException raise:@"Invalid meal type" format:@"type given was %@", mealTime];
         return -1;
@@ -646,7 +659,7 @@ bool usingTempData;
     } else if (mealTime == LiteBreakfast) {
         return @"Lite Breakfast";
     } else {
-        if (fabs(mealTime) < 9)
+        if (fabs(mealTime) < 10)
             return [@"c" stringByAppendingString:[self enumToStringTime:(-1 * mealTime)]];
         else {
             [NSException raise:@"Invalid meal type" format:@"type given was %ld", mealTime];
