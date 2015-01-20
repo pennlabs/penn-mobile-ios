@@ -24,12 +24,12 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+ //   [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     if (!webView.loading) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+   //     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }
 }
 - (void)didReceiveMemoryWarning {

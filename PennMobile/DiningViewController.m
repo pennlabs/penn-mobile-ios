@@ -544,7 +544,7 @@ bool usingTempData;
                             if (endHour == 0) endHour = 24;
                             if (startHour == 0) startHour = 24;
                             if (startHour <= [now hour] &&
-                                [now hour] <= endHour) {
+                                [now hour] < endHour) {
                                 _selectedMeal = [self stringTimeToEnum:mealTime[@"type"]];
                                 return _selectedMeal;
                             }
