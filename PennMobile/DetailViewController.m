@@ -64,10 +64,11 @@ static MKLocalSearch *search;
         CLLocation *user = [[CLLocation alloc] initWithLatitude:39.9520689 longitude:-75.1910786];
         _mapCover.region = MKCoordinateRegionMakeWithDistance(user.coordinate, kMapSize, kMapSize);
         if (info.building) {
-            _noLoc.hidden = YES;
             [_mapCover setCenterCoordinate:info.point.coordinate animated:YES];
             [_mapCover addAnnotation:info.point];
+            [_mapCover selectAnnotation:info.point animated:YES];
         } else {
+            _noLoc.hidden = NO;
             CLLocation *user = _mapCover.userLocation.location;
             if (!user) {
                 user = [[CLLocation alloc] initWithLatitude:39.9520689 longitude:-75.1910786];

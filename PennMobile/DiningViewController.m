@@ -258,7 +258,7 @@ bool usingTempData;
     _selectedVenue = venueName;
     _dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:[self isOpen:venueName]];
     if (!_dataForNextView || _dataForNextView.count == 0) {
-        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Call", nil];
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Call", nil];
         [new show];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
        }
@@ -341,7 +341,7 @@ bool usingTempData;
     NSError *error = [NSError alloc];
     NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
     if (!raw || error.code != 0) {
-        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         NSLog(@"JSON Parse error code: %ld", (long)error.code);
         [new show];
         return nil;
