@@ -11,5 +11,5 @@
 @interface NewsViewController : UIViewController <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-
+@property NSString *url;
 @end

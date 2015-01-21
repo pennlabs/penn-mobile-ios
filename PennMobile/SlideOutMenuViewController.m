@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _views = @[@"Dining", @"Directory", @"Registrar", @"Transit", @"News", @"About"];
+    _views = @[@"Dining", @"Directory", @"Courses", @"Transit", @"News", @"UTB", @"34th St", @"Events@Penn", @"About"];
     UITapGestureRecognizer *labsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLabsURL:)];
     [_labsImage addGestureRecognizer:labsTap];
     UISwipeGestureRecognizer *returnSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(returnToView:)];
@@ -44,6 +44,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:title];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     cell.textLabel.text = title;
     cell.textLabel.font = [UIFont systemFontOfSize:18];
     cell.textLabel.textColor = [UIColor whiteColor];
@@ -87,6 +88,16 @@
         [[[nav.view subviews] objectAtIndex:0] removeFromSuperview];
         nav.grayedOut = NO;
     }
+    if ([segue.identifier isEqualToString:@"News"]) {
+        [((NewsViewController *)nav.navigationController.viewControllers[0]) setUrl:@"http://www.thedp.com/"];
+    } else if ([segue.identifier isEqualToString:@"UTB"]) {
+        [((NewsViewController *)nav.navigationController.viewControllers[0]) setUrl:@"http://www.thedp.com/blog/under-the-button"];
+    } else if ([segue.identifier isEqualToString:@"Events"]) {
+        [((NewsViewController *)nav.navigationController.viewControllers[0]) setUrl:@"http://eventsatpenn.com/"];
+    } else if ([segue.identifier isEqualToString:@"34th"]) {
+        [((NewsViewController *)nav.navigationController.viewControllers[0]) setUrl:@"http://www.34st.com/"];
+    }
+
 }
 
 

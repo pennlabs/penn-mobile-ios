@@ -38,8 +38,12 @@ static MKLocalSearch *search;
     [_courseNumber.layer setMasksToBounds:YES];
     _courseNumber.layer.cornerRadius = BORDER_RADIUS;
     _courseNumber.text = [[info.dept stringByAppendingString:@" "] stringByAppendingString:info.courseNum];
-    if (info.professors && info.professors.count > 0)
+    if (info.professors && info.professors.count > 0) {
         _subText.text = info.professors[0];
+        if (info.professors.count > 1 && info.primaryProf) {
+            _subText.text = info.primaryProf;
+        }
+    }
     _credits.text = info.credits;
     _sectionNum.text = [@"Section " stringByAppendingString:info.sectionNum];
     [_backButton.layer setMasksToBounds:YES];

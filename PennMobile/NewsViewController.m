@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://thedp.com"]];
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_url]];
     [_webView loadRequest:req];
     _webView.scalesPageToFit = NO;
     _webView.delegate = self;

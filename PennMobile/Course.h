@@ -21,7 +21,7 @@
 @property NSString *roomBum;
 @property NSArray *professors;
 @property NSString *desc;
-
+@property NSString *primaryProf;
 @property NSString *identifier;
 
 - (NSString *)createDetail;

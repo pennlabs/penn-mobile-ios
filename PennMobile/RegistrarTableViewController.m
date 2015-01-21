@@ -49,6 +49,9 @@
 }
 -(void)importData:(NSArray *)raw {
     for (NSDictionary *courseData in raw) {
+        if (![courseData[@"activity_description"] isEqualToString:@"Lecture"]) {
+            continue;
+        }
         Course *new = [[Course alloc] init];
         new.identifier = courseData[@"_id"];
         new.dept = courseData[@"course_department"];
@@ -62,6 +65,7 @@
         if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0)
             new.building = courseData[@"meetings"][0][@"buildingName"];
         new.roomBum = courseData[@"roomNumber"];
+        new.primaryProf = courseData[@"primary_instructor"];
         NSMutableArray *profs = [[NSMutableArray alloc] init];
         for (NSDictionary *prof in courseData[@"instructors"]) {
             [profs addObject:prof[@"name"]];
@@ -106,6 +110,9 @@
     cell.labelNumber.text = [NSString stringWithFormat:@"%@ %@ ", inQuestion.dept, inQuestion.courseNum];
     if (inQuestion.professors && inQuestion.professors.count > 0) {
         cell.labelProf.text = inQuestion.professors[0];
+        if (inQuestion.professors.count > 1 && inQuestion.primaryProf) {
+            cell.labelProf.text = inQuestion.primaryProf;
+        }
     }
     cell.labelSection.text = [@"Section " stringByAppendingString:inQuestion.sectionNum];
     //CGRect cellFrame = cell.textLabel.frame;

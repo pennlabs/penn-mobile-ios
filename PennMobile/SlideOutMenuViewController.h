@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PennNavController.h"
+#import "NewsViewController.h"
 
 @interface SlideOutMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     NSString *currentView;

@@ -260,6 +260,15 @@
 			name = SlideOut;
 			sourceTree = "<group>";
 		};
+		192859DE1A6F214D00A47C67 /* News Views */ = {
+			isa = PBXGroup;
+			children = (
+				192C6F2D1A158533008D507C /* NewsViewController.h */,
+				192C6F2E1A158533008D507C /* NewsViewController.m */,
+			);
+			name = "News Views";
+			sourceTree = "<group>";
+		};
 		1929ACFD19DBA20C00B15C5B /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,6 +457,7 @@
 		82982FB519735ECC00DB2AE3 /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
+				192859DE1A6F214D00A47C67 /* News Views */,
 				1901F10C1A41FD9500DDFA9A /* SlideOut */,
 				19C3A8B31A1C309700D32D8A /* ListView */,
 				82982FB819735ECC00DB2AE3 /* AppDelegate.swift */,
@@ -468,8 +478,6 @@
 				195D940C19BFC44E00C6C8FA /* PennNavController.m */,
 				198E232019F9C8E8000D33FD /* DetailViewController.h */,
 				198E232119F9C8E8000D33FD /* DetailViewController.m */,
-				192C6F2D1A158533008D507C /* NewsViewController.h */,
-				192C6F2E1A158533008D507C /* NewsViewController.m */,
 				19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */,
 				19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */,
 			);
