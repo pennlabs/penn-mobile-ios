@@ -40,7 +40,7 @@ static MKLocalSearch *search;
     _courseNumber.text = [[info.dept stringByAppendingString:@" "] stringByAppendingString:info.courseNum];
     if (info.professors && info.professors.count > 0) {
         _subText.text = info.professors[0];
-        if (info.professors.count > 1 && info.primaryProf) {
+        if (info.professors.count > 1 && info.primaryProf && ![info.primaryProf isEqualToString:@""]) {
             _subText.text = info.primaryProf;
         }
     }
@@ -55,8 +55,19 @@ static MKLocalSearch *search;
     }];
 }
 - (void)viewDidAppear:(BOOL)animated {
+    
+    [self dealWithAppleMaps];
+       // [self startStandardUpdates];
+}
+- (void)dealWithAppleMaps {
     if (!_mapCover.hidden) {
-        if (!center) {
+        CLLocation *user = [[CLLocation alloc] initWithLatitude:39.9520689 longitude:-75.1910786];
+        _mapCover.region = MKCoordinateRegionMakeWithDistance(user.coordinate, kMapSize, kMapSize);
+        if (info.building) {
+            _noLoc.hidden = YES;
+            [_mapCover setCenterCoordinate:info.point.coordinate animated:YES];
+            [_mapCover addAnnotation:info.point];
+        } else {
             CLLocation *user = _mapCover.userLocation.location;
             if (!user) {
                 user = [[CLLocation alloc] initWithLatitude:39.9520689 longitude:-75.1910786];
@@ -64,12 +75,8 @@ static MKLocalSearch *search;
             [_mapCover setCenterCoordinate:user.coordinate animated:YES];
             _mapCover.region = MKCoordinateRegionMakeWithDistance(user.coordinate, kMapSize, kMapSize);
         }
-        else {
-            [_mapCover setCenterCoordinate:center.placemark.coordinate animated:YES];
-            _mapCover.region = MKCoordinateRegionMakeWithDistance(center.placemark.location.coordinate, kMapSize, kMapSize);
-        }
     }
-   // [self startStandardUpdates];
+
 }
 - (void)startStandardUpdates
 {

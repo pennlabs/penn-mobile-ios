@@ -49,7 +49,7 @@
 }
 -(void)importData:(NSArray *)raw {
     for (NSDictionary *courseData in raw) {
-        if (![courseData[@"activity_description"] isEqualToString:@"Lecture"]) {
+        if ([courseData[@"activity_description"] isEqualToString:@"Recitation"]) {
             continue;
         }
         Course *new = [[Course alloc] init];
@@ -62,10 +62,28 @@
         new.desc = courseData[@"course_description"];
         new.type = [courseData[@"type"] capitalizedString];
         new.times = courseData[@"times"];
-        if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0)
-            new.building = courseData[@"meetings"][0][@"buildingName"];
         new.roomBum = courseData[@"roomNumber"];
         new.primaryProf = courseData[@"primary_instructor"];
+        if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0) {
+            new.building = courseData[@"meetings"][0][@"building_name"];
+            new.buildingCode = courseData[@"meetings"][0][@"building_code"];
+            new.roomBum = courseData[@"meetings"][0][@"room_number"];
+            if (!new.buildingCode || [new.buildingCode isEqualToString:@""]) break;
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, BUILDING_PATH, new.buildingCode]];
+            NSData *result = [NSData dataWithContentsOfURL:url];
+            NSError *error;
+            NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
+            if (error) {
+                [NSException raise:@"JSON parse error" format:@"%@", error];
+            } else {
+                float lat = [returned[@"latitude"] doubleValue];
+                float lon = [returned[@"longitude"] doubleValue];
+                MKPointAnnotation *pt = [[MKPointAnnotation alloc] init];
+                pt.coordinate = CLLocationCoordinate2DMake(lat, lon);
+                pt.title = [[new.building stringByAppendingString:@" "] stringByAppendingString:new.roomBum];
+                new.point = pt;
+            }
+        }
         NSMutableArray *profs = [[NSMutableArray alloc] init];
         for (NSDictionary *prof in courseData[@"instructors"]) {
             [profs addObject:prof[@"name"]];
@@ -110,7 +128,7 @@
     cell.labelNumber.text = [NSString stringWithFormat:@"%@ %@ ", inQuestion.dept, inQuestion.courseNum];
     if (inQuestion.professors && inQuestion.professors.count > 0) {
         cell.labelProf.text = inQuestion.professors[0];
-        if (inQuestion.professors.count > 1 && inQuestion.primaryProf) {
+        if (inQuestion.professors.count > 1 && inQuestion.primaryProf && ![inQuestion.primaryProf isEqualToString:@""]) {
             cell.labelProf.text = inQuestion.primaryProf;
         }
     }

@@ -8,6 +8,7 @@
 
 import UIKit
 import Crashlytics
+import MapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

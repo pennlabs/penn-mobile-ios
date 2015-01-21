@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */; };
+		192859FB1A6F4F8900A47C67 /* FoodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192859FA1A6F4F8900A47C67 /* FoodDetailViewController.m */; };
 		1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929ACFF19DBA21E00B15C5B /* TransitViewController.m */; };
 		192AEF3519C934F10068ABA6 /* FoodItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 192AEF3419C934F10068ABA6 /* FoodItemTableViewCell.m */; };
 		192C6F2F1A158533008D507C /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192C6F2E1A158533008D507C /* NewsViewController.m */; };
@@ -36,6 +37,14 @@
 		1978259A19EDFAB400284799 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978259919EDFAB400284799 /* AboutViewController.m */; };
 		1979A72C1A0C586000E1B7EB /* PCRAggregaotr.m in Sources */ = {isa = PBXBuildFile; fileRef = 1979A72B1A0C586000E1B7EB /* PCRAggregaotr.m */; };
 		1979A72F1A0C595C00E1B7EB /* PCReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 1979A72E1A0C595C00E1B7EB /* PCReview.m */; };
+		197DBAE61A6F54DD00B0707C /* 34-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAE31A6F54DD00B0707C /* 34-Blue.png */; };
+		197DBAE71A6F54DD00B0707C /* DP-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAE41A6F54DD00B0707C /* DP-Blue.png */; };
+		197DBAE81A6F54DD00B0707C /* UTB-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAE51A6F54DD00B0707C /* UTB-Blue.png */; };
+		197DBAEC1A6F55C200B0707C /* 34-Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAE91A6F55C200B0707C /* 34-Grey.png */; };
+		197DBAED1A6F55C200B0707C /* DP-Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAEA1A6F55C200B0707C /* DP-Grey.png */; };
+		197DBAEE1A6F55C200B0707C /* UTB-Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAEB1A6F55C200B0707C /* UTB-Grey.png */; };
+		197DBAF11A6F5A1000B0707C /* E@P-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAEF1A6F5A1000B0707C /* E@P-Blue.png */; };
+		197DBAF21A6F5A1000B0707C /* E@P-Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAF01A6F5A1000B0707C /* E@P-Grey.png */; };
 		198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198E232119F9C8E8000D33FD /* DetailViewController.m */; };
 		199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 199B90CE19DB7FCD0018CDE3 /* Person.m */; };
 		19B4BDBD1A01DE73008DD69C /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 19B4BDBC1A01DE73008DD69C /* avatar.jpg */; };
@@ -105,6 +114,8 @@
 		16E1C19330F2CC1E8F480AD7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1901F10D1A41FDAC00DDFA9A /* SlideOutMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideOutMenuViewController.h; sourceTree = "<group>"; };
 		1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideOutMenuViewController.m; sourceTree = "<group>"; };
+		192859F91A6F4F8900A47C67 /* FoodDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodDetailViewController.h; sourceTree = "<group>"; };
+		192859FA1A6F4F8900A47C67 /* FoodDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoodDetailViewController.m; sourceTree = "<group>"; };
 		1929ACFE19DBA21E00B15C5B /* TransitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitViewController.h; sourceTree = "<group>"; };
 		1929ACFF19DBA21E00B15C5B /* TransitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitViewController.m; sourceTree = "<group>"; };
 		192AEF3319C934F10068ABA6 /* FoodItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodItemTableViewCell.h; sourceTree = "<group>"; };
@@ -146,6 +157,14 @@
 		1979A72B1A0C586000E1B7EB /* PCRAggregaotr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCRAggregaotr.m; sourceTree = "<group>"; };
 		1979A72D1A0C595C00E1B7EB /* PCReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCReview.h; sourceTree = "<group>"; };
 		1979A72E1A0C595C00E1B7EB /* PCReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCReview.m; sourceTree = "<group>"; };
+		197DBAE31A6F54DD00B0707C /* 34-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "34-Blue.png"; sourceTree = "<group>"; };
+		197DBAE41A6F54DD00B0707C /* DP-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DP-Blue.png"; sourceTree = "<group>"; };
+		197DBAE51A6F54DD00B0707C /* UTB-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UTB-Blue.png"; sourceTree = "<group>"; };
+		197DBAE91A6F55C200B0707C /* 34-Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "34-Grey.png"; sourceTree = "<group>"; };
+		197DBAEA1A6F55C200B0707C /* DP-Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DP-Grey.png"; sourceTree = "<group>"; };
+		197DBAEB1A6F55C200B0707C /* UTB-Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UTB-Grey.png"; sourceTree = "<group>"; };
+		197DBAEF1A6F5A1000B0707C /* E@P-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "E@P-Blue.png"; sourceTree = "<group>"; };
+		197DBAF01A6F5A1000B0707C /* E@P-Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "E@P-Grey.png"; sourceTree = "<group>"; };
 		198E232019F9C8E8000D33FD /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		198E232119F9C8E8000D33FD /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		199B90CD19DB7FCD0018CDE3 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
@@ -294,6 +313,11 @@
 		195D940419BFC40200C6C8FA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				197DBAEF1A6F5A1000B0707C /* E@P-Blue.png */,
+				197DBAF01A6F5A1000B0707C /* E@P-Grey.png */,
+				197DBAE31A6F54DD00B0707C /* 34-Blue.png */,
+				197DBAE41A6F54DD00B0707C /* DP-Blue.png */,
+				197DBAE51A6F54DD00B0707C /* UTB-Blue.png */,
 				19DE26D11A6897B800D072A7 /* Dining Halls */,
 				19DE26CF1A68901600D072A7 /* gradient.png */,
 				19DE26CD1A688FC200D072A7 /* dining-placeholder.png */,
@@ -318,6 +342,9 @@
 				19CB3E1F1A1576D600AF11D9 /* Book.png */,
 				19B4BDBC1A01DE73008DD69C /* avatar.jpg */,
 				1978259519EDEE1F00284799 /* labs.png */,
+				197DBAE91A6F55C200B0707C /* 34-Grey.png */,
+				197DBAEA1A6F55C200B0707C /* DP-Grey.png */,
+				197DBAEB1A6F55C200B0707C /* UTB-Grey.png */,
 				19EDDC9119D24FDD0088C4DC /* callbutton.png */,
 				19EDDC9219D24FDD0088C4DC /* callbutton@2x.png */,
 				19EDDC9319D24FDD0088C4DC /* callbutton@3x.png */,
@@ -404,6 +431,8 @@
 				195D941019BFC76200C6C8FA /* DiningTableViewCell.h */,
 				195D941119BFC76200C6C8FA /* DiningTableViewCell.m */,
 				199C2A7519D4CA250020B153 /* Meal.h */,
+				192859F91A6F4F8900A47C67 /* FoodDetailViewController.h */,
+				192859FA1A6F4F8900A47C67 /* FoodDetailViewController.m */,
 			);
 			name = Dining;
 			sourceTree = "<group>";
@@ -601,6 +630,7 @@
 			files = (
 				19DE26DE1A6897C400D072A7 /* hill.png in Resources */,
 				19C669961A696A790076AF1C /* Starbucks.jpg in Resources */,
+				197DBAEE1A6F55C200B0707C /* UTB-Grey.png in Resources */,
 				19B6BC431A159D71002BFEA5 /* AGaramond.otf in Resources */,
 				19DE26DD1A6897C400D072A7 /* engineering.png in Resources */,
 				195D940919BFC40200C6C8FA /* penn-logo@2x.png in Resources */,
@@ -612,6 +642,7 @@
 				19B6BC3D1A15998A002BFEA5 /* Transit-selected.png in Resources */,
 				1964BC8619C25EDA00CEB1E1 /* placeholder.png in Resources */,
 				19DE26DF1A6897C400D072A7 /* hillel.png in Resources */,
+				197DBAE61A6F54DD00B0707C /* 34-Blue.png in Resources */,
 				19EDDC8E19D24F4B0088C4DC /* contactbutton.png in Resources */,
 				19B6BC3B1A15998A002BFEA5 /* Menu-selected.png in Resources */,
 				19B6BC3C1A15998A002BFEA5 /* Transit.png in Resources */,
@@ -619,14 +650,17 @@
 				19DE26D01A68901600D072A7 /* gradient.png in Resources */,
 				19EDDC9819D24FDD0088C4DC /* callbutton@2x.png in Resources */,
 				1964BC8D19C281AD00CEB1E1 /* Main.storyboard in Resources */,
+				197DBAED1A6F55C200B0707C /* DP-Grey.png in Resources */,
 				19B6BC401A159CEC002BFEA5 /* News.png in Resources */,
 				19B6BC351A15998A002BFEA5 /* About.png in Resources */,
 				19DE26E31A6897C400D072A7 /* quad.png in Resources */,
 				1935F1131A37EFF300057667 /* iPhone 6@2x.png in Resources */,
+				197DBAE71A6F54DD00B0707C /* DP-Blue.png in Resources */,
 				19B6BC3A1A15998A002BFEA5 /* Menu.png in Resources */,
 				19EDDC8F19D24F4B0088C4DC /* contactbutton@2x.png in Resources */,
 				1935F10E1A37EFF300057667 /* App Icon.png in Resources */,
 				1935F1111A37EFF300057667 /* iPhone 5@2x.png in Resources */,
+				197DBAF21A6F5A1000B0707C /* E@P-Grey.png in Resources */,
 				19DE26DC1A6897C400D072A7 /* arch.png in Resources */,
 				19B6BC411A159CEC002BFEA5 /* News-selected.png in Resources */,
 				19F68ECD1A69708D0022B8F8 /* upenn.png in Resources */,
@@ -637,6 +671,8 @@
 				19DE26CE1A688FC200D072A7 /* dining-placeholder.png in Resources */,
 				19DE26DB1A6897C400D072A7 /* 1920.png in Resources */,
 				19C669941A6966240076AF1C /* UA.png in Resources */,
+				197DBAE81A6F54DD00B0707C /* UTB-Blue.png in Resources */,
+				197DBAEC1A6F55C200B0707C /* 34-Grey.png in Resources */,
 				19EDDC9019D24F4B0088C4DC /* contactbutton@3x.png in Resources */,
 				1978259619EDEE1F00284799 /* labs.png in Resources */,
 				19EDDC9719D24FDD0088C4DC /* callbutton.png in Resources */,
@@ -645,6 +681,7 @@
 				19EDDC9C19D24FDD0088C4DC /* textbutton@3x.png in Resources */,
 				19EDDC9A19D24FDD0088C4DC /* textbutton.png in Resources */,
 				82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */,
+				197DBAF11A6F5A1000B0707C /* E@P-Blue.png in Resources */,
 				19DE26E21A6897C400D072A7 /* marks.png in Resources */,
 				19B6BC381A15998A002BFEA5 /* directory.png in Resources */,
 				195D940A19BFC40200C6C8FA /* penn-logo@3x.png in Resources */,
@@ -725,6 +762,7 @@
 				195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */,
 				1944CD3819EDE3C800DBF9EE /* Course.m in Sources */,
 				195D940D19BFC44E00C6C8FA /* PennNavController.m in Sources */,
+				192859FB1A6F4F8900A47C67 /* FoodDetailViewController.m in Sources */,
 				1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */,
 				1979A72F1A0C595C00E1B7EB /* PCReview.m in Sources */,
 				195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */,

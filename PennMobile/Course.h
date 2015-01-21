@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <MapKit/MapKit.h>
 @interface Course : NSObject
 
 @property NSString *dept;
@@ -18,11 +18,13 @@
 @property NSString *type;
 @property NSString *times;
 @property NSString *building;
+@property NSString *buildingCode;
 @property NSString *roomBum;
 @property NSArray *professors;
 @property NSString *desc;
 @property NSString *primaryProf;
 @property NSString *identifier;
+@property MKPointAnnotation *point;
 
 - (NSString *)createDetail;
 

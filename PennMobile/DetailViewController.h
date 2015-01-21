@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "Course.h"
 
-#define kMapSize 1000
+#define kMapSize 800
 
 @interface DetailViewController : UIViewController <CLLocationManagerDelegate> {
     UIImage *coverUIImage;
@@ -18,6 +18,7 @@
     CLLocationManager *locationManager;
     Course *info;
 }
+@property (weak, nonatomic) IBOutlet UILabel *noLoc;
 
 @property (weak, nonatomic) IBOutlet UILabel *labelNoLoc;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *viewTitle;

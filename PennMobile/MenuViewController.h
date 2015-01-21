@@ -10,6 +10,7 @@
 #import "FoodItemTableViewCell.h"
 #import "DiningViewController.h"
 #import "Meal.h"
+#import "FoodDetailViewController.h"
 
 @class DiningViewController;
 
