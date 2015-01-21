@@ -68,20 +68,21 @@
             new.building = courseData[@"meetings"][0][@"building_name"];
             new.buildingCode = courseData[@"meetings"][0][@"building_code"];
             new.roomBum = courseData[@"meetings"][0][@"room_number"];
-            if (!new.buildingCode || [new.buildingCode isEqualToString:@""]) break;
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, BUILDING_PATH, new.buildingCode]];
-            NSData *result = [NSData dataWithContentsOfURL:url];
-            NSError *error;
-            NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
-            if (error) {
-                [NSException raise:@"JSON parse error" format:@"%@", error];
-            } else {
-                float lat = [returned[@"latitude"] doubleValue];
-                float lon = [returned[@"longitude"] doubleValue];
-                MKPointAnnotation *pt = [[MKPointAnnotation alloc] init];
-                pt.coordinate = CLLocationCoordinate2DMake(lat, lon);
-                pt.title = [[new.building stringByAppendingString:@" "] stringByAppendingString:new.roomBum];
-                new.point = pt;
+            if (new.buildingCode || ![new.buildingCode isEqualToString:@""]) {
+                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, BUILDING_PATH, new.buildingCode]];
+                NSData *result = [NSData dataWithContentsOfURL:url];
+                NSError *error;
+                NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
+                if (error) {
+                    [NSException raise:@"JSON parse error" format:@"%@", error];
+                } else {
+                    float lat = [returned[@"latitude"] doubleValue];
+                    float lon = [returned[@"longitude"] doubleValue];
+                    MKPointAnnotation *pt = [[MKPointAnnotation alloc] init];
+                    pt.coordinate = CLLocationCoordinate2DMake(lat, lon);
+                    pt.title = [[new.building stringByAppendingString:@" "]     stringByAppendingString:new.roomBum];
+                    new.point = pt;
+                }
             }
         }
         NSMutableArray *profs = [[NSMutableArray alloc] init];

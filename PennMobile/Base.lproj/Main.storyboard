@@ -1357,7 +1357,7 @@ and the rest of Labs + UA</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="eta-0E-OA7" kind="custom" customClass="ECSlidingSegue" id="TrI-qT-Iiu"/>
+                                            <segue destination="eta-0E-OA7" kind="custom" identifier="Events@Penn" customClass="ECSlidingSegue" id="TrI-qT-Iiu"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="About" id="emR-iS-uct">
