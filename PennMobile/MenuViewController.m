@@ -194,6 +194,7 @@
         }
         food.titleString = item.titleLabel.text;
     }
+    // need to handle unwind segue from detail view to un-highlight the cell
 }
 
 
