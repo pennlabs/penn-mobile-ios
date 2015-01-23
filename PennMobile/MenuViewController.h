@@ -19,6 +19,8 @@
     UIView *pickerTopBar;
     NSArray *dates;
     NSDateFormatter *weekday;
+    NSIndexPath *selected;
+    NSString *timeString;
 }
 
 /**

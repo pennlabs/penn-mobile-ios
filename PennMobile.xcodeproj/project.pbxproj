@@ -19,9 +19,25 @@
 		1935F1121A37EFF300057667 /* iPhone 6 Plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1935F10C1A37EFF300057667 /* iPhone 6 Plus@3x.png */; };
 		1935F1131A37EFF300057667 /* iPhone 6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1935F10D1A37EFF300057667 /* iPhone 6@2x.png */; };
 		1937623419C2882A007158E6 /* venue_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1937623319C2882A007158E6 /* venue_sample.txt */; };
+		19432D0E1A71C656003E9953 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D0C1A71C656003E9953 /* Bolts.framework */; };
+		19432D0F1A71C656003E9953 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D0D1A71C656003E9953 /* Parse.framework */; };
+		19432D1C1A71C6CD003E9953 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D101A71C6CD003E9953 /* AudioToolbox.framework */; };
+		19432D1D1A71C6CD003E9953 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D111A71C6CD003E9953 /* CFNetwork.framework */; };
+		19432D1E1A71C6CD003E9953 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D121A71C6CD003E9953 /* CoreGraphics.framework */; };
+		19432D1F1A71C6CD003E9953 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D131A71C6CD003E9953 /* CoreLocation.framework */; };
+		19432D201A71C6CD003E9953 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D141A71C6CD003E9953 /* libsqlite3.dylib */; };
+		19432D211A71C6CD003E9953 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D151A71C6CD003E9953 /* libz.dylib */; };
+		19432D221A71C6CD003E9953 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D161A71C6CD003E9953 /* MobileCoreServices.framework */; };
+		19432D231A71C6CD003E9953 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D171A71C6CD003E9953 /* QuartzCore.framework */; };
+		19432D241A71C6CD003E9953 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D181A71C6CD003E9953 /* Security.framework */; };
+		19432D251A71C6CD003E9953 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D191A71C6CD003E9953 /* Social.framework */; };
+		19432D261A71C6CD003E9953 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D1A1A71C6CD003E9953 /* StoreKit.framework */; };
+		19432D271A71C6CD003E9953 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D1B1A71C6CD003E9953 /* SystemConfiguration.framework */; };
+		19432D291A71C9FD003E9953 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D281A71C9FD003E9953 /* Accounts.framework */; };
 		1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3419EDE20B00DBF9EE /* RegistrarTableViewController.m */; };
 		1944CD3819EDE3C800DBF9EE /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3719EDE3C800DBF9EE /* Course.m */; };
 		1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3A19EDE84F00DBF9EE /* RegistrarTableViewCell.m */; };
+		1955ADEC1A71D89600D54A9C /* SupportTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1955ADEB1A71D89600D54A9C /* SupportTableViewController.m */; };
 		195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D940219BFC22900C6C8FA /* DiningViewController.m */; };
 		195D940819BFC40200C6C8FA /* penn-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940519BFC40200C6C8FA /* penn-logo.png */; };
 		195D940919BFC40200C6C8FA /* penn-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940619BFC40200C6C8FA /* penn-logo@2x.png */; };
@@ -32,6 +48,7 @@
 		1964BC8619C25EDA00CEB1E1 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 1964BC8519C25EDA00CEB1E1 /* placeholder.png */; };
 		1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1964BC8819C277DD00CEB1E1 /* MenuViewController.m */; };
 		1964BC8D19C281AD00CEB1E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82982FBE19735ECC00DB2AE3 /* Main.storyboard */; };
+		1965417F1A71D90C00026C92 /* SupportItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965417E1A71D90C00026C92 /* SupportItem.m */; };
 		1969DA1B19F9F8E6000C7076 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */; };
 		1978259619EDEE1F00284799 /* labs.png in Resources */ = {isa = PBXBuildFile; fileRef = 1978259519EDEE1F00284799 /* labs.png */; };
 		1978259A19EDFAB400284799 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978259919EDFAB400284799 /* AboutViewController.m */; };
@@ -129,12 +146,29 @@
 		1935F10C1A37EFF300057667 /* iPhone 6 Plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 6 Plus@3x.png"; sourceTree = "<group>"; };
 		1935F10D1A37EFF300057667 /* iPhone 6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 6@2x.png"; sourceTree = "<group>"; };
 		1937623319C2882A007158E6 /* venue_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = venue_sample.txt; sourceTree = "<group>"; };
+		19432D0C1A71C656003E9953 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		19432D0D1A71C656003E9953 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		19432D101A71C6CD003E9953 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		19432D111A71C6CD003E9953 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		19432D121A71C6CD003E9953 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		19432D131A71C6CD003E9953 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		19432D141A71C6CD003E9953 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		19432D151A71C6CD003E9953 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		19432D161A71C6CD003E9953 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		19432D171A71C6CD003E9953 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		19432D181A71C6CD003E9953 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		19432D191A71C6CD003E9953 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		19432D1A1A71C6CD003E9953 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		19432D1B1A71C6CD003E9953 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		19432D281A71C9FD003E9953 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		1944CD3319EDE20B00DBF9EE /* RegistrarTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrarTableViewController.h; sourceTree = "<group>"; };
 		1944CD3419EDE20B00DBF9EE /* RegistrarTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrarTableViewController.m; sourceTree = "<group>"; };
 		1944CD3619EDE3C800DBF9EE /* Course.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Course.h; sourceTree = "<group>"; };
 		1944CD3719EDE3C800DBF9EE /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
 		1944CD3919EDE84F00DBF9EE /* RegistrarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrarTableViewCell.h; sourceTree = "<group>"; };
 		1944CD3A19EDE84F00DBF9EE /* RegistrarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrarTableViewCell.m; sourceTree = "<group>"; };
+		1955ADEA1A71D89600D54A9C /* SupportTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportTableViewController.h; sourceTree = "<group>"; };
+		1955ADEB1A71D89600D54A9C /* SupportTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportTableViewController.m; sourceTree = "<group>"; };
 		195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		195D940119BFC22900C6C8FA /* DiningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningViewController.h; sourceTree = "<group>"; };
 		195D940219BFC22900C6C8FA /* DiningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningViewController.m; sourceTree = "<group>"; };
@@ -149,6 +183,8 @@
 		1964BC8519C25EDA00CEB1E1 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		1964BC8719C277DD00CEB1E1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		1964BC8819C277DD00CEB1E1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		1965417D1A71D90C00026C92 /* SupportItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportItem.h; sourceTree = "<group>"; };
+		1965417E1A71D90C00026C92 /* SupportItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportItem.m; sourceTree = "<group>"; };
 		1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		1978259519EDEE1F00284799 /* labs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labs.png; sourceTree = "<group>"; };
 		1978259819EDFAB400284799 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
@@ -240,9 +276,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19432D291A71C9FD003E9953 /* Accounts.framework in Frameworks */,
+				19432D1C1A71C6CD003E9953 /* AudioToolbox.framework in Frameworks */,
+				19432D1D1A71C6CD003E9953 /* CFNetwork.framework in Frameworks */,
+				19432D1E1A71C6CD003E9953 /* CoreGraphics.framework in Frameworks */,
+				19432D1F1A71C6CD003E9953 /* CoreLocation.framework in Frameworks */,
+				19432D201A71C6CD003E9953 /* libsqlite3.dylib in Frameworks */,
+				19432D211A71C6CD003E9953 /* libz.dylib in Frameworks */,
+				19432D221A71C6CD003E9953 /* MobileCoreServices.framework in Frameworks */,
+				19432D231A71C6CD003E9953 /* QuartzCore.framework in Frameworks */,
+				19432D241A71C6CD003E9953 /* Security.framework in Frameworks */,
+				19432D251A71C6CD003E9953 /* Social.framework in Frameworks */,
+				19432D261A71C6CD003E9953 /* StoreKit.framework in Frameworks */,
+				19432D271A71C6CD003E9953 /* SystemConfiguration.framework in Frameworks */,
 				19C62D791A2EAFBC00AC59F5 /* AddressBook.framework in Frameworks */,
 				19C62D7A1A2EAFBC00AC59F5 /* AddressBookUI.framework in Frameworks */,
 				1969DA1B19F9F8E6000C7076 /* Crashlytics.framework in Frameworks */,
+				19432D0F1A71C656003E9953 /* Parse.framework in Frameworks */,
+				19432D0E1A71C656003E9953 /* Bolts.framework in Frameworks */,
 				EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */,
 				F248D02664387BE000890A72 /* libPods.a in Frameworks */,
 			);
@@ -261,6 +312,19 @@
 		0F8F995CDFE7B714B314515F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19432D281A71C9FD003E9953 /* Accounts.framework */,
+				19432D101A71C6CD003E9953 /* AudioToolbox.framework */,
+				19432D111A71C6CD003E9953 /* CFNetwork.framework */,
+				19432D121A71C6CD003E9953 /* CoreGraphics.framework */,
+				19432D131A71C6CD003E9953 /* CoreLocation.framework */,
+				19432D141A71C6CD003E9953 /* libsqlite3.dylib */,
+				19432D151A71C6CD003E9953 /* libz.dylib */,
+				19432D161A71C6CD003E9953 /* MobileCoreServices.framework */,
+				19432D171A71C6CD003E9953 /* QuartzCore.framework */,
+				19432D181A71C6CD003E9953 /* Security.framework */,
+				19432D191A71C6CD003E9953 /* Social.framework */,
+				19432D1A1A71C6CD003E9953 /* StoreKit.framework */,
+				19432D1B1A71C6CD003E9953 /* SystemConfiguration.framework */,
 				19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */,
 				19C62D781A2EAFBC00AC59F5 /* AddressBookUI.framework */,
 				1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */,
@@ -372,6 +436,17 @@
 			path = PennMobile/SampleData;
 			sourceTree = "<group>";
 		};
+		196541801A71D91200026C92 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				1955ADEA1A71D89600D54A9C /* SupportTableViewController.h */,
+				1955ADEB1A71D89600D54A9C /* SupportTableViewController.m */,
+				1965417D1A71D90C00026C92 /* SupportItem.h */,
+				1965417E1A71D90C00026C92 /* SupportItem.m */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
 		1978259719EDFAA500284799 /* About */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,6 +537,8 @@
 		82982FAA19735ECC00DB2AE3 = {
 			isa = PBXGroup;
 			children = (
+				19432D0C1A71C656003E9953 /* Bolts.framework */,
+				19432D0D1A71C656003E9953 /* Parse.framework */,
 				19B6BC421A159D3B002BFEA5 /* AGaramond.otf */,
 				19CB3E1D1A130C3400AF11D9 /* Crashlytics.framework */,
 				1964BC8A19C2818300CEB1E1 /* SampleData */,
@@ -505,6 +582,7 @@
 				195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */,
 				195D940B19BFC44E00C6C8FA /* PennNavController.h */,
 				195D940C19BFC44E00C6C8FA /* PennNavController.m */,
+				196541801A71D91200026C92 /* Support */,
 				198E232019F9C8E8000D33FD /* DetailViewController.h */,
 				198E232119F9C8E8000D33FD /* DetailViewController.m */,
 				19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */,
@@ -759,6 +837,8 @@
 				19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */,
 				EBCE174919A715210008C332 /* Course.swift in Sources */,
 				192C6F2F1A158533008D507C /* NewsViewController.m in Sources */,
+				1955ADEC1A71D89600D54A9C /* SupportTableViewController.m in Sources */,
+				1965417F1A71D90C00026C92 /* SupportItem.m in Sources */,
 				195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */,
 				1944CD3819EDE3C800DBF9EE /* Course.m in Sources */,
 				195D940D19BFC44E00C6C8FA /* PennNavController.m in Sources */,

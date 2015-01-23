@@ -40,6 +40,8 @@ bool usingTempData;
     [roundingFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     mealJSONFormatter = [[NSDateFormatter alloc] init];
     [mealJSONFormatter setDateFormat:@"MM/dd/yyyy"];
+    prettyHourFormatter = [[NSDateFormatter alloc] init];
+    [prettyHourFormatter setDateFormat:@"hh:mm a"];
     //usingTempData = true;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         ipad = true;
@@ -258,7 +260,7 @@ bool usingTempData;
     _selectedVenue = venueName;
     _dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:[self isOpen:venueName]];
     if (!_dataForNextView || _dataForNextView.count == 0) {
-        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Call", nil];
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [new show];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
        }
@@ -415,6 +417,27 @@ bool usingTempData;
         [_mealTimes addObject:currentVenue];
     }
     **/
+}
+- (NSString *)getTimeStringForVenue:(NSString *)venue onDate:(NSDate *)date {
+    NSString *generated;
+    for (NSDictionary *v in _mealTimes) {
+        NSString *affectedVenue = [@"University of Pennsylvania " stringByAppendingString:v[@"name"]];
+        if ([affectedVenue isEqualToString:venue]) {
+            for (NSDictionary *d in v[@"dateHours"]) {
+                NSString *dateString = d[@"date"];
+                if ([self isSameDayWithDate1:date date2:[venueJSONFormatter dateFromString:dateString]]) {
+                    // we have the right date and venue, etc.
+                    for (NSDictionary *m in d[@"meal"]) {
+                        NSDate *open = [hoursJSONFormatter dateFromString:m[@"open"]];
+                        NSDate *close = [hoursJSONFormatter dateFromString:m[@"close"]];
+                        NSString *type = m[@"type"];
+                        generated = [NSString stringWithFormat:@"%@: %@ - %@\n", type, [prettyHourFormatter stringFromDate:open], [prettyHourFormatter stringFromDate:close]];
+                    }
+                }
+            }
+        }
+    }
+    return  generated;
 }
 - (BOOL)isSameDayWithDate1:(NSDate*)date1 date2:(NSDate*)date2 {
     NSCalendar* calendar = [NSCalendar currentCalendar];

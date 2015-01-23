@@ -17,7 +17,7 @@
 #define DIRECTORY_PATH @"directory/search?name="
 #define DETAIL_PATH @"directory/person/"
 
-@interface DirectoryTableViewController : PennTableViewController <UISearchBarDelegate, ABNewPersonViewControllerDelegate> {
+@interface DirectoryTableViewController : PennTableViewController <UISearchBarDelegate, ABNewPersonViewControllerDelegate, UIAlertViewDelegate> {
 
 }
 

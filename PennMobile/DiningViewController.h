@@ -30,6 +30,7 @@
     NSDateFormatter *venueJSONFormatter;
     NSDateFormatter *hoursJSONFormatter;
     NSDateFormatter *mealJSONFormatter;
+    NSDateFormatter *prettyHourFormatter;
     NSDateFormatter *roundingFormatter;
     NSMutableArray *residential; // for table view layout
     NSMutableArray *retail; // for table view layout
@@ -81,6 +82,7 @@
 // Data Accessors
 
 - (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSDate *)date atMeal:(Meal)meal;
+- (NSString *)getTimeStringForVenue:(NSString *)venue onDate:(NSDate *)date;
 - (NSArray *)getDates;
 - (NSString *)getVenueByID:(int)identifier;
 - (int)getIDForVenue:(NSString *)venue;

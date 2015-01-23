@@ -13,4 +13,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *sub;
 @property NSString *titleString;
 @property NSString *subString;
+@property NSIndexPath *indexPath;
 @end

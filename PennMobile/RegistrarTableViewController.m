@@ -63,6 +63,7 @@
         new.type = [courseData[@"type"] capitalizedString];
         new.times = courseData[@"times"];
         new.roomBum = courseData[@"roomNumber"];
+        new.sectionID = courseData[@"section_id_normalized"];
         new.primaryProf = courseData[@"primary_instructor"];
         if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0) {
             new.building = courseData[@"meetings"][0][@"building_name"];

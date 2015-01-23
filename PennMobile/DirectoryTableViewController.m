@@ -98,8 +98,9 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //forSegue = _people[indexPath.row];
+    super.forSegue = super.objects[indexPath.row];
     //[self performSegueWithIdentifier:@"detail" sender:self];
+    [self prompt:self];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -178,6 +179,43 @@
     return YES;
 }
 */
+-(IBAction)prompt:(id)sender {
+    Person *p = super.forSegue;
+    UIAlertView *phoneAlert = [[UIAlertView alloc] initWithTitle:p.name message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+    if (p.phone && ![p.phone isEqualToString:@""]) {
+        [phoneAlert addButtonWithTitle:@"Call"];
+        [phoneAlert addButtonWithTitle:@"Text"];
+    }
+    if (p.email && ![p.email isEqualToString:@""]) {
+        [phoneAlert addButtonWithTitle:@"Email"];
+    }
+    if ((!p.email || [p.email isEqualToString:@""]) && (!p.phone || [p.phone isEqualToString:@""])) {
+        phoneAlert.message = @"This person has no public information listed";
+    } else {
+        [phoneAlert addButtonWithTitle:@"Add to Contacts"];
+    }
+    [phoneAlert show];
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    Person *p = super.forSegue;
+    NSString *phoneNumber = [@"tel://" stringByAppendingString:p.phone];
+    NSString *textNumber = [@"sms://" stringByAppendingString:p.phone];
+    NSString *email = [@"mailto://" stringByAppendingString:p.email];
+    switch (buttonIndex) {
+        case 1:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+            break;
+        case 2:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:textNumber]];
+            break;
+        case 3:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
+            break;
+        case 4:
+            [self addContact:p];
+            break;
+    }
+}
 
 #pragma mark -
 #pragma mark Address Book Access

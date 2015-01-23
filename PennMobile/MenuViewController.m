@@ -42,14 +42,18 @@
     [_dummyText setInputView:mealPicker];
     _dummyText.inputAccessoryView = pickerTopBar;
     [self.view addSubview:_dummyText];
-    
+    timeString = [_source getTimeStringForVenue:_source.selectedVenue onDate:[NSDate date]];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
+- (void) viewWillAppear:(BOOL)animated {
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow]
+                             animated:animated];
+    [super viewWillAppear:animated];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -96,6 +100,7 @@
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         // _currentVeneu is null here
         // don't think its ever set
+        timeString = [_source getTimeStringForVenue:_source.selectedVenue onDate:dates[dateRow]];
         _source.dataForNextView = [_source switchMeal:dates[dateRow] meal:[_source stringTimeToEnum:_source.mealsServed[mealRow] ]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [[self tableView] reloadData];
@@ -130,7 +135,9 @@
     return cell;
 }
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    selected = indexPath;
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -193,6 +200,11 @@
             food.subString = item.descriptionLabel.text;
         }
         food.titleString = item.titleLabel.text;
+        food.indexPath = selected;
+    } else if ([segue.identifier isEqualToString:@"Times"]) {
+        FoodDetailViewController *food = segue.destinationViewController;
+        food.titleString = _source.selectedVenue;
+        food.subString = timeString;
     }
     // need to handle unwind segue from detail view to un-highlight the cell
 }

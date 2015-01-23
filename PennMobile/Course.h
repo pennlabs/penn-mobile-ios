@@ -25,6 +25,7 @@
 @property NSString *primaryProf;
 @property NSString *identifier;
 @property MKPointAnnotation *point;
+@property NSString *sectionID;
 
 - (NSString *)createDetail;
 

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E3D46C3CBB7427CED21FFC7B"
+               BlueprintIdentifier = "5AEDE4EA0FD4737998417385"
                BuildableName = "libPods-HMLauncherView.a"
                BlueprintName = "Pods-HMLauncherView"
                ReferencedContainer = "container:Pods.xcodeproj">

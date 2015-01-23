@@ -56,7 +56,9 @@
         }
     } else {
         // to support new Directory API
-        [results addObjectsFromArray:[self queryAPI:[name stringByReplacingOccurrencesOfString:@" " withString:@"%20"]]];
+        NSString *filter = [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+        [results addObjectsFromArray:[self queryAPI:[filter stringByReplacingOccurrencesOfString:@" " withString:@"%20"]]];
     }
     return [results allObjects];
 }

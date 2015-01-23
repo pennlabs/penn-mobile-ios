@@ -23,7 +23,10 @@
     [self.view addGestureRecognizer:tap];
 }
 -(IBAction)drop:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        // insert deselect code here
+        //[_tableView deselectRowAtIndexPath:_indexPath animated:YES];
+    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

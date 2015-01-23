@@ -8,7 +8,7 @@
 
 import UIKit
 import Crashlytics
-import MapKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,10 +19,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication!, didFinishLaunchingWithOptions launchOptions: NSDictionary!) -> Bool {
         Crashlytics.startWithAPIKey("18a765536e6539a73a15dd36c369ed29cfb91aa1");
         application.setStatusBarStyle(UIStatusBarStyle.LightContent, animated:true);
+        Parse.setApplicationId("0Lczjpr6ygk2FIpBb4pcBIM8T2tGssq3QbMTsF4Z", clientKey: "YjkMxWl752Pw9wqmf8fGQ2ViTa4m5kQOcUA1L7Jv");
         // Override point for customization after application launch.
         return true
     }
-
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let current = PFInstallation.currentInstallation();
+        current.setDeviceTokenFromData(deviceToken);
+        current.saveInBackgroundWithBlock { (saved, error) -> Void in
+            // insert conditional here
+        }
+        
+    }
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        PFPush.handlePush(userInfo);
+    }
     func applicationWillResignActive(application: UIApplication!) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
