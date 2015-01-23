@@ -1752,10 +1752,10 @@ and the rest of Labs + UA</string>
             </objects>
             <point key="canvasLocation" x="1244.5" y="3821.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Support Table View Controller-->
         <scene sceneID="0CT-or-2Hq">
             <objects>
-                <tableViewController id="Ukf-cy-1CY" sceneMemberID="viewController">
+                <tableViewController id="Ukf-cy-1CY" customClass="SupportTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Zw6-au-eUx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
