@@ -64,11 +64,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     SupportItem *c = _contacts[indexPath.row];
-    NSString *phoneNumber = [@"tel://" stringByAppendingString:c.phone];
+    NSString *phoneNumber = [@"tel://" stringByAppendingString:c.phoneFiltered];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     SupportItem *c = _contacts[indexPath.row];
     cell.textLabel.text = c.name;
     cell.detailTextLabel.text = c.phone;
