@@ -54,6 +54,7 @@
         }
         Course *new = [[Course alloc] init];
         new.identifier = courseData[@"_id"];
+        new.activity = courseData[@"activity_description"];
         new.dept = courseData[@"course_department"];
         new.title = [courseData[@"course_title"] capitalizedString];
         new.courseNum = courseData[@"course_number"];
@@ -101,6 +102,11 @@
     super.objects = [tempSet sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         int courseNum1 = [((Course *)obj1).courseNum intValue];
         int courseNum2 = [((Course *)obj2).courseNum intValue];
+        int sectionNum1 = [((Course *)obj1).sectionNum intValue];
+        int sectionNum2 = [((Course *)obj2).sectionNum intValue];
+        if (courseNum1 == courseNum2) {
+            return sectionNum1 > sectionNum2;
+        }
         return courseNum1 > courseNum2;
     }];
     if (tempSet && tempSet.count > 0)
@@ -139,7 +145,7 @@
             cell.labelProf.text = inQuestion.primaryProf;
         }
     }
-    cell.labelSection.text = [@"Section " stringByAppendingString:inQuestion.sectionNum];
+    cell.labelSection.text = [NSString stringWithFormat:@"Section %@ - %@", inQuestion.sectionNum, inQuestion.activity];
     //CGRect cellFrame = cell.textLabel.frame;
     //cell.textLabel.frame = CGRectMake(cellFrame.origin.x, cellFrame.origin.y, 20.0f, cellFrame.size.height);
     return cell;

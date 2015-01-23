@@ -26,6 +26,7 @@
 @property NSString *identifier;
 @property MKPointAnnotation *point;
 @property NSString *sectionID;
+@property NSString *activity;
 
 - (NSString *)createDetail;
 

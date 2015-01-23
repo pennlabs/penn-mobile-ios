@@ -37,6 +37,8 @@
 		1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3419EDE20B00DBF9EE /* RegistrarTableViewController.m */; };
 		1944CD3819EDE3C800DBF9EE /* Course.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3719EDE3C800DBF9EE /* Course.m */; };
 		1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1944CD3A19EDE84F00DBF9EE /* RegistrarTableViewCell.m */; };
+		194F1B831A71F3850038DC97 /* support_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 194F1B811A71F3850038DC97 /* support_blue.png */; };
+		194F1B841A71F3850038DC97 /* support_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 194F1B821A71F3850038DC97 /* support_grey.png */; };
 		1955ADEC1A71D89600D54A9C /* SupportTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1955ADEB1A71D89600D54A9C /* SupportTableViewController.m */; };
 		195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D940219BFC22900C6C8FA /* DiningViewController.m */; };
 		195D940819BFC40200C6C8FA /* penn-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940519BFC40200C6C8FA /* penn-logo.png */; };
@@ -167,6 +169,8 @@
 		1944CD3719EDE3C800DBF9EE /* Course.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Course.m; sourceTree = "<group>"; };
 		1944CD3919EDE84F00DBF9EE /* RegistrarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrarTableViewCell.h; sourceTree = "<group>"; };
 		1944CD3A19EDE84F00DBF9EE /* RegistrarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrarTableViewCell.m; sourceTree = "<group>"; };
+		194F1B811A71F3850038DC97 /* support_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = support_blue.png; sourceTree = "<group>"; };
+		194F1B821A71F3850038DC97 /* support_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = support_grey.png; sourceTree = "<group>"; };
 		1955ADEA1A71D89600D54A9C /* SupportTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportTableViewController.h; sourceTree = "<group>"; };
 		1955ADEB1A71D89600D54A9C /* SupportTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportTableViewController.m; sourceTree = "<group>"; };
 		195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -377,6 +381,8 @@
 		195D940419BFC40200C6C8FA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				194F1B811A71F3850038DC97 /* support_blue.png */,
+				194F1B821A71F3850038DC97 /* support_grey.png */,
 				197DBAEF1A6F5A1000B0707C /* E@P-Blue.png */,
 				197DBAF01A6F5A1000B0707C /* E@P-Grey.png */,
 				197DBAE31A6F54DD00B0707C /* 34-Blue.png */,
@@ -734,10 +740,12 @@
 				19DE26E31A6897C400D072A7 /* quad.png in Resources */,
 				1935F1131A37EFF300057667 /* iPhone 6@2x.png in Resources */,
 				197DBAE71A6F54DD00B0707C /* DP-Blue.png in Resources */,
+				194F1B841A71F3850038DC97 /* support_grey.png in Resources */,
 				19B6BC3A1A15998A002BFEA5 /* Menu.png in Resources */,
 				19EDDC8F19D24F4B0088C4DC /* contactbutton@2x.png in Resources */,
 				1935F10E1A37EFF300057667 /* App Icon.png in Resources */,
 				1935F1111A37EFF300057667 /* iPhone 5@2x.png in Resources */,
+				194F1B831A71F3850038DC97 /* support_blue.png in Resources */,
 				197DBAF21A6F5A1000B0707C /* E@P-Grey.png in Resources */,
 				19DE26DC1A6897C400D072A7 /* arch.png in Resources */,
 				19B6BC411A159CEC002BFEA5 /* News-selected.png in Resources */,
