@@ -35,7 +35,7 @@
     NSMutableArray *residential; // for table view layout
     NSMutableArray *retail; // for table view layout
     NSArray *images;
-    NSArray *grayImages;
+    NSMutableDictionary *grayImages;
     bool ipad;
 }
 

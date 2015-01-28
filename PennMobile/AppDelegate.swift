@@ -20,16 +20,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Crashlytics.startWithAPIKey("18a765536e6539a73a15dd36c369ed29cfb91aa1");
         application.setStatusBarStyle(UIStatusBarStyle.LightContent, animated:true);
         Parse.setApplicationId("0Lczjpr6ygk2FIpBb4pcBIM8T2tGssq3QbMTsF4Z", clientKey: "YjkMxWl752Pw9wqmf8fGQ2ViTa4m5kQOcUA1L7Jv");
+        PFUser.enableAutomaticUser()
+        PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions, block: { (valid, error) -> Void in
+            // do nothing here
+        })
+        if application.respondsToSelector("isRegisteredForRemoteNotifications")
+        {
+            // iOS 8 Notifications
+            //application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: (.Badge | .Sound | .Alert), categories: nil));
+            var types: UIUserNotificationType = UIUserNotificationType.Badge |
+                UIUserNotificationType.Alert |
+                UIUserNotificationType.Sound
+            
+            var settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: types, categories: nil )
+            
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
+            
+            return true
+        }
+        else
+        {
+            // iOS < 8 Notifications
+            application.registerForRemoteNotificationTypes(.Badge | .Sound | .Alert)
+        }
+        
+        var defaultACL = PFACL()
+        // If you would like all objects to be private by default, remove this line.
+        defaultACL.setPublicReadAccess(true)
+        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+        
         // Override point for customization after application launch.
         return true
     }
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        let current = PFInstallation.currentInstallation();
+        let current : PFInstallation = PFInstallation.currentInstallation();
         current.setDeviceTokenFromData(deviceToken);
-        current.saveInBackgroundWithBlock { (saved, error) -> Void in
-            // insert conditional here
-        }
-        
+        current.save();
     }
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         PFPush.handlePush(userInfo);
@@ -48,8 +75,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication!) {
+    func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        let currentInstallation: PFInstallation = PFInstallation.currentInstallation()
+        if (currentInstallation.badge != 0)
+        {
+            currentInstallation.badge = 0
+            currentInstallation.saveEventually()
+        }
     }
 
     func applicationWillTerminate(application: UIApplication!) {

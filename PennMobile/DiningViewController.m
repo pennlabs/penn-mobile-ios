@@ -32,6 +32,7 @@ bool usingTempData;
     retail = [[NSMutableArray alloc] init];
     _selectedDate = [NSDate date];
     _mealsServed = [[NSMutableArray alloc] init];
+    grayImages = [[NSMutableDictionary alloc] init];
     venueJSONFormatter = [[NSDateFormatter alloc] init];
     [venueJSONFormatter setDateFormat:@"yyyy-MM-dd"];
     hoursJSONFormatter = [[NSDateFormatter alloc] init];
@@ -106,7 +107,12 @@ bool usingTempData;
 }
 
 - (UIImage *) convertToGreyscale:(UIImage *)i {
-    
+    if (!i) {
+        return nil;
+    }
+    if (grayImages[i.description]) {
+        return grayImages[i.description];
+    }
     int kRed = 1;
     int kGreen = 2;
     int kBlue = 4;
@@ -163,7 +169,7 @@ bool usingTempData;
     
     // make sure the data will be released by giving it to an autoreleased NSData
     [NSData dataWithBytesNoCopy:result length:m_width * m_height];
-    
+    grayImages[i.description] = resultUIImage;
     return resultUIImage;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -650,7 +656,7 @@ bool usingTempData;
     } else if ([upper isEqualToString:@"LITE BREAKFAST"]) {
         return LiteBreakfast;
     } else if ([upper isEqualToString:@"BRUNCH/LUNCH"]) {
-        return Lunch;
+        return Brunch;
     } else if ([upper isEqualToString:@"BREAKFAST/LUNCH"]) {
         return Brunch;
     } else if ([upper isEqualToString:@"LUNCH/DINNER"] || [upper isEqualToString:@"BREAKFAST/LUNCH/DINNER"]) {
