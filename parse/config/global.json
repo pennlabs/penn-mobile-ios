@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "PennMobile": {
+            "applicationId": "0Lczjpr6ygk2FIpBb4pcBIM8T2tGssq3QbMTsF4Z", 
+            "masterKey": "L5xNLXTz50n90AebPoTDjjEFQCo0evIMxs0bFWxf"
+        }, 
+        "_default": {
+            "link": "PennMobile"
+        }
+    }
+}

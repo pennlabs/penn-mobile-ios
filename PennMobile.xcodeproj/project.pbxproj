@@ -78,6 +78,7 @@
 		19B6BC401A159CEC002BFEA5 /* News.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC3E1A159CEC002BFEA5 /* News.png */; };
 		19B6BC411A159CEC002BFEA5 /* News-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC3F1A159CEC002BFEA5 /* News-selected.png */; };
 		19B6BC431A159D71002BFEA5 /* AGaramond.otf in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC421A159D3B002BFEA5 /* AGaramond.otf */; };
+		19B7EB5D1A788D6600ADE2E8 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B7EB5C1A788D6600ADE2E8 /* ParseCrashReporting.framework */; };
 		19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */; };
 		19C62D791A2EAFBC00AC59F5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */; };
 		19C62D7A1A2EAFBC00AC59F5 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D781A2EAFBC00AC59F5 /* AddressBookUI.framework */; };
@@ -223,6 +224,7 @@
 		19B6BC3E1A159CEC002BFEA5 /* News.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = News.png; path = Tabs/News.png; sourceTree = "<group>"; };
 		19B6BC3F1A159CEC002BFEA5 /* News-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "News-selected.png"; path = "Tabs/News-selected.png"; sourceTree = "<group>"; };
 		19B6BC421A159D3B002BFEA5 /* AGaramond.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AGaramond.otf; sourceTree = "<group>"; };
+		19B7EB5C1A788D6600ADE2E8 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		19C3A8B41A1C30B300D32D8A /* PennTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PennTableViewController.h; sourceTree = "<group>"; };
 		19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PennTableViewController.m; sourceTree = "<group>"; };
 		19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -289,6 +291,7 @@
 				19432D231A71C6CD003E9953 /* QuartzCore.framework in Frameworks */,
 				19432D241A71C6CD003E9953 /* Security.framework in Frameworks */,
 				19432D251A71C6CD003E9953 /* Social.framework in Frameworks */,
+				19B7EB5D1A788D6600ADE2E8 /* ParseCrashReporting.framework in Frameworks */,
 				19432D261A71C6CD003E9953 /* StoreKit.framework in Frameworks */,
 				19432D271A71C6CD003E9953 /* SystemConfiguration.framework in Frameworks */,
 				19C62D791A2EAFBC00AC59F5 /* AddressBook.framework in Frameworks */,
@@ -540,6 +543,7 @@
 		82982FAA19735ECC00DB2AE3 = {
 			isa = PBXGroup;
 			children = (
+				19B7EB5C1A788D6600ADE2E8 /* ParseCrashReporting.framework */,
 				19432D0C1A71C656003E9953 /* Bolts.framework */,
 				19432D0D1A71C656003E9953 /* Parse.framework */,
 				19B6BC421A159D3B002BFEA5 /* AGaramond.otf */,
@@ -631,6 +635,7 @@
 				82982FB019735ECC00DB2AE3 /* Frameworks */,
 				82982FB119735ECC00DB2AE3 /* Resources */,
 				A3E14287587F4121F45DC03E /* Copy Pods Resources */,
+				19B7EB5E1A788DFD00ADE2E8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -782,6 +787,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		19B7EB5E1A788DFD00ADE2E8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=/usr/local/bin:$PATH\ncd <path_to_cloudcode_folder>\n\nparse symbols \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"";
+		};
 		A3E14287587F4121F45DC03E /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
