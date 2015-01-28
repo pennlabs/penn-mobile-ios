@@ -74,10 +74,13 @@
     [_searchBar resignFirstResponder];
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self searchTemplate];
+}
+- (void)searchTemplate {
     [_searchBar resignFirstResponder];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.tableView.userInteractionEnabled = NO;
-    [self performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
+    [self performSelectorInBackground:@selector(queryHandler:) withObject:_searchBar.text];
 }
 - (void)reloadView {
     [self.tableView reloadData];

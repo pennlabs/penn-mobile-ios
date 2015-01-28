@@ -16,10 +16,20 @@
 #define REGISTRAR_PATH @"registrar/search?q="
 #define BUILDING_PATH @"buildings/"
 
+typedef NS_ENUM(NSInteger, CourseFilter) {
+    All = 1,
+    Lecture,
+    Lab,
+    Recitation,
+};
+
 @interface RegistrarTableViewController : PennTableViewController <UITableViewDelegate, UISearchBarDelegate> {
     NSIndexPath *selected;
+    CourseFilter currentFilter;
 }
+@property (weak, nonatomic) IBOutlet UISegmentedControl *filterSwitch;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
+-(IBAction)courseFilterSwitch:(id)sender;
 @end

@@ -28,5 +28,5 @@
 - (void)dismissKeyboard:(id)sender;
 - (BOOL)confirmConnection:(NSData *)data;
 - (void)reloadView;
-
+- (void)searchTemplate;
 @end

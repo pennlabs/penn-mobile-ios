@@ -78,23 +78,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Search for Courses" translatesAutoresizingMaskIntoConstraints="NO" id="7yU-Li-JXL">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="Eze-ss-PW2"/>
-                                </constraints>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Eze-ss-PW2"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <outlet property="delegate" destination="ny0-2L-RBc" id="aUE-X5-ynu"/>
-                                </connections>
-                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ny0-2L-RBc">
-                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="515"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="class" id="1Rq-9z-uhF" customClass="RegistrarTableViewCell">
@@ -184,15 +169,55 @@
                                     <outlet property="delegate" destination="MBR-bh-WCV" id="MT9-aQ-Un1"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" placeholder="Search for Courses" translatesAutoresizingMaskIntoConstraints="NO" id="7yU-Li-JXL">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Eze-ss-PW2"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Eze-ss-PW2"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="ny0-2L-RBc" id="aUE-X5-ynu"/>
+                                </connections>
+                            </searchBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zUc-5c-NPR">
+                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="o7S-yZ-frm">
+                                        <rect key="frame" x="16" y="8" width="343" height="29"/>
+                                        <segments>
+                                            <segment title="All"/>
+                                            <segment title="Lecture"/>
+                                            <segment title="Lab"/>
+                                            <segment title="Recitation"/>
+                                        </segments>
+                                        <color key="tintColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="courseFilterSwitch:" destination="MBR-bh-WCV" eventType="valueChanged" id="CO6-00-ybI"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" red="0.78035200161764307" green="0.78209293903169941" blue="0.80865940903172351" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="p8c-6D-Dfz"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="ny0-2L-RBc" secondAttribute="trailing" id="6Xy-au-cbL"/>
                             <constraint firstItem="ny0-2L-RBc" firstAttribute="leading" secondItem="Dop-xF-v35" secondAttribute="leading" id="82e-Dx-Tk9"/>
                             <constraint firstItem="ny0-2L-RBc" firstAttribute="top" secondItem="7yU-Li-JXL" secondAttribute="bottom" id="9Fr-1p-Ian"/>
-                            <constraint firstItem="ny0-2L-RBc" firstAttribute="top" secondItem="7yU-Li-JXL" secondAttribute="bottom" id="D3H-5s-mOW"/>
+                            <constraint firstItem="zUc-5c-NPR" firstAttribute="leading" secondItem="Dop-xF-v35" secondAttribute="leading" id="OYd-Qz-fVU"/>
+                            <constraint firstItem="ny0-2L-RBc" firstAttribute="top" secondItem="zUc-5c-NPR" secondAttribute="bottom" id="P8S-3y-ypW"/>
+                            <constraint firstAttribute="trailing" secondItem="zUc-5c-NPR" secondAttribute="trailing" id="Yha-he-awk"/>
                             <constraint firstItem="7yU-Li-JXL" firstAttribute="leading" secondItem="Dop-xF-v35" secondAttribute="leading" id="a96-uL-yps"/>
                             <constraint firstItem="7yU-Li-JXL" firstAttribute="top" secondItem="3Dc-BE-VdD" secondAttribute="bottom" id="ae1-hU-LRL"/>
+                            <constraint firstItem="zUc-5c-NPR" firstAttribute="top" secondItem="7yU-Li-JXL" secondAttribute="bottom" id="nff-YL-Uq4"/>
                             <constraint firstItem="clO-tx-4od" firstAttribute="top" secondItem="ny0-2L-RBc" secondAttribute="bottom" id="p0d-Yz-Pbp"/>
                             <constraint firstAttribute="trailing" secondItem="7yU-Li-JXL" secondAttribute="trailing" id="wBX-GI-3IX"/>
                         </constraints>
@@ -229,6 +254,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="filterSwitch" destination="o7S-yZ-frm" id="kLe-kl-zDu"/>
                         <outlet property="searchBar" destination="7yU-Li-JXL" id="g4r-9U-4yN"/>
                         <outlet property="tableView" destination="ny0-2L-RBc" id="Xkx-hF-4tU"/>
                         <segue destination="HKG-NO-KBC" kind="presentation" identifier="detail" id="qJU-VF-1ve"/>

@@ -24,10 +24,17 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // to dismiss the keyboard when the user taps on the table
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(IBAction)courseFilterSwitch:(id)sender {
+    currentFilter = (CourseFilter) _filterSwitch.selectedSegmentIndex + 1;
+    if (!super.searchBar.isFirstResponder && super.searchBar.text && super.searchBar.text.length > 0) {
+        [super searchTemplate];
+    }
 }
 #pragma mark - API
 
@@ -49,8 +56,19 @@
 }
 -(void)importData:(NSArray *)raw {
     for (NSDictionary *courseData in raw) {
-        if ([courseData[@"activity_description"] isEqualToString:@"Recitation"]) {
-            continue;
+        NSString *activityType = courseData[@"activity_description"];
+        if (currentFilter == Recitation) {
+            if (![activityType isEqualToString:@"Recitation"]) {
+                continue;
+            }
+        } else if (currentFilter == Lab) {
+            if (![activityType isEqualToString:@"Laboratory"]) {
+                continue;
+            }
+        } else if (currentFilter == Lecture) {
+            if (![activityType isEqualToString:@"Lecture"]) {
+                continue;
+            }
         }
         Course *new = [[Course alloc] init];
         new.identifier = courseData[@"_id"];
