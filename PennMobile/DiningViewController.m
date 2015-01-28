@@ -43,6 +43,7 @@ bool usingTempData;
     [mealJSONFormatter setDateFormat:@"MM/dd/yyyy"];
     prettyHourFormatter = [[NSDateFormatter alloc] init];
     [prettyHourFormatter setDateFormat:@"hh:mm a"];
+    self.tableView.hidden = YES;
     //usingTempData = true;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         ipad = true;
@@ -72,6 +73,9 @@ bool usingTempData;
 }
 
 - (void)refresh {
+    if (self.tableView.hidden) {
+        self.tableView.hidden = NO;
+    }
     [[self tableView] reloadData];
 }
 #pragma mark - Table view data source
@@ -656,7 +660,7 @@ bool usingTempData;
     } else if ([upper isEqualToString:@"LITE BREAKFAST"]) {
         return LiteBreakfast;
     } else if ([upper isEqualToString:@"BRUNCH/LUNCH"]) {
-        return Brunch;
+        return Lunch;
     } else if ([upper isEqualToString:@"BREAKFAST/LUNCH"]) {
         return Brunch;
     } else if ([upper isEqualToString:@"LUNCH/DINNER"] || [upper isEqualToString:@"BREAKFAST/LUNCH/DINNER"]) {
