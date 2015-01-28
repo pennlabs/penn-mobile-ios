@@ -20,6 +20,7 @@
 @interface DirectoryTableViewController : PennTableViewController <UISearchBarDelegate, ABNewPersonViewControllerDelegate, UIAlertViewDelegate> {
 
 }
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 -(NSDictionary *)requetPersonDetails:(NSString *)name;
 
