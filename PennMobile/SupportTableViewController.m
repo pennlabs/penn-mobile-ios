@@ -21,7 +21,7 @@
     pGeneral.phone = @"(215) 898-7297";
     pGeneral.phoneFiltered = @"2158987297";
     SupportItem *pEmergency = [[SupportItem alloc] init];
-    pEmergency.name = @"Penn Police Emergency";
+    pEmergency.name = @"Police Emergency/MERT";
     pEmergency.phone = @"(215) 573-3333";
     pEmergency.phoneFiltered = @"2155733333";
     SupportItem *pWalk = [[SupportItem alloc] init];
@@ -43,13 +43,24 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UITapGestureRecognizer *taptap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(easterEgg:)];
+    taptap.numberOfTapsRequired = 3;
+    [self.navigationItem.titleView addGestureRecognizer:taptap];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(IBAction)easterEgg:(id)sender {
+    NSMutableArray *arr = [NSMutableArray arrayWithArray:_contacts];
+    SupportItem *n = [[SupportItem alloc] init];
+    n.name = @"Jake Noonan - Single Rdy 2 Mingle";
+    n.phoneFiltered = @"http://pennlabs.org/mobile/easterEgg";
+    [arr addObject:n];
+    _contacts = [arr copy];
+    [self.tableView reloadData];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
