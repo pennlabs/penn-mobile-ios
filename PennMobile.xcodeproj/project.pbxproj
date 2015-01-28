@@ -51,7 +51,6 @@
 		1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1964BC8819C277DD00CEB1E1 /* MenuViewController.m */; };
 		1964BC8D19C281AD00CEB1E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82982FBE19735ECC00DB2AE3 /* Main.storyboard */; };
 		1965417F1A71D90C00026C92 /* SupportItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965417E1A71D90C00026C92 /* SupportItem.m */; };
-		1969DA1B19F9F8E6000C7076 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */; };
 		1978259619EDEE1F00284799 /* labs.png in Resources */ = {isa = PBXBuildFile; fileRef = 1978259519EDEE1F00284799 /* labs.png */; };
 		1978259A19EDFAB400284799 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978259919EDFAB400284799 /* AboutViewController.m */; };
 		1979A72C1A0C586000E1B7EB /* PCRAggregaotr.m in Sources */ = {isa = PBXBuildFile; fileRef = 1979A72B1A0C586000E1B7EB /* PCRAggregaotr.m */; };
@@ -232,7 +231,6 @@
 		19C669951A696A790076AF1C /* Starbucks.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Starbucks.jpg; sourceTree = "<group>"; };
 		19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
 		19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
-		19CB3E1D1A130C3400AF11D9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		19CB3E1F1A1576D600AF11D9 /* Book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Book.png; path = Tabs/Book.png; sourceTree = "<group>"; };
 		19DE26CD1A688FC200D072A7 /* dining-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dining-placeholder.png"; sourceTree = "<group>"; };
 		19DE26CF1A68901600D072A7 /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient.png; sourceTree = "<group>"; };
@@ -295,7 +293,6 @@
 				19432D271A71C6CD003E9953 /* SystemConfiguration.framework in Frameworks */,
 				19C62D791A2EAFBC00AC59F5 /* AddressBook.framework in Frameworks */,
 				19C62D7A1A2EAFBC00AC59F5 /* AddressBookUI.framework in Frameworks */,
-				1969DA1B19F9F8E6000C7076 /* Crashlytics.framework in Frameworks */,
 				19432D0F1A71C656003E9953 /* Parse.framework in Frameworks */,
 				19432D0E1A71C656003E9953 /* Bolts.framework in Frameworks */,
 				EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */,
@@ -546,7 +543,6 @@
 				19432D0C1A71C656003E9953 /* Bolts.framework */,
 				19432D0D1A71C656003E9953 /* Parse.framework */,
 				19B6BC421A159D3B002BFEA5 /* AGaramond.otf */,
-				19CB3E1D1A130C3400AF11D9 /* Crashlytics.framework */,
 				1964BC8A19C2818300CEB1E1 /* SampleData */,
 				195D940419BFC40200C6C8FA /* Assets */,
 				82982FB519735ECC00DB2AE3 /* PennMobile */,
@@ -634,7 +630,6 @@
 				82982FAF19735ECC00DB2AE3 /* Sources */,
 				82982FB019735ECC00DB2AE3 /* Frameworks */,
 				82982FB119735ECC00DB2AE3 /* Resources */,
-				1969DA1919F9F8CF000C7076 /* Run Script */,
 				A3E14287587F4121F45DC03E /* Copy Pods Resources */,
 			);
 			buildRules = (
@@ -787,20 +782,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1969DA1919F9F8CF000C7076 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run 18a765536e6539a73a15dd36c369ed29cfb91aa1 eadaa5316fedefe9c8fbf0ed70e87c140cba02735fa0e93742c3ecfd4466765c";
-		};
 		A3E14287587F4121F45DC03E /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

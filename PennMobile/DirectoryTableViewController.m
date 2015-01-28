@@ -132,7 +132,7 @@
     }
     NSError *error;
     if (!result) {
-        CLS_LOG(@"Data parameter was nil for query..returning null");
+        //CLS_LOG(@"Data parameter was nil for query..returning null");
         return nil;
     }
     NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
