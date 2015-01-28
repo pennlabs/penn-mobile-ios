@@ -79,6 +79,7 @@
 		19B6BC411A159CEC002BFEA5 /* News-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC3F1A159CEC002BFEA5 /* News-selected.png */; };
 		19B6BC431A159D71002BFEA5 /* AGaramond.otf in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC421A159D3B002BFEA5 /* AGaramond.otf */; };
 		19B7EB5D1A788D6600ADE2E8 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B7EB5C1A788D6600ADE2E8 /* ParseCrashReporting.framework */; };
+		19B7EB601A788EB600ADE2E8 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B7EB5F1A788EB600ADE2E8 /* libstdc++.6.dylib */; };
 		19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */; };
 		19C62D791A2EAFBC00AC59F5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */; };
 		19C62D7A1A2EAFBC00AC59F5 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D781A2EAFBC00AC59F5 /* AddressBookUI.framework */; };
@@ -225,6 +226,7 @@
 		19B6BC3F1A159CEC002BFEA5 /* News-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "News-selected.png"; path = "Tabs/News-selected.png"; sourceTree = "<group>"; };
 		19B6BC421A159D3B002BFEA5 /* AGaramond.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AGaramond.otf; sourceTree = "<group>"; };
 		19B7EB5C1A788D6600ADE2E8 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
+		19B7EB5F1A788EB600ADE2E8 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		19C3A8B41A1C30B300D32D8A /* PennTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PennTableViewController.h; sourceTree = "<group>"; };
 		19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PennTableViewController.m; sourceTree = "<group>"; };
 		19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -280,6 +282,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19B7EB601A788EB600ADE2E8 /* libstdc++.6.dylib in Frameworks */,
 				19432D291A71C9FD003E9953 /* Accounts.framework in Frameworks */,
 				19432D1C1A71C6CD003E9953 /* AudioToolbox.framework in Frameworks */,
 				19432D1D1A71C6CD003E9953 /* CFNetwork.framework in Frameworks */,
@@ -316,6 +319,7 @@
 		0F8F995CDFE7B714B314515F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19B7EB5F1A788EB600ADE2E8 /* libstdc++.6.dylib */,
 				19432D281A71C9FD003E9953 /* Accounts.framework */,
 				19432D101A71C6CD003E9953 /* AudioToolbox.framework */,
 				19432D111A71C6CD003E9953 /* CFNetwork.framework */,
@@ -798,7 +802,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=/usr/local/bin:$PATH\ncd <path_to_cloudcode_folder>\n\nparse symbols \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"";
+			shellScript = "export PATH=/usr/local/bin:$PATH\ncd parse\n\nparse symbols \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"";
 		};
 		A3E14287587F4121F45DC03E /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -994,7 +998,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
+				PROVISIONING_PROFILE = "e63836d8-6aa0-4674-b233-ab2bab39e190";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1019,7 +1023,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
+				PROVISIONING_PROFILE = "e63836d8-6aa0-4674-b233-ab2bab39e190";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
