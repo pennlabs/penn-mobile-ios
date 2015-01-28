@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 
-@interface PennTableViewController : UITableViewController <UISearchBarDelegate> {
+@interface PennTableViewController : UIViewController <UISearchBarDelegate> {
     NSMutableOrderedSet *tempSet;
 }
 
 @property NSArray *objects;
 @property NSObject *forSegue;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 - (NSArray *)searchFor:(NSString *)name split:(BOOL)split;
 - (NSDictionary *)requestDetail:(NSString *)name;
