@@ -14,10 +14,16 @@
 
 @implementation SlideOutMenuViewController
 
+static SlideOutMenuViewController *instance;
+
++ (SlideOutMenuViewController *)instance {
+    return instance;
+}
 - (IBAction)unwindToMenuViewController:(UIStoryboardSegue *)segue { }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    instance = self;
     // Do any additional setup after loading the view.
     _views = @[@"Dining", @"Directory", @"Courses", @"Transit", @"theDP", @"UTB", @"34th St", @"Events@Penn", @"About", @"Support"];
     UITapGestureRecognizer *labsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLabsURL:)];
@@ -26,7 +32,7 @@
     returnSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:returnSwipe];
 }
-- (void)returnToView:(id)sender {
+- (IBAction)returnToView:(id)sender {
     [self performSegueWithIdentifier:currentView sender:self];
 }
 - (void)showLabsURL:(id)sender {
@@ -36,7 +42,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)viewDidAppear:(BOOL)animated {
+    _menuOut = YES;
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    _menuOut = NO;
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *title = _views[indexPath.row];
     UIImage *image = [UIImage imageNamed:title];
@@ -76,7 +87,9 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _views.count;
 }
-
+- (void)returnToView {
+    [self performSegueWithIdentifier:currentView sender:self];
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

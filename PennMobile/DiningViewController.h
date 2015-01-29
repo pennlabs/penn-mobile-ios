@@ -10,6 +10,7 @@
 #import "DiningTableViewCell.h"
 #import "MenuViewController.h"
 #import "Meal.h"
+#import "SlideOutMenuViewController.h"
 
 #define kTitleKey @"title"
 #define kAddressKey @"address"
@@ -38,6 +39,7 @@
     NSMutableDictionary *grayImages;
     bool ipad;
     int sections;
+    UITapGestureRecognizer *cancelTouches;
 }
 
 /**

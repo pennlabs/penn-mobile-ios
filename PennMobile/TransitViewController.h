@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SlideOutMenuViewController.h"
 
-@interface TransitViewController : UIViewController <UIWebViewDelegate>
+@interface TransitViewController : UIViewController <UIWebViewDelegate> {
+    UITapGestureRecognizer *cancelTouches;
+}
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end

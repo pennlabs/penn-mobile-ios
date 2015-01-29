@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+#import "SlideOutMenuViewController.h"
 
-@interface AboutViewController : UIViewController <MFMailComposeViewControllerDelegate>
+@interface AboutViewController : UIViewController <MFMailComposeViewControllerDelegate> {
+    UITapGestureRecognizer *cancelTouches;
+}
 
 @property (weak, nonatomic) IBOutlet UIImageView *labsLogo;
 @property (weak, nonatomic) IBOutlet UILabel *labsHeader;

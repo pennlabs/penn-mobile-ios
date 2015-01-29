@@ -31,4 +31,5 @@
 - (BOOL)confirmConnection:(NSData *)data;
 - (void)reloadView;
 - (void)searchTemplate;
+- (IBAction)menuButton:(id)sender;
 @end
