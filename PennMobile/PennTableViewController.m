@@ -102,6 +102,8 @@
         SlideOutMenuViewController *menu = segue.destinationViewController;
         cancelTouches = [[UITapGestureRecognizer alloc] initWithTarget:menu action:@selector(unwindToMenuViewController:)];
         cancelTouches.cancelsTouchesInView = YES;
+        cancelTouches.numberOfTapsRequired = 1;
+        cancelTouches.numberOfTouchesRequired = 1;
         [self.view addGestureRecognizer:cancelTouches];
     }
 }
