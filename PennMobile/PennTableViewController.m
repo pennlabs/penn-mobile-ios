@@ -89,6 +89,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
+
 - (BOOL)confirmConnection:(NSData *)data {
     if (!data) {
         UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -96,15 +97,5 @@
         return false;
     }
     return true;
-}
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.destinationViewController isKindOfClass:[SlideOutMenuViewController class]]) {
-        SlideOutMenuViewController *menu = segue.destinationViewController;
-        cancelTouches = [[UITapGestureRecognizer alloc] initWithTarget:menu action:@selector(unwindToMenuViewController:)];
-        cancelTouches.cancelsTouchesInView = YES;
-        cancelTouches.numberOfTapsRequired = 1;
-        cancelTouches.numberOfTouchesRequired = 1;
-        [self.view addGestureRecognizer:cancelTouches];
-    }
 }
 @end

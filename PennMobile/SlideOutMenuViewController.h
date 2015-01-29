@@ -17,7 +17,12 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *labsImage;
+@property bool menuOut;
+
 @property NSArray *views;
 
 - (IBAction)unwindToMenuViewController:(UIStoryboardSegue *)segue;
+- (IBAction)returnToView:(id)sender;
++ (SlideOutMenuViewController *)instance;
+
 @end

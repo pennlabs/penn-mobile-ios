@@ -232,7 +232,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="WN6-JZ-FoI">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="T11-xz-UHm" kind="unwind" unwindAction="unwindToMenuViewController:" id="rkA-HY-YtU"/>
+                                <action selector="menuButton:" destination="MBR-bh-WCV" id="aZ2-EC-4sm"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" opaque="NO" contentMode="scaleToFill" id="top-Iy-CP9">
@@ -261,6 +261,7 @@
                         <outlet property="searchBar" destination="7yU-Li-JXL" id="g4r-9U-4yN"/>
                         <outlet property="tableView" destination="ny0-2L-RBc" id="Xkx-hF-4tU"/>
                         <segue destination="HKG-NO-KBC" kind="presentation" identifier="detail" id="qJU-VF-1ve"/>
+                        <segue destination="T11-xz-UHm" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="qa8-jN-XQa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UTL-mg-nl0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -668,7 +669,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="UPf-Sw-IvP">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="X0u-UR-FEb" kind="unwind" unwindAction="unwindToMenuViewController:" id="EbI-9k-dJf"/>
+                                <action selector="menuButton:" destination="X8R-ls-6Mg" id="kXx-2m-7tw"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="I0f-rB-bDY">
@@ -704,6 +705,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <segue destination="DSH-Mj-qtj" kind="show" identifier="cellClick" id="Zcg-Gv-wYv"/>
+                        <segue destination="X0u-UR-FEb" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="lAq-OB-sbG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KGh-tc-NU7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -992,7 +994,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="u2D-ri-1lN">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="Jl6-6y-ua9" kind="unwind" unwindAction="unwindToMenuViewController:" id="G41-F4-Chg"/>
+                                <action selector="menuButton:" destination="HGu-Jc-q8m" id="uL9-DM-T45"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="SC1-Tn-DTM">
@@ -1018,6 +1020,7 @@
                     <connections>
                         <outlet property="searchBar" destination="wpL-VY-etq" id="zQm-69-5mP"/>
                         <outlet property="tableView" destination="RtA-aV-BAo" id="rwK-r6-l8b"/>
+                        <segue destination="Jl6-6y-ua9" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="AEP-Yt-o3g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ep7-Hx-OIR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1087,7 +1090,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="tKj-Pk-hdl">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="iWV-Iq-yZq" kind="unwind" unwindAction="unwindToMenuViewController:" id="12V-wH-QhV"/>
+                                <action selector="menuButton:" destination="guj-Kx-i0U" id="ZUQ-86-Rfe"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="1Ba-tz-L4s">
@@ -1112,12 +1115,13 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="webView" destination="055-2x-qTS" id="2e2-M0-0Fr"/>
+                        <segue destination="iWV-Iq-yZq" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="Ogk-FE-P4L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ShU-Gh-2RB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="iWV-Iq-yZq" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="952.5" y="1674.5"/>
+            <point key="canvasLocation" x="999.5" y="1674.5"/>
         </scene>
         <!--Directory-->
         <scene sceneID="5wG-16-1Bo">
@@ -1298,7 +1302,7 @@ and the rest of Labs + UA</string>
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="yCV-Fy-kEG">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="k5h-yz-QYd" kind="unwind" unwindAction="unwindToMenuViewController:" id="LYC-XD-6L2"/>
+                                <action selector="menuButton:" destination="Pwi-0Z-QYc" id="3Vp-Of-TzC"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" opaque="NO" contentMode="scaleToFill" id="2I7-cQ-1aL">
@@ -1323,6 +1327,7 @@ and the rest of Labs + UA</string>
                     <connections>
                         <outlet property="labsHeader" destination="iQp-rW-VFf" id="dps-IM-xIJ"/>
                         <outlet property="labsLogo" destination="DYq-jU-kZ7" id="F8A-sx-L3S"/>
+                        <segue destination="k5h-yz-QYd" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="ocx-G2-h45"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jlx-dO-iDF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1379,7 +1384,7 @@ and the rest of Labs + UA</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="SHn-7r-8Ex" kind="custom" identifier="Registrar" customClass="ECSlidingSegue" id="MQi-pv-2Lx"/>
+                                            <segue destination="SHn-7r-8Ex" kind="custom" identifier="Courses" customClass="ECSlidingSegue" id="MQi-pv-2Lx"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Transit" id="vbl-sp-ih0">
@@ -1552,7 +1557,7 @@ and the rest of Labs + UA</string>
             </objects>
             <point key="canvasLocation" x="584.5" y="2411.5"/>
         </scene>
-        <!--News View Controller-->
+        <!--theDP-->
         <scene sceneID="NSk-VE-lEN">
             <objects>
                 <viewController id="EEs-ve-KSf" customClass="NewsViewController" sceneMemberID="viewController">
@@ -1578,12 +1583,11 @@ and the rest of Labs + UA</string>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="kSu-nS-VVT">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="theDP" id="kSu-nS-VVT">
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="Xca-Om-YEM">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="ez7-pS-rfX" kind="unwind" unwindAction="unwindToMenuViewController:" id="fgH-YM-QEi"/>
+                                <action selector="menuButton:" destination="EEs-ve-KSf" id="wxM-af-okH"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="1VT-fd-RAz">
@@ -1608,6 +1612,7 @@ and the rest of Labs + UA</string>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="webView" destination="85F-Pf-nez" id="oWp-oG-JuP"/>
+                        <segue destination="ez7-pS-rfX" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="lrp-fY-iJX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ho-bW-OiQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1660,12 +1665,11 @@ and the rest of Labs + UA</string>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="irV-Ti-ODH">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="34th" id="irV-Ti-ODH">
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="f47-EG-pt9">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="Ktj-kY-hSQ" kind="unwind" unwindAction="unwindToMenuViewController:" id="3Oh-ZI-Zvc"/>
+                                <action selector="menuButton:" destination="Po3-P7-A2k" id="otx-Yj-2XM"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="ydF-X0-ZRX">
@@ -1690,6 +1694,7 @@ and the rest of Labs + UA</string>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="webView" destination="gIQ-7B-pVA" id="Fd2-m9-RLC"/>
+                        <segue destination="Ktj-kY-hSQ" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="OjG-99-MpV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rbM-rh-Oaq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1742,12 +1747,11 @@ and the rest of Labs + UA</string>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="xc4-Em-NYf">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="UTB" id="xc4-Em-NYf">
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="S73-zL-aFz">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="ofW-AJ-2Rb" kind="unwind" unwindAction="unwindToMenuViewController:" id="CQr-AT-cPX"/>
+                                <action selector="menuButton:" destination="Vgh-mD-Ojg" id="BoM-jZ-pNi"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="rOj-Gq-GYp">
@@ -1772,6 +1776,7 @@ and the rest of Labs + UA</string>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="webView" destination="6lz-bs-nyC" id="eFm-09-O5B"/>
+                        <segue destination="ofW-AJ-2Rb" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="vkp-SN-GnO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8vy-qB-YJp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1837,7 +1842,7 @@ and the rest of Labs + UA</string>
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="1cJ-xa-4x7">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="E0J-el-QO6" kind="unwind" unwindAction="unwindToMenuViewController:" id="uyN-P5-HEv"/>
+                                <action selector="menuButton:" destination="Ukf-cy-1CY" id="j4Y-Yb-Wxr"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="tW5-Le-wT0">
@@ -1855,6 +1860,9 @@ and the rest of Labs + UA</string>
                         </view>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="E0J-el-QO6" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="hGK-Hg-37E"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qie-xS-Pt7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="E0J-el-QO6" userLabel="Exit" sceneMemberID="exit"/>
@@ -1887,12 +1895,11 @@ and the rest of Labs + UA</string>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="Ldu-R0-tFP">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="Events@Penn" id="Ldu-R0-tFP">
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="3SB-V3-W8L">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="E4M-LK-0Ha" kind="unwind" unwindAction="unwindToMenuViewController:" id="9D3-ID-Ejb"/>
+                                <action selector="menuButton:" destination="RF0-qJ-TkV" id="yxa-1k-HQG"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="MAl-tu-hXE">
@@ -1917,12 +1924,13 @@ and the rest of Labs + UA</string>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="webView" destination="qil-l6-SYU" id="uLH-JW-RsH"/>
+                        <segue destination="E4M-LK-0Ha" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="IPJ-9M-yX0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hy8-Bx-pjK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="E4M-LK-0Ha" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1653.5" y="3826.5"/>
+            <point key="canvasLocation" x="1653.5" y="3821.5"/>
         </scene>
         <!--Support-->
         <scene sceneID="zoT-Ag-lBC">

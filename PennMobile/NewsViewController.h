@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SlideOutMenuViewController.h"
 
-@interface NewsViewController : UIViewController <UIWebViewDelegate>
+@interface NewsViewController : UIViewController <UIWebViewDelegate> {
+    UITapGestureRecognizer *cancelTouches;
+}
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property NSString *url;
