@@ -37,6 +37,7 @@
     NSArray *images;
     NSMutableDictionary *grayImages;
     bool ipad;
+    int sections;
 }
 
 /**
