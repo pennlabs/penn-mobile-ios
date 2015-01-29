@@ -64,7 +64,7 @@ bool usingTempData;
         [residential removeAllObjects];
         [retail removeAllObjects];
     }
-    sections = 1;
+    sections = 2;
     [self performSelectorInBackground:@selector(loadFromAPI) withObject:nil];
 }
 
