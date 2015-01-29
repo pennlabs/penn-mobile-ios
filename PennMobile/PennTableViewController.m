@@ -97,4 +97,12 @@
     }
     return true;
 }
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.destinationViewController isKindOfClass:[SlideOutMenuViewController class]]) {
+        SlideOutMenuViewController *menu = segue.destinationViewController;
+        cancelTouches = [[UITapGestureRecognizer alloc] initWithTarget:menu action:@selector(unwindToMenuViewController:)];
+        cancelTouches.cancelsTouchesInView = YES;
+        [self.view addGestureRecognizer:cancelTouches];
+    }
+}
 @end

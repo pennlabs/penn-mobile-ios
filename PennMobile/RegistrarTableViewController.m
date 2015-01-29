@@ -220,6 +220,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    [super prepareForSegue:segue sender:sender];
     if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
         Course *forSegue = (Course *)super.forSegue;
         [((DetailViewController *)segue.destinationViewController) configureWithCourse:forSegue];

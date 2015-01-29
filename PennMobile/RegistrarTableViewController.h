@@ -12,7 +12,6 @@
 #import "RegistrarTableViewCell.h"
 #import "DetailViewController.h"
 #import "PennTableViewController.h"
-
 #define REGISTRAR_PATH @"registrar/search?q="
 #define BUILDING_PATH @"buildings/"
 

@@ -43,7 +43,7 @@ bool usingTempData;
     [mealJSONFormatter setDateFormat:@"MM/dd/yyyy"];
     prettyHourFormatter = [[NSDateFormatter alloc] init];
     [prettyHourFormatter setDateFormat:@"hh:mm a"];
-    self.tableView.hidden = YES;
+    //self.tableView.hidden = YES;
     //usingTempData = true;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         ipad = true;
@@ -64,6 +64,7 @@ bool usingTempData;
         [residential removeAllObjects];
         [retail removeAllObjects];
     }
+    sections = 1;
     [self performSelectorInBackground:@selector(loadFromAPI) withObject:nil];
 }
 
@@ -73,16 +74,13 @@ bool usingTempData;
 }
 
 - (void)refresh {
-    if (self.tableView.hidden) {
-        self.tableView.hidden = NO;
-    }
     [[self tableView] reloadData];
 }
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of types of dining locaitons
-    return 2;
+    return sections;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
