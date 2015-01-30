@@ -603,7 +603,7 @@
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a sample of Hill's Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YoE-xM-4ZY">
-                                            <rect key="frame" x="18" y="86" width="264" height="25"/>
+                                            <rect key="frame" x="18" y="86" width="240" height="25"/>
                                             <accessibility key="accessibilityConfiguration">
                                                 <accessibilityTraits key="traits" none="YES" link="YES" staticText="YES"/>
                                             </accessibility>
@@ -635,7 +635,7 @@
                                         <constraint firstItem="Qir-jD-5ZS" firstAttribute="leading" secondItem="KUx-um-gbo" secondAttribute="leadingMargin" constant="10" id="rwb-g5-zjb"/>
                                         <constraint firstItem="YoE-xM-4ZY" firstAttribute="leading" secondItem="KUx-um-gbo" secondAttribute="leadingMargin" constant="10" id="uF8-Mx-TNO"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="YoE-xM-4ZY" secondAttribute="trailing" constant="15" id="vQm-A1-Ku1"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="YoE-xM-4ZY" secondAttribute="trailing" constant="30" id="won-wS-h1Z"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="YoE-xM-4ZY" secondAttribute="trailing" constant="30" id="won-wS-h1Z"/>
                                         <constraint firstAttribute="trailing" secondItem="IVg-mZ-Zds" secondAttribute="trailing" id="ybR-RE-w7j"/>
                                     </constraints>
                                     <variation key="default">
@@ -815,7 +815,7 @@
                             <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ytz-En-EF4">
                                 <rect key="frame" x="37" y="183" width="300" height="300"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egP-MZ-cev">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="egP-MZ-cev">
                                         <rect key="frame" x="10" y="18" width="280" height="27"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="99" id="70h-kB-2lk"/>

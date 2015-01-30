@@ -209,10 +209,13 @@ bool usingTempData;
         //cell.venueLabel.text = _venues[indexPath.row])[kTitleKey];
         //cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
         int open = [self isOpen:cell.venueLabel.text];
+        cell.addressLabel.layer.masksToBounds = YES;
+        cell.addressLabel.layer.cornerRadius = cell.addressLabel.frame.size.height / 2;
         if (open > 0) {
             //[cell.back setImage:images[0]];
             cell.addressLabel.textColor = [UIColor whiteColor];
-            cell.addressLabel.text = [NSString stringWithFormat:@"Currently serving: %@", [self enumToStringTime:open]];
+            cell.addressLabel.backgroundColor = PENN_BLUE;
+            cell.addressLabel.text = [NSString stringWithFormat:@" Currently serving: %@ ", [self enumToStringTime:open]];
         } else {
             [cell.back setImage:[self convertToGreyscale:[UIImage imageNamed:cell.venueLabel.text]]];
             if (![UIImage imageNamed:cell.venueLabel.text]) {
@@ -220,8 +223,9 @@ bool usingTempData;
             }
             //[cell.back setImage:grayImages[0]];
             [cell layoutIfNeeded];
-            cell.addressLabel.textColor = [UIColor redColor];
-            cell.addressLabel.text = [NSString stringWithFormat:@"Next serving %@", [[self enumToStringTime:open] substringFromIndex:1]];
+            cell.addressLabel.backgroundColor = PENN_RED;
+
+            cell.addressLabel.text = [NSString stringWithFormat:@" Next serving %@ ", [[self enumToStringTime:open] substringFromIndex:1]];
             // This code shows the regions from the xml to query
         }
     }
