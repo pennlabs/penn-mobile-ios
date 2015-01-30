@@ -998,7 +998,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
+				PROVISIONING_PROFILE = "e63836d8-6aa0-4674-b233-ab2bab39e190";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1023,7 +1023,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
+				PROVISIONING_PROFILE = "e63836d8-6aa0-4674-b233-ab2bab39e190";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
