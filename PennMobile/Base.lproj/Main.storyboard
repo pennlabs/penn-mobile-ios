@@ -1063,13 +1063,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTE: real-time transit info may be inaccurate. Penn Transit is working to fix this." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Rgn-JS-dv5">
-                                <rect key="frame" x="10" y="489" width="355" height="60"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTE: real-time transit info may be inaccurate. Penn Transit is working to fix it." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Rgn-JS-dv5">
+                                <rect key="frame" x="45" y="489" width="285" height="60"/>
                                 <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="eVW-Zf-xEx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1081,12 +1081,12 @@
                             <constraint firstItem="055-2x-qTS" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leadingMargin" constant="-22" id="9LN-mN-uSz"/>
                             <constraint firstItem="LeZ-t5-Bqz" firstAttribute="top" secondItem="Rgn-JS-dv5" secondAttribute="bottom" constant="10" id="Nva-od-ahw"/>
                             <constraint firstAttribute="trailingMargin" secondItem="055-2x-qTS" secondAttribute="trailing" id="OOh-sL-h2U"/>
-                            <constraint firstItem="Rgn-JS-dv5" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" constant="10" id="Qvz-GK-kBj"/>
+                            <constraint firstItem="Rgn-JS-dv5" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" constant="45" id="Qvz-GK-kBj"/>
                             <constraint firstAttribute="bottom" secondItem="055-2x-qTS" secondAttribute="bottom" id="VHb-kC-TLG"/>
                             <constraint firstItem="055-2x-qTS" firstAttribute="top" secondItem="BtY-LY-h2c" secondAttribute="bottom" id="Ybt-Dg-fro"/>
                             <constraint firstItem="055-2x-qTS" firstAttribute="top" secondItem="BtY-LY-h2c" secondAttribute="bottom" id="djj-Uw-bU2"/>
                             <constraint firstAttribute="trailing" secondItem="055-2x-qTS" secondAttribute="trailing" id="j8y-gm-si8"/>
-                            <constraint firstAttribute="trailing" secondItem="Rgn-JS-dv5" secondAttribute="trailing" constant="10" id="p6f-JV-Shs"/>
+                            <constraint firstAttribute="trailing" secondItem="Rgn-JS-dv5" secondAttribute="trailing" constant="45" id="p6f-JV-Shs"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
