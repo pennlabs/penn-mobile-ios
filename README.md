@@ -6,4 +6,4 @@ Views: Dining Halls, Directory, Registrar, Transit (coming soon)
 
 Currently maintained by [Sacha Best](https://github.com/sachabest)
 
-NOTE: this repo requires [CocoaPods](http://cocoapods.org/) and [Crashlytics](https://www.crashlytics.com/dashboard) to work correctly. Please install both and always open the .xcworkspace file rather than the .xcodeproj file. 
+NOTE: this repo requires [CocoaPods](http://cocoapods.org/) and [ParseAnalytics](http://parse.com) to work correctly. Please install both and always open the .xcworkspace file rather than the .xcodeproj file. 
