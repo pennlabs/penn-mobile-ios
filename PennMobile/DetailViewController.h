@@ -19,6 +19,7 @@
     Course *info;
 }
 @property (weak, nonatomic) IBOutlet UILabel *noLoc;
+@property (weak, nonatomic) IBOutlet UILabel *labelTime;
 
 @property (weak, nonatomic) IBOutlet UILabel *labelNoLoc;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *viewTitle;

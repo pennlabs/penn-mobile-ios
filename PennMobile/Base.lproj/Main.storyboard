@@ -434,8 +434,8 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2w-N1-T72">
-                                <rect key="frame" x="10" y="373" width="355" height="283.5"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2w-N1-T72">
+                                <rect key="frame" x="10" y="406" width="355" height="250.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="YKo-dL-yfc"/>
@@ -484,6 +484,15 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday: 3:30-4:30PM" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPU-ZP-s4M">
+                                <rect key="frame" x="16" y="381" width="343" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="Inv-1z-4Xe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -492,19 +501,22 @@
                             <constraint firstItem="Ydb-NF-cdh" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" constant="15" id="30g-D5-5Fl"/>
                             <constraint firstAttribute="trailing" secondItem="Y8B-3j-qKJ" secondAttribute="trailing" constant="15" id="4kc-2K-SL4"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" constant="10" id="79p-i2-oxK"/>
-                            <constraint firstItem="Y2w-N1-T72" firstAttribute="top" secondItem="Ydb-NF-cdh" secondAttribute="bottom" id="7Ry-Ff-y2Y"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leadingMargin" constant="45" id="Bea-9O-3br"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="top" secondItem="NUr-nw-KiH" secondAttribute="bottom" constant="10" id="Bt5-8y-t0f"/>
                             <constraint firstItem="BEf-6H-Uae" firstAttribute="top" secondItem="YvY-Du-Z7d" secondAttribute="top" id="D1L-5r-xwC"/>
                             <constraint firstItem="BEf-6H-Uae" firstAttribute="trailing" secondItem="YvY-Du-Z7d" secondAttribute="trailingMargin" constant="13" id="E0E-12-EtZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Y2w-N1-T72" secondAttribute="trailing" constant="49" id="ELk-Wr-9Ph"/>
                             <constraint firstItem="ZYQ-Wn-Ste" firstAttribute="top" secondItem="Y8B-3j-qKJ" secondAttribute="bottom" constant="34" id="Ejs-x1-biD"/>
+                            <constraint firstItem="kPU-ZP-s4M" firstAttribute="top" secondItem="Ydb-NF-cdh" secondAttribute="bottom" constant="8" id="Eqy-Wx-RBk"/>
                             <constraint firstItem="BEf-6H-Uae" firstAttribute="top" secondItem="sBX-cz-nln" secondAttribute="bottom" constant="-20" id="FKC-mI-IdF"/>
+                            <constraint firstItem="Y2w-N1-T72" firstAttribute="top" secondItem="kPU-ZP-s4M" secondAttribute="bottom" constant="4" id="Gqf-Xo-irV"/>
                             <constraint firstAttribute="trailing" secondItem="dkX-5U-Q2j" secondAttribute="trailing" id="Hfa-Fx-snI"/>
                             <constraint firstItem="ZYQ-Wn-Ste" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leadingMargin" constant="54" id="IYz-BO-pz8"/>
+                            <constraint firstItem="Y2w-N1-T72" firstAttribute="top" secondItem="kPU-ZP-s4M" secondAttribute="bottom" constant="8" id="Iyu-i0-WU0"/>
                             <constraint firstItem="IBn-GR-zrS" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leadingMargin" constant="40" id="Kdc-Oe-szZ"/>
                             <constraint firstAttribute="trailing" secondItem="Y2w-N1-T72" secondAttribute="trailing" constant="10" id="Ngd-HX-Osn"/>
                             <constraint firstAttribute="trailing" secondItem="IBn-GR-zrS" secondAttribute="trailing" id="Pqa-sc-ISK"/>
+                            <constraint firstItem="kPU-ZP-s4M" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leadingMargin" id="RCl-qM-81n"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" constant="10" id="aav-Lj-4E3"/>
                             <constraint firstItem="Y8B-3j-qKJ" firstAttribute="top" secondItem="sBX-cz-nln" secondAttribute="bottom" constant="11" id="bKI-5h-2zB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ZYQ-Wn-Ste" secondAttribute="trailing" constant="54" id="bd3-2k-t5j"/>
@@ -513,6 +525,7 @@
                             <constraint firstItem="dkX-5U-Q2j" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" id="dGP-pE-MBj"/>
                             <constraint firstAttribute="trailing" secondItem="BEf-6H-Uae" secondAttribute="trailing" id="dZb-nU-qTR"/>
                             <constraint firstItem="IBn-GR-zrS" firstAttribute="top" secondItem="BEf-6H-Uae" secondAttribute="bottom" id="hvN-3E-VV5"/>
+                            <constraint firstItem="kPU-ZP-s4M" firstAttribute="trailing" secondItem="YvY-Du-Z7d" secondAttribute="trailingMargin" id="hy0-zk-m8c"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="top" secondItem="IBn-GR-zrS" secondAttribute="bottom" constant="25" id="n9a-gD-xJE"/>
                             <constraint firstItem="IBn-GR-zrS" firstAttribute="top" secondItem="BEf-6H-Uae" secondAttribute="bottom" constant="-25" id="och-W3-7su"/>
                             <constraint firstItem="NUr-nw-KiH" firstAttribute="top" secondItem="Y2w-N1-T72" secondAttribute="bottom" constant="10" id="q5H-nt-RYj"/>
@@ -541,6 +554,7 @@
                                 <exclude reference="Bea-9O-3br"/>
                                 <exclude reference="Bt5-8y-t0f"/>
                                 <exclude reference="ELk-Wr-9Ph"/>
+                                <exclude reference="Iyu-i0-WU0"/>
                                 <exclude reference="Ngd-HX-Osn"/>
                                 <exclude reference="n9a-gD-xJE"/>
                                 <exclude reference="ytv-1f-bwW"/>
@@ -554,6 +568,7 @@
                         <outlet property="credits" destination="65k-UQ-yD1" id="g2o-cM-ont"/>
                         <outlet property="detailText" destination="Y2w-N1-T72" id="h1X-Lb-kqP"/>
                         <outlet property="labelNoLoc" destination="ZYQ-Wn-Ste" id="Iqq-D3-vGw"/>
+                        <outlet property="labelTime" destination="kPU-ZP-s4M" id="eWG-cY-fty"/>
                         <outlet property="mapCover" destination="BEf-6H-Uae" id="4QK-os-dmO"/>
                         <outlet property="noLoc" destination="ZYQ-Wn-Ste" id="06t-Kt-1uc"/>
                         <outlet property="sectionNum" destination="vCo-8J-M3N" id="lqR-sz-Hdf"/>
