@@ -579,7 +579,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h9a-Wx-evq" id="KUx-um-gbo">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dining-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="bi0-es-Iat">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Gourmet Grocer" translatesAutoresizingMaskIntoConstraints="NO" id="bi0-es-Iat">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient" translatesAutoresizingMaskIntoConstraints="NO" id="IVg-mZ-Zds" userLabel="gradient">
@@ -1969,12 +1969,12 @@ and the rest of Labs + UA</string>
         <image name="About" width="60" height="60"/>
         <image name="Dining" width="60" height="60"/>
         <image name="Directory" width="60" height="60"/>
+        <image name="Gourmet Grocer" width="1600" height="600"/>
         <image name="News" width="60" height="60"/>
         <image name="News-selected" width="60" height="60"/>
         <image name="Registrar" width="60" height="60"/>
         <image name="Transit" width="60" height="60"/>
         <image name="UA" width="1383" height="1000"/>
-        <image name="dining-placeholder" width="1000" height="667"/>
         <image name="gradient" width="1000" height="240"/>
         <image name="labs" width="500" height="500"/>
     </resources>

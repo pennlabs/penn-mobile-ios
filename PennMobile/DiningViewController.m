@@ -193,8 +193,12 @@ bool usingTempData;
         default:
             break;
     }
-    [cell.back setImage:[UIImage imageNamed:cell.venueLabel.text]];
-    if (![UIImage imageNamed:cell.venueLabel.text]) {
+    NSString *venueName = cell.venueLabel.text;
+    if ([venueName isEqualToString:@"Pure Fare"]) {
+        venueName = [venueName stringByAppendingString:@" (coming soon)"];
+    }
+    [cell.back setImage:[UIImage imageNamed:venueName]];
+    if (![UIImage imageNamed:venueName]) {
         [cell.back setImage:[UIImage imageNamed:@"Penn"]];
     }
     // Configure the cell...
@@ -344,7 +348,7 @@ bool usingTempData;
 
 - (BOOL)confirmConnection:(NSData *)data {
     if (!data) {
-        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Some (or all) data may be unavailable. Please try again later." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         self.tableView.userInteractionEnabled = YES;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [new show];
@@ -414,7 +418,7 @@ bool usingTempData;
         if (menuURL && ![menuURL isEqualToString:@""] && ![[menuURL substringFromIndex:[menuURL length]-3] isEqualToString:@"737"]) {
             raw = [self loadMealsForVenueIndex:count];
             if (!raw)
-                return;
+                continue;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 [self parseAPIMeals:raw selector:selector target:target];
             });
