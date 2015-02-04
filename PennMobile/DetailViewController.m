@@ -35,6 +35,7 @@ static MKLocalSearch *search;
     [_viewTitle.layer setCornerRadius:20.0f];
     _titleText.text = info.title;
     _detailText.text = info.desc;
+    _labelTime.text = info.times;
     _detailText.font = [UIFont systemFontOfSize:15.0];
     [_courseNumber.layer setMasksToBounds:YES];
     _courseNumber.layer.cornerRadius = BORDER_RADIUS;

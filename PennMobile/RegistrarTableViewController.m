@@ -80,7 +80,16 @@
         new.sectionNum = courseData[@"section_number"];
         new.desc = courseData[@"course_description"];
         new.type = [courseData[@"type"] capitalizedString];
-        new.times = courseData[@"times"];
+        if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0) {
+            NSArray *mtgs = ((NSArray *)courseData[@"meetings"]);
+            int c;
+            NSString *toBuild = @"";
+            for (c = 0; c < mtgs.count - 1; c++) {
+                toBuild = [toBuild stringByAppendingFormat:@"%@ %@ - %@ | ", mtgs[c][@"meeting_days"], mtgs[c][@"start_time"], mtgs[c][@"end_time"]];
+            }
+            toBuild = [toBuild stringByAppendingFormat:@"%@ %@ - %@.", mtgs[c][@"meeting_days"], mtgs[c][@"start_time"], mtgs[c][@"end_time"]];
+            new.times = toBuild;
+        }
         new.roomBum = courseData[@"roomNumber"];
         new.sectionID = courseData[@"section_id_normalized"];
         new.primaryProf = courseData[@"primary_instructor"];
