@@ -108,12 +108,12 @@ bool usingTempData;
     return 0;
 }
 
-- (UIImage *) convertToGreyscale:(UIImage *)i {
+- (UIImage *) convertToGreyscale:(UIImage *)i name:(NSString *)name {
     if (!i) {
         return nil;
     }
-    if (grayImages[i.description]) {
-        return grayImages[i.description];
+    if (grayImages[name]) {
+        return grayImages[name];
     }
     int kRed = 1;
     int kGreen = 2;
@@ -171,7 +171,7 @@ bool usingTempData;
     
     // make sure the data will be released by giving it to an autoreleased NSData
     [NSData dataWithBytesNoCopy:result length:m_width * m_height];
-    grayImages[i.description] = resultUIImage;
+    grayImages[name] = resultUIImage;
     return resultUIImage;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -221,9 +221,9 @@ bool usingTempData;
             cell.addressLabel.backgroundColor = PENN_BLUE;
             cell.addressLabel.text = [NSString stringWithFormat:@" Currently serving: %@ ", [self enumToStringTime:open]];
         } else {
-            [cell.back setImage:[self convertToGreyscale:[UIImage imageNamed:cell.venueLabel.text]]];
+            [cell.back setImage:[self convertToGreyscale:[UIImage imageNamed:cell.venueLabel.text] name:cell.venueLabel.text]];
             if (![UIImage imageNamed:cell.venueLabel.text]) {
-                [cell.back setImage:[self convertToGreyscale:[UIImage imageNamed:@"Penn"]]];
+                [cell.back setImage:[self convertToGreyscale:[UIImage imageNamed:@"Penn"] name:@"Penn"]];
             }
             //[cell.back setImage:grayImages[0]];
             [cell layoutIfNeeded];
