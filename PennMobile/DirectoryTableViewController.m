@@ -54,6 +54,9 @@
 -(void)importData:(NSArray *)raw {
     if (!raw)
         return;
+    if (!tempSet) {
+        tempSet = [[NSMutableOrderedSet alloc] init];
+    }
     for (NSDictionary *personData in raw) {
         Person *new = [[Person alloc] init];
         new.name = [personData[@"list_name"] capitalizedString];
