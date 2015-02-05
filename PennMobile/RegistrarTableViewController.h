@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
 @interface RegistrarTableViewController : PennTableViewController <UITableViewDelegate, UISearchBarDelegate> {
     NSIndexPath *selected;
     CourseFilter currentFilter;
+    NSMutableDictionary *buildings;
 }
 @property (weak, nonatomic) IBOutlet UISegmentedControl *filterSwitch;
 
