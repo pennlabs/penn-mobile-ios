@@ -204,19 +204,18 @@
     NSString *phoneNumber = [@"tel://" stringByAppendingString:p.phone];
     NSString *textNumber = [@"sms://" stringByAppendingString:p.phone];
     NSString *email = [@"mailto://" stringByAppendingString:p.email];
-    switch (buttonIndex) {
-        case 1:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-            break;
-        case 2:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:textNumber]];
-            break;
-        case 3:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
-            break;
-        case 4:
-            [self addContact:p];
-            break;
+    NSString *buttonTtile = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([buttonTtile isEqualToString:@"Call"]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+
+    } else if ([buttonTtile isEqualToString:@"Text"]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:textNumber]];
+
+    } else if ([buttonTtile isEqualToString:@"Email"]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
+
+    } else if ([buttonTtile isEqualToString:@"Add to Contacts"]) {
+        [self addContact:p];
     }
 }
 
