@@ -24,7 +24,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // to dismiss the keyboard when the user taps on the table
-
+    buildings = [[NSMutableDictionary alloc] init];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -80,6 +80,9 @@
         new.sectionNum = courseData[@"section_number"];
         new.desc = courseData[@"course_description"];
         new.type = [courseData[@"type"] capitalizedString];
+        new.roomBum = courseData[@"roomNumber"];
+        new.sectionID = courseData[@"section_id_normalized"];
+        new.primaryProf = courseData[@"primary_instructor"];
         if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0) {
             NSArray *mtgs = ((NSArray *)courseData[@"meetings"]);
             int c;
@@ -89,33 +92,39 @@
             }
             toBuild = [toBuild stringByAppendingFormat:@"%@ %@ - %@.", mtgs[c][@"meeting_days"], mtgs[c][@"start_time"], mtgs[c][@"end_time"]];
             new.times = toBuild;
-        }
-        new.roomBum = courseData[@"roomNumber"];
-        new.sectionID = courseData[@"section_id_normalized"];
-        new.primaryProf = courseData[@"primary_instructor"];
-        if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0) {
             new.building = courseData[@"meetings"][0][@"building_name"];
             new.buildingCode = courseData[@"meetings"][0][@"building_code"];
             new.roomBum = courseData[@"meetings"][0][@"room_number"];
             if (new.buildingCode && ![new.buildingCode isEqualToString:@""]) {
-                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, BUILDING_PATH, new.buildingCode]];
-                NSData *result = [NSData dataWithContentsOfURL:url];
-                NSError *error;
-                @try {
-                NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
-                if (error) {
-                    [NSException raise:@"JSON parse error" format:@"%@", error];
-                } else {
-                    float lat = [returned[@"latitude"] doubleValue];
-                    float lon = [returned[@"longitude"] doubleValue];
-                    MKPointAnnotation *pt = [[MKPointAnnotation alloc] init];
-                    pt.coordinate = CLLocationCoordinate2DMake(lat, lon);
-                    pt.title = [[new.building stringByAppendingString:@" "]     stringByAppendingString:new.roomBum];
-                    new.point = pt;
+                if (buildings[new.buildingCode]) {
+                    MKPointAnnotation *pt = buildings[new.buildingCode];
+                    MKPointAnnotation *newPt = [[MKPointAnnotation alloc] init];
+                    newPt.title = [[new.building stringByAppendingString:@" "]     stringByAppendingString:new.roomBum];
+                    newPt.coordinate = pt.coordinate;
+                    new.point = newPt;
+                    // this because MKPointAnimation does not implement copying
                 }
-                }
-                @catch (NSException *e) {
-                    NSLog(@"No building found for %@", new.buildingCode);
+                else {
+                    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, BUILDING_PATH, new.buildingCode]];
+                    NSData *result = [NSData dataWithContentsOfURL:url];
+                    NSError *error;
+                    @try {
+                        NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
+                        if (error) {
+                            [NSException raise:@"JSON parse error" format:@"%@", error];
+                        } else {
+                            float lat = [returned[@"latitude"] doubleValue];
+                            float lon = [returned[@"longitude"] doubleValue];
+                            MKPointAnnotation *pt = [[MKPointAnnotation alloc] init];
+                            pt.coordinate = CLLocationCoordinate2DMake(lat, lon);
+                            pt.title = [[new.building stringByAppendingString:@" "]     stringByAppendingString:new.roomBum];
+                            new.point = pt;
+                            buildings[new.buildingCode] = pt;
+                        }
+                    }
+                    @catch (NSException *e) {
+                        NSLog(@"No building found for %@", new.buildingCode);
+                    }
                 }
             }
         }

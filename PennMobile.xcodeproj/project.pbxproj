@@ -492,8 +492,8 @@
 		19C3A8B31A1C309700D32D8A /* ListView */ = {
 			isa = PBXGroup;
 			children = (
-				19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */,
 				19C3A8B41A1C30B300D32D8A /* PennTableViewController.h */,
+				19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */,
 			);
 			name = ListView;
 			sourceTree = "<group>";
