@@ -20,6 +20,9 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
+    // to account for odd startup bug
+    super.objects = nil;
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     // to dismiss the keyboard when the user taps on the table
@@ -35,8 +38,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"person" forIndexPath:indexPath];
-    
-    [cell configure:super.objects[indexPath.row]];
+    if (indexPath.row < super.objects.count) {
+        [cell configure:super.objects[indexPath.row]];
+    }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
