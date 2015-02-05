@@ -108,7 +108,7 @@ static SlideOutMenuViewController *instance;
         [t setUrl:@"http://www.thedp.com/blog/under-the-button"];
     } else if ([segue.identifier isEqualToString:@"Events@Penn"]) {
         [t setUrl:@"http://eventsatpenn.com/"];
-    } else if ([segue.identifier isEqualToString:@"34th"]) {
+    } else if ([segue.identifier isEqualToString:@"34th St"]) {
         [t setUrl:@"http://www.34st.com/"];
     }
 
