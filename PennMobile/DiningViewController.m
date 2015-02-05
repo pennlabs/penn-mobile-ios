@@ -351,7 +351,12 @@ bool usingTempData;
         UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Some (or all) data may be unavailable. Please try again later." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         self.tableView.userInteractionEnabled = YES;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [new show];
+        @try {
+            [new show];
+        }
+        @catch (NSException *exception) {
+            // do something here
+        }
         return false;
     }
     return true;
