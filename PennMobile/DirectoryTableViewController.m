@@ -57,8 +57,12 @@
     for (NSDictionary *personData in raw) {
         Person *new = [[Person alloc] init];
         new.name = [personData[@"list_name"] capitalizedString];
-        new.phone = personData[@"list_phone"];
-        new.email = personData[@"list_email"];
+        if (personData[@"list_phone"]) {
+            new.phone = personData[@"list_phone"];
+        }
+        if (personData[@"list_email"]) {
+            new.email = personData[@"list_email"];
+        }
         new.identifier = personData[@"person_id"];
         new.organization = [personData[@"list_organization"] capitalizedString];
         //new.affiliation = personData[@"list_affiliation"];
