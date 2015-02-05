@@ -17,4 +17,6 @@
 #define PENN_RED [UIColor colorWithRed:153/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]
 #define BORDER_RADIUS 4
 #import "MBProgressHUD.h"
+#import <ParseCrashReporting/ParseCrashReporting.h>
+
 #endif
