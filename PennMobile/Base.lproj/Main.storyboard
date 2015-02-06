@@ -187,7 +187,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zUc-5c-NPR">
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="o7S-yZ-frm">
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="o7S-yZ-frm">
                                         <rect key="frame" x="16" y="8" width="343" height="29"/>
                                         <segments>
                                             <segment title="All"/>
@@ -203,6 +203,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.78035200161764307" green="0.78209293903169941" blue="0.80865940903172351" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="o7S-yZ-frm" secondAttribute="trailing" constant="16" id="BId-wf-8Je"/>
+                                    <constraint firstItem="o7S-yZ-frm" firstAttribute="top" secondItem="zUc-5c-NPR" secondAttribute="top" constant="8" id="ESY-Rg-FQS"/>
+                                    <constraint firstItem="o7S-yZ-frm" firstAttribute="leading" secondItem="zUc-5c-NPR" secondAttribute="leading" constant="16" id="Oop-yq-25w"/>
+                                    <constraint firstAttribute="bottom" secondItem="o7S-yZ-frm" secondAttribute="bottom" constant="8" id="ah3-ck-qa4"/>
                                     <constraint firstAttribute="height" constant="44" id="p8c-6D-Dfz"/>
                                 </constraints>
                             </view>
