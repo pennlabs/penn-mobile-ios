@@ -76,8 +76,16 @@
         NSString *courseNum2 = ((Person *)obj1).name;
         return [courseNum1 compare:courseNum2];
     }];
-    if (tempSet && tempSet.count > 0)
-        [tempSet removeAllObjects];
+    if (tempSet && tempSet.count > 0) {
+        @try {
+            [tempSet removeAllObjects];
+        }
+        @catch (NSException *exception) {
+            // TBD
+            // this is caused by a concurrent access
+            // i.e. removeAllObjects is called too many times
+        }
+    }
 }
 
 - (NSDictionary *)requetPersonDetails:(NSString *)name {
