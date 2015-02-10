@@ -276,8 +276,12 @@ bool usingTempData;
     _selectedVenue = venueName;
     _dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:[self isOpen:venueName]];
     if (!_dataForNextView || _dataForNextView.count == 0) {
-        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [new show];
+        _selectedVenueHours = [self getTimeStringForVenue:_selectedVenue onDate:[NSDate date]];
+        
+        [self performSegueWithIdentifier:@"hours" sender:self];
+        // replacing with hours popup
+//        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Menu Unavailable" message:@"The menu you requested is not currently available. Please note that we do not get menus for Express and Retail locations." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//        [new show];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
        }
     else {
@@ -286,7 +290,10 @@ bool usingTempData;
    /* } */
     
 }
-
+- (NSString *)getFullTimeStringForVenue:(NSString *)venue {
+    // temp
+    return nil;
+}
 #pragma mark - Navigation
 /**
  * This fragment is repeated across the app, still don't know the best way to refactor
@@ -338,6 +345,10 @@ bool usingTempData;
         //child.navigationItem.title = currentVenue;
         child.source = self;
         // need to send over available times qq
+    } else if ([segue.identifier isEqualToString:@"hours"]) {
+        FoodDetailViewController *child = ((FoodDetailViewController *)segue.destinationViewController);
+        child.titleString = _selectedVenue;
+        child.subString = _selectedVenueHours;
     }
 }
 
@@ -483,15 +494,23 @@ bool usingTempData;
     NSString *generated;
     for (NSDictionary *v in _mealTimes) {
         NSString *affectedVenue = [@"University of Pennsylvania " stringByAppendingString:v[@"name"]];
-        if ([affectedVenue isEqualToString:venue]) {
+        if ([affectedVenue isEqualToString:venue] || [venue isEqualToString:v[@"name"]]) {
             for (NSDictionary *d in v[@"dateHours"]) {
                 NSString *dateString = d[@"date"];
                 if ([self isSameDayWithDate1:date date2:[venueJSONFormatter dateFromString:dateString]]) {
                     // we have the right date and venue, etc.
-                    for (NSDictionary *m in d[@"meal"]) {
-                        NSDate *open = [hoursJSONFormatter dateFromString:m[@"open"]];
-                        NSDate *close = [hoursJSONFormatter dateFromString:m[@"close"]];
-                        NSString *type = m[@"type"];
+                    // NSArray vs NSDictionary if only one item...sigh
+                    if ([d[@"meal"] isKindOfClass:[NSArray class]]) {
+                        for (NSDictionary *m in d[@"meal"]) {
+                            NSDate *open = [hoursJSONFormatter dateFromString:m[@"open"]];
+                            NSDate *close = [hoursJSONFormatter dateFromString:m[@"close"]];
+                            NSString *type = m[@"type"];
+                            generated = [NSString stringWithFormat:@"%@: %@ - %@\n", type, [prettyHourFormatter stringFromDate:open], [prettyHourFormatter stringFromDate:close]];
+                        }
+                    } else {
+                        NSDate *open = [hoursJSONFormatter dateFromString:d[@"meal"][@"open"]];
+                        NSDate *close = [hoursJSONFormatter dateFromString:d[@"meal"][@"close"]];
+                        NSString *type = d[@"meal"][@"type"];
                         generated = [NSString stringWithFormat:@"%@: %@ - %@\n", type, [prettyHourFormatter stringFromDate:open], [prettyHourFormatter stringFromDate:close]];
                     }
                 }

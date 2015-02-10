@@ -725,6 +725,7 @@
                     <connections>
                         <segue destination="DSH-Mj-qtj" kind="show" identifier="cellClick" id="Zcg-Gv-wYv"/>
                         <segue destination="X0u-UR-FEb" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="lAq-OB-sbG"/>
+                        <segue destination="bOm-Lw-oRu" kind="presentation" identifier="hours" modalPresentationStyle="overFullScreen" modalTransitionStyle="coverVertical" id="QVS-YE-BQT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KGh-tc-NU7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1998,6 +1999,6 @@ and the rest of Labs + UA</string>
         <image name="labs" width="500" height="500"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="usY-bl-Z76"/>
+        <segue reference="QVS-YE-BQT"/>
     </inferredMetricsTieBreakers>
 </document>

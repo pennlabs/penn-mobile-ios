@@ -2,7 +2,9 @@ penn-mobile-ios
 ===============
 Official University of Pennsylvania iOS App
 
-Views: Dining Halls, Directory, Registrar, Transit (coming soon)
+Version 1.1.2: bug fixes and stability updates
+
+Code needs to be refactored and cleaned before open-sourcing.
 
 Currently maintained by [Sacha Best](https://github.com/sachabest)
 

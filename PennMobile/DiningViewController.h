@@ -11,6 +11,7 @@
 #import "MenuViewController.h"
 #import "Meal.h"
 #import "SlideOutMenuViewController.h"
+#import "FoodDetailViewController.h"
 
 #define kTitleKey @"title"
 #define kAddressKey @"address"
@@ -69,6 +70,7 @@
 @property Meal selectedMeal;
 @property NSDate *selectedDate;
 @property NSString *selectedVenue;
+@property NSString *selectedVenueHours;
 @property NSMutableArray *mealsServed;
 @property NSArray *dataForNextView;
 @property NSString *currentVenue;
@@ -86,6 +88,7 @@
 
 - (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSDate *)date atMeal:(Meal)meal;
 - (NSString *)getTimeStringForVenue:(NSString *)venue onDate:(NSDate *)date;
+- (NSString *)getFullTimeStringForVenue:(NSString *)venue;
 - (NSArray *)getDates;
 - (NSString *)getVenueByID:(int)identifier;
 - (int)getIDForVenue:(NSString *)venue;
