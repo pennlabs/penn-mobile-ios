@@ -72,6 +72,7 @@
 		197DBAF21A6F5A1000B0707C /* E@P-Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAF01A6F5A1000B0707C /* E@P-Grey.png */; };
 		198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198E232119F9C8E8000D33FD /* DetailViewController.m */; };
 		199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 199B90CE19DB7FCD0018CDE3 /* Person.m */; };
+		19A4ACE61A8DA3FA000804E2 /* BuildingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A4ACE51A8DA3FA000804E2 /* BuildingViewController.m */; };
 		19B4BDBD1A01DE73008DD69C /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 19B4BDBC1A01DE73008DD69C /* avatar.jpg */; };
 		19B6BC351A15998A002BFEA5 /* About.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC2C1A15998A002BFEA5 /* About.png */; };
 		19B6BC361A15998A002BFEA5 /* About-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC2D1A15998A002BFEA5 /* About-selected.png */; };
@@ -225,6 +226,8 @@
 		199B90CE19DB7FCD0018CDE3 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		199C2A7419D4C97C0020B153 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = PennMobile/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
 		199C2A7519D4CA250020B153 /* Meal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meal.h; sourceTree = "<group>"; };
+		19A4ACE41A8DA3FA000804E2 /* BuildingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingViewController.h; sourceTree = "<group>"; };
+		19A4ACE51A8DA3FA000804E2 /* BuildingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuildingViewController.m; sourceTree = "<group>"; };
 		19B4BDBC1A01DE73008DD69C /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
 		19B6BC2C1A15998A002BFEA5 /* About.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = About.png; path = Tabs/About.png; sourceTree = "<group>"; };
 		19B6BC2D1A15998A002BFEA5 /* About-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "About-selected.png"; path = "Tabs/About-selected.png"; sourceTree = "<group>"; };
@@ -331,6 +334,9 @@
 		0F8F995CDFE7B714B314515F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19B7EB5C1A788D6600ADE2E8 /* ParseCrashReporting.framework */,
+				19432D0C1A71C656003E9953 /* Bolts.framework */,
+				19432D0D1A71C656003E9953 /* Parse.framework */,
 				19B7EB5F1A788EB600ADE2E8 /* libstdc++.6.dylib */,
 				19432D281A71C9FD003E9953 /* Accounts.framework */,
 				19432D101A71C6CD003E9953 /* AudioToolbox.framework */,
@@ -489,6 +495,40 @@
 			name = PCR;
 			sourceTree = "<group>";
 		};
+		19A4ACE11A8DA2CB000804E2 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				195D940B19BFC44E00C6C8FA /* PennNavController.h */,
+				195D940C19BFC44E00C6C8FA /* PennNavController.m */,
+				198E232019F9C8E8000D33FD /* DetailViewController.h */,
+				198E232119F9C8E8000D33FD /* DetailViewController.m */,
+				19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */,
+				19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		19A4ACE21A8DA2DB000804E2 /* Old Swift Code */ = {
+			isa = PBXGroup;
+			children = (
+				82982FB819735ECC00DB2AE3 /* AppDelegate.swift */,
+				195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */,
+				82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */,
+				EBCE174819A715210008C332 /* Course.swift */,
+				195D940E19BFC58B00C6C8FA /* Agent.swift */,
+			);
+			name = "Old Swift Code";
+			sourceTree = "<group>";
+		};
+		19A4ACE31A8DA2FE000804E2 /* Building */ = {
+			isa = PBXGroup;
+			children = (
+				19A4ACE41A8DA3FA000804E2 /* BuildingViewController.h */,
+				19A4ACE51A8DA3FA000804E2 /* BuildingViewController.m */,
+			);
+			name = Building;
+			sourceTree = "<group>";
+		};
 		19C3A8B31A1C309700D32D8A /* ListView */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,9 +605,6 @@
 		82982FAA19735ECC00DB2AE3 = {
 			isa = PBXGroup;
 			children = (
-				19B7EB5C1A788D6600ADE2E8 /* ParseCrashReporting.framework */,
-				19432D0C1A71C656003E9953 /* Bolts.framework */,
-				19432D0D1A71C656003E9953 /* Parse.framework */,
 				19B6BC421A159D3B002BFEA5 /* AGaramond.otf */,
 				1964BC8A19C2818300CEB1E1 /* SampleData */,
 				195D940419BFC40200C6C8FA /* Assets */,
@@ -591,13 +628,12 @@
 		82982FB519735ECC00DB2AE3 /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
+				19A4ACE31A8DA2FE000804E2 /* Building */,
+				19A4ACE21A8DA2DB000804E2 /* Old Swift Code */,
+				19A4ACE11A8DA2CB000804E2 /* Helpers */,
 				192859DE1A6F214D00A47C67 /* News Views */,
 				1901F10C1A41FD9500DDFA9A /* SlideOut */,
 				19C3A8B31A1C309700D32D8A /* ListView */,
-				82982FB819735ECC00DB2AE3 /* AppDelegate.swift */,
-				82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */,
-				EBCE174819A715210008C332 /* Course.swift */,
-				195D940E19BFC58B00C6C8FA /* Agent.swift */,
 				82982FBE19735ECC00DB2AE3 /* Main.storyboard */,
 				82982FC119735ECC00DB2AE3 /* Images.xcassets */,
 				1978259719EDFAA500284799 /* About */,
@@ -607,14 +643,7 @@
 				19EDDC8719D24D030088C4DC /* Directory */,
 				1929ACFD19DBA20C00B15C5B /* Map */,
 				19EDDC8619D24CEF0088C4DC /* Dining */,
-				195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */,
-				195D940B19BFC44E00C6C8FA /* PennNavController.h */,
-				195D940C19BFC44E00C6C8FA /* PennNavController.m */,
 				196541801A71D91200026C92 /* Support */,
-				198E232019F9C8E8000D33FD /* DetailViewController.h */,
-				198E232119F9C8E8000D33FD /* DetailViewController.m */,
-				19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */,
-				19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */,
 			);
 			path = PennMobile;
 			sourceTree = "<group>";
@@ -889,6 +918,7 @@
 				82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
 				1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */,
+				19A4ACE61A8DA3FA000804E2 /* BuildingViewController.m in Sources */,
 				19EDDC8A19D24D230088C4DC /* PersonTableViewCell.m in Sources */,
 				192AEF3519C934F10068ABA6 /* FoodItemTableViewCell.m in Sources */,
 				1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */,
