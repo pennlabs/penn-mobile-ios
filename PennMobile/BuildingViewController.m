@@ -34,7 +34,9 @@
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [self.locationManager startUpdatingLocation];
-    
+    if (self.locationManager.location) {
+        hasCentered = YES;
+    }
     [self centerMapOnLocation];
 }
 - (void)centerMapOnLocation {
@@ -47,7 +49,10 @@
     [_mapView setRegion:region animated:YES];
 }
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    [self centerMapOnLocation];
+    if (!hasCentered) {
+        [self centerMapOnLocation];
+        hasCentered = YES;
+    }
 }
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     
