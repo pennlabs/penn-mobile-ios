@@ -6,7 +6,8 @@
 //  Created by Sacha Best on 9/9/14.
 //  Copyright (c) 2014 PennLabs. All rights reserved.
 //
-
+// This file needs to be analyzed for performance (lots of O(n^2) everywhere)
+//
 #import "DiningViewController.h"
 
 @interface DiningViewController ()
@@ -491,7 +492,7 @@ bool usingTempData;
     **/
 }
 - (NSString *)getTimeStringForVenue:(NSString *)venue onDate:(NSDate *)date {
-    NSString *generated;
+    NSString *generated = @"";
     for (NSDictionary *v in _mealTimes) {
         NSString *affectedVenue = [@"University of Pennsylvania " stringByAppendingString:v[@"name"]];
         if ([affectedVenue isEqualToString:venue] || [venue isEqualToString:v[@"name"]]) {
@@ -505,7 +506,7 @@ bool usingTempData;
                             NSDate *open = [hoursJSONFormatter dateFromString:m[@"open"]];
                             NSDate *close = [hoursJSONFormatter dateFromString:m[@"close"]];
                             NSString *type = m[@"type"];
-                            generated = [NSString stringWithFormat:@"%@: %@ - %@\n", type, [prettyHourFormatter stringFromDate:open], [prettyHourFormatter stringFromDate:close]];
+                            generated = [generated stringByAppendingString:[NSString stringWithFormat:@"%@: %@ - %@\n", type, [prettyHourFormatter stringFromDate:open], [prettyHourFormatter stringFromDate:close]]];
                         }
                     } else {
                         NSDate *open = [hoursJSONFormatter dateFromString:d[@"meal"][@"open"]];
@@ -652,28 +653,25 @@ bool usingTempData;
                                 return _selectedMeal;
                             }
                             // fix for Starbucks (hours rolled over from prev day (open 6am close 2am)
-                            else if (startHour == 6 && endHour == 2 && ([now hour] > 6 || [now hour] < 2)) {
-                                _selectedMeal = [self stringTimeToEnum:mealTime[@"type"]];
-                                return _selectedMeal;
-                            }
                         }
                     } else {
                         componentsForFirstDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:date[@"meal"][@"open"]]];
                         NSDateComponents *now = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[NSDate date]];
-                        componentsForSecondDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:date[@"meal"][@"open"]]];
+                        componentsForSecondDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:date[@"meal"][@"close"]]];
                         long startHour = [componentsForFirstDate hour];
                         long endHour = [componentsForSecondDate hour];
                         if (endHour == 0) endHour = 24;
                         if (startHour == 0) startHour = 24;
                         if (startHour <= [now hour] &&
-                            [now hour] <= endHour) {
+                            [now hour] < endHour) {
                             _selectedMeal = [self stringTimeToEnum:date[@"meal"][@"type"]];
                             return _selectedMeal;
                         }
-                        // fix for Starbucks (hours rolled over from prev day (open 6am close 2am)
-                        else if (startHour == 6 && endHour == 2 && ([now hour] > 6 || [now hour] < 2)) {
-                            _selectedMeal = [self stringTimeToEnum:date[@"meal"][@"type"]];
-                            return _selectedMeal;
+                        if ([venue rangeOfString:@"Starbucks"].location != NSNotFound ) {
+                            if (!(startHour <= [now hour] && [now hour] < endHour)) {
+                                _selectedMeal = [self stringTimeToEnum:date[@"meal"][@"type"]];
+                                return _selectedMeal;
+                            }
                         }
                     }
                 }
