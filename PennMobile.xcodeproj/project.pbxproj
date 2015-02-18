@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */; };
+		1913FB131A94125000D2E17C /* Building.m in Sources */ = {isa = PBXBuildFile; fileRef = 1913FB121A94125000D2E17C /* Building.m */; };
 		192859FB1A6F4F8900A47C67 /* FoodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192859FA1A6F4F8900A47C67 /* FoodDetailViewController.m */; };
 		1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929ACFF19DBA21E00B15C5B /* TransitViewController.m */; };
 		192AEF3519C934F10068ABA6 /* FoodItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 192AEF3419C934F10068ABA6 /* FoodItemTableViewCell.m */; };
@@ -141,6 +142,8 @@
 		16E1C19330F2CC1E8F480AD7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1901F10D1A41FDAC00DDFA9A /* SlideOutMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideOutMenuViewController.h; sourceTree = "<group>"; };
 		1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideOutMenuViewController.m; sourceTree = "<group>"; };
+		1913FB111A94125000D2E17C /* Building.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
+		1913FB121A94125000D2E17C /* Building.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Building.m; sourceTree = "<group>"; };
 		192859F91A6F4F8900A47C67 /* FoodDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodDetailViewController.h; sourceTree = "<group>"; };
 		192859FA1A6F4F8900A47C67 /* FoodDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoodDetailViewController.m; sourceTree = "<group>"; };
 		1929ACFE19DBA21E00B15C5B /* TransitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitViewController.h; sourceTree = "<group>"; };
@@ -525,6 +528,8 @@
 			children = (
 				19A4ACE41A8DA3FA000804E2 /* BuildingViewController.h */,
 				19A4ACE51A8DA3FA000804E2 /* BuildingViewController.m */,
+				1913FB111A94125000D2E17C /* Building.h */,
+				1913FB121A94125000D2E17C /* Building.m */,
 			);
 			name = Building;
 			sourceTree = "<group>";
@@ -686,7 +691,7 @@
 				82982FB019735ECC00DB2AE3 /* Frameworks */,
 				82982FB119735ECC00DB2AE3 /* Resources */,
 				A3E14287587F4121F45DC03E /* Copy Pods Resources */,
-				19B7EB5E1A788DFD00ADE2E8 /* ShellScript */,
+				19B7EB5E1A788DFD00ADE2E8 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -844,13 +849,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		19B7EB5E1A788DFD00ADE2E8 /* ShellScript */ = {
+		19B7EB5E1A788DFD00ADE2E8 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -902,6 +908,7 @@
 				EBCE174919A715210008C332 /* Course.swift in Sources */,
 				192C6F2F1A158533008D507C /* NewsViewController.m in Sources */,
 				1955ADEC1A71D89600D54A9C /* SupportTableViewController.m in Sources */,
+				1913FB131A94125000D2E17C /* Building.m in Sources */,
 				1965417F1A71D90C00026C92 /* SupportItem.m in Sources */,
 				195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */,
 				1944CD3819EDE3C800DBF9EE /* Course.m in Sources */,

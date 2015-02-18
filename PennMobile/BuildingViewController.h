@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "DetailViewController.h"
+#import "Building.h"
+#import "SlideOutMenuViewController.h"
+
+#define BUILDING_PATH @"buildings/search?q="
 
 @interface BuildingViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate> {
     bool hasCentered;
+    Building *selected;
+    NSMutableArray *results;
+    UITapGestureRecognizer *cancelTouches;
 }
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
