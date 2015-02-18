@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "Course.h"
+#import "Building.h"
 
 #define kMapSize 800
 
@@ -18,6 +19,8 @@
     CLLocationManager *locationManager;
     Course *info;
 }
+
+@property Building *building;
 @property (weak, nonatomic) IBOutlet UILabel *noLoc;
 @property (weak, nonatomic) IBOutlet UILabel *labelTime;
 

@@ -1,4 +1,4 @@
-//
+    //
 //  AppDelegate.swift
 //  PennMobile
 //
@@ -20,7 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.setStatusBarStyle(UIStatusBarStyle.LightContent, animated:true);
         ParseCrashReporting.enable()
         Parse.setApplicationId("0Lczjpr6ygk2FIpBb4pcBIM8T2tGssq3QbMTsF4Z", clientKey: "YjkMxWl752Pw9wqmf8fGQ2ViTa4m5kQOcUA1L7Jv");
-        PFUser.enableAutomaticUser()
+        PFUser.enableAutomaticUser();
+        PFUser.currentUser().saveEventually();
+        PFInstallation.currentInstallation().saveEventually();
         PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions, block: { (valid, error) -> Void in
             // do nothing here
         })
@@ -56,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let current : PFInstallation = PFInstallation.currentInstallation();
         current.setDeviceTokenFromData(deviceToken);
-        current.save();
+        current.saveEventually();
     }
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         PFPush.handlePush(userInfo);
