@@ -21,6 +21,7 @@
             <string>AGaramondPro-Regular</string>
             <string>AGaramondPro-Regular</string>
             <string>AGaramondPro-Regular</string>
+            <string>AGaramondPro-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1368,6 +1369,82 @@ and the rest of Labs + UA</string>
             </objects>
             <point key="canvasLocation" x="967.5" y="-1223.5"/>
         </scene>
+        <!--Building View Controller-->
+        <scene sceneID="kvT-in-2sD">
+            <objects>
+                <viewController id="myL-q9-w5H" customClass="BuildingViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zaD-Lg-ffv"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ym5-TO-Ha2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JAk-iP-VPg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="E1C-gq-CG2">
+                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                <connections>
+                                    <outlet property="delegate" destination="myL-q9-w5H" id="26v-kX-ezg"/>
+                                </connections>
+                            </mapView>
+                            <searchBar contentMode="redraw" placeholder="Search for Buildings" translatesAutoresizingMaskIntoConstraints="NO" id="bIv-fe-I6P">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="pdn-cv-1l8"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="myL-q9-w5H" id="7JL-ZF-JEm"/>
+                                </connections>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="E1C-gq-CG2" firstAttribute="top" secondItem="bIv-fe-I6P" secondAttribute="bottom" id="475-pd-czc"/>
+                            <constraint firstItem="bIv-fe-I6P" firstAttribute="top" secondItem="JAk-iP-VPg" secondAttribute="topMargin" id="BXJ-JA-FSp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="E1C-gq-CG2" secondAttribute="trailing" constant="-16" id="INe-qA-i00"/>
+                            <constraint firstItem="E1C-gq-CG2" firstAttribute="leading" secondItem="JAk-iP-VPg" secondAttribute="leadingMargin" constant="-16" id="Nr1-hg-UfE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bIv-fe-I6P" secondAttribute="trailing" constant="-16" id="aTg-ek-5vx"/>
+                            <constraint firstItem="bIv-fe-I6P" firstAttribute="leading" secondItem="JAk-iP-VPg" secondAttribute="leadingMargin" constant="-16" id="jC0-0c-tea"/>
+                            <constraint firstItem="Ym5-TO-Ha2" firstAttribute="top" secondItem="E1C-gq-CG2" secondAttribute="bottom" id="lmb-cJ-7Cx"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="nfF-Uu-2Tw">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="f7E-hJ-V91">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="menuButton:" destination="Pwi-0Z-QYc" id="6q8-vQ-I53"/>
+                                <segue destination="B67-q0-ImR" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="SoZ-rI-7sp"/>
+                            </connections>
+                        </barButtonItem>
+                        <view key="titleView" contentMode="scaleToFill" id="LO0-kr-nDZ">
+                            <rect key="frame" x="112.5" y="5.5" width="150" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Maps" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="V9E-2K-u60">
+                                    <rect key="frame" x="24.5" y="0.5" width="100" height="33"/>
+                                    <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="mapView" destination="E1C-gq-CG2" id="gaw-nR-dkX"/>
+                        <outlet property="searchBar" destination="bIv-fe-I6P" id="1VU-UP-7Kh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ozc-vV-H2M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="B67-q0-ImR" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="977.5" y="-1953.5"/>
+        </scene>
         <!--Slide Out Menu View Controller-->
         <scene sceneID="fod-6H-kec">
             <objects>
@@ -1418,6 +1495,16 @@ and the rest of Labs + UA</string>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <segue destination="SHn-7r-8Ex" kind="custom" identifier="Courses" customClass="ECSlidingSegue" id="MQi-pv-2Lx"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Maps" id="Qy1-LO-lda">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qy1-LO-lda" id="rjy-H8-HSM">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <segue destination="MIw-dp-8Jb" kind="custom" identifier="Maps" customClass="ECSlidingSegue" id="RyB-yb-QJT"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Transit" id="vbl-sp-ih0">
@@ -1983,6 +2070,37 @@ and the rest of Labs + UA</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z3N-Jy-v9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="830.5" y="4537.5"/>
+        </scene>
+        <!--Maps-->
+        <scene sceneID="IYF-ZZ-Qcs">
+            <objects>
+                <navigationController storyboardIdentifier="MapsNavController" title="Maps" id="MIw-dp-8Jb" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="About" image="About" id="sQ0-19-0Tc"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="uYc-zk-P33">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="A3b-23-p8D">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="myL-q9-w5H" kind="relationship" relationship="rootViewController" id="Zf9-hb-ze3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IqO-dg-HCI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="3Sc-Pk-NaN">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="bO4-ly-vyn">
+                            <rect key="frame" x="65" y="0.0" width="120" height="33"/>
+                        </imageView>
+                    </subviews>
+                </view>
+            </objects>
+            <point key="canvasLocation" x="544.5" y="-1953.5"/>
         </scene>
     </scenes>
     <resources>
