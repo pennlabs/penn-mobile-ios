@@ -20,7 +20,7 @@
     }
     return nil;
 }
-- (NSDictionary *)createAddressDictionary {
+- (NSDictionary *)generateAddressDictionary {
     return @{
              (__bridge NSString *) kABPersonAddressStreetKey : self.addressState,
              (__bridge NSString *) kABPersonAddressCityKey : self.addressCity,
