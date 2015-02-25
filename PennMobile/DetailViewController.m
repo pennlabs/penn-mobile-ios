@@ -65,11 +65,16 @@ static MKLocalSearch *search;
         _courseNumber.hidden = YES;
         _buttonRoute.enabled = YES;
     }
+    [_labelTime removeFromSuperview];
+    //CGRect newDescFrame = CGRectMake(_detailText.frame.origin.x, _labelTime.frame.origin.y, _detailText.frame.size.width, _detailText.frame.size.height);
+    //_detailText.frame = newDescFrame;
     _detailText.text = building.desc;
     _courseNumber.text = building.code;
     _labelTime.text = @"";
-    _credits.hidden = YES;
-    _sectionNum.hidden = YES;
+    [_credits removeFromSuperview];
+    [_sectionNum removeFromSuperview];
+    _subText.numberOfLines = 2;
+    _subText.lineBreakMode = NSLineBreakByWordWrapping;
     [building loadImageWithBlock:^(UIImage *img) {
         _imageCover.image = img;
     }];

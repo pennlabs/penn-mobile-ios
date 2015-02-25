@@ -335,9 +335,9 @@
                                         </connections>
                                     </button>
                                     <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="YAX-Av-pd9">
-                                        <rect key="frame" x="146" y="15" width="190" height="40"/>
+                                        <rect key="frame" x="146" y="15" width="190" height="45"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="No Professor Listed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="83Q-Zw-TXu">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="No Professor Listed" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="13" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="83Q-Zw-TXu">
                                                 <rect key="frame" x="0.0" y="-2" width="190" height="26"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="26" id="k45-vd-h6X"/>
@@ -345,6 +345,11 @@
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                 <color key="textColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="k45-vd-h6X"/>
+                                                    </mask>
+                                                </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Section ---" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="vCo-8J-M3N">
                                                 <rect key="frame" x="0.0" y="23" width="190" height="18"/>
@@ -356,7 +361,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="- CU" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="65k-UQ-yD1">
-                                                <rect key="frame" x="87" y="24" width="103" height="16"/>
+                                                <rect key="frame" x="87" y="24" width="103" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="18" id="ZK4-CY-pPU"/>
                                                     <constraint firstAttribute="height" constant="18" id="oKp-2n-6pd"/>
@@ -377,6 +382,7 @@
                                             <constraint firstAttribute="trailing" secondItem="vCo-8J-M3N" secondAttribute="trailing" constant="8" id="2gq-wo-qOd"/>
                                             <constraint firstItem="vCo-8J-M3N" firstAttribute="top" secondItem="YAX-Av-pd9" secondAttribute="top" constant="23" id="7Tb-7Y-fiA"/>
                                             <constraint firstAttribute="bottom" secondItem="65k-UQ-yD1" secondAttribute="bottom" id="8yz-cg-S6s"/>
+                                            <constraint firstItem="65k-UQ-yD1" firstAttribute="top" secondItem="83Q-Zw-TXu" secondAttribute="bottom" id="Cbn-yk-CVN"/>
                                             <constraint firstAttribute="trailing" secondItem="65k-UQ-yD1" secondAttribute="trailing" id="EeT-sd-5kn"/>
                                             <constraint firstItem="65k-UQ-yD1" firstAttribute="top" secondItem="YAX-Av-pd9" secondAttribute="top" constant="24" id="G0F-HF-cl5"/>
                                             <constraint firstAttribute="trailing" secondItem="83Q-Zw-TXu" secondAttribute="trailing" constant="8" id="Hn1-3N-cvk"/>
@@ -422,7 +428,7 @@
                                     <constraint firstItem="YAX-Av-pd9" firstAttribute="top" secondItem="IBn-GR-zrS" secondAttribute="top" constant="15" id="Lw2-Ia-dPs"/>
                                     <constraint firstItem="YAX-Av-pd9" firstAttribute="leading" secondItem="1o6-7X-K0U" secondAttribute="trailing" constant="8" id="U8K-re-lXI"/>
                                     <constraint firstAttribute="trailing" secondItem="YAX-Av-pd9" secondAttribute="trailing" constant="8" id="Yye-2L-Zhd"/>
-                                    <constraint firstAttribute="bottom" secondItem="YAX-Av-pd9" secondAttribute="bottom" constant="15" id="c7n-Bl-stP"/>
+                                    <constraint firstAttribute="bottom" secondItem="YAX-Av-pd9" secondAttribute="bottom" constant="10" id="c7n-Bl-stP"/>
                                     <constraint firstItem="1o6-7X-K0U" firstAttribute="top" secondItem="IBn-GR-zrS" secondAttribute="top" constant="15" id="gJi-eK-dIh"/>
                                     <constraint firstAttribute="bottom" secondItem="1o6-7X-K0U" secondAttribute="bottom" constant="15" id="hnh-Ml-7B5"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YAX-Av-pd9" secondAttribute="trailing" id="jgr-Wk-vtn"/>
@@ -454,9 +460,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2w-N1-T72">
-                                <rect key="frame" x="10" y="406" width="355" height="250.5"/>
+                                <rect key="frame" x="10" y="406" width="355" height="251"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="1YQ-HE-E7d"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="YKo-dL-yfc"/>
                                     <constraint firstAttribute="width" id="wSS-4E-GeH"/>
                                 </constraints>
@@ -467,6 +474,7 @@
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="YKo-dL-yfc"/>
                                         <exclude reference="wSS-4E-GeH"/>
                                     </mask>
                                 </variation>
