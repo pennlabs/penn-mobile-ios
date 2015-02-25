@@ -18,6 +18,7 @@
     bool hasCentered;
     Building *selected;
     NSMutableArray *results;
+    NSMutableDictionary *resultToName;
     UITapGestureRecognizer *cancelTouches;
 }
 

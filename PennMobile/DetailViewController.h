@@ -18,9 +18,10 @@
     MKMapItem *center;
     CLLocationManager *locationManager;
     Course *info;
+    Building *building;
 }
 
-@property Building *building;
+@property (weak, nonatomic) IBOutlet UIButton *buttonRoute;
 @property (weak, nonatomic) IBOutlet UILabel *noLoc;
 @property (weak, nonatomic) IBOutlet UILabel *labelTime;
 
@@ -38,6 +39,9 @@
 
 -(void)configureUsingCover:(id)cover title:(NSString *)title sub:(NSString *)sub number:(NSString *)num credits:(NSString *)credits detail:(NSString *)detail;
 -(IBAction)back:(id)sender;
+-(IBAction)route:(id)sender;
 +(void)searchForBuilding:(NSString *)query sender:(id)sender completion:(SEL)completion;
 -(void)configureWithCourse:(Course *)course;
+-(void)configureUsingBuilding:(Building *)bldg;
+
 @end
