@@ -300,10 +300,9 @@
                                     </mask>
                                 </variation>
                             </mapView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GcU-30-tUd" customClass="GMSMapView">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Qz-vR-j2h">
                                 <rect key="frame" x="0.0" y="20" width="375" height="228"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IBn-GR-zrS">
                                 <rect key="frame" x="0.0" y="248" width="375" height="70"/>
                                 <subviews>
@@ -324,6 +323,17 @@
                                             </mask>
                                         </variation>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1o6-7X-K0U">
+                                        <rect key="frame" x="10" y="15" width="128" height="40"/>
+                                        <color key="backgroundColor" red="0.039215686274509803" green="0.070588235294117646" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="26"/>
+                                        <state key="normal" title="ROUTE">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="route:" destination="HKG-NO-KBC" eventType="touchUpInside" id="PmH-b3-eLg"/>
+                                        </connections>
+                                    </button>
                                     <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="YAX-Av-pd9">
                                         <rect key="frame" x="146" y="15" width="190" height="40"/>
                                         <subviews>
@@ -403,14 +413,18 @@
                                 <constraints>
                                     <constraint firstItem="YAX-Av-pd9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IBn-GR-zrS" secondAttribute="leading" id="2ld-fV-OvF"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="YAX-Av-pd9" secondAttribute="bottom" id="5JJ-Xd-REh"/>
+                                    <constraint firstItem="1o6-7X-K0U" firstAttribute="leading" secondItem="IBn-GR-zrS" secondAttribute="leading" constant="10" id="7Lz-TW-oQS"/>
                                     <constraint firstItem="YAX-Av-pd9" firstAttribute="leading" secondItem="IBn-GR-zrS" secondAttribute="leading" constant="8" id="7bB-4g-WOJ"/>
                                     <constraint firstItem="2bo-ZC-LgU" firstAttribute="top" secondItem="IBn-GR-zrS" secondAttribute="top" constant="15" id="8IP-cQ-hU5"/>
                                     <constraint firstItem="YAX-Av-pd9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="IBn-GR-zrS" secondAttribute="top" id="CFb-yp-YHe"/>
                                     <constraint firstAttribute="height" constant="70" id="G5D-uO-nbY"/>
                                     <constraint firstItem="YAX-Av-pd9" firstAttribute="top" secondItem="IBn-GR-zrS" secondAttribute="top" constant="8" id="HvY-O0-gia"/>
                                     <constraint firstItem="YAX-Av-pd9" firstAttribute="top" secondItem="IBn-GR-zrS" secondAttribute="top" constant="15" id="Lw2-Ia-dPs"/>
+                                    <constraint firstItem="YAX-Av-pd9" firstAttribute="leading" secondItem="1o6-7X-K0U" secondAttribute="trailing" constant="8" id="U8K-re-lXI"/>
                                     <constraint firstAttribute="trailing" secondItem="YAX-Av-pd9" secondAttribute="trailing" constant="8" id="Yye-2L-Zhd"/>
                                     <constraint firstAttribute="bottom" secondItem="YAX-Av-pd9" secondAttribute="bottom" constant="15" id="c7n-Bl-stP"/>
+                                    <constraint firstItem="1o6-7X-K0U" firstAttribute="top" secondItem="IBn-GR-zrS" secondAttribute="top" constant="15" id="gJi-eK-dIh"/>
+                                    <constraint firstAttribute="bottom" secondItem="1o6-7X-K0U" secondAttribute="bottom" constant="15" id="hnh-Ml-7B5"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YAX-Av-pd9" secondAttribute="trailing" id="jgr-Wk-vtn"/>
                                     <constraint firstItem="YAX-Av-pd9" firstAttribute="leading" secondItem="2bo-ZC-LgU" secondAttribute="trailing" constant="10" id="lPD-1d-e0Z"/>
                                     <constraint firstAttribute="height" constant="60" id="liq-48-DkX"/>
@@ -506,6 +520,7 @@
                             <constraint firstItem="Ydb-NF-cdh" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" constant="15" id="30g-D5-5Fl"/>
                             <constraint firstAttribute="trailing" secondItem="Y8B-3j-qKJ" secondAttribute="trailing" constant="15" id="4kc-2K-SL4"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" constant="10" id="79p-i2-oxK"/>
+                            <constraint firstItem="7Qz-vR-j2h" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" id="7GJ-Jv-qgS"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leadingMargin" constant="45" id="Bea-9O-3br"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="top" secondItem="NUr-nw-KiH" secondAttribute="bottom" constant="10" id="Bt5-8y-t0f"/>
                             <constraint firstItem="BEf-6H-Uae" firstAttribute="top" secondItem="YvY-Du-Z7d" secondAttribute="top" id="D1L-5r-xwC"/>
@@ -522,6 +537,7 @@
                             <constraint firstAttribute="trailing" secondItem="Y2w-N1-T72" secondAttribute="trailing" constant="10" id="Ngd-HX-Osn"/>
                             <constraint firstAttribute="trailing" secondItem="IBn-GR-zrS" secondAttribute="trailing" id="Pqa-sc-ISK"/>
                             <constraint firstItem="kPU-ZP-s4M" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leadingMargin" id="RCl-qM-81n"/>
+                            <constraint firstItem="IBn-GR-zrS" firstAttribute="top" secondItem="7Qz-vR-j2h" secondAttribute="bottom" id="WkX-21-tnp"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" constant="10" id="aav-Lj-4E3"/>
                             <constraint firstItem="Y8B-3j-qKJ" firstAttribute="top" secondItem="sBX-cz-nln" secondAttribute="bottom" constant="11" id="bKI-5h-2zB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ZYQ-Wn-Ste" secondAttribute="trailing" constant="54" id="bd3-2k-t5j"/>
@@ -532,9 +548,11 @@
                             <constraint firstItem="IBn-GR-zrS" firstAttribute="top" secondItem="BEf-6H-Uae" secondAttribute="bottom" id="hvN-3E-VV5"/>
                             <constraint firstItem="kPU-ZP-s4M" firstAttribute="trailing" secondItem="YvY-Du-Z7d" secondAttribute="trailingMargin" id="hy0-zk-m8c"/>
                             <constraint firstItem="Y2w-N1-T72" firstAttribute="top" secondItem="IBn-GR-zrS" secondAttribute="bottom" constant="25" id="n9a-gD-xJE"/>
+                            <constraint firstItem="7Qz-vR-j2h" firstAttribute="top" secondItem="sBX-cz-nln" secondAttribute="bottom" id="nGe-NJ-uTu"/>
                             <constraint firstItem="IBn-GR-zrS" firstAttribute="top" secondItem="BEf-6H-Uae" secondAttribute="bottom" constant="-25" id="och-W3-7su"/>
                             <constraint firstItem="NUr-nw-KiH" firstAttribute="top" secondItem="Y2w-N1-T72" secondAttribute="bottom" constant="10" id="q5H-nt-RYj"/>
                             <constraint firstItem="IBn-GR-zrS" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" id="qJj-fu-hqV"/>
+                            <constraint firstAttribute="trailing" secondItem="7Qz-vR-j2h" secondAttribute="trailing" id="sGq-ks-uqw"/>
                             <constraint firstItem="BEf-6H-Uae" firstAttribute="leading" secondItem="YvY-Du-Z7d" secondAttribute="leading" id="vNk-lJ-q1M"/>
                             <constraint firstAttribute="trailing" secondItem="Y2w-N1-T72" secondAttribute="trailing" constant="10" id="x2X-gQ-JvD"/>
                             <constraint firstItem="Y8B-3j-qKJ" firstAttribute="top" secondItem="sBX-cz-nln" secondAttribute="bottom" constant="8" id="xjf-3g-IKW"/>
@@ -543,9 +561,6 @@
                             <constraint firstItem="dkX-5U-Q2j" firstAttribute="top" secondItem="YvY-Du-Z7d" secondAttribute="top" id="yu2-lY-lDH"/>
                         </constraints>
                         <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="GcU-30-tUd"/>
-                            </mask>
                             <mask key="constraints">
                                 <exclude reference="E0E-12-EtZ"/>
                                 <exclude reference="FKC-mI-IdF"/>
@@ -569,9 +584,11 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="backButton" destination="Y8B-3j-qKJ" id="F5A-RT-6nr"/>
+                        <outlet property="buttonRoute" destination="1o6-7X-K0U" id="G1R-Zy-0wI"/>
                         <outlet property="courseNumber" destination="2bo-ZC-LgU" id="rZi-sj-DsP"/>
                         <outlet property="credits" destination="65k-UQ-yD1" id="g2o-cM-ont"/>
                         <outlet property="detailText" destination="Y2w-N1-T72" id="h1X-Lb-kqP"/>
+                        <outlet property="imageCover" destination="7Qz-vR-j2h" id="SKx-g7-KXk"/>
                         <outlet property="labelNoLoc" destination="ZYQ-Wn-Ste" id="Iqq-D3-vGw"/>
                         <outlet property="labelTime" destination="kPU-ZP-s4M" id="eWG-cY-fty"/>
                         <outlet property="mapCover" destination="BEf-6H-Uae" id="4QK-os-dmO"/>
@@ -1438,6 +1455,7 @@ and the rest of Labs + UA</string>
                     <connections>
                         <outlet property="mapView" destination="E1C-gq-CG2" id="gaw-nR-dkX"/>
                         <outlet property="searchBar" destination="bIv-fe-I6P" id="1VU-UP-7Kh"/>
+                        <segue destination="HKG-NO-KBC" kind="presentation" identifier="detail" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="M6c-9f-3Ic"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ozc-vV-H2M" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2117,6 +2135,7 @@ and the rest of Labs + UA</string>
         <image name="labs" width="500" height="500"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="M6c-9f-3Ic"/>
         <segue reference="QVS-YE-BQT"/>
     </inferredMetricsTieBreakers>
 </document>
