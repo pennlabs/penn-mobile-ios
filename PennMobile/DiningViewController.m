@@ -58,6 +58,19 @@ bool usingTempData;
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 - (void)viewDidAppear:(BOOL)animated {
+    sections = 2;
+    if (!hasLoaded) {
+        [self pull:self];
+        hasLoaded = YES;
+    }
+    //[self performSelectorInBackground:@selector(loadFromAPI) withObject:nil];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+- (IBAction)pull:(id)sender {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.tableView.userInteractionEnabled = NO;
     if (_venues && _venues.count > 0) {
@@ -65,15 +78,8 @@ bool usingTempData;
         [residential removeAllObjects];
         [retail removeAllObjects];
     }
-    sections = 2;
     [self performSelectorInBackground:@selector(loadFromAPI) withObject:nil];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)refresh {
     [[self tableView] reloadData];
 }
@@ -446,7 +452,16 @@ bool usingTempData;
 }
 - (void)hideActivity {
     self.tableView.userInteractionEnabled = YES;
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    @try {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }
+    @catch (NSException *exception) {
+        // odd library caused error
+        NSLog(@"That odd MBProgressView Error just happened");
+    }
+    @finally {
+        // do nothing
+    }
 }
 - (BOOL)loadVenues {
     /** Local Load
