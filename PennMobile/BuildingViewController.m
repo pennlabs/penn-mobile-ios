@@ -39,7 +39,9 @@
     if (self.locationManager.location) {
         hasCentered = YES;
     }
-    [self centerMapOnLocation];
+    if (!pinSelected) {
+        [self centerMapOnLocation];
+    }
 }
 - (void)centerMapOnLocation {
     //View Area
@@ -191,7 +193,9 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
-    
+    if ([annotationView isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
     if (!annotationView) {
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
         annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -255,6 +259,7 @@
     // Pass the selected object to the new view controller.
     [self handleRollBack:segue];
     if ([segue.identifier isEqualToString:@"detail"]) {
+        pinSelected = YES;
         DetailViewController *destination = segue.destinationViewController;
         [destination configureUsingBuilding:selected];
     }
