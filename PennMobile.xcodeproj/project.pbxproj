@@ -511,8 +511,8 @@
 				195D940C19BFC44E00C6C8FA /* PennNavController.m */,
 				198E232019F9C8E8000D33FD /* DetailViewController.h */,
 				198E232119F9C8E8000D33FD /* DetailViewController.m */,
-				19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */,
 				19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */,
+				19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";

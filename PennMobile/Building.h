@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
+#import <AddressBook/AddressBook.h>
 
 @interface Building : NSObject
 
@@ -18,6 +19,7 @@
 @property NSString *addressCity;
 @property NSString *addressState;
 @property NSString *yearBuilt;
+@property NSString *keywords;
 @property NSURL *link;
 
 @property NSString *zip;
@@ -25,8 +27,10 @@
 @property CLLocationCoordinate2D coord;
 @property MKPointAnnotation *mapPoint;
 
-- (NSString *)generateFullAddress;
+- (NSString *)generateFullAddress:(bool)twoline;
+- (NSDictionary *)generateAddressDictionary;
 - (bool)hasImage;
 - (void)setCoordAndGenerate:(CLLocationCoordinate2D)coord;
+- (void)loadImageWithBlock:(void (^) (UIImage *img))block;
 
 @end

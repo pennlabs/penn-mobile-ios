@@ -29,6 +29,7 @@
     [_mapView setZoomEnabled:YES];
     [_mapView setScrollEnabled:YES];
     results = [[NSMutableArray alloc] init];
+    resultToName = [[NSMutableDictionary alloc] init];
 }
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -38,7 +39,9 @@
     if (self.locationManager.location) {
         hasCentered = YES;
     }
-    [self centerMapOnLocation];
+    if (!pinSelected) {
+        [self centerMapOnLocation];
+    }
 }
 - (void)centerMapOnLocation {
     //View Area
@@ -127,6 +130,7 @@
     if (results && results.count > 0) {
         @try {
             [results removeAllObjects];
+            [resultToName removeAllObjects];
         }
         @catch (NSException *exception) {
             // TBD
@@ -148,7 +152,8 @@
             [new setCoordAndGenerate:CLLocationCoordinate2DMake([bldgData[@"latitude"] floatValue], [bldgData[@"longitude"] floatValue])];
             new.yearBuilt = bldgData[@"year_built"];
             new.link = [NSURL URLWithString:bldgData[@"http_link"]];
-            
+            new.desc = bldgData[@"description"];
+            new.keywords = bldgData[@"keywords"];
             // usually max of 2 images
             NSMutableArray *images = [[NSMutableArray alloc] initWithCapacity:2];
             
@@ -157,6 +162,7 @@
             }
             new.images = images;
             [results addObject:new];
+            resultToName[new.mapPoint.title] = new;
         }
         @catch (NSException *exception) {
             exceptionCaught = YES;
@@ -184,6 +190,29 @@
     return true;
 }
 
+#pragma mark - MKMapViewDelegate
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
+    if ([annotationView isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    if (!annotationView) {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
+        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    }
+    
+    annotationView.enabled = YES;
+    annotationView.canShowCallout = YES;
+    
+    return annotationView;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    // somehow this needs to set selected
+    selected = resultToName[view.annotation.title];
+    [self performSegueWithIdentifier:@"detail" sender:self];
+}
 
 #pragma mark - Navigation
 
@@ -231,8 +260,9 @@
     // Pass the selected object to the new view controller.
     [self handleRollBack:segue];
     if ([segue.identifier isEqualToString:@"detail"]) {
+        pinSelected = YES;
         DetailViewController *destination = segue.destinationViewController;
-        destination.building = selected;
+        [destination configureUsingBuilding:selected];
     }
 }
 

@@ -22,23 +22,31 @@ static MKLocalSearch *search;
     _imageCover.contentMode = UIViewContentModeScaleAspectFill;
     _mapCover.hidden = YES;
     _imageCover.hidden = NO;
-    if (coverUIImage) {
+    if (building) {
         _mapCover.hidden = YES;
         _imageCover.hidden = NO;
-        _imageCover.image = coverUIImage;
+        //_imageCover.image = coverUIImage;
+        [self setupForBuilding];
     } else {
         _mapCover.hidden = NO;
+        _buttonRoute.hidden = YES;
+        _buttonRoute.enabled = NO;
         _imageCover.hidden = YES;
         _mapCover.showsUserLocation = YES;
+        [self setupForCourse];
     }
     [_viewTitle.layer setMasksToBounds:YES];
     [_viewTitle.layer setCornerRadius:20.0f];
+       _detailText.font = [UIFont systemFontOfSize:15.0];
+    [_courseNumber.layer setMasksToBounds:YES];
+    _courseNumber.layer.cornerRadius = BORDER_RADIUS;
+    [_backButton.layer setMasksToBounds:YES];
+    [_backButton.layer setCornerRadius:BORDER_RADIUS];
+}
+- (void)setupForCourse {
     _titleText.text = info.title;
     _detailText.text = info.desc;
     _labelTime.text = info.times;
-    _detailText.font = [UIFont systemFontOfSize:15.0];
-    [_courseNumber.layer setMasksToBounds:YES];
-    _courseNumber.layer.cornerRadius = BORDER_RADIUS;
     _courseNumber.text = [[info.dept stringByAppendingString:@" "] stringByAppendingString:info.courseNum];
     if (info.professors && info.professors.count > 0) {
         _subText.text = info.professors[0];
@@ -48,19 +56,57 @@ static MKLocalSearch *search;
     }
     _credits.text = info.credits;
     _sectionNum.text = [@"Section " stringByAppendingString:info.sectionNum];
-    [_backButton.layer setMasksToBounds:YES];
-    [_backButton.layer setCornerRadius:BORDER_RADIUS];
 }
+- (void)setupForBuilding {
+    _titleBuilding.hidden = NO; 
+    _titleBuilding.text = building.name;
+    [_titleBuilding setContentOffset:CGPointZero animated:NO];
+    _buttonRoute.hidden = NO;
+    _titleText.text = [building generateFullAddress:YES];
+    if (_titleText.text.length > 0) {
+        _courseNumber.hidden = YES;
+        _buttonRoute.enabled = YES;
+    }
+    _courseDetailView.hidden = YES;
+    //descFrameUpdate = CGRectMake(_detailText.frame.origin.x, _labelTime.frame.origin.y, _detailText.frame.size.width, _detailText.frame.size.height);
+    //_detailText.frame = descFrameUpdate;
+    _detailText.text = building.desc;
+    _courseNumber.text = building.code;
+    _labelTime.text = building.keywords;
+    //_subText.lineBreakMode = NSLineBreakByWordWrapping;
+    _subText.numberOfLines = 2;
+    [building loadImageWithBlock:^(UIImage *img) {
+        _imageCover.image = img;
+    }];
+}
+
 -(IBAction)back:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^{
         [self.presentingViewController performSelector:@selector(deselect)];
     }];
 }
-- (void)viewDidAppear:(BOOL)animated {
-    
-    [self dealWithAppleMaps];
-       // [self startStandardUpdates];
+-(IBAction)route:(id)sender {
+    MKPlacemark* place = [[MKPlacemark alloc] initWithCoordinate:building.mapPoint.coordinate addressDictionary: [building generateAddressDictionary]];
+    MKMapItem* destination = [[MKMapItem alloc] initWithPlacemark: place];
+    destination.name = building.name;
+    NSArray* items = [[NSArray alloc] initWithObjects: destination, nil];
+    NSDictionary* options = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             MKLaunchOptionsDirectionsModeDriving,
+                             MKLaunchOptionsDirectionsModeKey, nil];
+    [MKMapItem openMapsWithItems: items launchOptions: options];
 }
+- (void)viewDidAppear:(BOOL)animated {
+    if (info) {
+        [self dealWithAppleMaps];
+    } else {
+        // correction to iOS 7 UITextView Font bug
+        // fix to iOS 7 ScrollView Bug
+        _titleBuilding.selectable = NO;
+        [_titleBuilding setContentOffset:CGPointZero animated:NO];
+    }
+    [_detailText setContentOffset:CGPointMake(0, -_detailText.contentInset.top) animated:NO];
+}
+
 - (void)dealWithAppleMaps {
     if (!_mapCover.hidden) {
         CLLocation *user = [[CLLocation alloc] initWithLatitude:39.9520689 longitude:-75.1910786];
@@ -132,6 +178,9 @@ static MKLocalSearch *search;
 }
 -(void)configureWithCourse:(Course *)course {
     info = course;
+}
+-(void)configureUsingBuilding:(Building *)bldg {
+    building = bldg;
 }
 - (void)setupMap:(MKMapItem *)point {
     center = point;
