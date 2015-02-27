@@ -94,6 +94,8 @@
 		19C62D7A1A2EAFBC00AC59F5 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D781A2EAFBC00AC59F5 /* AddressBookUI.framework */; };
 		19C669941A6966240076AF1C /* UA.png in Resources */ = {isa = PBXBuildFile; fileRef = 19C669931A6966240076AF1C /* UA.png */; };
 		19C669961A696A790076AF1C /* Starbucks.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 19C669951A696A790076AF1C /* Starbucks.jpg */; };
+		19C71C491AA0027700518455 /* hamburger-new.png in Resources */ = {isa = PBXBuildFile; fileRef = 19C71C481AA0027700518455 /* hamburger-new.png */; };
+		19C71C4B1AA0057E00518455 /* hamburger-xl.png in Resources */ = {isa = PBXBuildFile; fileRef = 19C71C4A1AA0057E00518455 /* hamburger-xl.png */; };
 		19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */; };
 		19CB3E201A1576D600AF11D9 /* Book.png in Resources */ = {isa = PBXBuildFile; fileRef = 19CB3E1F1A1576D600AF11D9 /* Book.png */; };
 		19DE26CE1A688FC200D072A7 /* dining-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 19DE26CD1A688FC200D072A7 /* dining-placeholder.png */; };
@@ -252,6 +254,8 @@
 		19C62D781A2EAFBC00AC59F5 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		19C669931A6966240076AF1C /* UA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UA.png; sourceTree = "<group>"; };
 		19C669951A696A790076AF1C /* Starbucks.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Starbucks.jpg; sourceTree = "<group>"; };
+		19C71C481AA0027700518455 /* hamburger-new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hamburger-new.png"; sourceTree = "<group>"; };
+		19C71C4A1AA0057E00518455 /* hamburger-xl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hamburger-xl.png"; sourceTree = "<group>"; };
 		19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
 		19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		19CB3E1F1A1576D600AF11D9 /* Book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Book.png; path = Tabs/Book.png; sourceTree = "<group>"; };
@@ -406,6 +410,8 @@
 		195D940419BFC40200C6C8FA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				19C71C4A1AA0057E00518455 /* hamburger-xl.png */,
+				19C71C481AA0027700518455 /* hamburger-new.png */,
 				194F1B811A71F3850038DC97 /* support_blue.png */,
 				194F1B821A71F3850038DC97 /* support_grey.png */,
 				197DBAEF1A6F5A1000B0707C /* E@P-Blue.png */,
@@ -778,6 +784,7 @@
 				19CB3E201A1576D600AF11D9 /* Book.png in Resources */,
 				1935F10F1A37EFF300057667 /* iPad@2x.png in Resources */,
 				19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */,
+				19C71C491AA0027700518455 /* hamburger-new.png in Resources */,
 				1935F1101A37EFF300057667 /* iPhone 4@2x.png in Resources */,
 				19B6BC3D1A15998A002BFEA5 /* Transit-selected.png in Resources */,
 				1972EEB31A8192E600362B6C /* JOES.PNG in Resources */,
@@ -814,6 +821,7 @@
 				1935F1121A37EFF300057667 /* iPhone 6 Plus@3x.png in Resources */,
 				19EDDC9919D24FDD0088C4DC /* callbutton@3x.png in Resources */,
 				19B6BC361A15998A002BFEA5 /* About-selected.png in Resources */,
+				19C71C4B1AA0057E00518455 /* hamburger-xl.png in Resources */,
 				19B4BDBD1A01DE73008DD69C /* avatar.jpg in Resources */,
 				19DE26CE1A688FC200D072A7 /* dining-placeholder.png in Resources */,
 				19DE26DB1A6897C400D072A7 /* 1920.png in Resources */,
