@@ -234,7 +234,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="DIZ-8I-Oo5">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="WN6-JZ-FoI">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="WN6-JZ-FoI">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="MBR-bh-WCV" id="aZ2-EC-4sm"/>
@@ -728,18 +728,18 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="ta1-SP-2n5">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="UPf-Sw-IvP">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="UPf-Sw-IvP">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="X8R-ls-6Mg" id="kXx-2m-7tw"/>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="I0f-rB-bDY">
-                            <rect key="frame" x="113" y="5.5" width="94" height="33"/>
+                            <rect key="frame" x="121" y="5.5" width="78" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dining" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="HKO-aV-UJ9">
-                                    <rect key="frame" x="0.0" y="0.0" width="94" height="33"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="78" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -762,6 +762,12 @@
                                 </mask>
                             </variation>
                         </view>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="F8S-Y4-xtt">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="pull:" destination="X8R-ls-6Mg" id="Riv-oa-Afp"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -1054,7 +1060,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="zJB-gx-XDL">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="u2D-ri-1lN">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="u2D-ri-1lN">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="HGu-Jc-q8m" id="uL9-DM-T45"/>
@@ -1163,7 +1169,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="3Uh-zb-6kv">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="tKj-Pk-hdl">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="tKj-Pk-hdl">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="guj-Kx-i0U" id="ZUQ-86-Rfe"/>
@@ -1375,7 +1381,7 @@ and the rest of Labs + UA</string>
                     </view>
                     <navigationItem key="navigationItem" id="qdC-W2-YvQ">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="yCV-Fy-kEG">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="yCV-Fy-kEG">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="Pwi-0Z-QYc" id="3Vp-Of-TzC"/>
@@ -1454,7 +1460,7 @@ and the rest of Labs + UA</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="nfF-Uu-2Tw">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="f7E-hJ-V91">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="f7E-hJ-V91">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="Pwi-0Z-QYc" id="6q8-vQ-I53"/>
@@ -1747,7 +1753,7 @@ and the rest of Labs + UA</string>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="theDP" id="kSu-nS-VVT">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="Xca-Om-YEM">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="Xca-Om-YEM">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="EEs-ve-KSf" id="wxM-af-okH"/>
@@ -1829,7 +1835,7 @@ and the rest of Labs + UA</string>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="34th" id="irV-Ti-ODH">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="f47-EG-pt9">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="f47-EG-pt9">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="Po3-P7-A2k" id="otx-Yj-2XM"/>
@@ -1911,7 +1917,7 @@ and the rest of Labs + UA</string>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="UTB" id="xc4-Em-NYf">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="S73-zL-aFz">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="S73-zL-aFz">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="Vgh-mD-Ojg" id="BoM-jZ-pNi"/>
@@ -2002,7 +2008,7 @@ and the rest of Labs + UA</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="ed3-Zf-wY3">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="1cJ-xa-4x7">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="1cJ-xa-4x7">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="Ukf-cy-1CY" id="j4Y-Yb-Wxr"/>
@@ -2059,7 +2065,7 @@ and the rest of Labs + UA</string>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Events@Penn" id="Ldu-R0-tFP">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="3SB-V3-W8L">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="3SB-V3-W8L">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="RF0-qJ-TkV" id="yxa-1k-HQG"/>
@@ -2157,6 +2163,7 @@ and the rest of Labs + UA</string>
         <image name="Transit" width="60" height="60"/>
         <image name="UA" width="1383" height="1000"/>
         <image name="gradient" width="1000" height="240"/>
+        <image name="hamburger" width="40" height="40"/>
         <image name="labs" width="500" height="500"/>
     </resources>
     <inferredMetricsTieBreakers>
