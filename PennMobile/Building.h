@@ -19,6 +19,7 @@
 @property NSString *addressCity;
 @property NSString *addressState;
 @property NSString *yearBuilt;
+@property NSString *keywords;
 @property NSURL *link;
 
 @property NSString *zip;
