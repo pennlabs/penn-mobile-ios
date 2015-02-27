@@ -153,6 +153,7 @@
             new.yearBuilt = bldgData[@"year_built"];
             new.link = [NSURL URLWithString:bldgData[@"http_link"]];
             new.desc = bldgData[@"description"];
+            new.keywords = bldgData[@"keywords"];
             // usually max of 2 images
             NSMutableArray *images = [[NSMutableArray alloc] initWithCapacity:2];
             

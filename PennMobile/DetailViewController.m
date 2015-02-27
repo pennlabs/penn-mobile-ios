@@ -68,11 +68,11 @@ static MKLocalSearch *search;
         _buttonRoute.enabled = YES;
     }
     _courseDetailView.hidden = YES;
-    descFrameUpdate = CGRectMake(_detailText.frame.origin.x, _labelTime.frame.origin.y, _detailText.frame.size.width, _detailText.frame.size.height);
-    _detailText.frame = descFrameUpdate;
+    //descFrameUpdate = CGRectMake(_detailText.frame.origin.x, _labelTime.frame.origin.y, _detailText.frame.size.width, _detailText.frame.size.height);
+    //_detailText.frame = descFrameUpdate;
     _detailText.text = building.desc;
     _courseNumber.text = building.code;
-    _labelTime.text = @"";
+    _labelTime.text = building.keywords;
     //_subText.lineBreakMode = NSLineBreakByWordWrapping;
     _subText.numberOfLines = 2;
     [building loadImageWithBlock:^(UIImage *img) {
