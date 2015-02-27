@@ -40,6 +40,7 @@
     NSMutableDictionary *grayImages;
     bool ipad;
     int sections;
+    bool hasLoaded;
     UITapGestureRecognizer *cancelTouches;
 }
 
@@ -103,5 +104,7 @@
 - (NSString *)enumToStringTime:(Meal)mealTime;
 // This can return null - watch out
 - (Meal)isOpen:(NSString *)venue;
+
+- (IBAction)pull:(id)sender;
 
 @end
