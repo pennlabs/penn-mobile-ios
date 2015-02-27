@@ -20,6 +20,7 @@
     NSMutableArray *results;
     NSMutableDictionary *resultToName;
     UITapGestureRecognizer *cancelTouches;
+    bool pinSelected;
 }
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;

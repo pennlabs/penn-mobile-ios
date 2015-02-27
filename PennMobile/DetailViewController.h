@@ -19,6 +19,7 @@
     CLLocationManager *locationManager;
     Course *info;
     Building *building;
+    CGRect descFrameUpdate;
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *buttonRoute;
@@ -36,6 +37,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageCover;
 @property (weak, nonatomic) IBOutlet MKMapView *mapCover;
 @property (weak, nonatomic) IBOutlet UITextView *detailText;
+@property (weak, nonatomic) IBOutlet UIView *courseDetailView;
+@property (weak, nonatomic) IBOutlet UITextView *titleBuilding;
 
 -(void)configureUsingCover:(id)cover title:(NSString *)title sub:(NSString *)sub number:(NSString *)num credits:(NSString *)credits detail:(NSString *)detail;
 -(IBAction)back:(id)sender;
