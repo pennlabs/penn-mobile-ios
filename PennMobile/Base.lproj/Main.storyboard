@@ -1418,7 +1418,7 @@ and the rest of Labs + UA</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="nfF-Uu-2Tw">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="f7E-hJ-V91">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="f7E-hJ-V91">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="menuButton:" destination="Pwi-0Z-QYc" id="6q8-vQ-I53"/>
