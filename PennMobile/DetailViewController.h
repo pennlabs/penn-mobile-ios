@@ -18,9 +18,11 @@
     MKMapItem *center;
     CLLocationManager *locationManager;
     Course *info;
+    Building *building;
+    CGRect descFrameUpdate;
 }
 
-@property Building *building;
+@property (weak, nonatomic) IBOutlet UIButton *buttonRoute;
 @property (weak, nonatomic) IBOutlet UILabel *noLoc;
 @property (weak, nonatomic) IBOutlet UILabel *labelTime;
 
@@ -35,9 +37,14 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageCover;
 @property (weak, nonatomic) IBOutlet MKMapView *mapCover;
 @property (weak, nonatomic) IBOutlet UITextView *detailText;
+@property (weak, nonatomic) IBOutlet UIView *courseDetailView;
+@property (weak, nonatomic) IBOutlet UITextView *titleBuilding;
 
 -(void)configureUsingCover:(id)cover title:(NSString *)title sub:(NSString *)sub number:(NSString *)num credits:(NSString *)credits detail:(NSString *)detail;
 -(IBAction)back:(id)sender;
+-(IBAction)route:(id)sender;
 +(void)searchForBuilding:(NSString *)query sender:(id)sender completion:(SEL)completion;
 -(void)configureWithCourse:(Course *)course;
+-(void)configureUsingBuilding:(Building *)bldg;
+
 @end
