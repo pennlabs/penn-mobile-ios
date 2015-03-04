@@ -207,7 +207,7 @@
 - (void)mapView:(MKMapView *)mapView1 didSelectAnnotationView:(MKAnnotationView *)annotation {
     
     if ([annotation isKindOfClass:[MKPinAnnotationView class]]){
-        [self mapView:mapView1 annotationView:annotation calloutAccessoryControlTapped:nil];
+        //[self mapView:mapView1 annotationView:annotation calloutAccessoryControlTapped:nil];
     }
     
 }
