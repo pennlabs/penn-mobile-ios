@@ -52,6 +52,7 @@
 		1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1964BC8819C277DD00CEB1E1 /* MenuViewController.m */; };
 		1964BC8D19C281AD00CEB1E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82982FBE19735ECC00DB2AE3 /* Main.storyboard */; };
 		1965417F1A71D90C00026C92 /* SupportItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965417E1A71D90C00026C92 /* SupportItem.m */; };
+		1971E22F1AA68B9900CD2404 /* AuthLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1971E22E1AA68B9900CD2404 /* AuthLoginViewController.m */; };
 		1972EEAC1A81928500362B6C /* PI.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA61A81928500362B6C /* PI.PNG */; };
 		1972EEAD1A81928500362B6C /* sbux3.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA71A81928500362B6C /* sbux3.PNG */; };
 		1972EEAE1A81928500362B6C /* Tortas.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA81A81928500362B6C /* Tortas.PNG */; };
@@ -203,6 +204,8 @@
 		1965417D1A71D90C00026C92 /* SupportItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportItem.h; sourceTree = "<group>"; };
 		1965417E1A71D90C00026C92 /* SupportItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportItem.m; sourceTree = "<group>"; };
 		1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		1971E22D1AA68B9900CD2404 /* AuthLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthLoginViewController.h; sourceTree = "<group>"; };
+		1971E22E1AA68B9900CD2404 /* AuthLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthLoginViewController.m; sourceTree = "<group>"; };
 		1972EEA61A81928500362B6C /* PI.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PI.PNG; sourceTree = "<group>"; };
 		1972EEA71A81928500362B6C /* sbux3.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sbux3.PNG; sourceTree = "<group>"; };
 		1972EEA81A81928500362B6C /* Tortas.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tortas.PNG; sourceTree = "<group>"; };
@@ -484,6 +487,15 @@
 			name = Support;
 			sourceTree = "<group>";
 		};
+		1971E22C1AA68B8300CD2404 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				1971E22D1AA68B9900CD2404 /* AuthLoginViewController.h */,
+				1971E22E1AA68B9900CD2404 /* AuthLoginViewController.m */,
+			);
+			name = Auth;
+			sourceTree = "<group>";
+		};
 		1978259719EDFAA500284799 /* About */ = {
 			isa = PBXGroup;
 			children = (
@@ -639,6 +651,7 @@
 		82982FB519735ECC00DB2AE3 /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
+				1971E22C1AA68B8300CD2404 /* Auth */,
 				19A4ACE31A8DA2FE000804E2 /* Building */,
 				19A4ACE21A8DA2DB000804E2 /* Old Swift Code */,
 				19A4ACE11A8DA2CB000804E2 /* Helpers */,
@@ -922,6 +935,7 @@
 				1944CD3819EDE3C800DBF9EE /* Course.m in Sources */,
 				195D940D19BFC44E00C6C8FA /* PennNavController.m in Sources */,
 				192859FB1A6F4F8900A47C67 /* FoodDetailViewController.m in Sources */,
+				1971E22F1AA68B9900CD2404 /* AuthLoginViewController.m in Sources */,
 				1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */,
 				1979A72F1A0C595C00E1B7EB /* PCReview.m in Sources */,
 				195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */,
@@ -1067,7 +1081,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
+				PROVISIONING_PROFILE = "e63836d8-6aa0-4674-b233-ab2bab39e190";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1092,7 +1106,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
+				PROVISIONING_PROFILE = "e63836d8-6aa0-4674-b233-ab2bab39e190";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

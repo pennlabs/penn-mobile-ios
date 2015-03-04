@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import ParseCrashReporting
+import LocalAuthentication
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,13 +22,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ParseCrashReporting.enable()
         Parse.setApplicationId("0Lczjpr6ygk2FIpBb4pcBIM8T2tGssq3QbMTsF4Z", clientKey: "YjkMxWl752Pw9wqmf8fGQ2ViTa4m5kQOcUA1L7Jv");
         PFUser.enableAutomaticUser();
-        PFUser.currentUser().saveEventually();
+        // PFUser.currentUser().saveEventually();
         PFInstallation.currentInstallation().saveEventually();
         PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions, block: { (valid, error) -> Void in
             // do nothing here
         })
-        if application.respondsToSelector("isRegisteredForRemoteNotifications")
-        {
+        
+        self.registerRemote(application);
+        self.auth();
+        // Override point for customization after application launch.
+        return true
+    }
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let current : PFInstallation = PFInstallation.currentInstallation();
+        current.setDeviceTokenFromData(deviceToken);
+        current.saveEventually();
+    }
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        PFPush.handlePush(userInfo);
+    }
+    func registerRemote(application: UIApplication) {
+        if application.respondsToSelector("isRegisteredForRemoteNotifications") {
             // iOS 8 Notifications
             //application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: (.Badge | .Sound | .Alert), categories: nil));
             var types: UIUserNotificationType = UIUserNotificationType.Badge |
@@ -39,10 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
             
-            return true
         }
-        else
-        {
+        else {
             // iOS < 8 Notifications
             application.registerForRemoteNotificationTypes(.Badge | .Sound | .Alert)
         }
@@ -51,17 +64,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If you would like all objects to be private by default, remove this line.
         defaultACL.setPublicReadAccess(true)
         PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
-        
-        // Override point for customization after application launch.
-        return true
     }
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        let current : PFInstallation = PFInstallation.currentInstallation();
-        current.setDeviceTokenFromData(deviceToken);
-        current.saveEventually();
+    func auth() {
+        var context : LAContext = LAContext();
+        var error : NSErrorPointer = nil;
+        if (context.canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error: error)) {
+            // authenticate here
+            if (error == nil) {
+                self.attemptTouchID(context);
+            } else {
+                //
+            }
+        }
     }
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        PFPush.handlePush(userInfo);
+    func attemptTouchID(context: LAContext) {
+        context.evaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, localizedReason: "Please login to access PennKey protected resources.", reply: { (success, error) -> Void in
+            if (error != nil) {
+                // some error here
+            } else if (success) {
+                // log in
+            } else {
+                // failed attempt, try again
+                self.attemptTouchID(context);
+            }
+        });
+
     }
     func applicationWillResignActive(application: UIApplication!) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

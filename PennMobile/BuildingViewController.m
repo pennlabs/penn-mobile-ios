@@ -36,9 +36,6 @@
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [self.locationManager startUpdatingLocation];
-    if (self.locationManager.location) {
-        hasCentered = YES;
-    }
     if (!pinSelected) {
         [self centerMapOnLocation];
     }
@@ -261,6 +258,7 @@
     [self handleRollBack:segue];
     if ([segue.identifier isEqualToString:@"detail"]) {
         pinSelected = YES;
+        hasCentered = YES;
         DetailViewController *destination = segue.destinationViewController;
         [destination configureUsingBuilding:selected];
     }
