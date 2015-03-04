@@ -90,7 +90,7 @@
         NSLog(@"Adding generic password with identifier “%@” to keychain failed with OSError %d: %@.", keychainItemIdentifier, (int)osStatus, error);
     }
     // Determine a string which the device will display in the fingerprint view explaining the reason for the fingerprint scan.
-    NSString * secUseOperationPrompt = @"Authenticate for server login";
+    NSString * secUseOperationPrompt = @"For PennKey protected resources. ";
     
     // The keychain operation shall be performed by the global queue. Otherwise it might just nothing happen.
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
