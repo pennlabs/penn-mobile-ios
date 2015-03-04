@@ -191,20 +191,26 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
-    if ([annotationView isKindOfClass:[MKUserLocation class]]) {
-        return nil;
+    if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
+        if (!annotationView) {
+            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
+            annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        }
+        
+        annotationView.enabled = YES;
+        annotationView.canShowCallout = YES;
+        
+        return annotationView;
     }
-    if (!annotationView) {
-        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
-        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    }
-    
-    annotationView.enabled = YES;
-    annotationView.canShowCallout = YES;
-    
-    return annotationView;
+    return nil;
 }
-
+- (void)mapView:(MKMapView *)mapView1 didSelectAnnotationView:(MKAnnotationView *)annotation {
+    
+    if ([annotation isKindOfClass:[MKPinAnnotationView class]]){
+        [self mapView:mapView1 annotationView:annotation calloutAccessoryControlTapped:nil];
+    }
+    
+}
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     // somehow this needs to set selected
     selected = resultToName[view.annotation.title];
