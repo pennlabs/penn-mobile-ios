@@ -11,6 +11,9 @@
 
 @interface AuthLoginViewController : UIViewController <UIWebViewDelegate>
 
+
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+
++ (void)auth;
 
 @end

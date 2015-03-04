@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <LocalAuthentication/LocalAuthentication.h>
+#import <Parse/Parse.h>
 
 @interface AppDelegate ()
 
@@ -14,11 +16,42 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [Crashlytics startWithAPIKey:@"18a765536e6539a73a15dd36c369ed29cfb91aa1"];
+    [application setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
+    [ParseCrashReporting enable];
+    [Parse setApplicationId:@"0Lczjpr6ygk2FIpBb4pcBIM8T2tGssq3QbMTsF4Z" clientKey:@"YjkMxWl752Pw9wqmf8fGQ2ViTa4m5kQOcUA1L7Jv"];
+    [PFUser enableAutomaticUser];
+    // PFUser.currentUser().saveEventually();
+    [[PFInstallation currentInstallation] saveEventually];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    [self registerRemoteAllDevices:application];
     return YES;
+}
+
+- (void)registerRemoteAllDevices:(UIApplication *)application  {
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
+        UIUserNotificationType types = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+        [application registerUserNotificationSettings:settings];
+    } else {
+        UIRemoteNotificationType types = UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound;
+        [application registerForRemoteNotificationTypes:types];
+    }
+    
+    PFACL *defaultACL = [[PFACL alloc] init];
+    [defaultACL setPublicReadAccess:YES];
+    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    PFInstallation *c = [PFInstallation currentInstallation];
+    [c setDeviceTokenFromData:deviceToken];
+    [c saveEventually];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [PFPush handlePush:userInfo];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -37,6 +70,12 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    if (currentInstallation.badge != 0) {
+        currentInstallation.badge = 0;
+        [currentInstallation saveEventually];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
