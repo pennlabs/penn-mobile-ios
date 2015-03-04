@@ -36,9 +36,6 @@
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [self.locationManager startUpdatingLocation];
-    if (self.locationManager.location) {
-        hasCentered = YES;
-    }
     if (!pinSelected) {
         [self centerMapOnLocation];
     }
@@ -194,20 +191,25 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
-    if ([annotationView isKindOfClass:[MKUserLocation class]]) {
-        return nil;
-    }
-    if (!annotationView) {
+    if (!annotationView && ![annotation isKindOfClass:[MKUserLocation class] ]) {
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
+    }
+    if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
         annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        annotationView.enabled = YES;
+        annotationView.canShowCallout = YES;
+        
+        return annotationView;
+    }
+    return nil;
+}
+- (void)mapView:(MKMapView *)mapView1 didSelectAnnotationView:(MKAnnotationView *)annotation {
+    
+    if ([annotation isKindOfClass:[MKPinAnnotationView class]]){
+        //[self mapView:mapView1 annotationView:annotation calloutAccessoryControlTapped:nil];
     }
     
-    annotationView.enabled = YES;
-    annotationView.canShowCallout = YES;
-    
-    return annotationView;
 }
-
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     // somehow this needs to set selected
     selected = resultToName[view.annotation.title];
@@ -261,6 +263,7 @@
     [self handleRollBack:segue];
     if ([segue.identifier isEqualToString:@"detail"]) {
         pinSelected = YES;
+        hasCentered = YES;
         DetailViewController *destination = segue.destinationViewController;
         [destination configureUsingBuilding:selected];
     }
