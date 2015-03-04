@@ -14,6 +14,4 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
-+ (void)auth;
-
 @end
