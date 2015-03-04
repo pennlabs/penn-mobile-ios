@@ -191,12 +191,11 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
+    if (!annotationView && ![annotation isKindOfClass:[MKUserLocation class] ]) {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
+    }
     if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
-        if (!annotationView) {
-            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
-            annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        }
-        
+        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         annotationView.enabled = YES;
         annotationView.canShowCallout = YES;
         
@@ -207,7 +206,7 @@
 - (void)mapView:(MKMapView *)mapView1 didSelectAnnotationView:(MKAnnotationView *)annotation {
     
     if ([annotation isKindOfClass:[MKPinAnnotationView class]]){
-        [self mapView:mapView1 annotationView:annotation calloutAccessoryControlTapped:nil];
+        //[self mapView:mapView1 annotationView:annotation calloutAccessoryControlTapped:nil];
     }
     
 }
