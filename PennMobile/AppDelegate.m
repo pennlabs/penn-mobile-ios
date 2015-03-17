@@ -26,7 +26,7 @@
     [[PFInstallation currentInstallation] saveEventually];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [self registerRemoteAllDevices:application];
-    [self auth];
+    //[self auth];
     return YES;
 }
 
