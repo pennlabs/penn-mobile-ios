@@ -391,13 +391,13 @@
 			name = "News Views";
 			sourceTree = "<group>";
 		};
-		1929ACFD19DBA20C00B15C5B /* Map */ = {
+		1929ACFD19DBA20C00B15C5B /* Transit */ = {
 			isa = PBXGroup;
 			children = (
 				1929ACFE19DBA21E00B15C5B /* TransitViewController.h */,
 				1929ACFF19DBA21E00B15C5B /* TransitViewController.m */,
 			);
-			name = Map;
+			name = Transit;
 			sourceTree = "<group>";
 		};
 		1944CD3219EDE1DA00DBF9EE /* Registrar */ = {
@@ -678,7 +678,7 @@
 				1979A7291A0C584800E1B7EB /* PCR */,
 				1944CD3219EDE1DA00DBF9EE /* Registrar */,
 				19EDDC8719D24D030088C4DC /* Directory */,
-				1929ACFD19DBA20C00B15C5B /* Map */,
+				1929ACFD19DBA20C00B15C5B /* Transit */,
 				19EDDC8619D24CEF0088C4DC /* Dining */,
 				196541801A71D91200026C92 /* Support */,
 			);
