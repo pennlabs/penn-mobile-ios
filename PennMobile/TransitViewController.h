@@ -10,7 +10,7 @@
 #import "SlideOutMenuViewController.h"
 #import <MapKit/MapKit.h>
 
-#define TRANSIT_PATH @'transit/routing?'
+#define TRANSIT_PATH @"transit/routing?"
 // latFrom latTO lonFrom lonTo
 //
 
