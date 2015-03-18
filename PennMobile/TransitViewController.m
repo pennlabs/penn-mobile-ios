@@ -42,9 +42,9 @@
 }
 #pragma mark - PennUber API
 
--(NSArray *)queryAPI:(double)latFrom latTo:(double)latTo lonFrom:(double)lonFrom lonTo:(double)lonTo {
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@latFrom=%f&latTo=%f&lonFrom=%f&lonTo=%f", SERVER_ROOT, TRANSIT_PATH, latFrom, latTo, lonFrom, lonTo ]];
+-(NSDictionary *)queryAPI:(CLLocationCoordinate2D)start destination:(CLLocationCoordinate2D)end
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@latFrom=%f&latTo=%f&lonFrom=%f&lonTo=%f", SERVER_ROOT, TRANSIT_PATH, start.latitude, start.longitude, end.latitude, end.longitude ]];
     NSData *result = [NSData dataWithContentsOfURL:url];
     if (![self confirmConnection:result]) {
         return nil;
@@ -58,7 +58,7 @@
     if (error) {
         [NSException raise:@"JSON parse error" format:@"%@", error];
     }
-    return returned[@"result_data"];
+    return returned;
 }
 
 - (BOOL)confirmConnection:(NSData *)data {
@@ -130,6 +130,12 @@
     MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:request];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [localSearch startWithCompletionHandler:completionHandler];
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    CLLocationCoordinate2D dsst = view.annotation.coordinate;
+    [self queryAPI:
 }
 #pragma mark - UISearchBarDelegate
 
