@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sil-2Q-Gkr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sil-2Q-Gkr">
     <dependencies>
         <deployment version="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -467,7 +467,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kinda Hard C and Assembly Coding with Zombies" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ydb-NF-cdh">
                                 <rect key="frame" x="15" y="328" width="345" height="45.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2w-N1-T72">
@@ -528,7 +528,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="Inv-1z-4Xe"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -799,7 +799,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOOD TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lT-mX-0hK">
                                             <rect key="frame" x="18" y="10" width="97" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="food description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wI5-V9-SLl">
@@ -982,7 +982,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sacha Best" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sFu-tj-FiG">
                                                     <rect key="frame" x="18" y="9" width="88" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Final Boss" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RXk-i6-Num">
@@ -1128,43 +1128,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="055-2x-qTS">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTE: real-time transit info may be inaccurate. Penn Transit is working to fix it." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Rgn-JS-dv5">
-                                <rect key="frame" x="45" y="489" width="285" height="60"/>
-                                <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <searchBar contentMode="redraw" placeholder="Destination" translatesAutoresizingMaskIntoConstraints="NO" id="7B2-cr-zVy">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="eVW-Zf-xEx"/>
+                                    <constraint firstAttribute="height" constant="44" id="khu-1l-PU8"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="guj-Kx-i0U" id="ZHC-xH-2rx"/>
+                                </connections>
+                            </searchBar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="CgH-nm-CA3">
+                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="LeZ-t5-Bqz" firstAttribute="top" secondItem="055-2x-qTS" secondAttribute="bottom" constant="-50" id="05d-7j-Zfj"/>
-                            <constraint firstItem="055-2x-qTS" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="52O-A2-Faz"/>
-                            <constraint firstItem="055-2x-qTS" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leadingMargin" constant="-22" id="9LN-mN-uSz"/>
-                            <constraint firstItem="LeZ-t5-Bqz" firstAttribute="top" secondItem="Rgn-JS-dv5" secondAttribute="bottom" constant="10" id="Nva-od-ahw"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="055-2x-qTS" secondAttribute="trailing" id="OOh-sL-h2U"/>
-                            <constraint firstItem="Rgn-JS-dv5" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" constant="45" id="Qvz-GK-kBj"/>
-                            <constraint firstAttribute="bottom" secondItem="055-2x-qTS" secondAttribute="bottom" id="VHb-kC-TLG"/>
-                            <constraint firstItem="055-2x-qTS" firstAttribute="top" secondItem="BtY-LY-h2c" secondAttribute="bottom" id="Ybt-Dg-fro"/>
-                            <constraint firstItem="055-2x-qTS" firstAttribute="top" secondItem="BtY-LY-h2c" secondAttribute="bottom" id="djj-Uw-bU2"/>
-                            <constraint firstAttribute="trailing" secondItem="055-2x-qTS" secondAttribute="trailing" id="j8y-gm-si8"/>
-                            <constraint firstAttribute="trailing" secondItem="Rgn-JS-dv5" secondAttribute="trailing" constant="45" id="p6f-JV-Shs"/>
+                            <constraint firstAttribute="bottom" secondItem="CgH-nm-CA3" secondAttribute="bottom" id="0K1-dD-nxw"/>
+                            <constraint firstAttribute="trailing" secondItem="7B2-cr-zVy" secondAttribute="trailing" id="7Lx-bj-69h"/>
+                            <constraint firstAttribute="trailing" secondItem="CgH-nm-CA3" secondAttribute="trailing" id="7kq-Kq-2UU"/>
+                            <constraint firstItem="CgH-nm-CA3" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="IG0-N8-Y1G"/>
+                            <constraint firstItem="CgH-nm-CA3" firstAttribute="top" secondItem="7B2-cr-zVy" secondAttribute="bottom" id="WjB-cO-LdR"/>
+                            <constraint firstItem="7B2-cr-zVy" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="rCc-O1-g4D"/>
+                            <constraint firstItem="7B2-cr-zVy" firstAttribute="top" secondItem="BtY-LY-h2c" secondAttribute="bottom" id="wo1-du-Jx2"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="9LN-mN-uSz"/>
-                                <exclude reference="OOh-sL-h2U"/>
-                                <exclude reference="Ybt-Dg-fro"/>
-                                <exclude reference="05d-7j-Zfj"/>
-                            </mask>
-                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="3Uh-zb-6kv">
@@ -1179,7 +1166,7 @@
                             <rect key="frame" x="109.5" y="5.5" width="156" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transit (beta)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="LVv-A4-wmD">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="LVv-A4-wmD">
                                     <rect key="frame" x="0.0" y="0.0" width="156" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1194,9 +1181,9 @@
                             </constraints>
                         </view>
                     </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="webView" destination="055-2x-qTS" id="2e2-M0-0Fr"/>
+                        <outlet property="mapView" destination="CgH-nm-CA3" id="76n-Pf-U5t"/>
                         <segue destination="iWV-Iq-yZq" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="Ogk-FE-P4L"/>
                     </connections>
                 </viewController>
@@ -2032,7 +2019,7 @@ and the rest of Labs + UA</string>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Na6-FX-77X">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4sn-5i-ALO">

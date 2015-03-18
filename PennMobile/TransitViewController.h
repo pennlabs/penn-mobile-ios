@@ -8,10 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import "SlideOutMenuViewController.h"
+#import <MapKit/MapKit.h>
 
-@interface TransitViewController : UIViewController <UIWebViewDelegate> {
+#define TRANSIT_PATH @'transit/routing?'
+// latFrom latTO lonFrom lonTo
+//
+
+@interface TransitViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate> {
     UITapGestureRecognizer *cancelTouches;
+    CLLocationManager *locationManager;
+    NSArray *results;
+    BOOL shouldCenter;
 }
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
+
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (nonatomic, assign) MKCoordinateRegion boundingRegion;
+
+- (void)search:(NSString *)query;
+- (BOOL)confirmConnection:(NSData *)data;
 
 @end
