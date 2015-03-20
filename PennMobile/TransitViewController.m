@@ -90,7 +90,7 @@
     return true;
 }
 
-- (void)parseData:(NSDictionary *)fromAPI {
+- (void)parseData:(NSDictionary *)fromAPI trueStart:(CLLocationCoordinate2D)trueStart trueEnd:(CLLocationCoordinate2D)trueEnd {
     CLLocationCoordinate2D end, from;
     double endLat, endLon, fromLat, fromLon;
     @try {
@@ -109,8 +109,23 @@
     @try {
         NSArray *busRoute = [self calculateRoutesFrom:from to:end];
         MKPolyline *busLine = [MKPolyline polylineWithCoordinates:(__bridge CLLocationCoordinate2D *)(busRoute) count:busRoute.count];
+        busLine.title = @"bus";
+        busView = [[MKPolylineRenderer alloc] initWithPolyline:busLine];
+        busView.fillColor = [UIColor blueColor];
+        NSArray *walkToRoute = [self calculateRoutesFrom:trueStart to:from];
+        NSArray *walkFromRoute = [self calculateRoutesFrom:end to:trueEnd];
+        MKPolyline *walkTo = [MKPolyline polylineWithCoordinates:(__bridge CLLocationCoordinate2D *)(walkToRoute) count:walkToRoute.count];
+        walkTo.title = @"walkTo";
+        walkToView = [[MKPolylineRenderer alloc] initWithPolyline:walkTo];
+        walkToView.fillColor = [UIColor redColor];
+        MKPolyline *walkFrom = [MKPolyline polylineWithCoordinates:(__bridge CLLocationCoordinate2D *)(walkFromRoute) count:walkFromRoute.count];
+        walkFrom.title = @"walkFrom";
+        walkFromView = [[MKPolylineRenderer alloc] initWithPolyline:walkFrom];
+        walkFromView.fillColor = [UIColor redColor];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [_mapView addAnnotation:busLine];
+            [_mapView addOverlay:busLine];
+            [_mapView addOverlay:walkFrom];
+            [_mapView addOverlay:walkTo];
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [self displayRouteUI:fromAPI];
         });
@@ -273,6 +288,17 @@
         annotationView.canShowCallout = YES;
         
         return annotationView;
+    }
+    return nil;
+}
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
+    if ([overlay.title isEqualToString:@"bus"]) {
+        return busView;
+    } else if ([overlay.title isEqualToString:@"walkFrom"]) {
+        return walkFromView;
+    } else if ([overlay.title isEqualToString:@"walkTo"]) {
+        return walkToView;
     }
     return nil;
 }
