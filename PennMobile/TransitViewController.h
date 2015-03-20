@@ -11,8 +11,9 @@
 #import <MapKit/MapKit.h>
 
 #define TRANSIT_PATH @"transit/routing?"
-// latFrom latTO lonFrom lonTo
-//
+#define BUS_COLOR [UIColor blueColor]
+#define WALK_COLOR [UIColor redColor]
+#define LINE_WEIGHT 5.0
 
 @interface TransitViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate> {
     UITapGestureRecognizer *cancelTouches;
@@ -23,6 +24,11 @@
     MKPolylineRenderer *walkToView;
     MKPolylineRenderer *walkFromView;
 }
+
+typedef struct LocationArray {
+    CLLocationCoordinate2D *coords;
+    int size;
+} LocationArray;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

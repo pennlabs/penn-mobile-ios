@@ -59,12 +59,12 @@
             });
             return;
         }
-        [self parseData:fromAPI];
+        [self parseData:fromAPI trueStart:start trueEnd:end];
     });
 }
 -(NSDictionary *)queryAPI:(CLLocationCoordinate2D)start destination:(CLLocationCoordinate2D)end
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@latFrom=%f&latTo=%f&lonFrom=%f&lonTo=%f", SERVER_ROOT, TRANSIT_PATH, start.latitude, start.longitude, end.latitude, end.longitude ]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@latFrom=%f&latTo=%f&lonFrom=%f&lonTo=%f", SERVER_ROOT, TRANSIT_PATH, start.latitude, end.latitude, start.longitude, end.longitude ]];
     NSData *result = [NSData dataWithContentsOfURL:url];
     if (![self confirmConnection:result]) {
         return nil;
@@ -90,14 +90,21 @@
     return true;
 }
 
+LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
+    LocationArray array;
+    array.coords = arr;
+    array.size = size;
+    return array;
+}
+
 - (void)parseData:(NSDictionary *)fromAPI trueStart:(CLLocationCoordinate2D)trueStart trueEnd:(CLLocationCoordinate2D)trueEnd {
     CLLocationCoordinate2D end, from;
     double endLat, endLon, fromLat, fromLon;
     @try {
-        endLat = [(NSString *) (fromAPI[@"toStop"][@"latitude"]) doubleValue];
-        endLon = [(NSString *) (fromAPI[@"toStop"][@"longitude"]) doubleValue];
-        fromLat = [(NSString *) (fromAPI[@"fromStop"][@"latitude"]) doubleValue];
-        fromLon = [(NSString *) (fromAPI[@"fromStop"][@"longitude"]) doubleValue];
+        endLat = [(NSString *) (fromAPI[@"toStop"][@"Latitude"]) doubleValue];
+        endLon = [(NSString *) (fromAPI[@"toStop"][@"Longitude"]) doubleValue];
+        fromLat = [(NSString *) (fromAPI[@"fromStop"][@"Latitude"]) doubleValue];
+        fromLon = [(NSString *) (fromAPI[@"fromStop"][@"Longitude"]) doubleValue];
     }
     @catch (NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Routing Unavailable." message:@"There was a problem routing to your destination. Please try again. Error: Invalid coordinates from Labs API." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -107,21 +114,24 @@
     end = CLLocationCoordinate2DMake(endLat, endLon);
     from = CLLocationCoordinate2DMake(fromLat, fromLon);
     @try {
-        NSArray *busRoute = [self calculateRoutesFrom:from to:end];
-        MKPolyline *busLine = [MKPolyline polylineWithCoordinates:(__bridge CLLocationCoordinate2D *)(busRoute) count:busRoute.count];
+        LocationArray busRoute = [self calculateRoutesFrom:from to:end];
+        MKPolyline *busLine = [MKPolyline polylineWithCoordinates:busRoute.coords count:busRoute.size];
         busLine.title = @"bus";
         busView = [[MKPolylineRenderer alloc] initWithPolyline:busLine];
-        busView.fillColor = [UIColor blueColor];
-        NSArray *walkToRoute = [self calculateRoutesFrom:trueStart to:from];
-        NSArray *walkFromRoute = [self calculateRoutesFrom:end to:trueEnd];
-        MKPolyline *walkTo = [MKPolyline polylineWithCoordinates:(__bridge CLLocationCoordinate2D *)(walkToRoute) count:walkToRoute.count];
+        busView.strokeColor = [BUS_COLOR colorWithAlphaComponent:0.7];
+        busView.lineWidth = LINE_WEIGHT;
+        LocationArray walkToRoute = [self calculateRoutesFrom:trueStart to:from];
+        LocationArray walkFromRoute = [self calculateRoutesFrom:end to:trueEnd];
+        MKPolyline *walkTo = [MKPolyline polylineWithCoordinates:walkToRoute.coords count:walkToRoute.size];
         walkTo.title = @"walkTo";
         walkToView = [[MKPolylineRenderer alloc] initWithPolyline:walkTo];
-        walkToView.fillColor = [UIColor redColor];
-        MKPolyline *walkFrom = [MKPolyline polylineWithCoordinates:(__bridge CLLocationCoordinate2D *)(walkFromRoute) count:walkFromRoute.count];
+        walkToView.strokeColor = [WALK_COLOR colorWithAlphaComponent:0.7];
+        walkToView.lineWidth = LINE_WEIGHT;
+        MKPolyline *walkFrom = [MKPolyline polylineWithCoordinates:walkFromRoute.coords count:walkFromRoute.size];
         walkFrom.title = @"walkFrom";
         walkFromView = [[MKPolylineRenderer alloc] initWithPolyline:walkFrom];
-        walkFromView.fillColor = [UIColor redColor];
+        walkFromView.strokeColor = [WALK_COLOR colorWithAlphaComponent:0.7];
+        walkFromView.lineWidth = LINE_WEIGHT;
         dispatch_async(dispatch_get_main_queue(), ^{
             [_mapView addOverlay:busLine];
             [_mapView addOverlay:walkFrom];
@@ -147,13 +157,20 @@
     _labelStart.text = fromAPI[@"fromStop"][@"BusStopName"];
     _labelEnd.text = fromAPI[@"toStop"][@"BusStopName"];
     _labelEnd.superview.hidden = NO;
+    _labelDestination.hidden = NO;
+}
+- (void)hideRouteUI {
+    _labelEnd.superview.hidden = YES;
+    _labelDestination.hidden = YES;
+    [_mapView removeAnnotations:_mapView.annotations];
+    [_mapView removeOverlays:_mapView.overlays];
 }
 
 #pragma mark - Google Maps Polyline Finder
 
 // taken from https://github.com/kadirpekel/MapWithRoutes/blob/master/Classes/MapView.m
 // LOL
--(NSArray*) calculateRoutesFrom:(CLLocationCoordinate2D) f to: (CLLocationCoordinate2D) t {
+-(LocationArray) calculateRoutesFrom:(CLLocationCoordinate2D) f to: (CLLocationCoordinate2D) t {
     NSString* saddr = [NSString stringWithFormat:@"%f,%f", f.latitude, f.longitude];
     NSString* daddr = [NSString stringWithFormat:@"%f,%f", t.latitude, t.longitude];
     
@@ -173,7 +190,7 @@
 
 // taken from https://github.com/kadirpekel/MapWithRoutes/blob/master/Classes/MapView.m
 // LOL
--(NSMutableArray *)decodePolyLine:(NSMutableString *)encoded {
+-(LocationArray)decodePolyLine:(NSMutableString *)encoded {
     [encoded replaceOccurrencesOfString:@"\\\\" withString:@"\\"
                                 options:NSLiteralSearch
                                   range:NSMakeRange(0, [encoded length])];
@@ -209,7 +226,16 @@
         CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
         [array addObject:loc];
     }
-    return array;
+    /** we need to get this into a fucking C array. So stupid
+     * So, because in the previous for loop we don't know the end size of the array
+     * beforehand, we must only convert to c array after the fact. 
+     **/
+    CLLocationCoordinate2D *arr = malloc(sizeof(CLLocationCoordinate2D) * array.count);
+    for (int i = 0; i < array.count; i++) {
+        arr[i] = ((CLLocation *) [array objectAtIndex:i]).coordinate;
+    }
+    LocationArray returned = LocationArrayMake(arr, array.count);
+    return returned;
 }
 
 #pragma mark - Searching and Plotting
@@ -293,6 +319,11 @@
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
+    MKPolyline *pl = overlay;
+    for (int i = 0; i < pl.pointCount; i++) {
+        MKMapPoint pt = pl.points[i];
+        NSLog(@"%f %f", pt.x, pt.y);
+    }
     if ([overlay.title isEqualToString:@"bus"]) {
         return busView;
     } else if ([overlay.title isEqualToString:@"walkFrom"]) {
@@ -314,6 +345,9 @@
     shouldCenter = NO;
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self hideRouteUI];
+}
 #pragma mark - CLLocationManager
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
