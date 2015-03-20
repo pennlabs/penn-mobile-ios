@@ -28,6 +28,8 @@
     [_mapView setMapType:MKMapTypeStandard];
     [_mapView setZoomEnabled:YES];
     [_mapView setScrollEnabled:YES];
+    _labelEnd.superview.hidden = YES;
+    _labelDestination.hidden = YES;
     // Do any additional setup after loading the view.
 }
 - (void)viewDidAppear:(BOOL)animated {
@@ -35,6 +37,7 @@
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     shouldCenter = YES;
     [locationManager startUpdatingLocation];
+    [self centerMapOnLocation];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -42,6 +45,23 @@
 }
 #pragma mark - PennUber API
 
+- (void)queryHandler:(CLLocationCoordinate2D)start destination:(CLLocationCoordinate2D)end {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSDictionary *fromAPI;
+        @try {
+            fromAPI = [self queryAPI:locationManager.location.coordinate destination:end];
+        } @catch (NSException *e) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Route Found" message:@"We couldn't find a route for you using Penn Transit services." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                [alert show];
+            });
+            return;
+        }
+        [self parseData:fromAPI];
+    });
+}
 -(NSDictionary *)queryAPI:(CLLocationCoordinate2D)start destination:(CLLocationCoordinate2D)end
 {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@latFrom=%f&latTo=%f&lonFrom=%f&lonTo=%f", SERVER_ROOT, TRANSIT_PATH, start.latitude, start.longitude, end.latitude, end.longitude ]];
@@ -55,7 +75,7 @@
         return nil;
     }
     NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
-    if (error) {
+    if (error || returned[@"Error"]) {
         [NSException raise:@"JSON parse error" format:@"%@", error];
     }
     return returned;
@@ -68,6 +88,113 @@
         return false;
     }
     return true;
+}
+
+- (void)parseData:(NSDictionary *)fromAPI {
+    CLLocationCoordinate2D end, from;
+    double endLat, endLon, fromLat, fromLon;
+    @try {
+        endLat = [(NSString *) (fromAPI[@"toStop"][@"latitude"]) doubleValue];
+        endLon = [(NSString *) (fromAPI[@"toStop"][@"longitude"]) doubleValue];
+        fromLat = [(NSString *) (fromAPI[@"fromStop"][@"latitude"]) doubleValue];
+        fromLon = [(NSString *) (fromAPI[@"fromStop"][@"longitude"]) doubleValue];
+    }
+    @catch (NSException *exception) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Routing Unavailable." message:@"There was a problem routing to your destination. Please try again. Error: Invalid coordinates from Labs API." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
+        return;
+    }
+    end = CLLocationCoordinate2DMake(endLat, endLon);
+    from = CLLocationCoordinate2DMake(fromLat, fromLon);
+    @try {
+        NSArray *busRoute = [self calculateRoutesFrom:from to:end];
+        MKPolyline *busLine = [MKPolyline polylineWithCoordinates:(__bridge CLLocationCoordinate2D *)(busRoute) count:busRoute.count];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_mapView addAnnotation:busLine];
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [self displayRouteUI:fromAPI];
+        });
+    }
+    @catch (NSException *exception) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Routing Unavailable." message:@"There was a problem routing to your destination. Please try again. Error: Invalid route from Google Maps API." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
+        return;
+    }
+}
+
+- (void)displayRouteUI:(NSDictionary *)fromAPI {
+    _labelDestination.text = ((id<MKAnnotation>)_mapView.selectedAnnotations[0]).title;
+    double walkEnd  = [(NSString *) (fromAPI[@"fromStop"][@"walkingDistanceAfter"]) doubleValue];
+    double walkStart  = [(NSString *) (fromAPI[@"fromStop"][@"walkingDistanceBefore"]) doubleValue];
+    _labelWalkEnd.text = [NSString stringWithFormat:@" then walk %fmi ", walkEnd];
+    _labelWalkStart.text = [NSString stringWithFormat:@" then walk %fmi ", walkStart];
+    _labelRouteName.text = fromAPI[@"route"];
+    _labelStart.text = fromAPI[@"fromStop"][@"BusStopName"];
+    _labelEnd.text = fromAPI[@"toStop"][@"BusStopName"];
+    _labelEnd.superview.hidden = NO;
+}
+
+#pragma mark - Google Maps Polyline Finder
+
+// taken from https://github.com/kadirpekel/MapWithRoutes/blob/master/Classes/MapView.m
+// LOL
+-(NSArray*) calculateRoutesFrom:(CLLocationCoordinate2D) f to: (CLLocationCoordinate2D) t {
+    NSString* saddr = [NSString stringWithFormat:@"%f,%f", f.latitude, f.longitude];
+    NSString* daddr = [NSString stringWithFormat:@"%f,%f", t.latitude, t.longitude];
+    
+    NSString* apiUrlStr = [NSString stringWithFormat:@"http://maps.google.com/maps?output=dragdir&saddr=%@&daddr=%@", saddr, daddr];
+    NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
+    NSLog(@"api url: %@", apiUrl);
+    NSError *error;
+    NSString *apiResponse = [NSString stringWithContentsOfURL:apiUrl encoding:NSUTF8StringEncoding error:&error];
+    if (error) {
+        [NSException raise:@"Error in point parsing." format:@""];
+    }
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"points:\\\"([^\\\"]*)\\\"" options:0 error:NULL];
+    NSTextCheckingResult *match = [regex firstMatchInString:apiResponse options:0 range:NSMakeRange(0, [apiResponse length])];
+    NSString *encodedPoints = [apiResponse substringWithRange:[match rangeAtIndex:1]];
+    return [self decodePolyLine:[encodedPoints mutableCopy]];
+}
+
+// taken from https://github.com/kadirpekel/MapWithRoutes/blob/master/Classes/MapView.m
+// LOL
+-(NSMutableArray *)decodePolyLine:(NSMutableString *)encoded {
+    [encoded replaceOccurrencesOfString:@"\\\\" withString:@"\\"
+                                options:NSLiteralSearch
+                                  range:NSMakeRange(0, [encoded length])];
+    NSInteger len = [encoded length];
+    NSInteger index = 0;
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSInteger lat=0;
+    NSInteger lng=0;
+    while (index < len) {
+        NSInteger b;
+        NSInteger shift = 0;
+        NSInteger result = 0;
+        do {
+            b = [encoded characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lat += dlat;
+        shift = 0;
+        result = 0;
+        do {
+            b = [encoded characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lng += dlng;
+        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
+        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
+        printf("[%f,", [latitude doubleValue]);
+        printf("%f]", [longitude doubleValue]);
+        CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
+        [array addObject:loc];
+    }
+    return array;
 }
 
 #pragma mark - Searching and Plotting
@@ -128,14 +255,31 @@
         //[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     };
     MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:request];
+    [_searchBar resignFirstResponder];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [localSearch startWithCompletionHandler:completionHandler];
 }
 
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    CLLocationCoordinate2D dsst = view.annotation.coordinate;
-    [self queryAPI:
+#pragma mark - MKMapViewDelegate
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
+    if (!annotationView && ![annotation isKindOfClass:[MKUserLocation class] ]) {
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
+    }
+    if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
+        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        annotationView.enabled = YES;
+        annotationView.canShowCallout = YES;
+        
+        return annotationView;
+    }
+    return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    CLLocationCoordinate2D dest = view.annotation.coordinate;
+    [self queryHandler:locationManager.location.coordinate destination:dest];
 }
 #pragma mark - UISearchBarDelegate
 
@@ -147,8 +291,9 @@
 #pragma mark - CLLocationManager
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    if (shouldCenter)
-        [self centerMapOnLocation];
+    if (shouldCenter) {
+        //[self centerMapOnLocation];
+    }
 }
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     

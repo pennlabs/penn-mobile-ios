@@ -1140,15 +1140,81 @@
                             </searchBar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="CgH-nm-CA3">
                                 <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                <connections>
+                                    <outlet property="delegate" destination="guj-Kx-i0U" id="s2L-IP-9Fy"/>
+                                </connections>
                             </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osn-uZ-XzD">
+                                <rect key="frame" x="0.0" y="515" width="375" height="88"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="69th &amp; Market SEPTA Strike Route" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1T-kc-63G">
+                                        <rect key="frame" x="10" y="8" width="355" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="7Oo-VF-dG1"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="69th Street Terminal Stop" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3yO-uY-eGE">
+                                        <rect key="frame" x="10" y="60" width="206" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="then walk 3.2mi" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gR0-uF-mw7">
+                                        <rect key="frame" x="252" y="60" width="113" height="21"/>
+                                        <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LRSM Stop, 3231 Walnut St." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oIm-OS-BnC">
+                                        <rect key="frame" x="128" y="32" width="237" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="walk 3.2mi to" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ND-MA-XEs">
+                                        <rect key="frame" x="10" y="32" width="91" height="21"/>
+                                        <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="i1T-kc-63G" firstAttribute="leading" secondItem="osn-uZ-XzD" secondAttribute="leading" constant="10" id="1F1-pr-BYg"/>
+                                    <constraint firstItem="i1T-kc-63G" firstAttribute="top" secondItem="osn-uZ-XzD" secondAttribute="top" constant="8" id="cow-AI-7hl"/>
+                                    <constraint firstAttribute="height" constant="88" id="ewR-Sb-SO7"/>
+                                    <constraint firstAttribute="trailing" secondItem="i1T-kc-63G" secondAttribute="trailing" constant="10" id="iWY-f9-Oxy"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To the Middle of Nowhere" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Onz-Qc-BW1">
+                                <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="NHS-mO-qbY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="CgH-nm-CA3" secondAttribute="bottom" id="0K1-dD-nxw"/>
+                            <constraint firstAttribute="bottom" secondItem="osn-uZ-XzD" secondAttribute="bottom" id="50v-7t-7r5"/>
+                            <constraint firstAttribute="trailing" secondItem="Onz-Qc-BW1" secondAttribute="trailing" id="6d5-u3-K4H"/>
                             <constraint firstAttribute="trailing" secondItem="7B2-cr-zVy" secondAttribute="trailing" id="7Lx-bj-69h"/>
                             <constraint firstAttribute="trailing" secondItem="CgH-nm-CA3" secondAttribute="trailing" id="7kq-Kq-2UU"/>
                             <constraint firstItem="CgH-nm-CA3" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="IG0-N8-Y1G"/>
+                            <constraint firstItem="Onz-Qc-BW1" firstAttribute="top" secondItem="7B2-cr-zVy" secondAttribute="bottom" id="NSi-j1-Iek"/>
+                            <constraint firstAttribute="trailing" secondItem="osn-uZ-XzD" secondAttribute="trailing" id="TXm-oa-hEM"/>
                             <constraint firstItem="CgH-nm-CA3" firstAttribute="top" secondItem="7B2-cr-zVy" secondAttribute="bottom" id="WjB-cO-LdR"/>
+                            <constraint firstItem="Onz-Qc-BW1" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="cA9-i0-kAS"/>
+                            <constraint firstItem="osn-uZ-XzD" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="o33-B4-qI3"/>
                             <constraint firstItem="7B2-cr-zVy" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="rCc-O1-g4D"/>
                             <constraint firstItem="7B2-cr-zVy" firstAttribute="top" secondItem="BtY-LY-h2c" secondAttribute="bottom" id="wo1-du-Jx2"/>
                         </constraints>
@@ -1183,7 +1249,14 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="labelDestination" destination="Onz-Qc-BW1" id="quN-Xv-ZIF"/>
+                        <outlet property="labelEnd" destination="3yO-uY-eGE" id="y9L-w9-4hm"/>
+                        <outlet property="labelRouteName" destination="i1T-kc-63G" id="43b-p8-fPG"/>
+                        <outlet property="labelStart" destination="oIm-OS-BnC" id="T7F-BH-MMD"/>
+                        <outlet property="labelWalkEnd" destination="gR0-uF-mw7" id="bMe-m4-ukI"/>
+                        <outlet property="labelWalkStart" destination="5ND-MA-XEs" id="GBc-2L-tLB"/>
                         <outlet property="mapView" destination="CgH-nm-CA3" id="76n-Pf-U5t"/>
+                        <outlet property="searchBar" destination="7B2-cr-zVy" id="iZK-Tq-vaK"/>
                         <segue destination="iWV-Iq-yZq" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="Ogk-FE-P4L"/>
                     </connections>
                 </viewController>
