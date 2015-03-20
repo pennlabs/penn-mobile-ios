@@ -19,6 +19,9 @@
     CLLocationManager *locationManager;
     NSArray *results;
     BOOL shouldCenter;
+    MKPolylineRenderer *busView;
+    MKPolylineRenderer *walkToView;
+    MKPolylineRenderer *walkFromView;
 }
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
