@@ -20,7 +20,7 @@
     // Override point for customization after application launch.
     [application setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
     [ParseCrashReporting enable];
-    [Parse setApplicationId:@"0Lczjpr6ygk2FIpBb4pcBIM8T2tGssq3QbMTsF4Z" clientKey:@"YjkMxWl752Pw9wqmf8fGQ2ViTa4m5kQOcUA1L7Jv"];
+    [Parse setApplicationId:PARSE_APP_ID clientKey:PARSE_APP_SECRET];
     [PFUser enableAutomaticUser];
     // PFUser.currentUser().saveEventually();
     [[PFInstallation currentInstallation] saveEventually];

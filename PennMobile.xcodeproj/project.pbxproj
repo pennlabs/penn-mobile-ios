@@ -189,6 +189,7 @@
 		1944CD3A19EDE84F00DBF9EE /* RegistrarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrarTableViewCell.m; sourceTree = "<group>"; };
 		194F1B811A71F3850038DC97 /* support_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = support_blue.png; sourceTree = "<group>"; };
 		194F1B821A71F3850038DC97 /* support_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = support_grey.png; sourceTree = "<group>"; };
+		194F1F2A1AC2579B00AABE08 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
 		1955ADEA1A71D89600D54A9C /* SupportTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportTableViewController.h; sourceTree = "<group>"; };
 		1955ADEB1A71D89600D54A9C /* SupportTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportTableViewController.m; sourceTree = "<group>"; };
 		195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -430,6 +431,7 @@
 				194F1B821A71F3850038DC97 /* support_grey.png */,
 				197DBAEF1A6F5A1000B0707C /* E@P-Blue.png */,
 				197DBAF01A6F5A1000B0707C /* E@P-Grey.png */,
+				19B6BC2F1A15998A002BFEA5 /* directory.png */,
 				197DBAE31A6F54DD00B0707C /* 34-Blue.png */,
 				197DBAE41A6F54DD00B0707C /* DP-Blue.png */,
 				197DBAE51A6F54DD00B0707C /* UTB-Blue.png */,
@@ -448,7 +450,6 @@
 				19B6BC2C1A15998A002BFEA5 /* About.png */,
 				19B6BC2D1A15998A002BFEA5 /* About-selected.png */,
 				19B6BC2E1A15998A002BFEA5 /* book-selected.png */,
-				19B6BC2F1A15998A002BFEA5 /* directory.png */,
 				19B6BC301A15998A002BFEA5 /* directory-selected.png */,
 				19B6BC311A15998A002BFEA5 /* Menu.png */,
 				19B6BC321A15998A002BFEA5 /* Menu-selected.png */,
@@ -698,6 +699,7 @@
 			children = (
 				82982FB719735ECC00DB2AE3 /* Info.plist */,
 				199C2A7419D4C97C0020B153 /* PrefixHeader.pch */,
+				194F1F2A1AC2579B00AABE08 /* Keys.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
