@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SlideOutMenuViewController.h"
 #import <MapKit/MapKit.h>
+#import "DirectionView.h"
 
 #define TRANSIT_PATH @"transit/routing?"
 #define BUS_COLOR [UIColor blueColor]
