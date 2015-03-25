@@ -30,3 +30,9 @@
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
 
+// shimmer
+#define COCOAPODS_POD_AVAILABLE_shimmer
+#define COCOAPODS_VERSION_MAJOR_shimmer 1
+#define COCOAPODS_VERSION_MINOR_shimmer 0
+#define COCOAPODS_VERSION_PATCH_shimmer 2
+

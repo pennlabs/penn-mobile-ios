@@ -3,17 +3,20 @@ PODS:
   - ECSlidingViewController (2.0.3)
   - HMLauncherView (1.0.3)
   - MBProgressHUD (0.9)
+  - Shimmer (1.0.2)
 
 DEPENDENCIES:
   - DropdownMenu
   - ECSlidingViewController
   - HMLauncherView
   - MBProgressHUD (~> 0.8)
+  - shimmer
 
 SPEC CHECKSUMS:
   DropdownMenu: ad71a2fcb932cc04a4f7c29aadaf2e8ed0c08e42
   ECSlidingViewController: e79fe856bfb1a99a39c995377a1943e50f7647eb
   HMLauncherView: 7f022dd6b7f90be4b08f0eef2c39cccc49acd09f
   MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
+  Shimmer: 057fcfe9c1c978d69d50b64fce93a61080cd08ec
 
 COCOAPODS: 0.35.0

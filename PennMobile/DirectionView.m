@@ -24,19 +24,23 @@ static int numCreated = 0;
     title.font = TITLE_FONT;
     title.textColor = [UIColor whiteColor];
     title.textAlignment = NSTextAlignmentCenter;
+    FBShimmeringLayer *shimmer = [[FBShimmeringLayer alloc] init];
+    shimmer.shimmering = YES;
+    [[title layer] addSublayer:shimmer];
     [n setTitle:title];
     [n addSubview:title];
     UILabel *subtitle = [[UILabel alloc] initWithFrame:CGRectMake(35, (VIEW_HEIGHT - TITLE_HEIGHT - SUBTITLE_HEIGHT - 30) / 2.0, screenWidth - 70, SUBTITLE_HEIGHT)];
     if (bus) {
         n.backgroundColor = PENN_BLUE;
-        // subtitle.text = [NSString stringWithFormat:@"bus %.2fmi to", round(dist)];
+        // to be added
+        subtitle.text = [NSString stringWithFormat:@"take the bus to"];
     } else {
         n.backgroundColor = PENN_RED;
-        subtitle.font = SUBTITLE_FONT;
         subtitle.text = [NSString stringWithFormat:@"walk %.2fmi to", round(dist)];
-        subtitle.textColor = [UIColor whiteColor];
-        subtitle.textAlignment = NSTextAlignmentCenter;
     }
+    subtitle.font = SUBTITLE_FONT;
+    subtitle.textColor = [UIColor whiteColor];
+    subtitle.textAlignment = NSTextAlignmentCenter;
     [n setDistance:subtitle];
     [n addSubview:subtitle];
     if (!last) {

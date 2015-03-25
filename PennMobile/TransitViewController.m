@@ -154,9 +154,12 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 - (void)displayRouteUI:(NSDictionary *)fromAPI {
     NSString *destTitle = ((id<MKAnnotation>)_mapView.selectedAnnotations[0]).title;
     
-    double walkEnd  = [(NSString *) (fromAPI[@"fromStop"][@"walkingDistanceAfter"]) doubleValue];
-    double walkStart  = [(NSString *) (fromAPI[@"fromStop"][@"walkingDistanceBefore"]) doubleValue];
-
+    NSNumber *endd  = fromAPI[@"walkingDistanceAfter"];
+    NSNumber *startd  = fromAPI[@"walkingDistanceBefore"];
+    
+    double walkStart = [endd doubleValue];
+    double walkEnd = [startd doubleValue];
+    
     NSString *routeTitle = fromAPI[@"route"];
     NSString *fromStop = fromAPI[@"fromStop"][@"BusStopName"];
     NSString *toStop = fromAPI[@"toStop"][@"BusStopName"];
