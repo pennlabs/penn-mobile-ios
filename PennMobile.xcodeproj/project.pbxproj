@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */; };
+		1909DF0A1AC23A6300936552 /* Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1909DF091AC23A6300936552 /* Arrow.png */; };
 		1913FB131A94125000D2E17C /* Building.m in Sources */ = {isa = PBXBuildFile; fileRef = 1913FB121A94125000D2E17C /* Building.m */; };
 		192859FB1A6F4F8900A47C67 /* FoodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192859FA1A6F4F8900A47C67 /* FoodDetailViewController.m */; };
 		1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929ACFF19DBA21E00B15C5B /* TransitViewController.m */; };
@@ -73,6 +74,7 @@
 		197DBAF11A6F5A1000B0707C /* E@P-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAEF1A6F5A1000B0707C /* E@P-Blue.png */; };
 		197DBAF21A6F5A1000B0707C /* E@P-Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAF01A6F5A1000B0707C /* E@P-Grey.png */; };
 		198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198E232119F9C8E8000D33FD /* DetailViewController.m */; };
+		19943A011AC2316B00B489A8 /* DirectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19943A001AC2316B00B489A8 /* DirectionView.m */; };
 		199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 199B90CE19DB7FCD0018CDE3 /* Person.m */; };
 		19A4ACE61A8DA3FA000804E2 /* BuildingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A4ACE51A8DA3FA000804E2 /* BuildingViewController.m */; };
 		19B4BDBD1A01DE73008DD69C /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 19B4BDBC1A01DE73008DD69C /* avatar.jpg */; };
@@ -146,6 +148,7 @@
 		16E1C19330F2CC1E8F480AD7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1901F10D1A41FDAC00DDFA9A /* SlideOutMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideOutMenuViewController.h; sourceTree = "<group>"; };
 		1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideOutMenuViewController.m; sourceTree = "<group>"; };
+		1909DF091AC23A6300936552 /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arrow.png; sourceTree = "<group>"; };
 		1913FB111A94125000D2E17C /* Building.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
 		1913FB121A94125000D2E17C /* Building.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Building.m; sourceTree = "<group>"; };
 		192859F91A6F4F8900A47C67 /* FoodDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodDetailViewController.h; sourceTree = "<group>"; };
@@ -231,6 +234,8 @@
 		197DBAF01A6F5A1000B0707C /* E@P-Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "E@P-Grey.png"; sourceTree = "<group>"; };
 		198E232019F9C8E8000D33FD /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		198E232119F9C8E8000D33FD /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		199439FF1AC2316B00B489A8 /* DirectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionView.h; sourceTree = "<group>"; };
+		19943A001AC2316B00B489A8 /* DirectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionView.m; sourceTree = "<group>"; };
 		199B90CD19DB7FCD0018CDE3 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		199B90CE19DB7FCD0018CDE3 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		199C2A7419D4C97C0020B153 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = PennMobile/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
@@ -396,6 +401,8 @@
 			children = (
 				1929ACFE19DBA21E00B15C5B /* TransitViewController.h */,
 				1929ACFF19DBA21E00B15C5B /* TransitViewController.m */,
+				199439FF1AC2316B00B489A8 /* DirectionView.h */,
+				19943A001AC2316B00B489A8 /* DirectionView.m */,
 			);
 			name = Transit;
 			sourceTree = "<group>";
@@ -416,6 +423,7 @@
 		195D940419BFC40200C6C8FA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1909DF091AC23A6300936552 /* Arrow.png */,
 				19C71C4A1AA0057E00518455 /* hamburger-xl.png */,
 				19C71C481AA0027700518455 /* hamburger-new.png */,
 				194F1B811A71F3850038DC97 /* support_blue.png */,
@@ -812,6 +820,7 @@
 				19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */,
 				19C71C491AA0027700518455 /* hamburger-new.png in Resources */,
 				1935F1101A37EFF300057667 /* iPhone 4@2x.png in Resources */,
+				1909DF0A1AC23A6300936552 /* Arrow.png in Resources */,
 				19B6BC3D1A15998A002BFEA5 /* Transit-selected.png in Resources */,
 				1972EEB31A8192E600362B6C /* JOES.PNG in Resources */,
 				1964BC8619C25EDA00CEB1E1 /* placeholder.png in Resources */,
@@ -940,6 +949,7 @@
 				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
 				19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */,
 				EBCE174919A715210008C332 /* Course.swift in Sources */,
+				19943A011AC2316B00B489A8 /* DirectionView.m in Sources */,
 				19B8543E1AA6ADDD002564D9 /* main.m in Sources */,
 				192C6F2F1A158533008D507C /* NewsViewController.m in Sources */,
 				1955ADEC1A71D89600D54A9C /* SupportTableViewController.m in Sources */,

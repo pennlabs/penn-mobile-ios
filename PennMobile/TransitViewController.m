@@ -148,16 +148,16 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 }
 
 - (void)displayRouteUI:(NSDictionary *)fromAPI {
-    _labelDestination.text = ((id<MKAnnotation>)_mapView.selectedAnnotations[0]).title;
+    NSString *destTitle = ((id<MKAnnotation>)_mapView.selectedAnnotations[0]).title;
+    
     double walkEnd  = [(NSString *) (fromAPI[@"fromStop"][@"walkingDistanceAfter"]) doubleValue];
     double walkStart  = [(NSString *) (fromAPI[@"fromStop"][@"walkingDistanceBefore"]) doubleValue];
-    _labelWalkEnd.text = [NSString stringWithFormat:@" then walk %fmi ", walkEnd];
-    _labelWalkStart.text = [NSString stringWithFormat:@" then walk %fmi ", walkStart];
-    _labelRouteName.text = fromAPI[@"route"];
-    _labelStart.text = fromAPI[@"fromStop"][@"BusStopName"];
-    _labelEnd.text = fromAPI[@"toStop"][@"BusStopName"];
-    _labelEnd.superview.hidden = NO;
-    _labelDestination.hidden = NO;
+
+    NSString *routeTitle = fromAPI[@"route"];
+    NSString *fromStop = fromAPI[@"fromStop"][@"BusStopName"];
+    NSString *toStop = fromAPI[@"toStop"][@"BusStopName"];
+    
+    
 }
 - (void)hideRouteUI {
     _labelEnd.superview.hidden = YES;
