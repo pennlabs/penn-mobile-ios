@@ -34,11 +34,8 @@ typedef struct LocationArray {
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UILabel *labelDestination;
-@property (weak, nonatomic) IBOutlet UILabel *labelRouteName;
-@property (weak, nonatomic) IBOutlet UILabel *labelEnd;
-@property (weak, nonatomic) IBOutlet UILabel *labelStart;
-@property (weak, nonatomic) IBOutlet UILabel *labelWalkEnd;
-@property (weak, nonatomic) IBOutlet UILabel *labelWalkStart;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 
 @property (nonatomic, assign) MKCoordinateRegion boundingRegion;
 

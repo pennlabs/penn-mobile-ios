@@ -1144,19 +1144,6 @@
                                     <outlet property="delegate" destination="guj-Kx-i0U" id="s2L-IP-9Fy"/>
                                 </connections>
                             </mapView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osn-uZ-XzD" customClass="DirectionView">
-                                <rect key="frame" x="0.0" y="515" width="375" height="88"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="88" id="ewR-Sb-SO7"/>
-                                    <constraint firstAttribute="width" secondItem="osn-uZ-XzD" secondAttribute="height" multiplier="375:88" id="zSB-VN-VO6"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="zSB-VN-VO6"/>
-                                    </mask>
-                                </variation>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To the Middle of Nowhere" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Onz-Qc-BW1">
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1167,21 +1154,27 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yIf-2N-SrZ">
+                                <rect key="frame" x="0.0" y="515" width="375" height="88"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="88" id="Tm2-AC-Iza"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="CgH-nm-CA3" secondAttribute="bottom" id="0K1-dD-nxw"/>
-                            <constraint firstAttribute="bottom" secondItem="osn-uZ-XzD" secondAttribute="bottom" id="50v-7t-7r5"/>
                             <constraint firstAttribute="trailing" secondItem="Onz-Qc-BW1" secondAttribute="trailing" id="6d5-u3-K4H"/>
                             <constraint firstAttribute="trailing" secondItem="7B2-cr-zVy" secondAttribute="trailing" id="7Lx-bj-69h"/>
                             <constraint firstAttribute="trailing" secondItem="CgH-nm-CA3" secondAttribute="trailing" id="7kq-Kq-2UU"/>
                             <constraint firstItem="CgH-nm-CA3" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="IG0-N8-Y1G"/>
                             <constraint firstItem="Onz-Qc-BW1" firstAttribute="top" secondItem="7B2-cr-zVy" secondAttribute="bottom" id="NSi-j1-Iek"/>
-                            <constraint firstAttribute="trailing" secondItem="osn-uZ-XzD" secondAttribute="trailing" id="TXm-oa-hEM"/>
                             <constraint firstItem="CgH-nm-CA3" firstAttribute="top" secondItem="7B2-cr-zVy" secondAttribute="bottom" id="WjB-cO-LdR"/>
                             <constraint firstItem="Onz-Qc-BW1" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="cA9-i0-kAS"/>
-                            <constraint firstItem="osn-uZ-XzD" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="o33-B4-qI3"/>
+                            <constraint firstAttribute="trailing" secondItem="yIf-2N-SrZ" secondAttribute="trailing" id="o8l-tN-FAa"/>
+                            <constraint firstItem="yIf-2N-SrZ" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="ofA-CX-K5T"/>
                             <constraint firstItem="7B2-cr-zVy" firstAttribute="leading" secondItem="9Cg-gb-Juy" secondAttribute="leading" id="rCc-O1-g4D"/>
+                            <constraint firstItem="LeZ-t5-Bqz" firstAttribute="top" secondItem="yIf-2N-SrZ" secondAttribute="bottom" id="vKt-Z0-xTt"/>
                             <constraint firstItem="7B2-cr-zVy" firstAttribute="top" secondItem="BtY-LY-h2c" secondAttribute="bottom" id="wo1-du-Jx2"/>
                         </constraints>
                     </view>
@@ -1217,6 +1210,7 @@
                     <connections>
                         <outlet property="labelDestination" destination="Onz-Qc-BW1" id="quN-Xv-ZIF"/>
                         <outlet property="mapView" destination="CgH-nm-CA3" id="76n-Pf-U5t"/>
+                        <outlet property="scrollView" destination="yIf-2N-SrZ" id="AqD-DK-gEG"/>
                         <outlet property="searchBar" destination="7B2-cr-zVy" id="iZK-Tq-vaK"/>
                         <segue destination="iWV-Iq-yZq" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="Ogk-FE-P4L"/>
                     </connections>

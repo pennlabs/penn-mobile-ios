@@ -28,8 +28,12 @@
     [_mapView setMapType:MKMapTypeStandard];
     [_mapView setZoomEnabled:YES];
     [_mapView setScrollEnabled:YES];
-    _labelEnd.superview.hidden = YES;
     _labelDestination.hidden = YES;
+    _scrollView.contentSize = [DirectionView size];
+    _scrollView.scrollEnabled = YES;
+    _scrollView.pagingEnabled = YES;
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.hidden = YES;
     // Do any additional setup after loading the view.
 }
 - (void)viewDidAppear:(BOOL)animated {
@@ -157,10 +161,21 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     NSString *fromStop = fromAPI[@"fromStop"][@"BusStopName"];
     NSString *toStop = fromAPI[@"toStop"][@"BusStopName"];
     
+    DirectionView *first = [DirectionView make:fromStop distance:walkStart isBus:NO isLast:NO];
+    DirectionView *bus = [DirectionView make:toStop distance:0 isBus:YES isLast:NO];
+    DirectionView *last = [DirectionView make:destTitle distance:walkEnd isBus:NO isLast:YES];
+    
+    [_scrollView addSubview:first];
+    [_scrollView addSubview:bus];
+    [_scrollView addSubview:last];
+    [_scrollView setContentOffset:CGPointZero animated:NO];
+    _labelDestination.text = destTitle;
+    _labelDestination.hidden = NO;
+    _scrollView.hidden = NO;
     
 }
 - (void)hideRouteUI {
-    _labelEnd.superview.hidden = YES;
+    _scrollView.hidden = YES;
     _labelDestination.hidden = YES;
     [_mapView removeAnnotations:_mapView.annotations];
     [_mapView removeOverlays:_mapView.overlays];
