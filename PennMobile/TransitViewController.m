@@ -157,8 +157,8 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     NSNumber *endd  = fromAPI[@"walkingDistanceAfter"];
     NSNumber *startd  = fromAPI[@"walkingDistanceBefore"];
     
-    double walkStart = [endd doubleValue];
-    double walkEnd = [startd doubleValue];
+    double walkStart = [startd doubleValue];
+    double walkEnd = [endd doubleValue];
     
     NSString *routeTitle = fromAPI[@"route"];
     NSString *fromStop = fromAPI[@"fromStop"][@"BusStopName"];
@@ -354,11 +354,30 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     CLLocationCoordinate2D dest = view.annotation.coordinate;
+    [self mapView:mapView clearAllPinsExcept:view.annotation];
     [self queryHandler:locationManager.location.coordinate destination:dest];
 }
+
+- (void)mapView:(MKMapView *)mapView clearAllPinsExcept:(id<MKAnnotation>)annot {
+    for (id<MKAnnotation> annotation in mapView.annotations) {
+        if (![annotation isKindOfClass:[MKUserLocation class]] && ![annotation isEqual:annot]) {
+            [mapView removeAnnotation:annotation];
+        }
+    }
+}
+
+- (void)mapViewClearAllPinsNotUser:(MKMapView *)mapView {
+    for (id<MKAnnotation> annotation in mapView.annotations) {
+        if (![annotation isKindOfClass:[MKUserLocation class]]) {
+            [mapView removeAnnotation:annotation];
+        }
+    }
+}
+
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self mapViewClearAllPinsNotUser:_mapView];
     [self search:searchBar.text];
     shouldCenter = NO;
 }
