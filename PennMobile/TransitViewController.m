@@ -410,12 +410,14 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
             [mapView removeAnnotation:annotation];
         }
     }
+    [_mapView removeOverlays:_mapView.overlays];
 }
 
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self mapViewClearAllPinsNotUser:_mapView];
+    [self hideRouteUI];
     [self search:searchBar.text];
     shouldCenter = NO;
 }
