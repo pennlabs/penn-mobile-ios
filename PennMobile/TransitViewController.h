@@ -10,6 +10,7 @@
 #import "SlideOutMenuViewController.h"
 #import <MapKit/MapKit.h>
 #import "DirectionView.h"
+#import "GoogleMapsSearcher.h"
 
 #define TRANSIT_PATH @"transit/routing?"
 #define BUS_COLOR [UIColor blueColor]
