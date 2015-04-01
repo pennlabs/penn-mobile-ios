@@ -36,6 +36,7 @@ typedef struct LocationArray {
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UILabel *labelDestination;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *stopsButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 

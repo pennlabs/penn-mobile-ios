@@ -1205,6 +1205,12 @@
                                 <constraint firstAttribute="bottom" secondItem="LVv-A4-wmD" secondAttribute="bottom" id="tcf-e1-Ka2"/>
                             </constraints>
                         </view>
+                        <barButtonItem key="rightBarButtonItem" title="Stops" id="inE-og-yqw">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="stopsButtonPressed:" destination="guj-Kx-i0U" id="DFm-BE-cUy"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -1212,6 +1218,7 @@
                         <outlet property="mapView" destination="CgH-nm-CA3" id="76n-Pf-U5t"/>
                         <outlet property="scrollView" destination="yIf-2N-SrZ" id="AqD-DK-gEG"/>
                         <outlet property="searchBar" destination="7B2-cr-zVy" id="iZK-Tq-vaK"/>
+                        <outlet property="stopsButton" destination="inE-og-yqw" id="Brh-ZV-Ict"/>
                         <segue destination="iWV-Iq-yZq" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="Ogk-FE-P4L"/>
                     </connections>
                 </viewController>

@@ -359,6 +359,12 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     [_searchBar resignFirstResponder];
 }
 
+#pragma mark - Bus Stops Display
+
+- (IBAction)stopsButtonPressed:(id)sender {
+    
+}
+
 #pragma mark - MKMapViewDelegate
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
