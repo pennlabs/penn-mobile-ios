@@ -274,6 +274,18 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     
 }
 
+- (void)addGoogleAnnotations:(NSArray *)res {
+    MKPointAnnotation *temp;
+    if (res.count > 0) {
+        for (long i = res.count - 1; i >= 0; i--) {
+            temp = [GoogleMapsSearcher makeAnnotationForGoogleResult:res[0]];
+            // these values were originally store in a local hashmap but wasn't worth it
+            [_mapView addAnnotation:temp];
+        }
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [_mapView selectAnnotation:temp animated:YES];
+    }
+}
 /**
  * The majority of this code is from Apple's samples. Just a heads up
  **/
@@ -288,7 +300,9 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     //
     newRegion.span.latitudeDelta = 0.112872;
     newRegion.span.longitudeDelta = 0.109863;
+
     
+    /* OLD
     MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
     
     request.naturalLanguageQuery = query;
@@ -314,9 +328,33 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         //[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     };
     MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:request];
-    [_searchBar resignFirstResponder];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [localSearch startWithCompletionHandler:completionHandler];
+     * --- END OLD ---- */
+    NSArray *res = [GoogleMapsSearcher getResultsFrom:[GoogleMapsSearcher generateURLRequest:_mapView.region.center withRadius:SEARCH_RADIUS andKeyword:query]];
+    if (res.count > 0 && [((NSString *)res[0][@"name"]) rangeOfString:API_ERROR_DELIM].location != NSNotFound) {
+        // there was an error
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Google Maps API Error"
+                                                        message:res[0]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } else if (res.count == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not find any results"
+                                                        message:@"Please try a different query."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }
+    else {
+        [self addGoogleAnnotations:res];
+        // used for later when setting the map's region in "prepareForSegue"
+       // _boundingRegion = response.boundingRegion;
+    }
+    [_searchBar resignFirstResponder];
 }
 
 #pragma mark - MKMapViewDelegate
