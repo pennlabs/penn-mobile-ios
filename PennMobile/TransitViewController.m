@@ -239,8 +239,8 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         lng += dlng;
         NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
         NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
-        printf("[%f,", [latitude doubleValue]);
-        printf("%f]", [longitude doubleValue]);
+        // printf("[%f,", [latitude doubleValue]);
+        // printf("%f]", [longitude doubleValue]);
         CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
         [array addObject:loc];
     }
