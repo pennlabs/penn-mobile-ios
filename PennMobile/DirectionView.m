@@ -36,7 +36,7 @@ static int numCreated = 0;
         subtitle.text = [NSString stringWithFormat:@"take the bus to"];
     } else {
         n.backgroundColor = PENN_RED;
-        subtitle.text = [NSString stringWithFormat:@"walk %.2fmi to", round(dist)];
+        subtitle.text = [NSString stringWithFormat:@"walk %.2fmi to", dist];
     }
     subtitle.font = SUBTITLE_FONT;
     subtitle.textColor = [UIColor whiteColor];
