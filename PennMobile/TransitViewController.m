@@ -283,6 +283,8 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
             [_mapView addAnnotation:temp];
         }
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+
+        [_mapView showAnnotations:_mapView.annotations animated:YES];
         [_mapView selectAnnotation:temp animated:YES];
     }
 }

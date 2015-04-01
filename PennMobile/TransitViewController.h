@@ -16,6 +16,7 @@
 #define BUS_COLOR [UIColor blueColor]
 #define WALK_COLOR [UIColor redColor]
 #define LINE_WEIGHT 5.0
+#define REGION_MARGIN 2.0f
 
 @interface TransitViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate> {
     UITapGestureRecognizer *cancelTouches;
