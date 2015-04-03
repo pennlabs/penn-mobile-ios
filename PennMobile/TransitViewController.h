@@ -17,6 +17,7 @@
 #define WALK_COLOR [UIColor redColor]
 #define LINE_WEIGHT 5.0
 #define REGION_MARGIN 2.0f
+#define ROUTES_PATH @"transit/routes/"
 
 @interface TransitViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate> {
     UITapGestureRecognizer *cancelTouches;
@@ -26,6 +27,7 @@
     MKPolylineRenderer *busView;
     MKPolylineRenderer *walkToView;
     MKPolylineRenderer *walkFromView;
+    NSDictionary *stopMap;
 }
 
 typedef struct LocationArray {

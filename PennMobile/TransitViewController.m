@@ -69,6 +69,18 @@
 -(NSDictionary *)queryAPI:(CLLocationCoordinate2D)start destination:(CLLocationCoordinate2D)end
 {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@latFrom=%f&latTo=%f&lonFrom=%f&lonTo=%f", SERVER_ROOT, TRANSIT_PATH, start.latitude, end.latitude, start.longitude, end.longitude ]];
+    if (!stopMap) {
+        NSURL *routesURL = [NSURL URLWithString:[SERVER_ROOT stringByAppendingString:ROUTES_PATH]];
+        NSData *routesResult = [NSData dataWithContentsOfURL:routesURL];
+        if (![self confirmConnection:routesResult]) {
+            return nil;
+        }
+        NSError *error;
+        stopMap = [NSJSONSerialization JSONObjectWithData:routesResult options:NSJSONReadingMutableLeaves error:&error][@"result_data"];
+        if (error.code != 0) {
+            return nil;
+        }
+    }
     NSData *result = [NSData dataWithContentsOfURL:url];
     if (![self confirmConnection:result]) {
         return nil;
@@ -101,14 +113,27 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     return array;
 }
 
+// could throw exception if route names don't match
+- (LocationArray)gatherRoutePoints:(NSString *)route from:(long)from to:(long)to {
+    NSArray *stops = [((NSArray *)stopMap[route]) subarrayWithRange:NSMakeRange(from, to)];
+    CLLocationCoordinate2D *arr = malloc(stops.count * sizeof(CLLocationCoordinate2D));
+    for (int i = 0; i < stops.count; i++) {
+        arr[i] = CLLocationCoordinate2DMake([stops[i][@"latitude"] doubleValue], [stops[i][@"longitude"] doubleValue]);
+    }
+    return LocationArrayMake(arr, stops.count);
+}
+
 - (void)parseData:(NSDictionary *)fromAPI trueStart:(CLLocationCoordinate2D)trueStart trueEnd:(CLLocationCoordinate2D)trueEnd {
     CLLocationCoordinate2D end, from;
     double endLat, endLon, fromLat, fromLon;
+    long fromID, toID;
     @try {
         endLat = [(NSString *) (fromAPI[@"toStop"][@"Latitude"]) doubleValue];
         endLon = [(NSString *) (fromAPI[@"toStop"][@"Longitude"]) doubleValue];
         fromLat = [(NSString *) (fromAPI[@"fromStop"][@"Latitude"]) doubleValue];
         fromLon = [(NSString *) (fromAPI[@"fromStop"][@"Longitude"]) doubleValue];
+        fromID = [fromAPI[@"fromOrder"] longValue];
+        toID = [fromAPI[@"toOrder"] longValue];
     }
     @catch (NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Routing Unavailable." message:@"There was a problem routing to your destination. Please try again. Error: Invalid coordinates from Labs API." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -118,7 +143,8 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     end = CLLocationCoordinate2DMake(endLat, endLon);
     from = CLLocationCoordinate2DMake(fromLat, fromLon);
     @try {
-        LocationArray busRoute = [self calculateRoutesFrom:from to:end];
+        // change this with Hong's code
+        LocationArray busRoute = [self gatherRoutePoints:fromAPI[@"route"] from:fromID to:toID];
         MKPolyline *busLine = [MKPolyline polylineWithCoordinates:busRoute.coords count:busRoute.size];
         busLine.title = @"bus";
         busView = [[MKPolylineRenderer alloc] initWithPolyline:busLine];
@@ -192,7 +218,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     NSString* saddr = [NSString stringWithFormat:@"%f,%f", f.latitude, f.longitude];
     NSString* daddr = [NSString stringWithFormat:@"%f,%f", t.latitude, t.longitude];
     
-    NSString* apiUrlStr = [NSString stringWithFormat:@"http://maps.google.com/maps?output=dragdir&saddr=%@&daddr=%@", saddr, daddr];
+    NSString* apiUrlStr = [NSString stringWithFormat:@"http://maps.google.com/maps?output=dragdir&saddr=%@&daddr=%@&mode=walking", saddr, daddr];
     NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
     NSLog(@"api url: %@", apiUrl);
     NSError *error;
