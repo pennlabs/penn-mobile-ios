@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */; };
+		1909DF0A1AC23A6300936552 /* Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1909DF091AC23A6300936552 /* Arrow.png */; };
 		1913FB131A94125000D2E17C /* Building.m in Sources */ = {isa = PBXBuildFile; fileRef = 1913FB121A94125000D2E17C /* Building.m */; };
 		192859FB1A6F4F8900A47C67 /* FoodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192859FA1A6F4F8900A47C67 /* FoodDetailViewController.m */; };
 		1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1929ACFF19DBA21E00B15C5B /* TransitViewController.m */; };
@@ -41,6 +42,7 @@
 		194F1B831A71F3850038DC97 /* support_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 194F1B811A71F3850038DC97 /* support_blue.png */; };
 		194F1B841A71F3850038DC97 /* support_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 194F1B821A71F3850038DC97 /* support_grey.png */; };
 		1955ADEC1A71D89600D54A9C /* SupportTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1955ADEB1A71D89600D54A9C /* SupportTableViewController.m */; };
+		195A5A8A1AD5F98C0080B186 /* Arrow-reversed.png in Resources */ = {isa = PBXBuildFile; fileRef = 195A5A891AD5F98C0080B186 /* Arrow-reversed.png */; };
 		195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D940219BFC22900C6C8FA /* DiningViewController.m */; };
 		195D940819BFC40200C6C8FA /* penn-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940519BFC40200C6C8FA /* penn-logo.png */; };
 		195D940919BFC40200C6C8FA /* penn-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940619BFC40200C6C8FA /* penn-logo@2x.png */; };
@@ -72,6 +74,7 @@
 		197DBAF11A6F5A1000B0707C /* E@P-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAEF1A6F5A1000B0707C /* E@P-Blue.png */; };
 		197DBAF21A6F5A1000B0707C /* E@P-Grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAF01A6F5A1000B0707C /* E@P-Grey.png */; };
 		198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198E232119F9C8E8000D33FD /* DetailViewController.m */; };
+		19943A011AC2316B00B489A8 /* DirectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 19943A001AC2316B00B489A8 /* DirectionView.m */; };
 		199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 199B90CE19DB7FCD0018CDE3 /* Person.m */; };
 		19A4ACE61A8DA3FA000804E2 /* BuildingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19A4ACE51A8DA3FA000804E2 /* BuildingViewController.m */; };
 		19B4BDBD1A01DE73008DD69C /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 19B4BDBC1A01DE73008DD69C /* avatar.jpg */; };
@@ -123,6 +126,7 @@
 		19EDDC9C19D24FDD0088C4DC /* textbutton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC9619D24FDD0088C4DC /* textbutton@3x.png */; };
 		19EDDC9F19D252B80088C4DC /* DirectoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC9E19D252B80088C4DC /* DirectoryTableViewController.m */; };
 		19F68ECD1A69708D0022B8F8 /* upenn.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F68ECC1A69708D0022B8F8 /* upenn.png */; };
+		19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */; };
 		82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82982FC119735ECC00DB2AE3 /* Images.xcassets */; };
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
 		EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCE174A19A993900008C332 /* MapKit.framework */; };
@@ -143,6 +147,7 @@
 		16E1C19330F2CC1E8F480AD7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1901F10D1A41FDAC00DDFA9A /* SlideOutMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideOutMenuViewController.h; sourceTree = "<group>"; };
 		1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideOutMenuViewController.m; sourceTree = "<group>"; };
+		1909DF091AC23A6300936552 /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arrow.png; sourceTree = "<group>"; };
 		1913FB111A94125000D2E17C /* Building.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
 		1913FB121A94125000D2E17C /* Building.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Building.m; sourceTree = "<group>"; };
 		192859F91A6F4F8900A47C67 /* FoodDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoodDetailViewController.h; sourceTree = "<group>"; };
@@ -185,6 +190,7 @@
 		194F1B821A71F3850038DC97 /* support_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = support_grey.png; sourceTree = "<group>"; };
 		1955ADEA1A71D89600D54A9C /* SupportTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportTableViewController.h; sourceTree = "<group>"; };
 		1955ADEB1A71D89600D54A9C /* SupportTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportTableViewController.m; sourceTree = "<group>"; };
+		195A5A891AD5F98C0080B186 /* Arrow-reversed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow-reversed.png"; sourceTree = "<group>"; };
 		195D940119BFC22900C6C8FA /* DiningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningViewController.h; sourceTree = "<group>"; };
 		195D940219BFC22900C6C8FA /* DiningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningViewController.m; sourceTree = "<group>"; };
 		195D940519BFC40200C6C8FA /* penn-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "penn-logo.png"; sourceTree = "<group>"; };
@@ -226,6 +232,8 @@
 		197DBAF01A6F5A1000B0707C /* E@P-Grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "E@P-Grey.png"; sourceTree = "<group>"; };
 		198E232019F9C8E8000D33FD /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		198E232119F9C8E8000D33FD /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		199439FF1AC2316B00B489A8 /* DirectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionView.h; sourceTree = "<group>"; };
+		19943A001AC2316B00B489A8 /* DirectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionView.m; sourceTree = "<group>"; };
 		199B90CD19DB7FCD0018CDE3 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		199B90CE19DB7FCD0018CDE3 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		199C2A7419D4C97C0020B153 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = PennMobile/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
@@ -286,6 +294,9 @@
 		19EDDC9D19D252B80088C4DC /* DirectoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectoryTableViewController.h; sourceTree = "<group>"; };
 		19EDDC9E19D252B80088C4DC /* DirectoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectoryTableViewController.m; sourceTree = "<group>"; };
 		19F68ECC1A69708D0022B8F8 /* upenn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upenn.png; sourceTree = "<group>"; };
+		19F6BA441ACB608E00D6C74B /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
+		19F6BA451ACB6B5200D6C74B /* GoogleMapsSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapsSearcher.h; sourceTree = "<group>"; };
+		19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapsSearcher.m; sourceTree = "<group>"; };
 		4650990C3EE7CEC81D779C28 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		6582CFB1B2E1CB15C6BCD647 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		82982FB319735ECC00DB2AE3 /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -384,13 +395,17 @@
 			name = "News Views";
 			sourceTree = "<group>";
 		};
-		1929ACFD19DBA20C00B15C5B /* Map */ = {
+		1929ACFD19DBA20C00B15C5B /* Transit */ = {
 			isa = PBXGroup;
 			children = (
+				19F6BA451ACB6B5200D6C74B /* GoogleMapsSearcher.h */,
+				19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */,
 				1929ACFE19DBA21E00B15C5B /* TransitViewController.h */,
 				1929ACFF19DBA21E00B15C5B /* TransitViewController.m */,
+				199439FF1AC2316B00B489A8 /* DirectionView.h */,
+				19943A001AC2316B00B489A8 /* DirectionView.m */,
 			);
-			name = Map;
+			name = Transit;
 			sourceTree = "<group>";
 		};
 		1944CD3219EDE1DA00DBF9EE /* Registrar */ = {
@@ -409,12 +424,15 @@
 		195D940419BFC40200C6C8FA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				195A5A891AD5F98C0080B186 /* Arrow-reversed.png */,
+				1909DF091AC23A6300936552 /* Arrow.png */,
 				19C71C4A1AA0057E00518455 /* hamburger-xl.png */,
 				19C71C481AA0027700518455 /* hamburger-new.png */,
 				194F1B811A71F3850038DC97 /* support_blue.png */,
 				194F1B821A71F3850038DC97 /* support_grey.png */,
 				197DBAEF1A6F5A1000B0707C /* E@P-Blue.png */,
 				197DBAF01A6F5A1000B0707C /* E@P-Grey.png */,
+				19B6BC2F1A15998A002BFEA5 /* directory.png */,
 				197DBAE31A6F54DD00B0707C /* 34-Blue.png */,
 				197DBAE41A6F54DD00B0707C /* DP-Blue.png */,
 				197DBAE51A6F54DD00B0707C /* UTB-Blue.png */,
@@ -433,7 +451,6 @@
 				19B6BC2C1A15998A002BFEA5 /* About.png */,
 				19B6BC2D1A15998A002BFEA5 /* About-selected.png */,
 				19B6BC2E1A15998A002BFEA5 /* book-selected.png */,
-				19B6BC2F1A15998A002BFEA5 /* directory.png */,
 				19B6BC301A15998A002BFEA5 /* directory-selected.png */,
 				19B6BC311A15998A002BFEA5 /* Menu.png */,
 				19B6BC321A15998A002BFEA5 /* Menu-selected.png */,
@@ -659,7 +676,7 @@
 				1979A7291A0C584800E1B7EB /* PCR */,
 				1944CD3219EDE1DA00DBF9EE /* Registrar */,
 				19EDDC8719D24D030088C4DC /* Directory */,
-				1929ACFD19DBA20C00B15C5B /* Map */,
+				1929ACFD19DBA20C00B15C5B /* Transit */,
 				19EDDC8619D24CEF0088C4DC /* Dining */,
 				196541801A71D91200026C92 /* Support */,
 			);
@@ -671,6 +688,7 @@
 			children = (
 				82982FB719735ECC00DB2AE3 /* Info.plist */,
 				199C2A7419D4C97C0020B153 /* PrefixHeader.pch */,
+				19F6BA441ACB608E00D6C74B /* Keys.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -786,6 +804,7 @@
 				197DBAEE1A6F55C200B0707C /* UTB-Grey.png in Resources */,
 				19B6BC431A159D71002BFEA5 /* AGaramond.otf in Resources */,
 				19DE26DD1A6897C400D072A7 /* engineering.png in Resources */,
+				195A5A8A1AD5F98C0080B186 /* Arrow-reversed.png in Resources */,
 				195D940919BFC40200C6C8FA /* penn-logo@2x.png in Resources */,
 				1937623419C2882A007158E6 /* venue_sample.txt in Resources */,
 				19CB3E201A1576D600AF11D9 /* Book.png in Resources */,
@@ -793,6 +812,7 @@
 				19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */,
 				19C71C491AA0027700518455 /* hamburger-new.png in Resources */,
 				1935F1101A37EFF300057667 /* iPhone 4@2x.png in Resources */,
+				1909DF0A1AC23A6300936552 /* Arrow.png in Resources */,
 				19B6BC3D1A15998A002BFEA5 /* Transit-selected.png in Resources */,
 				1972EEB31A8192E600362B6C /* JOES.PNG in Resources */,
 				1964BC8619C25EDA00CEB1E1 /* placeholder.png in Resources */,
@@ -919,6 +939,7 @@
 				1979A72C1A0C586000E1B7EB /* PCRAggregaotr.m in Sources */,
 				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
 				19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */,
+				19943A011AC2316B00B489A8 /* DirectionView.m in Sources */,
 				19B8543E1AA6ADDD002564D9 /* main.m in Sources */,
 				192C6F2F1A158533008D507C /* NewsViewController.m in Sources */,
 				1955ADEC1A71D89600D54A9C /* SupportTableViewController.m in Sources */,
@@ -937,6 +958,7 @@
 				1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */,
 				198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */,
 				19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */,
+				19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
 				1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */,
 				19A4ACE61A8DA3FA000804E2 /* BuildingViewController.m in Sources */,
@@ -1074,7 +1096,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e63836d8-6aa0-4674-b233-ab2bab39e190";
+				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1100,7 +1122,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e63836d8-6aa0-4674-b233-ab2bab39e190";
+				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
