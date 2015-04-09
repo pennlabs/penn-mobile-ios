@@ -469,6 +469,14 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [self hideRouteUI];
 }
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (searchText.length == 0) {
+        [self mapViewClearAllPinsNotUser:_mapView];
+        [self hideRouteUI];
+    }
+}
 #pragma mark - CLLocationManager
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
