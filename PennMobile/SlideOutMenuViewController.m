@@ -90,6 +90,43 @@ static SlideOutMenuViewController *instance;
 - (void)returnToView {
     [self performSegueWithIdentifier:currentView sender:self];
 }
+
+#pragma mark - UIScrollViewDelegate methods
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    double animDuration = 0.8;
+    
+    if (scrollView.contentOffset.y < 0 && scrollView.contentOffset.y <= scrollView.contentSize.height) {
+        // scrolled up        
+        [UIView beginAnimations:@"fade in" context:nil];
+        [UIView setAnimationDuration:animDuration];
+        _labsImage.alpha = 1.0;
+        [UIView commitAnimations];
+    } else if (scrollView.contentOffset.y > 0) {
+        // scrolled down
+        [UIView beginAnimations:@"fade out" context:nil];
+        [UIView setAnimationDuration:animDuration];
+        _labsImage.alpha = 0.0;
+        [UIView commitAnimations];
+    } else if (scrollView.contentOffset.y == 0) {
+        [UIView beginAnimations:@"fade in" context:nil];
+        [UIView setAnimationDuration:animDuration/2];
+        _labsImage.alpha = 1.0;
+        [UIView commitAnimations];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    // stopped scrolling
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+                  willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
+        // stopped scrolling
+    }
+}
+
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

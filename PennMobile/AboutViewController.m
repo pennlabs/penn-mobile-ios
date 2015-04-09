@@ -33,9 +33,10 @@
     // Email Subject
     NSString *messageSubject = @"[Penn iOS] Request: ";
     // To address
-    NSArray *toRecipents = [NSArray arrayWithObject:@"sachab@seas.upenn.edu"];
+    NSArray *toRecipents = [NSArray arrayWithObject:@"contact@pennlabs.org"];
     
     MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    
     mc.mailComposeDelegate = self;
     [mc setSubject:messageSubject];
     [mc setToRecipients:toRecipents];

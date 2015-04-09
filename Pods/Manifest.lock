@@ -11,9 +11,9 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.8)
 
 SPEC CHECKSUMS:
-  DropdownMenu: ad71a2fcb932cc04a4f7c29aadaf2e8ed0c08e42
-  ECSlidingViewController: e79fe856bfb1a99a39c995377a1943e50f7647eb
-  HMLauncherView: 7f022dd6b7f90be4b08f0eef2c39cccc49acd09f
-  MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
+  DropdownMenu: 5777e17ac6ddbc69b151719b83a838da81440786
+  ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
+  HMLauncherView: be5d387f11f73504727fb60d527bbb91087c04ef
+  MBProgressHUD: d8e7ea388dc1549a42e0d219067cf5f2c898fb66
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.36.0
