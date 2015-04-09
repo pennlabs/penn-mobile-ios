@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Shimmer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>235A8FFFAA8BDAA06D3BFE88</key>
+		<key>08B137AFFD7F09DCFDBD0079</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5561326AEA255CB248052D5F</key>
+		<key>32647C6CD99F2CE53840B537</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5B2AEA0A69EACD43FEB6710B</key>
+		<key>767AB551411A6A487639B184</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>772CDF3919BE173E5DA0CDC8</key>
+		<key>AFA66829F80C455DD9FDF893</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9919DF52990F6A2AFD539E5F</key>
+		<key>C1EE31613246F4BD961CE355</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C3D1DA026AE7B26D0765A0D8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
