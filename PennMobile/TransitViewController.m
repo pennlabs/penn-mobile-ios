@@ -69,6 +69,7 @@
 -(NSDictionary *)queryAPI:(CLLocationCoordinate2D)start destination:(CLLocationCoordinate2D)end
 {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@latFrom=%f&latTo=%f&lonFrom=%f&lonTo=%f", SERVER_ROOT, TRANSIT_PATH, start.latitude, end.latitude, start.longitude, end.longitude ]];
+    /* No Longer in use
     if (!stopMap) {
         NSURL *routesURL = [NSURL URLWithString:[SERVER_ROOT stringByAppendingString:ROUTES_PATH]];
         NSData *routesResult = [NSData dataWithContentsOfURL:routesURL];
@@ -81,6 +82,7 @@
             return nil;
         }
     }
+     */
     NSData *result = [NSData dataWithContentsOfURL:url];
     if (![self confirmConnection:result]) {
         return nil;
@@ -94,7 +96,7 @@
     if (error || returned[@"Error"]) {
         [NSException raise:@"JSON parse error" format:@"%@", error];
     }
-    return returned;
+    return returned[@"result_data"];
 }
 
 - (BOOL)confirmConnection:(NSData *)data {
@@ -114,6 +116,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 }
 
 // could throw exception if route names don't match
+// NOTE : UNUSED
 - (LocationArray)gatherRoutePoints:(NSString *)route from:(long)from to:(long)to {
     NSArray *stops = [((NSArray *)stopMap[route]) subarrayWithRange:NSMakeRange(from, to)];
     CLLocationCoordinate2D *arr = malloc(stops.count * sizeof(CLLocationCoordinate2D));
@@ -123,17 +126,24 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     return LocationArrayMake(arr, stops.count);
 }
 
+// now used instead
+- (LocationArray)gatherRoutePoints:(NSArray *)stops {
+    CLLocationCoordinate2D *arr = malloc(stops.count * sizeof(CLLocationCoordinate2D));
+    for (int i = 0; i < stops.count; i++) {
+        arr[i] = CLLocationCoordinate2DMake([stops[i][@"Latitude"] doubleValue], [stops[i][@"Longitude"] doubleValue]);
+    }
+    return LocationArrayMake(arr, stops.count);
+}
 - (void)parseData:(NSDictionary *)fromAPI trueStart:(CLLocationCoordinate2D)trueStart trueEnd:(CLLocationCoordinate2D)trueEnd {
     CLLocationCoordinate2D end, from;
     double endLat, endLon, fromLat, fromLon;
-    long fromID, toID;
+    NSArray *path;
     @try {
-        endLat = [(NSString *) (fromAPI[@"toStop"][@"Latitude"]) doubleValue];
-        endLon = [(NSString *) (fromAPI[@"toStop"][@"Longitude"]) doubleValue];
-        fromLat = [(NSString *) (fromAPI[@"fromStop"][@"Latitude"]) doubleValue];
-        fromLon = [(NSString *) (fromAPI[@"fromStop"][@"Longitude"]) doubleValue];
-        fromID = [fromAPI[@"fromOrder"] longValue];
-        toID = [fromAPI[@"toOrder"] longValue];
+        path = fromAPI[@"path"];
+        fromLat = [path[0][@"Latitude"] doubleValue];
+        fromLon = [path[0][@"Longitude"] doubleValue];
+        endLat = [path[path.count - 1][@"Latitude"] doubleValue];
+        endLon = [path[path.count - 1][@"Longitude"] doubleValue];
     }
     @catch (NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Routing Unavailable." message:@"There was a problem routing to your destination. Please try again. Error: Invalid coordinates from Labs API." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -144,7 +154,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     from = CLLocationCoordinate2DMake(fromLat, fromLon);
     @try {
         // change this with Hong's code
-        LocationArray busRoute = [self gatherRoutePoints:fromAPI[@"route"] from:fromID to:toID];
+        LocationArray busRoute = [self gatherRoutePoints:path];
         MKPolyline *busLine = [MKPolyline polylineWithCoordinates:busRoute.coords count:busRoute.size];
         busLine.title = @"bus";
         busView = [[MKPolylineRenderer alloc] initWithPolyline:busLine];
@@ -185,11 +195,11 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     
     double walkStart = [startd doubleValue];
     double walkEnd = [endd doubleValue];
-    
+    NSArray *path = fromAPI[@"path"];
     NSString *routeTitle = fromAPI[@"route"];
-    NSString *fromStop = fromAPI[@"fromStop"][@"BusStopName"];
-    NSString *toStop = fromAPI[@"toStop"][@"BusStopName"];
-    
+    NSString *fromStop = path[0][@"BusStopName"];
+    NSString *toStop = path[path.count - 1][@"BusStopName"];
+
     DirectionView *first = [DirectionView make:fromStop distance:walkStart isBus:NO isLast:NO];
     DirectionView *bus = [DirectionView make:toStop distance:0 isBus:YES isLast:NO];
     DirectionView *last = [DirectionView make:destTitle distance:walkEnd isBus:NO isLast:YES];
