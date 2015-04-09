@@ -520,6 +520,9 @@ bool usingTempData;
                         for (NSDictionary *m in d[@"meal"]) {
                             NSDate *open = [hoursJSONFormatter dateFromString:m[@"open"]];
                             NSDate *close = [hoursJSONFormatter dateFromString:m[@"close"]];
+                            if ([m[@"close"] isEqualToString:@"24:00:00"]) {
+                                close = [hoursJSONFormatter dateFromString:@"00:00:00"];
+                            }
                             NSString *type = m[@"type"];
                             generated = [generated stringByAppendingString:[NSString stringWithFormat:@"%@: %@ - %@\n", type, [prettyHourFormatter stringFromDate:open], [prettyHourFormatter stringFromDate:close]]];
                         }
