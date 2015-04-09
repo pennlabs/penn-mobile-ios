@@ -34,6 +34,7 @@ static int numCreated = 0;
         n.backgroundColor = PENN_BLUE;
         // to be added
         subtitle.text = [NSString stringWithFormat:@"take the bus to"];
+        [n addSubview:[DirectionView makeBackArrow]];
     } else {
         n.backgroundColor = PENN_RED;
         subtitle.text = [NSString stringWithFormat:@"walk %.2fmi to", dist];
@@ -54,6 +55,11 @@ static int numCreated = 0;
 + (UIImageView *)makeArrow {
     UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Arrow"]];
     arrow.frame = CGRectMake(screenWidth - 10 - (ARROW_WIDTH / 2.0), (VIEW_HEIGHT - ARROW_HEIGHT) / 2.0,ARROW_WIDTH, ARROW_HEIGHT);
+    return arrow;
+}
++ (UIImageView *)makeBackArrow {
+    UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Arrow-reversed"]];
+    arrow.frame = CGRectMake(10 + (ARROW_WIDTH / 2.0), (VIEW_HEIGHT - ARROW_HEIGHT) / 2.0,ARROW_WIDTH, ARROW_HEIGHT);
     return arrow;
 }
 /*
