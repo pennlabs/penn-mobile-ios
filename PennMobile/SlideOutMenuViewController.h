@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *labsImage;
 @property bool menuOut;
-@property (nonatomic, assign) CGFloat lastScrollOffset;
 
 @property NSArray *views;
 

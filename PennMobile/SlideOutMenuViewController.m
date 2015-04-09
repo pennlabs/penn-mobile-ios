@@ -95,18 +95,14 @@ static SlideOutMenuViewController *instance;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     double animDuration = 0.8;
     
-    if (_lastScrollOffset > scrollView.contentOffset.y && scrollView.contentOffset.y <= scrollView.contentSize.height) {
-        // scrolled up
-        NSLog(@"Up");
-        
+    if (scrollView.contentOffset.y < 0 && scrollView.contentOffset.y <= scrollView.contentSize.height) {
+        // scrolled up        
         [UIView beginAnimations:@"fade in" context:nil];
         [UIView setAnimationDuration:animDuration];
         _labsImage.alpha = 1.0;
         [UIView commitAnimations];
-    } else if (_lastScrollOffset < scrollView.contentOffset.y) {
+    } else if (scrollView.contentOffset.y > 0) {
         // scrolled down
-        NSLog(@"Down");
-        
         [UIView beginAnimations:@"fade out" context:nil];
         [UIView setAnimationDuration:animDuration];
         _labsImage.alpha = 0.0;
@@ -117,8 +113,6 @@ static SlideOutMenuViewController *instance;
         _labsImage.alpha = 1.0;
         [UIView commitAnimations];
     }
-    
-    _lastScrollOffset = scrollView.contentOffset.x;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
