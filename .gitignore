@@ -16,5 +16,7 @@ profile
 *.moved-aside
 DerivedData
 .idea/
-# Pods - for those of you who use CocoaPods
 Pods
+PennMobile/Keys.pch
+.DS_Store
+*.xcuserstate
