@@ -1,1 +1,0 @@
-../../../HMLauncherView/Classes/HMLauncherViewDelegate.h
