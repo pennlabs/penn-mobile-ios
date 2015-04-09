@@ -1205,12 +1205,6 @@
                                 <constraint firstAttribute="bottom" secondItem="LVv-A4-wmD" secondAttribute="bottom" id="tcf-e1-Ka2"/>
                             </constraints>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" title="Stops" id="inE-og-yqw">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="stopsButtonPressed:" destination="guj-Kx-i0U" id="DFm-BE-cUy"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -1218,7 +1212,6 @@
                         <outlet property="mapView" destination="CgH-nm-CA3" id="76n-Pf-U5t"/>
                         <outlet property="scrollView" destination="yIf-2N-SrZ" id="AqD-DK-gEG"/>
                         <outlet property="searchBar" destination="7B2-cr-zVy" id="iZK-Tq-vaK"/>
-                        <outlet property="stopsButton" destination="inE-og-yqw" id="Brh-ZV-Ict"/>
                         <segue destination="iWV-Iq-yZq" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="Ogk-FE-P4L"/>
                     </connections>
                 </viewController>
@@ -1815,7 +1808,7 @@ and the rest of Labs + UA</string>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="1VT-fd-RAz">
-                            <rect key="frame" x="146.5" y="5.5" width="82" height="33"/>
+                            <rect key="frame" x="147" y="6" width="82" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="theDP" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="dDD-hc-gZX">
@@ -1897,7 +1890,7 @@ and the rest of Labs + UA</string>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="ydF-X0-ZRX">
-                            <rect key="frame" x="146.5" y="5.5" width="82" height="33"/>
+                            <rect key="frame" x="147" y="6" width="82" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="34th St" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="nsC-Zz-Ra5">
@@ -1979,7 +1972,7 @@ and the rest of Labs + UA</string>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="rOj-Gq-GYp">
-                            <rect key="frame" x="140.5" y="5.5" width="94" height="33"/>
+                            <rect key="frame" x="141" y="6" width="94" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UTB" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="sBy-6h-WWq">
@@ -2070,7 +2063,7 @@ and the rest of Labs + UA</string>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="tW5-Le-wT0">
-                            <rect key="frame" x="112.5" y="5.5" width="150" height="33"/>
+                            <rect key="frame" x="113" y="6" width="150" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Support" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="b7E-6j-0Zx">
@@ -2127,7 +2120,7 @@ and the rest of Labs + UA</string>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="MAl-tu-hXE">
-                            <rect key="frame" x="93.5" y="5.5" width="188" height="33"/>
+                            <rect key="frame" x="94" y="6" width="188" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events@Penn" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="is2-rx-RSH">
