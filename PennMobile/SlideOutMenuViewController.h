@@ -10,7 +10,7 @@
 #import "PennNavController.h"
 #import "NewsViewController.h"
 
-@interface SlideOutMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface SlideOutMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate> {
     NSString *currentView;
     NSIndexPath *start;
 }

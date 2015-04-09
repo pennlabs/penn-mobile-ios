@@ -46,7 +46,6 @@
 		195D940919BFC40200C6C8FA /* penn-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940619BFC40200C6C8FA /* penn-logo@2x.png */; };
 		195D940A19BFC40200C6C8FA /* penn-logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 195D940719BFC40200C6C8FA /* penn-logo@3x.png */; };
 		195D940D19BFC44E00C6C8FA /* PennNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D940C19BFC44E00C6C8FA /* PennNavController.m */; };
-		195D940F19BFC58B00C6C8FA /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D940E19BFC58B00C6C8FA /* Agent.swift */; };
 		195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 195D941119BFC76200C6C8FA /* DiningTableViewCell.m */; };
 		1964BC8619C25EDA00CEB1E1 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 1964BC8519C25EDA00CEB1E1 /* placeholder.png */; };
 		1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1964BC8819C277DD00CEB1E1 /* MenuViewController.m */; };
@@ -124,10 +123,8 @@
 		19EDDC9C19D24FDD0088C4DC /* textbutton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC9619D24FDD0088C4DC /* textbutton@3x.png */; };
 		19EDDC9F19D252B80088C4DC /* DirectoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC9E19D252B80088C4DC /* DirectoryTableViewController.m */; };
 		19F68ECD1A69708D0022B8F8 /* upenn.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F68ECC1A69708D0022B8F8 /* upenn.png */; };
-		82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */; };
 		82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82982FC119735ECC00DB2AE3 /* Images.xcassets */; };
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
-		EBCE174919A715210008C332 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCE174819A715210008C332 /* Course.swift */; };
 		EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCE174A19A993900008C332 /* MapKit.framework */; };
 		F248D02664387BE000890A72 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16E1C19330F2CC1E8F480AD7 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -188,7 +185,6 @@
 		194F1B821A71F3850038DC97 /* support_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = support_grey.png; sourceTree = "<group>"; };
 		1955ADEA1A71D89600D54A9C /* SupportTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportTableViewController.h; sourceTree = "<group>"; };
 		1955ADEB1A71D89600D54A9C /* SupportTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportTableViewController.m; sourceTree = "<group>"; };
-		195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		195D940119BFC22900C6C8FA /* DiningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningViewController.h; sourceTree = "<group>"; };
 		195D940219BFC22900C6C8FA /* DiningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningViewController.m; sourceTree = "<group>"; };
 		195D940519BFC40200C6C8FA /* penn-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "penn-logo.png"; sourceTree = "<group>"; };
@@ -196,7 +192,6 @@
 		195D940719BFC40200C6C8FA /* penn-logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "penn-logo@3x.png"; sourceTree = "<group>"; };
 		195D940B19BFC44E00C6C8FA /* PennNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PennNavController.h; sourceTree = "<group>"; };
 		195D940C19BFC44E00C6C8FA /* PennNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PennNavController.m; sourceTree = "<group>"; };
-		195D940E19BFC58B00C6C8FA /* Agent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
 		195D941019BFC76200C6C8FA /* DiningTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiningTableViewCell.h; sourceTree = "<group>"; };
 		195D941119BFC76200C6C8FA /* DiningTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiningTableViewCell.m; sourceTree = "<group>"; };
 		1964BC8519C25EDA00CEB1E1 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
@@ -295,13 +290,11 @@
 		6582CFB1B2E1CB15C6BCD647 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		82982FB319735ECC00DB2AE3 /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FB719735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrarSearchViewController.swift; sourceTree = "<group>"; };
 		82982FBF19735ECC00DB2AE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		82982FC119735ECC00DB2AE3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		82982FC719735ECC00DB2AE3 /* PennMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PennMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FCC19735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobileTests.swift; sourceTree = "<group>"; };
-		EBCE174819A715210008C332 /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		EBCE174A19A993900008C332 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -535,7 +528,6 @@
 		19A4ACE21A8DA2DB000804E2 /* AppDelegate + Stuff */ = {
 			isa = PBXGroup;
 			children = (
-				19B8543F1AA6ADF2002564D9 /* Old Swift Shit */,
 				19B8543A1AA6AA5B002564D9 /* AppDelegate.h */,
 				19B8543B1AA6AA5B002564D9 /* AppDelegate.m */,
 				19B8543D1AA6ADDD002564D9 /* main.m */,
@@ -552,17 +544,6 @@
 				1913FB121A94125000D2E17C /* Building.m */,
 			);
 			name = Building;
-			sourceTree = "<group>";
-		};
-		19B8543F1AA6ADF2002564D9 /* Old Swift Shit */ = {
-			isa = PBXGroup;
-			children = (
-				82982FBA19735ECC00DB2AE3 /* RegistrarSearchViewController.swift */,
-				EBCE174819A715210008C332 /* Course.swift */,
-				195D940E19BFC58B00C6C8FA /* Agent.swift */,
-				195D940019BFC22800C6C8FA /* PennMobile-Bridging-Header.h */,
-			);
-			name = "Old Swift Shit";
 			sourceTree = "<group>";
 		};
 		19C3A8B31A1C309700D32D8A /* ListView */ = {
@@ -936,10 +917,8 @@
 			files = (
 				1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */,
 				1979A72C1A0C586000E1B7EB /* PCRAggregaotr.m in Sources */,
-				195D940F19BFC58B00C6C8FA /* Agent.swift in Sources */,
 				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
 				19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */,
-				EBCE174919A715210008C332 /* Course.swift in Sources */,
 				19B8543E1AA6ADDD002564D9 /* main.m in Sources */,
 				192C6F2F1A158533008D507C /* NewsViewController.m in Sources */,
 				1955ADEC1A71D89600D54A9C /* SupportTableViewController.m in Sources */,
@@ -958,7 +937,6 @@
 				1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */,
 				198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */,
 				19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */,
-				82982FBB19735ECC00DB2AE3 /* RegistrarSearchViewController.swift in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
 				1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */,
 				19A4ACE61A8DA3FA000804E2 /* BuildingViewController.m in Sources */,
