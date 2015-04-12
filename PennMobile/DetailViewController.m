@@ -56,6 +56,7 @@ static MKLocalSearch *search;
     }
     _credits.text = info.credits;
     _sectionNum.text = [@"Section " stringByAppendingString:info.sectionNum];
+    [self startStandardUpdates];
 }
 - (void)setupForBuilding {
     _titleBuilding.hidden = NO; 
