@@ -41,7 +41,7 @@
     if (indexPath.row < super.objects.count) {
         [cell configure:super.objects[indexPath.row]];
     }
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
@@ -116,6 +116,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     super.forSegue = super.objects[indexPath.row];
     //[self performSegueWithIdentifier:@"detail" sender:self];
     [self prompt:self];
