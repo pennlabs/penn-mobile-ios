@@ -93,6 +93,7 @@ static SlideOutMenuViewController *instance;
 
 #pragma mark - UIScrollViewDelegate methods
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // fun fading effect with PennLabs logo
     double animDuration = 0.8;
     
     if (scrollView.contentOffset.y < 0 && scrollView.contentOffset.y <= scrollView.contentSize.height) {
