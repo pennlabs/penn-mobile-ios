@@ -69,6 +69,10 @@
         UIView *grayCover = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
         [grayCover setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]];
         [grayCover addGestureRecognizer:cancelTouches];
+        
+        UISwipeGestureRecognizer *swipeToCancel = [[UISwipeGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
+        swipeToCancel.direction = UISwipeGestureRecognizerDirectionLeft;
+        [grayCover addGestureRecognizer:swipeToCancel];
         [UIView transitionWithView:self.view duration:1
                            options:UIViewAnimationOptionShowHideTransitionViews
                         animations:^ { [self.view addSubview:grayCover]; }
