@@ -31,6 +31,9 @@ static SlideOutMenuViewController *instance;
     UISwipeGestureRecognizer *returnSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(returnToView:)];
     returnSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:returnSwipe];
+    
+    // disable scrolling when all rows are showing
+    _tableView.alwaysBounceVertical = NO;
 }
 - (IBAction)returnToView:(id)sender {
     [self performSegueWithIdentifier:currentView sender:self];
