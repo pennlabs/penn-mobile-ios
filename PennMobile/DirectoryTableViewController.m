@@ -223,7 +223,7 @@
 
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ([alertView.title isEqualToString:@"Invalid Search"])
+    if ([alertView.title isEqualToString:@"Invalid Search"] || !super.forSegue)
         return;
     Person *p = super.forSegue;
     NSString *phoneNumber = [@"tel://" stringByAppendingString:p.phone];
