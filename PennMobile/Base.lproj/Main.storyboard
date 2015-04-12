@@ -980,13 +980,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sacha Best" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sFu-tj-FiG">
-                                                    <rect key="frame" x="18" y="9" width="88" height="21"/>
+                                                    <rect key="frame" x="18" y="9" width="319" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Final Boss" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RXk-i6-Num">
-                                                    <rect key="frame" x="18" y="28" width="107" height="20"/>
+                                                    <rect key="frame" x="18" y="28" width="339" height="20"/>
                                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -1013,23 +1013,23 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="sFu-tj-FiG" secondAttribute="trailing" constant="30" id="3Dq-zg-g4S"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="RXk-i6-Num" secondAttribute="trailing" constant="30" id="5hd-Pv-xyT"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="sFu-tj-FiG" secondAttribute="trailing" priority="900" constant="30" id="3Dq-zg-g4S"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="RXk-i6-Num" secondAttribute="trailing" priority="900" constant="10" id="5hd-Pv-xyT"/>
                                                 <constraint firstItem="SGp-Q1-xqf" firstAttribute="top" secondItem="UYo-KN-adf" secondAttribute="bottom" constant="-12" id="AHH-Do-tlB"/>
+                                                <constraint firstItem="sFu-tj-FiG" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leading" constant="18" id="D1l-9t-GcE"/>
                                                 <constraint firstItem="UYo-KN-adf" firstAttribute="top" secondItem="sFu-tj-FiG" secondAttribute="bottom" constant="10" id="FQu-CM-15z"/>
-                                                <constraint firstItem="sFu-tj-FiG" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leadingMargin" constant="10" id="N92-Mf-Crp"/>
                                                 <constraint firstItem="SGp-Q1-xqf" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leading" constant="18" id="Ouq-kU-bnl"/>
                                                 <constraint firstItem="UYo-KN-adf" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leading" constant="18" id="UVH-1K-n2g"/>
                                                 <constraint firstItem="RXk-i6-Num" firstAttribute="top" secondItem="YDc-yS-xRc" secondAttribute="topMargin" constant="20" id="UuE-AY-8Sz"/>
-                                                <constraint firstItem="RXk-i6-Num" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leadingMargin" constant="10" id="XHs-57-JWI"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="SGp-Q1-xqf" secondAttribute="trailing" constant="30" id="eLA-sZ-n9i"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="UYo-KN-adf" secondAttribute="trailing" constant="30" id="h8O-mB-mzn"/>
-                                                <constraint firstItem="SGp-Q1-xqf" firstAttribute="top" secondItem="RXk-i6-Num" secondAttribute="bottom" constant="11" id="kGm-w0-FIp"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="UYo-KN-adf" secondAttribute="trailing" priority="900" constant="10" id="YyS-FZ-Zm9"/>
                                                 <constraint firstItem="sFu-tj-FiG" firstAttribute="top" secondItem="YDc-yS-xRc" secondAttribute="topMargin" constant="1" id="nVy-qd-0NH"/>
+                                                <constraint firstItem="RXk-i6-Num" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leadingMargin" constant="18" id="tpG-fo-nyz"/>
+                                                <constraint firstItem="RXk-i6-Num" firstAttribute="leading" secondItem="YDc-yS-xRc" secondAttribute="leading" constant="18" id="tue-UQ-WqB"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="SGp-Q1-xqf" secondAttribute="trailing" priority="900" constant="10" id="zeJ-uB-Ij0"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="kGm-w0-FIp"/>
+                                                    <exclude reference="tpG-fo-nyz"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
