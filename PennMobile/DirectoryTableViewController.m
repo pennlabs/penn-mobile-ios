@@ -200,19 +200,27 @@
 -(IBAction)prompt:(id)sender {
     Person *p = super.forSegue;
     UIAlertView *phoneAlert = [[UIAlertView alloc] initWithTitle:p.name message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
-    if (p.phone && ![p.phone isEqualToString:@""]) {
-        [phoneAlert addButtonWithTitle:@"Call"];
-        [phoneAlert addButtonWithTitle:@"Text"];
+    @try {
+        if (p.phone && ![p.phone isEqualToString:@""]) {
+            [phoneAlert addButtonWithTitle:@"Call"];
+            [phoneAlert addButtonWithTitle:@"Text"];
+        }
+        if (p.email && ![p.email isEqualToString:@""]) {
+            [phoneAlert addButtonWithTitle:@"Email"];
+        }
+        if ((!p.email || [p.email isEqualToString:@""]) && (!p.phone || [p.phone isEqualToString:@""])) {
+            phoneAlert.message = @"This person has no public information listed";
+        } else {
+            [phoneAlert addButtonWithTitle:@"Add to Contacts"];
+        }
     }
-    if (p.email && ![p.email isEqualToString:@""]) {
-        [phoneAlert addButtonWithTitle:@"Email"];
+    @catch (NSException *exception) {
+        phoneAlert.message = @"There has been an API communication error. Please try again.";
     }
-    if ((!p.email || [p.email isEqualToString:@""]) && (!p.phone || [p.phone isEqualToString:@""])) {
-        phoneAlert.message = @"This person has no public information listed";
-    } else {
-        [phoneAlert addButtonWithTitle:@"Add to Contacts"];
+    @finally {
+        [phoneAlert show];
     }
-    [phoneAlert show];
+
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     Person *p = super.forSegue;
