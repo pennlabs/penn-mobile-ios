@@ -22,7 +22,7 @@
 @property (weak, nonatomic) UILabel *title;
 @property (weak, nonatomic) UILabel *distance;
 
-+ (DirectionView *)make:(NSString *)name distance:(double)dist isBus:(bool)bus isLast:(bool)last;
++ (DirectionView *)make:(NSString *)name distance:(double)dist routeTitle:(NSString *)bus isLast:(bool)last;
 
 + (CGSize)size;
 @end
