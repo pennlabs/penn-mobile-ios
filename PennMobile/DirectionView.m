@@ -14,7 +14,7 @@
 static float screenWidth = 0;
 static int numCreated = 0;
 
-+ (DirectionView *)make:(NSString *)name distance:(double)dist isBus:(bool)bus isLast:(bool)last {
++ (DirectionView *)make:(NSString *)name distance:(double)dist routeTitle:(NSString *)bus isLast:(bool)last {
     if (screenWidth == 0) {
         screenWidth = [[UIScreen mainScreen] bounds].size.width;
     }
@@ -33,7 +33,7 @@ static int numCreated = 0;
     if (bus) {
         n.backgroundColor = PENN_BLUE;
         // to be added
-        subtitle.text = [NSString stringWithFormat:@"take the bus to"];
+        subtitle.text = [NSString stringWithFormat:@"via %@", bus];
         [n addSubview:[DirectionView makeBackArrow]];
     } else {
         n.backgroundColor = PENN_RED;

@@ -196,13 +196,13 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     double walkStart = [startd doubleValue];
     double walkEnd = [endd doubleValue];
     NSArray *path = fromAPI[@"path"];
-    NSString *routeTitle = fromAPI[@"route"];
+    NSString *routeTitle = fromAPI[@"route_name"];
     NSString *fromStop = path[0][@"BusStopName"];
     NSString *toStop = path[path.count - 1][@"BusStopName"];
 
-    DirectionView *first = [DirectionView make:fromStop distance:walkStart isBus:NO isLast:NO];
-    DirectionView *bus = [DirectionView make:toStop distance:0 isBus:YES isLast:NO];
-    DirectionView *last = [DirectionView make:destTitle distance:walkEnd isBus:NO isLast:YES];
+    DirectionView *first = [DirectionView make:fromStop distance:walkStart routeTitle:nil isLast:NO];
+    DirectionView *bus = [DirectionView make:toStop distance:0 routeTitle:routeTitle isLast:NO];
+    DirectionView *last = [DirectionView make:destTitle distance:walkEnd routeTitle:nil isLast:YES];
     
     [_scrollView addSubview:first];
     [_scrollView addSubview:bus];
