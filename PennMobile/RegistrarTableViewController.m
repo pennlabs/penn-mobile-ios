@@ -161,6 +161,8 @@
     return super.objects.count;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     super.forSegue = super.objects[indexPath.row];
     selected = indexPath;
     [self performSegueWithIdentifier:@"detail" sender:self];
