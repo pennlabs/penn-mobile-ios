@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
-@interface Course : NSObject
+@interface Course : NSObject <NSCopying>
 
 @property NSString *dept;
 @property NSString *title;
