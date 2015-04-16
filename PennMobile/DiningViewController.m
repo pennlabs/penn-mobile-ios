@@ -317,6 +317,7 @@ bool usingTempData;
 }
 - (void)handleRollBack:(UIStoryboardSegue *)segue {
     if ([segue.destinationViewController isKindOfClass:[SlideOutMenuViewController class]]) {
+        self.tableView.scrollEnabled = NO;
         SlideOutMenuViewController *menu = segue.destinationViewController;
         cancelTouches = [[UITapGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
         cancelTouches.cancelsTouchesInView = YES;
