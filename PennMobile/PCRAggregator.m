@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 PennLabs. All rights reserved.
 //
 
-#import "PCRAggregaotr.h"
+#import "PCRAggregator.h"
 
-@implementation PCRAggregaotr
+@implementation PCRAggregator
 
 static NSMutableDictionary *reviews;
 static NSMutableDictionary *averages;
@@ -16,7 +16,7 @@ static NSMutableDictionary *averages;
  *  @brief Static initializer used to create the reviews hashmap. This map stores data locally to save API calls.
  */
 + (void)initialize {
-    if (self == [PCRAggregaotr class]) {
+    if (self == [PCRAggregator class]) {
         reviews = [[NSMutableDictionary alloc] init];
         averages = [[NSMutableDictionary alloc] init];
 
@@ -26,7 +26,7 @@ static NSMutableDictionary *averages;
 + (PCReview *) getAverageReviewFor:(Course *)course {
     if (!averages[course]) {
         if (!reviews[course]) {
-            [PCRAggregaotr getReviewsFor:course];
+            [PCRAggregator getReviewsFor:course];
         }
         double overall, inst, diff;
         for (PCReview *rev in reviews[course]) {
@@ -37,7 +37,7 @@ static NSMutableDictionary *averages;
         overall /= (double) [reviews[course] count];
         inst /= (double) [reviews[course] count];
         diff /= (double) [reviews[course] count];
-        averages[course] = [[PCReview alloc] initWithCourse:overall inst:inst diff:diff];
+        averages[course] = [PCReview reviewWithCourse:overall inst:inst diff:diff];
     }
     return averages[course];
     
@@ -45,11 +45,11 @@ static NSMutableDictionary *averages;
 
 + (NSArray *)getReviewsFor:(Course *)course {
     if (!reviews[course]) {
-        NSArray *raw = [PCRAggregaotr queryAPI:course.identifier];
+        NSArray *raw = [PCRAggregator queryAPI:course.identifier];
         NSMutableArray *revs = [[NSMutableArray alloc] initWithCapacity:raw.count];
         @try {
             for (NSDictionary *json in raw) {
-                [revs addObject:[PCRAggregaotr parseReview:json]];
+                [revs addObject:[PCRAggregator parseReview:json]];
                 reviews[course] = revs;
             }
         }
@@ -65,7 +65,7 @@ static NSMutableDictionary *averages;
     double course = [json[@"Course"] doubleValue];
     double inst = [json[@"Instructor"] doubleValue];
     double diff = [json[@"Difficulty"] doubleValue];
-    return [[PCReview alloc] initWithCourse:course inst:inst diff:diff];
+    return [PCReview reviewWithCourse:course inst:inst diff:diff];
 }
 
 /**
@@ -78,7 +78,7 @@ static NSMutableDictionary *averages;
 + (NSArray *)queryAPI:(NSString *)term {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:REVIEW_URL, term, PCR_TOKEN]];
     NSData *result = [NSData dataWithContentsOfURL:url];
-    if (![PCRAggregaotr confirmConnection:result]) {
+    if (![PCRAggregator confirmConnection:result]) {
         return nil;
     }
     NSError *error;

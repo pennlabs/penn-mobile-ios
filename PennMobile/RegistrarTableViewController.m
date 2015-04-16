@@ -71,7 +71,9 @@
             }
         }
         Course *new = [[Course alloc] init];
-        new.identifier = courseData[@"_id"];
+        NSString *term = courseData[@"term"];
+        long pcrYear = [[courseData[@"term"] substringToIndex:(term.length -1)] intValue] - 1;
+        NSString *semester = [term substringFromIndex:term.length - 1];
         new.activity = courseData[@"activity_description"];
         new.dept = courseData[@"course_department"];
         new.title = [courseData[@"course_title"] capitalizedString];
@@ -83,6 +85,8 @@
         new.roomBum = courseData[@"roomNumber"];
         new.sectionID = courseData[@"section_id_normalized"];
         new.primaryProf = courseData[@"primary_instructor"];
+        new.identifier = [NSString stringWithFormat:@"%ld%@-%@-%@", pcrYear, semester, new.dept, new.courseNum];
+        new.review = [PCRAggregator getAverageReviewFor:new];
         if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0) {
             NSArray *mtgs = ((NSArray *)courseData[@"meetings"]);
             int c;

@@ -47,6 +47,9 @@ static MKLocalSearch *search;
     _titleText.text = info.title;
     _detailText.text = info.desc;
     _labelTime.text = info.times;
+    _labelPCRCourse.text = [NSString stringWithFormat:@"%.2f", info.review.course];
+    _labelPCRDiff.text = [NSString stringWithFormat:@"%.2f", info.review.diff];
+    _labelPCRInst.text = [NSString stringWithFormat:@"%.2f", info.review.inst];
     _courseNumber.text = [[info.dept stringByAppendingString:@" "] stringByAppendingString:info.courseNum];
     if (info.professors && info.professors.count > 0) {
         _subText.text = info.professors[0];

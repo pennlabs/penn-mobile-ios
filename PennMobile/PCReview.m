@@ -11,7 +11,7 @@
 @implementation PCReview
 
 + (PCReview *)reviewWithCourse:(double)course inst:(double)inst diff:(double)diff {
-    PCReview *this = [PCReview init];
+    PCReview *this = [[PCReview alloc] init];
     this.course = course;
     this.diff = diff;
     this.inst = inst;
