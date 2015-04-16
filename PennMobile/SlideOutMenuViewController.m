@@ -36,7 +36,7 @@ static SlideOutMenuViewController *instance;
     [self performSegueWithIdentifier:currentView sender:self];
 }
 - (void)showLabsURL:(id)sender {
-    // open labs URL here
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.pennlabs.org"]];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
