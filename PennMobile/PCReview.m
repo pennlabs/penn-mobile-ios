@@ -10,12 +10,12 @@
 
 @implementation PCReview
 
-- (id)initWithCourse:(double)course inst:(double)inst diff:(double)diff {
-    PCReview *this = [super init];
++ (PCReview *)reviewWithCourse:(double)course inst:(double)inst diff:(double)diff {
+    PCReview *this = [PCReview init];
+    this.course = course;
+    this.diff = diff;
+    this.inst = inst;
     return this;
 }
 
-- (void)config:a1 a2:(double)a2 a3:(double)a3 {
-    //data = @{ a1    , a2, a3 };
-}
 @end

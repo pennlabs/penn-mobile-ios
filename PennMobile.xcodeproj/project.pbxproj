@@ -21,6 +21,7 @@
 		1935F1121A37EFF300057667 /* iPhone 6 Plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1935F10C1A37EFF300057667 /* iPhone 6 Plus@3x.png */; };
 		1935F1131A37EFF300057667 /* iPhone 6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1935F10D1A37EFF300057667 /* iPhone 6@2x.png */; };
 		1937623419C2882A007158E6 /* venue_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1937623319C2882A007158E6 /* venue_sample.txt */; };
+		193DF1A81ADDA25600B1532E /* PLAggregator.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DF1A71ADDA25600B1532E /* PLAggregator.m */; };
 		19432D0E1A71C656003E9953 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D0C1A71C656003E9953 /* Bolts.framework */; };
 		19432D0F1A71C656003E9953 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D0D1A71C656003E9953 /* Parse.framework */; };
 		19432D1C1A71C6CD003E9953 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D101A71C6CD003E9953 /* AudioToolbox.framework */; };
@@ -165,6 +166,8 @@
 		1935F10C1A37EFF300057667 /* iPhone 6 Plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 6 Plus@3x.png"; sourceTree = "<group>"; };
 		1935F10D1A37EFF300057667 /* iPhone 6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 6@2x.png"; sourceTree = "<group>"; };
 		1937623319C2882A007158E6 /* venue_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = venue_sample.txt; sourceTree = "<group>"; };
+		193DF1A61ADDA25600B1532E /* PLAggregator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAggregator.h; sourceTree = "<group>"; };
+		193DF1A71ADDA25600B1532E /* PLAggregator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAggregator.m; sourceTree = "<group>"; };
 		19432D0C1A71C656003E9953 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		19432D0D1A71C656003E9953 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		19432D101A71C6CD003E9953 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -521,6 +524,8 @@
 		1979A7291A0C584800E1B7EB /* PCR */ = {
 			isa = PBXGroup;
 			children = (
+				193DF1A61ADDA25600B1532E /* PLAggregator.h */,
+				193DF1A71ADDA25600B1532E /* PLAggregator.m */,
 				1979A72A1A0C586000E1B7EB /* PCRAggregaotr.h */,
 				1979A72B1A0C586000E1B7EB /* PCRAggregaotr.m */,
 				1979A72D1A0C595C00E1B7EB /* PCReview.h */,
@@ -952,6 +957,7 @@
 				1971E22F1AA68B9900CD2404 /* AuthLoginViewController.m in Sources */,
 				1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */,
 				1979A72F1A0C595C00E1B7EB /* PCReview.m in Sources */,
+				193DF1A81ADDA25600B1532E /* PLAggregator.m in Sources */,
 				195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */,
 				19EDDC9F19D252B80088C4DC /* DirectoryTableViewController.m in Sources */,
 				1978259A19EDFAB400284799 /* AboutViewController.m in Sources */,
