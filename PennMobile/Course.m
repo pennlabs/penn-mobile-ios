@@ -29,6 +29,7 @@
     copy.point = self.point;
     copy.sectionID = self.sectionID;
     copy.activity = self.activity;
+    copy.review = self.review;
     return copy;
 }
 

@@ -64,7 +64,7 @@
 		1972EEB31A8192E600362B6C /* JOES.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEB21A8192E600362B6C /* JOES.PNG */; };
 		1978259619EDEE1F00284799 /* labs.png in Resources */ = {isa = PBXBuildFile; fileRef = 1978259519EDEE1F00284799 /* labs.png */; };
 		1978259A19EDFAB400284799 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978259919EDFAB400284799 /* AboutViewController.m */; };
-		1979A72C1A0C586000E1B7EB /* PCRAggregaotr.m in Sources */ = {isa = PBXBuildFile; fileRef = 1979A72B1A0C586000E1B7EB /* PCRAggregaotr.m */; };
+		1979A72C1A0C586000E1B7EB /* PCRAggregator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1979A72B1A0C586000E1B7EB /* PCRAggregator.m */; };
 		1979A72F1A0C595C00E1B7EB /* PCReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 1979A72E1A0C595C00E1B7EB /* PCReview.m */; };
 		197DBAE61A6F54DD00B0707C /* 34-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAE31A6F54DD00B0707C /* 34-Blue.png */; };
 		197DBAE71A6F54DD00B0707C /* DP-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAE41A6F54DD00B0707C /* DP-Blue.png */; };
@@ -221,8 +221,8 @@
 		1978259519EDEE1F00284799 /* labs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labs.png; sourceTree = "<group>"; };
 		1978259819EDFAB400284799 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		1978259919EDFAB400284799 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
-		1979A72A1A0C586000E1B7EB /* PCRAggregaotr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCRAggregaotr.h; sourceTree = "<group>"; };
-		1979A72B1A0C586000E1B7EB /* PCRAggregaotr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCRAggregaotr.m; sourceTree = "<group>"; };
+		1979A72A1A0C586000E1B7EB /* PCRAggregator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCRAggregator.h; sourceTree = "<group>"; };
+		1979A72B1A0C586000E1B7EB /* PCRAggregator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCRAggregator.m; sourceTree = "<group>"; };
 		1979A72D1A0C595C00E1B7EB /* PCReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCReview.h; sourceTree = "<group>"; };
 		1979A72E1A0C595C00E1B7EB /* PCReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCReview.m; sourceTree = "<group>"; };
 		197DBAE31A6F54DD00B0707C /* 34-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "34-Blue.png"; sourceTree = "<group>"; };
@@ -526,8 +526,8 @@
 			children = (
 				193DF1A61ADDA25600B1532E /* PLAggregator.h */,
 				193DF1A71ADDA25600B1532E /* PLAggregator.m */,
-				1979A72A1A0C586000E1B7EB /* PCRAggregaotr.h */,
-				1979A72B1A0C586000E1B7EB /* PCRAggregaotr.m */,
+				1979A72A1A0C586000E1B7EB /* PCRAggregator.h */,
+				1979A72B1A0C586000E1B7EB /* PCRAggregator.m */,
 				1979A72D1A0C595C00E1B7EB /* PCReview.h */,
 				1979A72E1A0C595C00E1B7EB /* PCReview.m */,
 			);
@@ -941,7 +941,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */,
-				1979A72C1A0C586000E1B7EB /* PCRAggregaotr.m in Sources */,
+				1979A72C1A0C586000E1B7EB /* PCRAggregator.m in Sources */,
 				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
 				19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */,
 				19943A011AC2316B00B489A8 /* DirectionView.m in Sources */,

@@ -39,6 +39,9 @@
 @property (weak, nonatomic) IBOutlet UITextView *detailText;
 @property (weak, nonatomic) IBOutlet UIView *courseDetailView;
 @property (weak, nonatomic) IBOutlet UITextView *titleBuilding;
+@property (weak, nonatomic) IBOutlet UILabel *labelPCRCourse;
+@property (weak, nonatomic) IBOutlet UILabel *labelPCRInst;
+@property (weak, nonatomic) IBOutlet UILabel *labelPCRDiff;
 
 -(void)configureUsingCover:(id)cover title:(NSString *)title sub:(NSString *)sub number:(NSString *)num credits:(NSString *)credits detail:(NSString *)detail;
 -(IBAction)back:(id)sender;

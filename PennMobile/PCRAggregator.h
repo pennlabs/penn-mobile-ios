@@ -13,7 +13,7 @@
 #define SEARCH_URL @"http://api.penncoursereview.com/v1/search?token=%@&q=%@"
 #define REVIEW_URL @"http://api.penncoursereview.com/v1/courses/%@/reviews?token=%@"
 
-@interface PCRAggregaotr : NSObject
+@interface PCRAggregator : NSObject
 
 /**
  *  @brief Given a Course object, this method returns an array of PCRReviews pertaining to that course. These reviews are sorted from most recent to least recent. For a weighted average, call getAverageReviewFor instead.

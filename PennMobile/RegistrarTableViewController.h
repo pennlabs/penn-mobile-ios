@@ -12,6 +12,8 @@
 #import "RegistrarTableViewCell.h"
 #import "DetailViewController.h"
 #import "PennTableViewController.h"
+#import "PCRAggregator.h"
+
 #define REGISTRAR_PATH @"registrar/search?q="
 #define BUILDING_PATH @"buildings/"
 
