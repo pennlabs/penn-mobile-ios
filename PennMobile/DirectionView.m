@@ -46,6 +46,8 @@ static int numCreated = 0;
     [n addSubview:subtitle];
     if (!last) {
         [n addSubview:[DirectionView makeArrow]];
+    } else {
+        [n addSubview:[DirectionView makeBackArrow]];
     }
     numCreated += 1;
     numCreated %= 3;
@@ -59,7 +61,7 @@ static int numCreated = 0;
 }
 + (UIImageView *)makeBackArrow {
     UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Arrow-reversed"]];
-    arrow.frame = CGRectMake(10 + (ARROW_WIDTH / 2.0), (VIEW_HEIGHT - ARROW_HEIGHT) / 2.0,ARROW_WIDTH, ARROW_HEIGHT);
+    arrow.frame = CGRectMake(ARROW_WIDTH / 2.0, (VIEW_HEIGHT - ARROW_HEIGHT) / 2.0,ARROW_WIDTH, ARROW_HEIGHT);
     return arrow;
 }
 /*
