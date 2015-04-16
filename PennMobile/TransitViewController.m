@@ -211,6 +211,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     _labelDestination.text = destTitle;
     _labelDestination.hidden = NO;
     _scrollView.hidden = NO;
+    [_scrollView setContentOffset:CGPointMake(15, 0) animated:YES];
     
 }
 - (void)hideRouteUI {
