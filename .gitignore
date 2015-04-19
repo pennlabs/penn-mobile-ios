@@ -11,7 +11,7 @@ build/
 !default.perspectivev3
 *.xcworkspace
 !default.xcworkspace
-xcuserdata
+PennMobile.xcodeproj/xcuserdata/*
 profile
 *.moved-aside
 DerivedData
