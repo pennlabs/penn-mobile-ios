@@ -129,7 +129,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 // now used instead
 - (LocationArray)gatherRoutePoints:(NSArray *)stops {
     CLLocationCoordinate2D *arr = malloc(stops.count * sizeof(CLLocationCoordinate2D));
-    for (int i = 0; i < stops.count; i++) {
+    for (int i = 0; i < stops.count; i++) { 
         arr[i] = CLLocationCoordinate2DMake([stops[i][@"Latitude"] doubleValue], [stops[i][@"Longitude"] doubleValue]);
     }
     return LocationArrayMake(arr, stops.count);
