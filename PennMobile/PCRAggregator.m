@@ -24,47 +24,49 @@ static NSMutableDictionary *averages;
 }
 
 + (PCReview *) getAverageReviewFor:(Course *)course {
-    if (!averages[course]) {
-        if (!reviews[course]) {
+    if (!averages[course.identifier]) {
+        if (!reviews[course.identifier]) {
             [PCRAggregator getReviewsFor:course];
         }
         double overall, inst, diff;
-        for (PCReview *rev in reviews[course]) {
+        for (PCReview *rev in reviews[course.identifier]) {
             overall += rev.course;
             inst += rev.inst;
             diff += rev.diff;
         }
-        overall /= (double) [reviews[course] count];
-        inst /= (double) [reviews[course] count];
-        diff /= (double) [reviews[course] count];
-        averages[course] = [PCReview reviewWithCourse:overall inst:inst diff:diff];
+        overall /= (double) [reviews[course.identifier] count];
+        inst /= (double) [reviews[course.identifier] count];
+        diff /= (double) [reviews[course.identifier] count];
+        averages[course.identifier] = [PCReview reviewWithCourse:overall inst:inst diff:diff];
     }
-    return averages[course];
+    return averages[course.identifier];
     
 }
 
 + (NSArray *)getReviewsFor:(Course *)course {
-    if (!reviews[course]) {
-        NSArray *raw = [PCRAggregator queryAPI:course.identifier];
-        NSMutableArray *revs = [[NSMutableArray alloc] initWithCapacity:raw.count];
+    if (!reviews[course.identifier]) {
+        NSArray *raw = [PCRAggregator queryAPI:course.identifier][@"values"];
         @try {
-            for (NSDictionary *json in raw) {
-                [revs addObject:[PCRAggregator parseReview:json]];
-                reviews[course] = revs;
+            if (raw.count > 0) {
+                NSMutableArray *revs = [[NSMutableArray alloc] initWithCapacity:raw.count];
+                for (NSDictionary *json in raw) {
+                    [revs addObject:[PCRAggregator parseReview:json[@"ratings"]]];
+                }
+                reviews[course.identifier] = revs;
             }
         }
         @catch (NSException *exception) {
-            // will throw up a UIAlertView
-            [self confirmConnection:nil];
+            // will throw up a UIAlertView -not anymore - silent fail
+            //[self confirmConnection:nil];
         }
     }
-    return reviews[course];
+    return reviews[course.identifier];
 }
 
 + (PCReview *)parseReview:(NSDictionary *)json {
-    double course = [json[@"Course"] doubleValue];
-    double inst = [json[@"Instructor"] doubleValue];
-    double diff = [json[@"Difficulty"] doubleValue];
+    double course = [json[@"rCourseQuality"] doubleValue];
+    double inst = [json[@"rInstructorQuality"] doubleValue];
+    double diff = [json[@"rDifficulty"] doubleValue];
     return [PCReview reviewWithCourse:course inst:inst diff:diff];
 }
 
@@ -75,7 +77,7 @@ static NSMutableDictionary *averages;
  *
  *  @return JSON from the PCR API
  */
-+ (NSArray *)queryAPI:(NSString *)term {
++ (NSDictionary *)queryAPI:(NSString *)term {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:REVIEW_URL, term, PCR_TOKEN]];
     NSData *result = [NSData dataWithContentsOfURL:url];
     if (![PCRAggregator confirmConnection:result]) {
@@ -93,7 +95,8 @@ static NSMutableDictionary *averages;
 + (BOOL)confirmConnection:(NSData *)data {
     if (!data) {
         UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [new show];
+        //changed to silent failure
+        //[new show];
         return false;
     }
     return true;
