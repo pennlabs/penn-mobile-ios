@@ -11,7 +11,7 @@
 #import "PCReview.h"
 
 #define SEARCH_URL @"http://api.penncoursereview.com/v1/search?token=%@&q=%@"
-#define REVIEW_URL @"http://api.penncoursereview.com/v1/courses/%@/reviews?token=%@"
+#define REVIEW_URL @"http://api.penncoursereview.com/v1/coursehistories/%@/reviews?token=%@"
 
 @interface PCRAggregator : NSObject
 

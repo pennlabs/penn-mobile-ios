@@ -47,9 +47,24 @@ static MKLocalSearch *search;
     _titleText.text = info.title;
     _detailText.text = info.desc;
     _labelTime.text = info.times;
-    _labelPCRCourse.text = [NSString stringWithFormat:@"%.2f", info.review.course];
-    _labelPCRDiff.text = [NSString stringWithFormat:@"%.2f", info.review.diff];
-    _labelPCRInst.text = [NSString stringWithFormat:@"%.2f", info.review.inst];
+    if (info.review.course < 4) {
+        _labelPCRCourse.text = [NSString stringWithFormat:@"%.1f", info.review.course];
+    }
+    else {
+        _labelPCRCourse.text = @"N/A";
+    }
+    if (info.review.diff < 4) {
+        _labelPCRDiff.text = [NSString stringWithFormat:@"%.1f", info.review.diff];
+    }
+    else {
+        _labelPCRDiff.text = @"N/A";
+    }
+    if (info.review.inst < 4) {
+        _labelPCRInst.text = [NSString stringWithFormat:@"%.1f", info.review.inst];
+    }
+    else {
+        _labelPCRInst.text = @"N/A";
+    }
     _courseNumber.text = [[info.dept stringByAppendingString:@" "] stringByAppendingString:info.courseNum];
     if (info.professors && info.professors.count > 0) {
         _subText.text = info.professors[0];

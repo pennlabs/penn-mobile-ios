@@ -35,7 +35,7 @@
 
 // This used to be done by identifier - but for now Title will suffice
 -(bool)isEqual:(id)object {
-    return [_sectionID isEqualToString:((Course *)object).title];
+    return [_sectionID isEqualToString:((Course *)object).sectionID];
 }
 
 - (NSUInteger)hash {
