@@ -32,7 +32,7 @@ static MKLocalSearch *search;
         _buttonRoute.hidden = YES;
         _buttonRoute.enabled = NO;
         _imageCover.hidden = YES;
-        _mapCover.showsUserLocation = YES;
+       // _mapCover.showsUserLocation = YES;
         [self setupForCourse];
     }
     [_viewTitle.layer setMasksToBounds:YES];
@@ -47,6 +47,24 @@ static MKLocalSearch *search;
     _titleText.text = info.title;
     _detailText.text = info.desc;
     _labelTime.text = info.times;
+    if (info.review.course < 4) {
+        _labelPCRCourse.text = [NSString stringWithFormat:@"%.1f", info.review.course];
+    }
+    else {
+        _labelPCRCourse.text = @"N/A";
+    }
+    if (info.review.diff < 4) {
+        _labelPCRDiff.text = [NSString stringWithFormat:@"%.1f", info.review.diff];
+    }
+    else {
+        _labelPCRDiff.text = @"N/A";
+    }
+    if (info.review.inst < 4) {
+        _labelPCRInst.text = [NSString stringWithFormat:@"%.1f", info.review.inst];
+    }
+    else {
+        _labelPCRInst.text = @"N/A";
+    }
     _courseNumber.text = [[info.dept stringByAppendingString:@" "] stringByAppendingString:info.courseNum];
     if (info.professors && info.professors.count > 0) {
         _subText.text = info.professors[0];
@@ -112,16 +130,13 @@ static MKLocalSearch *search;
     if (!_mapCover.hidden) {
         CLLocation *user = [[CLLocation alloc] initWithLatitude:39.9520689 longitude:-75.1910786];
         _mapCover.region = MKCoordinateRegionMakeWithDistance(user.coordinate, kMapSize, kMapSize);
-        if (info.building) {
+        if (info.point) {
             [_mapCover setCenterCoordinate:info.point.coordinate animated:YES];
             [_mapCover addAnnotation:info.point];
             [_mapCover selectAnnotation:info.point animated:YES];
         } else {
             _noLoc.hidden = NO;
-            CLLocation *user = _mapCover.userLocation.location;
-            if (!user) {
-                user = [[CLLocation alloc] initWithLatitude:39.9520689 longitude:-75.1910786];
-            }
+            CLLocation *user = [[CLLocation alloc] initWithLatitude:39.9520689 longitude:-75.19107];
             [_mapCover setCenterCoordinate:user.coordinate animated:YES];
             _mapCover.region = MKCoordinateRegionMakeWithDistance(user.coordinate, kMapSize, kMapSize);
         }
@@ -132,6 +147,7 @@ static MKLocalSearch *search;
 {
     // Create the location manager if this object does not
     // already have one.
+    /*
     if (!locationManager)
         locationManager = [[CLLocationManager alloc] init];
     [locationManager requestWhenInUseAuthorization];
@@ -142,14 +158,17 @@ static MKLocalSearch *search;
     locationManager.distanceFilter = 500; // meters
     
     [locationManager startUpdatingLocation];
+     */
 }
 
+ /*
 // Delegate method from the CLLocationManagerDelegate protocol.
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     // If it's a relatively recent event, turn off updates to save power.
     CLLocation* location = [locations lastObject];
     [_mapCover setCenterCoordinate:location.coordinate];
 }
+ */
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
