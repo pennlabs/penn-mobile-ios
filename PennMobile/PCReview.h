@@ -12,10 +12,10 @@
     NSArray *data;
 }
 
-- (id)initWithCourse:(double)course inst:(double)inst diff:(double)diff;
++ (id)reviewWithCourse:(double)course inst:(double)inst diff:(double)diff;
 
-- (double)diff;
-- (double)inst;
-- (double)course;
+@property double diff;
+@property double course;
+@property double inst;
 
 @end

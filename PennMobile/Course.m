@@ -10,9 +10,32 @@
 
 @implementation Course
 
+- (id)copyWithZone:(NSZone *)zone {
+    Course *copy = [[[self class] alloc] init];
+    copy.dept = self.dept;
+    copy.title = self.title;
+    copy.courseNum = self.courseNum;
+    copy.credits = self.credits;
+    copy.sectionNum = self.sectionNum;
+    copy.type = self.type;
+    copy.times = self.times;
+    copy.building = self.building;
+    copy.buildingCode = self.buildingCode;
+    copy.roomBum = self.roomBum;
+    copy.professors = self.professors;
+    copy.desc = self.desc;
+    copy.primaryProf = self.primaryProf;
+    copy.identifier = self.identifier;
+    copy.point = self.point;
+    copy.sectionID = self.sectionID;
+    copy.activity = self.activity;
+    copy.review = self.review;
+    return copy;
+}
+
 // This used to be done by identifier - but for now Title will suffice
 -(bool)isEqual:(id)object {
-    return [_sectionID isEqualToString:((Course *)object).title];
+    return [_sectionID isEqualToString:((Course *)object).sectionID];
 }
 
 - (NSUInteger)hash {
