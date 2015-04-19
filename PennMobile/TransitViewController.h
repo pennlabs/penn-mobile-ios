@@ -19,7 +19,7 @@
 #define REGION_MARGIN 2.0f
 #define ROUTES_PATH @"transit/routes/"
 
-@interface TransitViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate> {
+@interface TransitViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, UIScrollViewDelegate, CLLocationManagerDelegate> {
     UITapGestureRecognizer *cancelTouches;
     CLLocationManager *locationManager;
     NSArray *results;
@@ -28,6 +28,7 @@
     MKPolylineRenderer *walkToView;
     MKPolylineRenderer *walkFromView;
     NSDictionary *stopMap;
+    NSTimer *searchbarBounceTimer;
 }
 
 typedef struct LocationArray {
@@ -36,10 +37,12 @@ typedef struct LocationArray {
 } LocationArray;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) UISearchBar *destinationSearchBar; // tag = 2
+@property (nonatomic, strong) UISearchBar *sourceSearchBar; // tag = 1
 @property (weak, nonatomic) IBOutlet UILabel *labelDestination;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *stopsButton;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *directionsScrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *searchScrollView; // tag = 3
 
 
 @property (nonatomic, assign) MKCoordinateRegion boundingRegion;
