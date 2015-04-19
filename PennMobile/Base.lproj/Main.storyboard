@@ -19,9 +19,6 @@
             <string>AGaramondPro-Regular</string>
             <string>AGaramondPro-Regular</string>
             <string>AGaramondPro-Regular</string>
-            <string>AGaramondPro-Regular</string>
-            <string>AGaramondPro-Regular</string>
-            <string>AGaramondPro-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1621,7 +1618,7 @@ and the rest of Labs + UA</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="6ac-z3-oqW" kind="custom" identifier="theDP" customClass="ECSlidingSegue" id="LNt-6B-ZRa"/>
+                                            <segue destination="6ac-z3-oqW" kind="custom" identifier="Penn News" customClass="ECSlidingSegue" id="LNt-6B-ZRa"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UTB" id="t9h-I4-0QY">
@@ -1630,9 +1627,6 @@ and the rest of Labs + UA</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="IN2-Kr-sTE" kind="custom" identifier="UTB" customClass="ECSlidingSegue" id="5wh-Ck-qlR"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="34th St" id="Xqc-MQ-k0A">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1640,9 +1634,6 @@ and the rest of Labs + UA</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="tk8-cI-wfX" kind="custom" identifier="34th St" customClass="ECSlidingSegue" id="4Hc-cY-bpw"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Events@Penn" id="al7-KV-HTm">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1650,9 +1641,6 @@ and the rest of Labs + UA</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="eta-0E-OA7" kind="custom" identifier="Events@Penn" customClass="ECSlidingSegue" id="TrI-qT-Iiu"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="About" id="emR-iS-uct">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1830,13 +1818,41 @@ and the rest of Labs + UA</string>
                                 <rect key="frame" x="-6" y="0.0" width="381" height="537"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CC1-1n-vAK">
+                                <rect key="frame" x="337" y="534" width="38" height="25"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="Xzm-G5-yf8"/>
+                                    <constraint firstAttribute="width" constant="38" id="ep0-z0-fee"/>
+                                </constraints>
+                                <state key="normal" title="Switch News" image="up-arrow">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="toggleControl:" destination="EEs-ve-KSf" eventType="touchUpInside" id="tne-YZ-aK5"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Bn6-eJ-4A7">
+                                <rect key="frame" x="0.0" y="531" width="220" height="29"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <segments>
+                                    <segment title="theDP"/>
+                                    <segment title="UTB"/>
+                                    <segment title="34th St"/>
+                                    <segment title="E@P"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mqd-FV-Bcy" firstAttribute="top" secondItem="85F-Pf-nez" secondAttribute="bottom" constant="-50" id="IPG-9D-jZK"/>
+                            <constraint firstItem="Bn6-eJ-4A7" firstAttribute="leading" secondItem="ju7-Uy-Jdf" secondAttribute="leadingMargin" constant="-16" id="M26-rN-c12"/>
+                            <constraint firstItem="mqd-FV-Bcy" firstAttribute="top" secondItem="Bn6-eJ-4A7" secondAttribute="bottom" id="ZVH-nJ-ViD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="85F-Pf-nez" secondAttribute="trailing" constant="-16" id="gVp-ys-MmX"/>
                             <constraint firstItem="85F-Pf-nez" firstAttribute="top" secondItem="ctr-Ho-b7w" secondAttribute="bottom" id="lLI-vm-riD"/>
                             <constraint firstItem="85F-Pf-nez" firstAttribute="leading" secondItem="ju7-Uy-Jdf" secondAttribute="leadingMargin" constant="-22" id="sfs-Jf-aUN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CC1-1n-vAK" secondAttribute="trailing" constant="-16" id="tFo-4G-huq"/>
+                            <constraint firstItem="mqd-FV-Bcy" firstAttribute="top" secondItem="CC1-1n-vAK" secondAttribute="bottom" id="zPC-Xm-bex"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -1851,8 +1867,8 @@ and the rest of Labs + UA</string>
                             <rect key="frame" x="147" y="6" width="82" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="theDP" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="dDD-hc-gZX">
-                                    <rect key="frame" x="0.0" y="0.0" width="82" height="33"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Penn News" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="dDD-hc-gZX">
+                                    <rect key="frame" x="0.0" y="0.0" width="130" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -1868,6 +1884,8 @@ and the rest of Labs + UA</string>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="newsSwitcher" destination="Bn6-eJ-4A7" id="ZWw-Da-F7O"/>
+                        <outlet property="toggle" destination="CC1-1n-vAK" id="tGA-nx-HHO"/>
                         <outlet property="webView" destination="85F-Pf-nez" id="oWp-oG-JuP"/>
                         <segue destination="ez7-pS-rfX" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="lrp-fY-iJX"/>
                     </connections>
@@ -1876,189 +1894,6 @@ and the rest of Labs + UA</string>
                 <exit id="ez7-pS-rfX" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1032.5" y="2393.5"/>
-        </scene>
-        <!--News-->
-        <scene sceneID="cxl-wD-eY8">
-            <objects>
-                <navigationController id="tk8-cI-wfX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="News" image="News" selectedImage="News-selected" id="gVd-OJ-bIc"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="4JR-X6-UxI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Po3-P7-A2k" kind="relationship" relationship="rootViewController" id="rjE-04-nNg"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pgr-Pa-cfC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="917.5" y="3118.5"/>
-        </scene>
-        <!--34th St-->
-        <scene sceneID="2fs-Q8-Slx">
-            <objects>
-                <viewController title="34th St" id="Po3-P7-A2k" customClass="NewsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="AhL-ep-Atg"/>
-                        <viewControllerLayoutGuide type="bottom" id="5kN-Yz-C1Z"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="vgF-in-ufW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gIQ-7B-pVA">
-                                <rect key="frame" x="-6" y="0.0" width="381" height="537"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="gIQ-7B-pVA" firstAttribute="leading" secondItem="vgF-in-ufW" secondAttribute="leadingMargin" constant="-22" id="Bry-bt-7yo"/>
-                            <constraint firstItem="5kN-Yz-C1Z" firstAttribute="top" secondItem="gIQ-7B-pVA" secondAttribute="bottom" constant="-50" id="Q5e-Nj-HqW"/>
-                            <constraint firstItem="gIQ-7B-pVA" firstAttribute="top" secondItem="AhL-ep-Atg" secondAttribute="bottom" id="Qox-5q-Pa9"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="gIQ-7B-pVA" secondAttribute="trailing" constant="-16" id="Sjm-LT-gFh"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="34th" id="irV-Ti-ODH">
-                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="f47-EG-pt9">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="menuButton:" destination="Po3-P7-A2k" id="otx-Yj-2XM"/>
-                            </connections>
-                        </barButtonItem>
-                        <view key="titleView" contentMode="scaleToFill" id="ydF-X0-ZRX">
-                            <rect key="frame" x="147" y="6" width="82" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="34th St" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="nsC-Zz-Ra5">
-                                    <rect key="frame" x="0.0" y="0.0" width="82" height="33"/>
-                                    <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="nsC-Zz-Ra5" firstAttribute="leading" secondItem="ydF-X0-ZRX" secondAttribute="leading" id="13a-a9-ge1"/>
-                                <constraint firstAttribute="bottom" secondItem="nsC-Zz-Ra5" secondAttribute="bottom" id="ZT6-cK-9ui"/>
-                                <constraint firstAttribute="trailing" secondItem="nsC-Zz-Ra5" secondAttribute="trailing" id="but-4Z-P0F"/>
-                                <constraint firstItem="nsC-Zz-Ra5" firstAttribute="top" secondItem="ydF-X0-ZRX" secondAttribute="top" id="fHp-X8-daC"/>
-                            </constraints>
-                        </view>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="webView" destination="gIQ-7B-pVA" id="Fd2-m9-RLC"/>
-                        <segue destination="Ktj-kY-hSQ" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="OjG-99-MpV"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rbM-rh-Oaq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="Ktj-kY-hSQ" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="1320.5" y="3100.5"/>
-        </scene>
-        <!--News-->
-        <scene sceneID="oI5-VG-cNy">
-            <objects>
-                <navigationController id="IN2-Kr-sTE" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="News" image="News" selectedImage="News-selected" id="Caf-cL-cWp"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="dDj-qK-p18">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Vgh-mD-Ojg" kind="relationship" relationship="rootViewController" id="5Df-QA-65F"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qx6-iv-8Do" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="451.5" y="3826.5"/>
-        </scene>
-        <!--UTB-->
-        <scene sceneID="Uw4-xb-Hgy">
-            <objects>
-                <viewController title="UTB" id="Vgh-mD-Ojg" customClass="NewsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="2JV-dn-r18"/>
-                        <viewControllerLayoutGuide type="bottom" id="3r6-oO-ufl"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="81j-4W-Ry6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6lz-bs-nyC">
-                                <rect key="frame" x="-6" y="0.0" width="381" height="609"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="6lz-bs-nyC" firstAttribute="top" secondItem="2JV-dn-r18" secondAttribute="bottom" id="06c-DU-WZ7"/>
-                            <constraint firstItem="6lz-bs-nyC" firstAttribute="leading" secondItem="81j-4W-Ry6" secondAttribute="leadingMargin" constant="-22" id="2oA-ku-IHs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6lz-bs-nyC" secondAttribute="trailing" constant="-16" id="8sK-O3-Ud1"/>
-                            <constraint firstItem="3r6-oO-ufl" firstAttribute="top" secondItem="6lz-bs-nyC" secondAttribute="bottom" constant="-50" id="k0F-TW-c32"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="UTB" id="xc4-Em-NYf">
-                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="S73-zL-aFz">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="menuButton:" destination="Vgh-mD-Ojg" id="BoM-jZ-pNi"/>
-                            </connections>
-                        </barButtonItem>
-                        <view key="titleView" contentMode="scaleToFill" id="rOj-Gq-GYp">
-                            <rect key="frame" x="141" y="6" width="94" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UTB" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="sBy-6h-WWq">
-                                    <rect key="frame" x="0.0" y="0.0" width="94" height="33"/>
-                                    <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="sBy-6h-WWq" secondAttribute="bottom" id="MOg-3n-zu0"/>
-                                <constraint firstAttribute="trailing" secondItem="sBy-6h-WWq" secondAttribute="trailing" id="MTS-rr-mtb"/>
-                                <constraint firstItem="sBy-6h-WWq" firstAttribute="leading" secondItem="rOj-Gq-GYp" secondAttribute="leading" id="cfY-pG-N1B"/>
-                                <constraint firstItem="sBy-6h-WWq" firstAttribute="top" secondItem="rOj-Gq-GYp" secondAttribute="top" id="kup-4M-Gfi"/>
-                            </constraints>
-                        </view>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="webView" destination="6lz-bs-nyC" id="eFm-09-O5B"/>
-                        <segue destination="ofW-AJ-2Rb" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="vkp-SN-GnO"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8vy-qB-YJp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="ofW-AJ-2Rb" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="794.5" y="3826.5"/>
-        </scene>
-        <!--News-->
-        <scene sceneID="ODz-KS-jrI">
-            <objects>
-                <navigationController title="News" id="eta-0E-OA7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="News" image="News" selectedImage="News-selected" id="IXf-zl-BNU"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Vye-Wa-gpJ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="RF0-qJ-TkV" kind="relationship" relationship="rootViewController" id="STa-H9-FV8"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Mmo-sO-6G9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1244.5" y="3821.5"/>
         </scene>
         <!--Support Table View Controller-->
         <scene sceneID="0CT-or-2Hq">
@@ -2126,69 +1961,6 @@ and the rest of Labs + UA</string>
             </objects>
             <point key="canvasLocation" x="1244.5" y="4537.5"/>
         </scene>
-        <!--Events-->
-        <scene sceneID="rdy-ZM-Xit">
-            <objects>
-                <viewController title="Events" id="RF0-qJ-TkV" customClass="NewsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="WZt-TO-Tdo"/>
-                        <viewControllerLayoutGuide type="bottom" id="wkE-85-M5p"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lJa-rC-4Tk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qil-l6-SYU">
-                                <rect key="frame" x="-6" y="0.0" width="381" height="609"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="qil-l6-SYU" secondAttribute="trailing" constant="-16" id="2Ol-2b-aCs"/>
-                            <constraint firstItem="qil-l6-SYU" firstAttribute="leading" secondItem="lJa-rC-4Tk" secondAttribute="leadingMargin" constant="-22" id="GaG-TA-1bO"/>
-                            <constraint firstItem="qil-l6-SYU" firstAttribute="top" secondItem="WZt-TO-Tdo" secondAttribute="bottom" id="avd-7z-0b0"/>
-                            <constraint firstItem="wkE-85-M5p" firstAttribute="top" secondItem="qil-l6-SYU" secondAttribute="bottom" constant="-50" id="v9h-lc-oTb"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Events@Penn" id="Ldu-R0-tFP">
-                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="3SB-V3-W8L">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="menuButton:" destination="RF0-qJ-TkV" id="yxa-1k-HQG"/>
-                            </connections>
-                        </barButtonItem>
-                        <view key="titleView" contentMode="scaleToFill" id="MAl-tu-hXE">
-                            <rect key="frame" x="94" y="6" width="188" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Events@Penn" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="is2-rx-RSH">
-                                    <rect key="frame" x="0.0" y="0.0" width="188" height="33"/>
-                                    <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="is2-rx-RSH" firstAttribute="leading" secondItem="MAl-tu-hXE" secondAttribute="leading" id="LX5-Wk-xvQ"/>
-                                <constraint firstAttribute="trailing" secondItem="is2-rx-RSH" secondAttribute="trailing" id="WVN-HM-COP"/>
-                                <constraint firstItem="is2-rx-RSH" firstAttribute="top" secondItem="MAl-tu-hXE" secondAttribute="top" id="frO-ok-fnS"/>
-                                <constraint firstAttribute="bottom" secondItem="is2-rx-RSH" secondAttribute="bottom" id="u0c-Ih-eKT"/>
-                            </constraints>
-                        </view>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="webView" destination="qil-l6-SYU" id="uLH-JW-RsH"/>
-                        <segue destination="E4M-LK-0Ha" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="IPJ-9M-yX0"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hy8-Bx-pjK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="E4M-LK-0Ha" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="1653.5" y="3821.5"/>
-        </scene>
         <!--Support-->
         <scene sceneID="zoT-Ag-lBC">
             <objects>
@@ -2253,6 +2025,7 @@ and the rest of Labs + UA</string>
         <image name="gradient" width="1000" height="240"/>
         <image name="hamburger" width="40" height="40"/>
         <image name="labs" width="500" height="500"/>
+        <image name="up-arrow" width="645" height="376"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="M6c-9f-3Ic"/>

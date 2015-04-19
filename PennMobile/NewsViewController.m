@@ -9,10 +9,12 @@
 #import "NewsViewController.h"
 
 @interface NewsViewController ()
-
+@property BOOL isToggleEnabled;
+@property (weak, nonatomic) IBOutlet UIButton *toggle;
 @end
 
 @implementation NewsViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -21,6 +23,16 @@
     [_webView loadRequest:req];
     _webView.scalesPageToFit = NO;
     _webView.delegate = self;
+    
+    _isToggleEnabled = YES;
+    [_newsSwitcher addTarget:self action:@selector(switchNewsSource:) forControlEvents:UIControlEventValueChanged];
+    UITapGestureRecognizer *newsSwitcherTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(collapseNewsSwitcher:)];
+    newsSwitcherTap.cancelsTouchesInView = NO;
+    [_newsSwitcher addGestureRecognizer:newsSwitcherTap];
+
+
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
@@ -37,6 +49,43 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)toggleControl:(id)sender {
+    if (_isToggleEnabled) {
+        NSLog(@"news switcher is hidden");
+        [UIView animateWithDuration:0.3 animations:^{
+            _newsSwitcher.frame = CGRectMake(_newsSwitcher.frame.origin.x, _newsSwitcher.frame.origin.y + _newsSwitcher.frame.size.height, _newsSwitcher.frame.size.width, _newsSwitcher.frame.size.height);
+        }];
+        _isToggleEnabled = NO;
+    } else {
+        NSLog(@"news switcher is NOT hidden");
+        [UIView animateWithDuration:0.3 animations:^{
+            _newsSwitcher.frame = CGRectMake(_newsSwitcher.frame.origin.x, _newsSwitcher.frame.origin.y - _newsSwitcher.frame.size.height, _newsSwitcher.frame.size.width, _newsSwitcher.frame.size.height);
+        }];
+        _isToggleEnabled = YES;
+    }
+}
+
+-(void)collapseNewsSwitcher:(UITapGestureRecognizer *)recognizer {
+    [_toggle sendActionsForControlEvents: UIControlEventTouchUpInside];
+}
+
+-(void)switchNewsSource:(UISegmentedControl *)segment {
+    switch (segment.selectedSegmentIndex) {
+        case 0:{
+            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://thedp.com/"]]];
+            break;}
+        case 1:{
+            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://thedp.com/blog/under-the-button/"]]];
+            break;}
+        case 2:{
+            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://34st.com/"]]];
+            break;}
+        case 3:{
+            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://eventsatpenn.com/"]]];
+            break;}
+    }
+
+}
 
 #pragma mark - Navigation
 
