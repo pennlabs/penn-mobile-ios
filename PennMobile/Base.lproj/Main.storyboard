@@ -1611,7 +1611,7 @@ and the rest of Labs + UA</string>
                                             <segue destination="1D0-pC-d68" kind="custom" identifier="Transit" customClass="ECSlidingSegue" id="UpK-cQ-Ame"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="theDP" id="VPN-Mh-3uH">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Penn News" id="VPN-Mh-3uH" userLabel="Penn News">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VPN-Mh-3uH" id="K5e-VL-CrK">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -1620,27 +1620,6 @@ and the rest of Labs + UA</string>
                                         <connections>
                                             <segue destination="6ac-z3-oqW" kind="custom" identifier="Penn News" customClass="ECSlidingSegue" id="LNt-6B-ZRa"/>
                                         </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="UTB" id="t9h-I4-0QY">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t9h-I4-0QY" id="bSL-Cy-3ke">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="34th St" id="Xqc-MQ-k0A">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xqc-MQ-k0A" id="kfF-To-YMs">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Events@Penn" id="al7-KV-HTm">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="al7-KV-HTm" id="wmy-Sb-ywD">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="About" id="emR-iS-uct">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1864,22 +1843,16 @@ and the rest of Labs + UA</string>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="1VT-fd-RAz">
-                            <rect key="frame" x="147" y="6" width="82" height="33"/>
+                            <rect key="frame" x="122" y="6" width="132" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Penn News" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="dDD-hc-gZX">
-                                    <rect key="frame" x="0.0" y="0.0" width="130" height="33"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="News" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="qeJ-PS-X32">
+                                    <rect key="frame" x="-6" y="0.0" width="156" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="dDD-hc-gZX" secondAttribute="trailing" id="BAP-wH-QUC"/>
-                                <constraint firstItem="dDD-hc-gZX" firstAttribute="leading" secondItem="1VT-fd-RAz" secondAttribute="leading" id="KOD-4Z-qhy"/>
-                                <constraint firstAttribute="bottom" secondItem="dDD-hc-gZX" secondAttribute="bottom" id="NmO-MV-20r"/>
-                                <constraint firstItem="dDD-hc-gZX" firstAttribute="top" secondItem="1VT-fd-RAz" secondAttribute="top" id="r0g-aP-3pD"/>
-                            </constraints>
                         </view>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
