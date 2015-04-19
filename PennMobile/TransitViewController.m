@@ -137,7 +137,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSDictionary *fromAPI;
         @try {
-            fromAPI = [self queryAPI:locationManager.location.coordinate destination:end];
+            fromAPI = [self queryAPI:start destination:end];
         } @catch (NSException *e) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Route Found" message:@"We couldn't find a route for you using Penn Transit services." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -479,6 +479,75 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     [_destinationSearchBar resignFirstResponder];
 }
 
+- (void)searchFrom:(NSString *)source to:(NSString *)dest {
+    MKCoordinateRegion newRegion;
+    newRegion.center.latitude = locationManager.location.coordinate.latitude;
+    newRegion.center.longitude = locationManager.location.coordinate.longitude;
+    
+    // setup the area spanned by the map region:
+    // we use the delta values to indicate the desired zoom level of the map,
+    //      (smaller delta values corresponding to a higher zoom level)
+    //
+    newRegion.span.latitudeDelta = 0.112872;
+    newRegion.span.longitudeDelta = 0.109863;
+    
+    // get results for destination pin
+    NSArray *res = [GoogleMapsSearcher getResultsFrom:[GoogleMapsSearcher generateURLRequest:_mapView.region.center withRadius:SEARCH_RADIUS andKeyword:dest]];
+    if (res.count > 0 && [((NSString *)res[0][@"name"]) rangeOfString:API_ERROR_DELIM].location != NSNotFound) {
+        // there was an error
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Google Maps API Error"
+                                                        message:res[0]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } else if (res.count == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not find any results"
+                                                        message:@"Please try a different query."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }
+    else {
+        [self addGoogleAnnotations:res];
+        // used for later when setting the map's region in "prepareForSegue"
+        // _boundingRegion = response.boundingRegion;
+    }
+    [_destinationSearchBar resignFirstResponder];
+    
+    // now get results for source pin
+    if (source.length > 0) {
+        res = [GoogleMapsSearcher getResultsFrom:[GoogleMapsSearcher generateURLRequest:_mapView.region.center withRadius:SEARCH_RADIUS andKeyword:source]];
+        if (res.count > 0 && [((NSString *)res[0][@"name"]) rangeOfString:API_ERROR_DELIM].location != NSNotFound) {
+            // there was an error
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Google Maps API Error"
+                                                            message:res[0]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        } else if (res.count == 0) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not find any results"
+                                                            message:@"Please try a different query."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }
+        else {
+            [self addGoogleAnnotations:res];
+            // used for later when setting the map's region in "prepareForSegue"
+            // _boundingRegion = response.boundingRegion;
+        }
+        [_sourceSearchBar resignFirstResponder];
+    }
+}
+
 #pragma mark - Bus Stops Display
 
 - (IBAction)stopsButtonPressed:(id)sender {
@@ -520,8 +589,9 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     CLLocationCoordinate2D dest = view.annotation.coordinate;
+    CLLocationCoordinate2D src = locationManager.location.coordinate;
     [self mapView:mapView clearAllPinsExcept:view.annotation];
-    [self queryHandler:locationManager.location.coordinate destination:dest];
+    [self queryHandler:src destination:dest];
 }
 
 - (void)mapView:(MKMapView *)mapView clearAllPinsExcept:(id<MKAnnotation>)annot {
@@ -546,7 +616,12 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self mapViewClearAllPinsNotUser:_mapView];
     [self hideRouteUI];
-    [self search:searchBar.text];
+//    [self search:searchBar.text];
+    [self searchFrom:[_sourceSearchBar text] to:[_destinationSearchBar text]];
+    if ([_sourceSearchBar text].length == 0) {
+        // collapse search bars, only show destination
+        [self searchScrollViewSwipeHide];
+    }
     shouldCenter = NO;
 }
 
