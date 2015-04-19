@@ -29,24 +29,107 @@
     [_mapView setZoomEnabled:YES];
     [_mapView setScrollEnabled:YES];
     _labelDestination.hidden = YES;
-    _scrollView.contentSize = [DirectionView size];
-    _scrollView.scrollEnabled = YES;
-    _scrollView.pagingEnabled = YES;
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    _scrollView.hidden = YES;
+    _directionsScrollView.contentSize = [DirectionView size];
+    _directionsScrollView.scrollEnabled = YES;
+    _directionsScrollView.pagingEnabled = YES;
+    _directionsScrollView.showsHorizontalScrollIndicator = NO;
+    _directionsScrollView.hidden = YES;
+    
+    // search bar scrollview
+    _sourceSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 375, 44)];
+    _sourceSearchBar.placeholder = @"Starting point";
+    _sourceSearchBar.delegate = self;
+    _sourceSearchBar.tag = 1;
+    
+    _destinationSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 44, 375, 44)];
+    _destinationSearchBar.placeholder = @"Destination";
+    _destinationSearchBar.delegate = self;
+    _destinationSearchBar.tag = 2;
+    
+    UISwipeGestureRecognizer *searchScrollViewShowSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(searchScrollViewSwipeShow)];
+    searchScrollViewShowSwipe.direction = UISwipeGestureRecognizerDirectionDown;
+    UISwipeGestureRecognizer *searchScrollViewHideSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(searchScrollViewSwipeHide)];
+    searchScrollViewHideSwipe.direction = UISwipeGestureRecognizerDirectionUp;
+    
+    _searchScrollView.pagingEnabled = NO;
+    _searchScrollView.scrollEnabled = NO;
+    _searchScrollView.bounces = YES;
+    _searchScrollView.contentSize = CGSizeMake(375, 44);
+    [_searchScrollView setContentOffset:CGPointMake(0, 44) animated:NO]; // start by showing only Destination bar
+    [_searchScrollView addSubview:_sourceSearchBar];
+    [_searchScrollView addSubview:_destinationSearchBar];
+    [_searchScrollView addGestureRecognizer:searchScrollViewShowSwipe];
+    [_searchScrollView addGestureRecognizer:searchScrollViewHideSwipe];
+    [_searchScrollView setTranslatesAutoresizingMaskIntoConstraints:YES];
+    
     // Do any additional setup after loading the view.
 }
+
 - (void)viewDidAppear:(BOOL)animated {
     locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     shouldCenter = YES;
     [locationManager startUpdatingLocation];
     [self centerMapOnLocation];
+    
+    // bounce scroll view after certain time
+    searchbarBounceTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                     target:self
+                                   selector:@selector(bounceSearchbars)
+                                   userInfo:nil
+                                    repeats:YES];
 }
+- (void)searchScrollViewSwipeShow {
+    // only bounce until user swipes to reveal both searchbars
+    [searchbarBounceTimer invalidate];
+    searchbarBounceTimer = nil;
+    // expand searchbar scroll view
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.1];
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        _searchScrollView.frame = CGRectMake(0, 0, 375, 88);
+        [UIView commitAnimations];
+    });
+}
+- (void)searchScrollViewSwipeHide {
+    // shrink searchbar scroll view
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.1];
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        _searchScrollView.frame = CGRectMake(0, 0, 375, 44);
+        [UIView commitAnimations];
+        
+        // reset to show destination search bar
+        [_searchScrollView setContentOffset:CGPointMake(0, 44)animated:YES];
+    });
+}
+
+-(void)bounceSearchbars {
+    [_searchScrollView setContentOffset:CGPointMake(0, 30) animated:YES];
+    [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(unbounceSearchbars) userInfo:nil repeats:NO];
+    
+//    NSLog(@"scroll bounce");
+//    CGPoint bottomOffset = CGPointMake(0, _searchScrollView.contentSize.height - _searchScrollView.bounds.size.height);
+//    [_searchScrollView setContentOffset:bottomOffset animated:YES];
+}
+-(void)unbounceSearchbars {
+    [_searchScrollView setContentOffset:CGPointMake(0, 44) animated:YES];
+    //    NSLog(@"scroll bounce");
+    //    CGPoint bottomOffset = CGPointMake(0, _searchScrollView.contentSize.height - _searchScrollView.bounds.size.height);
+    //    [_searchScrollView setContentOffset:bottomOffset animated:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - UIScrollView delegate methods
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+}
+
 #pragma mark - PennUber API
 
 - (void)queryHandler:(CLLocationCoordinate2D)start destination:(CLLocationCoordinate2D)end {
@@ -204,18 +287,18 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     DirectionView *bus = [DirectionView make:toStop distance:0 routeTitle:routeTitle isLast:NO];
     DirectionView *last = [DirectionView make:destTitle distance:walkEnd routeTitle:nil isLast:YES];
     
-    [_scrollView addSubview:first];
-    [_scrollView addSubview:bus];
-    [_scrollView addSubview:last];
-    [_scrollView setContentOffset:CGPointZero animated:NO];
+    [_directionsScrollView addSubview:first];
+    [_directionsScrollView addSubview:bus];
+    [_directionsScrollView addSubview:last];
+    [_directionsScrollView setContentOffset:CGPointZero animated:NO];
     _labelDestination.text = destTitle;
     _labelDestination.hidden = NO;
-    _scrollView.hidden = NO;
-    [_scrollView setContentOffset:CGPointMake(15, 0) animated:YES];
+    _directionsScrollView.hidden = NO;
+    [_directionsScrollView setContentOffset:CGPointMake(15, 0) animated:YES];
     
 }
 - (void)hideRouteUI {
-    _scrollView.hidden = YES;
+    _directionsScrollView.hidden = YES;
     _labelDestination.hidden = YES;
     [_mapView removeAnnotations:_mapView.annotations];
     [_mapView removeOverlays:_mapView.overlays];
@@ -393,7 +476,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         // used for later when setting the map's region in "prepareForSegue"
        // _boundingRegion = response.boundingRegion;
     }
-    [_searchBar resignFirstResponder];
+    [_destinationSearchBar resignFirstResponder];
 }
 
 #pragma mark - Bus Stops Display
@@ -478,6 +561,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         [self hideRouteUI];
     }
 }
+
 #pragma mark - CLLocationManager
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
