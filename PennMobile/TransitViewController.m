@@ -380,10 +380,13 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 
 - (void)plotResults {
     [_mapView removeAnnotations:_mapView.annotations];
-    MKPointAnnotation *temp;
+//    MKPointAnnotation *temp;
+    // temp
+    TransitMKPointAnnotation *temp;
     if (results.count > 0) {
         for (long i = results.count - 1; i >= 0; i--) {
-            temp = [[MKPointAnnotation alloc] init];
+//            temp = [[MKPointAnnotation alloc] init];
+            temp = [[TransitMKPointAnnotation alloc] init];
             temp.coordinate = ((MKMapItem *) results[i]).placemark.coordinate;
             temp.title = ((MKMapItem *) results[i]).name;
             // these values were originally store in a local hashmap but wasn't worth it
@@ -395,10 +398,11 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 }
 
 - (void)addGoogleAnnotations:(NSArray *)res {
-    MKPointAnnotation *temp;
+//    MKPointAnnotation *temp;
+    TransitMKPointAnnotation *temp;
     if (res.count > 0) {
         for (long i = res.count - 1; i >= 0; i--) {
-            temp = [GoogleMapsSearcher makeAnnotationForGoogleResult:res[0]];
+            temp = (TransitMKPointAnnotation *)[GoogleMapsSearcher makeAnnotationForGoogleResult:res[0]];
             // these values were originally store in a local hashmap but wasn't worth it
             [_mapView addAnnotation:temp];
         }
@@ -408,6 +412,28 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         [_mapView selectAnnotation:temp animated:YES];
     }
 }
+
+- (void)addGoogleAnnotations:(NSArray *)res isDest:(BOOL) isDest { // TODO is this even being called
+    //    MKPointAnnotation *temp;
+    TransitMKPointAnnotation *temp;
+    if (isDest) {
+        temp.isDest = YES;
+    } else {
+        temp.isDest = NO;
+    }
+    if (res.count > 0) {
+        for (long i = res.count - 1; i >= 0; i--) {
+            temp = (TransitMKPointAnnotation *)[GoogleMapsSearcher makeAnnotationForGoogleResult:res[0]];
+            // these values were originally store in a local hashmap but wasn't worth it
+            [_mapView addAnnotation:temp];
+        }
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        [_mapView showAnnotations:_mapView.annotations animated:YES];
+        [_mapView selectAnnotation:temp animated:YES];
+    }
+}
+
 /**
  * The majority of this code is from Apple's samples. Just a heads up
  **/
@@ -561,7 +587,15 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     if (!annotationView && ![annotation isKindOfClass:[MKUserLocation class] ]) {
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
     }
-    if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
+    // TODO
+    if ([annotationView isKindOfClass:[TransitMKPointAnnotation class]]) {
+        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        annotationView.enabled = YES;
+        annotationView.canShowCallout = YES;
+        // TODO color?
+        
+        return annotationView;
+    } else if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
         annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         annotationView.enabled = YES;
         annotationView.canShowCallout = YES;
@@ -589,7 +623,12 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     CLLocationCoordinate2D dest = view.annotation.coordinate;
-    CLLocationCoordinate2D src = locationManager.location.coordinate;
+    CLLocationCoordinate2D src;
+    if ([_sourceSearchBar text].length > 0) { // TODO this is a bad check
+        // TODO: how to get coordinates from source? should set it first....
+    } else {
+        src = locationManager.location.coordinate;
+    }
     [self mapView:mapView clearAllPinsExcept:view.annotation];
     [self queryHandler:src destination:dest];
 }
