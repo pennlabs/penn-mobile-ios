@@ -659,8 +659,13 @@ bool usingTempData;
                     if ([date[@"meal"] isKindOfClass:[NSArray class]]) {
                         for (NSDictionary *mealTime in date[@"meal"]) {
                             componentsForFirstDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:mealTime[@"open"]]];
+                            
                             NSDateComponents *now = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[NSDate date]];
-                            componentsForSecondDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:mealTime[@"close"]]];
+                            NSString *closeTime = mealTime[@"close"];
+                            if ([mealTime[@"close"] isEqualToString:@"24:00:00"]) {
+                                closeTime = @"00:00:00";
+                            }
+                            componentsForSecondDate = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour fromDate:[hoursJSONFormatter dateFromString:closeTime]];
                             long startHour = [componentsForFirstDate hour];
                             long endHour = [componentsForSecondDate hour];
                             if (endHour == 0) endHour = 24;
