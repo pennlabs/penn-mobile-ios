@@ -37,7 +37,7 @@
     
     // search bar scrollview
     _sourceSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 375, 44)];
-    _sourceSearchBar.placeholder = @"Starting point";
+    _sourceSearchBar.placeholder = @"Your location";
     _sourceSearchBar.delegate = self;
     _sourceSearchBar.tag = 1;
     
@@ -396,13 +396,12 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     }
     
 }
-
+/*
 - (void)addGoogleAnnotations:(NSArray *)res {
-//    MKPointAnnotation *temp;
-    TransitMKPointAnnotation *temp;
+    MKPointAnnotation *temp;
     if (res.count > 0) {
         for (long i = res.count - 1; i >= 0; i--) {
-            temp = (TransitMKPointAnnotation *)[GoogleMapsSearcher makeAnnotationForGoogleResult:res[0]];
+            temp = [GoogleMapsSearcher makeAnnotationForGoogleResult:res[0]];
             // these values were originally store in a local hashmap but wasn't worth it
             [_mapView addAnnotation:temp];
         }
@@ -412,15 +411,16 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         [_mapView selectAnnotation:temp animated:YES];
     }
 }
+ */
 
-- (void)addGoogleAnnotations:(NSArray *)res isDest:(BOOL) isDest { // TODO is this even being called
+- (void)addGoogleAnnotations:(NSArray *)res isDest:(BOOL)isDest { // TODO is this even being called
     //    MKPointAnnotation *temp;
     TransitMKPointAnnotation *temp;
-    NSLog(@"HERE");
-    temp.isDest = isDest;
     if (res.count > 0) {
         for (long i = res.count - 1; i >= 0; i--) {
             temp = (TransitMKPointAnnotation *)[GoogleMapsSearcher makeAnnotationForGoogleResult:res[0]];
+            temp.isDest = isDest;
+            NSLog(@"> in addGoogleAnnotations, set temp.isDest to %d (should be %d)", temp.isDest, isDest);
             // these values were originally store in a local hashmap but wasn't worth it
             [_mapView addAnnotation:temp];
         }
@@ -434,6 +434,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 /**
  * The majority of this code is from Apple's samples. Just a heads up
  **/
+/*
 - (void)search:(NSString *)query {
     MKCoordinateRegion newRegion;
     newRegion.center.latitude = locationManager.location.coordinate.latitude;
@@ -475,7 +476,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:request];
     [localSearch startWithCompletionHandler:completionHandler];
      * --- END OLD ---- */
-    NSArray *res = [GoogleMapsSearcher getResultsFrom:[GoogleMapsSearcher generateURLRequest:_mapView.region.center withRadius:SEARCH_RADIUS andKeyword:query]];
+    /*NSArray *res = [GoogleMapsSearcher getResultsFrom:[GoogleMapsSearcher generateURLRequest:_mapView.region.center withRadius:SEARCH_RADIUS andKeyword:query]];
     if (res.count > 0 && [((NSString *)res[0][@"name"]) rangeOfString:API_ERROR_DELIM].location != NSNotFound) {
         // there was an error
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Google Maps API Error"
@@ -501,10 +502,11 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     }
     [_destinationSearchBar resignFirstResponder];
 }
+*/
 
 - (void)searchFrom:(NSString *)source to:(NSString *)dest {
     MKCoordinateRegion newRegion;
-    newRegion.center.latitude = locationManager.location.coordinate.latitude;
+    newRegion.center.latitude = locationManager.location.coordinate.latitude; // TODO: change this based on start?
     newRegion.center.longitude = locationManager.location.coordinate.longitude;
     
     // setup the area spanned by the map region:
@@ -583,26 +585,51 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
-    if (!annotationView && ![annotationView isKindOfClass:[MKUserLocation class] ]) {
-        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
+    
+    if ([annotation.title isEqualToString:@"Current Location"]) {
+        return nil; // use default blue dot
     }
+    
+    NSLog(@"annotation: %@", annotation.title);
     // TODO
-    MKPinAnnotationView *pinView = (MKPinAnnotationView *)annotationView;
-    if ([pinView isKindOfClass:[TransitMKPointAnnotation class]]) {
+    MKPinAnnotationView *pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
+    
+    if ([annotation isKindOfClass:[TransitMKPointAnnotation class]]) {
+        NSLog(@"ajfsdkfjdklsjflkasjfdl");
+    }
+    
+    if ([(TransitMKPointAnnotation *)annotation isDest]) {
+        NSLog(@"> IS DEST");
         pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         pinView.enabled = YES;
         pinView.canShowCallout = YES;
+        pinView.pinColor = MKPinAnnotationColorRed;
         // TODO color?
-        
         return pinView;
-    } else if ([pinView isKindOfClass:[MKPinAnnotationView class]]) {
+    } else {
+        NSLog(@"> IS SRC");
         pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         pinView.enabled = YES;
         pinView.canShowCallout = YES;
-        
+        pinView.pinColor = MKPinAnnotationColorGreen;
         return pinView;
     }
+    
     return nil;
+    /*
+     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
+     if (!annotationView && ![annotation isKindOfClass:[MKUserLocation class] ]) {
+     annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
+     }
+     if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
+     annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+     annotationView.enabled = YES;
+     annotationView.canShowCallout = YES;
+     
+     return annotationView;
+     }
+     return nil;
+    */
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {

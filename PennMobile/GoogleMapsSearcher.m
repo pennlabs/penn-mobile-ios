@@ -8,6 +8,7 @@
 //
 
 #import "GoogleMapsSearcher.h"
+#import "TransitMKPointAnnotation.h"
 
 @implementation GoogleMapsSearcher
 
@@ -42,8 +43,19 @@
     }
 }
 
+/*
 + (MKPointAnnotation *)makeAnnotationForGoogleResult:(NSDictionary *)res {
     MKPointAnnotation *new = [[MKPointAnnotation alloc] init];
+    new.title = res[@"name"];
+    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([res[@"geometry"][@"location"][@"lat"] doubleValue], [res[@"geometry"][@"location"][@"lng"] doubleValue]);
+    new.coordinate = coord;
+    // way more content to use here if we want to...
+    return new;
+}
+ */
+
++ (TransitMKPointAnnotation *)makeAnnotationForGoogleResult:(NSDictionary *)res {
+    TransitMKPointAnnotation *new = [[TransitMKPointAnnotation alloc] init];
     new.title = res[@"name"];
     CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([res[@"geometry"][@"location"][@"lat"] doubleValue], [res[@"geometry"][@"location"][@"lng"] doubleValue]);
     new.coordinate = coord;
