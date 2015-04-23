@@ -10,6 +10,6 @@
 
 @interface TransitMKPointAnnotation : MKPointAnnotation
 
-@property BOOL isDest;
+@property (nonatomic) BOOL isDest;
 
 @end
