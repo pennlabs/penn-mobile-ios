@@ -1795,43 +1795,80 @@ and the rest of Labs + UA</string>
                         <subviews>
                             <webView contentMode="scaleToFill" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="85F-Pf-nez">
                                 <rect key="frame" x="-6" y="0.0" width="381" height="537"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CC1-1n-vAK">
-                                <rect key="frame" x="337" y="534" width="38" height="25"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Dv-JS-kxX">
+                                <rect key="frame" x="0.0" y="531" width="375" height="28"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Bn6-eJ-4A7">
+                                        <rect key="frame" x="0.0" y="0.0" width="309" height="29"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="6Kz-4y-xyX"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="theDP"/>
+                                            <segment title="UTB"/>
+                                            <segment title="34th St"/>
+                                            <segment title="E@P"/>
+                                        </segments>
+                                    </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CC1-1n-vAK">
+                                        <rect key="frame" x="309" y="1" width="36" height="28"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="RUR-oT-a5m"/>
+                                            <constraint firstAttribute="height" constant="28" id="wwU-cR-1HW"/>
+                                        </constraints>
+                                        <state key="normal" title="Switch News" image="up-arrow">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="toggleControl:" destination="EEs-ve-KSf" eventType="touchUpInside" id="tne-YZ-aK5"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mcv-O3-ehk">
+                                        <rect key="frame" x="345" y="1" width="30" height="29"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="29" id="Ikw-n3-5nJ"/>
+                                            <constraint firstAttribute="width" constant="30" id="Jjp-UN-f4G"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="29" id="ZqG-mM-mKi"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="bOz-Lh-tDY"/>
+                                        </constraints>
+                                        <state key="normal" image="back-arrow">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="webViewBack:" destination="EEs-ve-KSf" eventType="touchUpInside" id="sa8-EW-OSP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="Xzm-G5-yf8"/>
-                                    <constraint firstAttribute="width" constant="38" id="ep0-z0-fee"/>
+                                    <constraint firstAttribute="trailing" secondItem="mcv-O3-ehk" secondAttribute="trailing" id="9OT-Jg-1fD"/>
+                                    <constraint firstAttribute="height" constant="28" id="Ce8-hZ-4eZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="mcv-O3-ehk" secondAttribute="bottom" constant="-2" id="ExH-Wr-ccI"/>
+                                    <constraint firstAttribute="trailing" secondItem="mcv-O3-ehk" secondAttribute="trailing" id="HHj-MN-gkJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Bn6-eJ-4A7" secondAttribute="bottom" id="PVy-Uy-nwK"/>
+                                    <constraint firstAttribute="bottom" secondItem="CC1-1n-vAK" secondAttribute="bottom" constant="-1" id="SMM-XY-HM2"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mcv-O3-ehk" secondAttribute="bottom" constant="-2" id="eCh-y7-zOx"/>
+                                    <constraint firstItem="mcv-O3-ehk" firstAttribute="leading" secondItem="CC1-1n-vAK" secondAttribute="trailing" id="hCI-PF-iIa"/>
+                                    <constraint firstItem="Bn6-eJ-4A7" firstAttribute="leading" secondItem="3Dv-JS-kxX" secondAttribute="leading" id="hLt-MN-B5A"/>
+                                    <constraint firstItem="CC1-1n-vAK" firstAttribute="leading" secondItem="Bn6-eJ-4A7" secondAttribute="trailing" id="pOK-6z-wA9"/>
                                 </constraints>
-                                <state key="normal" title="Switch News" image="up-arrow">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="toggleControl:" destination="EEs-ve-KSf" eventType="touchUpInside" id="tne-YZ-aK5"/>
-                                </connections>
-                            </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Bn6-eJ-4A7">
-                                <rect key="frame" x="0.0" y="531" width="220" height="29"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <segments>
-                                    <segment title="theDP"/>
-                                    <segment title="UTB"/>
-                                    <segment title="34th St"/>
-                                    <segment title="E@P"/>
-                                </segments>
-                            </segmentedControl>
+                            </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="1Ga-1h-gXQ">
+                                <rect key="frame" x="174" y="259" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mqd-FV-Bcy" firstAttribute="top" secondItem="85F-Pf-nez" secondAttribute="bottom" constant="-50" id="IPG-9D-jZK"/>
-                            <constraint firstItem="Bn6-eJ-4A7" firstAttribute="leading" secondItem="ju7-Uy-Jdf" secondAttribute="leadingMargin" constant="-16" id="M26-rN-c12"/>
-                            <constraint firstItem="mqd-FV-Bcy" firstAttribute="top" secondItem="Bn6-eJ-4A7" secondAttribute="bottom" id="ZVH-nJ-ViD"/>
+                            <constraint firstItem="3Dv-JS-kxX" firstAttribute="leading" secondItem="ju7-Uy-Jdf" secondAttribute="leading" id="LpL-HG-JqM"/>
+                            <constraint firstAttribute="trailing" secondItem="3Dv-JS-kxX" secondAttribute="trailing" id="ec4-Q3-WP9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="85F-Pf-nez" secondAttribute="trailing" constant="-16" id="gVp-ys-MmX"/>
                             <constraint firstItem="85F-Pf-nez" firstAttribute="top" secondItem="ctr-Ho-b7w" secondAttribute="bottom" id="lLI-vm-riD"/>
                             <constraint firstItem="85F-Pf-nez" firstAttribute="leading" secondItem="ju7-Uy-Jdf" secondAttribute="leadingMargin" constant="-22" id="sfs-Jf-aUN"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="CC1-1n-vAK" secondAttribute="trailing" constant="-16" id="tFo-4G-huq"/>
-                            <constraint firstItem="mqd-FV-Bcy" firstAttribute="top" secondItem="CC1-1n-vAK" secondAttribute="bottom" id="zPC-Xm-bex"/>
+                            <constraint firstItem="mqd-FV-Bcy" firstAttribute="top" secondItem="3Dv-JS-kxX" secondAttribute="bottom" id="zLI-4G-l8t"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -1857,6 +1894,7 @@ and the rest of Labs + UA</string>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="loadingIndicator" destination="1Ga-1h-gXQ" id="2ZK-jy-kfO"/>
                         <outlet property="newsSwitcher" destination="Bn6-eJ-4A7" id="ZWw-Da-F7O"/>
                         <outlet property="toggle" destination="CC1-1n-vAK" id="tGA-nx-HHO"/>
                         <outlet property="webView" destination="85F-Pf-nez" id="oWp-oG-JuP"/>
@@ -1995,6 +2033,7 @@ and the rest of Labs + UA</string>
         <image name="Registrar" width="60" height="60"/>
         <image name="Transit" width="60" height="60"/>
         <image name="UA" width="1383" height="1000"/>
+        <image name="back-arrow" width="698" height="696"/>
         <image name="gradient" width="1000" height="240"/>
         <image name="hamburger" width="40" height="40"/>
         <image name="labs" width="500" height="500"/>
@@ -2004,4 +2043,5 @@ and the rest of Labs + UA</string>
         <segue reference="M6c-9f-3Ic"/>
         <segue reference="QVS-YE-BQT"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.039215686274509803" green="0.074509803921568626" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
 </document>

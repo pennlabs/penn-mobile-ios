@@ -10,6 +10,7 @@
 
 @interface NewsViewController ()
 @property BOOL isToggleEnabled;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *toggle;
 @end
 
@@ -31,18 +32,38 @@
                                             action:@selector(collapseNewsSwitcher:)];
     newsSwitcherTap.cancelsTouchesInView = NO;
     [_newsSwitcher addGestureRecognizer:newsSwitcherTap];
-
-
+    
+    [_loadingIndicator stopAnimating];
+    _loadingIndicator.hidesWhenStopped = YES;
+    _loadingIndicator.color = PENN_RED;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
- //   [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    NSLog(@"start");
+    
+    //   [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [_loadingIndicator startAnimating];
+    NSString *url =_webView.request.URL.absoluteString;
+    if ([url containsString:@"thedp.com/blog/under-the-button"]) {
+        [_newsSwitcher setSelectedSegmentIndex:1];
+    } else if ([url containsString:@"thedp.com"]) {
+        [_newsSwitcher setSelectedSegmentIndex:0];
+    } else if ([url containsString:@"34st.com"]) {
+        [_newsSwitcher setSelectedSegmentIndex:2];
+    } else if ([url containsString:@"eventsatpenn.com"]) {
+        [_newsSwitcher setSelectedSegmentIndex:3];
+    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    if (!webView.loading) {
-   //     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    NSLog(@"finish");
+    
+    
+    if (!webView.isLoading) {
+//     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }
+    [_loadingIndicator stopAnimating];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -85,6 +106,15 @@
             break;}
     }
 
+}
+
+- (IBAction)webViewBack:(id)sender {
+    if ([_webView canGoBack]) {
+        [_webView goBack];
+        NSString* url = _webView.request.URL.absoluteString;
+        //NSLog(url);///stopped working here
+        
+    }
 }
 
 #pragma mark - Navigation
