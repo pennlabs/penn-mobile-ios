@@ -416,11 +416,8 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 - (void)addGoogleAnnotations:(NSArray *)res isDest:(BOOL) isDest { // TODO is this even being called
     //    MKPointAnnotation *temp;
     TransitMKPointAnnotation *temp;
-    if (isDest) {
-        temp.isDest = YES;
-    } else {
-        temp.isDest = NO;
-    }
+    NSLog(@"HERE");
+    temp.isDest = isDest;
     if (res.count > 0) {
         for (long i = res.count - 1; i >= 0; i--) {
             temp = (TransitMKPointAnnotation *)[GoogleMapsSearcher makeAnnotationForGoogleResult:res[0]];
@@ -538,7 +535,8 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }
     else {
-        [self addGoogleAnnotations:res];
+//        [self addGoogleAnnotations:res];
+        [self addGoogleAnnotations:res isDest:YES];
         // used for later when setting the map's region in "prepareForSegue"
         // _boundingRegion = response.boundingRegion;
     }
@@ -566,7 +564,8 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
         }
         else {
-            [self addGoogleAnnotations:res];
+//            [self addGoogleAnnotations:res];
+            [self addGoogleAnnotations:res isDest:NO];
             // used for later when setting the map's region in "prepareForSegue"
             // _boundingRegion = response.boundingRegion;
         }
@@ -584,23 +583,24 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
-    if (!annotationView && ![annotation isKindOfClass:[MKUserLocation class] ]) {
+    if (!annotationView && ![annotationView isKindOfClass:[MKUserLocation class] ]) {
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
     }
     // TODO
-    if ([annotationView isKindOfClass:[TransitMKPointAnnotation class]]) {
-        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        annotationView.enabled = YES;
-        annotationView.canShowCallout = YES;
+    MKPinAnnotationView *pinView = (MKPinAnnotationView *)annotationView;
+    if ([pinView isKindOfClass:[TransitMKPointAnnotation class]]) {
+        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        pinView.enabled = YES;
+        pinView.canShowCallout = YES;
         // TODO color?
         
-        return annotationView;
-    } else if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
-        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        annotationView.enabled = YES;
-        annotationView.canShowCallout = YES;
+        return pinView;
+    } else if ([pinView isKindOfClass:[MKPinAnnotationView class]]) {
+        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        pinView.enabled = YES;
+        pinView.canShowCallout = YES;
         
-        return annotationView;
+        return pinView;
     }
     return nil;
 }
@@ -622,8 +622,9 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    TransitMKPointAnnotation *annotationView = (TransitMKPointAnnotation *)view;
     CLLocationCoordinate2D dest = view.annotation.coordinate;
-    CLLocationCoordinate2D src;
+    CLLocationCoordinate2D src; // TODO set src!!
     if ([_sourceSearchBar text].length > 0) { // TODO this is a bad check
         // TODO: how to get coordinates from source? should set it first....
     } else {
