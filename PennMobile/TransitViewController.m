@@ -154,14 +154,16 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     from = CLLocationCoordinate2DMake(fromLat, fromLon);
     @try {
         // change this with Hong's code
+        LocationArray walkToRoute = [self calculateRoutesFrom:trueStart to:from];
+        LocationArray walkFromRoute = [self calculateRoutesFrom:end to:trueEnd];
         LocationArray busRoute = [self gatherRoutePoints:path];
+        busRoute.coords[0] = walkToRoute.coords[walkFromRoute.size - 1];
+        busRoute.coords[busRoute.size -1] = walkFromRoute.coords[0];
         MKPolyline *busLine = [MKPolyline polylineWithCoordinates:busRoute.coords count:busRoute.size];
         busLine.title = @"bus";
         busView = [[MKPolylineRenderer alloc] initWithPolyline:busLine];
         busView.strokeColor = [BUS_COLOR colorWithAlphaComponent:0.7];
         busView.lineWidth = LINE_WEIGHT;
-        LocationArray walkToRoute = [self calculateRoutesFrom:trueStart to:from];
-        LocationArray walkFromRoute = [self calculateRoutesFrom:end to:trueEnd];
         MKPolyline *walkTo = [MKPolyline polylineWithCoordinates:walkToRoute.coords count:walkToRoute.size];
         walkTo.title = @"walkTo";
         walkToView = [[MKPolylineRenderer alloc] initWithPolyline:walkTo];
