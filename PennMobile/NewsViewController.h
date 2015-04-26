@@ -14,5 +14,6 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *newsSwitcher;
 @property NSString *url;
 @end
