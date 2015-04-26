@@ -97,6 +97,7 @@
 		19B8543E1AA6ADDD002564D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B8543D1AA6ADDD002564D9 /* main.m */; };
 		19C258781AED879B00638331 /* arrow-bwd.png in Resources */ = {isa = PBXBuildFile; fileRef = 19C258761AED879B00638331 /* arrow-bwd.png */; };
 		19C258791AED879B00638331 /* arrow-fwd.png in Resources */ = {isa = PBXBuildFile; fileRef = 19C258771AED879B00638331 /* arrow-fwd.png */; };
+		19C2587B1AED989E00638331 /* busStopAnnotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 19C2587A1AED989E00638331 /* busStopAnnotation.png */; };
 		19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */; };
 		19C62D791A2EAFBC00AC59F5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */; };
 		19C62D7A1A2EAFBC00AC59F5 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D781A2EAFBC00AC59F5 /* AddressBookUI.framework */; };
@@ -265,6 +266,7 @@
 		19B8543D1AA6ADDD002564D9 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		19C258761AED879B00638331 /* arrow-bwd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-bwd.png"; sourceTree = "<group>"; };
 		19C258771AED879B00638331 /* arrow-fwd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-fwd.png"; sourceTree = "<group>"; };
+		19C2587A1AED989E00638331 /* busStopAnnotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = busStopAnnotation.png; sourceTree = "<group>"; };
 		19C3A8B41A1C30B300D32D8A /* PennTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PennTableViewController.h; sourceTree = "<group>"; };
 		19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PennTableViewController.m; sourceTree = "<group>"; };
 		19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -431,6 +433,7 @@
 		195D940419BFC40200C6C8FA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				19C2587A1AED989E00638331 /* busStopAnnotation.png */,
 				19C258761AED879B00638331 /* arrow-bwd.png */,
 				19C258771AED879B00638331 /* arrow-fwd.png */,
 				195A5A891AD5F98C0080B186 /* Arrow-reversed.png */,
@@ -876,6 +879,7 @@
 				19C258781AED879B00638331 /* arrow-bwd.png in Resources */,
 				19EDDC9C19D24FDD0088C4DC /* textbutton@3x.png in Resources */,
 				19EDDC9A19D24FDD0088C4DC /* textbutton.png in Resources */,
+				19C2587B1AED989E00638331 /* busStopAnnotation.png in Resources */,
 				82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */,
 				197DBAF11A6F5A1000B0707C /* E@P-Blue.png in Resources */,
 				19DE26E21A6897C400D072A7 /* marks.png in Resources */,
