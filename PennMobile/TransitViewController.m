@@ -39,7 +39,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    shouldCenter = YES;
     [locationManager startUpdatingLocation];
     [self centerMapOnLocation];
 }
@@ -466,7 +465,6 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     [self mapViewClearAllPinsNotUser:_mapView];
     [self hideRouteUI];
     [self search:searchBar.text];
-    shouldCenter = NO;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -484,13 +482,16 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     if (shouldCenter) {
-        //[self centerMapOnLocation];
+        [self centerMapOnLocation];
+        shouldCenter = NO;
     }
 }
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     
     if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        [locationManager startUpdatingLocation];
         self.mapView.showsUserLocation = YES;
+        shouldCenter = YES;
     }
 }
 
