@@ -39,7 +39,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    shouldCenter = YES;
     [locationManager startUpdatingLocation];
     [self centerMapOnLocation];
 }
@@ -134,6 +133,20 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     }
     return LocationArrayMake(arr, stops.count);
 }
+
+- (NSArray *)getStopAnnotations:(NSArray *)path {
+    NSMutableArray *annotations = [[NSMutableArray alloc] initWithCapacity:path.count];
+    for (NSDictionary *stop in path) {
+        if (stop[@"BusStopName"]) {
+            MKPointAnnotation *pt = [[MKPointAnnotation alloc] init];
+            pt.coordinate = CLLocationCoordinate2DMake([stop[@"Latitude"] doubleValue], [stop[@"Longitude"] doubleValue]);
+            pt.title = [@"Stop " stringByAppendingString:stop[@"BusStopName"]];
+            [annotations addObject:pt];
+        }
+    }
+    return annotations;
+}
+
 - (void)parseData:(NSDictionary *)fromAPI trueStart:(CLLocationCoordinate2D)trueStart trueEnd:(CLLocationCoordinate2D)trueEnd {
     CLLocationCoordinate2D end, from;
     double endLat, endLon, fromLat, fromLon;
@@ -157,6 +170,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         LocationArray walkToRoute = [self calculateRoutesFrom:trueStart to:from];
         LocationArray walkFromRoute = [self calculateRoutesFrom:end to:trueEnd];
         LocationArray busRoute = [self gatherRoutePoints:path];
+        NSArray *stopAnnotations = [self getStopAnnotations:path];
         busRoute.coords[0] = walkToRoute.coords[walkFromRoute.size - 1];
         busRoute.coords[busRoute.size -1] = walkFromRoute.coords[0];
         MKPolyline *busLine = [MKPolyline polylineWithCoordinates:busRoute.coords count:busRoute.size];
@@ -178,6 +192,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
             [_mapView addOverlay:busLine];
             [_mapView addOverlay:walkFrom];
             [_mapView addOverlay:walkTo];
+            [_mapView addAnnotations:stopAnnotations];
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [self displayRouteUI:fromAPI];
         });
@@ -409,7 +424,14 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
     if (!annotationView && ![annotation isKindOfClass:[MKUserLocation class] ]) {
-        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
+        if ([annotation.title rangeOfString:@"Stop "].location != NSNotFound) {
+            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[annotation.title substringFromIndex:5]];
+            annotationView.image = [UIImage imageNamed:@"BusStopPin"];
+            annotationView.canShowCallout = YES;
+        }
+        else {
+            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
+        }
     }
     if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
         annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -418,7 +440,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         
         return annotationView;
     }
-    return nil;
+    return annotationView;
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
@@ -466,7 +488,6 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     [self mapViewClearAllPinsNotUser:_mapView];
     [self hideRouteUI];
     [self search:searchBar.text];
-    shouldCenter = NO;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -484,13 +505,16 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     if (shouldCenter) {
-        //[self centerMapOnLocation];
+        [self centerMapOnLocation];
+        shouldCenter = NO;
     }
 }
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     
     if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        [locationManager startUpdatingLocation];
         self.mapView.showsUserLocation = YES;
+        shouldCenter = YES;
     }
 }
 
