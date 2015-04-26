@@ -14,7 +14,7 @@
 static float screenWidth = 0;
 static int numCreated = 0;
 
-+ (DirectionView *)make:(NSString *)name distance:(double)dist isBus:(bool)bus isLast:(bool)last {
++ (DirectionView *)make:(NSString *)name distance:(double)dist routeTitle:(NSString *)bus isLast:(bool)last {
     if (screenWidth == 0) {
         screenWidth = [[UIScreen mainScreen] bounds].size.width;
     }
@@ -33,7 +33,7 @@ static int numCreated = 0;
     if (bus) {
         n.backgroundColor = PENN_BLUE;
         // to be added
-        subtitle.text = [NSString stringWithFormat:@"take the bus to"];
+        subtitle.text = [NSString stringWithFormat:@"via %@", bus];
         [n addSubview:[DirectionView makeBackArrow]];
     } else {
         n.backgroundColor = PENN_RED;
@@ -46,6 +46,8 @@ static int numCreated = 0;
     [n addSubview:subtitle];
     if (!last) {
         [n addSubview:[DirectionView makeArrow]];
+    } else {
+        [n addSubview:[DirectionView makeBackArrow]];
     }
     numCreated += 1;
     numCreated %= 3;
@@ -59,7 +61,7 @@ static int numCreated = 0;
 }
 + (UIImageView *)makeBackArrow {
     UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Arrow-reversed"]];
-    arrow.frame = CGRectMake(10 + (ARROW_WIDTH / 2.0), (VIEW_HEIGHT - ARROW_HEIGHT) / 2.0,ARROW_WIDTH, ARROW_HEIGHT);
+    arrow.frame = CGRectMake(ARROW_WIDTH / 2.0, (VIEW_HEIGHT - ARROW_HEIGHT) / 2.0,ARROW_WIDTH, ARROW_HEIGHT);
     return arrow;
 }
 /*
