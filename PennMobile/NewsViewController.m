@@ -111,12 +111,13 @@
 - (IBAction)webViewBack:(id)sender {
     if ([_webView canGoBack]) {
         [_webView goBack];
-        NSString* url = _webView.request.URL.absoluteString;
-        //NSLog(url);///stopped working here
-        
     }
 }
-
+- (IBAction)webViewForward:(id)sender {
+    if ([_webView canGoForward]) {
+        [_webView goForward];
+    }
+}
 #pragma mark - Navigation
 
 /**

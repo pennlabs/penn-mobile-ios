@@ -94,6 +94,8 @@
 		19B7EB601A788EB600ADE2E8 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B7EB5F1A788EB600ADE2E8 /* libstdc++.6.dylib */; };
 		19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B8543B1AA6AA5B002564D9 /* AppDelegate.m */; };
 		19B8543E1AA6ADDD002564D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B8543D1AA6ADDD002564D9 /* main.m */; };
+		19C258781AED879B00638331 /* arrow-bwd.png in Resources */ = {isa = PBXBuildFile; fileRef = 19C258761AED879B00638331 /* arrow-bwd.png */; };
+		19C258791AED879B00638331 /* arrow-fwd.png in Resources */ = {isa = PBXBuildFile; fileRef = 19C258771AED879B00638331 /* arrow-fwd.png */; };
 		19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */; };
 		19C62D791A2EAFBC00AC59F5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */; };
 		19C62D7A1A2EAFBC00AC59F5 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C62D781A2EAFBC00AC59F5 /* AddressBookUI.framework */; };
@@ -258,6 +260,8 @@
 		19B8543A1AA6AA5B002564D9 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		19B8543B1AA6AA5B002564D9 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		19B8543D1AA6ADDD002564D9 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		19C258761AED879B00638331 /* arrow-bwd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-bwd.png"; sourceTree = "<group>"; };
+		19C258771AED879B00638331 /* arrow-fwd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-fwd.png"; sourceTree = "<group>"; };
 		19C3A8B41A1C30B300D32D8A /* PennTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PennTableViewController.h; sourceTree = "<group>"; };
 		19C3A8B51A1C30B300D32D8A /* PennTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PennTableViewController.m; sourceTree = "<group>"; };
 		19C62D771A2EAFBC00AC59F5 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -424,6 +428,8 @@
 		195D940419BFC40200C6C8FA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				19C258761AED879B00638331 /* arrow-bwd.png */,
+				19C258771AED879B00638331 /* arrow-fwd.png */,
 				195A5A891AD5F98C0080B186 /* Arrow-reversed.png */,
 				1909DF091AC23A6300936552 /* Arrow.png */,
 				19C71C4A1AA0057E00518455 /* hamburger-xl.png */,
@@ -852,6 +858,7 @@
 				19B4BDBD1A01DE73008DD69C /* avatar.jpg in Resources */,
 				19DE26CE1A688FC200D072A7 /* dining-placeholder.png in Resources */,
 				19DE26DB1A6897C400D072A7 /* 1920.png in Resources */,
+				19C258791AED879B00638331 /* arrow-fwd.png in Resources */,
 				19C669941A6966240076AF1C /* UA.png in Resources */,
 				197DBAE81A6F54DD00B0707C /* UTB-Blue.png in Resources */,
 				1972EEAC1A81928500362B6C /* PI.PNG in Resources */,
@@ -861,6 +868,7 @@
 				19EDDC9719D24FDD0088C4DC /* callbutton.png in Resources */,
 				19B6BC371A15998A002BFEA5 /* book-selected.png in Resources */,
 				1972EEAE1A81928500362B6C /* Tortas.PNG in Resources */,
+				19C258781AED879B00638331 /* arrow-bwd.png in Resources */,
 				19EDDC9C19D24FDD0088C4DC /* textbutton@3x.png in Resources */,
 				19EDDC9A19D24FDD0088C4DC /* textbutton.png in Resources */,
 				82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */,
