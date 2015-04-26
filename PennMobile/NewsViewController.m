@@ -9,10 +9,13 @@
 #import "NewsViewController.h"
 
 @interface NewsViewController ()
-
+@property BOOL isToggleEnabled;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *toggle;
 @end
 
 @implementation NewsViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -21,23 +24,100 @@
     [_webView loadRequest:req];
     _webView.scalesPageToFit = NO;
     _webView.delegate = self;
+    
+    _isToggleEnabled = YES;
+    [_newsSwitcher addTarget:self action:@selector(switchNewsSource:) forControlEvents:UIControlEventValueChanged];
+    UITapGestureRecognizer *newsSwitcherTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(collapseNewsSwitcher:)];
+    newsSwitcherTap.cancelsTouchesInView = NO;
+    [_newsSwitcher addGestureRecognizer:newsSwitcherTap];
+    
+    [_loadingIndicator stopAnimating];
+    _loadingIndicator.hidesWhenStopped = YES;
+    _loadingIndicator.color = PENN_RED;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
- //   [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    NSLog(@"start");
+    
+    //   [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [_loadingIndicator startAnimating];
+    NSString *url =_webView.request.URL.absoluteString;
+    if ([url containsString:@"thedp.com/blog/under-the-button"]) {
+        [_newsSwitcher setSelectedSegmentIndex:1];
+    } else if ([url containsString:@"thedp.com"]) {
+        [_newsSwitcher setSelectedSegmentIndex:0];
+    } else if ([url containsString:@"34st.com"]) {
+        [_newsSwitcher setSelectedSegmentIndex:2];
+    } else if ([url containsString:@"eventsatpenn.com"]) {
+        [_newsSwitcher setSelectedSegmentIndex:3];
+    }
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    if (!webView.loading) {
-   //     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    NSLog(@"finish");
+    
+    
+    if (!webView.isLoading) {
+//     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }
+    [_loadingIndicator stopAnimating];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)toggleControl:(id)sender {
+    if (_isToggleEnabled) {
+        NSLog(@"news switcher is hidden");
+        [UIView animateWithDuration:0.3 animations:^{
+            _newsSwitcher.frame = CGRectMake(_newsSwitcher.frame.origin.x, _newsSwitcher.frame.origin.y + _newsSwitcher.frame.size.height, _newsSwitcher.frame.size.width, _newsSwitcher.frame.size.height);
+        }];
+        _isToggleEnabled = NO;
+    } else {
+        NSLog(@"news switcher is NOT hidden");
+        [UIView animateWithDuration:0.3 animations:^{
+            _newsSwitcher.frame = CGRectMake(_newsSwitcher.frame.origin.x, _newsSwitcher.frame.origin.y - _newsSwitcher.frame.size.height, _newsSwitcher.frame.size.width, _newsSwitcher.frame.size.height);
+        }];
+        _isToggleEnabled = YES;
+    }
+}
 
+-(void)collapseNewsSwitcher:(UITapGestureRecognizer *)recognizer {
+    [_toggle sendActionsForControlEvents: UIControlEventTouchUpInside];
+}
+
+-(void)switchNewsSource:(UISegmentedControl *)segment {
+    switch (segment.selectedSegmentIndex) {
+        case 0:{
+            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://thedp.com/"]]];
+            break;}
+        case 1:{
+            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://thedp.com/blog/under-the-button/"]]];
+            break;}
+        case 2:{
+            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://34st.com/"]]];
+            break;}
+        case 3:{
+            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://eventsatpenn.com/"]]];
+            break;}
+    }
+
+}
+
+- (IBAction)webViewBack:(id)sender {
+    if ([_webView canGoBack]) {
+        [_webView goBack];
+    }
+}
+- (IBAction)webViewForward:(id)sender {
+    if ([_webView canGoForward]) {
+        [_webView goForward];
+    }
+}
 #pragma mark - Navigation
 
 /**
