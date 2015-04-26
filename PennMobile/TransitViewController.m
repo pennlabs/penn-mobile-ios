@@ -129,7 +129,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 // now used instead
 - (LocationArray)gatherRoutePoints:(NSArray *)stops {
     CLLocationCoordinate2D *arr = malloc(stops.count * sizeof(CLLocationCoordinate2D));
-    for (int i = 0; i < stops.count; i++) {
+    for (int i = 0; i < stops.count; i++) { 
         arr[i] = CLLocationCoordinate2DMake([stops[i][@"Latitude"] doubleValue], [stops[i][@"Longitude"] doubleValue]);
     }
     return LocationArrayMake(arr, stops.count);
@@ -154,14 +154,16 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     from = CLLocationCoordinate2DMake(fromLat, fromLon);
     @try {
         // change this with Hong's code
+        LocationArray walkToRoute = [self calculateRoutesFrom:trueStart to:from];
+        LocationArray walkFromRoute = [self calculateRoutesFrom:end to:trueEnd];
         LocationArray busRoute = [self gatherRoutePoints:path];
+        busRoute.coords[0] = walkToRoute.coords[walkFromRoute.size - 1];
+        busRoute.coords[busRoute.size -1] = walkFromRoute.coords[0];
         MKPolyline *busLine = [MKPolyline polylineWithCoordinates:busRoute.coords count:busRoute.size];
         busLine.title = @"bus";
         busView = [[MKPolylineRenderer alloc] initWithPolyline:busLine];
         busView.strokeColor = [BUS_COLOR colorWithAlphaComponent:0.7];
         busView.lineWidth = LINE_WEIGHT;
-        LocationArray walkToRoute = [self calculateRoutesFrom:trueStart to:from];
-        LocationArray walkFromRoute = [self calculateRoutesFrom:end to:trueEnd];
         MKPolyline *walkTo = [MKPolyline polylineWithCoordinates:walkToRoute.coords count:walkToRoute.size];
         walkTo.title = @"walkTo";
         walkToView = [[MKPolylineRenderer alloc] initWithPolyline:walkTo];
@@ -196,13 +198,13 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     double walkStart = [startd doubleValue];
     double walkEnd = [endd doubleValue];
     NSArray *path = fromAPI[@"path"];
-    NSString *routeTitle = fromAPI[@"route"];
+    NSString *routeTitle = fromAPI[@"route_name"];
     NSString *fromStop = path[0][@"BusStopName"];
     NSString *toStop = path[path.count - 1][@"BusStopName"];
 
-    DirectionView *first = [DirectionView make:fromStop distance:walkStart isBus:NO isLast:NO];
-    DirectionView *bus = [DirectionView make:toStop distance:0 isBus:YES isLast:NO];
-    DirectionView *last = [DirectionView make:destTitle distance:walkEnd isBus:NO isLast:YES];
+    DirectionView *first = [DirectionView make:fromStop distance:walkStart routeTitle:nil isLast:NO];
+    DirectionView *bus = [DirectionView make:toStop distance:0 routeTitle:routeTitle isLast:NO];
+    DirectionView *last = [DirectionView make:destTitle distance:walkEnd routeTitle:nil isLast:YES];
     
     [_scrollView addSubview:first];
     [_scrollView addSubview:bus];
@@ -211,6 +213,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     _labelDestination.text = destTitle;
     _labelDestination.hidden = NO;
     _scrollView.hidden = NO;
+    [_scrollView setContentOffset:CGPointMake(15, 0) animated:YES];
     
 }
 - (void)hideRouteUI {
