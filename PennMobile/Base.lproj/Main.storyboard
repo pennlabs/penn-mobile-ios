@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sil-2Q-Gkr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sil-2Q-Gkr">
     <dependencies>
         <deployment version="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -1793,15 +1793,15 @@ and the rest of Labs + UA</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="85F-Pf-nez">
-                                <rect key="frame" x="-6" y="0.0" width="381" height="537"/>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="85F-Pf-nez">
+                                <rect key="frame" x="-6" y="0.0" width="381" height="511"/>
                             </webView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Dv-JS-kxX">
-                                <rect key="frame" x="0.0" y="531" width="375" height="28"/>
+                                <rect key="frame" x="0.0" y="511" width="375" height="48"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Bn6-eJ-4A7">
-                                        <rect key="frame" x="0.0" y="0.0" width="309" height="29"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <rect key="frame" x="8" y="10" width="277" height="29"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="6Kz-4y-xyX"/>
                                         </constraints>
@@ -1811,49 +1811,51 @@ and the rest of Labs + UA</string>
                                             <segment title="34th St"/>
                                             <segment title="E@P"/>
                                         </segments>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </segmentedControl>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CC1-1n-vAK">
-                                        <rect key="frame" x="309" y="1" width="36" height="28"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="36" id="RUR-oT-a5m"/>
-                                            <constraint firstAttribute="height" constant="28" id="wwU-cR-1HW"/>
-                                        </constraints>
-                                        <state key="normal" title="Switch News" image="up-arrow">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="toggleControl:" destination="EEs-ve-KSf" eventType="touchUpInside" id="tne-YZ-aK5"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mcv-O3-ehk">
-                                        <rect key="frame" x="345" y="1" width="30" height="29"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <rect key="frame" x="337" y="10" width="30" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="29" id="Ikw-n3-5nJ"/>
+                                            <constraint firstAttribute="height" constant="30" id="Ikw-n3-5nJ"/>
                                             <constraint firstAttribute="width" constant="30" id="Jjp-UN-f4G"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="29" id="ZqG-mM-mKi"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="bOz-Lh-tDY"/>
                                         </constraints>
-                                        <state key="normal" image="back-arrow">
+                                        <state key="normal" image="arrow-fwd">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="webViewBack:" destination="EEs-ve-KSf" eventType="touchUpInside" id="sa8-EW-OSP"/>
+                                            <action selector="webViewForward:" destination="EEs-ve-KSf" eventType="touchUpInside" id="SV2-f1-9mt"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CC1-1n-vAK">
+                                        <rect key="frame" x="295" y="10" width="30" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="RUR-oT-a5m"/>
+                                            <constraint firstAttribute="height" constant="30" id="wwU-cR-1HW"/>
+                                        </constraints>
+                                        <state key="normal" title="Back" image="arrow-bwd">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="webViewBack:" destination="EEs-ve-KSf" eventType="touchUpInside" id="b3Z-pO-MXW"/>
                                         </connections>
                                     </button>
                                 </subviews>
+                                <color key="backgroundColor" red="0.47843137254901963" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="mcv-O3-ehk" secondAttribute="trailing" id="9OT-Jg-1fD"/>
-                                    <constraint firstAttribute="height" constant="28" id="Ce8-hZ-4eZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="mcv-O3-ehk" secondAttribute="bottom" constant="-2" id="ExH-Wr-ccI"/>
-                                    <constraint firstAttribute="trailing" secondItem="mcv-O3-ehk" secondAttribute="trailing" id="HHj-MN-gkJ"/>
-                                    <constraint firstAttribute="bottom" secondItem="Bn6-eJ-4A7" secondAttribute="bottom" id="PVy-Uy-nwK"/>
-                                    <constraint firstAttribute="bottom" secondItem="CC1-1n-vAK" secondAttribute="bottom" constant="-1" id="SMM-XY-HM2"/>
+                                    <constraint firstAttribute="trailing" secondItem="mcv-O3-ehk" secondAttribute="trailing" constant="8" id="9OT-Jg-1fD"/>
+                                    <constraint firstAttribute="height" constant="48" id="Ce8-hZ-4eZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="mcv-O3-ehk" secondAttribute="bottom" constant="8" id="ExH-Wr-ccI"/>
+                                    <constraint firstAttribute="trailing" secondItem="mcv-O3-ehk" secondAttribute="trailing" constant="8" id="HHj-MN-gkJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Bn6-eJ-4A7" secondAttribute="bottom" constant="10" id="PVy-Uy-nwK"/>
+                                    <constraint firstAttribute="bottom" secondItem="CC1-1n-vAK" secondAttribute="bottom" constant="8" id="SMM-XY-HM2"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mcv-O3-ehk" secondAttribute="bottom" constant="-2" id="eCh-y7-zOx"/>
-                                    <constraint firstItem="mcv-O3-ehk" firstAttribute="leading" secondItem="CC1-1n-vAK" secondAttribute="trailing" id="hCI-PF-iIa"/>
-                                    <constraint firstItem="Bn6-eJ-4A7" firstAttribute="leading" secondItem="3Dv-JS-kxX" secondAttribute="leading" id="hLt-MN-B5A"/>
-                                    <constraint firstItem="CC1-1n-vAK" firstAttribute="leading" secondItem="Bn6-eJ-4A7" secondAttribute="trailing" id="pOK-6z-wA9"/>
+                                    <constraint firstItem="mcv-O3-ehk" firstAttribute="leading" secondItem="CC1-1n-vAK" secondAttribute="trailing" constant="12" id="hCI-PF-iIa"/>
+                                    <constraint firstItem="Bn6-eJ-4A7" firstAttribute="leading" secondItem="3Dv-JS-kxX" secondAttribute="leading" constant="8" id="hLt-MN-B5A"/>
+                                    <constraint firstItem="CC1-1n-vAK" firstAttribute="leading" secondItem="Bn6-eJ-4A7" secondAttribute="trailing" constant="10" id="pOK-6z-wA9"/>
                                 </constraints>
                             </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="1Ga-1h-gXQ">
@@ -1862,7 +1864,7 @@ and the rest of Labs + UA</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="mqd-FV-Bcy" firstAttribute="top" secondItem="85F-Pf-nez" secondAttribute="bottom" constant="-50" id="IPG-9D-jZK"/>
+                            <constraint firstItem="3Dv-JS-kxX" firstAttribute="top" secondItem="85F-Pf-nez" secondAttribute="bottom" id="JmS-8f-bK1"/>
                             <constraint firstItem="3Dv-JS-kxX" firstAttribute="leading" secondItem="ju7-Uy-Jdf" secondAttribute="leading" id="LpL-HG-JqM"/>
                             <constraint firstAttribute="trailing" secondItem="3Dv-JS-kxX" secondAttribute="trailing" id="ec4-Q3-WP9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="85F-Pf-nez" secondAttribute="trailing" constant="-16" id="gVp-ys-MmX"/>
@@ -1884,7 +1886,7 @@ and the rest of Labs + UA</string>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="News" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="qeJ-PS-X32">
-                                    <rect key="frame" x="-6" y="0.0" width="156" height="33"/>
+                                    <rect key="frame" x="-12" y="0.0" width="156" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -2033,11 +2035,11 @@ and the rest of Labs + UA</string>
         <image name="Registrar" width="60" height="60"/>
         <image name="Transit" width="60" height="60"/>
         <image name="UA" width="1383" height="1000"/>
-        <image name="back-arrow" width="698" height="696"/>
+        <image name="arrow-bwd" width="100" height="100"/>
+        <image name="arrow-fwd" width="100" height="100"/>
         <image name="gradient" width="1000" height="240"/>
         <image name="hamburger" width="40" height="40"/>
         <image name="labs" width="500" height="500"/>
-        <image name="up-arrow" width="645" height="376"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="M6c-9f-3Ic"/>
