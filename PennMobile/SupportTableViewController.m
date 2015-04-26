@@ -36,8 +36,23 @@
     hLine.name = @"Help Line";
     hLine.phone = @"215-898-HELP (4357)";
     hLine.phoneFiltered = @"2158984357";
-    
-    _contacts = [NSArray arrayWithObjects:pEmergency, pGeneral, pWalk, pRide, hLine, nil];
+    SupportItem *caps = [[SupportItem alloc] init];
+    caps.name = @"CAPS";
+    caps.phone = @"215-898-7021";
+    caps.phoneFiltered = @"2158987021";
+    SupportItem *special = [[SupportItem alloc] init];
+    special.name = @"Special Services";
+    special.phone = @"215-898-6600";
+    special.phoneFiltered = @"2158986600";
+    SupportItem *womens = [[SupportItem alloc] init];
+    womens.name = @"Women's Center";
+    womens.phone = @"215-898-8611";
+    womens.phoneFiltered = @"2158988611";
+    SupportItem *shs = [[SupportItem alloc] init];
+    shs.name = @"Student Health Services";
+    shs.phone = @"215-748-3505";
+    shs.phoneFiltered = @"2157463505";
+    _contacts = [NSArray arrayWithObjects:pEmergency, pGeneral, pWalk, pRide, hLine, caps, special, womens, shs, nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
