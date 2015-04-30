@@ -171,8 +171,12 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         LocationArray walkFromRoute = [self calculateRoutesFrom:end to:trueEnd];
         LocationArray busRoute = [self gatherRoutePoints:path];
         NSArray *stopAnnotations = [self getStopAnnotations:path];
-        busRoute.coords[0] = walkToRoute.coords[walkFromRoute.size - 1];
-        busRoute.coords[busRoute.size -1] = walkFromRoute.coords[0];
+        if (walkToRoute.size > 0) {
+            busRoute.coords[0] = walkToRoute.coords[walkFromRoute.size - 1];
+        }
+        if (walkFromRoute.size > 0) {
+            busRoute.coords[busRoute.size -1] = walkFromRoute.coords[0];
+        }
         MKPolyline *busLine = [MKPolyline polylineWithCoordinates:busRoute.coords count:busRoute.size];
         busLine.title = @"bus";
         busView = [[MKPolylineRenderer alloc] initWithPolyline:busLine];
