@@ -9,9 +9,14 @@
 #import "NewsViewController.h"
 
 @interface NewsViewController ()
-@property BOOL isToggleEnabled;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *newsSwitcher;
+@property (weak, nonatomic) IBOutlet UIView *newsSwitcherView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
-@property (weak, nonatomic) IBOutlet UIButton *toggle;
+
+@property BOOL isToggleEnabled;
+@property (nonatomic, assign) CGFloat lastContentOffset;
+@property (weak, nonatomic) IBOutlet UIButton *expandSwitcherButton;
 @end
 
 @implementation NewsViewController
@@ -20,6 +25,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self.view insertSubview:_expandSwitcherButton belowSubview:_newsSwitcherView];
+    _expandSwitcherButton.hidden = YES;
+    
     NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_url]];
     [_webView loadRequest:req];
     _webView.scalesPageToFit = NO;
@@ -27,15 +35,16 @@
     
     _isToggleEnabled = YES;
     [_newsSwitcher addTarget:self action:@selector(switchNewsSource:) forControlEvents:UIControlEventValueChanged];
-    UITapGestureRecognizer *newsSwitcherTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(collapseNewsSwitcher:)];
-    newsSwitcherTap.cancelsTouchesInView = NO;
-    [_newsSwitcher addGestureRecognizer:newsSwitcherTap];
+    UIScreenEdgePanGestureRecognizer *bottomEdgeGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(expandNewsSwitcherOnSwipe)];
+    bottomEdgeGesture.edges = UIRectEdgeRight;
+    bottomEdgeGesture.delegate = self;
+    [self.view addGestureRecognizer:bottomEdgeGesture];
     
     [_loadingIndicator stopAnimating];
     _loadingIndicator.hidesWhenStopped = YES;
     _loadingIndicator.color = PENN_RED;
+    
+    _webView.scrollView.delegate = self;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
@@ -61,7 +70,7 @@
     
     
     if (!webView.isLoading) {
-//     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        //     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }
     [_loadingIndicator stopAnimating];
 }
@@ -74,20 +83,28 @@
     if (_isToggleEnabled) {
         NSLog(@"news switcher is hidden");
         [UIView animateWithDuration:0.3 animations:^{
-            _newsSwitcher.frame = CGRectMake(_newsSwitcher.frame.origin.x, _newsSwitcher.frame.origin.y + _newsSwitcher.frame.size.height, _newsSwitcher.frame.size.width, _newsSwitcher.frame.size.height);
+            _webView.frame = CGRectMake(_webView.frame.origin.x, _webView.frame.origin.y, _webView.frame.size.width, _webView.frame.size.height + _newsSwitcherView.frame.size.height);
+            _newsSwitcherView.frame = CGRectMake(_newsSwitcherView.frame.origin.x, _newsSwitcherView.frame.origin.y + _newsSwitcherView.frame.size.height, _newsSwitcherView.frame.size.width, _newsSwitcherView.frame.size.height);
         }];
         _isToggleEnabled = NO;
     } else {
         NSLog(@"news switcher is NOT hidden");
         [UIView animateWithDuration:0.3 animations:^{
-            _newsSwitcher.frame = CGRectMake(_newsSwitcher.frame.origin.x, _newsSwitcher.frame.origin.y - _newsSwitcher.frame.size.height, _newsSwitcher.frame.size.width, _newsSwitcher.frame.size.height);
+            _newsSwitcherView.frame = CGRectMake(_newsSwitcherView.frame.origin.x, _newsSwitcherView.frame.origin.y - _newsSwitcherView.frame.size.height, _newsSwitcherView.frame.size.width, _newsSwitcherView.frame.size.height);
+            _webView.frame = CGRectMake(_webView.frame.origin.x, _webView.frame.origin.y, _webView.frame.size.width, _webView.frame.size.height - _newsSwitcherView.frame.size.height);
         }];
         _isToggleEnabled = YES;
     }
 }
 
--(void)collapseNewsSwitcher:(UITapGestureRecognizer *)recognizer {
-    [_toggle sendActionsForControlEvents: UIControlEventTouchUpInside];
+-(void)collapseNewsSwitcherOnScrollDown {
+    if (_isToggleEnabled)
+        [self toggleControl:self];
+}
+
+-(void)collapseNewsSwitcherOnScrollUp {
+    if (!_isToggleEnabled)
+        [self toggleControl:self];
 }
 
 -(void)switchNewsSource:(UISegmentedControl *)segment {
@@ -105,7 +122,7 @@
             [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://eventsatpenn.com/"]]];
             break;}
     }
-
+    
 }
 
 - (IBAction)webViewBack:(id)sender {
@@ -117,6 +134,28 @@
     if ([_webView canGoForward]) {
         [_webView goForward];
     }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    ScrollDirection scrollDirection;
+    if (self.lastContentOffset < scrollView.contentOffset.y && self.lastContentOffset > 10) {
+        scrollDirection = ScrollDirectionDown;
+        [self collapseNewsSwitcherOnScrollDown];
+        NSLog(@"scrolled down");
+    } else if (self.lastContentOffset > scrollView.contentOffset.y && self.lastContentOffset > 10) {
+        scrollDirection = ScrollDirectionDown;
+        [self collapseNewsSwitcherOnScrollUp];
+        NSLog(@"scrolled up");
+    }
+    
+    self.lastContentOffset = scrollView.contentOffset.y;
+    
+    // do whatever you need to with scrollDirection here.
+}
+
+- (IBAction)expandSwitcherButtonPress:(id)sender {
+    [self toggleControl:self];
 }
 #pragma mark - Navigation
 
@@ -168,5 +207,15 @@
     [self handleRollBack:segue];
 }
 
+// Enum for managing scroll direction
+
+typedef enum ScrollDirection {
+    ScrollDirectionNone,
+    ScrollDirectionRight,
+    ScrollDirectionLeft,
+    ScrollDirectionUp,
+    ScrollDirectionDown,
+    ScrollDirectionCrazy,
+} ScrollDirection;
 
 @end
