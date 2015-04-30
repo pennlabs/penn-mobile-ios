@@ -16,7 +16,6 @@
 
 @property BOOL isToggleEnabled;
 @property (nonatomic, assign) CGFloat lastContentOffset;
-@property (weak, nonatomic) IBOutlet UIButton *expandSwitcherButton;
 @end
 
 @implementation NewsViewController
@@ -25,8 +24,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.view insertSubview:_expandSwitcherButton belowSubview:_newsSwitcherView];
-    _expandSwitcherButton.hidden = YES;
     
     NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_url]];
     [_webView loadRequest:req];
@@ -154,9 +151,7 @@
     // do whatever you need to with scrollDirection here.
 }
 
-- (IBAction)expandSwitcherButtonPress:(id)sender {
-    [self toggleControl:self];
-}
+
 #pragma mark - Navigation
 
 /**
