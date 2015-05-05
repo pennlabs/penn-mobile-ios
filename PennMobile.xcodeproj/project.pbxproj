@@ -128,6 +128,7 @@
 		19EDDC9F19D252B80088C4DC /* DirectoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC9E19D252B80088C4DC /* DirectoryTableViewController.m */; };
 		19F68ECD1A69708D0022B8F8 /* upenn.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F68ECC1A69708D0022B8F8 /* upenn.png */; };
 		19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */; };
+		4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */; };
 		82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82982FC119735ECC00DB2AE3 /* Images.xcassets */; };
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
 		EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCE174A19A993900008C332 /* MapKit.framework */; };
@@ -301,6 +302,8 @@
 		19F6BA451ACB6B5200D6C74B /* GoogleMapsSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapsSearcher.h; sourceTree = "<group>"; };
 		19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapsSearcher.m; sourceTree = "<group>"; };
 		4650990C3EE7CEC81D779C28 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		4BEBE2231AF8970400EBF676 /* TransitMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMKPointAnnotation.h; sourceTree = "<group>"; };
+		4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitMKPointAnnotation.m; sourceTree = "<group>"; };
 		6582CFB1B2E1CB15C6BCD647 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		82982FB319735ECC00DB2AE3 /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FB719735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -405,6 +408,8 @@
 				19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */,
 				1929ACFE19DBA21E00B15C5B /* TransitViewController.h */,
 				1929ACFF19DBA21E00B15C5B /* TransitViewController.m */,
+				4BEBE2231AF8970400EBF676 /* TransitMKPointAnnotation.h */,
+				4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */,
 				199439FF1AC2316B00B489A8 /* DirectionView.h */,
 				19943A001AC2316B00B489A8 /* DirectionView.m */,
 			);
@@ -963,6 +968,7 @@
 				1978259A19EDFAB400284799 /* AboutViewController.m in Sources */,
 				1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */,
 				198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */,
+				4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */,
 				19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */,
 				19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
