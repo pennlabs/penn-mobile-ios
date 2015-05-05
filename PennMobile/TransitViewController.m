@@ -36,12 +36,14 @@
     _directionsScrollView.hidden = YES;
     
     // search bar scrollview
-    _sourceSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 375, 44)];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width; // account for different-size screens
+    _sourceSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 44)];
     _sourceSearchBar.placeholder = @"Your location";
     _sourceSearchBar.delegate = self;
     _sourceSearchBar.tag = 1;
     
-    _destinationSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 44, 375, 44)];
+    _destinationSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 44, screenWidth, 44)];
     _destinationSearchBar.placeholder = @"Destination";
     _destinationSearchBar.delegate = self;
     _destinationSearchBar.tag = 2;
