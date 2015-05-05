@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
-@interface Course : NSObject
+#import "PCReview.h"
+
+@interface Course : NSObject <NSCopying>
 
 @property NSString *dept;
 @property NSString *title;
@@ -27,6 +29,7 @@
 @property MKPointAnnotation *point;
 @property NSString *sectionID;
 @property NSString *activity;
+@property (nonatomic, strong) PCReview *review;
 
 - (NSString *)createDetail;
 

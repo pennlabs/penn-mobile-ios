@@ -41,7 +41,7 @@
     if (indexPath.row < super.objects.count) {
         [cell configure:super.objects[indexPath.row]];
     }
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
@@ -116,6 +116,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     super.forSegue = super.objects[indexPath.row];
     //[self performSegueWithIdentifier:@"detail" sender:self];
     [self prompt:self];
@@ -200,21 +201,31 @@
 -(IBAction)prompt:(id)sender {
     Person *p = super.forSegue;
     UIAlertView *phoneAlert = [[UIAlertView alloc] initWithTitle:p.name message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
-    if (p.phone && ![p.phone isEqualToString:@""]) {
-        [phoneAlert addButtonWithTitle:@"Call"];
-        [phoneAlert addButtonWithTitle:@"Text"];
+    @try {
+        if (p.phone && ![p.phone isEqualToString:@""]) {
+            [phoneAlert addButtonWithTitle:@"Call"];
+            [phoneAlert addButtonWithTitle:@"Text"];
+        }
+        if (p.email && ![p.email isEqualToString:@""]) {
+            [phoneAlert addButtonWithTitle:@"Email"];
+        }
+        if ((!p.email || [p.email isEqualToString:@""]) && (!p.phone || [p.phone isEqualToString:@""])) {
+            phoneAlert.message = @"This person has no public information listed";
+        } else {
+            [phoneAlert addButtonWithTitle:@"Add to Contacts"];
+        }
     }
-    if (p.email && ![p.email isEqualToString:@""]) {
-        [phoneAlert addButtonWithTitle:@"Email"];
+    @catch (NSException *exception) {
+        phoneAlert.message = @"There has been an API communication error. Please try again.";
     }
-    if ((!p.email || [p.email isEqualToString:@""]) && (!p.phone || [p.phone isEqualToString:@""])) {
-        phoneAlert.message = @"This person has no public information listed";
-    } else {
-        [phoneAlert addButtonWithTitle:@"Add to Contacts"];
+    @finally {
+        [phoneAlert show];
     }
-    [phoneAlert show];
+
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if ([alertView.title isEqualToString:@"Invalid Search"] || !super.forSegue)
+        return;
     Person *p = super.forSegue;
     NSString *phoneNumber = [@"tel://" stringByAppendingString:p.phone];
     NSString *textNumber = [@"sms://" stringByAppendingString:p.phone];
@@ -345,11 +356,17 @@ static ABAddressBookRef addressBook;
             // there is a keybaord dismiss tap recognizer present
             // ((UIGestureRecognizer *) self.view.gestureRecognizers[0]).enabled = NO;
         }
+        
         float width = [[UIScreen mainScreen] bounds].size.width;
         float height = [[UIScreen mainScreen] bounds].size.height;
         UIView *grayCover = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
         [grayCover setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]];
         [grayCover addGestureRecognizer:cancelTouches];
+        
+        UISwipeGestureRecognizer *swipeToCancel = [[UISwipeGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
+        swipeToCancel.direction = UISwipeGestureRecognizerDirectionLeft;
+        [grayCover addGestureRecognizer:swipeToCancel];
+        
         [UIView transitionWithView:self.view duration:1
                            options:UIViewAnimationOptionShowHideTransitionViews
                         animations:^ { [self.view addSubview:grayCover]; }
