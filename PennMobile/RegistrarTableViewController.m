@@ -71,7 +71,11 @@
             }
         }
         Course *new = [[Course alloc] init];
-        new.identifier = courseData[@"_id"];
+        /* Unused
+        NSString *term = courseData[@"term"];
+        long pcrYear = [[courseData[@"term"] substringToIndex:(term.length -1)] intValue] - 1;
+        NSString *semester = [term substringFromIndex:term.length - 1];
+         */
         new.activity = courseData[@"activity_description"];
         new.dept = courseData[@"course_department"];
         new.title = [courseData[@"course_title"] capitalizedString];
@@ -83,6 +87,7 @@
         new.roomBum = courseData[@"roomNumber"];
         new.sectionID = courseData[@"section_id_normalized"];
         new.primaryProf = courseData[@"primary_instructor"];
+        new.identifier = [NSString stringWithFormat:@"%@-%@", new.dept, new.courseNum];
         if (courseData[@"meetings"] && ((NSArray *)courseData[@"meetings"]).count > 0) {
             NSArray *mtgs = ((NSArray *)courseData[@"meetings"]);
             int c;
@@ -161,9 +166,18 @@
     return super.objects.count;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     super.forSegue = super.objects[indexPath.row];
     selected = indexPath;
-    [self performSegueWithIdentifier:@"detail" sender:self];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        ((Course *) super.forSegue).review = [PCRAggregator getAverageReviewFor:((Course *)super.forSegue)];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self performSegueWithIdentifier:@"detail" sender:self];
+        });
+    });
 }
 - (void)queryHandler:(NSString *)search {
     [self importData:[self searchFor:search split:YES]];
@@ -262,6 +276,10 @@
         UIView *grayCover = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
         [grayCover setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]];
         [grayCover addGestureRecognizer:cancelTouches];
+        
+        UISwipeGestureRecognizer *swipeToCancel = [[UISwipeGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
+        swipeToCancel.direction = UISwipeGestureRecognizerDirectionLeft;
+        [grayCover addGestureRecognizer:swipeToCancel];
         [UIView transitionWithView:self.view duration:1
                            options:UIViewAnimationOptionShowHideTransitionViews
                         animations:^ { [self.view addSubview:grayCover]; }

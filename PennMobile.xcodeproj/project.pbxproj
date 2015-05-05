@@ -21,6 +21,7 @@
 		1935F1121A37EFF300057667 /* iPhone 6 Plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1935F10C1A37EFF300057667 /* iPhone 6 Plus@3x.png */; };
 		1935F1131A37EFF300057667 /* iPhone 6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1935F10D1A37EFF300057667 /* iPhone 6@2x.png */; };
 		1937623419C2882A007158E6 /* venue_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1937623319C2882A007158E6 /* venue_sample.txt */; };
+		193DF1A81ADDA25600B1532E /* PLAggregator.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DF1A71ADDA25600B1532E /* PLAggregator.m */; };
 		19432D0E1A71C656003E9953 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D0C1A71C656003E9953 /* Bolts.framework */; };
 		19432D0F1A71C656003E9953 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D0D1A71C656003E9953 /* Parse.framework */; };
 		19432D1C1A71C6CD003E9953 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D101A71C6CD003E9953 /* AudioToolbox.framework */; };
@@ -63,7 +64,7 @@
 		1972EEB31A8192E600362B6C /* JOES.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEB21A8192E600362B6C /* JOES.PNG */; };
 		1978259619EDEE1F00284799 /* labs.png in Resources */ = {isa = PBXBuildFile; fileRef = 1978259519EDEE1F00284799 /* labs.png */; };
 		1978259A19EDFAB400284799 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978259919EDFAB400284799 /* AboutViewController.m */; };
-		1979A72C1A0C586000E1B7EB /* PCRAggregaotr.m in Sources */ = {isa = PBXBuildFile; fileRef = 1979A72B1A0C586000E1B7EB /* PCRAggregaotr.m */; };
+		1979A72C1A0C586000E1B7EB /* PCRAggregator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1979A72B1A0C586000E1B7EB /* PCRAggregator.m */; };
 		1979A72F1A0C595C00E1B7EB /* PCReview.m in Sources */ = {isa = PBXBuildFile; fileRef = 1979A72E1A0C595C00E1B7EB /* PCReview.m */; };
 		197DBAE61A6F54DD00B0707C /* 34-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAE31A6F54DD00B0707C /* 34-Blue.png */; };
 		197DBAE71A6F54DD00B0707C /* DP-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 197DBAE41A6F54DD00B0707C /* DP-Blue.png */; };
@@ -165,6 +166,8 @@
 		1935F10C1A37EFF300057667 /* iPhone 6 Plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 6 Plus@3x.png"; sourceTree = "<group>"; };
 		1935F10D1A37EFF300057667 /* iPhone 6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 6@2x.png"; sourceTree = "<group>"; };
 		1937623319C2882A007158E6 /* venue_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = venue_sample.txt; sourceTree = "<group>"; };
+		193DF1A61ADDA25600B1532E /* PLAggregator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAggregator.h; sourceTree = "<group>"; };
+		193DF1A71ADDA25600B1532E /* PLAggregator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAggregator.m; sourceTree = "<group>"; };
 		19432D0C1A71C656003E9953 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		19432D0D1A71C656003E9953 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		19432D101A71C6CD003E9953 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -218,8 +221,8 @@
 		1978259519EDEE1F00284799 /* labs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labs.png; sourceTree = "<group>"; };
 		1978259819EDFAB400284799 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		1978259919EDFAB400284799 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
-		1979A72A1A0C586000E1B7EB /* PCRAggregaotr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCRAggregaotr.h; sourceTree = "<group>"; };
-		1979A72B1A0C586000E1B7EB /* PCRAggregaotr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCRAggregaotr.m; sourceTree = "<group>"; };
+		1979A72A1A0C586000E1B7EB /* PCRAggregator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCRAggregator.h; sourceTree = "<group>"; };
+		1979A72B1A0C586000E1B7EB /* PCRAggregator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCRAggregator.m; sourceTree = "<group>"; };
 		1979A72D1A0C595C00E1B7EB /* PCReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCReview.h; sourceTree = "<group>"; };
 		1979A72E1A0C595C00E1B7EB /* PCReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCReview.m; sourceTree = "<group>"; };
 		197DBAE31A6F54DD00B0707C /* 34-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "34-Blue.png"; sourceTree = "<group>"; };
@@ -521,8 +524,10 @@
 		1979A7291A0C584800E1B7EB /* PCR */ = {
 			isa = PBXGroup;
 			children = (
-				1979A72A1A0C586000E1B7EB /* PCRAggregaotr.h */,
-				1979A72B1A0C586000E1B7EB /* PCRAggregaotr.m */,
+				193DF1A61ADDA25600B1532E /* PLAggregator.h */,
+				193DF1A71ADDA25600B1532E /* PLAggregator.m */,
+				1979A72A1A0C586000E1B7EB /* PCRAggregator.h */,
+				1979A72B1A0C586000E1B7EB /* PCRAggregator.m */,
 				1979A72D1A0C595C00E1B7EB /* PCReview.h */,
 				1979A72E1A0C595C00E1B7EB /* PCReview.m */,
 			);
@@ -936,7 +941,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */,
-				1979A72C1A0C586000E1B7EB /* PCRAggregaotr.m in Sources */,
+				1979A72C1A0C586000E1B7EB /* PCRAggregator.m in Sources */,
 				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
 				19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */,
 				19943A011AC2316B00B489A8 /* DirectionView.m in Sources */,
@@ -952,6 +957,7 @@
 				1971E22F1AA68B9900CD2404 /* AuthLoginViewController.m in Sources */,
 				1944CD3519EDE20B00DBF9EE /* RegistrarTableViewController.m in Sources */,
 				1979A72F1A0C595C00E1B7EB /* PCReview.m in Sources */,
+				193DF1A81ADDA25600B1532E /* PLAggregator.m in Sources */,
 				195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */,
 				19EDDC9F19D252B80088C4DC /* DirectoryTableViewController.m in Sources */,
 				1978259A19EDFAB400284799 /* AboutViewController.m in Sources */,
