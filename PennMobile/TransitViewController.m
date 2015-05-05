@@ -109,16 +109,9 @@
 -(void)bounceSearchbars {
     [_searchScrollView setContentOffset:CGPointMake(0, 30) animated:YES];
     [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(unbounceSearchbars) userInfo:nil repeats:NO];
-    
-//    NSLog(@"scroll bounce");
-//    CGPoint bottomOffset = CGPointMake(0, _searchScrollView.contentSize.height - _searchScrollView.bounds.size.height);
-//    [_searchScrollView setContentOffset:bottomOffset animated:YES];
 }
 -(void)unbounceSearchbars {
     [_searchScrollView setContentOffset:CGPointMake(0, 44) animated:YES];
-    //    NSLog(@"scroll bounce");
-    //    CGPoint bottomOffset = CGPointMake(0, _searchScrollView.contentSize.height - _searchScrollView.bounds.size.height);
-    //    [_searchScrollView setContentOffset:bottomOffset animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -206,7 +199,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     for (int i = 0; i < stops.count; i++) {
         arr[i] = CLLocationCoordinate2DMake([stops[i][@"latitude"] doubleValue], [stops[i][@"longitude"] doubleValue]);
     }
-    return LocationArrayMake(arr, stops.count);
+    return LocationArrayMake(arr, (int)stops.count);
 }
 
 // now used instead
@@ -215,7 +208,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     for (int i = 0; i < stops.count; i++) {
         arr[i] = CLLocationCoordinate2DMake([stops[i][@"Latitude"] doubleValue], [stops[i][@"Longitude"] doubleValue]);
     }
-    return LocationArrayMake(arr, stops.count);
+    return LocationArrayMake(arr, (int)stops.count);
 }
 - (void)parseData:(NSDictionary *)fromAPI trueStart:(CLLocationCoordinate2D)trueStart trueEnd:(CLLocationCoordinate2D)trueEnd {
     CLLocationCoordinate2D end, from;
@@ -271,7 +264,15 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 }
 
 - (void)displayRouteUI:(NSDictionary *)fromAPI {
-    NSString *destTitle = ((id<MKAnnotation>)_mapView.selectedAnnotations[0]).title;
+    NSString *destTitle;
+    for (id<MKAnnotation> annotation in _mapView.annotations) {
+        MKAnnotationView* view = [_mapView viewForAnnotation:annotation];
+        TransitMKPointAnnotation *pointAnnotation = (TransitMKPointAnnotation *)view.annotation;
+        if (![annotation isKindOfClass:[MKUserLocation class]] && [pointAnnotation isDest]) {
+            destTitle = pointAnnotation.title;
+            break;
+        }
+    }
     
     NSNumber *endd  = fromAPI[@"walkingDistanceAfter"];
     NSNumber *startd  = fromAPI[@"walkingDistanceBefore"];
@@ -380,12 +381,9 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 
 - (void)plotResults {
     [_mapView removeAnnotations:_mapView.annotations];
-//    MKPointAnnotation *temp;
-    // temp
     TransitMKPointAnnotation *temp;
     if (results.count > 0) {
         for (long i = results.count - 1; i >= 0; i--) {
-//            temp = [[MKPointAnnotation alloc] init];
             temp = [[TransitMKPointAnnotation alloc] init];
             temp.coordinate = ((MKMapItem *) results[i]).placemark.coordinate;
             temp.title = ((MKMapItem *) results[i]).name;
@@ -413,14 +411,12 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 }
  */
 
-- (void)addGoogleAnnotations:(NSArray *)res isDest:(BOOL)isDest { // TODO is this even being called
-    //    MKPointAnnotation *temp;
+- (void)addGoogleAnnotations:(NSArray *)res isDest:(BOOL)isDest {
     TransitMKPointAnnotation *temp;
     if (res.count > 0) {
         for (long i = res.count - 1; i >= 0; i--) {
             temp = (TransitMKPointAnnotation *)[GoogleMapsSearcher makeAnnotationForGoogleResult:res[0]];
             temp.isDest = isDest;
-            NSLog(@"> in addGoogleAnnotations, set temp.isDest to %d (should be %d)", temp.isDest, isDest);
             // these values were originally store in a local hashmap but wasn't worth it
             [_mapView addAnnotation:temp];
         }
@@ -584,33 +580,24 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 #pragma mark - MKMapViewDelegate
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
-    
     if ([annotation.title isEqualToString:@"Current Location"]) {
         return nil; // use default blue dot
     }
     
-    NSLog(@"annotation: %@", annotation.title);
-    // TODO
     MKPinAnnotationView *pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
-    
-    if ([annotation isKindOfClass:[TransitMKPointAnnotation class]]) {
-        NSLog(@"ajfsdkfjdklsjflkasjfdl");
-    }
     
     if ([(TransitMKPointAnnotation *)annotation isDest]) {
         NSLog(@"> IS DEST");
-        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         pinView.enabled = YES;
         pinView.canShowCallout = YES;
+        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         pinView.pinColor = MKPinAnnotationColorRed;
-        // TODO color?
         return pinView;
     } else {
         NSLog(@"> IS SRC");
-        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         pinView.enabled = YES;
         pinView.canShowCallout = YES;
+        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeContactAdd];
         pinView.pinColor = MKPinAnnotationColorGreen;
         return pinView;
     }
@@ -649,16 +636,26 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    TransitMKPointAnnotation *annotationView = (TransitMKPointAnnotation *)view;
-    CLLocationCoordinate2D dest = view.annotation.coordinate;
-    CLLocationCoordinate2D src; // TODO set src!!
-    if ([_sourceSearchBar text].length > 0) { // TODO this is a bad check
-        // TODO: how to get coordinates from source? should set it first....
-    } else {
-        src = locationManager.location.coordinate;
+    TransitMKPointAnnotation *annotation = (TransitMKPointAnnotation *)view.annotation;
+    if ([annotation isDest]) { // destination pin
+        destFromPin = view.annotation.coordinate;
     }
-    [self mapView:mapView clearAllPinsExcept:view.annotation];
-    [self queryHandler:src destination:dest];
+    if ([_sourceSearchBar text].length <= 0) { // default to user location
+        srcFromPin = locationManager.location.coordinate;
+    } else if (![annotation isDest]) {
+        srcFromPin = view.annotation.coordinate;
+    }
+//    [self mapView:mapView clearAllPinsExcept:view.annotation];
+    
+    if (!CLLocationCoordinate2DIsValid(destFromPin)) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Route Found" message:@"Please make sure to set a destination." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [alert show];
+        });
+        return;
+    }
+    [self queryHandler:srcFromPin destination:destFromPin];
 }
 
 - (void)mapView:(MKMapView *)mapView clearAllPinsExcept:(id<MKAnnotation>)annot {
