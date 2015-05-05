@@ -13,6 +13,6 @@
     UITapGestureRecognizer *cancelTouches;
 }
 
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
+
 @property NSString *url;
 @end

@@ -194,6 +194,8 @@
         if (inQuestion.professors.count > 1 && inQuestion.primaryProf && ![inQuestion.primaryProf isEqualToString:@""]) {
             cell.labelProf.text = inQuestion.primaryProf;
         }
+    } else {
+        cell.labelProf.text = @"No Professor Listed";
     }
     cell.labelSection.text = [NSString stringWithFormat:@"Section %@ - %@", inQuestion.sectionNum, inQuestion.activity];
     //CGRect cellFrame = cell.textLabel.frame;

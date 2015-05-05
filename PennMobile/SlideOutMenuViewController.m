@@ -25,12 +25,15 @@ static SlideOutMenuViewController *instance;
     [super viewDidLoad];
     instance = self;
     // Do any additional setup after loading the view.
-    _views = @[@"Dining", @"Directory", @"Courses", @"Transit", @"theDP", @"UTB", @"34th St", @"Events@Penn", @"About", @"Support"];
+    _views = @[@"Dining", @"Directory", @"Courses", @"Transit", @"News", @"About", @"Support"];
     UITapGestureRecognizer *labsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLabsURL:)];
     [_labsImage addGestureRecognizer:labsTap];
     UISwipeGestureRecognizer *returnSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(returnToView:)];
     returnSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:returnSwipe];
+    
+    // disable scrolling when all rows are showing
+    _tableView.alwaysBounceVertical = NO;
 }
 - (IBAction)returnToView:(id)sender {
     [self performSegueWithIdentifier:currentView sender:self];
@@ -140,16 +143,9 @@ static SlideOutMenuViewController *instance;
         nav.grayedOut = NO;
     }
     NewsViewController *t = ((UINavigationController *)nav).viewControllers[0];
-    if ([segue.identifier isEqualToString:@"theDP"]) {
+    if ([segue.identifier isEqualToString:@"News"]) {
         [t setUrl:@"http://www.thedp.com/"];
-    } else if ([segue.identifier isEqualToString:@"UTB"]) {
-        [t setUrl:@"http://www.thedp.com/blog/under-the-button"];
-    } else if ([segue.identifier isEqualToString:@"Events@Penn"]) {
-        [t setUrl:@"http://eventsatpenn.com/"];
-    } else if ([segue.identifier isEqualToString:@"34th St"]) {
-        [t setUrl:@"http://www.34st.com/"];
     }
-
 }
 
 
