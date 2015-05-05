@@ -30,6 +30,8 @@
     MKPolylineRenderer *walkFromView;
     NSDictionary *stopMap;
     NSTimer *searchbarBounceTimer;
+    CLLocationCoordinate2D srcFromPin;
+    CLLocationCoordinate2D destFromPin;
 }
 
 typedef struct LocationArray {
