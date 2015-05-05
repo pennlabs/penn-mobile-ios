@@ -62,6 +62,10 @@
     [_searchScrollView addGestureRecognizer:searchScrollViewHideSwipe];
     [_searchScrollView setTranslatesAutoresizingMaskIntoConstraints:YES];
     
+    // reset pins for source and destination
+    destFromPin = kCLLocationCoordinate2DInvalid;
+    srcFromPin = kCLLocationCoordinate2DInvalid;
+    
     // Do any additional setup after loading the view.
 }
 
@@ -394,22 +398,6 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     }
     
 }
-/*
-- (void)addGoogleAnnotations:(NSArray *)res {
-    MKPointAnnotation *temp;
-    if (res.count > 0) {
-        for (long i = res.count - 1; i >= 0; i--) {
-            temp = [GoogleMapsSearcher makeAnnotationForGoogleResult:res[0]];
-            // these values were originally store in a local hashmap but wasn't worth it
-            [_mapView addAnnotation:temp];
-        }
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-
-        [_mapView showAnnotations:_mapView.annotations animated:YES];
-        [_mapView selectAnnotation:temp animated:YES];
-    }
-}
- */
 
 - (void)addGoogleAnnotations:(NSArray *)res isDest:(BOOL)isDest {
     TransitMKPointAnnotation *temp;
@@ -430,76 +418,6 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 /**
  * The majority of this code is from Apple's samples. Just a heads up
  **/
-/*
-- (void)search:(NSString *)query {
-    MKCoordinateRegion newRegion;
-    newRegion.center.latitude = locationManager.location.coordinate.latitude;
-    newRegion.center.longitude = locationManager.location.coordinate.longitude;
-    
-    // setup the area spanned by the map region:
-    // we use the delta values to indicate the desired zoom level of the map,
-    //      (smaller delta values corresponding to a higher zoom level)
-    //
-    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.longitudeDelta = 0.109863;
-
-    
-    /* OLD
-    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
-    
-    request.naturalLanguageQuery = query;
-    request.region = newRegion;
-    
-    MKLocalSearchCompletionHandler completionHandler = ^(MKLocalSearchResponse *response, NSError *error) {
-        if (error != nil) {
-            NSString *errorStr = [[error userInfo] valueForKey:NSLocalizedDescriptionKey];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not find any results."
-                                                            message:errorStr
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-        }
-        else {
-            results = [response mapItems];
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [self plotResults];
-            // used for later when setting the map's region in "prepareForSegue"
-            _boundingRegion = response.boundingRegion;
-        }
-        //[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    };
-    MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:request];
-    [localSearch startWithCompletionHandler:completionHandler];
-     * --- END OLD ---- */
-    /*NSArray *res = [GoogleMapsSearcher getResultsFrom:[GoogleMapsSearcher generateURLRequest:_mapView.region.center withRadius:SEARCH_RADIUS andKeyword:query]];
-    if (res.count > 0 && [((NSString *)res[0][@"name"]) rangeOfString:API_ERROR_DELIM].location != NSNotFound) {
-        // there was an error
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Google Maps API Error"
-                                                        message:res[0]
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    } else if (res.count == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not find any results"
-                                                        message:@"Please try a different query."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }
-    else {
-        [self addGoogleAnnotations:res];
-        // used for later when setting the map's region in "prepareForSegue"
-       // _boundingRegion = response.boundingRegion;
-    }
-    [_destinationSearchBar resignFirstResponder];
-}
-*/
-
 - (void)searchFrom:(NSString *)source to:(NSString *)dest {
     MKCoordinateRegion newRegion;
     newRegion.center.latitude = locationManager.location.coordinate.latitude; // TODO: change this based on start?
@@ -587,14 +505,12 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     MKPinAnnotationView *pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
     
     if ([(TransitMKPointAnnotation *)annotation isDest]) {
-        NSLog(@"> IS DEST");
         pinView.enabled = YES;
         pinView.canShowCallout = YES;
         pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         pinView.pinColor = MKPinAnnotationColorRed;
         return pinView;
     } else {
-        NSLog(@"> IS SRC");
         pinView.enabled = YES;
         pinView.canShowCallout = YES;
         pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeContactAdd];
@@ -603,20 +519,6 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     }
     
     return nil;
-    /*
-     MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotation.title];
-     if (!annotationView && ![annotation isKindOfClass:[MKUserLocation class] ]) {
-     annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotation.title];
-     }
-     if ([annotationView isKindOfClass:[MKPinAnnotationView class]]) {
-     annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-     annotationView.enabled = YES;
-     annotationView.canShowCallout = YES;
-     
-     return annotationView;
-     }
-     return nil;
-    */
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
@@ -698,6 +600,12 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     if (searchText.length == 0) {
         [self mapViewClearAllPinsNotUser:_mapView];
         [self hideRouteUI];
+        // reset src and dest
+        if (searchBar.tag == 2) { // destinationSearchBar
+            destFromPin = kCLLocationCoordinate2DInvalid;
+        } else if (searchBar.tag == 1) { // sourceSearchBar
+            srcFromPin = kCLLocationCoordinate2DInvalid;
+        }
     }
 }
 
