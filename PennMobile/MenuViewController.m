@@ -85,6 +85,18 @@
             return @"";
     }
 }
+
+- (void)pickerView:(UIPickerView *)pickerView
+      didSelectRow:(NSInteger)row
+       inComponent:(NSInteger)component {
+    if (component == 0) { // weekday picker
+        // update the meals picker to show only valid meals for the selected day
+        NSInteger mealRow = [mealPicker selectedRowInComponent:1];
+        _source.dataForNextView = [_source switchMeal:dates[row] meal:[_source stringTimeToEnum:_source.mealsServed[mealRow] ]];
+        [pickerView reloadComponent:1];
+    }
+}
+
 - (void)confirmChooser:(id)sender {
     NSInteger dateRow = [mealPicker selectedRowInComponent:0];
     NSInteger mealRow = [mealPicker selectedRowInComponent:1];
@@ -112,6 +124,7 @@
 - (void)cancelChooser:(id)sender {
     [_dummyText resignFirstResponder];
 }
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
