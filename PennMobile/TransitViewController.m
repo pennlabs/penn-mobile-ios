@@ -56,7 +56,7 @@
     _searchScrollView.pagingEnabled = NO;
     _searchScrollView.scrollEnabled = NO;
     _searchScrollView.bounces = YES;
-    _searchScrollView.contentSize = CGSizeMake(375, 44);
+    _searchScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 44);
     [_searchScrollView setContentOffset:CGPointMake(0, 44) animated:NO]; // start by showing only Destination bar
     [_searchScrollView addSubview:_sourceSearchBar];
     [_searchScrollView addSubview:_destinationSearchBar];
@@ -93,7 +93,7 @@
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.1];
         [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-        _searchScrollView.frame = CGRectMake(0, 0, 375, 88);
+        _searchScrollView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 88);
         [UIView commitAnimations];
     });
 }
@@ -103,7 +103,7 @@
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.1];
         [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-        _searchScrollView.frame = CGRectMake(0, 0, 375, 44);
+        _searchScrollView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44);
         [UIView commitAnimations];
         
         // reset to show destination search bar
