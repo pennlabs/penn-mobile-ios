@@ -238,7 +238,7 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" opaque="NO" contentMode="scaleToFill" id="top-Iy-CP9">
-                            <rect key="frame" x="136" y="6" width="104" height="33"/>
+                            <rect key="frame" x="135.5" y="5.5" width="104" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Courses" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="7z9-Da-Y9z">
@@ -843,7 +843,7 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="I0f-rB-bDY">
-                            <rect key="frame" x="121" y="6" width="78" height="33"/>
+                            <rect key="frame" x="121" y="5.5" width="78" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dining" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="HKO-aV-UJ9">
@@ -941,7 +941,7 @@
                     <navigationItem key="navigationItem" id="Cga-JQ-GD3">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="q4X-Q5-aGh">
-                            <rect key="frame" x="113" y="6" width="150" height="33"/>
+                            <rect key="frame" x="112.5" y="5.5" width="150" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6S-Hq-caU">
@@ -1175,7 +1175,7 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="SC1-Tn-DTM">
-                            <rect key="frame" x="123" y="6" width="130" height="33"/>
+                            <rect key="frame" x="122.5" y="5.5" width="130" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Directory" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="8a0-cN-wF3">
@@ -1337,7 +1337,7 @@
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="1Ba-tz-L4s">
-                            <rect key="frame" x="110" y="6" width="156" height="33"/>
+                            <rect key="frame" x="109.5" y="5.5" width="156" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="LVv-A4-wmD">
@@ -2034,7 +2034,7 @@ and the rest of Labs + UA</string>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="1VT-fd-RAz">
-                            <rect key="frame" x="122" y="6" width="132" height="33"/>
+                            <rect key="frame" x="121.5" y="5.5" width="132" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="News" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="qeJ-PS-X32">
@@ -2050,7 +2050,6 @@ and the rest of Labs + UA</string>
                     <connections>
                         <outlet property="loadingIndicator" destination="1Ga-1h-gXQ" id="2ZK-jy-kfO"/>
                         <outlet property="newsSwitcher" destination="Bn6-eJ-4A7" id="ZWw-Da-F7O"/>
-                        <outlet property="toggle" destination="CC1-1n-vAK" id="tGA-nx-HHO"/>
                         <outlet property="webView" destination="85F-Pf-nez" id="oWp-oG-JuP"/>
                         <segue destination="ez7-pS-rfX" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="lrp-fY-iJX"/>
                     </connections>
