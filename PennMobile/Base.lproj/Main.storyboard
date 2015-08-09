@@ -1783,14 +1783,14 @@ and the rest of Labs + UA</string>
                                             <segue destination="oVB-9K-p2y" kind="custom" identifier="About" customClass="ECSlidingSegue" id="whA-eo-xpj"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Support" id="QOd-AA-t6M">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Campus Help" id="QOd-AA-t6M">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QOd-AA-t6M" id="lBm-Fa-a0A">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="iqI-Ds-NHl" kind="custom" identifier="Support" customClass="ECSlidingSegue" id="PeN-SV-7eU"/>
+                                            <segue destination="iqI-Ds-NHl" kind="custom" identifier="Campus Help" customClass="ECSlidingSegue" id="PeN-SV-7eU"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
