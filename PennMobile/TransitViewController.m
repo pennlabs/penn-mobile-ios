@@ -254,7 +254,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         LocationArray busRoute = [self gatherRoutePoints:path];
         NSArray *stopAnnotations = [self getStopAnnotations:path];
         if (walkToRoute.size > 0) {
-            busRoute.coords[0] = walkToRoute.coords[walkFromRoute.size - 1];
+            busRoute.coords[0] = walkToRoute.coords[walkToRoute.size - 1];
         }
         if (walkFromRoute.size > 0) {
             busRoute.coords[busRoute.size -1] = walkFromRoute.coords[0];
@@ -334,73 +334,86 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
 
 #pragma mark - Google Maps Polyline Finder
 
-// taken from https://github.com/kadirpekel/MapWithRoutes/blob/master/Classes/MapView.m
-// LOL
 -(LocationArray) calculateRoutesFrom:(CLLocationCoordinate2D) f to: (CLLocationCoordinate2D) t {
     NSString* saddr = [NSString stringWithFormat:@"%f,%f", f.latitude, f.longitude];
     NSString* daddr = [NSString stringWithFormat:@"%f,%f", t.latitude, t.longitude];
     
-    NSString* apiUrlStr = [NSString stringWithFormat:@"http://maps.google.com/maps?output=dragdir&saddr=%@&daddr=%@&mode=walking", saddr, daddr];
+    NSString* apiUrlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&mode=walking", saddr, daddr];
     NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
     NSLog(@"api url: %@", apiUrl);
     NSError *error;
-    NSString *apiResponse = [NSString stringWithContentsOfURL:apiUrl encoding:NSUTF8StringEncoding error:&error];
+    NSData *apiResponse = [NSData dataWithContentsOfURL:apiUrl options:NSDataReadingUncached error:&error];
     if (error) {
         [NSException raise:@"Error in point parsing." format:@""];
     }
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"points:\\\"([^\\\"]*)\\\"" options:0 error:NULL];
-    NSTextCheckingResult *match = [regex firstMatchInString:apiResponse options:0 range:NSMakeRange(0, [apiResponse length])];
-    NSString *encodedPoints = [apiResponse substringWithRange:[match rangeAtIndex:1]];
-    return [self decodePolyLine:[encodedPoints mutableCopy]];
+//    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"points:\\\"([^\\\"]*)\\\"" options:0 error:NULL];
+//    NSTextCheckingResult *match = [regex firstMatchInString:apiResponse options:0 range:NSMakeRange(0, [apiResponse length])];
+//    NSString *encodedPoints = [apiResponse substringWithRange:[match rangeAtIndex:1]];
+    return [self decodePolyLine:[apiResponse mutableCopy]];
 }
 
-// taken from https://github.com/kadirpekel/MapWithRoutes/blob/master/Classes/MapView.m
-// LOL
--(LocationArray)decodePolyLine:(NSMutableString *)encoded {
-    [encoded replaceOccurrencesOfString:@"\\\\" withString:@"\\"
-                                options:NSLiteralSearch
-                                  range:NSMakeRange(0, [encoded length])];
-    NSInteger len = [encoded length];
-    NSInteger index = 0;
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    NSInteger lat=0;
-    NSInteger lng=0;
-    while (index < len) {
-        NSInteger b;
-        NSInteger shift = 0;
-        NSInteger result = 0;
-        do {
-            b = [encoded characterAtIndex:index++] - 63;
-            result |= (b & 0x1f) << shift;
-            shift += 5;
-        } while (b >= 0x20);
-        NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
-        lat += dlat;
-        shift = 0;
-        result = 0;
-        do {
-            b = [encoded characterAtIndex:index++] - 63;
-            result |= (b & 0x1f) << shift;
-            shift += 5;
-        } while (b >= 0x20);
-        NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
-        lng += dlng;
-        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
-        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
-        // printf("[%f,", [latitude doubleValue]);
-        // printf("%f]", [longitude doubleValue]);
-        CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
-        [array addObject:loc];
+// http://stackoverflow.com/questions/31090531/did-google-maps-api-just-retire-the-dragdir-parameter
+-(LocationArray)decodePolyLine:(NSData *)encoded {
+//    [encoded replaceOccurrencesOfString:@"\\\\" withString:@"\\"
+//                                options:NSLiteralSearch
+//                                  range:NSMakeRange(0, [encoded length])];
+//    NSInteger len = [encoded length];
+//    NSInteger index = 0;
+//    NSMutableArray *array = [[NSMutableArray alloc] init];
+//    NSInteger lat=0;
+//    NSInteger lng=0;
+//    while (index < len) {
+//        NSInteger b;
+//        NSInteger shift = 0;
+//        NSInteger result = 0;
+//        do {
+//            b = [encoded characterAtIndex:index++] - 63;
+//            result |= (b & 0x1f) << shift;
+//            shift += 5;
+//        } while (b >= 0x20);
+//        NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+//        lat += dlat;
+//        shift = 0;
+//        result = 0;
+//        do {
+//            b = [encoded characterAtIndex:index++] - 63;
+//            result |= (b & 0x1f) << shift;
+//            shift += 5;
+//        } while (b >= 0x20);
+//        NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+//        lng += dlng;
+//        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
+//        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
+//        // printf("[%f,", [latitude doubleValue]);
+//        // printf("%f]", [longitude doubleValue]);
+//        CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
+//        [array addObject:loc];
+//    }
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:encoded options:NSJSONReadingAllowFragments error:&error];
+    if (error) {
+        [NSException raise:@"Error in point parsing." format:@""];
     }
+    @try {
+        json = json[@"routes"][0][@"legs"][0];
+    }
+    @catch (NSException *exception) {
+        [NSException raise:@"Error in point parsing." format:@""];
+    }
+    NSArray *steps = json[@"steps"];
+    
     /** we need to get this into a fucking C array. So stupid
      * So, because in the previous for loop we don't know the end size of the array
      * beforehand, we must only convert to c array after the fact. 
      **/
-    CLLocationCoordinate2D *arr = malloc(sizeof(CLLocationCoordinate2D) * array.count);
-    for (int i = 0; i < array.count; i++) {
-        arr[i] = ((CLLocation *) [array objectAtIndex:i]).coordinate;
+    CLLocationCoordinate2D *arr = malloc(sizeof(CLLocationCoordinate2D) * (steps.count + 1));
+    CLLocationCoordinate2D start = CLLocationCoordinate2DMake([json[@"start_location"][@"lat"] floatValue], [json[@"start_location"][@"lng"] floatValue]);
+    arr[0] = start;
+    for (int i = 0; i < steps.count; i++) {
+        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([steps[i][@"end_location"][@"lat"] floatValue], [steps[i][@"end_location"][@"lng"] floatValue]);
+        arr[i+1] = coord;
     }
-    LocationArray returned = LocationArrayMake(arr, array.count);
+    LocationArray returned = LocationArrayMake(arr, steps.count + 1);
     return returned;
 }
 
