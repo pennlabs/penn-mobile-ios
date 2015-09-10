@@ -22,8 +22,6 @@
 		1935F1131A37EFF300057667 /* iPhone 6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1935F10D1A37EFF300057667 /* iPhone 6@2x.png */; };
 		1937623419C2882A007158E6 /* venue_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1937623319C2882A007158E6 /* venue_sample.txt */; };
 		193DF1A81ADDA25600B1532E /* PLAggregator.m in Sources */ = {isa = PBXBuildFile; fileRef = 193DF1A71ADDA25600B1532E /* PLAggregator.m */; };
-		19432D0E1A71C656003E9953 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D0C1A71C656003E9953 /* Bolts.framework */; };
-		19432D0F1A71C656003E9953 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D0D1A71C656003E9953 /* Parse.framework */; };
 		19432D1C1A71C6CD003E9953 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D101A71C6CD003E9953 /* AudioToolbox.framework */; };
 		19432D1D1A71C6CD003E9953 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D111A71C6CD003E9953 /* CFNetwork.framework */; };
 		19432D1E1A71C6CD003E9953 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19432D121A71C6CD003E9953 /* CoreGraphics.framework */; };
@@ -91,7 +89,6 @@
 		19B6BC401A159CEC002BFEA5 /* News.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC3E1A159CEC002BFEA5 /* News.png */; };
 		19B6BC411A159CEC002BFEA5 /* News-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC3F1A159CEC002BFEA5 /* News-selected.png */; };
 		19B6BC431A159D71002BFEA5 /* AGaramond.otf in Resources */ = {isa = PBXBuildFile; fileRef = 19B6BC421A159D3B002BFEA5 /* AGaramond.otf */; };
-		19B7EB5D1A788D6600ADE2E8 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B7EB5C1A788D6600ADE2E8 /* ParseCrashReporting.framework */; };
 		19B7EB601A788EB600ADE2E8 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B7EB5F1A788EB600ADE2E8 /* libstdc++.6.dylib */; };
 		19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B8543B1AA6AA5B002564D9 /* AppDelegate.m */; };
 		19B8543E1AA6ADDD002564D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B8543D1AA6ADDD002564D9 /* main.m */; };
@@ -338,13 +335,10 @@
 				19432D231A71C6CD003E9953 /* QuartzCore.framework in Frameworks */,
 				19432D241A71C6CD003E9953 /* Security.framework in Frameworks */,
 				19432D251A71C6CD003E9953 /* Social.framework in Frameworks */,
-				19B7EB5D1A788D6600ADE2E8 /* ParseCrashReporting.framework in Frameworks */,
 				19432D261A71C6CD003E9953 /* StoreKit.framework in Frameworks */,
 				19432D271A71C6CD003E9953 /* SystemConfiguration.framework in Frameworks */,
 				19C62D791A2EAFBC00AC59F5 /* AddressBook.framework in Frameworks */,
 				19C62D7A1A2EAFBC00AC59F5 /* AddressBookUI.framework in Frameworks */,
-				19432D0F1A71C656003E9953 /* Parse.framework in Frameworks */,
-				19432D0E1A71C656003E9953 /* Bolts.framework in Frameworks */,
 				EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */,
 				F248D02664387BE000890A72 /* libPods.a in Frameworks */,
 			);
