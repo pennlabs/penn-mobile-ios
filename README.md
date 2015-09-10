@@ -1,11 +1,21 @@
-penn-mobile-ios
+PennMobile iOS
 ===============
-Official University of Pennsylvania iOS App
 
-Version 1.1.2: bug fixes and stability updates
+Official University of Pennsylvania iOS App, created by Penn Labs in cooperation with the UA.
 
-Code needs to be refactored and cleaned before open-sourcing.
+[PennMobile App Store](https://itunes.apple.com/us/app/pennmobile/id944829399)
 
-Currently maintained by [Sacha Best](https://github.com/sachabest)
+## Features
+
+* Course search from registrar
+* Directory search for faculty
+* List dining halls with open/close label
+* View dining menus for residential dining halls
+* Read Penn News from multiple sources (mobile websites)
+* View transit routes, static
+* Navigate using Penn Transit system
+* Call campus help support resources
+
+## Contributing
 
 NOTE: this repo requires [CocoaPods](http://cocoapods.org/) and [ParseAnalytics](http://parse.com) to work correctly. Please install both and always open the .xcworkspace file rather than the .xcodeproj file. 
