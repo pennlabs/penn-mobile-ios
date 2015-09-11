@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FBShimmeringLayer.h>
 
 #define VIEW_HEIGHT 88.0f
 #define TITLE_FONT [UIFont fontWithName:@"Helvetica Neue" size:20.0f]
