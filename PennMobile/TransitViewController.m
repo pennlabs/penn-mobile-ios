@@ -470,7 +470,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
     NSArray *res = [GoogleMapsSearcher getResultsFrom:[GoogleMapsSearcher generateURLRequest:_mapView.region.center withRadius:SEARCH_RADIUS andKeyword:dest]];
     if (res.count > 0 && [((NSString *)res[0][@"name"]) rangeOfString:API_ERROR_DELIM].location != NSNotFound) {
         // there was an error
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Google Maps API Error"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not retrieve results. Please try again later."
                                                         message:res[0]
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
@@ -499,7 +499,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         res = [GoogleMapsSearcher getResultsFrom:[GoogleMapsSearcher generateURLRequest:_mapView.region.center withRadius:SEARCH_RADIUS andKeyword:source]];
         if (res.count > 0 && [((NSString *)res[0][@"name"]) rangeOfString:API_ERROR_DELIM].location != NSNotFound) {
             // there was an error
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Google Maps API Error"
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not retrieve results. Please try again later."
                                                             message:res[0]
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"

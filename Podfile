@@ -4,3 +4,4 @@ pod "HMLauncherView"
 pod 'Parse'
 pod 'ParseCrashReporting'
 pod "DropdownMenu"
+pod 'Bolts'
