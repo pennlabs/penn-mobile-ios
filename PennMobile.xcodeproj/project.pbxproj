@@ -129,6 +129,7 @@
 		19F68ECD1A69708D0022B8F8 /* upenn.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F68ECC1A69708D0022B8F8 /* upenn.png */; };
 		19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */; };
 		4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */; };
+		6BB018321BE4080200D9EC4C /* laundry.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BB018311BE4080200D9EC4C /* laundry.png */; };
 		82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82982FC119735ECC00DB2AE3 /* Images.xcassets */; };
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
 		EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCE174A19A993900008C332 /* MapKit.framework */; };
@@ -308,6 +309,7 @@
 		4BEBE2231AF8970400EBF676 /* TransitMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMKPointAnnotation.h; sourceTree = "<group>"; };
 		4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitMKPointAnnotation.m; sourceTree = "<group>"; };
 		6582CFB1B2E1CB15C6BCD647 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		6BB018311BE4080200D9EC4C /* laundry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laundry.png; sourceTree = "<group>"; };
 		6BC9842D1BDAE21E00B8D6C8 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
 		82982FB319735ECC00DB2AE3 /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FB719735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -685,6 +687,7 @@
 				1901F10C1A41FD9500DDFA9A /* SlideOut */,
 				19C3A8B31A1C309700D32D8A /* ListView */,
 				82982FBE19735ECC00DB2AE3 /* Main.storyboard */,
+				6BB018311BE4080200D9EC4C /* laundry.png */,
 				82982FC119735ECC00DB2AE3 /* Images.xcassets */,
 				1978259719EDFAA500284799 /* About */,
 				82982FB619735ECC00DB2AE3 /* Supporting Files */,
@@ -853,6 +856,7 @@
 				197DBAE71A6F54DD00B0707C /* DP-Blue.png in Resources */,
 				194F1B841A71F3850038DC97 /* support_grey.png in Resources */,
 				19B6BC3A1A15998A002BFEA5 /* Menu.png in Resources */,
+				6BB018321BE4080200D9EC4C /* laundry.png in Resources */,
 				19EDDC8F19D24F4B0088C4DC /* contactbutton@2x.png in Resources */,
 				1935F10E1A37EFF300057667 /* App Icon.png in Resources */,
 				1935F1111A37EFF300057667 /* iPhone 5@2x.png in Resources */,
