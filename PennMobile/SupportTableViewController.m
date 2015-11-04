@@ -50,8 +50,8 @@
     womens.phoneFiltered = @"2158988611";
     SupportItem *shs = [[SupportItem alloc] init];
     shs.name = @"Student Health Services";
-    shs.phone = @"215-748-3505";
-    shs.phoneFiltered = @"2157463505";
+    shs.phone = @"215-746-3535";
+    shs.phoneFiltered = @"2157463535";
     _contacts = [NSArray arrayWithObjects:pEmergency, pGeneral, pWalk, pRide, hLine, caps, special, womens, shs, nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
