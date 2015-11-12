@@ -660,6 +660,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         shouldCenter = NO;
     }
 }
+
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     
     if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {

@@ -2228,7 +2228,7 @@ and the rest of Labs + UA</string>
         <!--Laundry View Controller-->
         <scene sceneID="W8U-Uc-F9x">
             <objects>
-                <tableViewController title="Laundry View Controller" id="f3T-Kk-0rD" sceneMemberID="viewController">
+                <tableViewController title="Laundry View Controller" id="f3T-Kk-0rD" customClass="LaundryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="YYz-eW-IPa">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2251,14 +2251,21 @@ and the rest of Labs + UA</string>
                             <outlet property="delegate" destination="f3T-Kk-0rD" id="yrG-PZ-ATD"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="2hl-lh-Zv1">
+                    <navigationItem key="navigationItem" title="Laundry View Controller" id="2hl-lh-Zv1">
                         <barButtonItem key="leftBarButtonItem" image="hamburger" id="fK1-l9-ppu">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="menuButton:" destination="f3T-Kk-0rD" id="99R-4f-Fta"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="FaU-JI-TgO" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="gwZ-cM-8br"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ke6-9T-vfH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="FaU-JI-TgO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="999.5" y="3147.5"/>
         </scene>
@@ -2430,8 +2437,8 @@ and the rest of Labs + UA</string>
         <image name="labs" width="500" height="500"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QVS-YE-BQT"/>
         <segue reference="qJU-VF-1ve"/>
+        <segue reference="usY-bl-Z76"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.039215686274509803" green="0.074509803921568626" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
 </document>
