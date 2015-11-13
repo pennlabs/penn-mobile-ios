@@ -10,7 +10,8 @@
 
 @interface LaundryTableViewController ()
 
-@property (nonatomic, strong) NSArray *laundryList;
+@property (nonatomic, strong) NSArray *fullLaundryList;
+@property (nonatomic, strong) NSMutableDictionary *parsedLaundryList;
 @property (nonatomic) BOOL hasLoaded;
 
 @end
@@ -24,19 +25,15 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    NSLog(@"???");
-    
     if (!self.hasLoaded) {
         [self pull:self];
         self.hasLoaded = YES;
     }
 }
 
-- (IBAction)pull:(id)sender {
+- (void) pull:(id)sender {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.tableView.userInteractionEnabled = NO;
-//    if ([self.laundryList count] > 0) {
-//    }
     [self performSelectorInBackground:@selector(loadFromAPI) withObject:nil];
 }
 
@@ -50,17 +47,36 @@
             NSLog(@"%@", error.localizedDescription);
         } else {
             NSError* error;
-            self.laundryList = [[NSJSONSerialization JSONObjectWithData:data
+            self.fullLaundryList = [[NSJSONSerialization JSONObjectWithData:data
                                                                 options:kNilOptions
                                                                   error:&error] objectForKey:@"halls"];
             
-            NSLog(@"%@", self.laundryList);
+            [self parseLaundryList];
+            //NSLog(@"%@", self.fullLaundryList);
         }
         
         [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
         [self.tableView reloadData];
         
     }];
+}
+
+-(void) parseLaundryList {
+    self.parsedLaundryList = [[NSMutableDictionary alloc] init];
+    for(NSDictionary *info in self.fullLaundryList) {
+        //NSLog(@"%@", info);
+        NSString *header = [[[info objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0];
+        //NSLog(@"%@", header);
+        if([self.parsedLaundryList objectForKey:header]) {
+            NSMutableArray *tempArray = [self.parsedLaundryList objectForKey:header];
+            [tempArray addObject:info];
+            [self.parsedLaundryList setObject:tempArray forKey:header];
+        } else {
+            NSMutableArray *tempArray = [NSMutableArray arrayWithObject:info];
+            [self.parsedLaundryList setObject:tempArray forKey:header];
+        }
+    }
+    //NSLog(@"%@", self.parsedLaundryList);
 }
 
 - (void)hideActivity {
@@ -80,9 +96,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.laundryList count];
+    return [self.parsedLaundryList count];
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -92,14 +107,15 @@
     if (!cell)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: cellIdentifier];
     
-    cell.textLabel.text = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"name"];
+    cell.textLabel.text = [[self.parsedLaundryList allKeys] objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@", [self.laundryList objectAtIndex:indexPath.row]);
+    NSArray *keyArray = [self.parsedLaundryList allKeys];
+    NSLog(@"%@", [self.parsedLaundryList objectForKey: [keyArray objectAtIndex:indexPath.row]]);
 }
 
 -(void)viewDidLayoutSubviews
