@@ -11,18 +11,39 @@
 @interface LaundryTableViewController ()
 
 @property (nonatomic, strong) NSArray *laundryList;
+@property (nonatomic) BOOL hasLoaded;
 
 @end
 
 @implementation LaundryTableViewController
 
-- (void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+-(void) viewDidLoad {
+    self.hasLoaded = NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
+    NSLog(@"???");
+    
+    if (!self.hasLoaded) {
+        [self pull:self];
+        self.hasLoaded = YES;
+    }
+}
+
+- (IBAction)pull:(id)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.tableView.userInteractionEnabled = NO;
+//    if ([self.laundryList count] > 0) {
+//    }
+    [self performSelectorInBackground:@selector(loadFromAPI) withObject:nil];
+}
+
+-(void) loadFromAPI {
     NSString *str=@"http://api.pennlabs.org/laundry/halls";
     NSURL *url =[NSURL URLWithString:str];
-    
-    
+
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         
         if (error) {
@@ -30,22 +51,22 @@
         } else {
             NSError* error;
             self.laundryList = [[NSJSONSerialization JSONObjectWithData:data
-                                                               options:kNilOptions
+                                                                options:kNilOptions
                                                                   error:&error] objectForKey:@"halls"];
             
             NSLog(@"%@", self.laundryList);
-            [self.tableView reloadData];
         }
+        
+        [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
+        [self.tableView reloadData];
+        
     }];
-    
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    NSLog(@"%@", self.laundryList);
-    
-}
+- (void)hideActivity {
+     self.tableView.userInteractionEnabled = YES;
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+ }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
