@@ -7,6 +7,7 @@
 //
 
 #import "LaundryTableViewController.h"
+#import "LaundryDetailTableViewController.h"
 
 @interface LaundryTableViewController ()
 
@@ -115,7 +116,12 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *keyArray = [self.parsedLaundryList allKeys];
-    NSLog(@"%@", [self.parsedLaundryList objectForKey: [keyArray objectAtIndex:indexPath.row]]);
+    NSArray *laundryList = [self.parsedLaundryList objectForKey: [keyArray objectAtIndex:indexPath.row]];
+    
+    LaundryDetailTableViewController *laundryDetailTVC = [[LaundryDetailTableViewController alloc] init];
+    laundryDetailTVC.laundryList = laundryList;
+    
+    [self.navigationController pushViewController:laundryDetailTVC animated:NO];
 }
 
 -(void)viewDidLayoutSubviews
