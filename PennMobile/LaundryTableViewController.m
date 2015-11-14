@@ -22,6 +22,7 @@
 
 -(void) viewDidLoad {
     self.hasLoaded = NO;
+    self.title = @"Laundry";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
