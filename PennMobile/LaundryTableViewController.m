@@ -51,14 +51,11 @@
             self.fullLaundryList = [[NSJSONSerialization JSONObjectWithData:data
                                                                 options:kNilOptions
                                                                   error:&error] objectForKey:@"halls"];
-            
             [self parseLaundryList];
-            //NSLog(@"%@", self.fullLaundryList);
         }
         
         [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
         [self.tableView reloadData];
-        
     }];
 }
 

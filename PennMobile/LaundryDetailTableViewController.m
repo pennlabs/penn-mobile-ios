@@ -7,6 +7,7 @@
 //
 
 #import "LaundryDetailTableViewController.h"
+#import "LaundryDetailViewController.h"
 
 @interface LaundryDetailTableViewController ()
 
@@ -20,7 +21,9 @@
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = backButtonItem;
     [backButtonItem setTintColor:[UIColor redColor]];
-
+    
+    self.tableView.scrollEnabled = NO;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 -(void)back {
@@ -77,6 +80,13 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
+}
+
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
+    laundryDetailVC.laundryInfo = [self.laundryList objectAtIndex:indexPath.row];
+    
+    [self.navigationController pushViewController:laundryDetailVC animated:NO];
 }
 
 /*

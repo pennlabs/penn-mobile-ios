@@ -130,6 +130,7 @@
 		19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */; };
 		4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */; };
 		6B0F0B811BF6A5E000D958BB /* LaundryDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0F0B801BF6A5E000D958BB /* LaundryDetailTableViewController.m */; };
+		6B0F0B841BF6AFC800D958BB /* LaundryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */; };
 		6BB018361BE410B400D9EC4C /* LaundryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB018351BE410B400D9EC4C /* LaundryTableViewController.m */; };
 		82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82982FC119735ECC00DB2AE3 /* Images.xcassets */; };
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
@@ -312,6 +313,8 @@
 		6582CFB1B2E1CB15C6BCD647 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6B0F0B7F1BF6A5E000D958BB /* LaundryDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDetailTableViewController.h; sourceTree = "<group>"; };
 		6B0F0B801BF6A5E000D958BB /* LaundryDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryDetailTableViewController.m; sourceTree = "<group>"; };
+		6B0F0B821BF6AFC800D958BB /* LaundryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDetailViewController.h; sourceTree = "<group>"; };
+		6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryDetailViewController.m; sourceTree = "<group>"; };
 		6BB018341BE410B400D9EC4C /* LaundryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryTableViewController.h; sourceTree = "<group>"; };
 		6BB018351BE410B400D9EC4C /* LaundryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryTableViewController.m; sourceTree = "<group>"; };
 		6BC9842D1BDAE21E00B8D6C8 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
@@ -654,6 +657,8 @@
 				6BB018351BE410B400D9EC4C /* LaundryTableViewController.m */,
 				6B0F0B7F1BF6A5E000D958BB /* LaundryDetailTableViewController.h */,
 				6B0F0B801BF6A5E000D958BB /* LaundryDetailTableViewController.m */,
+				6B0F0B821BF6AFC800D958BB /* LaundryDetailViewController.h */,
+				6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */,
 			);
 			name = "Laundry Views";
 			sourceTree = "<group>";
@@ -1015,6 +1020,7 @@
 				4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */,
 				19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */,
 				6BB018361BE410B400D9EC4C /* LaundryTableViewController.m in Sources */,
+				6B0F0B841BF6AFC800D958BB /* LaundryDetailViewController.m in Sources */,
 				19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
 				1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */,
