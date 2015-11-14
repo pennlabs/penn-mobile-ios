@@ -15,6 +15,11 @@
 
 @implementation LaundryDetailTableViewController
 
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.title = [[[[self.laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -83,6 +88,7 @@
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
     laundryDetailVC.laundryInfo = [self.laundryList objectAtIndex:indexPath.row];
     

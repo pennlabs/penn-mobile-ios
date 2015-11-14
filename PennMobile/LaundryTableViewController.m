@@ -8,6 +8,7 @@
 
 #import "LaundryTableViewController.h"
 #import "LaundryDetailTableViewController.h"
+#import "LaundryDetailViewController.h"
 
 @interface LaundryTableViewController ()
 
@@ -115,10 +116,18 @@
     NSArray *keyArray = [self.parsedLaundryList allKeys];
     NSArray *laundryList = [self.parsedLaundryList objectForKey: [keyArray objectAtIndex:indexPath.row]];
     
-    LaundryDetailTableViewController *laundryDetailTVC = [[LaundryDetailTableViewController alloc] init];
-    laundryDetailTVC.laundryList = laundryList;
-    
-    [self.navigationController pushViewController:laundryDetailTVC animated:NO];
+    if([laundryList count] == 1) {
+        LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
+        laundryDetailVC.laundryInfo = [laundryList objectAtIndex:0];
+        
+        [self.navigationController pushViewController:laundryDetailVC animated:NO];
+        
+    } else {
+        LaundryDetailTableViewController *laundryDetailTVC = [[LaundryDetailTableViewController alloc] init];
+        laundryDetailTVC.laundryList = laundryList;
+
+        [self.navigationController pushViewController:laundryDetailTVC animated:NO];
+    }
 }
 
 -(void)viewDidLayoutSubviews

@@ -14,6 +14,11 @@
 
 @implementation LaundryDetailViewController
 
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.title = [self.laundryInfo objectForKey:@"name"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
