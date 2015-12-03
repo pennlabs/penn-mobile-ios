@@ -8,6 +8,7 @@
 
 #import "LaundryDetailTableViewController.h"
 #import "LaundryDetailViewController.h"
+#import "LaundryTableViewCell.h"
 
 @interface LaundryDetailTableViewController ()
 
@@ -72,16 +73,22 @@
     return [self.laundryList count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 90;
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    LaundryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if (!cell)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: cellIdentifier];
+    if (!cell) {
+        [tableView registerNib:[UINib nibWithNibName:@"LaundryTableViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    }
     
-    cell.textLabel.text = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"name"];
+    cell.nameLabel.text = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"name"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;

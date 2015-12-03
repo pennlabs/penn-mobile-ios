@@ -9,6 +9,7 @@
 #import "LaundryTableViewController.h"
 #import "LaundryDetailTableViewController.h"
 #import "LaundryDetailViewController.h"
+#import "LaundryTableViewCell.h"
 
 @interface LaundryTableViewController ()
 
@@ -121,13 +122,13 @@
         LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
         laundryDetailVC.laundryInfo = [laundryList objectAtIndex:0];
         
-        [self.navigationController pushViewController:laundryDetailVC animated:NO];
+        [self.navigationController pushViewController:laundryDetailVC animated:YES];
         
     } else {
         LaundryDetailTableViewController *laundryDetailTVC = [[LaundryDetailTableViewController alloc] init];
         laundryDetailTVC.laundryList = laundryList;
 
-        [self.navigationController pushViewController:laundryDetailTVC animated:NO];
+        [self.navigationController pushViewController:laundryDetailTVC animated:YES];
     }
 }
 
