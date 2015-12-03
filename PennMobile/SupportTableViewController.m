@@ -42,8 +42,8 @@
     caps.phoneFiltered = @"2158987021";
     SupportItem *special = [[SupportItem alloc] init];
     special.name = @"Special Services";
-    special.phone = @"215-898-6600";
-    special.phoneFiltered = @"2158986600";
+    special.phone = @"215-898-4481";
+    special.phoneFiltered = @"2158984481";
     SupportItem *womens = [[SupportItem alloc] init];
     womens.name = @"Women's Center";
     womens.phone = @"215-898-8611";
