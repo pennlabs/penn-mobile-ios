@@ -13,7 +13,7 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
 #define AUTH_URL @""
-#define SERVER_ROOT @"http://api.pennlabs.org/"
+#define SERVER_ROOT @"https://api.pennlabs.org/"
 
 #define PENN_BLUE [UIColor colorWithRed:10/255.0f green:37/255.0f blue:69/255.0f alpha:1.0f]
 #define PENN_RED [UIColor colorWithRed:153/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]
