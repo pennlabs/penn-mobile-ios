@@ -101,6 +101,7 @@
             new.buildingCode = courseData[@"meetings"][0][@"building_code"];
             new.roomBum = courseData[@"meetings"][0][@"room_number"];
             if (new.buildingCode && ![new.buildingCode isEqualToString:@""]) {
+                NSLog(@"%@", new);
                 if (buildings[new.buildingCode]) {
                     MKPointAnnotation *pt = buildings[new.buildingCode];
                     MKPointAnnotation *newPt = [[MKPointAnnotation alloc] init];
@@ -108,8 +109,7 @@
                     newPt.coordinate = pt.coordinate;
                     new.point = newPt;
                     // this because MKPointAnimation does not implement copying
-                }
-                else {
+                } else {
                     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, BUILDING_PATH, new.buildingCode]];
                     NSData *result = [NSData dataWithContentsOfURL:url];
                     NSError *error;
