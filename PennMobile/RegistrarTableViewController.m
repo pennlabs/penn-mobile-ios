@@ -101,7 +101,6 @@
             new.buildingCode = courseData[@"meetings"][0][@"building_code"];
             new.roomBum = courseData[@"meetings"][0][@"room_number"];
             if (new.buildingCode && ![new.buildingCode isEqualToString:@""]) {
-                NSLog(@"%@", new);
                 if (buildings[new.buildingCode]) {
                     MKPointAnnotation *pt = buildings[new.buildingCode];
                     MKPointAnnotation *newPt = [[MKPointAnnotation alloc] init];
