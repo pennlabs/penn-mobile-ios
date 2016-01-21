@@ -108,8 +108,7 @@
                     newPt.coordinate = pt.coordinate;
                     new.point = newPt;
                     // this because MKPointAnimation does not implement copying
-                }
-                else {
+                } else {
                     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, BUILDING_PATH, new.buildingCode]];
                     NSData *result = [NSData dataWithContentsOfURL:url];
                     NSError *error;
