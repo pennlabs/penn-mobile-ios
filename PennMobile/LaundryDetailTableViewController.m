@@ -24,12 +24,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"%@", self.laundryList);
+    
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = backButtonItem;
     [backButtonItem setTintColor:[UIColor redColor]];
     
     self.tableView.scrollEnabled = NO;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 -(void)back {
@@ -74,7 +80,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 90;
+    return 100;
 }
 
 
@@ -89,7 +95,12 @@
     }
     
     cell.nameLabel.text = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"name"];
+    cell.available_washers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_available"] intValue];
+    cell.available_dryers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_available"] intValue];
+    cell.unavailable_washers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_in_use"] intValue];
+    cell.unavailable_dryers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_in_use"] intValue];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    [cell awakeFromNib];
     
     return cell;
 }
@@ -101,15 +112,5 @@
     
     [self.navigationController pushViewController:laundryDetailVC animated:NO];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

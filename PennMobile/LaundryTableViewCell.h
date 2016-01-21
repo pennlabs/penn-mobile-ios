@@ -11,5 +11,9 @@
 @interface LaundryTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property int available_washers;
+@property int unavailable_washers;
+@property int available_dryers;
+@property int unavailable_dryers;
 
 @end
