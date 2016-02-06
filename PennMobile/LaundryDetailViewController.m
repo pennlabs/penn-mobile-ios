@@ -59,7 +59,6 @@
 - (void) pull:(id)sender {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.tableView.userInteractionEnabled = NO;
-    NSLog(@"%@", self.indexNumber);
     [self performSelectorInBackground:@selector(loadFromAPI) withObject:nil];
 }
 
@@ -129,11 +128,22 @@
     
     if(indexPath.row == 0) {
         cell.textLabel.text = @"";
+        cell.backgroundColor = [UIColor whiteColor];
     } else {
         if(self.laundrySegment.selectedSegmentIndex == 0) {
-            cell.textLabel.text = [[self.washerList objectAtIndex:(indexPath.row-1)] objectForKey:@"number"];
+            cell.textLabel.text = [NSString stringWithFormat:@"Washer #%lu", indexPath.row];
+            if([[[self.washerList objectAtIndex:indexPath.row-1] objectForKey:@"available"] boolValue]) {
+                [cell setBackgroundColor: [UIColor greenColor]];
+            } else {
+                [cell setBackgroundColor: [UIColor redColor]];
+            }
         } else {
-            cell.textLabel.text = [[self.dryerList objectAtIndex:(indexPath.row-1)] objectForKey:@"number"];
+            cell.textLabel.text = [NSString stringWithFormat:@"Dryer #%lu", indexPath.row];
+            if([[[self.dryerList objectAtIndex:indexPath.row-1] objectForKey:@"available"] boolValue]) {
+                [cell setBackgroundColor: [UIColor greenColor]];
+            } else {
+                [cell setBackgroundColor: [UIColor redColor]];
+            }
         }
     }
     
