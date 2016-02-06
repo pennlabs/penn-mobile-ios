@@ -100,7 +100,7 @@
     cell.unavailable_washers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_in_use"] intValue];
     cell.unavailable_dryers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_in_use"] intValue];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    [cell awakeFromNib];
+//    [cell awakeFromNib];
     
     return cell;
 }
@@ -108,7 +108,7 @@
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
-    laundryDetailVC.laundryInfo = [self.laundryList objectAtIndex:indexPath.row];
+    laundryDetailVC.indexNumber = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"index"];
     
     [self.navigationController pushViewController:laundryDetailVC animated:NO];
 }

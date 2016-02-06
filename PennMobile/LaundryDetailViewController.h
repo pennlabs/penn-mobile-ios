@@ -10,6 +10,6 @@
 
 @interface LaundryDetailViewController : UIViewController
 
-@property (nonatomic, strong) NSDictionary *laundryInfo;
+@property (nonatomic, strong) NSNumber *indexNumber;
 
 @end

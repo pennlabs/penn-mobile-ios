@@ -65,30 +65,24 @@
 -(void) parseLaundryList {
     self.parsedLaundryList = [[NSMutableDictionary alloc] init];
     for(NSDictionary *info in self.fullLaundryList) {
-        //NSLog(@"%@", info);
-        NSString *header = [[[info objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0];
-        //NSLog(@"%@", header);
+        NSMutableDictionary *mutInfo = [[NSMutableDictionary alloc] initWithDictionary:info copyItems:YES];
+        [mutInfo setValue:[NSString stringWithFormat:@"%lu", [self.fullLaundryList indexOfObject:mutInfo]] forKey:@"index"];
+        NSString *header = [[[mutInfo objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0];
         if([self.parsedLaundryList objectForKey:header]) {
             NSMutableArray *tempArray = [self.parsedLaundryList objectForKey:header];
-            [tempArray addObject:info];
+            [tempArray addObject:mutInfo];
             [self.parsedLaundryList setObject:tempArray forKey:header];
         } else {
-            NSMutableArray *tempArray = [NSMutableArray arrayWithObject:info];
+            NSMutableArray *tempArray = [NSMutableArray arrayWithObject:mutInfo];
             [self.parsedLaundryList setObject:tempArray forKey:header];
         }
     }
-    //NSLog(@"%@", self.parsedLaundryList);
 }
 
 - (void)hideActivity {
      self.tableView.userInteractionEnabled = YES;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
  }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
@@ -120,7 +114,7 @@
     
     if([laundryList count] == 1) {
         LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
-        laundryDetailVC.laundryInfo = [laundryList objectAtIndex:0];
+        laundryDetailVC.indexNumber = [[laundryList objectAtIndex:0] objectForKey:@"index"];
         
         [self.navigationController pushViewController:laundryDetailVC animated:YES];
         
