@@ -6,15 +6,15 @@
 //  Copyright © 2015 PennLabs. All rights reserved.
 //
 
-#import "LaundryDetailTableViewController.h"
+#import "LaundryMidwayTableViewController.h"
 #import "LaundryDetailViewController.h"
 #import "LaundryTableViewCell.h"
 
-@interface LaundryDetailTableViewController ()
+@interface LaundryMidwayTableViewController ()
 
 @end
 
-@implementation LaundryDetailTableViewController
+@implementation LaundryMidwayTableViewController
 
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -109,6 +109,7 @@
     
     LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
     laundryDetailVC.indexNumber = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"index"];
+    laundryDetailVC.houseName = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"name"];
     
     [self.navigationController pushViewController:laundryDetailVC animated:NO];
 }

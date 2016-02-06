@@ -787,7 +787,7 @@ bool usingTempData;
     } else if (mealTime == LiteBreakfast) {
         return @"Lite Breakfast";
     } else {
-        if (fabs(mealTime) < 10)
+        if (labs(mealTime) < 10)
             return [@"c" stringByAppendingString:[self enumToStringTime:(-1 * mealTime)]];
         else {
             return @"All";

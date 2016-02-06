@@ -7,7 +7,7 @@
 //
 
 #import "LaundryTableViewController.h"
-#import "LaundryDetailTableViewController.h"
+#import "LaundryMidwayTableViewController.h"
 #import "LaundryDetailViewController.h"
 #import "LaundryTableViewCell.h"
 
@@ -115,11 +115,12 @@
     if([laundryList count] == 1) {
         LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
         laundryDetailVC.indexNumber = [[laundryList objectAtIndex:0] objectForKey:@"index"];
+        laundryDetailVC.houseName = [[laundryList objectAtIndex:0] objectForKey:@"name"];
         
         [self.navigationController pushViewController:laundryDetailVC animated:YES];
         
     } else {
-        LaundryDetailTableViewController *laundryDetailTVC = [[LaundryDetailTableViewController alloc] init];
+        LaundryMidwayTableViewController *laundryDetailTVC = [[LaundryMidwayTableViewController alloc] init];
         laundryDetailTVC.laundryList = laundryList;
 
         [self.navigationController pushViewController:laundryDetailTVC animated:YES];

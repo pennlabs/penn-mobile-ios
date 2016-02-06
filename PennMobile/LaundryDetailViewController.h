@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LaundryDetailViewController : UIViewController
+@interface LaundryDetailViewController : UITableViewController
 
 @property (nonatomic, strong) NSNumber *indexNumber;
+@property (nonatomic, strong) NSString *houseName;
 
 @end

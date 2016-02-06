@@ -413,7 +413,7 @@ LocationArray LocationArrayMake(CLLocationCoordinate2D *arr, int size) {
         CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([steps[i][@"end_location"][@"lat"] floatValue], [steps[i][@"end_location"][@"lng"] floatValue]);
         arr[i+1] = coord;
     }
-    LocationArray returned = LocationArrayMake(arr, steps.count + 1);
+    LocationArray returned = LocationArrayMake(arr, (int)steps.count + 1);
     return returned;
 }
 

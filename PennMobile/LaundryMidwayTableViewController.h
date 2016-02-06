@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LaundryDetailTableViewController : UITableViewController
+@interface LaundryMidwayTableViewController : UITableViewController
 
 @property (nonatomic, strong) NSArray *laundryList;
 
