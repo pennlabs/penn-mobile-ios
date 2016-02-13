@@ -7,6 +7,7 @@
 //
 
 #import "LaundryDetailViewController.h"
+#import "LaundryFloorDetailTableViewCell.h"
 
 @interface LaundryDetailViewController ()
 
@@ -41,6 +42,8 @@
     [self.view addSubview:self.laundrySegment];
     
     self.tableView.frame = CGRectMake(0, 44, self.view.frame.size.width, 0);
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.allowsSelection = NO;
 }
 
 -(void)back {
@@ -110,11 +113,22 @@
     return 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row == 0) {
+        return 44;
+    }if(indexPath.row == 1) {
+        return 50*3;
+    } else {
+        return 50;
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(self.laundrySegment.selectedSegmentIndex == 0) {
-        return [self.washerList count]+1;
+        return [self.washerList count]+2;
     } else {
-        return [self.dryerList count]+1;
+        return [self.dryerList count]+2;
     }
 }
 
@@ -124,49 +138,43 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (!cell)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier: cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     
     if(indexPath.row == 0) {
         cell.textLabel.text = @"";
         cell.backgroundColor = [UIColor whiteColor];
+    } else if(indexPath.row == 1) {
+        cell.textLabel.text = @"";
+        cell.imageView.image = [UIImage imageNamed:@"washer_icon.png"];
+        cell.backgroundColor = [UIColor lightGrayColor];
     } else {
         if(self.laundrySegment.selectedSegmentIndex == 0) {
-            cell.textLabel.text = [NSString stringWithFormat:@"Washer #%lu", indexPath.row];
-            if([[[self.washerList objectAtIndex:indexPath.row-1] objectForKey:@"available"] boolValue]) {
-                [cell setBackgroundColor: [UIColor greenColor]];
+            cell.textLabel.text = [NSString stringWithFormat:@"Washer %lu", indexPath.row-1];
+            if([[[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"available"] boolValue]) {
+                cell.detailTextLabel.text = @"Available";
+                cell.detailTextLabel.textColor = [UIColor greenColor];
             } else {
-                [cell setBackgroundColor: [UIColor redColor]];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
+                UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
+                cell.accessoryView = switchview;
+                cell.detailTextLabel.textColor = [UIColor redColor];
             }
         } else {
-            cell.textLabel.text = [NSString stringWithFormat:@"Dryer #%lu", indexPath.row];
-            if([[[self.dryerList objectAtIndex:indexPath.row-1] objectForKey:@"available"] boolValue]) {
-                [cell setBackgroundColor: [UIColor greenColor]];
+            cell.textLabel.text = [NSString stringWithFormat:@"Dryer %lu", indexPath.row-1];
+            if([[[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"available"] boolValue]) {
+                cell.detailTextLabel.text = @"Available";
+                cell.detailTextLabel.textColor = [UIColor greenColor];
             } else {
-                [cell setBackgroundColor: [UIColor redColor]];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
+                UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
+                cell.accessoryView = switchview;
+                cell.detailTextLabel.textColor = [UIColor redColor];
             }
         }
     }
     
     return cell;
 }
-
-//- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSArray *keyArray = [self.parsedLaundryList allKeys];
-//    NSArray *laundryList = [self.parsedLaundryList objectForKey: [keyArray objectAtIndex:indexPath.row]];
-//    
-//    if([laundryList count] == 1) {
-//        LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
-//        laundryDetailVC.indexNumber = [[laundryList objectAtIndex:0] objectForKey:@"index"];
-//        
-//        [self.navigationController pushViewController:laundryDetailVC animated:YES];
-//        
-//    } else {
-//        LaundryMidwayTableViewController *laundryDetailTVC = [[LaundryMidwayTableViewController alloc] init];
-//        laundryDetailTVC.laundryList = laundryList;
-//        
-//        [self.navigationController pushViewController:laundryDetailTVC animated:YES];
-//    }
-//}
 
 -(void)viewDidLayoutSubviews
 {
