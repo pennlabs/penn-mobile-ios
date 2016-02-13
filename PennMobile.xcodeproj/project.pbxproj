@@ -136,7 +136,6 @@
 		6BD9654D1C0FD67400D2AAF2 /* redCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BD9654B1C0FD67400D2AAF2 /* redCircle.png */; };
 		6BD965541C0FD78F00D2AAF2 /* LaundryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD965521C0FD78F00D2AAF2 /* LaundryTableViewCell.m */; };
 		6BD965551C0FD78F00D2AAF2 /* LaundryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6BD965531C0FD78F00D2AAF2 /* LaundryTableViewCell.xib */; };
-		6BFDB5641C6FBA4900E7A825 /* LaundryFloorDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFDB5631C6FBA4900E7A825 /* LaundryFloorDetailTableViewCell.m */; };
 		82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82982FC119735ECC00DB2AE3 /* Images.xcassets */; };
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
 		EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCE174A19A993900008C332 /* MapKit.framework */; };
@@ -328,8 +327,6 @@
 		6BD965511C0FD78F00D2AAF2 /* LaundryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryTableViewCell.h; sourceTree = "<group>"; };
 		6BD965521C0FD78F00D2AAF2 /* LaundryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryTableViewCell.m; sourceTree = "<group>"; };
 		6BD965531C0FD78F00D2AAF2 /* LaundryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaundryTableViewCell.xib; sourceTree = "<group>"; };
-		6BFDB5621C6FBA4900E7A825 /* LaundryFloorDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryFloorDetailTableViewCell.h; sourceTree = "<group>"; };
-		6BFDB5631C6FBA4900E7A825 /* LaundryFloorDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryFloorDetailTableViewCell.m; sourceTree = "<group>"; };
 		82982FB319735ECC00DB2AE3 /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FB719735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82982FBF19735ECC00DB2AE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -676,8 +673,6 @@
 				6B0F0B801BF6A5E000D958BB /* LaundryMidwayTableViewController.m */,
 				6B0F0B821BF6AFC800D958BB /* LaundryDetailViewController.h */,
 				6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */,
-				6BFDB5621C6FBA4900E7A825 /* LaundryFloorDetailTableViewCell.h */,
-				6BFDB5631C6FBA4900E7A825 /* LaundryFloorDetailTableViewCell.m */,
 			);
 			name = Laundry;
 			sourceTree = "<group>";
@@ -1038,7 +1033,6 @@
 				195D941219BFC76200C6C8FA /* DiningTableViewCell.m in Sources */,
 				19EDDC9F19D252B80088C4DC /* DirectoryTableViewController.m in Sources */,
 				1978259A19EDFAB400284799 /* AboutViewController.m in Sources */,
-				6BFDB5641C6FBA4900E7A825 /* LaundryFloorDetailTableViewCell.m in Sources */,
 				1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */,
 				198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */,
 				4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */,

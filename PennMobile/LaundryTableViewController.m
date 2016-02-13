@@ -33,6 +33,8 @@
         [self pull:self];
         self.hasLoaded = YES;
     }
+    
+    self.tableView.scrollEnabled = NO;
 }
 
 - (void) pull:(id)sender {
@@ -88,6 +90,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return self.view.frame.size.height / [self.parsedLaundryList count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

@@ -28,7 +28,7 @@
     self.navigationItem.leftBarButtonItem = backButtonItem;
     [backButtonItem setTintColor:[UIColor redColor]];
     
-    self.tableView.scrollEnabled = NO;
+    self.tableView.alwaysBounceVertical = NO;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
@@ -38,11 +38,6 @@
 
 -(void)back {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)viewDidLayoutSubviews
@@ -98,7 +93,7 @@
     cell.unavailable_washers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_in_use"] intValue];
     cell.unavailable_dryers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_in_use"] intValue];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    [cell awakeFromNib];
+    [cell awakeFromNib];
     
     return cell;
 }

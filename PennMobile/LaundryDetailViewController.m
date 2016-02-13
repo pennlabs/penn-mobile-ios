@@ -7,7 +7,6 @@
 //
 
 #import "LaundryDetailViewController.h"
-#import "LaundryFloorDetailTableViewCell.h"
 
 @interface LaundryDetailViewController ()
 
@@ -33,7 +32,7 @@
     self.navigationItem.leftBarButtonItem = backButtonItem;
     [backButtonItem setTintColor:[UIColor redColor]];
     
-    NSArray *itemArray = [NSArray arrayWithObjects: @"Washers", @"Dryers", nil];
+    NSArray *itemArray = [NSArray arrayWithObjects: @"WASHERS", @"DRYERS", nil];
     self.laundrySegment = [[UISegmentedControl alloc] initWithItems:itemArray];
     self.laundrySegment.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
     [self.laundrySegment addTarget:self action:@selector(changed) forControlEvents: UIControlEventValueChanged];
@@ -145,17 +144,22 @@
         cell.backgroundColor = [UIColor whiteColor];
     } else if(indexPath.row == 1) {
         cell.textLabel.text = @"";
-        cell.imageView.image = [UIImage imageNamed:@"washer_icon.png"];
+        self.laundrySegment.selectedSegmentIndex == 0 ? (cell.imageView.image = [UIImage imageNamed:@"washer_icon.png"]) : (cell.imageView.image = [UIImage imageNamed:@"dryer_icon.png"]);
         cell.backgroundColor = [UIColor lightGrayColor];
     } else {
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.imageView.image = nil;
+        UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
+        switchview.tag = indexPath.row;
+        [switchview addTarget:self action:@selector(switched:) forControlEvents:UIControlEventValueChanged];
         if(self.laundrySegment.selectedSegmentIndex == 0) {
             cell.textLabel.text = [NSString stringWithFormat:@"Washer %lu", indexPath.row-1];
             if([[[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"available"] boolValue]) {
                 cell.detailTextLabel.text = @"Available";
                 cell.detailTextLabel.textColor = [UIColor greenColor];
+                cell.accessoryView = nil;
             } else {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
-                UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
                 cell.accessoryView = switchview;
                 cell.detailTextLabel.textColor = [UIColor redColor];
             }
@@ -164,9 +168,9 @@
             if([[[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"available"] boolValue]) {
                 cell.detailTextLabel.text = @"Available";
                 cell.detailTextLabel.textColor = [UIColor greenColor];
+                cell.accessoryView = nil;
             } else {
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
-                UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
                 cell.accessoryView = switchview;
                 cell.detailTextLabel.textColor = [UIColor redColor];
             }
@@ -196,6 +200,32 @@
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+
+#pragma Switch Statement
+
+- (void)switched:(id) sender {
+    NSIndexPath *path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
+    NSString *text = [self.tableView cellForRowAtIndexPath:path].detailTextLabel.text;
+    NSInteger minutes = [[[text componentsSeparatedByString:@" "] objectAtIndex:2] integerValue];
+    
+    if ([sender isOn]) {
+        UILocalNotification *local = [[UILocalNotification alloc] init];
+        
+        local.fireDate = [NSDate dateWithTimeIntervalSinceNow:minutes*60]; //time in seconds
+        local.timeZone = [NSTimeZone defaultTimeZone];
+        
+        local.alertBody = @"Your laundry machine is free!";
+        local.alertAction = @"Okay!";
+        
+        local.soundName = [NSString stringWithFormat:@"Default.caf"];
+
+        [[UIApplication sharedApplication] scheduleLocalNotification:local];
+    } else {
+        NSLog(@"?????");
+        [sender setOn:NO animated:YES];
+    }
+    
 }
 
 @end
