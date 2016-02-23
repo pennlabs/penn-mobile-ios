@@ -135,7 +135,6 @@
 		6BD9654C1C0FD67400D2AAF2 /* greenCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BD9654A1C0FD67400D2AAF2 /* greenCircle.png */; };
 		6BD9654D1C0FD67400D2AAF2 /* redCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BD9654B1C0FD67400D2AAF2 /* redCircle.png */; };
 		6BD965541C0FD78F00D2AAF2 /* LaundryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD965521C0FD78F00D2AAF2 /* LaundryTableViewCell.m */; };
-		6BD965551C0FD78F00D2AAF2 /* LaundryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6BD965531C0FD78F00D2AAF2 /* LaundryTableViewCell.xib */; };
 		82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82982FC119735ECC00DB2AE3 /* Images.xcassets */; };
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
 		EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCE174A19A993900008C332 /* MapKit.framework */; };
@@ -326,7 +325,6 @@
 		6BD9654B1C0FD67400D2AAF2 /* redCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redCircle.png; sourceTree = "<group>"; };
 		6BD965511C0FD78F00D2AAF2 /* LaundryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryTableViewCell.h; sourceTree = "<group>"; };
 		6BD965521C0FD78F00D2AAF2 /* LaundryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryTableViewCell.m; sourceTree = "<group>"; };
-		6BD965531C0FD78F00D2AAF2 /* LaundryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaundryTableViewCell.xib; sourceTree = "<group>"; };
 		82982FB319735ECC00DB2AE3 /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FB719735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82982FBF19735ECC00DB2AE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -664,13 +662,12 @@
 		6BB018331BE40FE600D9EC4C /* Laundry */ = {
 			isa = PBXGroup;
 			children = (
-				6BD965511C0FD78F00D2AAF2 /* LaundryTableViewCell.h */,
-				6BD965521C0FD78F00D2AAF2 /* LaundryTableViewCell.m */,
-				6BD965531C0FD78F00D2AAF2 /* LaundryTableViewCell.xib */,
 				6BB018341BE410B400D9EC4C /* LaundryTableViewController.h */,
 				6BB018351BE410B400D9EC4C /* LaundryTableViewController.m */,
 				6B0F0B7F1BF6A5E000D958BB /* LaundryMidwayTableViewController.h */,
 				6B0F0B801BF6A5E000D958BB /* LaundryMidwayTableViewController.m */,
+				6BD965511C0FD78F00D2AAF2 /* LaundryTableViewCell.h */,
+				6BD965521C0FD78F00D2AAF2 /* LaundryTableViewCell.m */,
 				6B0F0B821BF6AFC800D958BB /* LaundryDetailViewController.h */,
 				6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */,
 			);
@@ -876,7 +873,6 @@
 				197DBAE61A6F54DD00B0707C /* 34-Blue.png in Resources */,
 				19EDDC8E19D24F4B0088C4DC /* contactbutton.png in Resources */,
 				19B6BC3B1A15998A002BFEA5 /* Menu-selected.png in Resources */,
-				6BD965551C0FD78F00D2AAF2 /* LaundryTableViewCell.xib in Resources */,
 				1972EEAD1A81928500362B6C /* sbux3.png in Resources */,
 				19B6BC3C1A15998A002BFEA5 /* Transit.png in Resources */,
 				195D940819BFC40200C6C8FA /* penn-logo.png in Resources */,
@@ -1177,6 +1173,12 @@
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/ParseCrashReporting\"",
+					"$(PROJECT_DIR)",
+					"/**",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.pennlabs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
@@ -1204,6 +1206,12 @@
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/ParseCrashReporting\"",
+					"$(PROJECT_DIR)",
+					"/**",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.pennlabs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";

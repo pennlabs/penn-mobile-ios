@@ -10,10 +10,13 @@
 
 @interface LaundryTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
-@property int available_washers;
-@property int unavailable_washers;
-@property int available_dryers;
-@property int unavailable_dryers;
+@property (strong, nonatomic) UILabel *nameLabel;
+
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString *)reuseIdentifier
+  available_washers:(int) aw
+  available_dryers:(int) ad
+  unavailable_washers:(int) uw
+  unavailable_dryers:(int) ud;
 
 @end

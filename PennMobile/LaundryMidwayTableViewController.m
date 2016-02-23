@@ -30,10 +30,8 @@
     
     self.tableView.alwaysBounceVertical = NO;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-}
-
-- (void) viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+    
+    [self.tableView reloadData];
 }
 
 -(void)back {
@@ -82,18 +80,16 @@
     static NSString *cellIdentifier = @"Cell";
     LaundryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if (!cell) {
-        [tableView registerNib:[UINib nibWithNibName:@"LaundryTableViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    }
+    int aw = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_available"] intValue];
+    int ad = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_available"] intValue];
+    int uw = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_in_use"] intValue];
+    int ud = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_in_use"] intValue];
     
+    if (!cell) {
+        cell = [[LaundryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier available_washers:aw available_dryers:ad unavailable_washers:uw unavailable_dryers:ud];
+    }
     cell.nameLabel.text = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"name"];
-    cell.available_washers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_available"] intValue];
-    cell.available_dryers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_available"] intValue];
-    cell.unavailable_washers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_in_use"] intValue];
-    cell.unavailable_dryers = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_in_use"] intValue];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    [cell awakeFromNib];
     
     return cell;
 }
