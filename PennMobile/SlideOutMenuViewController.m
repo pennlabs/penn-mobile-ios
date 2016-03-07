@@ -25,7 +25,7 @@ static SlideOutMenuViewController *instance;
     [super viewDidLoad];
     instance = self;
     // Do any additional setup after loading the view.
-    _views = @[@"Dining", @"Directory", @"Courses", @"Transit", @"News", @"About", @"Campus Help"];
+    _views = @[@"Dining", @"Directory", @"Courses", @"Transit", @"News", @"Laundry", @"About", @"Campus Help"];
     UITapGestureRecognizer *labsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLabsURL:)];
     [_labsImage addGestureRecognizer:labsTap];
     UISwipeGestureRecognizer *returnSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(returnToView:)];

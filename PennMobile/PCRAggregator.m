@@ -94,7 +94,7 @@ static NSMutableDictionary *averages;
 
 + (BOOL)confirmConnection:(NSData *)data {
     if (!data) {
-        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later. :(" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         //changed to silent failure
         //[new show];
         return false;

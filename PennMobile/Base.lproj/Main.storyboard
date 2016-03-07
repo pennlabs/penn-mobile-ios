@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sil-2Q-Gkr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sil-2Q-Gkr">
     <dependencies>
         <deployment version="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -62,7 +62,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sdZ-yH-mcZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-805.5" y="-156.5"/>
+            <point key="canvasLocation" x="-819.5" y="-80.5"/>
         </scene>
         <!--Course Search-->
         <scene sceneID="wPU-wb-rF4">
@@ -1646,7 +1646,7 @@ and the rest of Labs + UA</string>
                             </connections>
                         </barButtonItem>
                         <view key="titleView" contentMode="scaleToFill" id="LO0-kr-nDZ">
-                            <rect key="frame" x="113" y="6" width="150" height="33"/>
+                            <rect key="frame" x="112.5" y="5.5" width="150" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Maps" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="V9E-2K-u60">
@@ -1791,7 +1791,7 @@ and the rest of Labs + UA</string>
                                             <segue destination="6ac-z3-oqW" kind="custom" identifier="News" customClass="ECSlidingSegue" id="LNt-6B-ZRa"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="About" id="emR-iS-uct">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Laundry" id="emR-iS-uct">
                                         <rect key="frame" x="0.0" y="282" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="emR-iS-uct" id="3N2-PH-pWI">
@@ -1800,11 +1800,20 @@ and the rest of Labs + UA</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="oVB-9K-p2y" kind="custom" identifier="About" customClass="ECSlidingSegue" id="whA-eo-xpj"/>
+                                            <segue destination="u0C-RY-oAb" kind="custom" customClass="ECSlidingSegue" id="vTC-Aa-xrg"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Campus Help" id="QOd-AA-t6M">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="About" id="4hs-RM-j5Q">
                                         <rect key="frame" x="0.0" y="332" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4hs-RM-j5Q" id="qVD-Ju-NYS">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Campus Help" id="QOd-AA-t6M">
+                                        <rect key="frame" x="0.0" y="382" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QOd-AA-t6M" id="lBm-Fa-a0A">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1953,7 +1962,7 @@ and the rest of Labs + UA</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exZ-S2-gfX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="584.5" y="2411.5"/>
+            <point key="canvasLocation" x="592.5" y="2411.5"/>
         </scene>
         <!--theDP-->
         <scene sceneID="NSk-VE-lEN">
@@ -2079,7 +2088,65 @@ and the rest of Labs + UA</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ho-bW-OiQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ez7-pS-rfX" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1032.5" y="2393.5"/>
+            <point key="canvasLocation" x="1006.5" y="2411.5"/>
+        </scene>
+        <!--Laundry View Controller-->
+        <scene sceneID="W8U-Uc-F9x">
+            <objects>
+                <tableViewController title="Laundry View Controller" id="f3T-Kk-0rD" customClass="LaundryTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="YYz-eW-IPa">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="4Th-2X-DZ5">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Th-2X-DZ5" id="405-9G-eWR">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="f3T-Kk-0rD" id="U1W-cV-1O2"/>
+                            <outlet property="delegate" destination="f3T-Kk-0rD" id="yrG-PZ-ATD"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Laundry View Controller" id="2hl-lh-Zv1">
+                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="fK1-l9-ppu">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="menuButton:" destination="f3T-Kk-0rD" id="99R-4f-Fta"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="FaU-JI-TgO" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="gwZ-cM-8br"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ke6-9T-vfH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="FaU-JI-TgO" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="999.5" y="3147.5"/>
+        </scene>
+        <!--Laundry-->
+        <scene sceneID="53y-JI-piC">
+            <objects>
+                <navigationController title="Laundry" id="u0C-RY-oAb" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="2xf-d0-7LZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="f3T-Kk-0rD" kind="relationship" relationship="rootViewController" id="GB3-DG-mxL"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ACc-Sw-zUv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="584.5" y="3147.5"/>
         </scene>
         <!--Support Table View Controller-->
         <scene sceneID="0CT-or-2Hq">
@@ -2149,7 +2216,7 @@ and the rest of Labs + UA</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qie-xS-Pt7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="E0J-el-QO6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1244.5" y="4537.5"/>
+            <point key="canvasLocation" x="999.5" y="3899.5"/>
         </scene>
         <!--Support-->
         <scene sceneID="zoT-Ag-lBC">
@@ -2168,7 +2235,7 @@ and the rest of Labs + UA</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z3N-Jy-v9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="830.5" y="4537.5"/>
+            <point key="canvasLocation" x="598.5" y="3899.5"/>
         </scene>
         <!--Maps-->
         <scene sceneID="IYF-ZZ-Qcs">
@@ -2219,8 +2286,8 @@ and the rest of Labs + UA</string>
         <image name="labs" width="500" height="500"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QVS-YE-BQT"/>
         <segue reference="qJU-VF-1ve"/>
+        <segue reference="usY-bl-Z76"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.039215686274509803" green="0.074509803921568626" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
 </document>

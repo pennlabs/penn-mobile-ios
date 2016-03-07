@@ -53,13 +53,13 @@
 		1964BC8D19C281AD00CEB1E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82982FBE19735ECC00DB2AE3 /* Main.storyboard */; };
 		1965417F1A71D90C00026C92 /* SupportItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1965417E1A71D90C00026C92 /* SupportItem.m */; };
 		1971E22F1AA68B9900CD2404 /* AuthLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1971E22E1AA68B9900CD2404 /* AuthLoginViewController.m */; };
-		1972EEAC1A81928500362B6C /* PI.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA61A81928500362B6C /* PI.PNG */; };
-		1972EEAD1A81928500362B6C /* sbux3.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA71A81928500362B6C /* sbux3.PNG */; };
-		1972EEAE1A81928500362B6C /* Tortas.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA81A81928500362B6C /* Tortas.PNG */; };
-		1972EEAF1A81928500362B6C /* FOTW.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA91A81928500362B6C /* FOTW.PNG */; };
-		1972EEB01A81928500362B6C /* globalfusion.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEAA1A81928500362B6C /* globalfusion.PNG */; };
-		1972EEB11A81928500362B6C /* Gourmetgrocer.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEAB1A81928500362B6C /* Gourmetgrocer.PNG */; };
-		1972EEB31A8192E600362B6C /* JOES.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEB21A8192E600362B6C /* JOES.PNG */; };
+		1972EEAC1A81928500362B6C /* PI.png in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA61A81928500362B6C /* PI.png */; };
+		1972EEAD1A81928500362B6C /* sbux3.png in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA71A81928500362B6C /* sbux3.png */; };
+		1972EEAE1A81928500362B6C /* Tortas.png in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA81A81928500362B6C /* Tortas.png */; };
+		1972EEAF1A81928500362B6C /* FOTW.png in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEA91A81928500362B6C /* FOTW.png */; };
+		1972EEB01A81928500362B6C /* globalfusion.png in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEAA1A81928500362B6C /* globalfusion.png */; };
+		1972EEB11A81928500362B6C /* Gourmetgrocer.png in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEAB1A81928500362B6C /* Gourmetgrocer.png */; };
+		1972EEB31A8192E600362B6C /* JOES.png in Resources */ = {isa = PBXBuildFile; fileRef = 1972EEB21A8192E600362B6C /* JOES.png */; };
 		1978259619EDEE1F00284799 /* labs.png in Resources */ = {isa = PBXBuildFile; fileRef = 1978259519EDEE1F00284799 /* labs.png */; };
 		1978259A19EDFAB400284799 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1978259919EDFAB400284799 /* AboutViewController.m */; };
 		1979A72C1A0C586000E1B7EB /* PCRAggregator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1979A72B1A0C586000E1B7EB /* PCRAggregator.m */; };
@@ -129,6 +129,14 @@
 		19F68ECD1A69708D0022B8F8 /* upenn.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F68ECC1A69708D0022B8F8 /* upenn.png */; };
 		19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */; };
 		4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */; };
+		6B0F0B811BF6A5E000D958BB /* LaundryMidwayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0F0B801BF6A5E000D958BB /* LaundryMidwayTableViewController.m */; };
+		6B0F0B841BF6AFC800D958BB /* LaundryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */; };
+		6B5979451C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5979441C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m */; };
+		6B5979481C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5979471C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m */; };
+		6BB018361BE410B400D9EC4C /* LaundryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB018351BE410B400D9EC4C /* LaundryTableViewController.m */; };
+		6BD9654C1C0FD67400D2AAF2 /* greenCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BD9654A1C0FD67400D2AAF2 /* greenCircle.png */; };
+		6BD9654D1C0FD67400D2AAF2 /* redCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BD9654B1C0FD67400D2AAF2 /* redCircle.png */; };
+		6BD965541C0FD78F00D2AAF2 /* LaundryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD965521C0FD78F00D2AAF2 /* LaundryTableViewCell.m */; };
 		82982FC219735ECC00DB2AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82982FC119735ECC00DB2AE3 /* Images.xcassets */; };
 		82982FCE19735ECC00DB2AE3 /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82982FCD19735ECC00DB2AE3 /* PennMobileTests.swift */; };
 		EBCE174B19A993900008C332 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCE174A19A993900008C332 /* MapKit.framework */; };
@@ -212,13 +220,13 @@
 		1969DA1A19F9F8E6000C7076 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		1971E22D1AA68B9900CD2404 /* AuthLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthLoginViewController.h; sourceTree = "<group>"; };
 		1971E22E1AA68B9900CD2404 /* AuthLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthLoginViewController.m; sourceTree = "<group>"; };
-		1972EEA61A81928500362B6C /* PI.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PI.PNG; sourceTree = "<group>"; };
-		1972EEA71A81928500362B6C /* sbux3.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sbux3.PNG; sourceTree = "<group>"; };
-		1972EEA81A81928500362B6C /* Tortas.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tortas.PNG; sourceTree = "<group>"; };
-		1972EEA91A81928500362B6C /* FOTW.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FOTW.PNG; sourceTree = "<group>"; };
-		1972EEAA1A81928500362B6C /* globalfusion.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globalfusion.PNG; sourceTree = "<group>"; };
-		1972EEAB1A81928500362B6C /* Gourmetgrocer.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gourmetgrocer.PNG; sourceTree = "<group>"; };
-		1972EEB21A8192E600362B6C /* JOES.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JOES.PNG; sourceTree = "<group>"; };
+		1972EEA61A81928500362B6C /* PI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PI.png; sourceTree = "<group>"; };
+		1972EEA71A81928500362B6C /* sbux3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sbux3.png; sourceTree = "<group>"; };
+		1972EEA81A81928500362B6C /* Tortas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tortas.png; sourceTree = "<group>"; };
+		1972EEA91A81928500362B6C /* FOTW.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FOTW.png; sourceTree = "<group>"; };
+		1972EEAA1A81928500362B6C /* globalfusion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globalfusion.png; sourceTree = "<group>"; };
+		1972EEAB1A81928500362B6C /* Gourmetgrocer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gourmetgrocer.png; sourceTree = "<group>"; };
+		1972EEB21A8192E600362B6C /* JOES.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JOES.png; sourceTree = "<group>"; };
 		1978259519EDEE1F00284799 /* labs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labs.png; sourceTree = "<group>"; };
 		1978259819EDFAB400284799 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		1978259919EDFAB400284799 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
@@ -308,7 +316,21 @@
 		4BEBE2231AF8970400EBF676 /* TransitMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMKPointAnnotation.h; sourceTree = "<group>"; };
 		4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitMKPointAnnotation.m; sourceTree = "<group>"; };
 		6582CFB1B2E1CB15C6BCD647 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		6B0F0B7F1BF6A5E000D958BB /* LaundryMidwayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryMidwayTableViewController.h; sourceTree = "<group>"; };
+		6B0F0B801BF6A5E000D958BB /* LaundryMidwayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryMidwayTableViewController.m; sourceTree = "<group>"; };
+		6B0F0B821BF6AFC800D958BB /* LaundryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDetailViewController.h; sourceTree = "<group>"; };
+		6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryDetailViewController.m; sourceTree = "<group>"; };
+		6B5979431C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryWasherDetailTableViewCell.h; sourceTree = "<group>"; };
+		6B5979441C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryWasherDetailTableViewCell.m; sourceTree = "<group>"; };
+		6B5979461C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDryerDetailTableViewCell.h; sourceTree = "<group>"; };
+		6B5979471C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryDryerDetailTableViewCell.m; sourceTree = "<group>"; };
+		6BB018341BE410B400D9EC4C /* LaundryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryTableViewController.h; sourceTree = "<group>"; };
+		6BB018351BE410B400D9EC4C /* LaundryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryTableViewController.m; sourceTree = "<group>"; };
 		6BC9842D1BDAE21E00B8D6C8 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
+		6BD9654A1C0FD67400D2AAF2 /* greenCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenCircle.png; sourceTree = "<group>"; };
+		6BD9654B1C0FD67400D2AAF2 /* redCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redCircle.png; sourceTree = "<group>"; };
+		6BD965511C0FD78F00D2AAF2 /* LaundryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryTableViewCell.h; sourceTree = "<group>"; };
+		6BD965521C0FD78F00D2AAF2 /* LaundryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryTableViewCell.m; sourceTree = "<group>"; };
 		82982FB319735ECC00DB2AE3 /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82982FB719735ECC00DB2AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82982FBF19735ECC00DB2AE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -464,6 +486,8 @@
 				19B6BC2D1A15998A002BFEA5 /* About-selected.png */,
 				19B6BC2E1A15998A002BFEA5 /* book-selected.png */,
 				19B6BC301A15998A002BFEA5 /* directory-selected.png */,
+				6BD9654A1C0FD67400D2AAF2 /* greenCircle.png */,
+				6BD9654B1C0FD67400D2AAF2 /* redCircle.png */,
 				19B6BC311A15998A002BFEA5 /* Menu.png */,
 				19B6BC321A15998A002BFEA5 /* Menu-selected.png */,
 				19B6BC331A15998A002BFEA5 /* Transit.png */,
@@ -589,13 +613,13 @@
 		19DE26D11A6897B800D072A7 /* Dining Halls */ = {
 			isa = PBXGroup;
 			children = (
-				1972EEB21A8192E600362B6C /* JOES.PNG */,
-				1972EEA61A81928500362B6C /* PI.PNG */,
-				1972EEA71A81928500362B6C /* sbux3.PNG */,
-				1972EEA81A81928500362B6C /* Tortas.PNG */,
-				1972EEA91A81928500362B6C /* FOTW.PNG */,
-				1972EEAA1A81928500362B6C /* globalfusion.PNG */,
-				1972EEAB1A81928500362B6C /* Gourmetgrocer.PNG */,
+				1972EEB21A8192E600362B6C /* JOES.png */,
+				1972EEA61A81928500362B6C /* PI.png */,
+				1972EEA71A81928500362B6C /* sbux3.png */,
+				1972EEA81A81928500362B6C /* Tortas.png */,
+				1972EEA91A81928500362B6C /* FOTW.png */,
+				1972EEAA1A81928500362B6C /* globalfusion.png */,
+				1972EEAB1A81928500362B6C /* Gourmetgrocer.png */,
 				19F68ECC1A69708D0022B8F8 /* upenn.png */,
 				19C669951A696A790076AF1C /* Starbucks.jpg */,
 				19DE26D21A6897C400D072A7 /* 1920.png */,
@@ -641,6 +665,25 @@
 			name = Directory;
 			sourceTree = "<group>";
 		};
+		6BB018331BE40FE600D9EC4C /* Laundry */ = {
+			isa = PBXGroup;
+			children = (
+				6BB018341BE410B400D9EC4C /* LaundryTableViewController.h */,
+				6BB018351BE410B400D9EC4C /* LaundryTableViewController.m */,
+				6B0F0B7F1BF6A5E000D958BB /* LaundryMidwayTableViewController.h */,
+				6B0F0B801BF6A5E000D958BB /* LaundryMidwayTableViewController.m */,
+				6BD965511C0FD78F00D2AAF2 /* LaundryTableViewCell.h */,
+				6BD965521C0FD78F00D2AAF2 /* LaundryTableViewCell.m */,
+				6B0F0B821BF6AFC800D958BB /* LaundryDetailViewController.h */,
+				6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */,
+				6B5979431C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.h */,
+				6B5979441C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m */,
+				6B5979461C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.h */,
+				6B5979471C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m */,
+			);
+			name = Laundry;
+			sourceTree = "<group>";
+		};
 		7244253FD01B312498EF6108 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -681,6 +724,7 @@
 				19A4ACE31A8DA2FE000804E2 /* Building */,
 				19A4ACE21A8DA2DB000804E2 /* AppDelegate + Stuff */,
 				19A4ACE11A8DA2CB000804E2 /* Helpers */,
+				6BB018331BE40FE600D9EC4C /* Laundry */,
 				192859DE1A6F214D00A47C67 /* News Views */,
 				1901F10C1A41FD9500DDFA9A /* SlideOut */,
 				19C3A8B31A1C309700D32D8A /* ListView */,
@@ -774,12 +818,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
 					82982FB219735ECC00DB2AE3 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = Q4N479MPW3;
+						DevelopmentTeam = 55KFDSK3L9;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -827,17 +871,19 @@
 				19CB3E201A1576D600AF11D9 /* Book.png in Resources */,
 				1935F10F1A37EFF300057667 /* iPad@2x.png in Resources */,
 				19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */,
+				6BD9654D1C0FD67400D2AAF2 /* redCircle.png in Resources */,
 				19C71C491AA0027700518455 /* hamburger-new.png in Resources */,
 				1935F1101A37EFF300057667 /* iPhone 4@2x.png in Resources */,
 				1909DF0A1AC23A6300936552 /* Arrow.png in Resources */,
 				19B6BC3D1A15998A002BFEA5 /* Transit-selected.png in Resources */,
-				1972EEB31A8192E600362B6C /* JOES.PNG in Resources */,
+				1972EEB31A8192E600362B6C /* JOES.png in Resources */,
 				1964BC8619C25EDA00CEB1E1 /* placeholder.png in Resources */,
+				6BD9654C1C0FD67400D2AAF2 /* greenCircle.png in Resources */,
 				19DE26DF1A6897C400D072A7 /* hillel.png in Resources */,
 				197DBAE61A6F54DD00B0707C /* 34-Blue.png in Resources */,
 				19EDDC8E19D24F4B0088C4DC /* contactbutton.png in Resources */,
 				19B6BC3B1A15998A002BFEA5 /* Menu-selected.png in Resources */,
-				1972EEAD1A81928500362B6C /* sbux3.PNG in Resources */,
+				1972EEAD1A81928500362B6C /* sbux3.png in Resources */,
 				19B6BC3C1A15998A002BFEA5 /* Transit.png in Resources */,
 				195D940819BFC40200C6C8FA /* penn-logo.png in Resources */,
 				19DE26D01A68901600D072A7 /* gradient.png in Resources */,
@@ -845,11 +891,11 @@
 				1964BC8D19C281AD00CEB1E1 /* Main.storyboard in Resources */,
 				197DBAED1A6F55C200B0707C /* DP-Grey.png in Resources */,
 				19B6BC401A159CEC002BFEA5 /* News.png in Resources */,
-				1972EEB11A81928500362B6C /* Gourmetgrocer.PNG in Resources */,
+				1972EEB11A81928500362B6C /* Gourmetgrocer.png in Resources */,
 				19B6BC351A15998A002BFEA5 /* About.png in Resources */,
 				19DE26E31A6897C400D072A7 /* quad.png in Resources */,
 				1935F1131A37EFF300057667 /* iPhone 6@2x.png in Resources */,
-				1972EEB01A81928500362B6C /* globalfusion.PNG in Resources */,
+				1972EEB01A81928500362B6C /* globalfusion.png in Resources */,
 				197DBAE71A6F54DD00B0707C /* DP-Blue.png in Resources */,
 				194F1B841A71F3850038DC97 /* support_grey.png in Resources */,
 				19B6BC3A1A15998A002BFEA5 /* Menu.png in Resources */,
@@ -857,7 +903,7 @@
 				1935F10E1A37EFF300057667 /* App Icon.png in Resources */,
 				1935F1111A37EFF300057667 /* iPhone 5@2x.png in Resources */,
 				194F1B831A71F3850038DC97 /* support_blue.png in Resources */,
-				1972EEAF1A81928500362B6C /* FOTW.PNG in Resources */,
+				1972EEAF1A81928500362B6C /* FOTW.png in Resources */,
 				197DBAF21A6F5A1000B0707C /* E@P-Grey.png in Resources */,
 				19DE26DC1A6897C400D072A7 /* arch.png in Resources */,
 				19B6BC411A159CEC002BFEA5 /* News-selected.png in Resources */,
@@ -872,13 +918,13 @@
 				19C258791AED879B00638331 /* arrow-fwd.png in Resources */,
 				19C669941A6966240076AF1C /* UA.png in Resources */,
 				197DBAE81A6F54DD00B0707C /* UTB-Blue.png in Resources */,
-				1972EEAC1A81928500362B6C /* PI.PNG in Resources */,
+				1972EEAC1A81928500362B6C /* PI.png in Resources */,
 				197DBAEC1A6F55C200B0707C /* 34-Grey.png in Resources */,
 				19EDDC9019D24F4B0088C4DC /* contactbutton@3x.png in Resources */,
 				1978259619EDEE1F00284799 /* labs.png in Resources */,
 				19EDDC9719D24FDD0088C4DC /* callbutton.png in Resources */,
 				19B6BC371A15998A002BFEA5 /* book-selected.png in Resources */,
-				1972EEAE1A81928500362B6C /* Tortas.PNG in Resources */,
+				1972EEAE1A81928500362B6C /* Tortas.png in Resources */,
 				19C258781AED879B00638331 /* arrow-bwd.png in Resources */,
 				19EDDC9C19D24FDD0088C4DC /* textbutton@3x.png in Resources */,
 				19EDDC9A19D24FDD0088C4DC /* textbutton.png in Resources */,
@@ -972,12 +1018,15 @@
 			files = (
 				1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */,
 				1979A72C1A0C586000E1B7EB /* PCRAggregator.m in Sources */,
+				6B5979451C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m in Sources */,
 				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
 				19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */,
 				19943A011AC2316B00B489A8 /* DirectionView.m in Sources */,
 				19B8543E1AA6ADDD002564D9 /* main.m in Sources */,
 				192C6F2F1A158533008D507C /* NewsViewController.m in Sources */,
+				6BD965541C0FD78F00D2AAF2 /* LaundryTableViewCell.m in Sources */,
 				1955ADEC1A71D89600D54A9C /* SupportTableViewController.m in Sources */,
+				6B0F0B811BF6A5E000D958BB /* LaundryMidwayTableViewController.m in Sources */,
 				1913FB131A94125000D2E17C /* Building.m in Sources */,
 				1965417F1A71D90C00026C92 /* SupportItem.m in Sources */,
 				195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */,
@@ -994,7 +1043,10 @@
 				1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */,
 				198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */,
 				4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */,
+				6B5979481C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m in Sources */,
 				19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */,
+				6BB018361BE410B400D9EC4C /* LaundryTableViewController.m in Sources */,
+				6B0F0B841BF6AFC800D958BB /* LaundryDetailViewController.m in Sources */,
 				19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
 				1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */,
@@ -1055,6 +1107,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1132,8 +1185,15 @@
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/ParseCrashReporting\"",
+					"$(PROJECT_DIR)",
+					"/**",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.pennlabs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1158,8 +1218,15 @@
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/ParseCrashReporting\"",
+					"$(PROJECT_DIR)",
+					"/**",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.pennlabs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1179,6 +1246,7 @@
 				);
 				INFOPLIST_FILE = PennMobileTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.pennlabs.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
@@ -1194,6 +1262,7 @@
 				);
 				INFOPLIST_FILE = PennMobileTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.pennlabs.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
