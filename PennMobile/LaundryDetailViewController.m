@@ -7,6 +7,8 @@
 //
 
 #import "LaundryDetailViewController.h"
+#import "LaundryWasherDetailTableViewCell.h"
+#import "LaundryDryerDetailTableViewCell.h"
 
 @interface LaundryDetailViewController ()
 
@@ -43,6 +45,11 @@
     self.tableView.frame = CGRectMake(0, 44, self.view.frame.size.width, 0);
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.allowsSelection = NO;
+    
+    NSLog(@"AW = %d", self.aw);
+    NSLog(@"AD = %d", self.ad);
+    NSLog(@"UW = %d", self.uw);
+    NSLog(@"UD = %d", self.ud);
 }
 
 -(void)back {
@@ -77,6 +84,7 @@
             NSDictionary *success = [NSJSONSerialization JSONObjectWithData:data
                                                                     options:kNilOptions
                                                                       error:&error];
+            
             self.hallLaundryList = [success objectForKey:@"machines"];
                                 
             self.washerList = [[NSMutableArray alloc] init];
@@ -103,7 +111,9 @@
 }
 
 -(void) changed {
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 #pragma mark - Table view data source
@@ -133,51 +143,94 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *cellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (!cell)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-    
-    if(indexPath.row == 0) {
-        cell.textLabel.text = @"";
-        cell.backgroundColor = [UIColor whiteColor];
-    } else if(indexPath.row == 1) {
-        cell.textLabel.text = @"";
-        self.laundrySegment.selectedSegmentIndex == 0 ? (cell.imageView.image = [UIImage imageNamed:@"washer_icon.png"]) : (cell.imageView.image = [UIImage imageNamed:@"dryer_icon.png"]);
-        cell.backgroundColor = [UIColor lightGrayColor];
-    } else {
-        cell.backgroundColor = [UIColor whiteColor];
-        cell.imageView.image = nil;
-        UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
-        switchview.tag = indexPath.row;
-        [switchview addTarget:self action:@selector(switched:) forControlEvents:UIControlEventValueChanged];
+    if(indexPath.row == 1) {
+        
         if(self.laundrySegment.selectedSegmentIndex == 0) {
-            cell.textLabel.text = [NSString stringWithFormat:@"Washer %lu", indexPath.row-1];
-            if([[[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"available"] boolValue]) {
-                cell.detailTextLabel.text = @"Available";
-                cell.detailTextLabel.textColor = [UIColor greenColor];
-                cell.accessoryView = nil;
-            } else {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
-                cell.accessoryView = switchview;
-                cell.detailTextLabel.textColor = [UIColor redColor];
+            static NSString *cellIdentifier = @"Cell2";
+            LaundryWasherDetailTableViewCell *cell = nil;
+            
+            if (!cell) {
+                cell = [[LaundryWasherDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil available_washers:self.aw unavailable_washers:self.uw];
             }
+            
+            cell.textLabel.text = @"";
+            cell.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1.0];
+            cell.accessoryView = nil;
+            cell.detailTextLabel.text = @"";
+            
+            cell.nameLabel.text = self.houseName;
+            
+            return cell;
         } else {
-            cell.textLabel.text = [NSString stringWithFormat:@"Dryer %lu", indexPath.row-1];
-            if([[[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"available"] boolValue]) {
-                cell.detailTextLabel.text = @"Available";
-                cell.detailTextLabel.textColor = [UIColor greenColor];
-                cell.accessoryView = nil;
+            
+            static NSString *cellIdentifier = @"Cell3";
+            LaundryDryerDetailTableViewCell *cell = nil;
+            
+            if (!cell) {
+                cell = [[LaundryDryerDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil available_dryers:self.ad unavailable_dryers:self.ud];
+            }
+            
+            cell.textLabel.text = @"";
+            cell.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1.0];
+            cell.accessoryView = nil;
+            cell.detailTextLabel.text = @"";
+            
+            cell.nameLabel.text = self.houseName;
+            
+            return cell;
+        }
+        
+
+        
+    } else {
+        static NSString *cellIdentifier = @"Cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (!cell)
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        
+        if(indexPath.row == 0) {
+            cell.textLabel.text = @"";
+            cell.backgroundColor = [UIColor whiteColor];
+            cell.detailTextLabel.text = @"";
+            cell.accessoryView = nil;
+        } else {
+            cell.backgroundColor = [UIColor whiteColor];
+            cell.imageView.image = nil;
+            UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
+            switchview.tag = indexPath.row;
+            [switchview addTarget:self action:@selector(switched:) forControlEvents:UIControlEventValueChanged];
+            if(self.laundrySegment.selectedSegmentIndex == 0) {
+                cell.textLabel.text = [NSString stringWithFormat:@"Washer %lu", indexPath.row-1];
+                if([[[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"available"] boolValue]) {
+                    cell.detailTextLabel.text = @"Available";
+                    cell.detailTextLabel.textColor = [UIColor greenColor];
+                    cell.accessoryView = nil;
+                } else {
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
+                    cell.accessoryView = switchview;
+                    cell.detailTextLabel.textColor = [UIColor redColor];
+                }
             } else {
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
-                cell.accessoryView = switchview;
-                cell.detailTextLabel.textColor = [UIColor redColor];
+                cell.textLabel.text = [NSString stringWithFormat:@"Dryer %lu", indexPath.row-1];
+                if([[[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"available"] boolValue]) {
+                    cell.detailTextLabel.text = @"Available";
+                    cell.detailTextLabel.textColor = [UIColor greenColor];
+                    cell.accessoryView = nil;
+                } else {
+                    cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
+                    cell.detailTextLabel.textColor = [UIColor redColor];
+                    if([[[self.dryerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"] isEqualToString:@"not updating status"]) {
+                        cell.accessoryView = nil;
+                    } else {
+                        cell.accessoryView = switchview;
+                    }
+                }
             }
         }
+        return cell;
     }
     
-    return cell;
 }
 
 -(void)viewDidLayoutSubviews

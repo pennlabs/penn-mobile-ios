@@ -122,6 +122,10 @@
         LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
         laundryDetailVC.indexNumber = [[laundryList objectAtIndex:0] objectForKey:@"index"];
         laundryDetailVC.houseName = [[laundryList objectAtIndex:0] objectForKey:@"name"];
+        laundryDetailVC.aw = [[[laundryList objectAtIndex:0] objectForKey:@"washers_available"] intValue];
+        laundryDetailVC.ad = [[[laundryList objectAtIndex:0] objectForKey:@"dryers_available"] intValue];
+        laundryDetailVC.uw = [[[laundryList objectAtIndex:0] objectForKey:@"washers_in_use"] intValue];
+        laundryDetailVC.ud = [[[laundryList objectAtIndex:0] objectForKey:@"dryers_in_use"] intValue];
         
         [self.navigationController pushViewController:laundryDetailVC animated:YES];
         

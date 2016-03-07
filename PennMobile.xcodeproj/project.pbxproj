@@ -131,6 +131,8 @@
 		4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */; };
 		6B0F0B811BF6A5E000D958BB /* LaundryMidwayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0F0B801BF6A5E000D958BB /* LaundryMidwayTableViewController.m */; };
 		6B0F0B841BF6AFC800D958BB /* LaundryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */; };
+		6B5979451C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5979441C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m */; };
+		6B5979481C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5979471C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m */; };
 		6BB018361BE410B400D9EC4C /* LaundryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB018351BE410B400D9EC4C /* LaundryTableViewController.m */; };
 		6BD9654C1C0FD67400D2AAF2 /* greenCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BD9654A1C0FD67400D2AAF2 /* greenCircle.png */; };
 		6BD9654D1C0FD67400D2AAF2 /* redCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BD9654B1C0FD67400D2AAF2 /* redCircle.png */; };
@@ -318,6 +320,10 @@
 		6B0F0B801BF6A5E000D958BB /* LaundryMidwayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryMidwayTableViewController.m; sourceTree = "<group>"; };
 		6B0F0B821BF6AFC800D958BB /* LaundryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDetailViewController.h; sourceTree = "<group>"; };
 		6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryDetailViewController.m; sourceTree = "<group>"; };
+		6B5979431C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryWasherDetailTableViewCell.h; sourceTree = "<group>"; };
+		6B5979441C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryWasherDetailTableViewCell.m; sourceTree = "<group>"; };
+		6B5979461C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDryerDetailTableViewCell.h; sourceTree = "<group>"; };
+		6B5979471C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryDryerDetailTableViewCell.m; sourceTree = "<group>"; };
 		6BB018341BE410B400D9EC4C /* LaundryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryTableViewController.h; sourceTree = "<group>"; };
 		6BB018351BE410B400D9EC4C /* LaundryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryTableViewController.m; sourceTree = "<group>"; };
 		6BC9842D1BDAE21E00B8D6C8 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
@@ -670,6 +676,10 @@
 				6BD965521C0FD78F00D2AAF2 /* LaundryTableViewCell.m */,
 				6B0F0B821BF6AFC800D958BB /* LaundryDetailViewController.h */,
 				6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */,
+				6B5979431C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.h */,
+				6B5979441C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m */,
+				6B5979461C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.h */,
+				6B5979471C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m */,
 			);
 			name = Laundry;
 			sourceTree = "<group>";
@@ -1008,6 +1018,7 @@
 			files = (
 				1929AD0019DBA21E00B15C5B /* TransitViewController.m in Sources */,
 				1979A72C1A0C586000E1B7EB /* PCRAggregator.m in Sources */,
+				6B5979451C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m in Sources */,
 				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
 				19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */,
 				19943A011AC2316B00B489A8 /* DirectionView.m in Sources */,
@@ -1032,6 +1043,7 @@
 				1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */,
 				198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */,
 				4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */,
+				6B5979481C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m in Sources */,
 				19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */,
 				6BB018361BE410B400D9EC4C /* LaundryTableViewController.m in Sources */,
 				6B0F0B841BF6AFC800D958BB /* LaundryDetailViewController.m in Sources */,
@@ -1181,7 +1193,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.pennlabs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1214,7 +1226,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.pennlabs.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a9f85a40-10a4-4824-8789-41d8efaf29b4";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -13,4 +13,10 @@
 @property (nonatomic, strong) NSNumber *indexNumber;
 @property (nonatomic, strong) NSString *houseName;
 
+@property (nonatomic) int aw;
+@property (nonatomic) int uw;
+@property (nonatomic) int ad;
+@property (nonatomic) int ud;
+
+
 @end

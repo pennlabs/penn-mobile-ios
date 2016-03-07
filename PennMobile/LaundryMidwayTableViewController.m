@@ -77,8 +77,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *cellIdentifier = @"Cell";
-    LaundryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    LaundryTableViewCell *cell = nil;
     
     int aw = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_available"] intValue];
     int ad = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_available"] intValue];
@@ -86,7 +85,7 @@
     int ud = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_in_use"] intValue];
     
     if (!cell) {
-        cell = [[LaundryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier available_washers:aw available_dryers:ad unavailable_washers:uw unavailable_dryers:ud];
+        cell = [[LaundryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil available_washers:aw available_dryers:ad unavailable_washers:uw unavailable_dryers:ud];
     }
     cell.nameLabel.text = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"name"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -99,6 +98,10 @@
     LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
     laundryDetailVC.indexNumber = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"index"];
     laundryDetailVC.houseName = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"name"];
+    laundryDetailVC.aw = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_available"] intValue];
+    laundryDetailVC.ad = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_available"] intValue];
+    laundryDetailVC.uw = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_in_use"] intValue];
+    laundryDetailVC.ud = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_in_use"] intValue];
     
     [self.navigationController pushViewController:laundryDetailVC animated:NO];
 }

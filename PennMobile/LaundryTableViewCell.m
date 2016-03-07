@@ -21,6 +21,11 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier available_washers:(int) aw available_dryers:(int) ad unavailable_washers:(int) uw unavailable_dryers:(int) ud {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
+    for (UIView *view in self.subviews) {
+        [view removeFromSuperview];
+    }
+    
     if (self) {
         float height = self.frame.size.height;
         
