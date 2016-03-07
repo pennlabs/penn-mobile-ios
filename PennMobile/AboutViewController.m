@@ -16,15 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    UITapGestureRecognizer *tripeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeText)];
-    tripeTap.numberOfTapsRequired = 3;
-    [_labsLogo addGestureRecognizer:tripeTap];
+
 }
 
-- (void)changeText {
-    _labsHeader.text = @"You will never beat the real Best";
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -42,7 +36,7 @@
     [mc setToRecipients:toRecipents];
     
     // Present mail view controller on screen
-    [self presentViewController:mc animated:YES completion:NULL];
+    [self presentViewController:mc animated:YES completion:nil];
 }
 - (IBAction)moreInfo:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://pennlabs.org"]];
