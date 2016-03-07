@@ -45,11 +45,6 @@
     self.tableView.frame = CGRectMake(0, 44, self.view.frame.size.width, 0);
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.allowsSelection = NO;
-    
-    NSLog(@"AW = %d", self.aw);
-    NSLog(@"AD = %d", self.ad);
-    NSLog(@"UW = %d", self.uw);
-    NSLog(@"UD = %d", self.ud);
 }
 
 -(void)back {
@@ -146,7 +141,6 @@
     if(indexPath.row == 1) {
         
         if(self.laundrySegment.selectedSegmentIndex == 0) {
-            static NSString *cellIdentifier = @"Cell2";
             LaundryWasherDetailTableViewCell *cell = nil;
             
             if (!cell) {
@@ -162,8 +156,6 @@
             
             return cell;
         } else {
-            
-            static NSString *cellIdentifier = @"Cell3";
             LaundryDryerDetailTableViewCell *cell = nil;
             
             if (!cell) {
