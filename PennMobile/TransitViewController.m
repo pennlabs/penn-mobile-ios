@@ -28,6 +28,8 @@
     [_mapView setMapType:MKMapTypeStandard];
     [_mapView setZoomEnabled:YES];
     [_mapView setScrollEnabled:YES];
+    MKCoordinateRegion region = {{39.9529, -75.197098}, {10, 10}};
+    [_mapView setRegion:region];
     _labelDestination.hidden = YES;
     _directionsScrollView.contentSize = [DirectionView size];
     _directionsScrollView.scrollEnabled = YES;

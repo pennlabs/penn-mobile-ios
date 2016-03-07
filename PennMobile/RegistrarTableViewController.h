@@ -15,7 +15,7 @@
 #import "PCRAggregator.h"
 
 #define REGISTRAR_PATH @"registrar/search?q="
-#define BUILDING_PATH @"buildings/"
+#define BUILDING_PATH @"buildings/search?q="
 
 typedef NS_ENUM(NSInteger, CourseFilter) {
     All = 1,
