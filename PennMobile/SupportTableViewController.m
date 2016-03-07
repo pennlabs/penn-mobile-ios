@@ -53,20 +53,20 @@
     shs.phone = @"215-746-3535";
     shs.phoneFiltered = @"2157463535";
     _contacts = [NSArray arrayWithObjects:pEmergency, pGeneral, pWalk, pRide, hLine, caps, special, womens, shs, nil];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
     UITapGestureRecognizer *taptap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(easterEgg:)];
     taptap.numberOfTapsRequired = 3;
     [self.navigationItem.titleView addGestureRecognizer:taptap];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.bounces = NO;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 -(IBAction)easterEgg:(id)sender {
     NSMutableArray *arr = [NSMutableArray arrayWithArray:_contacts];
     SupportItem *n = [[SupportItem alloc] init];
@@ -76,6 +76,7 @@
     _contacts = [arr copy];
     [self.tableView reloadData];
 }
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -90,17 +91,43 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     SupportItem *c = _contacts[indexPath.row];
+    NSLog(@"%@", c.phoneFiltered);
     NSString *phoneNumber = [@"tel://" stringByAppendingString:c.phoneFiltered];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    SupportItem *c = _contacts[indexPath.row];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    }
+    SupportItem *c = [self.contacts objectAtIndex:indexPath.row];
     cell.textLabel.text = c.name;
     cell.detailTextLabel.text = c.phone;
-    // Configure the cell...
     
     return cell;
+}
+
+-(void)viewDidLayoutSubviews
+{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 
