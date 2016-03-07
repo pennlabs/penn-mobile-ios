@@ -102,7 +102,6 @@
 		19C669961A696A790076AF1C /* Starbucks.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 19C669951A696A790076AF1C /* Starbucks.jpg */; };
 		19C71C491AA0027700518455 /* hamburger-new.png in Resources */ = {isa = PBXBuildFile; fileRef = 19C71C481AA0027700518455 /* hamburger-new.png */; };
 		19C71C4B1AA0057E00518455 /* hamburger-xl.png in Resources */ = {isa = PBXBuildFile; fileRef = 19C71C4A1AA0057E00518455 /* hamburger-xl.png */; };
-		19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */; };
 		19CB3E201A1576D600AF11D9 /* Book.png in Resources */ = {isa = PBXBuildFile; fileRef = 19CB3E1F1A1576D600AF11D9 /* Book.png */; };
 		19DE26CE1A688FC200D072A7 /* dining-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 19DE26CD1A688FC200D072A7 /* dining-placeholder.png */; };
 		19DE26D01A68901600D072A7 /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 19DE26CF1A68901600D072A7 /* gradient.png */; };
@@ -281,8 +280,6 @@
 		19C669951A696A790076AF1C /* Starbucks.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Starbucks.jpg; sourceTree = "<group>"; };
 		19C71C481AA0027700518455 /* hamburger-new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hamburger-new.png"; sourceTree = "<group>"; };
 		19C71C4A1AA0057E00518455 /* hamburger-xl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hamburger-xl.png"; sourceTree = "<group>"; };
-		19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
-		19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		19CB3E1F1A1576D600AF11D9 /* Book.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Book.png; path = Tabs/Book.png; sourceTree = "<group>"; };
 		19DE26CD1A688FC200D072A7 /* dining-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dining-placeholder.png"; sourceTree = "<group>"; };
 		19DE26CF1A68901600D072A7 /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient.png; sourceTree = "<group>"; };
@@ -574,8 +571,6 @@
 				195D940C19BFC44E00C6C8FA /* PennNavController.m */,
 				198E232019F9C8E8000D33FD /* DetailViewController.h */,
 				198E232119F9C8E8000D33FD /* DetailViewController.m */,
-				19C7ABCF1A37EE8700E0144E /* TabBarViewController.m */,
-				19C7ABCE1A37EE8700E0144E /* TabBarViewController.h */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1020,7 +1015,6 @@
 				1979A72C1A0C586000E1B7EB /* PCRAggregator.m in Sources */,
 				6B5979451C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m in Sources */,
 				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
-				19C7ABD01A37EE8700E0144E /* TabBarViewController.m in Sources */,
 				19943A011AC2316B00B489A8 /* DirectionView.m in Sources */,
 				19B8543E1AA6ADDD002564D9 /* main.m in Sources */,
 				192C6F2F1A158533008D507C /* NewsViewController.m in Sources */,

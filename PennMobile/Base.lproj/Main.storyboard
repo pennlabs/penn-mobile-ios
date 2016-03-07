@@ -1800,7 +1800,7 @@ and the rest of Labs + UA</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="u0C-RY-oAb" kind="custom" customClass="ECSlidingSegue" id="vTC-Aa-xrg"/>
+                                            <segue destination="u0C-RY-oAb" kind="custom" identifier="Laundry" customClass="ECSlidingSegue" id="vTC-Aa-xrg"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="About" id="4hs-RM-j5Q">
@@ -2287,7 +2287,7 @@ and the rest of Labs + UA</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qJU-VF-1ve"/>
-        <segue reference="usY-bl-Z76"/>
+        <segue reference="QVS-YE-BQT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.039215686274509803" green="0.074509803921568626" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -24,6 +24,11 @@
 -(void) viewDidLoad {
     self.hasLoaded = NO;
     self.title = @"Laundry";
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor],
+       NSFontAttributeName:[UIFont fontWithName:@"AGaramondPro-Regular" size:30]}];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -169,7 +174,7 @@
         // this is a workaround as the normal returnToView selector causes a fault
         // the memory for hte instance is locked unless the view controller is passed in a segue
         // this is for security reasons.
-        [[SlideOutMenuViewController instance] performSegueWithIdentifier:self.navigationItem.title sender:self];
+        [[SlideOutMenuViewController instance] performSegueWithIdentifier:@"Laundry" sender:self];
     } else {
         [self performSegueWithIdentifier:@"menu" sender:self];
     }
