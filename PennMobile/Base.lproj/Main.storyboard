@@ -998,7 +998,7 @@
                             <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ytz-En-EF4">
                                 <rect key="frame" x="37" y="183" width="300" height="300"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="egP-MZ-cev">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="egP-MZ-cev">
                                         <rect key="frame" x="10" y="18" width="280" height="27"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="99" id="70h-kB-2lk"/>
@@ -1007,7 +1007,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jD1-R9-52S">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jD1-R9-52S">
                                         <rect key="frame" x="10" y="64.5" width="280" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1453,20 +1453,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="j9u-PD-pYY">
-                                <rect key="frame" x="37" y="413" width="300" height="110"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="1Uj-Sm-tca"/>
-                                    <constraint firstAttribute="height" constant="110" id="yTl-eH-5OB"/>
-                                </constraints>
-                                <string key="text">Developed by Sacha Best
-Designed by Derek Jobst and Sacha Best
-Thanks to Adel Qalieh, David Lakata
-and the rest of Labs + UA</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UA" translatesAutoresizingMaskIntoConstraints="NO" id="DFH-wk-Q8g">
                                 <rect key="frame" x="207" y="20" width="122" height="243"/>
                                 <constraints>
@@ -1477,20 +1463,6 @@ and the rest of Labs + UA</string>
                                     <mask key="constraints">
                                         <exclude reference="OKu-Yi-1fF"/>
                                         <exclude reference="bO3-TK-hMH"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="DYq-jU-kZ7">
-                                <rect key="frame" x="37" y="20" width="100" height="243"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="DYq-jU-kZ7" secondAttribute="height" multiplier="1:1" id="VNX-jj-aWM"/>
-                                    <constraint firstAttribute="width" constant="50" id="ekz-xH-SEW"/>
-                                    <constraint firstAttribute="width" constant="100" id="x0p-YB-Syv"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="VNX-jj-aWM"/>
-                                        <exclude reference="ekz-xH-SEW"/>
                                     </mask>
                                 </variation>
                             </imageView>
@@ -1510,6 +1482,34 @@ and the rest of Labs + UA</string>
                                     <constraint firstAttribute="width" constant="120" id="TY3-6g-OJT"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="labs" translatesAutoresizingMaskIntoConstraints="NO" id="DYq-jU-kZ7">
+                                <rect key="frame" x="37" y="20" width="100" height="243"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="DYq-jU-kZ7" secondAttribute="height" multiplier="1:1" id="VNX-jj-aWM"/>
+                                    <constraint firstAttribute="width" constant="50" id="ekz-xH-SEW"/>
+                                    <constraint firstAttribute="width" constant="100" id="x0p-YB-Syv"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="VNX-jj-aWM"/>
+                                        <exclude reference="ekz-xH-SEW"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="j9u-PD-pYY">
+                                <rect key="frame" x="37.5" y="413" width="300" height="110"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="1Uj-Sm-tca"/>
+                                    <constraint firstAttribute="height" constant="110" id="yTl-eH-5OB"/>
+                                </constraints>
+                                <string key="text">Developed by Sacha Best and Krishna Bharathala
+Designed by Derek Jobst and Sacha Best
+Thanks to Adel Qalieh, David Lakata
+and the rest of Labs + UA</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1563,8 +1563,8 @@ and the rest of Labs + UA</string>
                             <rect key="frame" x="137.5" y="5.5" width="100" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="648-zW-pTx">
-                                    <rect key="frame" x="0.0" y="0.0" width="100" height="33"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="About" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="648-zW-pTx">
+                                    <rect key="frame" x="-1" y="0.0" width="100" height="33"/>
                                     <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -1721,7 +1721,7 @@ and the rest of Labs + UA</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="nEE-Hs-eIk">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="nEE-Hs-eIk">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1800,7 +1800,7 @@ and the rest of Labs + UA</string>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="u0C-RY-oAb" kind="custom" customClass="ECSlidingSegue" id="vTC-Aa-xrg"/>
+                                            <segue destination="u0C-RY-oAb" kind="custom" identifier="Laundry" customClass="ECSlidingSegue" id="vTC-Aa-xrg"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="About" id="4hs-RM-j5Q">
@@ -1811,6 +1811,9 @@ and the rest of Labs + UA</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <segue destination="oVB-9K-p2y" kind="custom" identifier="About" customClass="ECSlidingSegue" id="8UR-BT-ubj"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Campus Help" id="QOd-AA-t6M">
                                         <rect key="frame" x="0.0" y="382" width="375" height="50"/>
@@ -1837,7 +1840,7 @@ and the rest of Labs + UA</string>
                                     <outlet property="delegate" destination="9eG-Q0-zVM" id="lNz-FH-s2Y"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PennMobile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="fSJ-A1-MKt">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PennMobile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="fSJ-A1-MKt">
                                 <rect key="frame" x="24" y="28" width="141.5" height="30"/>
                                 <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
