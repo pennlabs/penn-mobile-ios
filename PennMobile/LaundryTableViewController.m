@@ -169,7 +169,7 @@
         // this is a workaround as the normal returnToView selector causes a fault
         // the memory for hte instance is locked unless the view controller is passed in a segue
         // this is for security reasons.
-        [[SlideOutMenuViewController instance] performSegueWithIdentifier:self.navigationItem.title sender:self];
+        [[SlideOutMenuViewController instance] performSegueWithIdentifier:@"Laundry" sender:self];
     } else {
         [self performSegueWithIdentifier:@"menu" sender:self];
     }

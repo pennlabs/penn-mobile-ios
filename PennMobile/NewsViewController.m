@@ -46,8 +46,6 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     
-    NSLog(@"start");
-    
     //   [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [_loadingIndicator startAnimating];
     NSString *url =_webView.request.URL.absoluteString;
@@ -63,8 +61,6 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    NSLog(@"finish");
-    
     
     if (!webView.isLoading) {
         //     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -162,7 +158,7 @@
         // this is a workaround as the normal returnToView selector causes a fault
         // the memory for hte instance is locked unless the view controller is passed in a segue
         // this is for security reasons.
-        [[SlideOutMenuViewController instance] performSegueWithIdentifier:self.navigationItem.title sender:self];
+        [[SlideOutMenuViewController instance] performSegueWithIdentifier:@"News" sender:self];
     } else {
         [self performSegueWithIdentifier:@"menu" sender:self];
     }
