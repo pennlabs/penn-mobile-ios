@@ -192,10 +192,10 @@
     Person *p = super.forSegue;
     UIAlertView *phoneAlert = [[UIAlertView alloc] initWithTitle:p.name message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
     @try {
-        if (p.phone && ![p.phone isEqualToString:@""]) {
-            [phoneAlert addButtonWithTitle:@"Call"];
-            [phoneAlert addButtonWithTitle:@"Text"];
-        }
+//        if (p.phone && ![p.phone isEqualToString:@""]) {
+//            [phoneAlert addButtonWithTitle:@"Call"];
+//            [phoneAlert addButtonWithTitle:@"Text"];
+//        }
         if (p.email && ![p.email isEqualToString:@""]) {
             [phoneAlert addButtonWithTitle:@"Email"];
         }
