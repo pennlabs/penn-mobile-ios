@@ -26,7 +26,7 @@
     
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = backButtonItem;
-    [backButtonItem setTintColor:[UIColor redColor]];
+    [backButtonItem setTintColor:[UIColor whiteColor]];
     
     self.tableView.alwaysBounceVertical = NO;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];

@@ -32,7 +32,7 @@
     
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = backButtonItem;
-    [backButtonItem setTintColor:[UIColor redColor]];
+    [backButtonItem setTintColor:[UIColor whiteColor]];
     
     NSArray *itemArray = [NSArray arrayWithObjects: @"WASHERS", @"DRYERS", nil];
     self.laundrySegment = [[UISegmentedControl alloc] initWithItems:itemArray];
