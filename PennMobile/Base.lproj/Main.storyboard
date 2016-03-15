@@ -946,30 +946,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="Cga-JQ-GD3">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="q4X-Q5-aGh">
-                            <rect key="frame" x="112.5" y="5.5" width="150" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6S-Hq-caU">
-                                    <rect key="frame" x="8" y="8" width="134" height="17"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <state key="normal" title="Hours">
-                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <segue destination="bOm-Lw-oRu" kind="presentation" identifier="Times" modalPresentationStyle="overFullScreen" id="usY-bl-Z76"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="bottomMargin" secondItem="a6S-Hq-caU" secondAttribute="bottom" id="H6b-YT-3vC"/>
-                                <constraint firstAttribute="trailingMargin" secondItem="a6S-Hq-caU" secondAttribute="trailing" id="HPW-Y7-9Kb"/>
-                                <constraint firstItem="a6S-Hq-caU" firstAttribute="top" secondItem="q4X-Q5-aGh" secondAttribute="topMargin" id="fDX-jo-HE6"/>
-                                <constraint firstItem="a6S-Hq-caU" firstAttribute="leading" secondItem="q4X-Q5-aGh" secondAttribute="leadingMargin" id="l5g-hD-o0K"/>
-                            </constraints>
-                        </view>
                         <barButtonItem key="rightBarButtonItem" title="Meals" style="plain" id="AMb-v2-wPv">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -2289,8 +2265,8 @@ and the rest of Labs + UA</string>
         <image name="labs" width="500" height="500"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="kHb-Ul-JLt"/>
         <segue reference="qJU-VF-1ve"/>
-        <segue reference="QVS-YE-BQT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.039215686274509803" green="0.074509803921568626" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
 </document>
