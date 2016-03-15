@@ -72,7 +72,7 @@
          */
         new.activity = courseData[@"activity_description"];
         new.dept = courseData[@"course_department"];
-        new.title = [courseData[@"course_title"] capitalizedString];
+        new.title = courseData[@"course_title"];
         new.courseNum = courseData[@"course_number"];
         new.credits = courseData[@"credits"];
         new.sectionNum = courseData[@"section_number"];

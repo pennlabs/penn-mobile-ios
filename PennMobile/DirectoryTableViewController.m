@@ -16,16 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // to account for odd startup bug
     super.objects = nil;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    // to dismiss the keyboard when the user taps on the table
 }
 
 - (void)didReceiveMemoryWarning {
@@ -246,6 +237,7 @@ static ABAddressBookRef addressBook;
 - (void)accessGrantedForAddressBook:(Person *)inQuestion {
     [self showNewPersonViewController:inQuestion];
 }
+
 // Check the authorization status of our application for Address Book
 -(void)checkAddressBookAccess:(Person *)inQuestion
 {
@@ -283,6 +275,7 @@ static ABAddressBookRef addressBook;
         }
     });
 }
+
 - (void)newPersonViewController:(ABNewPersonViewController *)newPersonViewController
        didCompleteWithNewPerson:(ABRecordRef)person {
     NSString *name = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
@@ -296,8 +289,8 @@ static ABAddressBookRef addressBook;
         [newPersonViewController dismissViewControllerAnimated:YES completion:nil];
     }
 }
-- (void)showNewPersonViewController:(Person *)inQuestion
-{
+
+- (void)showNewPersonViewController:(Person *)inQuestion {
     ABNewPersonViewController *picker = [[ABNewPersonViewController alloc] init];
     picker.newPersonViewDelegate = self;
     ABRecordRef person = ABPersonCreate();
