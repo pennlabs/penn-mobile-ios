@@ -200,8 +200,12 @@
                     cell.accessoryView = nil;
                 } else {
                     cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
-                    cell.accessoryView = switchview;
                     cell.detailTextLabel.textColor = [UIColor redColor];
+                    if([[[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"] isEqualToString:@"not updating status"]) {
+                        cell.accessoryView = nil;
+                    } else {
+                        cell.accessoryView = switchview;
+                    }
                 }
             } else {
                 cell.textLabel.text = [NSString stringWithFormat:@"Dryer %lu", indexPath.row-1];
