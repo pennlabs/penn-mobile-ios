@@ -15,61 +15,73 @@
 @implementation MenuViewController
 
 - (void)viewDidLoad {
+    
+    NSLog(@"I AM HERE I THINK");
+    
     [super viewDidLoad];
-    self.tableView.rowHeight = 60.0f;
+    
     dates = [_source getDates];
     _dummyText = [[UITextField alloc] init];
+    mealPicker = [[UIPickerView alloc] init];
     mealPicker.delegate = self;
     mealPicker.dataSource = self;
+    
     pickerTopBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40)];
     pickerTopBar.backgroundColor = PENN_BLUE;
+    
+    self.navigationItem.title = @"Hours";
+    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(cancelChooser:)];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
     UIBarButtonItem *confirm = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStyleBordered target:self action:@selector(confirmChooser:)];
     confirm.tintColor = [UIColor whiteColor];
+    
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelChooser:)];
     cancel.tintColor = [UIColor whiteColor];
+    
     NSMutableArray *buttons = [[NSMutableArray alloc] initWithObjects:confirm, cancel, nil];
     UIToolbar *bar = [[UIToolbar alloc] initWithFrame:pickerTopBar.frame];
-    weekday = [[NSDateFormatter alloc] init];
-    [weekday setDateFormat:@"EEEE"];
     bar.barStyle = UIBarStyleBlack;
     bar.translucent = NO;
     bar.barTintColor = PENN_BLUE;
     [bar setItems:buttons];
     [pickerTopBar addSubview:bar];
-    mealPicker = [[UIPickerView alloc] init];
-    mealPicker.dataSource = self;
-    mealPicker.delegate = self;
+    
+    weekday = [[NSDateFormatter alloc] init];
+    [weekday setDateFormat:@"EEEE"];
+    
     [_dummyText setInputView:mealPicker];
     _dummyText.inputAccessoryView = pickerTopBar;
     [self.view addSubview:_dummyText];
     timeString = [_source getTimeStringForVenue:_source.selectedVenue onDate:[NSDate date]];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
 }
 - (void) viewWillAppear:(BOOL)animated {
-    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow]
-                             animated:animated];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
     [super viewWillAppear:animated];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark - Picker View Stuff
 
-- (int)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 2;
 }
 
-- (int)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     switch (component) {
         case 0:
             return dates.count;
         case 1:
-            return _source.mealsServed.count;
+            return self.source.mealsServed.count;
         default:
             return 0;
     }
@@ -84,6 +96,10 @@
         default:
             return @"";
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 60.0f;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView
@@ -151,39 +167,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     selected = indexPath;
 }
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 #pragma mark - Button Controls
 
 // This needs to show a picker that allows the user to select which meal time they want to see
@@ -194,11 +178,7 @@
 // This needs to show a picker that allows the user to choose the date for which they want to see
 - (IBAction)dateButtonClicked:(id)sender {
     [_dummyText becomeFirstResponder];
-
 }
-
-
-
 
 #pragma mark - Navigation
 
