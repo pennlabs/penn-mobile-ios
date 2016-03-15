@@ -15,9 +15,6 @@
 @implementation MenuViewController
 
 - (void)viewDidLoad {
-    
-    NSLog(@"I AM HERE I THINK");
-    
     [super viewDidLoad];
     
     dates = [_source getDates];
