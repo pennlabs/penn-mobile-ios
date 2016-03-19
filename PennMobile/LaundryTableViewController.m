@@ -29,6 +29,9 @@
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
        NSFontAttributeName:[UIFont fontWithName:@"AGaramondPro-Regular" size:30]}];
     
+    self.navigationController.navigationBar.barTintColor = PENN_BLUE;
+    self.navigationController.navigationBar.translucent = NO;
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
