@@ -10,7 +10,16 @@
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <Parse/Parse.h>
 
+#import "MainViewController.h"
+#import "MasterTableViewController.h"
+#import "SWRevealViewController.h"
+
 @interface AppDelegate ()
+
+@property (nonatomic, strong) UINavigationController *navController;
+@property (nonatomic, strong) MasterTableViewController *masterTableViewController;
+@property (nonatomic, strong) MainViewController *mainVC;
+@property (nonatomic, strong) SWRevealViewController *SWRevealViewController;
 
 @end
 
@@ -27,8 +36,34 @@
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [self registerRemoteAllDevices:application];
     //[self auth];
+    
+    self.mainVC = [[MainViewController alloc] init];
+    
+    self.navController = [[UINavigationController alloc] initWithRootViewController:self.mainVC];
+    self.navController.navigationBarHidden = YES;
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = self.navController;
+    [self.window makeKeyAndVisible];
+    
+    [self presentSWController];
+    
+    
     return YES;
 }
+
+- (void)presentSWController{
+    
+    self.masterTableViewController = [[MasterTableViewController alloc] init];
+    UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:self.masterTableViewController];
+    
+    self.mainVC = [[MainViewController alloc] init];
+    UINavigationController *mainViewNavigationController = [[UINavigationController alloc] initWithRootViewController:self.mainVC];
+    
+    self.SWRevealViewController = [[SWRevealViewController alloc] initWithRearViewController:masterNavigationController frontViewController:mainViewNavigationController];
+    
+    [self.navController pushViewController:self.SWRevealViewController animated:NO];
+}
+
 
 - (void)registerRemoteAllDevices:(UIApplication *)application  {
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {

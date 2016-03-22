@@ -18,7 +18,6 @@
             <string>AGaramondPro-Regular</string>
             <string>AGaramondPro-Regular</string>
             <string>AGaramondPro-Regular</string>
-            <string>AGaramondPro-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1775,9 +1774,6 @@ and the rest of Labs + UA</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="u0C-RY-oAb" kind="custom" identifier="Laundry" customClass="ECSlidingSegue" id="vTC-Aa-xrg"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="About" id="4hs-RM-j5Q">
                                         <rect key="frame" x="0.0" y="332" width="375" height="50"/>
@@ -1799,9 +1795,6 @@ and the rest of Labs + UA</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="iqI-Ds-NHl" kind="custom" identifier="Campus Help" customClass="ECSlidingSegue" id="PeN-SV-7eU"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
@@ -2069,153 +2062,6 @@ and the rest of Labs + UA</string>
             </objects>
             <point key="canvasLocation" x="1006.5" y="2411.5"/>
         </scene>
-        <!--Laundry View Controller-->
-        <scene sceneID="W8U-Uc-F9x">
-            <objects>
-                <tableViewController title="Laundry View Controller" id="f3T-Kk-0rD" customClass="LaundryTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="YYz-eW-IPa">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="4Th-2X-DZ5">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Th-2X-DZ5" id="405-9G-eWR">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="f3T-Kk-0rD" id="U1W-cV-1O2"/>
-                            <outlet property="delegate" destination="f3T-Kk-0rD" id="yrG-PZ-ATD"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Laundry View Controller" id="2hl-lh-Zv1">
-                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="fK1-l9-ppu">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="menuButton:" destination="f3T-Kk-0rD" id="99R-4f-Fta"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <segue destination="FaU-JI-TgO" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="gwZ-cM-8br"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ke6-9T-vfH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="FaU-JI-TgO" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="999.5" y="3147.5"/>
-        </scene>
-        <!--Laundry-->
-        <scene sceneID="53y-JI-piC">
-            <objects>
-                <navigationController title="Laundry" id="u0C-RY-oAb" sceneMemberID="viewController">
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="2xf-d0-7LZ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="f3T-Kk-0rD" kind="relationship" relationship="rootViewController" id="GB3-DG-mxL"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ACc-Sw-zUv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="584.5" y="3147.5"/>
-        </scene>
-        <!--Support Table View Controller-->
-        <scene sceneID="0CT-or-2Hq">
-            <objects>
-                <tableViewController id="Ukf-cy-1CY" customClass="SupportTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Zw6-au-eUx">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="Na6-FX-77X" detailTextLabel="4sn-5i-ALO" style="IBUITableViewCellStyleValue1" id="pDp-XG-PTv">
-                                <rect key="frame" x="0.0" y="22" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pDp-XG-PTv" id="DeR-px-T2L">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Na6-FX-77X">
-                                            <rect key="frame" x="15" y="12" width="31.5" height="19.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4sn-5i-ALO">
-                                            <rect key="frame" x="318.5" y="12" width="41.5" height="19.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Ukf-cy-1CY" id="9Qx-6S-OqH"/>
-                            <outlet property="delegate" destination="Ukf-cy-1CY" id="qCu-lI-qmu"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="ed3-Zf-wY3">
-                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="1cJ-xa-4x7">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="menuButton:" destination="Ukf-cy-1CY" id="j4Y-Yb-Wxr"/>
-                            </connections>
-                        </barButtonItem>
-                        <view key="titleView" contentMode="scaleToFill" id="tW5-Le-wT0">
-                            <rect key="frame" x="112.5" y="5.5" width="150" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Support" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="b7E-6j-0Zx">
-                                    <rect key="frame" x="-19.5" y="0.5" width="188" height="33"/>
-                                    <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
-                    </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <segue destination="E0J-el-QO6" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="hGK-Hg-37E"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qie-xS-Pt7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="E0J-el-QO6" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="999.5" y="3899.5"/>
-        </scene>
-        <!--Support-->
-        <scene sceneID="zoT-Ag-lBC">
-            <objects>
-                <navigationController title="Support" id="iqI-Ds-NHl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="News" image="News" selectedImage="News-selected" id="yE7-RZ-sLo"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="uw7-0V-SG9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Ukf-cy-1CY" kind="relationship" relationship="rootViewController" id="Wfa-BC-ZdP"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Z3N-Jy-v9s" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="598.5" y="3899.5"/>
-        </scene>
         <!--Maps-->
         <scene sceneID="IYF-ZZ-Qcs">
             <objects>
@@ -2266,7 +2112,7 @@ and the rest of Labs + UA</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kHb-Ul-JLt"/>
-        <segue reference="qJU-VF-1ve"/>
+        <segue reference="M6c-9f-3Ic"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.039215686274509803" green="0.074509803921568626" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
 </document>

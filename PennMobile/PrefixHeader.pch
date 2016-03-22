@@ -25,5 +25,6 @@
 
 #import "MBProgressHUD.h"
 #import <ParseCrashReporting/ParseCrashReporting.h>
+#import "SWRevealViewController.h"
 
 #endif

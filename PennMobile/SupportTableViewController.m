@@ -14,8 +14,38 @@
 
 @implementation SupportTableViewController
 
+-(id) init {
+    self = [super init];
+    if(self) {
+        self.title = @"Campus Help";
+    }
+    return self;
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.barTintColor = PENN_BLUE;
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    SWRevealViewController *revealController = [self revealViewController];
+    [revealController panGestureRecognizer];
+    [revealController tapGestureRecognizer];
+    
+    UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
+                                                                         style:UIBarButtonItemStylePlain
+                                                                        target:revealController
+                                                                        action:@selector(revealToggle:)];
+    self.navigationItem.leftBarButtonItem = revealButtonItem;
+    
     SupportItem *pGeneral = [[SupportItem alloc] init];
     pGeneral.name = @"Penn Police General";
     pGeneral.phone = @"(215) 898-7297";
@@ -58,15 +88,9 @@
     self.tableView.bounces = NO;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
     return 1;
 }
 
@@ -74,23 +98,19 @@
     return [self.contacts count];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SupportItem *c = _contacts[indexPath.row];
-    NSString *phoneNumber = [@"tel://" stringByAppendingString:c.phoneFiltered];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     SupportItem *c = [self.contacts objectAtIndex:indexPath.row];
     cell.textLabel.text = c.name;
     cell.detailTextLabel.text = c.phone;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    SupportItem *c = _contacts[indexPath.row];
+    NSString *phoneNumber = [@"tel://" stringByAppendingString:c.phoneFiltered];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 }
 
 -(void)viewDidLayoutSubviews
@@ -113,56 +133,6 @@
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
-}
-
-#pragma mark - Navigation
-
-/**
- * This fragment is repeated across the app, still don't know the best way to refactor
- **/
-- (IBAction)menuButton:(id)sender {
-    if ([SlideOutMenuViewController instance].menuOut) {
-        // this is a workaround as the normal returnToView selector causes a fault
-        // the memory for hte instance is locked unless the view controller is passed in a segue
-        // this is for security reasons.
-        [[SlideOutMenuViewController instance] performSegueWithIdentifier:@"Campus Help" sender:self];
-    } else {
-        [self performSegueWithIdentifier:@"menu" sender:self];
-    }
-}
-- (void)handleRollBack:(UIStoryboardSegue *)segue {
-    if ([segue.destinationViewController isKindOfClass:[SlideOutMenuViewController class]]) {
-        SlideOutMenuViewController *menu = segue.destinationViewController;
-        cancelTouches = [[UITapGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
-        cancelTouches.cancelsTouchesInView = YES;
-        cancelTouches.numberOfTapsRequired = 1;
-        cancelTouches.numberOfTouchesRequired = 1;
-        if (self.view.gestureRecognizers.count > 0) {
-            // there is a keybaord dismiss tap recognizer present
-            // ((UIGestureRecognizer *) self.view.gestureRecognizers[0]).enabled = NO;
-        }
-        float width = [[UIScreen mainScreen] bounds].size.width;
-        float height = [[UIScreen mainScreen] bounds].size.height;
-        UIView *grayCover = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-        [grayCover setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]];
-        [grayCover addGestureRecognizer:cancelTouches];
-        
-        UISwipeGestureRecognizer *swipeToCancel = [[UISwipeGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
-        swipeToCancel.direction = UISwipeGestureRecognizerDirectionLeft;
-        [grayCover addGestureRecognizer:swipeToCancel];
-        [UIView transitionWithView:self.view duration:1
-                           options:UIViewAnimationOptionShowHideTransitionViews
-                        animations:^ { [self.view addSubview:grayCover]; }
-                        completion:nil];
-    }
-}
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
-    [self handleRollBack:segue];
 }
 
 @end

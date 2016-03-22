@@ -130,6 +130,9 @@
 		4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */; };
 		6B0F0B811BF6A5E000D958BB /* LaundryMidwayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0F0B801BF6A5E000D958BB /* LaundryMidwayTableViewController.m */; };
 		6B0F0B841BF6AFC800D958BB /* LaundryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */; };
+		6B5103381CA0C34E003AF049 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5103371CA0C34E003AF049 /* MainViewController.m */; };
+		6B51033B1CA0C42A003AF049 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B51033A1CA0C42A003AF049 /* SWRevealViewController.m */; };
+		6B51033E1CA0C448003AF049 /* MasterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B51033D1CA0C448003AF049 /* MasterTableViewController.m */; };
 		6B5979451C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5979441C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m */; };
 		6B5979481C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5979471C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m */; };
 		6BB018361BE410B400D9EC4C /* LaundryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BB018351BE410B400D9EC4C /* LaundryTableViewController.m */; };
@@ -317,6 +320,12 @@
 		6B0F0B801BF6A5E000D958BB /* LaundryMidwayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryMidwayTableViewController.m; sourceTree = "<group>"; };
 		6B0F0B821BF6AFC800D958BB /* LaundryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDetailViewController.h; sourceTree = "<group>"; };
 		6B0F0B831BF6AFC800D958BB /* LaundryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryDetailViewController.m; sourceTree = "<group>"; };
+		6B5103361CA0C34E003AF049 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		6B5103371CA0C34E003AF049 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		6B5103391CA0C42A003AF049 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		6B51033A1CA0C42A003AF049 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		6B51033C1CA0C448003AF049 /* MasterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterTableViewController.h; sourceTree = "<group>"; };
+		6B51033D1CA0C448003AF049 /* MasterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterTableViewController.m; sourceTree = "<group>"; };
 		6B5979431C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryWasherDetailTableViewCell.h; sourceTree = "<group>"; };
 		6B5979441C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryWasherDetailTableViewCell.m; sourceTree = "<group>"; };
 		6B5979461C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDryerDetailTableViewCell.h; sourceTree = "<group>"; };
@@ -580,7 +589,11 @@
 			children = (
 				19B8543A1AA6AA5B002564D9 /* AppDelegate.h */,
 				19B8543B1AA6AA5B002564D9 /* AppDelegate.m */,
+				6B5103361CA0C34E003AF049 /* MainViewController.h */,
+				6B5103371CA0C34E003AF049 /* MainViewController.m */,
 				19B8543D1AA6ADDD002564D9 /* main.m */,
+				6B51033C1CA0C448003AF049 /* MasterTableViewController.h */,
+				6B51033D1CA0C448003AF049 /* MasterTableViewController.m */,
 			);
 			name = "AppDelegate + Stuff";
 			sourceTree = "<group>";
@@ -743,6 +756,8 @@
 				82982FB719735ECC00DB2AE3 /* Info.plist */,
 				199C2A7419D4C97C0020B153 /* PrefixHeader.pch */,
 				19F6BA441ACB608E00D6C74B /* Keys.pch */,
+				6B5103391CA0C42A003AF049 /* SWRevealViewController.h */,
+				6B51033A1CA0C42A003AF049 /* SWRevealViewController.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1036,11 +1051,14 @@
 				1978259A19EDFAB400284799 /* AboutViewController.m in Sources */,
 				1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */,
 				198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */,
+				6B51033E1CA0C448003AF049 /* MasterTableViewController.m in Sources */,
 				4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */,
+				6B51033B1CA0C42A003AF049 /* SWRevealViewController.m in Sources */,
 				6B5979481C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m in Sources */,
 				19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */,
 				6BB018361BE410B400D9EC4C /* LaundryTableViewController.m in Sources */,
 				6B0F0B841BF6AFC800D958BB /* LaundryDetailViewController.m in Sources */,
+				6B5103381CA0C34E003AF049 /* MainViewController.m in Sources */,
 				19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
 				1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */,
