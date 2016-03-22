@@ -14,7 +14,4 @@
     UITapGestureRecognizer *cancelTouches;
 }
 
-@property (weak, nonatomic) IBOutlet UIImageView *labsLogo;
-@property (weak, nonatomic) IBOutlet UILabel *labsHeader;
-
 @end

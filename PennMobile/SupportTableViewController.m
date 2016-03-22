@@ -17,7 +17,7 @@
 -(id) init {
     self = [super init];
     if(self) {
-        self.title = @"Campus Help";
+        self.title = @"Emergency";
     }
     return self;
 }
