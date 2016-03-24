@@ -17,6 +17,7 @@
 
 #define PENN_BLUE [UIColor colorWithRed:10/255.0f green:37/255.0f blue:69/255.0f alpha:1.0f]
 #define PENN_RED [UIColor colorWithRed:153/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]
+#define PENN_YELLOW [UIColor colorWithRed:255.0/255 green:193.0/255 blue:7.0/255 alpha:1.0]
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 #define BORDER_RADIUS 4
