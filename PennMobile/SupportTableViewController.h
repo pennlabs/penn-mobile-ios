@@ -10,10 +10,6 @@
 #import "SupportItem.h"
 #import "SlideOutMenuViewController.h"
 
-@interface SupportTableViewController : UITableViewController {
-    UITapGestureRecognizer *cancelTouches;
-}
-
-@property NSArray *contacts;
+@interface SupportTableViewController : UITableViewController
 
 @end

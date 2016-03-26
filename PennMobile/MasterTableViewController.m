@@ -63,8 +63,7 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     NewsViewController *newsVC = [[NewsViewController alloc] init];
     self.viewControllerArray = @[mainVC, laundryVC, newsVC, aboutVC, supportVC];
     
-//    self.viewControllerArray = @[microphoneVC, pastResultsVC, searchVC, settingsVC];
-//    self.iconArray = @[@"Micro-25.png", @"Folder-25.png", @"Search-25.png", @"Settings-25.png", @"Exit-25.png"];
+    // self.iconArray = @[@"dining-1.png", @"laundry-2.png", @"news-1.png", @"about-1.png", @"emergency.png"];
     
 }
 

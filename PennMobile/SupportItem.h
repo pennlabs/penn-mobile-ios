@@ -15,5 +15,8 @@
 @property NSString *url;
 @property UIImage *img;
 @property NSString *phoneFiltered;
+@property NSString *descriptionText;
+
+-(id)initWithName:(NSString *)name phone:(NSString*) phoneNumber;
 
 @end
