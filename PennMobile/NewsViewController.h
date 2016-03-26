@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "SlideOutMenuViewController.h"
 
-@interface NewsViewController : UIViewController <UIWebViewDelegate> {
+@interface NewsViewController : UIViewController <UIWebViewDelegate, UIToolbarDelegate> {
     UITapGestureRecognizer *cancelTouches;
 }
 
-
 @property NSString *url;
+
 @end

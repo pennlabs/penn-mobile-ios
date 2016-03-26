@@ -16,7 +16,6 @@
             <string>AGaramondPro-Regular</string>
             <string>AGaramondPro-Regular</string>
             <string>AGaramondPro-Regular</string>
-            <string>AGaramondPro-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1567,9 +1566,6 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="6ac-z3-oqW" kind="custom" identifier="News" customClass="ECSlidingSegue" id="LNt-6B-ZRa"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Laundry" id="emR-iS-uct">
                                         <rect key="frame" x="0.0" y="282" width="375" height="50"/>
@@ -1688,151 +1684,6 @@
             </objects>
             <point key="canvasLocation" x="-389.5" y="-86.5"/>
         </scene>
-        <!--dp-->
-        <scene sceneID="7m8-6c-3Mp">
-            <objects>
-                <navigationController title="dp" id="6ac-z3-oqW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="News" image="News" selectedImage="News-selected" id="DhP-Nt-bCc"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="qP4-3t-cyD">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="EEs-ve-KSf" kind="relationship" relationship="rootViewController" id="zG5-Qj-AXa"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="exZ-S2-gfX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="592.5" y="2411.5"/>
-        </scene>
-        <!--theDP-->
-        <scene sceneID="NSk-VE-lEN">
-            <objects>
-                <viewController id="EEs-ve-KSf" customClass="NewsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ctr-Ho-b7w"/>
-                        <viewControllerLayoutGuide type="bottom" id="mqd-FV-Bcy"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ju7-Uy-Jdf">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="85F-Pf-nez">
-                                <rect key="frame" x="-6" y="0.0" width="381" height="511"/>
-                            </webView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Dv-JS-kxX">
-                                <rect key="frame" x="0.0" y="511" width="375" height="48"/>
-                                <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Bn6-eJ-4A7">
-                                        <rect key="frame" x="8" y="10" width="277" height="29"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="28" id="6Kz-4y-xyX"/>
-                                        </constraints>
-                                        <segments>
-                                            <segment title="theDP"/>
-                                            <segment title="UTB"/>
-                                            <segment title="34th St"/>
-                                            <segment title="E@P"/>
-                                        </segments>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </segmentedControl>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mcv-O3-ehk">
-                                        <rect key="frame" x="337" y="10" width="30" height="30"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="Ikw-n3-5nJ"/>
-                                            <constraint firstAttribute="width" constant="30" id="Jjp-UN-f4G"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="29" id="ZqG-mM-mKi"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="bOz-Lh-tDY"/>
-                                        </constraints>
-                                        <state key="normal" image="arrow-fwd">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="webViewForward:" destination="EEs-ve-KSf" eventType="touchUpInside" id="SV2-f1-9mt"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CC1-1n-vAK">
-                                        <rect key="frame" x="295" y="10" width="30" height="30"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="RUR-oT-a5m"/>
-                                            <constraint firstAttribute="height" constant="30" id="wwU-cR-1HW"/>
-                                        </constraints>
-                                        <state key="normal" title="Back" image="arrow-bwd">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="webViewBack:" destination="EEs-ve-KSf" eventType="touchUpInside" id="b3Z-pO-MXW"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.47843137254901963" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="mcv-O3-ehk" secondAttribute="trailing" constant="8" id="9OT-Jg-1fD"/>
-                                    <constraint firstAttribute="height" constant="48" id="Ce8-hZ-4eZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="mcv-O3-ehk" secondAttribute="bottom" constant="8" id="ExH-Wr-ccI"/>
-                                    <constraint firstAttribute="trailing" secondItem="mcv-O3-ehk" secondAttribute="trailing" constant="8" id="HHj-MN-gkJ"/>
-                                    <constraint firstAttribute="bottom" secondItem="Bn6-eJ-4A7" secondAttribute="bottom" constant="10" id="PVy-Uy-nwK"/>
-                                    <constraint firstAttribute="bottom" secondItem="CC1-1n-vAK" secondAttribute="bottom" constant="8" id="SMM-XY-HM2"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mcv-O3-ehk" secondAttribute="bottom" constant="-2" id="eCh-y7-zOx"/>
-                                    <constraint firstItem="mcv-O3-ehk" firstAttribute="leading" secondItem="CC1-1n-vAK" secondAttribute="trailing" constant="12" id="hCI-PF-iIa"/>
-                                    <constraint firstItem="Bn6-eJ-4A7" firstAttribute="leading" secondItem="3Dv-JS-kxX" secondAttribute="leading" constant="8" id="hLt-MN-B5A"/>
-                                    <constraint firstItem="CC1-1n-vAK" firstAttribute="leading" secondItem="Bn6-eJ-4A7" secondAttribute="trailing" constant="10" id="pOK-6z-wA9"/>
-                                </constraints>
-                            </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="1Ga-1h-gXQ">
-                                <rect key="frame" x="174" y="259" width="20" height="20"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="3Dv-JS-kxX" firstAttribute="top" secondItem="85F-Pf-nez" secondAttribute="bottom" id="JmS-8f-bK1"/>
-                            <constraint firstItem="3Dv-JS-kxX" firstAttribute="leading" secondItem="ju7-Uy-Jdf" secondAttribute="leading" id="LpL-HG-JqM"/>
-                            <constraint firstAttribute="trailing" secondItem="3Dv-JS-kxX" secondAttribute="trailing" id="ec4-Q3-WP9"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="85F-Pf-nez" secondAttribute="trailing" constant="-16" id="gVp-ys-MmX"/>
-                            <constraint firstItem="85F-Pf-nez" firstAttribute="top" secondItem="ctr-Ho-b7w" secondAttribute="bottom" id="lLI-vm-riD"/>
-                            <constraint firstItem="85F-Pf-nez" firstAttribute="leading" secondItem="ju7-Uy-Jdf" secondAttribute="leadingMargin" constant="-22" id="sfs-Jf-aUN"/>
-                            <constraint firstItem="mqd-FV-Bcy" firstAttribute="top" secondItem="3Dv-JS-kxX" secondAttribute="bottom" id="zLI-4G-l8t"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="theDP" id="kSu-nS-VVT">
-                        <barButtonItem key="leftBarButtonItem" image="hamburger" id="Xca-Om-YEM">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="menuButton:" destination="EEs-ve-KSf" id="wxM-af-okH"/>
-                            </connections>
-                        </barButtonItem>
-                        <view key="titleView" contentMode="scaleToFill" id="1VT-fd-RAz">
-                            <rect key="frame" x="121.5" y="5.5" width="132" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="News" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="qeJ-PS-X32">
-                                    <rect key="frame" x="-12" y="0.0" width="156" height="33"/>
-                                    <fontDescription key="fontDescription" name="AGaramondPro-Regular" family="Adobe Garamond Pro" pointSize="30"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                        </view>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="loadingIndicator" destination="1Ga-1h-gXQ" id="2ZK-jy-kfO"/>
-                        <outlet property="newsSwitcher" destination="Bn6-eJ-4A7" id="ZWw-Da-F7O"/>
-                        <outlet property="webView" destination="85F-Pf-nez" id="oWp-oG-JuP"/>
-                        <segue destination="ez7-pS-rfX" kind="unwind" identifier="menu" unwindAction="unwindToMenuViewController:" id="lrp-fY-iJX"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2ho-bW-OiQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="ez7-pS-rfX" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="1006.5" y="2411.5"/>
-        </scene>
         <!--Maps-->
         <scene sceneID="IYF-ZZ-Qcs">
             <objects>
@@ -1870,12 +1721,8 @@
         <image name="Dining" width="60" height="60"/>
         <image name="Directory" width="60" height="60"/>
         <image name="Gourmet Grocer" width="1600" height="600"/>
-        <image name="News" width="60" height="60"/>
-        <image name="News-selected" width="60" height="60"/>
         <image name="Registrar" width="60" height="60"/>
         <image name="Transit" width="60" height="60"/>
-        <image name="arrow-bwd" width="100" height="100"/>
-        <image name="arrow-fwd" width="100" height="100"/>
         <image name="gradient" width="1000" height="240"/>
         <image name="hamburger" width="40" height="40"/>
         <image name="labs" width="500" height="500"/>

@@ -14,12 +14,14 @@
 #import "LaundryTableViewController.h"
 #import "SupportTableViewController.h"
 #import "AboutViewController.h"
+#import "NewsViewController.h"
 
 @interface MasterTableViewController () 
 
 typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     MasterTableViewRowTypeHome,
     MasterTableViewRowTypeLaundry,
+    MasterTableViewRowTypeNews,
     MasterTableViewRowTypeAbout,
     MasterTableViewRowTypeSupport,
     MasterTableViewRowTypeCount,
@@ -58,7 +60,8 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
     SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
-    self.viewControllerArray = @[mainVC, laundryVC, aboutVC, supportVC];
+    NewsViewController *newsVC = [[NewsViewController alloc] init];
+    self.viewControllerArray = @[mainVC, laundryVC, newsVC, aboutVC, supportVC];
     
 //    self.viewControllerArray = @[microphoneVC, pastResultsVC, searchVC, settingsVC];
 //    self.iconArray = @[@"Micro-25.png", @"Folder-25.png", @"Search-25.png", @"Settings-25.png", @"Exit-25.png"];

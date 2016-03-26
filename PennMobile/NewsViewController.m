@@ -9,10 +9,11 @@
 #import "NewsViewController.h"
 
 @interface NewsViewController ()
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *newsSwitcher;
-@property (weak, nonatomic) IBOutlet UIView *newsSwitcherView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
+@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) UISegmentedControl *newsSwitcher;
+@property (nonatomic, strong) UIView *newsSwitcherView;
+@property (nonatomic, strong) NSArray *segmentTitles;
+@property (nonatomic, strong) UIToolbar *toolbar;
 
 @property BOOL isToggleEnabled;
 @property (nonatomic, assign) CGFloat lastContentOffset;
@@ -20,34 +21,81 @@
 
 @implementation NewsViewController
 
+-(id) init {
+    self = [super init];
+    if(self) {
+        self.title = @"News";
+    }
+    return self;
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.tintColor = PENN_YELLOW;
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor blackColor]}];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_url]];
-    [_webView loadRequest:req];
-    _webView.scalesPageToFit = NO;
-    _webView.delegate = self;
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    _isToggleEnabled = YES;
-    [_newsSwitcher addTarget:self action:@selector(switchNewsSource:) forControlEvents:UIControlEventValueChanged];
-    UIScreenEdgePanGestureRecognizer *bottomEdgeGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(expandNewsSwitcherOnSwipe)];
-    bottomEdgeGesture.edges = UIRectEdgeRight;
-    bottomEdgeGesture.delegate = self;
-    [self.view addGestureRecognizer:bottomEdgeGesture];
+    SWRevealViewController *revealController = [self revealViewController];
+    [revealController panGestureRecognizer];
+    [revealController tapGestureRecognizer];
     
-    [_loadingIndicator stopAnimating];
-    _loadingIndicator.hidesWhenStopped = YES;
-    _loadingIndicator.color = PENN_RED;
+    UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
+                                                                         style:UIBarButtonItemStylePlain
+                                                                        target:revealController
+                                                                        action:@selector(revealToggle:)];
+    self.navigationItem.leftBarButtonItem = revealButtonItem;
+
     
-    _webView.scrollView.delegate = self;
+    self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 65, self.view.frame.size.width, 30)];
+
+    self.segmentTitles = @[@"hello", @"what", @"who"];
+
+    self.newsSwitcher = [[UISegmentedControl alloc] initWithItems: self.segmentTitles];
+    [self.newsSwitcher sizeToFit];
+    // self.newsSwitcher.frame = toolbar.frame;
+
+    [self.toolbar addSubview:self.newsSwitcher];
+    self.toolbar.delegate = self;
+
+    [self.view addSubview:self.toolbar];
+    
+    // ADD THIS IF YOU WANT TO REPLACE "NEWS" WITH SEGMENT
+//    UISegmentedControl *statFilter = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"theDP", @"UTB", @"34th Street", @"Events at Penn", nil]];
+//    [statFilter sizeToFit];
+//    self.navigationItem.titleView = statFilter;
+
+
+    
+//    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_url]];
+//    [_webView loadRequest:req];
+//    _webView.scalesPageToFit = NO;
+//    _webView.delegate = self;
+//    
+//    _isToggleEnabled = YES;
+//    [_newsSwitcher addTarget:self action:@selector(switchNewsSource:) forControlEvents:UIControlEventValueChanged];
+//    UIScreenEdgePanGestureRecognizer *bottomEdgeGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(expandNewsSwitcherOnSwipe)];
+//    bottomEdgeGesture.edges = UIRectEdgeRight;
+//    bottomEdgeGesture.delegate = self;
+//    [self.view addGestureRecognizer:bottomEdgeGesture];
+//    
+//    [_loadingIndicator stopAnimating];
+//    _loadingIndicator.hidesWhenStopped = YES;
+//    _loadingIndicator.color = PENN_RED;
+//    
+//    _webView.scrollView.delegate = self;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     
     //   [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [_loadingIndicator startAnimating];
+    // [_loadingIndicator startAnimating];
     NSString *url =_webView.request.URL.absoluteString;
     if ([url containsString:@"thedp.com/blog/under-the-button"]) {
         [_newsSwitcher setSelectedSegmentIndex:1];
@@ -65,7 +113,7 @@
     if (!webView.isLoading) {
         //     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     }
-    [_loadingIndicator stopAnimating];
+    // [_loadingIndicator stopAnimating];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

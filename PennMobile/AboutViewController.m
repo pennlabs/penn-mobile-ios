@@ -25,7 +25,7 @@
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:255.0/255 green:193.0/255 blue:7.0/255 alpha:1.0];
+    self.navigationController.navigationBar.tintColor = PENN_YELLOW;
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor blackColor]}];
     
@@ -68,7 +68,7 @@
     [self.view addSubview:descriptionLabel];
     
     UILabel *peopleLabel = [[UILabel alloc] init];
-    peopleLabel.text = @"Developed by Sacha Best and Krishna Bharathala\n Designed by Tiffany Chang\n Thanks to Adel Qalieh, David Lakata\n and the rest of Labs + UA";
+    peopleLabel.text = @"Developed by Sacha Best and Krishna Bharathala\n Designed by Sacha Best and Tiffany Chang\n Thanks to Adel Qalieh, David Lakata\n and the rest of Labs + UA";
     [peopleLabel setTextColor:[UIColor darkGrayColor]];
     [peopleLabel setFrame:CGRectMake(0, 0, width-40, height/3)];
     [peopleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
