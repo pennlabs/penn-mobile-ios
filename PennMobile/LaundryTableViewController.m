@@ -60,8 +60,6 @@
         [self pull:self];
         self.hasLoaded = YES;
     }
-    
-    self.tableView.scrollEnabled = NO;
 }
 
 - (void) pull:(id)sender {

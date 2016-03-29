@@ -15,12 +15,14 @@
 #import "SupportTableViewController.h"
 #import "AboutViewController.h"
 #import "NewsViewController.h"
+#import "DirectoryTableViewController.h"
 
 @interface MasterTableViewController () 
 
 typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     MasterTableViewRowTypeHome,
     MasterTableViewRowTypeLaundry,
+    MasterTableViewRowTypeDirectory,
     MasterTableViewRowTypeNews,
     MasterTableViewRowTypeAbout,
     MasterTableViewRowTypeSupport,
@@ -58,10 +60,11 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     
     MainViewController *mainVC = [[MainViewController alloc] init];
     LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
+    DirectoryTableViewController *directoryVC = [[DirectoryTableViewController alloc] init];
     SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
     NewsViewController *newsVC = [[NewsViewController alloc] init];
-    self.viewControllerArray = @[mainVC, laundryVC, newsVC, aboutVC, supportVC];
+    self.viewControllerArray = @[mainVC, laundryVC, directoryVC, newsVC, aboutVC, supportVC];
     
     // self.iconArray = @[@"dining-1.png", @"laundry-2.png", @"news-1.png", @"about-1.png", @"emergency.png"];
     
@@ -108,7 +111,7 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     }
     cell.backgroundColor = [UIColor clearColor];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.imageView.image = [UIImage imageNamed:[self.iconArray objectAtIndex:indexPath.row]];
+    // cell.imageView.image = [UIImage imageNamed:[self.iconArray objectAtIndex:indexPath.row]];
     
     return cell;
 }

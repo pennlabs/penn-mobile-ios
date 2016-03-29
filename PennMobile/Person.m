@@ -11,14 +11,14 @@
 @implementation Person
 
 -(bool)isEqual:(id)object {
-    return [_identifier isEqualToString:((Person *)object).identifier];
+    return [self.identifier isEqualToString:((Person *)object).identifier];
 }
 
 - (NSUInteger)hash {
-    return [_identifier hash];
+    return [self.identifier hash];
 }
 
 - (NSString *)createDetail {
-    return [NSString stringWithFormat:@"%@\nphone: %@\nemail: %@", _title, _email, _phone];
+    return [NSString stringWithFormat:@"%@\nphone: %@\nemail: %@", self.title, self.email, self.phone];
 }
 @end

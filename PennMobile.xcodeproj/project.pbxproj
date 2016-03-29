@@ -114,7 +114,6 @@
 		19DE26E21A6897C400D072A7 /* marks.png in Resources */ = {isa = PBXBuildFile; fileRef = 19DE26D91A6897C400D072A7 /* marks.png */; };
 		19DE26E31A6897C400D072A7 /* quad.png in Resources */ = {isa = PBXBuildFile; fileRef = 19DE26DA1A6897C400D072A7 /* quad.png */; };
 		19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8419D2289E0088C4DC /* list_sample.txt */; };
-		19EDDC8A19D24D230088C4DC /* PersonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */; };
 		19EDDC8E19D24F4B0088C4DC /* contactbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8B19D24F4B0088C4DC /* contactbutton.png */; };
 		19EDDC8F19D24F4B0088C4DC /* contactbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8C19D24F4B0088C4DC /* contactbutton@2x.png */; };
 		19EDDC9019D24F4B0088C4DC /* contactbutton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 19EDDC8D19D24F4B0088C4DC /* contactbutton@3x.png */; };
@@ -295,8 +294,6 @@
 		19DE26D91A6897C400D072A7 /* marks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marks.png; sourceTree = "<group>"; };
 		19DE26DA1A6897C400D072A7 /* quad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quad.png; sourceTree = "<group>"; };
 		19EDDC8419D2289E0088C4DC /* list_sample.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = list_sample.txt; sourceTree = "<group>"; };
-		19EDDC8819D24D230088C4DC /* PersonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonTableViewCell.h; sourceTree = "<group>"; };
-		19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonTableViewCell.m; sourceTree = "<group>"; };
 		19EDDC8B19D24F4B0088C4DC /* contactbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contactbutton.png; sourceTree = "<group>"; };
 		19EDDC8C19D24F4B0088C4DC /* contactbutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contactbutton@2x.png"; sourceTree = "<group>"; };
 		19EDDC8D19D24F4B0088C4DC /* contactbutton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contactbutton@3x.png"; sourceTree = "<group>"; };
@@ -663,8 +660,6 @@
 		19EDDC8719D24D030088C4DC /* Directory */ = {
 			isa = PBXGroup;
 			children = (
-				19EDDC8819D24D230088C4DC /* PersonTableViewCell.h */,
-				19EDDC8919D24D230088C4DC /* PersonTableViewCell.m */,
 				19EDDC9D19D252B80088C4DC /* DirectoryTableViewController.h */,
 				19EDDC9E19D252B80088C4DC /* DirectoryTableViewController.m */,
 				199B90CD19DB7FCD0018CDE3 /* Person.h */,
@@ -1063,7 +1058,6 @@
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
 				1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */,
 				19A4ACE61A8DA3FA000804E2 /* BuildingViewController.m in Sources */,
-				19EDDC8A19D24D230088C4DC /* PersonTableViewCell.m in Sources */,
 				192AEF3519C934F10068ABA6 /* FoodItemTableViewCell.m in Sources */,
 				1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */,
 			);

@@ -16,8 +16,8 @@
 @property NSString *email;
 @property NSString *organization;
 @property NSString *title;
-
 @property NSString *identifier;
 
 - (NSString *)createDetail;
+
 @end
