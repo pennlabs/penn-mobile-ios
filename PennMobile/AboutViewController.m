@@ -2,7 +2,7 @@
 //  AboutViewController.m
 //  PennMobile
 //
-//  Created by Krishna Bharathala.
+//  Created by Sacha Best and Krishna Bharathala.
 //  Copyright (c) 2016 PennLabs. All rights reserved.
 //
 
@@ -120,8 +120,7 @@
     mc.mailComposeDelegate = self;
     [mc setSubject:messageSubject];
     [mc setToRecipients:toRecipents];
-    
-    // Present mail view controller on screen
+
     [self presentViewController:mc animated:YES completion:nil];
 }
 - (void)moreInfo {

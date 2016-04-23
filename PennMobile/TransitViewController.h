@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SlideOutMenuViewController.h"
 #import <MapKit/MapKit.h>
 #import "DirectionView.h"
 #import "GoogleMapsSearcher.h"

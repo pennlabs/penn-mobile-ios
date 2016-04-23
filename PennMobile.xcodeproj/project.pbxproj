@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */; };
 		1909DF0A1AC23A6300936552 /* Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1909DF091AC23A6300936552 /* Arrow.png */; };
 		1913FB131A94125000D2E17C /* Building.m in Sources */ = {isa = PBXBuildFile; fileRef = 1913FB121A94125000D2E17C /* Building.m */; };
 		192859FB1A6F4F8900A47C67 /* FoodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 192859FA1A6F4F8900A47C67 /* FoodDetailViewController.m */; };
@@ -156,8 +155,6 @@
 
 /* Begin PBXFileReference section */
 		16E1C19330F2CC1E8F480AD7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		1901F10D1A41FDAC00DDFA9A /* SlideOutMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideOutMenuViewController.h; sourceTree = "<group>"; };
-		1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideOutMenuViewController.m; sourceTree = "<group>"; };
 		1909DF091AC23A6300936552 /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arrow.png; sourceTree = "<group>"; };
 		1913FB111A94125000D2E17C /* Building.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Building.h; sourceTree = "<group>"; };
 		1913FB121A94125000D2E17C /* Building.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Building.m; sourceTree = "<group>"; };
@@ -407,15 +404,6 @@
 				16E1C19330F2CC1E8F480AD7 /* libPods.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		1901F10C1A41FD9500DDFA9A /* SlideOut */ = {
-			isa = PBXGroup;
-			children = (
-				1901F10D1A41FDAC00DDFA9A /* SlideOutMenuViewController.h */,
-				1901F10E1A41FDAC00DDFA9A /* SlideOutMenuViewController.m */,
-			);
-			name = SlideOut;
 			sourceTree = "<group>";
 		};
 		192859DE1A6F214D00A47C67 /* News Views */ = {
@@ -729,7 +717,6 @@
 				19A4ACE11A8DA2CB000804E2 /* Helpers */,
 				6BB018331BE40FE600D9EC4C /* Laundry */,
 				192859DE1A6F214D00A47C67 /* News Views */,
-				1901F10C1A41FD9500DDFA9A /* SlideOut */,
 				19C3A8B31A1C309700D32D8A /* ListView */,
 				82982FBE19735ECC00DB2AE3 /* Main.storyboard */,
 				82982FC119735ECC00DB2AE3 /* Images.xcassets */,
@@ -1056,7 +1043,6 @@
 				6B5103381CA0C34E003AF049 /* MainViewController.m in Sources */,
 				19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
-				1901F10F1A41FDAC00DDFA9A /* SlideOutMenuViewController.m in Sources */,
 				19A4ACE61A8DA3FA000804E2 /* BuildingViewController.m in Sources */,
 				192AEF3519C934F10068ABA6 /* FoodItemTableViewCell.m in Sources */,
 				1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */,

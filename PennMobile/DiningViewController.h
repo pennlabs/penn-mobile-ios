@@ -10,7 +10,6 @@
 #import "DiningTableViewCell.h"
 #import "MenuViewController.h"
 #import "Meal.h"
-#import "SlideOutMenuViewController.h"
 #import "FoodDetailViewController.h"
 
 #define kTitleKey @"title"

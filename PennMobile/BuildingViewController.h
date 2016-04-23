@@ -10,7 +10,6 @@
 #import <MapKit/MapKit.h>
 #import "DetailViewController.h"
 #import "Building.h"
-#import "SlideOutMenuViewController.h"
 
 #define BUILDING_PATH @"buildings/search?q="
 

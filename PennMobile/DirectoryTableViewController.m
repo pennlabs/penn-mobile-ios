@@ -78,7 +78,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = nil; // [tableView dequeueReusableCellWithIdentifier:nil forIndexPath:indexPath];
+    UITableViewCell *cell = nil;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     }
@@ -171,18 +171,6 @@
 
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    Person *p = self.currPerson;
-    NSString *email = [@"mailto://" stringByAppendingString:p.email];
-    NSString *buttonTtile = [alertView buttonTitleAtIndex:buttonIndex];
-    if ([buttonTtile isEqualToString:@"Email"]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
-        
-    } else if ([buttonTtile isEqualToString:@"Add to Contacts"]) {
-        [self addContact:p];
-    }
-}
-
 #pragma mark - Search Bar Information
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -204,6 +192,21 @@
         [self searchBarCancelButtonClicked:self.directorySearchBar];
     }
 }
+
+#pragma mark - Alerts Information
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    Person *p = self.currPerson;
+    NSString *email = [@"mailto://" stringByAppendingString:p.email];
+    NSString *buttonTtile = [alertView buttonTitleAtIndex:buttonIndex];
+    if ([buttonTtile isEqualToString:@"Email"]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
+        
+    } else if ([buttonTtile isEqualToString:@"Add to Contacts"]) {
+        [self addContact:p];
+    }
+}
+
 
 #pragma mark - API Stuff
 
