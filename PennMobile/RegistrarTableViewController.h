@@ -17,21 +17,9 @@
 #define REGISTRAR_PATH @"registrar/search?q="
 #define BUILDING_PATH @"buildings/search?q="
 
-typedef NS_ENUM(NSInteger, CourseFilter) {
-    All = 1,
-    Lecture,
-    Lab,
-    Recitation,
-};
+@interface RegistrarTableViewController : UITableViewController <UITableViewDelegate, UISearchBarDelegate>
 
-@interface RegistrarTableViewController : PennTableViewController <UITableViewDelegate, UISearchBarDelegate> {
-    NSIndexPath *selected;
-    CourseFilter currentFilter;
-    NSMutableDictionary *buildings;
-}
-@property (weak, nonatomic) IBOutlet UISegmentedControl *filterSwitch;
+@property (weak, nonatomic) UISegmentedControl *filterSwitch;
+@property (nonatomic, strong) UISearchBar *registrySearchBar;
 
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-
--(IBAction)courseFilterSwitch:(id)sender;
 @end

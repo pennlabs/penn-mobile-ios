@@ -16,17 +16,19 @@
 #import "AboutViewController.h"
 #import "NewsViewController.h"
 #import "DirectoryTableViewController.h"
+#import "RegistrarTableViewController.h"
 
 @interface MasterTableViewController () 
 
 typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     MasterTableViewRowTypeHome,
     MasterTableViewRowTypeLaundry,
+    MastertableViewRowTypeRegistrar,
     MasterTableViewRowTypeDirectory,
     MasterTableViewRowTypeNews,
     MasterTableViewRowTypeAbout,
     MasterTableViewRowTypeSupport,
-    MasterTableViewRowTypeCount,
+    MasterTableViewRowTypeCount
 };
 
 @property (nonatomic, strong) NSArray *viewControllerArray;
@@ -60,11 +62,12 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     
     MainViewController *mainVC = [[MainViewController alloc] init];
     LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
+    RegistrarTableViewController *registrarVC = [[RegistrarTableViewController alloc] init];
     DirectoryTableViewController *directoryVC = [[DirectoryTableViewController alloc] init];
     SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
     NewsViewController *newsVC = [[NewsViewController alloc] init];
-    self.viewControllerArray = @[mainVC, laundryVC, directoryVC, newsVC, aboutVC, supportVC];
+    self.viewControllerArray = @[mainVC, laundryVC, registrarVC, directoryVC, newsVC, aboutVC, supportVC];
     
     // self.iconArray = @[@"dining-1.png", @"laundry-2.png", @"news-1.png", @"about-1.png", @"emergency.png"];
     

@@ -29,6 +29,8 @@
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self.directorySearchBar becomeFirstResponder];
+    
     self.navigationController.navigationBar.tintColor = PENN_YELLOW;
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor blackColor]}];
@@ -53,7 +55,6 @@
     self.directorySearchBar.delegate = self;
     [self.view addSubview:self.directorySearchBar];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"person"];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.currPerson = [[Person alloc] init];

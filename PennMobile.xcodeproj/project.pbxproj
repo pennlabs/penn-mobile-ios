@@ -406,13 +406,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		192859DE1A6F214D00A47C67 /* News Views */ = {
+		192859DE1A6F214D00A47C67 /* News */ = {
 			isa = PBXGroup;
 			children = (
 				192C6F2D1A158533008D507C /* NewsViewController.h */,
 				192C6F2E1A158533008D507C /* NewsViewController.m */,
 			);
-			name = "News Views";
+			name = News;
 			sourceTree = "<group>";
 		};
 		1929ACFD19DBA20C00B15C5B /* Transit */ = {
@@ -716,7 +716,7 @@
 				19A4ACE21A8DA2DB000804E2 /* AppDelegate + Stuff */,
 				19A4ACE11A8DA2CB000804E2 /* Helpers */,
 				6BB018331BE40FE600D9EC4C /* Laundry */,
-				192859DE1A6F214D00A47C67 /* News Views */,
+				192859DE1A6F214D00A47C67 /* News */,
 				19C3A8B31A1C309700D32D8A /* ListView */,
 				82982FBE19735ECC00DB2AE3 /* Main.storyboard */,
 				82982FC119735ECC00DB2AE3 /* Images.xcassets */,

@@ -1283,43 +1283,6 @@
             </objects>
             <point key="canvasLocation" x="977.5" y="-1953.5"/>
         </scene>
-        <!--Auth Login View Controller-->
-        <scene sceneID="hpj-Ud-Lut">
-            <objects>
-                <viewController id="qKI-Sh-xIl" customClass="AuthLoginViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Hl9-0q-Lj4"/>
-                        <viewControllerLayoutGuide type="bottom" id="e1l-8x-58k"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="vsn-qb-AnL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SSX-Y9-HdG">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="delegate" destination="qKI-Sh-xIl" id="XET-ep-qka"/>
-                                </connections>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="e1l-8x-58k" firstAttribute="top" secondItem="SSX-Y9-HdG" secondAttribute="bottom" id="8np-CS-eAW"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="SSX-Y9-HdG" secondAttribute="trailing" constant="-16" id="Z6y-C0-bVg"/>
-                            <constraint firstItem="SSX-Y9-HdG" firstAttribute="top" secondItem="vsn-qb-AnL" secondAttribute="topMargin" id="f0G-rF-Dg5"/>
-                            <constraint firstItem="SSX-Y9-HdG" firstAttribute="leading" secondItem="vsn-qb-AnL" secondAttribute="leadingMargin" constant="-16" id="onv-cT-zBH"/>
-                        </constraints>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="webView" destination="SSX-Y9-HdG" id="AIB-D3-teJ"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hX9-27-4GE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-255.5" y="-914.5"/>
-        </scene>
         <!--Slide Out Menu View Controller-->
         <scene sceneID="fod-6H-kec">
             <objects>
@@ -1371,9 +1334,6 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.039215686270000001" green="0.1450980392" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="SHn-7r-8Ex" kind="custom" identifier="Courses" customClass="ECSlidingSegue" id="MQi-pv-2Lx"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Transit" id="vbl-sp-ih0">
                                         <rect key="frame" x="0.0" y="182" width="375" height="50"/>
