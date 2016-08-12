@@ -40,32 +40,64 @@
     [revealController panGestureRecognizer];
     [revealController tapGestureRecognizer];
     
-    UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
-                                                                         style:UIBarButtonItemStylePlain
-                                                                        target:revealController
-                                                                        action:@selector(revealToggle:)];
+    UIBarButtonItem *revealButtonItem =
+        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
+                                         style:UIBarButtonItemStylePlain
+                                        target:revealController
+                                        action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = revealButtonItem;
     
-    SupportItem *pGeneral = [[SupportItem alloc] initWithName:@"Penn Police General" phone:@"(215) 898-7297"];
-    pGeneral.descriptionText = @"Call for all non-emergencies";
-    SupportItem *pEmergency = [[SupportItem alloc] initWithName:@"Police Emergency/MERT" phone:@"(215) 573-3333"];
-    pEmergency.descriptionText = @"Call for all criminal or medical emergencies.";
-    SupportItem *pWalk = [[SupportItem alloc] initWithName:@"Penn Walk" phone:@"215-898-WALK (9255)"];
-    pWalk.phoneFiltered = @"2158989255";
-    pWalk.descriptionText = @"Call this number to have a Public safety officer walk you home between 30th to 43rd Streets and Market Street to Baltimore Avenue.";
-    SupportItem *pRide = [[SupportItem alloc] initWithName:@"Penn Ride" phone:@"215-898-RIDE (7433)"];
-    pRide.phoneFiltered = @"2158987433";
-    pRide.descriptionText = @"Call for Penn Ride services.";
-    SupportItem *hLine = [[SupportItem alloc] initWithName:@"Help Line" phone:@"215-898-HELP (4357)"];
-    hLine.phoneFiltered = @"2158984357";
-    hLine.descriptionText = @"24-hour-a-day phone number for members of the Penn community who are seeking time sensitive help in navigating Penn’s resources for health and wellness.";
-    SupportItem *caps = [[SupportItem alloc] initWithName:@"CAPS" phone:@"215-898-7021"];
-    caps.descriptionText = @"CAPS main number. Call anytime to reach CAPS";
-    SupportItem *special = [[SupportItem alloc] initWithName:@"Special Services" phone:@"215-898-4481"];
-    SupportItem *womens = [[SupportItem alloc] initWithName:@"Women's Center" phone:@"215-898-8611"];
-    SupportItem *shs = [[SupportItem alloc] initWithName:@"Student Health Services" phone:@"215-746-3535"];
+    SupportItem *pGeneral =
+        [[SupportItem alloc] initWithName:@"Penn Police General"
+                                    phone:@"(215) 898-7297"
+                                     desc:@"Call for all non-emergencies"];
     
-    _contacts = [NSArray arrayWithObjects:pEmergency, pGeneral, pWalk, pRide, hLine, caps, special, womens, shs, nil];
+    SupportItem *pEmergency =
+        [[SupportItem alloc] initWithName:@"Police Emergency/MERT"
+                                    phone:@"(215) 573-3333"
+                                     desc:@"Call for all criminal or medical emergencies."];
+    
+    SupportItem *pWalk =
+        [[SupportItem alloc] initWithName:@"Penn Walk"
+                                    phone:@"215-898-WALK (9255)"
+                                     desc:@"Call this number to have a Public safety officer walk you home between 30th to 43rd Streets and Market Street to Baltimore Avenue."];
+    pWalk.phoneFiltered = @"2158989255";
+    
+    SupportItem *pRide =
+        [[SupportItem alloc] initWithName:@"Penn Ride"
+                                    phone:@"215-898-RIDE (7433)"
+                                     desc:@"Call for Penn Ride services."];
+    pRide.phoneFiltered = @"2158987433";
+
+    SupportItem *hLine =
+        [[SupportItem alloc] initWithName:@"Help Line"
+                                    phone:@"215-898-HELP (4357)"
+                                     desc:@"24-hour-a-day phone number for members of the Penn community who are seeking time sensitive help in navigating Penn’s resources for health and wellness."];
+    hLine.phoneFiltered = @"2158984357";
+
+    SupportItem *caps =
+        [[SupportItem alloc] initWithName:@"CAPS"
+                                    phone:@"215-898-7021"
+                                     desc:@"CAPS main number. Call anytime to reach CAPS"];
+
+    SupportItem *special =
+        [[SupportItem alloc] initWithName:@"Special Services"
+                                    phone:@"215-898-4481"
+                                     desc:nil];
+    
+    SupportItem *womens =
+    [[SupportItem alloc] initWithName:@"Women's Center"
+                                phone:@"215-898-8611"
+                                 desc:nil];
+    
+    SupportItem *shs =
+    [[SupportItem alloc] initWithName:@"Student Health Services"
+                                phone:@"215-746-3535"
+                                 desc:nil];
+    
+    self.contacts =
+        [NSArray arrayWithObjects:
+            pEmergency, pGeneral, pWalk, pRide, hLine, caps, special, womens, shs, nil];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.bounces = NO;
@@ -81,8 +113,10 @@
     return [self.contacts count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                                   reuseIdentifier:nil];
     SupportItem *c = [self.contacts objectAtIndex:indexPath.row];
     cell.textLabel.text = c.name;
     
@@ -93,7 +127,9 @@
     cell.imageView.transform = CGAffineTransformMakeScale(widthScale, heightScale);
     cell.imageView.tag = indexPath.row;
     
-    UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(phoneCalled:)];
+    UITapGestureRecognizer *tapped =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(phoneCalled:)];
     tapped.numberOfTapsRequired = 1;
     cell.imageView.userInteractionEnabled = YES;
     [cell.imageView addGestureRecognizer:tapped];
@@ -101,6 +137,10 @@
     cell.detailTextLabel.numberOfLines = 0;
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+//    [button setUserInteractionEnabled:NO];
+//    cell.accessoryView = button;
     
     return cell;
 }
@@ -120,7 +160,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [tableView reloadRowsAtIndexPaths:@[indexPath]
+                     withRowAnimation:UITableViewRowAnimationAutomatic];
     
     [tableView beginUpdates];
     
@@ -129,15 +170,18 @@
         [self.tableView cellForRowAtIndexPath:indexPath].detailTextLabel.text = @"";
     } else {
         
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        
         [self.tableView cellForRowAtIndexPath:self.expandedIndexPath].detailTextLabel.text = @"";
         
         self.expandedIndexPath = indexPath;
         SupportItem *c = self.contacts[indexPath.row];
         if(c.descriptionText) {
-            NSString *descriptionString = [NSString stringWithFormat:@"%@\n%@", c.phone, c.descriptionText];
-            [self.tableView cellForRowAtIndexPath:indexPath].detailTextLabel.text = descriptionString;
+            NSString *descriptionString =
+                [NSString stringWithFormat:@"%@\n%@", c.phone, c.descriptionText];
+            cell.detailTextLabel.text = descriptionString;
         } else {
-            [self.tableView cellForRowAtIndexPath:indexPath].detailTextLabel.text = c.phone;
+            cell.detailTextLabel.text = c.phone;
         }
     }
     
@@ -162,7 +206,9 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView
+ willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];

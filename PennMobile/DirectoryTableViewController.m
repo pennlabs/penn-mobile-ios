@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSMutableArray *resultsArray;
 @property (nonatomic, strong) NSIndexPath *expandedIndexPath;
 @property (nonatomic, strong) Person *currPerson;
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -45,17 +46,27 @@
     [revealController panGestureRecognizer];
     [revealController tapGestureRecognizer];
     
-    UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
-                                                                         style:UIBarButtonItemStylePlain
-                                                                        target:revealController
-                                                                        action:@selector(revealToggle:)];
+    UIBarButtonItem *revealButtonItem =
+        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
+                                         style:UIBarButtonItemStylePlain
+                                        target:revealController
+                                        action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = revealButtonItem;
     
-    self.directorySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.view.frame.size.height;
+    
+    self.directorySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, width, 44)];
     self.directorySearchBar.delegate = self;
     [self.view addSubview:self.directorySearchBar];
     
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 108, width, height-108)
+                                                  style:UITableViewStylePlain];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
     
     self.currPerson = [[Person alloc] init];
     
@@ -68,7 +79,7 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.resultsArray.count + 1;
+    return self.resultsArray.count;
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,14 +89,16 @@
     return 44.0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:nil];
     }
     
-    if (indexPath.row != 0 && indexPath.row <= self.resultsArray.count) {
-        Person *person = (Person *)[self.resultsArray objectAtIndex:indexPath.row-1];
+    if (indexPath.row <= self.resultsArray.count) {
+        Person *person = (Person *)[self.resultsArray objectAtIndex:indexPath.row];
         cell.textLabel.text = [person.name capitalizedString];
     }
     
@@ -108,7 +121,9 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView
+ willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];
@@ -122,7 +137,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [tableView reloadRowsAtIndexPaths:@[indexPath]
+                     withRowAnimation:UITableViewRowAnimationAutomatic];
     
     [tableView beginUpdates];
     
@@ -134,17 +150,22 @@
         [self.tableView cellForRowAtIndexPath:self.expandedIndexPath].detailTextLabel.text = @"";
         
         self.expandedIndexPath = indexPath;
-        Person *p = (Person *)[self.resultsArray objectAtIndex:indexPath.row-1];
+        Person *p = (Person *)[self.resultsArray objectAtIndex:indexPath.row];
         if(p) {
-            NSString *desc = [NSString stringWithFormat:@"%@ -- ", [[p.organization capitalizedString]stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]];
+            NSString *desc = [NSString stringWithFormat:@"%@ -- ",
+                              [[p.organization capitalizedString]stringByTrimmingCharactersInSet:
+                               [NSCharacterSet whitespaceCharacterSet]]];
             if(p.title) {
-                desc = [desc stringByAppendingString:[p.affiliation capitalizedString]];
+                desc = [desc stringByAppendingString:
+                        [p.affiliation capitalizedString]];
             }
             if(p.email) {
-                desc = [desc stringByAppendingString:[NSString stringWithFormat:@"\n%@", [p.email lowercaseString]]];
+                desc = [desc stringByAppendingString:
+                        [NSString stringWithFormat:@"\n%@", [p.email lowercaseString]]];
             }
             if(p.phone) {
-                desc = [desc stringByAppendingString:[NSString stringWithFormat:@"\n%@", p.phone]];
+                desc = [desc stringByAppendingString:
+                        [NSString stringWithFormat:@"\n%@", p.phone]];
             }
             [self.tableView cellForRowAtIndexPath:indexPath].detailTextLabel.text = desc;
         }
@@ -154,11 +175,17 @@
     [tableView endUpdates];
 }
 
--(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    Person *p = [self.resultsArray objectAtIndex: indexPath.row-1];
+-(void)tableView:(UITableView *)tableView
+accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    Person *p = [self.resultsArray objectAtIndex: indexPath.row];
     self.currPerson = p;
     
-    UIAlertView *phoneAlert = [[UIAlertView alloc] initWithTitle:[p.name capitalizedString] message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+    UIAlertView *phoneAlert = [[UIAlertView alloc] initWithTitle:[p.name capitalizedString]
+                                                         message:@""
+                                                        delegate:self
+                                               cancelButtonTitle:@"Cancel"
+                                               otherButtonTitles:nil];
+    
     if (p.email && ![p.email isEqualToString:@""]) {
         [phoneAlert addButtonWithTitle:@"Email"];
     }
@@ -169,7 +196,6 @@
     }
     
     [phoneAlert show];
-
 }
 
 #pragma mark - Search Bar Information
@@ -227,10 +253,11 @@
     
     term = [term stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, DIRECTORY_PATH, term]];
+    NSURL *url = [NSURL URLWithString:
+                      [NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, DIRECTORY_PATH, term]];
     NSData *result = [NSData dataWithContentsOfURL:url];
     if (!result) {
-        [SVProgressHUD showErrorWithStatus:@"There are no results. Please try a different search term."];
+        [SVProgressHUD showErrorWithStatus:@"No results. Please try a different search term."];
         return nil;
     }
     
@@ -239,7 +266,8 @@
                                                              options:NSJSONReadingMutableLeaves
                                                                error:&error];
     if (error) {
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"JSON parse error: %@",error.localizedDescription]];
+        [SVProgressHUD showErrorWithStatus:
+            [NSString stringWithFormat:@"JSON parse error: %@",error.localizedDescription]];
         return nil;
     }
     
@@ -299,7 +327,12 @@ static ABAddressBookRef addressBook;
         case  kABAuthorizationStatusDenied:
         case  kABAuthorizationStatusRestricted:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Privacy Warning" message:@"Permission was not granted for Contacts." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert =
+                [[UIAlertView alloc] initWithTitle:@"Privacy Warning"
+                                           message:@"Permission was not granted for Contacts."
+                                          delegate:nil
+                                 cancelButtonTitle:@"OK"
+                                 otherButtonTitles:nil];
             [alert show];
         }
             break;
@@ -325,7 +358,12 @@ static ABAddressBookRef addressBook;
     NSString *name = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
     if (name) {
         name = [name stringByAppendingString:@" was successfully added to your contacts."];
-        UIAlertView *toShow = [[UIAlertView alloc] initWithTitle:@"Contact Added" message:name delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *toShow =
+            [[UIAlertView alloc] initWithTitle:@"Contact Added"
+                                       message:name
+                                      delegate:self
+                             cancelButtonTitle:@"OK"
+                             otherButtonTitles:nil, nil];
         [newPersonViewController dismissViewControllerAnimated:YES completion:^{
             [toShow show];
         }];
@@ -339,21 +377,33 @@ static ABAddressBookRef addressBook;
     picker.newPersonViewDelegate = self;
     ABRecordRef person = ABPersonCreate();
     if (inQuestion.phone) {
-        ABMutableMultiValueRef phoneNumberMultiValue = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-        ABMultiValueAddValueAndLabel(phoneNumberMultiValue, (__bridge CFTypeRef)(inQuestion.phone) ,kABPersonPhoneMobileLabel, NULL);
-        ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumberMultiValue, nil); // set the phone number property
+        ABMutableMultiValueRef phoneNumberMultiValue =
+            ABMultiValueCreateMutable(kABMultiStringPropertyType);
+        ABMultiValueAddValueAndLabel(phoneNumberMultiValue,
+                                     (__bridge CFTypeRef)(inQuestion.phone),
+                                     kABPersonPhoneMobileLabel,
+                                     NULL);
+        // set the phone number property
+        ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumberMultiValue, nil);
     } if (inQuestion.email) {
         ABMutableMultiValueRef emailMulti = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-        ABMultiValueAddValueAndLabel(emailMulti, (__bridge CFTypeRef)(inQuestion.email) ,kABWorkLabel, NULL);
-        ABRecordSetValue(person, kABPersonEmailProperty, emailMulti, nil); // set the phone number property
+        ABMultiValueAddValueAndLabel(emailMulti,
+                                     (__bridge CFTypeRef)(inQuestion.email),
+                                     kABWorkLabel,
+                                     NULL);
+         // set the phone number property
+        ABRecordSetValue(person, kABPersonEmailProperty, emailMulti, nil);
     }
     NSArray *nameSplit = [inQuestion.name componentsSeparatedByString:@","];
     NSString *first = [nameSplit[1] substringToIndex:((NSString *)nameSplit[1]).length - 1];
     first = [first substringFromIndex:1];
     NSString *last = nameSplit[0];
-    ABRecordSetValue(person, kABPersonFirstNameProperty, (__bridge CFTypeRef)(first), nil); // first name of the new person
-    ABRecordSetValue(person, kABPersonLastNameProperty, (__bridge CFTypeRef)(last), nil); // his last name
-    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:picker];
+    // First name
+    ABRecordSetValue(person, kABPersonFirstNameProperty, (__bridge CFTypeRef)(first), nil);
+    // Last name
+    ABRecordSetValue(person, kABPersonLastNameProperty, (__bridge CFTypeRef)(last), nil);
+    UINavigationController *navigation =
+        [[UINavigationController alloc] initWithRootViewController:picker];
     picker.displayedPerson = person;
     [self presentViewController:navigation animated:YES completion:nil];
 }

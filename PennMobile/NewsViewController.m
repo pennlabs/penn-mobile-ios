@@ -44,6 +44,9 @@
     self.navBarHairlineImageView =
         [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     [self.navBarHairlineImageView setHidden:YES];
+    
+//    WE WANT TO MOVE THE HAIRLINE DOWN.
+//
 //    NSLog(@"%@", NSStringFromCGRect(self.navBarHairlineImageView.frame));
 //    self.navBarHairlineImageView.frame = CGRectOffset(self.navBarHairlineImageView.frame, 0, 44);
 //    NSLog(@"%@", NSStringFromCGRect(self.navBarHairlineImageView.frame));

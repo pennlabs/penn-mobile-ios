@@ -11,16 +11,23 @@
 @interface RegistrarTableViewController ()
 
 typedef NS_ENUM(NSInteger, CourseFilter) {
-    All = 1,
     Lecture,
     Lab,
     Recitation,
+    All,
 };
 
 @property (nonatomic, strong) NSIndexPath *selected;
 @property (nonatomic, strong) NSMutableDictionary *buildings;
-@property (nonatomic, strong) NSArray *courses;
+@property (nonatomic, strong) NSMutableArray *courses;
+@property (nonatomic, strong) NSMutableArray *filteredCourses;
 @property (nonatomic) CourseFilter currentFilter;
+@property (nonatomic, strong) UISegmentedControl *filterSwitch;
+
+@property (nonatomic, strong) UIToolbar *headerToolbar;
+@property (nonatomic, strong) UIImageView *navBarHairlineImageView;
+
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -41,7 +48,16 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor blackColor]}];
     
+    self.navBarHairlineImageView =
+    [self findHairlineImageViewUnder:self.navigationController.navigationBar];
+    [self.navBarHairlineImageView setHidden:YES];
+    
     self.view.backgroundColor = [UIColor whiteColor];
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navBarHairlineImageView.hidden = NO;
 }
 
 -(void) viewDidLoad {
@@ -51,21 +67,70 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
     [revealController panGestureRecognizer];
     [revealController tapGestureRecognizer];
     
-    UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
-                                                                         style:UIBarButtonItemStylePlain
-                                                                        target:revealController
-                                                                        action:@selector(revealToggle:)];
+    UIBarButtonItem *revealButtonItem =
+        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
+                                         style:UIBarButtonItemStylePlain
+                                        target:revealController
+                                        action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = revealButtonItem;
     
-    self.registrySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    // self.buildings = [[NSMutableDictionary alloc] init];
+    self.courses = [[NSMutableArray alloc] init];
+    self.filteredCourses = [[NSMutableArray alloc] init];
+    
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
+    
+    self.registrySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 108, width, 44)];
     self.registrySearchBar.delegate = self;
     [self.view addSubview:self.registrySearchBar];
     
+    self.headerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 64, width, 44)];
+    self.headerToolbar.backgroundColor = self.navigationController.navigationBar.backgroundColor;
+    self.headerToolbar.delegate = self;
+    
+    self.filterSwitch =
+        [[UISegmentedControl alloc] initWithItems: @[@"Lecture", @"Lab", @"Recitation", @"All"]];
+    self.filterSwitch.center = CGPointMake(width/2, self.headerToolbar.frame.size.height/2);
+    self.filterSwitch.tintColor = PENN_YELLOW;
+    self.filterSwitch.selectedSegmentIndex = 0;
+    [self.filterSwitch addTarget:self
+                          action:@selector(switchFilter)
+                forControlEvents:UIControlEventValueChanged];
+    [self.headerToolbar addSubview:self.filterSwitch];
+    [self.view addSubview:self.headerToolbar];
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 152, width, height-152)
+                                                  style:UITableViewStylePlain];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
     
-    self.buildings = [[NSMutableDictionary alloc] init];
-    self.courses = [[NSArray alloc] init];
     
+}
+
+- (void)switchFilter {
+    self.currentFilter = self.filterSwitch.selectedSegmentIndex;
+    self.filteredCourses = [self filterCourses: self.courses];
+    [self.tableView reloadData];
+}
+
+- (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar {
+    return UIBarPositionTopAttached;
+}
+
+- (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
+        return (UIImageView *)view;
+    }
+    for (UIView *subview in view.subviews) {
+        UIImageView *imageView = [self findHairlineImageViewUnder:subview];
+        if (imageView) {
+            return imageView;
+        }
+    }
+    return nil;
 }
 
 #pragma mark - Search Bar Information
@@ -81,14 +146,14 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
     }
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length > 2) {
-        [super performSelectorInBackground:@selector(queryHandler:) withObject:searchText];
-    }
-    if(![self.registrySearchBar isFirstResponder]) {
-        [self searchBarCancelButtonClicked:self.registrySearchBar];
-    }
-}
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    if (searchText.length > 2) {
+//        [super performSelectorInBackground:@selector(queryHandler:) withObject:searchText];
+//    }
+//    if(![self.registrySearchBar isFirstResponder]) {
+//        [self searchBarCancelButtonClicked:self.registrySearchBar];
+//    }
+//}
 
 #pragma mark - Table view data source
 
@@ -97,7 +162,7 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.courses.count;
+    return self.filteredCourses.count;
 }
 
 //
@@ -116,16 +181,17 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
 //    });
 //}
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:nil];
     }
     
-    if(indexPath.row != 0) {
-        cell.textLabel.text = [[self.courses objectAtIndex:indexPath.row -1] objectForKey:@"section_id_normalized1"];
-    }
-    
+    Course *cellCourse = (Course *)[self.filteredCourses objectAtIndex:indexPath.row];
+    cell.textLabel.text =
+        [cellCourse.sectionID stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     //    Course *inQuestion = super.objects[indexPath.row];
     //    cell.labelName.text = inQuestion.title;
@@ -172,34 +238,77 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
 - (void)queryHandler:(NSString *)search {
     
     self.courses = [self queryAPI:search];
-    NSLog(@"%@", self.courses);
-//    if(data) {
-//        [self parseData: data];
-//    }
+    self.filteredCourses = [self filterCourses:self.courses];
     
     [self.tableView reloadData];
-    NSLog(@"%@", search);
     self.tableView.userInteractionEnabled = YES;
     [SVProgressHUD dismiss];
 }
 
--(NSArray *)queryAPI:(NSString *)term {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, REGISTRAR_PATH, term]];
+-(NSMutableArray *)queryAPI:(NSString *)term {
+    NSURL *url =
+        [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, REGISTRAR_PATH, term]];
     NSData *result = [NSData dataWithContentsOfURL:url];
 
 //    if (![self confirmConnection:result]) {
 //        return nil;
 //    }
-//    if (!result) {
-//        //CLS_LOG(@"Data parameter was nil for query..proceeding anyway");
-//    }
+    if (!result) {
+        //CLS_LOG(@"Data parameter was nil for query..proceeding anyway");
+        [SVProgressHUD showErrorWithStatus:@"Cannot connect to internet or the API is down."];
+        return [[NSMutableArray alloc] init];
+    }
     NSError *error;
-    NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
+    NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result
+                                                             options:NSJSONReadingMutableLeaves
+                                                               error:&error];
     if (error) {
         [NSException raise:@"JSON parse error" format:@"%@", error];
     }
-    return returned[@"courses"];
     
+    NSMutableArray *courseList = [[NSMutableArray alloc] init];
+    for(NSDictionary *courseData in [returned objectForKey:@"courses"]) {
+        Course *new = [[Course alloc] init];
+        new.activity = courseData[@"activity_description"];
+        new.dept = courseData[@"course_department"];
+        new.title = courseData[@"course_title"];
+        new.courseNum = courseData[@"course_number"];
+        new.credits = courseData[@"credits"];
+        new.sectionNum = courseData[@"section_number"];
+        new.desc = courseData[@"course_description"];
+        new.type = [courseData[@"type"] capitalizedString];
+        new.roomNum = courseData[@"roomNumber"];
+        new.sectionID = courseData[@"section_id_normalized"];
+        new.primaryProf = courseData[@"primary_instructor"];
+        new.identifier =
+            [NSString stringWithFormat:@"%@-%@", new.dept, new.courseNum];
+        [courseList addObject:new];
+    }
+    
+    return courseList;
+}
+
+-(NSMutableArray *) filterCourses:(NSMutableArray *)courses {
+    
+    NSString *string;
+    if (self.currentFilter == All) {
+        return courses;
+    } else if (self.currentFilter == Lecture) {
+        string = @"Lecture";
+    } else if (self.currentFilter == Lab) {
+        string = @"Laboratory";
+    } else if (self.currentFilter == Recitation) {
+        string = @"Recitation";
+    }
+    
+    NSMutableArray *newList = [[NSMutableArray alloc] init];
+    for (Course *course in courses) {
+        if ([course.activity isEqualToString:string]) {
+            [newList addObject:course];
+        }
+    }
+    
+    return newList;
 }
 
 //
@@ -233,7 +342,7 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
 //        new.sectionNum = courseData[@"section_number"];
 //        new.desc = courseData[@"course_description"];
 //        new.type = [courseData[@"type"] capitalizedString];
-//        new.roomBum = courseData[@"roomNumber"];
+//        new.roomNum = courseData[@"roomNumber"];
 //        new.sectionID = courseData[@"section_id_normalized"];
 //        new.primaryProf = courseData[@"primary_instructor"];
 //        new.identifier = [NSString stringWithFormat:@"%@-%@", new.dept, new.courseNum];
@@ -248,12 +357,12 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
 //            new.times = toBuild;
 //            new.building = courseData[@"meetings"][0][@"building_name"];
 //            new.buildingCode = courseData[@"meetings"][0][@"building_code"];
-//            new.roomBum = courseData[@"meetings"][0][@"room_number"];
+//            new.roomNum = courseData[@"meetings"][0][@"room_number"];
 //            if (new.buildingCode && ![new.buildingCode isEqualToString:@""]) {
 //                if (buildings[new.buildingCode]) {
 //                    MKPointAnnotation *pt = buildings[new.buildingCode];
 //                    MKPointAnnotation *newPt = [[MKPointAnnotation alloc] init];
-//                    newPt.title = [[new.building stringByAppendingString:@" "]     stringByAppendingString:new.roomBum];
+//                    newPt.title = [[new.building stringByAppendingString:@" "]     stringByAppendingString:new.roomNum];
 //                    newPt.coordinate = pt.coordinate;
 //                    new.point = newPt;
 //                    // this because MKPointAnimation does not implement copying
@@ -270,7 +379,7 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
 //                            float lon = [returned[@"longitude"] doubleValue];
 //                            MKPointAnnotation *pt = [[MKPointAnnotation alloc] init];
 //                            pt.coordinate = CLLocationCoordinate2DMake(lat, lon);
-//                            pt.title = [[new.building stringByAppendingString:@" "]     stringByAppendingString:new.roomBum];
+//                            pt.title = [[new.building stringByAppendingString:@" "]     stringByAppendingString:new.roomNum];
 //                            new.point = pt;
 //                            buildings[new.buildingCode] = pt;
 //                        }

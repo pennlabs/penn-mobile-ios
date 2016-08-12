@@ -21,7 +21,7 @@
 @property NSString *times;
 @property NSString *building;
 @property NSString *buildingCode;
-@property NSString *roomBum;
+@property NSString *roomNum;
 @property NSArray *professors;
 @property NSString *desc;
 @property NSString *primaryProf;

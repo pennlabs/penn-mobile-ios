@@ -45,10 +45,11 @@
     [revealController panGestureRecognizer];
     [revealController tapGestureRecognizer];
     
-    UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
-                                                                         style:UIBarButtonItemStylePlain
-                                                                        target:revealController
-                                                                        action:@selector(revealToggle:)];
+    UIBarButtonItem *revealButtonItem =
+         [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
+                                          style:UIBarButtonItemStylePlain
+                                         target:revealController
+                                         action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = revealButtonItem;
     
 }
@@ -69,8 +70,8 @@
 }
 
 -(void) loadFromAPI {
-    NSString *str=@"http://api.pennlabs.org/laundry/halls";
-    NSURL *url =[NSURL URLWithString:str];
+    NSString *str = [NSString stringWithFormat: @"%@%@", SERVER_ROOT, LAUNDRY_PATH];
+    NSURL *url = [NSURL URLWithString:str];
 
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         

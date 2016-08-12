@@ -16,7 +16,9 @@
 #define DIRECTORY_PATH @"directory/search?name="
 #define DETAIL_PATH @"directory/person/"
 
-@interface DirectoryTableViewController : UITableViewController <UISearchBarDelegate, ABNewPersonViewControllerDelegate, UIAlertViewDelegate>
+@interface DirectoryTableViewController : UIViewController
+    <UISearchBarDelegate, ABNewPersonViewControllerDelegate, UIAlertViewDelegate,
+     UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UISearchBar *directorySearchBar;
 

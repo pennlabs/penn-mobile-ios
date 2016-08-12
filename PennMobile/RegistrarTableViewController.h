@@ -17,9 +17,9 @@
 #define REGISTRAR_PATH @"registrar/search?q="
 #define BUILDING_PATH @"buildings/search?q="
 
-@interface RegistrarTableViewController : UITableViewController <UITableViewDelegate, UISearchBarDelegate>
+@interface RegistrarTableViewController : UIViewController <UITableViewDelegate, UISearchBarDelegate,
+                                                            UIToolbarDelegate, UITableViewDataSource>
 
-@property (weak, nonatomic) UISegmentedControl *filterSwitch;
 @property (nonatomic, strong) UISearchBar *registrySearchBar;
 
 @end
