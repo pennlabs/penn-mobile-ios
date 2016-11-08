@@ -301,8 +301,8 @@ bool usingTempData;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
    /** if (indexPath.section *== 0) { **/
     NSString *venueName = ((DiningTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).venueLabel.text;
-    venueName = [@"University of Pennsylvania " stringByAppendingString:venueName];
     _selectedVenue = venueName;
+    NSLog(@"%@", _selectedVenue);
     _dataForNextView = [self getMealsForVenue:venueName forDate:_selectedDate atMeal:[self isOpen:venueName]];
     if (!_dataForNextView || _dataForNextView.count == 0) {
         _selectedVenueHours = [self getTimeStringForVenue:_selectedVenue onDate:[NSDate date]];
@@ -520,6 +520,7 @@ bool usingTempData;
     [_mealsServed removeAllObjects];
     NSMutableArray *toReturn = [[NSMutableArray alloc] init];
     NSDictionary *venueContents = _venues[venue];
+    NSLog(@"%@", _venues.allKeys);
     NSArray *mealOptions;
     for (NSString *day in [venueContents allKeys]) {
         NSDate *normalizedDay = [mealJSONFormatter dateFromString:day];
