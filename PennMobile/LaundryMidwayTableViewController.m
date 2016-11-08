@@ -28,7 +28,7 @@
     self.navigationItem.leftBarButtonItem = backButtonItem;
     [backButtonItem setTintColor: PENN_YELLOW];
     
-    self.tableView.alwaysBounceVertical = NO;
+    self.tableView.alwaysBounceVertical = YES;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [self.tableView reloadData];

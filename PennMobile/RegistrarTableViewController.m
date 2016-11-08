@@ -7,6 +7,7 @@
 //
 
 #import "RegistrarTableViewController.h"
+#import "RegistrarDetailViewController.h"
 
 @interface RegistrarTableViewController ()
 
@@ -165,8 +166,12 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
     return self.filteredCourses.count;
 }
 
-//
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44.0f;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 //
 //    super.forSegue = super.objects[indexPath.row];
@@ -179,19 +184,27 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
 //            [self performSegueWithIdentifier:@"detail" sender:self];
 //        });
 //    });
-//}
+    
+    RegistrarDetailViewController *registrarDetailVC =
+        [[RegistrarDetailViewController alloc] initWithCourse:[self.filteredCourses objectAtIndex:indexPath.item]];
+    [self.navigationController pushViewController:registrarDetailVC animated:YES];
+    
+    
+}
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = nil;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell"];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                                      reuseIdentifier:nil];
+                                      reuseIdentifier:@"Cell"];
     }
     
     Course *cellCourse = (Course *)[self.filteredCourses objectAtIndex:indexPath.row];
-    cell.textLabel.text =
-        [cellCourse.sectionID stringByReplacingOccurrencesOfString:@" " withString:@""];
+    cell.textLabel.text = cellCourse.sectionID;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    
+    // cell.detailTextLabel.text = cellCourse.title;
     
     //    Course *inQuestion = super.objects[indexPath.row];
     //    cell.labelName.text = inQuestion.title;
@@ -268,6 +281,9 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
     
     NSMutableArray *courseList = [[NSMutableArray alloc] init];
     for(NSDictionary *courseData in [returned objectForKey:@"courses"]) {
+        
+        NSDictionary *meetings = [courseData[@"meetings"] firstObject];
+        
         Course *new = [[Course alloc] init];
         new.activity = courseData[@"activity_description"];
         new.dept = courseData[@"course_department"];
@@ -276,12 +292,13 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
         new.credits = courseData[@"credits"];
         new.sectionNum = courseData[@"section_number"];
         new.desc = courseData[@"course_description"];
-        new.type = [courseData[@"type"] capitalizedString];
-        new.roomNum = courseData[@"roomNumber"];
-        new.sectionID = courseData[@"section_id_normalized"];
+        new.roomNum = [NSString stringWithFormat: @"%@%@", meetings[@"building_code"], meetings[@"room_number"]];
+        new.sectionID = [courseData[@"section_id_normalized"] stringByReplacingOccurrencesOfString:@" " withString:@""];
         new.primaryProf = courseData[@"primary_instructor"];
-        new.identifier =
-            [NSString stringWithFormat:@"%@-%@", new.dept, new.courseNum];
+        new.identifier = [NSString stringWithFormat:@"%@-%@", new.dept, new.courseNum];
+        new.times = [NSString stringWithFormat: @"%@ %@-%@", meetings[@"meeting_days"],
+                                                             meetings[@"start_time"],
+                                                             meetings[@"end_time"]];
         [courseList addObject:new];
     }
     

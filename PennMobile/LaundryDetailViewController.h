@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define LAUNDRY_PATH @"laundry/hall/"
+#define LAUNDRY_DETAIL_PATH @"laundry/hall/"
 
 @interface LaundryDetailViewController : UITableViewController
 

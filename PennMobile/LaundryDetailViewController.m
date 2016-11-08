@@ -67,7 +67,7 @@
 }
 
 -(void) loadFromAPI {
-    NSString *str = [NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, LAUNDRY_PATH, self.indexNumber];
+    NSString *str = [NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, LAUNDRY_DETAIL_PATH, self.indexNumber];
     NSURL *url =[NSURL URLWithString:str];
     
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -271,7 +271,6 @@
 
         [[UIApplication sharedApplication] scheduleLocalNotification:local];
     } else {
-        NSLog(@"?????");
         [sender setOn:NO animated:YES];
     }
     
