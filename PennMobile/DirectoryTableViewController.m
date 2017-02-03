@@ -10,151 +10,104 @@
 
 @interface DirectoryTableViewController ()
 
+@property (nonatomic, strong) NSMutableArray *resultsArray;
+@property (nonatomic, strong) NSIndexPath *expandedIndexPath;
+@property (nonatomic, strong) Person *currPerson;
+@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 @implementation DirectoryTableViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    super.objects = nil;
+-(id) init {
+    self = [super init];
+    if(self) {
+        self.title = @"Directory";
+    }
+    return self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.directorySearchBar becomeFirstResponder];
+    
+    self.navigationController.navigationBar.tintColor = PENN_YELLOW;
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor blackColor]}];
+    
 }
 
-#pragma mark - API
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"person" forIndexPath:indexPath];
-    if (indexPath.row < super.objects.count) {
-        [cell configure:super.objects[indexPath.row]];
-    }
-    [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
-    return cell;
-}
--(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    [self addContact:(Person *)super.objects[indexPath.row]];
-}
-- (void)queryHandler:(NSString *)search {
-    [self importData:[self searchFor:search split:NO]];
-    [self performSelectorOnMainThread:@selector(reloadView) withObject:nil waitUntilDone:NO];
-}
--(void)importData:(NSArray *)raw {
-    if (!raw)
-        return;
-    if (!tempSet) {
-        tempSet = [[NSMutableOrderedSet alloc] init];
-    }
-    for (NSDictionary *personData in raw) {
-        Person *new = [[Person alloc] init];
-        new.name = [personData[@"list_name"] capitalizedString];
-        if (personData[@"list_phone"]) {
-            new.phone = personData[@"list_phone"];
-        }
-        if (personData[@"list_email"]) {
-            new.email = personData[@"list_email"];
-        }
-        new.identifier = personData[@"person_id"];
-        new.organization = [personData[@"list_organization"] capitalizedString];
-        //new.affiliation = personData[@"list_affiliation"];
-        [tempSet addObject:new];
-    }
-    super.objects = [tempSet sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSString *courseNum1 = ((Person *)obj1).name;
-        NSString *courseNum2 = ((Person *)obj1).name;
-        return [courseNum1 compare:courseNum2];
-    }];
-    if (tempSet && tempSet.count > 0) {
-        @try {
-            [tempSet removeAllObjects];
-        }
-        @catch (NSException *exception) {
-            // TBD
-            // this is caused by a concurrent access
-            // i.e. removeAllObjects is called too many times
-        }
-    }
+-(void) viewDidLoad {
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    SWRevealViewController *revealController = [self revealViewController];
+    [revealController panGestureRecognizer];
+    [revealController tapGestureRecognizer];
+    
+    UIBarButtonItem *revealButtonItem =
+        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
+                                         style:UIBarButtonItemStylePlain
+                                        target:revealController
+                                        action:@selector(revealToggle:)];
+    self.navigationItem.leftBarButtonItem = revealButtonItem;
+    
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.view.frame.size.height;
+    
+    self.directorySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, width, 44)];
+    self.directorySearchBar.delegate = self;
+    [self.view addSubview:self.directorySearchBar];
+    
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 108, width, height-108)
+                                                  style:UITableViewStylePlain];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
+    
+    self.currPerson = [[Person alloc] init];
+    
 }
 
-- (NSDictionary *)requetPersonDetails:(NSString *)name {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, DETAIL_PATH, name]];
-    NSData *result = [NSData dataWithContentsOfURL:url];
-    NSError *error;
-    NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
-    if (error) {
-        [NSException raise:@"JSON parse error" format:@"%@", error];
-    }
-    return returned;
-}
-- (NSObject *)parseData:(NSDictionary *)data {
-    Person *new = [[Person alloc] init];
-    new.name = data[@"detail_name"];
-    new.title = data[@"title"];
-    new.organization = data[@"list_organization_pub"];
-    new.affiliation = data[@"list_affiliation"];
-    return new;
-}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
     return 1;
 }
 
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    super.forSegue = super.objects[indexPath.row];
-    //[self performSegueWithIdentifier:@"detail" sender:self];
-    [self prompt:self];
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.resultsArray.count;
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    if (searchBar.text.length <= 2) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Search" message:@"Please search by at least 3 characters." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([indexPath compare:self.expandedIndexPath] == NSOrderedSame) {
+        return 132.0;
     }
-    else {
-        [super.searchBar resignFirstResponder];
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        self.tableView.userInteractionEnabled = NO;
-        [super performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
-    }
-}
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length > 2) {
-        [super performSelectorInBackground:@selector(queryHandler:) withObject:searchText];
-    }
-    if(![super.searchBar isFirstResponder]) {
-        [self searchBarCancelButtonClicked:super.searchBar];
-    }
+    return 44.0;
 }
 
--(NSArray *)queryAPI:(NSString *)term {
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = nil;
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:nil];
+    }
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, DIRECTORY_PATH, term]];
-    NSData *result = [NSData dataWithContentsOfURL:url];
-    if (![super confirmConnection:result]) {
-        return nil;
+    if (indexPath.row <= self.resultsArray.count) {
+        Person *person = (Person *)[self.resultsArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = [person.name capitalizedString];
     }
-    NSError *error;
-    if (!result) {
-        //CLS_LOG(@"Data parameter was nil for query..returning null");
-        return nil;
-    }
-    NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
-    if (error) {
-        [NSException raise:@"JSON parse error" format:@"%@", error];
-    }
-    return returned[@"result_data"];
-}
-
-- (void)detailQueryHandler:(NSString *)search {
-   super.forSegue = [self parseData:[self requetPersonDetails:((Person *)super.forSegue).identifier]];
+    
+    cell.detailTextLabel.numberOfLines = 0;
+    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    cell.accessoryType = UITableViewCellAccessoryDetailButton;
+    
+    return cell;
 }
 
 -(void)viewDidLayoutSubviews
@@ -168,7 +121,9 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView
+ willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];
@@ -179,54 +134,171 @@
     }
 }
 
--(IBAction)prompt:(id)sender {
-    Person *p = super.forSegue;
-    UIAlertView *phoneAlert = [[UIAlertView alloc] initWithTitle:p.name message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
-    @try {
-//        if (p.phone && ![p.phone isEqualToString:@""]) {
-//            [phoneAlert addButtonWithTitle:@"Call"];
-//            [phoneAlert addButtonWithTitle:@"Text"];
-//        }
-        if (p.email && ![p.email isEqualToString:@""]) {
-            [phoneAlert addButtonWithTitle:@"Email"];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView reloadRowsAtIndexPaths:@[indexPath]
+                     withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [tableView beginUpdates];
+    
+    if ([indexPath compare:self.expandedIndexPath] == NSOrderedSame) {
+        self.expandedIndexPath = nil;
+        [self.tableView cellForRowAtIndexPath:indexPath].detailTextLabel.text = @"";
+    } else {
+        
+        [self.tableView cellForRowAtIndexPath:self.expandedIndexPath].detailTextLabel.text = @"";
+        
+        self.expandedIndexPath = indexPath;
+        Person *p = (Person *)[self.resultsArray objectAtIndex:indexPath.row];
+        if(p) {
+            NSString *desc = [NSString stringWithFormat:@"%@ -- ",
+                              [[p.organization capitalizedString]stringByTrimmingCharactersInSet:
+                               [NSCharacterSet whitespaceCharacterSet]]];
+            if(p.title) {
+                desc = [desc stringByAppendingString:
+                        [p.affiliation capitalizedString]];
+            }
+            if(p.email) {
+                desc = [desc stringByAppendingString:
+                        [NSString stringWithFormat:@"\n%@", [p.email lowercaseString]]];
+            }
+            if(p.phone) {
+                desc = [desc stringByAppendingString:
+                        [NSString stringWithFormat:@"\n%@", p.phone]];
+            }
+            [self.tableView cellForRowAtIndexPath:indexPath].detailTextLabel.text = desc;
         }
-        if ((!p.email || [p.email isEqualToString:@""]) && (!p.phone || [p.phone isEqualToString:@""])) {
-            phoneAlert.message = @"This person has no public information listed";
-        } else {
-            [phoneAlert addButtonWithTitle:@"Add to Contacts"];
-        }
+        
     }
-    @catch (NSException *exception) {
-        phoneAlert.message = @"There has been an API communication error. Please try again.";
-    }
-    @finally {
-        [phoneAlert show];
-    }
-
+    
+    [tableView endUpdates];
 }
+
+-(void)tableView:(UITableView *)tableView
+accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    Person *p = [self.resultsArray objectAtIndex: indexPath.row];
+    self.currPerson = p;
+    
+    UIAlertView *phoneAlert = [[UIAlertView alloc] initWithTitle:[p.name capitalizedString]
+                                                         message:@""
+                                                        delegate:self
+                                               cancelButtonTitle:@"Cancel"
+                                               otherButtonTitles:nil];
+    
+    if (p.email && ![p.email isEqualToString:@""]) {
+        [phoneAlert addButtonWithTitle:@"Email"];
+    }
+    if ((!p.email || [p.email isEqualToString:@""]) && (!p.phone || [p.phone isEqualToString:@""])) {
+        phoneAlert.message = @"This person has no public information listed";
+    } else {
+        [phoneAlert addButtonWithTitle:@"Add to Contacts"];
+    }
+    
+    [phoneAlert show];
+}
+
+#pragma mark - Search Bar Information
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    if (searchBar.text.length <= 2) {
+        [SVProgressHUD showErrorWithStatus:@"Invalid Search. Search by at least 3 characters."];
+    } else {
+        [self.directorySearchBar resignFirstResponder];
+        [SVProgressHUD show];
+        self.tableView.userInteractionEnabled = NO;
+        [super performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
+    }
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchText.length > 2) {
+        [super performSelectorInBackground:@selector(queryHandler:) withObject:searchText];
+    }
+    if(![self.directorySearchBar isFirstResponder]) {
+        [self searchBarCancelButtonClicked:self.directorySearchBar];
+    }
+}
+
+#pragma mark - Alerts Information
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ([alertView.title isEqualToString:@"Invalid Search"] || !super.forSegue)
-        return;
-    Person *p = super.forSegue;
-    NSString *phoneNumber = [@"tel://" stringByAppendingString:p.phone];
-    NSString *textNumber = [@"sms://" stringByAppendingString:p.phone];
+    Person *p = self.currPerson;
     NSString *email = [@"mailto://" stringByAppendingString:p.email];
     NSString *buttonTtile = [alertView buttonTitleAtIndex:buttonIndex];
-    if ([buttonTtile isEqualToString:@"Call"]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
-
-    } else if ([buttonTtile isEqualToString:@"Text"]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:textNumber]];
-
-    } else if ([buttonTtile isEqualToString:@"Email"]) {
+    if ([buttonTtile isEqualToString:@"Email"]) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
-
+        
     } else if ([buttonTtile isEqualToString:@"Add to Contacts"]) {
         [self addContact:p];
     }
 }
 
-#pragma mark -
+
+#pragma mark - API Stuff
+
+- (void)queryHandler:(NSString *)search {
+    
+    NSArray *data = [self queryAPI:search];
+    if(data) {
+        [self parseData: data];
+    }
+    
+    [self.tableView reloadData];
+    self.tableView.userInteractionEnabled = YES;
+    [SVProgressHUD dismiss];
+}
+
+-(NSArray *)queryAPI:(NSString *)term {
+    
+    term = [term stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
+    NSURL *url = [NSURL URLWithString:
+                      [NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, DIRECTORY_PATH, term]];
+    NSData *result = [NSData dataWithContentsOfURL:url];
+    if (!result) {
+        [SVProgressHUD showErrorWithStatus:@"No results. Please try a different search term."];
+        return nil;
+    }
+    
+    NSError *error;
+    NSDictionary *returned = [NSJSONSerialization JSONObjectWithData:result
+                                                             options:NSJSONReadingMutableLeaves
+                                                               error:&error];
+    if (error) {
+        [SVProgressHUD showErrorWithStatus:
+            [NSString stringWithFormat:@"JSON parse error: %@",error.localizedDescription]];
+        return nil;
+    }
+    
+    return returned[@"result_data"];
+}
+
+- (NSMutableArray *) parseData:(NSArray *) data {
+    self.resultsArray = [[NSMutableArray alloc] init];
+    NSMutableArray *idArray = [[NSMutableArray alloc] init];
+    for(NSMutableDictionary *dict in data) {
+        Person *newPerson = [self parsePerson:dict];
+        if(![idArray containsObject: newPerson.identifier]) {
+            [self.resultsArray addObject:newPerson];
+            [idArray addObject:newPerson.identifier];
+        }
+    }
+    return self.resultsArray;
+}
+
+- (Person *)parsePerson:(NSDictionary *)data {
+    Person *new = [[Person alloc] init];
+    new.name = data[@"list_name"];
+    new.title = data[@"list_title_or_major"];
+    new.email = data[@"list_email"];
+    new.phone = data[@"list_phone"];
+    new.organization = data[@"list_organization"];
+    new.affiliation = data[@"list_affiliation"];
+    new.identifier = data[@"person_id"];
+    return new;
+}
+
 #pragma mark Address Book Access
 
 static ABAddressBookRef addressBook;
@@ -255,7 +327,12 @@ static ABAddressBookRef addressBook;
         case  kABAuthorizationStatusDenied:
         case  kABAuthorizationStatusRestricted:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Privacy Warning" message:@"Permission was not granted for Contacts." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert =
+                [[UIAlertView alloc] initWithTitle:@"Privacy Warning"
+                                           message:@"Permission was not granted for Contacts."
+                                          delegate:nil
+                                 cancelButtonTitle:@"OK"
+                                 otherButtonTitles:nil];
             [alert show];
         }
             break;
@@ -281,7 +358,12 @@ static ABAddressBookRef addressBook;
     NSString *name = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
     if (name) {
         name = [name stringByAppendingString:@" was successfully added to your contacts."];
-        UIAlertView *toShow = [[UIAlertView alloc] initWithTitle:@"Contact Added" message:name delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *toShow =
+            [[UIAlertView alloc] initWithTitle:@"Contact Added"
+                                       message:name
+                                      delegate:self
+                             cancelButtonTitle:@"OK"
+                             otherButtonTitles:nil, nil];
         [newPersonViewController dismissViewControllerAnimated:YES completion:^{
             [toShow show];
         }];
@@ -295,85 +377,35 @@ static ABAddressBookRef addressBook;
     picker.newPersonViewDelegate = self;
     ABRecordRef person = ABPersonCreate();
     if (inQuestion.phone) {
-        ABMutableMultiValueRef phoneNumberMultiValue = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-        ABMultiValueAddValueAndLabel(phoneNumberMultiValue, (__bridge CFTypeRef)(inQuestion.phone) ,kABPersonPhoneMobileLabel, NULL);
-        ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumberMultiValue, nil); // set the phone number property
+        ABMutableMultiValueRef phoneNumberMultiValue =
+            ABMultiValueCreateMutable(kABMultiStringPropertyType);
+        ABMultiValueAddValueAndLabel(phoneNumberMultiValue,
+                                     (__bridge CFTypeRef)(inQuestion.phone),
+                                     kABPersonPhoneMobileLabel,
+                                     NULL);
+        // set the phone number property
+        ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumberMultiValue, nil);
     } if (inQuestion.email) {
         ABMutableMultiValueRef emailMulti = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-        ABMultiValueAddValueAndLabel(emailMulti, (__bridge CFTypeRef)(inQuestion.email) ,kABWorkLabel, NULL);
-        ABRecordSetValue(person, kABPersonEmailProperty, emailMulti, nil); // set the phone number property
+        ABMultiValueAddValueAndLabel(emailMulti,
+                                     (__bridge CFTypeRef)(inQuestion.email),
+                                     kABWorkLabel,
+                                     NULL);
+         // set the phone number property
+        ABRecordSetValue(person, kABPersonEmailProperty, emailMulti, nil);
     }
     NSArray *nameSplit = [inQuestion.name componentsSeparatedByString:@","];
     NSString *first = [nameSplit[1] substringToIndex:((NSString *)nameSplit[1]).length - 1];
     first = [first substringFromIndex:1];
     NSString *last = nameSplit[0];
-    ABRecordSetValue(person, kABPersonFirstNameProperty, (__bridge CFTypeRef)(first), nil); // first name of the new person
-    ABRecordSetValue(person, kABPersonLastNameProperty, (__bridge CFTypeRef)(last), nil); // his last name
-    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:picker];
+    // First name
+    ABRecordSetValue(person, kABPersonFirstNameProperty, (__bridge CFTypeRef)(first), nil);
+    // Last name
+    ABRecordSetValue(person, kABPersonLastNameProperty, (__bridge CFTypeRef)(last), nil);
+    UINavigationController *navigation =
+        [[UINavigationController alloc] initWithRootViewController:picker];
     picker.displayedPerson = person;
     [self presentViewController:navigation animated:YES completion:nil];
-}
-
-#pragma mark - Navigation
-/**
- * This fragment is repeated across the app, still don't know the best way to refactor
- **/
-- (IBAction)menuButton:(id)sender {
-    if ([SlideOutMenuViewController instance].menuOut) {
-        // this is a workaround as the normal returnToView selector causes a fault
-        // the memory for hte instance is locked unless the view controller is passed in a segue
-        // this is for security reasons.
-        [[SlideOutMenuViewController instance] performSegueWithIdentifier:@"Directory" sender:self];
-    } else {
-        [self performSegueWithIdentifier:@"menu" sender:self];
-    }
-}
-- (void)handleRollBack:(UIStoryboardSegue *)segue {
-    if ([segue.destinationViewController isKindOfClass:[SlideOutMenuViewController class]]) {
-        SlideOutMenuViewController *menu = segue.destinationViewController;
-        cancelTouches = [[UITapGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
-        cancelTouches.cancelsTouchesInView = YES;
-        cancelTouches.numberOfTapsRequired = 1;
-        cancelTouches.numberOfTouchesRequired = 1;
-        if (self.view.gestureRecognizers.count > 0) {
-            // there is a keybaord dismiss tap recognizer present
-            // ((UIGestureRecognizer *) self.view.gestureRecognizers[0]).enabled = NO;
-        }
-        
-        float width = [[UIScreen mainScreen] bounds].size.width;
-        float height = [[UIScreen mainScreen] bounds].size.height;
-        UIView *grayCover = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-        [grayCover setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]];
-        [grayCover addGestureRecognizer:cancelTouches];
-        
-        UISwipeGestureRecognizer *swipeToCancel = [[UISwipeGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
-        swipeToCancel.direction = UISwipeGestureRecognizerDirectionLeft;
-        [grayCover addGestureRecognizer:swipeToCancel];
-        
-        [UIView transitionWithView:self.view duration:1
-                           options:UIViewAnimationOptionShowHideTransitionViews
-                        animations:^ { [self.view addSubview:grayCover]; }
-                        completion:nil];
-    }
-}
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
-    [self handleRollBack:segue];
-
-    if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        self.tableView.userInteractionEnabled = NO;
-        NSString *detail = [(Person *)super.forSegue createDetail];
-        UIImage *placeholder = [UIImage imageNamed:@"avatar"];
-        [self performSelectorInBackground:@selector(detailQueryHandler:) withObject:((Person *) super.forSegue).identifier];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        self.tableView.userInteractionEnabled = YES;
-        //[((DetailViewController *)segue.destinationViewController) configureUsingCover:placeholder title:((Person *) super.forSegue).name sub:((Person *) super.forSegue).organization detail:detail];
-    }
 }
 
 

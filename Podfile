@@ -5,3 +5,4 @@ pod 'Parse'
 pod 'ParseCrashReporting'
 pod "DropdownMenu"
 pod 'Bolts'
+pod 'SVProgressHUD'

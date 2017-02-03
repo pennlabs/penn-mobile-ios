@@ -32,14 +32,14 @@
     
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = backButtonItem;
-    [backButtonItem setTintColor:[UIColor whiteColor]];
+    [backButtonItem setTintColor:PENN_YELLOW];
     
     NSArray *itemArray = [NSArray arrayWithObjects: @"WASHERS", @"DRYERS", nil];
     self.laundrySegment = [[UISegmentedControl alloc] initWithItems:itemArray];
     self.laundrySegment.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
     [self.laundrySegment addTarget:self action:@selector(changed) forControlEvents: UIControlEventValueChanged];
+    self.laundrySegment.tintColor = PENN_YELLOW;
     self.laundrySegment.selectedSegmentIndex = 0;
-    self.laundrySegment.layer.borderWidth =1.5f;
     [self.view addSubview:self.laundrySegment];
     
     self.tableView.frame = CGRectMake(0, 44, self.view.frame.size.width, 0);
@@ -67,7 +67,7 @@
 }
 
 -(void) loadFromAPI {
-    NSString *str= [NSString stringWithFormat:@"http://api.pennlabs.org/laundry/hall/%@", self.indexNumber];
+    NSString *str = [NSString stringWithFormat:@"%@%@%@", SERVER_ROOT, LAUNDRY_DETAIL_PATH, self.indexNumber];
     NSURL *url =[NSURL URLWithString:str];
     
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -271,7 +271,6 @@
 
         [[UIApplication sharedApplication] scheduleLocalNotification:local];
     } else {
-        NSLog(@"?????");
         [sender setOn:NO animated:YES];
     }
     

@@ -2,8 +2,8 @@
 //  AboutViewController.m
 //  PennMobile
 //
-//  Created by Sacha Best on 10/14/14.
-//  Copyright (c) 2014 PennLabs. All rights reserved.
+//  Created by Sacha Best and Krishna Bharathala.
+//  Copyright (c) 2016 PennLabs. All rights reserved.
 //
 
 #import "AboutViewController.h"
@@ -14,19 +14,105 @@
 
 @implementation AboutViewController
 
-- (void)viewDidLoad {
+-(id) init {
+    self = [super init];
+    if(self) {
+        self.title = @"About";
+    }
+    return self;
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.tintColor = PENN_YELLOW;
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor blackColor]}];
+    
+}
+
+-(void) viewDidLoad {
     [super viewDidLoad];
-
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
+    
+    UIImageView *labsLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"labs.png"]];
+    [labsLogo setFrame:CGRectMake(0, 0, 120, 120)];
+    labsLogo.center = CGPointMake(width*1/4, height*5/16);
+    [self.view addSubview:labsLogo];
+    
+    UIImageView *UALogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"UA-1"]];
+    [UALogo setFrame:CGRectMake(0, 0, 132, 99)];
+    UALogo.center = CGPointMake(width*7/10, height*5/16);
+    [self.view addSubview:UALogo];
+    
+    UILabel *builtLabel = [[UILabel alloc] init];
+    builtLabel.text = @"Built by Penn Labs";
+    [builtLabel setTextColor:[UIColor blackColor]];
+    [builtLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:20]];
+    [builtLabel sizeToFit];
+    builtLabel.center = CGPointMake(width/2, height*15/32);
+    [self.view addSubview:builtLabel];
+    
+    UILabel *descriptionLabel = [[UILabel alloc] init];
+    descriptionLabel.text = @"Penn Labs is a non-profit, student-run organization at the University of Pennsylvania dedicated to building technology for student use and supporting an open-source development environment on-campus. Penn Labs is sponsored by the UA, the Provost’s Office and VPUL.";
+    [descriptionLabel setTextColor:[UIColor darkGrayColor]];
+    [descriptionLabel setFrame:CGRectMake(0, 0, width-40, height/3)];
+    [descriptionLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
+    descriptionLabel.numberOfLines = 0;
+    descriptionLabel.center = CGPointMake(width/2, height*19/32);
+    descriptionLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:descriptionLabel];
+    
+    UILabel *peopleLabel = [[UILabel alloc] init];
+    peopleLabel.text = @"Developed by Sacha Best and Krishna Bharathala\n Designed by Sacha Best and Tiffany Chang\n Thanks to Adel Qalieh, David Lakata\n and the rest of Labs + UA";
+    [peopleLabel setTextColor:[UIColor darkGrayColor]];
+    [peopleLabel setFrame:CGRectMake(0, 0, width-40, height/3)];
+    [peopleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
+    peopleLabel.numberOfLines = 0;
+    peopleLabel.center = CGPointMake(width/2, height*3/4);
+    peopleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:peopleLabel];
+    
+    UILabel *copyRightLabel = [[UILabel alloc] init];
+    copyRightLabel.text = @"\u00A9 2016 Penn Labs";
+    [copyRightLabel setTextColor:[UIColor darkGrayColor]];
+    [copyRightLabel setFrame:CGRectMake(0, 0, width-40, height/3)];
+    [copyRightLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
+    copyRightLabel.center = CGPointMake(width/2, height*13/14);
+    copyRightLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:copyRightLabel];
+    
+    UIButton *featureRequestButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [featureRequestButton setTitle:@"Feature Request" forState:UIControlStateNormal];
+    [featureRequestButton setFrame:CGRectMake(0, 0, 150, 30)];
+    [featureRequestButton setCenter:CGPointMake(width/3, height*6/7)];
+    [featureRequestButton addTarget:self action:@selector(featureRequest) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:featureRequestButton];
+    
+    UIButton *moreInfoButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [moreInfoButton setTitle:@"More Info" forState:UIControlStateNormal];
+    [moreInfoButton setFrame:CGRectMake(0, 0, 150, 30)];
+    [moreInfoButton setCenter:CGPointMake(width*2/3, height*6/7)];
+    [moreInfoButton addTarget:self action:@selector(moreInfo) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:moreInfoButton];
+    
+    SWRevealViewController *revealController = [self revealViewController];
+    [revealController panGestureRecognizer];
+    [revealController tapGestureRecognizer];
+    
+    UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
+                                                                         style:UIBarButtonItemStylePlain
+                                                                        target:revealController
+                                                                        action:@selector(revealToggle:)];
+    self.navigationItem.leftBarButtonItem = revealButtonItem;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-- (IBAction)featureRequest:(id)sender {
-    // Email Subject
+- (void) featureRequest {
     NSString *messageSubject = @"[Penn iOS] Request: ";
-    // To address
     NSArray *toRecipents = [NSArray arrayWithObject:@"contact@pennlabs.org"];
     
     MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
@@ -34,11 +120,10 @@
     mc.mailComposeDelegate = self;
     [mc setSubject:messageSubject];
     [mc setToRecipients:toRecipents];
-    
-    // Present mail view controller on screen
+
     [self presentViewController:mc animated:YES completion:nil];
 }
-- (IBAction)moreInfo:(id)sender {
+- (void)moreInfo {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://pennlabs.org"]];
 }
 
@@ -63,56 +148,6 @@
     }
     
     [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-#pragma mark - Navigation
-
-/**
- * This fragment is repeated across the app, still don't know the best way to refactor
- **/
-- (IBAction)menuButton:(id)sender {
-    if ([SlideOutMenuViewController instance].menuOut) {
-        // this is a workaround as the normal returnToView selector causes a fault
-        // the memory for hte instance is locked unless the view controller is passed in a segue
-        // this is for security reasons.
-        [[SlideOutMenuViewController instance] performSegueWithIdentifier:@"About" sender:self];
-    } else {
-        [self performSegueWithIdentifier:@"menu" sender:self];
-    }
-}
-- (void)handleRollBack:(UIStoryboardSegue *)segue {
-    if ([segue.destinationViewController isKindOfClass:[SlideOutMenuViewController class]]) {
-        SlideOutMenuViewController *menu = segue.destinationViewController;
-        cancelTouches = [[UITapGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
-        cancelTouches.cancelsTouchesInView = YES;
-        cancelTouches.numberOfTapsRequired = 1;
-        cancelTouches.numberOfTouchesRequired = 1;
-        if (self.view.gestureRecognizers.count > 0) {
-            // there is a keybaord dismiss tap recognizer present
-            // ((UIGestureRecognizer *) self.view.gestureRecognizers[0]).enabled = NO;
-        }
-        float width = [[UIScreen mainScreen] bounds].size.width;
-        float height = [[UIScreen mainScreen] bounds].size.height;
-        UIView *grayCover = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-        [grayCover setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]];
-        [grayCover addGestureRecognizer:cancelTouches];
-        
-        UISwipeGestureRecognizer *swipeToCancel = [[UISwipeGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
-        swipeToCancel.direction = UISwipeGestureRecognizerDirectionLeft;
-        [grayCover addGestureRecognizer:swipeToCancel];
-        [UIView transitionWithView:self.view duration:1
-                           options:UIViewAnimationOptionShowHideTransitionViews
-                        animations:^ { [self.view addSubview:grayCover]; }
-                        completion:nil];
-    }
-}
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
-    [self handleRollBack:segue];
 }
 
 

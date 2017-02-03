@@ -21,7 +21,7 @@
     copy.times = self.times;
     copy.building = self.building;
     copy.buildingCode = self.buildingCode;
-    copy.roomBum = self.roomBum;
+    copy.roomNum = self.roomNum;
     copy.professors = self.professors;
     copy.desc = self.desc;
     copy.primaryProf = self.primaryProf;

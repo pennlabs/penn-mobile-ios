@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "SlideOutMenuViewController.h"
 
 @interface PennTableViewController : UIViewController <UISearchBarDelegate> {
     NSMutableOrderedSet *tempSet;

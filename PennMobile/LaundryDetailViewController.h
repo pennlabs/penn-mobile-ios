@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define LAUNDRY_DETAIL_PATH @"laundry/hall/"
+
 @interface LaundryDetailViewController : UITableViewController
 
 @property (nonatomic, strong) NSNumber *indexNumber;

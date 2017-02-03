@@ -10,4 +10,20 @@
 
 @implementation SupportItem
 
+-(id)initWithName:(NSString *)name
+            phone:(NSString *)phoneNumber
+             desc:(NSString *)desc{
+    self = [super init];
+    if(self) {
+        self.name = name;
+        self.phone = phoneNumber;
+        self.phoneFiltered = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        self.phoneFiltered = [self.phoneFiltered stringByReplacingOccurrencesOfString:@" " withString:@""];
+        self.phoneFiltered = [self.phoneFiltered stringByReplacingOccurrencesOfString:@"(" withString:@""];
+        self.phoneFiltered = [self.phoneFiltered stringByReplacingOccurrencesOfString:@")" withString:@""];
+        self.descriptionText = desc;
+    }
+    return self;
+}
+
 @end

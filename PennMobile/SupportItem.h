@@ -12,8 +12,13 @@
 
 @property NSString *name;
 @property NSString *phone;
-@property NSString *url;
+@property NSString *descriptionText;
 @property UIImage *img;
 @property NSString *phoneFiltered;
+
+
+-(id)initWithName:(NSString *)name
+            phone:(NSString*) phoneNumber
+             desc:(NSString*) desc;
 
 @end

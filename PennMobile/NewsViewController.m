@@ -2,211 +2,198 @@
 //  NewsViewController.m
 //  PennMobile
 //
-//  Created by Sacha Best on 11/13/14.
+//  Created by Krishna Bharathala on 4/23/16.
 //  Copyright (c) 2014 PennLabs. All rights reserved.
 //
 
 #import "NewsViewController.h"
 
 @interface NewsViewController ()
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *newsSwitcher;
-@property (weak, nonatomic) IBOutlet UIView *newsSwitcherView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
-@property BOOL isToggleEnabled;
-@property (nonatomic, assign) CGFloat lastContentOffset;
+@property (nonatomic, strong) UISegmentedControl *newsSwitcher;
+@property (nonatomic, strong) UIView *newsSwitcherView;
+@property (nonatomic, strong) NSArray *segmentTitles;
+@property (nonatomic, strong) UIToolbar *headerToolbar;
+@property (nonatomic, strong) UIImageView *navBarHairlineImageView;
+
+@property (nonatomic, strong) UIWebView *webview;
+@property (nonatomic, strong) NSArray *urlArray;
+
 @end
 
 @implementation NewsViewController
 
+-(id) init {
+    self = [super init];
+    if(self) {
+        self.title = @"News";
+        self.urlArray = @[@"http://thedp.com/", @"http://thedp.com/blog/under-the-button/", @"http://34st.com/"];
+    }
+    return self;
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.tintColor = PENN_YELLOW;
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor blackColor]}];
+    
+    self.navigationController.toolbarHidden = NO;
+    
+    self.navBarHairlineImageView =
+        [self findHairlineImageViewUnder:self.navigationController.navigationBar];
+    [self.navBarHairlineImageView setHidden:YES];
+    
+//    WE WANT TO MOVE THE HAIRLINE DOWN.
+//
+//    NSLog(@"%@", NSStringFromCGRect(self.navBarHairlineImageView.frame));
+//    self.navBarHairlineImageView.frame = CGRectOffset(self.navBarHairlineImageView.frame, 0, 44);
+//    NSLog(@"%@", NSStringFromCGRect(self.navBarHairlineImageView.frame));
+    
+    self.revealViewController.panGestureRecognizer.enabled = NO;
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navBarHairlineImageView.hidden = NO;
+    self.navigationController.toolbarHidden = YES;
+    self.revealViewController.panGestureRecognizer.enabled = YES;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:_url]];
-    [_webView loadRequest:req];
-    _webView.scalesPageToFit = NO;
-    _webView.delegate = self;
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    _isToggleEnabled = YES;
-    [_newsSwitcher addTarget:self action:@selector(switchNewsSource:) forControlEvents:UIControlEventValueChanged];
-    UIScreenEdgePanGestureRecognizer *bottomEdgeGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(expandNewsSwitcherOnSwipe)];
-    bottomEdgeGesture.edges = UIRectEdgeRight;
-    bottomEdgeGesture.delegate = self;
-    [self.view addGestureRecognizer:bottomEdgeGesture];
+    SWRevealViewController *revealController = [self revealViewController];
+    [revealController panGestureRecognizer];
+    [revealController tapGestureRecognizer];
     
-    [_loadingIndicator stopAnimating];
-    _loadingIndicator.hidesWhenStopped = YES;
-    _loadingIndicator.color = PENN_RED;
+    UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]
+                                                                         style:UIBarButtonItemStylePlain
+                                                                        target:revealController
+                                                                        action:@selector(revealToggle:)];
+    self.navigationItem.leftBarButtonItem = revealButtonItem;
     
-    _webView.scrollView.delegate = self;
+    
+    UIImage *fwdImage =
+        [self imageWithImage:[UIImage imageNamed:@"arrow-fwd"] scaledToSize:CGSizeMake(20, 20)];
+    UIBarButtonItem *fwdButton = [[UIBarButtonItem alloc] initWithImage:fwdImage
+                                                                  style:UIBarButtonItemStyleDone
+                                                                 target:self
+                                                                 action:@selector(fwdRequested)];
+    
+    UIImage *bwdImage =
+        [self imageWithImage:[UIImage imageNamed:@"arrow-bwd"] scaledToSize:CGSizeMake(20, 20)];
+    UIBarButtonItem *bwdButton = [[UIBarButtonItem alloc] initWithImage:bwdImage
+                                                                  style:UIBarButtonItemStyleDone
+                                                                 target:self
+                                                                 action:@selector(bwdRequested)];
+    
+    NSArray *buttons = [NSArray arrayWithObjects: bwdButton, fwdButton, nil];
+    [self setToolbarItems:buttons];
+    [self.navigationController.toolbar setTintColor:PENN_YELLOW];
+    
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
+    
+    self.headerToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 64, width, 44)];
+    self.headerToolbar.backgroundColor = self.navigationController.navigationBar.backgroundColor;
+    self.headerToolbar.delegate = self;
+    
+    self.newsSwitcher = [[UISegmentedControl alloc] initWithItems: @[@"theDP", @"UTB", @"34th Street"]];
+    self.newsSwitcher.center = CGPointMake(width/2, self.headerToolbar.frame.size.height/2);
+    self.newsSwitcher.tintColor = PENN_YELLOW;
+    self.newsSwitcher.selectedSegmentIndex = 0;
+    [self.newsSwitcher addTarget:self
+                          action:@selector(switchNewsSource:)
+                forControlEvents:UIControlEventValueChanged];
+
+    [self.headerToolbar addSubview:self.newsSwitcher];
+    [self.view addSubview:self.headerToolbar];
+    
+    self.webview = [[UIWebView alloc] initWithFrame:CGRectMake(0, 108, width, height-152)];
+    self.webview.delegate = self;
+    self.webview.scrollView.backgroundColor = [UIColor whiteColor];
+    [self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self.urlArray firstObject]]]];
+    [self.view addSubview: self.webview];
+    
+    UISwipeGestureRecognizer *swipeRight =
+        [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:swipeRight];
+    
+    UISwipeGestureRecognizer *swipeLeft =
+        [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipe:)];
+    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:swipeLeft];
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    
-    //   [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [_loadingIndicator startAnimating];
-    NSString *url =_webView.request.URL.absoluteString;
-    if ([url containsString:@"thedp.com/blog/under-the-button"]) {
-        [_newsSwitcher setSelectedSegmentIndex:1];
-    } else if ([url containsString:@"thedp.com"]) {
-        [_newsSwitcher setSelectedSegmentIndex:0];
-    } else if ([url containsString:@"34st.com"]) {
-        [_newsSwitcher setSelectedSegmentIndex:2];
-    } else if ([url containsString:@"eventsatpenn.com"]) {
-        [_newsSwitcher setSelectedSegmentIndex:3];
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    // UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+- (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar {
+    return UIBarPositionTopAttached;
+}
+
+- (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
+        return (UIImageView *)view;
     }
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    
-    if (!webView.isLoading) {
-        //     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    for (UIView *subview in view.subviews) {
+        UIImageView *imageView = [self findHairlineImageViewUnder:subview];
+        if (imageView) {
+            return imageView;
+        }
     }
-    [_loadingIndicator stopAnimating];
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    return nil;
 }
 
-- (IBAction)toggleControl:(id)sender {
-    if (_isToggleEnabled) {
-        NSLog(@"news switcher is hidden");
-        [UIView animateWithDuration:0.3 animations:^{
-            _webView.frame = CGRectMake(_webView.frame.origin.x, _webView.frame.origin.y, _webView.frame.size.width, _webView.frame.size.height + _newsSwitcherView.frame.size.height);
-            _newsSwitcherView.frame = CGRectMake(_newsSwitcherView.frame.origin.x, _newsSwitcherView.frame.origin.y + _newsSwitcherView.frame.size.height, _newsSwitcherView.frame.size.width, _newsSwitcherView.frame.size.height);
-        }];
-        _isToggleEnabled = NO;
-    } else {
-        NSLog(@"news switcher is NOT hidden");
-        [UIView animateWithDuration:0.3 animations:^{
-            _newsSwitcherView.frame = CGRectMake(_newsSwitcherView.frame.origin.x, _newsSwitcherView.frame.origin.y - _newsSwitcherView.frame.size.height, _newsSwitcherView.frame.size.width, _newsSwitcherView.frame.size.height);
-            _webView.frame = CGRectMake(_webView.frame.origin.x, _webView.frame.origin.y, _webView.frame.size.width, _webView.frame.size.height - _newsSwitcherView.frame.size.height);
-        }];
-        _isToggleEnabled = YES;
-    }
-}
-
--(void)collapseNewsSwitcherOnScrollDown {
-    if (_isToggleEnabled)
-        [self toggleControl:self];
-}
-
--(void)collapseNewsSwitcherOnScrollUp {
-    if (!_isToggleEnabled)
-        [self toggleControl:self];
-}
+//- (void)webViewDidStartLoad:(UIWebView *)webView {
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//}
+//
+//- (void)webViewDidFinishLoad:(UIWebView *)webView {
+//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//}
+//
+//- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+//    NSLog(@"%@", error.localizedDescription);
+//}
 
 -(void)switchNewsSource:(UISegmentedControl *)segment {
-    switch (segment.selectedSegmentIndex) {
-        case 0:{
-            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://thedp.com/"]]];
-            break;}
-        case 1:{
-            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://thedp.com/blog/under-the-button/"]]];
-            break;}
-        case 2:{
-            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://34st.com/"]]];
-            break;}
-        case 3:{
-            [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://eventsatpenn.com/"]]];
-            break;}
-    }
+    [self.webview loadRequest:
+     [NSURLRequest requestWithURL:[NSURL URLWithString:self.urlArray[segment.selectedSegmentIndex]]]];
+}
+
+- (void)didSwipe:(UISwipeGestureRecognizer*) swipe {
     
-}
-
-- (IBAction)webViewBack:(id)sender {
-    if ([_webView canGoBack]) {
-        [_webView goBack];
-    }
-}
-- (IBAction)webViewForward:(id)sender {
-    if ([_webView canGoForward]) {
-        [_webView goForward];
+    if (swipe.direction == UISwipeGestureRecognizerDirectionRight) {
+        [self bwdRequested];
+    } else if (swipe.direction == UISwipeGestureRecognizerDirectionLeft) {
+        [self fwdRequested];
     }
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    ScrollDirection scrollDirection;
-    if (self.lastContentOffset < scrollView.contentOffset.y && self.lastContentOffset > 10) {
-        scrollDirection = ScrollDirectionDown;
-        [self collapseNewsSwitcherOnScrollDown];
-        NSLog(@"scrolled down");
-    } else if (self.lastContentOffset > scrollView.contentOffset.y && self.lastContentOffset > 10) {
-        scrollDirection = ScrollDirectionDown;
-        [self collapseNewsSwitcherOnScrollUp];
-        NSLog(@"scrolled up");
-    }
-    
-    self.lastContentOffset = scrollView.contentOffset.y;
-    
-    // do whatever you need to with scrollDirection here.
-}
-
-
-#pragma mark - Navigation
-
-/**
- * This fragment is repeated across the app, still don't know the best way to refactor
- **/
-- (IBAction)menuButton:(id)sender {
-    if ([SlideOutMenuViewController instance].menuOut) {
-        // this is a workaround as the normal returnToView selector causes a fault
-        // the memory for hte instance is locked unless the view controller is passed in a segue
-        // this is for security reasons.
-        [[SlideOutMenuViewController instance] performSegueWithIdentifier:@"News" sender:self];
-    } else {
-        [self performSegueWithIdentifier:@"menu" sender:self];
-    }
-}
-- (void)handleRollBack:(UIStoryboardSegue *)segue {
-    if ([segue.destinationViewController isKindOfClass:[SlideOutMenuViewController class]]) {
-        SlideOutMenuViewController *menu = segue.destinationViewController;
-        cancelTouches = [[UITapGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
-        cancelTouches.cancelsTouchesInView = YES;
-        cancelTouches.numberOfTapsRequired = 1;
-        cancelTouches.numberOfTouchesRequired = 1;
-        if (self.view.gestureRecognizers.count > 0) {
-            // there is a keybaord dismiss tap recognizer present
-            // ((UIGestureRecognizer *) self.view.gestureRecognizers[0]).enabled = NO;
-        }
-        float width = [[UIScreen mainScreen] bounds].size.width;
-        float height = [[UIScreen mainScreen] bounds].size.height;
-        UIView *grayCover = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-        [grayCover setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]];
-        [grayCover addGestureRecognizer:cancelTouches];
-        
-        UISwipeGestureRecognizer *swipeToCancel = [[UISwipeGestureRecognizer alloc] initWithTarget:menu action:@selector(returnToView:)];
-        swipeToCancel.direction = UISwipeGestureRecognizerDirectionLeft;
-        [grayCover addGestureRecognizer:swipeToCancel];
-        [UIView transitionWithView:self.view duration:1
-                           options:UIViewAnimationOptionShowHideTransitionViews
-                        animations:^ { [self.view addSubview:grayCover]; }
-                        completion:nil];
+-(void)fwdRequested {
+    if ([self.webview canGoForward]) {
+        [self.webview goForward];
     }
 }
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
-    [self handleRollBack:segue];
+-(void)bwdRequested {
+    if ([self.webview canGoBack]) {
+        [self.webview goBack];
+    }
 }
-
-// Enum for managing scroll direction
-
-typedef enum ScrollDirection {
-    ScrollDirectionNone,
-    ScrollDirectionRight,
-    ScrollDirectionLeft,
-    ScrollDirectionUp,
-    ScrollDirectionDown,
-    ScrollDirectionCrazy,
-} ScrollDirection;
 
 @end

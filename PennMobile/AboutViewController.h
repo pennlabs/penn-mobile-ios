@@ -2,19 +2,13 @@
 //  AboutViewController.h
 //  PennMobile
 //
-//  Created by Sacha Best on 10/14/14.
+//  Created by Krishna Bharathala.
 //  Copyright (c) 2014 PennLabs. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
-#import "SlideOutMenuViewController.h"
 
-@interface AboutViewController : UIViewController <MFMailComposeViewControllerDelegate> {
-    UITapGestureRecognizer *cancelTouches;
-}
-
-@property (weak, nonatomic) IBOutlet UIImageView *labsLogo;
-@property (weak, nonatomic) IBOutlet UILabel *labsHeader;
+@interface AboutViewController : UIViewController <MFMailComposeViewControllerDelegate>
 
 @end

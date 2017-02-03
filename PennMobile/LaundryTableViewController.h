@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SlideOutMenuViewController.h"
 
-@interface LaundryTableViewController : UITableViewController {
-    UITapGestureRecognizer *cancelTouches;
-}
+#define LAUNDRY_PATH @"laundry/halls"
+
+@interface LaundryTableViewController : UITableViewController
 
 @end
