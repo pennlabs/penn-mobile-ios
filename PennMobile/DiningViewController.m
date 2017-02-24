@@ -45,17 +45,22 @@ bool usingTempData;
     prettyHourFormatter = [[NSDateFormatter alloc] init];
     [prettyHourFormatter setDateFormat:@"hh:mm a"];
     //self.tableView.hidden = YES;
-    //usingTempData = true;
+    usingTempData = true;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         ipad = true;
         self.tableView.rowHeight = 240.0f;
         // insert other changes for iPad here - to be refactored
     }
+    
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+     //self.clearsSelectionOnViewWillAppear = NO;
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+//     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
+    
+    
 }
 - (void)viewDidAppear:(BOOL)animated {
     sections = 2;
@@ -211,6 +216,7 @@ bool usingTempData;
     }
     cell.back.clipsToBounds = YES;
     cell.venueLabel.textColor = [UIColor whiteColor];
+    
     // This pick from the correct array of dining halls to display on the table
     switch (indexPath.section) {
         case 0:
@@ -239,8 +245,8 @@ bool usingTempData;
             cell.venueLabel.font = [UIFont fontWithName:@"Adobe Garamond Pro" size:kTitleFontSize * 2];
             cell.addressLabel.font = [UIFont systemFontOfSize:kSubtitleFontSize * 2];
         }
-        //cell.venueLabel.text = _venues[indexPath.row])[kTitleKey];
-        //cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
+//        cell.venueLabel.text = _venues[indexPath.row])[kTitleKey];
+//        cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
         int open = [self isOpen:cell.venueLabel.text];
         cell.addressLabel.layer.masksToBounds = YES;
         cell.addressLabel.layer.cornerRadius = cell.addressLabel.frame.size.height / 2;
