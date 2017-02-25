@@ -29,7 +29,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [application setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
-    [ParseCrashReporting enable];
+    //[ParseCrashReporting enable];
     [Parse setApplicationId:PARSE_APP_ID clientKey:PARSE_APP_SECRET];
     [PFUser enableAutomaticUser];
     // PFUser.currentUser().saveEventually();

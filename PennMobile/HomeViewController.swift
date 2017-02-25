@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DiningHallDelegate {
+    func goToDiningHallMenu(for hall: String)
+}
+
 @objc class HomeViewController: UITableViewController {
     
     var customSettings = ["Weather", "Schedule", "Study Room Break", "Dining"]
@@ -95,7 +99,7 @@ import UIKit
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
-            
+            cell.delegate = self
             return cell
         }
     }
@@ -105,5 +109,13 @@ import UIKit
         super.didReceiveMemoryWarning()
     }
     
+    
+}
+
+extension HomeViewController: DiningHallDelegate {
+    
+    func goToDiningHallMenu(for hall: String) {
+        print(hall)
+    }
     
 }

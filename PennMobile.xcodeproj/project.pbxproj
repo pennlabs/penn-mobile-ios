@@ -323,6 +323,7 @@
 		19F68ECC1A69708D0022B8F8 /* upenn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upenn.png; sourceTree = "<group>"; };
 		19F6BA451ACB6B5200D6C74B /* GoogleMapsSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapsSearcher.h; sourceTree = "<group>"; };
 		19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapsSearcher.m; sourceTree = "<group>"; };
+		211944D21E60F4B800E4A9E9 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
 		4BEBE2231AF8970400EBF676 /* TransitMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMKPointAnnotation.h; sourceTree = "<group>"; };
 		4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitMKPointAnnotation.m; sourceTree = "<group>"; };
 		57117C091E46748B001018D7 /* WeatherParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherParser.swift; sourceTree = "<group>"; };
@@ -346,7 +347,6 @@
 		573932961E60E79400C4CF2A /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
 		573932981E60E85500C4CF2A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		579F9A001DD2872600A87EF7 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Keys.pch; path = ../../Keys.pch; sourceTree = "<group>"; };
-		57E744401E3D3AE3005FAF26 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
 		57E744411E3D3BC1005FAF26 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		57FF5B221DE0E8E20027DD5E /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		57FF5B251DE0E9B10027DD5E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -782,7 +782,7 @@
 		82982FB519735ECC00DB2AE3 /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
-				57E744401E3D3AE3005FAF26 /* Keys.pch */,
+				211944D21E60F4B800E4A9E9 /* Keys.pch */,
 				57C06EB21DDFCEF9003A3BA8 /* Home */,
 				1971E22C1AA68B8300CD2404 /* Auth */,
 				19A4ACE31A8DA2FE000804E2 /* Building */,
@@ -896,7 +896,7 @@
 				TargetAttributes = {
 					82982FB219735ECC00DB2AE3 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = VU59R57FGM;
+						DevelopmentTeam = GZC25U6WG3;
 						LastSwiftMigration = 0820;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
@@ -1262,6 +1262,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = GZC25U6WG3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1290,6 +1291,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = GZC25U6WG3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
