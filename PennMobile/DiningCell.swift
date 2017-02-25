@@ -10,43 +10,18 @@ import UIKit
 
 class DiningCell: UITableViewCell {
     
-    var height: CGFloat!
-    var width: CGFloat!
+    private var height: CGFloat!
+    private var width: CGFloat!
     
-    lazy var hall1: DiningHallView = {
-        let view = DiningHallView()
-        view.diningHall = "1920 Commons"
-        view.setTimeRemaining(time: 30)
-        return view
-    }()
-    
-    lazy var hall2: DiningHallView = {
-        let view = DiningHallView()
-        view.diningHall = "English House"
-        view.setTimeRemaining(time: 55)
-        return view
-    }()
-    
-    lazy var hall3: DiningHallView = {
-        let view = DiningHallView()
-        view.diningHall = "Tortas Frontera"
-        view.setTimeRemaining(time: 120)
-        return view
-    }()
-    
-    lazy var hall4: DiningHallView = {
-        let view = DiningHallView()
-        view.diningHall = "New College House"
-        view.setTimeRemaining(time: 120)
-        return view
-    }()
+    private static let HallHeight: CGFloat = 30
+    private static let InnerWidth: CGFloat = 15
+    private static let Padding: CGFloat = 25
     
     var delegate: DiningHallDelegate? {
         didSet {
-            hall1.delegate = delegate
-            hall2.delegate = delegate
-            hall3.delegate = delegate
-            hall4.delegate = delegate
+            for hall in halls {
+                hall.delegate = delegate
+            }
         }
     }
     
@@ -60,47 +35,97 @@ class DiningCell: UITableViewCell {
         width = frame.width
         height = 0.603 * UIScreen.main.bounds.width //frame.height
         
-        setupCell()
-    }
-    
-    func setupCell() {
         backgroundColor = UIColor(r: 248, g: 248, b: 248)
         
-        addSubview(hall1)
-        addSubview(hall2)
-        addSubview(hall3)
-        addSubview(hall4)
-        
-        _ = hall1.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0.13 * height, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.131 * height)
-        
-        _ = hall2.anchor(hall1.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0.067 * height, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.131 * height)
-        
-        _ = hall3.anchor(hall2.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0.067 * height, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.131 * height)
-        
-        _ = hall4.anchor(hall3.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0.067 * height, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.131 * height)
+        addHallsToView()
     }
     
-    func addHall(hall: String) {
+    private var selectedHalls: [String] = ["1920 Commons", "English House", "Tortas Frontera", "New College House"] {
+        didSet {
+            addHallsToView()
+        }
+    }
+    
+    private var halls: [DiningHallView] = [DiningHallView]()
+    private var hallDictionary: [String: DiningHallView] = [String: DiningHallView]()
+    
+    private func createHall(hall: String) -> DiningHallView {
         let view = DiningHallView()
         view.diningHall = hall
         view.delegate = delegate
         view.setTimeRemaining(time: 120)
-    }
-
-    func handleHall1Pressed() {
-        print("hall1")
-    }
-    
-    func handleHall2Pressed() {
-        print("hall2")
+        
+        halls.append(view)
+        
+        return view
     }
     
-    func handleHall3Pressed() {
-        print("hall3")
+    private func addHallsToView() {
+        removeHallsFromView()
+        
+        for hall in selectedHalls {
+            let hallView = createHall(hall: hall)
+            hallDictionary[hall] = hallView
+        }
+        
+        var anchor: NSLayoutYAxisAnchor = topAnchor
+        var topConstant = DiningCell.Padding
+        
+        for hall in halls {
+            addSubview(hall)
+            
+            _ = hall.anchor(anchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: topConstant, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: DiningCell.HallHeight)
+            
+            anchor = hall.bottomAnchor
+            topConstant = DiningCell.InnerWidth
+        }
+        
+        updateTimesForAll()
     }
     
-    func handleHall4Pressed() {
-        print("hall4")
+    private func removeHallsFromView() {
+        hallDictionary.removeAll()
+        for hall in halls {
+            hall.removeFromSuperview()
+        }
+    }
+    
+    public func updateTimesForAll() {
+        for hall in halls {
+            if let diningHall = hall.diningHall {
+                let time = getTimeRemainingForHall(diningHall)
+                hall.setTimeRemaining(time: time)
+            }
+        }
+    }
+    
+    //TODO sync up the API
+    private func getTimeRemainingForHall(_ hall: String) -> Int {
+        if hall == "1920 Commons" {
+            return 30
+        } else if hall == "English House" {
+            return 55
+        } else if hall == "Tortas Frontera"{
+            return 120
+        } else {
+            return 0
+        }
+    }
+    
+    public static func calculateCellHeight(numberOfCells: Int) -> CGFloat {
+        if numberOfCells <= 0 { return 0 }
+        
+        let numberOfCells = CGFloat(numberOfCells)
+        
+        let t1 = 2 * Padding
+        let t2 = HallHeight * numberOfCells
+        let t3 = InnerWidth * (numberOfCells - 1)
+        
+        return t1 + t2 + t3
+    }
+    
+    public func updateHalls(halls: [String]) {
+        selectedHalls = halls
     }
     
 }
@@ -129,12 +154,11 @@ class DiningHallView: UIView {
     private lazy var button: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Menu", for: .normal)
-        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 16) //UIFont.systemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 14)
         button.tintColor = .white
         button.backgroundColor = UIColor(r: 63, g: 81, b: 181)
         button.layer.cornerRadius = 2
         button.layer.masksToBounds = true
-        button.addTarget(target, action: #selector(menuPresseed), for: .touchUpInside)
         return button
     }()
     
@@ -194,7 +218,7 @@ class DiningHallView: UIView {
     }
     
     func setTimeRemaining(time: Int) {
-        if time < 60 {
+        if time > 0 && time < 60 {
             timeLabel.isHidden = false
             timer.isHidden = false
 
@@ -202,6 +226,27 @@ class DiningHallView: UIView {
         } else {
             timeLabel.isHidden = true
             timer.isHidden = true
+        }
+        
+        setIsOpen(isOpen: time > 0)
+    }
+    
+    private func setIsOpen(isOpen: Bool) {
+        if isOpen {
+            label.textColor = UIColor(r: 115, g: 115, b: 115)
+            button.backgroundColor = UIColor(r: 63, g: 81, b: 181)
+            button.setTitle("Menu", for: .normal)
+            
+            button.addTarget(self, action: #selector(menuPresseed), for: .touchUpInside)
+        } else {
+            label.textColor = UIColor(r: 212, g: 212, b: 212)
+            button.backgroundColor = UIColor(r: 242, g: 110, b: 103)
+            button.setTitle("Closed", for: .normal)
+            
+            timeLabel.isHidden = true
+            timer.isHidden = true
+            
+            button.removeTarget(self, action: #selector(menuPresseed), for: .touchUpInside)
         }
     }
     

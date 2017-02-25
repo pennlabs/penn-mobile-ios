@@ -65,7 +65,8 @@ protocol DiningHallDelegate {
         if indexPath.row == 0 {
             return 350.0
         } else if indexPath.row == 3 {
-            return 0.603 * UIScreen.main.bounds.width
+            //return 0.603 * UIScreen.main.bounds.width
+            return DiningCell.calculateCellHeight(numberOfCells: 4)
         } else {
             return 100.0
         }
@@ -108,6 +109,7 @@ protocol DiningHallDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
     
     
 }
