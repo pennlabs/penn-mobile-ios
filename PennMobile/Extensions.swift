@@ -66,3 +66,16 @@ extension UIColor {
     }
     
 }
+
+extension UIBarButtonItem {
+    static func itemWith(colorfulImage: UIImage?, color: UIColor, target: AnyObject, action: Selector) -> UIBarButtonItem {
+        let button = UIButton(type: .custom)
+        button.setImage(colorfulImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
+        button.tintColor = color
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        button.addTarget(target, action: action, for: .touchUpInside)
+        
+        let barButtonItem = UIBarButtonItem(customView: button)
+        return barButtonItem
+    }
+}

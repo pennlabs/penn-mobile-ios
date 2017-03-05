@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol DiningHallDelegate {
+    func goToDiningHallMenu(for hall: String)
+    func getDiningHallArray() -> [String]
+}
+
 class DiningCell: UITableViewCell {
     
     private var height: CGFloat!
@@ -22,6 +27,8 @@ class DiningCell: UITableViewCell {
             for hall in halls {
                 hall.delegate = delegate
             }
+            addHallsToView()
+            print(delegate == nil)
         }
     }
     
@@ -37,12 +44,11 @@ class DiningCell: UITableViewCell {
         
         backgroundColor = UIColor(r: 248, g: 248, b: 248)
         
-        addHallsToView()
     }
     
-    private var selectedHalls: [String] = ["1920 Commons", "English House", "Tortas Frontera", "New College House"] {
-        didSet {
-            addHallsToView()
+    private var selectedHalls: [String]? {
+        get {
+            return delegate?.getDiningHallArray()
         }
     }
     
@@ -63,6 +69,8 @@ class DiningCell: UITableViewCell {
     private func addHallsToView() {
         removeHallsFromView()
         
+        guard let selectedHalls = selectedHalls else { return }
+        
         for hall in selectedHalls {
             let hallView = createHall(hall: hall)
             hallDictionary[hall] = hallView
@@ -80,6 +88,8 @@ class DiningCell: UITableViewCell {
             topConstant = DiningCell.InnerWidth
         }
         
+        layoutIfNeeded()
+        
         updateTimesForAll()
     }
     
@@ -88,6 +98,7 @@ class DiningCell: UITableViewCell {
         for hall in halls {
             hall.removeFromSuperview()
         }
+        halls.removeAll()
     }
     
     public func updateTimesForAll() {
@@ -107,8 +118,10 @@ class DiningCell: UITableViewCell {
             return 55
         } else if hall == "Tortas Frontera"{
             return 120
-        } else {
+        } else if hall == "New College House" {
             return 0
+        } else {
+            return 120
         }
     }
     
@@ -124,8 +137,12 @@ class DiningCell: UITableViewCell {
         return t1 + t2 + t3
     }
     
-    public func updateHalls(halls: [String]) {
-        selectedHalls = halls
+//    public func updateHalls(halls: [String]) {
+//        selectedHalls = halls
+//    }
+    
+    public func reloadDiningCells() {
+        addHallsToView()
     }
     
 }
