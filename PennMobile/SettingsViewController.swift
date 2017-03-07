@@ -75,9 +75,6 @@ class SettingsViewController: UITableViewController, SaveDelegate, SettingsCellD
         
         registerCells()
         
-//        
-//        tableView.estimatedRowHeight = 60
-//        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView() // Removes empty cell separators
         
     }
@@ -434,18 +431,6 @@ class CheckBoxTable: UIView, UICollectionViewDelegate, UICollectionViewDataSourc
         
         return selectedCells
     }
-    
-//    public func setSelectedCells(for selectedCells: [String]) {
-//        let cells = collectionView.visibleCells
-//        
-//        for cell in cells {
-//            if let cell = cell as? CheckBoxCell {
-//                if let title = cell.title {
-//                    cell.setCheckBox(isChecked: selectedCells.contains(title))
-//                }
-//            }
-//        }
-//    }
     
 }
 

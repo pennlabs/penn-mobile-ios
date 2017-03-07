@@ -123,6 +123,7 @@
 		19EDDC9F19D252B80088C4DC /* DirectoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19EDDC9E19D252B80088C4DC /* DirectoryTableViewController.m */; };
 		19F68ECD1A69708D0022B8F8 /* upenn.png in Resources */ = {isa = PBXBuildFile; fileRef = 19F68ECC1A69708D0022B8F8 /* upenn.png */; };
 		19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */; };
+		2112202C1E6CC63900E2125D /* AgendaLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112202B1E6CC63900E2125D /* AgendaLayout.swift */; };
 		213F57A31E6B694A003DBBDA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213F57A21E6B694A003DBBDA /* SettingsViewController.swift */; };
 		26E72E756BFDF249B5C2B1D4 /* libPods-PennMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0DCAC56A3686CB8F618C4 /* libPods-PennMobile.a */; };
 		4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */; };
@@ -324,6 +325,7 @@
 		19F68ECC1A69708D0022B8F8 /* upenn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upenn.png; sourceTree = "<group>"; };
 		19F6BA451ACB6B5200D6C74B /* GoogleMapsSearcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapsSearcher.h; sourceTree = "<group>"; };
 		19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapsSearcher.m; sourceTree = "<group>"; };
+		2112202B1E6CC63900E2125D /* AgendaLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgendaLayout.swift; sourceTree = "<group>"; };
 		211944D21E60F4B800E4A9E9 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
 		213F57A21E6B694A003DBBDA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4BEBE2231AF8970400EBF676 /* TransitMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMKPointAnnotation.h; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 				57117C091E46748B001018D7 /* WeatherParser.swift */,
 				573932961E60E79400C4CF2A /* DiningCell.swift */,
 				57117C0B1E467601001018D7 /* AgendaCell.swift */,
+				2112202B1E6CC63900E2125D /* AgendaLayout.swift */,
 				57117C0D1E467615001018D7 /* ReservationCell.swift */,
 				57117C0F1E467678001018D7 /* WeatherCell.swift */,
 				57117C111E4F8DB3001018D7 /* PercentageContrain.swift */,
@@ -1137,6 +1140,7 @@
 				198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */,
 				573932951E60E78700C4CF2A /* NetworkManager.swift in Sources */,
 				6B51033E1CA0C448003AF049 /* MasterTableViewController.m in Sources */,
+				2112202C1E6CC63900E2125D /* AgendaLayout.swift in Sources */,
 				57117C101E467678001018D7 /* WeatherCell.swift in Sources */,
 				4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */,
 				6B51033B1CA0C42A003AF049 /* SWRevealViewController.m in Sources */,

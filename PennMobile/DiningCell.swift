@@ -21,6 +21,22 @@ class DiningCell: UITableViewCell {
     private static let HallHeight: CGFloat = 30
     private static let InnerWidth: CGFloat = 15
     private static let Padding: CGFloat = 25
+    private static let HeaderHeight: CGFloat = 50
+    
+    private let header: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Light", size: 20)
+        label.text = "Eat at one of these locations"
+        label.textColor = UIColor(r: 115, g: 115, b: 115)
+        label.backgroundColor = .white
+        return label
+    }()
+    
+    private let body: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(r: 248, g: 248, b: 248)
+        return view
+    }()
     
     var delegate: DiningHallDelegate? {
         didSet {
@@ -28,7 +44,6 @@ class DiningCell: UITableViewCell {
                 hall.delegate = delegate
             }
             addHallsToView()
-            print(delegate == nil)
         }
     }
     
@@ -42,8 +57,14 @@ class DiningCell: UITableViewCell {
         width = frame.width
         height = 0.603 * UIScreen.main.bounds.width //frame.height
         
-        backgroundColor = UIColor(r: 248, g: 248, b: 248)
+        selectionStyle = UITableViewCellSelectionStyle.none
         
+        addSubview(header)
+        addSubview(body)
+        
+        _ = header.anchor(topAnchor, left: leftAnchor, bottom: topAnchor, right: rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: -DiningCell.HeaderHeight, rightConstant: 0, widthConstant: 0, heightConstant: DiningCell.HeaderHeight)
+        
+        _ = body.anchorToTop(header.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
     }
     
     private var selectedHalls: [String]? {
@@ -67,6 +88,11 @@ class DiningCell: UITableViewCell {
     }
     
     private func addHallsToView() {
+        //check if halls are the same
+        if selectedHallsAreTheSame() {
+            return
+        }
+        
         removeHallsFromView()
         
         guard let selectedHalls = selectedHalls else { return }
@@ -76,11 +102,11 @@ class DiningCell: UITableViewCell {
             hallDictionary[hall] = hallView
         }
         
-        var anchor: NSLayoutYAxisAnchor = topAnchor
+        var anchor: NSLayoutYAxisAnchor = body.topAnchor
         var topConstant = DiningCell.Padding
         
         for hall in halls {
-            addSubview(hall)
+            body.addSubview(hall)
             
             _ = hall.anchor(anchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: topConstant, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: DiningCell.HallHeight)
             
@@ -91,6 +117,20 @@ class DiningCell: UITableViewCell {
         layoutIfNeeded()
         
         updateTimesForAll()
+    }
+    
+    private func selectedHallsAreTheSame() -> Bool {
+        if let selectedHalls = selectedHalls {
+            if selectedHalls.count != halls.count { return false }
+
+            for hall in halls {
+                if let diningHall = hall.diningHall {
+                    if !selectedHalls.contains(diningHall) { return false }
+                }
+            }
+        }
+        
+        return true
     }
     
     private func removeHallsFromView() {
@@ -134,15 +174,7 @@ class DiningCell: UITableViewCell {
         let t2 = HallHeight * numberOfCells
         let t3 = InnerWidth * (numberOfCells - 1)
         
-        return t1 + t2 + t3
-    }
-    
-//    public func updateHalls(halls: [String]) {
-//        selectedHalls = halls
-//    }
-    
-    public func reloadDiningCells() {
-        addHallsToView()
+        return t1 + t2 + t3 + HeaderHeight
     }
     
 }

@@ -8,25 +8,21 @@
 
 import UIKit
 
+protocol Refreshable {
+    func refreshData(callback: @escaping (_ success: Bool) -> ())
+}
+
 @objc class HomeViewController: UITableViewController {
     
     var customSettings = ["Weather", "Schedule", "Study Room Booking", "Dining"]
     var diningHalls = ["1920 Commons", "English House", "Tortas Frontera", "New College House"]
     
+    var weather = Weather(temperature: "43", description: "Sunny")
+    
+    let cellSpacingHeight: CGFloat = 80
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NetworkManager.getWeatherData(callback: { (dictionary) in
-            
-            if let temp = dictionary["temp"] {
-                print(temp)
-            }
-            
-            if let description = dictionary["description"] {
-                print(description)
-            }
-            
-        })
         
         self.title = "Home"
         self.view.backgroundColor = UIColor.white
@@ -49,6 +45,18 @@ import UIKit
         registerCells()
         
         tableView.tableFooterView = UIView() //removes the lines between blank cells
+        
+        //enables refresh on pulldown
+        refreshControl = UIRefreshControl()
+        refreshControl?.isEnabled = true
+        refreshControl?.addTarget(self, action: #selector(refreshAllData), for: .valueChanged)
+        refreshControl?.backgroundColor = .clear
+        refreshControl?.tintColor = .black
+        refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        
+        tableView.addSubview(refreshControl!)
+        
+        refreshAllData(refreshControl!)
     }
     
     let weatherCell = "weatherCell"
@@ -64,43 +72,41 @@ import UIKit
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if customSettings[indexPath.row] == "Weather" {
-            return 350.0
-        } else if customSettings[indexPath.row] == "Dining" {
+        let setting = customSettings[indexPath.section]
+        if setting == "Weather" {
+            return 300.0
+        } else if setting == "Dining" {
             //return 0.603 * UIScreen.main.bounds.width
             return DiningCell.calculateCellHeight(numberOfCells: diningHalls.count)
+        } else if setting == "Schedule" {
+            return 500
         } else {
-            return 100.0
+            return 60
         }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return customSettings.count
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //adding table view cell programmatically
-        if customSettings[indexPath.row] == "Weather" {
+        let setting = customSettings[indexPath.section]
+        if setting == "Weather" {
             let cell = tableView.dequeueReusableCell(withIdentifier: weatherCell, for: indexPath) as! WeatherCell
-            cell.condition.text = "Sunny"
-            cell.temperature.text = "43"
-            cell.comment.text = "Bust out the shades"
-            cell.weatherImage.image = UIImage(named:"1d.png")
-            
+            cell.delegate = self
             return cell
-        } else if customSettings[indexPath.row] == "Schedule" {
+        } else if setting == "Schedule" {
             let cell = tableView.dequeueReusableCell(withIdentifier: agendaCell, for: indexPath) as! AgendaCell
             //fill in stuff
-            cell.backgroundColor = .blue
-            
+            cell.delegate = self
             return cell
-        } else if customSettings[indexPath.row] == "Study Room Booking" {
+        } else if setting == "Study Room Booking" {
             let cell = tableView.dequeueReusableCell(withIdentifier: reservationCell, for: indexPath) as! ReservationCell
             //fill in stuff
             cell.backgroundColor = .red
-            
             return cell
-        } else if customSettings[indexPath.row] == "Dining" {
+        } else if setting == "Dining" {
             let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
             cell.delegate = self
             return cell
@@ -109,10 +115,51 @@ import UIKit
         }
     }
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return customSettings.count
+    }
+    
+    // Set the spacing between sections
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        } else if customSettings[section - 1] == "Weather" {
+            return 20
+        }
+        return cellSpacingHeight
+    }
+    
+    // Make the background color show through
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
+    }
+    
     func handleShowSettings() {
         let svc = SettingsViewController()
         svc.delegate = self
         navigationController?.pushViewController(svc, animated: false)
+    }
+    
+    func refreshAllData(_ refreshControl: UIRefreshControl) {
+        NetworkManager.getWeatherData(callback: { (dictionary) in
+            
+            if let temp = dictionary["temp"] as? NSNumber, let description = dictionary["description"] as? String {
+                self.weather = Weather(temperature: temp.stringValue, description: description)
+            }
+            
+            //TODO: Implement other getters
+            
+            let when = DispatchTime.now() + 0.6
+            DispatchQueue.main.asyncAfter(deadline: when, execute: {
+                refreshControl.endRefreshing()
+                self.tableView.reloadData()
+            })
+            
+            print(self.weather.temperature)
+        })
+        
     }
     
 }
@@ -128,6 +175,20 @@ extension HomeViewController: DiningHallDelegate {
         return diningHalls
     }
     
+}
+
+extension HomeViewController: WeatherDelegate {
+    
+    internal func getWeather() -> Weather {
+        return weather
+    }
+}
+
+extension HomeViewController: AgendaDelegate {
+    
+    internal func getAnnouncement() -> String? {
+        return "Advanced Registration begins in 3 days"
+    }
 }
 
 extension HomeViewController: SettingsViewControllerDelegate {

@@ -23,8 +23,8 @@ class NetworkManager {
                     
                     if let dictionary = array as? [String: AnyObject] {
                         if let mainDict = dictionary["main"] as? [String: AnyObject] {
-                            if let temp = mainDict["temp"] {
-                                infoDict["temp"] = temp
+                            if let temp = mainDict["temp"] as? Int {
+                                infoDict["temp"] = temp as AnyObject
                             }
                         }
                         
@@ -62,6 +62,8 @@ class NetworkManager {
             
             let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
                 //
+                
+                
                 if let error = error {
                     print(error.localizedDescription)
                 } else if let httpResponse = response as? HTTPURLResponse {
@@ -69,15 +71,14 @@ class NetworkManager {
                     }
                 }
                 
-                let resultNSString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
-                if resultNSString != "null" {
-                    if let json = try! JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary {
+                //let resultNSString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
+                if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                    if let json = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
                         
                         callback(json)
                         
                     }
                 } else {
-                    print("handle Null")
                     callback(nil)
                 }
                 
