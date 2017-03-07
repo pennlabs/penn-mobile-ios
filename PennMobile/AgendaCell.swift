@@ -111,11 +111,16 @@ class AgendaCell: UITableViewCell, ScheduleTableDelegate {
         
         let event3 = Event(name: "FNAR264", location: "FSHR 203", startTime: Time(hour: 11, minutes: 0, isAm: true), endTime: Time(hour: 12, minutes: 0, isAm: false))
         
-        //let event4 = Event(name: "MATH240", location: "HUNT 250", startTime: Time(hour: 11, minutes: 0, isAm: true), endTime: Time(hour: 3, minutes: 0, isAm: false))
+        let event4 = Event(name: "MATH240", location: "HUNT 250", startTime: Time(hour: 11, minutes: 0, isAm: true), endTime: Time(hour: 3, minutes: 0, isAm: false))
         
-        let event4 = Event(name: "GSWS101", location: "WILL 027", startTime: Time(hour: 1, minutes: 0, isAm: false), endTime: Time(hour: 2, minutes: 0, isAm: false))
+        let event5 = Event(name: "GSWS101", location: "WILL 027", startTime: Time(hour: 1, minutes: 0, isAm: false), endTime: Time(hour: 2, minutes: 0, isAm: false))
         
-        let events = [event1, event2, event3, event4]
+        let event6 = Event(name: "CIS160", location: "MOOR 100", startTime: Time(hour: 7, minutes: 0, isAm: true), endTime: Time(hour: 2, minutes: 0, isAm: false))
+        
+        let event7 = Event(name: "PennQuest", location: "Houston Hall", startTime: Time(hour: 8, minutes: 30, isAm: true), endTime: Time(hour: 10, minutes: 30, isAm: true))
+
+        
+        let events = [event1, event2, event3, event5, event6, event7]
         
         return events.sorted { (event1, event2) -> Bool in
             let raw1 = event1.startTime.rawMinutes()
@@ -224,7 +229,7 @@ protocol ScheduleTableDelegate {
 class ScheduleTable: UIView {
     
     let heightForHour: CGFloat = 50
-    let leftOffset: CGFloat = 60
+    let leftOffset: CGFloat = 70
     let rightOffset: CGFloat = 24
     
     let padding: CGFloat = 4.0
@@ -247,7 +252,10 @@ class ScheduleTable: UIView {
         }
     }
     
+    internal var times: [Time]!
+    
     let scheduleCell = "scheduleCell"
+    let timeCell = "timeCell"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -260,12 +268,34 @@ class ScheduleTable: UIView {
         
         addSubview(collectionView)
         
-        collectionView.anchorWithConstantsToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 20, leftConstant: leftOffset, bottomConstant: 8, rightConstant: rightOffset)
+        collectionView.anchorWithConstantsToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 8, rightConstant: rightOffset)
         
         collectionView.register(ScheduleEventCell.self, forCellWithReuseIdentifier: scheduleCell)
+        collectionView.register(TimeCell.self, forCellWithReuseIdentifier: timeCell)
     }
     
-    public var delegate: ScheduleTableDelegate!
+    public var delegate: ScheduleTableDelegate! {
+        didSet {
+            var tempTimes = [Time]()
+            for event in events {
+                let startTime = event.startTime
+                if !tempTimes.contains(startTime) {
+                    tempTimes.append(startTime)
+                }
+                
+                let endTime = event.endTime
+                if !tempTimes.contains(endTime) {
+                    tempTimes.append(endTime)
+                }
+            }
+            
+            tempTimes.sort { (time1, time2) -> Bool in
+                return time1.rawMinutes() < time2.rawMinutes()
+            }
+            
+            times = tempTimes
+        }
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -276,22 +306,36 @@ class ScheduleTable: UIView {
 extension ScheduleTable: UICollectionViewDelegate, UICollectionViewDataSource {
     
     internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return events.count
+        if section == 0 {
+            return times.count
+        } else {
+            return events.count
+        }
     }
     
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: scheduleCell, for: indexPath) as! ScheduleEventCell
-        cell.event = events[indexPath.item]
-        return cell
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: timeCell, for: indexPath) as! TimeCell
+            cell.time = times[indexPath.item]
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: scheduleCell, for: indexPath) as! ScheduleEventCell
+            cell.event = events[indexPath.item]
+            return cell
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
     
 }
 
 extension ScheduleTable: ScheduleLayoutDelegate {
+    func getLeftOffset() -> CGFloat {
+        return leftOffset
+    }
+    
     func getPadding() -> CGFloat {
         return padding
     }
@@ -328,7 +372,7 @@ extension ScheduleTable: ScheduleLayoutDelegate {
             }
             
             if let index = index, index < indexPath.item {
-                let width = self.collectionView(collectionView: collectionView, widthForCellAtIndexPath: IndexPath(item: index, section: 0), width: width)
+                let width = self.collectionView(collectionView: collectionView, widthForCellAtIndexPath: IndexPath(item: index, section: 1), width: width)
                 
                 remainingWidth -= width
                 count -= 1
@@ -344,7 +388,7 @@ extension ScheduleTable: ScheduleLayoutDelegate {
                 }
                 
                 if let index = index, index < indexPath.item {
-                    let prevXOffset = self.collectionView(collectionView: collectionView, xOffsetForCellAtIndexPath: IndexPath(item: index, section: 0) ,  width: width)
+                    let prevXOffset = self.collectionView(collectionView: collectionView, xOffsetForCellAtIndexPath: IndexPath(item: index, section: 1) ,  width: width)
                     
                     if prevXOffset < calculatedWidth && prevXOffset > 0 {
                         calculatedWidth = prevXOffset
@@ -388,7 +432,7 @@ extension ScheduleTable: ScheduleLayoutDelegate {
             
             if let index = index, index < indexPath.item {
                 
-                let index = IndexPath(item: index, section: 0)
+                let index = IndexPath(item: index, section: 1)
                 
                 let prevXOffset = self.collectionView(collectionView: collectionView, xOffsetForCellAtIndexPath: index, width: width)
                 
@@ -402,8 +446,16 @@ extension ScheduleTable: ScheduleLayoutDelegate {
     }
     
     func collectionView(collectionView: UICollectionView, yOffsetForCellAtIndexPath indexPath: IndexPath, heightForHour: CGFloat) -> CGFloat {
+        if indexPath.section == 0 {
+            return getYOffsetForTime(for: times[indexPath.item])
+        }
+        
         let event = events[indexPath.item]
-        return heightForHour * CGFloat(event.startTime.rawMinutes() - minimumStartTime().rawMinutes()) / 60.0
+        return getYOffsetForTime(for: event.startTime)
+    }
+    
+    private func getYOffsetForTime(for time: Time) -> CGFloat {
+        return heightForHour * CGFloat(time.rawMinutes() - minimumStartTime().rawMinutes()) / 60.0
     }
     
     //returns all conflicting events, including itself
@@ -509,6 +561,49 @@ class ScheduleEventCell: UICollectionViewCell {
         if let attributes = layoutAttributes as? ScheduleLayoutAttributes {
             color = attributes.color
         }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override class var requiresConstraintBasedLayout: Bool {
+        return true
+    }
+}
+
+class TimeCell: UICollectionViewCell {
+    
+    var time: Time! {
+        didSet {
+            var str: String = String(time.hour)
+            if time.minutes != 0 {
+                str += ":" + String(time.minutes)
+            }
+            str += time.isAm ? "AM" : "PM"
+            label.text = str
+        }
+    }
+    
+    private let label: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 12)
+        label.textColor = UIColor(r: 115, g: 115, b: 115)
+        label.textAlignment = .right
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addSubview(label)
+        
+        _ = label.anchor(topAnchor, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+    }
+    
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

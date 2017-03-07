@@ -20,6 +20,7 @@ protocol ScheduleLayoutDelegate {
     
     func getHeightForHour() -> CGFloat
     func getPadding() -> CGFloat
+    func getLeftOffset() -> CGFloat
 }
 
 class ScheduleLayoutAttributes: UICollectionViewLayoutAttributes {
@@ -51,14 +52,20 @@ class ScheduleLayout: UICollectionViewLayout {
     var delegate: ScheduleLayoutDelegate!
     
     //2. Configurable properties
-    var cellPadding: CGFloat {
+    private var cellPadding: CGFloat {
         get {
             return delegate.getPadding()
         }
     }
-    var contentHeightForHour: CGFloat {
+    private var contentHeightForHour: CGFloat {
         get {
             return delegate.getHeightForHour()
+        }
+    }
+    
+    private var timeWidth: CGFloat {
+        get {
+            return delegate.getLeftOffset()
         }
     }
     
@@ -66,6 +73,7 @@ class ScheduleLayout: UICollectionViewLayout {
     private var cache = [UICollectionViewLayoutAttributes]()
     
     //4. Content height and size
+    private var timeHeight: CGFloat = 12.0
     private var contentHeight: CGFloat = 0.0
     private var contentWidth: CGFloat {
         let insets = collectionView!.contentInset
@@ -93,12 +101,31 @@ class ScheduleLayout: UICollectionViewLayout {
             for item in 0 ..< collectionView!.numberOfItems(inSection: 0) {
                 
                 let indexPath = IndexPath(item: item, section: 0)
+                
+                // 3. Asks the delegate for the xOffset, yOffset, height, and width of the cell and calculates the cell frame.
+                let yOffset = delegate.collectionView(collectionView: collectionView!, yOffsetForCellAtIndexPath: indexPath, heightForHour: contentHeightForHour)
+                
+                let frame = CGRect(x: 0, y: yOffset, width: timeWidth - 4, height: timeHeight)
+                
+                // 4. Creates an UICollectionViewLayoutItem with the frame and add it to the cache
+                let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+                attributes.frame = frame
+                cache.append(attributes)
+                
+                // 5. Updates the collection view content height
+                contentHeight = max(contentHeight, frame.maxY)
+            }
+            
+            // 2. Iterates through the list of items in the second section
+            for item in 0 ..< collectionView!.numberOfItems(inSection: 1) {
+                
+                let indexPath = IndexPath(item: item, section: 1)
 
                 // 3. Asks the delegate for the xOffset, yOffset, height, and width of the cell and calculates the cell frame.
-                let width = delegate.collectionView(collectionView: collectionView!, widthForCellAtIndexPath: indexPath, width: contentWidth) - cellPadding
+                let width = delegate.collectionView(collectionView: collectionView!, widthForCellAtIndexPath: indexPath, width: contentWidth - timeWidth) - cellPadding
                 let height = delegate.collectionView(collectionView: collectionView!, heightForCellAtIndexPath: indexPath, heightForHour: contentHeightForHour) - cellPadding
-                let xOffset = delegate.collectionView(collectionView: collectionView!, xOffsetForCellAtIndexPath: indexPath, width: contentWidth)
-                let yOffset = delegate.collectionView(collectionView: collectionView!, yOffsetForCellAtIndexPath: indexPath, heightForHour: contentHeightForHour)
+                let xOffset = delegate.collectionView(collectionView: collectionView!, xOffsetForCellAtIndexPath: indexPath, width: contentWidth - timeWidth) + timeWidth
+                let yOffset = delegate.collectionView(collectionView: collectionView!, yOffsetForCellAtIndexPath: indexPath, heightForHour: contentHeightForHour) + timeHeight - 2.0
                 
                 let frame = CGRect(x: xOffset, y: yOffset, width: width, height: height)
                                 

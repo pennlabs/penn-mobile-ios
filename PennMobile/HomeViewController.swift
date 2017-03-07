@@ -79,7 +79,7 @@ protocol Refreshable {
             //return 0.603 * UIScreen.main.bounds.width
             return DiningCell.calculateCellHeight(numberOfCells: diningHalls.count)
         } else if setting == "Schedule" {
-            return 500
+            return 600
         } else {
             return 60
         }
