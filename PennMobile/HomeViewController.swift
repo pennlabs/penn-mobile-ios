@@ -2,24 +2,65 @@
 //  HomeViewController.swift
 //  PennMobile
 //
-//  Created by Victor Chien on 11/19/16.
+//  Created by Josh Doman on 3/4/17.
 //  Copyright © 2016 PennLabs. All rights reserved.
 //
 
 import UIKit
 
-protocol Refreshable {
-    func refreshData(callback: @escaping (_ success: Bool) -> ())
-}
-
 @objc class HomeViewController: UITableViewController {
     
+    //The cells or widgets that appear in Home Controller in order that they appear
     var customSettings = ["Weather", "Schedule", "Study Room Booking", "Dining"]
-    var diningHalls = ["1920 Commons", "English House", "Tortas Frontera", "New College House"]
     
+    //Dining Halls for Dining Cell
+    var diningHalls: [DiningHall]!
+    
+    //Events for Agenda Cell
+    var events: [Event] = {
+        let event1 = Event(name: "LGST101", location: "SHDH 211", startTime: Time(hour: 8, minutes: 0, isAm: true), endTime: Time(hour: 9, minutes: 0, isAm: true))
+        
+        let event2 = Event(name: "MEAM101", location: "TOWN 101", startTime: Time(hour: 9, minutes: 0, isAm: true), endTime: Time(hour: 11, minutes: 0, isAm: true))
+        
+        let event3 = Event(name: "FNAR264", location: "FSHR 203", startTime: Time(hour: 11, minutes: 0, isAm: true), endTime: Time(hour: 12, minutes: 0, isAm: false))
+        
+        let event4 = Event(name: "MATH240", location: "HUNT 250", startTime: Time(hour: 11, minutes: 0, isAm: true), endTime: Time(hour: 3, minutes: 0, isAm: false))
+        
+        let event5 = Event(name: "GSWS101", location: "WILL 027", startTime: Time(hour: 1, minutes: 0, isAm: false), endTime: Time(hour: 2, minutes: 0, isAm: false))
+        
+        let event6 = Event(name: "CIS160", location: "MOOR 100", startTime: Time(hour: 7, minutes: 0, isAm: true), endTime: Time(hour: 2, minutes: 0, isAm: false))
+        
+        let event7 = Event(name: "PennQuest", location: "Houston Hall", startTime: Time(hour: 8, minutes: 30, isAm: true), endTime: Time(hour: 10, minutes: 30, isAm: true))
+        
+        return [event1, event2, event3, event4, event5, event6, event7]
+    }()
+    
+    //Weather for weather cell
     var weather = Weather(temperature: "43", description: "Sunny")
     
-    let cellSpacingHeight: CGFloat = 80
+    //Study spaces for Reservation Cell, given in order that they appear in cell
+    var studySpaces: [StudyLocation] = {
+        let location1: StudyLocation = {
+            var location = StudyLocation(name: "Education Commons")
+            location.loadGSRs(for: [229, 221, 250])
+            return location
+        }()
+        
+        let location2: StudyLocation = {
+            var location = StudyLocation(name: "Van Pelt Library")
+            location.loadGSRs(for: [229, 221, 250])
+            return location
+        }()
+        
+        return [location1, location2]
+    }()
+    
+    //Announcement for Agenda Cell
+    var showAgendaAnnouncement: Bool = false
+    var agendaAnnouncement: String? = "Advanced Registration begins in 3 days"
+    
+    //Spacing between cells
+    let cellSpacingHeight: CGFloat = 60
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +85,8 @@ protocol Refreshable {
         
         registerCells()
         
-        tableView.tableFooterView = UIView() //removes the lines between blank cells
+        tableView.separatorStyle = .none //removes the separator lines between cells
+        tableView.showsVerticalScrollIndicator = false //removes the scroll bar
         
         //enables refresh on pulldown
         refreshControl = UIRefreshControl()
@@ -57,14 +99,19 @@ protocol Refreshable {
         tableView.addSubview(refreshControl!)
         
         refreshAllData(refreshControl!)
+        
+        //Default settings for dining halls
+        diningHalls = generateDiningHalls(for: ["1920 Commons", "English House", "Tortas Frontera", "New College House"])
+        
     }
     
-    let weatherCell = "weatherCell"
-    let agendaCell = "agendaCell"
-    let reservationCell = "reservationCell"
-    let diningCell = "diningCell"
+    //cell identifiers
+    private let weatherCell = "weatherCell"
+    private let agendaCell = "agendaCell"
+    private let reservationCell = "reservationCell"
+    private let diningCell = "diningCell"
     
-    func registerCells() {
+    private func registerCells() {
         tableView.register(WeatherCell.self, forCellReuseIdentifier: weatherCell)
         tableView.register(DiningCell.self, forCellReuseIdentifier: diningCell)
         tableView.register(AgendaCell.self, forCellReuseIdentifier: agendaCell)
@@ -79,9 +126,11 @@ protocol Refreshable {
             //return 0.603 * UIScreen.main.bounds.width
             return DiningCell.calculateCellHeight(numberOfCells: diningHalls.count)
         } else if setting == "Schedule" {
-            return 600
+            return AgendaCell.calculateHeightForEvents(for: events)
+        } else if setting == "Study Room Booking" {
+            return ReservationCell.calculateCellHeight(numberOfLocations: 2)
         } else {
-            return 60
+            return 60.0
         }
     }
     
@@ -98,17 +147,18 @@ protocol Refreshable {
             return cell
         } else if setting == "Schedule" {
             let cell = tableView.dequeueReusableCell(withIdentifier: agendaCell, for: indexPath) as! AgendaCell
-            //fill in stuff
             cell.delegate = self
+            cell.reloadData()
             return cell
         } else if setting == "Study Room Booking" {
             let cell = tableView.dequeueReusableCell(withIdentifier: reservationCell, for: indexPath) as! ReservationCell
-            //fill in stuff
-            cell.backgroundColor = .red
+            cell.delegate = self
+            cell.reloadData()
             return cell
         } else if setting == "Dining" {
             let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
             cell.delegate = self
+            cell.reloadData()
             return cell
         } else {
             return UITableViewCell()
@@ -162,19 +212,39 @@ protocol Refreshable {
         
     }
     
+    internal func generateDiningHalls(for diningHalls: [String]) -> [DiningHall] {
+        var arr = [DiningHall]()
+        for hall in diningHalls {
+            arr.append(DiningHall(name: hall, timeRemaining: getTimeRemainingForDiningHall(for: hall)))
+        }
+        return arr
+    }
+    
+    //TODO sync up the API
+    internal func getTimeRemainingForDiningHall(for hall: String) -> Int {
+        if hall == "1920 Commons" {
+            return 30
+        } else if hall == "English House" {
+            return 55
+        } else if hall == "Tortas Frontera"{
+            return 0
+        } else if hall == "New College House" {
+            return 0
+        } else {
+            return 120
+        }
+    }
+    
 }
 
-extension HomeViewController: DiningHallDelegate {
-    
-    internal func goToDiningHallMenu(for hall: String) {
-        print(hall)
+extension HomeViewController: DiningCellDelegate {
+    internal func handleMenuPressed(for diningHall: DiningHall) {
+        print(diningHall.name)
     }
     
-    //returns array of strings of dining halls
-    internal func getDiningHallArray() -> [String] {
+    internal func getDiningHalls() -> [DiningHall] {
         return diningHalls
     }
-    
 }
 
 extension HomeViewController: WeatherDelegate {
@@ -186,15 +256,45 @@ extension HomeViewController: WeatherDelegate {
 
 extension HomeViewController: AgendaDelegate {
     
+    //returns nil if no announcement is
     internal func getAnnouncement() -> String? {
-        return "Advanced Registration begins in 3 days"
+        return agendaAnnouncement
+    }
+    
+    internal func showAnnouncement() -> Bool {
+        return showAgendaAnnouncement
+    }
+    
+    internal func getEvents() -> [Event] {
+        return events
+    }
+}
+
+extension HomeViewController: ReservationCellDelegate {
+    
+    internal func getStudyLocations() -> [StudyLocation] {
+        return studySpaces
+    }
+    
+    //TODO: implement
+    internal func handleReserve(for gsr: GSR) {
+        print(gsr.description)
+    }
+    
+    //TODO: implement
+    internal func handleMore() {
+        print("More study spaces")
     }
 }
 
 extension HomeViewController: SettingsViewControllerDelegate {
     internal func updateHomeViewController(settings: [String], diningHalls: [String]) {
         self.customSettings = settings
-        self.diningHalls = diningHalls
+        self.diningHalls = generateDiningHalls(for: diningHalls)
+        if !events.isEmpty {
+            events.removeLast()
+        }
+        
         tableView.reloadData()
     }
 
@@ -203,6 +303,10 @@ extension HomeViewController: SettingsViewControllerDelegate {
     }
 
     internal func getSelectedDiningHalls() -> [String] {
-        return diningHalls
+        var arr = [String]()
+        for diningHall in diningHalls {
+            arr.append(diningHall.name)
+        }
+        return arr
     }
 }

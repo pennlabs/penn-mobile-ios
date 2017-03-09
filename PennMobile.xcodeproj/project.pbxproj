@@ -125,6 +125,10 @@
 		19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 19F6BA461ACB6B5200D6C74B /* GoogleMapsSearcher.m */; };
 		2112202C1E6CC63900E2125D /* AgendaLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112202B1E6CC63900E2125D /* AgendaLayout.swift */; };
 		213F57A31E6B694A003DBBDA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213F57A21E6B694A003DBBDA /* SettingsViewController.swift */; };
+		21AA5EA71E70D363004502FD /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EA61E70D363004502FD /* Checkbox.swift */; };
+		21AA5EAA1E70DC88004502FD /* ScheduleTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EA91E70DC88004502FD /* ScheduleTable.swift */; };
+		21AA5EAC1E70DCDF004502FD /* ScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EAB1E70DCDF004502FD /* ScheduleModel.swift */; };
+		21AA5EAE1E7124BC004502FD /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EAD1E7124BB004502FD /* DiningCell.swift */; };
 		26E72E756BFDF249B5C2B1D4 /* libPods-PennMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0DCAC56A3686CB8F618C4 /* libPods-PennMobile.a */; };
 		4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */; };
 		57117C0A1E46748B001018D7 /* WeatherParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57117C091E46748B001018D7 /* WeatherParser.swift */; };
@@ -145,7 +149,6 @@
 		571896DC1E57B4E000FE2934 /* 50d.png in Resources */ = {isa = PBXBuildFile; fileRef = 571896D11E57B4E000FE2934 /* 50d.png */; };
 		571896DE1E57B50100FE2934 /* 1d.png in Resources */ = {isa = PBXBuildFile; fileRef = 571896DD1E57B50100FE2934 /* 1d.png */; };
 		573932951E60E78700C4CF2A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573932941E60E78700C4CF2A /* NetworkManager.swift */; };
-		573932971E60E79400C4CF2A /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573932961E60E79400C4CF2A /* DiningCell.swift */; };
 		573932991E60E85500C4CF2A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573932981E60E85500C4CF2A /* Extensions.swift */; };
 		57E744421E3D3BC1005FAF26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57E744411E3D3BC1005FAF26 /* Main.storyboard */; };
 		57FF5B261DE0E9B10027DD5E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FF5B251DE0E9B10027DD5E /* HomeViewController.swift */; };
@@ -328,6 +331,10 @@
 		2112202B1E6CC63900E2125D /* AgendaLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgendaLayout.swift; sourceTree = "<group>"; };
 		211944D21E60F4B800E4A9E9 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
 		213F57A21E6B694A003DBBDA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		21AA5EA61E70D363004502FD /* Checkbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
+		21AA5EA91E70DC88004502FD /* ScheduleTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTable.swift; sourceTree = "<group>"; };
+		21AA5EAB1E70DCDF004502FD /* ScheduleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleModel.swift; sourceTree = "<group>"; };
+		21AA5EAD1E7124BB004502FD /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
 		4BEBE2231AF8970400EBF676 /* TransitMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMKPointAnnotation.h; sourceTree = "<group>"; };
 		4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitMKPointAnnotation.m; sourceTree = "<group>"; };
 		57117C091E46748B001018D7 /* WeatherParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherParser.swift; sourceTree = "<group>"; };
@@ -348,7 +355,6 @@
 		571896D11E57B4E000FE2934 /* 50d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50d.png; sourceTree = "<group>"; };
 		571896DD1E57B50100FE2934 /* 1d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1d.png; sourceTree = "<group>"; };
 		573932941E60E78700C4CF2A /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		573932961E60E79400C4CF2A /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
 		573932981E60E85500C4CF2A /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		579F9A001DD2872600A87EF7 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Keys.pch; path = ../../Keys.pch; sourceTree = "<group>"; };
 		57E744411E3D3BC1005FAF26 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -704,6 +710,26 @@
 			name = Directory;
 			sourceTree = "<group>";
 		};
+		21AA5EA51E70D306004502FD /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				213F57A21E6B694A003DBBDA /* SettingsViewController.swift */,
+				21AA5EA61E70D363004502FD /* Checkbox.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		21AA5EA81E70DC48004502FD /* AgendaCell */ = {
+			isa = PBXGroup;
+			children = (
+				2112202B1E6CC63900E2125D /* AgendaLayout.swift */,
+				21AA5EAB1E70DCDF004502FD /* ScheduleModel.swift */,
+				57117C0B1E467601001018D7 /* AgendaCell.swift */,
+				21AA5EA91E70DC88004502FD /* ScheduleTable.swift */,
+			);
+			name = AgendaCell;
+			sourceTree = "<group>";
+		};
 		571896C61E57B41D00FE2934 /* icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -731,13 +757,12 @@
 				573932941E60E78700C4CF2A /* NetworkManager.swift */,
 				57FF5B251DE0E9B10027DD5E /* HomeViewController.swift */,
 				57117C091E46748B001018D7 /* WeatherParser.swift */,
-				573932961E60E79400C4CF2A /* DiningCell.swift */,
-				57117C0B1E467601001018D7 /* AgendaCell.swift */,
-				2112202B1E6CC63900E2125D /* AgendaLayout.swift */,
+				21AA5EAD1E7124BB004502FD /* DiningCell.swift */,
 				57117C0D1E467615001018D7 /* ReservationCell.swift */,
+				21AA5EA81E70DC48004502FD /* AgendaCell */,
 				57117C0F1E467678001018D7 /* WeatherCell.swift */,
 				57117C111E4F8DB3001018D7 /* PercentageContrain.swift */,
-				213F57A21E6B694A003DBBDA /* SettingsViewController.swift */,
+				21AA5EA51E70D306004502FD /* Settings */,
 				573932981E60E85500C4CF2A /* Extensions.swift */,
 			);
 			name = Home;
@@ -1113,7 +1138,6 @@
 				1979A72C1A0C586000E1B7EB /* PCRAggregator.m in Sources */,
 				6B5979451C7BFA3600C07C1D /* LaundryWasherDetailTableViewCell.m in Sources */,
 				19C3A8B61A1C30B300D32D8A /* PennTableViewController.m in Sources */,
-				573932971E60E79400C4CF2A /* DiningCell.swift in Sources */,
 				19943A011AC2316B00B489A8 /* DirectionView.m in Sources */,
 				19B8543E1AA6ADDD002564D9 /* main.m in Sources */,
 				192C6F2F1A158533008D507C /* NewsViewController.m in Sources */,
@@ -1123,6 +1147,7 @@
 				57117C0C1E467601001018D7 /* AgendaCell.swift in Sources */,
 				1913FB131A94125000D2E17C /* Building.m in Sources */,
 				57FF5B261DE0E9B10027DD5E /* HomeViewController.swift in Sources */,
+				21AA5EAE1E7124BC004502FD /* DiningCell.swift in Sources */,
 				1965417F1A71D90C00026C92 /* SupportItem.m in Sources */,
 				195D940319BFC22900C6C8FA /* DiningViewController.m in Sources */,
 				1944CD3819EDE3C800DBF9EE /* Course.m in Sources */,
@@ -1138,6 +1163,7 @@
 				57117C0E1E467615001018D7 /* ReservationCell.swift in Sources */,
 				1944CD3B19EDE84F00DBF9EE /* RegistrarTableViewCell.m in Sources */,
 				198E232219F9C8E8000D33FD /* DetailViewController.m in Sources */,
+				21AA5EAC1E70DCDF004502FD /* ScheduleModel.swift in Sources */,
 				573932951E60E78700C4CF2A /* NetworkManager.swift in Sources */,
 				6B51033E1CA0C448003AF049 /* MasterTableViewController.m in Sources */,
 				2112202C1E6CC63900E2125D /* AgendaLayout.swift in Sources */,
@@ -1146,6 +1172,7 @@
 				6B51033B1CA0C42A003AF049 /* SWRevealViewController.m in Sources */,
 				6B5979481C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m in Sources */,
 				19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */,
+				21AA5EAA1E70DC88004502FD /* ScheduleTable.swift in Sources */,
 				6BB018361BE410B400D9EC4C /* LaundryTableViewController.m in Sources */,
 				6BF8F7C11D6BD10600F528FF /* RegistrarDetailViewController.m in Sources */,
 				6B0F0B841BF6AFC800D958BB /* LaundryDetailViewController.m in Sources */,
@@ -1158,6 +1185,7 @@
 				57117C0A1E46748B001018D7 /* WeatherParser.swift in Sources */,
 				1964BC8919C277DD00CEB1E1 /* MenuViewController.m in Sources */,
 				57117C121E4F8DB3001018D7 /* PercentageContrain.swift in Sources */,
+				21AA5EA71E70D363004502FD /* Checkbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1279,7 +1307,7 @@
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.pennlabs.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.domanapps.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
@@ -1314,7 +1342,7 @@
 					"$(PROJECT_DIR)",
 					"/**",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.pennlabs.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.domanapps.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";

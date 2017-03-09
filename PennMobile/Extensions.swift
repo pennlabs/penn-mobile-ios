@@ -65,6 +65,13 @@ extension UIColor {
         self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
     
+    static let warmGrey = UIColor(r: 115, g: 115, b: 115)
+    static let whiteGrey = UIColor(r: 248, g: 248, b: 248)
+    static let paleTeal = UIColor(r: 149, g: 207, b: 175)
+    static let coral = UIColor(r: 242, g: 110, b: 103)
+    static let marigold = UIColor(r: 255, g: 193, b: 7)
+    static let oceanBlue = UIColor(r: 73, g: 144, b: 226)
+    
 }
 
 extension UIBarButtonItem {

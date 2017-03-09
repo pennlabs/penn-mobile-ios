@@ -1,24 +1,21 @@
 //
-//  DiningCell.swift
+//  DiningCell2.swift
 //  PennMobile
 //
-//  Created by Josh Doman on 2/18/17.
+//  Created by Josh Doman on 3/8/17.
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
 import UIKit
 
-protocol DiningHallDelegate {
-    func goToDiningHallMenu(for hall: String)
-    func getDiningHallArray() -> [String]
+struct DiningHall {
+    let name: String
+    var timeRemaining: Int
 }
 
 class DiningCell: UITableViewCell {
     
-    private var height: CGFloat!
-    private var width: CGFloat!
-    
-    private static let HallHeight: CGFloat = 30
+    internal static let HallHeight: CGFloat = 32
     private static let InnerWidth: CGFloat = 15
     private static let Padding: CGFloat = 25
     private static let HeaderHeight: CGFloat = 50
@@ -32,20 +29,42 @@ class DiningCell: UITableViewCell {
         return label
     }()
     
-    private let body: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(r: 248, g: 248, b: 248)
-        return view
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = DiningCell.InnerWidth //decreases gap between cells
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = UIColor(r: 248, g: 248, b: 248)
+        cv.dataSource = self
+        cv.delegate = self
+        cv.allowsSelection = false
+        cv.isScrollEnabled = false
+        cv.contentInset = UIEdgeInsets(top: DiningCell.Padding, left: 0, bottom: DiningCell.Padding, right: 0)
+        cv.register(DiningHallCell.self, forCellWithReuseIdentifier: self.diningCell)
+        return cv
     }()
     
-    var delegate: DiningHallDelegate? {
-        didSet {
-            for hall in halls {
-                hall.delegate = delegate
-            }
-            addHallsToView()
+    internal var diningHalls: [DiningHall]! {
+        get {
+            return delegate.getDiningHalls().sorted(by: { (hall1, hall2) -> Bool in
+                let time1 = hall1.timeRemaining
+                if time1 == 0 {
+                    return false
+                }
+                
+                let time2 = hall2.timeRemaining
+                
+                if time2 == 0 {
+                    return true
+                }
+                
+                return time1 < time2
+            })
         }
     }
+    
+    var delegate: DiningCellDelegate!
+    
+    internal let diningCell = "diningCell"
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:)")
@@ -54,115 +73,14 @@ class DiningCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        width = frame.width
-        height = 0.603 * UIScreen.main.bounds.width //frame.height
-        
         selectionStyle = UITableViewCellSelectionStyle.none
         
         addSubview(header)
-        addSubview(body)
+        addSubview(collectionView)
         
         _ = header.anchor(topAnchor, left: leftAnchor, bottom: topAnchor, right: rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: -DiningCell.HeaderHeight, rightConstant: 0, widthConstant: 0, heightConstant: DiningCell.HeaderHeight)
         
-        _ = body.anchorToTop(header.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
-    }
-    
-    private var selectedHalls: [String]? {
-        get {
-            return delegate?.getDiningHallArray()
-        }
-    }
-    
-    private var halls: [DiningHallView] = [DiningHallView]()
-    private var hallDictionary: [String: DiningHallView] = [String: DiningHallView]()
-    
-    private func createHall(hall: String) -> DiningHallView {
-        let view = DiningHallView()
-        view.diningHall = hall
-        view.delegate = delegate
-        view.setTimeRemaining(time: 120)
-        
-        halls.append(view)
-        
-        return view
-    }
-    
-    private func addHallsToView() {
-        //check if halls are the same
-        if selectedHallsAreTheSame() {
-            return
-        }
-        
-        removeHallsFromView()
-        
-        guard let selectedHalls = selectedHalls else { return }
-        
-        for hall in selectedHalls {
-            let hallView = createHall(hall: hall)
-            hallDictionary[hall] = hallView
-        }
-        
-        var anchor: NSLayoutYAxisAnchor = body.topAnchor
-        var topConstant = DiningCell.Padding
-        
-        for hall in halls {
-            body.addSubview(hall)
-            
-            _ = hall.anchor(anchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: topConstant, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: DiningCell.HallHeight)
-            
-            anchor = hall.bottomAnchor
-            topConstant = DiningCell.InnerWidth
-        }
-        
-        layoutIfNeeded()
-        
-        updateTimesForAll()
-    }
-    
-    private func selectedHallsAreTheSame() -> Bool {
-        if let selectedHalls = selectedHalls {
-            if selectedHalls.count != halls.count { return false }
-
-            for hall in halls {
-                if let diningHall = hall.diningHall {
-                    if !selectedHalls.contains(diningHall) { return false }
-                }
-            }
-        }
-        
-        return true
-    }
-    
-    private func removeHallsFromView() {
-        hallDictionary.removeAll()
-        for hall in halls {
-            hall.removeFromSuperview()
-        }
-        halls.removeAll()
-    }
-    
-    public func updateTimesForAll() {
-        for hall in halls {
-            if let diningHall = hall.diningHall {
-                let time = getTimeRemainingForHall(diningHall)
-                hall.setTimeRemaining(time: time)
-            }
-        }
-    }
-    
-    //TODO sync up the API
-    private func getTimeRemainingForHall(_ hall: String) -> Int {
-        if hall == "1920 Commons" {
-            return 30
-        } else if hall == "English House" {
-            return 55
-        } else if hall == "Tortas Frontera"{
-            return 120
-        } else if hall == "New College House" {
-            return 0
-        } else {
-            return 120
-        }
+        _ = collectionView.anchorToTop(header.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
     }
     
     public static func calculateCellHeight(numberOfCells: Int) -> CGFloat {
@@ -177,21 +95,55 @@ class DiningCell: UITableViewCell {
         return t1 + t2 + t3 + HeaderHeight
     }
     
+    internal func handleMenuPressed(for diningHall: String) {
+        print(diningHall)
+    }
+    
+    public func reloadData() {
+        collectionView.reloadData()
+    }
 }
 
-class DiningHallView: UIView {
+extension DiningCell: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
     
-    var width: CGFloat? {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return diningHalls.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let diningHall = diningHalls[indexPath.item]
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: diningCell, for: indexPath) as! DiningHallCell
+        cell.diningHall = diningHall
+        cell.delegate = delegate
+        cell.setTimeRemaining(time: diningHall.timeRemaining)
+        return cell
+    }
+}
+
+extension DiningCell: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: frame.width, height: DiningCell.HallHeight)
+    }
+}
+
+protocol DiningCellDelegate {
+    func handleMenuPressed(for diningHall: DiningHall)
+    func getDiningHalls() -> [DiningHall]
+}
+
+private class DiningHallCell: UICollectionViewCell {
+    
+    var diningHall: DiningHall! {
         didSet {
-            setupView()
+            label.text = diningHall.name
         }
     }
     
-    var diningHall: String? {
-        didSet {
-            label.text = diningHall
-        }
-    }
+    var delegate: DiningCellDelegate!
     
     private let label: UILabel = {
         let label = UILabel()
@@ -203,7 +155,7 @@ class DiningHallView: UIView {
     private lazy var button: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Menu", for: .normal)
-        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 14)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 14)
         button.tintColor = .white
         button.backgroundColor = UIColor(r: 63, g: 81, b: 181)
         button.layer.cornerRadius = 2
@@ -238,39 +190,33 @@ class DiningHallView: UIView {
     }
     
     private func setupView() {
-        let width = UIScreen.main.bounds.width
-        
         addSubview(button)
         addSubview(label)
         addSubview(timer)
         addSubview(timeLabel)
         
-        _ = button.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0.168 * width, widthConstant: 0.195 * width, heightConstant: 0)
+        _ = button.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 60, widthConstant: 70, heightConstant: 0)
         
-        _ = label.anchor(nil, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0.064 * width, bottomConstant: 0, rightConstant: 0.491*width, widthConstant: 0, heightConstant: 0)
+        _ = label.anchor(nil, left: leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 30, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         label.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
         
-        _ = timer.anchor(nil, left: button.rightAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 6, bottomConstant: 0, rightConstant: 0, widthConstant: 16, heightConstant: 16)
+        _ = timer.anchor(nil, left: button.rightAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 6, bottomConstant: 0, rightConstant: 0, widthConstant: 17, heightConstant: 14)
         timer.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
         
-        _ = timeLabel.anchor(nil, left: timer.rightAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 4, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = timeLabel.anchor(nil, left: timer.rightAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 2, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         timeLabel.centerYAnchor.constraint(equalTo: button.centerYAnchor).isActive = true
         
     }
     
-    var delegate: DiningHallDelegate?
-    
     func menuPresseed() {
-        if let hall = diningHall {
-            delegate?.goToDiningHallMenu(for: hall)
-        }
+        delegate.handleMenuPressed(for: diningHall)
     }
     
     func setTimeRemaining(time: Int) {
         if time > 0 && time < 60 {
             timeLabel.isHidden = false
             timer.isHidden = false
-
+            
             timeLabel.text = "\(time)'"
         } else {
             timeLabel.isHidden = true
@@ -298,5 +244,6 @@ class DiningHallView: UIView {
             button.removeTarget(self, action: #selector(menuPresseed), for: .touchUpInside)
         }
     }
+    
     
 }

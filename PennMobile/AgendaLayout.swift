@@ -82,11 +82,7 @@ class ScheduleLayout: UICollectionViewLayout {
     
     //5. Colors to be used in cells
     private var colors: [UIColor] = {
-        let paleTeal = UIColor(r: 149, g: 207, b: 175)
-        let coral = UIColor(r: 242, g: 110, b: 103)
-        let marigold = UIColor(r: 255, g: 193, b: 7)
-        let oceanBlue = UIColor(r: 73, g: 144, b: 226)
-        return [paleTeal, coral, marigold, oceanBlue]
+        return [UIColor.paleTeal, UIColor.coral, UIColor.marigold, UIColor.oceanBlue]
     }()
     
     override class var layoutAttributesClass: AnyClass {
@@ -178,5 +174,5 @@ class ScheduleLayout: UICollectionViewLayout {
         
         cache = []
         contentHeight = 0
-    }
+    }    
 }
