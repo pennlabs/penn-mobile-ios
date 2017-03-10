@@ -759,11 +759,11 @@
 				57117C091E46748B001018D7 /* WeatherParser.swift */,
 				21AA5EAD1E7124BB004502FD /* DiningCell.swift */,
 				57117C0D1E467615001018D7 /* ReservationCell.swift */,
-				21AA5EA81E70DC48004502FD /* AgendaCell */,
 				57117C0F1E467678001018D7 /* WeatherCell.swift */,
 				57117C111E4F8DB3001018D7 /* PercentageContrain.swift */,
-				21AA5EA51E70D306004502FD /* Settings */,
 				573932981E60E85500C4CF2A /* Extensions.swift */,
+				21AA5EA81E70DC48004502FD /* AgendaCell */,
+				21AA5EA51E70D306004502FD /* Settings */,
 			);
 			name = Home;
 			sourceTree = "<group>";

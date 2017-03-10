@@ -108,6 +108,11 @@ class WeatherCell: UITableViewCell {
         
         _ = condition.anchor(starter.bottomAnchor, left: nil, bottom: nil, right: starter.rightAnchor, topConstant: 2, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
+        self.addSubview(comment)
+        
+        _ = comment.anchor(topAnchor, left: nil, bottom: nil, right: nil, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        comment.centerXAnchor.constraint(equalTo: weatherImage.centerXAnchor).isActive = true
+        
         selectionStyle = UITableViewCellSelectionStyle.none
     }
     

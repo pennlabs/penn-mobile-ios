@@ -174,6 +174,8 @@ private class SaveCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupViews()
+        
+        selectionStyle = .none
     }
     
     func setupViews() {
@@ -191,14 +193,14 @@ private class SaveCell: UITableViewCell {
         delegate?.handleSave()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        subviews.forEach { (view) in
-            if type(of: view).description() == "_UITableViewCellSeparatorView" {
-                view.isHidden = true
-            }
-        }
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        subviews.forEach { (view) in
+//            if type(of: view).description() == "_UITableViewCellSeparatorView" {
+//                view.isHidden = true
+//            }
+//        }
+//    }
 }
 
 private protocol SettingsCellDelegate {
