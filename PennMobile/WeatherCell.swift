@@ -17,7 +17,7 @@ protocol WeatherDelegate {
     func getWeather() -> Weather
 }
 
-class WeatherCell: UITableViewCell {
+class WeatherCell: GenericHomeCell {
     
     private var weather: Weather {
         get {
@@ -30,7 +30,7 @@ class WeatherCell: UITableViewCell {
         }
     }
     
-    public var delegate: WeatherDelegate? {
+    public var delegate: WeatherDelegate! {
         didSet {
             condition.text = weather.description
             temperatureLabel.text = weather.temperature
@@ -111,9 +111,7 @@ class WeatherCell: UITableViewCell {
         self.addSubview(comment)
         
         _ = comment.anchor(topAnchor, left: nil, bottom: nil, right: nil, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        comment.centerXAnchor.constraint(equalTo: weatherImage.centerXAnchor).isActive = true
-        
-        selectionStyle = UITableViewCellSelectionStyle.none
+        comment.centerXAnchor.constraint(equalTo: weatherImage.centerXAnchor).isActive = true        
     }
     
    

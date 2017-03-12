@@ -19,8 +19,6 @@
 #import "RegistrarTableViewController.h"
 #import "PennMobile-Swift.h"
 
-
-
 @interface MasterTableViewController ()
 
 typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
@@ -65,10 +63,23 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     
     self.tableView.bounces = NO;
     
+    //OLD Dining View Controller
+//    //here is the problem!!!!
+//    HomeViewController *homeVC = [[HomeViewController alloc] init];// from swift file
+//    MainViewController *mainVC = [[MainViewController alloc] init];
+//    LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
+//    RegistrarTableViewController *registrarVC = [[RegistrarTableViewController alloc] init];
+//    DirectoryTableViewController *directoryVC = [[DirectoryTableViewController alloc] init];
+//    SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
+//    AboutViewController *aboutVC = [[AboutViewController alloc] init];
+//    NewsViewController *newsVC = [[NewsViewController alloc] init];
+//    
+//    //controls order of items in slideout menu
+//    self.viewControllerArray = @[homeVC, mainVC, laundryVC, registrarVC, directoryVC, newsVC, aboutVC, supportVC];
     
     //here is the problem!!!!
     HomeViewController *homeVC = [[HomeViewController alloc] init];// from swift file
-    MainViewController *mainVC = [[MainViewController alloc] init];
+    DiningViewController *diningVC = [[DiningViewController alloc] init];// from swift file
     LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
     RegistrarTableViewController *registrarVC = [[RegistrarTableViewController alloc] init];
     DirectoryTableViewController *directoryVC = [[DirectoryTableViewController alloc] init];
@@ -77,7 +88,7 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     NewsViewController *newsVC = [[NewsViewController alloc] init];
     
     //controls order of items in slideout menu
-    self.viewControllerArray = @[homeVC, mainVC, laundryVC, registrarVC, directoryVC, newsVC, aboutVC, supportVC];
+    self.viewControllerArray = @[homeVC, diningVC, laundryVC, registrarVC, directoryVC, newsVC, aboutVC, supportVC];
     
     // self.iconArray = @[@"dining-1.png", @"laundry-2.png", @"news-1.png", @"about-1.png", @"emergency.png"];
     
@@ -127,6 +138,8 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
         //must set menu button for Home manually
         if (indexPath.row == 0) {
             cell.textLabel.text = @"Home";
+        } else if (indexPath.row == 1) {
+            cell.textLabel.text = @"Dining";
         } else {
             cell.textLabel.text = currViewController.title;
         }

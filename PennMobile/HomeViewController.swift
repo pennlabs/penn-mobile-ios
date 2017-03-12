@@ -8,10 +8,18 @@
 
 import UIKit
 
-@objc class HomeViewController: UITableViewController {
+@objc class HomeViewController: GenericTableViewController {
+    
+    //cell identifiers
+    internal let weatherCell = "Weather"
+    internal let agendaCell = "Schedule"
+    internal let reservationCell = "Study Room Booking"
+    internal let diningCell = "Dining"
     
     //The cells or widgets that appear in Home Controller in order that they appear
-    var customSettings = ["Weather", "Schedule", "Study Room Booking", "Dining"]
+    lazy var customSettings: [String] = {
+        return [self.weatherCell, self.agendaCell, self.reservationCell, self.diningCell]
+    }()
     
     //Dining Halls for Dining Cell
     var diningHalls: [DiningHall]!
@@ -66,17 +74,6 @@ import UIKit
         super.viewDidLoad()
         
         self.title = "Home"
-        self.view.backgroundColor = UIColor.white
-        self.navigationController?.navigationBar.tintColor = UIColor(r: 192, g: 57, b:  43)
-        
-        //slide out menu stuff
-        let revealController = SWRevealViewController()
-        revealController.panGestureRecognizer()
-        revealController.tapGestureRecognizer()
-        
-        //Assigns function to the menu button
-        let revealButtonItem = UIBarButtonItem(image: UIImage(named: "reveal-icon.png")!, style: .plain, target: revealController, action: #selector(SWRevealViewController.revealToggle(_:)))
-        self.navigationItem.leftBarButtonItem = revealButtonItem
         
         let image = UIImage(named: "homepage-settings")
         navigationItem.rightBarButtonItem = UIBarButtonItem.itemWith(colorfulImage: image, color: UIColor(r: 100, g: 100, b:  100), target: self, action: #selector(handleShowSettings))
@@ -104,12 +101,6 @@ import UIKit
         diningHalls = generateDiningHalls(for: ["1920 Commons", "English House", "Tortas Frontera", "New College House"])
         
     }
-    
-    //cell identifiers
-    private let weatherCell = "weatherCell"
-    private let agendaCell = "agendaCell"
-    private let reservationCell = "reservationCell"
-    private let diningCell = "diningCell"
     
     private func registerCells() {
         tableView.register(WeatherCell.self, forCellReuseIdentifier: weatherCell)
@@ -141,28 +132,27 @@ import UIKit
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //adding table view cell programmatically
         let setting = customSettings[indexPath.section]
-        if setting == "Weather" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: weatherCell, for: indexPath) as! WeatherCell
-            cell.delegate = self
-            return cell
-        } else if setting == "Schedule" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: agendaCell, for: indexPath) as! AgendaCell
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: setting, for: indexPath)
+        
+        if let cell = cell as? WeatherCell {
             cell.delegate = self
             cell.reloadData()
             return cell
-        } else if setting == "Study Room Booking" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: reservationCell, for: indexPath) as! ReservationCell
+        } else if let cell = cell as? AgendaCell {
             cell.delegate = self
             cell.reloadData()
             return cell
-        } else if setting == "Dining" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
+        } else if let cell = cell as? ReservationCell {
             cell.delegate = self
             cell.reloadData()
             return cell
-        } else {
-            return UITableViewCell()
+        } else if let cell = cell as? DiningCell {
+            cell.delegate = self
+            cell.reloadData()
+            return cell
         }
+        return cell
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -233,6 +223,12 @@ import UIKit
         } else {
             return 120
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.tintColor = UIColor(r: 192, g: 57, b:  43)
     }
     
 }

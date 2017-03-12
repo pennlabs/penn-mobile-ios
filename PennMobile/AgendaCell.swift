@@ -14,7 +14,7 @@ protocol AgendaDelegate {
     func showAnnouncement() -> Bool
 }
 
-class AgendaCell: UITableViewCell, ScheduleTableDelegate {
+class AgendaCell: GenericHomeCell, ScheduleTableDelegate {
     
     private var mainAnnouncement = UILabel()
     
@@ -77,11 +77,7 @@ class AgendaCell: UITableViewCell, ScheduleTableDelegate {
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        backgroundColor = .white
-        
-        selectionStyle = .none
+        super.init(style: style, reuseIdentifier: reuseIdentifier)        
     }
     
     private func setupCell() {
@@ -137,7 +133,7 @@ class AgendaCell: UITableViewCell, ScheduleTableDelegate {
         }
     }
     
-    public func reloadData() {
+    public override func reloadData() {
         body.reloadData()
     }
 }

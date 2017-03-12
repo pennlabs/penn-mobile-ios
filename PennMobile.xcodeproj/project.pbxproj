@@ -129,6 +129,9 @@
 		21AA5EAA1E70DC88004502FD /* ScheduleTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EA91E70DC88004502FD /* ScheduleTable.swift */; };
 		21AA5EAC1E70DCDF004502FD /* ScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EAB1E70DCDF004502FD /* ScheduleModel.swift */; };
 		21AA5EAE1E7124BC004502FD /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EAD1E7124BB004502FD /* DiningCell.swift */; };
+		21AA5EB31E75E497004502FD /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EB21E75E497004502FD /* DiningViewController.swift */; };
+		21AA5EB51E75EDB2004502FD /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EB41E75EDB2004502FD /* GenericViewController.swift */; };
+		21AA5EB71E75EEB3004502FD /* GenericHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EB61E75EEB3004502FD /* GenericHomeCell.swift */; };
 		26E72E756BFDF249B5C2B1D4 /* libPods-PennMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0DCAC56A3686CB8F618C4 /* libPods-PennMobile.a */; };
 		4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */; };
 		57117C0A1E46748B001018D7 /* WeatherParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57117C091E46748B001018D7 /* WeatherParser.swift */; };
@@ -335,6 +338,9 @@
 		21AA5EA91E70DC88004502FD /* ScheduleTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTable.swift; sourceTree = "<group>"; };
 		21AA5EAB1E70DCDF004502FD /* ScheduleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleModel.swift; sourceTree = "<group>"; };
 		21AA5EAD1E7124BB004502FD /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
+		21AA5EB21E75E497004502FD /* DiningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewController.swift; sourceTree = "<group>"; };
+		21AA5EB41E75EDB2004502FD /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericViewController.swift; path = ../GenericViewController.swift; sourceTree = "<group>"; };
+		21AA5EB61E75EEB3004502FD /* GenericHomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericHomeCell.swift; sourceTree = "<group>"; };
 		4BEBE2231AF8970400EBF676 /* TransitMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMKPointAnnotation.h; sourceTree = "<group>"; };
 		4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitMKPointAnnotation.m; sourceTree = "<group>"; };
 		57117C091E46748B001018D7 /* WeatherParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherParser.swift; sourceTree = "<group>"; };
@@ -681,7 +687,7 @@
 			name = "Dining Halls";
 			sourceTree = "<group>";
 		};
-		19EDDC8619D24CEF0088C4DC /* Dining */ = {
+		19EDDC8619D24CEF0088C4DC /* Dining-Old */ = {
 			isa = PBXGroup;
 			children = (
 				1964BC8719C277DD00CEB1E1 /* MenuViewController.h */,
@@ -696,7 +702,7 @@
 				192859F91A6F4F8900A47C67 /* FoodDetailViewController.h */,
 				192859FA1A6F4F8900A47C67 /* FoodDetailViewController.m */,
 			);
-			name = Dining;
+			name = "Dining-Old";
 			sourceTree = "<group>";
 		};
 		19EDDC8719D24D030088C4DC /* Directory */ = {
@@ -730,6 +736,26 @@
 			name = AgendaCell;
 			sourceTree = "<group>";
 		};
+		21AA5EAF1E75DEF2004502FD /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				21AA5EAD1E7124BB004502FD /* DiningCell.swift */,
+				57117C0D1E467615001018D7 /* ReservationCell.swift */,
+				57117C0F1E467678001018D7 /* WeatherCell.swift */,
+				21AA5EA81E70DC48004502FD /* AgendaCell */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		21AA5EB11E75E473004502FD /* Dining-New */ = {
+			isa = PBXGroup;
+			children = (
+				21AA5EB21E75E497004502FD /* DiningViewController.swift */,
+			);
+			name = "Dining-New";
+			path = ..;
+			sourceTree = "<group>";
+		};
 		571896C61E57B41D00FE2934 /* icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -753,16 +779,13 @@
 			isa = PBXGroup;
 			children = (
 				571896C61E57B41D00FE2934 /* icons */,
-				57FF5B221DE0E8E20027DD5E /* PennMobile-Bridging-Header.h */,
 				573932941E60E78700C4CF2A /* NetworkManager.swift */,
 				57FF5B251DE0E9B10027DD5E /* HomeViewController.swift */,
 				57117C091E46748B001018D7 /* WeatherParser.swift */,
-				21AA5EAD1E7124BB004502FD /* DiningCell.swift */,
-				57117C0D1E467615001018D7 /* ReservationCell.swift */,
-				57117C0F1E467678001018D7 /* WeatherCell.swift */,
 				57117C111E4F8DB3001018D7 /* PercentageContrain.swift */,
 				573932981E60E85500C4CF2A /* Extensions.swift */,
-				21AA5EA81E70DC48004502FD /* AgendaCell */,
+				21AA5EB61E75EEB3004502FD /* GenericHomeCell.swift */,
+				21AA5EAF1E75DEF2004502FD /* Cells */,
 				21AA5EA51E70D306004502FD /* Settings */,
 			);
 			name = Home;
@@ -814,9 +837,12 @@
 			isa = PBXGroup;
 			children = (
 				211944D21E60F4B800E4A9E9 /* Keys.pch */,
+				57FF5B221DE0E8E20027DD5E /* PennMobile-Bridging-Header.h */,
+				21AA5EB41E75EDB2004502FD /* GenericViewController.swift */,
 				57C06EB21DDFCEF9003A3BA8 /* Home */,
 				1971E22C1AA68B8300CD2404 /* Auth */,
 				19A4ACE31A8DA2FE000804E2 /* Building */,
+				21AA5EB11E75E473004502FD /* Dining-New */,
 				19A4ACE21A8DA2DB000804E2 /* AppDelegate + Stuff */,
 				19A4ACE11A8DA2CB000804E2 /* Helpers */,
 				192859DE1A6F214D00A47C67 /* News */,
@@ -829,7 +855,7 @@
 				19EDDC8719D24D030088C4DC /* Directory */,
 				1929ACFD19DBA20C00B15C5B /* Transit */,
 				6BB018331BE40FE600D9EC4C /* Laundry */,
-				19EDDC8619D24CEF0088C4DC /* Dining */,
+				19EDDC8619D24CEF0088C4DC /* Dining-Old */,
 				196541801A71D91200026C92 /* Support */,
 			);
 			path = PennMobile;
@@ -1170,7 +1196,9 @@
 				57117C101E467678001018D7 /* WeatherCell.swift in Sources */,
 				4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */,
 				6B51033B1CA0C42A003AF049 /* SWRevealViewController.m in Sources */,
+				21AA5EB51E75EDB2004502FD /* GenericViewController.swift in Sources */,
 				6B5979481C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m in Sources */,
+				21AA5EB31E75E497004502FD /* DiningViewController.swift in Sources */,
 				19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */,
 				21AA5EAA1E70DC88004502FD /* ScheduleTable.swift in Sources */,
 				6BB018361BE410B400D9EC4C /* LaundryTableViewController.m in Sources */,
@@ -1180,6 +1208,7 @@
 				19F6BA471ACB6B5200D6C74B /* GoogleMapsSearcher.m in Sources */,
 				199B90CF19DB7FCD0018CDE3 /* Person.m in Sources */,
 				19A4ACE61A8DA3FA000804E2 /* BuildingViewController.m in Sources */,
+				21AA5EB71E75EEB3004502FD /* GenericHomeCell.swift in Sources */,
 				192AEF3519C934F10068ABA6 /* FoodItemTableViewCell.m in Sources */,
 				573932991E60E85500C4CF2A /* Extensions.swift in Sources */,
 				57117C0A1E46748B001018D7 /* WeatherParser.swift in Sources */,

@@ -45,7 +45,7 @@ protocol ReservationCellDelegate {
     func getStudyLocations() -> [StudyLocation]
 }
 
-class ReservationCell: UITableViewCell {
+class ReservationCell: GenericHomeCell {
     
     internal static let StudyCellHeight: CGFloat = LocationCell.calculateCellHeight()
     private static let HeaderHeight: CGFloat = 50
@@ -107,9 +107,7 @@ class ReservationCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        selectionStyle = UITableViewCellSelectionStyle.none
-        
+                
         setupViews()
     }
     
@@ -133,7 +131,7 @@ class ReservationCell: UITableViewCell {
         return BottomPadding + StudyCellHeight * numberOfCells + HeaderHeight + FooterHeight
     }
     
-    public func reloadData() {
+    public override func reloadData() {
         collectionView.reloadData()
     }
     

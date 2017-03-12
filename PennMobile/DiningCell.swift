@@ -13,7 +13,7 @@ struct DiningHall {
     var timeRemaining: Int
 }
 
-class DiningCell: UITableViewCell {
+class DiningCell: GenericHomeCell {
     
     internal static let HallHeight: CGFloat = 32
     private static let InnerWidth: CGFloat = 15
@@ -72,9 +72,7 @@ class DiningCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        selectionStyle = UITableViewCellSelectionStyle.none
-        
+                
         addSubview(header)
         addSubview(collectionView)
         
@@ -99,7 +97,7 @@ class DiningCell: UITableViewCell {
         print(diningHall)
     }
     
-    public func reloadData() {
+    public override func reloadData() {
         collectionView.reloadData()
     }
 }
