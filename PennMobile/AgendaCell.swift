@@ -20,13 +20,19 @@ class AgendaCell: GenericHomeCell, ScheduleTableDelegate {
     
     private var events: [Event] {
         get {
-            return sortEvents(for: delegate.getEvents())
+            //return sortEvents(for: delegate.getEvents())
+            return Event.approvableEvents(for: delegate.getEvents())
         }
     }
     
     private static let HeaderHeight: CGFloat = 50
     private static let AnnouncementHeight: CGFloat = 35
+//    private lazy var AnnouncementHeight: CGFloat = {
+//        return AgendaCell.calculateAnnouncementHeight(announcement: self.announcement)
+//    }()
+
     private let emptyMessage = "Sorry! No events scheduled today."
+    private static let HeaderFont = UIFont(name: "HelveticaNeue-Light", size: 20)
     
     var announcement: String? {
         get {
@@ -49,7 +55,7 @@ class AgendaCell: GenericHomeCell, ScheduleTableDelegate {
     
     private let header: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Light", size: 20)
+        label.font = AgendaCell.HeaderFont
         label.text = "Your Monday schedule looks like"
         label.textColor = UIColor(r: 115, g: 115, b: 115)
         label.backgroundColor = .white
@@ -115,25 +121,26 @@ class AgendaCell: GenericHomeCell, ScheduleTableDelegate {
         return emptyMessage
     }
     
-    public static func calculateHeightForEvents(for events: [Event]) -> CGFloat {
-        return ScheduleTable.calculateHeightForEvents(for: events) + HeaderHeight + AnnouncementHeight
-    }
-    
-    private func sortEvents(for events: [Event]) -> [Event] {
-        return events.sorted { (event1, event2) -> Bool in
-            let raw1 = event1.startTime.rawMinutes()
-            let raw2 = event2.startTime.rawMinutes()
-            
-            //sort by latest event first
-            if raw1 == raw2 {
-                return event1.endTime.rawMinutes() > event2.endTime.rawMinutes()
-            }
-            
-            return raw1 < raw2
-        }
+    public static func calculateHeightForEvents(for events: [Event], announcement: String?) -> CGFloat {
+        var cellHeight = ScheduleTable.calculateHeightForEvents(for: events) + HeaderHeight + AnnouncementHeight
+        
+        //cellHeight += calculateAnnouncementHeight(for: announcement)
+        
+        return cellHeight
     }
     
     public override func reloadData() {
         body.reloadData()
+    }
+    
+    public static func calculateAnnouncementHeight(for announcement: String?) -> CGFloat {
+        if let announcement = announcement {
+            let maxWidth: CGFloat = UIScreen.main.bounds.width
+            
+            let rect: CGRect = announcement.boundingRect(with: CGSize(width: maxWidth, height: CGFloat.greatestFiniteMagnitude), options: ([.usesLineFragmentOrigin, .usesFontLeading]), attributes: [NSFontAttributeName: AgendaCell.HeaderFont!], context: nil)
+            let textHeight: CGFloat = rect.size.height
+            return textHeight
+        }
+        return 0
     }
 }

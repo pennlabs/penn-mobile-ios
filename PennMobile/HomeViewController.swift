@@ -44,7 +44,7 @@ import UIKit
     }()
     
     //Weather for weather cell
-    var weather = Weather(temperature: "43", description: "Sunny")
+    var weather = Weather(temperature: "43", description: "sunny")
     
     //Study spaces for Reservation Cell, given in order that they appear in cell
     var studySpaces: [StudyLocation] = {
@@ -64,8 +64,7 @@ import UIKit
     }()
     
     //Announcement for Agenda Cell
-    var showAgendaAnnouncement: Bool = false
-    var agendaAnnouncement: String? = "Advanced Registration begins in 3 days"
+    var agendaAnnouncement: String? //= "Advanced Registration begins in 3 days"
     
     //Spacing between cells
     let cellSpacingHeight: CGFloat = 60
@@ -117,7 +116,7 @@ import UIKit
             //return 0.603 * UIScreen.main.bounds.width
             return DiningCell.calculateCellHeight(numberOfCells: diningHalls.count)
         } else if setting == "Schedule" {
-            return AgendaCell.calculateHeightForEvents(for: events)
+            return AgendaCell.calculateHeightForEvents(for: events, announcement: agendaAnnouncement)
         } else if setting == "Study Room Booking" {
             return ReservationCell.calculateCellHeight(numberOfLocations: 2)
         } else {
@@ -191,21 +190,88 @@ import UIKit
             
             //TODO: Implement other getters
             
-            let when = DispatchTime.now() + 0.6
-            DispatchQueue.main.asyncAfter(deadline: when, execute: {
-                refreshControl.endRefreshing()
-                self.tableView.reloadData()
+            NetworkManager.getAnnouncementData(callback: { (announcements) in
+                print(announcements)
+                
+                //TODO: temporary
+                //self.agendaAnnouncement = announcements.first?.title
+                
+                for announcement in announcements {
+                    let today = Date()
+                    if announcement.start > today && announcement.end > today {
+                        //TODO: ask Tiff
+                    }
+                    
+                }
+                
+                NetworkManager.getDiningData(for: self.diningHalls, callback: { (info) in
+                    print(info)
+                    
+                    let today = self.getCurrentLocalDate()
+                    
+                    var newDiningHalls = [DiningHall]()
+                    
+                    for var hall in self.diningHalls {
+                        hall.timeRemaining = 0
+                        
+                        if let times = info[hall.name] as? [String: AnyObject] {
+                            for obj in times.values {
+                                if let timeDict = obj as? [String: Date] {
+                                    
+                                    if let open = timeDict["open"], let close = timeDict["close"] {
+                                        if today >= open && today < close {
+                                            hall.timeRemaining = self.minutesBetween(date1: open, date2: close)
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        newDiningHalls.append(hall)
+                    }
+                    
+                    self.diningHalls = newDiningHalls
+                    
+                    let when = DispatchTime.now() + 0.6
+                    DispatchQueue.main.asyncAfter(deadline: when, execute: {
+                        refreshControl.endRefreshing()
+                        self.tableView.reloadData()
+                    })
+                })
+                
             })
-            
-            print(self.weather.temperature)
         })
         
+    }
+    
+    func getCurrentLocalDate()-> Date {
+        var now = Date()
+        var nowComponents = DateComponents()
+        let calendar = Calendar.current
+        nowComponents.year = Calendar.current.component(.year, from: now)
+        nowComponents.month = Calendar.current.component(.month, from: now)
+        nowComponents.day = Calendar.current.component(.day, from: now)
+        nowComponents.hour = Calendar.current.component(.hour, from: now)
+        nowComponents.minute = Calendar.current.component(.minute, from: now)
+        nowComponents.second = Calendar.current.component(.second, from: now)
+        nowComponents.timeZone = TimeZone(abbreviation: "GMT")!
+        now = calendar.date(from: nowComponents)!
+        return now as Date
+    }
+    
+    func minutesBetween(date1: Date, date2: Date) -> Int {
+        let difference = Calendar.current.dateComponents([.hour, .minute], from: date1, to: date2)
+        if let hour = difference.hour, let minute = difference.minute {
+            return hour*60 + minute
+        }
+        return 0
     }
     
     internal func generateDiningHalls(for diningHalls: [String]) -> [DiningHall] {
         var arr = [DiningHall]()
         for hall in diningHalls {
-            arr.append(DiningHall(name: hall, timeRemaining: getTimeRemainingForDiningHall(for: hall)))
+            arr.append(DiningHall(name: hall, timeRemaining: 0))
+            //arr.append(DiningHall(name: hall, timeRemaining: getTimeRemainingForDiningHall(for: hall)))
         }
         return arr
     }
@@ -258,7 +324,7 @@ extension HomeViewController: AgendaDelegate {
     }
     
     internal func showAnnouncement() -> Bool {
-        return showAgendaAnnouncement
+        return agendaAnnouncement != nil
     }
     
     internal func getEvents() -> [Event] {
@@ -292,6 +358,7 @@ extension HomeViewController: SettingsViewControllerDelegate {
         }
         
         tableView.reloadData()
+        refreshAllData(refreshControl!)
     }
 
     internal func getSelectedSettings() -> [String] {

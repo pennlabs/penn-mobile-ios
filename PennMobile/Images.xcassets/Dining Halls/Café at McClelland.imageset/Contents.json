@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "FOTW.png"
+      "filename" : "quad.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

@@ -10,7 +10,11 @@ import Foundation
 
 class NetworkManager {
     
-    static let weatherURL = "https://api.pennlabs.org/weather"
+    static let masterURL = "https://api.pennlabs.org"
+    
+    static let weatherURL = masterURL + "/weather"
+    static let announcementURL = masterURL + "/calendar"
+    static let diningURL = masterURL + "/dining/venues"
     
     //callback gives a dict with "temp" and "description"
     static func getWeatherData(callback: @escaping (_ info: [String: AnyObject]) -> ()) {
@@ -45,6 +49,121 @@ class NetworkManager {
             }
         
         })
+    }
+    
+    public static func getAnnouncementData(callback: @escaping (_ announcements: [Announcement]) -> ()) {
+        getRequest(url: announcementURL) { (data) in
+            
+            var announcements = [Announcement]()
+            
+            if let dict = data as? [String: AnyObject] {
+                if let array = dict["calendar"] as? [AnyObject] {
+                    
+                    for event in array {
+                        if let eventDict = event as? [String: AnyObject] {
+                            
+                            if let start = eventDict["start"] as? String, let end = eventDict["end"] as? String, let title = eventDict["name"] as? String {
+                                let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "yyyy-MM-dd"
+                                
+                                if let startDate = dateFormatter.date(from: start), let endDate = dateFormatter.date(from: end) {
+                                    announcements.append(Announcement(title: title, start: startDate, end: endDate))
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+
+            }
+            
+            callback(announcements)
+            
+        }
+    }
+    
+    public static func getDiningData(for diningHalls: [DiningHall], callback: @escaping (_ info: [String: AnyObject]) -> ()) {
+        getRequest(url: diningURL) { (data) in
+            
+            var info = [String: AnyObject]()
+            
+            for hall in diningHalls {
+                info[hall.name] = getOpenCloseTimes(for: hall.name, data: data) as AnyObject
+            }
+            
+            callback(info)
+            
+        }
+    }
+    
+    private static func getOpenCloseTimes(for diningHall: String, data: NSDictionary?) -> [String: AnyObject] {
+        var info = [String: AnyObject]()
+        
+        if let dict = data as? [String: AnyObject] {
+            if let dict2 = dict["document"] as? [String: AnyObject] {
+                if let array = dict2["venue"] as? [AnyObject] {
+                    for diningHallDict in array {
+                        if let diningHallDict = diningHallDict as? [String: AnyObject] {
+                            if let name = diningHallDict["name"] as? String {
+                                if name.range(of: diningHall) != nil {
+                                    
+                                    if let dateArray = diningHallDict["dateHours"] as? [AnyObject] {
+                                        
+                                        let today = Date()
+                                        let dateFormatter = DateFormatter()
+                                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                                        
+                                        let todayString = dateFormatter.string(from: today)
+                                        
+                                        for obj in dateArray {
+                                            if let dict = obj as? [String: AnyObject] {
+                                                
+                                                if let date = dict["date"] as? String {
+                                                    if date == todayString {
+                                                        
+                                                        if let array = dict["meal"] as? [AnyObject] {
+                                                            
+                                                            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                                                            dateFormatter.timeZone = TimeZone(abbreviation: "EST")
+
+                                                            for obj in array {
+                                                                
+                                                                if let mealDict = obj as? [String: AnyObject] {
+                                                                    if let type = mealDict["type"] as? String, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || diningHall.range(of: type) != nil{
+                                                                        
+                                                                        if let open = mealDict["open"] as? String, let close = mealDict["close"] as? String {
+                                                                            
+                                                                            let openDate = dateFormatter.date(from: "\(todayString)T\(open)+0000")
+                                                                            let closeDate = dateFormatter.date(from: "\(todayString)T\(close)+0000")
+                                                                            
+                                                                            info[type] = ["open": openDate, "close": closeDate] as AnyObject
+                                                                        }
+                                                                        
+                                                                    }
+                                                                }
+                                                                
+                                                            }
+                                                            break
+                                                            
+                                                        }
+                                                        
+                                                    }
+                                                }
+                                                
+                                            }
+                                        }
+                                        break
+                                        
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return info
     }
     
     private static func getRequest(url: String, callback: @escaping (_ json: NSDictionary?) -> ()) {

@@ -71,7 +71,7 @@ extension UIColor {
     static let coral = UIColor(r: 242, g: 110, b: 103)
     static let marigold = UIColor(r: 255, g: 193, b: 7)
     static let oceanBlue = UIColor(r: 73, g: 144, b: 226)
-    
+    static let frenchBlue = UIColor(r: 63, g: 81, b: 181)
 }
 
 extension UIBarButtonItem {

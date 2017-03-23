@@ -229,6 +229,7 @@ private class DiningHallCell: UICollectionViewCell {
             label.textColor = UIColor(r: 115, g: 115, b: 115)
             button.backgroundColor = UIColor(r: 63, g: 81, b: 181)
             button.setTitle("Menu", for: .normal)
+            button.reversesTitleShadowWhenHighlighted = true
             
             button.addTarget(self, action: #selector(menuPresseed), for: .touchUpInside)
         } else {

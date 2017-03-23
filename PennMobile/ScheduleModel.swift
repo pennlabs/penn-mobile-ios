@@ -51,7 +51,7 @@ struct Event: Hashable {
     let endTime: Time
     
     func isConflicting(with event: Event) -> Bool {
-        return event.occurs(at: startTime) || self.occurs(at: event.startTime)
+        return event.occurs(at: self.startTime) || self.occurs(at: event.startTime)
     }
     
     func occurs(at time: Time) -> Bool {
@@ -92,5 +92,76 @@ struct Event: Hashable {
             hash += (3*hash + endTime.hashValue)
             return hash
         }
+    }
+    
+    //returns all conflicting events, including itself
+    public func getAllConflictingEvents(for events: [Event]) -> [Event] {
+        var conflictingEvents = [Event]()
+        
+        for thisEvent in events {
+            if isConflicting(with: thisEvent) {
+                conflictingEvents.append(thisEvent)
+            }
+        }
+        return conflictingEvents
+    }
+    
+    //returns all conflicting events, including the event itself, when most conflicting events occur
+    public func getMaxConflictingEvents(for events: [Event]) -> [Event] {
+        var maxEvents: [Event] = []
+        
+        let conflictingEvents = getAllConflictingEvents(for: events)
+        
+        for event in conflictingEvents {
+            let startTime = event.startTime
+            var tempEvents: [Event] = []
+            
+            for otherEvent in conflictingEvents {
+                if otherEvent.occurs(at: startTime) {
+                    tempEvents.append(otherEvent)
+                }
+            }
+            
+            if maxEvents.count < tempEvents.count {
+                maxEvents = tempEvents
+            }
+            
+        }
+        
+        return maxEvents
+    }
+    
+    private static func getApprovable(for events: [Event]) -> [Event] {
+        var tempEvents = events
+        for event in events {
+            let maxConflictingEvents = event.getMaxConflictingEvents(for: tempEvents)
+            if maxConflictingEvents.count > 3 {
+                for i in 3...(maxConflictingEvents.count - 1) {
+                    if let index = tempEvents.index(of: maxConflictingEvents[i]) {
+                        tempEvents.remove(at: index)
+                    }
+                }
+            }
+        }
+        return tempEvents
+    }
+    
+    private static func sortEvents(for events: [Event]) -> [Event] {
+        return events.sorted { (event1, event2) -> Bool in
+            let raw1 = event1.startTime.rawMinutes()
+            let raw2 = event2.startTime.rawMinutes()
+            
+            //sort by latest event first
+            if raw1 == raw2 {
+                return event1.endTime.rawMinutes() > event2.endTime.rawMinutes()
+            }
+            
+            return raw1 < raw2
+        }
+    }
+    
+    public static func approvableEvents(for events: [Event]) -> [Event] {
+        let sortedEvents = Event.sortEvents(for: events)
+        return Event.getApprovable(for: sortedEvents)
     }
 }

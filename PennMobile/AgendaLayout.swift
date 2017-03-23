@@ -117,11 +117,14 @@ class ScheduleLayout: UICollectionViewLayout {
                 
                 let indexPath = IndexPath(item: item, section: 1)
 
+                
                 // 3. Asks the delegate for the xOffset, yOffset, height, and width of the cell and calculates the cell frame.
                 let width = delegate.collectionView(collectionView: collectionView!, widthForCellAtIndexPath: indexPath, width: contentWidth - timeWidth) - cellPadding
                 let height = delegate.collectionView(collectionView: collectionView!, heightForCellAtIndexPath: indexPath, heightForHour: contentHeightForHour) - cellPadding
                 let xOffset = delegate.collectionView(collectionView: collectionView!, xOffsetForCellAtIndexPath: indexPath, width: contentWidth - timeWidth) + timeWidth
                 let yOffset = delegate.collectionView(collectionView: collectionView!, yOffsetForCellAtIndexPath: indexPath, heightForHour: contentHeightForHour) + timeHeight - 2.0
+                
+                //print("x: \(xOffset), y: \(yOffset), width: \(width), height: \(height)")
                 
                 let frame = CGRect(x: xOffset, y: yOffset, width: width, height: height)
                                 

@@ -255,7 +255,7 @@ extension ScheduleTable: ScheduleLayoutDelegate {
         var nextOffset: CGFloat = 0.0
         while nextOffset < width && nextOffset != width {
             validXOffsets.append(nextOffset)
-            nextOffset += cellWidth > width/2 ? width - cellWidth : cellWidth
+            nextOffset += floor(cellWidth > width/2 ? width - cellWidth : cellWidth)
         }
         
         for conflictingEvent in conflictingEvents {
@@ -293,44 +293,13 @@ extension ScheduleTable: ScheduleLayoutDelegate {
         return heightForHour * CGFloat(time.rawMinutes() - minStartTime.rawMinutes()) / 60.0
     }
     
-    //returns all conflicting events, including itself
-    private func getConflictingEvents(for event: Event) -> [Event] {
-        var conflictingEvents = [Event]()
-        
-        for thisEvent in events {
-            if thisEvent.isConflicting(with: event) {
-                conflictingEvents.append(thisEvent)
-            }
-        }
-        return conflictingEvents
-    }
-    
     //returns all conflicting events, including the event itself, when most conflicting events occur
     private func maxConflictingEvents(for event: Event) -> [Event] {
-        var maxEvents: [Event] = []
-        
-        let conflictingEvents = getConflictingEvents(for: event)
-        
-        for event in conflictingEvents {
-            let startTime = event.startTime
-            var tempEvents: [Event] = []
-            
-            for otherEvent in conflictingEvents {
-                if otherEvent.occurs(at: startTime) {
-                    tempEvents.append(otherEvent)
-                }
-            }
-            
-            if maxEvents.count < tempEvents.count {
-                maxEvents = tempEvents
-            }
-            
-        }
-        
-        return maxEvents
+        return event.getMaxConflictingEvents(for: events)
     }
     
     private func maximumNumberConflictingEvents(for event: Event) -> Int {
+        //return maxConflictingEvents(for: event).count
         return maxConflictingEvents(for: event).count
     }
     

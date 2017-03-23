@@ -39,6 +39,12 @@ struct StudyLocation {
     }
 }
 
+struct Announcement {
+    let title: String
+    let start: Date
+    let end: Date
+}
+
 protocol ReservationCellDelegate {
     func handleReserve(for gsr: GSR)
     func handleMore()
