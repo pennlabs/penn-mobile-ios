@@ -64,7 +64,7 @@ import UIKit
     }()
     
     //Announcement for Agenda Cell
-    var agendaAnnouncement: String? //= "Advanced Registration begins in 3 days"
+    var agendaAnnouncement: String? //= "Advanced Registration begins 3 days."
     
     //Spacing between cells
     let cellSpacingHeight: CGFloat = 60
@@ -113,7 +113,6 @@ import UIKit
         if setting == "Weather" {
             return 300.0
         } else if setting == "Dining" {
-            //return 0.603 * UIScreen.main.bounds.width
             return DiningCell.calculateCellHeight(numberOfCells: diningHalls.count)
         } else if setting == "Schedule" {
             return AgendaCell.calculateHeightForEvents(for: events, announcement: agendaAnnouncement)
@@ -194,12 +193,13 @@ import UIKit
                 print(announcements)
                 
                 //TODO: temporary
-                //self.agendaAnnouncement = announcements.first?.title
+                self.agendaAnnouncement = announcements.first?.title
                 
                 for announcement in announcements {
-                    let today = Date()
+                    let today = Date.currentLocalDate
                     if announcement.start > today && announcement.end > today {
                         //TODO: ask Tiff
+                        
                     }
                     
                 }
@@ -207,12 +207,12 @@ import UIKit
                 NetworkManager.getDiningData(for: self.diningHalls, callback: { (info) in
                     print(info)
                     
-                    let today = self.getCurrentLocalDate()
+                    let today = Date.currentLocalDate //get current time in local time
                     
                     var newDiningHalls = [DiningHall]()
                     
                     for var hall in self.diningHalls {
-                        hall.timeRemaining = 0
+                        hall.timeRemaining = 0 //set default time remaining to be zero (closed)
                         
                         if let times = info[hall.name] as? [String: AnyObject] {
                             for obj in times.values {
@@ -220,8 +220,7 @@ import UIKit
                                     
                                     if let open = timeDict["open"], let close = timeDict["close"] {
                                         if today >= open && today < close {
-                                            hall.timeRemaining = self.minutesBetween(date1: open, date2: close)
-                                            
+                                            hall.timeRemaining = today.minutesFrom(date: close) //minutes till close
                                         }
                                     }
                                 }
@@ -230,7 +229,7 @@ import UIKit
                         newDiningHalls.append(hall)
                     }
                     
-                    self.diningHalls = newDiningHalls
+                    self.diningHalls = newDiningHalls //set diningHalls to be new array
                     
                     let when = DispatchTime.now() + 0.6
                     DispatchQueue.main.asyncAfter(deadline: when, execute: {
@@ -244,57 +243,12 @@ import UIKit
         
     }
     
-    func getCurrentLocalDate()-> Date {
-        var now = Date()
-        var nowComponents = DateComponents()
-        let calendar = Calendar.current
-        nowComponents.year = Calendar.current.component(.year, from: now)
-        nowComponents.month = Calendar.current.component(.month, from: now)
-        nowComponents.day = Calendar.current.component(.day, from: now)
-        nowComponents.hour = Calendar.current.component(.hour, from: now)
-        nowComponents.minute = Calendar.current.component(.minute, from: now)
-        nowComponents.second = Calendar.current.component(.second, from: now)
-        nowComponents.timeZone = TimeZone(abbreviation: "GMT")!
-        now = calendar.date(from: nowComponents)!
-        return now as Date
-    }
-    
-    func minutesBetween(date1: Date, date2: Date) -> Int {
-        let difference = Calendar.current.dateComponents([.hour, .minute], from: date1, to: date2)
-        if let hour = difference.hour, let minute = difference.minute {
-            return hour*60 + minute
-        }
-        return 0
-    }
-    
     internal func generateDiningHalls(for diningHalls: [String]) -> [DiningHall] {
         var arr = [DiningHall]()
         for hall in diningHalls {
             arr.append(DiningHall(name: hall, timeRemaining: 0))
-            //arr.append(DiningHall(name: hall, timeRemaining: getTimeRemainingForDiningHall(for: hall)))
         }
         return arr
-    }
-    
-    //TODO sync up the API
-    internal func getTimeRemainingForDiningHall(for hall: String) -> Int {
-        if hall == "1920 Commons" {
-            return 30
-        } else if hall == "English House" {
-            return 55
-        } else if hall == "Tortas Frontera"{
-            return 0
-        } else if hall == "New College House" {
-            return 0
-        } else {
-            return 120
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.tintColor = UIColor(r: 192, g: 57, b:  43)
     }
     
 }

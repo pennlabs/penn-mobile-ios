@@ -24,8 +24,8 @@ class CheckBoxTable: UIView, UICollectionViewDelegate, UICollectionViewDataSourc
         cv.backgroundColor = .white
         cv.dataSource = self
         cv.delegate = self
-        cv.allowsSelection = false
         cv.isScrollEnabled = false
+        cv.allowsSelection = false
         return cv
     }()
     
@@ -102,7 +102,7 @@ class CheckBoxTable: UIView, UICollectionViewDelegate, UICollectionViewDataSourc
     
 }
 
-fileprivate class CheckBoxCell: UICollectionViewCell {
+fileprivate class CheckBoxCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     private let checkBox = CheckBox(frame: .zero)
     
@@ -122,6 +122,13 @@ fileprivate class CheckBoxCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        //enables entire cell to be tapped (triggers checkbox)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(flipCheckBox))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        tapGestureRecognizer.delegate = self
+        isUserInteractionEnabled = true
+        addGestureRecognizer(tapGestureRecognizer)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -145,6 +152,14 @@ fileprivate class CheckBoxCell: UICollectionViewCell {
     
     func isChecked() -> Bool {
         return checkBox.isChecked
+    }
+    
+    func flipCheckBox(_ sender: UIButton) {
+        setCheckBox(isChecked: !checkBox.isChecked)
+    }
+    
+    fileprivate override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return gestureRecognizer.location(in: self).x < label.bounds.maxX //disables gesture if touch beyond label
     }
 }
 

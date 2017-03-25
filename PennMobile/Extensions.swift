@@ -86,3 +86,30 @@ extension UIBarButtonItem {
         return barButtonItem
     }
 }
+
+extension Date {
+    func minutesFrom(date: Date) -> Int {
+        let difference = Calendar.current.dateComponents([.hour, .minute], from: self, to: date)
+        if let hour = difference.hour, let minute = difference.minute {
+            return hour*60 + minute
+        }
+        return 0
+    }
+    
+    static var currentLocalDate: Date {
+        get {
+            var now = Date()
+            var nowComponents = DateComponents()
+            let calendar = Calendar.current
+            nowComponents.year = Calendar.current.component(.year, from: now)
+            nowComponents.month = Calendar.current.component(.month, from: now)
+            nowComponents.day = Calendar.current.component(.day, from: now)
+            nowComponents.hour = Calendar.current.component(.hour, from: now)
+            nowComponents.minute = Calendar.current.component(.minute, from: now)
+            nowComponents.second = Calendar.current.component(.second, from: now)
+            nowComponents.timeZone = TimeZone(abbreviation: "GMT")!
+            now = calendar.date(from: nowComponents)!
+            return now as Date
+        }
+    }
+}

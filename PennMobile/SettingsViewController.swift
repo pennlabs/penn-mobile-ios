@@ -15,7 +15,7 @@ protocol SettingsViewControllerDelegate {
     func updateHomeViewController(settings: [String], diningHalls: [String])
 }
 
-public class SettingsViewController: UITableViewController, SaveDelegate, SettingsCellDelegate {
+class SettingsViewController: GenericTableViewController, SaveDelegate, SettingsCellDelegate {
     
     let settings = ["Weather", "Schedule", "Study Room Booking", "Dining"]
     let diningHalls = ["1920 Commons", "English House", "Tortas Frontera", "New College House", "Hill House", "1920 Starbucks", "Houston Market"]
@@ -54,22 +54,11 @@ public class SettingsViewController: UITableViewController, SaveDelegate, Settin
         }
     }
     
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Customize Home"
-        self.view.backgroundColor = UIColor.white
-        self.navigationController?.navigationBar.tintColor = UIColor(r: 192, g: 57, b:  43)
-        
-        //slide out menu stuff
-        let revealController = SWRevealViewController()
-        revealController.panGestureRecognizer()
-        revealController.tapGestureRecognizer()
-        
-        //Assigns function to the menu button
-        let revealButtonItem = UIBarButtonItem(image: UIImage(named: "reveal-icon.png")!, style: .plain, target: revealController, action: #selector(SWRevealViewController.revealToggle(_:)))
-        self.navigationItem.leftBarButtonItem = revealButtonItem
-        
+
         let image = UIImage(named: "homepage-settings")
         navigationItem.rightBarButtonItem = UIBarButtonItem.itemWith(colorfulImage: image, color: UIColor(r: 100, g: 100, b:  100), target: self, action: #selector(handleDismiss))
         
@@ -87,7 +76,7 @@ public class SettingsViewController: UITableViewController, SaveDelegate, Settin
         tableView.register(SaveCell.self, forCellReuseIdentifier: saveCell)
     }
     
-    override public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == settings.count - 1 {
             return 60 + CheckBoxTable.CalculateTableHeight(for: diningHalls.count, heightForRow: checkBoxHeight)
         } else {
@@ -95,11 +84,11 @@ public class SettingsViewController: UITableViewController, SaveDelegate, Settin
         }
     }
     
-    override public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settings.count + 1
     }
     
-    override public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //adding table view cell programmatically
         if indexPath.row == settings.count {
             let cell = tableView.dequeueReusableCell(withIdentifier: saveCell, for: indexPath) as! SaveCell
@@ -124,7 +113,7 @@ public class SettingsViewController: UITableViewController, SaveDelegate, Settin
         return cell
     }
     
-    override public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return nil
     }
     

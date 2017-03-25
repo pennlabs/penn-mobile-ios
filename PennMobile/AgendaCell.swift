@@ -27,9 +27,6 @@ class AgendaCell: GenericHomeCell, ScheduleTableDelegate {
     
     private static let HeaderHeight: CGFloat = 50
     private static let AnnouncementHeight: CGFloat = 35
-//    private lazy var AnnouncementHeight: CGFloat = {
-//        return AgendaCell.calculateAnnouncementHeight(announcement: self.announcement)
-//    }()
 
     private let emptyMessage = "Sorry! No events scheduled today."
     private static let HeaderFont = UIFont(name: "HelveticaNeue-Light", size: 20)
@@ -75,6 +72,7 @@ class AgendaCell: GenericHomeCell, ScheduleTableDelegate {
         label.font = UIFont(name: "HelveticaNeue", size: 15)
         label.text = self.announcement
         label.textAlignment = .center
+        label.numberOfLines = 2
         return label
     }()
     
@@ -104,7 +102,7 @@ class AgendaCell: GenericHomeCell, ScheduleTableDelegate {
         if showAnnouncement {
             addSubview(announcementLabel)
             
-            _ = announcementLabel.anchor(tempTopAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: AgendaCell.AnnouncementHeight)
+            _ = announcementLabel.anchor(tempTopAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: AgendaCell.calculateAnnouncementHeight(for: announcement))
             
             tempTopAnchor = announcementLabel.bottomAnchor
         }
@@ -124,8 +122,7 @@ class AgendaCell: GenericHomeCell, ScheduleTableDelegate {
     public static func calculateHeightForEvents(for events: [Event], announcement: String?) -> CGFloat {
         var cellHeight = ScheduleTable.calculateHeightForEvents(for: events) + HeaderHeight + AnnouncementHeight
         
-        //cellHeight += calculateAnnouncementHeight(for: announcement)
-        
+        cellHeight += calculateAnnouncementHeight(for: announcement)
         return cellHeight
     }
     
@@ -139,7 +136,8 @@ class AgendaCell: GenericHomeCell, ScheduleTableDelegate {
             
             let rect: CGRect = announcement.boundingRect(with: CGSize(width: maxWidth, height: CGFloat.greatestFiniteMagnitude), options: ([.usesLineFragmentOrigin, .usesFontLeading]), attributes: [NSFontAttributeName: AgendaCell.HeaderFont!], context: nil)
             let textHeight: CGFloat = rect.size.height
-            return textHeight
+            
+            return max(textHeight, 30.0)
         }
         return 0
     }
