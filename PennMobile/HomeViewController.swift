@@ -190,7 +190,6 @@ import UIKit
             //TODO: Implement other getters
             
             NetworkManager.getAnnouncementData(callback: { (announcements) in
-                print(announcements)
                 
                 //TODO: temporary
                 self.agendaAnnouncement = announcements.first?.title
@@ -204,32 +203,9 @@ import UIKit
                     
                 }
                 
-                NetworkManager.getDiningData(for: self.diningHalls, callback: { (info) in
-                    print(info)
+                NetworkManager.getDiningData(for: self.diningHalls, callback: { (diningHalls) in
                     
-                    let today = Date.currentLocalDate //get current time in local time
-                    
-                    var newDiningHalls = [DiningHall]()
-                    
-                    for var hall in self.diningHalls {
-                        hall.timeRemaining = 0 //set default time remaining to be zero (closed)
-                        
-                        if let times = info[hall.name] as? [String: AnyObject] {
-                            for obj in times.values {
-                                if let timeDict = obj as? [String: Date] {
-                                    
-                                    if let open = timeDict["open"], let close = timeDict["close"] {
-                                        if today >= open && today < close {
-                                            hall.timeRemaining = today.minutesFrom(date: close) //minutes till close
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        newDiningHalls.append(hall)
-                    }
-                    
-                    self.diningHalls = newDiningHalls //set diningHalls to be new array
+                    self.diningHalls = diningHalls //set diningHalls to be new array
                     
                     let when = DispatchTime.now() + 0.6
                     DispatchQueue.main.asyncAfter(deadline: when, execute: {

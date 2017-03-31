@@ -79,9 +79,9 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     
     //here is the problem!!!!
     HomeViewController *homeVC = [[HomeViewController alloc] init];// from swift file
-    DiningViewController *diningVC = [[DiningViewController alloc] init];// from swift file
+    NewDiningViewController *diningVC = [[NewDiningViewController alloc] init];// from swift file
     LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
-    RegistrarTableViewController *registrarVC = [[RegistrarTableViewController alloc] init];
+    PCRViewController *registrarVC = [[PCRViewController alloc] init];
     DirectoryTableViewController *directoryVC = [[DirectoryTableViewController alloc] init];
     SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
@@ -140,6 +140,8 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
             cell.textLabel.text = @"Home";
         } else if (indexPath.row == 1) {
             cell.textLabel.text = @"Dining";
+        } else if (indexPath.row == 3) {
+            cell.textLabel.text = @"PennCourseReview";
         } else {
             cell.textLabel.text = currViewController.title;
         }

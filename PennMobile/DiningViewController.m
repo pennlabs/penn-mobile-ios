@@ -520,6 +520,7 @@ bool usingTempData;
     [comp1 month] == [comp2 month] &&
     [comp1 year]  == [comp2 year];
 }
+
 // This now also updates the available meals array
 - (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSDate *)date atMeal:(Meal)meal {
     // to clear the list of open times for switching veneus
@@ -539,6 +540,7 @@ bool usingTempData;
                     mealOptions = venueContents[day][possibleMeal][kStation];
                 }
             }
+            
             for (int station = 0; station < mealOptions.count; station++) {
                 NSMutableDictionary *currentStation = [[NSMutableDictionary alloc] initWithCapacity:3];
                 id stationItems = mealOptions[station][@"tblItem"];

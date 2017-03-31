@@ -18,7 +18,7 @@ protocol SettingsViewControllerDelegate {
 class SettingsViewController: GenericTableViewController, SaveDelegate, SettingsCellDelegate {
     
     let settings = ["Weather", "Schedule", "Study Room Booking", "Dining"]
-    let diningHalls = ["1920 Commons", "English House", "Tortas Frontera", "New College House", "Hill House", "1920 Starbucks", "Houston Market"]
+    let diningHalls = ["1920 Commons", "English House", "Tortas Frontera", "New College House", "Hill House", "1920 Starbucks", "Beefsteak", "Houston Market"]
     
     var diningCellSelected = false
     var checkBoxHeight = 20

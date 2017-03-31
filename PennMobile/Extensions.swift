@@ -112,4 +112,10 @@ extension Date {
             return now as Date
         }
     }
+    
+    func getMinutes() -> Int {
+        let calendar = Calendar.current
+        let minutes = calendar.component(.minute, from: self)
+        return minutes
+    }
 }

@@ -15,7 +15,7 @@ class NetworkManager {
     static let weatherURL = masterURL + "/weather"
     static let announcementURL = masterURL + "/calendar"
     static let diningURL = masterURL + "/dining/venues"
-    
+        
     //callback gives a dict with "temp" and "description"
     static func getWeatherData(callback: @escaping (_ info: [String: AnyObject]) -> ()) {
         getRequest(url: weatherURL, callback: { (data) in
@@ -82,7 +82,7 @@ class NetworkManager {
         }
     }
     
-    public static func getDiningData(for diningHalls: [DiningHall], callback: @escaping (_ info: [String: AnyObject]) -> ()) {
+    public static func getDiningData(for diningHalls: [DiningHall], callback: @escaping (_ diningHalls: [DiningHall]) -> ()) {
         getRequest(url: diningURL) { (data) in
             
             var info = [String: AnyObject]()
@@ -91,21 +91,59 @@ class NetworkManager {
                 info[hall.name] = getOpenCloseTimes(for: hall.name, data: data) as AnyObject
             }
             
-            callback(info)
+            let updateDiningHalls = getDiningHallFromData(info: info, diningHalls: diningHalls)
+            
+            callback(updateDiningHalls)
             
         }
     }
     
+    private static func getDiningHallFromData(info: [String: AnyObject], diningHalls: [DiningHall]) -> [DiningHall] {
+        var newDiningHalls = [DiningHall]()
+        
+        let today = Date.currentLocalDate //get current time in local time
+        
+        for var hall in diningHalls {
+            hall.timeRemaining = 0 //set default time remaining to be zero (closed)
+            
+            var openingTimes = [OpenClose]()
+            
+            if let times = info[hall.name] as? [String: AnyObject] {
+                for obj in times.values {
+                    if let timeDict = obj as? [String: Date] {
+                        
+                        if let open = timeDict["open"], let close = timeDict["close"] {
+                            if today >= open && today < close {
+                                hall.timeRemaining = today.minutesFrom(date: close) //minutes till close
+                            }
+                            openingTimes.append(OpenClose(open: open, close: close))
+                        }
+                    }
+                }
+            }
+            
+            openingTimes.sort(by: { (oc1, oc2) -> Bool in
+                return oc1.open < oc2.open
+            })
+            
+            hall.times = openingTimes
+            newDiningHalls.append(hall)
+        }
+        
+        return newDiningHalls
+    }
+    
     private static func getOpenCloseTimes(for diningHall: String, data: NSDictionary?) -> [String: AnyObject] {
         var info = [String: AnyObject]()
-        
+        let diningHall = diningHall.folding(options: .diacriticInsensitive, locale: .current)
         if let dict = data as? [String: AnyObject] {
             if let dict2 = dict["document"] as? [String: AnyObject] {
                 if let array = dict2["venue"] as? [AnyObject] {
                     for diningHallDict in array {
                         if let diningHallDict = diningHallDict as? [String: AnyObject] {
                             if let name = diningHallDict["name"] as? String {
-                                if name.range(of: diningHall) != nil {
+                                let name = name.folding(options: .diacriticInsensitive, locale: .current)
+                                if name.range(of: diningHall) != nil || diningHall.range(of: name) != nil {
                                     
                                     if let dateArray = diningHallDict["dateHours"] as? [AnyObject] {
                                         

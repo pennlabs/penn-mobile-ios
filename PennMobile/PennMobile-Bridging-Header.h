@@ -9,3 +9,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "PennTableViewController.h"
+#import "RegistrarTableViewController.h"
+#import "DiningViewController.h"
+#import "Course.h"
+#import "PCReview.h"
+#import "Meal.h"
+

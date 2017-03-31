@@ -11,6 +11,18 @@ import UIKit
 struct DiningHall {
     let name: String
     var timeRemaining: Int
+    
+    init(name: String, timeRemaining: Int) {
+        self.name = name
+        self.timeRemaining = timeRemaining
+    }
+    
+    var times: [OpenClose]?
+}
+
+struct OpenClose {
+    let open: Date
+    let close: Date
 }
 
 class DiningCell: GenericHomeCell {

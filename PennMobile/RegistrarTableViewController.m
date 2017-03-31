@@ -21,7 +21,6 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
 @property (nonatomic, strong) NSIndexPath *selected;
 @property (nonatomic, strong) NSMutableDictionary *buildings;
 @property (nonatomic, strong) NSMutableArray *courses;
-@property (nonatomic, strong) NSMutableArray *filteredCourses;
 @property (nonatomic) CourseFilter currentFilter;
 @property (nonatomic, strong) UISegmentedControl *filterSwitch;
 
@@ -91,7 +90,7 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
     self.headerToolbar.delegate = self;
     
     self.filterSwitch =
-        [[UISegmentedControl alloc] initWithItems: @[@"Lecture", @"Lab", @"Recitation", @"All"]];
+        [[UISegmentedControl alloc] initWithItems: @[@"All", @"Lecture", @"Recitation", @"Lab"]];
     self.filterSwitch.center = CGPointMake(width/2, self.headerToolbar.frame.size.height/2);
     self.filterSwitch.tintColor = PENN_YELLOW;
     self.filterSwitch.selectedSegmentIndex = 0;
@@ -299,6 +298,8 @@ typedef NS_ENUM(NSInteger, CourseFilter) {
         new.times = [NSString stringWithFormat: @"%@ %@-%@", meetings[@"meeting_days"],
                                                              meetings[@"start_time"],
                                                              meetings[@"end_time"]];
+        new.review = [PCRAggregator getAverageReviewFor:new];
+
         [courseList addObject:new];
     }
     
