@@ -106,4 +106,7 @@
 
 - (IBAction)pull:(id)sender;
 
+//for swift
+- (NSArray *) getMeals: (NSDate *)date venue:(NSString *)venueName;
+
 @end

@@ -325,6 +325,11 @@ bool usingTempData;
    /* } */
     
 }
+
+- (NSArray *) getMeals: (NSDate *)date venue:(NSString *)venueName {
+    return [self getMealsForVenue:venueName forDate:date atMeal:[self isOpen:venueName]];
+}
+
 - (NSString *)getFullTimeStringForVenue:(NSString *)venue {
     // temp
     return nil;
@@ -401,6 +406,31 @@ bool usingTempData;
     return raw;
 }
 
+- (NSDictionary *)loadMealsForVenueID:(int)ID {
+    // TEMP - this code reads from an included sample JSON file
+    NSString *path;
+    NSData *data;
+    if (usingTempData) {
+        path = [[NSBundle mainBundle] pathForResource:@"venue_sample" ofType:@"txt"];
+        data = [[NSFileManager defaultManager] contentsAtPath:path];
+    } else {
+        path = [NSString stringWithFormat:@"%@%@", SERVER_ROOT, MEAL_PATH];
+        path = [path stringByAppendingFormat:@"%d", ID];
+        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
+        if (![self confirmConnection:data])
+            return nil;
+    }
+    NSError *error = [NSError alloc];
+    NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
+    if (!raw || error.code != 0) {
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        NSLog(@"JSON Parse error code: %ld", (long)error.code);
+        [new show];
+        return nil;
+    }
+    return raw;
+}
+
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector {
     if (![self loadVenues]) {
         return;
@@ -421,6 +451,28 @@ bool usingTempData;
     [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
     [self refresh];
 }
+
+- (void)loadFromAPIwithTarget2:(id)target selector:(SEL)selector id:(int)ID {
+    if (![self loadVenues]) {
+        return;
+    }
+    NSDictionary *raw;
+    for (int count = 0; count < _mealTimes.count; count++) {
+        NSString *menuURL = _mealTimes[count][@"dailyMenuURL"];
+        // fix for McCleland bullshit
+        if (menuURL && ![menuURL isEqualToString:@""] && ![[menuURL substringFromIndex:[menuURL length]-3] isEqualToString:@"737"]) {
+            raw = [self loadMealsForVenueID:ID];
+            if (!raw)
+                continue;
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                [self parseAPIMeals:raw selector:selector target:target];
+            });
+        }
+    }
+    [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
+    [self refresh];
+}
+
 - (void)hideActivity {
     self.tableView.userInteractionEnabled = YES;
     @try {

@@ -55,7 +55,6 @@ class DiningControllerCell: UITableViewCell {
     
     private let timesLabel: UILabel = {
         let label = UILabel()
-        label.text = "8 - 2  |  11 - 12  |  8 - 10"
         label.textColor = UIColor.warmGrey
         label.font = UIFont(name: "HelveticaNeue-Light", size: 12)
         return label
@@ -129,6 +128,11 @@ class DiningControllerCell: UITableViewCell {
             }
             timesString += "\(open) - \(close)"
         }
+        
+        if times.isEmpty {
+            timesString = "CLOSED"
+        }
+        
         timesLabel.text = timesString
     }
     
