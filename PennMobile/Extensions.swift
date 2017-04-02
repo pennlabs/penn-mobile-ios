@@ -113,9 +113,24 @@ extension Date {
         }
     }
     
-    func getMinutes() -> Int {
+    var minutes: Int {
         let calendar = Calendar.current
         let minutes = calendar.component(.minute, from: self)
         return minutes
+    }
+    
+    static func addMinutes(to date: Date, minutes: Int) -> Date {
+        return Calendar.current.date(byAdding: .minute, value: minutes, to: date)!
+    }
+    
+    private var ends11_59: Bool {
+        return minutes == 59
+    }
+    
+    func adjustFor11_59() -> Date {
+        if ends11_59 {
+            return Date.addMinutes(to: self, minutes: 1)
+        }
+        return self
     }
 }

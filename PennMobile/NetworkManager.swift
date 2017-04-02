@@ -167,12 +167,12 @@ class NetworkManager {
                                                             for obj in array {
                                                                 
                                                                 if let mealDict = obj as? [String: AnyObject] {
-                                                                    if let type = mealDict["type"] as? String, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || diningHall.range(of: type) != nil{
+                                                                    if let type = mealDict["type"] as? String, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || type == "Late Night" || diningHall.range(of: type) != nil {
                                                                         
                                                                         if let open = mealDict["open"] as? String, let close = mealDict["close"] as? String {
                                                                             
-                                                                            let openDate = dateFormatter.date(from: "\(todayString)T\(open)+0000")
-                                                                            let closeDate = dateFormatter.date(from: "\(todayString)T\(close)+0000")
+                                                                            let openDate = dateFormatter.date(from: "\(todayString)T\(open)+0000")?.adjustFor11_59()
+                                                                            let closeDate = dateFormatter.date(from: "\(todayString)T\(close)+0000")?.adjustFor11_59()
                                                                             
                                                                             info[type] = ["open": openDate, "close": closeDate] as AnyObject
                                                                         }

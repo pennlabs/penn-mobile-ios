@@ -34,7 +34,6 @@ class NewDiningViewController: GenericTableViewController {
         dining = generateDiningHalls(for: diningHalls)
         retailHalls = generateDiningHalls(for: retail)
         
-        updateTimesForDiningHalls()
     }
     
     internal let headerView = "header"
@@ -67,6 +66,12 @@ class NewDiningViewController: GenericTableViewController {
                 })
             })
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateTimesForDiningHalls()
     }
 }
 
