@@ -1,0 +1,36 @@
+PODS:
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - DropdownMenu (1.0.0)
+  - ECSlidingViewController (2.0.3)
+  - HMLauncherView (1.0.3)
+  - MBProgressHUD (0.9.2)
+  - Parse (1.14.2):
+    - Bolts/Tasks (~> 1.8)
+  - SVProgressHUD (2.1.2)
+
+DEPENDENCIES:
+  - Bolts
+  - DropdownMenu
+  - ECSlidingViewController
+  - HMLauncherView
+  - MBProgressHUD (~> 0.8)
+  - Parse
+  - SVProgressHUD
+
+SPEC CHECKSUMS:
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  DropdownMenu: 5777e17ac6ddbc69b151719b83a838da81440786
+  ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
+  HMLauncherView: be5d387f11f73504727fb60d527bbb91087c04ef
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+
+PODFILE CHECKSUM: b46908d610e85b1830fb90acb464d283a16fc58c
+
+COCOAPODS: 1.2.0
