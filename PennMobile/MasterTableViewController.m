@@ -88,7 +88,7 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     NewsViewController *newsVC = [[NewsViewController alloc] init];
     
     //controls order of items in slideout menu
-    self.viewControllerArray = @[homeVC, diningVC, laundryVC, registrarVC, directoryVC, newsVC, aboutVC, supportVC];
+    self.viewControllerArray = @[homeVC, diningVC, laundryVC, newsVC, aboutVC, supportVC, supportVC];
     
     // self.iconArray = @[@"dining-1.png", @"laundry-2.png", @"news-1.png", @"about-1.png", @"emergency.png"];
     
@@ -136,12 +136,21 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
         UIViewController *currViewController = [self.viewControllerArray objectAtIndex:indexPath.row];
         
         //must set menu button for Home manually
+//        if (indexPath.row == 0) {
+//            cell.textLabel.text = @"Home";
+//        } else if (indexPath.row == 1) {
+//            cell.textLabel.text = @"Dining";
+//        } else if (indexPath.row == 3) {
+//            cell.textLabel.text = @"PennCourseReview";
+//        } else {
+//            cell.textLabel.text = currViewController.title;
+//        }
+        
+        //must set menu button for Home manually
         if (indexPath.row == 0) {
             cell.textLabel.text = @"Home";
         } else if (indexPath.row == 1) {
             cell.textLabel.text = @"Dining";
-        } else if (indexPath.row == 3) {
-            cell.textLabel.text = @"PennCourseReview";
         } else {
             cell.textLabel.text = currViewController.title;
         }

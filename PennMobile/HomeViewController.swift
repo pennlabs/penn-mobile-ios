@@ -73,6 +73,7 @@ import UIKit
         super.viewDidLoad()
         
         self.title = "Home"
+        self.screenName = "Home Page" //sets tracking for Google Analytics
         
         let image = UIImage(named: "homepage-settings")
         navigationItem.rightBarButtonItem = UIBarButtonItem.itemWith(colorfulImage: image, color: UIColor(r: 100, g: 100, b:  100), target: self, action: #selector(handleShowSettings))
@@ -225,6 +226,12 @@ import UIKit
             arr.append(DiningHall(name: hall, timeRemaining: 0))
         }
         return arr
+    }
+    
+    override func updateData() {
+        if let rc = refreshControl {
+            refreshAllData(rc)
+        }
     }
     
 }

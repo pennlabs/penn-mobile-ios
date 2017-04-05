@@ -126,6 +126,7 @@
 		2101ABF91E8ECD62009D6211 /* PCRDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101ABF81E8ECD62009D6211 /* PCRDetailController.swift */; };
 		2101ABFB1E8ECE46009D6211 /* PCRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101ABFA1E8ECE46009D6211 /* PCRViewController.swift */; };
 		2101ABFD1E8F02F0009D6211 /* DiningDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101ABFC1E8F02F0009D6211 /* DiningDetailViewController.swift */; };
+		21029DA01E952C0A00A6EF61 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21029D9F1E952C0A00A6EF61 /* GoogleService-Info.plist */; };
 		2112202C1E6CC63900E2125D /* AgendaLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2112202B1E6CC63900E2125D /* AgendaLayout.swift */; };
 		213F57A31E6B694A003DBBDA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213F57A21E6B694A003DBBDA /* SettingsViewController.swift */; };
 		217CF8731E8DE3D0003922DC /* DiningControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217CF8721E8DE3CF003922DC /* DiningControllerCell.swift */; };
@@ -135,7 +136,7 @@
 		21AA5EAC1E70DCDF004502FD /* ScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EAB1E70DCDF004502FD /* ScheduleModel.swift */; };
 		21AA5EAE1E7124BC004502FD /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EAD1E7124BB004502FD /* DiningCell.swift */; };
 		21AA5EB31E75E497004502FD /* NewDiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EB21E75E497004502FD /* NewDiningViewController.swift */; };
-		21AA5EB51E75EDB2004502FD /* GenericTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EB41E75EDB2004502FD /* GenericTableViewController.swift */; };
+		21AA5EB51E75EDB2004502FD /* GenericControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EB41E75EDB2004502FD /* GenericControllers.swift */; };
 		21AA5EB71E75EEB3004502FD /* GenericHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA5EB61E75EEB3004502FD /* GenericHomeCell.swift */; };
 		26E72E756BFDF249B5C2B1D4 /* libPods-PennMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB0DCAC56A3686CB8F618C4 /* libPods-PennMobile.a */; };
 		4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */; };
@@ -339,6 +340,7 @@
 		2101ABF81E8ECD62009D6211 /* PCRDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCRDetailController.swift; sourceTree = "<group>"; };
 		2101ABFA1E8ECE46009D6211 /* PCRViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PCRViewController.swift; sourceTree = "<group>"; };
 		2101ABFC1E8F02F0009D6211 /* DiningDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningDetailViewController.swift; sourceTree = "<group>"; };
+		21029D9F1E952C0A00A6EF61 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2112202B1E6CC63900E2125D /* AgendaLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgendaLayout.swift; sourceTree = "<group>"; };
 		211944D21E60F4B800E4A9E9 /* Keys.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.pch; sourceTree = "<group>"; };
 		213F57A21E6B694A003DBBDA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -349,7 +351,7 @@
 		21AA5EAB1E70DCDF004502FD /* ScheduleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleModel.swift; sourceTree = "<group>"; };
 		21AA5EAD1E7124BB004502FD /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
 		21AA5EB21E75E497004502FD /* NewDiningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDiningViewController.swift; sourceTree = "<group>"; };
-		21AA5EB41E75EDB2004502FD /* GenericTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericTableViewController.swift; path = ../GenericTableViewController.swift; sourceTree = "<group>"; };
+		21AA5EB41E75EDB2004502FD /* GenericControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericControllers.swift; path = ../GenericControllers.swift; sourceTree = "<group>"; };
 		21AA5EB61E75EEB3004502FD /* GenericHomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericHomeCell.swift; sourceTree = "<group>"; };
 		4BEBE2231AF8970400EBF676 /* TransitMKPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMKPointAnnotation.h; sourceTree = "<group>"; };
 		4BEBE2241AF8970400EBF676 /* TransitMKPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitMKPointAnnotation.m; sourceTree = "<group>"; };
@@ -834,6 +836,7 @@
 			isa = PBXGroup;
 			children = (
 				19B6BC421A159D3B002BFEA5 /* AGaramond.otf */,
+				21029D9F1E952C0A00A6EF61 /* GoogleService-Info.plist */,
 				1964BC8A19C2818300CEB1E1 /* SampleData */,
 				195D940419BFC40200C6C8FA /* Assets */,
 				82982FB519735ECC00DB2AE3 /* PennMobile */,
@@ -858,7 +861,7 @@
 			children = (
 				211944D21E60F4B800E4A9E9 /* Keys.pch */,
 				57FF5B221DE0E8E20027DD5E /* PennMobile-Bridging-Header.h */,
-				21AA5EB41E75EDB2004502FD /* GenericTableViewController.swift */,
+				21AA5EB41E75EDB2004502FD /* GenericControllers.swift */,
 				573932941E60E78700C4CF2A /* NetworkManager.swift */,
 				573932981E60E85500C4CF2A /* Extensions.swift */,
 				57C06EB21DDFCEF9003A3BA8 /* Home */,
@@ -976,7 +979,7 @@
 				TargetAttributes = {
 					82982FB219735ECC00DB2AE3 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = GZC25U6WG3;
+						DevelopmentTeam = VU59R57FGM;
 						LastSwiftMigration = 0820;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
@@ -1028,6 +1031,7 @@
 				571896D81E57B4E000FE2934 /* 10d.png in Resources */,
 				19CB3E201A1576D600AF11D9 /* Book.png in Resources */,
 				571896DB1E57B4E000FE2934 /* 13n.png in Resources */,
+				21029DA01E952C0A00A6EF61 /* GoogleService-Info.plist in Resources */,
 				1935F10F1A37EFF300057667 /* iPad@2x.png in Resources */,
 				571896D41E57B4E000FE2934 /* 2n.png in Resources */,
 				19EDDC8519D2289E0088C4DC /* list_sample.txt in Resources */,
@@ -1223,7 +1227,7 @@
 				57117C101E467678001018D7 /* WeatherCell.swift in Sources */,
 				4BEBE2251AF8970400EBF676 /* TransitMKPointAnnotation.m in Sources */,
 				6B51033B1CA0C42A003AF049 /* SWRevealViewController.m in Sources */,
-				21AA5EB51E75EDB2004502FD /* GenericTableViewController.swift in Sources */,
+				21AA5EB51E75EDB2004502FD /* GenericControllers.swift in Sources */,
 				6B5979481C7C0C7E00C07C1D /* LaundryDryerDetailTableViewCell.m in Sources */,
 				21AA5EB31E75E497004502FD /* NewDiningViewController.swift in Sources */,
 				19B8543C1AA6AA5B002564D9 /* AppDelegate.m in Sources */,
@@ -1355,7 +1359,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = GZC25U6WG3;
+				DEVELOPMENT_TEAM = VU59R57FGM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1364,7 +1368,7 @@
 				INFOPLIST_FILE = PennMobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.domanapps.PennMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";
@@ -1384,7 +1388,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = GZC25U6WG3;
+				DEVELOPMENT_TEAM = VU59R57FGM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1399,7 +1403,7 @@
 					"$(PROJECT_DIR)",
 					"/**",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.domanapps.PennMobile;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/PennMobile-Bridging-Header.h";

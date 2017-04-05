@@ -7,5 +7,6 @@ pod 'Parse'
 pod "DropdownMenu"
 pod 'Bolts'
 pod 'SVProgressHUD'
+pod 'Google/Analytics'
 
 end

@@ -46,5 +46,6 @@ class DiningDetailViewController: GenericViewController {
             }
         }
         
+        self.screenName = diningHall.name
     }
 }

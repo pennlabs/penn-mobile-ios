@@ -96,6 +96,7 @@ extension Date {
         return 0
     }
     
+    //returns date in local time
     static var currentLocalDate: Date {
         get {
             var now = Date()

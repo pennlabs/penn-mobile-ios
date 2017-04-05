@@ -10,11 +10,11 @@ import Foundation
 
 class NetworkManager {
     
-    static let masterURL = "https://api.pennlabs.org"
+    static let masterURL = "https://api.pennlabs.org/"
     
-    static let weatherURL = masterURL + "/weather"
-    static let announcementURL = masterURL + "/calendar"
-    static let diningURL = masterURL + "/dining/venues"
+    static let weatherURL = masterURL + "weather"
+    static let announcementURL = masterURL + "calendar"
+    static let diningURL = masterURL + "dining/venues"
         
     //callback gives a dict with "temp" and "description"
     static func getWeatherData(callback: @escaping (_ info: [String: AnyObject]) -> ()) {
@@ -91,9 +91,9 @@ class NetworkManager {
                 info[hall.name] = getOpenCloseTimes(for: hall.name, data: data) as AnyObject
             }
             
-            let updateDiningHalls = getDiningHallFromData(info: info, diningHalls: diningHalls)
+            let updatedDiningHalls = getDiningHallFromData(info: info, diningHalls: diningHalls)
             
-            callback(updateDiningHalls)
+            callback(updatedDiningHalls)
             
         }
     }
@@ -135,7 +135,7 @@ class NetworkManager {
     
     private static func getOpenCloseTimes(for diningHall: String, data: NSDictionary?) -> [String: AnyObject] {
         var info = [String: AnyObject]()
-        let diningHall = diningHall.folding(options: .diacriticInsensitive, locale: .current)
+        let diningHall = diningHall.folding(options: .diacriticInsensitive, locale: .current) //removes accents
         if let dict = data as? [String: AnyObject] {
             if let dict2 = dict["document"] as? [String: AnyObject] {
                 if let array = dict2["venue"] as? [AnyObject] {
@@ -171,29 +171,22 @@ class NetworkManager {
                                                                         
                                                                         if let open = mealDict["open"] as? String, let close = mealDict["close"] as? String {
                                                                             
-                                                                            let openDate = dateFormatter.date(from: "\(todayString)T\(open)+0000")?.adjustFor11_59()
+                                                                            let openDate = dateFormatter.date(from: "\(todayString)T\(open)+0000")?.adjustFor11_59() //rounds up if :59
                                                                             let closeDate = dateFormatter.date(from: "\(todayString)T\(close)+0000")?.adjustFor11_59()
                                                                             
                                                                             info[type] = ["open": openDate, "close": closeDate] as AnyObject
                                                                         }
-                                                                        
                                                                     }
                                                                 }
-                                                                
                                                             }
                                                             break
-                                                            
                                                         }
-                                                        
                                                     }
                                                 }
-                                                
                                             }
                                         }
                                         break
-                                        
                                     }
-                                    
                                 }
                             }
                         }

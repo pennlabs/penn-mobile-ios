@@ -24,6 +24,7 @@ class NewDiningViewController: GenericTableViewController {
         super.viewDidLoad()
         
         self.title = "Dining"
+        self.screenName = "Dining"
         
         tableView.separatorStyle = .none
         tableView.dataSource = self
@@ -68,9 +69,7 @@ class NewDiningViewController: GenericTableViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    override func updateData() {
         updateTimesForDiningHalls()
     }
 }
