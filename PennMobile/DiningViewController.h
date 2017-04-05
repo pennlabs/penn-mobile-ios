@@ -41,6 +41,7 @@
     int sections;
     bool hasLoaded;
     UITapGestureRecognizer *cancelTouches;
+    IBOutlet UITableView *tableView;
 }
 
 /**
@@ -66,7 +67,6 @@
  **/
 
 @property NSMutableSet *days;
-
 @property Meal selectedMeal;
 @property NSDate *selectedDate;
 @property NSString *selectedVenue;
@@ -105,5 +105,8 @@
 - (Meal)isOpen:(NSString *)venue;
 
 - (IBAction)pull:(id)sender;
+
+//for swift
+- (NSArray *) getMeals: (NSDate *)date venue:(NSString *)venueName;
 
 @end

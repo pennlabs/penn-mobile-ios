@@ -101,4 +101,5 @@ static NSMutableDictionary *averages;
     }
     return true;
 }
+
 @end

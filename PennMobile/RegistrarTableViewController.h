@@ -21,5 +21,6 @@
                                                             UIToolbarDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UISearchBar *registrySearchBar;
+@property (nonatomic, strong) NSMutableArray *filteredCourses;
 
 @end

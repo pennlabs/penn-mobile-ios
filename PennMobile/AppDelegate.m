@@ -13,12 +13,13 @@
 #import "MainViewController.h"
 #import "MasterTableViewController.h"
 #import "SWRevealViewController.h"
+#import "PennMobile-Swift.h"
 
 @interface AppDelegate ()
 
 @property (nonatomic, strong) UINavigationController *navController;
 @property (nonatomic, strong) MasterTableViewController *masterTableViewController;
-@property (nonatomic, strong) MainViewController *mainVC;
+@property (nonatomic, strong) HomeViewController *homeVC;
 @property (nonatomic, strong) SWRevealViewController *SWRevealViewController;
 
 @end
@@ -26,9 +27,21 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    //Google Analytics stuff
+    // Configure tracker from GoogleService-Info.plist.
+    NSError *configureError;
+    [[GGLContext sharedInstance] configureWithError:&configureError];
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    
+    // Optional: configure GAI options.
+    GAI *gai = [GAI sharedInstance];
+    gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
+    gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
+    
     // Override point for customization after application launch.
     [application setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
-    [ParseCrashReporting enable];
+    //[ParseCrashReporting enable];
     [Parse setApplicationId:PARSE_APP_ID clientKey:PARSE_APP_SECRET];
     [PFUser enableAutomaticUser];
     // PFUser.currentUser().saveEventually();
@@ -37,9 +50,9 @@
     [self registerRemoteAllDevices:application];
     //[self auth];
     
-    self.mainVC = [[MainViewController alloc] init];
+    self.homeVC = [[HomeViewController alloc] init];
     
-    self.navController = [[UINavigationController alloc] initWithRootViewController:self.mainVC];
+    self.navController = [[UINavigationController alloc] initWithRootViewController:self.homeVC];
     self.navController.navigationBarHidden = YES;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.navController;
@@ -56,10 +69,11 @@
     self.masterTableViewController = [[MasterTableViewController alloc] init];
     UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:self.masterTableViewController];
     
-    self.mainVC = [[MainViewController alloc] init];
-    UINavigationController *mainViewNavigationController = [[UINavigationController alloc] initWithRootViewController:self.mainVC];
+    self.homeVC = [[HomeViewController alloc] init];
     
-    self.SWRevealViewController = [[SWRevealViewController alloc] initWithRearViewController:masterNavigationController frontViewController:mainViewNavigationController];
+    UINavigationController *homeViewNavigationController = [[UINavigationController alloc] initWithRootViewController:self.homeVC];
+    
+    self.SWRevealViewController = [[SWRevealViewController alloc] initWithRearViewController:masterNavigationController frontViewController:homeViewNavigationController];
     
     [self.navController pushViewController:self.SWRevealViewController animated:NO];
 }

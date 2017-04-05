@@ -17,10 +17,12 @@
 #import "NewsViewController.h"
 #import "DirectoryTableViewController.h"
 #import "RegistrarTableViewController.h"
+#import "PennMobile-Swift.h"
 
-@interface MasterTableViewController () 
+@interface MasterTableViewController ()
 
 typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
+    MasterTableViewRowTypeMain, //ADDED for home screen
     MasterTableViewRowTypeHome,
     MasterTableViewRowTypeLaundry,
     MastertableViewRowTypeRegistrar,
@@ -31,6 +33,7 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     MasterTableViewRowTypeCount
 };
 
+//stores the items in the menu
 @property (nonatomic, strong) NSArray *viewControllerArray;
 @property (nonatomic, strong) NSArray *iconArray;
 @property (nonatomic, retain) UILabel *notificationLabel;
@@ -60,14 +63,32 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     
     self.tableView.bounces = NO;
     
-    MainViewController *mainVC = [[MainViewController alloc] init];
+    //OLD Dining View Controller
+//    //here is the problem!!!!
+//    HomeViewController *homeVC = [[HomeViewController alloc] init];// from swift file
+//    MainViewController *mainVC = [[MainViewController alloc] init];
+//    LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
+//    RegistrarTableViewController *registrarVC = [[RegistrarTableViewController alloc] init];
+//    DirectoryTableViewController *directoryVC = [[DirectoryTableViewController alloc] init];
+//    SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
+//    AboutViewController *aboutVC = [[AboutViewController alloc] init];
+//    NewsViewController *newsVC = [[NewsViewController alloc] init];
+//    
+//    //controls order of items in slideout menu
+//    self.viewControllerArray = @[homeVC, mainVC, laundryVC, registrarVC, directoryVC, newsVC, aboutVC, supportVC];
+    
+    //here is the problem!!!!
+    HomeViewController *homeVC = [[HomeViewController alloc] init];// from swift file
+    NewDiningViewController *diningVC = [[NewDiningViewController alloc] init];// from swift file
     LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
-    RegistrarTableViewController *registrarVC = [[RegistrarTableViewController alloc] init];
+    PCRViewController *registrarVC = [[PCRViewController alloc] init];
     DirectoryTableViewController *directoryVC = [[DirectoryTableViewController alloc] init];
     SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
     NewsViewController *newsVC = [[NewsViewController alloc] init];
-    self.viewControllerArray = @[mainVC, laundryVC, registrarVC, directoryVC, newsVC, aboutVC, supportVC];
+    
+    //controls order of items in slideout menu
+    self.viewControllerArray = @[homeVC, diningVC, laundryVC, newsVC, aboutVC, supportVC, supportVC];
     
     // self.iconArray = @[@"dining-1.png", @"laundry-2.png", @"news-1.png", @"about-1.png", @"emergency.png"];
     
@@ -93,10 +114,13 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
+    //return sizeof self.viewControllerArray;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return MasterTableViewRowTypeCount;
+//    return MasterTableViewRowTypeCount;
+    return sizeof self.viewControllerArray - 1;
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,9 +132,28 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
     
-    if(indexPath.row < MasterTableViewRowTypeCount) {
+    if(indexPath.row < sizeof self.viewControllerArray - 1) {
         UIViewController *currViewController = [self.viewControllerArray objectAtIndex:indexPath.row];
-        cell.textLabel.text = currViewController.title;
+        
+        //must set menu button for Home manually
+//        if (indexPath.row == 0) {
+//            cell.textLabel.text = @"Home";
+//        } else if (indexPath.row == 1) {
+//            cell.textLabel.text = @"Dining";
+//        } else if (indexPath.row == 3) {
+//            cell.textLabel.text = @"PennCourseReview";
+//        } else {
+//            cell.textLabel.text = currViewController.title;
+//        }
+        
+        //must set menu button for Home manually
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"Home";
+        } else if (indexPath.row == 1) {
+            cell.textLabel.text = @"Dining";
+        } else {
+            cell.textLabel.text = currViewController.title;
+        }
     }
     cell.backgroundColor = [UIColor clearColor];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -130,7 +173,7 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     
     UIViewController *newFrontController = nil;
     
-    if(indexPath.row < MasterTableViewRowTypeCount) {
+    if(indexPath.row < sizeof self.viewControllerArray - 1) {
         newFrontController = [self.viewControllerArray objectAtIndex:indexPath.row];
         
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:newFrontController];

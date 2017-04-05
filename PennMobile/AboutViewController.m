@@ -98,7 +98,11 @@
     [moreInfoButton setFrame:CGRectMake(0, 0, 150, 30)];
     [moreInfoButton setCenter:CGPointMake(width*2/3, height*6/7)];
     [moreInfoButton addTarget:self action:@selector(moreInfo) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:moreInfoButton];
+    
+    
+    
     
     SWRevealViewController *revealController = [self revealViewController];
     [revealController panGestureRecognizer];

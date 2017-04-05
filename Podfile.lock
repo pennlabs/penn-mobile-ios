@@ -1,39 +1,59 @@
 PODS:
-  - Bolts (1.3.0):
-    - Bolts/AppLinks (= 1.3.0)
-    - Bolts/Tasks (= 1.3.0)
-  - Bolts/AppLinks (1.3.0):
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
-  - Bolts/Tasks (1.3.0)
+  - Bolts/Tasks (1.8.4)
   - DropdownMenu (1.0.0)
   - ECSlidingViewController (2.0.3)
+  - FirebaseAnalytics (3.7.0):
+    - FirebaseCore (~> 3.5)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseCore (3.5.1):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (1.0.9)
+  - Google/Analytics (3.0.3):
+    - Google/Core
+    - GoogleAnalytics (~> 3.12)
+  - Google/Core (3.0.3):
+    - FirebaseAnalytics (~> 3.2)
+  - GoogleAnalytics (3.17.0)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - HMLauncherView (1.0.3)
-  - MBProgressHUD (0.9.1)
-  - Parse (1.9.0):
-    - Bolts/Tasks (>= 1.3.0)
-  - ParseCrashReporting (1.9.0):
-    - Bolts/Tasks (>= 1.2.2)
-    - Parse (~> 1.9.0)
-  - SVProgressHUD (2.0)
+  - MBProgressHUD (0.9.2)
+  - Parse (1.14.2):
+    - Bolts/Tasks (~> 1.8)
+  - SVProgressHUD (2.1.2)
 
 DEPENDENCIES:
   - Bolts
   - DropdownMenu
   - ECSlidingViewController
+  - Google/Analytics
   - HMLauncherView
   - MBProgressHUD (~> 0.8)
   - Parse
-  - ParseCrashReporting
   - SVProgressHUD
 
 SPEC CHECKSUMS:
-  Bolts: 805a4a87413e49d4a0c2b7d469084cbc46b09342
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   DropdownMenu: 5777e17ac6ddbc69b151719b83a838da81440786
   ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
+  FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
+  FirebaseCore: 225d40532489835a034b8f4e2c9c87fbf4f615a2
+  FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
+  Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
+  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   HMLauncherView: be5d387f11f73504727fb60d527bbb91087c04ef
-  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  Parse: 712efbc476d4f47b0f96b70db7e53101575753aa
-  ParseCrashReporting: dacad1847e54a9e9494d57eca70656406bfd4b9f
-  SVProgressHUD: e9e7c893686a20da55a28015ed384d9425e15479
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: ac45d1f67fda351f3695ad2810aeb2891c10398e
+
+COCOAPODS: 1.2.0
