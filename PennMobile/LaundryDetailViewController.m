@@ -84,11 +84,7 @@
                                 
             self.washerList = [[NSMutableArray alloc] init];
             self.dryerList = [[NSMutableArray alloc] init];
-            
 
-            if (self.hallLaundryList.count == 4) {
-                printf("hello");
-            }
             
             //Look Here
             for(NSDictionary *machine in self.hallLaundryList) {

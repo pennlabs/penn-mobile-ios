@@ -90,6 +90,7 @@
     }];
 }
 
+//error possibly here - Not here
 -(void) parseLaundryList {
     self.parsedLaundryList = [[NSMutableDictionary alloc] init];
     for(NSDictionary *info in self.fullLaundryList) {
@@ -140,16 +141,22 @@
     return cell;
 }
 
+
+//should not be the problem
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *keyArray = [self.parsedLaundryList allKeys];
+    
+    //look here
     NSArray *laundryList = [self.parsedLaundryList objectForKey: [keyArray objectAtIndex:indexPath.row]];
+    
     
     if([laundryList count] == 1) {
         LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
         
-        //determines which api is used in the next view
-        laundryDetailVC.indexNumber = [[laundryList objectAtIndex:0] objectForKey:@"index"];
+        //determines which laundry info is used in the next view
+        laundryDetailVC.indexNumber = [[laundryList objectAtIndex:0] objectForKey:@"hall_no"];
         
+        //change all of this possibly
         laundryDetailVC.houseName = [[laundryList objectAtIndex:0] objectForKey:@"name"];
         laundryDetailVC.aw = [[[laundryList objectAtIndex:0] objectForKey:@"washers_available"] intValue];
         laundryDetailVC.ad = [[[laundryList objectAtIndex:0] objectForKey:@"dryers_available"] intValue];

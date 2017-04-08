@@ -68,7 +68,11 @@ CGFloat button_dimension;
     
     UILabel *timeLabel = [[UILabel alloc] init];
     timeLabel.frame = CGRectMake(16, 4 + typeLabelBottom, width - 32, 0);
-    timeLabel.text = self.course.times;
+    if ([self.course.times  isEqual: @"(null) (null)-(null)"]) {
+        timeLabel.text = @"N/A";
+    } else {
+        timeLabel.text = self.course.times;
+    }
     timeLabel.textColor = [UIColor grayColor];
     timeLabel.font = [UIFont systemFontOfSize:12.0f];
     [timeLabel sizeToFit];
@@ -77,7 +81,11 @@ CGFloat button_dimension;
     
     UILabel *profLabel = [[UILabel alloc] init];
     profLabel.frame = CGRectMake(16, 4 + timeLabelBottom, width - 32, 0);
-    profLabel.text = self.course.primaryProf;
+    if ([self.course.primaryProf isEqual: @"null"]) {
+        profLabel.text = @"N/A";
+    } else {
+        profLabel.text = self.course.primaryProf;
+    }
     profLabel.textColor = [UIColor grayColor];
     profLabel.font = [UIFont systemFontOfSize:12.0f];
     [profLabel sizeToFit];
@@ -92,7 +100,11 @@ CGFloat button_dimension;
     courseButton.clipsToBounds = YES;
     [courseButton setBackgroundColor:[UIColor colorWithRed: 149/255.0f green: 207/255.0f blue: 175/255.0f alpha:1]];
     courseButton.userInteractionEnabled = NO;
-    [courseButton setTitle:[NSString stringWithFormat: @"%.1f", review.course] forState:UIControlStateNormal];
+    if ((int) review.course != 0) {
+        [courseButton setTitle:[NSString stringWithFormat: @"%.1f", review.course] forState:UIControlStateNormal];
+    } else {
+        [courseButton setTitle:[NSString stringWithFormat: @"%s", "N/A"] forState:UIControlStateNormal];
+    }
     //proper way to set text color
     [courseButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
     [courseButton.titleLabel setFont:[UIFont systemFontOfSize:40]];
@@ -107,7 +119,11 @@ CGFloat button_dimension;
     instButton.clipsToBounds = YES;
     [instButton setBackgroundColor:[UIColor colorWithRed: 73/255.0f green: 144/255.0f blue: 226/255.0f alpha:1]];
     instButton.userInteractionEnabled = NO;
-    [instButton setTitle:[NSString stringWithFormat: @"%.1f", review.inst] forState:UIControlStateNormal];
+    if ((int) review.inst != 0) {
+        [instButton setTitle:[NSString stringWithFormat: @"%.1f", review.inst] forState:UIControlStateNormal];
+    } else {
+        [instButton setTitle:[NSString stringWithFormat: @"%s", "N/A"] forState:UIControlStateNormal];
+    }
     [instButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
     [instButton.titleLabel setFont:[UIFont systemFontOfSize:40]];
     instButton.titleLabel.alpha = 1.0;
@@ -122,7 +138,11 @@ CGFloat button_dimension;
     [diffButton setBackgroundColor:[UIColor colorWithRed:  242/255.0f green: 110/255.0f blue: 103/255.0f alpha:1]];
     [diffButton.titleLabel setFont:[UIFont systemFontOfSize:40]];
     diffButton.userInteractionEnabled = NO;
-    [diffButton setTitle:[NSString stringWithFormat: @"%.1f", review.diff] forState:UIControlStateNormal];
+    if ((int) review.diff != 0) {
+        [diffButton setTitle:[NSString stringWithFormat: @"%.1f", review.diff] forState:UIControlStateNormal];
+    } else {
+        [diffButton setTitle:[NSString stringWithFormat: @"%s", "N/A"] forState:UIControlStateNormal];
+    }
     [diffButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
     diffButton.titleLabel.alpha = 1.0;
     float diffButtonRight = diffButton.frame.origin.x + button_dimension;
