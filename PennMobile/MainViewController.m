@@ -34,6 +34,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //generates temp web view for dining
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://university-of-pennsylvania.cafebonappetit.com/"]]];
+    [self.view addSubview:webView];
+
     self.view.backgroundColor = [UIColor whiteColor];
     
     SWRevealViewController *revealController = [self revealViewController];

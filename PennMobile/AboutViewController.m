@@ -39,15 +39,10 @@
     float width = self.view.frame.size.width;
     float height = self.view.frame.size.height;
     
-    UIImageView *labsLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"labs.png"]];
-    [labsLogo setFrame:CGRectMake(0, 0, 120, 120)];
-    labsLogo.center = CGPointMake(width*1/4, height*5/16);
+    UIImageView *labsLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NewLabsLogo.png"]];
+    [labsLogo setFrame:CGRectMake(0, 0, 240, 120)];
+    labsLogo.center = CGPointMake(width*1/2, height*5/16);
     [self.view addSubview:labsLogo];
-    
-    UIImageView *UALogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"UA-1"]];
-    [UALogo setFrame:CGRectMake(0, 0, 132, 99)];
-    UALogo.center = CGPointMake(width*7/10, height*5/16);
-    [self.view addSubview:UALogo];
     
     UILabel *builtLabel = [[UILabel alloc] init];
     builtLabel.text = @"Built by Penn Labs";
@@ -68,7 +63,7 @@
     [self.view addSubview:descriptionLabel];
     
     UILabel *peopleLabel = [[UILabel alloc] init];
-    peopleLabel.text = @"Developed by Sacha Best and Krishna Bharathala\n Designed by Sacha Best and Tiffany Chang\n Thanks to Adel Qalieh, David Lakata\n and the rest of Labs + UA";
+    peopleLabel.text = @"Developed by Sacha Best, Krishna Bharathala, Josh Doman, and Victor Chien\n Designed by Sacha Best and Tiffany Chang\n Thanks to Adel Qalieh, David Lakata\n and the rest of Labs + UA";
     [peopleLabel setTextColor:[UIColor darkGrayColor]];
     [peopleLabel setFrame:CGRectMake(0, 0, width-40, height/3)];
     [peopleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
@@ -98,7 +93,11 @@
     [moreInfoButton setFrame:CGRectMake(0, 0, 150, 30)];
     [moreInfoButton setCenter:CGPointMake(width*2/3, height*6/7)];
     [moreInfoButton addTarget:self action:@selector(moreInfo) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:moreInfoButton];
+    
+    
+    
     
     SWRevealViewController *revealController = [self revealViewController];
     [revealController panGestureRecognizer];

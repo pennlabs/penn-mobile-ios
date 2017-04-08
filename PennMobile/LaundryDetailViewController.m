@@ -84,10 +84,12 @@
                                 
             self.washerList = [[NSMutableArray alloc] init];
             self.dryerList = [[NSMutableArray alloc] init];
+
             
+            //Look Here
             for(NSDictionary *machine in self.hallLaundryList) {
-                if ([[machine objectForKey:@"machine_type"] rangeOfString:@"washer"
-                                                                  options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                if ([[machine objectForKey:@"machine_type"] rangeOfString:@"Front-Load Washer"
+                options:NSCaseInsensitiveSearch].location != NSNotFound) {
                     [self.washerList addObject:machine];
                 } else {
                     [self.dryerList addObject:machine];
@@ -140,6 +142,7 @@
     
     if(indexPath.row == 1) {
         
+        //for the tab button
         if(self.laundrySegment.selectedSegmentIndex == 0) {
             LaundryWasherDetailTableViewCell *cell = nil;
             
@@ -171,9 +174,6 @@
             
             return cell;
         }
-        
-
-        
     } else {
         static NSString *cellIdentifier = @"Cell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -191,7 +191,11 @@
             cell.imageView.image = nil;
             UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
             switchview.tag = indexPath.row;
+            
             [switchview addTarget:self action:@selector(switched:) forControlEvents:UIControlEventValueChanged];
+            
+            
+            //for populating cells below based on whether dryer or washer clicked
             if(self.laundrySegment.selectedSegmentIndex == 0) {
                 cell.textLabel.text = [NSString stringWithFormat:@"Washer %lu", indexPath.row-1];
                 if([[[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"available"] boolValue]) {
@@ -201,6 +205,8 @@
                 } else {
                     cell.detailTextLabel.text = [NSString stringWithFormat:@"Busy - %@", [[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"]];
                     cell.detailTextLabel.textColor = [UIColor redColor];
+                    
+                    //for the reminder switch
                     if([[[self.washerList objectAtIndex:indexPath.row-2] objectForKey:@"time_left"] isEqualToString:@"not updating status"]) {
                         cell.accessoryView = nil;
                     } else {

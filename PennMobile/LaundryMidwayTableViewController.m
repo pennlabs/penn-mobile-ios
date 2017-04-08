@@ -96,7 +96,7 @@
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     LaundryDetailViewController *laundryDetailVC = [[LaundryDetailViewController alloc] init];
-    laundryDetailVC.indexNumber = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"index"];
+    laundryDetailVC.indexNumber = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"hall_no"];
     laundryDetailVC.houseName = [[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"name"];
     laundryDetailVC.aw = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"washers_available"] intValue];
     laundryDetailVC.ad = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_available"] intValue];

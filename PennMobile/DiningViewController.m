@@ -45,17 +45,22 @@ bool usingTempData;
     prettyHourFormatter = [[NSDateFormatter alloc] init];
     [prettyHourFormatter setDateFormat:@"hh:mm a"];
     //self.tableView.hidden = YES;
-    //usingTempData = true;
+    usingTempData = true;
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         ipad = true;
         self.tableView.rowHeight = 240.0f;
         // insert other changes for iPad here - to be refactored
     }
+    
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+     //self.clearsSelectionOnViewWillAppear = NO;
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+//     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
+    
+    
 }
 - (void)viewDidAppear:(BOOL)animated {
     sections = 2;
@@ -211,6 +216,7 @@ bool usingTempData;
     }
     cell.back.clipsToBounds = YES;
     cell.venueLabel.textColor = [UIColor whiteColor];
+    
     // This pick from the correct array of dining halls to display on the table
     switch (indexPath.section) {
         case 0:
@@ -239,8 +245,8 @@ bool usingTempData;
             cell.venueLabel.font = [UIFont fontWithName:@"Adobe Garamond Pro" size:kTitleFontSize * 2];
             cell.addressLabel.font = [UIFont systemFontOfSize:kSubtitleFontSize * 2];
         }
-        //cell.venueLabel.text = _venues[indexPath.row])[kTitleKey];
-        //cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
+//        cell.venueLabel.text = _venues[indexPath.row])[kTitleKey];
+//        cell.addressLabel.text = _venues[indexPath.row][kAddressKey];
         int open = [self isOpen:cell.venueLabel.text];
         cell.addressLabel.layer.masksToBounds = YES;
         cell.addressLabel.layer.cornerRadius = cell.addressLabel.frame.size.height / 2;
@@ -319,6 +325,11 @@ bool usingTempData;
    /* } */
     
 }
+
+- (NSArray *) getMeals: (NSDate *)date venue:(NSString *)venueName {
+    return [self getMealsForVenue:venueName forDate:date atMeal:[self isOpen:venueName]];
+}
+
 - (NSString *)getFullTimeStringForVenue:(NSString *)venue {
     // temp
     return nil;
@@ -395,6 +406,31 @@ bool usingTempData;
     return raw;
 }
 
+- (NSDictionary *)loadMealsForVenueID:(int)ID {
+    // TEMP - this code reads from an included sample JSON file
+    NSString *path;
+    NSData *data;
+    if (usingTempData) {
+        path = [[NSBundle mainBundle] pathForResource:@"venue_sample" ofType:@"txt"];
+        data = [[NSFileManager defaultManager] contentsAtPath:path];
+    } else {
+        path = [NSString stringWithFormat:@"%@%@", SERVER_ROOT, MEAL_PATH];
+        path = [path stringByAppendingFormat:@"%d", ID];
+        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
+        if (![self confirmConnection:data])
+            return nil;
+    }
+    NSError *error = [NSError alloc];
+    NSDictionary *raw = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
+    if (!raw || error.code != 0) {
+        UIAlertView *new = [[UIAlertView alloc] initWithTitle:@"Couldn't Connect to API" message:@"We couldn't connect to Penn's API. Please try again later." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        NSLog(@"JSON Parse error code: %ld", (long)error.code);
+        [new show];
+        return nil;
+    }
+    return raw;
+}
+
 - (void)loadFromAPIwithTarget:(id)target selector:(SEL)selector {
     if (![self loadVenues]) {
         return;
@@ -415,6 +451,28 @@ bool usingTempData;
     [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
     [self refresh];
 }
+
+- (void)loadFromAPIwithTarget2:(id)target selector:(SEL)selector id:(int)ID {
+    if (![self loadVenues]) {
+        return;
+    }
+    NSDictionary *raw;
+    for (int count = 0; count < _mealTimes.count; count++) {
+        NSString *menuURL = _mealTimes[count][@"dailyMenuURL"];
+        // fix for McCleland bullshit
+        if (menuURL && ![menuURL isEqualToString:@""] && ![[menuURL substringFromIndex:[menuURL length]-3] isEqualToString:@"737"]) {
+            raw = [self loadMealsForVenueID:ID];
+            if (!raw)
+                continue;
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                [self parseAPIMeals:raw selector:selector target:target];
+            });
+        }
+    }
+    [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
+    [self refresh];
+}
+
 - (void)hideActivity {
     self.tableView.userInteractionEnabled = YES;
     @try {
@@ -514,6 +572,7 @@ bool usingTempData;
     [comp1 month] == [comp2 month] &&
     [comp1 year]  == [comp2 year];
 }
+
 // This now also updates the available meals array
 - (NSArray *)getMealsForVenue:(NSString *)venue forDate:(NSDate *)date atMeal:(Meal)meal {
     // to clear the list of open times for switching veneus
@@ -533,6 +592,7 @@ bool usingTempData;
                     mealOptions = venueContents[day][possibleMeal][kStation];
                 }
             }
+            
             for (int station = 0; station < mealOptions.count; station++) {
                 NSMutableDictionary *currentStation = [[NSMutableDictionary alloc] initWithCapacity:3];
                 id stationItems = mealOptions[station][@"tblItem"];

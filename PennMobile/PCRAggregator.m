@@ -28,19 +28,23 @@ static NSMutableDictionary *averages;
         if (!reviews[course.identifier]) {
             [PCRAggregator getReviewsFor:course];
         }
-        double overall, inst, diff;
+        double overall = 0.0, inst = 0.0, diff = 0.0;
         for (PCReview *rev in reviews[course.identifier]) {
             overall += rev.course;
             inst += rev.inst;
             diff += rev.diff;
         }
-        overall /= (double) [reviews[course.identifier] count];
-        inst /= (double) [reviews[course.identifier] count];
-        diff /= (double) [reviews[course.identifier] count];
+        
+        double size = (double) [reviews[course.identifier] count];
+        if (size != 0) {
+            overall /= size;
+            inst /= size;
+            diff /= size;
+        }
+        
         averages[course.identifier] = [PCReview reviewWithCourse:overall inst:inst diff:diff];
     }
     return averages[course.identifier];
-    
 }
 
 + (NSArray *)getReviewsFor:(Course *)course {
@@ -101,4 +105,5 @@ static NSMutableDictionary *averages;
     }
     return true;
 }
+
 @end

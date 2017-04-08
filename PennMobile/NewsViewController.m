@@ -65,6 +65,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.webview.delegate = self;
     
     SWRevealViewController *revealController = [self revealViewController];
     [revealController panGestureRecognizer];
@@ -158,17 +159,25 @@
     return nil;
 }
 
-//- (void)webViewDidStartLoad:(UIWebView *)webView {
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//}
-//
-//- (void)webViewDidFinishLoad:(UIWebView *)webView {
-//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-//}
-//
-//- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-//    NSLog(@"%@", error.localizedDescription);
-//}
+//to deal with continuous reloading of webview whenever ads pop up
+bool loaded = false;
+
+-(void)webViewDidStartLoad:(UIWebView *)webView{
+    if (!loaded) {
+        [SVProgressHUD show];
+    }
+}
+
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    [SVProgressHUD dealloc];
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    if(!webView.loading){
+        [SVProgressHUD dismiss];
+        loaded = true;
+    }
+}
 
 -(void)switchNewsSource:(UISegmentedControl *)segment {
     [self.webview loadRequest:
