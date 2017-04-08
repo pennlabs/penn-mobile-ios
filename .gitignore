@@ -1,6 +1,9 @@
-# Xcode
-.DS_Store
+### Objective-C ###
+## Build generated
 build/
+DerivedData/
+
+## Various settings
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -9,16 +12,41 @@ build/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-*.xcworkspace
-!default.xcworkspace
-*.xcworkspace/
-PennMobile.xcodeproj/xcuserdata/*
-profile
+xcuserdata/
+
+## Other
 *.moved-aside
-DerivedData
-.idea/
-Pods
-PennMobile/Keys.pch
-.DS_Store
-*.xcuserstate
-parse/config/global.json
+*.xccheckout
+*.xcscmblueprint
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Code Injection
+# After new code Injection tools there's a generated folder /iOSInjectionProject
+iOSInjectionProject/
+
+### Swift ###
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+#
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+# Package.pins
+.build/
+
+# CocoaPods
+Pods/
+
+### Xcode ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
