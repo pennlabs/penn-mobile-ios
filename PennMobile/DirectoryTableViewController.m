@@ -209,7 +209,6 @@ accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
         self.tableView.userInteractionEnabled = NO;
         [super performSelectorInBackground:@selector(queryHandler:) withObject:searchBar.text];
     }
-    self.directorySearchBar.text=@"";
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {

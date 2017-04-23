@@ -28,14 +28,16 @@ class DiningDetailViewController: GenericViewController {
         dict["New College House"] = "new-college-house"
         return dict
     }()
-    
+
     var diningHall: DiningHall!
     var webview: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        webview = UIWebView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        removeMenuButton()
+        
+        webview = GenericWebview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         view.addSubview(webview)
         
         if let endPoint = serverDictionary[diningHall.name] {
@@ -46,5 +48,7 @@ class DiningDetailViewController: GenericViewController {
             }
         }
         
+        self.screenName = diningHall.name
+        disablePan()
     }
 }

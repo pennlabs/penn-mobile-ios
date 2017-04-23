@@ -10,8 +10,9 @@
 
 #import "PennTableViewController.h"
 #import "RegistrarTableViewController.h"
-#import "DiningViewController.h"
 #import "Course.h"
 #import "PCReview.h"
-#import "Meal.h"
+#import <Google/Analytics.h>
+#import "LaundryDetailViewController.h"
 
+#import <MBProgressHUD/MBProgressHUD.h>

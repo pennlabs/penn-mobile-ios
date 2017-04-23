@@ -1,3 +1,5 @@
+use_frameworks!
+
 target 'PennMobile' do
 
 pod 'ECSlidingViewController'
@@ -7,5 +9,6 @@ pod 'Parse'
 pod "DropdownMenu"
 pod 'Bolts'
 pod 'SVProgressHUD'
+pod 'Google/Analytics'
 
 end

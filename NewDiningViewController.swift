@@ -24,6 +24,7 @@ class NewDiningViewController: GenericTableViewController {
         super.viewDidLoad()
         
         self.title = "Dining"
+        self.screenName = "Dining"
         
         tableView.separatorStyle = .none
         tableView.dataSource = self
@@ -34,7 +35,6 @@ class NewDiningViewController: GenericTableViewController {
         dining = generateDiningHalls(for: diningHalls)
         retailHalls = generateDiningHalls(for: retail)
         
-        updateTimesForDiningHalls()
     }
     
     internal let headerView = "header"
@@ -67,6 +67,10 @@ class NewDiningViewController: GenericTableViewController {
                 })
             })
         }
+    }
+    
+    override func updateData() {
+        updateTimesForDiningHalls()
     }
 }
 

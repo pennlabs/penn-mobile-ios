@@ -22,6 +22,21 @@ struct Time: Hashable {
         return total
     }
     
+    public static func getTime(from minutes: Int) -> Time {
+        if minutes < 60 {
+            return Time(hour: 12, minutes: minutes, isAm: true)
+        } else if minutes / 60 < 12 {
+            return Time(hour: minutes / 60, minutes: minutes % 60, isAm: true)
+        } else {
+            let adjusted = minutes - 12 * 60
+            if minutes < 60 {
+                return Time(hour: 12, minutes: minutes, isAm: true)
+            } else {
+                return Time(hour: minutes / 60, minutes: minutes % 60, isAm: false)
+            }
+        }
+    }
+    
     /// Returns a Boolean value indicating whether two values are equal.
     ///
     /// Equality is the inverse of inequality. For any values `a` and `b`,
