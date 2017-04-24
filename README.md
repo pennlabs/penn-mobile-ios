@@ -7,15 +7,13 @@ Official University of Pennsylvania iOS App, created by Penn Labs in cooperation
 
 ## Features
 
-* Course search from registrar
-* Directory search for faculty
 * List dining halls with open/close label
 * View dining menus for residential dining halls
 * Read Penn News from multiple sources (mobile websites)
-* View transit routes, static
-* Navigate using Penn Transit system
 * Call campus help support resources
+* Book study rooms in Van Pelt, Education Commons, Levin Building, Lippincott and more
+
 
 ## Contributing
 
-NOTE: this repo requires [CocoaPods](http://cocoapods.org/) and [ParseAnalytics](http://parse.com) to work correctly. Please install both and always open the .xcworkspace file rather than the .xcodeproj file. 
+NOTE: this repo requires [CocoaPods](http://cocoapods.org/) to work correctly. Please install both and always open the .xcworkspace file rather than the .xcodeproj file. If a simulator has trouble loading the app, remove the app from the simulator and try again.
