@@ -1,5 +1,5 @@
 //
-//  NewDiningViewController.swift
+//  DiningViewController.swift
 //  PennMobile
 //
 //  Created by Josh Doman on 3/12/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewDiningViewController: GenericTableViewController {
+class DiningViewController: GenericTableViewController {
     
     internal let titles = ["Dining Halls", "Retail Dining"]
     internal let diningHalls = ["1920 Commons", "McClelland Express", "New College House", "English House", "Falk Kosher Dining"]
@@ -74,7 +74,7 @@ class NewDiningViewController: GenericTableViewController {
     }
 }
 
-extension NewDiningViewController {
+extension DiningViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2

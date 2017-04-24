@@ -10,7 +10,6 @@
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <Parse/Parse.h>
 
-#import "MainViewController.h"
 #import "MasterTableViewController.h"
 #import "SWRevealViewController.h"
 #import "PennMobile-Swift.h"
@@ -18,14 +17,12 @@
 #import "AboutViewController.h"
 #import "SupportTableViewController.h"
 #import "NewsViewController.h"
-#import "AuthLoginViewController.h"
 
 
 @interface AppDelegate ()
 
 @property (nonatomic, strong) UINavigationController *navController;
 @property (nonatomic, strong) MasterTableViewController *masterTableViewController;
-@property (nonatomic, strong) HomeViewController *homeVC;
 @property (nonatomic, strong) SWRevealViewController *SWRevealViewController;
 
 @end
@@ -43,7 +40,6 @@
     // Optional: configure GAI options.
     GAI *gai = [GAI sharedInstance];
     gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
-    //gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
     
     // Override point for customization after application launch.
     [application setStatusBarStyle:UIStatusBarStyleLightContent animated:true];
@@ -54,30 +50,22 @@
     [[PFInstallation currentInstallation] saveEventually];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [self registerRemoteAllDevices:application];
-    //[self auth];
     
-    self.homeVC = [[HomeViewController alloc] init];
-    
-    self.navController = [[UINavigationController alloc] initWithRootViewController:self.homeVC];
+    self.navController = [[UINavigationController alloc] initWithRootViewController: [[DiningViewController alloc] init]];
     self.navController.navigationBarHidden = YES;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible];
     
     [self presentSWController];
-    
-    
     return YES;
 }
 
 - (void)presentSWController{
-    //here is the problem!!!!
     self.masterTableViewController = [[MasterTableViewController alloc] init];
     UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:self.masterTableViewController];
     
-    //self.homeVC = 
-    
-    UINavigationController *homeViewNavigationController = [[UINavigationController alloc] initWithRootViewController:[[NewDiningViewController alloc] init]];
+    UINavigationController *homeViewNavigationController = [[UINavigationController alloc] initWithRootViewController:[[DiningViewController alloc] init]];
     
     self.SWRevealViewController = [[SWRevealViewController alloc] initWithRearViewController:masterNavigationController frontViewController:homeViewNavigationController];
     

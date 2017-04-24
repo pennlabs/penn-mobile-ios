@@ -10,13 +10,10 @@
 #import "SWRevealViewController.h"
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
 #import "LaundryTableViewController.h"
 #import "SupportTableViewController.h"
 #import "AboutViewController.h"
 #import "NewsViewController.h"
-#import "DirectoryTableViewController.h"
-#import "RegistrarTableViewController.h"
 #import "PennMobile-Swift.h"
 
 @interface MasterTableViewController ()
@@ -63,17 +60,14 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     
     self.tableView.bounces = NO;
     
-    NewDiningViewController *diningVC = [[NewDiningViewController alloc] init];// from swift file
+    DiningViewController *diningVC = [[DiningViewController alloc] init];// from swift file
     BookViewController *bookVC = [[BookViewController alloc] init];
     LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
     SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
     NewsViewController *newsVC = [[NewsViewController alloc] init];
     
-//    //controls order of items in slideout menu
-    self.viewControllerArray = @[diningVC, bookVC, laundryVC, newsVC, supportVC, aboutVC];
-    
-    // self.iconArray = @[@"dining-1.png", @"laundry-2.png", @"news-1.png", @"about-1.png", @"emergency.png"];
+    self.viewControllerArray = @[diningVC, bookVC, laundryVC, newsVC, supportVC, aboutVC]; //to add controller, add here AND update numberOfItemsInSection
     
 }
 
@@ -97,12 +91,10 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
-    //return sizeof self.viewControllerArray;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return MasterTableViewRowTypeCount;
-    return 6;
+    return 6; //update this number when you add viewcontrollers
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -118,17 +110,6 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
         UIViewController *currViewController = [self.viewControllerArray objectAtIndex:indexPath.row];
         
         //must set menu button for Home manually
-//        if (indexPath.row == 0) {
-//            cell.textLabel.text = @"Home";
-//        } else if (indexPath.row == 1) {
-//            cell.textLabel.text = @"Dining";
-//        } else if (indexPath.row == 3) {
-//            cell.textLabel.text = @"PennCourseReview";
-//        } else {
-//            cell.textLabel.text = currViewController.title;
-//        }
-        
-        //must set menu button for Home manually
         if (indexPath.row == 0) {
             cell.textLabel.text = @"Dining";
         } else if (indexPath.row == 1) {
@@ -139,7 +120,6 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     }
     cell.backgroundColor = [UIColor clearColor];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    // cell.imageView.image = [UIImage imageNamed:[self.iconArray objectAtIndex:indexPath.row]];
     
     return cell;
 }

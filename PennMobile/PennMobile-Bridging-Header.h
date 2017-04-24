@@ -4,14 +4,8 @@
 
 #import "SWRevealViewController.h"
 #import <UIKit/UIKit.h>
-#import "MainViewController.h"
 #import "SWRevealViewController.h"
 #import <QuartzCore/QuartzCore.h>
-
-#import "PennTableViewController.h"
-#import "RegistrarTableViewController.h"
-#import "Course.h"
-#import "PCReview.h"
 #import <Google/Analytics.h>
 #import "LaundryDetailViewController.h"
 
