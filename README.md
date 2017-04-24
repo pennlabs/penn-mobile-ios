@@ -1,7 +1,7 @@
 PennMobile iOS
 ===============
 
-Official University of Pennsylvania iOS App, created by Penn Labs in cooperation with the UA.
+Official University of Pennsylvania iOS App for students, created by Penn Labs
 
 [![PennMobile on App Store](Assets/appstore.png)](https://itunes.apple.com/us/app/pennmobile/id944829399)
 
