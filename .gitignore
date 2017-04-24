@@ -19,6 +19,7 @@ DerivedData
 .idea/
 Pods
 PennMobile/Keys.pch
+PennMobile/GoogleService-Info.plist
 .DS_Store
 *.xcuserstate
 parse/config/global.json
