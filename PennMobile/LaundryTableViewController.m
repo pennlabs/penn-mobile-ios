@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) NSArray *fullLaundryList;
 @property (nonatomic, strong) NSMutableDictionary *parsedLaundryList;
-@property (nonatomic) BOOL hasLoaded;
+@property (nonatomic) BOOL hasPushedController;
 
 @end
 
@@ -35,11 +35,11 @@
     self.navigationController.navigationBar.tintColor = PENN_YELLOW;
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor blackColor]}];
-    
+    self.revealViewController.panGestureRecognizer.enabled = YES;
 }
 
 -(void) viewDidLoad {
-    self.hasLoaded = NO;
+    self.hasPushedController = NO;
     
     SWRevealViewController *revealController = [self revealViewController];
     [revealController panGestureRecognizer];
@@ -51,16 +51,15 @@
                                          target:revealController
                                          action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = revealButtonItem;
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (!self.hasLoaded) {
+    if (!self.hasPushedController) {
         [self pull:self];
-        self.hasLoaded = YES;
     }
+    self.hasPushedController = NO;
 }
 
 - (void) pull:(id)sender {
@@ -144,8 +143,10 @@
 
 //should not be the problem
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *keyArray = [self.parsedLaundryList allKeys];
     
+    self.hasPushedController = YES;
+    
+    NSArray *keyArray = [self.parsedLaundryList allKeys];
     //look here
     NSArray *laundryList = [self.parsedLaundryList objectForKey: [keyArray objectAtIndex:indexPath.row]];
     

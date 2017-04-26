@@ -7,6 +7,7 @@
 //
 
 #import "SupportTableViewController.h"
+#import "PennMobile-Swift.h"
 
 @interface SupportTableViewController ()
 
@@ -31,6 +32,8 @@
     self.navigationController.navigationBar.tintColor = PENN_YELLOW;
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor blackColor]}];
+    
+    [GoogleAnalyticsManager track:@"Support"];
 }
 
 - (void)viewDidLoad {

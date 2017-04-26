@@ -9,6 +9,7 @@
 #import "LaundryMidwayTableViewController.h"
 #import "LaundryDetailViewController.h"
 #import "LaundryTableViewCell.h"
+#import "PennMobile-Swift.h"
 
 @interface LaundryMidwayTableViewController ()
 
@@ -19,6 +20,7 @@
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.title = [[[[self.laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0];
+    self.revealViewController.panGestureRecognizer.enabled = NO;
 }
 
 - (void)viewDidLoad {
@@ -30,6 +32,8 @@
     
     self.tableView.alwaysBounceVertical = YES;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    [GoogleAnalyticsManager track:[[[[self.laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0]];
     
     [self.tableView reloadData];
 }

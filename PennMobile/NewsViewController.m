@@ -7,6 +7,7 @@
 //
 
 #import "NewsViewController.h"
+#import "PennMobile-Swift.h"
 
 @interface NewsViewController ()
 
@@ -45,6 +46,8 @@
         [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     [self.navBarHairlineImageView setHidden:YES];
     
+    [GoogleAnalyticsManager track:@"News"];
+    
 //    WE WANT TO MOVE THE HAIRLINE DOWN.
 //
 //    NSLog(@"%@", NSStringFromCGRect(self.navBarHairlineImageView.frame));
@@ -65,7 +68,6 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.webview.delegate = self;
     
     SWRevealViewController *revealController = [self revealViewController];
     [revealController panGestureRecognizer];
@@ -159,27 +161,25 @@
     return nil;
 }
 
-//to deal with continuous reloading of webview whenever ads pop up
-bool loaded = false;
+    bool load = true;
 
--(void)webViewDidStartLoad:(UIWebView *)webView{
-    if (!loaded) {
-        [SVProgressHUD show];
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    if (load) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
 }
 
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    [SVProgressHUD dealloc];
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    load = false;
 }
 
--(void)webViewDidFinishLoad:(UIWebView *)webView{
-    if(!webView.loading){
-        [SVProgressHUD dismiss];
-        loaded = true;
-    }
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    NSLog(@"%@", error.localizedDescription);
 }
 
 -(void)switchNewsSource:(UISegmentedControl *)segment {
+    load = true;
     [self.webview loadRequest:
      [NSURLRequest requestWithURL:[NSURL URLWithString:self.urlArray[segment.selectedSegmentIndex]]]];
 }

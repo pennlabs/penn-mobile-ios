@@ -107,14 +107,14 @@ class DiningControllerCell: UITableViewCell {
         var timesString = ""
         
         for open_close in times {
-            if open_close.open.getMinutes() == 0 {
+            if open_close.open.minutes == 0 {
                 formatter.dateFormat = times.count > 1 ? "h" : "ha"
             } else {
                 formatter.dateFormat = times.count > 1 ? "h:mm" : "h:mma"
             }
             let open = formatter.string(from: open_close.open)
             
-            if open_close.close.getMinutes() == 0 {
+            if open_close.close.minutes == 0 {
                 formatter.dateFormat = times.count > 1 ? "h" : "ha"
             } else {
                 formatter.dateFormat = times.count > 1 ? "h:mm" : "h:mma"

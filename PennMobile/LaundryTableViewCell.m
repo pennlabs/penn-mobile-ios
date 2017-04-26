@@ -44,7 +44,7 @@
         
         for(int i = 0; i < aw; i++) {
             CAShapeLayer *circleLayerGreen = [CAShapeLayer layer];
-            [circleLayerGreen setFillColor:[UIColor blueColor].CGColor];
+            [circleLayerGreen setFillColor:[UIColor greenColor].CGColor];
             [circleLayerGreen setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(height*2 + i*height/3, 50, height/4, height/4)] CGPath]];
             [[self layer] addSublayer:circleLayerGreen];
         }

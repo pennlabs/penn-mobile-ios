@@ -72,6 +72,8 @@ extension UIColor {
     static let marigold = UIColor(r: 255, g: 193, b: 7)
     static let oceanBlue = UIColor(r: 73, g: 144, b: 226)
     static let frenchBlue = UIColor(r: 63, g: 81, b: 181)
+    
+    static let buttonBlue = UIColor(r: 14, g: 122, b: 254)
 }
 
 extension UIBarButtonItem {
@@ -96,26 +98,70 @@ extension Date {
         return 0
     }
     
+    //returns date in local time
     static var currentLocalDate: Date {
         get {
-            var now = Date()
-            var nowComponents = DateComponents()
-            let calendar = Calendar.current
-            nowComponents.year = Calendar.current.component(.year, from: now)
-            nowComponents.month = Calendar.current.component(.month, from: now)
-            nowComponents.day = Calendar.current.component(.day, from: now)
-            nowComponents.hour = Calendar.current.component(.hour, from: now)
-            nowComponents.minute = Calendar.current.component(.minute, from: now)
-            nowComponents.second = Calendar.current.component(.second, from: now)
-            nowComponents.timeZone = TimeZone(abbreviation: "GMT")!
-            now = calendar.date(from: nowComponents)!
-            return now as Date
+            return convertToLocalFromTimeZone(Date(), timezone: "GMT")
         }
     }
     
-    func getMinutes() -> Int {
+    static func convertToLocalFromTimeZone(_ date: Date, timezone: String) -> Date {
+        var nowComponents = DateComponents()
+        let calendar = Calendar.current
+        nowComponents.year = Calendar.current.component(.year, from: date)
+        nowComponents.month = Calendar.current.component(.month, from: date)
+        nowComponents.day = Calendar.current.component(.day, from: date)
+        nowComponents.hour = Calendar.current.component(.hour, from: date)
+        nowComponents.minute = Calendar.current.component(.minute, from: date)
+        nowComponents.second = Calendar.current.component(.second, from: date)
+        nowComponents.timeZone = TimeZone(abbreviation: timezone)!
+        return calendar.date(from: nowComponents)! as Date
+    }
+    
+    func convertToLocalTime() -> Date {
+        return Date.convertToLocalFromTimeZone(self, timezone: "GMT")
+    }
+    
+    var minutes: Int {
         let calendar = Calendar.current
         let minutes = calendar.component(.minute, from: self)
         return minutes
+    }
+    
+    static func addMinutes(to date: Date, minutes: Int) -> Date {
+        return Calendar.current.date(byAdding: .minute, value: minutes, to: date)!
+    }
+    
+    static func roundDownToHour(_ date: Date) -> Date {
+        return Date.addMinutes(to: date, minutes: -date.minutes)
+    }
+    
+    private var ends11_59: Bool {
+        return minutes == 59
+    }
+        
+    var dayOfWeek: String {
+        let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        let myComponents = myCalendar.components(.weekday, from: self)
+        let weekDay = myComponents.weekday!
+        return weekdayArray[weekDay-1]
+    }
+    
+    func adjustFor11_59() -> Date {
+        if ends11_59 {
+            return Date.addMinutes(to: self, minutes: 1)
+        }
+        return self
+    }
+    
+    func dateIn(days: Int) -> Date {
+        let today = Date()
+        let start = Calendar.current.startOfDay(for: today)
+        return Calendar.current.date(byAdding: .day, value: days, to: start)!
+    }
+    
+    var tomorrow: Date {
+        return self.dateIn(days: 1)
     }
 }

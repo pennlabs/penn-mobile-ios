@@ -9,6 +9,7 @@
 #import "LaundryDetailViewController.h"
 #import "LaundryWasherDetailTableViewCell.h"
 #import "LaundryDryerDetailTableViewCell.h"
+#import "PennMobile-Swift.h"
 
 @interface LaundryDetailViewController ()
 
@@ -58,6 +59,10 @@
         [self pull:self];
         self.hasLoaded = YES;
     }
+    
+    self.revealViewController.panGestureRecognizer.enabled = NO;
+    
+    [GoogleAnalyticsManager track:self.houseName];
 }
 
 - (void) pull:(id)sender {
@@ -86,15 +91,31 @@
             self.dryerList = [[NSMutableArray alloc] init];
 
             
+            self.uw = 0;
+            self.aw = 0;
+            self.ud = 0;
+            self.ad = 0;
+            
             //Look Here
             for(NSDictionary *machine in self.hallLaundryList) {
                 if ([[machine objectForKey:@"machine_type"] rangeOfString:@"Front-Load Washer"
                 options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                    if ([[machine objectForKey:@"available"] boolValue]) {
+                        self.aw += 1;
+                    } else {
+                        self.uw += 1;
+                    }
                     [self.washerList addObject:machine];
                 } else {
+                    if ([[machine objectForKey:@"available"] boolValue]) {
+                        self.ad += 1;
+                    } else {
+                        self.ud += 1;
+                    }
                     [self.dryerList addObject:machine];
                 }
             }
+            
         }
         
         [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
@@ -121,9 +142,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //added index condition here
     if(indexPath.row == 0) {
         return 44;
-    }if(indexPath.row == 1) {
+    } else if(indexPath.row == 1) {
         return 50*3;
     } else {
         return 50;
@@ -131,6 +153,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    //added +3 instead of +2
     if(self.laundrySegment.selectedSegmentIndex == 0) {
         return [self.washerList count]+2;
     } else {
@@ -140,8 +163,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+//    if(indexPath.row == 0) {
+//        LaundryWasherDetailTableViewCell *cell = nil;
+//        static NSString *cellIdentifier = @"TableCell";
+//        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        return cell;
+//    }
     if(indexPath.row == 1) {
-        
         //for the tab button
         if(self.laundrySegment.selectedSegmentIndex == 0) {
             LaundryWasherDetailTableViewCell *cell = nil;
@@ -181,6 +209,12 @@
         if (!cell)
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         
+//        if(indexPath.row == 0) {
+//            cell.textLabel.text = @"";
+//            cell.backgroundColor = [UIColor whiteColor];
+//            cell.detailTextLabel.text = @"";
+//            cell.accessoryView = nil;
+//        }
         if(indexPath.row == 0) {
             cell.textLabel.text = @"";
             cell.backgroundColor = [UIColor whiteColor];

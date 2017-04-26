@@ -7,13 +7,14 @@
 //
 
 #import "AboutViewController.h"
+#import "PennMobile-Swift.h"
 
 @interface AboutViewController ()
-
-@end
+    
+    @end
 
 @implementation AboutViewController
-
+    
 -(id) init {
     self = [super init];
     if(self) {
@@ -21,7 +22,7 @@
     }
     return self;
 }
-
+    
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -29,8 +30,9 @@
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor blackColor]}];
     
+    [GoogleAnalyticsManager track:@"About"];
 }
-
+    
 -(void) viewDidLoad {
     [super viewDidLoad];
     
@@ -39,8 +41,8 @@
     float width = self.view.frame.size.width;
     float height = self.view.frame.size.height;
     
-    UIImageView *labsLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NewLabsLogo.png"]];
-    [labsLogo setFrame:CGRectMake(0, 0, 240, 120)];
+    UIImageView *labsLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"labs_logo"]];
+    [labsLogo setFrame:CGRectMake(0, 0, 240, 130)];
     labsLogo.center = CGPointMake(width*1/2, height*5/16);
     [self.view addSubview:labsLogo];
     
@@ -63,7 +65,7 @@
     [self.view addSubview:descriptionLabel];
     
     UILabel *peopleLabel = [[UILabel alloc] init];
-    peopleLabel.text = @"Developed by Sacha Best, Krishna Bharathala, Josh Doman, and Victor Chien\n Designed by Sacha Best and Tiffany Chang\n Thanks to Adel Qalieh, David Lakata\n and the rest of Labs + UA";
+    peopleLabel.text = @"Developed by Josh Doman, Victor Chien, Sacha Best, and Krishna Bharathala. Designed by \nTiffany Chang, Josh Doman, and Sacha Best.\n Special thanks to Yagil Burowski, Adel \n Qalieh, David Lakata and the rest of Labs.";
     [peopleLabel setTextColor:[UIColor darkGrayColor]];
     [peopleLabel setFrame:CGRectMake(0, 0, width-40, height/3)];
     [peopleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
@@ -73,7 +75,7 @@
     [self.view addSubview:peopleLabel];
     
     UILabel *copyRightLabel = [[UILabel alloc] init];
-    copyRightLabel.text = @"\u00A9 2016 Penn Labs";
+    copyRightLabel.text = @"\u00A9 2017 Penn Labs";
     [copyRightLabel setTextColor:[UIColor darkGrayColor]];
     [copyRightLabel setFrame:CGRectMake(0, 0, width-40, height/3)];
     [copyRightLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
@@ -109,7 +111,7 @@
                                                                         action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = revealButtonItem;
 }
-
+    
 - (void) featureRequest {
     NSString *messageSubject = @"[Penn iOS] Request: ";
     NSArray *toRecipents = [NSArray arrayWithObject:@"contact@pennlabs.org"];
@@ -119,35 +121,35 @@
     mc.mailComposeDelegate = self;
     [mc setSubject:messageSubject];
     [mc setToRecipients:toRecipents];
-
+    
     [self presentViewController:mc animated:YES completion:nil];
 }
 - (void)moreInfo {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://pennlabs.org"]];
 }
-
+    
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
-{
-    switch (result) {
-        case MFMailComposeResultSent:
+    {
+        switch (result) {
+            case MFMailComposeResultSent:
             NSLog(@"You sent the email.");
             break;
-        case MFMailComposeResultSaved:
+            case MFMailComposeResultSaved:
             NSLog(@"You saved a draft of this email");
             break;
-        case MFMailComposeResultCancelled:
+            case MFMailComposeResultCancelled:
             NSLog(@"You cancelled sending this email.");
             break;
-        case MFMailComposeResultFailed:
+            case MFMailComposeResultFailed:
             NSLog(@"Mail failed:  An error occurred when trying to compose this email");
             break;
-        default:
+            default:
             NSLog(@"An error occurred when trying to compose this email");
             break;
+        }
+        
+        [self dismissViewControllerAnimated:YES completion:NULL];
     }
     
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-
-@end
+    
+    @end

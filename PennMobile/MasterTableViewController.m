@@ -10,18 +10,16 @@
 #import "SWRevealViewController.h"
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
 #import "LaundryTableViewController.h"
 #import "SupportTableViewController.h"
 #import "AboutViewController.h"
 #import "NewsViewController.h"
-#import "DirectoryTableViewController.h"
-#import "RegistrarTableViewController.h"
 #import "PennMobile-Swift.h"
 
 @interface MasterTableViewController ()
 
 typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
+    MasterTableViewRowTypeMain, //ADDED for home screen
     MasterTableViewRowTypeHome,
     MasterTableViewRowTypeLaundry,
     MastertableViewRowTypeRegistrar,
@@ -33,9 +31,9 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
 };
 
 //stores the items in the menu
-@property (nonatomic, strong) NSArray *viewControllerArray;
 @property (nonatomic, strong) NSArray *iconArray;
 @property (nonatomic, retain) UILabel *notificationLabel;
+@property (nonatomic, strong) NSArray *viewControllerArray;
 
 @property (nonatomic) NSInteger currRow;
 
@@ -62,35 +60,14 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
     
     self.tableView.bounces = NO;
     
-    //OLD Dining View Controller
-//    //here is the problem!!!!
-//    HomeViewController *homeVC = [[HomeViewController alloc] init];// from swift file
-//    MainViewController *mainVC = [[MainViewController alloc] init];
-//    LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
-//    RegistrarTableViewController *registrarVC = [[RegistrarTableViewController alloc] init];
-//    DirectoryTableViewController *directoryVC = [[DirectoryTableViewController alloc] init];
-//    SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
-//    AboutViewController *aboutVC = [[AboutViewController alloc] init];
-//    NewsViewController *newsVC = [[NewsViewController alloc] init];
-//    
-//    //controls order of items in slideout menu
-//    self.viewControllerArray = @[homeVC, mainVC, laundryVC, registrarVC, directoryVC, newsVC, aboutVC, supportVC];
-    
-    //here is the problem!!!!
-//    HomeViewController *homeVC = [[HomeViewController alloc] init];// from swift file
-    NewDiningViewController *diningVC = [[NewDiningViewController alloc] init];// from swift file
+    DiningViewController *diningVC = [[DiningViewController alloc] init];// from swift file
+    BookViewController *bookVC = [[BookViewController alloc] init];
     LaundryTableViewController *laundryVC = [[LaundryTableViewController alloc] init];
-    //PCRViewController *registrarVC = [[PCRViewController alloc] init];
-    RegistrarTableViewController *registrarVC = [[RegistrarTableViewController alloc] init];
-    DirectoryTableViewController *directoryVC = [[DirectoryTableViewController alloc] init];
     SupportTableViewController *supportVC = [[SupportTableViewController alloc] init];
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
     NewsViewController *newsVC = [[NewsViewController alloc] init];
     
-    //controls order of items in slideout menu
-    self.viewControllerArray = @[diningVC, laundryVC, registrarVC, directoryVC, newsVC, aboutVC, supportVC];
-    
-//    self.iconArray = @[@"dining.png", @"laundry.png", @"courses.png", @"directory.png", @"news.png", @"about.png", @"emergency.png"];
+    self.viewControllerArray = @[diningVC, bookVC, laundryVC, newsVC, supportVC, aboutVC]; //to add controller, add here AND update numberOfItemsInSection
     
 }
 
@@ -114,13 +91,10 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
-    //return sizeof self.viewControllerArray;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return MasterTableViewRowTypeCount;
-    return sizeof self.viewControllerArray - 1;
-
+    return 6; //update this number when you add viewcontrollers
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -139,16 +113,13 @@ typedef NS_ENUM (NSUInteger, MasterTableViewRowType) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"Dining";
         } else if (indexPath.row == 1) {
-            cell.textLabel.text = @"Laundry";
-        } else if (indexPath.row == 3) {
-            cell.textLabel.text = @"Directory";
+            cell.textLabel.text = @"Study Room Booking";
         } else {
             cell.textLabel.text = currViewController.title;
         }
     }
     cell.backgroundColor = [UIColor clearColor];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//     cell.imageView.image = [UIImage imageNamed:[self.iconArray objectAtIndex:indexPath.row]];
     
     return cell;
 }
