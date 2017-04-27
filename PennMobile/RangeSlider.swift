@@ -281,7 +281,7 @@ open class RangeSlider: UIControl {
         return (bounds.width - thumbSize) * CGFloat(index) / CGFloat(count) + thumbRadius
     }
     
-    func callback() {
+    func reload() {
         updateLayerFrames()
         valueFinishedChangingCallback?(minValue, maxValue)
     }

@@ -150,6 +150,7 @@ class NetworkManager {
                                         let today = Date()
                                         let dateFormatter = DateFormatter()
                                         dateFormatter.dateFormat = "yyyy-MM-dd"
+                                        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                                         
                                         let todayString = dateFormatter.string(from: today)
                                         

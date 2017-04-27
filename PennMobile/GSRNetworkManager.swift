@@ -31,6 +31,8 @@ class GSRNetworkManager: NSObject {
         self.ids = ids
     }
     
+    //static private func isGoodAuthentication(_ dataString: String
+    
     static func getHours(_ date: String, gid: Int, callback: @escaping (AnyObject) -> ()) {
         let headers = [
             "Referer": "http://libcal.library.upenn.edu/booking/vpdlc"
@@ -58,9 +60,6 @@ class GSRNetworkManager: NSObject {
         
         task.resume()
     }
-    
-    
-    
     
     // MARK: - crazy experiemnt
     

@@ -98,6 +98,7 @@ class DiningControllerCell: UITableViewCell {
     
     private func updateTimeLabel(with times: [OpenClose]) {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "h:mma"
         formatter.timeZone = TimeZone(abbreviation: "GMT")!
         formatter.amSymbol = "a"

@@ -54,6 +54,7 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     private func getStringTimeFromValue(_ val: Int) -> String? {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mma"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         let startDate = earliestDate//formatter.date(from: "12:00am")!
         let totalMinutes = CGFloat((startDate?.minutesFrom(date: endDate))!)
         let minutes = Int((CGFloat(val) / 100.0) * totalMinutes)
@@ -69,7 +70,9 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     internal let endDate: Date = {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mma"
-        return Date.addMinutes(to: formatter.date(from: "12:00am")!, minutes: 24*60)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        let date = formatter.date(from: "12:00am")
+        return Date.addMinutes(to: date!, minutes: 24*60)
     }()
     
     internal var minDate: Date!
@@ -86,7 +89,7 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     var currentDate : GSRDate? {
         didSet {
             setEarliestTime()
-            rangeSlider.callback()
+            rangeSlider.reload()
         }
     }
     
@@ -135,6 +138,7 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     internal func setEarliestTime() {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mma"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         if dates.count > 0 && currentDate?.compact == dates[0].compact {
             let now = Date()
             let strFormat = formatter.string(from: now)
@@ -156,6 +160,7 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
             self.refreshContent()
             let formatter = DateFormatter()
             formatter.dateFormat = "hh:mma"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
             let startDate = self.earliestDate!
             let totalMinutes = CGFloat(startDate.minutesFrom(date: self.endDate))
             let minMinutes = (Int((CGFloat(min) / 100.0) * totalMinutes) / 60) * 60
