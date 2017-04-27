@@ -16,6 +16,7 @@ class Parser {
     static func getDateFromTime(time: String) -> Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mma"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         let date = formatter.date(from: time)!
         return Date.convertToLocalFromTimeZone(date, timezone: "GMT")
     }
@@ -120,7 +121,6 @@ class Parser {
         if (matches.count > 0) {
             let match = matches[0]
             return getAttributeFromTag("value", rawTag: match).replacingOccurrences(of: "=", with: "%3D").replacingOccurrences(of: "+", with: "%2B")
-    
         }
         
         return ""

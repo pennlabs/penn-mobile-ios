@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CredentialsViewController: GAITrackedViewController {
+class CredentialsViewController: GAITrackedViewController, ShowsAlert {
     
     var date : GSRDate?
     var location : GSRLocation?
@@ -86,23 +86,12 @@ class CredentialsViewController: GAITrackedViewController {
     }
 
     func saveCredentials(_ sender: AnyObject) {
-        save()
-        if date == nil {
-            dismiss()
-        } else {
-            submit()
-        }
-    }
-    
-    func cancel(_ sender: AnyObject) {
-        dismiss()
-    }
-    
-    internal func save() {
         email = emailField.text?.trimmingCharacters(in: CharacterSet.whitespaces)
         password = passwordField.text?.trimmingCharacters(in: CharacterSet.whitespaces)
         
-        if (email == "" || password == "") {
+        guard let email = email, let password = password else { return }
+        if (email == "" || password == "" || !email.contains("@") || !email.contains("upenn.edu")) {
+            showAlert(withMsg: "Your email or password is invalid. Please try again.", title: "Uh oh!", completion: nil)
             return
         }
         
@@ -110,9 +99,21 @@ class CredentialsViewController: GAITrackedViewController {
         
         defaults.setValue(email, forKey: "email")
         defaults.setValue(password, forKey: "password")
+        
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        if self.date == nil {
+            self.dismiss()
+        } else {
+            self.showProcessViewController()
+        }
     }
     
-    internal func submit() {
+    func cancel(_ sender: AnyObject) {
+        dismiss()
+    }
+    
+    internal func showProcessViewController() {
         let dest = ProcessViewController()
         dest.ids = ids
         dest.date = date
