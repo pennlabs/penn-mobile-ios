@@ -1,14 +1,18 @@
-use_frameworks!
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
 
 target 'PennMobile' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
 
-pod 'ECSlidingViewController'
-pod 'MBProgressHUD', '~> 0.8'
-pod "HMLauncherView"
-pod 'Parse'
-pod "DropdownMenu"
-pod 'Bolts'
-pod 'SVProgressHUD'
+  # Pods for PennMobile
+
 pod 'Google/Analytics'
+pod 'MBProgressHUD', '~> 0.8'
+
+  target 'PennMobileTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
 
 end
