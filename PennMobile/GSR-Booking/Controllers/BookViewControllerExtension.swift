@@ -160,7 +160,6 @@ extension BookViewController: CollectionViewProtocol {
     }
     
     internal func getEmailAndPassword() -> (String?, String?) {
-        
         let defaults = UserDefaults.standard
         
         let email = defaults.string(forKey: "email")
