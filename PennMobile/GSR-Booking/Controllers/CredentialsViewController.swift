@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CredentialsViewController: GAITrackedViewController, ShowsAlert {
+class CredentialsViewController: GAITrackedViewController, ShowsAlert, IndicatorEnabled {
     
     var date : GSRDate?
     var location : GSRLocation?
@@ -91,25 +91,45 @@ class CredentialsViewController: GAITrackedViewController, ShowsAlert {
         
         guard let email = email, let password = password else { return }
         if (email == "" || password == "" || !email.contains("@") || !email.contains("upenn.edu")) {
-            showAlert(withMsg: "Your email or password is invalid. Please try again.", title: "Uh oh!", completion: nil)
+            handleErrorAuthenticating()
             return
         }
         
         let defaults = UserDefaults.standard
+
+        if email != defaults.string(forKey: "email") || password != defaults.string(forKey: "password") {
+            showActivity()
+        }
         
-        defaults.setValue(email, forKey: "email")
-        defaults.setValue(password, forKey: "password")
-        
-        emailField.resignFirstResponder()
-        passwordField.resignFirstResponder()
-        if self.date == nil {
-            self.dismiss()
-        } else {
-            self.showProcessViewController()
+        GSRNetworkManager.shared.authenticateEmailPassword(email: email, password: password) { (isValid) in
+            self.hideActivity()
+            
+            if isValid {
+                defaults.setValue(email, forKey: "email")
+                defaults.setValue(password, forKey: "password")
+                defaults.setValue(true, forKey: "logged in")
+                
+                self.emailField.resignFirstResponder()
+                self.passwordField.resignFirstResponder()
+                
+                if self.date == nil {
+                    self.dismiss()
+                } else {
+                    self.showProcessViewController()
+                }
+            } else {
+                self.handleErrorAuthenticating()
+            }
         }
     }
     
+    func handleErrorAuthenticating() {
+        showAlert(withMsg: "Your email or password is invalid. Please try again.", title: "Uh oh!", completion: nil)
+    }
+    
     func cancel(_ sender: AnyObject) {
+        self.emailField.resignFirstResponder()
+        self.passwordField.resignFirstResponder()
         dismiss()
     }
     
