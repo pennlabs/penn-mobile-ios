@@ -184,8 +184,7 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     }
     
     internal var isLoggedIn: Bool {
-        let (email, password) = getEmailAndPassword()
-        return email != nil && password != nil
+        return UserDefaults.standard.bool(forKey: "logged in")
     }
     
     private func setupView() {
@@ -351,10 +350,8 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     func submitSelection() {
         if (validateSubmission() == false) {
             showAlert(withMsg: "You can only choose consecutive times", title: "Can't do that.", completion: nil)
-        } else {
-            let (email, password) = getEmailAndPassword()
-            
-            if email != nil && password != nil {
+        } else {            
+            if isLoggedIn {
                 let dest = ProcessViewController()
                 let ids = getSelectionIds()
                 let (email, password) = getEmailAndPassword()
@@ -388,12 +385,8 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
             submitSelection()
         } else if isLoggedIn {
             let defaults = UserDefaults.standard
-            defaults.removeObject(forKey: "email")
-            defaults.removeObject(forKey: "password")
-            self.showAlert(withMsg: "You've successfuly reset your credentials. They are no longer stored on this device.", title: "Reset Credentials", completion: {
-                self.dismiss(animated: true, completion: nil)
-                self.refreshLoginLogout()
-            })
+            defaults.set(false, forKey: "logged in")
+            self.refreshLoginLogout()
         } else {
             let destination = CredentialsViewController()
             let nvc = UINavigationController(rootViewController: destination)

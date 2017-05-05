@@ -12,11 +12,18 @@ import Foundation
 class GSRNetworkManager: NSObject {
     static let availUrl = "http://libcal.library.upenn.edu/process_roombookings.php"
     
+    public typealias AuthenticateCallback = (_ isValid: Bool) -> Void
+    fileprivate var authenticateCallback: AuthenticateCallback?
+    
     var email : String?
     var password: String?
     var gid : Int?
     var ids : [Int]?
     var session : URLSession?
+    
+    var doNotBook = false
+    
+    static let shared = GSRNetworkManager()
     
     override init() {
         let configuration = URLSessionConfiguration.default
@@ -63,6 +70,48 @@ class GSRNetworkManager: NSObject {
     
     // MARK: - crazy experiemnt
     
+    private func getValidRoom(callback: @escaping (_ gid: Int?, _ ids: [Int]?, _ error: Error?) -> ()) {
+        guard let date = DateHandler.getDates().last?.compact, let gid = LocationsHandler.getLocations().first?.code else { return }
+        
+        GSRNetworkManager.getHours(date, gid: gid) {
+            (res: AnyObject) in
+            
+            if (res is NSError) {
+                callback(nil, nil, res as? Error)
+            } else {
+                let minDate = Parser.getDateFromTime(time: "12:00am")
+                let maxDate = Parser.getDateFromTime(time: "11:59pm")
+                let roomData = Parser.getAvailableTimeSlots(res as! String, startDate: minDate, endDate: maxDate)
+                let dictIndex: Int = Int(arc4random_uniform(UInt32(roomData.count)))
+                let randomRoom = Array(roomData.values)[dictIndex]
+                let hourIndex: Int = Int(arc4random_uniform(UInt32(randomRoom.count)))
+                callback(gid, [randomRoom[hourIndex].id], nil)
+            }
+        }
+    }
+    
+    func authenticateEmailPassword(email: String, password: String, _ callback: AuthenticateCallback?) {
+        let defaults = UserDefaults.standard
+        
+        let storedEmail = defaults.string(forKey: "email")
+        let storedPassword = defaults.string(forKey: "password")
+        
+        if email == storedEmail && password == storedPassword {
+            callback?(true)
+            return
+        }
+        
+        getValidRoom() { (gid, ids, error) in
+            self.email = email
+            self.password = password
+            self.gid = gid
+            self.ids = ids
+            self.doNotBook = true
+            
+            self.authenticateCallback = callback
+            self.bookSelection()
+        }
+    }
     
     func bookSelection() {
         let request = NSMutableURLRequest(url: URL(string: "http://libcal.library.upenn.edu/booking/vpdlc")!)
@@ -119,7 +168,6 @@ class GSRNetworkManager: NSObject {
         task.resume()
     }
     
-    
     func get2(_ url : URL) {
         let appendStr = "&idpentityid=https%3A%2F%2Fidp.pennkey.upenn.edu%2Fidp%2Fshibboleth"
         let getUrl = URL(string: url.absoluteString + appendStr)
@@ -159,7 +207,6 @@ class GSRNetworkManager: NSObject {
         
     }
     
-    
     func authenticate() {
         let pennKey = email!.components(separatedBy: "@")[0]
         let request = NSMutableURLRequest(url: URL(string: "https://weblogin.pennkey.upenn.edu/login")!)
@@ -190,6 +237,13 @@ class GSRNetworkManager: NSObject {
         
         let SAMLResponse = Parser.dataStringToSAMLResponse(dataString)
         let bodyData = "RelayState=https%3A%2F%2Flibauth.com%2Fsaml%2Fmodule.php%2Fcore%2Fauthenticate.php%3Fas%3Dspringy-sp&SAMLResponse=\(SAMLResponse)"
+        
+        if doNotBook {
+            DispatchQueue.main.async {
+                self.authenticateCallback?(SAMLResponse != "")
+            }
+            return
+        }
         
         request.httpBody = bodyData.data(using: String.Encoding.utf8);
         

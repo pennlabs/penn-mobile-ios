@@ -39,7 +39,6 @@
 		216640CC1EBADCA400746B8E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C91EBADCA400746B8E /* Extensions.swift */; };
 		216640CD1EBADCA400746B8E /* GoogleAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */; };
 		216640D01EBADD2600746B8E /* DiningNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640CF1EBADD2600746B8E /* DiningNetworkManager.swift */; };
-		216640D21EBAE57200746B8E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 216640D11EBAE57200746B8E /* GoogleService-Info.plist */; };
 		216640E81EBB861000746B8E /* LaundryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640DD1EBB861000746B8E /* LaundryDetailViewController.m */; };
 		216640E91EBB861000746B8E /* LaundryDryerDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640DF1EBB861000746B8E /* LaundryDryerDetailTableViewCell.m */; };
 		216640EA1EBB861000746B8E /* LaundryMidwayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640E11EBB861000746B8E /* LaundryMidwayTableViewController.m */; };
@@ -51,6 +50,7 @@
 		216640FC1EBB899900746B8E /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640FB1EBB899900746B8E /* AboutViewController.m */; };
 		216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640FD1EBBA5A300746B8E /* NewsViewController.swift */; };
 		2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */; };
+		2190FD331EBBE2E100EC683C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2190FD321EBBE2E100EC683C /* GoogleService-Info.plist */; };
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
 		8D08ACB30BC0C29FD56CE14E /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */; };
 /* End PBXBuildFile section */
@@ -104,7 +104,6 @@
 		216640C91EBADCA400746B8E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsManager.swift; sourceTree = "<group>"; };
 		216640CF1EBADD2600746B8E /* DiningNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningNetworkManager.swift; sourceTree = "<group>"; };
-		216640D11EBAE57200746B8E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		216640DC1EBB861000746B8E /* LaundryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDetailViewController.h; sourceTree = "<group>"; };
 		216640DD1EBB861000746B8E /* LaundryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryDetailViewController.m; sourceTree = "<group>"; };
 		216640DE1EBB861000746B8E /* LaundryDryerDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDryerDetailTableViewCell.h; sourceTree = "<group>"; };
@@ -126,6 +125,7 @@
 		216640FB1EBB899900746B8E /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		216640FD1EBBA5A300746B8E /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = PennMobile/Assets.xcassets; sourceTree = "<group>"; };
+		2190FD321EBBE2E100EC683C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2B364FB5448C9559DDEB6B7C /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -179,11 +179,11 @@
 			isa = PBXGroup;
 			children = (
 				216640F91EBB898700746B8E /* About */,
+				216640C71EBADC9D00746B8E /* General */,
 				216640881EBADBA000746B8E /* AppDelegate + Stuff */,
 				2166408B1EBADBF800746B8E /* Dining */,
 				216640EE1EBB867600746B8E /* Emergency */,
 				2166408C1EBADBFC00746B8E /* GSR-Booking */,
-				216640C71EBADC9D00746B8E /* General */,
 				216640DB1EBB85EA00746B8E /* Laundry */,
 				216640D31EBB80FD00746B8E /* News */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
@@ -203,8 +203,8 @@
 		216640831EBADB7000746B8E /* Supporting_Files */ = {
 			isa = PBXGroup;
 			children = (
-				216640D11EBAE57200746B8E /* GoogleService-Info.plist */,
 				2166406F1EBADADA00746B8E /* Info.plist */,
+				2190FD321EBBE2E100EC683C /* GoogleService-Info.plist */,
 				2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */,
 				216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */,
 				216640F81EBB88FB00746B8E /* PrefixHeader.pch */,
@@ -512,7 +512,7 @@
 			files = (
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
-				216640D21EBAE57200746B8E /* GoogleService-Info.plist in Resources */,
+				2190FD331EBBE2E100EC683C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
