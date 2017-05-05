@@ -19,16 +19,14 @@ class GSRNetworkManager: NSObject {
     var password: String?
     var gid : Int?
     var ids : [Int]?
-    var session : URLSession?
+    var session : URLSession = {
+        let session = URLSession.shared
+        return URLSession.shared
+    }()
     
     var doNotBook = false
     
     static let shared = GSRNetworkManager()
-    
-    override init() {
-        let configuration = URLSessionConfiguration.default
-        self.session = URLSession(configuration: configuration)
-    }
     
     convenience init(email: String, password: String, gid: Int, ids: [Int]) {
         self.init()
@@ -91,16 +89,6 @@ class GSRNetworkManager: NSObject {
     }
     
     func authenticateEmailPassword(email: String, password: String, _ callback: AuthenticateCallback?) {
-        let defaults = UserDefaults.standard
-        
-        let storedEmail = defaults.string(forKey: "email")
-        let storedPassword = defaults.string(forKey: "password")
-        
-        if email == storedEmail && password == storedPassword {
-            callback?(true)
-            return
-        }
-        
         getValidRoom() { (gid, ids, error) in
             self.email = email
             self.password = password
@@ -114,18 +102,20 @@ class GSRNetworkManager: NSObject {
     }
     
     func bookSelection() {
-        let request = NSMutableURLRequest(url: URL(string: "http://libcal.library.upenn.edu/booking/vpdlc")!)
-        self.sendNotification("msg", msg: "Starting up...")
-        
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
-            guard error == nil && data != nil else {   // check for fundamental networking error
-                self.handleError()
-                return
+        session.reset {
+            let request = NSMutableURLRequest(url: URL(string: "http://libcal.library.upenn.edu/booking/vpdlc")!)
+            self.sendNotification("msg", msg: "Starting up...")
+            
+            let task = self.session.dataTask(with: request as URLRequest) {data, response, error in
+                guard error == nil && data != nil else {   // check for fundamental networking error
+                    self.handleError()
+                    return
+                }
+                self.initiateProcess()
             }
-            self.initiateProcess()
+            
+            task.resume()
         }
-        
-        task.resume()
     }
     
     func initiateProcess() {
@@ -137,7 +127,7 @@ class GSRNetworkManager: NSObject {
         
         request.httpBody = bodyData.data(using: String.Encoding.utf8);
         
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
+        let task = session.dataTask(with: request as URLRequest) {data, response, error in
             guard error == nil && data != nil else {   // check for fundamental networking error
                 self.handleError()
                 return
@@ -155,7 +145,7 @@ class GSRNetworkManager: NSObject {
     
     func get1(_ url : URL) {
         let request = NSMutableURLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
+        let task = session.dataTask(with: request as URLRequest) {data, response, error in
             guard error == nil && data != nil else {   // check for fundamental networking error
                 self.handleError()
                 return
@@ -172,7 +162,7 @@ class GSRNetworkManager: NSObject {
         let appendStr = "&idpentityid=https%3A%2F%2Fidp.pennkey.upenn.edu%2Fidp%2Fshibboleth"
         let getUrl = URL(string: url.absoluteString + appendStr)
         let request = NSMutableURLRequest(url: getUrl!)
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
+        let task = session.dataTask(with: request as URLRequest) {data, response, error in
             guard error == nil && data != nil else {   // check for fundamental networking error
                 self.handleError()
                 return
@@ -190,11 +180,9 @@ class GSRNetworkManager: NSObject {
     
     func get3(_ url : URL, referer : String) {
         let request = NSMutableURLRequest(url: url)
-        
-        
         request.setValue(referer, forHTTPHeaderField: "Referer")
         
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
+        let task = session.dataTask(with: request as URLRequest) {data, response, error in
             guard error == nil && data != nil else {   // check for fundamental networking error
                 self.handleError()
                 return
@@ -217,7 +205,7 @@ class GSRNetworkManager: NSObject {
         
         request.setValue("https://weblogin.pennkey.upenn.edu/login?factors=UPENN.EDU&cosign-pennkey-idp-0&https://idp.pennkey.upenn.edu/idp/Authn/RemoteUser", forHTTPHeaderField: "Referer")
         
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
+        let task = session.dataTask(with: request as URLRequest) {data, response, error in
             guard error == nil && data != nil else {   // check for fundamental networking error
                 self.handleError()
                 return
@@ -231,7 +219,6 @@ class GSRNetworkManager: NSObject {
     }
     
     func postAuthenticate(_ dataString : String) {
-        
         let request = NSMutableURLRequest(url: URL(string: "https://libauth.com/saml/module.php/saml/sp/saml2-acs.php/springy-sp")!)
         request.httpMethod = "POST"
         
@@ -249,11 +236,12 @@ class GSRNetworkManager: NSObject {
         
         request.setValue("https://idp.pennkey.upenn.edu/idp/profile/SAML2/Redirect/SSO", forHTTPHeaderField: "Referer")
         
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
+        let task = session.dataTask(with: request as URLRequest) {data, response, error in
             guard error == nil && data != nil else {   // check for fundamental networking error
                 self.handleError()
                 return
             }
+            
             if let url = response?.url! {
                 self.postBooking(url.absoluteString)
                 self.sendNotification("msg", msg: "Finalizing everything...")
@@ -273,7 +261,7 @@ class GSRNetworkManager: NSObject {
         
         request.httpBody = bodyData.data(using: String.Encoding.utf8);
         
-        let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
             if error == nil {
                 let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
                 
@@ -326,6 +314,7 @@ class GSRNetworkManager: NSObject {
     }
     
     func sendNotification(_ type: String, msg : String) {
+        if doNotBook { return }
         switch type {
         case "msg":
             NotificationCenter.default.post(name: Notification.Name(rawValue: "ProgressMessageNotification"), object: msg)

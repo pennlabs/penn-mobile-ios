@@ -107,7 +107,6 @@ class CredentialsViewController: GAITrackedViewController, ShowsAlert, Indicator
             if isValid {
                 defaults.setValue(email, forKey: "email")
                 defaults.setValue(password, forKey: "password")
-                defaults.setValue(true, forKey: "logged in")
                 
                 self.emailField.resignFirstResponder()
                 self.passwordField.resignFirstResponder()

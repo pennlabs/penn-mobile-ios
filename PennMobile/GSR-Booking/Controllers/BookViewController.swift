@@ -184,7 +184,8 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     }
     
     internal var isLoggedIn: Bool {
-        return UserDefaults.standard.bool(forKey: "logged in")
+        let (email, password) = getEmailAndPassword()
+        return email != nil && password != nil
     }
     
     private func setupView() {
@@ -385,7 +386,8 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
             submitSelection()
         } else if isLoggedIn {
             let defaults = UserDefaults.standard
-            defaults.set(false, forKey: "logged in")
+            defaults.removeObject(forKey: "email")
+            defaults.removeObject(forKey: "password")
             self.refreshLoginLogout()
         } else {
             let destination = CredentialsViewController()
