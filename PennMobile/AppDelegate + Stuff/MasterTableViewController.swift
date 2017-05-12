@@ -65,4 +65,17 @@ class MasterTableViewController: UITableViewController {
         tableView.cellForRow(at: selectedIndex)?.isHighlighted = false
         selectedIndex = indexPath
     }
+    
+//    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+//    
+//    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//        let sourceName = displayNameArray[sourceIndexPath.row]
+//        let sourceController = viewControllerArray[sourceIndexPath.row]
+//        displayNameArray[sourceIndexPath.row] = displayNameArray[destinationIndexPath.row]
+//        viewControllerArray[sourceIndexPath.row] = viewControllerArray[destinationIndexPath.row]
+//        displayNameArray[destinationIndexPath.row] = sourceName
+//        viewControllerArray[destinationIndexPath.row] = sourceController
+//    }
 }

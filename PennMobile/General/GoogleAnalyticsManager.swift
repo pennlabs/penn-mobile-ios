@@ -25,11 +25,13 @@ import UIKit
         tracker?.send(GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build() as! [AnyHashable : Any]!)
     }
     
-    struct category {
-        static let studyRoomCategory = "Study Room Booking"
-    }
-    
-    struct action {
-        static let attempReservation = "Submit Booking"
+    struct events {
+        struct category {
+            static let studyRoomBooking = "Study Room Booking"
+        }
+        
+        struct action {
+            static let attemptReservation = "Submit Booking"
+        }
     }
 }

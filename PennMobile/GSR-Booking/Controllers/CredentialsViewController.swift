@@ -1,9 +1,9 @@
 //
 //  CredentialsViewController.swift
-//  GSR
+//  PennMobile
 //
-//  Created by Yagil Burowski on 15/09/2016.
-//  Copyright © 2016 Yagil Burowski. All rights reserved.
+//  Created by Josh Doman on 4/20/17.
+//  Copyright © 2017 PennLabs. All rights reserved.
 //
 
 import UIKit

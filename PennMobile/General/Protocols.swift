@@ -1,8 +1,8 @@
 //
-//  IndicatorEnabled.swift
+//  Protocols.swift
 //  PennMobile
 //
-//  Created by Josh Doman on 4/14/17.
+//  Created by Josh Doman on 5/12/17.
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
@@ -58,7 +58,7 @@ extension Trackable where Self: UIViewController {
 
 protocol HairlineRemovable {}
 
-extension HairlineRemovable where Self: UIViewController {
+extension HairlineRemovable {
     
     func removeHairline(from view: UIView) {
         if let hairline = findHairlineImageViewUnder(view: view) {
@@ -68,7 +68,7 @@ extension HairlineRemovable where Self: UIViewController {
     
     //finds hairline underview if there is one
     private func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
-        if view.isKind(of: UIImageView.self) && view.bounds.size.height <= 1 {
+        if view is UIImageView && view.bounds.size.height <= 1 {
             return view as? UIImageView
         }
         for subview in view.subviews {
@@ -78,5 +78,19 @@ extension HairlineRemovable where Self: UIViewController {
             }
         }
         return nil
+    }
+}
+
+protocol ShowsAlert {}
+
+extension ShowsAlert where Self: UIViewController {
+    func showAlert(withMsg: String, title: String = "Error", completion: (() -> Void)?) {
+        let alertController = UIAlertController(title: title, message: withMsg, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (_) in
+            if let completion = completion {
+                completion()
+            }
+        }))
+        present(alertController, animated: true, completion: nil)
     }
 }

@@ -52,7 +52,7 @@ class ProcessViewController: GAITrackedViewController {
         
         if let location = location {
             self.screenName = location.name
-            GoogleAnalyticsManager.trackEvent(category: GoogleAnalyticsManager.category.studyRoomCategory, action: GoogleAnalyticsManager.action.attempReservation, label: location.name, value: 1)
+            GoogleAnalyticsManager.trackEvent(category: GoogleAnalyticsManager.events.category.studyRoomBooking, action: GoogleAnalyticsManager.events.action.attemptReservation, label: location.name, value: 1)
         }
         
         let networkingManager = GSRNetworkManager(email: email!, password: password!, gid: (location?.code)!, ids: ids!)
@@ -106,8 +106,8 @@ class ProcessViewController: GAITrackedViewController {
     }
     
     internal func trackMessage(_ msg: String) {
-        let category = GoogleAnalyticsManager.category.studyRoomCategory
-        let action = GoogleAnalyticsManager.action.attempReservation
+        let category = GoogleAnalyticsManager.events.category.studyRoomBooking
+        let action = GoogleAnalyticsManager.events.action.attemptReservation
         if msg.contains("Failed") || msg.contains("Error") {
             GoogleAnalyticsManager.trackEvent(category: category, action: action, label: "Failed", value: -1)
             let defaults = UserDefaults.standard
