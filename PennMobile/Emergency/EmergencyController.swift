@@ -12,13 +12,13 @@ class EmergencyController: SupportTableViewController, ShowsAlert {
     
     let contacts: [SupportItem] = SupportItem.getContacts() as! [SupportItem]
     
-    internal var contactsButtonTitle: String {
+    fileprivate var contactsButtonTitle: String {
         get {
             return UserDefaults.standard.bool(forKey: "Contacts added") ? "Remove all" : "Add all"
         }
     }
     
-    private lazy var addRemoveButton: UIBarButtonItem = {
+    fileprivate lazy var addRemoveButton: UIBarButtonItem = {
         return UIBarButtonItem(title: self.contactsButtonTitle, style: .done, target: self, action: #selector(addRemove(_:)))
     }()
     
@@ -27,7 +27,7 @@ class EmergencyController: SupportTableViewController, ShowsAlert {
         navigationItem.rightBarButtonItem = addRemoveButton
     }
     
-    internal func addRemove(_ sender: UIBarButtonItem) {
+    @objc fileprivate func addRemove(_ sender: UIBarButtonItem) {
         if UserDefaults.standard.bool(forKey: "Contacts added") {
             removeContacts()
         } else {
@@ -35,7 +35,7 @@ class EmergencyController: SupportTableViewController, ShowsAlert {
         }
     }
     
-    internal func updateAddRemoveButton() {
+    fileprivate func updateAddRemoveButton() {
         self.addRemoveButton.tintColor = .clear
         addRemoveButton.title = contactsButtonTitle
         self.addRemoveButton.tintColor = nil
@@ -43,19 +43,19 @@ class EmergencyController: SupportTableViewController, ShowsAlert {
 }
 
 extension EmergencyController {
-    internal func addContacts() {
+    fileprivate func addContacts() {
         ContactManager.shared.save(contacts) { (success) in
             contactManagerFinished(success, isAddingContacts: true)
         }
     }
     
-    internal func removeContacts() {
+    fileprivate func removeContacts() {
         ContactManager.shared.delete(contacts) { (success) in
             self.contactManagerFinished(success, isAddingContacts: false)
         }
     }
     
-    private func contactManagerFinished(_ success: Bool, isAddingContacts: Bool) {
+    fileprivate func contactManagerFinished(_ success: Bool, isAddingContacts: Bool) {
         let msg = success ? "All Penn contacts have been \(isAddingContacts ? "saved" : "removed") to your address book." : "Please try again. You must permit access to your contact book."
         let title = success ? (isAddingContacts ? "Saved" : "Removed"): "Uh oh!"
         let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
@@ -83,7 +83,6 @@ extension EmergencyController {
                 }
             }))
         }
-        
         self.present(alertController, animated: true, completion: nil)
     }
 }
