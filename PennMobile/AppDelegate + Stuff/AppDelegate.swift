@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var swRevealViewController: SWRevealViewController!
     private var navController: UINavigationController!
     private var masterTableViewController = MasterTableViewController()
-    private var homeController = DiningViewController()
+    private var homeController = ControllerSettings.shared.firstController
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
