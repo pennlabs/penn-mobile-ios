@@ -8,6 +8,7 @@
 
 #import "SupportTableViewController.h"
 #import "PennMobile-Swift.h"
+#import "SupportItem.h"
 
 @interface SupportTableViewController ()
 
@@ -33,7 +34,7 @@
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor blackColor]}];
     
-    [GoogleAnalyticsManager track:@"Support"];
+    [GoogleAnalyticsManager track:@"Emergency"];
 }
 
 - (void)viewDidLoad {
@@ -50,58 +51,8 @@
                                         action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = revealButtonItem;
     
-    SupportItem *pGeneral =
-        [[SupportItem alloc] initWithName:@"Penn Police General"
-                                    phone:@"(215) 898-7297"
-                                     desc:@"Call for all non-emergencies"];
-    
-    SupportItem *pEmergency =
-        [[SupportItem alloc] initWithName:@"Police Emergency/MERT"
-                                    phone:@"(215) 573-3333"
-                                     desc:@"Call for all criminal or medical emergencies."];
-    
-    SupportItem *pWalk =
-        [[SupportItem alloc] initWithName:@"Penn Walk"
-                                    phone:@"215-898-WALK (9255)"
-                                     desc:@"Call this number to have a Public safety officer walk you home between 30th to 43rd Streets and Market Street to Baltimore Avenue."];
-    pWalk.phoneFiltered = @"2158989255";
-    
-    SupportItem *pRide =
-        [[SupportItem alloc] initWithName:@"Penn Ride"
-                                    phone:@"215-898-RIDE (7433)"
-                                     desc:@"Call for Penn Ride services."];
-    pRide.phoneFiltered = @"2158987433";
+    self.contacts = [SupportItem getContacts];
 
-    SupportItem *hLine =
-        [[SupportItem alloc] initWithName:@"Help Line"
-                                    phone:@"215-898-HELP (4357)"
-                                     desc:@"24-hour-a-day phone number for members of the Penn community who are seeking time sensitive help in navigating Penn’s resources for health and wellness."];
-    hLine.phoneFiltered = @"2158984357";
-
-    SupportItem *caps =
-        [[SupportItem alloc] initWithName:@"CAPS"
-                                    phone:@"215-898-7021"
-                                     desc:@"CAPS main number. Call anytime to reach CAPS"];
-
-    SupportItem *special =
-        [[SupportItem alloc] initWithName:@"Special Services"
-                                    phone:@"215-898-4481"
-                                     desc:nil];
-    
-    SupportItem *womens =
-    [[SupportItem alloc] initWithName:@"Women's Center"
-                                phone:@"215-898-8611"
-                                 desc:nil];
-    
-    SupportItem *shs =
-    [[SupportItem alloc] initWithName:@"Student Health Services"
-                                phone:@"215-746-3535"
-                                 desc:nil];
-    
-    self.contacts =
-        [NSArray arrayWithObjects:
-            pEmergency, pGeneral, pWalk, pRide, hLine, caps, special, womens, shs, nil];
-    
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.bounces = NO;
 }

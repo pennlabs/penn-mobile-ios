@@ -10,7 +10,7 @@ import UIKit
 
 class MasterTableViewController: UITableViewController {
     
-    private let viewControllerArray: [UIViewController] = [DiningViewController(), BookViewController(), LaundryTableViewController(), NewsViewController(), SupportTableViewController(), AboutViewController()]
+    private let viewControllerArray: [UIViewController] = [DiningViewController(), BookViewController(), LaundryTableViewController(), NewsViewController(), EmergencyController(), AboutViewController()]
     private let displayNameArray = ["Dining", "Study Room Booking", "Laundry", "News", "Emergency", "About"]
     
     private let cellID = "cellID"

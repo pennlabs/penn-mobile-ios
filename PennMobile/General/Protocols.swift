@@ -81,7 +81,7 @@ extension HairlineRemovable {
     }
 }
 
-protocol ShowsAlert {}
+@objc protocol ShowsAlert {}
 
 extension ShowsAlert where Self: UIViewController {
     func showAlert(withMsg: String, title: String = "Error", completion: (() -> Void)?) {
