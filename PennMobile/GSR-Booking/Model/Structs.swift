@@ -53,8 +53,7 @@ extension Dictionary where Key == String, Value == [GSRHour] {
             return keys.sorted(by: { (key1, key2) -> Bool in
                 guard let arr1 = self[key1] else { return false }
                 guard let arr2 = self[key2] else { return true }
-                if arr1.isEmpty { return false }
-                if arr2.isEmpty { return false }
+                if arr1.isEmpty || arr2.isEmpty { return false }
                 let start1 = arr1.first!
                 let start2 = arr2.first!
                 let start1Time = Parser.getDateFromTime(time: start1.start)
@@ -79,54 +78,17 @@ extension Dictionary where Key == String, Value == [GSRHour] {
             })
         }
     }
-}
-
-
-// MARK: - Turning raw data to structs
-
-public func generateHour(hour rawHour : AnyObject, prev: GSRHour?) -> GSRHour {
     
-    if let id = rawHour.object(forKey: "id") as? Int {
-        
-        let start = rawHour.object(forKey: "start_time") as! String
-        let end = rawHour.object(forKey: "end_time") as! String
-        
-        return GSRHour(id: id, start: start, end: end, prev: prev)
-    }
-    
-    return GSRHour(id: 0, start: "", end: "",prev: nil)
-    
-}
-
-public func generateRoomData(_ rawRoomData : AnyObject) -> Dictionary<String, [GSRHour]> {
-    
-    var roomData = Dictionary<String, [GSRHour]>()
-    
-    let roomDict = rawRoomData as! NSDictionary
-    
-    for (room, hoursArray) in roomDict {
-        let title = room as! String
-        let rawHours = hoursArray as! NSArray
-        var hours = [GSRHour]()
-        for (index, rawHour) in rawHours.enumerated() {
-            if (index == 0) {
-                let hour = generateHour(hour: rawHour as AnyObject, prev: nil)
-                hours.append(hour)
-            } else {
-                let hour = generateHour(hour: rawHour as AnyObject, prev: nil)
-                let prev = hours[index - 1]
-                
-                if (hour.start == prev.end) {
-                    hour.prev = prev
-                    prev.next = hour
-                }
-                
-                hours.append(hour)
+    var lastOpening: Date? {
+        get {
+            if self.isEmpty { return Parser.midnight.tomorrow }
+            var tempLastEndtime = Parser.getDateFromTime(time: "12:00am")
+            for key in keys {
+                guard let gsrArr = self[key], let lastHour = gsrArr.last else { continue }
+                let lastEndTime = Parser.getDateFromTime(time: lastHour.end)
+                if lastEndTime > tempLastEndtime { tempLastEndtime = lastEndTime }
             }
+            return tempLastEndtime
         }
-        
-        roomData[title] = hours
     }
-    
-    return roomData
 }

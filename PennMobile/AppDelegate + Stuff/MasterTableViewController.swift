@@ -12,39 +12,46 @@ class ControllerSettings: NSObject {
     
     static let shared = ControllerSettings()
     
-    let displayNameArray: [String] = {
+    let vcDictionary: [String: UIViewController] = {
+        var dict = [String: UIViewController]()
+        dict["Dining"] = DiningViewController()
+        dict["Study Room Booking"] = BookViewController()
+        dict["Laundry"] = LaundryTableViewController()
+        dict["News"] = NewsViewController()
+        dict["Emergency"] = EmergencyController()
+        dict["About"] = AboutViewController()
+        return dict
+    }()
+    
+    var viewControllers: [UIViewController] {
+        let orderedArr = self.displayNames
+        var arr = [UIViewController]()
+        for title in orderedArr {
+            arr.append(ControllerSettings.shared.viewController(for: title))
+        }
+        return arr
+    }
+    
+    var displayNames: [String] {
         if let savedArr = UserDefaults.standard.stringArray(forKey: "Controller settings") {
             return savedArr
         }
-        return  ["Dining", "Study Room Booking", "Laundry", "News", "Emergency", "About"]
-    }()
+        return vcDictionary.keys.toArray()
+    }
     
     func viewController(for title: String) -> UIViewController {
-        if title == "Dining" {
-            return DiningViewController()
-        } else if title == "Study Room Booking" {
-            return BookViewController()
-        } else if title == "Laundry" {
-            return LaundryTableViewController()
-        } else if title == "News" {
-            return NewsViewController()
-        } else if title == "Emergency" {
-            return EmergencyController()
-        } else if title == "About" {
-            return AboutViewController()
-        }
-        return UIViewController()
+        return vcDictionary[title] ?? UIViewController()
     }
     
     var firstController: UIViewController {
-        return viewController(for: displayNameArray.first!)
+        return viewControllers.first!
     }
 }
 
 class MasterTableViewController: UITableViewController {
     
-    fileprivate var viewControllerArray: [UIViewController]!
-    fileprivate var displayNameArray: [String] = ControllerSettings.shared.displayNameArray
+    fileprivate var viewControllerArray = ControllerSettings.shared.viewControllers
+    fileprivate var displayNameArray = ControllerSettings.shared.displayNames
     
     fileprivate let cellID = "cellID"
     fileprivate var selectedIndex: IndexPath {
@@ -112,19 +119,10 @@ class MasterTableViewController: UITableViewController {
 
 extension MasterTableViewController {
     fileprivate func loadTableView() {
-        loadControllers()
         tableView.tableFooterView = UIView() //removes empty lines
         tableView.bounces = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellID")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         addLongPressGesture() //enables long press to reorder cells
-    }
-    
-    fileprivate func loadControllers() {
-        let orderedArr = self.displayNameArray
-        viewControllerArray = [UIViewController]()
-        for title in orderedArr {
-            viewControllerArray.append(ControllerSettings.shared.viewController(for: title))
-        }
     }
 }
 

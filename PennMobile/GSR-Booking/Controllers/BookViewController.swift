@@ -19,8 +19,6 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
         return ai
     }()
     
-    // MARK: - Outlets and Properties
-    
     internal lazy var pickerView: UIPickerView = {
         let pv = UIPickerView(frame: .zero)
         pv.translatesAutoresizingMaskIntoConstraints = false
@@ -38,13 +36,11 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     }()
     
     private func getStringTimeFromValue(_ val: Int) -> String? {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mma"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        let startDate = earliestDate//formatter.date(from: "12:00am")!
-        let totalMinutes = CGFloat((startDate?.minutesFrom(date: endDate))!)
+        let formatter = Parser.formatter
+        guard let startDate = earliestDate else { return nil }
+        let totalMinutes = CGFloat(startDate.minutesFrom(date: endDate))
         let minutes = Int((CGFloat(val) / 100.0) * totalMinutes)
-        let chosenDate = Date.addMinutes(to: startDate!, minutes: minutes)
+        let chosenDate = startDate.add(minutes: minutes)
         formatter.amSymbol = "a"
         formatter.pmSymbol = "p"
         formatter.dateFormat = "ha"
@@ -52,18 +48,10 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     }
     
     internal var earliestDate: Date!
-    
-    internal let endDate: Date = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mma"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        let date = formatter.date(from: "12:00am")
-        return Date.addMinutes(to: date!, minutes: 24*60)
-    }()
+    internal var endDate: Date = Parser.midnight.tomorrow
     
     internal var minDate: Date!
-    
-    internal var maxDate: Date = Parser.getDateFromTime(time: "11:59pm")
+    internal var maxDate: Date = Parser.midnight.tomorrow
     
     internal lazy var dates : [GSRDate] = DateHandler.getDates()
     
@@ -118,19 +106,17 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
         setupView()
         setupSlider()
         currentDate = dates[0]
-        minDate = earliestDate.convertToLocalTime()
+        minDate = earliestDate.localTime
     }
     
     internal func setEarliestTime() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mma"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
         if dates.count > 0 && currentDate?.compact == dates[0].compact {
             let now = Date()
+            let formatter = Parser.formatter
             let strFormat = formatter.string(from: now)
-            earliestDate = Date.roundDownToHour(formatter.date(from: strFormat)!)
+            earliestDate = formatter.date(from: strFormat)!.roundedDownToHour
         } else {
-            earliestDate = formatter.date(from: "12:00am")!
+            earliestDate = Parser.midnight
         }
     }
     
@@ -144,15 +130,18 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
         }
         rangeSlider.setValueFinishedChangingCallback { (min, max) in
             self.refreshContent()
-            let formatter = DateFormatter()
-            formatter.dateFormat = "hh:mma"
-            formatter.locale = Locale(identifier: "en_US_POSIX")
             let startDate = self.earliestDate!
             let totalMinutes = CGFloat(startDate.minutesFrom(date: self.endDate))
             let minMinutes = (Int((CGFloat(min) / 100.0) * totalMinutes) / 60) * 60
             let maxMinutes = (Int((CGFloat(max) / 100.0) * totalMinutes) / 60) * 60
-            self.minDate = Date.addMinutes(to: startDate, minutes: minMinutes).convertToLocalTime()
-            self.maxDate = Date.addMinutes(to: startDate, minutes: maxMinutes).convertToLocalTime()
+            self.minDate = startDate.add(minutes: minMinutes).localTime
+            self.maxDate = startDate.add(minutes: maxMinutes).localTime
+        }
+        rangeSlider.setBeganEditingCallback { 
+            if self.activityIndicator.isAnimating {
+                self.activityIndicator.stopAnimating()
+                GSRNetworkManager.shared.session.reset {} //invalidates getRoom request
+            }
         }
     }
     
@@ -314,20 +303,22 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
             return
         }
         
-        GSRNetworkManager.getHours((currentDate?.compact)!, gid: (currentLocation?.code)!) {
-            (res: AnyObject) in
-            
-            if (res is NSError) {
-                self.showAlert(withMsg: "Can't communicate with the server", title: "Oops", completion: nil)
-                self.activityIndicator.stopAnimating()
-            } else {
-                DispatchQueue.main.async(execute: {
+        DispatchQueue.global().async {
+            GSRNetworkManager.shared.getHours((self.currentDate?.compact)!, gid: (self.currentLocation?.code)!) {
+                (res: AnyObject) in
+                
+                if (res is NSError) {
+                    self.showAlert(withMsg: "Can't communicate with the server", title: "Oops", completion: nil)
                     self.activityIndicator.stopAnimating()
-                    self.roomData = Parser.getAvailableTimeSlots(res as! String, startDate: self.minDate, endDate: self.maxDate)
-                    self.sortedKeys = self.roomData.sortedKeys
-                    self.currentSelection?.removeAll()
-                    self.tableView.reloadData()
-                })
+                } else {
+                    DispatchQueue.main.async(execute: {
+                        self.activityIndicator.stopAnimating()
+                        self.roomData = Parser.getAvailableTimeSlots(res as! String, startDate: self.minDate, endDate: self.maxDate)
+                        self.sortedKeys = self.roomData.sortedKeys
+                        self.currentSelection?.removeAll()
+                        self.tableView.reloadData()
+                    })
+                }
             }
         }
     }

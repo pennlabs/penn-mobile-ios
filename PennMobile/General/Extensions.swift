@@ -103,25 +103,25 @@ extension Date {
     //returns date in local time
     static var currentLocalDate: Date {
         get {
-            return convertToLocalFromTimeZone(Date(), timezone: "GMT")
+            return Date().localTime
         }
     }
     
-    static func convertToLocalFromTimeZone(_ date: Date, timezone: String) -> Date {
+    func convert(to timezone: String) -> Date {
         var nowComponents = DateComponents()
         let calendar = Calendar.current
-        nowComponents.year = Calendar.current.component(.year, from: date)
-        nowComponents.month = Calendar.current.component(.month, from: date)
-        nowComponents.day = Calendar.current.component(.day, from: date)
-        nowComponents.hour = Calendar.current.component(.hour, from: date)
-        nowComponents.minute = Calendar.current.component(.minute, from: date)
-        nowComponents.second = Calendar.current.component(.second, from: date)
+        nowComponents.year = Calendar.current.component(.year, from: self)
+        nowComponents.month = Calendar.current.component(.month, from: self)
+        nowComponents.day = Calendar.current.component(.day, from: self)
+        nowComponents.hour = Calendar.current.component(.hour, from: self)
+        nowComponents.minute = Calendar.current.component(.minute, from: self)
+        nowComponents.second = Calendar.current.component(.second, from: self)
         nowComponents.timeZone = TimeZone(abbreviation: timezone)!
         return calendar.date(from: nowComponents)! as Date
     }
     
-    func convertToLocalTime() -> Date {
-        return Date.convertToLocalFromTimeZone(self, timezone: "GMT")
+    var localTime: Date {
+        return self.convert(to: "GMT")
     }
     
     var minutes: Int {
@@ -130,12 +130,12 @@ extension Date {
         return minutes
     }
     
-    static func addMinutes(to date: Date, minutes: Int) -> Date {
-        return Calendar.current.date(byAdding: .minute, value: minutes, to: date)!
+    func add(minutes: Int) -> Date {
+        return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
     
-    static func roundDownToHour(_ date: Date) -> Date {
-        return Date.addMinutes(to: date, minutes: -date.minutes)
+    var roundedDownToHour: Date {
+        return self.add(minutes: -self.minutes)
     }
     
     private var ends11_59: Bool {
@@ -152,18 +152,24 @@ extension Date {
     
     func adjustFor11_59() -> Date {
         if ends11_59 {
-            return Date.addMinutes(to: self, minutes: 1)
+            return self.add(minutes: 1)
         }
         return self
     }
     
     func dateIn(days: Int) -> Date {
-        let today = Date()
-        let start = Calendar.current.startOfDay(for: today)
+        let start = Calendar.current.startOfDay(for: self)
         return Calendar.current.date(byAdding: .day, value: days, to: start)!
     }
     
     var tomorrow: Date {
         return self.dateIn(days: 1)
+    }
+}
+
+public extension LazyMapCollection  {
+    
+    func toArray() -> [Element]{
+        return Array(self)
     }
 }
