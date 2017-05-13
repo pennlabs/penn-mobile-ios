@@ -12,11 +12,9 @@ import UIKit
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        //this is a test
         
         self.navigationController?.navigationBar.tintColor = UIColor.navRed
         
-        //slide out menu stuff
         let revealController = SWRevealViewController()
         revealController.panGestureRecognizer()
         revealController.tapGestureRecognizer()
@@ -40,10 +38,16 @@ import UIKit
     
     func updateData() { }
     
-    var screenName: String?
+    var screenName: String? {
+        didSet {
+            title = screenName
+        }
+    }
     
-    func disablePan() {
-        pan(enabled: false)
+    var isPanEnabled: Bool = true {
+        didSet {
+            pan(enabled: isPanEnabled)
+        }
     }
     
     private func pan(enabled: Bool) {
@@ -57,10 +61,8 @@ class GenericViewController: UIViewController, Trackable {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
         self.navigationController?.navigationBar.tintColor = UIColor.navRed
         
-        //slide out menu stuff
         let revealController = SWRevealViewController()
         revealController.panGestureRecognizer()
         revealController.tapGestureRecognizer()
@@ -83,10 +85,15 @@ class GenericViewController: UIViewController, Trackable {
         pan(enabled: true)
     }
     
-    var screenName: String?
-    
-    func disablePan() {
-        pan(enabled: false)
+    var screenName: String? {
+        didSet {
+            title = screenName
+        }
+    }
+    var isPanEnabled: Bool = true {
+        didSet {
+            pan(enabled: isPanEnabled)
+        }
     }
     
     private func pan(enabled: Bool) {

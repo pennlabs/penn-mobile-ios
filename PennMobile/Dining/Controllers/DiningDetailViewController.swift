@@ -49,6 +49,6 @@ class DiningDetailViewController: GenericViewController {
         }
         
         self.screenName = diningHall.name
-        disablePan()
+        self.isPanEnabled = false
     }
 }

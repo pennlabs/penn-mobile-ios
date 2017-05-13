@@ -1,26 +1,12 @@
 //
 //  BookViewController.swift
-//  GSR
+//  PennMobile
 //
-//  Created by Yagil Burowski on 15/09/2016.
-//  Copyright © 2016 Yagil Burowski. All rights reserved.
+//  Created by Josh Doman on 4/20/17.
+//  Copyright © 2017 PennLabs. All rights reserved.
 //
 
 import UIKit
-
-protocol ShowsAlert {}
-
-extension ShowsAlert where Self: UIViewController {
-    func showAlert(withMsg: String, title: String = "Error", completion: (() -> Void)?) {
-        let alertController = UIAlertController(title: title, message: withMsg, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (_) in
-            if let completion = completion {
-                completion()
-            }
-        }))
-        present(alertController, animated: true, completion: nil)
-    }
-}
 
 protocol CollectionViewProtocol: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {}
 

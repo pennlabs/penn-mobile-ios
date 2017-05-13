@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		212209A51EC67B690038FB7F /* EmergencyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A41EC67B690038FB7F /* EmergencyController.swift */; };
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
 		216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640781EBADADA00746B8E /* PennMobileTests.swift */; };
@@ -34,7 +35,6 @@
 		216640BE1EBADC7300746B8E /* CredentialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640B91EBADC7300746B8E /* CredentialsViewController.swift */; };
 		216640BF1EBADC7300746B8E /* ProcessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640BA1EBADC7300746B8E /* ProcessViewController.swift */; };
 		216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C11EBADC9300746B8E /* GenericControllers.swift */; };
-		216640C51EBADC9300746B8E /* GenericProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C21EBADC9300746B8E /* GenericProtocols.swift */; };
 		216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C31EBADC9300746B8E /* GenericWebview.swift */; };
 		216640CC1EBADCA400746B8E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C91EBADCA400746B8E /* Extensions.swift */; };
 		216640CD1EBADCA400746B8E /* GoogleAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */; };
@@ -51,6 +51,8 @@
 		216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640FD1EBBA5A300746B8E /* NewsViewController.swift */; };
 		2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */; };
 		2190FD331EBBE2E100EC683C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2190FD321EBBE2E100EC683C /* GoogleService-Info.plist */; };
+		2190FD351EC625BB00EC683C /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2190FD341EC625BB00EC683C /* Protocols.swift */; };
+		2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2190FD3A1EC65E7800EC683C /* ContactManager.swift */; };
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
 		8D08ACB30BC0C29FD56CE14E /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */; };
 /* End PBXBuildFile section */
@@ -66,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		212209A41EC67B690038FB7F /* EmergencyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmergencyController.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		216640631EBADADA00746B8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2166406D1EBADADA00746B8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -99,7 +102,6 @@
 		216640B91EBADC7300746B8E /* CredentialsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialsViewController.swift; sourceTree = "<group>"; };
 		216640BA1EBADC7300746B8E /* ProcessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessViewController.swift; sourceTree = "<group>"; };
 		216640C11EBADC9300746B8E /* GenericControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericControllers.swift; sourceTree = "<group>"; };
-		216640C21EBADC9300746B8E /* GenericProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericProtocols.swift; sourceTree = "<group>"; };
 		216640C31EBADC9300746B8E /* GenericWebview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWebview.swift; sourceTree = "<group>"; };
 		216640C91EBADCA400746B8E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsManager.swift; sourceTree = "<group>"; };
@@ -126,6 +128,8 @@
 		216640FD1EBBA5A300746B8E /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = PennMobile/Assets.xcassets; sourceTree = "<group>"; };
 		2190FD321EBBE2E100EC683C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2190FD341EC625BB00EC683C /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		2190FD3A1EC65E7800EC683C /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		2B364FB5448C9559DDEB6B7C /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -327,7 +331,6 @@
 			isa = PBXGroup;
 			children = (
 				216640C11EBADC9300746B8E /* GenericControllers.swift */,
-				216640C21EBADC9300746B8E /* GenericProtocols.swift */,
 				216640C31EBADC9300746B8E /* GenericWebview.swift */,
 			);
 			path = Generics;
@@ -338,6 +341,7 @@
 			children = (
 				216640C01EBADC8000746B8E /* Generics */,
 				216640C91EBADCA400746B8E /* Extensions.swift */,
+				2190FD341EC625BB00EC683C /* Protocols.swift */,
 				216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */,
 			);
 			path = General;
@@ -385,6 +389,8 @@
 				216640F01EBB86A300746B8E /* SupportItem.m */,
 				216640F11EBB86A300746B8E /* SupportTableViewController.h */,
 				216640F21EBB86A300746B8E /* SupportTableViewController.m */,
+				212209A41EC67B690038FB7F /* EmergencyController.swift */,
+				2190FD3A1EC65E7800EC683C /* ContactManager.swift */,
 			);
 			path = Emergency;
 			sourceTree = "<group>";
@@ -633,8 +639,10 @@
 				216640AF1EBADC5E00746B8E /* Parser.swift in Sources */,
 				216640B11EBADC5E00746B8E /* Colors.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
+				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				216640E81EBB861000746B8E /* LaundryDetailViewController.m in Sources */,
+				212209A51EC67B690038FB7F /* EmergencyController.swift in Sources */,
 				216640A51EBADC5300746B8E /* TrackLayer.swift in Sources */,
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				216640A31EBADC5300746B8E /* TextLayer.swift in Sources */,
@@ -651,8 +659,8 @@
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				216640FC1EBB899900746B8E /* AboutViewController.m in Sources */,
 				216640B01EBADC5E00746B8E /* LocationsHandler.swift in Sources */,
+				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */,
-				216640C51EBADC9300746B8E /* GenericProtocols.swift in Sources */,
 				216640BD1EBADC7300746B8E /* BookViewControllerExtension.swift in Sources */,
 				216640971EBADC1700746B8E /* DiningModel.swift in Sources */,
 				216640BF1EBADC7300746B8E /* ProcessViewController.swift in Sources */,
@@ -799,6 +807,7 @@
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -818,6 +827,7 @@
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
