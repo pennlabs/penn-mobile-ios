@@ -35,17 +35,6 @@ class BookViewController: GenericViewController, ShowsAlert {
         return rs
     }()
     
-    private func getStringTimeFromValue(_ val: Int) -> String? {
-        let formatter = Parser.formatter
-        let totalMinutes = CGFloat(earliestTime.minutesFrom(date: endDate))
-        let minutes = Int((CGFloat(val) / 100.0) * totalMinutes)
-        let chosenDate = earliestTime.add(minutes: minutes)
-        formatter.amSymbol = "a"
-        formatter.pmSymbol = "p"
-        formatter.dateFormat = "ha"
-        return formatter.string(from: chosenDate)
-    }
-    
     internal var earliestTime: Date = Parser.midnight
     internal var endDate: Date = Parser.midnight.tomorrow
     
@@ -62,7 +51,7 @@ class BookViewController: GenericViewController, ShowsAlert {
     internal lazy var currentDate : GSRDate = self.dates[0]
     internal lazy var currentLocation : GSRLocation = self.locations[0]
     
-    var currentSelection : Set<GSRHour>? = Set() {
+    var currentSelection : Set<GSRHour> = Set() {
         didSet {
             refreshLoginLogout()
         }
@@ -107,7 +96,7 @@ class BookViewController: GenericViewController, ShowsAlert {
             let strFormat = formatter.string(from: now)
             earliestTime = formatter.date(from: strFormat)!.roundedDownToHour
         } else {
-            earliestTime = locationRoomData.firstOpening
+            earliestTime = locationRoomData.firstOpening.roundedDownToHour
         }
     }
     
@@ -122,26 +111,34 @@ class BookViewController: GenericViewController, ShowsAlert {
             let totalMinutes = CGFloat(self.earliestTime.minutesFrom(date: self.endDate))
             let minMinutes = (Int((CGFloat(min) / 100.0) * totalMinutes) / 60) * 60
             let maxMinutes = (Int((CGFloat(max) / 100.0) * totalMinutes) / 60) * 60
-            self.minDate = self.earliestTime.add(minutes: minMinutes).localTime
-            self.maxDate = self.earliestTime.add(minutes: maxMinutes).localTime
+            self.minDate = self.earliestTime.add(minutes: minMinutes).localTime.roundedDownToHour
+            self.maxDate = self.earliestTime.add(minutes: maxMinutes).localTime.roundedDownToHour
             self.reloadParsedData()
         }
+    }
+    
+    private func getStringTimeFromValue(_ val: Int) -> String? {
+        let formatter = Parser.formatter
+        let totalMinutes = CGFloat(earliestTime.minutesFrom(date: endDate))
+        let minutes = Int((CGFloat(val) / 100.0) * totalMinutes)
+        let chosenDate = earliestTime.add(minutes: minutes)
+        formatter.amSymbol = "a"
+        formatter.pmSymbol = "p"
+        formatter.dateFormat = "ha"
+        return formatter.string(from: chosenDate)
     }
     
     private func reloadParsedData() {
         self.parsedRoomData = locationRoomData.parse(from: self.minDate, to: self.maxDate)
         self.sortedKeys = self.parsedRoomData.sortedKeys
         setEarliestTime()
-        self.currentSelection?.removeAll()
+        self.currentSelection.removeAll()
         self.tableView.reloadData()
     }
     
     internal var loginLogoutButtonTitle: String {
         get {
-            if !(currentSelection?.isEmpty)! {
-                return "Submit"
-            }
-            return isLoggedIn ? "Logout" : "Login"
+            return currentSelection.isEmpty ? isLoggedIn ? "Logout" : "Login" : "Submit"
         }
     }
     
@@ -152,9 +149,6 @@ class BookViewController: GenericViewController, ShowsAlert {
     
     private func setupView() {
         self.title = "Study Room Booking"
-        navigationItem.title = title
-        
-        view.backgroundColor = .white
         
         view.addSubview(pickerView)
         view.addSubview(tableView)
@@ -173,7 +167,6 @@ class BookViewController: GenericViewController, ShowsAlert {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         dates = DateHandler.getDates()
-        
         setEarliestTime()
         refreshContent()
         
@@ -195,7 +188,7 @@ class BookViewController: GenericViewController, ShowsAlert {
                 DispatchQueue.main.async(execute: {
                     self.activityIndicator.stopAnimating()
                     self.locationRoomData = Parser.getAvailableTimeSlots(res as! String)
-                    self.endDate = self.locationRoomData.lastOpening
+                    self.endDate = self.locationRoomData.lastOpening.roundedDownToHour
                     self.setEarliestTime()
                     self.rangeSlider.reload()
                     self.reloadParsedData()
@@ -227,7 +220,7 @@ class BookViewController: GenericViewController, ShowsAlert {
                 destination.date = currentDate
                 destination.ids = [Int]()
                 
-                for selection in currentSelection! {
+                for selection in currentSelection {
                     destination.ids!.append(selection.id)
                 }
                 
@@ -240,7 +233,7 @@ class BookViewController: GenericViewController, ShowsAlert {
     }
     
     internal func handleLoginLogout(_ sender: UIButton) {
-        if !(currentSelection?.isEmpty)! {
+        if !currentSelection.isEmpty {
             submitSelection()
         } else if isLoggedIn {
             let defaults = UserDefaults.standard

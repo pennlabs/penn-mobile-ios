@@ -60,7 +60,7 @@ extension BookViewController: CollectionViewProtocol {
         cell.hour = hour
         cell.tag = hour.id
         
-        if ((currentSelection?.contains(hour)) == true) {
+        if currentSelection.contains(hour) == true {
             cell.backgroundColor = Colors.blue.color()
         } else {
             cell.backgroundColor = Colors.green.color()
@@ -87,17 +87,17 @@ extension BookViewController: CollectionViewProtocol {
     // MARK: - Validation & Submission methods
     
     internal func validateChoice(_ collectionView: UICollectionView, indexPath: IndexPath) -> Bool{
-        if (currentSelection!.count >= 4) {
+        if currentSelection.count >= 4 {
             showAlert(withMsg: "You can choose a maximum of 4 slots", title: "Can't do that.", completion: nil)
             return false
-        } else if (currentSelection!.count == 0) {
+        } else if currentSelection.count == 0 {
             return true
         }
         
         let room = Array(sortedKeys)[collectionView.tag]
         let hour = parsedRoomData[room]![indexPath.row]
         
-        if (currentSelection?.contains(hour) == true) {
+        if currentSelection.contains(hour) == true {
             handleSelection(collectionView, indexPath: indexPath, action: Selection.remove)
             showAlert(withMsg: "You can only choose consecutive times", title: "Can't do that.", completion: nil)
             return false
@@ -108,7 +108,7 @@ extension BookViewController: CollectionViewProtocol {
     
     internal func isChoiceAllowed(_ hour: GSRHour) -> Bool {
         var flag = false
-        for selection in currentSelection! {
+        for selection in currentSelection {
             flag =                       flag ||
                 hour.id == selection.prev?.id ||
                 hour.id == selection.next?.id
@@ -117,11 +117,11 @@ extension BookViewController: CollectionViewProtocol {
     }
     
     internal func validateSubmission() -> Bool {
-        if (currentSelection!.count == 1) {
+        if currentSelection.count == 1 {
             return true
         }
         
-        for selection in currentSelection! {
+        for selection in currentSelection {
             if (isChoiceAllowed(selection) == false) {
                 return false
             }
@@ -139,11 +139,11 @@ extension BookViewController: CollectionViewProtocol {
         
         switch action {
         case .add:
-            currentSelection?.insert(hour)
+            currentSelection.insert(hour)
             cell.backgroundColor = Colors.blue.color()
             break
         case .remove:
-            currentSelection?.remove(hour)
+            currentSelection.remove(hour)
             cell.backgroundColor = Colors.green.color()
             break
         }
@@ -152,7 +152,7 @@ extension BookViewController: CollectionViewProtocol {
     internal func getSelectionIds() -> [Int] {
         var ids = [Int]()
         
-        for selection in currentSelection! {
+        for selection in currentSelection {
             ids.append(selection.id)
         }
         

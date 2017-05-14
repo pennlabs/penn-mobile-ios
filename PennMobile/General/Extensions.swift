@@ -135,6 +135,7 @@ extension Date {
     }
     
     var roundedDownToHour: Date {
+        print(self.minutes)
         return self.add(minutes: -self.minutes)
     }
     
