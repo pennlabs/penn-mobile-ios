@@ -9,20 +9,24 @@
 import Foundation
 
 class Parser {
+    static var formatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mma"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }
+    
+    static let midnight: Date = getDateFromTime(time: "12:00am")
+    
     static func parseJSON(_ JSON: Any) -> NSDictionary {
         return JSON as! NSDictionary
     }
     
     static func getDateFromTime(time: String) -> Date {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mma"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        let date = formatter.date(from: time)!
-        return Date.convertToLocalFromTimeZone(date, timezone: "GMT")
+        return formatter.date(from: time)!
     }
     
-    static func getAvailableTimeSlots(_ rawHTML : String, startDate: Date, endDate: Date) -> Dictionary<String, [GSRHour]> {
-        
+    static func getAvailableTimeSlots(_ rawHTML : String) -> Dictionary<String, [GSRHour]> {
         var timeSlots = Dictionary<String, [GSRHour]>()
         
         let aTags = getATags(rawHTML) as NSArray
@@ -37,30 +41,25 @@ class Parser {
                 roomHours = hours
             }
             
-            let startHour = getDateFromTime(time: start)
-
-            if startDate <= startHour && startHour < endDate {
-                let id = getAttributeFromTag("id", rawTag: tag as! String)
+            let id = getAttributeFromTag("id", rawTag: tag as! String)
+            
+            let hour = GSRHour(id: Int(id)!, start: start, end: end, prev: nil)
+            
+            let index = roomHours.count
+            
+            if (index > 0) {
                 
-                let hour = GSRHour(id: Int(id)!, start: start, end: end, prev: nil)
+                let prev = roomHours[index - 1]
                 
-                let index = roomHours.count
-                
-                if (index > 0) {
-                    
-                    let prev = roomHours[index - 1]
-                    
-                    if (hour.id == prev.id + 1) {
-                        hour.prev = prev
-                        prev.next = hour
-                    }
+                if (hour.id == prev.id + 1) {
+                    hour.prev = prev
+                    prev.next = hour
                 }
-                
-                roomHours.append(hour)
-                timeSlots[room] = roomHours //ensures only rooms with available times get shown
             }
+            
+            roomHours.append(hour)
+            timeSlots[room] = roomHours
         }
-        
         return timeSlots
     }
     
@@ -110,7 +109,6 @@ class Parser {
                                                 options: [], range: NSMakeRange(0, nsString.length))
             return results.map { nsString.substring(with: $0.range)}
         } catch _ as NSError {
-//            print("invalid regex: \(error.localizedDescription)")
             return []
         }
     }

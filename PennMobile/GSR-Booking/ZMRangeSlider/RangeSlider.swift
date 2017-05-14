@@ -2,7 +2,8 @@ import UIKit
 
 @IBDesignable
 open class RangeSlider: UIControl {
-
+    
+    public typealias BeganEditingCallback = () -> Void
     public typealias ValueChangedCallback = (_ minValue: Int, _ maxValue: Int) -> Void
     public typealias ValueFinishedChangingCallback = (_ minValue: Int, _ maxValue: Int) -> Void
     public typealias MinValueDisplayTextGetter = (_ minValue: Int) -> String?
@@ -17,6 +18,7 @@ open class RangeSlider: UIControl {
     fileprivate var beginTrackLocation = CGPoint.zero
     fileprivate var rangeValues = Array(0...100)
 
+    fileprivate var beganEditingCallback: BeganEditingCallback?
     fileprivate var valueChangedCallback: ValueChangedCallback?
     fileprivate var valueFinishedChangingCallback: ValueFinishedChangingCallback?
     fileprivate var minValueDisplayTextGetter: MinValueDisplayTextGetter?
@@ -111,13 +113,13 @@ open class RangeSlider: UIControl {
     }
 
     open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        beganEditingCallback?()
         beginTrackLocation = touch.location(in: self)
         if minValueThumbLayer.frame.contains(beginTrackLocation) {
             minValueThumbLayer.isHighlight = true
         } else if maxValueThumbLayer.frame.contains(beginTrackLocation) {
             maxValueThumbLayer.isHighlight = true
         }
-
         return minValueThumbLayer.isHighlight || maxValueThumbLayer.isHighlight
     }
 
@@ -172,7 +174,11 @@ open class RangeSlider: UIControl {
         self.maxValue = maxValue
         updateLayerFrames()
     }
-
+    
+    open func setBeganEditingCallback(_ callback: BeganEditingCallback?) {
+        self.beganEditingCallback = callback
+    }
+    
     open func setValueChangedCallback(_ callback: ValueChangedCallback?) {
         self.valueChangedCallback = callback
     }

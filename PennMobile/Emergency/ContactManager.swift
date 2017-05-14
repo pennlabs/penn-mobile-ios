@@ -58,8 +58,7 @@ class ContactManager: NSObject {
         do{
             let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: toFetch)
             guard contacts.count > 0 else{
-                print("No contacts found")
-                callback(true)
+                callback(true) //no contacts found
                 return
             }
             
@@ -70,15 +69,12 @@ class ContactManager: NSObject {
                 
                 do {
                     try store.execute(req)
-                    print("Success, You deleted the user")
-                    callback(true)
-                } catch let e {
-                    print("Error = \(e)")
+                    callback(true) //successfully deleted user
+                } catch {
                     callback(false)
                 }
             }
         } catch let err{
-            print(err)
             callback(false)
         }
     }

@@ -10,7 +10,7 @@ import Foundation
 
 
 class GSRNetworkManager: NSObject {
-    static let availUrl = "http://libcal.library.upenn.edu/process_roombookings.php"
+    let availUrl = "http://libcal.library.upenn.edu/process_roombookings.php"
     
     public typealias AuthenticateCallback = (_ isValid: Bool) -> Void
     fileprivate var authenticateCallback: AuthenticateCallback?
@@ -24,7 +24,9 @@ class GSRNetworkManager: NSObject {
         return URLSession.shared
     }()
     
-    var doNotBook = false
+    var doNotBook: Bool {
+        return authenticateCallback != nil
+    }
     
     static let shared = GSRNetworkManager()
     
@@ -38,7 +40,7 @@ class GSRNetworkManager: NSObject {
     
     //static private func isGoodAuthentication(_ dataString: String
     
-    static func getHours(_ date: String, gid: Int, callback: @escaping (AnyObject) -> ()) {
+    func getHours(_ date: String, gid: Int, callback: @escaping (AnyObject) -> ()) {
         let headers = [
             "Referer": "http://libcal.library.upenn.edu/booking/vpdlc"
         ]
@@ -66,20 +68,16 @@ class GSRNetworkManager: NSObject {
         task.resume()
     }
     
-    // MARK: - crazy experiemnt
-    
     private func getValidRoom(callback: @escaping (_ gid: Int?, _ ids: [Int]?, _ error: Error?) -> ()) {
         guard let date = DateHandler.getDates().last?.compact, let gid = LocationsHandler.getLocations().first?.code else { return }
         
-        GSRNetworkManager.getHours(date, gid: gid) {
+        self.getHours(date, gid: gid) {
             (res: AnyObject) in
             
             if (res is NSError) {
                 callback(nil, nil, res as? Error)
             } else {
-                let minDate = Parser.getDateFromTime(time: "12:00am")
-                let maxDate = Parser.getDateFromTime(time: "11:59pm")
-                let roomData = Parser.getAvailableTimeSlots(res as! String, startDate: minDate, endDate: maxDate)
+                let roomData = Parser.getAvailableTimeSlots(res as! String)
                 let dictIndex: Int = Int(arc4random_uniform(UInt32(roomData.count)))
                 let randomRoom = Array(roomData.values)[dictIndex]
                 let hourIndex: Int = Int(arc4random_uniform(UInt32(randomRoom.count)))
@@ -94,7 +92,6 @@ class GSRNetworkManager: NSObject {
             self.password = password
             self.gid = gid
             self.ids = ids
-            self.doNotBook = true
             
             self.authenticateCallback = callback
             self.bookSelection()
