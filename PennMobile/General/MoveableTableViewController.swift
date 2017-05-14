@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MoveableDelegate {
+    func rowMoved(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath)
+}
+
 class MoveableTableViewController: UITableViewController {
     public typealias FinishedMovingCallback = () -> Void
     
@@ -16,7 +20,7 @@ class MoveableTableViewController: UITableViewController {
     fileprivate var cellSnapshot: UIView?
     fileprivate var finishedMovingCallback: FinishedMovingCallback?
     
-    var isMoveable: Bool = false {
+    internal var isMoveable: Bool = false {
         didSet {
             if isMoveable {
                 addLongPressGesture()
@@ -27,7 +31,7 @@ class MoveableTableViewController: UITableViewController {
         }
     }
     
-    internal func rowMoved(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {}
+    internal var moveDelegate: MoveableDelegate?
     
     internal func setFinishedMovingCell(_ callback: FinishedMovingCallback?) {
         self.finishedMovingCallback = callback
@@ -78,7 +82,7 @@ extension MoveableTableViewController {
             cellSnapshot?.center = center!
             
             if ((indexPath != nil) && (indexPath != initialIndexPath)) {
-                rowMoved(from: initialIndexPath!, to: indexPath!)
+                moveDelegate?.rowMoved(from: initialIndexPath!, to: indexPath!)
                 tableView.moveRow(at: initialIndexPath!, to: indexPath!)
                 initialIndexPath = indexPath
             }
