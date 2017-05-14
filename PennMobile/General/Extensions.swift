@@ -56,7 +56,6 @@ extension UIView {
         
         return anchors
     }
-    
 }
 
 extension UIColor {
@@ -178,4 +177,9 @@ extension UIViewController {
     var isVisible: Bool {
         return self.isViewLoaded && self.view.window != nil
     }
+}
+
+extension UIFont {
+    static let helvetica = UIFont(name: "HelveticaNeue", size: 12)
+    static let helveticaLight = UIFont(name: "HelveticaNeue-Light", size: 12)
 }

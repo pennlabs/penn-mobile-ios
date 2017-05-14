@@ -31,7 +31,7 @@ class DiningNetworkManager {
     private static func getDiningHallFromData(info: [String: AnyObject], diningHalls: [DiningHall]) -> [DiningHall] {
         var newDiningHalls = [DiningHall]()
         
-        let today = Date.currentLocalDate //get current time in local time
+        let today = Date.currentLocalDate //get current local time
         
         for var hall in diningHalls {
             hall.timeRemaining = 0 //set default time remaining to be zero (closed)

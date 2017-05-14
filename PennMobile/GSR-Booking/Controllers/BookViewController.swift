@@ -12,6 +12,8 @@ protocol CollectionViewProtocol: UICollectionViewDelegate, UICollectionViewDataS
 
 class BookViewController: GenericViewController, ShowsAlert {
     
+    fileprivate let emptyView = EmptyView()
+    
     internal var activityIndicator: UIActivityIndicatorView = {
         let ai = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         ai.activityIndicatorViewStyle = .gray
@@ -133,6 +135,7 @@ class BookViewController: GenericViewController, ShowsAlert {
         self.sortedKeys = self.parsedRoomData.sortedKeys
         setEarliestTime()
         self.currentSelection.removeAll()
+        tableView.isHidden = parsedRoomData.isEmpty
         self.tableView.reloadData()
     }
     
@@ -150,6 +153,7 @@ class BookViewController: GenericViewController, ShowsAlert {
     private func setupView() {
         self.title = "Study Room Booking"
         
+        view.addSubview(emptyView)
         view.addSubview(pickerView)
         view.addSubview(tableView)
         view.addSubview(rangeSlider)
@@ -159,7 +163,9 @@ class BookViewController: GenericViewController, ShowsAlert {
         
         _ = rangeSlider.anchor(pickerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 30)
         
-        _ = tableView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = emptyView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        tableView.anchorToTop(emptyView.topAnchor, left: emptyView.leftAnchor, bottom: emptyView.bottomAnchor, right: emptyView.rightAnchor)
         
         navigationItem.rightBarButtonItems = [loginLogoutButton, UIBarButtonItem(customView: activityIndicator)]
     }
