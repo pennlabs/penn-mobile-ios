@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let gai = GAI.sharedInstance()
         gai?.trackUncaughtExceptions = true
-        gai?.dryRun = true //remove for production release
+        gai?.dryRun = true //prevents analytics from being sent, must remove when preparing for release
         
         navController = UINavigationController(rootViewController: homeController)
         navController.isNavigationBarHidden = true
