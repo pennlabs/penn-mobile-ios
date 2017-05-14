@@ -109,7 +109,6 @@ class Parser {
                                                 options: [], range: NSMakeRange(0, nsString.length))
             return results.map { nsString.substring(with: $0.range)}
         } catch _ as NSError {
-//            print("invalid regex: \(error.localizedDescription)")
             return []
         }
     }

@@ -76,9 +76,10 @@ extension EmergencyController {
                 }
                 
                 if UIApplication.shared.canOpenURL(settingsUrl) {
-                    UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                        print("Settings opened: \(success)") // Prints true
-                        self.updateAddRemoveButton()
+                    UIApplication.shared.open(settingsUrl, completionHandler: { (successful) in
+                        if successful {
+                            self.updateAddRemoveButton()
+                        }
                     })
                 }
             }))
