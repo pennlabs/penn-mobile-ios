@@ -35,7 +35,7 @@ class DiningControllerCell: UITableViewCell {
     
     private let label: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: 15.5)
+        label.font = UIFont.helvetica?.withSize(15.5)
         label.textColor = UIColor.warmGrey
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -44,7 +44,7 @@ class DiningControllerCell: UITableViewCell {
     private let openLabel: UILabel = {
         let label = UILabel()
         label.text = "Open"
-        label.font = UIFont(name: "HelveticaNeue-Light", size: 13)
+        label.font = UIFont.helveticaLight?.withSize(13)
         label.textColor = .white
         label.backgroundColor = UIColor.coral
         label.layer.cornerRadius = 4
@@ -56,7 +56,7 @@ class DiningControllerCell: UITableViewCell {
     private let timesLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.warmGrey
-        label.font = UIFont(name: "HelveticaNeue-Light", size: 12)
+        label.font = UIFont.helveticaLight?.withSize(12)
         return label
     }()
     

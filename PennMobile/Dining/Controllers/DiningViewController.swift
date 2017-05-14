@@ -133,7 +133,7 @@ private class DiningHeaderView: UITableViewHeaderFooterView {
     
     private let label: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+        label.font = UIFont.helveticaLight?.withSize(18)
         label.textColor = UIColor.warmGrey
         return label
     }()

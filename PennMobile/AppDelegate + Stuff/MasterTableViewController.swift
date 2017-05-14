@@ -18,7 +18,7 @@ class ControllerSettings: NSObject {
         dict["Study Room Booking"] = BookViewController()
         dict["Laundry"] = LaundryTableViewController()
         dict["News"] = NewsViewController()
-        dict["Emergency"] = EmergencyController()
+        dict["Contacts"] = EmergencyController()
         dict["About"] = AboutViewController()
         return dict
     }()
@@ -30,7 +30,9 @@ class ControllerSettings: NSObject {
     }
     
     var displayNames: [String] {
-        return UserDefaults.standard.stringArray(forKey: "Controller settings") ?? vcDictionary.keys.toArray()
+        if justUpdated && newViewControllerAdded { } //insert new view controller into UserDefaults array here
+        return UserDefaults.standard.stringArray(forKey: "Controller settings") ??
+            ["Dining", "Study Room Booking", "Laundry", "News", "Contacts", "About"]
     }
     
     func viewController(for title: String) -> UIViewController {
@@ -40,6 +42,15 @@ class ControllerSettings: NSObject {
     var firstController: UIViewController {
         return viewControllers.first!
     }
+    
+    private var justUpdated: Bool {
+        let currentVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        let previousVersion = UserDefaults.standard.value(forKey: "CFBundleVersion") as? String
+        UserDefaults.standard.set(currentVersion, forKey: "CFBundleVersion")
+        return previousVersion != currentVersion
+    }
+    
+    private let newViewControllerAdded: Bool = false
 }
 
 class MasterTableViewController: MoveableTableViewController {
