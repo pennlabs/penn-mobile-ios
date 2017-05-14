@@ -10,7 +10,7 @@ import UIKit
 
 protocol CollectionViewProtocol: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {}
 
-class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, ShowsAlert {
+class BookViewController: GenericViewController, ShowsAlert {
     
     internal var activityIndicator: UIActivityIndicatorView = {
         let ai = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
@@ -37,39 +37,30 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     
     private func getStringTimeFromValue(_ val: Int) -> String? {
         let formatter = Parser.formatter
-        guard let startDate = earliestDate else { return nil }
-        let totalMinutes = CGFloat(startDate.minutesFrom(date: endDate))
+        let totalMinutes = CGFloat(earliestTime.minutesFrom(date: endDate))
         let minutes = Int((CGFloat(val) / 100.0) * totalMinutes)
-        let chosenDate = startDate.add(minutes: minutes)
+        let chosenDate = earliestTime.add(minutes: minutes)
         formatter.amSymbol = "a"
         formatter.pmSymbol = "p"
         formatter.dateFormat = "ha"
         return formatter.string(from: chosenDate)
     }
     
-    internal var earliestDate: Date!
+    internal var earliestTime: Date = Parser.midnight
     internal var endDate: Date = Parser.midnight.tomorrow
     
-    internal var minDate: Date!
+    internal var minDate: Date = Parser.midnight
     internal var maxDate: Date = Parser.midnight.tomorrow
     
     internal lazy var dates : [GSRDate] = DateHandler.getDates()
-    
     internal lazy var locations : [GSRLocation] = LocationsHandler.getLocations()
     
-    internal var roomData = Dictionary<String, [GSRHour]>()
+    internal var locationRoomData = Dictionary<String, [GSRHour]>()
+    internal var parsedRoomData = Dictionary<String, [GSRHour]>()
     internal var sortedKeys = [String]()
     
-    var currentDate : GSRDate? {
-        didSet {
-            setEarliestTime()
-            rangeSlider.reload()
-        }
-    }
-    
-    lazy var currentLocation : GSRLocation? = {
-        return self.locations[0]
-    }()
+    internal lazy var currentDate : GSRDate = self.dates[0]
+    internal lazy var currentLocation : GSRLocation = self.locations[0]
     
     var currentSelection : Set<GSRHour>? = Set() {
         didSet {
@@ -77,8 +68,8 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
         }
     }
     
-    private let roomCell = "roomCell"
-    let cellSize: CGFloat = 100
+    internal let roomCell = "roomCell"
+    internal let cellSize: CGFloat = 100
     
     internal lazy var tableView: UITableView = {
         let tv = UITableView(frame: .zero)
@@ -105,48 +96,44 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
         self.screenName = "Study Room Booking"
         setupView()
         setupSlider()
-        currentDate = dates[0]
-        minDate = earliestDate.localTime
+        setEarliestTime()
+        minDate = earliestTime.localTime
     }
     
     internal func setEarliestTime() {
-        if dates.count > 0 && currentDate?.compact == dates[0].compact {
+        if dates.count > 0 && currentDate.compact == dates[0].compact {
             let now = Date()
             let formatter = Parser.formatter
             let strFormat = formatter.string(from: now)
-            earliestDate = formatter.date(from: strFormat)!.roundedDownToHour
+            earliestTime = formatter.date(from: strFormat)!.roundedDownToHour
         } else {
-            earliestDate = Parser.midnight
+            earliestTime = locationRoomData.firstOpening
         }
     }
     
     private func setupSlider() {
         rangeSlider.setMinValueDisplayTextGetter { (minValue) -> String? in
-            return self.getStringTimeFromValue(minValue)
-            
+            return self.locationRoomData.isEmpty ? "" : self.getStringTimeFromValue(minValue)
         }
         rangeSlider.setMaxValueDisplayTextGetter { (maxValue) -> String? in
-            return self.getStringTimeFromValue(maxValue)
+            return self.locationRoomData.isEmpty ? "" : self.getStringTimeFromValue(maxValue)
         }
         rangeSlider.setValueFinishedChangingCallback { (min, max) in
-            self.refreshContent()
-            let startDate = self.earliestDate!
-            let totalMinutes = CGFloat(startDate.minutesFrom(date: self.endDate))
+            let totalMinutes = CGFloat(self.earliestTime.minutesFrom(date: self.endDate))
             let minMinutes = (Int((CGFloat(min) / 100.0) * totalMinutes) / 60) * 60
             let maxMinutes = (Int((CGFloat(max) / 100.0) * totalMinutes) / 60) * 60
-            self.minDate = startDate.add(minutes: minMinutes).localTime
-            self.maxDate = startDate.add(minutes: maxMinutes).localTime
-        }
-        rangeSlider.setBeganEditingCallback { 
-            if self.activityIndicator.isAnimating {
-                self.activityIndicator.stopAnimating()
-                GSRNetworkManager.shared.session.reset {} //invalidates getRoom request
-            }
+            self.minDate = self.earliestTime.add(minutes: minMinutes).localTime
+            self.maxDate = self.earliestTime.add(minutes: maxMinutes).localTime
+            self.reloadParsedData()
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    private func reloadParsedData() {
+        self.parsedRoomData = locationRoomData.parse(from: self.minDate, to: self.maxDate)
+        self.sortedKeys = self.parsedRoomData.sortedKeys
+        setEarliestTime()
+        self.currentSelection?.removeAll()
+        self.tableView.reloadData()
     }
     
     internal var loginLogoutButtonTitle: String {
@@ -186,139 +173,33 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         dates = DateHandler.getDates()
+        
         setEarliestTime()
         refreshContent()
         
         revealViewController().panGestureRecognizer().delegate = self
     }
-
-    override func awakeFromNib() {
-        // init properties
-        super.awakeFromNib()
-        refreshContent()
-    }
-    
-    // MARK: - Picker view methods
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        switch component {
-        case 0:
-            return dates.count
-        case 1:
-            return locations.count
-        default:
-            return 0
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        switch component {
-        case 0:
-            currentDate = dates[row]
-            break
-        case 1:
-            currentLocation = locations[row]
-            break
-        default:
-            break
-        }
-        
-        refreshContent()
-        
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        switch component {
-        case 0:
-            if (row == 0) {
-                return "Today"
-            } else if (row == 1) {
-                return "Tomorrow"
-            }
-            return dates[row].compact
-        case 1:
-            return locations[row].name
-        default:
-            return ""
-        }
-    }
-    
-    // MARK: - Table view methods
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return roomData.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return Array(roomData.sortedKeys)[section]
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: roomCell,
-                                                               for: indexPath)
-        
-        return cell
-    }
-    
-    // MARK: - CollectionView Related Methods
-    
-    func tableView(_ tableView: UITableView,
-                            willDisplay cell: UITableViewCell,
-                                            forRowAt indexPath: IndexPath) {
-        
-        guard let tableViewCell = cell as? RoomCell else { return }
-        
-        tableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forSection: indexPath.section)
-        tableViewCell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView,
-                            didEndDisplaying cell: UITableViewCell,
-                                                 forRowAt indexPath: IndexPath) {
-        
-        guard let tableViewCell = cell as? RoomCell else { return }
-        
-        storedOffsets[indexPath.row] = tableViewCell.collectionViewOffset
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellSize
-    }
     
     // MARK: - Data Methods
 
     func refreshContent() {
-        self.refreshLoginLogout()
         self.activityIndicator.startAnimating()
         
-        if minDate == nil {
-            return
-        }
-        
-        DispatchQueue.global().async {
-            GSRNetworkManager.shared.getHours((self.currentDate?.compact)!, gid: (self.currentLocation?.code)!) {
-                (res: AnyObject) in
-                
-                if (res is NSError) {
-                    self.showAlert(withMsg: "Can't communicate with the server", title: "Oops", completion: nil)
+        GSRNetworkManager.shared.getHours(self.currentDate.compact, gid: self.currentLocation.code) {
+            (res: AnyObject) in
+            
+            if (res is NSError) {
+                self.showAlert(withMsg: "Can't communicate with the server", title: "Oops", completion: nil)
+                self.activityIndicator.stopAnimating()
+            } else {
+                DispatchQueue.main.async(execute: {
                     self.activityIndicator.stopAnimating()
-                } else {
-                    DispatchQueue.main.async(execute: {
-                        self.activityIndicator.stopAnimating()
-                        self.roomData = Parser.getAvailableTimeSlots(res as! String, startDate: self.minDate, endDate: self.maxDate)
-                        self.sortedKeys = self.roomData.sortedKeys
-                        self.currentSelection?.removeAll()
-                        self.tableView.reloadData()
-                    })
-                }
+                    self.locationRoomData = Parser.getAvailableTimeSlots(res as! String)
+                    self.endDate = self.locationRoomData.lastOpening
+                    self.setEarliestTime()
+                    self.rangeSlider.reload()
+                    self.reloadParsedData()
+                })
             }
         }
     }
@@ -377,6 +258,100 @@ class BookViewController: GenericViewController, UIPickerViewDelegate, UIPickerV
         self.loginLogoutButton.tintColor = .clear
         loginLogoutButton.title = loginLogoutButtonTitle
         self.loginLogoutButton.tintColor = nil
+    }
+}
+
+// MARK: - Picker view methods
+
+extension BookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 2
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch component {
+        case 0:
+            return dates.count
+        case 1:
+            return locations.count
+        default:
+            return 0
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch component {
+        case 0:
+            currentDate = dates[row]
+            break
+        case 1:
+            currentLocation = locations[row]
+            break
+        default:
+            break
+        }
+        
+        refreshContent()
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch component {
+        case 0:
+            if (row == 0) {
+                return "Today"
+            } else if (row == 1) {
+                return "Tomorrow"
+            }
+            return dates[row].compact
+        case 1:
+            return locations[row].name
+        default:
+            return ""
+        }
+    }
+}
+
+// MARK: - Table view methods
+
+extension BookViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return parsedRoomData.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sortedKeys[section]
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return tableView.dequeueReusableCell(withIdentifier: roomCell,
+                                             for: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+        
+        guard let tableViewCell = cell as? RoomCell else { return }
+        
+        tableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forSection: indexPath.section)
+        tableViewCell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   didEndDisplaying cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+        
+        guard let tableViewCell = cell as? RoomCell else { return }
+        
+        storedOffsets[indexPath.row] = tableViewCell.collectionViewOffset
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellSize
     }
 }
 

@@ -79,10 +79,24 @@ extension Dictionary where Key == String, Value == [GSRHour] {
         }
     }
     
-    var lastOpening: Date? {
+    var firstOpening: Date {
+        get {
+            if self.isEmpty { return Parser.midnight }
+            var tempEarliestTime = Parser.midnight.tomorrow
+            self.forEach { (_, value) in
+                if let firstHour = value.first {
+                    let firstTime = Parser.getDateFromTime(time: firstHour.start)
+                    tempEarliestTime = Swift.min(firstTime, tempEarliestTime)
+                }
+            }
+            return tempEarliestTime
+        }
+    }
+    
+    var lastOpening: Date {
         get {
             if self.isEmpty { return Parser.midnight.tomorrow }
-            var tempLastEndtime = Parser.getDateFromTime(time: "12:00am")
+            var tempLastEndtime = Parser.midnight
             for key in keys {
                 guard let gsrArr = self[key], let lastHour = gsrArr.last else { continue }
                 let lastEndTime = Parser.getDateFromTime(time: lastHour.end)
@@ -90,5 +104,17 @@ extension Dictionary where Key == String, Value == [GSRHour] {
             }
             return tempLastEndtime
         }
+    }
+    
+    func parse(from start: Date, to end: Date) -> Dictionary<String, [GSRHour]> {
+        var timeSlots = Dictionary<String, [GSRHour]>()
+        for (key, value) in self {
+            let arr = value.filter({ (hour) -> Bool in
+                let startHour = Parser.getDateFromTime(time: hour.start).localTime
+                return start <= startHour && startHour < end
+            })
+            timeSlots[key] = arr.isEmpty ? nil : arr
+        }
+        return timeSlots
     }
 }

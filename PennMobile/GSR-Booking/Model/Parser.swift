@@ -26,7 +26,7 @@ class Parser {
         return formatter.date(from: time)!
     }
     
-    static func getAvailableTimeSlots(_ rawHTML : String, startDate: Date, endDate: Date) -> Dictionary<String, [GSRHour]> {
+    static func getAvailableTimeSlots(_ rawHTML : String) -> Dictionary<String, [GSRHour]> {
         var timeSlots = Dictionary<String, [GSRHour]>()
         
         let aTags = getATags(rawHTML) as NSArray
@@ -41,28 +41,24 @@ class Parser {
                 roomHours = hours
             }
             
-            let startHour = getDateFromTime(time: start).localTime
+            let id = getAttributeFromTag("id", rawTag: tag as! String)
             
-            if startDate <= startHour && startHour < endDate {
-                let id = getAttributeFromTag("id", rawTag: tag as! String)
+            let hour = GSRHour(id: Int(id)!, start: start, end: end, prev: nil)
+            
+            let index = roomHours.count
+            
+            if (index > 0) {
                 
-                let hour = GSRHour(id: Int(id)!, start: start, end: end, prev: nil)
+                let prev = roomHours[index - 1]
                 
-                let index = roomHours.count
-                
-                if (index > 0) {
-                    
-                    let prev = roomHours[index - 1]
-                    
-                    if (hour.id == prev.id + 1) {
-                        hour.prev = prev
-                        prev.next = hour
-                    }
+                if (hour.id == prev.id + 1) {
+                    hour.prev = prev
+                    prev.next = hour
                 }
-                
-                roomHours.append(hour)
-                timeSlots[room] = roomHours //ensures only rooms with available times get shown
             }
+            
+            roomHours.append(hour)
+            timeSlots[room] = roomHours
         }
         return timeSlots
     }

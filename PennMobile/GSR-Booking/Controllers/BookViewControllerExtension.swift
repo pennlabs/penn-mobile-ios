@@ -40,7 +40,7 @@ enum Selection {
 extension BookViewController: CollectionViewProtocol {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        var dataSource = roomData
+        var dataSource = parsedRoomData
         
         let room = Array(sortedKeys)[collectionView.tag]
         return dataSource[room]!.count
@@ -52,7 +52,7 @@ extension BookViewController: CollectionViewProtocol {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourCell.identifier,
                                                         for: indexPath) as! HourCell
         
-        var dataSource = roomData
+        var dataSource = parsedRoomData
         
         let room = Array(sortedKeys)[collectionView.tag]
         let hour = dataSource[room]![indexPath.row]
@@ -95,7 +95,7 @@ extension BookViewController: CollectionViewProtocol {
         }
         
         let room = Array(sortedKeys)[collectionView.tag]
-        let hour = roomData[room]![indexPath.row]
+        let hour = parsedRoomData[room]![indexPath.row]
         
         if (currentSelection?.contains(hour) == true) {
             handleSelection(collectionView, indexPath: indexPath, action: Selection.remove)
@@ -131,7 +131,7 @@ extension BookViewController: CollectionViewProtocol {
     
     internal func handleSelection(_ collectionView: UICollectionView, indexPath: IndexPath, action: Selection) {
 
-        var dataSource = roomData
+        var dataSource = parsedRoomData
 
         let cell = collectionView.cellForItem(at: indexPath) as! HourCell
         let room = Array(sortedKeys)[collectionView.tag]

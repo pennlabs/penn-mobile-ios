@@ -77,9 +77,7 @@ class GSRNetworkManager: NSObject {
             if (res is NSError) {
                 callback(nil, nil, res as? Error)
             } else {
-                let minDate = Parser.getDateFromTime(time: "12:00am")
-                let maxDate = Parser.getDateFromTime(time: "11:59pm")
-                let roomData = Parser.getAvailableTimeSlots(res as! String, startDate: minDate, endDate: maxDate)
+                let roomData = Parser.getAvailableTimeSlots(res as! String)
                 let dictIndex: Int = Int(arc4random_uniform(UInt32(roomData.count)))
                 let randomRoom = Array(roomData.values)[dictIndex]
                 let hourIndex: Int = Int(arc4random_uniform(UInt32(randomRoom.count)))
