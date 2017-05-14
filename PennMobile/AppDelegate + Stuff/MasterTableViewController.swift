@@ -30,7 +30,7 @@ class ControllerSettings: NSObject {
     }
     
     var displayNames: [String] {
-        if justUpdated && newViewControllerAdded { } //insert new view controller into UserDefaults array here
+        if justUpdated && newViewControllerAdded { } //insert new view controller title into stored title array here
         return UserDefaults.standard.stringArray(forKey: "Controller settings") ??
             ["Dining", "Study Room Booking", "Laundry", "News", "Contacts", "About"]
     }
@@ -43,12 +43,12 @@ class ControllerSettings: NSObject {
         return viewControllers.first!
     }
     
-    private var justUpdated: Bool {
+    private let justUpdated: Bool = {
         let currentVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         let previousVersion = UserDefaults.standard.value(forKey: "CFBundleVersion") as? String
-        UserDefaults.standard.set(currentVersion, forKey: "CFBundleVersion")
+        UserDefaults.standard.set(currentVersion, forKey: "CFBundleVersion") //update stored version
         return previousVersion != currentVersion
-    }
+    }()
     
     private let newViewControllerAdded: Bool = false
 }
@@ -85,8 +85,12 @@ class MasterTableViewController: MoveableTableViewController {
         super.viewWillDisappear(animated)
         revealViewController().frontViewController.view.isUserInteractionEnabled = true
     }
-    
-    internal override func rowMoved(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+}
+
+// Mark: moveability
+
+extension MasterTableViewController: MoveableDelegate {
+    internal func rowMoved(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         swap(&viewControllerArray[sourceIndexPath.row], &viewControllerArray[destinationIndexPath.row]) //swap controllers
         swap(&displayNameArray[sourceIndexPath.row], &displayNameArray[destinationIndexPath.row]) //swap display names
     }
@@ -103,6 +107,7 @@ extension MasterTableViewController {
         setFinishedMovingCell {
             UserDefaults.standard.set(self.displayNameArray, forKey: "Controller settings")
         }
+        self.moveDelegate = self
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
