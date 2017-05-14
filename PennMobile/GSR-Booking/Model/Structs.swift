@@ -96,13 +96,13 @@ extension Dictionary where Key == String, Value == [GSRHour] {
     var lastOpening: Date {
         get {
             if self.isEmpty { return Parser.midnight.tomorrow }
-            var tempLastEndtime = Parser.midnight
+            var tempEndTime = Parser.midnight
             for key in keys {
                 guard let gsrArr = self[key], let lastHour = gsrArr.last else { continue }
                 let lastEndTime = Parser.getDateFromTime(time: lastHour.end)
-                if lastEndTime > tempLastEndtime { tempLastEndtime = lastEndTime }
+                tempEndTime = Swift.max(tempEndTime, lastEndTime)
             }
-            return tempLastEndtime
+            return tempEndTime
         }
     }
     
