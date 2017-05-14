@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		212209A51EC67B690038FB7F /* EmergencyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A41EC67B690038FB7F /* EmergencyController.swift */; };
+		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
 		216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640781EBADADA00746B8E /* PennMobileTests.swift */; };
@@ -69,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		212209A41EC67B690038FB7F /* EmergencyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmergencyController.swift; sourceTree = "<group>"; };
+		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		216640631EBADADA00746B8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2166406D1EBADADA00746B8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 				216640C01EBADC8000746B8E /* Generics */,
 				216640C91EBADCA400746B8E /* Extensions.swift */,
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
+				212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */,
 				216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */,
 			);
 			path = General;
@@ -658,6 +661,7 @@
 				216640A21EBADC5300746B8E /* RangeSlider.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				216640FC1EBB899900746B8E /* AboutViewController.m in Sources */,
+				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
 				216640B01EBADC5E00746B8E /* LocationsHandler.swift in Sources */,
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */,

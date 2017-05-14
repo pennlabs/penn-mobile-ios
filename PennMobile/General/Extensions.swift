@@ -167,9 +167,15 @@ extension Date {
     }
 }
 
-public extension LazyMapCollection  {
+extension LazyMapCollection  {
     
     func toArray() -> [Element]{
         return Array(self)
+    }
+}
+
+extension UIViewController {
+    var isVisible: Bool {
+        return self.isViewLoaded && self.view.window != nil
     }
 }
