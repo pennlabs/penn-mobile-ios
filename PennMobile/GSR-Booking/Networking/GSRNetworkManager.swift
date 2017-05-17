@@ -28,6 +28,9 @@ class GSRNetworkManager: NSObject {
         return authenticateCallback != nil
     }
     
+    private var maxFails = 10
+    private var numberOfFails = 0
+    
     static let shared = GSRNetworkManager()
     
     convenience init(email: String, password: String, gid: Int, ids: [Int]) {
@@ -69,7 +72,7 @@ class GSRNetworkManager: NSObject {
     }
     
     private func getValidRoom(callback: @escaping (_ gid: Int?, _ ids: [Int]?, _ error: Error?) -> ()) {
-        guard let date = DateHandler.getDates().last?.compact, let gid = LocationsHandler.getLocations().first?.code else { return }
+        guard let date = DateHandler.getDates().random()?.compact, let gid = LocationsHandler.getLocations().random()?.code else { return }
         
         self.getHours(date, gid: gid) {
             (res: AnyObject) in
@@ -78,6 +81,15 @@ class GSRNetworkManager: NSObject {
                 callback(nil, nil, res as? Error)
             } else {
                 let roomData = Parser.getAvailableTimeSlots(res as! String)
+                if roomData.isEmpty {
+                    if self.numberOfFails == self.maxFails {
+                        self.authenticateCallback?(false)
+                        return
+                    }
+                    self.numberOfFails += 1
+                    self.getValidRoom(callback: callback)
+                    return
+                }
                 let dictIndex: Int = Int(arc4random_uniform(UInt32(roomData.count)))
                 let randomRoom = Array(roomData.values)[dictIndex]
                 let hourIndex: Int = Int(arc4random_uniform(UInt32(randomRoom.count)))
@@ -87,13 +99,15 @@ class GSRNetworkManager: NSObject {
     }
     
     func authenticateEmailPassword(email: String, password: String, _ callback: AuthenticateCallback?) {
+        self.authenticateCallback = callback
+        self.numberOfFails = 0
+        
         getValidRoom() { (gid, ids, error) in
             self.email = email
             self.password = password
             self.gid = gid
             self.ids = ids
             
-            self.authenticateCallback = callback
             self.bookSelection()
         }
     }
