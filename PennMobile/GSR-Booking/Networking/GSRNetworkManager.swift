@@ -90,10 +90,11 @@ class GSRNetworkManager: NSObject {
                     self.getValidRoom(callback: callback)
                     return
                 }
-                let dictIndex: Int = Int(arc4random_uniform(UInt32(roomData.count)))
-                let randomRoom = Array(roomData.values)[dictIndex]
-                let hourIndex: Int = Int(arc4random_uniform(UInt32(randomRoom.count)))
-                callback(gid, [randomRoom[hourIndex].id], nil)
+                guard let randomRoom = roomData.values.random()?.random()?.id else {
+                    self.authenticateCallback?(false)
+                    return
+                }
+                callback(gid, [randomRoom], nil)
             }
         }
     }
