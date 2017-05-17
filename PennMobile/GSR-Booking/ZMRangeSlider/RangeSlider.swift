@@ -3,7 +3,7 @@ import UIKit
 @IBDesignable
 open class RangeSlider: UIControl {
     
-    public typealias BeganEditingCallback = () -> Void
+    public typealias BeganTrackingCallback = () -> Void
     public typealias ValueChangedCallback = (_ minValue: Int, _ maxValue: Int) -> Void
     public typealias ValueFinishedChangingCallback = (_ minValue: Int, _ maxValue: Int) -> Void
     public typealias MinValueDisplayTextGetter = (_ minValue: Int) -> String?
@@ -18,7 +18,7 @@ open class RangeSlider: UIControl {
     fileprivate var beginTrackLocation = CGPoint.zero
     fileprivate var rangeValues = Array(0...100)
 
-    fileprivate var beganEditingCallback: BeganEditingCallback?
+    fileprivate var beganTrackingCallback: BeganTrackingCallback?
     fileprivate var valueChangedCallback: ValueChangedCallback?
     fileprivate var valueFinishedChangingCallback: ValueFinishedChangingCallback?
     fileprivate var minValueDisplayTextGetter: MinValueDisplayTextGetter?
@@ -113,14 +113,19 @@ open class RangeSlider: UIControl {
     }
 
     open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        beganEditingCallback?()
         beginTrackLocation = touch.location(in: self)
         if minValueThumbLayer.frame.contains(beginTrackLocation) {
             minValueThumbLayer.isHighlight = true
         } else if maxValueThumbLayer.frame.contains(beginTrackLocation) {
             maxValueThumbLayer.isHighlight = true
+        } else {
+            let distanceFromMinLayer = abs(minValueThumbLayer.frame.midX - beginTrackLocation.x)
+            let distanceFromMaxLayer = abs(maxValueThumbLayer.frame.midX - beginTrackLocation.x)
+            minValueThumbLayer.isHighlight = distanceFromMinLayer < distanceFromMaxLayer
+            maxValueThumbLayer.isHighlight = distanceFromMinLayer > distanceFromMaxLayer
         }
-        return minValueThumbLayer.isHighlight || maxValueThumbLayer.isHighlight
+        beganTrackingCallback?()
+        return true
     }
 
     open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
@@ -175,8 +180,8 @@ open class RangeSlider: UIControl {
         updateLayerFrames()
     }
     
-    open func setBeganEditingCallback(_ callback: BeganEditingCallback?) {
-        self.beganEditingCallback = callback
+    open func setBeganTrackingCallback(_ callback: BeganTrackingCallback?) {
+        self.beganTrackingCallback = callback
     }
     
     open func setValueChangedCallback(_ callback: ValueChangedCallback?) {
