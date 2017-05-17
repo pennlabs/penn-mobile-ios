@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let gai = GAI.sharedInstance()
         gai?.trackUncaughtExceptions = true
-        gai?.dryRun = true //remove to stop tracking
+        gai?.dryRun = true //prevents GoogleAnalytics tracking (remove before production release)
         
         navController = UINavigationController(rootViewController: homeController)
         navController.isNavigationBarHidden = true
