@@ -45,6 +45,11 @@ extension Array where Element: GSRHour {
             self.append(newElement)
         }
     }
+    
+    var numberInRow: Int {
+        if count == 0 { return 0 }
+        return 1 + (first?.next == nil ? 0 : Array(dropFirst()).numberInRow)
+    }
 }
 
 extension Dictionary where Key == String, Value == [GSRHour] {
@@ -54,27 +59,17 @@ extension Dictionary where Key == String, Value == [GSRHour] {
                 guard let arr1 = self[key1] else { return false }
                 guard let arr2 = self[key2] else { return true }
                 if arr1.isEmpty || arr2.isEmpty { return false }
-                let start1 = arr1.first!
-                let start2 = arr2.first!
-                let start1Time = Parser.getDateFromTime(time: start1.start)
-                let start2Time = Parser.getDateFromTime(time: start2.start)
+                let start1Time = Parser.getDateFromTime(time: arr1.first!.start)
+                let start2Time = Parser.getDateFromTime(time: arr2.first!.start)
                 if start1Time == start2Time {
-                    if let next1 = start1.next {
-                        guard let next2 = start2.next else { return true }
-                        if next1.next != nil {
-                            if next2.next != nil {
-                                return arr1.count > arr2.count
-                            } else {
-                                return true
-                            }
-                        } else if next2.next != nil { return false }
+                    let numRow1 = arr1.numberInRow
+                    let numRow2 = arr2.numberInRow
+                    if numRow1 == numRow2 {
                         return arr1.count > arr2.count
                     }
-                    if start2.next != nil { return false }
-                    return arr1.count > arr2.count
-                } else {
-                    return start1Time < start2Time
+                    return numRow1 > numRow2
                 }
+                return start1Time < start2Time
             })
         }
     }

@@ -18,7 +18,7 @@ class ControllerSettings: NSObject {
         dict["Study Room Booking"] = BookViewController()
         dict["Laundry"] = LaundryTableViewController()
         dict["News"] = NewsViewController()
-        dict["Emergency"] = EmergencyController()
+        dict["Support"] = EmergencyController()
         dict["About"] = AboutViewController()
         return dict
     }()
@@ -30,7 +30,8 @@ class ControllerSettings: NSObject {
     }
     
     var displayNames: [String] {
-        return UserDefaults.standard.stringArray(forKey: "Controller settings") ?? vcDictionary.keys.toArray()
+        return UserDefaults.standard.stringArray(forKey: "Controller settings") ??
+            ["Dining", "Study Room Booking", "Laundry", "News", "Support", "About"]
     }
     
     func viewController(for title: String) -> UIViewController {
