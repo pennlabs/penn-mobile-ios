@@ -168,7 +168,6 @@ extension Date {
 }
 
 extension LazyMapCollection  {
-    
     func toArray() -> [Element]{
         return Array(self)
     }

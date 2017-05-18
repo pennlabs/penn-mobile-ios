@@ -58,9 +58,9 @@ extension Dictionary where Key == String, Value == [GSRHour] {
             return keys.sorted(by: { (key1, key2) -> Bool in
                 guard let arr1 = self[key1] else { return false }
                 guard let arr2 = self[key2] else { return true }
-                if arr1.isEmpty || arr2.isEmpty { return false }
-                let start1Time = Parser.getDateFromTime(time: arr1.first!.start)
-                let start2Time = Parser.getDateFromTime(time: arr2.first!.start)
+                guard let start1 = arr1.first?.start, let start2 = arr2.first?.start else { return false }
+                let start1Time = Parser.getDateFromTime(time: start1)
+                let start2Time = Parser.getDateFromTime(time: start2)
                 if start1Time == start2Time {
                     let numRow1 = arr1.numberInRow
                     let numRow2 = arr2.numberInRow
