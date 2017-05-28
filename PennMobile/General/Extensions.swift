@@ -168,7 +168,7 @@ extension Date {
 }
 
 extension LazyMapCollection  {
-    func toArray() -> [Element]{
+    func toArray() -> [Element] {
         return Array(self)
     }
 }
@@ -187,7 +187,7 @@ public extension Collection {
         return list
     }
     
-    func random() -> Generator.Element? {
+    var random: Generator.Element? {
         return shuffle().first
     }
 }

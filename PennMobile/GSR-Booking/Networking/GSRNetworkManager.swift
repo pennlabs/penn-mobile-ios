@@ -72,7 +72,7 @@ class GSRNetworkManager: NSObject {
     }
     
     private func getValidRoom(callback: @escaping (_ gid: Int?, _ ids: [Int]?, _ error: Error?) -> ()) {
-        guard let date = DateHandler.getDates().random()?.compact, let gid = LocationsHandler.getLocations().random()?.code else { return }
+        guard let date = DateHandler.getDates().random?.compact, let gid = LocationsHandler.getLocations().random?.code else { return }
         
         self.getHours(date, gid: gid) {
             (res: AnyObject) in
@@ -90,7 +90,7 @@ class GSRNetworkManager: NSObject {
                     self.getValidRoom(callback: callback)
                     return
                 }
-                guard let randomRoom = roomData.values.random()?.random()?.id else {
+                guard let randomRoom = roomData.values.random?.random?.id else {
                     self.authenticateCallback?(false)
                     return
                 }

@@ -12,19 +12,18 @@ class ContactManager: NSObject {
     
     static let shared = ContactManager()
     
-    func save(_ items: [SupportItem], callback: (_ success: Bool) -> Void) {
+    func save(_ items: [Contact], callback: @escaping (_ success: Bool) -> Void) {
         let saveRequest = CNSaveRequest()
         let store = CNContactStore()
         for item in items {
             let contact = createContact(for: item)
             saveRequest.add(contact, toContainerWithIdentifier:nil)
         }
-        
         do {
             try store.execute(saveRequest)
             callback(true)
         } catch {
-            callback(false) //fails to save contacts (probably didn't give permission)
+            callback(false)
         }
     }
     
