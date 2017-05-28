@@ -102,8 +102,8 @@ class DiningNetworkManager {
                                                                         
                                                                         if let open = mealDict["open"] as? String, let close = mealDict["close"] as? String {
                                                                             
-                                                                            let openDate = dateFormatter.date(from: "\(todayString)T\(open)+0000")?.adjustFor11_59() //rounds up if :59
-                                                                            let closeDate = dateFormatter.date(from: "\(todayString)T\(close)+0000")?.adjustFor11_59()
+                                                                            let openDate = dateFormatter.date(from: "\(todayString)T\(open)+0000")?.adjustedFor11_59 //rounds up if :59
+                                                                            let closeDate = dateFormatter.date(from: "\(todayString)T\(close)+0000")?.adjustedFor11_59
                                                                             
                                                                             info[type] = ["open": openDate, "close": closeDate] as AnyObject
                                                                         }

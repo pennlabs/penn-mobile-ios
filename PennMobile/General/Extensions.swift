@@ -102,9 +102,7 @@ extension Date {
     
     //returns date in local time
     static var currentLocalDate: Date {
-        get {
-            return Date().localTime
-        }
+        return Date().localTime
     }
     
     func convert(to timezone: String) -> Date {
@@ -137,10 +135,6 @@ extension Date {
     var roundedDownToHour: Date {
         return self.add(minutes: -self.minutes)
     }
-    
-    private var ends11_59: Bool {
-        return minutes == 59
-    }
         
     var dayOfWeek: String {
         let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -150,8 +144,8 @@ extension Date {
         return weekdayArray[weekDay-1]
     }
     
-    func adjustFor11_59() -> Date {
-        if ends11_59 {
+    var adjustedFor11_59: Date {
+        if self.minutes == 59 {
             return self.add(minutes: 1)
         }
         return self

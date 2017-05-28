@@ -45,7 +45,7 @@ class EmergencyController: SupportTableViewController, ShowsAlert {
 extension EmergencyController {
     fileprivate func addContacts() {
         ContactManager.shared.save(contacts) { (success) in
-            contactManagerFinished(success, isAddingContacts: true)
+            self.contactManagerFinished(success, isAddingContacts: true)
         }
     }
     

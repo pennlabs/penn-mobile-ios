@@ -9,7 +9,10 @@
 import UIKit
 
 @objc class GoogleAnalyticsManager: NSObject {
-    static func track(_ name: String) {
+    
+    static let shared = GoogleAnalyticsManager()
+    
+    func track(_ name: String) {
         let tracker = GAI.sharedInstance().defaultTracker
         tracker?.set(kGAIScreenName, value: name)
         
@@ -19,7 +22,7 @@ import UIKit
         }
     }
     
-    static func trackEvent(category: String, action: String, label: String, value: NSNumber) {
+    func trackEvent(category: String, action: String, label: String, value: NSNumber) {
         let tracker = GAI.sharedInstance().defaultTracker
         
         tracker?.send(GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build() as! [AnyHashable : Any]!)
