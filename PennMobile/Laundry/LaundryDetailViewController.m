@@ -62,7 +62,7 @@
     
     self.revealViewController.panGestureRecognizer.enabled = NO;
     
-    [GoogleAnalyticsManager track:self.houseName];
+    [GoogleAnalyticsManager.shared track:self.houseName];
 }
 
 - (void) pull:(id)sender {

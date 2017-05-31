@@ -6,29 +6,31 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-class DiningNetworkManager {
+class DiningNetworkManager: NSObject, Requestable {
     
-    static let masterURL = "https://api.pennlabs.org/"
+    static let shared = DiningNetworkManager()
     
-    static let diningURL = masterURL + "dining/venues"
+    let masterURL = "https://api.pennlabs.org/"
+    let diningURL = "dining/venues"
     
-    public static func getDiningData(for diningHalls: [DiningHall], callback: @escaping (_ diningHalls: [DiningHall]) -> ()) {
-        getRequest(url: diningURL) { (data) in
+    func getDiningData(for diningHalls: [DiningHall], callback: @escaping (_ diningHalls: [DiningHall]) -> ()) {
+        let url = masterURL + diningURL
+        getRequest(url: url) { (data) in
             
             var info = [String: AnyObject]()
             
             for hall in diningHalls {
-                info[hall.name] = getOpenCloseTimes(for: hall.name, data: data) as AnyObject
+                info[hall.name] = self.getOpenCloseTimes(for: hall.name, data: data) as AnyObject
             }
             
-            let updatedDiningHalls = getDiningHallFromData(info: info, diningHalls: diningHalls)
+            let updatedDiningHalls = self.getDiningHallFromData(info: info, diningHalls: diningHalls)
             
             callback(updatedDiningHalls)
             
         }
     }
     
-    private static func getDiningHallFromData(info: [String: AnyObject], diningHalls: [DiningHall]) -> [DiningHall] {
+    private func getDiningHallFromData(info: [String: AnyObject], diningHalls: [DiningHall]) -> [DiningHall] {
         var newDiningHalls = [DiningHall]()
         
         let today = Date.currentLocalDate //get current time in local time
@@ -63,61 +65,52 @@ class DiningNetworkManager {
         return newDiningHalls
     }
     
-    private static func getOpenCloseTimes(for diningHall: String, data: NSDictionary?) -> [String: AnyObject] {
+    private func getOpenCloseTimes(for diningHall: String, data: NSDictionary?) -> [String: AnyObject] {
         var info = [String: AnyObject]()
         let diningHall = diningHall.folding(options: .diacriticInsensitive, locale: .current) //removes accents
         if let dict = data as? [String: AnyObject] {
             if let dict2 = dict["document"] as? [String: AnyObject] {
                 if let array = dict2["venue"] as? [AnyObject] {
                     for diningHallDict in array {
-                        if let diningHallDict = diningHallDict as? [String: AnyObject] {
-                            if let name = diningHallDict["name"] as? String {
-                                let name = name.folding(options: .diacriticInsensitive, locale: .current)
-                                if name.range(of: diningHall) != nil || diningHall.range(of: name) != nil {
-                                    
-                                    if let dateArray = diningHallDict["dateHours"] as? [AnyObject] {
-                                        
-                                        let today = Date()
-                                        let dateFormatter = DateFormatter()
-                                        dateFormatter.dateFormat = "yyyy-MM-dd"
-                                        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                                        
-                                        let todayString = dateFormatter.string(from: today)
-                                        
-                                        for obj in dateArray {
-                                            if let dict = obj as? [String: AnyObject] {
-                                                
-                                                if let date = dict["date"] as? String {
-                                                    if date == todayString {
+                        if let diningHallDict = diningHallDict as? [String: AnyObject], let name = diningHallDict["name"] as? String {
+                            let name = name.folding(options: .diacriticInsensitive, locale: .current)
+                            if name.range(of: diningHall) != nil || diningHall.range(of: name) != nil {
+                                if let dateArray = diningHallDict["dateHours"] as? [AnyObject] {
+                                    let dateFormatter = DateFormatter.yyyyMMdd
+                                    let todayString = dateFormatter.string(from: Date())
+                                    for obj in dateArray {
+                                        if let dict = obj as? [String: AnyObject] {
+                                            
+                                            if let date = dict["date"] as? String {
+                                                if date == todayString {
+                                                    
+                                                    if let array = dict["meal"] as? [AnyObject] {
                                                         
-                                                        if let array = dict["meal"] as? [AnyObject] {
+                                                        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                                                        dateFormatter.timeZone = TimeZone(abbreviation: "EST")
+                                                        
+                                                        for obj in array {
                                                             
-                                                            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                                                            dateFormatter.timeZone = TimeZone(abbreviation: "EST")
-                                                            
-                                                            for obj in array {
-                                                                
-                                                                if let mealDict = obj as? [String: AnyObject] {
-                                                                    if let type = mealDict["type"] as? String, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || type == "Late Night" || diningHall.range(of: type) != nil {
+                                                            if let mealDict = obj as? [String: AnyObject] {
+                                                                if let type = mealDict["type"] as? String, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || type == "Late Night" || diningHall.range(of: type) != nil {
+                                                                    
+                                                                    if let open = mealDict["open"] as? String, let close = mealDict["close"] as? String {
                                                                         
-                                                                        if let open = mealDict["open"] as? String, let close = mealDict["close"] as? String {
-                                                                            
-                                                                            let openDate = dateFormatter.date(from: "\(todayString)T\(open)+0000")?.adjustedFor11_59 //rounds up if :59
-                                                                            let closeDate = dateFormatter.date(from: "\(todayString)T\(close)+0000")?.adjustedFor11_59
-                                                                            
-                                                                            info[type] = ["open": openDate, "close": closeDate] as AnyObject
-                                                                        }
+                                                                        let openDate = dateFormatter.date(from: "\(todayString)T\(open)+0000")?.adjustedFor11_59 //rounds up if :59
+                                                                        let closeDate = dateFormatter.date(from: "\(todayString)T\(close)+0000")?.adjustedFor11_59
+                                                                        
+                                                                        info[type] = ["open": openDate, "close": closeDate] as AnyObject
                                                                     }
                                                                 }
                                                             }
-                                                            break
                                                         }
+                                                        break
                                                     }
                                                 }
                                             }
                                         }
-                                        break
                                     }
+                                    break
                                 }
                             }
                         }
@@ -127,45 +120,4 @@ class DiningNetworkManager {
         }
         return info
     }
-    
-    private static func getRequest(url: String, callback: @escaping (_ json: NSDictionary?) -> ()) {
-        let url = URL(string: url)
-        
-        let request = NSMutableURLRequest(url: url!)
-        
-        request.httpMethod = "GET"
-        do {
-            //let params = ["item":item, "location":location,"username":username]
-            
-            request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            
-            //request.httpBody = try JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
-            
-            let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
-                //
-                
-                
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
-                    }
-                }
-                
-                //let resultNSString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
-                if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                    if let json = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                        
-                        callback(json)
-                        
-                    }
-                } else {
-                    callback(nil)
-                }
-                
-            })
-            task.resume()
-        }
-    }
-    
 }

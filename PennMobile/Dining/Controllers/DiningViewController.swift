@@ -54,11 +54,11 @@ class DiningViewController: GenericTableViewController {
     }
     
     func updateTimesForDiningHalls() {
-        DiningNetworkManager.getDiningData(for: self.dining) { (diningHalls) in
+        DiningNetworkManager.shared.getDiningData(for: self.dining) { (diningHalls) in
             
             self.dining = diningHalls
             
-            DiningNetworkManager.getDiningData(for: self.retailHalls, callback: { (diningHalls) in
+            DiningNetworkManager.shared.getDiningData(for: self.retailHalls, callback: { (diningHalls) in
                 self.retailHalls = diningHalls
                 
                 let when = DispatchTime.now() + 0.3

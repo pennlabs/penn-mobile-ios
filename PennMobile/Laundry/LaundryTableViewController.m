@@ -71,7 +71,7 @@
 -(void) loadFromAPI {
     NSString *str = [NSString stringWithFormat: @"%@%@", SERVER_ROOT, LAUNDRY_PATH];
     NSURL *url = [NSURL URLWithString:str];
-
+    
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         
         if (error) {

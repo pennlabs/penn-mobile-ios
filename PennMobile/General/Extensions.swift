@@ -173,6 +173,15 @@ extension UIViewController {
     }
 }
 
+extension DateFormatter {
+    static var yyyyMMdd: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        return dateFormatter
+    }
+}
+
 public extension Collection {
     /// Return a copy of `self` with its elements shuffled
     func shuffle() -> [Generator.Element] {
