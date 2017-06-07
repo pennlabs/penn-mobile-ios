@@ -70,6 +70,12 @@ class BookViewController: GenericViewController, ShowsAlert {
         return tv
     }()
     
+    fileprivate let emptyView: EmptyView = {
+        let ev = EmptyView()
+        ev.isHidden = true
+        return ev
+    }()
+    
     var storedOffsets = [Int: CGFloat]()
 
     private lazy var loginLogoutButton: UIBarButtonItem = {
@@ -133,6 +139,7 @@ class BookViewController: GenericViewController, ShowsAlert {
         self.sortedKeys = self.parsedRoomData.sortedKeys
         setEarliestTime()
         self.currentSelection.removeAll()
+        self.showEmptyViewIfNeeded()
         self.tableView.reloadData()
     }
     
@@ -140,6 +147,11 @@ class BookViewController: GenericViewController, ShowsAlert {
         get {
             return currentSelection.isEmpty ? isLoggedIn ? "Logout" : "Login" : "Submit"
         }
+    }
+    
+    internal func showEmptyViewIfNeeded() {
+        emptyView.isHidden = !parsedRoomData.isEmpty
+        tableView.isHidden = parsedRoomData.isEmpty
     }
     
     internal var isLoggedIn: Bool {
@@ -152,6 +164,7 @@ class BookViewController: GenericViewController, ShowsAlert {
         
         view.addSubview(pickerView)
         view.addSubview(tableView)
+        view.addSubview(emptyView)
         view.addSubview(rangeSlider)
         
         pickerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
@@ -160,6 +173,8 @@ class BookViewController: GenericViewController, ShowsAlert {
         _ = rangeSlider.anchor(pickerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 30)
         
         _ = tableView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         navigationItem.rightBarButtonItems = [loginLogoutButton, UIBarButtonItem(customView: activityIndicator)]
     }
@@ -307,6 +322,7 @@ extension BookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 // MARK: - Table view methods
 
 extension BookViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return parsedRoomData.count
     }
