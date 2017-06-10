@@ -24,7 +24,6 @@ import UIKit
     
     func trackEvent(category: String, action: String, label: String, value: NSNumber) {
         let tracker = GAI.sharedInstance().defaultTracker
-        
         tracker?.send(GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build() as! [AnyHashable : Any]!)
     }
     

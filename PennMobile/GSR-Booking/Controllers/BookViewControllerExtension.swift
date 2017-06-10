@@ -76,17 +76,22 @@ extension BookViewController: CollectionViewProtocol {
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        
-        handleSelection(collectionView, indexPath: indexPath, action: Selection.remove)
+        if validateChoice(collectionView, indexPath: indexPath, action: .remove) {
+            handleSelection(collectionView, indexPath: indexPath, action: Selection.remove)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return validateChoice(collectionView, indexPath: indexPath)
+        return validateChoice(collectionView, indexPath: indexPath, action: .add)
     }
     
     // MARK: - Validation & Submission methods
     
-    internal func validateChoice(_ collectionView: UICollectionView, indexPath: IndexPath) -> Bool{
+    internal func validateChoice(_ collectionView: UICollectionView, indexPath: IndexPath, action: Selection) -> Bool{
+        if action == .remove {
+            return true
+        }
+        
         if currentSelection.count >= 4 {
             showAlert(withMsg: "You can choose a maximum of 4 slots", title: "Can't do that.", completion: nil)
             return false
@@ -97,7 +102,7 @@ extension BookViewController: CollectionViewProtocol {
         let room = Array(sortedKeys)[collectionView.tag]
         let hour = parsedRoomData[room]![indexPath.row]
         
-        if currentSelection.contains(hour) == true {
+        if currentSelection.contains(hour) {
             handleSelection(collectionView, indexPath: indexPath, action: Selection.remove)
             showAlert(withMsg: "You can only choose consecutive times", title: "Can't do that.", completion: nil)
             return false
@@ -116,13 +121,23 @@ extension BookViewController: CollectionViewProtocol {
         return flag
     }
     
+    private func isValidRemoval(_ hour: GSRHour) -> Bool {
+        currentSelection.remove(hour)
+        let isValid = validateSubmission()
+        if !isValid {
+            showAlert(withMsg: "Selected times must be consecutive", title: "Can't do that.", completion: nil)
+            currentSelection.insert(hour)
+        }
+        return isValid
+    }
+    
     internal func validateSubmission() -> Bool {
         if currentSelection.count == 1 {
             return true
         }
         
         for selection in currentSelection {
-            if (isChoiceAllowed(selection) == false) {
+            if !isChoiceAllowed(selection) {
                 return false
             }
         }
