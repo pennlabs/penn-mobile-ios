@@ -18,7 +18,11 @@ struct DiningHall {
     var times: [OpenClose]?
 }
 
-struct OpenClose {
+struct OpenClose: Equatable {
     let open: Date
     let close: Date
+    
+    static func ==(lhs: OpenClose, rhs: OpenClose) -> Bool {
+        return lhs.open == rhs.open && lhs.close == rhs.close
+    }
 }

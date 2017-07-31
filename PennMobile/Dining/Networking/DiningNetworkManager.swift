@@ -48,7 +48,12 @@ class DiningNetworkManager: NSObject, Requestable {
                             if today >= open && today < close {
                                 hall.timeRemaining = today.minutesFrom(date: close) //minutes till close
                             }
-                            openingTimes.append(OpenClose(open: open, close: close))
+                            
+                            //remove repeat times if any exist
+                            let time = OpenClose(open: open, close: close)
+                            if !openingTimes.contains(time) {
+                                openingTimes.append(time)
+                            }
                         }
                     }
                 }
