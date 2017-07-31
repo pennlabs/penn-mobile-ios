@@ -56,7 +56,7 @@ extension EmergencyController {
     }
     
     fileprivate func contactManagerFinished(_ success: Bool, isAddingContacts: Bool) {
-        let msg = success ? "All Penn contacts have been \(isAddingContacts ? "saved" : "removed") to your address book." : "Please try again. You must permit access to your contact book."
+        let msg = success ? "All Penn contacts have been \(isAddingContacts ? "saved to" : "removed from") your address book." : "Please try again. You must permit access to your contact book."
         let title = success ? (isAddingContacts ? "Saved" : "Removed"): "Uh oh!"
         let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         
