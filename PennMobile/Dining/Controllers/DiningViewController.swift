@@ -69,6 +69,7 @@ class DiningViewController: GenericTableViewController {
         }
     }
     
+    //called when view appears
     override func updateData() {
         updateTimesForDiningHalls()
     }

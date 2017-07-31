@@ -90,7 +90,6 @@ class DiningNetworkManager: NSObject, Requestable {
                                                         dateFormatter.timeZone = TimeZone(abbreviation: "EST")
                                                         
                                                         for obj in array {
-                                                            
                                                             if let mealDict = obj as? [String: AnyObject] {
                                                                 if let type = mealDict["type"] as? String, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || type == "Late Night" || diningHall.range(of: type) != nil {
                                                                     

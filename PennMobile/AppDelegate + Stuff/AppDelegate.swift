@@ -51,8 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func registerForPushNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             (granted, error) in
-            print("Permission granted: \(granted)")
-            
             guard granted else { return }
             self.getNotificationSettings()
         }
@@ -60,14 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            print("Notification settings: \(settings)")
             guard settings.authorizationStatus == .authorized else { return }
-            print("test")
             DispatchQueue.main.async {
-                print("registered")
                 UIApplication.shared.registerForRemoteNotifications()
             }
-            print("passed")
         }
     }
     
