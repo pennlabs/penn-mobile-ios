@@ -23,21 +23,23 @@ class DatabaseManager: NSObject {
     }
 }
 
-//private class DBRequest: NSObject {
-//    
-//    static let dbURL = "https://agile-waters-48349.herokuapp.com/"
-//    
-//    let method: Method
-//    let url: URL
-//    
-//    init(method: Method, path: String, values: Any) throws {
-//        self.method = method
-//        guard let url = URL(string: DBRequest.dbURL + path) else {
-//            return //throw EXC_CRASH
-//        }
-//    }
-//    
-//}
+private class DBRequest: NSObject {
+    
+    static let dbURL = "https://agile-waters-48349.herokuapp.com/"
+    
+    let method: Method
+    let url: URL
+    let values: Any
+    
+    init(method: Method, path: String, values: Any) {
+        self.method = method
+        guard let url = URL(string: DBRequest.dbURL + path) else {
+            return //throw EXC_CRASH
+        }
+        self.url = url
+    }
+    
+}
 
 
 public enum Method {

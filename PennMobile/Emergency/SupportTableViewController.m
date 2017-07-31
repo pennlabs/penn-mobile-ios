@@ -76,8 +76,8 @@
     
     UIImage *phoneImage = [UIImage imageNamed:@"phone.png"];
     cell.imageView.image = phoneImage;
-    CGFloat widthScale = 24.0 / phoneImage.size.width;
-    CGFloat heightScale = 24.0 / phoneImage.size.height;
+    CGFloat widthScale = 60 / phoneImage.size.width;
+    CGFloat heightScale = 60 / phoneImage.size.height;
     cell.imageView.transform = CGAffineTransformMakeScale(widthScale, heightScale);
     cell.imageView.tag = indexPath.row;
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */; };
 		211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */ = {isa = PBXBuildFile; fileRef = 211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */; };
 		212209A51EC67B690038FB7F /* EmergencyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A41EC67B690038FB7F /* EmergencyController.swift */; };
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
@@ -72,6 +73,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		211B11A41F2995AD00A22C8A /* PennMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PennMobile.entitlements; sourceTree = "<group>"; };
 		211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AuthKey_6MBD9SUNGE.p8; sourceTree = "<group>"; };
 		212209A41EC67B690038FB7F /* EmergencyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmergencyController.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				216640F81EBB88FB00746B8E /* PrefixHeader.pch */,
 				216640851EBADB8300746B8E /* SWRevealViewController.h */,
 				216640861EBADB8300746B8E /* SWRevealViewController.m */,
+				2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */,
 			);
 			path = Supporting_Files;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				216640A21EBADC5300746B8E /* RangeSlider.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				216640FC1EBB899900746B8E /* AboutViewController.m in Sources */,
+				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
 				216640B01EBADC5E00746B8E /* LocationsHandler.swift in Sources */,
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
