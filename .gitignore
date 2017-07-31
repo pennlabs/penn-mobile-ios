@@ -19,8 +19,8 @@ DerivedData
 .idea/
 Pods
 PennMobile/Keys.pch
-GoogleService-Info.plist
-AuthKey_6MBD9SUNGE.p8
+PennMobile/Supporting_Files/GoogleService-Info.plist
+PennMobile/Supporting_Files/AuthKey_6MBD9SUNGE.p8
 .DS_Store
 *.xcuserstate
 parse/config/global.json
