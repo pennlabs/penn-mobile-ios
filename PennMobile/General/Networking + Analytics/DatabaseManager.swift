@@ -8,12 +8,18 @@
 
 import UIKit
 
+enum DBError: String, LocalizedError {
+    case deviceUUIDUnavailable = "Device UUID Unavailable. Check to make sure that it has not been removed from UserDefaults or being accessed before it has been set."
+    var localizedDescription: String { return NSLocalizedString(self.rawValue, comment: "") }
+}
+
 class DatabaseManager: NSObject, Requestable {
     
     static let shared = DatabaseManager()
-    let dbURL = "https://agile-waters-48349.herokuapp.com/"
+    static let dbURL = "https://agile-waters-48349.herokuapp.com"
     
-    private var batchRequests = [DBRequest]()
+    internal var batchRequests = [DBRequest]()
+    internal var sessionStarted = false
     
     var dryRun: Bool = false //prevents any requests being sent
     
@@ -22,20 +28,83 @@ class DatabaseManager: NSObject, Requestable {
     }
     
     func sendCurrentBatch() throws {
-        try request(method: .post, url: dbURL, params: batchRequests.encode())
+        let url = DatabaseManager.dbURL + "/batch"
+        try request(method: .post, url: url, params: batchRequests.encode())
         batchRequests.removeAll() //only runs if error not thrown
     }
 }
 
-//Mark: Handle First Sessions
+//Mark: Handles the first session and creation of new user in DB
 extension DatabaseManager {
-    func startSession() {
-        if UserDefaults.standard.isFirstTimeUser(), let deviceUUID = UIDevice.current.identifierForVendor?.uuidString {
-          UserDefaults.standard.setDeviceUUID(value: deviceUUID)
+    
+    //returns true if successful, false if not a first time user
+    //NOTE: returns true if user has deleted the app in the past and has just redownloaded it
+    func createUser(with deviceToken: String? = nil) throws -> Bool {
+        let isFirstTimeUser = UserDefaults.standard.isFirstTimeUser()
+        if isFirstTimeUser, let deviceUUID = UIDevice.current.identifierForVendor?.uuidString {
+            UserDefaults.standard.set(deviceUUID: deviceUUID)
+            
+            if let token = deviceToken {
+                UserDefaults.standard.set(deviceToken: token)
+            }
+            
+            let uri = DatabaseManager.dbURL + "/users"
+            var params: [String: Any] = ["device_id": deviceUUID]
+            params["token"] = deviceToken
+            batchRequests.append(DBRequest(method: .post, uri: uri, params: params))
         }
-        //if UserDefaults.standard.string(forKey: "deviceId") == nil, let deviceId = UIDevice.current.identifierForVendor?.uuidString {
+        return isFirstTimeUser
+    }
+    
+    func updateDeviceToken(with deviceToken: String) throws {
+        let uri = DatabaseManager.dbURL + "/users"
+        guard let deviceId = UserDefaults.standard.getDeviceUUID() else {
+            throw DBError.deviceUUIDUnavailable
+        }
+        let params = [
+            "deviceId": deviceId,
+            "token": deviceToken
+            ]
+        batchRequests.append(DBRequest(method: .patch, uri: uri, params: params))
+    }
+    
+    func startSession() {
+        if UserDefaults.standard.isFirstTimeUser() || sessionStarted {
+            return
+        }
+        do {
+            try logNewSession()
+        } catch {
+            print("Caught: \(error)")
+        }
+    }
+    
+    internal func logNewSession() throws {
+        if let firstVC = ControllerSettings.shared.displayNames.first {
+            batchRequests.append(try DBLogRequest(vc: firstVC, event: "New session", action: nil, desc: nil))
+        }
+    }
+}
+
+class DBLogRequest: DBRequest {
+    
+    init(vc: String? = nil, event: String? = nil, action: String? = nil, desc: String? = nil) throws {
+        let uri = DatabaseManager.dbURL + "/logs"
+        guard let deviceId = UserDefaults.standard.getDeviceUUID() else {
+            throw DBError.deviceUUIDUnavailable
+        }
         
-        //}
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        let params = [
+            "device_id": deviceId,
+            "vc": vc,
+            "event": event,
+            "action": action,
+            "desc": desc,
+            "timestamp": formatter.string(from: Date())
+        ].removeNullValues()
+        super.init(method: .post, uri: uri, params: params)
     }
 }
 
@@ -44,24 +113,43 @@ class DBRequest: NSObject {
     let uri: String
     let params: [String: Any]?
     
-    init(method: Method, uri: String, params: [String: Any]? = nil, values: Any? = nil) {
+    init(method: Method, uri: String, params: [String: Any]? = nil) {
         self.method = method
         self.uri = uri
         self.params = params
     }
     
-    func encode() -> [String: Any] {
-        let values: Any = params == nil ? "null" : params!
-        return [
-            "method": method.description,
-            "uri": uri,
-            "values": values
+    func encode() -> [NSString: Any] {
+        var dict: [NSString: Any] = [
+            "method": method.description as NSString,
+            "uri": uri as NSString
         ]
+        dict["values"] = params as [NSString: Any]?
+        return dict
     }
 }
 
 extension Array where Element: DBRequest {
-    func encode() -> [String: Any] {
-        return ["requests": self]
+    func encode() -> [NSString: Any] {
+        let encodedRequests = self.map { (req) -> [NSString: Any] in
+            return req.encode()
+        } as Any
+        return ["requests": encodedRequests]
+    }
+}
+
+extension Dictionary where Key == String, Value == Optional<Any> {
+    func unwrapOptionals(withNullUnwrap: Bool) -> [String: Any]{
+        var dict = [String: Any]()
+        for (k,v) in self {
+            if v != nil || withNullUnwrap {
+                dict[k] = v.nullUnwrap()
+            }
+        }
+        return dict
+    }
+    
+    func removeNullValues() -> [String: Any] {
+        return self.unwrapOptionals(withNullUnwrap: false)
     }
 }

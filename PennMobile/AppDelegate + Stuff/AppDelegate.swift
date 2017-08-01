@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        DatabaseManager.shared.startSession() //adds new session log to queue
+        
         let gai = GAI.sharedInstance()
         gai?.trackUncaughtExceptions = true
         gai?.dryRun = true //prevents GoogleAnalytics tracking (remove before production release)
@@ -34,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         presentSWController()
         registerForPushNotifications()
+            
         return true
     }
     
@@ -51,14 +54,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func registerForPushNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             (granted, error) in
-            guard granted else { return }
+            guard granted else {
+                self.registerOrUpdateUser()
+                return
+            }
             self.getNotificationSettings()
         }
     }
     
     func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            guard settings.authorizationStatus == .authorized else { return }
+            if settings.authorizationStatus != .authorized {
+                self.registerOrUpdateUser()
+                return
+            }
             DispatchQueue.main.async {
                 UIApplication.shared.registerForRemoteNotifications()
             }
@@ -73,11 +82,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let token = tokenParts.joined()
         print("Device Token: \(token)")
+        
+        registerOrUpdateUser(with: token)
     }
     
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register: \(error)")
+        registerOrUpdateUser()
+    }
+    
+    private func registerOrUpdateUser(with token: String? = nil) {
+        do {
+            if try DatabaseManager.shared.createUser(with: token) { //returns true if first visit
+                DatabaseManager.shared.startSession()
+            } else if let token = token {
+                try DatabaseManager.shared.updateDeviceToken(with: token)
+            }
+            try DatabaseManager.shared.sendCurrentBatch()
+        } catch {
+            print("Caught: \(error)")
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

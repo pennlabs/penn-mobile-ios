@@ -13,13 +13,14 @@ extension UserDefaults {
     enum UserDefaultsKeys: String {
         case deviceUUID
         case deviceToken
+        case controllerSettings
     }
 }
 
 // Mark: Permanent DeviceUUID
 extension UserDefaults {
-    func setDeviceUUID(value: String) {
-        set(value, forKey: UserDefaultsKeys.deviceUUID.rawValue)
+    func set(deviceUUID: String) {
+        set(deviceUUID, forKey: UserDefaultsKeys.deviceUUID.rawValue)
         synchronize()
     }
     
@@ -33,10 +34,22 @@ extension UserDefaults {
     }
 }
 
+// Mark: VC Controller Settings (order of VCs)
+extension UserDefaults {
+    func set(vcDisplayNames: [String]) {
+        set(vcDisplayNames, forKey: UserDefaultsKeys.controllerSettings.rawValue)
+        synchronize()
+    }
+    
+    func getVCDisplayNames() -> [String]? {
+        return array(forKey: UserDefaultsKeys.controllerSettings.rawValue) as? [String]
+    }
+}
+
 // Mark: Permanent Device Token (for push notifications)
 extension UserDefaults {
-    func setDeviceToken(value: String) {
-        set(value, forKey: UserDefaultsKeys.deviceToken.rawValue)
+    func set(deviceToken: String) {
+        set(deviceToken, forKey: UserDefaultsKeys.deviceToken.rawValue)
         synchronize()
     }
     

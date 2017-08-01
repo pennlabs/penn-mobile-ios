@@ -208,3 +208,10 @@ public extension MutableCollection where Index == Int {
         }
     }
 }
+
+
+extension Optional {
+    func nullUnwrap() -> Any {
+        return self == nil ? "null" : self!
+    }
+}

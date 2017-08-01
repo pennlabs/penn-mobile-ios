@@ -30,7 +30,7 @@ class ControllerSettings: NSObject {
     }
     
     var displayNames: [String] {
-        return UserDefaults.standard.stringArray(forKey: "Controller settings") ??
+        return UserDefaults.standard.getVCDisplayNames() ??
             ["Dining", "Study Room Booking", "Laundry", "News", "Support", "About"]
     }
     
@@ -91,7 +91,7 @@ extension MasterTableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         isMoveable = true //enables moveability
         setFinishedMovingCell {
-            UserDefaults.standard.set(self.displayNameArray, forKey: "Controller settings")
+            UserDefaults.standard.set(vcDisplayNames: self.displayNameArray)
         }
     }
     
