@@ -349,6 +349,7 @@
 		216640C01EBADC8000746B8E /* Generics */ = {
 			isa = PBXGroup;
 			children = (
+				212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */,
 				216640C11EBADC9300746B8E /* GenericControllers.swift */,
 				216640C31EBADC9300746B8E /* GenericWebview.swift */,
 			);
@@ -358,12 +359,10 @@
 		216640C71EBADC9D00746B8E /* General */ = {
 			isa = PBXGroup;
 			children = (
-				21ECADA21F30146B00569883 /* DB Networking + Analytics */,
+				21ECADA21F30146B00569883 /* Networking + Analytics */,
 				216640C01EBADC8000746B8E /* Generics */,
 				216640C91EBADCA400746B8E /* Extensions.swift */,
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
-				212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */,
-				214C23B11F2FEE150004487C /* Networking.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
 			);
 			path = General;
@@ -426,13 +425,14 @@
 			path = About;
 			sourceTree = "<group>";
 		};
-		21ECADA21F30146B00569883 /* DB Networking + Analytics */ = {
+		21ECADA21F30146B00569883 /* Networking + Analytics */ = {
 			isa = PBXGroup;
 			children = (
 				216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */,
 				214F768E1F07391000B8841C /* DatabaseManager.swift */,
+				214C23B11F2FEE150004487C /* Networking.swift */,
 			);
-			path = "DB Networking + Analytics";
+			path = "Networking + Analytics";
 			sourceTree = "<group>";
 		};
 		54F8BC3E1191968D76D8E893 /* Frameworks */ = {
