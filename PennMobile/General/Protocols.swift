@@ -95,48 +95,4 @@ extension ShowsAlert where Self: UIViewController {
     }
 }
 
-protocol Requestable {}
-
-extension Requestable {
-    internal func getRequest(url: String, callback: @escaping (_ json: NSDictionary?) -> ()) {
-        let url = URL(string: url)
-        
-        let request = NSMutableURLRequest(url: url!)
-        
-        request.httpMethod = "GET"
-        do {
-            //let params = ["item":item, "location":location,"username":username]
-            
-            request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            
-            //request.httpBody = try JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
-            
-            let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
-                //
-                
-                
-                if let error = error {
-                    print(error.localizedDescription)
-                } else if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
-                    }
-                }
-                
-                //let resultNSString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
-                if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                    if let json = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                        
-                        callback(json)
-                        
-                    }
-                } else {
-                    callback(nil)
-                }
-                
-            })
-            task.resume()
-        }
-    }
-}
-
 

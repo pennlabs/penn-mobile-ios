@@ -12,6 +12,7 @@
 		212209A51EC67B690038FB7F /* EmergencyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A41EC67B690038FB7F /* EmergencyController.swift */; };
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
 		21329D081EE7AAE500C9DE65 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21329D071EE7AAE500C9DE65 /* EmptyView.swift */; };
+		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
 		214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F768E1F07391000B8841C /* DatabaseManager.swift */; };
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
@@ -58,6 +59,7 @@
 		2190FD331EBBE2E100EC683C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2190FD321EBBE2E100EC683C /* GoogleService-Info.plist */; };
 		2190FD351EC625BB00EC683C /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2190FD341EC625BB00EC683C /* Protocols.swift */; };
 		2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2190FD3A1EC65E7800EC683C /* ContactManager.swift */; };
+		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
 		8D08ACB30BC0C29FD56CE14E /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */; };
 /* End PBXBuildFile section */
@@ -79,6 +81,7 @@
 		212209A41EC67B690038FB7F /* EmergencyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmergencyController.swift; sourceTree = "<group>"; };
 		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
 		21329D071EE7AAE500C9DE65 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		214F768E1F07391000B8841C /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		216640631EBADADA00746B8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +144,7 @@
 		2190FD321EBBE2E100EC683C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2190FD341EC625BB00EC683C /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		2190FD3A1EC65E7800EC683C /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
+		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
 		2B364FB5448C9559DDEB6B7C /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -354,12 +358,13 @@
 		216640C71EBADC9D00746B8E /* General */ = {
 			isa = PBXGroup;
 			children = (
+				21ECADA21F30146B00569883 /* DB Networking + Analytics */,
 				216640C01EBADC8000746B8E /* Generics */,
 				216640C91EBADCA400746B8E /* Extensions.swift */,
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
 				212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */,
-				216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */,
-				214F768E1F07391000B8841C /* DatabaseManager.swift */,
+				214C23B11F2FEE150004487C /* Networking.swift */,
+				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -419,6 +424,15 @@
 				216640FB1EBB899900746B8E /* AboutViewController.m */,
 			);
 			path = About;
+			sourceTree = "<group>";
+		};
+		21ECADA21F30146B00569883 /* DB Networking + Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */,
+				214F768E1F07391000B8841C /* DatabaseManager.swift */,
+			);
+			path = "DB Networking + Analytics";
 			sourceTree = "<group>";
 		};
 		54F8BC3E1191968D76D8E893 /* Frameworks */ = {
@@ -674,6 +688,7 @@
 				216640EC1EBB861000746B8E /* LaundryTableViewController.m in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
+				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2166408A1EBADBB700746B8E /* MasterTableViewController.swift in Sources */,
 				216640A41EBADC5300746B8E /* ThumbLayer.swift in Sources */,
 				216640EB1EBB861000746B8E /* LaundryTableViewCell.m in Sources */,
@@ -695,6 +710,7 @@
 				216640F41EBB86A300746B8E /* SupportTableViewController.m in Sources */,
 				216640B41EBADC6A00746B8E /* RoomCell.swift in Sources */,
 				216640871EBADB8300746B8E /* SWRevealViewController.m in Sources */,
+				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				216640D01EBADD2600746B8E /* DiningNetworkManager.swift in Sources */,
 				216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */,
 				216640CD1EBADCA400746B8E /* GoogleAnalyticsManager.swift in Sources */,
