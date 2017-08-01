@@ -14,6 +14,7 @@ extension UserDefaults {
         case deviceUUID
         case deviceToken
         case controllerSettings
+        case sessionCount
     }
 }
 
@@ -43,6 +44,25 @@ extension UserDefaults {
     
     func getVCDisplayNames() -> [String]? {
         return array(forKey: UserDefaultsKeys.controllerSettings.rawValue) as? [String]
+    }
+}
+
+extension UserDefaults {
+    func set(sessionCount: Int) {
+        set(sessionCount, forKey: UserDefaultsKeys.sessionCount.rawValue)
+        synchronize()
+    }
+    
+    func getSessionCount() -> Int? {
+        return integer(forKey: UserDefaultsKeys.sessionCount.rawValue)
+    }
+    
+    func incrementSessionCount() {
+        if let count = getSessionCount() {
+            UserDefaults.standard.set(sessionCount: count + 1)
+        } else {
+            set(sessionCount: 0)
+        }
     }
 }
 

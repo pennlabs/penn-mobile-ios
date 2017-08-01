@@ -69,7 +69,11 @@ extension DatabaseManager {
     }
     
     func startSession() {
-        if UserDefaults.standard.isFirstTimeUser() || sessionStarted {
+        if sessionStarted { return }
+        
+        UserDefaults.standard.incrementSessionCount() //sets count to 0 if first time, +1 otherwise
+        
+        if UserDefaults.standard.isFirstTimeUser() {
             return
         }
         do {
@@ -95,9 +99,10 @@ class DBLogRequest: DBRequest {
         }
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZ"
         let params = [
             "device_id": deviceId,
+            "session": UserDefaults.standard.getSessionCount(),
             "vc": vc,
             "event": event,
             "action": action,
