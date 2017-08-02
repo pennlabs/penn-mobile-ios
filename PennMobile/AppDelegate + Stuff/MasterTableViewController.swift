@@ -41,6 +41,19 @@ class ControllerSettings: NSObject {
     var firstController: UIViewController {
         return viewControllers.first!
     }
+    
+    func visibleVCIndex() -> IndexPath {
+        for vc in viewControllers {
+            if vc.isVisible {
+                return IndexPath(row: viewControllers.index(of: vc)!, section: 0)
+            }
+        }
+        return IndexPath(row: 0, section: 0)
+    }
+    
+    func visibleVCName() -> String {
+        return displayNames[visibleVCIndex().row]
+    }
 }
 
 class MasterTableViewController: MoveableTableViewController {
@@ -49,16 +62,6 @@ class MasterTableViewController: MoveableTableViewController {
     fileprivate var displayNameArray = ControllerSettings.shared.displayNames
     
     fileprivate let cellID = "cellID"
-    fileprivate var selectedIndex: IndexPath {
-        get {
-            for vc in viewControllerArray {
-                if vc.isVisible {
-                    return IndexPath(row: viewControllerArray.index(of: vc)!, section: 0)
-                }
-            }
-            return IndexPath(row: 0, section: 0)
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,6 +124,6 @@ extension MasterTableViewController {
         
         let navController = UINavigationController(rootViewController: viewControllerArray[indexPath.row])
         revealViewController().pushFrontViewController(navController, animated: true)
-        tableView.cellForRow(at: selectedIndex)?.isHighlighted = false
+        tableView.cellForRow(at: ControllerSettings.shared.visibleVCIndex())?.isHighlighted = false
     }
 }

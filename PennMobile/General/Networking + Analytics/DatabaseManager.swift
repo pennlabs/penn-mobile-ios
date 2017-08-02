@@ -18,7 +18,21 @@ class DatabaseManager: NSObject, Requestable {
     static let shared = DatabaseManager()
     static let dbURL = "https://agile-waters-48349.herokuapp.com"
     
-    internal var batchRequests = [DBRequest]()
+    var maxBatchSize = 2
+    
+    fileprivate var batchTimer: Timer?
+    var maxTime: TimeInterval = 2 //default batch time of 5 minute
+    
+    internal var batchRequests = [DBRequest]() {
+        didSet {
+            if batchRequests.count >= maxBatchSize {
+                sendCurrentBatch()
+            } else if batchRequests.count == 1 { //first request added
+                batchTimer = Timer.scheduledTimer(timeInterval: maxTime, target: self, selector: #selector(sendCurrentBatch), userInfo: nil, repeats: false)
+            }
+        }
+    }
+    
     internal var sessionStarted = false
     
     var dryRun: Bool = false //prevents any requests being sent
@@ -27,10 +41,17 @@ class DatabaseManager: NSObject, Requestable {
         self.batchRequests.append(request)
     }
     
-    func sendCurrentBatch() throws {
-        let url = DatabaseManager.dbURL + "/batch"
-        try request(method: .post, url: url, params: batchRequests.encode())
-        batchRequests.removeAll() //only runs if error not thrown
+    func sendCurrentBatch() {
+        if dryRun && !batchRequests.isEmpty { return }
+        
+        do {
+            let url = DatabaseManager.dbURL + "/batch"
+            try request(method: .post, url: url, params: batchRequests.encode())
+            batchRequests.removeAll() //only runs if error not thrown
+            batchTimer?.invalidate()
+        } catch {
+            print("Caught: \(error)")
+        }
     }
 }
 
@@ -71,22 +92,39 @@ extension DatabaseManager {
     func startSession() {
         if sessionStarted { return }
         
+        sessionStarted = true
         UserDefaults.standard.incrementSessionCount() //sets count to 0 if first time, +1 otherwise
         
         if UserDefaults.standard.isFirstTimeUser() {
             return
         }
         do {
-            try logNewSession()
+            try logSessionStarted()
         } catch {
             print("Caught: \(error)")
         }
     }
     
-    internal func logNewSession() throws {
-        if let firstVC = ControllerSettings.shared.displayNames.first {
-            batchRequests.append(try DBLogRequest(vc: firstVC, event: "New session", action: nil, desc: nil))
+    func endSession() {
+        if !sessionStarted { return }
+        
+        do {
+            try logSessionEnded()
+        } catch {
+            print("Caught: \(error)")
         }
+        
+        sessionStarted = false
+        sendCurrentBatch()
+    }
+    
+    internal func logSessionStarted() throws {
+        let vc = ControllerSettings.shared.visibleVCName()
+        batchRequests.append(try DBLogRequest(vc: vc, event: "Session started", action: nil, desc: nil))
+    }
+    
+    internal func logSessionEnded() throws {
+        batchRequests.append(try DBLogRequest(event: "Session ended"))
     }
 }
 
