@@ -18,10 +18,10 @@ enum DBError: String, LocalizedError {
     static let shared = DatabaseManager()
     static let dbURL = "https://agile-waters-48349.herokuapp.com"
     
-    var maxBatchSize = 8
+    var maxBatchSize = 5 //maximum number of batchRequests
     
     fileprivate var batchTimer: Timer?
-    var maxTime: TimeInterval = 1 //default batch time of 5 minute
+    var maxTime: TimeInterval = 30 //default batch time is 30 seconds
     
     internal var batchRequests = [DBRequest]() {
         didSet {

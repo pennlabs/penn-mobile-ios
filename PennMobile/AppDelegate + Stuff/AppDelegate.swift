@@ -102,14 +102,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    var sessionEndedTimer: Timer?
+    var backgroundTask: UIBackgroundTaskIdentifier?
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         DatabaseManager.shared.endSession()
+        backgroundTask = application.beginBackgroundTask {
+            if let bgTask = self.backgroundTask {
+                DispatchQueue.main.async {
+                    application.endBackgroundTask(bgTask)
+                    self.backgroundTask = UIBackgroundTaskInvalid
+                }
+            }
+        }
+        
+        DispatchQueue.main.async {
+            if application.backgroundTimeRemaining > 1.0 {
+                DatabaseManager.shared.endSession()
+            }
+            
+            if let bgTask = self.backgroundTask {
+                application.endBackgroundTask(bgTask)
+                self.backgroundTask = UIBackgroundTaskInvalid
+            }
+        }
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        sessionEndedTimer?.invalidate()
         DatabaseManager.shared.startSession()
     }
 
