@@ -34,7 +34,8 @@
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor blackColor]}];
     
-    [GoogleAnalyticsManager.shared track:@"Emergency"];
+    [GoogleAnalyticsManager.shared track:@"Contacts"];
+    [DatabaseManager.shared track:@"Contacts"];
 }
 
 - (void)viewDidLoad {

@@ -33,7 +33,8 @@
     self.tableView.alwaysBounceVertical = YES;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    [GoogleAnalyticsManager.shared track:[[[[self.laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0]];    
+    [GoogleAnalyticsManager.shared track:[[[[self.laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0]];
+    [DatabaseManager.shared track:[[[[self.laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0]];
     [self.tableView reloadData];
 }
 

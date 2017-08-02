@@ -31,6 +31,7 @@
      @{NSForegroundColorAttributeName:[UIColor blackColor]}];
     
     [GoogleAnalyticsManager.shared track:@"About"];
+    [DatabaseManager.shared track:@"About"];
 }
     
 -(void) viewDidLoad {

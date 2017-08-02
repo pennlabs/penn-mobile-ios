@@ -85,7 +85,11 @@
         }
         
         [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
-        [self.tableView reloadData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            //Run UI Updates
+            [self.tableView reloadData];
+        });
     }];
 }
 

@@ -13,7 +13,7 @@ enum DBError: String, LocalizedError {
     var localizedDescription: String { return NSLocalizedString(self.rawValue, comment: "") }
 }
 
-class DatabaseManager: NSObject, Requestable {
+@objc class DatabaseManager: NSObject, Requestable {
     
     static let shared = DatabaseManager()
     static let dbURL = "https://agile-waters-48349.herokuapp.com"

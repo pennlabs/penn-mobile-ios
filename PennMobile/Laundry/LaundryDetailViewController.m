@@ -63,6 +63,7 @@
     self.revealViewController.panGestureRecognizer.enabled = NO;
     
     [GoogleAnalyticsManager.shared track:self.houseName];
+    [DatabaseManager.shared track:self.houseName];
 }
 
 - (void) pull:(id)sender {
@@ -119,7 +120,10 @@
         }
         
         [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
-        [self.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            //Run UI Updates
+            [self.tableView reloadData];
+        });
     }];
 }
 
