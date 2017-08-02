@@ -18,10 +18,10 @@ class DatabaseManager: NSObject, Requestable {
     static let shared = DatabaseManager()
     static let dbURL = "https://agile-waters-48349.herokuapp.com"
     
-    var maxBatchSize = 2
+    var maxBatchSize = 8
     
     fileprivate var batchTimer: Timer?
-    var maxTime: TimeInterval = 2 //default batch time of 5 minute
+    var maxTime: TimeInterval = 1 //default batch time of 5 minute
     
     internal var batchRequests = [DBRequest]() {
         didSet {
@@ -55,7 +55,7 @@ class DatabaseManager: NSObject, Requestable {
     }
 }
 
-//Mark: Handles the first session and creation of new user in DB
+//Mark: Handles creation and end of sessions (including creation of user)
 extension DatabaseManager {
     
     //returns true if successful, false if not a first time user
@@ -125,6 +125,16 @@ extension DatabaseManager {
     
     internal func logSessionEnded() throws {
         batchRequests.append(try DBLogRequest(event: "Session ended"))
+    }
+}
+
+//Mark: Trackable API
+extension DatabaseManager {
+    func track(_ name: String) {
+        do {
+            batchRequests.append(try DBLogRequest(vc: name, event: "New VC", action: nil, desc: nil))
+        } catch {
+        }
     }
 }
 
