@@ -8,19 +8,20 @@
 
 import UIKit
 
-class DiningControllerCell: UITableViewCell {
+class DiningCell: UITableViewCell {
     
-    var diningHall: DiningHall! {
+    var venue: DiningVenue! {
         didSet {
-            diningImage.image = UIImage(named: diningHall.name.folding(options: .diacriticInsensitive, locale: .current))
-            label.text = diningHall.name
-            if let times = diningHall.times {
+            venueImage.image = UIImage(named: venue.name.folding(options: .diacriticInsensitive, locale: .current))
+            label.text = venue.name
+            
+            if let times = venue.times {
                 updateTimeLabel(with: times)
             }
         }
     }
     
-    private let diningImage: UIImageView = {
+    private let venueImage: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -64,7 +65,7 @@ class DiningControllerCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-                
+        
         setupView()
     }
     
@@ -75,15 +76,15 @@ class DiningControllerCell: UITableViewCell {
         //shadowLayer.anchorToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         mainBackground.anchorToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
-        mainBackground.addSubview(diningImage)
+        mainBackground.addSubview(venueImage)
         mainBackground.addSubview(label)
         mainBackground.addSubview(timesLabel)
         
-        _ = diningImage.anchor(mainBackground.topAnchor, left: mainBackground.leftAnchor, bottom: mainBackground.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        diningImage.widthAnchor.constraint(equalTo: mainBackground.widthAnchor, multiplier: 0.5).isActive = true
+        _ = venueImage.anchor(mainBackground.topAnchor, left: mainBackground.leftAnchor, bottom: mainBackground.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        venueImage.widthAnchor.constraint(equalTo: mainBackground.widthAnchor, multiplier: 0.5).isActive = true
         
         label.topAnchor.constraint(equalTo: mainBackground.centerYAnchor, constant: -4).isActive = true
-        label.leftAnchor.constraint(equalTo: diningImage.rightAnchor, constant: 20).isActive = true
+        label.leftAnchor.constraint(equalTo: venueImage.rightAnchor, constant: 20).isActive = true
         
         _ = timesLabel.anchor(label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
@@ -100,7 +101,6 @@ class DiningControllerCell: UITableViewCell {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "h:mma"
-        formatter.timeZone = TimeZone(abbreviation: "GMT")!
         formatter.amSymbol = "a"
         formatter.pmSymbol = "p"
         
@@ -138,3 +138,4 @@ class DiningControllerCell: UITableViewCell {
     }
     
 }
+

@@ -29,7 +29,7 @@ class DiningDetailViewController: GenericViewController {
         return dict
     }()
 
-    var diningHall: DiningHall!
+    var diningHall: DiningVenue!
     var webview: UIWebView!
     
     override func viewDidLoad() {

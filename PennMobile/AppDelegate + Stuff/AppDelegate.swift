@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         DatabaseManager.shared.startSession() //adds new session log to queue
+        DatabaseManager.shared.dryRun = true
         
         let gai = GAI.sharedInstance()
         gai?.trackUncaughtExceptions = true

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */; };
 		211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */ = {isa = PBXBuildFile; fileRef = 211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */; };
+		211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DFE531F36A02C00CB73E4 /* DiningAPI.swift */; };
 		212209A51EC67B690038FB7F /* EmergencyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A41EC67B690038FB7F /* EmergencyController.swift */; };
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
 		21329D081EE7AAE500C9DE65 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21329D071EE7AAE500C9DE65 /* EmptyView.swift */; };
@@ -44,7 +45,6 @@
 		216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C31EBADC9300746B8E /* GenericWebview.swift */; };
 		216640CC1EBADCA400746B8E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C91EBADCA400746B8E /* Extensions.swift */; };
 		216640CD1EBADCA400746B8E /* GoogleAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */; };
-		216640D01EBADD2600746B8E /* DiningNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640CF1EBADD2600746B8E /* DiningNetworkManager.swift */; };
 		216640E81EBB861000746B8E /* LaundryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640DD1EBB861000746B8E /* LaundryDetailViewController.m */; };
 		216640E91EBB861000746B8E /* LaundryDryerDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640DF1EBB861000746B8E /* LaundryDryerDetailTableViewCell.m */; };
 		216640EA1EBB861000746B8E /* LaundryMidwayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640E11EBB861000746B8E /* LaundryMidwayTableViewController.m */; };
@@ -78,6 +78,7 @@
 		2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		211B11A41F2995AD00A22C8A /* PennMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PennMobile.entitlements; sourceTree = "<group>"; };
 		211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AuthKey_6MBD9SUNGE.p8; sourceTree = "<group>"; };
+		211DFE531F36A02C00CB73E4 /* DiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPI.swift; sourceTree = "<group>"; };
 		212209A41EC67B690038FB7F /* EmergencyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmergencyController.swift; sourceTree = "<group>"; };
 		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
 		21329D071EE7AAE500C9DE65 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
@@ -119,7 +120,6 @@
 		216640C31EBADC9300746B8E /* GenericWebview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWebview.swift; sourceTree = "<group>"; };
 		216640C91EBADCA400746B8E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsManager.swift; sourceTree = "<group>"; };
-		216640CF1EBADD2600746B8E /* DiningNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningNetworkManager.swift; sourceTree = "<group>"; };
 		216640DC1EBB861000746B8E /* LaundryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDetailViewController.h; sourceTree = "<group>"; };
 		216640DD1EBB861000746B8E /* LaundryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaundryDetailViewController.m; sourceTree = "<group>"; };
 		216640DE1EBB861000746B8E /* LaundryDryerDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaundryDryerDetailTableViewCell.h; sourceTree = "<group>"; };
@@ -371,7 +371,7 @@
 		216640CE1EBADD1B00746B8E /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				216640CF1EBADD2600746B8E /* DiningNetworkManager.swift */,
+				211DFE531F36A02C00CB73E4 /* DiningAPI.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -703,6 +703,7 @@
 				216640B01EBADC5E00746B8E /* LocationsHandler.swift in Sources */,
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */,
+				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				216640BD1EBADC7300746B8E /* BookViewControllerExtension.swift in Sources */,
 				216640971EBADC1700746B8E /* DiningModel.swift in Sources */,
 				216640BF1EBADC7300746B8E /* ProcessViewController.swift in Sources */,
@@ -711,7 +712,6 @@
 				216640B41EBADC6A00746B8E /* RoomCell.swift in Sources */,
 				216640871EBADB8300746B8E /* SWRevealViewController.m in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
-				216640D01EBADD2600746B8E /* DiningNetworkManager.swift in Sources */,
 				216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */,
 				216640CD1EBADCA400746B8E /* GoogleAnalyticsManager.swift in Sources */,
 			);

@@ -6,16 +6,13 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-struct DiningHall {
-    let name: String
-    var timeRemaining: Int
-    
-    init(name: String, timeRemaining: Int) {
-        self.name = name
-        self.timeRemaining = timeRemaining
-    }
-    
+class DiningVenue: NSObject {
+    var name: String
     var times: [OpenClose]?
+    
+    init(name: String) {
+        self.name = name
+    }
 }
 
 struct OpenClose: Equatable {
@@ -24,5 +21,9 @@ struct OpenClose: Equatable {
     
     static func ==(lhs: OpenClose, rhs: OpenClose) -> Bool {
         return lhs.open == rhs.open && lhs.close == rhs.close
+    }
+    
+    var description: String {
+        return open.description + " - " + close.description
     }
 }
