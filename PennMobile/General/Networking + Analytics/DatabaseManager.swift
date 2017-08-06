@@ -130,9 +130,16 @@ extension DatabaseManager {
 
 //Mark: Trackable API
 extension DatabaseManager {
-    func track(_ name: String) {
+    func trackVC(_ name: String) {
         do {
             batchRequests.append(try DBLogRequest(vc: name, event: "New VC", action: nil, desc: nil))
+        } catch {
+        }
+    }
+    
+    func trackEvent(vcName: String, event: String, action: String? = nil) {
+        do {
+            batchRequests.append(try DBLogRequest(vc: vcName, event: event, action: action, desc: nil))
         } catch {
         }
     }

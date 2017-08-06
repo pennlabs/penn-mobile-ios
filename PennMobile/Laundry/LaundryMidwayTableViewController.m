@@ -34,7 +34,6 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [GoogleAnalyticsManager.shared track:[[[[self.laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0]];
-    [DatabaseManager.shared track:[[[[self.laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0]];
     [self.tableView reloadData];
 }
 
@@ -108,6 +107,7 @@
     laundryDetailVC.ud = [[[self.laundryList objectAtIndex:indexPath.row] objectForKey:@"dryers_in_use"] intValue];
     
     [self.navigationController pushViewController:laundryDetailVC animated:NO];
+    //[DatabaseManager.shared trackEventWithVcName:"Laundry" event:[[laundryList objectAtIndex:indexPath.row] objectForKey:@"name"] action:NULL]
 }
 
 @end

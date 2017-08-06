@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol CollectionViewProtocol: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {}
+protocol CollectionViewProtocol: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {}
 
 class BookViewController: GenericViewController, ShowsAlert {
     

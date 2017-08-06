@@ -39,7 +39,7 @@ extension Dictionary where Key == String, Value == DiningVenue {
         for json in jsonArray {
             let venue = try DiningVenue(json: json)
             
-            //filter for provided venues
+            //filter for provided venues/use venue names
             for otherVenue in venues {
                 if otherVenue.range(of: venue.name) != nil || venue.name.range(of: otherVenue) != nil {
                     venue.name = otherVenue

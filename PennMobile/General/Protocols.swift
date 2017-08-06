@@ -52,7 +52,6 @@ extension Trackable where Self: UIViewController {
     func track(_ name: String?) {
         if let name = name {
             GoogleAnalyticsManager.shared.track(name)
-            DatabaseManager.shared.track(name)
         }
     }
 }

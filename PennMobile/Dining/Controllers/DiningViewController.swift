@@ -92,8 +92,10 @@ extension DiningViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let ddc = DiningDetailViewController()
-        ddc.diningHall = diningDictionary[indexPath.section][indexPath.item]
+        ddc.venue = diningDictionary[indexPath.section][indexPath.item]
         navigationController?.pushViewController(ddc, animated: true)
+        
+        DatabaseManager.shared.trackEvent(vcName: "Dining", event: ddc.venue.name)
     }
 }
 

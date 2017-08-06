@@ -35,7 +35,6 @@
      @{NSForegroundColorAttributeName:[UIColor blackColor]}];
     
     [GoogleAnalyticsManager.shared track:@"Contacts"];
-    [DatabaseManager.shared track:@"Contacts"];
 }
 
 - (void)viewDidLoad {

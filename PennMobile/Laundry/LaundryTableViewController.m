@@ -173,8 +173,10 @@
     } else {
         LaundryMidwayTableViewController *laundryDetailTVC = [[LaundryMidwayTableViewController alloc] init];
         laundryDetailTVC.laundryList = laundryList;
-
+        
         [self.navigationController pushViewController:laundryDetailTVC animated:YES];
+        
+        //[DatabaseManager.shared trackEventWithVcName:@"Laundry" event:[[[[laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0] action:@"Clicked"];
     }
 }
 

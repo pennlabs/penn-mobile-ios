@@ -125,5 +125,6 @@ extension MasterTableViewController {
         let navController = UINavigationController(rootViewController: viewControllerArray[indexPath.row])
         revealViewController().pushFrontViewController(navController, animated: true)
         tableView.cellForRow(at: ControllerSettings.shared.visibleVCIndex())?.isHighlighted = false
+        DatabaseManager.shared.trackVC(displayNameArray[indexPath.row]) //send screen name to DB
     }
 }
