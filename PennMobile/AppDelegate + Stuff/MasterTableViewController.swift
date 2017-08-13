@@ -18,7 +18,7 @@ class ControllerSettings: NSObject {
         dict["Study Room Booking"] = BookViewController()
         dict["Laundry"] = LaundryTableViewController()
         dict["News"] = NewsViewController()
-        dict["Support"] = EmergencyController()
+        dict["Support"] = ContactsTableViewController()
         dict["About"] = AboutViewController()
         return dict
     }()

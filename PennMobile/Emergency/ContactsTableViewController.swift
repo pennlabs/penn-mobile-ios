@@ -1,16 +1,22 @@
 //
-//  EmergencyController.swift
+//  SupportTableViewController2.swift
 //  PennMobile
 //
-//  Created by Josh Doman on 5/12/17.
+//  Created by Josh Doman on 8/12/17.
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
 import UIKit
 
-class EmergencyController: SupportTableViewController, ShowsAlert {
+protocol ContactCellDelegate {
+    func call(number: String)
+}
+
+class ContactsTableViewController: GenericTableViewController, ShowsAlert {
     
     let contacts: [SupportItem] = SupportItem.getContacts() as! [SupportItem]
+    
+    fileprivate var expandedCellIndex: IndexPath?
     
     fileprivate var contactsButtonTitle: String {
         get {
@@ -22,11 +28,67 @@ class EmergencyController: SupportTableViewController, ShowsAlert {
         return UIBarButtonItem(title: self.contactsButtonTitle, style: .done, target: self, action: #selector(addRemove(_:)))
     }()
     
+    fileprivate let cellId = "supportCellId"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = addRemoveButton
+        self.screenName = "Contacts"
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(ContactCell.self, forCellReuseIdentifier: cellId)
+    }
+}
+
+//Mark: TableView Datasource
+extension ContactsTableViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return contacts.count
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath == expandedCellIndex {
+            return 100.0
+        }
+        return 60.0
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ContactCell
+        cell.contact = contacts[indexPath.row]
+        cell.delegate = self
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        var indexes = [indexPath]
+        
+        if let expandedIndex = expandedCellIndex, indexPath != expandedCellIndex {
+            let expandedCell = tableView.cellForRow(at: expandedIndex) as! ContactCell
+            expandedCell.isExpanded = false
+            indexes.append(expandedIndex)
+        }
+        
+        expandedCellIndex = indexPath == expandedCellIndex ? nil : indexPath
+        
+        let cell = tableView.cellForRow(at: indexPath) as! ContactCell
+        cell.isExpanded = expandedCellIndex != nil
+        
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+    
+    private func expandCell(cell: ContactCell, indexPath: IndexPath, expand: Bool) {
+        cell.isExpanded = expand
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+}
+
+//Mark: add/remove UI button logic
+extension ContactsTableViewController {
     @objc fileprivate func addRemove(_ sender: UIBarButtonItem) {
         if UserDefaults.standard.bool(forKey: "Contacts added") {
             removeContacts()
@@ -42,7 +104,8 @@ class EmergencyController: SupportTableViewController, ShowsAlert {
     }
 }
 
-extension EmergencyController {
+//Mark: ContactManager logic
+extension ContactsTableViewController {
     fileprivate func addContacts() {
         ContactManager.shared.save(contacts) { (success) in
             self.contactManagerFinished(success, isAddingContacts: true)
@@ -85,5 +148,13 @@ extension EmergencyController {
             }))
         }
         self.present(alertController, animated: true, completion: nil)
+    }
+}
+
+//Mark: ContactCellDelegate
+extension ContactsTableViewController: ContactCellDelegate {
+    func call(number: String) {
+        guard let number = URL(string: "tel://" + number) else { return }
+        UIApplication.shared.open(number)
     }
 }

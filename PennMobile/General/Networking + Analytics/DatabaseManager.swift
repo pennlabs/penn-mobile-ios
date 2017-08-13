@@ -42,7 +42,7 @@ enum DBError: String, LocalizedError {
     }
     
     func sendCurrentBatch() {
-        if dryRun && !batchRequests.isEmpty { return }
+        if dryRun || batchRequests.isEmpty { return }
         
         do {
             let url = DatabaseManager.dbURL + "/batch"

@@ -46,7 +46,7 @@
     [[SupportItem alloc] initWithName:@"Penn Walk"
                           contactName:@"Penn Walk"
                                 phone:@"215-898-WALK (9255)"
-                                 desc:@"Call this number to have a Public safety officer walk you home between 30th to 43rd Streets and Market Street to Baltimore Avenue."];
+                                 desc:@"Call for a walking escort between 30th and 43rd Streets and Market Street and Baltimore Avenue."];
     pWalk.phoneFiltered = @"2158989255";
     
     SupportItem *pRide =
@@ -60,7 +60,7 @@
     [[SupportItem alloc] initWithName:@"Help Line"
                           contactName:@"Penn Help Line"
                                 phone:@"215-898-HELP (4357)"
-                                 desc:@"24-hour-a-day phone number for members of the Penn community who are seeking time sensitive help in navigating Penn’s resources for health and wellness."];
+                                 desc:@"24-hour phone line for navigating Penn’s health and wellness resources."];
     hLine.phoneFiltered = @"2158984357";
     
     SupportItem *caps =
