@@ -201,7 +201,7 @@
 				216640C71EBADC9D00746B8E /* General */,
 				216640881EBADBA000746B8E /* AppDelegate + Stuff */,
 				2166408B1EBADBF800746B8E /* Dining */,
-				216640EE1EBB867600746B8E /* Emergency */,
+				216640EE1EBB867600746B8E /* Contacts */,
 				2166408C1EBADBFC00746B8E /* GSR-Booking */,
 				216640DB1EBB85EA00746B8E /* Laundry */,
 				216640D31EBB80FD00746B8E /* News */,
@@ -402,7 +402,7 @@
 			path = Laundry;
 			sourceTree = "<group>";
 		};
-		216640EE1EBB867600746B8E /* Emergency */ = {
+		216640EE1EBB867600746B8E /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
 				216640EF1EBB86A300746B8E /* SupportItem.h */,
@@ -411,7 +411,7 @@
 				2108CF221F3F762500CEC3F4 /* ContactCell.swift */,
 				2190FD3A1EC65E7800EC683C /* ContactManager.swift */,
 			);
-			path = Emergency;
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 		216640F91EBB898700746B8E /* About */ = {

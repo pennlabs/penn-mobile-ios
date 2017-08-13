@@ -18,7 +18,7 @@ class ControllerSettings: NSObject {
         dict["Study Room Booking"] = BookViewController()
         dict["Laundry"] = LaundryTableViewController()
         dict["News"] = NewsViewController()
-        dict["Support"] = ContactsTableViewController()
+        dict["Penn Contacts"] = ContactsTableViewController()
         dict["About"] = AboutViewController()
         return dict
     }()
@@ -31,7 +31,7 @@ class ControllerSettings: NSObject {
     
     var displayNames: [String] {
         return UserDefaults.standard.getVCDisplayNames() ??
-            ["Dining", "Study Room Booking", "Laundry", "News", "Support", "About"]
+            ["Dining", "Study Room Booking", "Laundry", "News", "Penn Contacts", "About"]
     }
     
     func viewController(for title: String) -> UIViewController {

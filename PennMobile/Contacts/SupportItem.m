@@ -67,25 +67,25 @@
     [[SupportItem alloc] initWithName:@"CAPS"
                           contactName:@"Penn CAPS"
                                 phone:@"215-898-7021"
-                                 desc:@"CAPS main number. Call anytime to reach CAPS."];
+                                 desc:@"Call anytime to reach Penn's Counseling and Pyschological Services Center."];
     
     SupportItem *special =
     [[SupportItem alloc] initWithName:@"Special Services"
                           contactName:@"Penn Special Services"
                                 phone:@"215-898-4481"
-                                 desc:nil];
+                                 desc:@"Call to inquire or receive support services when victimized by any type of crime."];
     
     SupportItem *womens =
     [[SupportItem alloc] initWithName:@"Women's Center"
                           contactName:@"Penn Women's Center"
                                 phone:@"215-898-8611"
-                                 desc:nil];
+                                 desc:@"The Women's Center sponsors programs on career development, stress management, parenting, violence prevention, and more."];
     
     SupportItem *shs =
     [[SupportItem alloc] initWithName:@"Student Health Services"
                           contactName:@"Penn Student Health Services"
                                 phone:@"215-746-3535"
-                                 desc:nil];
+                                 desc:@"Call to make an appointment, contact a department, or address urgent medical issues."];
     
     return [NSArray arrayWithObjects:
      pEmergency, pGeneral, pWalk, pRide, hLine, caps, special, womens, shs, nil];

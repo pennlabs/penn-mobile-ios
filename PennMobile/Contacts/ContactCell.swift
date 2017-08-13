@@ -27,7 +27,7 @@ class ContactCell: UITableViewCell {
     func setDetailTextLabel() {
         if isExpanded, let phoneNumber = contact?.phone {
             if let description = self.contact?.descriptionText {
-                self.detailTextLabel?.text = String(format: "%@\n%@", arguments: [phoneNumber, description])// [phoneNumber, description])
+                self.detailTextLabel?.text = String(format: "%@\n%@", arguments: [phoneNumber, description])
             } else {
                 self.detailTextLabel?.text = phoneNumber
             }
@@ -59,8 +59,6 @@ class ContactCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let yOffset: CGFloat = isExpanded ? 2 : 0
-        
         textLabel?.frame = CGRect(x: 64, y: textLabel!.frame.origin.y, width: textLabel!.frame.width, height: textLabel!.frame.height)
         detailTextLabel?.frame = CGRect(x: 64, y: detailTextLabel!.frame.origin.y, width: contentView.bounds.width - 64 - 20, height: detailTextLabel!.frame.height)
     }
@@ -73,18 +71,14 @@ class ContactCell: UITableViewCell {
         let fakeButton = UIButton()
         fakeButton.isUserInteractionEnabled = true
         fakeButton.addTarget(self, action: #selector(handleCall(_:)), for: .touchUpInside)
+        
         addSubview(fakeButton)
+        addSubview(phoneButton)
         
         _ = fakeButton.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 64, heightConstant: 0)
         
-        addSubview(phoneButton)
-        //addSubview(contactNameLabel)
-        
         _ = phoneButton.anchor(nil, left: leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 30, heightConstant: 30)
         phoneButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
-        //contactNameLabel.leftAnchor.constraint(equalTo: phoneButton.rightAnchor, constant: 20).isActive = true
-        //contactNameLabel.centerYAnchor.constraint(equalTo: phoneButton.centerYAnchor).isActive = true
     }
     
     internal func handleCall(_ sender: UIButton) {

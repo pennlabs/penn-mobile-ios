@@ -6,6 +6,5 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "SWRevealViewController.h"
 #import "LaundryTableViewController.h"
-#import "SupportTableViewController.h"
 #import "AboutViewController.h"
 #import "SupportItem.h"
