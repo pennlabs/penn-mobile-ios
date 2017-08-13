@@ -87,7 +87,7 @@ class MasterTableViewController: MoveableTableViewController {
 
 // MARK: setup tableview
 
-extension MasterTableViewController {
+extension MasterTableViewController: Trackable {
     fileprivate func loadTableView() {
         tableView.tableFooterView = UIView() //removes empty lines
         tableView.bounces = false
@@ -125,6 +125,6 @@ extension MasterTableViewController {
         let navController = UINavigationController(rootViewController: viewControllerArray[indexPath.row])
         revealViewController().pushFrontViewController(navController, animated: true)
         tableView.cellForRow(at: ControllerSettings.shared.visibleVCIndex())?.isHighlighted = false
-        DatabaseManager.shared.trackVC(displayNameArray[indexPath.row]) //send screen name to DB
+        trackScreen(displayNameArray[indexPath.row])
     }
 }

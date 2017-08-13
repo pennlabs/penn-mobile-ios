@@ -90,7 +90,7 @@ extension DatabaseManager {
     }
     
     func startSession() {
-        if sessionStarted { return }
+        if sessionStarted || dryRun { return }
         
         sessionStarted = true
         UserDefaults.standard.incrementSessionCount() //sets count to 0 if first time, +1 otherwise
@@ -106,7 +106,7 @@ extension DatabaseManager {
     }
     
     func endSession() {
-        if !sessionStarted { return }
+        if !sessionStarted || dryRun { return }
         
         do {
             try logSessionEnded()
@@ -131,6 +131,8 @@ extension DatabaseManager {
 //Mark: Trackable API
 extension DatabaseManager {
     func trackVC(_ name: String) {
+        if dryRun { return }
+        
         do {
             batchRequests.append(try DBLogRequest(vc: name, event: "New VC", action: nil, desc: nil))
         } catch {
@@ -138,6 +140,8 @@ extension DatabaseManager {
     }
     
     func trackEvent(vcName: String, event: String, action: String? = nil) {
+        if dryRun { return }
+        
         do {
             batchRequests.append(try DBLogRequest(vc: vcName, event: event, action: action, desc: nil))
         } catch {

@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        DatabaseManager.shared.startSession() //adds new session log to queue
         DatabaseManager.shared.dryRun = true
+        DatabaseManager.shared.startSession() //adds new session log to queue
         
         let gai = GAI.sharedInstance()
         gai?.trackUncaughtExceptions = true
@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         presentSWController()
-        registerForPushNotifications()
+        //registerForPushNotifications() //uncomment when ready to start registering tokens for push notifications
             
         return true
     }
@@ -106,6 +106,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var backgroundTask: UIBackgroundTaskIdentifier?
     
     func applicationDidEnterBackground(_ application: UIApplication) {
+        if DatabaseManager.shared.dryRun { return }
+        
         DatabaseManager.shared.endSession()
         backgroundTask = application.beginBackgroundTask {
             if let bgTask = self.backgroundTask {
@@ -135,7 +137,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         DatabaseManager.shared.endSession()
     }
-
 
 }
 

@@ -23,7 +23,6 @@ class DiningViewController: GenericTableViewController {
         self.title = "Dining"
         
         registerHeadersAndCells()
-        
         updateVenueTimes()
     }
     

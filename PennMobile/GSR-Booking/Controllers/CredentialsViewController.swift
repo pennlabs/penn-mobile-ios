@@ -54,7 +54,7 @@ class CredentialsViewController: GAITrackedViewController, ShowsAlert, Indicator
         super.viewDidLoad()
         emailField.becomeFirstResponder()
         
-        self.screenName = "Login Screen"
+        self.screenName = "Credentials Screen"
         navigationItem.title = "Email & Password"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveCredentials(_:)))
@@ -119,6 +119,8 @@ class CredentialsViewController: GAITrackedViewController, ShowsAlert, Indicator
             } else {
                 self.handleErrorAuthenticating()
             }
+            
+            GoogleAnalyticsManager.shared.trackEvent(category: "Study Room Booking", action: "Attempted login", label: (isValid ? "Success" : "Failed"), value: 1)
         }
     }
     

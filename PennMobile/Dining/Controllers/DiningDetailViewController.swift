@@ -48,7 +48,8 @@ class DiningDetailViewController: GenericViewController {
             }
         }
         
-        self.title = venue.name
+        self.screenName = venue.name
         self.isPanEnabled = false
+        self.trackScreen = true
     }
 }

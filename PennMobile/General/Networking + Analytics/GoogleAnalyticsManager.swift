@@ -33,7 +33,7 @@ import UIKit
         }
         
         struct action {
-            static let attemptReservation = "Submit Booking"
+            static let attemptReservation = "Attempted reservation"
         }
     }
 }
