@@ -22,11 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         DatabaseManager.shared.dryRun = true
-        DatabaseManager.shared.startSession() //adds new session log to queue
+        //DatabaseManager.shared.startSession() //adds new session log to queue
         
         let gai = GAI.sharedInstance()
         gai?.trackUncaughtExceptions = true
-        gai?.dryRun = true //prevents GoogleAnalytics tracking (remove before production release)
+        //gai?.dryRun = true //prevents GoogleAnalytics tracking (remove before production release)
         
         navController = UINavigationController(rootViewController: homeController)
         navController.isNavigationBarHidden = true
