@@ -56,7 +56,7 @@ class ControllerSettings: NSObject {
     }
 }
 
-class MasterTableViewController: MoveableTableViewController {
+class MasterTableViewController: MoveableTableViewController, Trackable {
     
     fileprivate var viewControllerArray = ControllerSettings.shared.viewControllers
     fileprivate var displayNameArray = ControllerSettings.shared.displayNames
@@ -83,16 +83,19 @@ class MasterTableViewController: MoveableTableViewController {
         swap(&viewControllerArray[sourceIndexPath.row], &viewControllerArray[destinationIndexPath.row]) //swap controllers
         swap(&displayNameArray[sourceIndexPath.row], &displayNameArray[destinationIndexPath.row]) //swap display names
     }
+    
+    func prepare() {
+        trackScreen(displayNameArray.first)
+    }
 }
 
 // MARK: setup tableview
-
-extension MasterTableViewController: Trackable {
+extension MasterTableViewController {
     fileprivate func loadTableView() {
         tableView.tableFooterView = UIView() //removes empty lines
         tableView.bounces = false
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-        isMoveable = true //enables moveability
+        //isMoveable = true //enables row moveability
         setFinishedMovingCell {
             UserDefaults.standard.set(vcDisplayNames: self.displayNameArray)
         }

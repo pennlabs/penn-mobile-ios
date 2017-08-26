@@ -51,7 +51,7 @@ protocol Trackable {}
 extension Trackable where Self: UIViewController {
     func trackScreen(_ name: String?) {
         if let name = name {
-            GoogleAnalyticsManager.shared.track(name)
+            GoogleAnalyticsManager.shared.trackScreen(name)
             DatabaseManager.shared.trackVC(name)
         }
     }

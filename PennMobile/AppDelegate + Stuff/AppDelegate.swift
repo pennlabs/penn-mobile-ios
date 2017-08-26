@@ -24,9 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DatabaseManager.shared.dryRun = true
         //DatabaseManager.shared.startSession() //adds new session log to queue
         
-        let gai = GAI.sharedInstance()
-        gai?.trackUncaughtExceptions = true
-        //gai?.dryRun = true //prevents GoogleAnalytics tracking (remove before production release)
+        GoogleAnalyticsManager.prepare()
         
         navController = UINavigationController(rootViewController: homeController)
         navController.isNavigationBarHidden = true
@@ -49,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         swRevealViewController = SWRevealViewController(rearViewController: masterNavController, frontViewController: homeNavController)
         
         self.navController.pushViewController(swRevealViewController, animated: false)
+        
+        masterTableViewController.prepare() //need to call because viewDidLoad not called until menu button is pressed (bug with SWRevealViewController?)
     }
     
     //Special thanks to Ray Wenderlich

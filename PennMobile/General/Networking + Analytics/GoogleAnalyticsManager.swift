@@ -1,4 +1,3 @@
-//
 //  GoogleAnalyticsManager.swift
 //  PennMobile
 //
@@ -12,19 +11,26 @@ import UIKit
     
     static let shared = GoogleAnalyticsManager()
     
-    func track(_ name: String) {
-        let tracker = GAI.sharedInstance().defaultTracker
-        tracker?.set(kGAIScreenName, value: name)
+    static func prepare() {
+        let gai = GAI.sharedInstance()
+        gai?.trackUncaughtExceptions = true
+        gai?.dryRun = true //prevents GoogleAnalytics tracking (remove before production release)
+        gai?.logger.logLevel = .verbose
+        gai?.dispatchInterval = 20
+        gai?.defaultTracker = GAI.sharedInstance().tracker(withName: "PennMobile", trackingId: "UA-96870393-1")
+    }
+    
+    func trackScreen(_ name: String) {
+        GAI.sharedInstance().defaultTracker?.set(kGAIScreenName, value: name)
         
         let builder = GAIDictionaryBuilder.createScreenView()
         if let build = builder?.build() as? [AnyHashable: Any] {
-            tracker?.send(build)
+            GAI.sharedInstance().defaultTracker?.send(build)
         }
     }
     
     func trackEvent(category: String, action: String, label: String, value: NSNumber) {
-        let tracker = GAI.sharedInstance().defaultTracker
-        tracker?.send(GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build() as! [AnyHashable : Any]!)
+        GAI.sharedInstance().defaultTracker?.send(GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build() as! [AnyHashable : Any]!)
     }
     
     struct events {
