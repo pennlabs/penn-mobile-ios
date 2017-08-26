@@ -15,12 +15,12 @@ import UIKit
         let gai = GAI.sharedInstance()
         gai?.trackUncaughtExceptions = true
         gai?.dryRun = true //prevents GoogleAnalytics tracking (remove before production release)
-        gai?.logger.logLevel = .verbose
+        //gai?.logger.logLevel = .verbose //MUST COMMENT OUT BEFORE RELEASE
         gai?.dispatchInterval = 20
         gai?.defaultTracker = GAI.sharedInstance().tracker(withName: "PennMobile", trackingId: "UA-96870393-1")
     }
     
-    func trackScreen(_ name: String) {
+    @objc func trackScreen(_ name: String) {
         GAI.sharedInstance().defaultTracker?.set(kGAIScreenName, value: name)
         
         let builder = GAIDictionaryBuilder.createScreenView()
@@ -29,7 +29,7 @@ import UIKit
         }
     }
     
-    func trackEvent(category: String, action: String, label: String, value: NSNumber) {
+    @objc func trackEvent(category: String, action: String, label: String, value: NSNumber) {
         GAI.sharedInstance().defaultTracker?.send(GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build() as! [AnyHashable : Any]!)
     }
     

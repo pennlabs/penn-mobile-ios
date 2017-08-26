@@ -177,7 +177,7 @@
         [self.navigationController pushViewController:laundryDetailTVC animated:YES];
         
         //[DatabaseManager.shared trackEventWithVcName:@"Laundry" event:[[[[laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0] action:@"Clicked"];
-        [GoogleAnalyticsManager.shared track:[[[[laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0]];
+        [GoogleAnalyticsManager.shared trackScreen:[[[[laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0]];
     }
 }
 

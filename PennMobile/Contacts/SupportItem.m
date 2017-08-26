@@ -87,8 +87,14 @@
                                 phone:@"215-746-3535"
                                  desc:@"Call to make an appointment, contact a department, or address urgent medical issues."];
     
+    SupportItem *ofa =
+    [[SupportItem alloc] initWithName:@"Office of Affirmative Action"
+                          contactName:@"Penn Office of Affirmative Action"
+                                phone:@"(215) 898-6993"
+                                 desc:@"Call regarding issues related to the University's obligations as an aff. action and equal opp. employer and educational institution."];
+    
     return [NSArray arrayWithObjects:
-     pEmergency, pGeneral, pWalk, pRide, hLine, caps, special, womens, shs, nil];
+     pEmergency, pGeneral, pWalk, ofa, hLine, caps, special, womens, shs, pRide, nil];
 }
 
 @end
