@@ -57,6 +57,28 @@ extension Trackable where Self: UIViewController {
     }
 }
 
+protocol URLOpenable {}
+
+extension URLOpenable {
+    
+    //Source: https://stackoverflow.com/questions/38964264/openurl-in-ios10
+    func open(scheme: String) {
+        if let url = URL(string: scheme) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:],
+                                          completionHandler: {
+                                            (success) in
+                                            //print("Open \(scheme): \(success)")
+                })
+            } else {
+                _ = UIApplication.shared.openURL(url)
+                //let success = UIApplication.shared.openURL(url)
+                //print("Open \(scheme): \(success)")
+            }
+        }
+    }
+}
+
 protocol HairlineRemovable {}
 
 extension HairlineRemovable {

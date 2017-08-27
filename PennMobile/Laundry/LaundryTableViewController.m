@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSArray *fullLaundryList;
 @property (nonatomic, strong) NSMutableDictionary *parsedLaundryList;
 @property (nonatomic) BOOL hasPushedController;
+@property (nonatomic, copy) NSString* announcement;
 
 @end
 
@@ -26,6 +27,7 @@
     self = [super init];
     if(self) {
         self.title = @"Laundry";
+        self.announcement = @"Oh no! It seems like the new laundry machines have broken this feature. Hang tight for a few weeks while we fix things, and please, don’t let this stop you from doing your laundry. Click here to subscribe to updates.";
     }
     return self;
 }
@@ -51,6 +53,10 @@
                                          target:revealController
                                          action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = revealButtonItem;
+    
+    if (_announcement) {
+        [self.tableView registerClass:[LaundryAnnouncementHeader class] forHeaderFooterViewReuseIdentifier:@"AnnouncementHeader"];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -142,6 +148,14 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (_announcement) {
+        return [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"AnnouncementHeader"];
+    } else {
+        return nil;
+    }
 }
 
 

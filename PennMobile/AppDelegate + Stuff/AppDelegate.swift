@@ -13,10 +13,10 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    private var swRevealViewController: SWRevealViewController!
-    private var navController: UINavigationController!
-    private var masterTableViewController = MasterTableViewController()
-    private var homeController = ControllerSettings.shared.firstController
+    var swRevealViewController: SWRevealViewController!
+    var navController: UINavigationController!
+    var masterTableViewController = MasterTableViewController()
+    var homeController = ControllerSettings.shared.firstController
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

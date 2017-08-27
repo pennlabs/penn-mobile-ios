@@ -14,6 +14,9 @@ class DiningViewController: GenericTableViewController {
     
     internal lazy var diningDictionary: [[DiningVenue]] = [self.generateVenues(for: self.diningHalls), self.generateVenues(for: self.retail)]
     
+    fileprivate var announcement: String? = nil //set to nil if no announcement is to be shown
+    fileprivate var showAnnouncement: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,10 +31,14 @@ class DiningViewController: GenericTableViewController {
     
     internal let headerView = "header"
     internal let diningCell = "cell"
+    internal let announcementHeader = "announcement"
     
     private func registerHeadersAndCells() {
         tableView.register(DiningCell.self, forCellReuseIdentifier: diningCell)
         tableView.register(DiningHeaderView.self, forHeaderFooterViewReuseIdentifier: headerView)
+        if showAnnouncement {
+            tableView.register(AnnouncementHeaderView.self, forHeaderFooterViewReuseIdentifier: announcementHeader)
+        }
     }
     
     private func generateVenues(for venues: [String]) -> [DiningVenue] {
@@ -52,23 +59,35 @@ class DiningViewController: GenericTableViewController {
 extension DiningViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return showAnnouncement ? 3 : 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? diningHalls.count : retail.count
+        if showAnnouncement {
+            return section == 0 ? 0 : (section == 1 ? diningHalls.count : retail.count)
+        } else {
+            return section == 0 ? diningHalls.count : retail.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
-        cell.venue = diningDictionary[indexPath.section][indexPath.item]
+        let diningSection = showAnnouncement ? (indexPath.section - 1) : indexPath.section
+        cell.venue = diningDictionary[diningSection][indexPath.item]
         return cell
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
-        view.label.text = titles[section]
-        return view
+        if showAnnouncement && section == 0, let announcement = self.announcement {
+            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: announcementHeader) as! AnnouncementHeaderView
+            view.announcement = announcement
+            return view
+        } else {
+            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
+            let titleSection = showAnnouncement ? section - 1 : section
+            view.label.text = titles[titleSection]
+            return view
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -76,7 +95,7 @@ extension DiningViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 54
+        return (showAnnouncement && section == 0) ? 130 : 54
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -91,7 +110,8 @@ extension DiningViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let ddc = DiningDetailViewController()
-        ddc.venue = diningDictionary[indexPath.section][indexPath.item]
+        let titleSection = showAnnouncement ? indexPath.section - 1 : indexPath.section
+        ddc.venue = diningDictionary[titleSection][indexPath.item]
         navigationController?.pushViewController(ddc, animated: true)
         
         DatabaseManager.shared.trackEvent(vcName: "Dining", event: ddc.venue.name)
