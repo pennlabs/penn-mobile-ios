@@ -9,7 +9,7 @@
 class DiningViewController: GenericTableViewController {
     
     internal let titles = ["Dining Halls", "Retail Dining"]
-    internal let diningHalls = ["1920 Commons", "McClelland Express", "New College House", "English House", "Falk Kosher Dining"]
+    internal let diningHalls = ["1920 Commons", "McClelland Express", "New College House", "Hill House", "English House", "Falk Kosher Dining"]
     internal let retail = ["Tortas Frontera", "Gourmet Grocer", "Houston Market", "Joe's Café", "Mark's Café", "Beefsteak", "Starbucks"]
     
     internal lazy var diningDictionary: [[DiningVenue]] = [self.generateVenues(for: self.diningHalls), self.generateVenues(for: self.retail)]
