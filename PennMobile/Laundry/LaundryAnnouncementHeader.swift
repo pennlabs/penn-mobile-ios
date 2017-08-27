@@ -49,5 +49,6 @@ import UIKit
     
     func handleSubscribe(_ sender: UIButton) {
         open(scheme: "http://eepurl.com/c07CGb")
+        GoogleAnalyticsManager.shared.trackEvent(category: "Laundry", action: "Subscribe", label: "Pressed subscribe button", value: 1)
     }
 }
