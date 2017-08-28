@@ -149,7 +149,7 @@ extension Date {
             return self.add(minutes: 1)
         }
         return self
-    }
+    } 
     
     func dateIn(days: Int) -> Date {
         let start = Calendar.current.startOfDay(for: self)
@@ -213,5 +213,25 @@ public extension MutableCollection where Index == Int {
 extension Optional {
     func nullUnwrap() -> Any {
         return self == nil ? "null" : self!
+    }
+}
+
+extension UILabel {
+    var numberOfVisibleLines: Int {
+        let textSize = CGSize(width: CGFloat(self.frame.size.width), height: CGFloat(MAXFLOAT))
+        let rHeight: Int = lroundf(Float(self.sizeThatFits(textSize).height))
+        let charSize: Int = lroundf(Float(self.font.pointSize))
+        return rHeight / charSize
+    }
+    
+    func shrinkUntilFits(numberOfLines: Int, increment: CGFloat) {
+        if self.numberOfVisibleLines <= numberOfLines {
+            return
+        }
+        
+        let size = self.font.pointSize
+        self.font = self.font.withSize(size - increment)
+        
+        self.shrinkUntilFits(numberOfLines: numberOfLines, increment: increment)
     }
 }

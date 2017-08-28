@@ -58,6 +58,8 @@ class DiningCell: UITableViewCell {
         let label = UILabel()
         label.textColor = UIColor.warmGrey
         label.font = UIFont(name: "HelveticaNeue-Light", size: 12)
+        label.textAlignment = .left
+        label.numberOfLines = 2
         return label
     }()
     
@@ -86,7 +88,7 @@ class DiningCell: UITableViewCell {
         label.topAnchor.constraint(equalTo: mainBackground.centerYAnchor, constant: -4).isActive = true
         label.leftAnchor.constraint(equalTo: venueImage.rightAnchor, constant: 20).isActive = true
         
-        _ = timesLabel.anchor(label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = timesLabel.anchor(label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
     }
     
     private func setIsOpen(isOpen: Bool) {
@@ -135,6 +137,8 @@ class DiningCell: UITableViewCell {
         }
         
         timesLabel.text = timesString
+        
+        timesLabel.shrinkUntilFits(numberOfLines: 1, increment: 0.5)
     }
     
 }

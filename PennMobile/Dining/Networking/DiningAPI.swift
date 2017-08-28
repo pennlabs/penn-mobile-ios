@@ -78,7 +78,7 @@ extension DiningVenue {
                 if let openDate = formatter.date(from: open)?.adjustedFor11_59, let closeDate = formatter.date(from: close)?.adjustedFor11_59 {
                     
                     let time = OpenClose(open: openDate, close: closeDate)
-                    if let tempTimes = self.times, !tempTimes.contains(time) { //remove duplicate times
+                    if let tempTimes = self.times, !tempTimes.containsOverlappingTime(with: time) { //remove duplicate times
                         self.times?.append(time)
                     }
                 }

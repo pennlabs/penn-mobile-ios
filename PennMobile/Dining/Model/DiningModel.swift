@@ -26,4 +26,29 @@ struct OpenClose: Equatable {
     var description: String {
         return open.description + " - " + close.description
     }
+    
+    func overlaps(with oc: OpenClose) -> Bool {
+        return (oc.open >= self.open && oc.open < self.close) || (self.open >= oc.open && self.open < oc.close)
+    }
+    
+    func withoutMinutes() -> OpenClose {
+        let newOpen = open.roundedDownToHour
+        let newClose = close.roundedDownToHour
+        return OpenClose(open: newOpen, close: newClose)
+    }
+}
+
+extension Array where Element == OpenClose {
+    func containsOverlappingTime(with oc: OpenClose) -> Bool {
+        for e in self {
+            if e.overlaps(with: oc) { return true }
+        }
+        return false
+    }
+    
+    mutating func removeAllMinutes() {
+        for i in 0...(self.count - 1) {
+            self[i] = self[i].withoutMinutes()
+        }
+    }
 }
