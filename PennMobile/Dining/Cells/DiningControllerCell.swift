@@ -88,7 +88,7 @@ class DiningCell: UITableViewCell {
         label.topAnchor.constraint(equalTo: mainBackground.centerYAnchor, constant: -4).isActive = true
         label.leftAnchor.constraint(equalTo: venueImage.rightAnchor, constant: 20).isActive = true
         
-        _ = timesLabel.anchor(label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+        _ = timesLabel.anchor(label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 6, widthConstant: 0, heightConstant: 0)
     }
     
     private func setIsOpen(isOpen: Bool) {
@@ -138,7 +138,7 @@ class DiningCell: UITableViewCell {
         
         timesLabel.text = timesString
         
-        timesLabel.shrinkUntilFits(numberOfLines: 1, increment: 0.5)
+        timesLabel.shrinkUntilFits(numberOfLines: 1, increment: 0.25)
     }
     
 }
