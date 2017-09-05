@@ -63,8 +63,6 @@ class DiningCell: UITableViewCell {
         return label
     }()
     
-    private let shadowLayer = ShadowView()
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -72,10 +70,8 @@ class DiningCell: UITableViewCell {
     }
     
     private func setupView() {
-        //addSubview(shadowLayer)
         addSubview(mainBackground)
         
-        //shadowLayer.anchorToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         mainBackground.anchorToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
         mainBackground.addSubview(venueImage)
@@ -89,10 +85,6 @@ class DiningCell: UITableViewCell {
         label.leftAnchor.constraint(equalTo: venueImage.rightAnchor, constant: 20).isActive = true
         
         _ = timesLabel.anchor(label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 6, widthConstant: 0, heightConstant: 0)
-    }
-    
-    private func setIsOpen(isOpen: Bool) {
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -138,7 +130,9 @@ class DiningCell: UITableViewCell {
         
         timesLabel.text = timesString
         
-        timesLabel.shrinkUntilFits(numberOfLines: 1, increment: 0.25)
+        if times.count > 3 {
+            timesLabel.shrinkUntilFits(numberOfLines: 1, increment: 0.5)
+        }
     }
     
 }

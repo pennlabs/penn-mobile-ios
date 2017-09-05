@@ -54,7 +54,7 @@ class ContactCell: UITableViewCell {
         return l
     }()
     
-    var delegate: ContactCellDelegate?
+    weak var delegate: ContactCellDelegate?
     
     override func layoutSubviews() {
         super.layoutSubviews()

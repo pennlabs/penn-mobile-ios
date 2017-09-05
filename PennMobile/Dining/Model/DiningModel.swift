@@ -47,8 +47,8 @@ extension Array where Element == OpenClose {
     }
     
     mutating func removeAllMinutes() {
-        for i in 0...(self.count - 1) {
-            self[i] = self[i].withoutMinutes()
-        }
+        self = self.map({ (oc) -> OpenClose in
+            oc.withoutMinutes()
+        })
     }
 }

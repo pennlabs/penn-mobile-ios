@@ -225,13 +225,8 @@ extension UILabel {
     }
     
     func shrinkUntilFits(numberOfLines: Int, increment: CGFloat) {
-        if self.numberOfVisibleLines <= numberOfLines {
-            return
+        while self.numberOfVisibleLines > numberOfLines {
+            self.font = self.font.withSize(self.font.pointSize - increment)
         }
-        
-        let size = self.font.pointSize
-        self.font = self.font.withSize(size - increment)
-        
-        self.shrinkUntilFits(numberOfLines: numberOfLines, increment: increment)
     }
 }

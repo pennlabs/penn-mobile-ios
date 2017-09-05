@@ -15,7 +15,7 @@ import UIKit
         label.font = UIFont(name: "HelveticaNeue-Light", size: 17)
         label.textColor = UIColor.whiteGrey
         label.textAlignment = .center
-        label.text = "Oh no! It seems like the new laundry machines have broken this feature. Hang tight for a few weeks while we fix things, and please, don’t let this stop you from doing your laundry. Click here to subscribe to new updates."
+        label.text = "Oh no! It seems like the new laundry machines have broken this feature. Hang tight for a few weeks while we fix things, and please, don’t let this stop you from doing your laundry. Click below to subscribe to new updates."
         label.numberOfLines = 10
         return label
     }()
@@ -48,7 +48,7 @@ import UIKit
     }
     
     func handleSubscribe(_ sender: UIButton) {
-        open(scheme: "http://eepurl.com/c07CGb")
         GoogleAnalyticsManager.shared.trackEvent(category: "Laundry", action: "Subscribe", label: "Pressed subscribe button", value: 1)
+        open(scheme: "http://eepurl.com/c07CGb")
     }
 }

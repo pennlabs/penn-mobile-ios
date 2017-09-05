@@ -14,7 +14,7 @@ import UIKit
     static func prepare() {
         let gai = GAI.sharedInstance()
         gai?.trackUncaughtExceptions = true
-        //gai?.dryRun = true //prevents GoogleAnalytics tracking (remove before production release)
+        gai?.dryRun = true //prevents GoogleAnalytics tracking (remove before production release)
         //gai?.logger.logLevel = .verbose //MUST COMMENT OUT BEFORE RELEASE
         gai?.dispatchInterval = 20
         gai?.defaultTracker = GAI.sharedInstance().tracker(withName: "PennMobile", trackingId: "UA-96870393-1")
