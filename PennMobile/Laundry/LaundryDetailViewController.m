@@ -62,7 +62,8 @@
     
     self.revealViewController.panGestureRecognizer.enabled = NO;
     
-    [GoogleAnalyticsManager track:self.houseName];
+    [GoogleAnalyticsManager.shared trackScreen:self.houseName];
+    //[DatabaseManager.shared trackEventWithVcName:@"Laundry" event:self.houseName action:@""];
 }
 
 - (void) pull:(id)sender {
@@ -119,7 +120,10 @@
         }
         
         [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
-        [self.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            //Run UI Updates
+            [self.tableView reloadData];
+        });
     }];
 }
 

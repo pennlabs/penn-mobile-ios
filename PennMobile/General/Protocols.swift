@@ -49,9 +49,32 @@ extension IndicatorEnabled where Self: UIView {
 protocol Trackable {}
 
 extension Trackable where Self: UIViewController {
-    func track(_ name: String?) {
+    func trackScreen(_ name: String?) {
         if let name = name {
-            GoogleAnalyticsManager.track(name)
+            GoogleAnalyticsManager.shared.trackScreen(name)
+            DatabaseManager.shared.trackVC(name)
+        }
+    }
+}
+
+protocol URLOpenable {}
+
+extension URLOpenable {
+    
+    //Source: https://stackoverflow.com/questions/38964264/openurl-in-ios10
+    func open(scheme: String) {
+        if let url = URL(string: scheme) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:],
+                                          completionHandler: {
+                                            (success) in
+                                            //print("Open \(scheme): \(success)")
+                })
+            } else {
+                _ = UIApplication.shared.openURL(url)
+                //let success = UIApplication.shared.openURL(url)
+                //print("Open \(scheme): \(success)")
+            }
         }
     }
 }

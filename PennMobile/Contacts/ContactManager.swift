@@ -8,49 +8,51 @@
 
 import Contacts
 
-class ContactManager: NSObject {
+extension SupportItem {
     
-    static let shared = ContactManager()
-    
-    func save(_ items: [SupportItem], callback: (_ success: Bool) -> Void) {
-        let saveRequest = CNSaveRequest()
-        let store = CNContactStore()
-        for item in items {
-            let contact = createContact(for: item)
-            saveRequest.add(contact, toContainerWithIdentifier:nil)
-        }
-        
-        do {
-            try store.execute(saveRequest)
-            callback(true)
-        } catch {
-            callback(false) //fails to save contacts (probably didn't give permission)
-        }
-    }
-    
-    private func createContact(for item: SupportItem) -> CNMutableContact {
+    var cnContact: CNMutableContact {
         let contact = CNMutableContact()
-        contact.givenName = item.contactName
+        contact.givenName = self.contactName
         contact.phoneNumbers = [CNLabeledValue(
             label:CNLabelPhoneNumberiPhone,
-            value:CNPhoneNumber(stringValue: item.phoneFiltered))]
-        if let desc = item.descriptionText {
+            value:CNPhoneNumber(stringValue: self.phoneFiltered))]
+        if let desc = self.descriptionText {
             contact.note = desc
         }
         return contact
     }
     
+}
+
+class ContactManager: NSObject {
+    
+    static let shared = ContactManager()
+    
+    func save(_ items: [SupportItem], callback: @escaping (_ success: Bool) -> Void) {
+        let saveRequest = CNSaveRequest()
+        let store = CNContactStore()
+        for item in items {
+            saveRequest.add(item.cnContact, toContainerWithIdentifier:nil)
+        }
+        do {
+            try store.execute(saveRequest)
+            callback(true)
+        } catch {
+            callback(false)
+        }
+    }
+    
     func delete(_ items: [SupportItem], callback: (_ success: Bool) -> Void) {
         var successful = true
         for item in items {
-            delete(for: item) { (success) in
+            delete(item) { (success) in
                 successful = successful ? success : false
             }
         }
         callback(successful)
     }
     
-    private func delete(for item: SupportItem, callback: (_ success: Bool) -> Void) {
+    func delete(_ item: SupportItem, callback2: (_ success: Bool) -> Void) {
         let store = CNContactStore()
         let predicate = CNContact.predicateForContacts(matchingName: item.contactName)
         let toFetch = [CNContactGivenNameKey] as [CNKeyDescriptor]
@@ -58,7 +60,7 @@ class ContactManager: NSObject {
         do{
             let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: toFetch)
             guard contacts.count > 0 else{
-                callback(true) //no contacts found
+                callback2(true) //no contacts found
                 return
             }
             
@@ -69,13 +71,13 @@ class ContactManager: NSObject {
                 
                 do {
                     try store.execute(req)
-                    callback(true) //successfully deleted user
+                    callback2(true) //successfully deleted user
                 } catch {
-                    callback(false)
+                    callback2(false)
                 }
             }
-        } catch let err{
-            callback(false)
+        } catch {
+            callback2(false)
         }
     }
 }

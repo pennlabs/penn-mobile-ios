@@ -7,22 +7,24 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    private var swRevealViewController: SWRevealViewController!
-    private var navController: UINavigationController!
-    private var masterTableViewController = MasterTableViewController()
-    private var homeController = ControllerSettings.shared.firstController
+    var swRevealViewController: SWRevealViewController!
+    var navController: UINavigationController!
+    var masterTableViewController = MasterTableViewController()
+    var homeController = ControllerSettings.shared.firstController
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let gai = GAI.sharedInstance()
-        gai?.trackUncaughtExceptions = true
-        gai?.dryRun = true //prevents analytics from being sent, must remove when preparing for release
+        DatabaseManager.shared.dryRun = true
+        //DatabaseManager.shared.startSession() //adds new session log to queue
+        
+        GoogleAnalyticsManager.prepare()
         
         navController = UINavigationController(rootViewController: homeController)
         navController.isNavigationBarHidden = true
@@ -32,7 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         presentSWController()
-        
+        //registerForPushNotifications() //uncomment when ready to start registering tokens for push notifications
+            
         return true
     }
     
@@ -44,28 +47,96 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         swRevealViewController = SWRevealViewController(rearViewController: masterNavController, frontViewController: homeNavController)
         
         self.navController.pushViewController(swRevealViewController, animated: false)
+        
+        masterTableViewController.prepare() //need to call because viewDidLoad not called until menu button is pressed (bug with SWRevealViewController?)
     }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    
+    //Special thanks to Ray Wenderlich
+    func registerForPushNotifications() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+            (granted, error) in
+            guard granted else {
+                self.registerOrUpdateUser()
+                return
+            }
+            self.getNotificationSettings()
+        }
     }
-
+    
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            if settings.authorizationStatus != .authorized {
+                self.registerOrUpdateUser()
+                return
+            }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+    }
+    
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
+        }
+        
+        let token = tokenParts.joined()
+        registerOrUpdateUser(with: token)
+    }
+    
+    func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register: \(error)")
+        registerOrUpdateUser()
+    }
+    
+    private func registerOrUpdateUser(with token: String? = nil) {
+        do {
+            if try DatabaseManager.shared.createUser(with: token) { //returns true if first visit
+                DatabaseManager.shared.startSession()
+            } else if let token = token {
+                try DatabaseManager.shared.updateDeviceToken(with: token)
+            }
+        } catch {
+            print("Caught: \(error)")
+        }
+    }
+    
+    var backgroundTask: UIBackgroundTaskIdentifier?
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        if DatabaseManager.shared.dryRun { return }
+        
+        DatabaseManager.shared.endSession()
+        backgroundTask = application.beginBackgroundTask {
+            if let bgTask = self.backgroundTask {
+                DispatchQueue.main.async {
+                    application.endBackgroundTask(bgTask)
+                    self.backgroundTask = UIBackgroundTaskInvalid
+                }
+            }
+        }
+        
+        DispatchQueue.main.async {
+            if application.backgroundTimeRemaining > 1.0 {
+                DatabaseManager.shared.endSession()
+            }
+            
+            if let bgTask = self.backgroundTask {
+                application.endBackgroundTask(bgTask)
+                self.backgroundTask = UIBackgroundTaskInvalid
+            }
+        }
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        DatabaseManager.shared.startSession()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        DatabaseManager.shared.endSession()
     }
+
 }
 

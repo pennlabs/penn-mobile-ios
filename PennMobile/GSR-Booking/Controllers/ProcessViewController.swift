@@ -52,7 +52,6 @@ class ProcessViewController: GAITrackedViewController {
         
         if let location = location {
             self.screenName = location.name
-            GoogleAnalyticsManager.trackEvent(category: GoogleAnalyticsManager.events.category.studyRoomBooking, action: GoogleAnalyticsManager.events.action.attemptReservation, label: location.name, value: 1)
         }
         
         let networkingManager = GSRNetworkManager(email: email!, password: password!, gid: (location?.code)!, ids: ids!)
@@ -109,10 +108,12 @@ class ProcessViewController: GAITrackedViewController {
         let category = GoogleAnalyticsManager.events.category.studyRoomBooking
         let action = GoogleAnalyticsManager.events.action.attemptReservation
         if msg.contains("Failed") || msg.contains("Error") {
-            GoogleAnalyticsManager.trackEvent(category: category, action: action, label: "Failed", value: -1)
+            GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: "Failed", value: -1)
             let defaults = UserDefaults.standard
             defaults.removeObject(forKey: "email")
             defaults.removeObject(forKey: "password")
+        } else {
+            GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: "Success", value: 1)
         }
     }
 }

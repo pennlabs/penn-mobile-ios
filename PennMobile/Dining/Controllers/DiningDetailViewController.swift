@@ -26,10 +26,11 @@ class DiningDetailViewController: GenericViewController {
         dict["Houston Market"] = "houston-market"
         dict["Starbucks"] = "1920-starbucks"
         dict["New College House"] = "new-college-house"
+        dict["Hill House"] = "hill-house"
         return dict
     }()
 
-    var diningHall: DiningHall!
+    var venue: DiningVenue!
     var webview: UIWebView!
     
     override func viewDidLoad() {
@@ -40,7 +41,7 @@ class DiningDetailViewController: GenericViewController {
         webview = GenericWebview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         view.addSubview(webview)
         
-        if let endPoint = serverDictionary[diningHall.name] {
+        if let endPoint = serverDictionary[venue.name] {
             let urlString = "\(server)/\(endPoint)"
             
             if let url = URL(string: urlString) {
@@ -48,7 +49,8 @@ class DiningDetailViewController: GenericViewController {
             }
         }
         
-        self.screenName = diningHall.name
+        self.screenName = venue.name
         self.isPanEnabled = false
+        self.trackScreen = true
     }
 }

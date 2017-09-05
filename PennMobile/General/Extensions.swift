@@ -56,6 +56,7 @@ extension UIView {
         
         return anchors
     }
+    
 }
 
 extension UIColor {
@@ -101,9 +102,7 @@ extension Date {
     
     //returns date in local time
     static var currentLocalDate: Date {
-        get {
-            return Date().localTime
-        }
+        return Date().localTime
     }
     
     func convert(to timezone: String) -> Date {
@@ -136,10 +135,6 @@ extension Date {
     var roundedDownToHour: Date {
         return self.add(minutes: -self.minutes)
     }
-    
-    private var ends11_59: Bool {
-        return minutes == 59
-    }
         
     var dayOfWeek: String {
         let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -149,12 +144,12 @@ extension Date {
         return weekdayArray[weekDay-1]
     }
     
-    func adjustFor11_59() -> Date {
-        if ends11_59 {
+    var adjustedFor11_59: Date {
+        if self.minutes == 59 {
             return self.add(minutes: 1)
         }
         return self
-    }
+    } 
     
     func dateIn(days: Int) -> Date {
         let start = Calendar.current.startOfDay(for: self)
@@ -167,8 +162,7 @@ extension Date {
 }
 
 extension LazyMapCollection  {
-    
-    func toArray() -> [Element]{
+    func toArray() -> [Element] {
         return Array(self)
     }
 }
@@ -179,7 +173,60 @@ extension UIViewController {
     }
 }
 
-extension UIFont {
-    static let helvetica = UIFont(name: "HelveticaNeue", size: 12)
-    static let helveticaLight = UIFont(name: "HelveticaNeue-Light", size: 12)
+extension DateFormatter {
+    static var yyyyMMdd: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        return dateFormatter
+    }
+}
+
+public extension Collection {
+    /// Return a copy of `self` with its elements shuffled
+    func shuffle() -> [Generator.Element] {
+        var list = Array(self)
+        list.shuffleInPlace()
+        return list
+    }
+    
+    var random: Generator.Element? {
+        return shuffle().first
+    }
+}
+
+public extension MutableCollection where Index == Int {
+    /// Shuffle the elements of `self` in-place.
+    mutating func shuffleInPlace() {
+        // empty and single-element collections don't shuffle
+        if count < 2 { return }
+        
+        for i in startIndex ..< endIndex - 1 {
+            let j = Int(arc4random_uniform(UInt32(endIndex - i))) + i
+            guard i != j else { continue }
+            swap(&self[i], &self[j])
+        }
+    }
+}
+
+
+extension Optional {
+    func nullUnwrap() -> Any {
+        return self == nil ? "null" : self!
+    }
+}
+
+extension UILabel {
+    var numberOfVisibleLines: Int {
+        let textSize = CGSize(width: CGFloat(self.frame.size.width), height: CGFloat(MAXFLOAT))
+        let rHeight: Int = lroundf(Float(self.sizeThatFits(textSize).height))
+        let charSize: Int = lroundf(Float(self.font.pointSize))
+        return rHeight / charSize
+    }
+    
+    func shrinkUntilFits(numberOfLines: Int, increment: CGFloat) {
+        while self.numberOfVisibleLines > numberOfLines {
+            self.font = self.font.withSize(self.font.pointSize - increment)
+        }
+    }
 }

@@ -6,94 +6,88 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-import UIKit
-
 class DiningViewController: GenericTableViewController {
     
     internal let titles = ["Dining Halls", "Retail Dining"]
-    internal let diningHalls = ["1920 Commons", "McClelland Express", "New College House", "English House", "Falk Kosher Dining"]
+    internal let diningHalls = ["1920 Commons", "McClelland Express", "New College House", "Hill House", "English House", "Falk Kosher Dining"]
     internal let retail = ["Tortas Frontera", "Gourmet Grocer", "Houston Market", "Joe's Café", "Mark's Café", "Beefsteak", "Starbucks"]
-    internal var diningDictionary: [[DiningHall]] {
-        return [dining, retailHalls]
-    }
     
-    var dining: [DiningHall]!
-    var retailHalls: [DiningHall]!
+    internal lazy var diningDictionary: [[DiningVenue]] = [self.generateVenues(for: self.diningHalls), self.generateVenues(for: self.retail)]
+    
+    fileprivate var announcement: String? = nil //set to nil if no announcement is to be shown
+    fileprivate var showAnnouncement: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.screenName = "Dining"
-        self.title = "Dining"
-        
         tableView.separatorStyle = .none
         tableView.dataSource = self
         
+        self.title = "Dining"
+        
         registerHeadersAndCells()
-        
-        //Default settings for dining halls
-        dining = generateDiningHalls(for: diningHalls)
-        retailHalls = generateDiningHalls(for: retail)
-        
+        updateVenueTimes()
     }
     
     internal let headerView = "header"
     internal let diningCell = "cell"
+    internal let announcementHeader = "announcement"
     
     private func registerHeadersAndCells() {
-        tableView.register(DiningControllerCell.self, forCellReuseIdentifier: diningCell)
+        tableView.register(DiningCell.self, forCellReuseIdentifier: diningCell)
         tableView.register(DiningHeaderView.self, forHeaderFooterViewReuseIdentifier: headerView)
+        if showAnnouncement {
+            tableView.register(AnnouncementHeaderView.self, forHeaderFooterViewReuseIdentifier: announcementHeader)
+        }
     }
     
-    internal func generateDiningHalls(for diningHalls: [String]) -> [DiningHall] {
-        var arr = [DiningHall]()
-        for hall in diningHalls {
-            arr.append(DiningHall(name: hall, timeRemaining: 0))
+    private func generateVenues(for venues: [String]) -> [DiningVenue] {
+        var arr = [DiningVenue]()
+        for venue in venues {
+            arr.append(DiningVenue(name: venue))
         }
         return arr
     }
     
-    func updateTimesForDiningHalls() {
-        DiningNetworkManager.getDiningData(for: self.dining) { (diningHalls) in
-            
-            self.dining = diningHalls
-            
-            DiningNetworkManager.getDiningData(for: self.retailHalls, callback: { (diningHalls) in
-                self.retailHalls = diningHalls
-                
-                let when = DispatchTime.now() + 0.3
-                DispatchQueue.main.asyncAfter(deadline: when, execute: {
-                    self.tableView.reloadData()
-                })
-            })
-        }
-    }
-    
+    //called when view appears
     override func updateData() {
-        updateTimesForDiningHalls()
+        updateVenueTimes()
     }
 }
 
+//Mark: Setting up table view
 extension DiningViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return showAnnouncement ? 3 : 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? diningHalls.count : retail.count
+        if showAnnouncement {
+            return section == 0 ? 0 : (section == 1 ? diningHalls.count : retail.count)
+        } else {
+            return section == 0 ? diningHalls.count : retail.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningControllerCell
-        cell.diningHall = diningDictionary[indexPath.section][indexPath.item]
+        let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
+        let diningSection = showAnnouncement ? (indexPath.section - 1) : indexPath.section
+        cell.venue = diningDictionary[diningSection][indexPath.item]
         return cell
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
-        view.title = titles[section]
-        return view
+        if showAnnouncement && section == 0, let announcement = self.announcement {
+            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: announcementHeader) as! AnnouncementHeaderView
+            view.announcement = announcement
+            return view
+        } else {
+            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
+            let titleSection = showAnnouncement ? section - 1 : section
+            view.label.text = titles[titleSection]
+            return view
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -101,7 +95,7 @@ extension DiningViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 54
+        return (showAnnouncement && section == 0) ? 130 : 54
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -115,25 +109,52 @@ extension DiningViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let diningHall = diningDictionary[indexPath.section][indexPath.item]
         let ddc = DiningDetailViewController()
-        ddc.diningHall = diningHall
+        let titleSection = showAnnouncement ? indexPath.section - 1 : indexPath.section
+        ddc.venue = diningDictionary[titleSection][indexPath.item]
         navigationController?.pushViewController(ddc, animated: true)
+        
+        DatabaseManager.shared.trackEvent(vcName: "Dining", event: ddc.venue.name)
+    }
+}
+
+//Mark: Networking to retrieve today's times
+extension DiningViewController {
+    fileprivate func updateVenueTimes() {
+        var allVenues = diningHalls
+        allVenues.append(contentsOf: retail)
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        _ = DiningAPI.getVenueHours(for: allVenues).then { venueDictionary -> Void in
+            
+            DispatchQueue.main.async {
+                self.updateUIWithVenues(venueDictionary)
+            }
+            
+            }.always {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            }.catch { error in
+                print(error)
+        }
     }
     
+    fileprivate func updateUIWithVenues(_ venueDictionary: Dictionary<String, DiningVenue>) {
+        for (key, venue) in venueDictionary {
+            if let index = diningHalls.index(of: key) {
+                diningDictionary[0][index] = venue
+            } else if let index = retail.index(of: key) {
+                diningDictionary[1][index] = venue
+            }
+        }
+        tableView.reloadData()
+    }
 }
 
 private class DiningHeaderView: UITableViewHeaderFooterView {
     
-    public var title: String! {
-        didSet {
-            label.text = title
-        }
-    }
-    
-    private let label: UILabel = {
+    var label: UILabel = {
         let label = UILabel()
-        label.font = UIFont.helveticaLight?.withSize(18)
+        label.font = UIFont(name: "HelveticaNeue-Light", size: 18)
         label.textColor = UIColor.warmGrey
         return label
     }()

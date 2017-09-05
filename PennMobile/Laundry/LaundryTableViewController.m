@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSArray *fullLaundryList;
 @property (nonatomic, strong) NSMutableDictionary *parsedLaundryList;
 @property (nonatomic) BOOL hasPushedController;
+@property (nonatomic, copy) NSString* announcement;
 
 @end
 
@@ -26,6 +27,7 @@
     self = [super init];
     if(self) {
         self.title = @"Laundry";
+        self.announcement = @"Oh no! It seems like the new laundry machines have broken this feature. Hang tight for a few weeks while we fix things, and please, don’t let this stop you from doing your laundry. Click here to subscribe to updates.";
     }
     return self;
 }
@@ -51,6 +53,10 @@
                                          target:revealController
                                          action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = revealButtonItem;
+    
+    if (_announcement) {
+        [self.tableView registerClass:[LaundryAnnouncementHeader class] forHeaderFooterViewReuseIdentifier:@"AnnouncementHeader"];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -71,7 +77,7 @@
 -(void) loadFromAPI {
     NSString *str = [NSString stringWithFormat: @"%@%@", SERVER_ROOT, LAUNDRY_PATH];
     NSURL *url = [NSURL URLWithString:str];
-
+    
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         
         if (error) {
@@ -85,7 +91,11 @@
         }
         
         [self performSelectorOnMainThread:@selector(hideActivity) withObject:nil waitUntilDone:NO];
-        [self.tableView reloadData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            //Run UI Updates
+            [self.tableView reloadData];
+        });
     }];
 }
 
@@ -140,6 +150,14 @@
     return cell;
 }
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (_announcement) {
+        return [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"AnnouncementHeader"];
+    } else {
+        return nil;
+    }
+}
+
 
 //should not be the problem
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -169,8 +187,11 @@
     } else {
         LaundryMidwayTableViewController *laundryDetailTVC = [[LaundryMidwayTableViewController alloc] init];
         laundryDetailTVC.laundryList = laundryList;
-
+        
         [self.navigationController pushViewController:laundryDetailTVC animated:YES];
+        
+        //[DatabaseManager.shared trackEventWithVcName:@"Laundry" event:[[[[laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0] action:@"Clicked"];
+        [GoogleAnalyticsManager.shared trackScreen:[[[[laundryList objectAtIndex:0] objectForKey:@"name"] componentsSeparatedByString:@"-"] objectAtIndex:0]];
     }
 }
 

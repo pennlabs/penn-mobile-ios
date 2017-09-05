@@ -25,7 +25,7 @@ class DateHandler {
         for date in dateRange {
             let locale = Locale(identifier: "en_US")
             let string = date.description(with: locale).components(separatedBy: ", 201")[0]
-            let compact = date.dayOfWeek//date.description.components(separatedBy: " ")[0]
+            let compact = date.dayOfWeek
             let day = (cal as NSCalendar).components(NSCalendar.Unit.day, from: date).day
             dates.append(GSRDate(string: string, compact: compact, day: day!))
         }

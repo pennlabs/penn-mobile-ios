@@ -8,11 +8,9 @@
 
 import UIKit
 
-protocol CollectionViewProtocol: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {}
+protocol CollectionViewProtocol: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {}
 
 class BookViewController: GenericViewController, ShowsAlert {
-    
-    fileprivate let emptyView = EmptyView()
     
     internal var activityIndicator: UIActivityIndicatorView = {
         let ai = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
@@ -70,6 +68,12 @@ class BookViewController: GenericViewController, ShowsAlert {
         tv.register(RoomCell.self, forCellReuseIdentifier: self.roomCell)
         tv.tableFooterView = UIView()
         return tv
+    }()
+    
+    fileprivate let emptyView: EmptyView = {
+        let ev = EmptyView()
+        ev.isHidden = true
+        return ev
     }()
     
     var storedOffsets = [Int: CGFloat]()
@@ -135,7 +139,7 @@ class BookViewController: GenericViewController, ShowsAlert {
         self.sortedKeys = self.parsedRoomData.sortedKeys
         setEarliestTime()
         self.currentSelection.removeAll()
-        tableView.isHidden = parsedRoomData.isEmpty
+        self.showEmptyViewIfNeeded()
         self.tableView.reloadData()
     }
     
@@ -143,6 +147,11 @@ class BookViewController: GenericViewController, ShowsAlert {
         get {
             return currentSelection.isEmpty ? isLoggedIn ? "Logout" : "Login" : "Submit"
         }
+    }
+    
+    internal func showEmptyViewIfNeeded() {
+        emptyView.isHidden = !parsedRoomData.isEmpty
+        tableView.isHidden = parsedRoomData.isEmpty
     }
     
     internal var isLoggedIn: Bool {
@@ -153,9 +162,9 @@ class BookViewController: GenericViewController, ShowsAlert {
     private func setupView() {
         self.title = "Study Room Booking"
         
-        view.addSubview(emptyView)
         view.addSubview(pickerView)
         view.addSubview(tableView)
+        view.addSubview(emptyView)
         view.addSubview(rangeSlider)
         
         pickerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
@@ -163,9 +172,9 @@ class BookViewController: GenericViewController, ShowsAlert {
         
         _ = rangeSlider.anchor(pickerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 30)
         
-        _ = emptyView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = tableView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        tableView.anchorToTop(emptyView.topAnchor, left: emptyView.leftAnchor, bottom: emptyView.bottomAnchor, right: emptyView.rightAnchor)
+        _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         navigationItem.rightBarButtonItems = [loginLogoutButton, UIBarButtonItem(customView: activityIndicator)]
     }
@@ -177,6 +186,11 @@ class BookViewController: GenericViewController, ShowsAlert {
         refreshContent()
         
         revealViewController().panGestureRecognizer().delegate = self
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        revealViewController().panGestureRecognizer().delegate = nil
     }
     
     // MARK: - Data Methods
@@ -313,6 +327,7 @@ extension BookViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 // MARK: - Table view methods
 
 extension BookViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return parsedRoomData.count
     }

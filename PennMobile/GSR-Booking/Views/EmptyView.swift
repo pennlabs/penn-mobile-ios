@@ -2,7 +2,7 @@
 //  EmptyView.swift
 //  PennMobile
 //
-//  Created by Josh Doman on 5/14/17.
+//  Created by Josh Doman on 6/6/17.
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
@@ -11,26 +11,27 @@ import UIKit
 class EmptyView: UIView {
     
     private let label: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "No results found"
-        lbl.textColor = UIColor.warmGrey
-        lbl.font = UIFont.helvetica?.withSize(24)
-        lbl.textAlignment = .center
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
+        let l = UILabel()
+        l.font = UIFont(name: "HelveticaNeue", size: 24)
+        l.text = "No results found"
+        l.textColor = UIColor.warmGrey
+        l.textAlignment = .center
+        l.translatesAutoresizingMaskIntoConstraints = false
+        return l
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .white
+        
+        backgroundColor = .clear
         
         addSubview(label)
+        
+        label.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -60).isActive = true
         label.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -40).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

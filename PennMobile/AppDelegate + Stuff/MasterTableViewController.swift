@@ -18,7 +18,7 @@ class ControllerSettings: NSObject {
         dict["Study Room Booking"] = BookViewController()
         dict["Laundry"] = LaundryTableViewController()
         dict["News"] = NewsViewController()
-        dict["Contacts"] = EmergencyController()
+        dict["Penn Contacts"] = ContactsTableViewController()
         dict["About"] = AboutViewController()
         return dict
     }()
@@ -30,9 +30,8 @@ class ControllerSettings: NSObject {
     }
     
     var displayNames: [String] {
-        if justUpdated && newViewControllerAdded { } //insert new view controller title into stored title array here
-        return UserDefaults.standard.stringArray(forKey: "Controller settings") ??
-            ["Dining", "Study Room Booking", "Laundry", "News", "Contacts", "About"]
+        return UserDefaults.standard.getVCDisplayNames() ??
+            ["Dining", "Study Room Booking", "Laundry", "News", "Penn Contacts", "About"]
     }
     
     func viewController(for title: String) -> UIViewController {
@@ -43,32 +42,26 @@ class ControllerSettings: NSObject {
         return viewControllers.first!
     }
     
-    private let justUpdated: Bool = {
-        let currentVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        let previousVersion = UserDefaults.standard.value(forKey: "CFBundleVersion") as? String
-        UserDefaults.standard.set(currentVersion, forKey: "CFBundleVersion") //update stored version
-        return previousVersion != currentVersion
-    }()
+    func visibleVCIndex() -> IndexPath {
+        for vc in viewControllers {
+            if vc.isVisible {
+                return IndexPath(row: viewControllers.index(of: vc)!, section: 0)
+            }
+        }
+        return IndexPath(row: 0, section: 0)
+    }
     
-    private let newViewControllerAdded: Bool = false
+    func visibleVCName() -> String {
+        return displayNames[visibleVCIndex().row]
+    }
 }
 
-class MasterTableViewController: MoveableTableViewController {
+class MasterTableViewController: MoveableTableViewController, Trackable {
     
     fileprivate var viewControllerArray = ControllerSettings.shared.viewControllers
     fileprivate var displayNameArray = ControllerSettings.shared.displayNames
     
     fileprivate let cellID = "cellID"
-    fileprivate var selectedIndex: IndexPath {
-        get {
-            for vc in viewControllerArray {
-                if vc.isVisible {
-                    return IndexPath(row: viewControllerArray.index(of: vc)!, section: 0)
-                }
-            }
-            return IndexPath(row: 0, section: 0)
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,29 +78,27 @@ class MasterTableViewController: MoveableTableViewController {
         super.viewWillDisappear(animated)
         revealViewController().frontViewController.view.isUserInteractionEnabled = true
     }
-}
-
-// Mark: moveability
-
-extension MasterTableViewController: MoveableDelegate {
-    internal func rowMoved(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    
+    internal override func rowMoved(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         swap(&viewControllerArray[sourceIndexPath.row], &viewControllerArray[destinationIndexPath.row]) //swap controllers
         swap(&displayNameArray[sourceIndexPath.row], &displayNameArray[destinationIndexPath.row]) //swap display names
+    }
+    
+    func prepare() {
+        trackScreen(displayNameArray.first)
     }
 }
 
 // MARK: setup tableview
-
 extension MasterTableViewController {
     fileprivate func loadTableView() {
         tableView.tableFooterView = UIView() //removes empty lines
         tableView.bounces = false
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-        isMoveable = true //enables moveability
+        //isMoveable = true //enables row moveability
         setFinishedMovingCell {
-            UserDefaults.standard.set(self.displayNameArray, forKey: "Controller settings")
+            UserDefaults.standard.set(vcDisplayNames: self.displayNameArray)
         }
-        self.moveDelegate = self
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -136,6 +127,7 @@ extension MasterTableViewController {
         
         let navController = UINavigationController(rootViewController: viewControllerArray[indexPath.row])
         revealViewController().pushFrontViewController(navController, animated: true)
-        tableView.cellForRow(at: selectedIndex)?.isHighlighted = false
+        tableView.cellForRow(at: ControllerSettings.shared.visibleVCIndex())?.isHighlighted = false
+        trackScreen(displayNameArray[indexPath.row])
     }
 }

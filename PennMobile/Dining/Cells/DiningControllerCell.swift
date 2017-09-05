@@ -8,19 +8,20 @@
 
 import UIKit
 
-class DiningControllerCell: UITableViewCell {
+class DiningCell: UITableViewCell {
     
-    var diningHall: DiningHall! {
+    var venue: DiningVenue! {
         didSet {
-            diningImage.image = UIImage(named: diningHall.name.folding(options: .diacriticInsensitive, locale: .current))
-            label.text = diningHall.name
-            if let times = diningHall.times {
+            venueImage.image = UIImage(named: venue.name.folding(options: .diacriticInsensitive, locale: .current))
+            label.text = venue.name
+            
+            if let times = venue.times {
                 updateTimeLabel(with: times)
             }
         }
     }
     
-    private let diningImage: UIImageView = {
+    private let venueImage: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -35,7 +36,7 @@ class DiningControllerCell: UITableViewCell {
     
     private let label: UILabel = {
         let label = UILabel()
-        label.font = UIFont.helvetica?.withSize(15.5)
+        label.font = UIFont(name: "HelveticaNeue", size: 15.5)
         label.textColor = UIColor.warmGrey
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -44,7 +45,7 @@ class DiningControllerCell: UITableViewCell {
     private let openLabel: UILabel = {
         let label = UILabel()
         label.text = "Open"
-        label.font = UIFont.helveticaLight?.withSize(13)
+        label.font = UIFont(name: "HelveticaNeue-Light", size: 13)
         label.textColor = .white
         label.backgroundColor = UIColor.coral
         label.layer.cornerRadius = 4
@@ -56,40 +57,34 @@ class DiningControllerCell: UITableViewCell {
     private let timesLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.warmGrey
-        label.font = UIFont.helveticaLight?.withSize(12)
+        label.font = UIFont(name: "HelveticaNeue-Light", size: 12)
+        label.textAlignment = .left
+        label.numberOfLines = 2
         return label
     }()
     
-    private let shadowLayer = ShadowView()
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-                
+        
         setupView()
     }
     
     private func setupView() {
-        //addSubview(shadowLayer)
         addSubview(mainBackground)
         
-        //shadowLayer.anchorToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         mainBackground.anchorToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
-        mainBackground.addSubview(diningImage)
+        mainBackground.addSubview(venueImage)
         mainBackground.addSubview(label)
         mainBackground.addSubview(timesLabel)
         
-        _ = diningImage.anchor(mainBackground.topAnchor, left: mainBackground.leftAnchor, bottom: mainBackground.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        diningImage.widthAnchor.constraint(equalTo: mainBackground.widthAnchor, multiplier: 0.5).isActive = true
+        _ = venueImage.anchor(mainBackground.topAnchor, left: mainBackground.leftAnchor, bottom: mainBackground.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        venueImage.widthAnchor.constraint(equalTo: mainBackground.widthAnchor, multiplier: 0.5).isActive = true
         
         label.topAnchor.constraint(equalTo: mainBackground.centerYAnchor, constant: -4).isActive = true
-        label.leftAnchor.constraint(equalTo: diningImage.rightAnchor, constant: 20).isActive = true
+        label.leftAnchor.constraint(equalTo: venueImage.rightAnchor, constant: 20).isActive = true
         
-        _ = timesLabel.anchor(label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
-    
-    private func setIsOpen(isOpen: Bool) {
-        
+        _ = timesLabel.anchor(label.bottomAnchor, left: label.leftAnchor, bottom: nil, right: rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 6, widthConstant: 0, heightConstant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -100,7 +95,6 @@ class DiningControllerCell: UITableViewCell {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "h:mma"
-        formatter.timeZone = TimeZone(abbreviation: "GMT")!
         formatter.amSymbol = "a"
         formatter.pmSymbol = "p"
         
@@ -135,6 +129,11 @@ class DiningControllerCell: UITableViewCell {
         }
         
         timesLabel.text = timesString
+        
+        if times.count > 3 {
+            timesLabel.shrinkUntilFits(numberOfLines: 1, increment: 0.5)
+        }
     }
     
 }
+

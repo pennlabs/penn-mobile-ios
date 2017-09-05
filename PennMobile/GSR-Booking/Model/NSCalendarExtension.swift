@@ -8,16 +8,10 @@
 
 import Foundation
 
-// greater than
-func GT (left: Foundation.Date, right: Foundation.Date) -> Bool {
-    return left.compare(right) == .orderedDescending
-}
-
 extension Calendar {
     func dateRange(startDate: Foundation.Date, endDate: Foundation.Date, stepUnits: NSCalendar.Unit, stepValue: Int) -> DateRange {
-        let dateRange = DateRange(calendar: self, startDate: startDate, endDate: endDate,
+        return DateRange(calendar: self, startDate: startDate, endDate: endDate,
                                   stepUnits: stepUnits, stepValue: stepValue, multiplier: 0)
-        return dateRange
     }
 }
 
@@ -45,13 +39,8 @@ struct DateRange: Sequence {
                                                                  options: []) else {
                                                                     return nil
             }
-            if GT(left: nextDate, right: range.endDate) {
-                return nil
-            }
-            else {
-                range.multiplier += 1
-                return nextDate
-            }
+            range.multiplier += 1
+            return nextDate > range.endDate ? nil : nextDate
         }
     }
 }

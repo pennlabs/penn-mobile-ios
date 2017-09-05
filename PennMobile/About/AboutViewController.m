@@ -28,9 +28,7 @@
     
     self.navigationController.navigationBar.tintColor = PENN_YELLOW;
     [self.navigationController.navigationBar setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor blackColor]}];
-    
-    [GoogleAnalyticsManager track:@"About"];
+     @{NSForegroundColorAttributeName:[UIColor blackColor]}];    
 }
     
 -(void) viewDidLoad {
