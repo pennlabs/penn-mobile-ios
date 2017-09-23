@@ -31,6 +31,7 @@ class DiningDetailViewController: GenericViewController {
     }()
 
     var venue: DiningVenue!
+    
     var webview: UIWebView!
     
     override func viewDidLoad() {
