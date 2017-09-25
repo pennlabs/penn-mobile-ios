@@ -132,8 +132,16 @@ extension Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
     
-    var roundedDownToHour: Date {
+    var roundDownToHour: Date {
         return self.add(minutes: -self.minutes)
+    }
+    
+    var roundUpToHourIfNeeded: Date {
+        if minutes > 0 {
+            return self.add(minutes: 60 - self.minutes)
+        } else {
+            return self
+        }
     }
         
     var dayOfWeek: String {

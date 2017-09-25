@@ -100,9 +100,9 @@ class BookViewController: GenericViewController, ShowsAlert {
             let now = Date()
             let formatter = Parser.formatter
             let strFormat = formatter.string(from: now)
-            earliestTime = formatter.date(from: strFormat)!.roundedDownToHour
+            earliestTime = formatter.date(from: strFormat)!.roundDownToHour
         } else {
-            earliestTime = locationRoomData.firstOpening.roundedDownToHour
+            earliestTime = locationRoomData.firstOpening.roundDownToHour
         }
     }
     
@@ -117,8 +117,8 @@ class BookViewController: GenericViewController, ShowsAlert {
             let totalMinutes = CGFloat(self.earliestTime.minutesFrom(date: self.endDate))
             let minMinutes = (Int((CGFloat(min) / 100.0) * totalMinutes) / 60) * 60
             let maxMinutes = (Int((CGFloat(max) / 100.0) * totalMinutes) / 60) * 60
-            self.minDate = self.earliestTime.add(minutes: minMinutes).localTime.roundedDownToHour
-            self.maxDate = self.earliestTime.add(minutes: maxMinutes).localTime.roundedDownToHour
+            self.minDate = self.earliestTime.add(minutes: minMinutes).localTime.roundDownToHour
+            self.maxDate = self.earliestTime.add(minutes: maxMinutes).localTime.roundDownToHour
             self.reloadParsedData()
         }
     }
@@ -135,6 +135,7 @@ class BookViewController: GenericViewController, ShowsAlert {
     }
     
     private func reloadParsedData() {
+        print(maxDate)
         self.parsedRoomData = locationRoomData.parse(from: self.minDate, to: self.maxDate)
         self.sortedKeys = self.parsedRoomData.sortedKeys
         setEarliestTime()
@@ -208,7 +209,7 @@ class BookViewController: GenericViewController, ShowsAlert {
                 DispatchQueue.main.async(execute: {
                     self.activityIndicator.stopAnimating()
                     self.locationRoomData = Parser.getAvailableTimeSlots(res as! String)
-                    self.endDate = self.locationRoomData.lastOpening.roundedDownToHour
+                    self.endDate = self.locationRoomData.lastOpening.roundUpToHourIfNeeded
                     self.setEarliestTime()
                     self.rangeSlider.reload()
                     self.reloadParsedData()
