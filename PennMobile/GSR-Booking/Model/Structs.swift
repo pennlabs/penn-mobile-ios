@@ -46,9 +46,17 @@ extension Array where Element: GSRHour {
         }
     }
     
-    var numberInRow: Int {
-        if count == 0 { return 0 }
-        return 1 + (first?.next == nil ? 0 : Array(dropFirst()).numberInRow)
+    var numberConsecutiveSlots: Int {
+        get {
+            if count == 0 { return 0 }
+            var sum = 0
+            var val: GSRHour? = first
+            while(val != nil) {
+                sum += 1
+                val = val?.next
+            }
+            return sum
+        }
     }
 }
 
@@ -63,8 +71,8 @@ extension Dictionary where Key == String, Value == [GSRHour] {
                 let start1Time = Parser.getDateFromTime(time: start1)
                 let start2Time = Parser.getDateFromTime(time: start2)
                 if start1Time == start2Time {
-                    let numRow1 = memo[key1] == nil ? arr1.numberInRow : memo[key1]!
-                    let numRow2 = memo[key2] == nil ? arr2.numberInRow : memo[key2]!
+                    let numRow1 = memo[key1] == nil ? arr1.numberConsecutiveSlots : memo[key1]!
+                    let numRow2 = memo[key2] == nil ? arr2.numberConsecutiveSlots : memo[key2]!
                     memo[key1] = numRow1
                     memo[key2] = numRow2
                     
