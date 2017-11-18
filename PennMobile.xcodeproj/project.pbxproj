@@ -68,6 +68,7 @@
 		B654BAEE1F801F830038B9D5 /* LaundryOverhaulTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAED1F801F830038B9D5 /* LaundryOverhaulTableViewController.swift */; };
 		B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAF11F802A050038B9D5 /* LaundryCell.swift */; };
 		B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B658393A1FABD295009486FC /* LaundryAPIService.swift */; };
+		B6973F8B1FC0C0850060CC0C /* LaundryGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6973F8A1FC0C0850060CC0C /* LaundryGraphView.swift */; };
 		CF29A1751FB788820067D946 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1651FB7887C0067D946 /* Page.swift */; };
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
@@ -157,6 +158,7 @@
 		B654BAED1F801F830038B9D5 /* LaundryOverhaulTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryOverhaulTableViewController.swift; sourceTree = "<group>"; };
 		B654BAF11F802A050038B9D5 /* LaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryCell.swift; sourceTree = "<group>"; };
 		B658393A1FABD295009486FC /* LaundryAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryAPIService.swift; sourceTree = "<group>"; };
+		B6973F8A1FC0C0850060CC0C /* LaundryGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryGraphView.swift; sourceTree = "<group>"; };
 		B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF5C02A7792D4E6978F00EB /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				219F01F81FB8AC22006BBC4E /* HallSelectionView.swift */,
+				B6973F8A1FC0C0850060CC0C /* LaundryGraphView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -801,6 +804,7 @@
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */,
 				CF7FCA761FAFCD9E0052F0A9 /* HallSelectionViewController.swift in Sources */,
+				B6973F8B1FC0C0850060CC0C /* LaundryGraphView.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
 				216640CD1EBADCA400746B8E /* GoogleAnalyticsManager.swift in Sources */,
 			);

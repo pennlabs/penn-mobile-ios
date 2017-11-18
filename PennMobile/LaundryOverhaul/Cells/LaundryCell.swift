@@ -10,7 +10,7 @@ import UIKit
 
 protocol LaundryCellDelegate: class {
     func deleteLaundryCell(for hall: LaundryHall)
-    func handleMachineCellTapped(for hall: LaundryHall, isWasher: Bool, timeRemaining: Int, _ updateCellIfNeeded: @escaping () -> Void)
+    func toggleGraphView(_ cell: LaundryCell)
 }
 
 class LaundryCell: UITableViewCell {
@@ -26,28 +26,28 @@ class LaundryCell: UITableViewCell {
         }
     }
     
+    var isExpanded = false
+    
     fileprivate var washerCollectionView: UICollectionView?
     fileprivate var dryerCollectionView: UICollectionView?
-    
-    fileprivate let cellId = "cellId"
     
     fileprivate let bgView: UIView = {
         let bg = UIView()
         /*
-        let gradient: CAGradientLayer = CAGradientLayer()
-        
-        gradient.colors = [UIColor.init(red: 250.0 / 255.0, green: 250.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0).cgColor,
-                           UIColor.init(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0).cgColor]
-        gradient.locations = [0.0 , 1.0]
-        gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
-        gradient.endPoint = CGPoint(x: 0.0, y: 1.0)
-        gradient.frame = CGRect(x: 0.0, y: 0.0, width: 500.0, height: 350.0)
-        
-        bg.layer.insertSublayer(gradient, at: 0)
-        
-        bg.clipsToBounds = true
-        bg.layer.cornerRadius = 15
-        bg.layer.masksToBounds = true*/
+         let gradient: CAGradientLayer = CAGradientLayer()
+         
+         gradient.colors = [UIColor.init(red: 250.0 / 255.0, green: 250.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0).cgColor,
+         UIColor.init(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0).cgColor]
+         gradient.locations = [0.0 , 1.0]
+         gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
+         gradient.endPoint = CGPoint(x: 0.0, y: 1.0)
+         gradient.frame = CGRect(x: 0.0, y: 0.0, width: 500.0, height: 350.0)
+         
+         bg.layer.insertSublayer(gradient, at: 0)
+         
+         bg.clipsToBounds = true
+         bg.layer.cornerRadius = 15
+         bg.layer.masksToBounds = true*/
         
         // corner radius
         bg.layer.cornerRadius = 20
@@ -78,6 +78,20 @@ class LaundryCell: UITableViewCell {
         xb.setBackgroundImage(UIImage(named: "x_button_selected"), for: .highlighted)
         xb.addTarget(self, action: #selector(deleteRoom), for: .touchUpInside)
         return xb
+    }()
+    
+    fileprivate lazy var graphButton: UIButton = {
+        let b = UIButton()
+        b.backgroundColor = UIColor.clear
+        b.contentMode = .scaleAspectFill
+        b.clipsToBounds = true
+        b.layer.cornerRadius = 20
+        b.layer.masksToBounds = true
+        b.setBackgroundImage(UIImage(named: "x_button"), for: UIControlState.normal)
+        b.setBackgroundImage(UIImage(named: "x_button_selected"), for: .selected)
+        b.setBackgroundImage(UIImage(named: "x_button_selected"), for: .highlighted)
+        b.addTarget(self, action: #selector(toggleGraph), for: .touchUpInside)
+        return b
     }()
     
     fileprivate let washersDryersView: UIView = {
@@ -165,12 +179,18 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = ""
         label.font = UIFont(name: "HelveticaNeue", size: 16)
-
+        
         label.textColor = .warmGrey
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
         return label
+    }()
+    
+    fileprivate let graphView: LaundryGraphView = {
+        let v = LaundryGraphView()
+        v.backgroundColor = .green
+        return v
     }()
     
     fileprivate let borderView: UIView = {
@@ -189,7 +209,11 @@ class LaundryCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setupViews() {
+    func setupViews() {
+        
+        for eachView in self.subviews {
+            eachView.removeFromSuperview()
+        }
         
         addSubview(bgView)
         
@@ -203,9 +227,7 @@ class LaundryCell: UITableViewCell {
         bgView.addSubview(washersDryersView)
         bgView.addSubview(borderView)
         bgView.addSubview(washerView)
-        /*
-        bgView.addSubview(washerLoadingSpinner)
-        bgView.addSubview(dryerLoadingSpinner)*/
+        
         bgView.addSubview(washerCollectionViewContainer)
         washerCollectionView = generateCollectionView(washerCollectionViewContainer.frame)
         bgView.addSubview(washerCollectionView!)
@@ -236,11 +258,25 @@ class LaundryCell: UITableViewCell {
         xButton.centerYAnchor.constraint(
             equalTo: roomFloorLabel.centerYAnchor).isActive = true
         
+        // Graph Button
+        bgView.addSubview(graphButton)
+        graphButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        graphButton.heightAnchor.constraint(
+            equalTo: xButton.heightAnchor).isActive = true
+        graphButton.widthAnchor.constraint(
+            equalTo: xButton.heightAnchor).isActive = true
+        graphButton.trailingAnchor.constraint(
+            equalTo: xButton.leadingAnchor,
+            constant: -15).isActive = true
+        graphButton.centerYAnchor.constraint(
+            equalTo: xButton.centerYAnchor).isActive = true
+        
         // WashersDryersView
         _ = washersDryersView.anchor(bgView.topAnchor, left: bgView.leftAnchor,
-                                     bottom: bgView.bottomAnchor, right: bgView.rightAnchor,
+                                     bottom: nil, right: bgView.rightAnchor,
                                      topConstant: 70, leftConstant: 0, bottomConstant: 10, rightConstant: 0,
-                                     widthConstant: 0, heightConstant: 0)
+                                     widthConstant: 0, heightConstant: 200.0)
         
         _ = borderView.anchor(nil, left: washersDryersView.leftAnchor,
                               bottom: washersDryersView.topAnchor, right: washersDryersView.rightAnchor,
@@ -276,23 +312,6 @@ class LaundryCell: UITableViewCell {
                                         bottom: dryerView.bottomAnchor, right: dryerView.rightAnchor,
                                         topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
                                         widthConstant: 0, heightConstant: 0)
-        
-        /*
-        // Loading spinners
-        washerLoadingSpinner.translatesAutoresizingMaskIntoConstraints = false
-        washerLoadingSpinner.leadingAnchor.constraint(
-            equalTo: washerCollectionView!.leadingAnchor,
-            constant: 20).isActive = true
-        washerLoadingSpinner.centerYAnchor.constraint(
-            equalTo: washerCollectionView!.centerYAnchor).isActive = true
-        
-        dryerLoadingSpinner.translatesAutoresizingMaskIntoConstraints = false
-        dryerLoadingSpinner.leadingAnchor.constraint(
-            equalTo: dryerCollectionView!.leadingAnchor,
-            constant: 20).isActive = true
-        dryerLoadingSpinner.centerYAnchor.constraint(
-            equalTo: dryerCollectionView!.centerYAnchor).isActive = true*/
-        
         
         // Building Floor Label
         roomFloorLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -357,34 +376,39 @@ class LaundryCell: UITableViewCell {
 // Mark: CollectionView Delegate and Datasource
 
 extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
-    
     fileprivate func generateCollectionView(_ frame: CGRect) -> UICollectionView {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: frame, collectionViewLayout: flowLayout)
-        collectionView.register(LaundryMachineCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(LaundryMachineCell.self, forCellWithReuseIdentifier: "collectionCell")
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = UIColor.clear
         collectionView.showsHorizontalScrollIndicator = false
+        
         return collectionView
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == washerCollectionView {
             let numItems = room.numWasherOpen + room.numWasherRunning + room.numWasherOffline + room.numWasherOutOfOrder
             if numItems == 0 {
                 numWashersLabel.text = ""
+                //washerLoadingSpinner.startAnimating()
             } else {
                 numWashersLabel.text = "\(room.numWasherOpen) of \(numItems) open"
+                //washerLoadingSpinner.stopAnimating()
             }
             return numItems
         } else if collectionView == dryerCollectionView {
             let numItems = room.numDryerOpen + room.numDryerRunning + room.numDryerOffline + room.numDryerOutOfOrder
             if numItems == 0 {
                 numDryersLabel.text = ""
+                //dryerLoadingSpinner.startAnimating()
             } else {
                 numDryersLabel.text = "\(room.numDryerOpen) of \(numItems) open"
+                //dryerLoadingSpinner.stopAnimating()
             }
             return numItems
         } else {
@@ -393,43 +417,94 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath as IndexPath) as! LaundryMachineCell
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath as IndexPath) as! LaundryMachineCell
         cell.backgroundColor = UIColor.clear
-        cell.bgImageColor = UIColor.clear
-        cell.isUnderNotification = false
-        cell.timerText = ""
-        
-        guard let room = room else { return cell }
-        
-        if collectionView == washerCollectionView {
-            if (indexPath.row < room.numWasherRunning) {
-                cell.bgImage = UIImage(named: "washer_busy")
-                if indexPath.row < room.remainingTimeWashers.count {
-                    let time = room.remainingTimeWashers[indexPath.row]
-                    cell.timerText = "\(time)"
-                    cell.isUnderNotification = room.isUnderNotification(isWasher: true, timeRemaining: time)
-                }
-            } else if (indexPath.row < room.numWasherOpen + room.numWasherRunning) {
-                cell.bgImage = UIImage(named: "washer_open")
+        let cellMachineTypeWasher: Bool = {
+            if collectionView == washerCollectionView {
+                return true
             } else {
-                cell.bgImage = UIImage(named: "washer_broken")
+                return false
             }
-        } else {
-            if (indexPath.row < room.numDryerRunning) {
-                cell.bgImage = UIImage(named: "dryer_busy")
-                if indexPath.row < room.remainingTimeDryers.count {
-                    let time = room.remainingTimeDryers[indexPath.row]
-                    cell.timerText = "\(time)"
-                    cell.isUnderNotification = room.isUnderNotification(isWasher: false, timeRemaining: time)
+        }()
+        /* ////// This code presents open machines first
+         if let room = room {
+         if cellMachineTypeWasher {
+         if (indexPath.row < room.numWasherOpen) {
+         cell.bgImageColor = UIColor.clear
+         cell.bgImage = UIImage(named: "washer_open")
+         cell.timerText = ""
+         } else if (indexPath.row < room.numWasherOpen + room.numWasherRunning) {
+         cell.bgImageColor = UIColor.clear
+         cell.bgImage = UIImage(named: "washer_busy")
+         if (indexPath.row - room.numWasherOpen) < room.remainingTimeWashers.count {
+         let time = room.remainingTimeWashers[indexPath.row - room.numWasherOpen]
+         cell.timerText = "\(time)"
+         }
+         } else {
+         cell.bgImageColor = UIColor.clear
+         cell.bgImage = UIImage(named: "washer_broken")
+         cell.timerText = ""
+         }
+         } else {
+         if (indexPath.row < room.numDryerOpen) {
+         cell.bgImageColor = UIColor.clear
+         cell.bgImage = UIImage(named: "dryer_open")
+         cell.timerText = ""
+         } else if (indexPath.row < room.numDryerOpen + room.numDryerRunning) {
+         cell.bgImageColor = UIColor.whiteGrey
+         cell.bgImage = UIImage(named: "dryer_busy")
+         if (indexPath.row - room.numDryerOpen) < room.remainingTimeDryers.count {
+         let time = room.remainingTimeDryers[indexPath.row - room.numDryerOpen]
+         cell.timerText = "\(time)"
+         }
+         } else {
+         cell.bgImageColor = UIColor.clear
+         cell.bgImage = UIImage(named: "dryer_broken")
+         cell.timerText = ""
+         }
+         }
+         }*/
+        if let room = room {
+            if cellMachineTypeWasher {
+                if (indexPath.row < room.numWasherRunning) {
+                    cell.bgImageColor = UIColor.clear
+                    cell.bgImage = UIImage(named: "washer_busy")
+                    if indexPath.row < room.remainingTimeWashers.count {
+                        let time = room.remainingTimeWashers[indexPath.row]
+                        cell.timerText = "\(time)"
+                    } else {
+                        cell.timerText = "" // need to cache to prevent empty cell from copying time of non-empty
+                    }
+                } else if (indexPath.row < room.numWasherOpen + room.numWasherRunning) {
+                    cell.bgImageColor = UIColor.clear
+                    cell.bgImage = UIImage(named: "washer_open")
+                    cell.timerText = ""
+                } else {
+                    cell.bgImageColor = UIColor.clear
+                    cell.bgImage = UIImage(named: "washer_broken")
+                    cell.timerText = ""
                 }
-            } else if (indexPath.row < room.numDryerOpen + room.numDryerRunning) {
-                cell.bgImage = UIImage(named: "dryer_open")
             } else {
-                cell.bgImage = UIImage(named: "dryer_broken")
+                if (indexPath.row < room.numDryerRunning) {
+                    cell.bgImageColor = UIColor.clear
+                    cell.bgImage = UIImage(named: "dryer_busy")
+                    if indexPath.row < room.remainingTimeDryers.count {
+                        let time = room.remainingTimeDryers[indexPath.row]
+                        cell.timerText = "\(time)"
+                    } else {
+                        cell.timerText = "" // need to cache to prevent empty cell from copying time of non-empty
+                    }
+                } else if (indexPath.row < room.numDryerOpen + room.numDryerRunning) {
+                    cell.bgImageColor = UIColor.clear
+                    cell.bgImage = UIImage(named: "dryer_open")
+                    cell.timerText = ""
+                } else {
+                    cell.bgImageColor = UIColor.clear
+                    cell.bgImage = UIImage(named: "dryer_broken")
+                    cell.timerText = ""
+                }
             }
         }
-        
         return cell
     }
     
@@ -442,28 +517,36 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 5)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // Uncomment to handle notifications
-//        let isWasher = collectionView == washerCollectionView
-//        let timeArray = isWasher ? room.remainingTimeWashers : room.remainingTimeDryers
-//
-//        if indexPath.item < timeArray.count {
-//            delegate?.handleMachineCellTapped(for: room, isWasher: isWasher, timeRemaining: timeArray[indexPath.item]) {
-//                collectionView.reloadData()
-//            }
-//        }
-    }
-    
-    func reloadCollectionViews() {
-        washerCollectionView?.reloadData()
-        dryerCollectionView?.reloadData()
-    }
 }
 
-// Mark: Delete cell
+// Mark : Delete cell, expand graph view
 extension LaundryCell {
     @objc fileprivate func deleteRoom() {
         delegate?.deleteLaundryCell(for: room)
+    }
+    
+    @objc fileprivate func toggleGraph() {
+        delegate?.toggleGraphView(self)
+    }
+    
+    func addGraphView() {
+        // GraphView (Only exists when toggled)
+        if (isExpanded) {
+            bgView.addSubview(graphView)
+            _ = graphView.anchor(washersDryersView.bottomAnchor, left: bgView.leftAnchor,
+                                 bottom: bottomAnchor, right: bgView.rightAnchor,
+                                 topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10,
+                                 widthConstant: 0, heightConstant: 0)
+            graphView.initializeGraph()
+            graphView.animateDataRectangles(withDuration: 5.0)
+        }
+    }
+    
+    func removeGraphView() {
+        if (isExpanded) {
+            graphView.clearGraph()
+            graphView.removeConstraints(graphView.constraints)
+            graphView.removeFromSuperview()
+        }
     }
 }

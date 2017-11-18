@@ -1,5 +1,5 @@
 //
-//  LaundryTableViewController.swift
+//  LaundryOverhaulTableViewController.swift
 //  PennMobile
 //
 //  Created by Dominic Holmes on 9/30/17.
@@ -13,8 +13,6 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
     
-    fileprivate var timer: Timer?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,30 +24,18 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
         self.title = "Laundry"
         
         halls = LaundryHall.getPreferences()
-
+        
         registerHeadersAndCells()
         prepareRefreshControl()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(handleEditPressed))
-        
-        // Start indicator if there are cells that need to be loaded
-        if !halls.isEmpty {
-            showActivity()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.showActivity()
         updateInfo {
             self.hideActivity()
-        }
-    }
-    
-    fileprivate func reloadCellsButNotTable() {
-        for cell in self.tableView.visibleCells {
-            if let laundryCell = cell as? LaundryCell {
-                laundryCell.reloadCollectionViews()
-            }
         }
     }
 }
@@ -114,6 +100,11 @@ extension LaundryOverhaulTableViewController {
         // Use for cards 1/2 the size of the screen
         //return self.view.layoutMarginsGuide.layoutFrame.height / 2.0
         // Use for cards 1/2 the size of the iPhone 7 screen
+        if let cell = tableView.cellForRow(at: indexPath) as? LaundryCell {
+            if cell.isExpanded {
+                return 500.0
+            }
+        }
         return 300.0
     }
 }
@@ -121,7 +112,6 @@ extension LaundryOverhaulTableViewController {
 // Laundry API Calls
 extension LaundryOverhaulTableViewController {
     func updateInfo(completion: @escaping () -> Void) {
-        timer?.invalidate()
         if halls.isEmpty {
             self.tableView.reloadData()
             completion()
@@ -129,15 +119,15 @@ extension LaundryOverhaulTableViewController {
             LaundryAPIService.instance.getHalls(for: halls) { (newHalls) in
                 if let newHalls = newHalls {
                     self.halls = newHalls
-
+                    
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
-                        self.resetTimer()
                         completion()
                     }
                 } else {
                     DispatchQueue.main.async {
                         completion()
+                        self.showAlert(withMsg: "Failed to connect to the API. Please re-check your connection and try again.", title: "Uh oh!", completion: nil)
                     }
                 }
             }
@@ -146,67 +136,53 @@ extension LaundryOverhaulTableViewController {
 }
 
 // Mark: Hall Selection Delegate
-extension LaundryOverhaulTableViewController: HallSelectionDelegate {    
+extension LaundryOverhaulTableViewController: HallSelectionDelegate {
     func saveSelection(for halls: [LaundryHall]) {
         LaundryHall.setPreferences(for: halls)
         self.halls = halls
         self.tableView.reloadData()
-        self.showActivity()
     }
 }
 
 // Mark: Laundry Cell Delegate
 extension LaundryOverhaulTableViewController: LaundryCellDelegate {
     internal func deleteLaundryCell(for hall: LaundryHall) {
-        // Uncomment to show show alert before deletion
-        
-//        let message = "Are you sure you want to remove this room from your preferences? You can always add it back later."
-//        let alert = UIAlertController(title: "Remove Room",
-//                                      message: message,
-//                                      preferredStyle: .alert)
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//        alert.addAction(cancelAction)
-//        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
-//            self.delete(hall: hall)
-//        }))
-//        present(alert, animated: true)
-        
-        self.delete(hall: hall)
+        let message = "Are you sure you want to remove this room from your preferences? You can always add it back later."
+        let alert = UIAlertController(title: "Remove Room",
+                                      message: message,
+                                      preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
+            self.delete(hall: hall)
+        }))
+        present(alert, animated: true)
     }
     
     private func delete(hall: LaundryHall) {
         if let index = halls.index(of: hall) {
             halls.remove(at: index)
             LaundryHall.setPreferences(for: halls)
+            //            tableView.beginUpdates()
+            //            self.tableView.deleteRows(at: [IndexPath(row: 0, section: 0)], with: .top)
+            //            self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .bottom)
+            //            self.tableView.deleteRows(at: [IndexPath(row: 0, section: 1)], with: .top)
+            //            self.tableView.insertRows(at: [IndexPath(row: 0, section: 1)], with: .bottom)
+            //            tableView.endUpdates()
             tableView.reloadData()
         }
     }
-
-    func handleMachineCellTapped(for hall: LaundryHall, isWasher: Bool, timeRemaining: Int, _ updateCellIfNeeded: @escaping () -> Void) {
-        if hall.isUnderNotification(isWasher: isWasher, timeRemaining: timeRemaining) {
-            
-            LaundryNotificationCenter.shared.removeOutstandingNotification(for: hall, isWasher: isWasher, timeRemaining: timeRemaining) {
-                
-                hall.updateUnderNotification(completion: {
-                    DispatchQueue.main.async {
-                        updateCellIfNeeded()
-                    }
-                })
-            }
-            
+    
+    internal func toggleGraphView(_ cell : LaundryCell) {
+        tableView.beginUpdates()
+        if (cell.isExpanded) {
+            cell.isExpanded = false
+            cell.removeGraphView()
         } else {
-            
-            LaundryNotificationCenter.shared.notifyWithMessage(for: hall, isWasher: isWasher, in: timeRemaining, title: "Ready!", message: "The \(isWasher ? "washer" : "dryer") has finished running.", completion: { (success) in
-                
-                if success {
-                    hall.updateUnderNotification(completion: {
-                        DispatchQueue.main.async {
-                            updateCellIfNeeded()
-                        }
-                    })
-                }
-            })
+            cell.isExpanded = true
+            cell.addGraphView()
         }
+        tableView.endUpdates()
     }
 }
 
@@ -214,28 +190,5 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
 extension LaundryOverhaulTableViewController: AddLaundryCellDelegate {
     internal func addPressed() {
         handleEditPressed()
-    }
-}
-
-// Mark: Timer
-extension LaundryOverhaulTableViewController {
-    internal func resetTimer() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (_) in
-            if self.halls.filter({ (hall) -> Bool in
-                return hall.numDryerRunning > 0 || hall.numWasherRunning > 0
-            }).count == 0 {
-                self.timer?.invalidate()
-                return
-            }
-            
-            LaundryNotificationCenter.shared.removeExpiredNotifications()
-
-            for hall in self.halls {
-                hall.decrementMinutesRemaining()
-            }
-            
-            self.reloadCellsButNotTable()
-        })
     }
 }
