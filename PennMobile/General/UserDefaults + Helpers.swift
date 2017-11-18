@@ -15,6 +15,8 @@ extension UserDefaults {
         case deviceToken
         case controllerSettings
         case sessionCount
+        case laundryPreferences
+        case isOnboarded
     }
 }
 
@@ -77,3 +79,28 @@ extension UserDefaults {
         return string(forKey: UserDefaultsKeys.deviceToken.rawValue)
     }
 }
+
+// Mark: Laundry Preferences
+extension UserDefaults {
+    func set(preferences: [Int]) {
+        set(preferences, forKey: UserDefaultsKeys.laundryPreferences.rawValue)
+        synchronize()
+    }
+    
+    func getLaundryPreferences() -> [Int]? {
+        return array(forKey: UserDefaultsKeys.laundryPreferences.rawValue) as? [Int]
+    }
+}
+
+// Mark: Onboarding Status
+extension UserDefaults {
+    func setIsOnboarded(value: Bool) {
+        set(value, forKey: UserDefaultsKeys.isOnboarded.rawValue)
+        synchronize()
+    }
+
+    func isOnboarded() -> Bool {
+        return bool(forKey: UserDefaultsKeys.isOnboarded.rawValue)
+    }
+}
+

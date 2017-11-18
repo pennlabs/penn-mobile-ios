@@ -120,7 +120,9 @@ class CredentialsViewController: GAITrackedViewController, ShowsAlert, Indicator
                 self.handleErrorAuthenticating()
             }
             
-            GoogleAnalyticsManager.shared.trackEvent(category: "Study Room Booking", action: "Attempted login", label: (isValid ? "Success" : "Failed"), value: 1)
+            let category = GoogleAnalyticsManager.events.category.studyRoomBooking
+            let action = GoogleAnalyticsManager.events.action.attemptLogin
+            GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: (isValid ? "Success" : "Failed"), value: 1)
         }
     }
     

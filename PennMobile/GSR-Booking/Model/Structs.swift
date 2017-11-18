@@ -46,24 +46,15 @@ extension Array where Element: GSRHour {
         }
     }
     
-    var numberConsecutiveSlots: Int {
-        get {
-            if count == 0 { return 0 }
-            var sum = 0
-            var val: GSRHour? = first
-            while(val != nil) {
-                sum += 1
-                val = val?.next
-            }
-            return sum
-        }
+    var numberInRow: Int {
+        if count == 0 { return 0 }
+        return 1 + (first?.next == nil ? 0 : Array(dropFirst()).numberInRow)
     }
 }
 
 extension Dictionary where Key == String, Value == [GSRHour] {
     var sortedKeys: [Key] {
         get {
-            var memo = [String: Int]()
             return keys.sorted(by: { (key1, key2) -> Bool in
                 guard let arr1 = self[key1] else { return false }
                 guard let arr2 = self[key2] else { return true }
@@ -71,15 +62,11 @@ extension Dictionary where Key == String, Value == [GSRHour] {
                 let start1Time = Parser.getDateFromTime(time: start1)
                 let start2Time = Parser.getDateFromTime(time: start2)
                 if start1Time == start2Time {
-                    let numRow1 = memo[key1] == nil ? arr1.numberConsecutiveSlots : memo[key1]!
-                    let numRow2 = memo[key2] == nil ? arr2.numberConsecutiveSlots : memo[key2]!
-                    memo[key1] = numRow1
-                    memo[key2] = numRow2
-                    
+                    let numRow1 = arr1.numberInRow
+                    let numRow2 = arr2.numberInRow
                     if numRow1 == numRow2 {
                         return arr1.count > arr2.count
                     }
-
                     return numRow1 > numRow2
                 }
                 return start1Time < start2Time

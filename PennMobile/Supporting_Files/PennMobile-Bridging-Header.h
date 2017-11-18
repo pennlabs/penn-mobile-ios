@@ -5,6 +5,5 @@
 #import <Google/Analytics.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "SWRevealViewController.h"
-#import "LaundryTableViewController.h"
 #import "AboutViewController.h"
 #import "SupportItem.h"

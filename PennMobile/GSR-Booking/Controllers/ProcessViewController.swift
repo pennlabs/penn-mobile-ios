@@ -52,6 +52,7 @@ class ProcessViewController: GAITrackedViewController {
         
         if let location = location {
             self.screenName = location.name
+            self.title = "In Progress"
         }
         
         let networkingManager = GSRNetworkManager(email: email!, password: password!, gid: (location?.code)!, ids: ids!)
@@ -77,21 +78,23 @@ class ProcessViewController: GAITrackedViewController {
     }
     
     func handleStatusMessage(_ notification: Notification) {
-        let html = notification.object as! String
-        self.webView.loadHTMLString(html, baseURL: nil)
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
+            let html = notification.object as! String
+            self.webView.loadHTMLString(html, baseURL: nil)
             let button = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ProcessViewController.dismissSelf))
             self.navigationItem.rightBarButtonItem = button
-        })
-        
+            
+            // Track Success/Failed event
+            let status = notification.object as! String
+            self.trackStatus(status)
+        }
     }
     
     func handleNotification(_ notification: Notification) {
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             let msg = notification.object as! String
             self.statusLabel.text = msg
-            self.trackMessage(msg)
-        })
+        }
     }
     
     func dismissSelf() {
@@ -104,16 +107,22 @@ class ProcessViewController: GAITrackedViewController {
         statusLabel.text = msg
     }
     
-    internal func trackMessage(_ msg: String) {
+    internal func trackStatus(_ status: String) {
+        guard let title = statusLabel.text else { return }
+        
         let category = GoogleAnalyticsManager.events.category.studyRoomBooking
         let action = GoogleAnalyticsManager.events.action.attemptReservation
-        if msg.contains("Failed") || msg.contains("Error") {
-            GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: "Failed", value: -1)
-            let defaults = UserDefaults.standard
-            defaults.removeObject(forKey: "email")
-            defaults.removeObject(forKey: "password")
+        if title.contains("Failed") || title.contains("Error") {
+            if status.contains("cannot book more than one room at the same time") {
+                GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: "Failed - already booked a room at that time", value: -1)
+            } else {
+                GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: "Failed 2.0", value: -1)
+                let defaults = UserDefaults.standard
+                defaults.removeObject(forKey: "email")
+                defaults.removeObject(forKey: "password")
+            }
         } else {
-            GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: "Success", value: 1)
+            GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: "Success 2.0", value: 1)
         }
     }
 }

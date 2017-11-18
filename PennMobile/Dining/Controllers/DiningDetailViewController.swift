@@ -51,6 +51,7 @@ class DiningDetailViewController: GenericViewController {
         }
         
         self.screenName = venue.name
+        self.title = venue.name
         self.isPanEnabled = false
         self.trackScreen = true
     }

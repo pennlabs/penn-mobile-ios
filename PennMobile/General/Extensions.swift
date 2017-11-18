@@ -76,6 +76,7 @@ extension UIColor {
     static let buttonBlue = UIColor(r: 14, g: 122, b: 254)
     
     static let navRed = UIColor(r: 192, g: 57, b:  43)
+    static let navBarGrey = UIColor(r: 247, g: 247, b: 247)
 }
 
 extension UIBarButtonItem {
@@ -132,7 +133,16 @@ extension Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
     
-    var roundDownToHour: Date {
+    func add(seconds: Int) -> Date {
+        return Calendar.current.date(byAdding: .second, value: seconds, to: self)!
+    }
+    
+    func add(milliseconds: Int) -> Date {
+        let millisecondsSince1970 = Int((self.timeIntervalSince1970 * 1000.0).rounded())
+        return Date(timeIntervalSince1970: TimeInterval((milliseconds + millisecondsSince1970) / 1000))
+    }
+    
+    var roundedDownToHour: Date {
         return self.add(minutes: -self.minutes)
     }
     
@@ -212,7 +222,7 @@ public extension MutableCollection where Index == Int {
         for i in startIndex ..< endIndex - 1 {
             let j = Int(arc4random_uniform(UInt32(endIndex - i))) + i
             guard i != j else { continue }
-            swap(&self[i], &self[j])
+            self.swapAt(i, j)
         }
     }
 }

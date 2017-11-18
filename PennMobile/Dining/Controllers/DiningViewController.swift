@@ -4,7 +4,7 @@
 //
 //  Created by Josh Doman on 3/12/17.
 //  Copyright © 2017 PennLabs. All rights reserved.
-// 
+//
 
 class DiningViewController: GenericTableViewController {
     
@@ -24,6 +24,7 @@ class DiningViewController: GenericTableViewController {
         tableView.dataSource = self
         
         self.title = "Dining"
+        self.screenName = "Dining"
         
         registerHeadersAndCells()
         updateVenueTimes()

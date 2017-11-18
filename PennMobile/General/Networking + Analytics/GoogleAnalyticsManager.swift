@@ -11,10 +11,12 @@ import UIKit
     
     static let shared = GoogleAnalyticsManager()
     
+    var dryRun = false
+    
     static func prepare() {
         let gai = GAI.sharedInstance()
         gai?.trackUncaughtExceptions = true
-        gai?.dryRun = true //prevents GoogleAnalytics tracking (remove before production release)
+        gai?.dryRun = shared.dryRun //prevents GoogleAnalytics tracking (remove before production release)
         //gai?.logger.logLevel = .verbose //MUST COMMENT OUT BEFORE RELEASE
         gai?.dispatchInterval = 20
         gai?.defaultTracker = GAI.sharedInstance().tracker(withName: "PennMobile", trackingId: "UA-96870393-1")
@@ -36,10 +38,13 @@ import UIKit
     struct events {
         struct category {
             static let studyRoomBooking = "Study Room Booking"
+            static let onboarding = "Onboarding"
         }
         
         struct action {
             static let attemptReservation = "Attempted reservation"
+            static let attemptLogin = "Attempted login"
+            static let savedSelection = "Saved selection"
         }
     }
 }

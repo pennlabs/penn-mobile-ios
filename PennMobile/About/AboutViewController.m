@@ -63,7 +63,8 @@
     [self.view addSubview:descriptionLabel];
     
     UILabel *peopleLabel = [[UILabel alloc] init];
-    peopleLabel.text = @"Developed by Josh Doman, Victor Chien, Sacha Best, and Krishna Bharathala. Designed by \nTiffany Chang, Josh Doman, and Sacha Best.\n Special thanks to Yagil Burowski, Adel \n Qalieh, David Lakata and the rest of Labs.";
+//    peopleLabel.text = @"Developed by Josh Doman, Victor Chien, Sacha Best, and Krishna Bharathala. Designed by \nTiffany Chang, Josh Doman, and Sacha Best.\n Special thanks to Yagil Burowski, Adel \n Qalieh, David Lakata and the rest of Labs.";
+    peopleLabel.text = @"Currently being developed by Josh Doman, Zhilei Zhang, and Dominic Holmes. Designed by Tiffany Chang, Josh Doman, Dominic Holmes, and Laura Gao. Special thanks to Yagil Burowski, Adel Qalieh, and everyone else who came before us.";
     [peopleLabel setTextColor:[UIColor darkGrayColor]];
     [peopleLabel setFrame:CGRectMake(0, 0, width-40, height/3)];
     [peopleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];

@@ -12,7 +12,7 @@ class NewsViewController: GenericViewController, HairlineRemovable {
     
     private let urlArray = ["http://thedp.com/", "http://thedp.com/blog/under-the-button/", "http://34st.com/"]
     
-    private var webview: UIWebView!
+    private var webview: GenericWebview!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +22,11 @@ class NewsViewController: GenericViewController, HairlineRemovable {
         setupWebview()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        webview.hideActivity()
+    }
+    
     private func setupNavBar() {
         //removes hairline from bottom of navbar
         if let navbar = navigationController?.navigationBar {
@@ -29,18 +34,20 @@ class NewsViewController: GenericViewController, HairlineRemovable {
         }
         
         let width = view.frame.width
+        let headerHeight = navigationController?.navigationBar.frame.height ?? 44
         
-        let headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: 44))
+        let headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: headerHeight))
         headerToolbar.backgroundColor = navigationController?.navigationBar.backgroundColor
         
         let newsSwitcher = UISegmentedControl(items: ["theDP", "UTB", "34th Street"])
-        newsSwitcher.center = CGPoint(x: width/2, y: headerToolbar.frame.size.height/2)
+        newsSwitcher.center = CGPoint(x: width/2, y: 64 + headerToolbar.frame.size.height/2)
         newsSwitcher.tintColor = UIColor.navRed
         newsSwitcher.selectedSegmentIndex = 0
-        newsSwitcher.addTarget(self, action: #selector(switchNewsSource), for: .valueChanged)
+        newsSwitcher.isUserInteractionEnabled = true
+        newsSwitcher.addTarget(self, action: #selector(switchNewsSource(_:)), for: .valueChanged)
         
-        headerToolbar.addSubview(newsSwitcher)
         view.addSubview(headerToolbar)
+        view.addSubview(newsSwitcher)
     }
     
     private func setupWebview() {

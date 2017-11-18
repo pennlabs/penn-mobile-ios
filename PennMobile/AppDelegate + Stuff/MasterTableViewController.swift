@@ -16,7 +16,7 @@ class ControllerSettings: NSObject {
         var dict = [String: UIViewController]()
         dict["Dining"] = DiningViewController()
         dict["Study Room Booking"] = BookViewController()
-        dict["Laundry"] = LaundryTableViewController()
+        dict["Laundry"] = LaundryOverhaulTableViewController()
         dict["News"] = NewsViewController()
         dict["Penn Contacts"] = ContactsTableViewController()
         dict["About"] = AboutViewController()
@@ -39,7 +39,11 @@ class ControllerSettings: NSObject {
     }
     
     var firstController: UIViewController {
-        return viewControllers.first!
+        return viewController(for: firstControllerName)
+    }
+    
+    var firstControllerName: String {
+        return UserDefaults.standard.isOnboarded() ? displayNames[0] : "Laundry"
     }
     
     func visibleVCIndex() -> IndexPath {
@@ -53,6 +57,10 @@ class ControllerSettings: NSObject {
     
     func visibleVCName() -> String {
         return displayNames[visibleVCIndex().row]
+    }
+    
+    func visibleVC() -> UIViewController {
+        return viewController(for: visibleVCName())
     }
 }
 
@@ -85,7 +93,7 @@ class MasterTableViewController: MoveableTableViewController, Trackable {
     }
     
     func prepare() {
-        trackScreen(displayNameArray.first)
+        trackScreen(ControllerSettings.shared.firstControllerName)
     }
 }
 

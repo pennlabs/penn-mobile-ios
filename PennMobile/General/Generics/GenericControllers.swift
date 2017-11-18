@@ -40,11 +40,7 @@ import UIKit
     
     func updateData() { }
     
-    var screenName: String? {
-        didSet {
-            title = screenName
-        }
-    }
+    var screenName: String?
     
     var trackScreen: Bool = false
     
@@ -91,11 +87,7 @@ class GenericViewController: UIViewController, Trackable {
         pan(enabled: true)
     }
     
-    var screenName: String? {
-        didSet {
-            title = screenName
-        }
-    }
+    var screenName: String?
     
     var trackScreen: Bool = false
     

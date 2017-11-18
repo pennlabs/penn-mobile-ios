@@ -22,9 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         DatabaseManager.shared.dryRun = true
+        GoogleAnalyticsManager.shared.dryRun = true
         //DatabaseManager.shared.startSession() //adds new session log to queue
         
         GoogleAnalyticsManager.prepare()
+        LaundryAPIService.instance.prepare()
+        LaundryNotificationCenter.shared.prepare()
+        
+        if !UserDefaults.standard.isOnboarded() {
+            handleOnboarding(animated: true)
+            UserDefaults.standard.setIsOnboarded(value: true) // uncomment in order to prevent multiple onboardings
+            return true
+        }
         
         navController = UINavigationController(rootViewController: homeController)
         navController.isNavigationBarHidden = true
@@ -35,11 +44,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         presentSWController()
         //registerForPushNotifications() //uncomment when ready to start registering tokens for push notifications
-            
+
         return true
     }
     
-    private func presentSWController() {
+    func handleOnboarding(animated: Bool) {
+        let vc = UIViewController()
+        vc.view.backgroundColor = .white
+        navController = UINavigationController(rootViewController: vc)
+        navController.isNavigationBarHidden = true
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = navController
+        window?.makeKeyAndVisible()
+        
+        let tempVC = UIViewController()
+        tempVC.view.backgroundColor = UIColor.red
+        navController.modalTransitionStyle = .crossDissolve
+        let oc = OnboardingController()
+        oc.delegate = self
+        self.navController.present(oc, animated: animated, completion: nil)
+    }
+    
+    func presentSWController() {
         
         let masterNavController = UINavigationController(rootViewController: masterTableViewController)
         let homeNavController = UINavigationController(rootViewController: homeController)
@@ -132,11 +159,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         DatabaseManager.shared.startSession()
+        ControllerSettings.shared.visibleVC().viewWillAppear(true)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         DatabaseManager.shared.endSession()
     }
 
+}
+
+extension AppDelegate: OnboardingDelegate {
+    func handleFinishedOnboarding() {
+        navController.viewControllers = [homeController]
+        presentSWController()
+        //registerForPushNotifications()
+    }
 }
 

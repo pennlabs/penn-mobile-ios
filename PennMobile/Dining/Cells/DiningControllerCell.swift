@@ -132,6 +132,8 @@ class DiningCell: UITableViewCell {
         
         if times.count > 3 {
             timesLabel.shrinkUntilFits(numberOfLines: 1, increment: 0.5)
+        } else {
+            timesLabel.font = UIFont(name: "HelveticaNeue-Light", size: 12)
         }
     }
     

@@ -89,6 +89,7 @@ class BookViewController: GenericViewController, ShowsAlert {
         self.activityIndicator.startAnimating()
         
         self.screenName = "Study Room Booking"
+        self.title = "Study Room Booking"
         setupView()
         setupSlider()
         setEarliestTime()
@@ -100,9 +101,9 @@ class BookViewController: GenericViewController, ShowsAlert {
             let now = Date()
             let formatter = Parser.formatter
             let strFormat = formatter.string(from: now)
-            earliestTime = formatter.date(from: strFormat)!.roundDownToHour
+            earliestTime = formatter.date(from: strFormat)!.roundedDownToHour
         } else {
-            earliestTime = locationRoomData.firstOpening.roundDownToHour
+            earliestTime = locationRoomData.firstOpening.roundedDownToHour
         }
     }
     
@@ -117,8 +118,8 @@ class BookViewController: GenericViewController, ShowsAlert {
             let totalMinutes = CGFloat(self.earliestTime.minutesFrom(date: self.endDate))
             let minMinutes = (Int((CGFloat(min) / 100.0) * totalMinutes) / 60) * 60
             let maxMinutes = (Int((CGFloat(max) / 100.0) * totalMinutes) / 60) * 60
-            self.minDate = self.earliestTime.add(minutes: minMinutes).localTime.roundDownToHour
-            self.maxDate = self.earliestTime.add(minutes: maxMinutes).localTime.roundDownToHour
+            self.minDate = self.earliestTime.add(minutes: minMinutes).localTime.roundedDownToHour
+            self.maxDate = self.earliestTime.add(minutes: maxMinutes).localTime.roundedDownToHour
             self.reloadParsedData()
         }
     }
@@ -135,7 +136,6 @@ class BookViewController: GenericViewController, ShowsAlert {
     }
     
     private func reloadParsedData() {
-        print(maxDate)
         self.parsedRoomData = locationRoomData.parse(from: self.minDate, to: self.maxDate)
         self.sortedKeys = self.parsedRoomData.sortedKeys
         setEarliestTime()
