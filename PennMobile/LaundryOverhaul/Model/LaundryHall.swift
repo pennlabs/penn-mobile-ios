@@ -142,6 +142,14 @@ extension LaundryHall: Equatable {
     }
 }
 
+// Historic Usage Data Fetching
+extension LaundryHall {
+    // fetch usage data
+    func getUsageData(for type: MachineType) -> [Float] {
+        return UsageData.shared.getData(for: self, type: type)
+    }
+}
+
 // Under notification functions
 extension LaundryHall {    
     func isUnderNotification(isWasher: Bool, timeRemaining: Int) -> Bool {
