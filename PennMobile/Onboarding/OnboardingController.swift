@@ -12,7 +12,7 @@ protocol OnboardingDelegate: class {
     func handleFinishedOnboarding()
 }
 
-class OnboardingController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class OnboardingController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, Trackable {
     
     weak var delegate: OnboardingDelegate?
     
@@ -113,6 +113,8 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
         nextButtonTopAnchor = nextButton.anchor(view.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 60, heightConstant: 50).first
         
         registerCells()
+        
+        trackScreen("Onboarding")
     }
     
     fileprivate func registerCells() {
