@@ -404,7 +404,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         let graphView = ScrollableGraphView(frame: frame, dataSource: self)
         let referenceLines = ReferenceLines()
         
-        let washersLinePlot = LinePlot(identifier: "washers")
+        let washersLinePlot = LinePlot(identifier: "washer")
         washersLinePlot.lineWidth = 1
         washersLinePlot.lineColor = UIColor.clear
         washersLinePlot.lineStyle = ScrollableGraphViewLineStyle.smooth
@@ -416,6 +416,19 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         washersLinePlot.fillGradientStartColor = color
         washersLinePlot.fillGradientEndColor = color
         washersLinePlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic
+        
+        let dryersLinePlot = LinePlot(identifier: "dryer")
+        dryersLinePlot.lineWidth = 1
+        dryersLinePlot.lineColor = UIColor.clear
+        dryersLinePlot.lineStyle = ScrollableGraphViewLineStyle.smooth
+        
+        dryersLinePlot.shouldFill = true
+        dryersLinePlot.fillType = ScrollableGraphViewFillType.gradient
+        dryersLinePlot.fillGradientType = ScrollableGraphViewGradientType.linear
+        let color2 = UIColor(red: 1.0, green: 0.7, blue: 0.7, alpha: 1.0)
+        dryersLinePlot.fillGradientStartColor = color2
+        dryersLinePlot.fillGradientEndColor = color2
+        dryersLinePlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic
 
         referenceLines.referenceLineLabelFont = UIFont.boldSystemFont(ofSize: 8)
         referenceLines.referenceLineColor = UIColor.clear
@@ -444,6 +457,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         
         graphView.addReferenceLines(referenceLines: referenceLines)
         graphView.addPlot(plot: washersLinePlot)
+        graphView.addPlot(plot: dryersLinePlot)
         graphView.showsHorizontalScrollIndicator = false
         
         return graphView
