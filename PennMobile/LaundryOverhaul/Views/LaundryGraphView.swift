@@ -31,8 +31,14 @@ class LaundryGraphView: UIView {
     var dataMin: CGFloat!
     var dataRange: CGFloat!
     
-    var dataToGraph: [Int] = [1, 2, 3, 2, 4, 3, 1]
-    var xAxisLabels: [String] = ["M", "T", "W", "T", "F", "S", "S"]
+    var dataToGraph: [Int] = [1, 2, 3, 2, 4,
+                              3, 1, 1, 2, 3]
+    var xAxisLabels: [String] = ["8a", "9a", "10a", "11a", "12p",
+                                 "1p", "2p", "3p", "4p", "5p",
+                                 "", "", "", "", "",
+                                 "", "", "", "", "",
+                                 "", "", "", "", "",
+                                 ""]
     
     var finalDataRects: [CustomGraphRect] = [CustomGraphRect]()
     var startingDataRects: [CustomGraphRect] = [CustomGraphRect]()
@@ -59,10 +65,10 @@ class LaundryGraphView: UIView {
     
     func initializeGraphFrame() {
         // CHANGE THESE VALUES TO FILL THE VIEW
-        self.viewHeight = 200.0
+        self.viewHeight = 180.0
         self.viewWidth = 300.0
         self.graphHeight = (0.8 * viewHeight)
-        self.graphWidth = (0.8 * viewWidth)
+        self.graphWidth = (0.95 * viewWidth)
         self.graphFrame = CGRect(x: 0.0 + ((viewWidth - graphWidth) / 2.0) + 10.0,
                                  y: 0.0 + ((viewHeight - graphHeight) / 2.0) + (graphHeight * 0.1),
                                  width: graphWidth, height: graphHeight)
@@ -94,7 +100,7 @@ class LaundryGraphView: UIView {
         for eachPoint in dataToGraph.indices {
             let valueOfPoint = dataToGraph[eachPoint]
             let xCoordinate = graphFrame.origin.x + (xInterval * CGFloat(eachPoint))
-            let yCoordinate = graphFrame.origin.y
+            let yCoordinate = graphFrame.origin.y + graphFrame.height
             let rectWidth = xInterval
             if dataMax == 0.0 {
                 dataMax = 1.0
@@ -207,9 +213,9 @@ class LaundryGraphView: UIView {
         let xInterval = (graphWidth) / CGFloat(dataToGraph.count + 1)
         for eachPoint in dataToGraph.indices {
             let xCoordinate = graphFrame.origin.x + (xInterval * CGFloat(eachPoint + 1) - 4.0)
-            let yCoordinate = graphFrame.origin.y + (graphHeight * 1.17)
+            let yCoordinate = graphFrame.origin.y + (graphHeight * 0.95)
             axisLabels.append(createLabel(fromString: xAxisLabels[eachPoint],
-                                          insideRect: CGRect(x: xCoordinate, y: yCoordinate, width: 12.0, height: 21.0),
+                                          insideRect: CGRect(x: xCoordinate, y: yCoordinate, width: 48.0, height: 21.0),
                                           onAxis: "x"))
         }
     }

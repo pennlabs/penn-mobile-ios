@@ -27,25 +27,28 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.1.7):
     - PromiseKit/CorePromise
+  - ScrollableGraphView (4.0.4)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Google/Analytics
   - MBProgressHUD (~> 0.8)
   - PromiseKit
+  - ScrollableGraphView
   - SwiftyJSON
 
 SPEC CHECKSUMS:
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseCore: 225d40532489835a034b8f4e2c9c87fbf4f615a2
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
-  Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
+  Google: cd92fab98f800f509da88c1e0c570275713bc9d5
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
+  ScrollableGraphView: 072ea302f4ca27779692656a49d51fe537b2b1e7
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: ae796c042d9e24ad875684a45b8d1735dfec8ce5
+PODFILE CHECKSUM: e2a4b9dc20653fbf74b93008a9b6e8ef7053ed91
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.3.1

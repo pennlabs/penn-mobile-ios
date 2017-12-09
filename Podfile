@@ -11,6 +11,7 @@ pod 'Google/Analytics'
 pod 'MBProgressHUD', '~> 0.8'
 pod 'SwiftyJSON'
 pod 'PromiseKit'
+pod 'ScrollableGraphView'
 
   target 'PennMobileTests' do
     inherit! :search_paths

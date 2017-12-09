@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import ScrollableGraphView
 
 protocol LaundryCellDelegate: class {
     func deleteLaundryCell(for hall: LaundryHall)
-    func toggleGraphView(_ cell: LaundryCell)
+    //func toggleGraphView(_ cell: LaundryCell)
 }
 
 class LaundryCell: UITableViewCell {
@@ -26,10 +27,24 @@ class LaundryCell: UITableViewCell {
         }
     }
     
-    var isExpanded = false
+    var isDryerGraph = false
+    
+    
+    // BEGIN TEST - DUMMY DATA
+    // For testing the new scrollable graph
+    fileprivate var numberOfDataPointsInGraph = 26
+    fileprivate var linePlotData = [2.0, 2.2, 2.4, 0.0, 1.1, 2.0, 2.2, 1.4, 2.0, 3.0,
+                                    2.0, 1.2, 2.4, 1.0, 2.1, 3.0, 2.2, 2.4, 2.0, 1.1,
+                                    2.0, 0.0, 2.0, 1.0, 3.0, 2.4]
+    fileprivate var emptyLinePlotData = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                         0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    // END TEST
+    
     
     fileprivate var washerCollectionView: UICollectionView?
     fileprivate var dryerCollectionView: UICollectionView?
+    fileprivate var scrollableGraphView: ScrollableGraphView?
     
     fileprivate let bgView: UIView = {
         let bg = UIView()
@@ -58,9 +73,9 @@ class LaundryCell: UITableViewCell {
         
         // shadow
         bg.layer.shadowColor = UIColor.black.cgColor
-        bg.layer.shadowOffset = CGSize(width: 0, height: 0)
-        bg.layer.shadowOpacity = 0.5
-        bg.layer.shadowRadius = 2.0
+        bg.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        bg.layer.shadowOpacity = 0.8
+        bg.layer.shadowRadius = 3.0
         bg.backgroundColor = UIColor.whiteGrey
         
         return bg
@@ -82,14 +97,11 @@ class LaundryCell: UITableViewCell {
     
     fileprivate lazy var graphButton: UIButton = {
         let b = UIButton()
+        b.titleLabel?.text = "Average Busy Washers"
+        b.setTitle("Average Busy Washers", for: .normal)
+        b.setTitleColor(UIColor.buttonBlue, for: .normal)
+        b.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 14)
         b.backgroundColor = UIColor.clear
-        b.contentMode = .scaleAspectFill
-        b.clipsToBounds = true
-        b.layer.cornerRadius = 20
-        b.layer.masksToBounds = true
-        b.setBackgroundImage(UIImage(named: "x_button"), for: UIControlState.normal)
-        b.setBackgroundImage(UIImage(named: "x_button_selected"), for: .selected)
-        b.setBackgroundImage(UIImage(named: "x_button_selected"), for: .highlighted)
         b.addTarget(self, action: #selector(toggleGraph), for: .touchUpInside)
         return b
     }()
@@ -187,11 +199,18 @@ class LaundryCell: UITableViewCell {
         return label
     }()
     
-    fileprivate let graphView: LaundryGraphView = {
-        let v = LaundryGraphView()
-        v.backgroundColor = .green
+    fileprivate let graphViewContainer: UIView = {
+        let v = UIView()
+        v.backgroundColor = .clear
         return v
     }()
+    
+    /*
+    fileprivate let graphView: LaundryGraphView = {
+        let v = LaundryGraphView()
+        v.backgroundColor = .clear
+        return v
+    }()*/
     
     fileprivate let borderView: UIView = {
         let bv = UIView()
@@ -219,7 +238,7 @@ class LaundryCell: UITableViewCell {
         
         // BackgroundImageView
         _ = bgView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
-                          topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10,
+                          topConstant: 15, leftConstant: 20, bottomConstant: 10, rightConstant: 20,
                           widthConstant: 0, heightConstant: 0)
         
         bgView.addSubview(roomLabel)
@@ -237,6 +256,12 @@ class LaundryCell: UITableViewCell {
         dryerCollectionView = generateCollectionView(dryerCollectionViewContainer.frame)
         bgView.addSubview(dryerCollectionView!)
         
+        bgView.addSubview(graphViewContainer)
+        scrollableGraphView = generateScrollableGraphView(graphViewContainer.frame)
+        bgView.addSubview(scrollableGraphView!)
+        bgView.addSubview(graphButton)
+        
+        
         bgView.addSubview(washersLabel)
         bgView.addSubview(dryersLabel)
         
@@ -247,9 +272,7 @@ class LaundryCell: UITableViewCell {
         bgView.addSubview(xButton)
         xButton.translatesAutoresizingMaskIntoConstraints = false
         
-        xButton.heightAnchor.constraint(
-            equalTo: bgView.widthAnchor,
-            multiplier: 0.07).isActive = true
+        xButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         xButton.widthAnchor.constraint(
             equalTo: xButton.heightAnchor).isActive = true
         xButton.trailingAnchor.constraint(
@@ -257,20 +280,6 @@ class LaundryCell: UITableViewCell {
             constant: -15).isActive = true
         xButton.centerYAnchor.constraint(
             equalTo: roomFloorLabel.centerYAnchor).isActive = true
-        
-        // Graph Button
-        bgView.addSubview(graphButton)
-        graphButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        graphButton.heightAnchor.constraint(
-            equalTo: xButton.heightAnchor).isActive = true
-        graphButton.widthAnchor.constraint(
-            equalTo: xButton.heightAnchor).isActive = true
-        graphButton.trailingAnchor.constraint(
-            equalTo: xButton.leadingAnchor,
-            constant: -15).isActive = true
-        graphButton.centerYAnchor.constraint(
-            equalTo: xButton.centerYAnchor).isActive = true
         
         // WashersDryersView
         _ = washersDryersView.anchor(bgView.topAnchor, left: bgView.leftAnchor,
@@ -313,6 +322,16 @@ class LaundryCell: UITableViewCell {
                                         topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
                                         widthConstant: 0, heightConstant: 0)
         
+        // Scrollable Graph View
+        _ = graphViewContainer.anchor(washersDryersView.bottomAnchor, left: bgView.leftAnchor,
+                                        bottom: bgView.bottomAnchor, right: bgView.rightAnchor,
+                                        topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
+                                        widthConstant: 0, heightConstant: 0)
+        _ = scrollableGraphView!.anchor(graphViewContainer.topAnchor, left: graphViewContainer.leftAnchor,
+                                        bottom: graphViewContainer.bottomAnchor, right: graphViewContainer.rightAnchor,
+                                        topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
+                                        widthConstant: 0, heightConstant: 0)
+        
         // Building Floor Label
         roomFloorLabel.translatesAutoresizingMaskIntoConstraints = false
         roomFloorLabel.leadingAnchor.constraint(
@@ -330,7 +349,6 @@ class LaundryCell: UITableViewCell {
         roomLabel.topAnchor.constraint(
             equalTo: roomFloorLabel.bottomAnchor,
             constant: 3).isActive = true
-        
         
         // "Washers" Label
         washersLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -368,9 +386,96 @@ class LaundryCell: UITableViewCell {
             equalTo: dryersLabel.centerYAnchor,
             constant: 0).isActive = true
         
+        // Graph Button
+        graphButton.translatesAutoresizingMaskIntoConstraints = false
+        graphButton.leadingAnchor.constraint(
+            equalTo: washersLabel.leadingAnchor).isActive = true
+        graphButton.topAnchor.constraint(
+            equalTo: graphViewContainer.topAnchor,
+            constant: -14).isActive = true
     }
     
+}
+
+extension LaundryCell: ScrollableGraphViewDataSource {
+    fileprivate func generateScrollableGraphView(_ frame: CGRect) -> ScrollableGraphView {
+        // Compose the graph view by creating a graph, then adding any plots
+        // and reference lines before adding the graph to the view hierarchy.
+        let graphView = ScrollableGraphView(frame: frame, dataSource: self)
+        let referenceLines = ReferenceLines()
+        
+        let washersLinePlot = LinePlot(identifier: "washers")
+        washersLinePlot.lineWidth = 1
+        washersLinePlot.lineColor = UIColor.clear
+        washersLinePlot.lineStyle = ScrollableGraphViewLineStyle.smooth
+        
+        washersLinePlot.shouldFill = true
+        washersLinePlot.fillType = ScrollableGraphViewFillType.gradient
+        washersLinePlot.fillGradientType = ScrollableGraphViewGradientType.linear
+        let color = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0)
+        washersLinePlot.fillGradientStartColor = color
+        washersLinePlot.fillGradientEndColor = color
+        washersLinePlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic
+
+        referenceLines.referenceLineLabelFont = UIFont.boldSystemFont(ofSize: 8)
+        referenceLines.referenceLineColor = UIColor.clear
+        referenceLines.referenceLineLabelColor = UIColor.clear
+        
+        referenceLines.positionType = .relative
+        // Reference lines will be shown at these values on the y-axis.
+        referenceLines.absolutePositions = [1.0, 2.0]
+        referenceLines.includeMinMax = true
+        
+        referenceLines.dataPointLabelColor = UIColor.white.withAlphaComponent(0.7)
+        
+        
+        // Setup the graph
+        graphView.backgroundFillColor = UIColor.clear
+        graphView.dataPointSpacing = 40
+        
+        graphView.shouldAnimateOnStartup = true
+        graphView.shouldAdaptRange = false
+        graphView.shouldRangeAlwaysStartAtZero = true
+        
+        graphView.rangeMin = 0.0
+        graphView.rangeMax = 3.0
+        
+        graphView.layer.cornerRadius = 20
+        
+        graphView.addReferenceLines(referenceLines: referenceLines)
+        graphView.addPlot(plot: washersLinePlot)
+        graphView.showsHorizontalScrollIndicator = false
+        
+        return graphView
+    }
     
+    internal func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double {
+        // Return the data for each plot.
+        switch(plot.identifier) {
+        case "washer":
+            if (!isDryerGraph) {
+                return linePlotData[pointIndex]
+            } else {
+                return emptyLinePlotData[pointIndex]
+            }
+        case "dryer":
+            if (isDryerGraph) {
+                return linePlotData[pointIndex]
+            } else {
+                return emptyLinePlotData[pointIndex]
+            }
+        default:
+            return 0
+        }
+    }
+    
+    internal func label(atIndex pointIndex: Int) -> String {
+        return "H \(pointIndex)"
+    }
+    
+    internal func numberOfPoints() -> Int {
+        return numberOfDataPointsInGraph
+    }
 }
 
 // Mark: CollectionView Delegate and Datasource
@@ -526,9 +631,17 @@ extension LaundryCell {
     }
     
     @objc fileprivate func toggleGraph() {
-        delegate?.toggleGraphView(self)
+        self.isDryerGraph = !isDryerGraph
+        scrollableGraphView?.reload()
     }
     
+    /*
+    @objc fileprivate func toggleGraph() {
+        delegate?.toggleGraphView(self)
+    }*/
+    
+    /*
+    This code will programmatically expand the cell to include a graph view
     func addGraphView() {
         // GraphView (Only exists when toggled)
         if (isExpanded) {
@@ -538,7 +651,7 @@ extension LaundryCell {
                                  topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10,
                                  widthConstant: 0, heightConstant: 0)
             graphView.initializeGraph()
-            graphView.animateDataRectangles(withDuration: 5.0)
+            graphView.animateDataRectangles(withDuration: 2.0)
         }
     }
     
@@ -548,5 +661,5 @@ extension LaundryCell {
             graphView.removeConstraints(graphView.constraints)
             graphView.removeFromSuperview()
         }
-    }
+    }*/
 }

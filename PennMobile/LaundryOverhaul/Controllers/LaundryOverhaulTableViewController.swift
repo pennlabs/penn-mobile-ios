@@ -100,12 +100,14 @@ extension LaundryOverhaulTableViewController {
         // Use for cards 1/2 the size of the screen
         //return self.view.layoutMarginsGuide.layoutFrame.height / 2.0
         // Use for cards 1/2 the size of the iPhone 7 screen
+        
+        /*
         if let cell = tableView.cellForRow(at: indexPath) as? LaundryCell {
             if cell.isExpanded {
                 return 500.0
             }
-        }
-        return 300.0
+        }*/
+        return 400.0
     }
 }
 
@@ -173,6 +175,7 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
         }
     }
     
+    /*
     internal func toggleGraphView(_ cell : LaundryCell) {
         tableView.beginUpdates()
         if (cell.isExpanded) {
@@ -183,7 +186,7 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
             cell.addGraphView()
         }
         tableView.endUpdates()
-    }
+    }*/
 }
 
 //Mark: Add Laundry Cell Delegate
