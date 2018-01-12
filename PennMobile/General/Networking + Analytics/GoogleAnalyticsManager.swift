@@ -11,7 +11,7 @@ import UIKit
     
     static let shared = GoogleAnalyticsManager()
     
-    var dryRun = false
+    var dryRun = false // Default unless changed in app delegate
     
     static func prepare() {
         let gai = GAI.sharedInstance()

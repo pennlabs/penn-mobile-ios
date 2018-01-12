@@ -15,7 +15,7 @@ class LaundryAPIService: Requestable {
     
     private let laundryUrl = "https://api.pennlabs.org/laundry/hall"
     private let hallsUrl = "https://api.pennlabs.org/laundry/halls/ids"
-    fileprivate let historyUrl = "https://api.pennlabs.org/laundry/usage/"
+    fileprivate let historyUrl = "https://api.pennlabs.org/laundry/usage"
     
     public var idToHalls: [Int: LaundryHall]?
     
@@ -50,9 +50,36 @@ class LaundryAPIService: Requestable {
         }
     }
     
+    func getUsageData(for id: Int, callback: @escaping ((LaundryUsageData?) -> Void)) {
+        let url = "\(historyUrl)/\(id)"
+        getRequest(url: url) { (dict) in
+            if let dict = dict {
+                let json = JSON(dict)
+                let usageData = try? LaundryUsageData(id: id, json: json)
+                callback(usageData)
+            } else {
+                callback(nil)
+            }
+        }
+    }
+    
     // call passing array of ids to API
     // Returns optional array of halls (nil if network call failed)
     func getHalls(for ids: [Int], callback: @escaping (([LaundryHall]?) -> Void)) {
+        for id in ids {
+            if LaundryUsageData.dataForRoom[id] == nil {
+                getUsageData(for: id, callback: { (usageData) in
+                    LaundryUsageData.dataForRoom[id] = usageData
+                    if let data = usageData {
+                        print(data.id)
+                        print(data.name)
+                        print(data.numberOfMachines)
+                        print(data.usageData)
+                    }
+                })
+            }
+        }
+        
         if ids.count == 3 {
             getHalls(for: [ids[0]], callback: { (firstHallArray) in
                 if firstHallArray == nil {
