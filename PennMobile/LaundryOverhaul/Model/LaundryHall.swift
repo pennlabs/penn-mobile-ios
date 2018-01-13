@@ -142,9 +142,8 @@ extension LaundryHall: Equatable {
     }
 }
 
-// Historic Usage Data Fetching
+// Mark: UsageData
 extension LaundryHall {
-    // fetch usage data
     func getUsageData() -> Array<Float>? {
         return LaundryUsageData.dataForRoom[id]?.usageData
     }
