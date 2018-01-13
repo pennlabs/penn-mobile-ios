@@ -14,6 +14,7 @@ extension String: Error {}
 class LaundryUsageData {
     
     static var dataForRoom = Dictionary<Int, LaundryUsageData>()
+    static var currentDayForData = Date()
     
     let id: Int
     let name: String
@@ -39,4 +40,10 @@ class LaundryUsageData {
         self.usageData = data.map { $0/2 }
     }
     
+    static func clearIfNewDay() {
+        if !NSCalendar.current.isDateInToday(currentDayForData) {
+            dataForRoom = Dictionary<Int, LaundryUsageData>()
+            currentDayForData = Date()
+        }
+    }
 }

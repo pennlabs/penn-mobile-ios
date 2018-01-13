@@ -50,45 +50,18 @@ class LaundryAPIService: Requestable {
         }
     }
     
-    func getUsageData(for id: Int, callback: @escaping ((LaundryUsageData?) -> Void)) {
-        let url = "\(historyUrl)/\(id)"
-        getRequest(url: url) { (dict) in
-            if let dict = dict {
-                let json = JSON(dict)
-                let usageData = try? LaundryUsageData(id: id, json: json)
-                callback(usageData)
-            } else {
-                callback(nil)
-            }
-        }
-    }
-    
     // call passing array of ids to API
     // Returns optional array of halls (nil if network call failed)
-    func getHalls(for ids: [Int], callback: @escaping (([LaundryHall]?) -> Void)) {
-        for id in ids {
-            if LaundryUsageData.dataForRoom[id] == nil {
-                getUsageData(for: id, callback: { (usageData) in
-                    LaundryUsageData.dataForRoom[id] = usageData
-                    if let data = usageData {
-                        print(data.id)
-                        print(data.name)
-                        print(data.numberOfMachines)
-                        print(data.usageData)
-                    }
-                })
-            }
-        }
-        
+    private func getHallsHelper(for ids: [Int], callback: @escaping (([LaundryHall]?) -> Void)) {
         if ids.count == 3 {
-            getHalls(for: [ids[0]], callback: { (firstHallArray) in
+            getHallsHelper(for: [ids[0]], callback: { (firstHallArray) in
                 if firstHallArray == nil {
                     callback(nil)
                     return
                 }
                 
                 var firstCopy = firstHallArray
-                self.getHalls(for: [ids[1], ids[2]], callback: { (secondThirdHalls) in
+                self.getHallsHelper(for: [ids[1], ids[2]], callback: { (secondThirdHalls) in
                     if let second = secondThirdHalls {
                         firstCopy?.append(contentsOf: second)
                         callback(firstCopy)
@@ -125,37 +98,85 @@ class LaundryAPIService: Requestable {
         }
     }
     
+    func getHalls(for ids: [Int], callback: @escaping (([LaundryHall]?) -> Void)) {
+        updateUsageDataIfNeeded(for: ids) { (success) in
+            if !success {
+                callback(nil)
+                return
+            }
+            
+            self.getHallsHelper(for: ids, callback: { (laundryHalls) in
+                callback(laundryHalls)
+            })
+        }
+    }
+    
     func getHalls(for halls: [LaundryHall], callback: @escaping (([LaundryHall]?) -> Void)) {
         let ids = halls.map { $0.id }
         getHalls(for: ids, callback: callback)
     }
 }
 
+// Mark: Usage API
 extension LaundryAPIService {
-    // Fetch Historical Data for 1 hall
-    func getTodaysHistory(for id: Int, callback: @escaping ([Float], [Float]) ->Void){
-        let url = historyUrl + "\(id)"
-        getRequest(url: url, callback: { (dictionary) in
-            if let dict = dictionary {
+    
+    fileprivate func getUsageData(for id: Int, callback: @escaping ((LaundryUsageData?) -> Void)) {
+        let url = "\(historyUrl)/\(id)"
+        getRequest(url: url) { (dict) in
+            if let dict = dict {
                 let json = JSON(dict)
-                var washers = Array<Float>(repeating: 0, count: 26)
-                var dryers = Array<Float>(repeating: 0, count: 26)
-                if let washerData = json["washer_data"].dictionary, let dryerData = json["dryer_data"].dictionary {
-                    for i in 0..<26 {
-                        if let currWasher = washerData["\(i)"]?.float {
-                            washers[i] = currWasher
-                        }
-                        if let currDryer = dryerData["\(i)"]?.float {
-                            dryers[i] = currDryer
-                        }
-                    }
-                    callback(washers, dryers)
-                } else {
-                    callback([], [])
-                }
+                let usageData = try? LaundryUsageData(id: id, json: json)
+                callback(usageData)
+            } else {
+                callback(nil)
+            }
+        }
+    }
+    
+    fileprivate func getUsageData(for ids: [Int], callback: @escaping (([Int: LaundryUsageData]?) -> Void)) {
+        if ids.isEmpty {
+            callback(Dictionary<Int, LaundryUsageData>())
+            return
+        }
+        
+        let firstId = ids[0]
+        var remainingIds = ids
+        remainingIds.remove(at: 0)
+        getUsageData(for: firstId) { (usageData) in
+            guard let usageData = usageData else {
+                callback(nil)
+                return
             }
             
-        })
+            self.getUsageData(for: remainingIds, callback: { (usageDataDict) in
+                if usageDataDict == nil {
+                    callback(nil)
+                    return
+                }
+                
+                var newUsageDataDict = usageDataDict!
+                newUsageDataDict[firstId] = usageData
+                callback(newUsageDataDict)
+            })
+        }
+    }
+    
+    // Callback is passed a boolean representing a success or failure of network call
+    fileprivate func updateUsageDataIfNeeded(for ids: [Int], callback: @escaping (Bool) -> Void) {
+        LaundryUsageData.clearIfNewDay()
+        let newIds = ids.filter { LaundryUsageData.dataForRoom[$0] == nil }
+        getUsageData(for: newIds) { (usageData) in
+            if let usageData = usageData {
+                for id in newIds {
+                    if let data = usageData[id] {
+                        LaundryUsageData.dataForRoom[id] = data
+                    }
+                }
+                callback(true)
+            } else {
+                callback(false)
+            }
+        }
     }
 }
 

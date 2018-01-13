@@ -145,8 +145,8 @@ extension LaundryHall: Equatable {
 // Historic Usage Data Fetching
 extension LaundryHall {
     // fetch usage data
-    func getUsageData(for type: MachineType) -> [Float] {
-        return UsageData.shared.getData(for: self, type: type)
+    func getUsageData() -> Array<Float>? {
+        return LaundryUsageData.dataForRoom[id]?.usageData
     }
 }
 
