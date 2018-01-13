@@ -9,10 +9,14 @@
 import UIKit
 import ScrollableGraphView
 
+// MARK: - Laundry Cell Delegate Protocol
+
 protocol LaundryCellDelegate: class {
     func deleteLaundryCell(for hall: LaundryHall)
     //func toggleGraphView(_ cell: LaundryCell)
 }
+
+// MARK: - Laundry Cell
 
 class LaundryCell: UITableViewCell {
     
@@ -41,6 +45,7 @@ class LaundryCell: UITableViewCell {
                                          0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     // END TEST
     
+    // MARK: - Define UI Element Variables
     
     fileprivate var washerCollectionView: UICollectionView?
     fileprivate var dryerCollectionView: UICollectionView?
@@ -205,18 +210,13 @@ class LaundryCell: UITableViewCell {
         return v
     }()
     
-    /*
-    fileprivate let graphView: LaundryGraphView = {
-        let v = LaundryGraphView()
-        v.backgroundColor = .clear
-        return v
-    }()*/
-    
     fileprivate let borderView: UIView = {
         let bv = UIView()
         bv.backgroundColor = .lightGray
         return bv
     }()
+    
+    // MARK: - Init
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -227,6 +227,8 @@ class LaundryCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Layout Views, Constraints
     
     func setupViews() {
         
@@ -397,6 +399,8 @@ class LaundryCell: UITableViewCell {
     
 }
 
+// MARK: - Scrollable Graph View
+
 extension LaundryCell: ScrollableGraphViewDataSource {
     fileprivate func generateScrollableGraphView(_ frame: CGRect) -> ScrollableGraphView {
         // Compose the graph view by creating a graph, then adding any plots
@@ -492,7 +496,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
 }
 
-// Mark: CollectionView Delegate and Datasource
+// MARK: - Machine CollectionView Delegate, Datasource
 
 extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     fileprivate func generateCollectionView(_ frame: CGRect) -> UICollectionView {
@@ -638,7 +642,8 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     }
 }
 
-// Mark : Delete cell, expand graph view
+// MARK: - Extension functions to delete cells, expand graph view
+
 extension LaundryCell {
     @objc fileprivate func deleteRoom() {
         delegate?.deleteLaundryCell(for: room)
