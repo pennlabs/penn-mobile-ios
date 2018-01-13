@@ -8,12 +8,13 @@
 
 protocol HallSelectionViewDelegate: class {
     func updateSelectedHalls(for halls: [LaundryHall])
+    func handleFailureToLoadDictionary()
 }
 
 class HallSelectionView: UIView, IndicatorEnabled {
     
     // delegating function to pass value to LaundryOverhaulViewController
-    weak var cellDelegate: HallSelectionViewDelegate?
+    weak var delegate: HallSelectionViewDelegate?
     
     let maxNumHalls = 3
     
@@ -41,8 +42,10 @@ class HallSelectionView: UIView, IndicatorEnabled {
         // delegation
         searchBar.delegate = self
         self.tableView.delegate = self
-        self.tableView.dataSource = self
-        
+        self.tableView.dataSource = self        
+    }
+    
+    public func prepare() {
         // set up view and gesture recognizer
         setUpView()
         setupDictionaries()
@@ -57,7 +60,7 @@ class HallSelectionView: UIView, IndicatorEnabled {
 
 // Mark: Select chosen halls
 extension HallSelectionView {
-    fileprivate func updateSelectedHalls() {
+    public func updateSelectedHalls() {
         for hall in chosenHalls {
             if let index = getCurrentIndex(for: hall) {
                 tableView.selectRow(at: index, animated: false, scrollPosition: .none)
@@ -80,6 +83,7 @@ extension HallSelectionView {
 // Mark: Sorting algorithm
 extension HallSelectionView {
     fileprivate func sortHeaders(for headers: [String]) -> [String] {
+        print(chosenHalls.isEmpty)
         return headers.sorted {
             let count1 = buildings[$0]!.filter({ (hall) -> Bool in
                 return chosenHalls.contains(hall)
@@ -184,6 +188,7 @@ extension HallSelectionView {
             DispatchQueue.main.async {
                 self.hideActivity()
                 if !success {
+                    self.delegate?.handleFailureToLoadDictionary()
                     return
                 }
                 
@@ -243,7 +248,7 @@ extension HallSelectionView: UITableViewDelegate, UITableViewDataSource {
                 updateSelectedHalls()
             }
         }
-        cellDelegate?.updateSelectedHalls(for: chosenHalls)
+        delegate?.updateSelectedHalls(for: chosenHalls)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -258,7 +263,7 @@ extension HallSelectionView: UITableViewDelegate, UITableViewDataSource {
             tableView.reloadData()
             updateSelectedHalls()
         }
-        cellDelegate?.updateSelectedHalls(for: chosenHalls)
+        delegate?.updateSelectedHalls(for: chosenHalls)
     }
     
     // Resigns the keyboard if up once the user starts to scroll through the listings

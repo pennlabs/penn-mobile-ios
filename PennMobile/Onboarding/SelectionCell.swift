@@ -29,8 +29,9 @@ class SelectionCell: UICollectionViewCell, HallSelectionViewDelegate {
         navigationBar.frame.size = navigationBar.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width, height: navigationBar.customHeight))
         
         selectionView = HallSelectionView(frame: .zero)
-        selectionView?.cellDelegate = self
-
+        selectionView?.delegate = self
+        selectionView?.prepare()
+        
         addSubview(selectionView)
         addSubview(navigationBar)
         
@@ -67,6 +68,9 @@ class SelectionCell: UICollectionViewCell, HallSelectionViewDelegate {
     func handleSave() {
         _ = selectionView.resignFirstResponder()
         delegate?.saveSelection(for: selectionView.chosenHalls)
+    }
+    
+    func handleFailureToLoadDictionary() {
     }
 }
 
