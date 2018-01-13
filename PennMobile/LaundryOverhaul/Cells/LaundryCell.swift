@@ -408,66 +408,86 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         let graphView = ScrollableGraphView(frame: frame, dataSource: self)
         let referenceLines = ReferenceLines()
         
-        let washersLinePlot = LinePlot(identifier: "washer")
-        washersLinePlot.lineWidth = 1
-        washersLinePlot.lineColor = UIColor.clear
-        washersLinePlot.lineStyle = ScrollableGraphViewLineStyle.smooth
+        /*let zerosLinePlot = LinePlot(identifier: "zero_data")
+        zerosLinePlot.lineWidth = 1
+        zerosLinePlot.lineColor = UIColor.clear
+        zerosLinePlot.lineStyle = ScrollableGraphViewLineStyle.smooth
         
-        washersLinePlot.shouldFill = true
-        washersLinePlot.fillType = ScrollableGraphViewFillType.gradient
-        washersLinePlot.fillGradientType = ScrollableGraphViewGradientType.linear
+        zerosLinePlot.shouldFill = true
+        zerosLinePlot.fillType = ScrollableGraphViewFillType.gradient
+        zerosLinePlot.fillGradientType = ScrollableGraphViewGradientType.linear
         let color = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0)
-        washersLinePlot.fillGradientStartColor = color
-        washersLinePlot.fillGradientEndColor = color
-        washersLinePlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic
+        zerosLinePlot.fillGradientStartColor = color
+        zerosLinePlot.fillGradientEndColor = color
+        zerosLinePlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic*/
         
-        let dryersLinePlot = LinePlot(identifier: "dryer")
-        dryersLinePlot.lineWidth = 1
-        dryersLinePlot.lineColor = UIColor.clear
-        dryersLinePlot.lineStyle = ScrollableGraphViewLineStyle.smooth
+        let dataLinePlot = LinePlot(identifier: "traffic_data")
+        dataLinePlot.lineWidth = 1
+        dataLinePlot.lineColor = UIColor.black
+        dataLinePlot.lineStyle = ScrollableGraphViewLineStyle.smooth
         
-        dryersLinePlot.shouldFill = true
-        dryersLinePlot.fillType = ScrollableGraphViewFillType.gradient
-        dryersLinePlot.fillGradientType = ScrollableGraphViewGradientType.linear
-        let color2 = UIColor(red: 1.0, green: 0.7, blue: 0.7, alpha: 1.0)
-        dryersLinePlot.fillGradientStartColor = color2
-        dryersLinePlot.fillGradientEndColor = color2
-        dryersLinePlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic
+        dataLinePlot.shouldFill = true
+        dataLinePlot.fillType = ScrollableGraphViewFillType.gradient
+        dataLinePlot.fillGradientType = ScrollableGraphViewGradientType.linear
+        let color = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0)
+        dataLinePlot.fillGradientStartColor = color
+        dataLinePlot.fillGradientEndColor = color
+        dataLinePlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic
 
+        
+        /*
         referenceLines.referenceLineLabelFont = UIFont.boldSystemFont(ofSize: 8)
-        referenceLines.referenceLineColor = UIColor.clear
-        referenceLines.referenceLineLabelColor = UIColor.clear
+        referenceLines.referenceLineColor = UIColor.black
+        referenceLines.referenceLineLabelColor = UIColor.black
+        
         
         referenceLines.positionType = .relative
         // Reference lines will be shown at these values on the y-axis.
-        referenceLines.absolutePositions = [1.0, 2.0]
-        referenceLines.includeMinMax = true
+        referenceLines.includeMinMax = true*/
         
-        referenceLines.dataPointLabelColor = UIColor.white.withAlphaComponent(0.7)
+        
+        // Customize the data labels (5am, 2pm, etc.)
+        referenceLines.dataPointLabelColor = .black
+        referenceLines.shouldShowLabels = true
+        referenceLines.dataPointLabelsSparsity = 4
+        
         
         
         // Setup the graph
         graphView.backgroundFillColor = UIColor.clear
-        graphView.dataPointSpacing = 40
+        graphView.dataPointSpacing = 20
         
         graphView.shouldAnimateOnStartup = true
         graphView.shouldAdaptRange = false
         graphView.shouldRangeAlwaysStartAtZero = true
         
         graphView.rangeMin = 0.0
-        graphView.rangeMax = 3.0
+        graphView.rangeMax = 1.5
         
         graphView.layer.cornerRadius = 20
         
         graphView.addReferenceLines(referenceLines: referenceLines)
-        graphView.addPlot(plot: washersLinePlot)
-        graphView.addPlot(plot: dryersLinePlot)
+        //graphView.addPlot(plot: zerosLinePlot)
+        graphView.addPlot(plot: dataLinePlot)
         graphView.showsHorizontalScrollIndicator = false
         
         return graphView
     }
     
     internal func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double {
+        
+        let pulledDataPoints = room.getUsageData()
+        
+        if let _ = pulledDataPoints {
+            return pulledDataPoints![pointIndex]
+        } else {
+            return 0.0
+        }
+        
+        
+        
+        /*
+        
         // Return the data for each plot.
         switch(plot.identifier) {
         case "washer":
@@ -484,7 +504,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
             }
         default:
             return 0
-        }
+        }*/
     }
     
     internal func label(atIndex pointIndex: Int) -> String {

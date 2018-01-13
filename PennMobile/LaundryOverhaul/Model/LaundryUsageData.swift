@@ -19,7 +19,7 @@ class LaundryUsageData {
     let id: Int
     let name: String
     let numberOfMachines: Int
-    let usageData: Array<Float>
+    let usageData: Array<Double>
     
     init(id: Int, json: JSON) throws {
         self.id = id
@@ -27,17 +27,27 @@ class LaundryUsageData {
             throw "Bad format"
         }
         self.name = name
-        self.numberOfMachines = Int(json["total_number_of_washers"].floatValue)
-        var data = Array<Float>(repeating: 0, count: 27)
+        self.numberOfMachines = Int(json["total_number_of_washers"].doubleValue)
+        var data = Array<Double>(repeating: 0, count: 27)
         json["washer_data"].dictionaryValue.forEach { (key, val) in
-            data[Int(key)!] = val.floatValue
+            data[Int(key)!] = val.doubleValue
         }
         
         json["dryer_data"].dictionaryValue.forEach { (key, val) in
-            data[Int(key)!] += val.floatValue
+            data[Int(key)!] += val.doubleValue
         }
         
-        self.usageData = data.map { $0/2 }
+        print("NumMachines: \(numberOfMachines)")
+        let dataMax = data.max() ?? 1.0
+        let dataMin = data.min() ?? 0.0
+        print(data)
+        print("Max: \(dataMax), Min: \(dataMin)")
+        for i in data.indices {
+            // 1 - (totalMachinesOpen / numberOfMachinesInRoom) -> 0...1 where 0 is low traffic and 1 is high
+            data[i] = ((dataMax - data[i]) / (dataMax - dataMin))
+        }
+        
+        self.usageData = data.map { $0 }
     }
     
     static func clearIfNewDay() {
