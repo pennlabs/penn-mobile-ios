@@ -37,11 +37,9 @@ class LaundryUsageData {
             data[Int(key)!] += val.doubleValue
         }
         
-        print("NumMachines: \(numberOfMachines)")
+        // Edit the data to look good displayed on a graph
         let dataMax = data.max() ?? 1.0
         let dataMin = data.min() ?? 0.0
-        print(data)
-        print("Max: \(dataMax), Min: \(dataMin)")
         for i in data.indices {
             // 1 - (totalMachinesOpen / numberOfMachinesInRoom) -> 0...1 where 0 is low traffic and 1 is high
             data[i] = ((dataMax - data[i]) / (dataMax - dataMin))

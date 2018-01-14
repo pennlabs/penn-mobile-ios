@@ -31,19 +31,12 @@ class LaundryCell: UITableViewCell {
         }
     }
     
-    var isDryerGraph = false
-    
-    
-    // BEGIN TEST - DUMMY DATA
-    // For testing the new scrollable graph
-    fileprivate var numberOfDataPointsInGraph = 26
-    fileprivate var linePlotData = [2.0, 2.2, 2.4, 0.0, 1.1, 2.0, 2.2, 1.4, 2.0, 3.0,
-                                    2.0, 1.2, 2.4, 1.0, 2.1, 3.0, 2.2, 2.4, 2.0, 1.1,
-                                    2.0, 0.0, 2.0, 1.0, 3.0, 2.4]
-    fileprivate var emptyLinePlotData = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                                         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                                         0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    // END TEST
+    // Number of datapoints displayed in the graph
+    fileprivate let numberOfDataPointsInGraph = 27
+    // Should data be displayed, or zeros
+    fileprivate var shouldDisplayGraphData = false
+    // Space between data points
+    fileprivate let dataPointSpacing = 30
     
     // MARK: - Define UI Element Variables
     
@@ -107,7 +100,7 @@ class LaundryCell: UITableViewCell {
         b.setTitleColor(UIColor.buttonBlue, for: .normal)
         b.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 14)
         b.backgroundColor = UIColor.clear
-        b.addTarget(self, action: #selector(toggleGraph), for: .touchUpInside)
+        b.addTarget(self, action: #selector(debugStuff), for: .touchUpInside)
         return b
     }()
     
@@ -210,6 +203,22 @@ class LaundryCell: UITableViewCell {
         return v
     }()
     
+    fileprivate let graphLabel: UILabel = {
+        let label = UILabel()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE" // Monday, Friday, etc.
+        let day = dateFormatter.string(from: Date())
+        
+        label.text = "Busy Times - \(day)"
+        label.font = UIFont(name: "HelveticaNeue", size: 14)
+        label.textColor = .black
+        label.layer.cornerRadius = 4
+        label.layer.masksToBounds = true
+        label.textAlignment = .left
+        return label
+    }()
+    
     fileprivate let borderView: UIView = {
         let bv = UIView()
         bv.backgroundColor = .lightGray
@@ -261,7 +270,8 @@ class LaundryCell: UITableViewCell {
         bgView.addSubview(graphViewContainer)
         scrollableGraphView = generateScrollableGraphView(graphViewContainer.frame)
         bgView.addSubview(scrollableGraphView!)
-        bgView.addSubview(graphButton)
+        //bgView.addSubview(graphButton)
+        bgView.addSubview(graphLabel)
         
         
         bgView.addSubview(washersLabel)
@@ -388,13 +398,22 @@ class LaundryCell: UITableViewCell {
             equalTo: dryersLabel.centerYAnchor,
             constant: 0).isActive = true
         
-        // Graph Button
+        /*// Graph Button
         graphButton.translatesAutoresizingMaskIntoConstraints = false
         graphButton.leadingAnchor.constraint(
             equalTo: washersLabel.leadingAnchor).isActive = true
         graphButton.topAnchor.constraint(
             equalTo: graphViewContainer.topAnchor,
-            constant: -14).isActive = true
+            constant: -14).isActive = true*/
+        
+        // "Busy times on _" Graph Label
+        graphLabel.translatesAutoresizingMaskIntoConstraints = false
+        graphLabel.leadingAnchor.constraint(
+            equalTo: washersLabel.leadingAnchor).isActive = true
+        graphLabel.topAnchor.constraint(
+            equalTo: graphViewContainer.topAnchor,
+            constant: 0).isActive = true
+        
     }
     
 }
@@ -408,54 +427,37 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         let graphView = ScrollableGraphView(frame: frame, dataSource: self)
         let referenceLines = ReferenceLines()
         
-        /*let zerosLinePlot = LinePlot(identifier: "zero_data")
-        zerosLinePlot.lineWidth = 1
-        zerosLinePlot.lineColor = UIColor.clear
-        zerosLinePlot.lineStyle = ScrollableGraphViewLineStyle.smooth
+        let lineColor = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0)
+        let fillColorTop = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 0.8)
+        let fillColorBottom = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 0.1)
+        let dataLabelColor = UIColor.warmGrey
         
-        zerosLinePlot.shouldFill = true
-        zerosLinePlot.fillType = ScrollableGraphViewFillType.gradient
-        zerosLinePlot.fillGradientType = ScrollableGraphViewGradientType.linear
-        let color = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0)
-        zerosLinePlot.fillGradientStartColor = color
-        zerosLinePlot.fillGradientEndColor = color
-        zerosLinePlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic*/
-        
+        // Line plot
         let dataLinePlot = LinePlot(identifier: "traffic_data")
         dataLinePlot.lineWidth = 1
-        dataLinePlot.lineColor = UIColor.black
+        dataLinePlot.lineColor = lineColor
         dataLinePlot.lineStyle = ScrollableGraphViewLineStyle.smooth
         
         dataLinePlot.shouldFill = true
         dataLinePlot.fillType = ScrollableGraphViewFillType.gradient
         dataLinePlot.fillGradientType = ScrollableGraphViewGradientType.linear
-        let color = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0)
-        dataLinePlot.fillGradientStartColor = color
-        dataLinePlot.fillGradientEndColor = color
+        dataLinePlot.fillGradientStartColor = fillColorTop
+        dataLinePlot.fillGradientEndColor = fillColorBottom
         dataLinePlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic
 
-        
-        /*
-        referenceLines.referenceLineLabelFont = UIFont.boldSystemFont(ofSize: 8)
-        referenceLines.referenceLineColor = UIColor.black
-        referenceLines.referenceLineLabelColor = UIColor.black
-        
-        
+        // Reference lines
+        referenceLines.referenceLineColor = .clear
+        referenceLines.referenceLineLabelColor = .clear
         referenceLines.positionType = .relative
-        // Reference lines will be shown at these values on the y-axis.
-        referenceLines.includeMinMax = true*/
         
-        
-        // Customize the data labels (5am, 2pm, etc.)
-        referenceLines.dataPointLabelColor = .black
+        // Data labels (5am, 2pm, etc.)
+        referenceLines.dataPointLabelColor = dataLabelColor
         referenceLines.shouldShowLabels = true
-        referenceLines.dataPointLabelsSparsity = 4
-        
-        
+        referenceLines.dataPointLabelsSparsity = 2
         
         // Setup the graph
         graphView.backgroundFillColor = UIColor.clear
-        graphView.dataPointSpacing = 20
+        graphView.dataPointSpacing = CGFloat(self.dataPointSpacing)
         
         graphView.shouldAnimateOnStartup = true
         graphView.shouldAdaptRange = false
@@ -467,11 +469,33 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         graphView.layer.cornerRadius = 20
         
         graphView.addReferenceLines(referenceLines: referenceLines)
-        //graphView.addPlot(plot: zerosLinePlot)
         graphView.addPlot(plot: dataLinePlot)
         graphView.showsHorizontalScrollIndicator = false
         
+        // Create dotted line showing current time
+        generateDottedLine(forView: graphView)
+        
         return graphView
+    }
+    
+    internal func generateDottedLine(forView view: ScrollableGraphView) {
+        
+        let dottedLineLayer = CAShapeLayer()
+        
+        dottedLineLayer.strokeColor = UIColor.warmGrey.cgColor
+        dottedLineLayer.lineWidth = 1.0
+        dottedLineLayer.lineCap = kCALineCapRound
+        dottedLineLayer.lineDashPattern = [.init(integerLiteral: 5)]
+        
+        let currentHour = Calendar.current.component(.hour, from: Date())
+        
+        let linePath = UIBezierPath()
+        linePath.move(to: CGPoint(x: 50.0 + Double(currentHour * dataPointSpacing), y: 25.0))
+        linePath.addLine(to: CGPoint(x: 50.0 + Double(currentHour * dataPointSpacing),
+                                     y: 60.0))
+        
+        dottedLineLayer.path = linePath.cgPath
+        view.layer.addSublayer(dottedLineLayer)
     }
     
     internal func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double {
@@ -479,40 +503,44 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         let pulledDataPoints = room.getUsageData()
         
         if let _ = pulledDataPoints {
-            return pulledDataPoints![pointIndex]
+            if shouldDisplayGraphData {
+                return pulledDataPoints![pointIndex]
+            } else {
+                return 0.0
+            }
         } else {
             return 0.0
         }
-        
-        
-        
-        /*
-        
-        // Return the data for each plot.
-        switch(plot.identifier) {
-        case "washer":
-            if (!isDryerGraph) {
-                return linePlotData[pointIndex]
-            } else {
-                return emptyLinePlotData[pointIndex]
-            }
-        case "dryer":
-            if (isDryerGraph) {
-                return linePlotData[pointIndex]
-            } else {
-                return emptyLinePlotData[pointIndex]
-            }
-        default:
-            return 0
-        }*/
     }
     
     internal func label(atIndex pointIndex: Int) -> String {
-        return "H \(pointIndex)"
+        if pointIndex == 0 {
+            return "12a"
+        } else if pointIndex < 12 {
+            return "\(pointIndex)a"
+        } else if pointIndex == 12 {
+            return "12p"
+        } else if pointIndex < 24 {
+            return "\(pointIndex - 12)p"
+        } else if pointIndex == 24 {
+            return "12a"
+        } else if pointIndex > 24 {
+            return "\(pointIndex - 24)a"
+        } else {
+            return ""
+        }
     }
     
     internal func numberOfPoints() -> Int {
         return numberOfDataPointsInGraph
+    }
+    
+    fileprivate func scrollGraphToCurrentHour() {
+        var currentHour = Calendar.current.component(.hour, from: Date())
+        if currentHour > 2 {
+            currentHour -= 2
+        }
+        scrollableGraphView?.setContentOffset(CGPoint(x: currentHour * dataPointSpacing, y: 0), animated: true)
     }
 }
 
@@ -669,15 +697,17 @@ extension LaundryCell {
         delegate?.deleteLaundryCell(for: room)
     }
     
-    @objc fileprivate func toggleGraph() {
-        self.isDryerGraph = !isDryerGraph
+    func reloadGraphData() {
+        shouldDisplayGraphData = true
         scrollableGraphView?.reload()
+        scrollGraphToCurrentHour()
     }
     
-    /*
-    @objc fileprivate func toggleGraph() {
-        delegate?.toggleGraphView(self)
-    }*/
+    @objc fileprivate func debugStuff() {
+        print("ScrollView frame width: \(scrollableGraphView?.frame.width)")
+        print("ScrollView layer frame width: \(scrollableGraphView?.layer.frame.width)")
+        scrollableGraphView?.setContentOffset(CGPoint(x: 200.0, y: 0.0), animated: true)
+    }
     
     /*
     This code will programmatically expand the cell to include a graph view

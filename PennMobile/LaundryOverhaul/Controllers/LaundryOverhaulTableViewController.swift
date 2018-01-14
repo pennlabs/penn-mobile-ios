@@ -13,6 +13,8 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
     
+    fileprivate var allowGraphsToAnimate = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +39,11 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
         updateInfo {
             self.hideActivity()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.allowGraphsToAnimate = true
     }
 }
 
@@ -88,6 +95,9 @@ extension LaundryOverhaulTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: laundryCell) as! LaundryCell
             cell.room = room
             cell.delegate = self
+            if allowGraphsToAnimate {
+                cell.reloadGraphData()
+            }
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: addLaundryCell) as! AddLaundryCell
@@ -107,7 +117,7 @@ extension LaundryOverhaulTableViewController {
                 return 500.0
             }
         }*/
-        return 400.0
+        return 380.0
     }
 }
 
@@ -174,19 +184,6 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
             tableView.reloadData()
         }
     }
-    
-    /*
-    internal func toggleGraphView(_ cell : LaundryCell) {
-        tableView.beginUpdates()
-        if (cell.isExpanded) {
-            cell.isExpanded = false
-            cell.removeGraphView()
-        } else {
-            cell.isExpanded = true
-            cell.addGraphView()
-        }
-        tableView.endUpdates()
-    }*/
 }
 
 //Mark: Add Laundry Cell Delegate
