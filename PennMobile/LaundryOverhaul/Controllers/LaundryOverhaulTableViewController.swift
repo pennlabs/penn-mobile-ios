@@ -38,12 +38,12 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
         self.showActivity()
         updateInfo {
             self.hideActivity()
+            self.allowGraphsToAnimate = true
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.allowGraphsToAnimate = true
     }
 }
 
@@ -96,7 +96,9 @@ extension LaundryOverhaulTableViewController {
             cell.room = room
             cell.delegate = self
             if allowGraphsToAnimate {
+                cell.tableViewSpinnerCompleted = true
                 cell.reloadGraphData()
+                cell.reloadDottedLineLayer()
             }
             return cell
         } else {

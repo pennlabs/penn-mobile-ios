@@ -28,10 +28,13 @@ class LaundryCell: UITableViewCell {
             roomFloorLabel.text = room.name
             washerCollectionView?.reloadData()
             dryerCollectionView?.reloadData()
+            scrollGraphToCurrentHour()
         }
     }
     
-    var hasGraphReachedStartPosition = false
+    internal var hasGraphReachedStartPosition = false
+    internal var shouldReleaseGraphAnimations = false
+    var tableViewSpinnerCompleted = false
     
     // Number of datapoints displayed in the graph
     fileprivate let numberOfDataPointsInGraph = 27
@@ -45,6 +48,8 @@ class LaundryCell: UITableViewCell {
     fileprivate var washerCollectionView: UICollectionView?
     fileprivate var dryerCollectionView: UICollectionView?
     fileprivate var scrollableGraphView: ScrollableGraphView?
+    
+    fileprivate var dottedLineShapeLayer: CAShapeLayer?
     
     fileprivate let bgView: UIView = {
         let bg = UIView()
@@ -102,7 +107,7 @@ class LaundryCell: UITableViewCell {
         b.setTitleColor(UIColor.buttonBlue, for: .normal)
         b.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 14)
         b.backgroundColor = UIColor.clear
-        b.addTarget(self, action: #selector(debugStuff), for: .touchUpInside)
+        //b.addTarget(self, action: #selector(debugStuff), for: .touchUpInside)
         return b
     }()
     
@@ -501,12 +506,14 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         graphView.showsHorizontalScrollIndicator = false
         
         // Create dotted line showing current time
-        generateDottedLine(forView: graphView)
+        reloadDottedLineLayer()
         
         return graphView
     }
     
-    internal func generateDottedLine(forView view: ScrollableGraphView) {
+    func reloadDottedLineLayer() {
+        
+        dottedLineShapeLayer?.removeFromSuperlayer()
         
         let dottedLineLayer = CAShapeLayer()
         
@@ -523,7 +530,8 @@ extension LaundryCell: ScrollableGraphViewDataSource {
                                      y: 60.0))
         
         dottedLineLayer.path = linePath.cgPath
-        view.layer.addSublayer(dottedLineLayer)
+        dottedLineShapeLayer = dottedLineLayer
+        scrollableGraphView?.layer.addSublayer(dottedLineLayer)
     }
     
     internal func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double {
@@ -531,7 +539,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         let pulledDataPoints = room.getUsageData()
         
         if let _ = pulledDataPoints {
-            if shouldDisplayGraphData {
+            if shouldDisplayGraphData && shouldReleaseGraphAnimations && tableViewSpinnerCompleted {
                 return pulledDataPoints![pointIndex]
             } else {
                 return 0.0
@@ -568,7 +576,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         if currentHour > 2 {
             currentHour -= 2
         }
-        scrollableGraphView?.setContentOffset(CGPoint(x: currentHour * dataPointSpacing, y: 0), animated: false)
+        scrollableGraphView?.setContentOffset(CGPoint(x: currentHour * dataPointSpacing, y: 0), animated: true)
     }
 }
 
@@ -727,11 +735,17 @@ extension LaundryCell {
     
     func reloadGraphData() {
         shouldDisplayGraphData = true
+        if tableViewSpinnerCompleted {
+            let _ = Timer.scheduledTimer(timeInterval: 0.5, target: self,
+                                         selector: #selector(self.releaseGraphAnimations),
+                                         userInfo: nil, repeats: false)
+        }
         scrollableGraphView?.reload()
     }
     
-    @objc fileprivate func debugStuff() {
-        scrollableGraphView?.setContentOffset(CGPoint(x: 200.0, y: 0.0), animated: true)
+    @objc fileprivate func releaseGraphAnimations() {
+        self.shouldReleaseGraphAnimations = true
+        scrollableGraphView?.reload()
     }
     
     /*
