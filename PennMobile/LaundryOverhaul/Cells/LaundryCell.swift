@@ -13,7 +13,6 @@ import ScrollableGraphView
 
 protocol LaundryCellDelegate: class {
     func deleteLaundryCell(for hall: LaundryHall)
-    //func toggleGraphView(_ cell: LaundryCell)
 }
 
 // MARK: - Laundry Cell
@@ -32,14 +31,10 @@ class LaundryCell: UITableViewCell {
         }
     }
     
-    internal var hasGraphReachedStartPosition = false
-    internal var shouldReleaseGraphAnimations = false
-    var tableViewSpinnerCompleted = false
+    var graphData = Array.init(repeating: 0.0, count: 27)
     
     // Number of datapoints displayed in the graph
     fileprivate let numberOfDataPointsInGraph = 27
-    // Should data be displayed, or zeros
-    fileprivate var shouldDisplayGraphData = false
     // Space between data points
     fileprivate let dataPointSpacing = 30
     
@@ -53,21 +48,6 @@ class LaundryCell: UITableViewCell {
     
     fileprivate let bgView: UIView = {
         let bg = UIView()
-        /*
-         let gradient: CAGradientLayer = CAGradientLayer()
-         
-         gradient.colors = [UIColor.init(red: 250.0 / 255.0, green: 250.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0).cgColor,
-         UIColor.init(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0).cgColor]
-         gradient.locations = [0.0 , 1.0]
-         gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
-         gradient.endPoint = CGPoint(x: 0.0, y: 1.0)
-         gradient.frame = CGRect(x: 0.0, y: 0.0, width: 500.0, height: 350.0)
-         
-         bg.layer.insertSublayer(gradient, at: 0)
-         
-         bg.clipsToBounds = true
-         bg.layer.cornerRadius = 15
-         bg.layer.masksToBounds = true*/
         
         // corner radius
         bg.layer.cornerRadius = 20
@@ -98,17 +78,6 @@ class LaundryCell: UITableViewCell {
         xb.setBackgroundImage(UIImage(named: "x_button_selected"), for: .highlighted)
         xb.addTarget(self, action: #selector(deleteRoom), for: .touchUpInside)
         return xb
-    }()
-    
-    fileprivate lazy var graphButton: UIButton = {
-        let b = UIButton()
-        b.titleLabel?.text = "Average Busy Washers"
-        b.setTitle("Average Busy Washers", for: .normal)
-        b.setTitleColor(UIColor.buttonBlue, for: .normal)
-        b.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 14)
-        b.backgroundColor = UIColor.clear
-        //b.addTarget(self, action: #selector(debugStuff), for: .touchUpInside)
-        return b
     }()
     
     fileprivate let washersDryersView: UIView = {
@@ -293,7 +262,7 @@ class LaundryCell: UITableViewCell {
         bgView.addSubview(graphViewContainer)
         scrollableGraphView = generateScrollableGraphView(graphViewContainer.frame)
         bgView.addSubview(scrollableGraphView!)
-        //bgView.addSubview(graphButton)
+
         bgView.addSubview(graphLabel)
         bgView.addSubview(graphDayLabel)
         
@@ -422,14 +391,6 @@ class LaundryCell: UITableViewCell {
             equalTo: dryersLabel.centerYAnchor,
             constant: 0).isActive = true
         
-        /*// Graph Button
-        graphButton.translatesAutoresizingMaskIntoConstraints = false
-        graphButton.leadingAnchor.constraint(
-            equalTo: washersLabel.leadingAnchor).isActive = true
-        graphButton.topAnchor.constraint(
-            equalTo: graphViewContainer.topAnchor,
-            constant: -14).isActive = true*/
-        
         // "Busy times on _" Graph Label
         graphLabel.translatesAutoresizingMaskIntoConstraints = false
         graphLabel.leadingAnchor.constraint(
@@ -505,7 +466,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         graphView.addPlot(plot: dataLinePlot)
         graphView.showsHorizontalScrollIndicator = false
         
-        // Create dotted line showing current time
+        // Create/refresh dotted line showing current time
         reloadDottedLineLayer()
         
         return graphView
@@ -535,15 +496,9 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
     
     internal func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double {
-        
-        let pulledDataPoints = room.getUsageData()
-        
-        if let _ = pulledDataPoints {
-            if shouldDisplayGraphData && shouldReleaseGraphAnimations && tableViewSpinnerCompleted {
-                return pulledDataPoints![pointIndex]
-            } else {
-                return 0.0
-            }
+        if pointIndex < graphData.count {
+            // When loading is completed, graphData will be populated with data pulled from the API
+            return graphData[pointIndex]
         } else {
             return 0.0
         }
@@ -577,6 +532,23 @@ extension LaundryCell: ScrollableGraphViewDataSource {
             currentHour -= 2
         }
         scrollableGraphView?.setContentOffset(CGPoint(x: currentHour * dataPointSpacing, y: 0), animated: true)
+    }
+    
+    func reloadGraphData() {
+        let _ = Timer.scheduledTimer(timeInterval: 0.5, target: self,
+                                     selector: #selector(self.releaseGraphAnimations),
+                                     userInfo: nil, repeats: false)
+    }
+    
+    @objc fileprivate func releaseGraphAnimations() {
+        if let usageData = room.getUsageData() {
+            for i in self.graphData.indices {
+                if i < usageData.count {
+                    graphData[i] = usageData[i]
+                }
+            }
+        }
+        scrollableGraphView?.reload()
     }
 }
 
@@ -633,44 +605,6 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                 return false
             }
         }()
-        /* ////// This code presents open machines first
-         if let room = room {
-         if cellMachineTypeWasher {
-         if (indexPath.row < room.numWasherOpen) {
-         cell.bgImageColor = UIColor.clear
-         cell.bgImage = UIImage(named: "washer_open")
-         cell.timerText = ""
-         } else if (indexPath.row < room.numWasherOpen + room.numWasherRunning) {
-         cell.bgImageColor = UIColor.clear
-         cell.bgImage = UIImage(named: "washer_busy")
-         if (indexPath.row - room.numWasherOpen) < room.remainingTimeWashers.count {
-         let time = room.remainingTimeWashers[indexPath.row - room.numWasherOpen]
-         cell.timerText = "\(time)"
-         }
-         } else {
-         cell.bgImageColor = UIColor.clear
-         cell.bgImage = UIImage(named: "washer_broken")
-         cell.timerText = ""
-         }
-         } else {
-         if (indexPath.row < room.numDryerOpen) {
-         cell.bgImageColor = UIColor.clear
-         cell.bgImage = UIImage(named: "dryer_open")
-         cell.timerText = ""
-         } else if (indexPath.row < room.numDryerOpen + room.numDryerRunning) {
-         cell.bgImageColor = UIColor.whiteGrey
-         cell.bgImage = UIImage(named: "dryer_busy")
-         if (indexPath.row - room.numDryerOpen) < room.remainingTimeDryers.count {
-         let time = room.remainingTimeDryers[indexPath.row - room.numDryerOpen]
-         cell.timerText = "\(time)"
-         }
-         } else {
-         cell.bgImageColor = UIColor.clear
-         cell.bgImage = UIImage(named: "dryer_broken")
-         cell.timerText = ""
-         }
-         }
-         }*/
         if let room = room {
             if cellMachineTypeWasher {
                 if (indexPath.row < room.numWasherRunning) {
@@ -732,42 +666,4 @@ extension LaundryCell {
     @objc fileprivate func deleteRoom() {
         delegate?.deleteLaundryCell(for: room)
     }
-    
-    func reloadGraphData() {
-        shouldDisplayGraphData = true
-        if tableViewSpinnerCompleted {
-            let _ = Timer.scheduledTimer(timeInterval: 0.5, target: self,
-                                         selector: #selector(self.releaseGraphAnimations),
-                                         userInfo: nil, repeats: false)
-        }
-        scrollableGraphView?.reload()
-    }
-    
-    @objc fileprivate func releaseGraphAnimations() {
-        self.shouldReleaseGraphAnimations = true
-        scrollableGraphView?.reload()
-    }
-    
-    /*
-    This code will programmatically expand the cell to include a graph view
-    func addGraphView() {
-        // GraphView (Only exists when toggled)
-        if (isExpanded) {
-            bgView.addSubview(graphView)
-            _ = graphView.anchor(washersDryersView.bottomAnchor, left: bgView.leftAnchor,
-                                 bottom: bottomAnchor, right: bgView.rightAnchor,
-                                 topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10,
-                                 widthConstant: 0, heightConstant: 0)
-            graphView.initializeGraph()
-            graphView.animateDataRectangles(withDuration: 2.0)
-        }
-    }
-    
-    func removeGraphView() {
-        if (isExpanded) {
-            graphView.clearGraph()
-            graphView.removeConstraints(graphView.constraints)
-            graphView.removeFromSuperview()
-        }
-    }*/
 }

@@ -13,7 +13,7 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
     
-    fileprivate var allowGraphsToAnimate = false
+    fileprivate var allowCellsToUpdateGraphs = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,6 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
         self.showActivity()
         updateInfo {
             self.hideActivity()
-            self.allowGraphsToAnimate = true
         }
     }
     
@@ -95,11 +94,12 @@ extension LaundryOverhaulTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: laundryCell) as! LaundryCell
             cell.room = room
             cell.delegate = self
-            if allowGraphsToAnimate {
-                cell.tableViewSpinnerCompleted = true
-                cell.reloadGraphData()
-                cell.reloadDottedLineLayer()
+            
+            // If the cell has finished loading, allow it to update its graph
+            if self.allowCellsToUpdateGraphs {
+                self.reloadGraphData(cell)
             }
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: addLaundryCell) as! AddLaundryCell
@@ -111,14 +111,7 @@ extension LaundryOverhaulTableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Use for cards 1/2 the size of the screen
         //return self.view.layoutMarginsGuide.layoutFrame.height / 2.0
-        // Use for cards 1/2 the size of the iPhone 7 screen
-        
-        /*
-        if let cell = tableView.cellForRow(at: indexPath) as? LaundryCell {
-            if cell.isExpanded {
-                return 500.0
-            }
-        }*/
+        // Use for cards of fixed size
         return 380.0
     }
 }
@@ -135,6 +128,7 @@ extension LaundryOverhaulTableViewController {
                     self.halls = newHalls
                     
                     DispatchQueue.main.async {
+                        self.allowCellsToUpdateGraphs = true
                         self.tableView.reloadData()
                         completion()
                     }
@@ -177,12 +171,6 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
         if let index = halls.index(of: hall) {
             halls.remove(at: index)
             LaundryHall.setPreferences(for: halls)
-            //            tableView.beginUpdates()
-            //            self.tableView.deleteRows(at: [IndexPath(row: 0, section: 0)], with: .top)
-            //            self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .bottom)
-            //            self.tableView.deleteRows(at: [IndexPath(row: 0, section: 1)], with: .top)
-            //            self.tableView.insertRows(at: [IndexPath(row: 0, section: 1)], with: .bottom)
-            //            tableView.endUpdates()
             tableView.reloadData()
         }
     }
@@ -192,5 +180,11 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
 extension LaundryOverhaulTableViewController: AddLaundryCellDelegate {
     internal func addPressed() {
         handleEditPressed()
+    }
+}
+
+extension LaundryOverhaulTableViewController {
+    fileprivate func reloadGraphData(_ cell: LaundryCell) {
+        cell.reloadGraphData()
     }
 }
