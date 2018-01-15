@@ -31,6 +31,8 @@ class LaundryCell: UITableViewCell {
         }
     }
     
+    var hasGraphReachedStartPosition = false
+    
     // Number of datapoints displayed in the graph
     fileprivate let numberOfDataPointsInGraph = 27
     // Should data be displayed, or zeros
@@ -210,12 +212,28 @@ class LaundryCell: UITableViewCell {
         dateFormatter.dateFormat = "EEEE" // Monday, Friday, etc.
         let day = dateFormatter.string(from: Date())
         
-        label.text = "Busy Times - \(day)"
+        label.text = "Popular Times"
         label.font = UIFont(name: "HelveticaNeue", size: 14)
         label.textColor = .black
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .left
+        return label
+    }()
+    
+    fileprivate let graphDayLabel: UILabel = {
+        let label = UILabel()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE" // Monday, Friday, etc.
+        let day = dateFormatter.string(from: Date())
+        
+        label.text = day
+        label.font = UIFont(name: "HelveticaNeue", size: 14)
+        label.textColor = .warmGrey
+        label.layer.cornerRadius = 4
+        label.layer.masksToBounds = true
+        label.textAlignment = .right
         return label
     }()
     
@@ -272,6 +290,7 @@ class LaundryCell: UITableViewCell {
         bgView.addSubview(scrollableGraphView!)
         //bgView.addSubview(graphButton)
         bgView.addSubview(graphLabel)
+        bgView.addSubview(graphDayLabel)
         
         
         bgView.addSubview(washersLabel)
@@ -414,6 +433,12 @@ class LaundryCell: UITableViewCell {
             equalTo: graphViewContainer.topAnchor,
             constant: 0).isActive = true
         
+        graphDayLabel.translatesAutoresizingMaskIntoConstraints = false
+        graphDayLabel.trailingAnchor.constraint(
+            equalTo: numWashersLabel.trailingAnchor).isActive = true
+        graphDayLabel.topAnchor.constraint(
+            equalTo: graphLabel.topAnchor).isActive = true
+        
     }
     
 }
@@ -453,7 +478,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         // Data labels (5am, 2pm, etc.)
         referenceLines.dataPointLabelColor = dataLabelColor
         referenceLines.shouldShowLabels = true
-        referenceLines.dataPointLabelsSparsity = 2
+        referenceLines.dataPointLabelsSparsity = 2  
         
         // Setup the graph
         graphView.backgroundFillColor = UIColor.clear
@@ -462,6 +487,9 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         graphView.shouldAnimateOnStartup = true
         graphView.shouldAdaptRange = false
         graphView.shouldRangeAlwaysStartAtZero = true
+        
+        // Enable/disable scrolling
+        graphView.isScrollEnabled = true
         
         graphView.rangeMin = 0.0
         graphView.rangeMax = 1.5
@@ -535,12 +563,12 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         return numberOfDataPointsInGraph
     }
     
-    fileprivate func scrollGraphToCurrentHour() {
+    func scrollGraphToCurrentHour() {
         var currentHour = Calendar.current.component(.hour, from: Date())
         if currentHour > 2 {
             currentHour -= 2
         }
-        scrollableGraphView?.setContentOffset(CGPoint(x: currentHour * dataPointSpacing, y: 0), animated: true)
+        scrollableGraphView?.setContentOffset(CGPoint(x: currentHour * dataPointSpacing, y: 0), animated: false)
     }
 }
 
@@ -700,12 +728,9 @@ extension LaundryCell {
     func reloadGraphData() {
         shouldDisplayGraphData = true
         scrollableGraphView?.reload()
-        scrollGraphToCurrentHour()
     }
     
     @objc fileprivate func debugStuff() {
-        print("ScrollView frame width: \(scrollableGraphView?.frame.width)")
-        print("ScrollView layer frame width: \(scrollableGraphView?.layer.frame.width)")
         scrollableGraphView?.setContentOffset(CGPoint(x: 200.0, y: 0.0), animated: true)
     }
     
