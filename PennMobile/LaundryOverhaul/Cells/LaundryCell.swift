@@ -497,7 +497,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     
     internal func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double {
         if pointIndex < graphData.count {
-            // When loading is completed, graphData will be populated with data pulled from the API
+            // graphData will initially contain all 0.0s, but will update to real values after API data is recieved
             return graphData[pointIndex]
         } else {
             return 0.0
@@ -527,6 +527,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
     
     func scrollGraphToCurrentHour() {
+        // Graph is scrolled as soon as the room is passed to the laundry cell
         var currentHour = Calendar.current.component(.hour, from: Date())
         if currentHour > 2 {
             currentHour -= 2
@@ -535,6 +536,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
     
     func reloadGraphData() {
+        // The delay is to allow scrollGraphToCurrentHour() to complete, before animating the graph data
         let _ = Timer.scheduledTimer(timeInterval: 0.5, target: self,
                                      selector: #selector(self.releaseGraphAnimations),
                                      userInfo: nil, repeats: false)

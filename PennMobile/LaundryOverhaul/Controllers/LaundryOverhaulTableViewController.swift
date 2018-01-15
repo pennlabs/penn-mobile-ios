@@ -13,6 +13,7 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
     
+    // This boolean is set to true when the loading indicator disappears, and allows the graph to animate from 0 to real values
     fileprivate var allowCellsToUpdateGraphs = false
     
     override func viewDidLoad() {
@@ -46,7 +47,7 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
     }
 }
 
-// Mark: Add/edit selection
+// MARK: - Add/edit selection
 extension LaundryOverhaulTableViewController {
     @objc fileprivate func handleEditPressed() {
         let hallSelectionVC = HallSelectionViewController()
@@ -57,7 +58,7 @@ extension LaundryOverhaulTableViewController {
     }
 }
 
-// Mark: UIRefreshControl
+// MARK: - UIRefreshControl
 extension LaundryOverhaulTableViewController {
     fileprivate func prepareRefreshControl() {
         refreshControl = UIRefreshControl()
@@ -72,7 +73,7 @@ extension LaundryOverhaulTableViewController {
     }
 }
 
-//Mark: Set up table view
+//MARK: - Set up table view
 extension LaundryOverhaulTableViewController {
     fileprivate func registerHeadersAndCells() {
         tableView.register(LaundryCell.self, forCellReuseIdentifier: laundryCell)
@@ -95,7 +96,9 @@ extension LaundryOverhaulTableViewController {
             cell.room = room
             cell.delegate = self
             
-            // If the cell has finished loading, allow it to update its graph
+            /*
+             When this boolean is true, the cell is allowed to update its graph data to whatever the most recent API call returned. Any changes to the data will be animated w/ a delay set in LaundryCell. The first time that this is set to true, the data will be changing from all 0.0s to the actual usage data, and this change will be animated.
+             */
             if self.allowCellsToUpdateGraphs {
                 self.reloadGraphData(cell)
             }
@@ -111,6 +114,7 @@ extension LaundryOverhaulTableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Use for cards 1/2 the size of the screen
         //return self.view.layoutMarginsGuide.layoutFrame.height / 2.0
+        
         // Use for cards of fixed size
         return 380.0
     }
@@ -128,7 +132,7 @@ extension LaundryOverhaulTableViewController {
                     self.halls = newHalls
                     
                     DispatchQueue.main.async {
-                        self.allowCellsToUpdateGraphs = true
+                        self.allowCellsToUpdateGraphs = true // allows cells to update their graph data (w/ animations) when tableView is reloaded
                         self.tableView.reloadData()
                         completion()
                     }
@@ -143,7 +147,7 @@ extension LaundryOverhaulTableViewController {
     }
 }
 
-// Mark: Hall Selection Delegate
+// MARK: - Hall Selection Delegate
 extension LaundryOverhaulTableViewController: HallSelectionDelegate {
     func saveSelection(for halls: [LaundryHall]) {
         LaundryHall.setPreferences(for: halls)
@@ -152,7 +156,7 @@ extension LaundryOverhaulTableViewController: HallSelectionDelegate {
     }
 }
 
-// Mark: Laundry Cell Delegate
+// MARK: - Laundry Cell Delegate
 extension LaundryOverhaulTableViewController: LaundryCellDelegate {
     internal func deleteLaundryCell(for hall: LaundryHall) {
         let message = "Are you sure you want to remove this room from your preferences? You can always add it back later."
@@ -176,7 +180,7 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
     }
 }
 
-//Mark: Add Laundry Cell Delegate
+// MARK: - Add Laundry Cell Delegate
 extension LaundryOverhaulTableViewController: AddLaundryCellDelegate {
     internal func addPressed() {
         handleEditPressed()
@@ -185,6 +189,7 @@ extension LaundryOverhaulTableViewController: AddLaundryCellDelegate {
 
 extension LaundryOverhaulTableViewController {
     fileprivate func reloadGraphData(_ cell: LaundryCell) {
-        cell.reloadGraphData()
+        cell.reloadGraphData() // refresh the graph
+        cell.reloadDottedLineLayer() // refresh the dotted line that indicates current time
     }
 }
