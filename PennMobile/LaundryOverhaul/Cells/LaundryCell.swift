@@ -502,8 +502,8 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
     
     internal func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double {
+        // graphData will initially contain all 0.0s, but will update to real values after API data is recieved
         if pointIndex < graphData.count {
-            // graphData will initially contain all 0.0s, but will update to real values after API data is recieved
             return graphData[pointIndex]
         } else {
             return 0.0
@@ -532,13 +532,18 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         return numberOfDataPointsInGraph
     }
     
-    fileprivate func scrollGraphToCurrentHour() {
+    fileprivate func scrollGraphToCurrentHour(_ completion: () -> Void) {
         // Graph is scrolled as soon as the room is passed to the laundry cell
         var currentHour = Calendar.current.component(.hour, from: Date())
         if currentHour > 2 {
             currentHour -= 2
         }
-        scrollableGraphView?.setContentOffset(CGPoint(x: currentHour * dataPointSpacing, y: 0), animated: true)
+        let newXOffset = currentHour * dataPointSpacing
+        if let oldXOffset = scrollableGraphView?.contentOffset.x, oldXOffset == CGFloat(newXOffset) {
+            completion()
+        } else {
+            scrollableGraphView?.setContentOffset(CGPoint(x: newXOffset, y: 0), animated: true)
+        }
     }
     
     func reloadGraphDataIfNeeded(oldRoom: LaundryHall?, newRoom: LaundryHall?) {
@@ -555,10 +560,18 @@ extension LaundryCell: ScrollableGraphViewDataSource {
             return
         }
         
-        scrollGraphToCurrentHour()
+        scrollGraphToCurrentHour {
+            self.animateGraph()
+        }
     }
     
     @objc fileprivate func animateGraph() {
+        let _ = Timer.scheduledTimer(timeInterval: 0.2, target: self,
+                                     selector: #selector(executeGraphAnimation),
+                                     userInfo: nil, repeats: false)
+    }
+    
+    @objc fileprivate func executeGraphAnimation() {
         if let usageData = room.getUsageData() {
             for i in self.graphData.indices {
                 if i < usageData.count {
@@ -574,11 +587,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
 
 extension LaundryCell: UIScrollViewDelegate {
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if let _ = room.getUsageData() {
-            let _ = Timer.scheduledTimer(timeInterval: 0.2, target: self,
-                                         selector: #selector(self.animateGraph),
-                                         userInfo: nil, repeats: false)
-        }
+        animateGraph()
     }
 }
 
