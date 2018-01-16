@@ -122,7 +122,6 @@ extension LaundryOverhaulTableViewController {
                     self.halls = newHalls
                     
                     DispatchQueue.main.async {
-                        self.allowCellsToUpdateGraphs = true // allows cells to update their graph data (w/ animations) when tableView is reloaded
                         self.tableView.reloadData()
                         completion()
                     }
