@@ -188,7 +188,7 @@ extension Dictionary where Key == Int, Value == LaundryHall {
         self.init()
         for json in jsonArray {
             let id = json["id"].intValue
-            let hall = LaundryHall.init(json: json)
+            let hall = LaundryHall(json: json)
             self[id] = hall
         }
     }
