@@ -27,6 +27,7 @@ class LaundryCell: UITableViewCell {
             roomFloorLabel.text = room.name
             washerCollectionView?.reloadData()
             dryerCollectionView?.reloadData()
+            reloadGraphDataIfNeeded(oldRoom: oldValue, newRoom: room)
         }
     }
     
@@ -537,12 +538,21 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         scrollableGraphView?.setContentOffset(CGPoint(x: currentHour * dataPointSpacing, y: 0), animated: true)
     }
     
-    func reloadGraphData() {
-        // Check if room has today's usage data. If not, do nothing.
-        if room.getUsageData() == nil { return }
+    func reloadGraphDataIfNeeded(oldRoom: LaundryHall?, newRoom: LaundryHall?) {
+        reloadDottedLineLayer() // refresh the dotted line that indicates current time
+
+        if oldRoom?.getUsageData() == nil && newRoom?.getUsageData() == nil { return }
+        
+        if let oldUsageData = oldRoom?.getUsageData(), let newUsageData = newRoom?.getUsageData(),
+            oldUsageData == newUsageData { return }
+        
+        if oldRoom?.getUsageData() != nil && newRoom?.getUsageData() == nil {
+            graphData = Array(repeating: 0.0, count: self.numberOfDataPointsInGraph)
+            scrollableGraphView?.reload()
+            return
+        }
         
         scrollGraphToCurrentHour()
-        reloadDottedLineLayer() // refresh the dotted line that indicates current time
     }
     
     fileprivate func animateGraph(with usageData: Array<Double>) {

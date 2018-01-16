@@ -92,7 +92,6 @@ extension LaundryOverhaulTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: laundryCell) as! LaundryCell
             cell.room = room
             cell.delegate = self
-            cell.reloadGraphData() // refresh the graph
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: addLaundryCell) as! AddLaundryCell
