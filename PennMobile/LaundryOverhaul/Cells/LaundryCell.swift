@@ -558,13 +558,15 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         scrollGraphToCurrentHour()
     }
     
-    fileprivate func animateGraph(with usageData: Array<Double>) {
-        for i in self.graphData.indices {
-            if i < usageData.count {
-                graphData[i] = usageData[i]
+    @objc fileprivate func animateGraph() {
+        if let usageData = room.getUsageData() {
+            for i in self.graphData.indices {
+                if i < usageData.count {
+                    graphData[i] = usageData[i]
+                }
             }
+            scrollableGraphView?.reload()
         }
-        scrollableGraphView?.reload()
     }
 }
 
@@ -572,8 +574,10 @@ extension LaundryCell: ScrollableGraphViewDataSource {
 
 extension LaundryCell: UIScrollViewDelegate {
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if let usageData = room.getUsageData() {
-            self.animateGraph(with: usageData)
+        if let _ = room.getUsageData() {
+            let _ = Timer.scheduledTimer(timeInterval: 0.2, target: self,
+                                         selector: #selector(self.animateGraph),
+                                         userInfo: nil, repeats: false)
         }
     }
 }
