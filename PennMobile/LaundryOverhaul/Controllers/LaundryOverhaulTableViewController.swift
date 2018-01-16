@@ -100,13 +100,6 @@ extension LaundryOverhaulTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: laundryCell) as! LaundryCell
             cell.room = room
             cell.delegate = self
-            /*
-             When this boolean is true, the cell is allowed to update its graph data to whatever the most recent API call returned. Any changes to the data will be animated w/ a delay set in LaundryCell. The first time that this is set to true, the data will be changing from all 0.0s to the actual usage data, and this change will be animated.
-             */
-            if self.allowCellsToUpdateGraphs {
-                self.reloadGraphData(cell)
-            }
-            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: addLaundryCell) as! AddLaundryCell

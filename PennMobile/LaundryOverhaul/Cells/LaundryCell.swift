@@ -57,12 +57,12 @@ class LaundryCell: UITableViewCell {
         bg.layer.borderColor = UIColor.lightGray.cgColor
         
         // shadow
-        //bg.layer.shadowColor = UIColor.black.cgColor
-        bg.layer.shadowColor = UIColor.clear.cgColor
+        bg.layer.shadowColor = UIColor.black.cgColor
+        //bg.layer.shadowColor = UIColor.clear.cgColor
         
         bg.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
-        bg.layer.shadowOpacity = 0.8
-        bg.layer.shadowRadius = 3.0
+        bg.layer.shadowOpacity = 0.6
+        bg.layer.shadowRadius = 2.0
         bg.backgroundColor = UIColor.whiteGrey
         
         return bg
@@ -676,7 +676,7 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     }
 }
 
-// MARK: - Extension functions to delete cells, expand graph view
+// MARK: - Extension functions to delete cells
 
 extension LaundryCell {
     @objc fileprivate func deleteRoom() {
