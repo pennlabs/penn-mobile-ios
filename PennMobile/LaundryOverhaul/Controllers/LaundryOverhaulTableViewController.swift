@@ -13,9 +13,6 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
     
-    // This boolean is set to true when the loading indicator disappears, and allows the graph to animate from 0 to real values
-    fileprivate var allowCellsToUpdateGraphs = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -143,7 +140,6 @@ extension LaundryOverhaulTableViewController {
                     self.halls = newHalls
                     
                     DispatchQueue.main.async {
-                        self.allowCellsToUpdateGraphs = true // allows cells to update their graph data (w/ animations) when tableView is reloaded
                         self.tableView.reloadData()
                         completion()
                     }
@@ -195,12 +191,5 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
 extension LaundryOverhaulTableViewController: AddLaundryCellDelegate {
     internal func addPressed() {
         handleEditPressed()
-    }
-}
-
-extension LaundryOverhaulTableViewController {
-    fileprivate func reloadGraphData(_ cell: LaundryCell) {
-        cell.reloadGraphData() // refresh the graph
-        cell.reloadDottedLineLayer() // refresh the dotted line that indicates current time
     }
 }

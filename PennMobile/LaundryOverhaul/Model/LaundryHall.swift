@@ -38,7 +38,9 @@ class LaundryHall: Codable {
     // Ex: if the firstWasher is under notification, then dryersUnderNotification.contains(0) is true
     fileprivate var dryersUnderNotification = [Int]()
     fileprivate var washersUnderNotification = [Int]()
-        
+    
+    fileprivate var usageData: Array<Double>? = nil
+    
     // instantiation
     init(json: JSON) {
         self.id = json["id"].intValue
@@ -80,6 +82,8 @@ class LaundryHall: Codable {
         }
         
         //updateUnderNotification()
+        
+        self.usageData = LaundryUsageData.dataForRoom[self.id]?.usageData
     }
     
     static func getLaundryHall(for id: Int) -> LaundryHall? {
@@ -145,7 +149,8 @@ extension LaundryHall: Equatable {
 // Mark: UsageData
 extension LaundryHall {
     func getUsageData() -> Array<Double>? {
-        return LaundryUsageData.dataForRoom[id]?.usageData
+        return usageData
+        //return LaundryUsageData.dataForRoom[id]?.usageData
     }
 }
 

@@ -27,11 +27,10 @@ class LaundryCell: UITableViewCell {
             roomFloorLabel.text = room.name
             washerCollectionView?.reloadData()
             dryerCollectionView?.reloadData()
-            scrollGraphToCurrentHour()
         }
     }
     
-    var graphData = Array.init(repeating: 0.0, count: 27)
+    lazy var graphData = Array(repeating: 0.0, count: self.numberOfDataPointsInGraph)
     
     // Number of datapoints displayed in the graph
     fileprivate let numberOfDataPointsInGraph = 27
@@ -472,6 +471,9 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         // Create/refresh dotted line showing current time
         reloadDottedLineLayer()
         
+        // Need delegate method to pop up graph when scroll animation is finished
+        graphView.delegate = self
+        
         return graphView
     }
     
@@ -529,7 +531,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         return numberOfDataPointsInGraph
     }
     
-    func scrollGraphToCurrentHour() {
+    fileprivate func scrollGraphToCurrentHour() {
         // Graph is scrolled as soon as the room is passed to the laundry cell
         var currentHour = Calendar.current.component(.hour, from: Date())
         if currentHour > 2 {
@@ -539,21 +541,30 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
     
     func reloadGraphData() {
-        // The delay is to allow scrollGraphToCurrentHour() to complete, before animating the graph data
-        let _ = Timer.scheduledTimer(timeInterval: 0.5, target: self,
-                                     selector: #selector(self.releaseGraphAnimations),
-                                     userInfo: nil, repeats: false)
+        // Check if room has today's usage data. If not, do nothing.
+        if room.getUsageData() == nil { return }
+        
+        scrollGraphToCurrentHour()
+        reloadDottedLineLayer() // refresh the dotted line that indicates current time
     }
     
-    @objc fileprivate func releaseGraphAnimations() {
-        if let usageData = room.getUsageData() {
-            for i in self.graphData.indices {
-                if i < usageData.count {
-                    graphData[i] = usageData[i]
-                }
+    fileprivate func animateGraph(with usageData: Array<Double>) {
+        for i in self.graphData.indices {
+            if i < usageData.count {
+                graphData[i] = usageData[i]
             }
         }
         scrollableGraphView?.reload()
+    }
+}
+
+// Mark: - UIScrollViewDelegate
+
+extension LaundryCell: UIScrollViewDelegate {
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if let usageData = room.getUsageData() {
+            self.animateGraph(with: usageData)
+        }
     }
 }
 
