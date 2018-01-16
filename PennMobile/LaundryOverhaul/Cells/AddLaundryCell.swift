@@ -18,17 +18,21 @@ class AddLaundryCell: UITableViewCell {
     
     private let mainBackground: UIView = {
         let bg = UIView()
+        
         // corner radius
         bg.layer.cornerRadius = 20
         
         // border
-        bg.layer.borderWidth = 0.0
-        bg.layer.borderColor = UIColor.black.cgColor
+        //bg.layer.borderWidth = 0.0
+        bg.layer.borderWidth = 1.0
+        bg.layer.borderColor = UIColor.lightGray.cgColor
         
         // shadow
         bg.layer.shadowColor = UIColor.black.cgColor
-        bg.layer.shadowOffset = CGSize(width: 0, height: 0)
-        bg.layer.shadowOpacity = 0.5
+        //bg.layer.shadowColor = UIColor.clear.cgColor
+        
+        bg.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        bg.layer.shadowOpacity = 0.6
         bg.layer.shadowRadius = 2.0
         bg.backgroundColor = UIColor.whiteGrey
         
@@ -73,7 +77,7 @@ class AddLaundryCell: UITableViewCell {
         addSubview(mainBackground)
         
         _ = mainBackground.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
-                                 topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10,
+                                 topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20,
                                  widthConstant: 0, heightConstant: 0)
         
         mainBackground.addSubview(addRoomButton)

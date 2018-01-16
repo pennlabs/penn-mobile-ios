@@ -21,12 +21,13 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
         tableView.dataSource = self
         tableView.allowsSelection = false
         
+        tableView.tableFooterView = getFooterViewForTable()
+        
         self.title = "Laundry"
         
         halls = LaundryHall.getPreferences()
         
         registerHeadersAndCells()
-        prepareRefreshControl()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(handleEditPressed))
     }
@@ -41,6 +42,13 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        prepareRefreshControl()
+    }
+    
+    fileprivate func getFooterViewForTable() -> UIView {
+        let v = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 30.0))
+        v.backgroundColor = UIColor.clear
+        return v
     }
 }
 
@@ -59,7 +67,7 @@ extension LaundryOverhaulTableViewController {
 extension LaundryOverhaulTableViewController {
     fileprivate func prepareRefreshControl() {
         refreshControl = UIRefreshControl()
-        refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        //refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl?.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
     }
     
@@ -105,7 +113,11 @@ extension LaundryOverhaulTableViewController {
         //return self.view.layoutMarginsGuide.layoutFrame.height / 2.0
         
         // Use for cards of fixed size
-        return 380.0
+        if indexPath.section >= halls.count {
+            return 300.0
+        } else {
+            return 380.0
+        }
     }
 }
 
