@@ -53,11 +53,14 @@ class LaundryCell: UITableViewCell {
         bg.layer.cornerRadius = 20
         
         // border
-        bg.layer.borderWidth = 0.0
-        bg.layer.borderColor = UIColor.black.cgColor
+        //bg.layer.borderWidth = 0.0
+        bg.layer.borderWidth = 1.0
+        bg.layer.borderColor = UIColor.lightGray.cgColor
         
         // shadow
-        bg.layer.shadowColor = UIColor.black.cgColor
+        //bg.layer.shadowColor = UIColor.black.cgColor
+        bg.layer.shadowColor = UIColor.clear.cgColor
+        
         bg.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         bg.layer.shadowOpacity = 0.8
         bg.layer.shadowRadius = 3.0
@@ -241,7 +244,7 @@ class LaundryCell: UITableViewCell {
         
         // BackgroundImageView
         _ = bgView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
-                          topConstant: 15, leftConstant: 20, bottomConstant: 10, rightConstant: 20,
+                          topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20,
                           widthConstant: 0, heightConstant: 0)
         
         bgView.addSubview(roomLabel)
