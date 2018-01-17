@@ -163,19 +163,6 @@ extension LaundryOverhaulTableViewController: HallSelectionDelegate {
 // MARK: - Laundry Cell Delegate
 extension LaundryOverhaulTableViewController: LaundryCellDelegate {
     internal func deleteLaundryCell(for hall: LaundryHall) {
-        let message = "Are you sure you want to remove this room from your preferences? You can always add it back later."
-        let alert = UIAlertController(title: "Remove Room",
-                                      message: message,
-                                      preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(cancelAction)
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
-            self.delete(hall: hall)
-        }))
-        present(alert, animated: true)
-    }
-    
-    private func delete(hall: LaundryHall) {
         if let index = halls.index(of: hall) {
             halls.remove(at: index)
             LaundryHall.setPreferences(for: halls)
@@ -183,7 +170,7 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
         }
     }
     
-    func handleMachineCellTapped(for machine: Machine, _ updateCellIfNeeded: @escaping () -> Void) {
+    internal func handleMachineCellTapped(for machine: Machine, _ updateCellIfNeeded: @escaping () -> Void) {
         if !allowMachineNotifications { return }
         
         if machine.isUnderNotification() {
