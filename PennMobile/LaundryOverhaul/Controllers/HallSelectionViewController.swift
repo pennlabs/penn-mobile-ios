@@ -14,19 +14,11 @@ protocol HallSelectionDelegate: class {
 
 class HallSelectionViewController: UIViewController, ShowsAlert, Trackable, IndicatorEnabled {
     
-    // delegating function to pass value to LaundryOverhaulViewController
     weak var delegate: HallSelectionDelegate?
     
     fileprivate let maxNumHalls = 3
     
     var chosenHalls = [LaundryHall]()
-    
-    // buildings and currentResult to update TableView
-    fileprivate var buildings = [String: [LaundryHall]]()
-    fileprivate var currentResults = [String: [LaundryHall]]()
-    
-    // current sort for the headers
-    fileprivate var currentSort: [String]!
     
     // Views
     fileprivate lazy var selectionView: HallSelectionView = {
