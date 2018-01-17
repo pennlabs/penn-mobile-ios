@@ -46,7 +46,6 @@ class Machine: Hashable {
         id = json["id"].intValue
         status = Status.parseStatus(for: json["status"].stringValue)
         timeRemaining = json["time_remaining"].intValue
-        isWasher = json["type"].stringValue == "washer"
         type = MachineType(rawValue: json["type"].stringValue)!
     }
     
