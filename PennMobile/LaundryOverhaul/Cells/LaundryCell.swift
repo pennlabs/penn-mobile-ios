@@ -459,8 +459,7 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let machineArray = collectionView == washerCollectionView ? room.washers : room.dryers
-
-        if indexPath.item < machineArray.count {
+        if machineArray[indexPath.row].status == .running {
             delegate?.handleMachineCellTapped(for: machineArray[indexPath.item]) {
                 DispatchQueue.main.async {
                     collectionView.reloadData()

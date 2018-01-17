@@ -211,13 +211,13 @@ extension LaundryOverhaulTableViewController {
     internal func resetTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (_) in
-            for hall in self.halls {
-                hall.decrementTimeRemaining(by: 1)
-            }
-            
             if !self.halls.containsRunningMachine() {
                 self.timer?.invalidate()
                 return
+            }
+            
+            for hall in self.halls {
+                hall.decrementTimeRemaining(by: 1)
             }
             
             LaundryNotificationCenter.shared.updateForExpiredNotifications {

@@ -30,10 +30,16 @@ class Machine: Hashable {
     }
     
     let id: Int
-    let status: Status
-    var timeRemaining: Int
     let isWasher: Bool
     let roomName: String
+    var status: Status
+    var timeRemaining: Int {
+        didSet {
+            if status == .running && timeRemaining <= 0 {
+                status = .open
+            }
+        }
+    }
         
     init(json: JSON, roomName: String) {
         self.roomName = roomName
