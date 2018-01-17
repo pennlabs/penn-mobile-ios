@@ -44,7 +44,8 @@ class Machine: Hashable {
     init(json: JSON, roomName: String) {
         self.roomName = roomName
         id = json["id"].intValue
-        status = Status.parseStatus(for: json["status"].stringValue)
+        let statusStr = json["status"].stringValue
+        status = Status(rawValue: statusStr) ?? Status.parseStatus(for: statusStr)
         timeRemaining = json["time_remaining"].intValue
         isWasher = json["type"].stringValue == "washer"
     }

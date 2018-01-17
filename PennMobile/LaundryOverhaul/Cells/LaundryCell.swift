@@ -441,7 +441,6 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellId, for: indexPath as IndexPath) as! LaundryMachineCell
-        
         let machineArray = collectionView == washerCollectionView ? room.washers : room.dryers
         cell.machine = machineArray[indexPath.row]
         return cell
