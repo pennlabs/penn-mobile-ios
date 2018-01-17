@@ -434,16 +434,9 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let machineArray = collectionView == washerCollectionView ? room.washers : room.dryers
-        setMachineLabels()
+        numWashersLabel.text = "\(room.washers.numberOpenMachines()) of \(room.washers.count) open"
+        numDryersLabel.text = "\(room.dryers.numberOpenMachines()) of \(room.dryers.count) open"
         return machineArray.count
-    }
-    
-    fileprivate func setMachineLabels() {
-        let numWashersOpen = room.washers.numberOpenMachines()
-        let numDryersOpen = room.dryers.numberOpenMachines()
-        
-        numWashersLabel.text = "\(numWashersOpen) of \(room.washers.count) open"
-        numDryersLabel.text = "\(numDryersOpen) of \(room.dryers.count) open"
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
