@@ -182,7 +182,7 @@ extension HallSelectionView {
         return nil
     }
     
-    private func attemptToLoadDictionary() {
+    fileprivate func attemptToLoadDictionary() {
         showActivity()
         LaundryAPIService.instance.loadIds { (success) in
             DispatchQueue.main.async {
