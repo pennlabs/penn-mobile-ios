@@ -18,30 +18,15 @@ class LaundryHall: Codable {
         case building
     }
     
-    // fields, get() by laundryHall.fieldName, set() only available through network calls
     let id: Int
     let name: String
     let building: String
     
-    public private(set) var numWasherOpen = 0
-    public private(set) var numWasherRunning = 0
-    public private(set) var numWasherOutOfOrder = 0
-    public private(set) var numWasherOffline = 0
-    public private(set) var remainingTimeWashers = [Int]()
-    public private(set) var numDryerOpen = 0
-    public private(set) var numDryerRunning = 0
-    public private(set) var numDryerOutOfOrder = 0
-    public private(set) var numDryerOffline = Int()
-    public private(set) var remainingTimeDryers = [Int]()
-    
-    // Keeps track of the washers/dryers that are under notification
-    // Ex: if the firstWasher is under notification, then dryersUnderNotification.contains(0) is true
-    fileprivate var dryersUnderNotification = [Int]()
-    fileprivate var washersUnderNotification = [Int]()
+    public private(set) var washers = [Machine]()
+    public private(set) var dryers = [Machine]()
     
     fileprivate var usageData: Array<Double>? = nil
     
-    // instantiation
     init(json: JSON) {
         self.id = json["id"].intValue
         self.name = json["hall_name"].string ?? "Unknown"
@@ -52,36 +37,12 @@ class LaundryHall: Codable {
         self.id = id
         self.name = json["hall_name"].string ?? "Unknown"
         self.building = json["location"].string ?? "Unknown"
-        let washers:JSON = json["machines"]["washers"]
-        let dryers:JSON = json["machines"]["dryers"]
-        self.numWasherOpen = washers["open"].intValue
-        self.numWasherRunning = washers["running"].intValue
-        self.numWasherOutOfOrder = washers["out_of_order"].intValue
-        self.numWasherOffline = washers["offline"].intValue
-        self.numDryerOpen = dryers["open"].intValue
-        self.numDryerRunning = dryers["running"].intValue
-        self.numDryerOutOfOrder = dryers["out_of_order"].intValue
-        self.numDryerOffline = dryers["offline"].intValue
         
-        if let arr = washers["time_remaining"].arrayObject {
-            for time in arr {
-                if let t = time as? Int, t >= 0 {
-                    remainingTimeWashers.append(t)
-                }
-            }
-            remainingTimeWashers.sort()
-        }
+        let runningMachines = json["machines"]["details"].arrayValue
+            .map { Machine(json: $0, roomName: name) }
         
-        if let arr = dryers["time_remaining"].arrayObject {
-            for time in arr {
-                if let t = time as? Int, t >= 0 {
-                    remainingTimeDryers.append(t)
-                }
-            }
-            remainingTimeDryers.sort()
-        }
-        
-        //updateUnderNotification()
+        self.washers = runningMachines.filter { $0.isWasher }.sorted()
+        self.dryers = runningMachines.filter { !$0.isWasher }.sorted()
         
         self.usageData = LaundryUsageData.dataForRoom[self.id]?.usageData
     }
@@ -112,31 +73,12 @@ class LaundryHall: Codable {
         return [LaundryHall]()
     }
     
-    func decrementMinutesRemaining() {
-        var newDryersTimes = [Int]()
-        for time in remainingTimeDryers {
-            if time > 1 {
-                newDryersTimes.append(time - 1)
-            }
-        }
+    func decrementTimeRemaining(by minutes: Int) {
+        washers.forEach { $0.timeRemaining -= minutes }
+        dryers.forEach { $0.timeRemaining -= minutes }
         
-        var newWashersTimes = [Int]()
-        for time in remainingTimeWashers {
-            if time > 1 {
-                newWashersTimes.append(time - 1)
-            }
-        }
-        
-        numDryerOpen += remainingTimeDryers.count - newDryersTimes.count
-        numDryerRunning = newDryersTimes.count
-        
-        numWasherOpen += remainingTimeWashers.count - newWashersTimes.count
-        numWasherRunning = newWashersTimes.count
-        
-        remainingTimeDryers = newDryersTimes
-        remainingTimeWashers = newWashersTimes
-        
-        //updateUnderNotification()
+        washers.sort()
+        dryers.sort()
     }
 }
 
@@ -150,35 +92,13 @@ extension LaundryHall: Equatable {
 extension LaundryHall {
     func getUsageData() -> Array<Double>? {
         return usageData
-        //return LaundryUsageData.dataForRoom[id]?.usageData
     }
 }
 
-// Under notification functions
-extension LaundryHall {    
-    func isUnderNotification(isWasher: Bool, timeRemaining: Int) -> Bool {
-        return isWasher ? washersUnderNotification.contains(timeRemaining) : dryersUnderNotification.contains(timeRemaining)
-    }
-    
-    func updateUnderNotification(completion: @escaping () -> Void) {
-        LaundryNotificationCenter.shared.getTimeRemainingForOutstandingNotifications(for: self, isWasher: true, timeRemainingArray: remainingTimeWashers) { (timesUnderNotification) in
-            self.washersUnderNotification = timesUnderNotification
-            
-            
-            LaundryNotificationCenter.shared.getTimeRemainingForOutstandingNotifications(for: self, isWasher: false, timeRemainingArray: self.remainingTimeDryers) { (timesUnderNotification) in
-                self.dryersUnderNotification = timesUnderNotification
-                completion()
-            }
-        }
-    }
-    
-    func updateUnderNotification() {
-        LaundryNotificationCenter.shared.getTimeRemainingForOutstandingNotifications(for: self, isWasher: true, timeRemainingArray: remainingTimeWashers) { (timesUnderNotification) in
-            self.washersUnderNotification = timesUnderNotification
-        }
-        
-        LaundryNotificationCenter.shared.getTimeRemainingForOutstandingNotifications(for: self, isWasher: false, timeRemainingArray: self.remainingTimeDryers) { (timesUnderNotification) in
-            self.dryersUnderNotification = timesUnderNotification
-        }
+extension Array where Element == LaundryHall {
+    func containsRunningMachine() -> Bool {
+        return filter({ (hall) -> Bool in
+            return hall.washers.containsRunningMachine() || hall.dryers.containsRunningMachine()
+        }).count > 0
     }
 }

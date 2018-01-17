@@ -13,32 +13,16 @@ class LaundryNotificationCenter {
     
     static let shared = LaundryNotificationCenter()
     
-    private struct LaundryNotification: Equatable {
-        let room: LaundryHall
-        let isWasher: Bool
-        let triggerDate: Date
-        
-        var identifier: String?
-        
-        init(room: LaundryHall, isWasher: Bool, triggerDate: Date) {
-            self.room = room
-            self.isWasher = isWasher
-            self.triggerDate = triggerDate
-        }
-        
-        static func ==(lhs: LaundryNotification, rhs: LaundryNotification) -> Bool {
-            return lhs.room == rhs.room && lhs.isWasher == rhs.isWasher && lhs.triggerDate.minutesFrom(date: Date()) == rhs.triggerDate.minutesFrom(date: Date())
-        }
-    }
-    
-    private var pendingNotifications = [LaundryNotification]()
+    private var identifiers = Dictionary<Machine, String>()
     
     func prepare() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
     
-    func notifyWithMessage(for room: LaundryHall, isWasher: Bool, in minutes: Int, title: String?, message: String?, completion: @escaping (_ success: Bool) -> Void) {
+    func notifyWithMessage(for machine: Machine, title: String?, message: String?, completion: @escaping (_ success: Bool) -> Void) {
         let center = UNUserNotificationCenter.current()
+        let isWasher = machine.isWasher
+        let minutes = machine.timeRemaining
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             if error != nil {
                 completion(false)
@@ -56,107 +40,46 @@ class LaundryNotificationCenter {
                         message, arguments: nil)
                 }
                 
-                // Deliver the notification in five seconds.
+                // Deliver the notification when minutes expire.
                 content.sound = UNNotificationSound.default()
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(60 * minutes),
                                                                 repeats: false)
                 
                 // Schedule the notification.
-                let identifier = "\(room.name)-\(isWasher ? "washer" : "dryer")-\(minutes)-\(Date().timeIntervalSince1970)"
+                let identifier = "\(machine.roomName)-\(isWasher ? "washer" : "dryer")-\(minutes)-\(Date().timeIntervalSince1970)"
                 let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
                 let center = UNUserNotificationCenter.current()
                 center.add(request, withCompletionHandler: nil)
                 
-                var secondsUntilCellExpires = 60 * minutes
-                
-                let timesArray = isWasher ? room.remainingTimeWashers : room.remainingTimeDryers
-                if timesArray.contains(minutes + 1) && !timesArray.contains(minutes - 1) {
-                    secondsUntilCellExpires -= 59
-                }
-                
-                var notification = LaundryNotification(room: room, isWasher: isWasher, triggerDate: Date().add(seconds: secondsUntilCellExpires))
-                notification.identifier = identifier
-                self.pendingNotifications.append(notification)
+                self.identifiers[machine] = identifier
             }
             
             completion(granted)
         }
     }
     
-    
-    func getTimeRemainingForOutstandingNotifications(for room: LaundryHall, isWasher: Bool, timeRemainingArray: [Int], completion: @escaping ([Int]) -> Void) {
-        
-        var pendingNotificationTimes = pendingNotifications.filter({ (notification) -> Bool in
-            return notification.room == room && notification.isWasher == isWasher
-        }).map { Date().minutesFrom(date: $0.triggerDate) + 1 }
-        
-        var timesWithNotification = [Int]()
-        for time in timeRemainingArray {
-            if timesWithNotification.contains(time) {
-                continue
+    func updateForExpiredNotifications(_ completion: @escaping () -> Void) {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+            var newIdentifiers = Dictionary<Machine, String>()
+            for (machine, identifier) in self.identifiers {
+                if requests.contains(where: { (request) -> Bool in
+                    request.identifier == identifier
+                }) {
+                    newIdentifiers[machine] = identifier
+                }
             }
-            
-            if let index = pendingNotificationTimes.index(of: time) {
-                timesWithNotification.append(time)
-                pendingNotificationTimes.remove(at: index)
-            }
-        }
-        
-        for time in timeRemainingArray {
-            if timesWithNotification.contains(time) {
-                continue
-            }
-            
-            if let index = pendingNotificationTimes.index(of: time - 1) {
-                timesWithNotification.append(time)
-                pendingNotificationTimes.remove(at: index)
-            }
-        }
-        
-        for time in timeRemainingArray {
-            if timesWithNotification.contains(time) {
-                continue
-            }
-            
-            if let index = pendingNotificationTimes.index(of: time + 1) {
-                timesWithNotification.append(time)
-                pendingNotificationTimes.remove(at: index)
-            }
-        }
-        
-        completion(timesWithNotification)
-    }
-    
-    func removeOutstandingNotification(for room: LaundryHall, isWasher: Bool, timeRemaining: Int, completion: @escaping () -> Void) {
-        if let index = self.getNotificationIndex(for: room, isWasher: isWasher, timeRemaining: timeRemaining), let identifier = pendingNotifications[index].identifier {
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
-            self.pendingNotifications.remove(at: index)
+            self.identifiers = newIdentifiers
             completion()
         }
     }
     
-    private func getNotificationIndex(for room: LaundryHall, isWasher: Bool, timeRemaining: Int) -> Int? {
-        if let index = pendingNotifications.index(of: LaundryNotification(room: room, isWasher: isWasher, triggerDate: Date().add(minutes: timeRemaining))) {
-            return index
-        } else if let index = pendingNotifications.index(of: LaundryNotification(room: room, isWasher: isWasher, triggerDate: Date().add(minutes: timeRemaining - 1))) {
-            return index
-        } else if let index = pendingNotifications.index(of: LaundryNotification(room: room, isWasher: isWasher, triggerDate: Date().add(minutes: timeRemaining + 1))) {
-            return index
-        }
-        return nil
+    func removeOutstandingNotification(for machine: Machine) {
+        guard let identifier = identifiers[machine] else { return }
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+        identifiers.removeValue(forKey: machine)
     }
     
-    func removeExpiredNotifications() {
-        pendingNotifications = pendingNotifications.filter { $0.triggerDate > Date() }
+    func isUnderNotification(for machine: Machine) -> Bool {
+        return identifiers[machine] != nil
     }
 }
-
-extension UNTimeIntervalNotificationTrigger {
-    func minutesUntilTrigger() -> Int {
-        if let triggerDate = nextTriggerDate() {
-            return Date().minutesFrom(date: triggerDate) + 1 // adjust because automatically rounds down
-        }
-        return 0
-    }
-}
-

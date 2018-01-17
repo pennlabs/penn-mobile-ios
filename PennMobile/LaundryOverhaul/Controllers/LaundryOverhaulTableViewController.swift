@@ -13,6 +13,10 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
     
+    fileprivate var timer: Timer?
+    
+    fileprivate let allowMachineNotifications = true
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,21 +32,21 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
         halls = LaundryHall.getPreferences()
         
         registerHeadersAndCells()
+        prepareRefreshControl()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(handleEditPressed))
+        
+        // Start indicator if there are cells that need to be loaded
+        if !halls.isEmpty {
+            showActivity()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.showActivity()
         updateInfo {
             self.hideActivity()
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        prepareRefreshControl()
     }
     
     fileprivate func getFooterViewForTable() -> UIView {
@@ -124,22 +128,22 @@ extension LaundryOverhaulTableViewController {
 // Laundry API Calls
 extension LaundryOverhaulTableViewController {
     func updateInfo(completion: @escaping () -> Void) {
-        if halls.isEmpty {
-            self.tableView.reloadData()
-            completion()
-        } else {
-            LaundryAPIService.instance.getHalls(for: halls) { (newHalls) in
-                if let newHalls = newHalls {
-                    self.halls = newHalls
-                    
+        timer?.invalidate()
+        LaundryNotificationCenter.shared.updateForExpiredNotifications {
+            if self.halls.isEmpty {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    completion()
+                }
+            } else {
+                LaundryAPIService.instance.getHalls(for: self.halls) { (newHalls) in
                     DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        if let newHalls = newHalls {
+                            self.halls = newHalls
+                            self.tableView.reloadData()
+                            self.resetTimer()
+                        }
                         completion()
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        completion()
-                        self.showAlert(withMsg: "Failed to connect to the API. Please re-check your connection and try again.", title: "Uh oh!", completion: nil)
                     }
                 }
             }
@@ -178,11 +182,57 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
             tableView.reloadData()
         }
     }
+    
+    func handleMachineCellTapped(for machine: Machine, _ updateCellIfNeeded: @escaping () -> Void) {
+        if !allowMachineNotifications { return }
+        
+        if machine.isUnderNotification() {
+            LaundryNotificationCenter.shared.removeOutstandingNotification(for: machine)
+            updateCellIfNeeded()
+        } else {
+            LaundryNotificationCenter.shared.notifyWithMessage(for: machine, title: "Ready!", message: "The \(machine.roomName) \(machine.isWasher ? "washer" : "dryer") has finished running.", completion: { (success) in
+                if success {
+                    updateCellIfNeeded()
+                }
+            })
+        }
+    }
 }
 
 // MARK: - Add Laundry Cell Delegate
 extension LaundryOverhaulTableViewController: AddLaundryCellDelegate {
     internal func addPressed() {
         handleEditPressed()
+    }
+}
+
+// Mark: Timer
+extension LaundryOverhaulTableViewController {
+    internal func resetTimer() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (_) in
+            for hall in self.halls {
+                hall.decrementTimeRemaining(by: 1)
+            }
+            
+            if !self.halls.containsRunningMachine() {
+                self.timer?.invalidate()
+                return
+            }
+            
+            LaundryNotificationCenter.shared.updateForExpiredNotifications {
+                DispatchQueue.main.async {
+                    self.reloadVisibleMachineCells()
+                }
+            }
+        })
+    }
+    
+    fileprivate func reloadVisibleMachineCells() {
+        for cell in self.tableView.visibleCells {
+            if let laundryCell = cell as? LaundryCell {
+                laundryCell.reloadCollectionViews()
+            }
+        }
     }
 }

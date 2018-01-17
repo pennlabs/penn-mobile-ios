@@ -13,6 +13,7 @@ import ScrollableGraphView
 
 protocol LaundryCellDelegate: class {
     func deleteLaundryCell(for hall: LaundryHall)
+    func handleMachineCellTapped(for machine: Machine, _ updateCellIfNeeded: @escaping () -> Void)
 }
 
 // MARK: - Laundry Cell
@@ -31,20 +32,22 @@ class LaundryCell: UITableViewCell {
         }
     }
     
-    lazy var graphData = Array(repeating: 0.0, count: self.numberOfDataPointsInGraph)
+    internal lazy var graphData = Array(repeating: 0.0, count: self.numberOfDataPointsInGraph)
     
     // Number of datapoints displayed in the graph
-    fileprivate let numberOfDataPointsInGraph = 27
+    internal let numberOfDataPointsInGraph = 27
     // Space between data points
-    fileprivate let dataPointSpacing = 30
+    internal let dataPointSpacing = 30
     
     // MARK: - Define UI Element Variables
     
     fileprivate var washerCollectionView: UICollectionView?
     fileprivate var dryerCollectionView: UICollectionView?
-    fileprivate var scrollableGraphView: ScrollableGraphView?
     
-    fileprivate var dottedLineShapeLayer: CAShapeLayer?
+    fileprivate let collectionCellId = "cellId"
+
+    internal var scrollableGraphView: ScrollableGraphView?
+    internal var dottedLineShapeLayer: CAShapeLayer?
     
     fileprivate let bgView: UIView = {
         let bg = UIView()
@@ -224,7 +227,6 @@ class LaundryCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupViews()
     }
     
@@ -232,9 +234,12 @@ class LaundryCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Layout Views, Constraints
-    
-    func setupViews() {
+}
+
+// MARK: - Layout Views, Constraints
+
+extension LaundryCell {
+    fileprivate func setupViews() {
         
         for eachView in self.subviews {
             eachView.removeFromSuperview()
@@ -265,7 +270,7 @@ class LaundryCell: UITableViewCell {
         bgView.addSubview(graphViewContainer)
         scrollableGraphView = generateScrollableGraphView(graphViewContainer.frame)
         bgView.addSubview(scrollableGraphView!)
-
+        
         bgView.addSubview(graphLabel)
         bgView.addSubview(graphDayLabel)
         
@@ -332,9 +337,9 @@ class LaundryCell: UITableViewCell {
         
         // Scrollable Graph View
         _ = graphViewContainer.anchor(washersDryersView.bottomAnchor, left: bgView.leftAnchor,
-                                        bottom: bgView.bottomAnchor, right: bgView.rightAnchor,
-                                        topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
-                                        widthConstant: 0, heightConstant: 0)
+                                      bottom: bgView.bottomAnchor, right: bgView.rightAnchor,
+                                      topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
+                                      widthConstant: 0, heightConstant: 0)
         _ = scrollableGraphView!.anchor(graphViewContainer.topAnchor, left: graphViewContainer.leftAnchor,
                                         bottom: graphViewContainer.bottomAnchor, right: graphViewContainer.rightAnchor,
                                         topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
@@ -409,186 +414,6 @@ class LaundryCell: UITableViewCell {
             equalTo: graphLabel.topAnchor).isActive = true
         
     }
-    
-}
-
-// MARK: - Scrollable Graph View
-
-extension LaundryCell: ScrollableGraphViewDataSource {
-    fileprivate func generateScrollableGraphView(_ frame: CGRect) -> ScrollableGraphView {
-        // Compose the graph view by creating a graph, then adding any plots
-        // and reference lines before adding the graph to the view hierarchy.
-        let graphView = ScrollableGraphView(frame: frame, dataSource: self)
-        let referenceLines = ReferenceLines()
-        
-        let lineColor = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0)
-        let fillColorTop = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 0.8)
-        let fillColorBottom = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 0.1)
-        let dataLabelColor = UIColor.warmGrey
-        
-        // Line plot
-        let dataLinePlot = LinePlot(identifier: "traffic_data")
-        dataLinePlot.lineWidth = 1
-        dataLinePlot.lineColor = lineColor
-        dataLinePlot.lineStyle = ScrollableGraphViewLineStyle.smooth
-        
-        dataLinePlot.shouldFill = true
-        dataLinePlot.fillType = ScrollableGraphViewFillType.gradient
-        dataLinePlot.fillGradientType = ScrollableGraphViewGradientType.linear
-        dataLinePlot.fillGradientStartColor = fillColorTop
-        dataLinePlot.fillGradientEndColor = fillColorBottom
-        dataLinePlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic
-
-        // Reference lines
-        referenceLines.referenceLineColor = .clear
-        referenceLines.referenceLineLabelColor = .clear
-        referenceLines.positionType = .relative
-        
-        // Data labels (5am, 2pm, etc.)
-        referenceLines.dataPointLabelColor = dataLabelColor
-        referenceLines.shouldShowLabels = true
-        referenceLines.dataPointLabelsSparsity = 2  
-        
-        // Setup the graph
-        graphView.backgroundFillColor = UIColor.clear
-        graphView.dataPointSpacing = CGFloat(self.dataPointSpacing)
-        
-        graphView.shouldAnimateOnStartup = true
-        graphView.shouldAdaptRange = false
-        graphView.shouldRangeAlwaysStartAtZero = true
-        
-        // Enable/disable scrolling
-        graphView.isScrollEnabled = true
-        
-        graphView.rangeMin = 0.0
-        graphView.rangeMax = 1.5
-        
-        graphView.layer.cornerRadius = 20
-        
-        graphView.addReferenceLines(referenceLines: referenceLines)
-        graphView.addPlot(plot: dataLinePlot)
-        graphView.showsHorizontalScrollIndicator = false
-        
-        // Create/refresh dotted line showing current time
-        reloadDottedLineLayer()
-        
-        // Need delegate method to pop up graph when scroll animation is finished
-        graphView.delegate = self
-        
-        return graphView
-    }
-    
-    func reloadDottedLineLayer() {
-        
-        dottedLineShapeLayer?.removeFromSuperlayer()
-        
-        let dottedLineLayer = CAShapeLayer()
-        
-        dottedLineLayer.strokeColor = UIColor.warmGrey.cgColor
-        dottedLineLayer.lineWidth = 1.0
-        dottedLineLayer.lineCap = kCALineCapRound
-        dottedLineLayer.lineDashPattern = [.init(integerLiteral: 5)]
-        
-        let currentHour = Calendar.current.component(.hour, from: Date())
-        
-        let linePath = UIBezierPath()
-        linePath.move(to: CGPoint(x: 50.0 + Double(currentHour * dataPointSpacing), y: 25.0))
-        linePath.addLine(to: CGPoint(x: 50.0 + Double(currentHour * dataPointSpacing),
-                                     y: 60.0))
-        
-        dottedLineLayer.path = linePath.cgPath
-        dottedLineShapeLayer = dottedLineLayer
-        scrollableGraphView?.layer.addSublayer(dottedLineLayer)
-    }
-    
-    internal func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double {
-        // graphData will initially contain all 0.0s, but will update to real values after API data is recieved
-        if pointIndex < graphData.count {
-            return graphData[pointIndex]
-        } else {
-            return 0.0
-        }
-    }
-    
-    internal func label(atIndex pointIndex: Int) -> String {
-        if pointIndex == 0 {
-            return "12a"
-        } else if pointIndex < 12 {
-            return "\(pointIndex)a"
-        } else if pointIndex == 12 {
-            return "12p"
-        } else if pointIndex < 24 {
-            return "\(pointIndex - 12)p"
-        } else if pointIndex == 24 {
-            return "12a"
-        } else if pointIndex > 24 {
-            return "\(pointIndex - 24)a"
-        } else {
-            return ""
-        }
-    }
-    
-    internal func numberOfPoints() -> Int {
-        return numberOfDataPointsInGraph
-    }
-    
-    fileprivate func scrollGraphToCurrentHour(_ completion: () -> Void) {
-        // Graph is scrolled as soon as the room is passed to the laundry cell
-        var currentHour = Calendar.current.component(.hour, from: Date())
-        if currentHour > 2 {
-            currentHour -= 2
-        }
-        let newXOffset = currentHour * dataPointSpacing
-        if let oldXOffset = scrollableGraphView?.contentOffset.x, oldXOffset == CGFloat(newXOffset) {
-            completion()
-        } else {
-            scrollableGraphView?.setContentOffset(CGPoint(x: newXOffset, y: 0), animated: true)
-        }
-    }
-    
-    func reloadGraphDataIfNeeded(oldRoom: LaundryHall?, newRoom: LaundryHall?) {
-        reloadDottedLineLayer() // refresh the dotted line that indicates current time
-
-        if oldRoom?.getUsageData() == nil && newRoom?.getUsageData() == nil { return }
-        
-        if let oldUsageData = oldRoom?.getUsageData(), let newUsageData = newRoom?.getUsageData(),
-            oldUsageData == newUsageData { return }
-        
-        if oldRoom?.getUsageData() != nil && newRoom?.getUsageData() == nil {
-            graphData = Array(repeating: 0.0, count: self.numberOfDataPointsInGraph)
-            scrollableGraphView?.reload()
-            return
-        }
-        
-        scrollGraphToCurrentHour {
-            self.animateGraph()
-        }
-    }
-    
-    @objc fileprivate func animateGraph() {
-        let _ = Timer.scheduledTimer(timeInterval: 0.2, target: self,
-                                     selector: #selector(executeGraphAnimation),
-                                     userInfo: nil, repeats: false)
-    }
-    
-    @objc fileprivate func executeGraphAnimation() {
-        if let usageData = room.getUsageData() {
-            for i in self.graphData.indices {
-                if i < usageData.count {
-                    graphData[i] = usageData[i]
-                }
-            }
-            scrollableGraphView?.reload()
-        }
-    }
-}
-
-// Mark: - UIScrollViewDelegate
-
-extension LaundryCell: UIScrollViewDelegate {
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        animateGraph()
-    }
 }
 
 // MARK: - Machine CollectionView Delegate, Datasource
@@ -598,93 +423,34 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: frame, collectionViewLayout: flowLayout)
-        collectionView.register(LaundryMachineCell.self, forCellWithReuseIdentifier: "collectionCell")
+        collectionView.register(LaundryMachineCell.self, forCellWithReuseIdentifier: collectionCellId)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = UIColor.clear
         collectionView.showsHorizontalScrollIndicator = false
-        
         return collectionView
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == washerCollectionView {
-            let numItems = room.numWasherOpen + room.numWasherRunning + room.numWasherOffline + room.numWasherOutOfOrder
-            if numItems == 0 {
-                numWashersLabel.text = ""
-                //washerLoadingSpinner.startAnimating()
-            } else {
-                numWashersLabel.text = "\(room.numWasherOpen) of \(numItems) open"
-                //washerLoadingSpinner.stopAnimating()
-            }
-            return numItems
-        } else if collectionView == dryerCollectionView {
-            let numItems = room.numDryerOpen + room.numDryerRunning + room.numDryerOffline + room.numDryerOutOfOrder
-            if numItems == 0 {
-                numDryersLabel.text = ""
-                //dryerLoadingSpinner.startAnimating()
-            } else {
-                numDryersLabel.text = "\(room.numDryerOpen) of \(numItems) open"
-                //dryerLoadingSpinner.stopAnimating()
-            }
-            return numItems
-        } else {
-            return 0
-        }
+        let machineArray = collectionView == washerCollectionView ? room.washers : room.dryers
+        setMachineLabels()
+        return machineArray.count
+    }
+    
+    fileprivate func setMachineLabels() {
+        let numWashersOpen = room.washers.numberOpenMachines()
+        let numDryersOpen = room.dryers.numberOpenMachines()
+        
+        numWashersLabel.text = "\(numWashersOpen) of \(room.washers.count) open"
+        numDryersLabel.text = "\(numDryersOpen) of \(room.dryers.count) open"
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath as IndexPath) as! LaundryMachineCell
-        cell.backgroundColor = UIColor.clear
-        let cellMachineTypeWasher: Bool = {
-            if collectionView == washerCollectionView {
-                return true
-            } else {
-                return false
-            }
-        }()
-        if let room = room {
-            if cellMachineTypeWasher {
-                if (indexPath.row < room.numWasherRunning) {
-                    cell.bgImageColor = UIColor.clear
-                    cell.bgImage = UIImage(named: "washer_busy")
-                    if indexPath.row < room.remainingTimeWashers.count {
-                        let time = room.remainingTimeWashers[indexPath.row]
-                        cell.timerText = "\(time)"
-                    } else {
-                        cell.timerText = "" // need to cache to prevent empty cell from copying time of non-empty
-                    }
-                } else if (indexPath.row < room.numWasherOpen + room.numWasherRunning) {
-                    cell.bgImageColor = UIColor.clear
-                    cell.bgImage = UIImage(named: "washer_open")
-                    cell.timerText = ""
-                } else {
-                    cell.bgImageColor = UIColor.clear
-                    cell.bgImage = UIImage(named: "washer_broken")
-                    cell.timerText = ""
-                }
-            } else {
-                if (indexPath.row < room.numDryerRunning) {
-                    cell.bgImageColor = UIColor.clear
-                    cell.bgImage = UIImage(named: "dryer_busy")
-                    if indexPath.row < room.remainingTimeDryers.count {
-                        let time = room.remainingTimeDryers[indexPath.row]
-                        cell.timerText = "\(time)"
-                    } else {
-                        cell.timerText = "" // need to cache to prevent empty cell from copying time of non-empty
-                    }
-                } else if (indexPath.row < room.numDryerOpen + room.numDryerRunning) {
-                    cell.bgImageColor = UIColor.clear
-                    cell.bgImage = UIImage(named: "dryer_open")
-                    cell.timerText = ""
-                } else {
-                    cell.bgImageColor = UIColor.clear
-                    cell.bgImage = UIImage(named: "dryer_broken")
-                    cell.timerText = ""
-                }
-            }
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellId, for: indexPath as IndexPath) as! LaundryMachineCell
+        
+        let machineArray = collectionView == washerCollectionView ? room.washers : room.dryers
+        cell.machine = machineArray[indexPath.row]
         return cell
     }
     
@@ -696,6 +462,23 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let machineArray = collectionView == washerCollectionView ? room.washers : room.dryers
+
+        if indexPath.item < machineArray.count {
+            delegate?.handleMachineCellTapped(for: machineArray[indexPath.item]) {
+                DispatchQueue.main.async {
+                    collectionView.reloadData()
+                }
+            }
+        }
+    }
+    
+    func reloadCollectionViews() {
+        washerCollectionView?.reloadData()
+        dryerCollectionView?.reloadData()
     }
 }
 
