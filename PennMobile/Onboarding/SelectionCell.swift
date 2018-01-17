@@ -30,7 +30,7 @@ class SelectionCell: UICollectionViewCell, HallSelectionViewDelegate {
         
         selectionView = HallSelectionView(frame: .zero)
         selectionView?.delegate = self
-        selectionView?.prepare()
+        selectionView?.prepare(with: nil)
         
         addSubview(selectionView)
         addSubview(navigationBar)

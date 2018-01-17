@@ -18,7 +18,7 @@ class HallSelectionView: UIView, IndicatorEnabled {
     
     let maxNumHalls = 3
     
-    var chosenHalls = [LaundryHall]()
+    public fileprivate(set) var chosenHalls = [LaundryHall]()
     
     // buildings and currentResult to update TableView
     fileprivate var buildings = [String: [LaundryHall]]()
@@ -45,42 +45,23 @@ class HallSelectionView: UIView, IndicatorEnabled {
         self.tableView.dataSource = self        
     }
     
-    public func prepare() {
+    public func prepare(with halls: [LaundryHall]?) {
+        if let chosenHalls = halls {
+            self.chosenHalls = chosenHalls
+        }
         // set up view and gesture recognizer
         setUpView()
         setupDictionaries()
         setupCurrentSort()
+        selectChosenHalls()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
-// Mark: Sorting algorithm
-extension HallSelectionView {
-    fileprivate func sortHeaders(for headers: [String]) -> [String] {
-        print(chosenHalls.isEmpty)
-        return headers.sorted {
-            let count1 = buildings[$0]!.filter({ (hall) -> Bool in
-                return chosenHalls.contains(hall)
-            }).count
-            
-            let count2 = buildings[$1]!.filter({ (hall) -> Bool in
-                return chosenHalls.contains(hall)
-            }).count
-            
-            if count1 == count2 {
-                return $0 == "Quad" // By default, make the quad appear first
-            }
-            
-            return count1 > count2
-        }
-    }
-}
-
-// Mark: Functions to Set Up View, Gesture Recognizer, Dictionaries, and Sorted Headers
+// Mark: - Setup
 extension HallSelectionView {
     fileprivate func setUpView() {
         self.backgroundColor = UIColor.white
@@ -119,6 +100,31 @@ extension HallSelectionView {
         _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
+    fileprivate func setupCurrentSort() {
+        self.currentSort = sortHeaders(for: Array(buildings.keys))
+    }
+}
+
+// Mark: - Sorting
+extension HallSelectionView {
+    fileprivate func sortHeaders(for headers: [String]) -> [String] {
+        return headers.sorted {
+            let count1 = buildings[$0]!.filter({ (hall) -> Bool in
+                return chosenHalls.contains(hall)
+            }).count
+            
+            let count2 = buildings[$1]!.filter({ (hall) -> Bool in
+                return chosenHalls.contains(hall)
+            }).count
+            
+            if count1 == count2 {
+                return $0 == "Quad" // By default, make the quad appear first
+            }
+            
+            return count1 > count2
+        }
+    }
+    
     fileprivate func setupDictionaries() {
         guard let hallsDict: [Int: LaundryHall] = LaundryAPIService.instance.idToHalls else {
             attemptToLoadDictionary()
@@ -144,7 +150,7 @@ extension HallSelectionView {
             })
         }
         
-        for hall in chosenHalls {
+        for hall in chosenHalls.reversed() {
             var arr = buildings[hall.building]
             if let index = arr?.index(of: hall) {
                 arr?.remove(at: index)
@@ -155,15 +161,11 @@ extension HallSelectionView {
         
         currentResults = buildings
     }
-    
-    fileprivate func setupCurrentSort() {
-        self.currentSort = sortHeaders(for: Array(buildings.keys))
-    }
 }
 
-// Mark: Select chosen halls
+// Mark: - Hall Selection
 extension HallSelectionView {
-    public func updateSelectedHalls() {
+    public func selectChosenHalls() {
         for hall in chosenHalls {
             if let index = getCurrentIndex(for: hall) {
                 tableView.selectRow(at: index, animated: false, scrollPosition: .none)
@@ -236,18 +238,21 @@ extension HallSelectionView: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return chosenHalls.count < maxNumHalls ? indexPath : nil
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if chosenHalls.count < maxNumHalls {
-            let key = currentSort[indexPath.section]
-            let hall = currentResults[key]![indexPath.row]
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            chosenHalls.append(hall)
-            
-            if chosenHalls.count == maxNumHalls {
-                tableView.reloadData()
-                updateSelectedHalls()
-            }
+        let key = currentSort[indexPath.section]
+        let hall = currentResults[key]![indexPath.row]
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        chosenHalls.append(hall)
+        
+        if chosenHalls.count == maxNumHalls {
+            tableView.reloadData()
+            selectChosenHalls()
         }
+        
         delegate?.updateSelectedHalls(for: chosenHalls)
     }
     
@@ -261,7 +266,7 @@ extension HallSelectionView: UITableViewDelegate, UITableViewDataSource {
         
         if chosenHalls.count == maxNumHalls - 1 {
             tableView.reloadData()
-            updateSelectedHalls()
+            selectChosenHalls()
         }
         delegate?.updateSelectedHalls(for: chosenHalls)
     }
@@ -283,7 +288,7 @@ extension HallSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
             currentSort = sortHeaders(for: Array(buildings.keys))
             self.showEmptyViewIfNeeded()
             tableView.reloadData()
-            updateSelectedHalls()
+            selectChosenHalls()
             return
         }
         
@@ -306,7 +311,7 @@ extension HallSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
         currentSort = sortHeaders(for: Array(currentResults.keys))
         self.showEmptyViewIfNeeded()
         tableView.reloadData()
-        updateSelectedHalls()
+        selectChosenHalls()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
