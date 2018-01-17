@@ -12,7 +12,7 @@ protocol HallSelectionDelegate: class {
     func saveSelection(for halls: [LaundryHall])
 }
 
-class HallSelectionViewController: UIViewController, ShowsAlert, Trackable, IndicatorEnabled {
+class HallSelectionViewController: UIViewController, ShowsAlert, Trackable {
     
     weak var delegate: HallSelectionDelegate?
     
@@ -29,7 +29,7 @@ class HallSelectionViewController: UIViewController, ShowsAlert, Trackable, Indi
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // set up navbar
+        
         navigationItem.title = "\(chosenHalls.count)/\(maxNumHalls) Chosen"
         self.navigationController?.navigationBar.tintColor = UIColor.navRed
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
