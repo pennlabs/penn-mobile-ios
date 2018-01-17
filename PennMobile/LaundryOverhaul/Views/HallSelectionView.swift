@@ -58,28 +58,6 @@ class HallSelectionView: UIView, IndicatorEnabled {
     
 }
 
-// Mark: Select chosen halls
-extension HallSelectionView {
-    public func updateSelectedHalls() {
-        for hall in chosenHalls {
-            if let index = getCurrentIndex(for: hall) {
-                tableView.selectRow(at: index, animated: false, scrollPosition: .none)
-            }
-        }
-    }
-    
-    private func getCurrentIndex(for hall: LaundryHall) -> IndexPath? {
-        if let section = currentSort.index(where: { (building) -> Bool in
-            return building == hall.building
-        }), let halls = currentResults[hall.building] {
-            if let row = halls.index(of: hall) {
-                return IndexPath(row: row, section: section)
-            }
-        }
-        return nil
-    }
-}
-
 // Mark: Sorting algorithm
 extension HallSelectionView {
     fileprivate func sortHeaders(for headers: [String]) -> [String] {
@@ -180,6 +158,28 @@ extension HallSelectionView {
     
     fileprivate func setupCurrentSort() {
         self.currentSort = sortHeaders(for: Array(buildings.keys))
+    }
+}
+
+// Mark: Select chosen halls
+extension HallSelectionView {
+    public func updateSelectedHalls() {
+        for hall in chosenHalls {
+            if let index = getCurrentIndex(for: hall) {
+                tableView.selectRow(at: index, animated: false, scrollPosition: .none)
+            }
+        }
+    }
+    
+    private func getCurrentIndex(for hall: LaundryHall) -> IndexPath? {
+        if let section = currentSort.index(where: { (building) -> Bool in
+            return building == hall.building
+        }), let halls = currentResults[hall.building] {
+            if let row = halls.index(of: hall) {
+                return IndexPath(row: row, section: section)
+            }
+        }
+        return nil
     }
     
     private func attemptToLoadDictionary() {
