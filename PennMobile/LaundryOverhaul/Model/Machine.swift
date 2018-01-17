@@ -29,16 +29,10 @@ class Machine: Hashable {
         }
     }
     
-    enum MachineType: String {
-        case washer
-        case dryer
-    }
-    
     let id: Int
     let status: Status
     var timeRemaining: Int
     let isWasher: Bool
-    let type: MachineType
     let roomName: String
         
     init(json: JSON, roomName: String) {
@@ -46,7 +40,7 @@ class Machine: Hashable {
         id = json["id"].intValue
         status = Status.parseStatus(for: json["status"].stringValue)
         timeRemaining = json["time_remaining"].intValue
-        type = MachineType(rawValue: json["type"].stringValue)!
+        isWasher = json["type"].stringValue == "washer"
     }
     
     var hashValue: Int {
