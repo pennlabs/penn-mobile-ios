@@ -74,27 +74,29 @@ class LaundryHall: Codable {
     }
     
     func decrementTimeRemaining(by minutes: Int) {
-        washers.forEach { $0.timeRemaining -= minutes }
-        dryers.forEach { $0.timeRemaining -= minutes }
+        washers.decrementTimeRemaining(by: minutes)
+        dryers.decrementTimeRemaining(by: minutes)
         
         washers.sort()
         dryers.sort()
     }
 }
 
+// MARK: - Equatable
 extension LaundryHall: Equatable {
     static func ==(lhs: LaundryHall, rhs: LaundryHall) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
-// Mark: UsageData
+// MARK: - UsageData
 extension LaundryHall {
     func getUsageData() -> Array<Double>? {
         return usageData
     }
 }
 
+// MARK: - Array Extension
 extension Array where Element == LaundryHall {
     func containsRunningMachine() -> Bool {
         return filter({ (hall) -> Bool in

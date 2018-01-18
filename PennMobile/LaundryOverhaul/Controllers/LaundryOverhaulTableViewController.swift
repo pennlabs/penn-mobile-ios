@@ -193,7 +193,7 @@ extension LaundryOverhaulTableViewController: AddLaundryCellDelegate {
     }
 }
 
-// Mark: Timer
+// MARK: - Timer
 extension LaundryOverhaulTableViewController {
     internal func resetTimer() {
         timer?.invalidate()
@@ -218,7 +218,7 @@ extension LaundryOverhaulTableViewController {
     fileprivate func reloadVisibleMachineCells() {
         for cell in self.tableView.visibleCells {
             if let laundryCell = cell as? LaundryCell {
-                laundryCell.reloadCollectionViews()
+                laundryCell.reloadData()
             }
         }
     }

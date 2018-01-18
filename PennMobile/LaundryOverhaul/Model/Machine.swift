@@ -33,13 +33,7 @@ class Machine: Hashable {
     let isWasher: Bool
     let roomName: String
     var status: Status
-    var timeRemaining: Int {
-        didSet {
-            if status == .running && timeRemaining <= 0 {
-                status = .open
-            }
-        }
-    }
+    var timeRemaining: Int
         
     init(json: JSON, roomName: String) {
         self.roomName = roomName
@@ -48,10 +42,15 @@ class Machine: Hashable {
         status = Status(rawValue: statusStr) ?? Status.parseStatus(for: statusStr)
         timeRemaining = json["time_remaining"].intValue
         isWasher = json["type"].stringValue == "washer"
+        
+        // Flag if website does not provide a time remaining
+        if status == .running && timeRemaining == 0 {
+            timeRemaining = -1
+        }
     }
     
     var hashValue: Int {
-        return "\(roomName) \(isWasher) \(id)".hashValue
+        return "\(roomName)\(isWasher)\(id)".hashValue
     }
     
     func isUnderNotification() -> Bool {
@@ -59,6 +58,7 @@ class Machine: Hashable {
     }
 }
 
+// MARK: - Comparable
 extension Machine: Comparable {
     static func <(lhs: Machine, rhs: Machine) -> Bool {
         switch (lhs.status, rhs.status) {
@@ -84,6 +84,7 @@ extension Machine: Comparable {
     }
 }
 
+// MARK: - Array Extensions
 extension Array where Element == Machine {
     func containsRunningMachine() -> Bool {
         if self.count == 0 { return false }
@@ -92,5 +93,17 @@ extension Array where Element == Machine {
     
     func numberOpenMachines() -> Int {
         return filter { $0.status == .open }.count
+    }
+    
+    func decrementTimeRemaining(by minutes: Int) {
+        forEach {
+            if $0.status == .running {
+                $0.timeRemaining -= minutes
+                
+                if $0.timeRemaining == 0 {
+                    $0.status = .open
+                }
+            }
+        }
     }
 }

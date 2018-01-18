@@ -36,6 +36,7 @@ class LaundryCell: UITableViewCell {
     
     // Number of datapoints displayed in the graph
     internal let numberOfDataPointsInGraph = 27
+    
     // Space between data points
     internal let dataPointSpacing = 30
     
@@ -468,9 +469,10 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
         }
     }
     
-    func reloadCollectionViews() {
+    func reloadData() {
         washerCollectionView?.reloadData()
         dryerCollectionView?.reloadData()
+        reloadDottedLineLayer()
     }
 }
 

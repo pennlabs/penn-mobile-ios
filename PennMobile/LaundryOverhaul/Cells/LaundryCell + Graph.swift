@@ -76,22 +76,20 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
     
     func reloadDottedLineLayer() {
-        
         dottedLineShapeLayer?.removeFromSuperlayer()
         
         let dottedLineLayer = CAShapeLayer()
-        
         dottedLineLayer.strokeColor = UIColor.warmGrey.cgColor
         dottedLineLayer.lineWidth = 1.0
         dottedLineLayer.lineCap = kCALineCapRound
         dottedLineLayer.lineDashPattern = [.init(integerLiteral: 5)]
         
         let currentHour = Calendar.current.component(.hour, from: Date())
+        let xPosition = 50.0 + Double(currentHour * dataPointSpacing)
         
         let linePath = UIBezierPath()
-        linePath.move(to: CGPoint(x: 50.0 + Double(currentHour * dataPointSpacing), y: 25.0))
-        linePath.addLine(to: CGPoint(x: 50.0 + Double(currentHour * dataPointSpacing),
-                                     y: 60.0))
+        linePath.move(to: CGPoint(x: xPosition, y: 25.0))
+        linePath.addLine(to: CGPoint(x: xPosition, y: 60.0))
         
         dottedLineLayer.path = linePath.cgPath
         dottedLineShapeLayer = dottedLineLayer
@@ -177,6 +175,12 @@ extension LaundryCell: ScrollableGraphViewDataSource {
                 }
             }
             scrollableGraphView?.reload()
+        }
+    }
+    
+    internal func scrollAndUpdateGraph() {
+        scrollGraphToCurrentHour {
+            self.animateGraph()
         }
     }
 }
