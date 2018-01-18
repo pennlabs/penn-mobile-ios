@@ -458,7 +458,8 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let machineArray = collectionView == washerCollectionView ? room.washers : room.dryers
-        if machineArray[indexPath.row].status == .running {
+        let machine = machineArray[indexPath.row]
+        if machine.status == .running && machine.timeRemaining > 0 {
             delegate?.handleMachineCellTapped(for: machineArray[indexPath.item]) {
                 DispatchQueue.main.async {
                     collectionView.reloadData()
@@ -473,7 +474,7 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     }
 }
 
-// MARK: - Extension functions to delete cells
+// MARK: - Deletion
 
 extension LaundryCell {
     @objc fileprivate func deleteRoom() {

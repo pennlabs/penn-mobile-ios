@@ -44,7 +44,6 @@ class LaundryMachineCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
-
         setupViews()
     }
     
@@ -80,45 +79,13 @@ class LaundryMachineCell: UICollectionViewCell {
         
         bgImageView.image = UIImage(named: "\(typeStr)_\(statusStr)")
         
-        if machine.status == .running {
+        if machine.status == .running && machine.timeRemaining > 0 {
             timerLabel.text = "\(machine.timeRemaining)"
         } else {
             timerLabel.text = ""
         }
         
         bellView.isHidden = !machine.isUnderNotification()
-        
-        
-        
-//        if collectionView == washerCollectionView {
-//            if (indexPath.row < room.numWasherRunning) {
-//                cell.bgImage = UIImage(named: "washer_busy")
-//                if indexPath.row < room.runningWashers.count {
-//                    let machine = room.runningWashers[indexPath.row]
-//                    let time = machine.timeRemaining
-//                    cell.timerText = "\(time)"
-//                    cell.isUnderNotification = machine.isUnderNotification()
-//                }
-//            } else if (indexPath.row < room.numWasherOpen + room.numWasherRunning) {
-//                cell.bgImage = UIImage(named: "washer_open")
-//            } else {
-//                cell.bgImage = UIImage(named: "washer_broken")
-//            }
-//        } else {
-//            if (indexPath.row < room.numDryerRunning) {
-//                cell.bgImage = UIImage(named: "dryer_busy")
-//                if indexPath.row < room.runningDryers.count {
-//                    let machine = room.runningDryers[indexPath.row]
-//                    let time = machine.timeRemaining
-//                    cell.timerText = "\(time)"
-//                    cell.isUnderNotification = machine.isUnderNotification()
-//                }
-//            } else if (indexPath.row < room.numDryerOpen + room.numDryerRunning) {
-//                cell.bgImage = UIImage(named: "dryer_open")
-//            } else {
-//                cell.bgImage = UIImage(named: "dryer_broken")
-//            }
-//        }
     }
     
     required init?(coder aDecoder: NSCoder) {
