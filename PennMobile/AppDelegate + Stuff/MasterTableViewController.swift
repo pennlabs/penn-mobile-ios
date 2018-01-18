@@ -16,7 +16,7 @@ class ControllerSettings: NSObject {
         var dict = [String: UIViewController]()
         dict["Dining"] = DiningViewController()
         dict["Study Room Booking"] = BookViewController()
-        dict["Laundry"] = LaundryOverhaulTableViewController()
+        dict["Laundry"] = LaundryTableViewController()
         dict["News"] = NewsViewController()
         dict["Penn Contacts"] = ContactsTableViewController()
         dict["About"] = AboutViewController()

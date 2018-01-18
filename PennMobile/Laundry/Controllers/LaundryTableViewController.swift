@@ -1,12 +1,12 @@
 //
-//  LaundryOverhaulTableViewController.swift
+//  LaundryTableViewController.swift
 //  PennMobile
 //
 //  Created by Dominic Holmes on 9/30/17.
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorEnabled, ShowsAlert {
+class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, ShowsAlert {
     
     internal var halls = [LaundryHall]()
     
@@ -57,7 +57,7 @@ class LaundryOverhaulTableViewController: GenericTableViewController, IndicatorE
 }
 
 // MARK: - Add/edit selection
-extension LaundryOverhaulTableViewController {
+extension LaundryTableViewController {
     @objc fileprivate func handleEditPressed() {
         let hallSelectionVC = HallSelectionViewController()
         hallSelectionVC.delegate = self
@@ -68,7 +68,7 @@ extension LaundryOverhaulTableViewController {
 }
 
 // MARK: - UIRefreshControl
-extension LaundryOverhaulTableViewController {
+extension LaundryTableViewController {
     fileprivate func prepareRefreshControl() {
         refreshControl = UIRefreshControl()
         //refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -83,7 +83,7 @@ extension LaundryOverhaulTableViewController {
 }
 
 //MARK: - Set up table view
-extension LaundryOverhaulTableViewController {
+extension LaundryTableViewController {
     fileprivate func registerHeadersAndCells() {
         tableView.register(LaundryCell.self, forCellReuseIdentifier: laundryCell)
         tableView.register(AddLaundryCell.self, forCellReuseIdentifier: addLaundryCell)
@@ -126,7 +126,7 @@ extension LaundryOverhaulTableViewController {
 }
 
 // Laundry API Calls
-extension LaundryOverhaulTableViewController {
+extension LaundryTableViewController {
     func updateInfo(completion: @escaping () -> Void) {
         timer?.invalidate()
         LaundryNotificationCenter.shared.updateForExpiredNotifications {
@@ -152,7 +152,7 @@ extension LaundryOverhaulTableViewController {
 }
 
 // MARK: - Hall Selection Delegate
-extension LaundryOverhaulTableViewController: HallSelectionDelegate {
+extension LaundryTableViewController: HallSelectionDelegate {
     func saveSelection(for halls: [LaundryHall]) {
         LaundryHall.setPreferences(for: halls)
         self.halls = halls
@@ -161,7 +161,7 @@ extension LaundryOverhaulTableViewController: HallSelectionDelegate {
 }
 
 // MARK: - Laundry Cell Delegate
-extension LaundryOverhaulTableViewController: LaundryCellDelegate {
+extension LaundryTableViewController: LaundryCellDelegate {
     internal func deleteLaundryCell(for hall: LaundryHall) {
         if let index = halls.index(of: hall) {
             halls.remove(at: index)
@@ -187,14 +187,14 @@ extension LaundryOverhaulTableViewController: LaundryCellDelegate {
 }
 
 // MARK: - Add Laundry Cell Delegate
-extension LaundryOverhaulTableViewController: AddLaundryCellDelegate {
+extension LaundryTableViewController: AddLaundryCellDelegate {
     internal func addPressed() {
         handleEditPressed()
     }
 }
 
 // MARK: - Timer
-extension LaundryOverhaulTableViewController {
+extension LaundryTableViewController {
     internal func resetTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (_) in

@@ -67,7 +67,7 @@
 		B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */; };
 		B650C5641FA43FC600922E98 /* LaundryHall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5631FA43FC600922E98 /* LaundryHall.swift */; };
 		B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */; };
-		B654BAEE1F801F830038B9D5 /* LaundryOverhaulTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAED1F801F830038B9D5 /* LaundryOverhaulTableViewController.swift */; };
+		B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */; };
 		B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAF11F802A050038B9D5 /* LaundryCell.swift */; };
 		B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B658393A1FABD295009486FC /* LaundryAPIService.swift */; };
 		B6F0DCE1200A894700DB0006 /* LaundryUsageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F0DCE0200A894700DB0006 /* LaundryUsageData.swift */; };
@@ -159,7 +159,7 @@
 		B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLaundryCell.swift; sourceTree = "<group>"; };
 		B650C5631FA43FC600922E98 /* LaundryHall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryHall.swift; sourceTree = "<group>"; };
 		B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachineCell.swift; sourceTree = "<group>"; };
-		B654BAED1F801F830038B9D5 /* LaundryOverhaulTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryOverhaulTableViewController.swift; sourceTree = "<group>"; };
+		B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryTableViewController.swift; sourceTree = "<group>"; };
 		B654BAF11F802A050038B9D5 /* LaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryCell.swift; sourceTree = "<group>"; };
 		B658393A1FABD295009486FC /* LaundryAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryAPIService.swift; sourceTree = "<group>"; };
 		B6F0DCE0200A894700DB0006 /* LaundryUsageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryUsageData.swift; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 				216640C71EBADC9D00746B8E /* General */,
 				216640881EBADBA000746B8E /* AppDelegate + Stuff */,
 				2166408B1EBADBF800746B8E /* Dining */,
-				B654BAE81F801F030038B9D5 /* LaundryOverhaul */,
+				B654BAE81F801F030038B9D5 /* Laundry */,
 				216640EE1EBB867600746B8E /* Contacts */,
 				2166408C1EBADBFC00746B8E /* GSR-Booking */,
 				216640D31EBB80FD00746B8E /* News */,
@@ -465,7 +465,7 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		B654BAE81F801F030038B9D5 /* LaundryOverhaul */ = {
+		B654BAE81F801F030038B9D5 /* Laundry */ = {
 			isa = PBXGroup;
 			children = (
 				219F01F71FB8ABF2006BBC4E /* Views */,
@@ -474,7 +474,7 @@
 				B654BAEA1F801F3F0038B9D5 /* Controllers */,
 				B654BAE91F801F380038B9D5 /* Cells */,
 			);
-			path = LaundryOverhaul;
+			path = Laundry;
 			sourceTree = "<group>";
 		};
 		B654BAE91F801F380038B9D5 /* Cells */ = {
@@ -491,7 +491,7 @@
 		B654BAEA1F801F3F0038B9D5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B654BAED1F801F830038B9D5 /* LaundryOverhaulTableViewController.swift */,
+				B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */,
 				CF7FCA751FAFCD9E0052F0A9 /* HallSelectionViewController.swift */,
 			);
 			path = Controllers;
@@ -772,7 +772,7 @@
 				216640B11EBADC5E00746B8E /* Colors.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
-				B654BAEE1F801F830038B9D5 /* LaundryOverhaulTableViewController.swift in Sources */,
+				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				216640A51EBADC5300746B8E /* TrackLayer.swift in Sources */,
