@@ -6,7 +6,7 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, ShowsAlert {
+class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, ShowsAlert, NotificationRequestable {
     
     internal var halls = [LaundryHall]()
     
@@ -44,6 +44,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //LaundryNotificationCenter.shared.executePendingRequests()
         updateInfo {
             self.hideActivity()
         }
@@ -173,15 +174,19 @@ extension LaundryTableViewController: LaundryCellDelegate {
     internal func handleMachineCellTapped(for machine: Machine, _ updateCellIfNeeded: @escaping () -> Void) {
         if !allowMachineNotifications { return }
         
-        if machine.isUnderNotification() {
-            LaundryNotificationCenter.shared.removeOutstandingNotification(for: machine)
-            updateCellIfNeeded()
-        } else {
-            LaundryNotificationCenter.shared.notifyWithMessage(for: machine, title: "Ready!", message: "The \(machine.roomName) \(machine.isWasher ? "washer" : "dryer") has finished running.", completion: { (success) in
-                if success {
+        requestNotification { (granted) in
+            if granted {
+                if machine.isUnderNotification() {
+                    LaundryNotificationCenter.shared.removeOutstandingNotification(for: machine)
                     updateCellIfNeeded()
+                } else {
+                    LaundryNotificationCenter.shared.notifyWithMessage(for: machine, title: "Ready!", message: "The \(machine.roomName) \(machine.isWasher ? "washer" : "dryer") has finished running.", completion: { (success) in
+                        if success {
+                            updateCellIfNeeded()
+                        }
+                    })
                 }
-            })
+            }
         }
     }
 }

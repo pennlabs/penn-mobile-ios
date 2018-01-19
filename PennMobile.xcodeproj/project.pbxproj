@@ -74,6 +74,7 @@
 		CF29A1751FB788820067D946 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1651FB7887C0067D946 /* Page.swift */; };
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
+		CF4BE2F8201266FE0043D3EC /* NotificationRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4BE2F7201266FE0043D3EC /* NotificationRequestable.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* HallSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* HallSelectionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -169,6 +170,7 @@
 		CF29A1651FB7887C0067D946 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
+		CF4BE2F7201266FE0043D3EC /* NotificationRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequestable.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* HallSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallSelectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -386,6 +388,7 @@
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
 				21879B1D1FB3FF54003CF552 /* Storage.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
+				CF4BE2F7201266FE0043D3EC /* NotificationRequestable.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -652,16 +655,22 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/ScrollableGraphView/ScrollableGraphView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScrollableGraphView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -698,7 +707,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5EDB35F2F75DD9FC2BE10B84 /* [CP] Check Pods Manifest.lock */ = {
@@ -716,7 +725,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6B3070EE25B37ACA0E25E9B3 /* [CP] Embed Pods Frameworks */ = {
@@ -810,6 +819,7 @@
 				B650C5641FA43FC600922E98 /* LaundryHall.swift in Sources */,
 				216640AE1EBADC5E00746B8E /* NSCalendarExtension.swift in Sources */,
 				216640B41EBADC6A00746B8E /* RoomCell.swift in Sources */,
+				CF4BE2F8201266FE0043D3EC /* NotificationRequestable.swift in Sources */,
 				216640871EBADB8300746B8E /* SWRevealViewController.m in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,

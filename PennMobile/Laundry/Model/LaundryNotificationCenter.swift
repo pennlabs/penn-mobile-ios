@@ -15,6 +15,8 @@ class LaundryNotificationCenter {
     
     private var identifiers = Dictionary<Machine, String>()
     
+    private var pendingRequests = Dictionary<String, UNNotificationRequest>()
+    
     func prepare() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
@@ -29,29 +31,31 @@ class LaundryNotificationCenter {
                 return
             }
             
+            let content = UNMutableNotificationContent()
+            if let title = title {
+                content.title = NSString.localizedUserNotificationString(forKey:
+                    title, arguments: nil)
+            }
+            if let message = message {
+                content.body = NSString.localizedUserNotificationString(forKey:
+                    message, arguments: nil)
+            }
+            
+            // Deliver the notification when minutes expire.
+            content.sound = UNNotificationSound.default()
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(60 * minutes),
+                                                            repeats: false)
+            
+            // Schedule the notification.
+            let identifier = "\(machine.roomName)-\(isWasher ? "washer" : "dryer")-\(minutes)-\(Date().timeIntervalSince1970)"
+            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+            
             if granted {
-                let content = UNMutableNotificationContent()
-                if let title = title {
-                    content.title = NSString.localizedUserNotificationString(forKey:
-                        title, arguments: nil)
-                }
-                if let message = message {
-                    content.body = NSString.localizedUserNotificationString(forKey:
-                        message, arguments: nil)
-                }
-                
-                // Deliver the notification when minutes expire.
-                content.sound = UNNotificationSound.default()
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(60 * minutes),
-                                                                repeats: false)
-                
-                // Schedule the notification.
-                let identifier = "\(machine.roomName)-\(isWasher ? "washer" : "dryer")-\(minutes)-\(Date().timeIntervalSince1970)"
-                let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
                 let center = UNUserNotificationCenter.current()
                 center.add(request, withCompletionHandler: nil)
-                
                 self.identifiers[machine] = identifier
+            } else {
+                self.pendingRequests[identifier] = request
             }
             
             completion(granted)

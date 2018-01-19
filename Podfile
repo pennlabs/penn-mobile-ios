@@ -12,6 +12,9 @@ pod 'MBProgressHUD', '~> 0.8'
 pod 'SwiftyJSON'
 pod 'PromiseKit'
 pod 'ScrollableGraphView'
+pod 'Firebase', '~> 4.7'
+pod 'Firebase/Messaging'
+pod 'SCLAlertView'
 
   target 'PennMobileTests' do
     inherit! :search_paths
