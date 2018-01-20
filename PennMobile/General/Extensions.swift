@@ -153,6 +153,12 @@ extension Date {
             return self
         }
     }
+    
+    static var currentDayOfWeek: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE" // Monday, Friday, etc.
+        return dateFormatter.string(from: Date())
+    }
         
     var dayOfWeek: String {
         let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]

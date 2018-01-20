@@ -189,11 +189,6 @@ class LaundryCell: UITableViewCell {
     
     fileprivate let graphLabel: UILabel = {
         let label = UILabel()
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE" // Monday, Friday, etc.
-        let day = dateFormatter.string(from: Date())
-        
         label.text = "Popular Times"
         label.font = UIFont(name: "HelveticaNeue", size: 14)
         label.textColor = .black
@@ -203,13 +198,9 @@ class LaundryCell: UITableViewCell {
         return label
     }()
     
-    fileprivate let graphDayLabel: UILabel = {
+    let graphDayLabel: UILabel = {
         let label = UILabel()
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE" // Monday, Friday, etc.
-        let day = dateFormatter.string(from: Date())
-        
+        let day = Date.currentDayOfWeek
         label.text = day
         label.font = UIFont(name: "HelveticaNeue", size: 14)
         label.textColor = .warmGrey
