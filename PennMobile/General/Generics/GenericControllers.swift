@@ -27,7 +27,7 @@ import UIKit
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.tintColor = UIColor.navRed
-        updateData()
+        
         if trackScreen {
             trackScreen(screenName)
         }
@@ -37,8 +37,6 @@ import UIKit
         super.viewWillDisappear(true)
         pan(enabled: true)
     }
-    
-    func updateData() { }
     
     var screenName: String?
     
@@ -78,7 +76,7 @@ class GenericViewController: UIViewController, Trackable {
         self.navigationController?.navigationBar.tintColor = UIColor.navRed
         
         if trackScreen {
-            trackScreen(screenName)
+            trackScreen(screenName ?? title)
         }
     }
     

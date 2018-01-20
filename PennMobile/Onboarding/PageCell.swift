@@ -12,7 +12,7 @@ class PageCell: UICollectionViewCell {
     
     private lazy var confettiView: SAConfettiView = SAConfettiView(frame: self.bounds)
 
-    var page: Page? {
+    var page: OnboardingPage? {
         didSet {
             
             guard let page = page else {

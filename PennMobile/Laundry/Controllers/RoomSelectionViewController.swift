@@ -8,21 +8,21 @@
 
 import UIKit
 
-protocol HallSelectionDelegate: class {
-    func saveSelection(for halls: [LaundryHall])
+protocol RoomSelectionVCDelegate: class {
+    func saveSelection(for rooms: [LaundryRoom])
 }
 
-class HallSelectionViewController: UIViewController, ShowsAlert, Trackable {
+class RoomSelectionViewController: UIViewController, ShowsAlert, Trackable {
     
-    weak var delegate: HallSelectionDelegate?
+    weak var delegate: RoomSelectionVCDelegate?
     
     fileprivate let maxNumHalls = 3
     
-    var chosenHalls = [LaundryHall]()
+    var chosenRooms = [LaundryRoom]()
     
     // Views
-    fileprivate lazy var selectionView: HallSelectionView = {
-        let hsv = HallSelectionView(frame: .zero)
+    fileprivate lazy var selectionView: RoomSelectionView = {
+        let hsv = RoomSelectionView(frame: .zero)
         hsv.delegate = self
         return hsv
     }()
@@ -30,7 +30,7 @@ class HallSelectionViewController: UIViewController, ShowsAlert, Trackable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "\(chosenHalls.count)/\(maxNumHalls) Chosen"
+        navigationItem.title = "\(chosenRooms.count)/\(maxNumHalls) Chosen"
         self.navigationController?.navigationBar.tintColor = UIColor.navRed
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
@@ -50,14 +50,14 @@ class HallSelectionViewController: UIViewController, ShowsAlert, Trackable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.title = "\(chosenHalls.count)/\(maxNumHalls) Chosen"
-        selectionView.prepare(with: chosenHalls)
+        navigationItem.title = "\(chosenRooms.count)/\(maxNumHalls) Chosen"
+        selectionView.prepare(with: chosenRooms)
     }
 }
 
-extension HallSelectionViewController: HallSelectionViewDelegate {
-    func updateSelectedHalls(for halls: [LaundryHall]) {
-        navigationItem.title = "\(halls.count)/\(selectionView.maxNumHalls) Chosen"
+extension RoomSelectionViewController: RoomSelectionViewDelegate {
+    func updateSelectedRooms(for rooms: [LaundryRoom]) {
+        navigationItem.title = "\(rooms.count)/\(selectionView.maxNumRooms) Chosen"
     }
     
     func handleFailureToLoadDictionary() {
@@ -66,9 +66,9 @@ extension HallSelectionViewController: HallSelectionViewDelegate {
 }
 
 // Mark: Hall selection
-extension HallSelectionViewController {
+extension RoomSelectionViewController {
     @objc fileprivate func handleSave() {
-        delegate?.saveSelection(for: selectionView.chosenHalls)
+        delegate?.saveSelection(for: selectionView.chosenRooms)
         _ = selectionView.resignFirstResponder()
         dismiss(animated: true, completion: nil)
     }

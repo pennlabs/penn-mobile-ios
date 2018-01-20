@@ -6,68 +6,10 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-import UIKit
-
-class ControllerSettings: NSObject {
-    
-    static let shared = ControllerSettings()
-    
-    let vcDictionary: [String: UIViewController] = {
-        var dict = [String: UIViewController]()
-        dict["Dining"] = DiningViewController()
-        dict["Study Room Booking"] = BookViewController()
-        dict["Laundry"] = LaundryTableViewController()
-        dict["News"] = NewsViewController()
-        dict["Penn Contacts"] = ContactsTableViewController()
-        dict["About"] = AboutViewController()
-        return dict
-    }()
-    
-    var viewControllers: [UIViewController] {
-        return displayNames.map { (title) -> UIViewController in
-            return vcDictionary[title]!
-        }
-    }
-    
-    var displayNames: [String] {
-        return UserDefaults.standard.getVCDisplayNames() ??
-            ["Dining", "Study Room Booking", "Laundry", "News", "Penn Contacts", "About"]
-    }
-    
-    func viewController(for title: String) -> UIViewController {
-        return vcDictionary[title] ?? UIViewController()
-    }
-    
-    var firstController: UIViewController {
-        return viewController(for: firstControllerName)
-    }
-    
-    var firstControllerName: String {
-        return UserDefaults.standard.isOnboarded() ? displayNames[0] : "Laundry"
-    }
-    
-    func visibleVCIndex() -> IndexPath {
-        for vc in viewControllers {
-            if vc.isVisible {
-                return IndexPath(row: viewControllers.index(of: vc)!, section: 0)
-            }
-        }
-        return IndexPath(row: 0, section: 0)
-    }
-    
-    func visibleVCName() -> String {
-        return displayNames[visibleVCIndex().row]
-    }
-    
-    func visibleVC() -> UIViewController {
-        return viewController(for: visibleVCName())
-    }
-}
-
 class MasterTableViewController: MoveableTableViewController, Trackable {
     
-    fileprivate var viewControllerArray = ControllerSettings.shared.viewControllers
-    fileprivate var displayNameArray = ControllerSettings.shared.displayNames
+    fileprivate var viewControllerArray = ControllerModel.shared.viewControllers
+    fileprivate var displayNameArray = ControllerModel.shared.displayNames
     
     fileprivate let cellID = "cellID"
     
@@ -93,7 +35,7 @@ class MasterTableViewController: MoveableTableViewController, Trackable {
     }
     
     func prepare() {
-        trackScreen(ControllerSettings.shared.firstControllerName)
+        trackScreen(ControllerModel.shared.firstPage.rawValue)
     }
 }
 
@@ -135,7 +77,14 @@ extension MasterTableViewController {
         
         let navController = UINavigationController(rootViewController: viewControllerArray[indexPath.row])
         revealViewController().pushFrontViewController(navController, animated: true)
-        tableView.cellForRow(at: ControllerSettings.shared.visibleVCIndex())?.isHighlighted = false
+        tableView.cellForRow(at: ControllerModel.shared.visibleVCIndex())?.isHighlighted = false
         trackScreen(displayNameArray[indexPath.row])
+    }
+}
+
+// MARK: - Transitions
+extension MasterTableViewController {
+    func transition(to page: Page) {
+        print(page.rawValue)
     }
 }

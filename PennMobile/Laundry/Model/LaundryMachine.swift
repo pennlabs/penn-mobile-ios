@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Machine: Hashable {
+class LaundryMachine: Hashable {
     
     enum Status: String {
         case open
@@ -59,8 +59,8 @@ class Machine: Hashable {
 }
 
 // MARK: - Comparable
-extension Machine: Comparable {
-    static func <(lhs: Machine, rhs: Machine) -> Bool {
+extension LaundryMachine: Comparable {
+    static func <(lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
         switch (lhs.status, rhs.status) {
         case (.running, .open):
             return true
@@ -77,7 +77,7 @@ extension Machine: Comparable {
         }
     }
     
-    static func ==(lhs: Machine, rhs: Machine) -> Bool {
+    static func ==(lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
         return lhs.roomName == rhs.roomName
             && lhs.id == rhs.id
             && lhs.isWasher == rhs.isWasher
@@ -85,7 +85,7 @@ extension Machine: Comparable {
 }
 
 // MARK: - Array Extensions
-extension Array where Element == Machine {
+extension Array where Element == LaundryMachine {
     func containsRunningMachine() -> Bool {
         if self.count == 0 { return false }
         return self[0].status == .running

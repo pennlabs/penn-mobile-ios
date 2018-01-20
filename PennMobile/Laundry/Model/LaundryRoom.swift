@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-class LaundryHall: Codable {
+class LaundryRoom: Codable {
     
     static let directory = "laundryHallData.json"
     
@@ -22,10 +22,17 @@ class LaundryHall: Codable {
     let name: String
     let building: String
     
-    public private(set) var washers = [Machine]()
-    public private(set) var dryers = [Machine]()
+    var washers: [LaundryMachine] {
+        return LaundryMachineData.getMachines(for: id).washers
+    }
+
+    var dryers: [LaundryMachine] {
+        return LaundryMachineData.getMachines(for: id).dryers
+    }
     
-    fileprivate var usageData: Array<Double>? = nil
+    var usageData: LaundryUsageData? {
+        return LaundryUsageData.getUsageData(for: id)
+    }
     
     init(json: JSON) {
         self.id = json["id"].intValue
@@ -33,36 +40,22 @@ class LaundryHall: Codable {
         self.building = json["location"].string ?? "Unknown"
     }
     
-    init(json: JSON, id:Int) {
-        self.id = id
-        self.name = json["hall_name"].string ?? "Unknown"
-        self.building = json["location"].string ?? "Unknown"
-        
-        let runningMachines = json["machines"]["details"].arrayValue
-            .map { Machine(json: $0, roomName: name) }
-        
-        self.washers = runningMachines.filter { $0.isWasher }.sorted()
-        self.dryers = runningMachines.filter { !$0.isWasher }.sorted()
-        
-        self.usageData = LaundryUsageData.dataForRoom[self.id]?.usageData
-    }
-    
-    static func getLaundryHall(for id: Int) -> LaundryHall? {
-        return LaundryAPIService.instance.idToHalls?[id]
+    static func getLaundryHall(for id: Int) -> LaundryRoom? {
+        return LaundryAPIService.instance.idToRooms?[id]
     }
     
     static func setPreferences(for ids: [Int]) {
         UserDefaults.standard.set(preferences: ids)
     }
     
-    static func setPreferences(for halls: [LaundryHall]) {
+    static func setPreferences(for halls: [LaundryRoom]) {
         let ids = halls.map { $0.id }
         UserDefaults.standard.set(preferences: ids)
     }
     
-    static func getPreferences() -> [LaundryHall] {
+    static func getPreferences() -> [LaundryRoom] {
         if let ids = UserDefaults.standard.getLaundryPreferences() {
-            var halls = [LaundryHall]()
+            var halls = [LaundryRoom]()
             for id in ids {
                 if let hall = getLaundryHall(for: id) {
                     halls.append(hall)
@@ -70,37 +63,42 @@ class LaundryHall: Codable {
             }
             return halls
         }
-        return [LaundryHall]()
+        return [LaundryRoom]()
     }
     
     func decrementTimeRemaining(by minutes: Int) {
         washers.decrementTimeRemaining(by: minutes)
         dryers.decrementTimeRemaining(by: minutes)
         
-        washers.sort()
-        dryers.sort()
+        LaundryMachineData.set(washers: washers.sorted(), dryers: dryers.sorted(), for: id)
     }
 }
 
 // MARK: - Equatable
-extension LaundryHall: Equatable {
-    static func ==(lhs: LaundryHall, rhs: LaundryHall) -> Bool {
+extension LaundryRoom: Equatable {
+    static func ==(lhs: LaundryRoom, rhs: LaundryRoom) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
-// MARK: - UsageData
-extension LaundryHall {
-    func getUsageData() -> Array<Double>? {
-        return usageData
-    }
-}
-
 // MARK: - Array Extension
-extension Array where Element == LaundryHall {
+extension Array where Element == LaundryRoom {
     func containsRunningMachine() -> Bool {
         return filter({ (hall) -> Bool in
             return hall.washers.containsRunningMachine() || hall.dryers.containsRunningMachine()
         }).count > 0
+    }
+}
+
+// MARK: - Default Selection
+extension LaundryRoom {
+    static func getDefaultRooms() -> [LaundryRoom] {
+        var rooms = getPreferences()
+        while rooms.count < 3 {
+            let lastId = rooms.last?.id ?? -1
+            guard let nextRoom = getLaundryHall(for: lastId + 1) else { continue }
+            rooms.append(nextRoom)
+        }
+        return rooms
     }
 }

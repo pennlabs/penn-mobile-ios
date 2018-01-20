@@ -13,13 +13,13 @@ extension String: Error {}
 
 class LaundryUsageData {
     
-    static var dataForRoom = Dictionary<Int, LaundryUsageData>()
-    static var currentDayForData = Date()
+    fileprivate static var dataForRoom = Dictionary<Int, LaundryUsageData>()
+    fileprivate static var currentDayForData = Date()
     
     let id: Int
     let name: String
     let numberOfMachines: Int
-    let usageData: Array<Double>
+    let data: Array<Double>
     
     init(id: Int, json: JSON) throws {
         self.id = id
@@ -45,7 +45,19 @@ class LaundryUsageData {
             data[i] = ((dataMax - data[i]) / (dataMax - dataMin))
         }
         
-        self.usageData = data.map { $0 }
+        self.data = data.map { $0 }
+    }
+    
+    static func set(usageData: LaundryUsageData, for id: Int) {
+        dataForRoom[id] = usageData
+    }
+    
+    static func getUsageData(for id: Int) -> LaundryUsageData? {
+        return dataForRoom[id]
+    }
+    
+    static func containsUsageData(for id: Int) -> Bool {
+        return getUsageData(for: id) != nil
     }
     
     static func clearIfNewDay() {
@@ -54,5 +66,12 @@ class LaundryUsageData {
             currentDayForData = Date()
         }
     }
+}
+
+// MARK: - Equatable
+extension LaundryUsageData: Equatable {
+    static func ==(lhs: LaundryUsageData, rhs: LaundryUsageData) -> Bool {
+        return lhs.id == rhs.id && lhs.data == rhs.data
+    } 
 }
 

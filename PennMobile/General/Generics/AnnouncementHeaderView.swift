@@ -10,6 +10,8 @@ import UIKit
 
 @objc class AnnouncementHeaderView: UITableViewHeaderFooterView {
     
+    static let headerHeight: CGFloat = 40
+    
     var announcement: String? {
         didSet {
             label.text = announcement
@@ -22,6 +24,7 @@ import UIKit
         label.textColor = UIColor.whiteGrey
         label.textAlignment = .center
         label.numberOfLines = 5
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -31,7 +34,8 @@ import UIKit
         contentView.backgroundColor = UIColor.frenchBlue
         
         addSubview(label)
-        _ = label.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 16, leftConstant: 16, bottomConstant: 16, rightConstant: 16)
+        label.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

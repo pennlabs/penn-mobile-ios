@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Page {
+struct OnboardingPage {
     
     let title: String
     let message: String

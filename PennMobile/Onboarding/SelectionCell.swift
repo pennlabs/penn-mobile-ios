@@ -10,12 +10,12 @@ import UIKit
 
 protocol SelectionCellDelegate: class {
     func handleCancel()
-    func saveSelection(for halls: [LaundryHall])
+    func saveSelection(for rooms: [LaundryRoom])
 }
 
-class SelectionCell: UICollectionViewCell, HallSelectionViewDelegate {
+class SelectionCell: UICollectionViewCell, RoomSelectionViewDelegate {
 
-    private var selectionView: HallSelectionView!
+    private var selectionView: RoomSelectionView!
     private var navigationBar: NavigationBar!
     
     weak var delegate: SelectionCellDelegate?
@@ -28,7 +28,7 @@ class SelectionCell: UICollectionViewCell, HallSelectionViewDelegate {
         navigationBar.customHeight = 44 + UIApplication.shared.statusBarFrame.height
         navigationBar.frame.size = navigationBar.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width, height: navigationBar.customHeight))
         
-        selectionView = HallSelectionView(frame: .zero)
+        selectionView = RoomSelectionView(frame: .zero)
         selectionView?.delegate = self
         selectionView?.prepare(with: nil)
         
@@ -39,7 +39,7 @@ class SelectionCell: UICollectionViewCell, HallSelectionViewDelegate {
         
         let item = UINavigationItem()
         let titleLabel = UILabel(frame: .zero)
-        titleLabel.text = "0/\(selectionView.maxNumHalls) Chosen"
+        titleLabel.text = "0/\(selectionView.maxNumRooms) Chosen"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
         item.titleView = titleLabel
         item.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
@@ -54,9 +54,9 @@ class SelectionCell: UICollectionViewCell, HallSelectionViewDelegate {
     }
     
     // Need to use titleView (instead of title) to prevent buggy behavior where the title shifts position
-    func updateSelectedHalls(for halls: [LaundryHall]) {
+    func updateSelectedRooms(for rooms: [LaundryRoom]) {
         let label = navigationBar.topItem?.titleView as! UILabel
-        label.text = "\(halls.count)/\(selectionView.maxNumHalls) Chosen"
+        label.text = "\(rooms.count)/\(selectionView.maxNumRooms) Chosen"
         navigationBar.topItem?.titleView = label
     }
     
@@ -67,7 +67,7 @@ class SelectionCell: UICollectionViewCell, HallSelectionViewDelegate {
     
     func handleSave() {
         _ = selectionView.resignFirstResponder()
-        delegate?.saveSelection(for: selectionView.chosenHalls)
+        delegate?.saveSelection(for: selectionView.chosenRooms)
     }
     
     func handleFailureToLoadDictionary() {

@@ -2,8 +2,8 @@
 //  LaundryAPIService.swift
 //  LaundryTester
 //
-//  Created by Zhilei Zheng on 2017/10/24.
-//  Copyright © 2017年 Zhilei Zheng. All rights reserved.
+//  Created by Josh Doman on 2017/10/24.
+//  Copyright © 2017 Penn Labs. All rights reserved.
 //
 import Foundation
 import SwiftyJSON
@@ -13,16 +13,16 @@ class LaundryAPIService: Requestable {
     
     static let instance = LaundryAPIService()
     
-    private let laundryUrl = "https://api.pennlabs.org/laundry/hall"
-    private let hallsUrl = "https://api.pennlabs.org/laundry/halls/ids"
+    fileprivate let laundryUrl = "https://api.pennlabs.org/laundry/hall"
+    fileprivate let hallsUrl = "https://api.pennlabs.org/laundry/halls/ids"
     fileprivate let historyUrl = "https://api.pennlabs.org/laundry/usage"
     
-    public var idToHalls: [Int: LaundryHall]?
+    public var idToRooms: [Int: LaundryRoom]?
     
     // Prepare the service
     func prepare() {
-        if Storage.fileExists(LaundryHall.directory, in: .caches) {
-            self.idToHalls = Storage.retrieve(LaundryHall.directory, from: .caches, as: Dictionary<Int, LaundryHall>.self)
+        if Storage.fileExists(LaundryRoom.directory, in: .caches) {
+            self.idToRooms = Storage.retrieve(LaundryRoom.directory, from: .caches, as: Dictionary<Int, LaundryRoom>.self)
         } else {
             loadIds { _ in }
         }
@@ -30,46 +30,85 @@ class LaundryAPIService: Requestable {
     
     func loadIds(_ callback: @escaping (_ success: Bool) -> ()) {
         fetchIds { (dictionary) in
-            self.idToHalls = dictionary
+            self.idToRooms = dictionary
             if let dict = dictionary {
-                Storage.store(dict, to: .caches, as: LaundryHall.directory)
+                Storage.store(dict, to: .caches, as: LaundryRoom.directory)
             }
             callback(dictionary != nil)
         }
     }
     
-    private func fetchIds(callback: @escaping ([Int: LaundryHall]?) -> ()) {
+    private func fetchIds(callback: @escaping ([Int: LaundryRoom]?) -> ()) {
         getRequest(url: hallsUrl) { (dictionary) in
             if let dict = dictionary {
                 let json = JSON(dict)
-                let hallsDictionary = try? Dictionary<Int, LaundryHall>(json: json)
+                let hallsDictionary = try? Dictionary<Int, LaundryRoom>(json: json)
                 callback(hallsDictionary)
             } else {
                 callback(nil)
             }
         }
     }
-    
-    // call passing array of ids to API
-    // Returns optional array of halls (nil if network call failed)
-    private func getHallsHelper(for ids: [Int], callback: @escaping (([LaundryHall]?) -> Void)) {
+}
+
+// MARK: - Fetch API
+extension LaundryAPIService {
+    func fetchLaundryData(for rooms: [LaundryRoom], withUsageData: Bool, _ callback: @escaping (_ success: Bool) -> Void) {
+        let ids = rooms.map { $0.id }
+        fetchMachineData(for: ids) { (machineDataArray) in
+            if machineDataArray == nil {
+                callback(false)
+                return
+            }
+            
+            if !withUsageData {
+                for machineData in machineDataArray! {
+                    LaundryMachineData.set(laundryMachineData: machineData)
+                }
+                callback(true)
+                return
+            }
+            
+            self.fetchUsageData(for: ids, callback: { (usageDataArray) in
+                if usageDataArray == nil {
+                    callback(false)
+                    return
+                }
+                
+                for machineData in machineDataArray! {
+                    LaundryMachineData.set(laundryMachineData: machineData)
+                }
+                
+                for usageData in usageDataArray! {
+                    LaundryUsageData.set(usageData: usageData, for: usageData.id)
+                }
+                
+                callback(true)
+            })
+        }
+    }
+}
+
+// MARK: - MachineData API
+extension LaundryAPIService {
+    fileprivate func fetchMachineData(for ids: [Int], _ callback: @escaping ([LaundryMachineData]?) -> Void) {
         if ids.count == 3 {
-            getHallsHelper(for: [ids[0]], callback: { (firstHallArray) in
-                if firstHallArray == nil {
+            fetchMachineData(for: [ids[0]]) { (firstMachineDataArray) in
+                if firstMachineDataArray == nil {
                     callback(nil)
                     return
                 }
                 
-                var firstCopy = firstHallArray
-                self.getHallsHelper(for: [ids[1], ids[2]], callback: { (secondThirdHalls) in
-                    if let second = secondThirdHalls {
-                        firstCopy?.append(contentsOf: second)
-                        callback(firstCopy)
+                var finalArray = firstMachineDataArray
+                self.fetchMachineData(for: [ids[1], ids[2]]) { (secondMachineDataArray) in
+                    if let secondArray = secondMachineDataArray {
+                        finalArray?.append(contentsOf: secondArray)
+                        callback(finalArray)
                     } else {
                         callback(nil)
                     }
-                })
-            })
+                }
+            }
             return
         }
         
@@ -77,50 +116,36 @@ class LaundryAPIService: Requestable {
         for id in ids {
             url += "/\(id)"
         }
+        
         getRequest(url: url) { (dictionary) in
             if let dict = dictionary {
                 let json = JSON(dict)
-                if let hallArray = json["halls"].array {
-                    var halls = [LaundryHall]()
-                    var index = 0
-                    for id in ids {
-                        halls.append(LaundryHall(json: hallArray[index], id: id))
-                        index += 1
-                    }
-                    callback(halls)
+                if let machineDataArray = LaundryMachineData.getMachineDataArray(json: json, ids: ids) {
+                    callback(machineDataArray)
                 } else {
-                    let laundryHall = LaundryHall(json: json, id: ids[0])
-                    callback([laundryHall])
+                    let machineData = LaundryMachineData(json: json, id: ids[0])
+                    callback([machineData])
                 }
             } else {
                 callback(nil)
             }
         }
     }
-    
-    func getHalls(for ids: [Int], callback: @escaping (([LaundryHall]?) -> Void)) {
-        updateUsageDataIfNeeded(for: ids) { (success) in
-            if !success {
-                callback(nil)
-                return
-            }
-            
-            self.getHallsHelper(for: ids, callback: { (laundryHalls) in
-                callback(laundryHalls)
-            })
+}
+
+// MARK: - UsageData API
+extension LaundryAPIService {
+    // Callback is passed a boolean representing a success or failure of network call
+    fileprivate func fetchUsageData(for ids: [Int], callback: @escaping ([LaundryUsageData]?) -> Void) {
+        LaundryUsageData.clearIfNewDay()
+        let newIds = ids.filter { !LaundryUsageData.containsUsageData(for: $0) }
+        
+        getUsageData(for: newIds) { (newUsageDataArray) in
+            callback(newUsageDataArray)
         }
     }
     
-    func getHalls(for halls: [LaundryHall], callback: @escaping (([LaundryHall]?) -> Void)) {
-        let ids = halls.map { $0.id }
-        getHalls(for: ids, callback: callback)
-    }
-}
-
-// Mark: Usage API
-extension LaundryAPIService {
-    
-    fileprivate func getUsageData(for id: Int, callback: @escaping ((LaundryUsageData?) -> Void)) {
+    private func getUsageData(for id: Int, callback: @escaping ((LaundryUsageData?) -> Void)) {
         let url = "\(historyUrl)/\(id)"
         getRequest(url: url) { (dict) in
             if let dict = dict {
@@ -133,9 +158,9 @@ extension LaundryAPIService {
         }
     }
     
-    fileprivate func getUsageData(for ids: [Int], callback: @escaping (([Int: LaundryUsageData]?) -> Void)) {
+    private func getUsageData(for ids: [Int], callback: @escaping (([LaundryUsageData]?) -> Void)) {
         if ids.isEmpty {
-            callback(Dictionary<Int, LaundryUsageData>())
+            callback([])
             return
         }
         
@@ -148,39 +173,39 @@ extension LaundryAPIService {
                 return
             }
             
-            self.getUsageData(for: remainingIds, callback: { (usageDataDict) in
-                if usageDataDict == nil {
+            self.getUsageData(for: remainingIds, callback: { (usageDataArray) in
+                if usageDataArray == nil {
                     callback(nil)
                     return
                 }
                 
-                var newUsageDataDict = usageDataDict!
-                newUsageDataDict[firstId] = usageData
-                callback(newUsageDataDict)
+                var newUsageDataArray = usageDataArray!
+                newUsageDataArray.append(usageData)
+                callback(newUsageDataArray)
             })
-        }
-    }
-    
-    // Callback is passed a boolean representing a success or failure of network call
-    fileprivate func updateUsageDataIfNeeded(for ids: [Int], callback: @escaping (Bool) -> Void) {
-        LaundryUsageData.clearIfNewDay()
-        let newIds = ids.filter { LaundryUsageData.dataForRoom[$0] == nil }
-        getUsageData(for: newIds) { (usageData) in
-            if let usageData = usageData {
-                for id in newIds {
-                    if let data = usageData[id] {
-                        LaundryUsageData.dataForRoom[id] = data
-                    }
-                }
-                callback(true)
-            } else {
-                callback(false)
-            }
         }
     }
 }
 
-extension Dictionary where Key == Int, Value == LaundryHall {
+// MARK: - MultiRoom Parsing
+extension LaundryMachineData {
+    fileprivate static func getMachineDataArray(json: JSON, ids: [Int]) -> [LaundryMachineData]? {
+        guard let jsonArray = json["halls"].array else {
+            return nil
+        }
+        
+        var dataArray = [LaundryMachineData]()
+        var i = 0
+        for json in jsonArray {
+            dataArray.append(LaundryMachineData(json: json, id: ids[i]))
+            i += 1
+        }
+        return dataArray
+    }
+}
+
+// MARK: - Room ID Parsing
+extension Dictionary where Key == Int, Value == LaundryRoom {
     init(json: JSON) throws {
         guard let jsonArray = json["halls"].array else {
             throw JSONError.unexpectedRootNode("Result missing halls.")
@@ -188,8 +213,8 @@ extension Dictionary where Key == Int, Value == LaundryHall {
         self.init()
         for json in jsonArray {
             let id = json["id"].intValue
-            let hall = LaundryHall(json: json)
-            self[id] = hall
+            let room = LaundryRoom(json: json)
+            self[id] = room
         }
     }
 }

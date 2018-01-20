@@ -119,7 +119,7 @@ extension DatabaseManager {
     }
     
     internal func logSessionStarted() throws {
-        let vc = ControllerSettings.shared.visibleVCName()
+        let vc = ControllerModel.shared.visiblePage().rawValue
         batchRequests.append(try DBLogRequest(vc: vc, event: "Session started", action: nil, desc: nil))
     }
     

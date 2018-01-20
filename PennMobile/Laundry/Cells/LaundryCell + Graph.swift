@@ -11,7 +11,7 @@ import ScrollableGraphView
 
 // MARK: - Scrollable Graph View
 
-extension LaundryCell: ScrollableGraphViewDataSource {
+extension LaundryCell: ScrollableGraphViewDataSource {    
     internal func generateScrollableGraphView(_ frame: CGRect) -> ScrollableGraphView {
         // Compose the graph view by creating a graph, then adding any plots
         // and reference lines before adding the graph to the view hierarchy.
@@ -127,20 +127,22 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         return numberOfDataPointsInGraph
     }
     
-    func reloadGraphDataIfNeeded(oldRoom: LaundryHall?, newRoom: LaundryHall?) {
+    func reloadGraphDataIfNeeded(oldRoom: LaundryRoom?, newRoom: LaundryRoom?) {
         reloadDottedLineLayer() // refresh the dotted line that indicates current time
         
-        if oldRoom?.getUsageData() == nil && newRoom?.getUsageData() == nil { return }
+        if usageData == nil && newRoom?.usageData == nil { return }
         
-        if let oldUsageData = oldRoom?.getUsageData(), let newUsageData = newRoom?.getUsageData(),
-            oldUsageData == newUsageData { return }
+        if let usageData = usageData, let newUsageData = newRoom?.usageData,
+            usageData == newUsageData { return }
         
-        if oldRoom?.getUsageData() != nil && newRoom?.getUsageData() == nil {
+        if usageData != nil && newRoom?.usageData == nil {
+            usageData = nil
             graphData = Array(repeating: 0.0, count: self.numberOfDataPointsInGraph)
             scrollableGraphView?.reload()
             return
         }
         
+        usageData = newRoom?.usageData
         scrollGraphToCurrentHour {
             self.animateGraph()
         }
@@ -168,7 +170,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
     
     @objc fileprivate func executeGraphAnimation() {
-        if let usageData = room.getUsageData() {
+        if let usageData = usageData?.data {
             for i in self.graphData.indices {
                 if i < usageData.count {
                     graphData[i] = usageData[i]

@@ -16,8 +16,22 @@
 		21329D081EE7AAE500C9DE65 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21329D071EE7AAE500C9DE65 /* EmptyView.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
 		214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F768E1F07391000B8841C /* DatabaseManager.swift */; };
-		21640D3E200ED954002F33CA /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D3D200ED954002F33CA /* Machine.swift */; };
+		21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D3D200ED954002F33CA /* LaundryMachine.swift */; };
 		21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D3F200EF881002F33CA /* LaundryCell + Graph.swift */; };
+		21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D4420103EB8002F33CA /* HomeViewController.swift */; };
+		21640D4B20104B5A002F33CA /* HomeViewModelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D4A20104B5A002F33CA /* HomeViewModelItem.swift */; };
+		21640D5020105032002F33CA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D4F20105032002F33CA /* Event.swift */; };
+		21640D5220105086002F33CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5120105086002F33CA /* User.swift */; };
+		21640D542010526B002F33CA /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D532010526B002F33CA /* HomeViewModel.swift */; };
+		21640D5620105A5E002F33CA /* GeneralHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5520105A5E002F33CA /* GeneralHomeCell.swift */; };
+		21640D5A20105B8E002F33CA /* HomeEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5920105B8E002F33CA /* HomeEventCell.swift */; };
+		21640D5C20105B98002F33CA /* HomeDiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5B20105B98002F33CA /* HomeDiningCell.swift */; };
+		21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5D20105BAC002F33CA /* HomeLaundryCell.swift */; };
+		21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5F20105BB4002F33CA /* HomeStudyRoomCell.swift */; };
+		21640D6220114A29002F33CA /* ControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D6120114A28002F33CA /* ControllerModel.swift */; };
+		21640D64201157A6002F33CA /* TransitionalHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D63201157A5002F33CA /* TransitionalHomeCell.swift */; };
+		21640D662012A1CE002F33CA /* OpenClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D652012A1CE002F33CA /* OpenClose.swift */; };
+		21640D682012A23E002F33CA /* DiningHoursData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D672012A23E002F33CA /* DiningHoursData.swift */; };
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
 		216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640781EBADADA00746B8E /* PennMobileTests.swift */; };
@@ -26,7 +40,7 @@
 		216640941EBADC1700746B8E /* DiningControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640901EBADC1700746B8E /* DiningControllerCell.swift */; };
 		216640951EBADC1700746B8E /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640911EBADC1700746B8E /* DiningViewController.swift */; };
 		216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640921EBADC1700746B8E /* DiningDetailViewController.swift */; };
-		216640971EBADC1700746B8E /* DiningModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640931EBADC1700746B8E /* DiningModel.swift */; };
+		216640971EBADC1700746B8E /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640931EBADC1700746B8E /* DiningVenue.swift */; };
 		216640A21EBADC5300746B8E /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2166409E1EBADC5300746B8E /* RangeSlider.swift */; };
 		216640A31EBADC5300746B8E /* TextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2166409F1EBADC5300746B8E /* TextLayer.swift */; };
 		216640A41EBADC5300746B8E /* ThumbLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640A01EBADC5300746B8E /* ThumbLayer.swift */; };
@@ -51,7 +65,13 @@
 		216640F31EBB86A300746B8E /* SupportItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640F01EBB86A300746B8E /* SupportItem.m */; };
 		216640FC1EBB899900746B8E /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640FB1EBB899900746B8E /* AboutViewController.m */; };
 		216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640FD1EBBA5A300746B8E /* NewsViewController.swift */; };
-		21879B1C1FB3F431003CF552 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21879B1B1FB3F431003CF552 /* GoogleService-Info.plist */; };
+		217C6DD2201399DB00F07C3D /* LaundryMachineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD1201399DB00F07C3D /* LaundryMachineData.swift */; };
+		217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD320139A1800F07C3D /* DiningViewModel.swift */; };
+		217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */; };
+		217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */; };
+		2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */; };
+		2180D2322013F57E008C94CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2180D2312013F57E008C94CF /* GoogleService-Info.plist */; };
+		2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2180D2342013F65C008C94CF /* HomeAPIService.swift */; };
 		21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21879B1D1FB3FF54003CF552 /* Storage.swift */; };
 		2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */; };
 		2190FD351EC625BB00EC683C /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2190FD341EC625BB00EC683C /* Protocols.swift */; };
@@ -59,13 +79,13 @@
 		2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2196D5E21F5263AC002058A0 /* AnnouncementHeaderView.swift */; };
 		219F01F41FB7CCFA006BBC4E /* SAConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01F31FB7CCFA006BBC4E /* SAConfettiView.swift */; };
 		219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01F51FB7E14A006BBC4E /* SelectionCell.swift */; };
-		219F01F91FB8AC22006BBC4E /* HallSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01F81FB8AC22006BBC4E /* HallSelectionView.swift */; };
+		219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */; };
 		219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
 		8D08ACB30BC0C29FD56CE14E /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */; };
 		B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */; };
-		B650C5641FA43FC600922E98 /* LaundryHall.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5631FA43FC600922E98 /* LaundryHall.swift */; };
+		B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5631FA43FC600922E98 /* LaundryRoom.swift */; };
 		B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */; };
 		B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */; };
 		B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAF11F802A050038B9D5 /* LaundryCell.swift */; };
@@ -74,8 +94,7 @@
 		CF29A1751FB788820067D946 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1651FB7887C0067D946 /* Page.swift */; };
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
-		CF4BE2F8201266FE0043D3EC /* NotificationRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4BE2F7201266FE0043D3EC /* NotificationRequestable.swift */; };
-		CF7FCA761FAFCD9E0052F0A9 /* HallSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* HallSelectionViewController.swift */; };
+		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,8 +118,22 @@
 		21329D071EE7AAE500C9DE65 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		214F768E1F07391000B8841C /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
-		21640D3D200ED954002F33CA /* Machine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
+		21640D3D200ED954002F33CA /* LaundryMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachine.swift; sourceTree = "<group>"; };
 		21640D3F200EF881002F33CA /* LaundryCell + Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LaundryCell + Graph.swift"; sourceTree = "<group>"; };
+		21640D4420103EB8002F33CA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		21640D4A20104B5A002F33CA /* HomeViewModelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelItem.swift; sourceTree = "<group>"; };
+		21640D4F20105032002F33CA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		21640D5120105086002F33CA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		21640D532010526B002F33CA /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		21640D5520105A5E002F33CA /* GeneralHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralHomeCell.swift; sourceTree = "<group>"; };
+		21640D5920105B8E002F33CA /* HomeEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventCell.swift; sourceTree = "<group>"; };
+		21640D5B20105B98002F33CA /* HomeDiningCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDiningCell.swift; sourceTree = "<group>"; };
+		21640D5D20105BAC002F33CA /* HomeLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLaundryCell.swift; sourceTree = "<group>"; };
+		21640D5F20105BB4002F33CA /* HomeStudyRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStudyRoomCell.swift; sourceTree = "<group>"; };
+		21640D6120114A28002F33CA /* ControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerModel.swift; sourceTree = "<group>"; };
+		21640D63201157A5002F33CA /* TransitionalHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionalHomeCell.swift; sourceTree = "<group>"; };
+		21640D652012A1CE002F33CA /* OpenClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClose.swift; sourceTree = "<group>"; };
+		21640D672012A23E002F33CA /* DiningHoursData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningHoursData.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		216640631EBADADA00746B8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2166406D1EBADADA00746B8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -115,7 +148,7 @@
 		216640901EBADC1700746B8E /* DiningControllerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningControllerCell.swift; sourceTree = "<group>"; };
 		216640911EBADC1700746B8E /* DiningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewController.swift; sourceTree = "<group>"; };
 		216640921EBADC1700746B8E /* DiningDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningDetailViewController.swift; sourceTree = "<group>"; };
-		216640931EBADC1700746B8E /* DiningModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningModel.swift; sourceTree = "<group>"; };
+		216640931EBADC1700746B8E /* DiningVenue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningVenue.swift; sourceTree = "<group>"; };
 		2166409E1EBADC5300746B8E /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 		2166409F1EBADC5300746B8E /* TextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextLayer.swift; sourceTree = "<group>"; };
 		216640A01EBADC5300746B8E /* ThumbLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbLayer.swift; sourceTree = "<group>"; };
@@ -143,7 +176,13 @@
 		216640FA1EBB899900746B8E /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		216640FB1EBB899900746B8E /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		216640FD1EBBA5A300746B8E /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
-		21879B1B1FB3F431003CF552 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		217C6DD1201399DB00F07C3D /* LaundryMachineData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachineData.swift; sourceTree = "<group>"; };
+		217C6DD320139A1800F07C3D /* DiningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewModel.swift; sourceTree = "<group>"; };
+		217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
+		217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
+		2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequestable.swift; sourceTree = "<group>"; };
+		2180D2312013F57E008C94CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2180D2342013F65C008C94CF /* HomeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPIService.swift; sourceTree = "<group>"; };
 		21879B1D1FB3FF54003CF552 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = PennMobile/Assets.xcassets; sourceTree = "<group>"; };
 		2190FD341EC625BB00EC683C /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
@@ -151,14 +190,14 @@
 		2196D5E21F5263AC002058A0 /* AnnouncementHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementHeaderView.swift; sourceTree = "<group>"; };
 		219F01F31FB7CCFA006BBC4E /* SAConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAConfettiView.swift; sourceTree = "<group>"; };
 		219F01F51FB7E14A006BBC4E /* SelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCell.swift; sourceTree = "<group>"; };
-		219F01F81FB8AC22006BBC4E /* HallSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallSelectionView.swift; sourceTree = "<group>"; };
+		219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionView.swift; sourceTree = "<group>"; };
 		219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryNotificationCenter.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
 		2B364FB5448C9559DDEB6B7C /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLaundryCell.swift; sourceTree = "<group>"; };
-		B650C5631FA43FC600922E98 /* LaundryHall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryHall.swift; sourceTree = "<group>"; };
+		B650C5631FA43FC600922E98 /* LaundryRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryRoom.swift; sourceTree = "<group>"; };
 		B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachineCell.swift; sourceTree = "<group>"; };
 		B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryTableViewController.swift; sourceTree = "<group>"; };
 		B654BAF11F802A050038B9D5 /* LaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryCell.swift; sourceTree = "<group>"; };
@@ -170,8 +209,7 @@
 		CF29A1651FB7887C0067D946 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
-		CF4BE2F7201266FE0043D3EC /* NotificationRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequestable.swift; sourceTree = "<group>"; };
-		CF7FCA751FAFCD9E0052F0A9 /* HallSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallSelectionViewController.swift; sourceTree = "<group>"; };
+		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +232,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21640D4220103C8A002F33CA /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2180D2332013F652008C94CF /* Networking */,
+				21640D4E2010501C002F33CA /* Model */,
+				21640D4920104B0B002F33CA /* ViewModel */,
+				21640D4620104354002F33CA /* Cells */,
+				21640D4320103E9F002F33CA /* Controllers */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		21640D4320103E9F002F33CA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				21640D4420103EB8002F33CA /* HomeViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		21640D4620104354002F33CA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				21640D5520105A5E002F33CA /* GeneralHomeCell.swift */,
+				21640D63201157A5002F33CA /* TransitionalHomeCell.swift */,
+				21640D5920105B8E002F33CA /* HomeEventCell.swift */,
+				21640D5B20105B98002F33CA /* HomeDiningCell.swift */,
+				21640D5D20105BAC002F33CA /* HomeLaundryCell.swift */,
+				21640D5F20105BB4002F33CA /* HomeStudyRoomCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		21640D4920104B0B002F33CA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				21640D4A20104B5A002F33CA /* HomeViewModelItem.swift */,
+				21640D532010526B002F33CA /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		21640D4E2010501C002F33CA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				21640D4F20105032002F33CA /* Event.swift */,
+				21640D5120105086002F33CA /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		216640571EBADADA00746B8E = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +312,7 @@
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
 				216640C71EBADC9D00746B8E /* General */,
 				216640881EBADBA000746B8E /* AppDelegate + Stuff */,
+				21640D4220103C8A002F33CA /* Home */,
 				2166408B1EBADBF800746B8E /* Dining */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
 				216640EE1EBB867600746B8E /* Contacts */,
@@ -246,8 +336,8 @@
 			isa = PBXGroup;
 			children = (
 				2166406F1EBADADA00746B8E /* Info.plist */,
-				21879B1B1FB3F431003CF552 /* GoogleService-Info.plist */,
 				211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */,
+				2180D2312013F57E008C94CF /* GoogleService-Info.plist */,
 				2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */,
 				216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */,
 				216640F81EBB88FB00746B8E /* PrefixHeader.pch */,
@@ -263,6 +353,7 @@
 			children = (
 				216640631EBADADA00746B8E /* AppDelegate.swift */,
 				216640891EBADBB700746B8E /* MasterTableViewController.swift */,
+				21640D6120114A28002F33CA /* ControllerModel.swift */,
 			);
 			path = "AppDelegate + Stuff";
 			sourceTree = "<group>";
@@ -293,7 +384,10 @@
 		2166408D1EBADC0100746B8E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				216640931EBADC1700746B8E /* DiningModel.swift */,
+				216640931EBADC1700746B8E /* DiningVenue.swift */,
+				21640D672012A23E002F33CA /* DiningHoursData.swift */,
+				217C6DD320139A1800F07C3D /* DiningViewModel.swift */,
+				21640D652012A1CE002F33CA /* OpenClose.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -311,6 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				216640901EBADC1700746B8E /* DiningControllerCell.swift */,
+				217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -388,7 +483,7 @@
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
 				21879B1D1FB3FF54003CF552 /* Storage.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
-				CF4BE2F7201266FE0043D3EC /* NotificationRequestable.swift */,
+				2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -430,10 +525,18 @@
 			path = About;
 			sourceTree = "<group>";
 		};
+		2180D2332013F652008C94CF /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				2180D2342013F65C008C94CF /* HomeAPIService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		219F01F71FB8ABF2006BBC4E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				219F01F81FB8AC22006BBC4E /* HallSelectionView.swift */,
+				219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -441,6 +544,7 @@
 		21ECADA21F30146B00569883 /* Networking + Analytics */ = {
 			isa = PBXGroup;
 			children = (
+				217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */,
 				216640CA1EBADCA400746B8E /* GoogleAnalyticsManager.swift */,
 				214F768E1F07391000B8841C /* DatabaseManager.swift */,
 				214C23B11F2FEE150004487C /* Networking.swift */,
@@ -495,7 +599,7 @@
 			isa = PBXGroup;
 			children = (
 				B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */,
-				CF7FCA751FAFCD9E0052F0A9 /* HallSelectionViewController.swift */,
+				CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -503,8 +607,9 @@
 		B654BAEB1F801F470038B9D5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				21640D3D200ED954002F33CA /* Machine.swift */,
-				B650C5631FA43FC600922E98 /* LaundryHall.swift */,
+				21640D3D200ED954002F33CA /* LaundryMachine.swift */,
+				217C6DD1201399DB00F07C3D /* LaundryMachineData.swift */,
+				B650C5631FA43FC600922E98 /* LaundryRoom.swift */,
 				B6F0DCE0200A894700DB0006 /* LaundryUsageData.swift */,
 				219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */,
 			);
@@ -629,8 +734,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
+				2180D2322013F57E008C94CF /* GoogleService-Info.plist in Resources */,
 				211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */,
-				21879B1C1FB3F431003CF552 /* GoogleService-Info.plist in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -768,19 +873,26 @@
 				B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */,
 				216640AD1EBADC5E00746B8E /* DateHandler.swift in Sources */,
 				219F01F41FB7CCFA006BBC4E /* SAConfettiView.swift in Sources */,
+				21640D4B20104B5A002F33CA /* HomeViewModelItem.swift in Sources */,
 				216640B51EBADC6A00746B8E /* HourCell.swift in Sources */,
 				216640AC1EBADC5D00746B8E /* Structs.swift in Sources */,
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
 				216640BC1EBADC7300746B8E /* BookViewController.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
+				21640D682012A23E002F33CA /* DiningHoursData.swift in Sources */,
+				21640D5C20105B98002F33CA /* HomeDiningCell.swift in Sources */,
 				21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */,
 				216640BB1EBADC7300746B8E /* GSRNetworkManager.swift in Sources */,
 				216640AF1EBADC5E00746B8E /* Parser.swift in Sources */,
+				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
+				21640D5620105A5E002F33CA /* GeneralHomeCell.swift in Sources */,
+				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
 				216640B11EBADC5E00746B8E /* Colors.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
+				21640D542010526B002F33CA /* HomeViewModel.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
@@ -788,43 +900,55 @@
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				216640A31EBADC5300746B8E /* TextLayer.swift in Sources */,
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
+				217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */,
 				214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */,
 				21329D081EE7AAE500C9DE65 /* EmptyView.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
+				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2166408A1EBADBB700746B8E /* MasterTableViewController.swift in Sources */,
 				216640A41EBADC5300746B8E /* ThumbLayer.swift in Sources */,
-				219F01F91FB8AC22006BBC4E /* HallSelectionView.swift in Sources */,
+				21640D5020105032002F33CA /* Event.swift in Sources */,
+				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
 				216640BE1EBADC7300746B8E /* CredentialsViewController.swift in Sources */,
+				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
+				217C6DD2201399DB00F07C3D /* LaundryMachineData.swift in Sources */,
 				216640941EBADC1700746B8E /* DiningControllerCell.swift in Sources */,
+				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640A21EBADC5300746B8E /* RangeSlider.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
-				21640D3E200ED954002F33CA /* Machine.swift in Sources */,
+				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
 				B6F0DCE1200A894700DB0006 /* LaundryUsageData.swift in Sources */,
 				216640FC1EBB899900746B8E /* AboutViewController.m in Sources */,
 				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
+				21640D5220105086002F33CA /* User.swift in Sources */,
+				217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
 				216640B01EBADC5E00746B8E /* LocationsHandler.swift in Sources */,
+				21640D64201157A6002F33CA /* TransitionalHomeCell.swift in Sources */,
 				B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */,
 				219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */,
+				21640D662012A1CE002F33CA /* OpenClose.swift in Sources */,
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
+				21640D5A20105B8E002F33CA /* HomeEventCell.swift in Sources */,
 				216640BD1EBADC7300746B8E /* BookViewControllerExtension.swift in Sources */,
-				216640971EBADC1700746B8E /* DiningModel.swift in Sources */,
+				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
+				216640971EBADC1700746B8E /* DiningVenue.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				216640BF1EBADC7300746B8E /* ProcessViewController.swift in Sources */,
-				B650C5641FA43FC600922E98 /* LaundryHall.swift in Sources */,
+				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				216640AE1EBADC5E00746B8E /* NSCalendarExtension.swift in Sources */,
 				216640B41EBADC6A00746B8E /* RoomCell.swift in Sources */,
-				CF4BE2F8201266FE0043D3EC /* NotificationRequestable.swift in Sources */,
+				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
 				216640871EBADB8300746B8E /* SWRevealViewController.m in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */,
-				CF7FCA761FAFCD9E0052F0A9 /* HallSelectionViewController.swift in Sources */,
+				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
 				216640CD1EBADCA400746B8E /* GoogleAnalyticsManager.swift in Sources */,
 			);

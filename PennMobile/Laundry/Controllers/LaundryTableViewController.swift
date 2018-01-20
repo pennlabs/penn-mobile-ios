@@ -8,7 +8,7 @@
 
 class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, ShowsAlert, NotificationRequestable {
     
-    internal var halls = [LaundryHall]()
+    internal var rooms = [LaundryRoom]()
     
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
@@ -29,7 +29,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         
         self.title = "Laundry"
         
-        halls = LaundryHall.getPreferences()
+        rooms = LaundryRoom.getPreferences()
         
         registerHeadersAndCells()
         prepareRefreshControl()
@@ -37,14 +37,13 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(handleEditPressed))
         
         // Start indicator if there are cells that need to be loaded
-        if !halls.isEmpty {
+        if !rooms.isEmpty {
             showActivity()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //LaundryNotificationCenter.shared.executePendingRequests()
         updateInfo {
             self.hideActivity()
         }
@@ -60,10 +59,10 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
 // MARK: - Add/edit selection
 extension LaundryTableViewController {
     @objc fileprivate func handleEditPressed() {
-        let hallSelectionVC = HallSelectionViewController()
-        hallSelectionVC.delegate = self
-        hallSelectionVC.chosenHalls = halls //provide selected ids here
-        let nvc = UINavigationController(rootViewController: hallSelectionVC)
+        let roomselectionVC = RoomSelectionViewController()
+        roomselectionVC.delegate = self
+        roomselectionVC.chosenRooms = rooms //provide selected ids here
+        let nvc = UINavigationController(rootViewController: roomselectionVC)
         showDetailViewController(nvc, sender: nil)
     }
 }
@@ -91,7 +90,7 @@ extension LaundryTableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return min(halls.count + 1, 3)
+        return min(rooms.count + 1, 3)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -100,8 +99,8 @@ extension LaundryTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if self.halls.count > indexPath.section {
-            let room = halls[indexPath.section]
+        if self.rooms.count > indexPath.section {
+            let room = rooms[indexPath.section]
             let cell = tableView.dequeueReusableCell(withIdentifier: laundryCell) as! LaundryCell
             cell.room = room
             cell.delegate = self
@@ -118,7 +117,7 @@ extension LaundryTableViewController {
         //return self.view.layoutMarginsGuide.layoutFrame.height / 2.0
         
         // Use for cards of fixed size
-        if indexPath.section >= halls.count {
+        if indexPath.section >= rooms.count {
             return 300.0
         } else {
             return 380.0
@@ -131,16 +130,15 @@ extension LaundryTableViewController {
     func updateInfo(completion: @escaping () -> Void) {
         timer?.invalidate()
         LaundryNotificationCenter.shared.updateForExpiredNotifications {
-            if self.halls.isEmpty {
+            if self.rooms.isEmpty {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     completion()
                 }
             } else {
-                LaundryAPIService.instance.getHalls(for: self.halls) { (newHalls) in
+                LaundryAPIService.instance.fetchLaundryData(for: self.rooms, withUsageData: true) { (success) in
                     DispatchQueue.main.async {
-                        if let newHalls = newHalls {
-                            self.halls = newHalls
+                        if success {
                             self.tableView.reloadData()
                             self.resetTimer()
                         }
@@ -152,34 +150,34 @@ extension LaundryTableViewController {
     }
 }
 
-// MARK: - Hall Selection Delegate
-extension LaundryTableViewController: HallSelectionDelegate {
-    func saveSelection(for halls: [LaundryHall]) {
-        LaundryHall.setPreferences(for: halls)
-        self.halls = halls
+// MARK: - room Selection Delegate
+extension LaundryTableViewController: RoomSelectionVCDelegate {
+    func saveSelection(for rooms: [LaundryRoom]) {
+        LaundryRoom.setPreferences(for: rooms)
+        self.rooms = rooms
         self.tableView.reloadData()
     }
 }
 
 // MARK: - Laundry Cell Delegate
 extension LaundryTableViewController: LaundryCellDelegate {
-    internal func deleteLaundryCell(for hall: LaundryHall) {
-        if let index = halls.index(of: hall) {
-            halls.remove(at: index)
-            LaundryHall.setPreferences(for: halls)
+    internal func deleteLaundryCell(for room: LaundryRoom) {
+        if let index = rooms.index(of: room) {
+            rooms.remove(at: index)
+            LaundryRoom.setPreferences(for: rooms)
             tableView.reloadData()
         }
     }
     
-    internal func handleMachineCellTapped(for machine: Machine, _ updateCellIfNeeded: @escaping () -> Void) {
+    internal func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void) {
         if !allowMachineNotifications { return }
         
-        requestNotification { (granted) in
-            if granted {
-                if machine.isUnderNotification() {
-                    LaundryNotificationCenter.shared.removeOutstandingNotification(for: machine)
-                    updateCellIfNeeded()
-                } else {
+        if machine.isUnderNotification() {
+            LaundryNotificationCenter.shared.removeOutstandingNotification(for: machine)
+            updateCellIfNeeded()
+        } else {
+            requestNotification { (granted) in
+                if granted {
                     LaundryNotificationCenter.shared.notifyWithMessage(for: machine, title: "Ready!", message: "The \(machine.roomName) \(machine.isWasher ? "washer" : "dryer") has finished running.", completion: { (success) in
                         if success {
                             updateCellIfNeeded()
@@ -203,13 +201,13 @@ extension LaundryTableViewController {
     internal func resetTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (_) in
-            if !self.halls.containsRunningMachine() {
+            if !self.rooms.containsRunningMachine() {
                 self.timer?.invalidate()
                 return
             }
             
-            for hall in self.halls {
-                hall.decrementTimeRemaining(by: 1)
+            for room in self.rooms {
+                room.decrementTimeRemaining(by: 1)
             }
             
             LaundryNotificationCenter.shared.updateForExpiredNotifications {

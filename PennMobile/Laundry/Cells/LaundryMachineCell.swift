@@ -10,7 +10,7 @@ import UIKit
 
 class LaundryMachineCell: UICollectionViewCell {
     
-    var machine: Machine! {
+    var machine: LaundryMachine! {
         didSet {
             updateCell(with: machine)
         }
@@ -64,7 +64,7 @@ class LaundryMachineCell: UICollectionViewCell {
         _ = bellView.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: -8, leftConstant: 0, bottomConstant: 0, rightConstant: -8, widthConstant: 20, heightConstant: 20)
     }
     
-    func updateCell(with machine: Machine) {
+    func updateCell(with machine: LaundryMachine) {
         let typeStr = machine.isWasher ? "washer" : "dryer"
         let statusStr: String
         switch machine.status {

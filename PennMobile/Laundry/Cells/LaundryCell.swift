@@ -9,11 +9,11 @@
 import UIKit
 import ScrollableGraphView
 
-// MARK: - Laundry Cell Delegate Protocol
+// MARK: - Laundry Cell Delegate
 
 protocol LaundryCellDelegate: class {
-    func deleteLaundryCell(for hall: LaundryHall)
-    func handleMachineCellTapped(for machine: Machine, _ updateCellIfNeeded: @escaping () -> Void)
+    func deleteLaundryCell(for hall: LaundryRoom)
+    func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void)
 }
 
 // MARK: - Laundry Cell
@@ -22,7 +22,7 @@ class LaundryCell: UITableViewCell {
     
     weak var delegate: LaundryCellDelegate?
     
-    var room: LaundryHall! {
+    var room: LaundryRoom! {
         didSet {
             roomLabel.text = room.building
             roomFloorLabel.text = room.name
@@ -32,6 +32,7 @@ class LaundryCell: UITableViewCell {
         }
     }
     
+    var usageData: LaundryUsageData?
     internal lazy var graphData = Array(repeating: 0.0, count: self.numberOfDataPointsInGraph)
     
     // Number of datapoints displayed in the graph

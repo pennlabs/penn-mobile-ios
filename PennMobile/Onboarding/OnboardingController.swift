@@ -32,12 +32,12 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
     let cellId = "cellId"
     let selectionCellId = "selectionCell"
     
-    let pages: [Page] = {
-        var firstPage: Page = Page(title: "Laundry is back!", message: "And it's better than ever. Now you can see what machines are open. Anytime, anywhere.", imageName: "Onboard 1", showConfetti: true, isFullScreen: true)
+    let pages: [OnboardingPage] = {
+        var firstPage = OnboardingPage(title: "Laundry is back!", message: "And it's better than ever. Now you can see what machines are open. Anytime, anywhere.", imageName: "Onboard 1", showConfetti: true, isFullScreen: true)
         
-        let secondPage = Page(title: "Take the pain out of doing laundry", message: "Check real time usage data without having to leave your room. Swipe to see all machines.", imageName: "Onboard 2", showConfetti: false, isFullScreen: false)
+        let secondPage = OnboardingPage(title: "Take the pain out of doing laundry", message: "Check real time usage data without having to leave your room. Swipe to see all machines.", imageName: "Onboard 2", showConfetti: false, isFullScreen: false)
         
-        let thirdPage = Page(title: "Choose up to three rooms", message: "We'll remember them! You can always edit your selection later.", imageName: "Onboard 3", showConfetti: false, isFullScreen: true)
+        let thirdPage = OnboardingPage(title: "Choose up to three rooms", message: "We'll remember them! You can always edit your selection later.", imageName: "Onboard 3", showConfetti: false, isFullScreen: true)
         
        return [firstPage, secondPage, thirdPage]
     }() //creates empty array (don't have to use optionals)
@@ -181,8 +181,8 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
 }
 
 extension OnboardingController: SelectionCellDelegate {
-    func saveSelection(for halls: [LaundryHall]) {
-        LaundryHall.setPreferences(for: halls)
+    func saveSelection(for halls: [LaundryRoom]) {
+        LaundryRoom.setPreferences(for: halls)
         terminateOnboarding()
         
         let category = GoogleAnalyticsManager.events.category.onboarding

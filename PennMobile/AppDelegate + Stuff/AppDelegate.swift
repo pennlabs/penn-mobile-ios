@@ -14,14 +14,12 @@ import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    let gcmMessageIDKey = "gcm.message_id"
 
     var window: UIWindow?
     var swRevealViewController: SWRevealViewController!
     var navController: UINavigationController!
     var masterTableViewController = MasterTableViewController()
-    var homeController = ControllerSettings.shared.firstController
+    var homeController = ControllerModel.shared.firstVC
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -34,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LaundryAPIService.instance.prepare()
         LaundryNotificationCenter.shared.prepare()
         
-        // Firebase
         FirebaseApp.configure()
         
         if !UserDefaults.standard.isOnboarded() {
@@ -167,7 +164,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         DatabaseManager.shared.startSession()
-        ControllerSettings.shared.visibleVC().viewWillAppear(true)
+        ControllerModel.shared.visibleVC().viewWillAppear(true)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -186,7 +183,7 @@ extension AppDelegate: OnboardingDelegate {
 
 extension AppDelegate: MessagingDelegate {
     func application(received remoteMessage: MessagingRemoteMessage) {
-//        print("Received data message: \(remoteMessage.appData)")
+        //        print("Received data message: \(remoteMessage.appData)")
     }
 }
 
@@ -201,12 +198,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         Messaging.messaging().appDidReceiveMessage(userInfo)
         
         // Print message ID.
-//        if let messageID = userInfo[gcmMessageIDKey] {
-//            print("Message ID: \(messageID)")
-//        }
+        //        if let messageID = userInfo[gcmMessageIDKey] {
+        //            print("Message ID: \(messageID)")
+        //        }
         
         // Print full message.
-//        print(userInfo)
+        //        print(userInfo)
         
         // Change this to your preferred presentation option
         completionHandler([])
@@ -215,14 +212,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
-//        let userInfo = response.notification.request.content.userInfo
-//        // Print message ID.
-//        if let messageID = userInfo[gcmMessageIDKey] {
-//            print("Message ID: \(messageID)")
-//        }
-//
-//        // Print full message.
-//        print(userInfo)
+        //        let userInfo = response.notification.request.content.userInfo
+        //        // Print message ID.
+        //        if let messageID = userInfo[gcmMessageIDKey] {
+        //            print("Message ID: \(messageID)")
+        //        }
+        //
+        //        // Print full message.
+        //        print(userInfo)
         
         completionHandler()
     }
