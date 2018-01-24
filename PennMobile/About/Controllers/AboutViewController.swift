@@ -166,8 +166,8 @@ class AboutViewController: GenericViewController {
     // Labels & TextViews
     fileprivate let pennLabsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Built by Penn Labs"
-        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = "Built by students. For students."
+        label.font = UIFont(name: "HelveticaNeue-Light", size: 18)
         label.textColor = .black
         label.textAlignment = .center
         return label
@@ -207,7 +207,7 @@ class AboutViewController: GenericViewController {
     
     fileprivate let copyrightLabel: UILabel = {
         let label = UILabel()
-        label.text = "© 2017 Penn Labs"
+        label.text = "© 2018 Penn Labs"
         label.font = UIFont(name: "HelveticaNeue", size: 14)
         label.textColor = .darkGray
         label.textAlignment = .center
