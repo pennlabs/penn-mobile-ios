@@ -18,7 +18,11 @@ class AddLaundryCell: UITableViewCell {
     
     var numberOfRoomsSelected: Int = 0 {
         didSet {
-            chooseRoomLabel.text = "\(numberOfRoomsSelected) of 3 rooms selected"
+            if numberOfRoomsSelected > 0 {
+                chooseRoomLabel.text = "\(numberOfRoomsSelected) of 3 rooms selected"
+            } else {
+                chooseRoomLabel.text = "No laundry rooms selected"
+            }
         }
     }
     
