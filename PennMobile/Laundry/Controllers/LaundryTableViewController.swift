@@ -108,6 +108,7 @@ extension LaundryTableViewController {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: addLaundryCell) as! AddLaundryCell
             cell.delegate = self
+            cell.numberOfRoomsSelected = self.rooms.count
             return cell
         }
     }
@@ -118,7 +119,7 @@ extension LaundryTableViewController {
         
         // Use for cards of fixed size
         if indexPath.section >= rooms.count {
-            return 300.0
+            return 80.0
         } else {
             return 380.0
         }

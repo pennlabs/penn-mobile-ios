@@ -60,7 +60,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         graphView.rangeMin = 0.0
         graphView.rangeMax = 1.5
         
-        graphView.layer.cornerRadius = 20
+        graphView.layer.cornerRadius = 15.0
         
         graphView.addReferenceLines(referenceLines: referenceLines)
         graphView.addPlot(plot: dataLinePlot)

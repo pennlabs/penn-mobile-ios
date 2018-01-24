@@ -54,22 +54,22 @@ class LaundryCell: UITableViewCell {
     fileprivate let bgView: UIView = {
         let bg = UIView()
         
-        // corner radius
-        bg.layer.cornerRadius = 20
+        // corner radius for cell. a seperate variable controls corner radius of the Graph
+        bg.layer.cornerRadius = 15.0
         
         // border
         //bg.layer.borderWidth = 0.0
         bg.layer.borderWidth = 1.0
-        bg.layer.borderColor = UIColor.lightGray.cgColor
+        bg.layer.borderColor = UIColor.clear.cgColor
         
         // shadow
         bg.layer.shadowColor = UIColor.black.cgColor
         //bg.layer.shadowColor = UIColor.clear.cgColor
         
-        bg.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
-        bg.layer.shadowOpacity = 0.6
-        bg.layer.shadowRadius = 2.0
-        bg.backgroundColor = UIColor.whiteGrey
+        bg.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        bg.layer.shadowOpacity = 0.25
+        bg.layer.shadowRadius = 4.0
+        bg.backgroundColor = UIColor.white
         
         return bg
     }()

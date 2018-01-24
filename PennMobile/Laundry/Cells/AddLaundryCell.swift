@@ -16,32 +16,38 @@ class AddLaundryCell: UITableViewCell {
     
     weak var delegate: AddLaundryCellDelegate?
     
+    var numberOfRoomsSelected: Int = 0 {
+        didSet {
+            chooseRoomLabel.text = "\(numberOfRoomsSelected) of 3 rooms selected"
+        }
+    }
+    
     private let mainBackground: UIView = {
         let bg = UIView()
         
-        // corner radius
-        bg.layer.cornerRadius = 20
+        // corner radius for cell
+        bg.layer.cornerRadius = 15.0
         
         // border
         //bg.layer.borderWidth = 0.0
         bg.layer.borderWidth = 1.0
-        bg.layer.borderColor = UIColor.lightGray.cgColor
+        bg.layer.borderColor = UIColor.clear.cgColor
         
         // shadow
-        bg.layer.shadowColor = UIColor.black.cgColor
+        bg.layer.shadowColor = UIColor.clear.cgColor
         //bg.layer.shadowColor = UIColor.clear.cgColor
         
-        bg.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
-        bg.layer.shadowOpacity = 0.6
-        bg.layer.shadowRadius = 2.0
-        bg.backgroundColor = UIColor.whiteGrey
+        bg.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        bg.layer.shadowOpacity = 0.25
+        bg.layer.shadowRadius = 4.0
+        bg.backgroundColor = UIColor.clear
         
         return bg
     }()
     
     private let chooseRoomLabel: UILabel = {
         let label = UILabel()
-        label.text = "Choose a Laundry Room"
+        label.text = "0 of 3 rooms selected"
         label.font = UIFont(name: "HelveticaNeue-Light", size: 16)
         label.textColor = UIColor.darkGray
         label.layer.cornerRadius = 4
@@ -52,13 +58,12 @@ class AddLaundryCell: UITableViewCell {
     
     private lazy var addRoomButton: UIButton = {
         let b = UIButton()
-        b.backgroundColor = .clear
-        b.contentMode = .scaleAspectFill
-        b.clipsToBounds = true
-        b.layer.masksToBounds = true
-        b.setBackgroundImage(UIImage(named: "AddLaundryRoomButton"), for: .normal)
-        b.setBackgroundImage(UIImage(named: "AddLaundryRoomButtonSelected"), for: .selected)
-        b.setBackgroundImage(UIImage(named: "AddLaundryRoomButtonSelected"), for: .highlighted)
+        b.setTitleColor(UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0),
+                        for: .normal)
+        b.setTitleColor(UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 0.3),
+                        for: UIControlState.highlighted)
+        b.setTitle("Select a room", for: .normal)
+        b.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 16)
         b.addTarget(self, action: #selector(addRoom), for: .touchUpInside)
         return b
     }()
@@ -77,31 +82,26 @@ class AddLaundryCell: UITableViewCell {
         addSubview(mainBackground)
         
         _ = mainBackground.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
-                                 topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20,
-                                 widthConstant: 0, heightConstant: 0)
+                                  topConstant: 12, leftConstant: 17, bottomConstant: 12, rightConstant: 17,
+                                  widthConstant: 0, heightConstant: 0)
         
         mainBackground.addSubview(addRoomButton)
         mainBackground.addSubview(chooseRoomLabel)
         
-        addRoomButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        addRoomButton.heightAnchor.constraint(
-            equalTo: mainBackground.heightAnchor,
-            multiplier: 0.4).isActive = true
-        addRoomButton.widthAnchor.constraint(
-            equalTo: mainBackground.heightAnchor,
-            multiplier: 0.4).isActive = true
-        addRoomButton.centerXAnchor.constraint(
-            equalTo: mainBackground.centerXAnchor).isActive = true
-        addRoomButton.centerYAnchor.constraint(
-            equalTo: mainBackground.centerYAnchor).isActive = true
-        
         chooseRoomLabel.translatesAutoresizingMaskIntoConstraints = false
+        chooseRoomLabel.topAnchor.constraint(
+            equalTo: mainBackground.topAnchor,
+            constant: 20.0).isActive = true
         chooseRoomLabel.centerXAnchor.constraint(
             equalTo: mainBackground.centerXAnchor).isActive = true
-        chooseRoomLabel.bottomAnchor.constraint(
-            equalTo: addRoomButton.topAnchor,
-            constant: -15).isActive = true
+        
+        addRoomButton.translatesAutoresizingMaskIntoConstraints = false
+        addRoomButton.topAnchor.constraint(
+            equalTo: chooseRoomLabel.bottomAnchor,
+            constant: 0.0).isActive = true
+        addRoomButton.centerXAnchor.constraint(
+            equalTo: chooseRoomLabel.centerXAnchor).isActive = true
+        
     }
     
     @objc private func addRoom() {
