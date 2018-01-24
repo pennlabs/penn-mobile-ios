@@ -70,7 +70,6 @@
 		217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */; };
 		217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */; };
 		2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */; };
-		2180D2322013F57E008C94CF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2180D2312013F57E008C94CF /* GoogleService-Info.plist */; };
 		2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2180D2342013F65C008C94CF /* HomeAPIService.swift */; };
 		21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21879B1D1FB3FF54003CF552 /* Storage.swift */; };
 		2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */; };
@@ -85,6 +84,7 @@
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
 		8D08ACB30BC0C29FD56CE14E /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */; };
 		B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */; };
+		B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6111DB12018497400DC7877 /* GoogleService-Info.plist */; };
 		B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5631FA43FC600922E98 /* LaundryRoom.swift */; };
 		B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */; };
 		B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */; };
@@ -181,7 +181,6 @@
 		217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
 		217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
 		2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequestable.swift; sourceTree = "<group>"; };
-		2180D2312013F57E008C94CF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2180D2342013F65C008C94CF /* HomeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPIService.swift; sourceTree = "<group>"; };
 		21879B1D1FB3FF54003CF552 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = PennMobile/Assets.xcassets; sourceTree = "<group>"; };
@@ -197,6 +196,7 @@
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLaundryCell.swift; sourceTree = "<group>"; };
+		B6111DB12018497400DC7877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B650C5631FA43FC600922E98 /* LaundryRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryRoom.swift; sourceTree = "<group>"; };
 		B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachineCell.swift; sourceTree = "<group>"; };
 		B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryTableViewController.swift; sourceTree = "<group>"; };
@@ -335,9 +335,9 @@
 		216640831EBADB7000746B8E /* Supporting_Files */ = {
 			isa = PBXGroup;
 			children = (
+				B6111DB12018497400DC7877 /* GoogleService-Info.plist */,
 				2166406F1EBADADA00746B8E /* Info.plist */,
 				211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */,
-				2180D2312013F57E008C94CF /* GoogleService-Info.plist */,
 				2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */,
 				216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */,
 				216640F81EBB88FB00746B8E /* PrefixHeader.pch */,
@@ -734,7 +734,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
-				2180D2322013F57E008C94CF /* GoogleService-Info.plist in Resources */,
+				B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */,
 				211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
