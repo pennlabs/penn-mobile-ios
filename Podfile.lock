@@ -1,18 +1,18 @@
 PODS:
-  - Firebase (4.8.1):
-    - Firebase/Core (= 4.8.1)
-  - Firebase/Core (4.8.1):
-    - FirebaseAnalytics (= 4.0.7)
-    - FirebaseCore (= 4.0.14)
-  - Firebase/Messaging (4.8.1):
+  - Firebase (4.8.0):
+    - Firebase/Core (= 4.8.0)
+  - Firebase/Core (4.8.0):
+    - FirebaseAnalytics (= 4.0.5)
+    - FirebaseCore (= 4.0.13)
+  - Firebase/Messaging (4.8.0):
     - Firebase/Core
     - FirebaseMessaging (= 2.0.8)
-  - FirebaseAnalytics (4.0.7):
+  - FirebaseAnalytics (4.0.5):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.14):
+  - FirebaseCore (4.0.13):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseInstanceID (2.0.8):
     - FirebaseCore (~> 4.0)
@@ -76,9 +76,9 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Firebase: 2721056b8885eef90233b03f37be64358d35d262
-  FirebaseAnalytics: 617afa8c26b57a0c3f11361b248bc9e17bfd8dfd
-  FirebaseCore: 2e0b98fb2d64ca8140136beff15772bdd14d2dd7
+  Firebase: 710decbbc6d9d48530e9a5dba3209740c3532e05
+  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
+  FirebaseCore: 3c02ec652db3d03fdc8bc6d9154af3e20d64b6f5
   FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
   FirebaseMessaging: dfdcd307c2382290a1e297a81d0f18370f5b1bcd
   Google: d536877ec602555b755cc28ce6fed104825c693c
@@ -98,4 +98,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 06076c8dacec10a146b6a8051268f0ee67c7a960
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.3.0

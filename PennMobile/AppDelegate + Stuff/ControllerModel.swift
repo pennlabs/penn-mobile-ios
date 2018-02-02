@@ -31,7 +31,7 @@ class ControllerModel: NSObject {
         var dict = [Page: UIViewController]()
         dict[.home] = HomeViewController()
         dict[.dining] = DiningViewController()
-        dict[.studyRoomBooking] = BookViewController()
+        dict[.studyRoomBooking] = GSROverhallController()
         dict[.laundry] = LaundryTableViewController()
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()

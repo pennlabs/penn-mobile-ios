@@ -96,6 +96,11 @@
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
+		CFDF88052024CEB700778852 /* GSROverhaulManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88042024CEB700778852 /* GSROverhaulManager.swift */; };
+		CFDF88072024D30400778852 /* GSROverhallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88062024D30400778852 /* GSROverhallController.swift */; };
+		CFDF880A2024F41000778852 /* GSRVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88092024F41000778852 /* GSRVenue.swift */; };
+		CFDF880C2024F42100778852 /* GSRRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF880B2024F42100778852 /* GSRRoom.swift */; };
+		CFDF880E2024F44900778852 /* GSRTimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF880D2024F44900778852 /* GSRTimeSlot.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +216,11 @@
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
+		CFDF88042024CEB700778852 /* GSROverhaulManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSROverhaulManager.swift; sourceTree = "<group>"; };
+		CFDF88062024D30400778852 /* GSROverhallController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSROverhallController.swift; sourceTree = "<group>"; };
+		CFDF88092024F41000778852 /* GSRVenue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRVenue.swift; sourceTree = "<group>"; };
+		CFDF880B2024F42100778852 /* GSRRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRoom.swift; sourceTree = "<group>"; };
+		CFDF880D2024F44900778852 /* GSRTimeSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTimeSlot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -373,6 +383,7 @@
 		2166408C1EBADBFC00746B8E /* GSR-Booking */ = {
 			isa = PBXGroup;
 			children = (
+				CFDF88082024F3AC00778852 /* OverhaulModels */,
 				2166409B1EBADC3E00746B8E /* Controllers */,
 				2166409A1EBADC3900746B8E /* Model */,
 				2166409D1EBADC4600746B8E /* Networking */,
@@ -442,6 +453,7 @@
 				216640B81EBADC7300746B8E /* BookViewControllerExtension.swift */,
 				216640B91EBADC7300746B8E /* CredentialsViewController.swift */,
 				216640BA1EBADC7300746B8E /* ProcessViewController.swift */,
+				CFDF88062024D30400778852 /* GSROverhallController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -460,6 +472,7 @@
 			isa = PBXGroup;
 			children = (
 				216640B61EBADC7300746B8E /* GSRNetworkManager.swift */,
+				CFDF88042024CEB700778852 /* GSROverhaulManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -651,6 +664,16 @@
 				219F01F31FB7CCFA006BBC4E /* SAConfettiView.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		CFDF88082024F3AC00778852 /* OverhaulModels */ = {
+			isa = PBXGroup;
+			children = (
+				CFDF88092024F41000778852 /* GSRVenue.swift */,
+				CFDF880B2024F42100778852 /* GSRRoom.swift */,
+				CFDF880D2024F44900778852 /* GSRTimeSlot.swift */,
+			);
+			path = OverhaulModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -892,6 +915,7 @@
 				219F01F41FB7CCFA006BBC4E /* SAConfettiView.swift in Sources */,
 				21640D4B20104B5A002F33CA /* HomeViewModelItem.swift in Sources */,
 				216640B51EBADC6A00746B8E /* HourCell.swift in Sources */,
+				CFDF880C2024F42100778852 /* GSRRoom.swift in Sources */,
 				216640AC1EBADC5D00746B8E /* Structs.swift in Sources */,
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
@@ -922,6 +946,7 @@
 				21329D081EE7AAE500C9DE65 /* EmptyView.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
 				B6111DB420184C4A00DC7877 /* AboutViewController.swift in Sources */,
+				CFDF880E2024F44900778852 /* GSRTimeSlot.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
@@ -930,6 +955,7 @@
 				216640A41EBADC5300746B8E /* ThumbLayer.swift in Sources */,
 				21640D5020105032002F33CA /* Event.swift in Sources */,
 				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
+				CFDF880A2024F41000778852 /* GSRVenue.swift in Sources */,
 				216640BE1EBADC7300746B8E /* CredentialsViewController.swift in Sources */,
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				217C6DD2201399DB00F07C3D /* LaundryMachineData.swift in Sources */,
@@ -938,6 +964,8 @@
 				216640A21EBADC5300746B8E /* RangeSlider.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
+				CFDF88072024D30400778852 /* GSROverhallController.swift in Sources */,
+				CFDF88052024CEB700778852 /* GSROverhaulManager.swift in Sources */,
 				B6F0DCE1200A894700DB0006 /* LaundryUsageData.swift in Sources */,
 				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
 				21640D5220105086002F33CA /* User.swift in Sources */,
