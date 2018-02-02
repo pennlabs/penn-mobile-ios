@@ -19,6 +19,7 @@ class DiningViewController: GenericTableViewController {
         self.title = "Dining"
         self.screenName = "Dining"
         
+        viewModel.delegate = self
         viewModel.registerHeadersAndCells(for: tableView)
         
         tableView.dataSource = viewModel
