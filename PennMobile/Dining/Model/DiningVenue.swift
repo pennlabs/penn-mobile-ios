@@ -25,9 +25,15 @@ enum DiningVenueName: String {
     case marks = "Mark's Café"
     case beefsteak = "Beefsteak"
     case starbucks = "Starbucks"
+    case pret = "Pret a Manger"
+    case mbaCafe = "MBA Café"
     case unknown
     
     static func getVenueName(for apiName: String) -> DiningVenueName {
+        if apiName.contains("MBA") {
+            return .mbaCafe
+        }
+        
         var venueNames = DiningVenue.diningNames
         venueNames.append(contentsOf: DiningVenue.retailNames)
         for venue in venueNames {
@@ -42,7 +48,7 @@ enum DiningVenueName: String {
 class DiningVenue: NSObject {
     
     static let diningNames: [DiningVenueName] = [.commons, .mcclelland, .nch, .hill, .english, .falk]
-    static let retailNames: [DiningVenueName] = [.frontera, .gourmetGrocer, .houston, .joes, .marks, .beefsteak, .starbucks]
+    static let retailNames: [DiningVenueName] = [.frontera, .gourmetGrocer, .houston, .joes, .marks, .beefsteak, .starbucks, .pret, .mbaCafe]
     
     var venue: DiningVenueName
     var name: String

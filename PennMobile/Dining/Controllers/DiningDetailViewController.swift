@@ -27,6 +27,8 @@ class DiningDetailViewController: GenericViewController {
         dict["Starbucks"] = "1920-starbucks"
         dict["New College House"] = "new-college-house"
         dict["Hill House"] = "hill-house"
+        dict["MBA Café"] = "pret-a-manger-upper"
+        dict["Pret a Manger"] = "pret-a-manger-lower"
         return dict
     }()
 
