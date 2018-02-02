@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         DatabaseManager.shared.dryRun = true
-        // GoogleAnalyticsManager.shared.dryRun = false
-        GoogleAnalyticsManager.shared.dryRun = true
+        GoogleAnalyticsManager.shared.dryRun = false
+        //GoogleAnalyticsManager.shared.dryRun = true
         //DatabaseManager.shared.startSession() //adds new session log to queue
         
         GoogleAnalyticsManager.prepare()
