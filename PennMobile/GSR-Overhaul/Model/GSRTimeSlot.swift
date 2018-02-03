@@ -8,12 +8,12 @@
 
 import Foundation
 
-public struct GSRTimeSlot {
+public class GSRTimeSlot {
     var isAvailable: Bool
     var startTime: Date
     var endTime: Date
     
-    init(isAvailable: Bool, startTime:Date, endTime:Date) {
+    init(isAvailable: Bool, startTime: Date, endTime: Date) {
         self.isAvailable = isAvailable
         self.startTime = startTime
         self.endTime = endTime

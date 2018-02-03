@@ -8,18 +8,13 @@
 
 import Foundation
 
-public struct GSRVenue {
+public class GSRVenue {
     var name: String
     var id: Int
-    var rooms: [Int:GSRRoom]
+    var rooms: [GSRRoom]?
     
     init(name: String, id: Int) {
         self.name = name
         self.id = id
-        self.rooms = [:]
-    }
-    
-    mutating func addRoom(room: GSRRoom) {
-        rooms[room.id] = room
     }
 }

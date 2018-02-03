@@ -96,7 +96,7 @@
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
-		CFDF88052024CEB700778852 /* GSROverhaulManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88042024CEB700778852 /* GSROverhaulManager.swift */; };
+		CFDF88052024CEB700778852 /* GSROverhaulNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88042024CEB700778852 /* GSROverhaulNetworkManager.swift */; };
 		CFDF88072024D30400778852 /* GSROverhallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88062024D30400778852 /* GSROverhallController.swift */; };
 		CFDF880A2024F41000778852 /* GSRVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88092024F41000778852 /* GSRVenue.swift */; };
 		CFDF880C2024F42100778852 /* GSRRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF880B2024F42100778852 /* GSRRoom.swift */; };
@@ -216,7 +216,7 @@
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
-		CFDF88042024CEB700778852 /* GSROverhaulManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSROverhaulManager.swift; sourceTree = "<group>"; };
+		CFDF88042024CEB700778852 /* GSROverhaulNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSROverhaulNetworkManager.swift; sourceTree = "<group>"; };
 		CFDF88062024D30400778852 /* GSROverhallController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSROverhallController.swift; sourceTree = "<group>"; };
 		CFDF88092024F41000778852 /* GSRVenue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRVenue.swift; sourceTree = "<group>"; };
 		CFDF880B2024F42100778852 /* GSRRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRoom.swift; sourceTree = "<group>"; };
@@ -328,6 +328,7 @@
 				B654BAE81F801F030038B9D5 /* Laundry */,
 				216640EE1EBB867600746B8E /* Contacts */,
 				2166408C1EBADBFC00746B8E /* GSR-Booking */,
+				21E1C6FE20256ECA003248EC /* GSR-Overhaul */,
 				216640D31EBB80FD00746B8E /* News */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
 			);
@@ -383,7 +384,6 @@
 		2166408C1EBADBFC00746B8E /* GSR-Booking */ = {
 			isa = PBXGroup;
 			children = (
-				CFDF88082024F3AC00778852 /* OverhaulModels */,
 				2166409B1EBADC3E00746B8E /* Controllers */,
 				2166409A1EBADC3900746B8E /* Model */,
 				2166409D1EBADC4600746B8E /* Networking */,
@@ -453,7 +453,6 @@
 				216640B81EBADC7300746B8E /* BookViewControllerExtension.swift */,
 				216640B91EBADC7300746B8E /* CredentialsViewController.swift */,
 				216640BA1EBADC7300746B8E /* ProcessViewController.swift */,
-				CFDF88062024D30400778852 /* GSROverhallController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -472,7 +471,6 @@
 			isa = PBXGroup;
 			children = (
 				216640B61EBADC7300746B8E /* GSRNetworkManager.swift */,
-				CFDF88042024CEB700778852 /* GSROverhaulManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -551,6 +549,40 @@
 			isa = PBXGroup;
 			children = (
 				219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		21E1C6FE20256ECA003248EC /* GSR-Overhaul */ = {
+			isa = PBXGroup;
+			children = (
+				21E1C70120256EF7003248EC /* Views */,
+				21E1C70020256EEF003248EC /* Networking */,
+				21E1C6FF20256EE8003248EC /* Controllers */,
+				CFDF88082024F3AC00778852 /* Model */,
+			);
+			path = "GSR-Overhaul";
+			sourceTree = "<group>";
+		};
+		21E1C6FF20256EE8003248EC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CFDF88062024D30400778852 /* GSROverhallController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		21E1C70020256EEF003248EC /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				CFDF88042024CEB700778852 /* GSROverhaulNetworkManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		21E1C70120256EF7003248EC /* Views */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -666,14 +698,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		CFDF88082024F3AC00778852 /* OverhaulModels */ = {
+		CFDF88082024F3AC00778852 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				CFDF88092024F41000778852 /* GSRVenue.swift */,
 				CFDF880B2024F42100778852 /* GSRRoom.swift */,
 				CFDF880D2024F44900778852 /* GSRTimeSlot.swift */,
 			);
-			path = OverhaulModels;
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -965,7 +997,7 @@
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
 				CFDF88072024D30400778852 /* GSROverhallController.swift in Sources */,
-				CFDF88052024CEB700778852 /* GSROverhaulManager.swift in Sources */,
+				CFDF88052024CEB700778852 /* GSROverhaulNetworkManager.swift in Sources */,
 				B6F0DCE1200A894700DB0006 /* LaundryUsageData.swift in Sources */,
 				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
 				21640D5220105086002F33CA /* User.swift in Sources */,

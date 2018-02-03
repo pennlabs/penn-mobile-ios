@@ -14,7 +14,7 @@ class GSROverhaulManager: NSObject, Requestable {
     
     static let instance = GSROverhaulManager()
     
-    let availUrl = "http://api.pennlabs.org/studyspaces/availability/"
+    let availUrl = "http://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "http://api.pennlabs.org/studyspaces/locations"
     
     var locations:[Int:String] = [:]
@@ -33,15 +33,15 @@ class GSROverhaulManager: NSObject, Requestable {
         }
     }
     
-    func getAvailability (for gsrId: Int, callback: @escaping (([GSRRoom]?) -> Void)) {
-        let url = "\(availUrl)\(gsrId)"
+    func getAvailability(for gsrId: Int, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
+        let url = "\(availUrl)/\(gsrId)"
         getRequest(url: url) { (dict) in
+            var rooms: [GSRRoom]!
             if let dict = dict {
                 let json = JSON(dict)
-                let rooms = self.parseRooms(json: json)
-            } else {
-                callback(nil)
+                rooms = Array<GSRRoom>(json: json)
             }
+            callback(rooms)
         }
     }
     
@@ -56,53 +56,59 @@ class GSROverhaulManager: NSObject, Requestable {
         }
         return locations
     }
-    
-    private func parseRooms(json:JSON) -> [GSRRoom] {
-        var rooms = [GSRRoom]()
+}
+
+extension Array where Element == GSRRoom {
+    init(json: JSON) {
+        self.init()
         let roomArray = json["rooms"].arrayValue
         for roomJSON in roomArray {
-            let room = GSRRoom(json: roomJSON)
-            rooms.append(room)
-            return rooms
+            if let room = try? GSRRoom(json: roomJSON) {
+                self.append(room)
+            }
         }
-        return rooms
     }
 }
 
 extension GSRRoom {
-    init(json: JSON) {
+    convenience init(json: JSON) throws {
+        guard let name = json["name"].string, let id = json["room_id"].int else {
+            throw NetworkingError.jsonError
+        }
+        
         let capacity = json["capacity"].intValue
-        let name = json["name"].stringValue
-        let id = json["room_id"].intValue
-        let imageUrl = json["thumbnail"].stringValue
-        self.init(name: name, id: id, imgUrl: imageUrl, capacity: capacity)
+        let imageUrl = json["thumbnail"].string
+        
+        var times = [GSRTimeSlot]()
         let jsonTimeArray = json["times"].arrayValue
         for timeJSON in jsonTimeArray {
-            let time = GSRTimeSlot(json: timeJSON)
-            self.addTimeSlot(time: time)
+            if let time = try? GSRTimeSlot(json: timeJSON), time.isAvailable {
+                times.append(time)
+            }
         }
+        self.init(name: name, id: id, imageUrl: imageUrl, capacity: capacity, timeSlots: times)
     }
 }
 
 extension GSRTimeSlot {
-    init(json: JSON) {
-        let isAvailable = json["available"].boolValue
-        let startDate = Date().extractDate(from: json["start"].stringValue)
-        let endDate = Date().extractDate(from: json["end"].stringValue)
+    convenience init(json: JSON) throws {
+        guard let isAvailable = json["available"].bool,
+            let startStr = json["start"].string,
+            let endStr = json["end"].string else {
+                throw NetworkingError.jsonError
+        }
+        
+        let startDate = try GSRTimeSlot.extractDate(from: startStr)
+        let endDate = try GSRTimeSlot.extractDate(from: endStr)
         self.init(isAvailable: isAvailable, startTime: startDate, endTime: endDate)
     }
-
-}
-
-extension Date {
-    func extractDate(from dateString: String) -> Date {
-        let shortenDateString = dateString.substring(to: dateString.index(dateString.endIndex, offsetBy: -6))
-        print(shortenDateString) // test print
+    
+    private static func extractDate(from dateString: String) throws -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        let date = dateFormatter.date(from: shortenDateString)
-        print(date) // test print
-        return date!
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        guard let date = dateFormatter.date(from: dateString)?.localTime else {
+            throw NetworkingError.jsonError
+        }
+        return date
     }
 }
-
