@@ -352,8 +352,8 @@ extension BookViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let tableViewCell = cell as? RoomCell else { return }
         
-        tableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forSection: indexPath.section)
-        tableViewCell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
+//        tableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forSection: indexPath.section)
+//        tableViewCell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
     }
     
     func tableView(_ tableView: UITableView,
@@ -362,7 +362,7 @@ extension BookViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let tableViewCell = cell as? RoomCell else { return }
         
-        storedOffsets[indexPath.row] = tableViewCell.collectionViewOffset
+//        storedOffsets[indexPath.row] = tableViewCell.collectionViewOffset
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

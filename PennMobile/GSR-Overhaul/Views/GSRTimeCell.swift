@@ -1,0 +1,67 @@
+//
+//  GSRTimeCell.swift
+//  PennMobile
+//
+//  Created by Josh Doman on 2/3/18.
+//  Copyright © 2018 PennLabs. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+class GSRTimeCell: UICollectionViewCell {
+    
+    static let identifier = "timeCell"
+    
+    var timeSlot: GSRTimeSlot! {
+        didSet {
+            startLabel.text = format(date: timeSlot.startTime)
+            endLabel.text = format(date: timeSlot.endTime)
+        }
+    }
+    
+    private let startLabel = UILabel()
+    private let endLabel = UILabel()
+    
+    private let toLabel: UILabel = {
+        let label = UILabel()
+        label.text = "to"
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = Colors.green.color()
+        setupView()
+    }
+    
+    private func setupView() {
+        addSubview(startLabel)
+        addSubview(endLabel)
+        addSubview(toLabel)
+        
+        toLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        toLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+        startLabel.font = UIFont.systemFont(ofSize: 18)
+        endLabel.font = UIFont.systemFont(ofSize: 18)
+        
+        _ = startLabel.anchor(topAnchor, left: nil, bottom: nil, right: nil, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        startLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+        _ = endLabel.anchor(nil, left: nil, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        endLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+    }
+    
+    private func format(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm"
+        return formatter.string(from: date)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

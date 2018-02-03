@@ -82,7 +82,9 @@ extension GSRRoom {
         var times = [GSRTimeSlot]()
         let jsonTimeArray = json["times"].arrayValue
         for timeJSON in jsonTimeArray {
-            if let time = try? GSRTimeSlot(json: timeJSON), time.isAvailable {
+            if let time = try? GSRTimeSlot(roomId: id, json: timeJSON), time.isAvailable {
+                times.last?.next = time
+                time.prev = times.last
                 times.append(time)
             }
         }
@@ -91,7 +93,7 @@ extension GSRRoom {
 }
 
 extension GSRTimeSlot {
-    convenience init(json: JSON) throws {
+    convenience init(roomId: Int, json: JSON) throws {
         guard let isAvailable = json["available"].bool,
             let startStr = json["start"].string,
             let endStr = json["end"].string else {
@@ -100,13 +102,13 @@ extension GSRTimeSlot {
         
         let startDate = try GSRTimeSlot.extractDate(from: startStr)
         let endDate = try GSRTimeSlot.extractDate(from: endStr)
-        self.init(isAvailable: isAvailable, startTime: startDate, endTime: endDate)
+        self.init(roomId: roomId, isAvailable: isAvailable, startTime: startDate, endTime: endDate)
     }
     
     private static func extractDate(from dateString: String) throws -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        guard let date = dateFormatter.date(from: dateString)?.localTime else {
+        guard let date = dateFormatter.date(from: dateString) else {
             throw NetworkingError.jsonError
         }
         return date

@@ -8,14 +8,23 @@
 
 import Foundation
 
-public class GSRTimeSlot {
-    var isAvailable: Bool
-    var startTime: Date
-    var endTime: Date
+public class GSRTimeSlot: NSObject {
+    let roomId: Int
+    let isAvailable: Bool
+    let startTime: Date
+    let endTime: Date
     
-    init(isAvailable: Bool, startTime: Date, endTime: Date) {
+    weak var prev: GSRTimeSlot? = nil
+    weak var next: GSRTimeSlot? = nil
+    
+    init(roomId: Int, isAvailable: Bool, startTime: Date, endTime: Date) {
+        self.roomId = roomId
         self.isAvailable = isAvailable
         self.startTime = startTime
         self.endTime = endTime
+    }
+    
+    static func ==(lhs: GSRTimeSlot, rhs: GSRTimeSlot) -> Bool {
+        return lhs.roomId == rhs.roomId && lhs.isAvailable == rhs.isAvailable && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime
     }
 }

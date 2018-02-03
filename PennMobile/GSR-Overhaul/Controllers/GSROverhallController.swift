@@ -8,21 +8,87 @@
 
 import UIKit
 
-class GSROverhallController: GenericTableViewController {
+class GSROverhallController: GenericViewController {
     
-    internal let roomCell = "roomCell"
+    // MARK: UI Elements
+    fileprivate var tableView: UITableView!
+    fileprivate var rangeSlider: GSRRangeSlider!
+    fileprivate var pickerView: UIPickerView!
+    fileprivate var emptyView: EmptyView!
     
-    fileprivate var currentRooms = [GSRRoom]()
+    fileprivate var viewModel: GSRViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Study Room Booking"
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: roomCell)
-
+        prepareViewModel()
+        prepareUI()
         updateRooms(for: 1086)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        revealViewController().panGestureRecognizer().delegate = self
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        revealViewController().panGestureRecognizer().delegate = nil
+    }
+}
+
+// MARK: - Setup UI
+extension GSROverhallController {
+    fileprivate func prepareUI() {
+        preparePickerView()
+        prepareRangeSlider()
+        prepareTableView()
+    }
+    
+    private func preparePickerView() {
+        pickerView = UIPickerView(frame: .zero)
+        pickerView.translatesAutoresizingMaskIntoConstraints = false
+        pickerView.delegate = viewModel
+        pickerView.dataSource = viewModel
+        
+        view.addSubview(pickerView)
+        pickerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
+        pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    private func prepareRangeSlider() {
+        rangeSlider = GSRRangeSlider()
+        rangeSlider.delegate = viewModel
+        
+        view.addSubview(rangeSlider)
+        _ = rangeSlider.anchor(pickerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 30)
+    }
+    
+    private func prepareTableView() {
+        tableView = UITableView(frame: .zero)
+        tableView.dataSource = viewModel
+        tableView.delegate = viewModel
+        tableView.register(RoomCell.self, forCellReuseIdentifier: RoomCell.identifier)
+        tableView.tableFooterView = UIView()
+        
+        view.addSubview(tableView)
+        _ = tableView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+    }
+    
+    private func prepareEmptyView() {
+        emptyView = EmptyView()
+        emptyView.isHidden = true
+        
+        view.addSubview(emptyView)
+        _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+    }
+}
+
+// MARK: - Prepare View Model
+extension GSROverhallController {
+    fileprivate func prepareViewModel() {
+        viewModel = GSRViewModel()
     }
 }
 
@@ -32,7 +98,7 @@ extension GSROverhallController {
         GSROverhaulManager.instance.getAvailability(for: id) { (rooms) in
             DispatchQueue.main.async {
                 if let rooms = rooms {
-                    self.currentRooms = rooms
+                    self.viewModel.updateData(with: rooms)
                     self.tableView.reloadData()
                 }
             }
@@ -40,22 +106,19 @@ extension GSROverhallController {
     }
 }
 
-extension GSROverhallController {
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return currentRooms.count
+// MARK: - ViewModelDelegate
+extension GSROverhallController: GSRViewModelDelegate {
+    func reloadTableView() {
+        tableView.reloadData()
     }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return currentRooms[section].name
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: roomCell, for: indexPath)
-        cell.textLabel?.text = String(currentRooms[indexPath.section].timeSlots.count)
-        return cell
+}
+
+// MARK: - UIGestureRecognizerDelegate
+extension GSROverhallController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view == rangeSlider || touch.location(in: tableView).y > 0 {
+            return false
+        }
+        return true
     }
 }

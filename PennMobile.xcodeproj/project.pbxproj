@@ -14,6 +14,7 @@
 		211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DFE531F36A02C00CB73E4 /* DiningAPI.swift */; };
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
 		21329D081EE7AAE500C9DE65 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21329D071EE7AAE500C9DE65 /* EmptyView.swift */; };
+		2137CB5420259E8B009D243B /* GSRRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2137CB5320259E8B009D243B /* GSRRangeSlider.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
 		214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F768E1F07391000B8841C /* DatabaseManager.swift */; };
 		21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D3D200ED954002F33CA /* LaundryMachine.swift */; };
@@ -79,6 +80,8 @@
 		219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01F51FB7E14A006BBC4E /* SelectionCell.swift */; };
 		219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */; };
 		219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */; };
+		21E1C70420258199003248EC /* GSRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E1C70320258199003248EC /* GSRViewModel.swift */; };
+		21E1C706202588C1003248EC /* GSRTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E1C705202588C1003248EC /* GSRTimeCell.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
 		8D08ACB30BC0C29FD56CE14E /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */; };
@@ -122,6 +125,7 @@
 		211DFE531F36A02C00CB73E4 /* DiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPI.swift; sourceTree = "<group>"; };
 		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
 		21329D071EE7AAE500C9DE65 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		2137CB5320259E8B009D243B /* GSRRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRangeSlider.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		214F768E1F07391000B8841C /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		21640D3D200ED954002F33CA /* LaundryMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachine.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 		219F01F51FB7E14A006BBC4E /* SelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCell.swift; sourceTree = "<group>"; };
 		219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionView.swift; sourceTree = "<group>"; };
 		219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryNotificationCenter.swift; sourceTree = "<group>"; };
+		21E1C70320258199003248EC /* GSRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRViewModel.swift; sourceTree = "<group>"; };
+		21E1C705202588C1003248EC /* GSRTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTimeCell.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
 		2B364FB5448C9559DDEB6B7C /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -461,7 +467,6 @@
 			isa = PBXGroup;
 			children = (
 				216640B31EBADC6A00746B8E /* HourCell.swift */,
-				216640B21EBADC6A00746B8E /* RoomCell.swift */,
 				21329D071EE7AAE500C9DE65 /* EmptyView.swift */,
 			);
 			path = Views;
@@ -556,6 +561,7 @@
 		21E1C6FE20256ECA003248EC /* GSR-Overhaul */ = {
 			isa = PBXGroup;
 			children = (
+				21E1C70220258189003248EC /* ViewModel */,
 				21E1C70120256EF7003248EC /* Views */,
 				21E1C70020256EEF003248EC /* Networking */,
 				21E1C6FF20256EE8003248EC /* Controllers */,
@@ -583,8 +589,19 @@
 		21E1C70120256EF7003248EC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				216640B21EBADC6A00746B8E /* RoomCell.swift */,
+				21E1C705202588C1003248EC /* GSRTimeCell.swift */,
+				2137CB5320259E8B009D243B /* GSRRangeSlider.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		21E1C70220258189003248EC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				21E1C70320258199003248EC /* GSRViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		21ECADA21F30146B00569883 /* Networking + Analytics */ = {
@@ -955,6 +972,7 @@
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				21640D682012A23E002F33CA /* DiningHoursData.swift in Sources */,
 				21640D5C20105B98002F33CA /* HomeDiningCell.swift in Sources */,
+				2137CB5420259E8B009D243B /* GSRRangeSlider.swift in Sources */,
 				21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */,
 				216640BB1EBADC7300746B8E /* GSRNetworkManager.swift in Sources */,
 				216640AF1EBADC5E00746B8E /* Parser.swift in Sources */,
@@ -976,6 +994,7 @@
 				217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */,
 				214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */,
 				21329D081EE7AAE500C9DE65 /* EmptyView.swift in Sources */,
+				21E1C70420258199003248EC /* GSRViewModel.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
 				B6111DB420184C4A00DC7877 /* AboutViewController.swift in Sources */,
 				CFDF880E2024F44900778852 /* GSRTimeSlot.swift in Sources */,
@@ -1010,6 +1029,7 @@
 				21640D662012A1CE002F33CA /* OpenClose.swift in Sources */,
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */,
+				21E1C706202588C1003248EC /* GSRTimeCell.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5A20105B8E002F33CA /* HomeEventCell.swift in Sources */,
 				216640BD1EBADC7300746B8E /* BookViewControllerExtension.swift in Sources */,
