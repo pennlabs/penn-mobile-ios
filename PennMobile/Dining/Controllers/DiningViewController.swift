@@ -61,7 +61,7 @@ extension DiningViewController: DiningViewModelDelegate {
     }
 }
 
-// MARK: - Menu Preloading
+// MARK: - Webview Preloading
 extension DiningViewController {
     fileprivate func preloadWebview(for venue: DiningVenueName) {
         DiningAPI.instance.fetchDetailPageHTML(for: venue) { (html) in
