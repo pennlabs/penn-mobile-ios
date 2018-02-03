@@ -10,6 +10,8 @@ class DiningViewController: GenericTableViewController {
     
     fileprivate var viewModel = DiningViewModel()
     
+    let venueToPreload: DiningVenueName = .commons
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,6 +26,8 @@ class DiningViewController: GenericTableViewController {
         
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
+        
+        preloadWebview(for: venueToPreload)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +58,21 @@ extension DiningViewController: DiningViewModelDelegate {
         ddc.venue = venue
         navigationController?.pushViewController(ddc, animated: true)
         DatabaseManager.shared.trackEvent(vcName: "Dining", event: ddc.venue.name)
+    }
+}
+
+// MARK: - Menu Preloading
+extension DiningViewController {
+    fileprivate func preloadWebview(for venue: DiningVenueName) {
+        DiningAPI.instance.fetchDetailPageHTML(for: venue) { (html) in
+            if let html = html {
+                DispatchQueue.main.async {
+                    let webview = UIWebView(frame: .zero)
+                    webview.loadHTMLString(html, baseURL: nil)
+                    DiningDetailModel.set(webview: webview, for: venue)
+                }
+            }
+        }
     }
 }
 
