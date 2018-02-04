@@ -10,28 +10,7 @@ import UIKit
 
 class DiningDetailViewController: GenericViewController {
     
-    let server = "http://university-of-pennsylvania.cafebonappetit.com/cafe"
-    
-    let serverDictionary: [String: String] = {
-        var dict = [String: String]()
-        dict["1920 Commons"] = "1920-commons"
-        dict["McClelland Express"] = "mcclelland"
-        dict["Beefsteak"] = "beefsteak"
-        dict["Falk Kosher Dining"] = "falk-dining-commons"
-        dict["English House"] = "kings-court-english-house"
-        dict["Gourmet Grocer"] = "1920-gourmet-grocer"
-        dict["Joe's Café"] = "joes-cafe"
-        dict["Mark's Café"] = "marks-cafe"
-        dict["Tortas Frontera"] = "tortas-frontera-at-the-arch"
-        dict["Houston Market"] = "houston-market"
-        dict["Starbucks"] = "1920-starbucks"
-        dict["New College House"] = "new-college-house"
-        dict["Hill House"] = "hill-house"
-        return dict
-    }()
-
     var venue: DiningVenue!
-    
     var webview: UIWebView!
     
     override func viewDidLoad() {
@@ -39,16 +18,20 @@ class DiningDetailViewController: GenericViewController {
         
         removeMenuButton()
         
-        webview = GenericWebview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        view.addSubview(webview)
-        
-        if let endPoint = serverDictionary[venue.name] {
-            let urlString = "\(server)/\(endPoint)"
-            
-            if let url = URL(string: urlString) {
-                webview.loadRequest(URLRequest(url: url))
+        webview = DiningDetailModel.getWebview(for: venue.venue)
+        if webview == nil {
+            webview = GenericWebview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+            guard let urlString = DiningDetailModel.getUrl(for: venue.venue),
+                let url = URL(string: urlString) else {
+                return
             }
+            webview.loadRequest(URLRequest(url: url))
+            DiningDetailModel.set(webview: webview, for: venue.venue)
         }
+        
+        view.addSubview(webview)
+        webview.translatesAutoresizingMaskIntoConstraints = false
+        webview.anchorToTop(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         
         self.screenName = venue.name
         self.title = venue.name
