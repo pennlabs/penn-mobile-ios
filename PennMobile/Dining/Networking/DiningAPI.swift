@@ -6,7 +6,6 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-import PromiseKit
 import SwiftyJSON
 import Foundation
 
