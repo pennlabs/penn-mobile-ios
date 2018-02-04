@@ -17,6 +17,9 @@
 		212A9B3920266AAB0065ECB1 /* GSRLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A9B3820266AAB0065ECB1 /* GSRLocationModel.swift */; };
 		212A9B3B20266BA70065ECB1 /* locations.json in Resources */ = {isa = PBXBuildFile; fileRef = 212A9B3A20266BA70065ECB1 /* locations.json */; };
 		212A9B3D202678360065ECB1 /* GSRDateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A9B3C202678360065ECB1 /* GSRDateHandler.swift */; };
+		212A9B3F2026D16A0065ECB1 /* GSRLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A9B3E2026D16A0065ECB1 /* GSRLoginController.swift */; };
+		212A9B412026DB300065ECB1 /* GSRBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A9B402026DB300065ECB1 /* GSRBooking.swift */; };
+		212A9B452026E4D90065ECB1 /* GSRUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A9B442026E4D90065ECB1 /* GSRUser.swift */; };
 		21329D081EE7AAE500C9DE65 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21329D071EE7AAE500C9DE65 /* EmptyView.swift */; };
 		2137CB5420259E8B009D243B /* GSRRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2137CB5320259E8B009D243B /* GSRRangeSlider.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
@@ -104,7 +107,7 @@
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
 		CFDF88052024CEB700778852 /* GSROverhaulNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88042024CEB700778852 /* GSROverhaulNetworkManager.swift */; };
-		CFDF88072024D30400778852 /* GSROverhallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88062024D30400778852 /* GSROverhallController.swift */; };
+		CFDF88072024D30400778852 /* GSROverhaulController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88062024D30400778852 /* GSROverhaulController.swift */; };
 		CFDF880A2024F41000778852 /* GSRVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF88092024F41000778852 /* GSRVenue.swift */; };
 		CFDF880C2024F42100778852 /* GSRRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF880B2024F42100778852 /* GSRRoom.swift */; };
 		CFDF880E2024F44900778852 /* GSRTimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF880D2024F44900778852 /* GSRTimeSlot.swift */; };
@@ -132,6 +135,9 @@
 		212A9B3820266AAB0065ECB1 /* GSRLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationModel.swift; sourceTree = "<group>"; };
 		212A9B3A20266BA70065ECB1 /* locations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = locations.json; sourceTree = "<group>"; };
 		212A9B3C202678360065ECB1 /* GSRDateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRDateHandler.swift; sourceTree = "<group>"; };
+		212A9B3E2026D16A0065ECB1 /* GSRLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLoginController.swift; sourceTree = "<group>"; };
+		212A9B402026DB300065ECB1 /* GSRBooking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRBooking.swift; sourceTree = "<group>"; };
+		212A9B442026E4D90065ECB1 /* GSRUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRUser.swift; sourceTree = "<group>"; };
 		21329D071EE7AAE500C9DE65 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		2137CB5320259E8B009D243B /* GSRRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRangeSlider.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -231,7 +237,7 @@
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
 		CFDF88042024CEB700778852 /* GSROverhaulNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSROverhaulNetworkManager.swift; sourceTree = "<group>"; };
-		CFDF88062024D30400778852 /* GSROverhallController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSROverhallController.swift; sourceTree = "<group>"; };
+		CFDF88062024D30400778852 /* GSROverhaulController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSROverhaulController.swift; sourceTree = "<group>"; };
 		CFDF88092024F41000778852 /* GSRVenue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRVenue.swift; sourceTree = "<group>"; };
 		CFDF880B2024F42100778852 /* GSRRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRoom.swift; sourceTree = "<group>"; };
 		CFDF880D2024F44900778852 /* GSRTimeSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTimeSlot.swift; sourceTree = "<group>"; };
@@ -581,7 +587,8 @@
 		21E1C6FF20256EE8003248EC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				CFDF88062024D30400778852 /* GSROverhallController.swift */,
+				CFDF88062024D30400778852 /* GSROverhaulController.swift */,
+				212A9B3E2026D16A0065ECB1 /* GSRLoginController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -733,6 +740,8 @@
 				212A9B342026639D0065ECB1 /* StudySpace.swift */,
 				212A9B3820266AAB0065ECB1 /* GSRLocationModel.swift */,
 				212A9B3C202678360065ECB1 /* GSRDateHandler.swift */,
+				212A9B402026DB300065ECB1 /* GSRBooking.swift */,
+				212A9B442026E4D90065ECB1 /* GSRUser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1018,6 +1027,7 @@
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2166408A1EBADBB700746B8E /* MasterTableViewController.swift in Sources */,
+				212A9B452026E4D90065ECB1 /* GSRUser.swift in Sources */,
 				216640A41EBADC5300746B8E /* ThumbLayer.swift in Sources */,
 				21640D5020105032002F33CA /* Event.swift in Sources */,
 				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
@@ -1030,14 +1040,16 @@
 				216640A21EBADC5300746B8E /* RangeSlider.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
-				CFDF88072024D30400778852 /* GSROverhallController.swift in Sources */,
+				CFDF88072024D30400778852 /* GSROverhaulController.swift in Sources */,
 				CFDF88052024CEB700778852 /* GSROverhaulNetworkManager.swift in Sources */,
 				B6F0DCE1200A894700DB0006 /* LaundryUsageData.swift in Sources */,
 				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
 				21640D5220105086002F33CA /* User.swift in Sources */,
 				217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */,
+				212A9B3F2026D16A0065ECB1 /* GSRLoginController.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
 				216640B01EBADC5E00746B8E /* LocationsHandler.swift in Sources */,
+				212A9B412026DB300065ECB1 /* GSRBooking.swift in Sources */,
 				21640D64201157A6002F33CA /* TransitionalHomeCell.swift in Sources */,
 				B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */,
 				219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */,

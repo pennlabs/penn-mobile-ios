@@ -1,5 +1,5 @@
 //
-//  GSROverhallController.swift
+//  GSROverhaulController.swift
 //  PennMobile
 //
 //  Created by Zhilei Zheng on 2/2/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GSROverhallController: GenericViewController {
+class GSROverhaulController: GenericViewController {
     
     // MARK: UI Elements
     fileprivate var tableView: UITableView!
@@ -54,7 +54,7 @@ class GSROverhallController: GenericViewController {
 }
 
 // MARK: - Setup UI
-extension GSROverhallController {
+extension GSROverhaulController {
     fileprivate func prepareUI() {
         preparePickerView()
         prepareRangeSlider()
@@ -108,7 +108,7 @@ extension GSROverhallController {
 }
 
 // MARK: - Prepare View Model
-extension GSROverhallController {
+extension GSROverhaulController {
     fileprivate func prepareViewModel() {
         viewModel = GSRViewModel()
         viewModel.delegate = self
@@ -116,7 +116,7 @@ extension GSROverhallController {
 }
 
 // MARK: - ViewModelDelegate + Networking
-extension GSROverhallController: GSRViewModelDelegate {
+extension GSROverhaulController: GSRViewModelDelegate {
     func fetchData() {
         let locationId = viewModel.getSelectedLocation().id
         let date = viewModel.getSelectedDate()
@@ -126,6 +126,7 @@ extension GSROverhallController: GSRViewModelDelegate {
                     self.viewModel.updateData(with: rooms)
                     self.refreshDataUI()
                     self.rangeSlider.reload()
+                    self.refreshBarButton()
                 }
             }
         }
@@ -143,7 +144,7 @@ extension GSROverhallController: GSRViewModelDelegate {
 }
 
 // MARK: - UIGestureRecognizerDelegate
-extension GSROverhallController: UIGestureRecognizerDelegate {
+extension GSROverhaulController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view == rangeSlider || touch.location(in: tableView).y > 0 {
             return false
@@ -153,7 +154,7 @@ extension GSROverhallController: UIGestureRecognizerDelegate {
 }
 
 // MARK: - Bar Button Refresh + Handler
-extension GSROverhallController {
+extension GSROverhaulController {
     fileprivate func refreshBarButton() {
         self.barButton.tintColor = .clear
         barButton.title = barButtonTitle
@@ -163,11 +164,20 @@ extension GSROverhallController {
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
         switch viewModel.state {
         case .loggedOut:
+            presentLoginController()
             break
         case .loggedIn:
             break
-        case .readyToSubmit:
+        case .readyToSubmit(let booking):
+            presentLoginController(with: booking)
             break
         }
+    }
+    
+    private func presentLoginController(with booking: GSRBooking? = nil) {
+        let glc = GSRLoginController()
+        glc.booking = booking
+        let nvc = UINavigationController(rootViewController: glc)
+        present(nvc, animated: true, completion: nil)
     }
 }

@@ -15,7 +15,7 @@ enum SelectionType {
 enum GSRState {
     case loggedOut
     case loggedIn
-    case readyToSubmit
+    case readyToSubmit(GSRBooking)
 }
 
 protocol GSRViewModelDelegate: ShowsAlert {
@@ -45,7 +45,10 @@ class GSRViewModel: NSObject {
     // MARK: GSR State
     var state: GSRState {
         get {
-            return currentSelection.isEmpty ? .loggedOut : .readyToSubmit
+            if let booking = getBooking() {
+                return .readyToSubmit(booking)
+            }
+            return .loggedOut
         }
     }
     
@@ -124,10 +127,7 @@ extension GSRViewModel {
     func updateData(with rooms: [GSRRoom]) {
         self.allRooms = rooms
         self.currentRooms = rooms
-    }
-    
-    func clearData() {
-        self.allRooms = []
+        self.currentSelection = []
     }
 }
 
@@ -224,5 +224,25 @@ extension GSRViewModel {
     
     func getSelectedDate() -> GSROverhaulDate {
         return selectedDate
+    }
+    
+    fileprivate func getBooking() -> GSRBooking? {
+        if currentSelection.isEmpty {
+            return nil
+        }
+        let locationId = selectedLocation.id
+        let roomId = currentSelection[0].roomId
+        let startTime: Date
+        let endTime: Date
+        var timeSlot = currentSelection[0]
+        while timeSlot.prev != nil {
+            timeSlot = timeSlot.prev!
+        }
+        startTime = timeSlot.startTime
+        while timeSlot.next != nil {
+            timeSlot = timeSlot.next!
+        }
+        endTime = timeSlot.endTime
+        return GSRBooking(locationId: locationId, roomId: roomId, start: startTime, end: endTime)
     }
 }
