@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SCLAlertView
 
-class GSRLoginController: UIViewController, IndicatorEnabled {
+class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
     
     fileprivate var firstNameField: UITextField!
     fileprivate var lastNameField: UITextField!
@@ -31,7 +31,7 @@ class GSRLoginController: UIViewController, IndicatorEnabled {
         if booking == nil {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveCredentials(_:)))
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit", style: .done, target: self, action: #selector(saveCredentials(_:)))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: #selector(saveCredentials(_:)))
         }
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
@@ -142,7 +142,7 @@ extension GSRLoginController {
     
     private func preparePhoneNumberField() {
         phoneNumberField = UITextField()
-        phoneNumberField.placeholder = "Phone number"
+        phoneNumberField.placeholder = "Phone number (e.g. 2158985000)"
         phoneNumberField.font = UIFont.systemFont(ofSize: 14)
         phoneNumberField.keyboardType = .phonePad
         phoneNumberField.textAlignment = .natural
@@ -163,8 +163,10 @@ extension GSRLoginController: GSRBookable {
         }
         
         if firstName == "" || lastName == "" || email == "" || phone == "" {
+            showAlert(withMsg: "A field was left blank. Please fill it out before submitting.", completion: nil)
             return // A field is left blank
         } else if !email.contains("upenn.edu") || !email.contains("@") {
+            showAlert(withMsg: "The email field was malformed. Please make sure to use your Penn email.", completion: nil)
             return // Malformed email, please use email ending in upenn.edu
         }
         
@@ -172,16 +174,12 @@ extension GSRLoginController: GSRBookable {
 
         let user = GSRUser(firstName: firstName, lastName: lastName, email: email, phone: phone)
         if booking != nil {
-            guard let groupName = groupNameField.text else { return }
             booking.user = user
-            booking.groupName = groupName
-            
-            let failureMessage = "It seems like your request failed. Please double check your contact information and your network connection and try again."
-            submitBooking(for: booking, failureMessage: failureMessage) { (success) in
+            submitBooking(for: booking) { (success) in
                 if success {
                     GSRUser.save(user: user)
-                    self.dismiss(animated: true, completion: nil)
                 }
+                self.dismiss(animated: true, completion: nil)
             }
         } else {
             GSRUser.save(user: user)

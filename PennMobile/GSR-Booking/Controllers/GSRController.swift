@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import SCLAlertView
 
-class GSROverhaulController: GenericViewController, IndicatorEnabled {
+class GSRController: GenericViewController, IndicatorEnabled {
     
     // MARK: UI Elements
     fileprivate var tableView: UITableView!
@@ -56,7 +55,7 @@ class GSROverhaulController: GenericViewController, IndicatorEnabled {
 }
 
 // MARK: - Setup UI
-extension GSROverhaulController {
+extension GSRController {
     fileprivate func prepareUI() {
         preparePickerView()
         prepareRangeSlider()
@@ -110,7 +109,7 @@ extension GSROverhaulController {
 }
 
 // MARK: - Prepare View Model
-extension GSROverhaulController {
+extension GSRController {
     fileprivate func prepareViewModel() {
         viewModel = GSRViewModel()
         viewModel.delegate = self
@@ -118,11 +117,11 @@ extension GSROverhaulController {
 }
 
 // MARK: - ViewModelDelegate + Networking
-extension GSROverhaulController: GSRViewModelDelegate {
+extension GSRController: GSRViewModelDelegate {
     func fetchData() {
         let locationId = viewModel.getSelectedLocation().id
         let date = viewModel.getSelectedDate()
-        GSROverhaulManager.instance.getAvailability(for: locationId, date: date) { (rooms) in
+        GSRNetworkManager.instance.getAvailability(for: locationId, date: date) { (rooms) in
             DispatchQueue.main.async {
                 if let rooms = rooms {
                     self.viewModel.updateData(with: rooms)
@@ -146,7 +145,7 @@ extension GSROverhaulController: GSRViewModelDelegate {
 }
 
 // MARK: - UIGestureRecognizerDelegate
-extension GSROverhaulController: UIGestureRecognizerDelegate {
+extension GSRController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view == rangeSlider || touch.location(in: tableView).y > 0 {
             return false
@@ -156,7 +155,7 @@ extension GSROverhaulController: UIGestureRecognizerDelegate {
 }
 
 // MARK: - Bar Button Refresh + Handler
-extension GSROverhaulController: GSRBookable {
+extension GSRController: GSRBookable {
     fileprivate func refreshBarButton() {
         self.barButton.tintColor = .clear
         barButton.title = barButtonTitle
@@ -188,8 +187,7 @@ extension GSROverhaulController: GSRBookable {
     private func submitPressed(for booking: GSRBooking) {
         if let user = GSRUser.getUser() {
             booking.user = user
-            let failureMessage = "It seems like your request failed. Please update your contact information and try again."
-            submitBooking(for: booking, failureMessage: failureMessage) { (success) in
+            submitBooking(for: booking) { (success) in
                 if success {
                     self.fetchData()
                 } else {
@@ -198,27 +196,6 @@ extension GSROverhaulController: GSRBookable {
             }
         } else {
             presentLoginController(with: booking)
-        }
-    }
-}
-
-protocol GSRBookable: IndicatorEnabled {}
-
-extension GSRBookable where Self: UIViewController {
-    func submitBooking(for booking: GSRBooking, failureMessage: String,
-                       _ completion: @escaping (_ success: Bool) -> Void) {
-        self.showActivity()
-        GSROverhaulManager.instance.makeBooking(for: booking) { (success) in
-            DispatchQueue.main.async {
-                self.hideActivity()
-                let alertView = SCLAlertView()
-                if success {
-                    alertView.showSuccess("Success!", subTitle: "You should receive a confirmation email in the next few minutes.")
-                } else {
-                    alertView.showError("Uh oh!", subTitle: failureMessage)
-                }
-                completion(success)
-            }
         }
     }
 }

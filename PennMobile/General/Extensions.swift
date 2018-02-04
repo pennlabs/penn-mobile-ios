@@ -189,6 +189,25 @@ extension Date {
     var tomorrow: Date {
         return self.dateIn(days: 1)
     }
+    
+    static func midnight(for dateStr: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter.date(from: dateStr)!
+    }
+    
+    static var midnightYesterday: Date  {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        let dateStr = formatter.string(from: Date())
+        return formatter.date(from: dateStr)!
+    }
+    
+    static var midnightToday: Date {
+        return midnightYesterday.tomorrow
+    }
 }
 
 extension LazyMapCollection  {

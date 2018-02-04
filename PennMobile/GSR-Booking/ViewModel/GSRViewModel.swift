@@ -236,11 +236,11 @@ extension GSRViewModel {
         let startTime: Date
         let endTime: Date
         var timeSlot = currentSelection[0]
-        while timeSlot.prev != nil {
+        while timeSlot.prev != nil && currentSelection.contains(timeSlot.prev!) {
             timeSlot = timeSlot.prev!
         }
         startTime = timeSlot.startTime
-        while timeSlot.next != nil {
+        while timeSlot.next != nil && currentSelection.contains(timeSlot.next!) {
             timeSlot = timeSlot.next!
         }
         endTime = timeSlot.endTime

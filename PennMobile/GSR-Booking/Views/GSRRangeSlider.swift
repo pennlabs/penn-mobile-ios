@@ -16,11 +16,11 @@ protocol GSRRangeSliderDelegate {
 }
 
 class GSRRangeSlider: RangeSlider {
-    fileprivate var startDate = Parser.midnightYesterday
-    fileprivate var endDate = Parser.midnightToday
+    fileprivate var startDate = Date.midnightYesterday
+    fileprivate var endDate = Date.midnightToday
     
-    fileprivate var minDate = Parser.midnightYesterday
-    fileprivate var maxDate = Parser.midnightToday
+    fileprivate var minDate = Date.midnightYesterday
+    fileprivate var maxDate = Date.midnightToday
     
     var delegate: GSRRangeSliderDelegate?
     
@@ -69,7 +69,9 @@ extension GSRRangeSlider {
     }
     
     private func getStringTimeFromValue(_ val: Int) -> String? {
-        let formatter = Parser.formatter
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mma"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         let totalMinutes = CGFloat(startDate.minutesFrom(date: endDate))
         let minutes = Int((CGFloat(val) / 100.0) * totalMinutes)
         let chosenDate = startDate.add(minutes: minutes)

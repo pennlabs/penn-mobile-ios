@@ -49,8 +49,8 @@ extension GSRRoom: Comparable {
 
 extension Array where Element == GSRRoom {
     func getMinMaxDates(day: GSROverhaulDate) -> (Date, Date) {
-        let midnightYesterday = midnight(for: day.string)
-        let midnightToday = midnightYesterday.tomorrow
+        let midnightYesterday = Date.midnightYesterday
+        let midnightToday = Date.midnightToday
 
         if isEmpty {
             return (midnightYesterday, midnightToday)
@@ -67,12 +67,5 @@ extension Array where Element == GSRRoom {
             }
         }
         return (min, max)
-    }
-    
-    private func midnight(for dateStr: String) -> Date {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter.date(from: dateStr)!
     }
 }
