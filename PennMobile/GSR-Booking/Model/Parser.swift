@@ -16,7 +16,8 @@ class Parser {
         return formatter
     }
     
-    static let midnight: Date = getDateFromTime(time: "12:00am")
+    static let midnightYesterday: Date = getDateFromTime(time: "12:00am")
+    static let midnightToday: Date = getDateFromTime(time: "12:00am").tomorrow
     
     static func parseJSON(_ JSON: Any) -> NSDictionary {
         return JSON as! NSDictionary

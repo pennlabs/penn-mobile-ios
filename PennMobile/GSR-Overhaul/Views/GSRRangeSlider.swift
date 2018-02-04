@@ -11,14 +11,16 @@ import Foundation
 protocol GSRRangeSliderDelegate {
     func parseData(startDate: Date, endDate: Date)
     func existsNonEmptyRoom() -> Bool
+    func getMinDate() -> Date
+    func getMaxDate() -> Date
 }
 
 class GSRRangeSlider: RangeSlider {
-    fileprivate var startDate = Parser.midnight
-    fileprivate var endDate = Parser.midnight.tomorrow
+    fileprivate var startDate = Parser.midnightYesterday
+    fileprivate var endDate = Parser.midnightToday
     
-    fileprivate var minDate = Parser.midnight
-    fileprivate var maxDate = Parser.midnight.tomorrow
+    fileprivate var minDate = Parser.midnightYesterday
+    fileprivate var maxDate = Parser.midnightToday
     
     var delegate: GSRRangeSliderDelegate?
     
@@ -30,6 +32,14 @@ class GSRRangeSlider: RangeSlider {
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Reload
+    override func reload() {
+        guard let start = delegate?.getMinDate(), let end = delegate?.getMaxDate() else { return }
+        startDate = start
+        endDate = end
+        super.reload()
     }
 }
 
@@ -52,8 +62,8 @@ extension GSRRangeSlider {
             let totalMinutes = CGFloat(self.startDate.minutesFrom(date: self.endDate))
             let minMinutes = (Int((CGFloat(min) / 100.0) * totalMinutes) / 60) * 60
             let maxMinutes = (Int((CGFloat(max) / 100.0) * totalMinutes) / 60) * 60
-            self.minDate = self.startDate.add(minutes: minMinutes).localTime.roundedDownToHour
-            self.maxDate = self.startDate.add(minutes: maxMinutes).localTime.roundedDownToHour
+            self.minDate = self.startDate.add(minutes: minMinutes).roundedDownToHour
+            self.maxDate = self.startDate.add(minutes: maxMinutes).roundedDownToHour
             self.delegate!.parseData(startDate: self.minDate, endDate: self.maxDate)
         }
     }
@@ -67,12 +77,5 @@ extension GSRRangeSlider {
         formatter.pmSymbol = "p"
         formatter.dateFormat = "ha"
         return formatter.string(from: chosenDate)
-    }
-}
-
-// MARK: - Updating
-extension GSRRangeSlider {
-    func setStartDate(to date: Date) {
-        self.startDate = date
     }
 }

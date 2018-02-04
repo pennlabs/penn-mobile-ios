@@ -13,6 +13,10 @@
 		211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */ = {isa = PBXBuildFile; fileRef = 211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */; };
 		211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DFE531F36A02C00CB73E4 /* DiningAPI.swift */; };
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
+		212A9B352026639D0065ECB1 /* StudySpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A9B342026639D0065ECB1 /* StudySpace.swift */; };
+		212A9B3920266AAB0065ECB1 /* GSRLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A9B3820266AAB0065ECB1 /* GSRLocationModel.swift */; };
+		212A9B3B20266BA70065ECB1 /* locations.json in Resources */ = {isa = PBXBuildFile; fileRef = 212A9B3A20266BA70065ECB1 /* locations.json */; };
+		212A9B3D202678360065ECB1 /* GSRDateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A9B3C202678360065ECB1 /* GSRDateHandler.swift */; };
 		21329D081EE7AAE500C9DE65 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21329D071EE7AAE500C9DE65 /* EmptyView.swift */; };
 		2137CB5420259E8B009D243B /* GSRRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2137CB5320259E8B009D243B /* GSRRangeSlider.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
@@ -124,6 +128,10 @@
 		211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AuthKey_6MBD9SUNGE.p8; sourceTree = "<group>"; };
 		211DFE531F36A02C00CB73E4 /* DiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPI.swift; sourceTree = "<group>"; };
 		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
+		212A9B342026639D0065ECB1 /* StudySpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySpace.swift; sourceTree = "<group>"; };
+		212A9B3820266AAB0065ECB1 /* GSRLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationModel.swift; sourceTree = "<group>"; };
+		212A9B3A20266BA70065ECB1 /* locations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = locations.json; sourceTree = "<group>"; };
+		212A9B3C202678360065ECB1 /* GSRDateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRDateHandler.swift; sourceTree = "<group>"; };
 		21329D071EE7AAE500C9DE65 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		2137CB5320259E8B009D243B /* GSRRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRangeSlider.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -444,10 +452,10 @@
 			children = (
 				216640AB1EBADC5D00746B8E /* Colors.swift */,
 				216640A71EBADC5D00746B8E /* DateHandler.swift */,
-				216640AA1EBADC5D00746B8E /* LocationsHandler.swift */,
 				216640A81EBADC5D00746B8E /* NSCalendarExtension.swift */,
 				216640A91EBADC5D00746B8E /* Parser.swift */,
 				216640A61EBADC5D00746B8E /* Structs.swift */,
+				216640AA1EBADC5D00746B8E /* LocationsHandler.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -718,9 +726,13 @@
 		CFDF88082024F3AC00778852 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				212A9B3A20266BA70065ECB1 /* locations.json */,
 				CFDF88092024F41000778852 /* GSRVenue.swift */,
 				CFDF880B2024F42100778852 /* GSRRoom.swift */,
 				CFDF880D2024F44900778852 /* GSRTimeSlot.swift */,
+				212A9B342026639D0065ECB1 /* StudySpace.swift */,
+				212A9B3820266AAB0065ECB1 /* GSRLocationModel.swift */,
+				212A9B3C202678360065ECB1 /* GSRDateHandler.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -824,6 +836,7 @@
 			files = (
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
 				B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */,
+				212A9B3B20266BA70065ECB1 /* locations.json in Resources */,
 				211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
@@ -985,9 +998,11 @@
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeViewModel.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
+				212A9B3D202678360065ECB1 /* GSRDateHandler.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				216640A51EBADC5300746B8E /* TrackLayer.swift in Sources */,
+				212A9B352026639D0065ECB1 /* StudySpace.swift in Sources */,
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				216640A31EBADC5300746B8E /* TextLayer.swift in Sources */,
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
@@ -1030,6 +1045,7 @@
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */,
 				21E1C706202588C1003248EC /* GSRTimeCell.swift in Sources */,
+				212A9B3920266AAB0065ECB1 /* GSRLocationModel.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5A20105B8E002F33CA /* HomeEventCell.swift in Sources */,
 				216640BD1EBADC7300746B8E /* BookViewControllerExtension.swift in Sources */,

@@ -76,8 +76,8 @@ extension Dictionary where Key == String, Value == [GSRHour] {
     
     var firstOpening: Date {
         get {
-            if self.isEmpty { return Parser.midnight }
-            var tempEarliestTime = Parser.midnight.tomorrow
+            if self.isEmpty { return Parser.midnightToday }
+            var tempEarliestTime = Parser.midnightToday.tomorrow
             self.forEach { (_, value) in
                 if let firstHour = value.first {
                     let firstTime = Parser.getDateFromTime(time: firstHour.start)
@@ -90,8 +90,8 @@ extension Dictionary where Key == String, Value == [GSRHour] {
     
     var lastOpening: Date {
         get {
-            if self.isEmpty { return Parser.midnight.tomorrow }
-            var tempEndTime = Parser.midnight
+            if self.isEmpty { return Parser.midnightToday.tomorrow }
+            var tempEndTime = Parser.midnightToday
             for key in keys {
                 guard let gsrArr = self[key], let lastHour = gsrArr.last else { continue }
                 let lastEndTime = Parser.getDateFromTime(time: lastHour.end)

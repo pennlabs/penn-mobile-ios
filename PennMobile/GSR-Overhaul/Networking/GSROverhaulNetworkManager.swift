@@ -33,8 +33,9 @@ class GSROverhaulManager: NSObject, Requestable {
         }
     }
     
-    func getAvailability(for gsrId: Int, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
-        let url = "\(availUrl)/\(gsrId)"
+    func getAvailability(for gsrId: Int, date: GSROverhaulDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
+        let dateStr = date.string
+        let url = "\(availUrl)/\(gsrId)?date=\(dateStr)&available=true"
         getRequest(url: url) { (dict) in
             var rooms: [GSRRoom]!
             if let dict = dict {
@@ -83,8 +84,10 @@ extension GSRRoom {
         let jsonTimeArray = json["times"].arrayValue
         for timeJSON in jsonTimeArray {
             if let time = try? GSRTimeSlot(roomId: id, json: timeJSON), time.isAvailable {
-                times.last?.next = time
-                time.prev = times.last
+                if let prevTime = times.last, prevTime.endTime == time.startTime {
+                    times.last?.next = time
+                    time.prev = times.last
+                }
                 times.append(time)
             }
         }

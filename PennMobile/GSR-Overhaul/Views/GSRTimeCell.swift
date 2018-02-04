@@ -45,8 +45,8 @@ class GSRTimeCell: UICollectionViewCell {
         toLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         toLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
-        startLabel.font = UIFont.systemFont(ofSize: 18)
-        endLabel.font = UIFont.systemFont(ofSize: 18)
+        startLabel.font = UIFont.systemFont(ofSize: 17)
+        endLabel.font = UIFont.systemFont(ofSize: 17)
         
         _ = startLabel.anchor(topAnchor, left: nil, bottom: nil, right: nil, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         startLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -57,7 +57,9 @@ class GSRTimeCell: UICollectionViewCell {
     
     private func format(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm"
+        formatter.dateFormat = "h:mma"
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
         return formatter.string(from: date)
     }
     

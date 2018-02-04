@@ -35,11 +35,11 @@ class BookViewController: GenericViewController, ShowsAlert {
         return rs
     }()
     
-    internal var earliestTime: Date = Parser.midnight
-    internal var endDate: Date = Parser.midnight.tomorrow
+    internal var earliestTime: Date = Parser.midnightToday
+    internal var endDate: Date = Parser.midnightToday.tomorrow
     
-    internal var minDate: Date = Parser.midnight
-    internal var maxDate: Date = Parser.midnight.tomorrow
+    internal var minDate: Date = Parser.midnightToday
+    internal var maxDate: Date = Parser.midnightToday.tomorrow
     
     internal lazy var dates : [GSRDate] = DateHandler.getDates()
     internal lazy var locations : [GSRLocation] = LocationsHandler.getLocations()

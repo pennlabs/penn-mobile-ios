@@ -28,3 +28,16 @@ public class GSRTimeSlot: NSObject {
         return lhs.roomId == rhs.roomId && lhs.isAvailable == rhs.isAvailable && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime
     }
 }
+
+extension Array where Element: GSRTimeSlot {
+    var numberInRow: Int {
+        if count == 0 { return 0 }
+        var num = 1
+        var currTime: GSRTimeSlot = first!
+        while currTime.next != nil {
+            num += 1
+            currTime = currTime.next!
+        }
+        return num
+    }
+}

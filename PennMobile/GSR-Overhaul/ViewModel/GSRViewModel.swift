@@ -13,16 +13,17 @@ enum SelectionType {
 }
 
 protocol GSRViewModelDelegate: ShowsAlert {
-    func reloadTableView()
+    func reloadTableView(isEmpty: Bool)
+    func fetchData()
 }
 
 class GSRViewModel: NSObject {
     
     // MARK: Dates + Locations
-    fileprivate lazy var dates = DateHandler.getDates()
-    fileprivate lazy var locations = LocationsHandler.getLocations()
-    fileprivate lazy var currentDate : GSRDate = self.dates[0]
-    fileprivate lazy var currentLocation : GSRLocation = self.locations[0]
+    fileprivate let dates = GSRDateHandler.generateDates()
+    fileprivate let locations = GSRLocationModel.shared.getLocations()
+    fileprivate lazy var selectedDate = self.dates[0]
+    fileprivate lazy var selectedLocation = self.locations[0]
     
     // MARK: Room Data
     fileprivate var allRooms = [GSRRoom]()
@@ -32,7 +33,7 @@ class GSRViewModel: NSObject {
     fileprivate var currentSelection = [GSRTimeSlot]()
     
     // MARK: Delegate
-    var delegate: GSRViewModelDelegate?
+    var delegate: GSRViewModelDelegate!
 }
 
 // MARK: - UIPickerViewDelegate, UIPickerViewDataSource
@@ -47,12 +48,11 @@ extension GSRViewModel: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
-            currentDate = dates[row]
-        } else {
-            currentLocation = locations[row]
+            selectedDate = dates[row]
+        } else if component == 1 {
+            selectedLocation = locations[row]
         }
-        
-        //        refreshContent()
+        delegate!.fetchData()
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -62,7 +62,7 @@ extension GSRViewModel: UIPickerViewDataSource, UIPickerViewDelegate {
             } else if (row == 1) {
                 return "Tomorrow"
             }
-            return dates[row].compact
+            return dates[row].dayOfWeek
         } else {
             return locations[row].name
         }
@@ -103,6 +103,10 @@ extension GSRViewModel {
     func updateData(with rooms: [GSRRoom]) {
         self.allRooms = rooms
         self.currentRooms = rooms
+    }
+    
+    func clearData() {
+        self.allRooms = []
     }
 }
 
@@ -157,6 +161,7 @@ extension GSRViewModel: GSRSelectionDelegate {
     }
 }
 
+// MARK: - GSRRangeSliderDelegate
 extension GSRViewModel: GSRRangeSliderDelegate {
     func existsNonEmptyRoom() -> Bool {
         return !allRooms.isEmpty
@@ -165,11 +170,34 @@ extension GSRViewModel: GSRRangeSliderDelegate {
     func parseData(startDate: Date, endDate: Date) {
         var currentRooms = [GSRRoom]()
         for room in allRooms {
-            let timeSlots = room.timeSlots.filter { $0.startTime >= startDate && $0.endTime <= endDate }
-            let newRoom = GSRRoom(name: room.name, id: room.id, imageUrl: room.imageUrl, capacity: room.capacity, timeSlots: timeSlots)
-            currentRooms.append(newRoom)
+            let timeSlots = room.timeSlots.filter {
+                return $0.startTime >= startDate && $0.endTime <= endDate
+            }
+            if !timeSlots.isEmpty {
+                let newRoom = GSRRoom(name: room.name, id: room.id, imageUrl: room.imageUrl, capacity: room.capacity, timeSlots: timeSlots)
+                currentRooms.append(newRoom)
+            }
         }
-        self.currentRooms = currentRooms
-        delegate?.reloadTableView()
+        self.currentRooms = currentRooms.sorted()
+        delegate.reloadTableView(isEmpty: currentRooms.isEmpty)
+    }
+    
+    func getMinDate() -> Date {
+        return allRooms.getMinMaxDates(day: selectedDate).0
+    }
+    
+    func getMaxDate() -> Date {
+        return allRooms.getMinMaxDates(day: selectedDate).1
+    }
+}
+
+// MARK: - Data Getter Methods
+extension GSRViewModel {
+    func getSelectedLocation() -> StudySpace {
+        return selectedLocation
+    }
+    
+    func getSelectedDate() -> GSROverhaulDate {
+        return selectedDate
     }
 }

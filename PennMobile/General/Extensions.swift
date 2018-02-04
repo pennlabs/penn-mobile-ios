@@ -129,6 +129,12 @@ extension Date {
         return minutes
     }
     
+    var hour: Int {
+        let calendar = Calendar.current
+        let minutes = calendar.component(.hour, from: self)
+        return minutes
+    }
+    
     func add(minutes: Int) -> Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
@@ -173,7 +179,7 @@ extension Date {
             return self.add(minutes: 1)
         }
         return self
-    } 
+    }
     
     func dateIn(days: Int) -> Date {
         let start = Calendar.current.startOfDay(for: self)

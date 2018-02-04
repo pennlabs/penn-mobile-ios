@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GoogleAnalyticsManager.prepare()
         LaundryAPIService.instance.prepare()
         LaundryNotificationCenter.shared.prepare()
+        GSRLocationModel.shared.prepare()
         
         FirebaseApp.configure()
         

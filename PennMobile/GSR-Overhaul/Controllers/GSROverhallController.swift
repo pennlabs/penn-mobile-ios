@@ -24,12 +24,13 @@ class GSROverhallController: GenericViewController {
         
         prepareViewModel()
         prepareUI()
-        updateRooms(for: 1086)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        rangeSlider?.reload()
         revealViewController().panGestureRecognizer().delegate = self
+        fetchData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,6 +45,7 @@ extension GSROverhallController {
         preparePickerView()
         prepareRangeSlider()
         prepareTableView()
+        prepareEmptyView()
     }
     
     private func preparePickerView() {
@@ -89,27 +91,30 @@ extension GSROverhallController {
 extension GSROverhallController {
     fileprivate func prepareViewModel() {
         viewModel = GSRViewModel()
+        viewModel.delegate = self
     }
 }
 
-// MARK: - Update Rooms
-extension GSROverhallController {
-    func updateRooms(for id: Int) {
-        GSROverhaulManager.instance.getAvailability(for: id) { (rooms) in
+// MARK: - ViewModelDelegate + Networking
+extension GSROverhallController: GSRViewModelDelegate {
+    func reloadTableView(isEmpty: Bool) {
+        emptyView.isHidden = !isEmpty
+        tableView.isHidden = isEmpty
+        tableView.reloadData()
+    }
+    
+    func fetchData() {
+        let locationId = viewModel.getSelectedLocation().id
+        let date = viewModel.getSelectedDate()
+        GSROverhaulManager.instance.getAvailability(for: locationId, date: date) { (rooms) in
             DispatchQueue.main.async {
                 if let rooms = rooms {
                     self.viewModel.updateData(with: rooms)
                     self.tableView.reloadData()
+                    self.rangeSlider.reload()
                 }
             }
         }
-    }
-}
-
-// MARK: - ViewModelDelegate
-extension GSROverhallController: GSRViewModelDelegate {
-    func reloadTableView() {
-        tableView.reloadData()
     }
 }
 

@@ -16,10 +16,8 @@ class LocationsHandler {
                 GSRLocation(name: "Edu Commons", code: 848, path: "/booking/educom"),
                 GSRLocation(name: "Levin Building", code: 13489, path: "/booking/levin"),
                 GSRLocation(name: "VP Sem. Rooms", code: 4409, path: "/booking/seminar"),
-                //GSRLocation(name: "Noldus Observer", code: 3621, path: "/booking/noldus"),
                 GSRLocation(name: "Lippincott Sem. Rooms", code: 2587, path: "/booking/lippseminar"),
                 GSRLocation(name: "Glossberg Recording Room", code: 1819, path: "/booking/glossberg"),
-                //GSRLocation(name: "Dental GSR", code: 13107, path: "/booking/dental"), //crashes
                 GSRLocation(name: "Biomedical Lib.", code: 505, path: "/booking/biomed")
         ]
     }
