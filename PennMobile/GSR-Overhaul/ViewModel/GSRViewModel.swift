@@ -12,8 +12,15 @@ enum SelectionType {
     case remove, add
 }
 
+enum GSRState {
+    case loggedOut
+    case loggedIn
+    case readyToSubmit
+}
+
 protocol GSRViewModelDelegate: ShowsAlert {
-    func reloadTableView(isEmpty: Bool)
+    func refreshDataUI()
+    func refreshSelectionUI()
     func fetchData()
 }
 
@@ -34,6 +41,20 @@ class GSRViewModel: NSObject {
     
     // MARK: Delegate
     var delegate: GSRViewModelDelegate!
+    
+    // MARK: GSR State
+    var state: GSRState {
+        get {
+            return currentSelection.isEmpty ? .loggedOut : .readyToSubmit
+        }
+    }
+    
+    // MARK: Empty 
+    var isEmpty: Bool {
+        get {
+            return currentRooms.isEmpty
+        }
+    }
 }
 
 // MARK: - UIPickerViewDelegate, UIPickerViewDataSource
@@ -158,6 +179,10 @@ extension GSRViewModel: GSRSelectionDelegate {
             currentSelection.remove(at: currentSelection.index(of: timeSlot)!)
             break
         }
+        
+        if currentSelection.count == 0 || (currentSelection.count == 1 && action == .add) {
+            delegate.refreshSelectionUI()
+        }
     }
 }
 
@@ -179,7 +204,7 @@ extension GSRViewModel: GSRRangeSliderDelegate {
             }
         }
         self.currentRooms = currentRooms.sorted()
-        delegate.reloadTableView(isEmpty: currentRooms.isEmpty)
+        delegate.refreshDataUI()
     }
     
     func getMinDate() -> Date {

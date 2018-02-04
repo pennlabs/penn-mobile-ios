@@ -15,6 +15,20 @@ class GSROverhallController: GenericViewController {
     fileprivate var rangeSlider: GSRRangeSlider!
     fileprivate var pickerView: UIPickerView!
     fileprivate var emptyView: EmptyView!
+    fileprivate var barButton: UIBarButtonItem!
+    
+    var barButtonTitle: String {
+        get {
+            switch viewModel.state {
+            case .loggedIn:
+                return "Logout"
+            case .loggedOut:
+                return "Login"
+            case .readyToSubmit:
+                return "Submit"
+            }
+        }
+    }
     
     fileprivate var viewModel: GSRViewModel!
     
@@ -46,6 +60,7 @@ extension GSROverhallController {
         prepareRangeSlider()
         prepareTableView()
         prepareEmptyView()
+        prepareBarButton()
     }
     
     private func preparePickerView() {
@@ -85,6 +100,11 @@ extension GSROverhallController {
         view.addSubview(emptyView)
         _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
+    
+    private func prepareBarButton() {
+        barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
+        navigationItem.rightBarButtonItem = barButton
+    }
 }
 
 // MARK: - Prepare View Model
@@ -97,12 +117,6 @@ extension GSROverhallController {
 
 // MARK: - ViewModelDelegate + Networking
 extension GSROverhallController: GSRViewModelDelegate {
-    func reloadTableView(isEmpty: Bool) {
-        emptyView.isHidden = !isEmpty
-        tableView.isHidden = isEmpty
-        tableView.reloadData()
-    }
-    
     func fetchData() {
         let locationId = viewModel.getSelectedLocation().id
         let date = viewModel.getSelectedDate()
@@ -110,11 +124,21 @@ extension GSROverhallController: GSRViewModelDelegate {
             DispatchQueue.main.async {
                 if let rooms = rooms {
                     self.viewModel.updateData(with: rooms)
-                    self.tableView.reloadData()
+                    self.refreshDataUI()
                     self.rangeSlider.reload()
                 }
             }
         }
+    }
+    
+    func refreshDataUI() {
+        emptyView.isHidden = !viewModel.isEmpty
+        tableView.isHidden = viewModel.isEmpty
+        self.tableView.reloadData()
+    }
+    
+    func refreshSelectionUI() {
+        self.refreshBarButton()
     }
 }
 
@@ -125,5 +149,25 @@ extension GSROverhallController: UIGestureRecognizerDelegate {
             return false
         }
         return true
+    }
+}
+
+// MARK: - Bar Button Refresh + Handler
+extension GSROverhallController {
+    fileprivate func refreshBarButton() {
+        self.barButton.tintColor = .clear
+        barButton.title = barButtonTitle
+        self.barButton.tintColor = nil
+    }
+    
+    @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
+        switch viewModel.state {
+        case .loggedOut:
+            break
+        case .loggedIn:
+            break
+        case .readyToSubmit:
+            break
+        }
     }
 }
