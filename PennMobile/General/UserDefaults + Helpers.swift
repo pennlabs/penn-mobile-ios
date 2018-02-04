@@ -17,6 +17,7 @@ extension UserDefaults {
         case sessionCount
         case laundryPreferences
         case isOnboarded
+        case gsrUSer
     }
 }
 
@@ -101,6 +102,29 @@ extension UserDefaults {
 
     func isOnboarded() -> Bool {
         return bool(forKey: UserDefaultsKeys.isOnboarded.rawValue)
+    }
+}
+
+// Mark: - GSR User
+extension UserDefaults {
+    func setGSRUser(value: GSRUser) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(value) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.gsrUSer.rawValue)
+        }
+        synchronize()
+    }
+    
+    func getGSRUser() -> GSRUser? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.gsrUSer.rawValue) {
+            return try? decoder.decode(GSRUser.self, from: decodedData)
+        }
+        return nil
+    }
+    
+    func clearGSRUser() {
+        removeObject(forKey: UserDefaultsKeys.gsrUSer.rawValue)
     }
 }
 

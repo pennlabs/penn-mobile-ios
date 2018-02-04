@@ -1,0 +1,54 @@
+{
+    "locations": [
+                  {
+                  "id": 2683,
+                  "name": "Biomedical Library",
+                  "service": "libcal"
+                  },
+                  {
+                  "id": 2495,
+                  "name": "Education Commons",
+                  "service": "libcal"
+                  },
+                  {
+                  "id": 2637,
+                  "name": "Fisher Fine Arts",
+                  "service": "libcal"
+                  },
+                  {
+                  "id": 1090,
+                  "name": "Levin Building",
+                  "service": "libcal"
+                  },
+                  {
+                  "id": 2634,
+                  "name": "Museum Library",
+                  "service": "libcal"
+                  },
+                  {
+                  "id": 1086,
+                  "name": "VP GSR",
+                  "service": "libcal"
+                  },
+                  {
+                  "id": 2587,
+                  "name": "Lippincott",
+                  "service": "libcal"
+                  },
+                  {
+                  "id": 2636,
+                  "name": "VP Seminar",
+                  "service": "libcal"
+                  },
+                  {
+                  "id": 2611,
+                  "name": "VP Special Use",
+                  "service": "libcal"
+                  },
+                  {
+                  "id": 0,
+                  "name": "View All Locations",
+                  "service": "libcal"
+                  }
+                  ]
+}

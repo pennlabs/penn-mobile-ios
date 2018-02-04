@@ -19,6 +19,11 @@ public enum Method {
     case other(method: String)
 }
 
+enum NetworkingError: String, LocalizedError {
+    case jsonError = "JSON error"
+    var localizedDescription: String { return NSLocalizedString(self.rawValue, comment: "") }
+}
+
 extension Method {
     public init(_ rawValue: String) {
         let method = rawValue.uppercased()
