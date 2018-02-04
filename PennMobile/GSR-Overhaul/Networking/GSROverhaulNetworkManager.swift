@@ -16,6 +16,7 @@ class GSROverhaulManager: NSObject, Requestable {
     
     let availUrl = "http://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "http://api.pennlabs.org/studyspaces/locations"
+    let bookingUrl = "http://api.pennlabs.org/studyspaces/book"
     
     var locations:[Int:String] = [:]
     
@@ -56,6 +57,44 @@ class GSROverhaulManager: NSObject, Requestable {
             }
         }
         return locations
+    }
+    
+    func makeBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool) -> Void) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let start = dateFormatter.string(from: booking.start)
+        let end = dateFormatter.string(from: booking.end)
+        let user: GSRUser = booking.user
+        let params: [String: String] = [
+            "building" : String(booking.locationId),
+            "room" : String(booking.roomId),
+            "start" : start,
+            "end" : end,
+            "firstname" : user.firstName,
+            "lastname" : user.lastName,
+            "email" : user.email,
+            "phone" : user.phone,
+            "groupname" : booking.groupName,
+            "size" : "2-3"
+        ]
+        
+        guard let url = URL(string: bookingUrl) else { return }
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8);
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
+            
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            if let data = data {
+                let json = JSON(data)
+                callback(json["results"].boolValue)
+            } else {
+                callback(false)
+            }
+        })
+        task.resume()
     }
 }
 

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SCLAlertView
 
-class GSROverhaulController: GenericViewController {
+class GSROverhaulController: GenericViewController, IndicatorEnabled {
     
     // MARK: UI Elements
     fileprivate var tableView: UITableView!
@@ -43,6 +44,7 @@ class GSROverhaulController: GenericViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         rangeSlider?.reload()
+        refreshBarButton()
         revealViewController().panGestureRecognizer().delegate = self
         fetchData()
     }
@@ -154,7 +156,7 @@ extension GSROverhaulController: UIGestureRecognizerDelegate {
 }
 
 // MARK: - Bar Button Refresh + Handler
-extension GSROverhaulController {
+extension GSROverhaulController: GSRBookable {
     fileprivate func refreshBarButton() {
         self.barButton.tintColor = .clear
         barButton.title = barButtonTitle
@@ -167,9 +169,11 @@ extension GSROverhaulController {
             presentLoginController()
             break
         case .loggedIn:
+            GSRUser.clear()
+            refreshBarButton()
             break
         case .readyToSubmit(let booking):
-            presentLoginController(with: booking)
+            submitPressed(for: booking)
             break
         }
     }
@@ -179,5 +183,42 @@ extension GSROverhaulController {
         glc.booking = booking
         let nvc = UINavigationController(rootViewController: glc)
         present(nvc, animated: true, completion: nil)
+    }
+    
+    private func submitPressed(for booking: GSRBooking) {
+        if let user = GSRUser.getUser() {
+            booking.user = user
+            let failureMessage = "It seems like your request failed. Please update your contact information and try again."
+            submitBooking(for: booking, failureMessage: failureMessage) { (success) in
+                if success {
+                    self.fetchData()
+                } else {
+                    self.presentLoginController(with: booking)
+                }
+            }
+        } else {
+            presentLoginController(with: booking)
+        }
+    }
+}
+
+protocol GSRBookable: IndicatorEnabled {}
+
+extension GSRBookable where Self: UIViewController {
+    func submitBooking(for booking: GSRBooking, failureMessage: String,
+                       _ completion: @escaping (_ success: Bool) -> Void) {
+        self.showActivity()
+        GSROverhaulManager.instance.makeBooking(for: booking) { (success) in
+            DispatchQueue.main.async {
+                self.hideActivity()
+                let alertView = SCLAlertView()
+                if success {
+                    alertView.showSuccess("Success!", subTitle: "You should receive a confirmation email in the next few minutes.")
+                } else {
+                    alertView.showError("Uh oh!", subTitle: failureMessage)
+                }
+                completion(success)
+            }
+        }
     }
 }

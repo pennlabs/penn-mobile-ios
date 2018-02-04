@@ -12,12 +12,12 @@
                   },
                   {
                   "id": 2637,
-                  "name": "Fisher Fine Arts Library",
+                  "name": "Fisher Fine Arts",
                   "service": "libcal"
                   },
                   {
                   "id": 1090,
-                  "name": "Levin Building Group Study Rooms",
+                  "name": "Levin Building",
                   "service": "libcal"
                   },
                   {
@@ -27,22 +27,22 @@
                   },
                   {
                   "id": 1086,
-                  "name": "Van Pelt-Dietrich Library Center: Group Study Spaces",
+                  "name": "VP GSR",
                   "service": "libcal"
                   },
                   {
                   "id": 2587,
-                  "name": "Van Pelt-Dietrich Library Center: Lippincott Library",
+                  "name": "Lippincott",
                   "service": "libcal"
                   },
                   {
                   "id": 2636,
-                  "name": "Van Pelt-Dietrich Library Center: Teaching, Seminar, & Meeting Rooms",
+                  "name": "VP Seminar",
                   "service": "libcal"
                   },
                   {
                   "id": 2611,
-                  "name": "Van Pelt-Dietrich Library Center: Special Use Rooms",
+                  "name": "VP Special Use",
                   "service": "libcal"
                   },
                   {

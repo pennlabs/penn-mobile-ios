@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import SCLAlertView
 
-class GSRLoginController: UIViewController {
+class GSRLoginController: UIViewController, IndicatorEnabled {
     
     fileprivate var firstNameField: UITextField!
     fileprivate var lastNameField: UITextField!
@@ -36,6 +37,12 @@ class GSRLoginController: UIViewController {
         
         prepareUI()
         firstNameField.becomeFirstResponder()
+        
+        guard let user = GSRUser.getUser() else { return }
+        firstNameField.text = user.firstName
+        lastNameField.text = user.lastName
+        emailField.text = user.email
+        phoneNumberField.text = user.phone
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -57,7 +64,7 @@ extension GSRLoginController {
     fileprivate func prepareUI() {
         prepareFirstNameField()
         prepareLastNameField()
-        prepareGroupNameField()
+        // prepareGroupNameField()
         prepareEmailField()
         preparePhoneNumberField()
     }
@@ -129,7 +136,7 @@ extension GSRLoginController {
         emailField.autocapitalizationType = .none
         
         view.addSubview(emailField)
-        let topAnchor = booking == nil ? firstNameField.bottomAnchor : groupNameField.bottomAnchor
+        let topAnchor = groupNameField == nil ? firstNameField.bottomAnchor : groupNameField.bottomAnchor
         _ = emailField.anchor(topAnchor, left: firstNameField.leftAnchor, bottom: nil, right: lastNameField.rightAnchor, topConstant: spaceBetween, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 44)
     }
     
@@ -149,7 +156,7 @@ extension GSRLoginController {
 }
 
 // MARK: - Handlers
-extension GSRLoginController {
+extension GSRLoginController: GSRBookable {
     @objc fileprivate func saveCredentials(_ sender: Any) {
         guard let firstName = firstNameField.text, let lastName = lastNameField.text, let email = emailField.text, let phone = phoneNumberField.text else {
             return
@@ -157,17 +164,27 @@ extension GSRLoginController {
         
         if firstName == "" || lastName == "" || email == "" || phone == "" {
             return // A field is left blank
-        } else if !email.contains("upenn.edu") {
+        } else if !email.contains("upenn.edu") || !email.contains("@") {
             return // Malformed email, please use email ending in upenn.edu
         }
-    
+        
+        _ = resignFirstResponder()
+
         let user = GSRUser(firstName: firstName, lastName: lastName, email: email, phone: phone)
         if booking != nil {
             guard let groupName = groupNameField.text else { return }
             booking.user = user
             booking.groupName = groupName
+            
+            let failureMessage = "It seems like your request failed. Please double check your contact information and your network connection and try again."
+            submitBooking(for: booking, failureMessage: failureMessage) { (success) in
+                if success {
+                    GSRUser.save(user: user)
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
         } else {
-            _ = self.resignFirstResponder()
+            GSRUser.save(user: user)
             dismiss(animated: true, completion: nil)
         }
     }
