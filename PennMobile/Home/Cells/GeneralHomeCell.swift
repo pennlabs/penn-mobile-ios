@@ -23,6 +23,7 @@ class GeneralHomeCell: UITableViewCell {
     var delegate: GeneralHomeCellDelegate!
     
     fileprivate var typeLabel: UILabel!
+    fileprivate var cardView: UIView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,6 +41,21 @@ class GeneralHomeCell: UITableViewCell {
 extension GeneralHomeCell {
     fileprivate func prepareBackground() {
         backgroundColor = UIColor.whiteGrey
+        
+        cardView = UIView()
+
+        cardView.backgroundColor = .white
+        cardView.layer.cornerRadius = 15.0
+        
+        // Shadows
+        cardView.layer.shadowColor = UIColor.black.cgColor
+        cardView.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        cardView.layer.shadowOpacity = 0.25
+        cardView.layer.shadowRadius = 4.0
+        
+        addSubview(cardView)
+        cardView.anchorWithConstantsToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
+                                          topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10)
     }
     
     fileprivate func prepareTypeLabel() {

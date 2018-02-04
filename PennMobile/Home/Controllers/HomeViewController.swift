@@ -43,6 +43,9 @@ extension HomeViewController {
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
         
+        tableView.backgroundColor = .whiteGrey
+        tableView.separatorStyle = .none
+        
         view.addSubview(tableView)
         
         tableView.anchorToTop(nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor)
