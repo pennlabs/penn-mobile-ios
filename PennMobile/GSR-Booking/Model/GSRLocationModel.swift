@@ -12,9 +12,9 @@ import SwiftyJSON
 class GSRLocationModel {
     static let shared = GSRLocationModel()
     
-    fileprivate var locations = [StudySpace]()
+    fileprivate var locations = [GSRLocation]()
     
-    func getLocations() -> [StudySpace] {
+    func getLocations() -> [GSRLocation] {
         return locations
     }
     
@@ -30,15 +30,12 @@ class GSRLocationModel {
         guard let json = try? fetchJSON() else { return }
         let locationsJSONArray = json["locations"].arrayValue
         for json in locationsJSONArray {
-            let id = json["id"].intValue
+            let lid = json["lid"].intValue
+            let gid = json["gid"].int
             let name = json["name"].stringValue
             let service = json["service"].stringValue
-            let location = StudySpace(id: id, name: name, service: service)
+            let location = GSRLocation(lid: lid, gid: gid, name: name, service: service)
             locations.append(location)
         }
-        locations.sort { (ss1, ss2) -> Bool in
-            return ss1.id < ss2.id
-        }
-        locations.remove(at: 0) // removes id = 0 (all locations)
     }
 }

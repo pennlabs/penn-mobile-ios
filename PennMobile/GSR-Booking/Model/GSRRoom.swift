@@ -10,14 +10,16 @@ import Foundation
 
 class GSRRoom {
     let name: String
-    let id: Int
+    let roomId: Int
+    let gid: Int
     let imageUrl: String?
     let capacity: Int
     let timeSlots: [GSRTimeSlot]
     
-    init(name: String, id: Int, imageUrl: String?, capacity: Int, timeSlots: [GSRTimeSlot]) {
+    init(name: String, roomId: Int, gid: Int, imageUrl: String?, capacity: Int, timeSlots: [GSRTimeSlot]) {
         self.name = name
-        self.id = id
+        self.roomId = roomId
+        self.gid = gid
         self.imageUrl = imageUrl
         self.capacity = capacity
         self.timeSlots = timeSlots
@@ -43,7 +45,7 @@ extension GSRRoom: Comparable {
     }
     
     static func ==(lhs: GSRRoom, rhs: GSRRoom) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.roomId == rhs.roomId
     }
 }
 

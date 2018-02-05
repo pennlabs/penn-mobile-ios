@@ -126,6 +126,10 @@ extension GSRViewModel: UITableViewDelegate {
 // MARK: - Reload Data
 extension GSRViewModel {
     func updateData(with rooms: [GSRRoom]) {
+        var rooms = rooms
+        if let gid = selectedLocation.gid {
+            rooms = rooms.filter { $0.gid == gid }
+        }
         self.allRooms = rooms
         self.currentRooms = rooms
         self.currentSelection = []
@@ -200,7 +204,7 @@ extension GSRViewModel: GSRRangeSliderDelegate {
                 return $0.startTime >= startDate && $0.endTime <= endDate
             }
             if !timeSlots.isEmpty {
-                let newRoom = GSRRoom(name: room.name, id: room.id, imageUrl: room.imageUrl, capacity: room.capacity, timeSlots: timeSlots)
+                let newRoom = GSRRoom(name: room.name, roomId: room.roomId, gid: room.gid, imageUrl: room.imageUrl, capacity: room.capacity, timeSlots: timeSlots)
                 currentRooms.append(newRoom)
             }
         }
@@ -219,7 +223,7 @@ extension GSRViewModel: GSRRangeSliderDelegate {
 
 // MARK: - Data Getter Methods
 extension GSRViewModel {
-    func getSelectedLocation() -> StudySpace {
+    func getSelectedLocation() -> GSRLocation {
         return selectedLocation
     }
     
@@ -231,7 +235,7 @@ extension GSRViewModel {
         if currentSelection.isEmpty {
             return nil
         }
-        let locationId = selectedLocation.id
+        let locationId = selectedLocation.lid
         let roomId = currentSelection[0].roomId
         let startTime: Date
         let endTime: Date

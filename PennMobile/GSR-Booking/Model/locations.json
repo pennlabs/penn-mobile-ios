@@ -1,54 +1,69 @@
 {
     "locations": [
                   {
-                  "id": 2683,
+                  "lid": 1086,
+                  "gid": 1889,
+                  "name": "Weigle",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 1086,
+                  "gid": 4660,
+                  "name": "VP Ground Floor",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 1086,
+                  "gid": 4659,
+                  "name": "VP 3rd Floor",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 1086,
+                  "gid": 1891,
+                  "name": "VP 4th Floor",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 2683,
                   "name": "Biomedical Library",
                   "service": "libcal"
                   },
                   {
-                  "id": 2495,
+                  "lid": 2495,
                   "name": "Education Commons",
                   "service": "libcal"
                   },
                   {
-                  "id": 2637,
+                  "lid": 2637,
                   "name": "Fisher Fine Arts",
                   "service": "libcal"
                   },
                   {
-                  "id": 1090,
+                  "lid": 1090,
                   "name": "Levin Building",
                   "service": "libcal"
                   },
                   {
-                  "id": 2634,
+                  "lid": 2634,
+                  "gid": 2634,
                   "name": "Museum Library",
                   "service": "libcal"
                   },
                   {
-                  "id": 1086,
-                  "name": "VP GSR",
-                  "service": "libcal"
-                  },
-                  {
-                  "id": 2587,
+                  "lid": 2587,
                   "name": "Lippincott",
                   "service": "libcal"
                   },
                   {
-                  "id": 2636,
+                  "lid": 2636,
                   "name": "VP Seminar",
                   "service": "libcal"
                   },
                   {
-                  "id": 2611,
+                  "lid": 2611,
                   "name": "VP Special Use",
                   "service": "libcal"
-                  },
-                  {
-                  "id": 0,
-                  "name": "View All Locations",
-                  "service": "libcal"
                   }
-                  ]
+                ]
 }

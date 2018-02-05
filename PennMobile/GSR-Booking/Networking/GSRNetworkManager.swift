@@ -113,7 +113,7 @@ extension Array where Element == GSRRoom {
 
 extension GSRRoom {
     convenience init(json: JSON) throws {
-        guard let name = json["name"].string, let id = json["room_id"].int else {
+        guard let name = json["name"].string, let roomId = json["room_id"].int, let gid = json["gid"].int else {
             throw NetworkingError.jsonError
         }
         
@@ -123,7 +123,7 @@ extension GSRRoom {
         var times = [GSRTimeSlot]()
         let jsonTimeArray = json["times"].arrayValue
         for timeJSON in jsonTimeArray {
-            if let time = try? GSRTimeSlot(roomId: id, json: timeJSON), time.isAvailable {
+            if let time = try? GSRTimeSlot(roomId: roomId, json: timeJSON), time.isAvailable {
                 if let prevTime = times.last, prevTime.endTime == time.startTime {
                     times.last?.next = time
                     time.prev = times.last
@@ -131,7 +131,7 @@ extension GSRRoom {
                 times.append(time)
             }
         }
-        self.init(name: name, id: id, imageUrl: imageUrl, capacity: capacity, timeSlots: times)
+        self.init(name: name, roomId: roomId, gid: gid, imageUrl: imageUrl, capacity: capacity, timeSlots: times)
     }
 }
 

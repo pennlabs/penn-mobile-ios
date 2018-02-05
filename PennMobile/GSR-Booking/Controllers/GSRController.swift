@@ -119,7 +119,7 @@ extension GSRController {
 // MARK: - ViewModelDelegate + Networking
 extension GSRController: GSRViewModelDelegate {
     func fetchData() {
-        let locationId = viewModel.getSelectedLocation().id
+        let locationId = viewModel.getSelectedLocation().lid
         let date = viewModel.getSelectedDate()
         GSRNetworkManager.instance.getAvailability(for: locationId, date: date) { (rooms) in
             DispatchQueue.main.async {

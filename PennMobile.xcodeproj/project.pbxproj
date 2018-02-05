@@ -70,7 +70,7 @@
 		2189C0A02027CE4100771C1F /* GSRVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0972027CE4000771C1F /* GSRVenue.swift */; };
 		2189C0A12027CE4100771C1F /* GSRBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0982027CE4000771C1F /* GSRBooking.swift */; };
 		2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0992027CE4000771C1F /* GSRRoom.swift */; };
-		2189C0A32027CE4100771C1F /* StudySpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C09A2027CE4000771C1F /* StudySpace.swift */; };
+		2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C09A2027CE4000771C1F /* GSRLocation.swift */; };
 		2189C0A82027CE4B00771C1F /* ThumbLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0A42027CE4B00771C1F /* ThumbLayer.swift */; };
 		2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0A52027CE4B00771C1F /* RangeSlider.swift */; };
 		2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0A62027CE4B00771C1F /* TextLayer.swift */; };
@@ -186,7 +186,7 @@
 		2189C0972027CE4000771C1F /* GSRVenue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRVenue.swift; sourceTree = "<group>"; };
 		2189C0982027CE4000771C1F /* GSRBooking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRBooking.swift; sourceTree = "<group>"; };
 		2189C0992027CE4000771C1F /* GSRRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRRoom.swift; sourceTree = "<group>"; };
-		2189C09A2027CE4000771C1F /* StudySpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudySpace.swift; sourceTree = "<group>"; };
+		2189C09A2027CE4000771C1F /* GSRLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRLocation.swift; sourceTree = "<group>"; };
 		2189C0A42027CE4B00771C1F /* ThumbLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbLayer.swift; sourceTree = "<group>"; };
 		2189C0A52027CE4B00771C1F /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
 		2189C0A62027CE4B00771C1F /* TextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextLayer.swift; sourceTree = "<group>"; };
@@ -515,7 +515,7 @@
 				2189C0962027CE4000771C1F /* GSRUser.swift */,
 				2189C0972027CE4000771C1F /* GSRVenue.swift */,
 				2189C0952027CE4000771C1F /* locations.json */,
-				2189C09A2027CE4000771C1F /* StudySpace.swift */,
+				2189C09A2027CE4000771C1F /* GSRLocation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -956,7 +956,7 @@
 				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				217C6DD2201399DB00F07C3D /* LaundryMachineData.swift in Sources */,
-				2189C0A32027CE4100771C1F /* StudySpace.swift in Sources */,
+				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
 				216640941EBADC1700746B8E /* DiningControllerCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
