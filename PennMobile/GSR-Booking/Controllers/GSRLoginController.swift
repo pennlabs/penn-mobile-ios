@@ -66,7 +66,7 @@ extension GSRLoginController {
         prepareLastNameField()
         // prepareGroupNameField()
         prepareEmailField()
-        preparePhoneNumberField()
+        // preparePhoneNumberField()
     }
     
     private func prepareFirstNameField() {
@@ -158,11 +158,11 @@ extension GSRLoginController {
 // MARK: - Handlers
 extension GSRLoginController: GSRBookable {
     @objc fileprivate func saveCredentials(_ sender: Any) {
-        guard let firstName = firstNameField.text, let lastName = lastNameField.text, let email = emailField.text, let phone = phoneNumberField.text else {
+        guard let firstName = firstNameField.text, let lastName = lastNameField.text, let email = emailField.text else {
             return
         }
         
-        if firstName == "" || lastName == "" || email == "" || phone == "" {
+        if firstName == "" || lastName == "" || email == "" {
             showAlert(withMsg: "A field was left blank. Please fill it out before submitting.", completion: nil)
             return // A field is left blank
         } else if !email.contains("upenn.edu") || !email.contains("@") {
@@ -172,7 +172,7 @@ extension GSRLoginController: GSRBookable {
         
         _ = resignFirstResponder()
 
-        let user = GSRUser(firstName: firstName, lastName: lastName, email: email, phone: phone)
+        let user = GSRUser(firstName: firstName, lastName: lastName, email: email, phone: "2158986533")
         if booking != nil {
             booking.user = user
             submitBooking(for: booking) { (success) in
