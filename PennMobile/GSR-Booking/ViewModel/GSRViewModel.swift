@@ -235,7 +235,6 @@ extension GSRViewModel {
         if currentSelection.isEmpty {
             return nil
         }
-        let locationId = selectedLocation.lid
         let roomId = currentSelection[0].roomId
         let startTime: Date
         let endTime: Date
@@ -248,6 +247,6 @@ extension GSRViewModel {
             timeSlot = timeSlot.next!
         }
         endTime = timeSlot.endTime
-        return GSRBooking(locationId: locationId, roomId: roomId, start: startTime, end: endTime)
+        return GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)
     }
 }

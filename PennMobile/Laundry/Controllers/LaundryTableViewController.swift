@@ -12,10 +12,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
-    
-    fileprivate var plusBarButtonItem: UIBarButtonItem!
-    fileprivate var editBarButtonItem: UIBarButtonItem!
-    
+
     fileprivate var timer: Timer?
     
     fileprivate let allowMachineNotifications = true
@@ -38,9 +35,8 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         prepareRefreshControl()
         
         // initialize navigation bar
-        plusBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
-        editBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(handleEditPressed))
-        updateNavigationItem()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
+
         
         // Start indicator if there are cells that need to be loaded
         if !rooms.isEmpty {
@@ -59,14 +55,6 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         let v = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 30.0))
         v.backgroundColor = UIColor.clear
         return v
-    }
-    
-    fileprivate func updateNavigationItem() {
-        if rooms.count > 0 {
-            navigationItem.rightBarButtonItem = self.editBarButtonItem
-        } else {
-            navigationItem.rightBarButtonItem = self.plusBarButtonItem
-        }
     }
 }
 
@@ -170,7 +158,6 @@ extension LaundryTableViewController: RoomSelectionVCDelegate {
     func saveSelection(for rooms: [LaundryRoom]) {
         LaundryRoom.setPreferences(for: rooms)
         self.rooms = rooms
-        updateNavigationItem()
         self.tableView.reloadData()
     }
 }
@@ -181,7 +168,6 @@ extension LaundryTableViewController: LaundryCellDelegate {
         if let index = rooms.index(of: room) {
             rooms.remove(at: index)
             LaundryRoom.setPreferences(for: rooms)
-            updateNavigationItem()
             tableView.reloadData()
         }
     }

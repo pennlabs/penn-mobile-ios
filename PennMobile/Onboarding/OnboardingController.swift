@@ -80,10 +80,7 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
     
     func handleSkip() {
         terminateOnboarding()
-        
-        let category = GoogleAnalyticsManager.events.category.onboarding
-        let action = GoogleAnalyticsManager.events.action.savedSelection
-        GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: "No", value: -1)
+        GoogleAnalyticsManager.shared.trackEvent(category: .onboarding, action: .savedSelection, label: "No", value: -1)
     }
     
     func terminateOnboarding() {
@@ -184,19 +181,13 @@ extension OnboardingController: SelectionCellDelegate {
     func saveSelection(for halls: [LaundryRoom]) {
         LaundryRoom.setPreferences(for: halls)
         terminateOnboarding()
-        
-        let category = GoogleAnalyticsManager.events.category.onboarding
-        let action = GoogleAnalyticsManager.events.action.savedSelection
         let label = halls.isEmpty ? "No" : "Yes"
-        GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: label, value: 1)
+        GoogleAnalyticsManager.shared.trackEvent(category: .onboarding, action: .savedSelection, label: label, value: 1)
     }
     
     func handleCancel() {
         terminateOnboarding()
-        
-        let category = GoogleAnalyticsManager.events.category.onboarding
-        let action = GoogleAnalyticsManager.events.action.savedSelection
-        GoogleAnalyticsManager.shared.trackEvent(category: category, action: action, label: "No", value: 1)
+        GoogleAnalyticsManager.shared.trackEvent(category: .onboarding, action: .savedSelection, label: "No", value: 1)
     }
 }
 
