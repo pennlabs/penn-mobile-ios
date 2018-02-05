@@ -18,11 +18,14 @@ extension GSRBookable where Self: UIViewController {
             DispatchQueue.main.async {
                 self.hideActivity()
                 let alertView = SCLAlertView()
+                var action: GoogleAnalyticsManager.EventAction = .failed
                 if success {
                     alertView.showSuccess("Success!", subTitle: "You should receive a confirmation email in the next few minutes.")
+                    action = .success
                 } else if let msg = errorMessage {
                     alertView.showError("Uh oh!", subTitle: msg)
                 }
+                GoogleAnalyticsManager.shared.trackEvent(category: .attemptedBooking, action: action, label: booking.location.name, value: success ? 1 : -1)
                 completion(success)
             }
         }

@@ -18,6 +18,15 @@ class GSRLocationModel {
         return locations
     }
     
+    func getLocationName(for lid: Int, gid: Int?) -> String {
+        for location in locations {
+            if location.lid == lid && location.gid == gid {
+                return location.name
+            }
+        }
+        return ""
+    }
+    
     private func fetchJSON() throws -> JSON {
         guard let path = Bundle.main.path(forResource: "locations", ofType: "json") else {
             throw NetworkingError.jsonError

@@ -66,7 +66,7 @@ class GSRNetworkManager: NSObject, Requestable {
         let end = dateFormatter.string(from: booking.end)
         let user: GSRUser = booking.user
         let params: [String: String] = [
-            "building" : String(booking.locationId),
+            "building" : String(booking.location.lid),
             "room" : String(booking.roomId),
             "start" : start,
             "end" : end,

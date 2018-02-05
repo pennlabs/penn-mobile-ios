@@ -9,15 +9,15 @@
 import Foundation
 
 class GSRBooking {
-    let locationId: Int
+    let location: GSRLocation
     let roomId: Int
     let start: Date
     let end: Date
     var user: GSRUser! = nil
     var groupName = "Penn Mobile Booking"
     
-    init(locationId: Int, roomId: Int, start: Date, end: Date) {
-        self.locationId = locationId
+    init(location: GSRLocation, roomId: Int, start: Date, end: Date) {
+        self.location = location
         self.roomId = roomId
         self.start = start
         self.end = end
