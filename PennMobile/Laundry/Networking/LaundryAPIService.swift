@@ -27,6 +27,10 @@ class LaundryAPIService: Requestable {
         }
     }
     
+    func clearDirectory() {
+        Storage.remove(LaundryRoom.directory, from: .caches)
+    }
+    
     func loadIds(_ callback: @escaping (_ success: Bool) -> ()) {
         fetchIds { (dictionary) in
             self.idToRooms = dictionary

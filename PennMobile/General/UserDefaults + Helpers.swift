@@ -18,6 +18,7 @@ extension UserDefaults {
         case laundryPreferences
         case isOnboarded
         case gsrUSer
+        case appVersion
     }
 }
 
@@ -125,6 +126,21 @@ extension UserDefaults {
     
     func clearGSRUser() {
         removeObject(forKey: UserDefaultsKeys.gsrUSer.rawValue)
+    }
+}
+
+// MARK: - App Version
+extension UserDefaults {
+    func isNewAppVersion() -> Bool {
+        let prevAppVersion = string(forKey: UserDefaultsKeys.appVersion.rawValue) ?? ""
+        let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+        return prevAppVersion != version
+    }
+    
+    func setAppVersion() {
+        let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+        set(version, forKey: UserDefaultsKeys.appVersion.rawValue)
+        synchronize()
     }
 }
 

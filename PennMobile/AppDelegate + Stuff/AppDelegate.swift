@@ -24,10 +24,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        if UserDefaults.standard.isNewAppVersion() {
+            UserDefaults.standard.setAppVersion()
+            LaundryAPIService.instance.clearDirectory()
+        }
+        
         DatabaseManager.shared.dryRun = true
-        // GoogleAnalyticsManager.shared.dryRun = false
         GoogleAnalyticsManager.shared.dryRun = true
-        //DatabaseManager.shared.startSession() //adds new session log to queue
         
         GoogleAnalyticsManager.prepare()
         LaundryAPIService.instance.prepare()
@@ -38,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if !UserDefaults.standard.isOnboarded() {
             handleOnboarding(animated: true)
-            UserDefaults.standard.setIsOnboarded(value: true) // uncomment in order to prevent multiple onboardings
+            UserDefaults.standard.setIsOnboarded(value: true)
             return true
         }
         
@@ -50,8 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         presentSWController()
-        //registerForPushNotifications() //uncomment when ready to start registering tokens for push notifications
-
         return true
     }
     
@@ -179,7 +180,6 @@ extension AppDelegate: OnboardingDelegate {
     func handleFinishedOnboarding() {
         navController.viewControllers = [homeController]
         presentSWController()
-        //registerForPushNotifications()
     }
 }
 
