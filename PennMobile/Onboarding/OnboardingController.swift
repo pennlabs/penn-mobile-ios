@@ -178,10 +178,13 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
 }
 
 extension OnboardingController: SelectionCellDelegate {
-    func saveSelection(for halls: [LaundryRoom]) {
-        LaundryRoom.setPreferences(for: halls)
+    func saveSelection(for rooms: [LaundryRoom]) {
+        LaundryRoom.setPreferences(for: rooms)
         terminateOnboarding()
-        let label = halls.isEmpty ? "No" : "Yes"
+        for room in rooms {
+            GoogleAnalyticsManager.shared.trackEvent(category: .laundry, action: .addRoom, label: room.name, value: 0)
+        }
+        let label = rooms.isEmpty ? "No" : "Yes"
         GoogleAnalyticsManager.shared.trackEvent(category: .onboarding, action: .savedSelection, label: label, value: 1)
     }
     

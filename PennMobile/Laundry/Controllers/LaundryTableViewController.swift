@@ -186,6 +186,7 @@ extension LaundryTableViewController: LaundryCellDelegate {
                             updateCellIfNeeded()
                         }
                     })
+                    GoogleAnalyticsManager.shared.trackEvent(category: .laundry, action: .registerNotification, label: machine.roomName, value: 0)
                 }
             }
         }

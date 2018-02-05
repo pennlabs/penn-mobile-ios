@@ -38,11 +38,17 @@ class GoogleAnalyticsManager: NSObject {
     enum EventCategory: String {
         case attemptedBooking = "Attempted booking"
         case onboarding = "Onboarding"
+        case laundry = "Laundry"
+        case notificationPermission = "Notification permission"
     }
     
     enum EventAction: String {
         case savedSelection = "Saved selection"
         case success = "Success"
         case failed = "Failed"
+        case accept = "Accept"
+        case decline = "Decline"
+        case registerNotification = "Register for notification"
+        case addRoom = "Add room"
     }
 }
