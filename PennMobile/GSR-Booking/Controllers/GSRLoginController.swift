@@ -17,6 +17,8 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
     fileprivate var groupNameField: UITextField!
     fileprivate var emailField: UITextField!
     fileprivate var phoneNumberField: UITextField!
+    
+    fileprivate var messageView: UITextView!
 
     fileprivate let edgeOffset: CGFloat = 24
     fileprivate let spaceBetween: CGFloat = 20
@@ -54,8 +56,8 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
         super.resignFirstResponder()
         return firstNameField.resignFirstResponder() ||
         lastNameField.resignFirstResponder() ||
-        emailField.resignFirstResponder() ||
-        phoneNumberField.resignFirstResponder()
+        emailField.resignFirstResponder() // ||
+        // phoneNumberField.resignFirstResponder()
     }
 }
 
@@ -67,6 +69,7 @@ extension GSRLoginController {
         // prepareGroupNameField()
         prepareEmailField()
         // preparePhoneNumberField()
+        prepareMessage()
     }
     
     private func prepareFirstNameField() {
@@ -79,6 +82,8 @@ extension GSRLoginController {
         firstNameField.autocorrectionType = .no
         firstNameField.spellCheckingType = .no
         firstNameField.autocapitalizationType = .words
+        firstNameField.delegate = self
+        firstNameField.tag = 0
         
         view.addSubview(firstNameField)
         _ = firstNameField.anchor(nil, left: view.leftAnchor, bottom: nil, right: view.centerXAnchor, topConstant: 0, leftConstant: edgeOffset, bottomConstant: 0, rightConstant: edgeOffset/2, widthConstant: 0, heightConstant: 44)
@@ -100,6 +105,8 @@ extension GSRLoginController {
         lastNameField.autocorrectionType = .no
         lastNameField.spellCheckingType = .no
         lastNameField.autocapitalizationType = .words
+        lastNameField.delegate = self
+        lastNameField.tag = 1
         
         view.addSubview(lastNameField)
         _ = lastNameField.anchor(firstNameField.topAnchor, left: view.centerXAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: edgeOffset/2, bottomConstant: 0, rightConstant: edgeOffset, widthConstant: 0, heightConstant: 44)
@@ -134,6 +141,9 @@ extension GSRLoginController {
         emailField.autocorrectionType = .no
         emailField.spellCheckingType = .no
         emailField.autocapitalizationType = .none
+        emailField.delegate = self
+        emailField.returnKeyType = .done
+        emailField.tag = 2
         
         view.addSubview(emailField)
         let topAnchor = groupNameField == nil ? firstNameField.bottomAnchor : groupNameField.bottomAnchor
@@ -152,6 +162,29 @@ extension GSRLoginController {
         
         view.addSubview(phoneNumberField)
         _ = phoneNumberField.anchor(emailField.bottomAnchor, left: emailField.leftAnchor, bottom: nil, right: emailField.rightAnchor, topConstant: spaceBetween, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 44)
+    }
+    
+    private func prepareMessage() {
+        let messageView = UITextView()
+        messageView.text = "Built by Eric Wang '21 and Josh Doman '20. Special thanks to Yagil Burowski '17 for donating the original design to Penn Labs."
+        messageView.textColor = UIColor.lightGray
+        messageView.isScrollEnabled = false
+        messageView.font = UIFont.systemFont(ofSize: 14)
+        
+        view.addSubview(messageView)
+        _ = messageView.anchor(emailField.bottomAnchor, left: emailField.leftAnchor, bottom: nil, right: emailField.rightAnchor, topConstant: spaceBetween, leftConstant: -4, bottomConstant: 0, rightConstant: -4, widthConstant: 0, heightConstant: 0)
+    }
+}
+
+// MARK: - TextFieldDelegate
+extension GSRLoginController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            saveCredentials(textField)
+        }
+        return false
     }
 }
 
