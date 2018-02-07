@@ -166,9 +166,11 @@ extension GSRLoginController {
     
     private func prepareMessage() {
         let messageView = UITextView()
-        messageView.text = "Built by Eric Wang '21 and Josh Doman '20. Special thanks to Yagil Burowski '17 for donating the original design to Penn Labs."
+        messageView.text = "Built by Eric Wang '21 and Josh Doman '20. Special thanks to Yagil Burowski '17 for donating the original design of this feature to Penn Labs."
         messageView.textColor = UIColor.lightGray
         messageView.isScrollEnabled = false
+        messageView.isEditable = false
+        messageView.isSelectable = false
         messageView.font = UIFont.systemFont(ofSize: 14)
         
         view.addSubview(messageView)
@@ -199,7 +201,7 @@ extension GSRLoginController: GSRBookable {
             showAlert(withMsg: "A field was left blank. Please fill it out before submitting.", completion: nil)
             return // A field is left blank
         } else if !email.contains("upenn.edu") || !email.contains("@") {
-            showAlert(withMsg: "The email field was malformed. Please make sure to use your Penn email.", completion: nil)
+            showAlert(withMsg: "The email field is malformed. Please make sure to use your Penn email.", completion: nil)
             return // Malformed email, please use email ending in upenn.edu
         }
         
