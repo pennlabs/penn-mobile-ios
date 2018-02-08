@@ -190,6 +190,10 @@ extension Date {
         return self.dateIn(days: 1)
     }
     
+    var isToday: Bool {
+        return Calendar.current.isDateInToday(self)
+    }
+    
     static func midnight(for dateStr: String) -> Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"

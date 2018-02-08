@@ -8,15 +8,15 @@
 
 import Foundation
 
-public struct GSROverhaulDate {
+public struct GSRDate {
     var string: String
     var dayOfWeek: String
     var day: Int
 }
 
 class GSRDateHandler {
-    static func generateDates() -> [GSROverhaulDate] {
-        var dates = [GSROverhaulDate]()
+    static func generateDates() -> [GSRDate] {
+        var dates = [GSRDate]()
         var cal = Calendar.current
         cal.timeZone = TimeZone(abbreviation: "EST")!
         
@@ -34,7 +34,7 @@ class GSRDateHandler {
             formatter.dateFormat = "yyyy-MM-dd"
             let string = formatter.string(from: date)
             let day = (cal as NSCalendar).components(NSCalendar.Unit.day, from: date).day
-            dates.append(GSROverhaulDate(string: string, dayOfWeek: date.dayOfWeek, day: day!))
+            dates.append(GSRDate(string: string, dayOfWeek: date.dayOfWeek, day: day!))
         }
         
         return dates

@@ -50,7 +50,7 @@ extension GSRRoom: Comparable {
 }
 
 extension Array where Element == GSRRoom {
-    func getMinMaxDates(day: GSROverhaulDate) -> (Date, Date) {
+    func getMinMaxDates(day: GSRDate) -> (Date, Date) {
         let midnightYesterday = Date.midnightYesterday
         let midnightToday = Date.midnightToday
 

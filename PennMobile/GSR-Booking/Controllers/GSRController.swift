@@ -17,6 +17,8 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var emptyView: EmptyView!
     fileprivate var barButton: UIBarButtonItem!
     
+    var currentDay = Date()
+    
     var barButtonTitle: String {
         get {
             switch viewModel.state {
@@ -42,6 +44,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateForNewDayIfNeeded()
         rangeSlider?.reload()
         refreshBarButton()
         revealViewController().panGestureRecognizer().delegate = self
@@ -196,6 +199,17 @@ extension GSRController: GSRBookable {
             }
         } else {
             presentLoginController(with: booking)
+        }
+    }
+}
+
+// MARK: - Update For New Day
+extension GSRController {
+    func updateForNewDayIfNeeded() {
+        if !currentDay.isToday {
+            currentDay = Date()
+            viewModel.updateDates()
+            pickerView.reloadAllComponents()
         }
     }
 }

@@ -27,7 +27,7 @@ protocol GSRViewModelDelegate: ShowsAlert {
 class GSRViewModel: NSObject {
     
     // MARK: Dates + Locations
-    fileprivate let dates = GSRDateHandler.generateDates()
+    fileprivate var dates = GSRDateHandler.generateDates()
     fileprivate let locations = GSRLocationModel.shared.getLocations()
     fileprivate lazy var selectedDate = self.dates[0]
     fileprivate lazy var selectedLocation = self.locations[0]
@@ -134,6 +134,10 @@ extension GSRViewModel {
         self.currentRooms = rooms
         self.currentSelection = []
     }
+    
+    func updateDates() {
+        dates = GSRDateHandler.generateDates()
+    }
 }
 
 // MARK: Selection Delegate
@@ -227,7 +231,7 @@ extension GSRViewModel {
         return selectedLocation
     }
     
-    func getSelectedDate() -> GSROverhaulDate {
+    func getSelectedDate() -> GSRDate {
         return selectedDate
     }
     

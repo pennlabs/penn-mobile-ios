@@ -43,7 +43,7 @@ class DiningDetailModel {
     }
     
     static func getWebview(for venue: DiningVenueName) -> UIWebView? {
-        if lastUpdated.dayOfWeek != Date().dayOfWeek {
+        if !lastUpdated.isToday {
             webviewDictionary = [DiningVenueName: UIWebView]()
             lastUpdated = Date()
             return nil
