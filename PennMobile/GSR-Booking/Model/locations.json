@@ -25,6 +25,11 @@
                   "service": "libcal"
                   },
                   {
+                  "lid": 2587,
+                  "name": "Lippincott",
+                  "service": "libcal"
+                  },
+                  {
                   "lid": 2683,
                   "name": "Biomedical Library",
                   "service": "libcal"
@@ -48,11 +53,6 @@
                   "lid": 2634,
                   "gid": 2634,
                   "name": "Museum Library",
-                  "service": "libcal"
-                  },
-                  {
-                  "lid": 2587,
-                  "name": "Lippincott",
                   "service": "libcal"
                   },
                   {
