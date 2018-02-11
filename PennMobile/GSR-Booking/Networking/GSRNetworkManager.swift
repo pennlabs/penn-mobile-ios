@@ -2,346 +2,158 @@
 //  NetworkManager.swift
 //  GSR
 //
-//  Created by Yagil Burowski on 15/09/2016.
+//  Created by Zhilei Zheng on 01/02/2018.
 //  Copyright © 2016 Yagil Burowski. All rights reserved.
 //
 
 import Foundation
+import SwiftyJSON
 
 
-class GSRNetworkManager: NSObject {
-    let availUrl = "http://libcal.library.upenn.edu/process_roombookings.php"
+class GSRNetworkManager: NSObject, Requestable {
     
-    public typealias AuthenticateCallback = (_ isValid: Bool) -> Void
-    fileprivate var authenticateCallback: AuthenticateCallback?
+    static let instance = GSRNetworkManager()
     
-    var email : String?
-    var password: String?
-    var gid : Int?
-    var ids : [Int]?
-    var session : URLSession = {
-        let session = URLSession.shared
-        return URLSession.shared
-    }()
+    let availUrl = "http://api.pennlabs.org/studyspaces/availability"
+    let locationsUrl = "http://api.pennlabs.org/studyspaces/locations"
+    let bookingUrl = "http://api.pennlabs.org/studyspaces/book"
     
-    var doNotBook: Bool {
-        return authenticateCallback != nil
+    var locations:[Int:String] = [:]
+    
+    
+    func getLocations (callback: @escaping (([Int:String]?) -> Void)) {
+        let url = locationsUrl
+        getRequest(url: url) { (dict) in
+            if let dict = dict {
+                let json = JSON(dict)
+                self.locations = self.parseLocations(json: json)
+                callback(self.locations)
+            } else {
+                callback(nil)
+            }
+        }
     }
     
-    private var maxFails = 10
-    private var numberOfFails = 0
-    
-    static let shared = GSRNetworkManager()
-    
-    convenience init(email: String, password: String, gid: Int, ids: [Int]) {
-        self.init()
-        self.email = email
-        self.password = password
-        self.gid = gid
-        self.ids = ids
+    func getAvailability(for gsrId: Int, date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
+        let dateStr = date.string
+        let url = "\(availUrl)/\(gsrId)?date=\(dateStr)&available=true"
+        getRequest(url: url) { (dict) in
+            var rooms: [GSRRoom]!
+            if let dict = dict {
+                let json = JSON(dict)
+                rooms = Array<GSRRoom>(json: json)
+            }
+            callback(rooms)
+        }
     }
     
-    //static private func isGoodAuthentication(_ dataString: String
+    private func parseLocations(json:JSON) -> [Int:String] {
+        var locations:[Int:String] = [:]
+        if let jsonArray = json["locations"].array {
+            for json in jsonArray {
+                let id = json["id"].intValue
+                let name = json["name"].stringValue
+                locations[id] = name
+            }
+        }
+        return locations
+    }
     
-    func getHours(_ date: String, gid: Int, callback: @escaping (AnyObject) -> ()) {
-        let headers = [
-            "Referer": "http://libcal.library.upenn.edu/booking/vpdlc"
+    func makeBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let start = dateFormatter.string(from: booking.start)
+        let end = dateFormatter.string(from: booking.end)
+        let user: GSRUser = booking.user
+        let params: [String: String] = [
+            "building" : String(booking.location.lid),
+            "room" : String(booking.roomId),
+            "start" : start,
+            "end" : end,
+            "firstname" : user.firstName,
+            "lastname" : user.lastName,
+            "email" : user.email,
+            "phone" : user.phone,
+            "groupname" : booking.groupName,
+            "size" : "2-3"
         ]
         
-        let url = availUrl + "?m=calscroll&date=\(date)&gid=\(gid)"
-        let request = NSMutableURLRequest(url: URL(string: url)!)
-        request.httpMethod = "POST"
-        request.allHTTPHeaderFields = headers
-        
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
-            guard error == nil && data != nil else {   // check for fundamental networking error
-                callback(error! as AnyObject)
-                return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
-                callback(response!)
-            }
-            
-            let responseString = String(data: data!, encoding: String.Encoding.utf8)
-            
-            callback(responseString! as AnyObject)
-        }
-        
-        task.resume()
-    }
-    
-    private func getValidRoom(callback: @escaping (_ gid: Int?, _ ids: [Int]?, _ error: Error?) -> ()) {
-        guard let date = DateHandler.getDates().random?.compact, let gid = LocationsHandler.getLocations().random?.code else { return }
-        
-        self.getHours(date, gid: gid) {
-            (res: AnyObject) in
-            
-            if (res is NSError) {
-                callback(nil, nil, res as? Error)
-            } else {
-                let roomData = Parser.getAvailableTimeSlots(res as! String)
-                if roomData.isEmpty {
-                    if self.numberOfFails == self.maxFails {
-                        self.authenticateCallback?(false)
-                        return
-                    }
-                    self.numberOfFails += 1
-                    self.getValidRoom(callback: callback)
-                    return
-                }
-                guard let randomRoom = roomData.values.random?.random?.id else {
-                    self.authenticateCallback?(false)
-                    return
-                }
-                callback(gid, [randomRoom], nil)
-            }
-        }
-    }
-    
-    func authenticateEmailPassword(email: String, password: String, _ callback: AuthenticateCallback?) {
-        self.authenticateCallback = callback
-        self.numberOfFails = 0
-        
-        getValidRoom() { (gid, ids, error) in
-            self.email = email
-            self.password = password
-            self.gid = gid
-            self.ids = ids
-            
-            self.bookSelection()
-        }
-    }
-    
-    func bookSelection() {
-        session.reset {
-            let request = NSMutableURLRequest(url: URL(string: "http://libcal.library.upenn.edu/booking/vpdlc")!)
-            self.sendNotification("msg", msg: "Starting up...")
-            
-            let task = self.session.dataTask(with: request as URLRequest) {data, response, error in
-                guard error == nil && data != nil else {   // check for fundamental networking error
-                    self.handleError()
-                    return
-                }
-                self.initiateProcess()
-            }
-            
-            task.resume()
-        }
-    }
-    
-    func initiateProcess() {
-        let request = NSMutableURLRequest(url: URL(string: "http://libcal.library.upenn.edu/libauth_s_r.php")!)
-        
-        request.httpMethod = "POST"
-        
-        let bodyData = "tc=done&p1=\(Parser.idsArrayToString(ids!))&p2=\(gid!)&p3=8&p4=0&iid=335"
-        
-        request.httpBody = bodyData.data(using: String.Encoding.utf8);
-        
-        let task = session.dataTask(with: request as URLRequest) {data, response, error in
-            guard error == nil && data != nil else {   // check for fundamental networking error
-                self.handleError()
-                return
-            }
-            
-            self.sendNotification("msg", msg: "Some back and forth...")
-            
-            if let nextUrl = response?.url! {
-                self.get1(nextUrl)
-            }
-        }
-        
-        task.resume()
-    }
-    
-    func get1(_ url : URL) {
+        guard let url = URL(string: bookingUrl) else { return }
         let request = NSMutableURLRequest(url: url)
-        let task = session.dataTask(with: request as URLRequest) {data, response, error in
-            guard error == nil && data != nil else {   // check for fundamental networking error
-                self.handleError()
-                return
-            }
-            self.sendNotification("msg", msg: "Some back and forth...")
-            
-            self.get2(url)
-        }
-        
-        task.resume()
-    }
-    
-    func get2(_ url : URL) {
-        let appendStr = "&idpentityid=https%3A%2F%2Fidp.pennkey.upenn.edu%2Fidp%2Fshibboleth"
-        let getUrl = URL(string: url.absoluteString + appendStr)
-        let request = NSMutableURLRequest(url: getUrl!)
-        let task = session.dataTask(with: request as URLRequest) {data, response, error in
-            guard error == nil && data != nil else {   // check for fundamental networking error
-                self.handleError()
-                return
-            }
-            self.sendNotification("msg", msg: "Negotiating with artificial intelligence...")
-            if let nextUrl = response?.url! {
-                self.get3(nextUrl, referer: (getUrl?.absoluteString)!)
-            }
-        }
-        
-        task.resume()
-        
-    }
-    
-    
-    func get3(_ url : URL, referer : String) {
-        let request = NSMutableURLRequest(url: url)
-        request.setValue(referer, forHTTPHeaderField: "Referer")
-        
-        let task = session.dataTask(with: request as URLRequest) {data, response, error in
-            guard error == nil && data != nil else {   // check for fundamental networking error
-                self.handleError()
-                return
-            }
-            self.sendNotification("msg", msg: "Making more progress...")
-            self.authenticate()
-        }
-        
-        task.resume()
-        
-    }
-    
-    func authenticate() {
-        let pennKey = email!.components(separatedBy: "@")[0]
-        let request = NSMutableURLRequest(url: URL(string: "https://weblogin.pennkey.upenn.edu/login")!)
         request.httpMethod = "POST"
-        let bodyData = "login=\(pennKey)&password=\(password!)&required=UPENN.EDU&ref=https://idp.pennkey.upenn.edu/idp/Authn/RemoteUser&service=cosign-pennkey-idp-0"
-        
-        request.httpBody = bodyData.data(using: String.Encoding.utf8);
-        
-        request.setValue("https://weblogin.pennkey.upenn.edu/login?factors=UPENN.EDU&cosign-pennkey-idp-0&https://idp.pennkey.upenn.edu/idp/Authn/RemoteUser", forHTTPHeaderField: "Referer")
-        
-        let task = session.dataTask(with: request as URLRequest) {data, response, error in
-            guard error == nil && data != nil else {   // check for fundamental networking error
-                self.handleError()
-                return
+        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8);
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
+            var success = false
+            var errorMessage = "Unable to connect to the internet. Please reconnect and try again."
+            if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                let json = JSON(data)
+                success = json["results"].boolValue
+                errorMessage = json["error"].stringValue
             }
-            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            self.sendNotification("msg", msg: "Providing the secret password...")
-            self.postAuthenticate(dataString! as String)
-        }
-        
+            if errorMessage.contains("\n") {
+                errorMessage = errorMessage.replacingOccurrences(of: "\n", with: " ")
+            }
+            callback(success, errorMessage)
+        })
         task.resume()
-    }
-    
-    func postAuthenticate(_ dataString : String) {
-        let request = NSMutableURLRequest(url: URL(string: "https://libauth.com/saml/module.php/saml/sp/saml2-acs.php/springy-sp")!)
-        request.httpMethod = "POST"
-        
-        let SAMLResponse = Parser.dataStringToSAMLResponse(dataString)
-        let bodyData = "RelayState=https%3A%2F%2Flibauth.com%2Fsaml%2Fmodule.php%2Fcore%2Fauthenticate.php%3Fas%3Dspringy-sp&SAMLResponse=\(SAMLResponse)"
-        
-        if doNotBook {
-            DispatchQueue.main.async {
-                self.authenticateCallback?(SAMLResponse != "")
-            }
-            return
-        }
-        
-        request.httpBody = bodyData.data(using: String.Encoding.utf8);
-        
-        request.setValue("https://idp.pennkey.upenn.edu/idp/profile/SAML2/Redirect/SSO", forHTTPHeaderField: "Referer")
-        
-        let task = session.dataTask(with: request as URLRequest) {data, response, error in
-            guard error == nil && data != nil else {   // check for fundamental networking error
-                self.handleError()
-                return
-            }
-            
-            if let url = response?.url! {
-                self.postBooking(url.absoluteString)
-                self.sendNotification("msg", msg: "Finalizing everything...")
-            }
-        }
-        
-        task.resume()
-        
-    }
-    
-    func postBooking(_ referrer : String) {
-        let request = NSMutableURLRequest(url: URL(string: "http://libcal.library.upenn.edu/process_roombookings.php?m=booking_full")!)
-        request.httpMethod = "POST"
-        
-        let bodyData = "gid=\(gid!)&iid=335&email=\(email!)&nick=strategy&q1=2-3&qcount=1&fid=919"
-        request.setValue(referrer, forHTTPHeaderField: "Referer")
-        
-        request.httpBody = bodyData.data(using: String.Encoding.utf8);
-        
-        let task = session.dataTask(with: request as URLRequest) { data, response, error in
-            if error == nil {
-                let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-                
-                if dataString == "ProcPage::invalid request" {
-                    self.sendNotification("msg", msg: "Request Failed")
-                    let errorMessage = "<body style='font-family:Helvetica'><h3>Possible reasons:</h3>" +
-                        "<ul>" +
-                        "<li>You may have entered the wrong email or password. In this case, login and try again.</li>" +
-                        "<li>You might have exceeded your daily booking limit.</li>" +
-                        "<li>Exit the app, wait a few minutes and try again.</li>" +
-                        "<li>For anything else contact <a href='mailto:contactpennmobile@gmail.com'>contactpennmobile@gmail.com</a></li>" +
-                    "</ul></body>"
-                    self.sendNotification("status", msg: errorMessage)
-                    return
-                }
-                
-                do {
-                    if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:Any] {
-                        
-                        let msg = json["msg"] as! String
-                        switch json["status"] as! Int {
-                        case 0:
-                            self.sendNotification("msg", msg: "Encountered Error:")
-                            self.sendNotification("status", msg: msg)
-                            break
-                        case 2:
-                            self.sendNotification("msg", msg: "Result:")
-                            self.sendNotification("status", msg: "<body style='font-family:Helvetica'>\(msg)</body>")
-                        default:
-                            break
-                        }
-                    }
-                } catch {
-                    self.sendNotification("msg", msg: "Request Failed")
-                    let errorMessage = "<body style='font-family:Helvetica'><h3>Possible reasons:</h3>" +
-                        "<ul>" +
-                        "<li>You may have entered the wrong email or password. In this case, login and try again.</li>" +
-                        "<li>You might have exceeded your daily booking limit.</li>" +
-                        "<li>Exit the app, wait a few minutes and try again.</li>" +
-                        "<li>For anything else contact <a href='mailto:contactpennmobile@gmail.com'>contactpennmobile@gmail.com</a></li>" +
-                    "</ul></body>"
-                    self.sendNotification("status", msg: errorMessage)
-                }
-            } else {
-                self.handleError()
-            }
-        }
-        
-        task.resume()
-    }
-    
-    func sendNotification(_ type: String, msg : String) {
-        if doNotBook { return }
-        switch type {
-        case "msg":
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "ProgressMessageNotification"), object: msg)
-            break
-        case "status":
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "StatusMessageNotification"), object: msg)
-        default:
-            break
-        }
-        
-    }
-    fileprivate func handleError() {
-        self.sendNotification("msg", msg: "Request Failed")
-        self.sendNotification("status", msg: "<p style='font-family:Helvetica'>Email  contactpennmobile@gmail.com to get help</p>")
     }
 }
 
+extension Array where Element == GSRRoom {
+    init(json: JSON) {
+        self.init()
+        let roomArray = json["rooms"].arrayValue
+        for roomJSON in roomArray {
+            if let room = try? GSRRoom(json: roomJSON) {
+                self.append(room)
+            }
+        }
+    }
+}
 
+extension GSRRoom {
+    convenience init(json: JSON) throws {
+        guard let name = json["name"].string, let roomId = json["room_id"].int, let gid = json["gid"].int else {
+            throw NetworkingError.jsonError
+        }
+        
+        let capacity = json["capacity"].intValue
+        let imageUrl = json["thumbnail"].string
+        
+        var times = [GSRTimeSlot]()
+        let jsonTimeArray = json["times"].arrayValue
+        for timeJSON in jsonTimeArray {
+            if let time = try? GSRTimeSlot(roomId: roomId, json: timeJSON), time.isAvailable {
+                if let prevTime = times.last, prevTime.endTime == time.startTime {
+                    times.last?.next = time
+                    time.prev = times.last
+                }
+                times.append(time)
+            }
+        }
+        self.init(name: name, roomId: roomId, gid: gid, imageUrl: imageUrl, capacity: capacity, timeSlots: times)
+    }
+}
+
+extension GSRTimeSlot {
+    convenience init(roomId: Int, json: JSON) throws {
+        guard let isAvailable = json["available"].bool,
+            let startStr = json["start"].string,
+            let endStr = json["end"].string else {
+                throw NetworkingError.jsonError
+        }
+        
+        let startDate = try GSRTimeSlot.extractDate(from: startStr)
+        let endDate = try GSRTimeSlot.extractDate(from: endStr)
+        self.init(roomId: roomId, isAvailable: isAvailable, startTime: startDate, endTime: endDate)
+    }
+    
+    private static func extractDate(from dateString: String) throws -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        guard let date = dateFormatter.date(from: dateString) else {
+            throw NetworkingError.jsonError
+        }
+        return date
+    }
+}

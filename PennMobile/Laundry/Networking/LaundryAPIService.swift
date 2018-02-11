@@ -7,7 +7,6 @@
 //
 import Foundation
 import SwiftyJSON
-import PromiseKit
 
 class LaundryAPIService: Requestable {
     
@@ -26,6 +25,10 @@ class LaundryAPIService: Requestable {
         } else {
             loadIds { _ in }
         }
+    }
+    
+    func clearDirectory() {
+        Storage.remove(LaundryRoom.directory, from: .caches)
     }
     
     func loadIds(_ callback: @escaping (_ success: Bool) -> ()) {
@@ -208,7 +211,7 @@ extension LaundryMachineData {
 extension Dictionary where Key == Int, Value == LaundryRoom {
     init(json: JSON) throws {
         guard let jsonArray = json["halls"].array else {
-            throw JSONError.unexpectedRootNode("Result missing halls.")
+            throw NetworkingError.jsonError
         }
         self.init()
         for json in jsonArray {

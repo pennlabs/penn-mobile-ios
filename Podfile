@@ -10,7 +10,6 @@ target 'PennMobile' do
 pod 'Google/Analytics'
 pod 'MBProgressHUD', '~> 0.8'
 pod 'SwiftyJSON'
-pod 'PromiseKit'
 pod 'ScrollableGraphView'
 pod 'Firebase', '~> 4.7'
 pod 'Firebase/Messaging'

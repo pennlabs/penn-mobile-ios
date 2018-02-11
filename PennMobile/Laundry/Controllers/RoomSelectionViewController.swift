@@ -70,6 +70,9 @@ extension RoomSelectionViewController {
     @objc fileprivate func handleSave() {
         delegate?.saveSelection(for: selectionView.chosenRooms)
         _ = selectionView.resignFirstResponder()
+        for room in selectionView.chosenRooms {
+            GoogleAnalyticsManager.shared.trackEvent(category: .laundry, action: .addRoom, label: room.name, value: 0)
+        }
         dismiss(animated: true, completion: nil)
     }
 

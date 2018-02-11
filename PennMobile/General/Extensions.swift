@@ -129,6 +129,12 @@ extension Date {
         return minutes
     }
     
+    var hour: Int {
+        let calendar = Calendar.current
+        let minutes = calendar.component(.hour, from: self)
+        return minutes
+    }
+    
     func add(minutes: Int) -> Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
@@ -173,7 +179,7 @@ extension Date {
             return self.add(minutes: 1)
         }
         return self
-    } 
+    }
     
     func dateIn(days: Int) -> Date {
         let start = Calendar.current.startOfDay(for: self)
@@ -182,6 +188,29 @@ extension Date {
     
     var tomorrow: Date {
         return self.dateIn(days: 1)
+    }
+    
+    var isToday: Bool {
+        return Calendar.current.isDateInToday(self)
+    }
+    
+    static func midnight(for dateStr: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter.date(from: dateStr)!
+    }
+    
+    static var midnightYesterday: Date  {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        let dateStr = formatter.string(from: Date())
+        return formatter.date(from: dateStr)!
+    }
+    
+    static var midnightToday: Date {
+        return midnightYesterday.tomorrow
     }
 }
 
@@ -253,4 +282,26 @@ extension UILabel {
             self.font = self.font.withSize(self.font.pointSize - increment)
         }
     }
+}
+
+extension Dictionary where Key == String, Value == String {
+    
+    /// Build string representation of HTTP parameter dictionary of keys and objects
+    ///
+    /// This percent escapes in compliance with RFC 3986
+    ///
+    /// http://www.ietf.org/rfc/rfc3986.txt
+    ///
+    /// - returns: String representation in the form of key1=value1&key2=value2 where the keys and values are percent escaped
+    
+    func stringFromHttpParameters() -> String {
+        let parameterArray = map { key, value -> String in
+            let escapedKey = key.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
+            let escapedValue: String = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
+            return "\(escapedKey)=\(escapedValue)"
+        }
+        
+        return parameterArray.joined(separator: "&")
+    }
+    
 }

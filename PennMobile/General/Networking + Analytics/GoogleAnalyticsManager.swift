@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc class GoogleAnalyticsManager: NSObject {
+class GoogleAnalyticsManager: NSObject {
     
     static let shared = GoogleAnalyticsManager()
     
@@ -31,20 +31,24 @@ import UIKit
         }
     }
     
-    @objc func trackEvent(category: String, action: String, label: String, value: NSNumber) {
-        GAI.sharedInstance().defaultTracker?.send(GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build() as! [AnyHashable : Any]!)
+    func trackEvent(category: EventCategory, action: EventAction, label: String, value: NSNumber) {
+        GAI.sharedInstance().defaultTracker?.send(GAIDictionaryBuilder.createEvent(withCategory: category.rawValue, action: action.rawValue, label: label, value: value).build() as! [AnyHashable : Any]!)
     }
     
-    struct events {
-        struct category {
-            static let studyRoomBooking = "Study Room Booking"
-            static let onboarding = "Onboarding"
-        }
-        
-        struct action {
-            static let attemptReservation = "Attempted reservation"
-            static let attemptLogin = "Attempted login"
-            static let savedSelection = "Saved selection"
-        }
+    enum EventCategory: String {
+        case attemptedBooking = "Attempted booking"
+        case onboarding = "Onboarding"
+        case laundry = "Laundry"
+        case notificationPermission = "Notification permission"
+    }
+    
+    enum EventAction: String {
+        case savedSelection = "Saved selection"
+        case success = "Success"
+        case failed = "Failed"
+        case accept = "Accept"
+        case decline = "Decline"
+        case registerNotification = "Register for notification"
+        case addRoom = "Add room"
     }
 }

@@ -6,7 +6,6 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-import PromiseKit
 import SwiftyJSON
 import Foundation
 
@@ -26,6 +25,18 @@ class DiningAPI: Requestable {
             let json = JSON(dictionary!)
             let success = DiningHoursData.shared.loadHoursForAllVenues(for: json)
             completion(success)
+        }
+    }
+    
+    func fetchDetailPageHTML(for venue: DiningVenueName, _ completion: @escaping (_ html: String?) -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            guard let urlString = DiningDetailModel.getUrl(for: venue),
+                let url = URL(string: urlString) else {
+                return
+            }
+            
+            let html = try? String(contentsOf: url, encoding: .ascii)
+            completion(html)
         }
     }
 }

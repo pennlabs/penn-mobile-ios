@@ -1,0 +1,69 @@
+{
+    "locations": [
+                  {
+                  "lid": 1086,
+                  "gid": 1889,
+                  "name": "Weigle",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 1086,
+                  "gid": 4660,
+                  "name": "VP Ground Floor",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 1086,
+                  "gid": 4659,
+                  "name": "VP 3rd Floor",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 1086,
+                  "gid": 1891,
+                  "name": "VP 4th Floor",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 2587,
+                  "name": "Lippincott",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 2683,
+                  "name": "Biomedical Library",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 2495,
+                  "name": "Education Commons",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 2637,
+                  "name": "Fisher Fine Arts",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 1090,
+                  "name": "Levin Building",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 2634,
+                  "gid": 2634,
+                  "name": "Museum Library",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 2636,
+                  "name": "VP Seminar",
+                  "service": "libcal"
+                  },
+                  {
+                  "lid": 2611,
+                  "name": "VP Special Use",
+                  "service": "libcal"
+                  }
+                ]
+}

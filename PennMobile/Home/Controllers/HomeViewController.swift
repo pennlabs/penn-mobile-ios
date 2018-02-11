@@ -51,7 +51,7 @@ extension HomeViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         } else {
             tableView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0).isActive = true
-            tableView.bottomAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0).isActive = true
+            tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
         
         registerTableViewCells()

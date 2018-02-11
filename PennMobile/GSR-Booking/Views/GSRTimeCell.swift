@@ -1,33 +1,27 @@
 //
-//  HourCell.swift
+//  GSRTimeCell.swift
 //  PennMobile
 //
-//  Created by Josh Doman on 4/20/17.
-//  Copyright © 2017 PennLabs. All rights reserved.
+//  Created by Josh Doman on 2/3/18.
+//  Copyright © 2018 PennLabs. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-class HourCell: UICollectionViewCell {
+class GSRTimeCell: UICollectionViewCell {
     
-    static let identifier = "hourCell"
+    static let identifier = "timeCell"
     
-    var hour: GSRHour! {
+    var timeSlot: GSRTimeSlot! {
         didSet {
-            startLabel.text = hour.start
-            endLabel.text = hour.end
+            startLabel.text = format(date: timeSlot.startTime)
+            endLabel.text = format(date: timeSlot.endTime)
         }
     }
     
-    private let startLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    private let endLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
+    private let startLabel = UILabel()
+    private let endLabel = UILabel()
     
     private let toLabel: UILabel = {
         let label = UILabel()
@@ -39,9 +33,7 @@ class HourCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         backgroundColor = Colors.green.color()
-        
         setupView()
     }
     
@@ -53,6 +45,9 @@ class HourCell: UICollectionViewCell {
         toLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         toLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
+        startLabel.font = UIFont.systemFont(ofSize: 17)
+        endLabel.font = UIFont.systemFont(ofSize: 17)
+        
         _ = startLabel.anchor(topAnchor, left: nil, bottom: nil, right: nil, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         startLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
@@ -60,8 +55,15 @@ class HourCell: UICollectionViewCell {
         endLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
+    private func format(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mma"
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
+        return formatter.string(from: date)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

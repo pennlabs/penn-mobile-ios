@@ -31,7 +31,7 @@ class ControllerModel: NSObject {
         var dict = [Page: UIViewController]()
         dict[.home] = HomeViewController()
         dict[.dining] = DiningViewController()
-        dict[.studyRoomBooking] = BookViewController()
+        dict[.studyRoomBooking] = GSRController()
         dict[.laundry] = LaundryTableViewController()
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()
@@ -45,7 +45,7 @@ class ControllerModel: NSObject {
         }
     }
     
-    let orderedPages: [Page] = [.dining, .laundry, .news, .contacts, .about]
+    let orderedPages: [Page] = [.dining, .studyRoomBooking, .laundry, .news, .contacts, .about]
     
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }
