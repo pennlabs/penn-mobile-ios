@@ -50,7 +50,8 @@ extension NotificationRequestable where Self: UIViewController {
     }
     
     func alertForDecline(_ completion: AuthorizedCompletion?) {
-        let alertView = SCLAlertView()
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+        let alertView = SCLAlertView(appearance: appearance)
         alertView.addButton("Allow") {
             guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
                 return
@@ -66,14 +67,17 @@ extension NotificationRequestable where Self: UIViewController {
                 })
             }
         }
+        alertView.addButton("Decline", action: { _ in })
         alertView.showSuccess("Turn On Notifications", subTitle: "Go to Settings -> PennMobile -> Notification -> Turn On Notifications")
     }
     
     func alertForDetermination(_ completion: AuthorizedCompletion?) {
-        let alertView = SCLAlertView()
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+        let alertView = SCLAlertView(appearance: appearance)
         alertView.addButton("Turn On"){
             self.registerPushNotification(completion)
         }
+        alertView.addButton("Decline", action: { _ in })
         alertView.showSuccess("Enable Notifications", subTitle: "Get notifications for laundry, and our future updates!")
     }
     

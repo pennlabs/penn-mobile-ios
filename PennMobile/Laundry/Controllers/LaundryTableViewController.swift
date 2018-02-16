@@ -12,7 +12,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
-    
+
     fileprivate var timer: Timer?
     
     fileprivate let allowMachineNotifications = true
@@ -34,7 +34,9 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         registerHeadersAndCells()
         prepareRefreshControl()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(handleEditPressed))
+        // initialize navigation bar
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
+
         
         // Start indicator if there are cells that need to be loaded
         if !rooms.isEmpty {
@@ -108,6 +110,7 @@ extension LaundryTableViewController {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: addLaundryCell) as! AddLaundryCell
             cell.delegate = self
+            cell.numberOfRoomsSelected = self.rooms.count
             return cell
         }
     }
@@ -118,7 +121,7 @@ extension LaundryTableViewController {
         
         // Use for cards of fixed size
         if indexPath.section >= rooms.count {
-            return 300.0
+            return 80.0
         } else {
             return 380.0
         }
@@ -183,6 +186,7 @@ extension LaundryTableViewController: LaundryCellDelegate {
                             updateCellIfNeeded()
                         }
                     })
+                    GoogleAnalyticsManager.shared.trackEvent(category: .laundry, action: .registerNotification, label: machine.roomName, value: 0)
                 }
             }
         }
