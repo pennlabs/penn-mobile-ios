@@ -7,30 +7,39 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class UserDBManager: NSObject {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
-    fileprivate func getAnalyticsRequest(url: String, params: [String: Any]?) -> NSMutableURLRequest {
+    fileprivate func getAnalyticsRequest(url: String) -> NSMutableURLRequest {
         let url = URL(string: url)!
         let request = NSMutableURLRequest(url: url)
         let deviceID = UIDevice.current.identifierForVendor!.uuidString
-        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
-        if let params = params {
-            request.httpBody = try! JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
-        }
+        print(deviceID)
+        request.setValue("test", forHTTPHeaderField: "X-Device-ID")
         return request
+    }
+    
+    fileprivate func getPostString(params: [String: Any]) -> String {
+        var data = [String]()
+        for(key, value) in params {
+            data.append(key + "=\(value)")
+        }
+        return data.map { String($0) }.joined(separator: "&")
     }
 }
 
 // MARK: - Dining
 extension UserDBManager {
-    func savePreference(for venue: DiningVenue) {
+    func saveDiningPreference(for venue: DiningVenue) {
         let urlString = "\(baseUrl)/dining/preferences"
         let id = venue.venue.getID()
         let params = ["venue_id": id]
-        let request = getAnalyticsRequest(url: urlString, params: params)
+        let request = getAnalyticsRequest(url: urlString)
+        request.httpMethod = "POST"
+        request.httpBody = getPostString(params: params).data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request as URLRequest)
         task.resume()
     }
@@ -38,11 +47,13 @@ extension UserDBManager {
 
 // MARK: - Laundry
 extension UserDBManager {
-    func savePreferences(for rooms: [LaundryRoom]) {
+    func saveLaundryPreferences(for rooms: [LaundryRoom]) {
         let urlString = "\(baseUrl)/laundry/preferences"
         let ids = rooms.map { $0.id }
         let params = ["rooms": ids]
-        let request = getAnalyticsRequest(url: urlString, params: params)
+        let request = getAnalyticsRequest(url: urlString)
+        request.httpMethod = "POST"
+        request.httpBody = getPostString(params: params).data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request as URLRequest)
         task.resume()
     }
