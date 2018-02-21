@@ -13,6 +13,8 @@ class UserDBManager: NSObject {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
+    var dryRun: Bool = false
+    
     fileprivate func getAnalyticsRequest(url: String) -> NSMutableURLRequest {
         let url = URL(string: url)!
         let request = NSMutableURLRequest(url: url)
@@ -22,12 +24,31 @@ class UserDBManager: NSObject {
         return request
     }
     
+    fileprivate func getAnalyticsPostRequest(url: String, params: [String: Any]?) -> NSMutableURLRequest {
+        let request = getAnalyticsRequest(url: url)
+        request.httpMethod = "POST"
+        if let params = params {
+            request.httpBody = getPostString(params: params).data(using: .utf8)
+        }
+        return request
+    }
+    
     fileprivate func getPostString(params: [String: Any]) -> String {
         var data = [String]()
         for(key, value) in params {
+            if let arr = value as? Array<Any> {
+                let str = arr.map { String(describing: $0) }.joined(separator: ",")
+                data.append(key + "=\(str)")
+            }
             data.append(key + "=\(value)")
         }
         return data.map { String($0) }.joined(separator: "&")
+    }
+    
+    fileprivate func sendRequest(_ request: URLRequest) {
+        if dryRun { return }
+        let task = URLSession.shared.dataTask(with: request as URLRequest)
+        task.resume()
     }
 }
 
@@ -37,24 +58,22 @@ extension UserDBManager {
         let urlString = "\(baseUrl)/dining/preferences"
         let id = venue.venue.getID()
         let params = ["venue_id": id]
-        let request = getAnalyticsRequest(url: urlString)
-        request.httpMethod = "POST"
-        request.httpBody = getPostString(params: params).data(using: .utf8)
-        let task = URLSession.shared.dataTask(with: request as URLRequest)
-        task.resume()
+        let request = getAnalyticsPostRequest(url: urlString, params: params)
+        sendRequest(request)
     }
 }
 
 // MARK: - Laundry
 extension UserDBManager {
     func saveLaundryPreferences(for rooms: [LaundryRoom]) {
-        let urlString = "\(baseUrl)/laundry/preferences"
         let ids = rooms.map { $0.id }
+        saveLaundryPreferences(for: ids)
+    }
+    
+    func saveLaundryPreferences(for ids: [Int]) {
+        let urlString = "\(baseUrl)/laundry/preferences"
         let params = ["rooms": ids]
-        let request = getAnalyticsRequest(url: urlString)
-        request.httpMethod = "POST"
-        request.httpBody = getPostString(params: params).data(using: .utf8)
-        let task = URLSession.shared.dataTask(with: request as URLRequest)
-        task.resume()
+        let request = getAnalyticsPostRequest(url: urlString, params: params)
+        sendRequest(request)
     }
 }
