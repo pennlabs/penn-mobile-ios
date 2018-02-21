@@ -12,11 +12,14 @@ class UserDBManager: NSObject {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
-    fileprivate func getAnalyticsRequest(for url: String) -> NSMutableURLRequest {
+    fileprivate func getAnalyticsRequest(url: String, params: [String: Any]?) -> NSMutableURLRequest {
         let url = URL(string: url)!
         let request = NSMutableURLRequest(url: url)
         let deviceID = UIDevice.current.identifierForVendor!.uuidString
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+        if let params = params {
+            request.httpBody = try! JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
+        }
         return request
     }
 }
@@ -25,12 +28,9 @@ class UserDBManager: NSObject {
 extension UserDBManager {
     func savePreference(for venue: DiningVenue) {
         let urlString = "\(baseUrl)/dining/preferences"
-        let request = getAnalyticsRequest(for: urlString)
-        let params = [
-            "venue_id": 0
-        ]
-        request.httpBody = try! JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
-        
+        let id = venue.venue.getID()
+        let params = ["venue_id": id]
+        let request = getAnalyticsRequest(url: urlString, params: params)
         let task = URLSession.shared.dataTask(with: request as URLRequest)
         task.resume()
     }
@@ -40,13 +40,9 @@ extension UserDBManager {
 extension UserDBManager {
     func savePreferences(for rooms: [LaundryRoom]) {
         let urlString = "\(baseUrl)/laundry/preferences"
-        let request = getAnalyticsRequest(for: urlString)
         let ids = rooms.map { $0.id }
-        let params = [
-            "rooms": ids
-        ]
-        request.httpBody = try! JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
-        
+        let params = ["rooms": ids]
+        let request = getAnalyticsRequest(url: urlString, params: params)
         let task = URLSession.shared.dataTask(with: request as URLRequest)
         task.resume()
     }
