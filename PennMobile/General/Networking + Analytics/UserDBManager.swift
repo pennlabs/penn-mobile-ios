@@ -19,8 +19,7 @@ class UserDBManager: NSObject {
         let url = URL(string: url)!
         let request = NSMutableURLRequest(url: url)
         let deviceID = UIDevice.current.identifierForVendor!.uuidString
-        print(deviceID)
-        request.setValue("test", forHTTPHeaderField: "X-Device-ID")
+        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         return request
     }
     
@@ -45,7 +44,7 @@ class UserDBManager: NSObject {
         return data.map { String($0) }.joined(separator: "&")
     }
     
-    fileprivate func sendRequest(_ request: URLRequest) {
+    fileprivate func sendRequest(_ request: NSMutableURLRequest) {
         if dryRun { return }
         let task = URLSession.shared.dataTask(with: request as URLRequest)
         task.resume()
