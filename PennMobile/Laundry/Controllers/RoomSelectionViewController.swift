@@ -68,11 +68,13 @@ extension RoomSelectionViewController: RoomSelectionViewDelegate {
 // Mark: Hall selection
 extension RoomSelectionViewController {
     @objc fileprivate func handleSave() {
-        delegate?.saveSelection(for: selectionView.chosenRooms)
+        let rooms = selectionView.chosenRooms
+        delegate?.saveSelection(for: rooms)
         _ = selectionView.resignFirstResponder()
-        for room in selectionView.chosenRooms {
+        for room in rooms {
             GoogleAnalyticsManager.shared.trackEvent(category: .laundry, action: .addRoom, label: room.name, value: 0)
         }
+        UserDBManager.shared.saveLaundryPreferences(for: rooms)
         dismiss(animated: true, completion: nil)
     }
 

@@ -11,40 +11,6 @@ enum DiningVenueType {
     case retail
 }
 
-enum DiningVenueName: String {
-    case commons = "1920 Commons"
-    case mcclelland = "McClelland Express"
-    case nch = "New College House"
-    case hill = "Hill House"
-    case english = "English House"
-    case falk = "Falk Kosher Dining"
-    case frontera = "Tortas Frontera"
-    case gourmetGrocer = "Gourmet Grocer"
-    case houston = "Houston Market"
-    case joes = "Joe's Café"
-    case marks = "Mark's Café"
-    case beefsteak = "Beefsteak"
-    case starbucks = "Starbucks"
-    case pret = "Pret a Manger"
-    case mbaCafe = "MBA Café"
-    case unknown
-    
-    static func getVenueName(for apiName: String) -> DiningVenueName {
-        if apiName.contains("MBA") {
-            return .mbaCafe
-        }
-        
-        var venueNames = DiningVenue.diningNames
-        venueNames.append(contentsOf: DiningVenue.retailNames)
-        for venue in venueNames {
-            if apiName.contains(venue.rawValue) || venue.rawValue.contains(apiName) {
-                return venue
-            }
-        }
-        return .unknown
-    }
-}
-
 class DiningVenue: NSObject {
     
     static let diningNames: [DiningVenueName] = [.commons, .mcclelland, .nch, .hill, .english, .falk]

@@ -53,7 +53,7 @@ class RoomSelectionView: UIView, IndicatorEnabled {
         setUpView()
         setupDictionaries()
         setupCurrentSort()
-        selectchosenRooms()
+        selectChosenRooms()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -165,7 +165,7 @@ extension RoomSelectionView {
 
 // Mark: - room Selection
 extension RoomSelectionView {
-    public func selectchosenRooms() {
+    public func selectChosenRooms() {
         for room in chosenRooms {
             if let index = getCurrentIndex(for: room) {
                 tableView.selectRow(at: index, animated: false, scrollPosition: .none)
@@ -250,7 +250,7 @@ extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
         
         if chosenRooms.count == maxNumRooms {
             tableView.reloadData()
-            selectchosenRooms()
+            selectChosenRooms()
         }
         
         delegate?.updateSelectedRooms(for: chosenRooms)
@@ -266,7 +266,7 @@ extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
         
         if chosenRooms.count == maxNumRooms - 1 {
             tableView.reloadData()
-            selectchosenRooms()
+            selectChosenRooms()
         }
         delegate?.updateSelectedRooms(for: chosenRooms)
     }
@@ -288,7 +288,7 @@ extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
             currentSort = sortHeaders(for: Array(buildings.keys))
             self.showEmptyViewIfNeeded()
             tableView.reloadData()
-            selectchosenRooms()
+            selectChosenRooms()
             return
         }
         
@@ -311,7 +311,7 @@ extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
         currentSort = sortHeaders(for: Array(currentResults.keys))
         self.showEmptyViewIfNeeded()
         tableView.reloadData()
-        selectchosenRooms()
+        selectChosenRooms()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
