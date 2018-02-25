@@ -8,9 +8,21 @@
 
 import Foundation
 
-class HomeAPIService {
+class HomeAPIService: Requestable {
     
     static let instance = HomeAPIService()
+    
+    func fetchModel(_ completion: @escaping (HomeViewModel?) -> Void) {
+        let url = "http://api-dev.pennlabs.org/homepage"
+        getRequest(url: url) { (dict) in
+            var model: HomeViewModel? = nil
+            if let dict = dict {
+                let json = JSON(dict)
+                model = try? HomeViewModel(json: json)
+            }
+            completion(model)
+        }
+    }
     
     func fetchData(for items: [HomeViewModelItem], _ completion: @escaping () -> Void) {
         let operationQueue = OperationQueue()
@@ -64,5 +76,16 @@ class HomeAPIService {
                 self.state = .finished
             }
         }
+    }
+}
+
+extension HomeViewModelItemType {
+    fileprivate static func parseJSON(_ json: JSON) throws -> [HomeViewModelItemType] {
+        guard let cellsJSON = json["cells"].array else {
+            throw NetworkingError.jsonError
+        }
+        return cellsJSON.map { HomeViewModelItemType(rawValue: $0["type"].stringValue) }
+                        .filter { $0 != nil }
+                        .map { $0! }
     }
 }

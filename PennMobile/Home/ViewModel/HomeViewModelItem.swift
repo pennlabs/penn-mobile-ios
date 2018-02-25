@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - HomeViewModelType
-enum HomeViewModelItemType {
+enum HomeViewModelItemType: String {
     case event
     case dining
     case studyRoomBooking

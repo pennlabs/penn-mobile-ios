@@ -19,16 +19,15 @@ class HomeViewController: GenericViewController {
         super.viewDidLoad()
         self.title = "Home"
         view.backgroundColor = .white
-        
         trackScreen = true
         
-        viewModel = HomeViewModel()
-        viewModel.delegate = self
-        
-        prepareTableView()        
+        fetchViewModel()
+        prepareTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if viewModel == nil { return }
         viewModel.update()
         tableView.reloadData()
         
@@ -40,9 +39,6 @@ class HomeViewController: GenericViewController {
 extension HomeViewController {
     func prepareTableView() {
         tableView = UITableView()
-        tableView.dataSource = viewModel
-        tableView.delegate = viewModel
-        
         tableView.backgroundColor = .whiteGrey
         tableView.separatorStyle = .none
         
@@ -66,6 +62,13 @@ extension HomeViewController {
         tableView.register(HomeLaundryCell.self, forCellReuseIdentifier: HomeLaundryCell.identifier)
         tableView.register(HomeStudyRoomCell.self, forCellReuseIdentifier: HomeStudyRoomCell.identifier)
     }
+    
+    func setTableViewModel(_ model: HomeViewModel) {
+        viewModel = model
+        viewModel.delegate = self
+        tableView.dataSource = viewModel
+        tableView.delegate = viewModel
+    }
 }
 
 // MARK: - ViewModelDelegate
@@ -78,6 +81,16 @@ extension HomeViewController: HomeViewModelDelegate {
 
 // MARK: - Networking
 extension HomeViewController {
+    func fetchViewModel() {
+        HomeAPIService.instance.fetchModel { (model) in
+            guard let model = model else { return }
+            DispatchQueue.main.async {
+                self.setTableViewModel(model)
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     func fetchAndReloadData() {
         HomeAPIService.instance.fetchData(for: viewModel.items) {
             DispatchQueue.main.async {

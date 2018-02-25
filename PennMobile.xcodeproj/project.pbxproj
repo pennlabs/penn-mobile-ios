@@ -20,7 +20,6 @@
 		21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D4420103EB8002F33CA /* HomeViewController.swift */; };
 		21640D4B20104B5A002F33CA /* HomeViewModelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D4A20104B5A002F33CA /* HomeViewModelItem.swift */; };
 		21640D5020105032002F33CA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D4F20105032002F33CA /* Event.swift */; };
-		21640D5220105086002F33CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5120105086002F33CA /* User.swift */; };
 		21640D542010526B002F33CA /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D532010526B002F33CA /* HomeViewModel.swift */; };
 		21640D5620105A5E002F33CA /* GeneralHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5520105A5E002F33CA /* GeneralHomeCell.swift */; };
 		21640D5A20105B8E002F33CA /* HomeEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5920105B8E002F33CA /* HomeEventCell.swift */; };
@@ -128,7 +127,6 @@
 		21640D4420103EB8002F33CA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		21640D4A20104B5A002F33CA /* HomeViewModelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelItem.swift; sourceTree = "<group>"; };
 		21640D4F20105032002F33CA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		21640D5120105086002F33CA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		21640D532010526B002F33CA /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		21640D5520105A5E002F33CA /* GeneralHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralHomeCell.swift; sourceTree = "<group>"; };
 		21640D5920105B8E002F33CA /* HomeEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventCell.swift; sourceTree = "<group>"; };
@@ -289,7 +287,6 @@
 			isa = PBXGroup;
 			children = (
 				21640D4F20105032002F33CA /* Event.swift */,
-				21640D5120105086002F33CA /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -964,7 +961,6 @@
 				B6F0DCE1200A894700DB0006 /* LaundryUsageData.swift in Sources */,
 				21E1C6FD20256DC6003248EC /* DiningDetailModel.swift in Sources */,
 				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
-				21640D5220105086002F33CA /* User.swift in Sources */,
 				217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
 				21640D64201157A6002F33CA /* TransitionalHomeCell.swift in Sources */,

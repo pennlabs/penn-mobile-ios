@@ -18,37 +18,34 @@ class HomeViewModel: NSObject {
     
     var delegate: HomeViewModelDelegate!
     
-    convenience override init() {
-        let user = User()
-        let event = Event(imageUrl: "eventUrl.com")
-        self.init(user: user, event: event)
+    override init() {
+        items = HomeViewModel.defaultOrdering.map { HomeViewModel.generateItem(for: $0) }
     }
     
-    init(user: User, event: Event? = nil, ordering: [HomeViewModelItemType]? = nil) {
-        items = HomeViewModel.generateItems(user: user, event: event, with: ordering ?? HomeViewModel.defaultOrdering)
-        super.init()
-    }
-    
-    static func generateItems(user: User, event: Event?, with orderedTypes: [HomeViewModelItemType]) -> [HomeViewModelItem] {
-        var items = [HomeViewModelItem]()
-        for type in orderedTypes {
-            let item: HomeViewModelItem
-            switch type {
-            case .event:
-                guard let event = event else { continue }
-                item = HomeViewModelEventItem(imageUrl: event.imageUrl)
-            case .dining:
-                let venues = !user.preferredVenues.isEmpty ? user.preferredVenues : DiningVenue.getDefaultVenues()
-                item = HomeViewModelDiningItem(venues: venues)
-            case .laundry:
-                let rooms = !user.preferredLaundryRooms.isEmpty ? user.preferredLaundryRooms : LaundryRoom.getDefaultRooms()
-                item = HomeViewModelLaundryItem(rooms: rooms)
-            case .studyRoomBooking:
-                item = HomeViewModelStudyRoomItem()
-            }
-            items.append(item)
+    init(json: JSON) throws {
+        guard let cellsJSON = json["cells"].array else {
+            throw NetworkingError.jsonError
         }
-        return items
+        let types = cellsJSON.map { HomeViewModelItemType(rawValue: $0["type"].stringValue) }
+            .filter { $0 != nil }
+            .map { $0! }
+        items = types.map { HomeViewModel.generateItem(for: $0) }
+    }
+    
+    static func generateItem(for type: HomeViewModelItemType, info: JSON? = nil) -> HomeViewModelItem {
+        switch type {
+        case .event:
+            let imageUrl = info?["imageUrl"].string ?? ""
+            return HomeViewModelEventItem(imageUrl: imageUrl)
+        case .dining:
+            let venues = DiningVenue.getDefaultVenues()
+            return HomeViewModelDiningItem(venues: venues)
+        case .laundry:
+            let rooms = LaundryRoom.getDefaultRooms()
+            return HomeViewModelLaundryItem(rooms: rooms)
+        case .studyRoomBooking:
+            return HomeViewModelStudyRoomItem()
+        }
     }
 }
 
