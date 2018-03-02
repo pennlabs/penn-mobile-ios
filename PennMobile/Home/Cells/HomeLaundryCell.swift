@@ -78,14 +78,16 @@ extension HomeLaundryCell {
     // MARK: Machine View
     private func prepareWasherDryerMachineViews() {
         washerView = getMachineView(isWasher: true)
-        dryerView = getMachineView(isWasher: true)
+        dryerView = getMachineView(isWasher: false)
         
         cardView.addSubview(washerView)
         cardView.addSubview(dryerView)
         
-        _ = washerView.anchor(buildingLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 100)
+        let height = LaundryMachinesView.height
         
-        _ = dryerView.anchor(washerView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 100)
+        _ = washerView.anchor(buildingLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
+        
+        _ = dryerView.anchor(washerView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
     }
     
     private func getMachineView(isWasher: Bool) -> LaundryMachinesView {
@@ -102,6 +104,8 @@ extension HomeLaundryCell {
         room = item.room
         roomLabel.text = room.name
         buildingLabel.text = room.building
+        washerView.reloadData()
+        dryerView.reloadData()
     }
 }
 

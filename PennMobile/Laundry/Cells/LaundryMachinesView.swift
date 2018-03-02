@@ -13,8 +13,9 @@ protocol LaundryMachinesViewDataSource {
 }
 
 final class LaundryMachinesView: UIView {
-    let isWasher: Bool
+    static let height: CGFloat = 80
     
+    let isWasher: Bool
     var dataSource: LaundryMachinesViewDataSource!
     
     fileprivate var typeLabel: UILabel!
@@ -49,7 +50,7 @@ extension LaundryMachinesView {
         addSubview(numberLabel)
         
         typeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-        typeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
+        typeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         
         numberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
         numberLabel.centerYAnchor.constraint(equalTo: typeLabel.centerYAnchor, constant: 0).isActive = true
@@ -89,6 +90,9 @@ extension LaundryMachinesView {
         collectionView.backgroundColor = UIColor.clear
         collectionView.showsHorizontalScrollIndicator = false
         machineCollectionView = collectionView
+        
+        addSubview(machineCollectionView)
+        _ = machineCollectionView.anchor(typeLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 }
 
@@ -116,5 +120,12 @@ extension LaundryMachinesView: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 5)
+    }
+}
+
+// MARK: - Reload
+extension LaundryMachinesView {
+    func reloadData() {
+        machineCollectionView.reloadData()
     }
 }

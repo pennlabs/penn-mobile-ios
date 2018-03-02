@@ -21,17 +21,18 @@ class HomeViewController: GenericViewController {
         view.backgroundColor = .white
         trackScreen = true
         
-        fetchViewModel()
         prepareTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if viewModel == nil { return }
-        viewModel.update {
-            self.tableView.reloadData()
+        if viewModel == nil {
+            fetchViewModel()
+        } else {
+            viewModel.update {
+                self.fetchAndReloadData()
+            }
         }
-        fetchAndReloadData()
     }
 }
 
@@ -87,6 +88,7 @@ extension HomeViewController {
             DispatchQueue.main.async {
                 self.setTableViewModel(model)
                 self.tableView.reloadData()
+                self.fetchAndReloadData()
             }
         }
     }
