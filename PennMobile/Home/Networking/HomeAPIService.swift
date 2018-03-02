@@ -72,9 +72,9 @@ class HomeAPIService: Requestable {
         
         override func main() {
             super.main()
-            LaundryAPIService.instance.fetchLaundryData(for: rooms, withUsageData: false) { (_) in
-                self.state = .finished
-            }
+//            LaundryAPIService.instance.fetchLaundryData(for: rooms, withUsageData: false) { (_) in
+//                self.state = .finished
+//            }
         }
     }
 }

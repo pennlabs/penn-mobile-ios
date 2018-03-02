@@ -139,9 +139,10 @@ extension LaundryTableViewController {
                     completion()
                 }
             } else {
-                LaundryAPIService.instance.fetchLaundryData(for: self.rooms, withUsageData: true) { (success) in
+                LaundryAPIService.instance.fetchLaundryData(for: self.rooms) { (rooms) in
                     DispatchQueue.main.async {
-                        if success {
+                        if let rooms = rooms {
+                            self.rooms = rooms
                             self.tableView.reloadData()
                             self.resetTimer()
                         }

@@ -31,6 +31,8 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     fileprivate var washerView: LaundryMachinesView!
     fileprivate var dryerView: LaundryMachinesView!
     
+    fileprivate var hairline: UIView!
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
@@ -46,6 +48,7 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
 extension HomeLaundryCell {
     fileprivate func prepareUI() {
         prepareLabels()
+        prepareHairline()
         prepareWasherDryerMachineViews()
     }
     
@@ -85,9 +88,9 @@ extension HomeLaundryCell {
         
         let height = LaundryMachinesView.height
         
-        _ = washerView.anchor(buildingLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
+        _ = washerView.anchor(hairline.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
         
-        _ = dryerView.anchor(washerView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
+        _ = dryerView.anchor(washerView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 6, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
     }
     
     private func getMachineView(isWasher: Bool) -> LaundryMachinesView {
@@ -95,6 +98,16 @@ extension HomeLaundryCell {
         machinesView.dataSource = self
         machinesView.translatesAutoresizingMaskIntoConstraints = false
         return machinesView
+    }
+    
+    // MARK: Hairline
+    private func prepareHairline() {
+        hairline = UIView()
+        hairline.backgroundColor = .lightGray
+        
+        cardView.addSubview(hairline)
+        
+        _ = hairline.anchor(buildingLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 10, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 1)
     }
 }
 

@@ -24,6 +24,7 @@ protocol HomeCellConformable where Self: UITableViewCell {
 extension HomeCellConformable {
     func prepareHomeCell() {
         self.backgroundColor = UIColor.white
+        self.selectionStyle = .none
         prepareCardView()
         prepareTypeLabel()
     }

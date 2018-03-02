@@ -124,7 +124,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
     
     internal func numberOfPoints() -> Int {
-        return numberOfDataPointsInGraph
+        return LaundryCell.numberOfDataPointsInGraph
     }
     
     func reloadGraphDataIfNeeded(oldRoom: LaundryRoom?, newRoom: LaundryRoom?) {
@@ -138,7 +138,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         
         if usageData != nil && newRoom?.usageData == nil {
             usageData = nil
-            graphData = Array(repeating: 0.0, count: self.numberOfDataPointsInGraph)
+            graphData = Array(repeating: 0.0, count: LaundryCell.numberOfDataPointsInGraph)
             scrollableGraphView?.reload()
             return
         }
@@ -171,7 +171,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
     
     @objc fileprivate func executeGraphAnimation() {
-        if let usageData = usageData?.data {
+        if let usageData = usageData {
             for i in self.graphData.indices {
                 if i < usageData.count {
                     graphData[i] = usageData[i]

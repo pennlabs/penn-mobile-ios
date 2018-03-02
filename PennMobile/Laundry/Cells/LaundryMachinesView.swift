@@ -13,7 +13,7 @@ protocol LaundryMachinesViewDataSource {
 }
 
 final class LaundryMachinesView: UIView {
-    static let height: CGFloat = 80
+    static let height: CGFloat = 90
     
     let isWasher: Bool
     var dataSource: LaundryMachinesViewDataSource!
@@ -92,7 +92,7 @@ extension LaundryMachinesView {
         machineCollectionView = collectionView
         
         addSubview(machineCollectionView)
-        _ = machineCollectionView.anchor(typeLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = machineCollectionView.anchor(typeLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 }
 

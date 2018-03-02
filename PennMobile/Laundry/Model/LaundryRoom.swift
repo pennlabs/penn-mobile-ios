@@ -22,22 +22,35 @@ class LaundryRoom: Codable {
     let name: String
     let building: String
     
-    var washers: [LaundryMachine] {
-        return LaundryMachineData.getMachines(for: id).washers
-    }
+    var washers = [LaundryMachine]()
+    var dryers = [LaundryMachine]()
+    
+    var usageData = Array<Double>(repeating: 0, count: 27)
 
-    var dryers: [LaundryMachine] {
-        return LaundryMachineData.getMachines(for: id).dryers
-    }
-    
-    var usageData: LaundryUsageData? {
-        return LaundryUsageData.getUsageData(for: id)
-    }
-    
     init(json: JSON) {
         self.id = json["id"].intValue
         self.name = json["hall_name"].string ?? "Unknown"
         self.building = json["location"].string ?? "Unknown"
+        
+        let runningMachines = json["machines"]["details"].arrayValue.map { LaundryMachine(json: $0, roomName: name) }
+        washers = runningMachines.filter { $0.isWasher }.sorted()
+        dryers = runningMachines.filter { !$0.isWasher }.sorted()
+        
+        let usageJSON = json["usage_data"]
+        guard let washerData = usageJSON["washer_data"].dictionary, let dryerData = usageJSON["dryer_data"].dictionary else { return }
+        
+        washerData.forEach { (key, val) in
+            usageData[Int(key)!] = val.doubleValue
+        }
+        dryerData.forEach { (key, val) in
+            usageData[Int(key)!] += val.doubleValue
+        }
+        
+        let dataMax = usageData.max()!
+        let dataMin = usageData.min()!
+        for i in usageData.indices {
+            usageData[i] = ((dataMax - usageData[i]) / (dataMax - dataMin))
+        }
     }
     
     static func getLaundryHall(for id: Int) -> LaundryRoom? {
@@ -69,8 +82,8 @@ class LaundryRoom: Codable {
     func decrementTimeRemaining(by minutes: Int) {
         washers.decrementTimeRemaining(by: minutes)
         dryers.decrementTimeRemaining(by: minutes)
-        
-        LaundryMachineData.set(washers: washers.sorted(), dryers: dryers.sorted(), for: id)
+        washers = washers.sorted()
+        dryers = dryers.sorted()
     }
 }
 
