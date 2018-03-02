@@ -9,14 +9,12 @@
 import Foundation
 import UIKit
 
-class HomeDiningCell: GeneralHomeCell, Transitionable {
+final class HomeDiningCell: UITableViewCell, HomeCellConformable {
+    static var identifier: String = "diningCell"
+    static var cellHeight: CGFloat = 200.0
     
-    static let identifier = "diningCell"
-    static let cellHeight: CGFloat = 200.0
-    
-    var transitionButton: UIButton!
-
-    override var item: HomeViewModelItem? {
+    var delegate: HomeCellDelegate!
+    var item: HomeViewModelItem? {
         didSet {
             guard let item = item as? HomeViewModelDiningItem else { return }
             setupCell(with: item)
@@ -25,7 +23,7 @@ class HomeDiningCell: GeneralHomeCell, Transitionable {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        prepareTransitionButton()
+        prepareHomeCell()
         prepareTextLabel()
     }
     

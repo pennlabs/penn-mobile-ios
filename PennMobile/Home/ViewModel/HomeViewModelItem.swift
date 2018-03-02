@@ -14,15 +14,6 @@ enum HomeViewModelItemType: String {
     case dining
     case studyRoomBooking
     case laundry
-    
-    var page: Page? {
-        switch self {
-        case .dining: return .dining
-        case .studyRoomBooking: return .studyRoomBooking
-        case .laundry: return .laundry
-        default: return nil
-        }
-    }
 }
 
 // MARK: - HomeViewModelItem
@@ -32,7 +23,7 @@ protocol HomeViewModelItem {
 }
 
 // MARK: - HomeViewModelEventItem
-class HomeViewModelEventItem: HomeViewModelItem {
+final class HomeViewModelEventItem: HomeViewModelItem {
     var type: HomeViewModelItemType {
         return .event
     }
@@ -50,7 +41,7 @@ class HomeViewModelEventItem: HomeViewModelItem {
 }
 
 // MARK: - HomeViewModelEventItem
-class HomeViewModelDiningItem: HomeViewModelItem {
+final class HomeViewModelDiningItem: HomeViewModelItem {
     var type: HomeViewModelItemType {
         return .dining
     }
@@ -67,7 +58,7 @@ class HomeViewModelDiningItem: HomeViewModelItem {
 }
 
 // MARK: - HomeViewModelStudyRoomItem
-class HomeViewModelStudyRoomItem: HomeViewModelItem {
+final class HomeViewModelStudyRoomItem: HomeViewModelItem {
     var type: HomeViewModelItemType {
         return .studyRoomBooking
     }
@@ -78,7 +69,7 @@ class HomeViewModelStudyRoomItem: HomeViewModelItem {
 }
 
 // MARK: - HomeViewModelLaundryItem
-class HomeViewModelLaundryItem: HomeViewModelItem {
+final class HomeViewModelLaundryItem: HomeViewModelItem {
     var type: HomeViewModelItemType {
         return .laundry
     }
@@ -87,10 +78,10 @@ class HomeViewModelLaundryItem: HomeViewModelItem {
         return "Laundry"
     }
     
-    var rooms: [LaundryRoom]
+    var room: LaundryRoom
     
-    init(rooms: [LaundryRoom]) {
-        self.rooms = rooms
+    init(room: LaundryRoom) {
+        self.room = room
     }
 }
 

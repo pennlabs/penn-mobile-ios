@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-class HomeEventCell: GeneralHomeCell {
+final class HomeEventCell: UITableViewCell, HomeCellConformable {
+    static var identifier = "eventCell"
+    static var cellHeight: CGFloat = 100.0
     
-    static let identifier = "eventCell"
-    static let cellHeight: CGFloat = 100.0
-
-    override var item: HomeViewModelItem? {
+    var delegate: HomeCellDelegate!
+    var item: HomeViewModelItem? {
         didSet {
             guard let item = item as? HomeViewModelEventItem else { return }
             setupCell(with: item)
@@ -23,6 +23,7 @@ class HomeEventCell: GeneralHomeCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        prepareHomeCell()
         prepareTextLabel()
     }
     

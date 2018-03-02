@@ -39,7 +39,7 @@ class HomeAPIService: Requestable {
                 operation = DiningAPIOperation()
             case .laundry:
                 guard let item = item as? HomeViewModelLaundryItem else { break }
-                operation = LaundryAPIOperation(rooms: item.rooms)
+                operation = LaundryAPIOperation(rooms: [item.room])
             default:
                 break
             }

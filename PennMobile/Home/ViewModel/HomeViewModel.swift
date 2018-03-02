@@ -41,8 +41,8 @@ class HomeViewModel: NSObject {
             let venues = DiningVenue.getDefaultVenues()
             return HomeViewModelDiningItem(venues: venues)
         case .laundry:
-            let rooms = LaundryRoom.getDefaultRooms()
-            return HomeViewModelLaundryItem(rooms: rooms)
+            let room = LaundryRoom.getDefaultRooms().first!
+            return HomeViewModelLaundryItem(room: room)
         case .studyRoomBooking:
             return HomeViewModelStudyRoomItem()
         }
@@ -69,10 +69,10 @@ extension HomeViewModel: UITableViewDataSource {
             identifier = HomeStudyRoomCell.identifier
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! GeneralHomeCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! HomeCellConformable
         cell.item = item
         cell.delegate = self
-        return cell
+        return cell as! UITableViewCell
     }
 }
 
@@ -95,21 +95,22 @@ extension HomeViewModel: UITableViewDelegate {
 
 // MARK: - Update Data
 extension HomeViewModel {
-    func update() {
-        for item in items {
-            switch item.type {
-            case .laundry:
-                guard let item = item as? HomeViewModelLaundryItem else { break }
-                item.rooms = LaundryRoom.getDefaultRooms()
-            default:
-                break
-            }
-        }
+    func update(_ completion: () -> Void) {
+//        for item in items {
+//            switch item.type {
+//            case .laundry:
+//                guard let item = item as? HomeViewModelLaundryItem else { break }
+//                item.rooms = LaundryRoom.getDefaultRooms()
+//            default:
+//                break
+//            }
+//        }
+        completion()
     }
 }
 
 // MARK: - GeneralHomeCellDelegate
-extension HomeViewModel: GeneralHomeCellDelegate {
+extension HomeViewModel: HomeCellDelegate {
     func handleTransition(to page: Page) {
         delegate.handleTransition(to: page)
     }

@@ -28,9 +28,9 @@ class HomeViewController: GenericViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if viewModel == nil { return }
-        viewModel.update()
-        tableView.reloadData()
-        
+        viewModel.update {
+            self.tableView.reloadData()
+        }
         fetchAndReloadData()
     }
 }
