@@ -21,12 +21,15 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
         }
     }
     
+    var room: LaundryRoom!
+    
+    var cardView: UIView! = UIView()
+
     fileprivate var roomLabel: UILabel!
-    fileprivate var roomFloorLabel: UILabel!
-    fileprivate var washersLabel: UILabel!
-    fileprivate var dryersLabel: UILabel!
-    fileprivate var numWashersLabel: UILabel!
-    fileprivate var numDryersLabel: UILabel!
+    fileprivate var buildingLabel: UILabel!
+    
+    fileprivate var washerView: LaundryMachinesView!
+    fileprivate var dryerView: LaundryMachinesView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -43,17 +46,24 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
 extension HomeLaundryCell {
     fileprivate func prepareUI() {
         prepareLabels()
+        prepareWasherDryerMachineViews()
     }
     
     // MARK: Labels
     
     fileprivate func prepareLabels() {
-        roomLabel = getRoomLabel(fontSize: 14)
-        roomFloorLabel = getRoomLabel(fontSize: 24)
-        washersLabel = getWasherDryerLabel(isWasher: true)
-        dryersLabel = getWasherDryerLabel(isWasher: false)
-        numWashersLabel = getNumMachinesLabel()
-        numDryersLabel = getNumMachinesLabel()
+        roomLabel = getRoomLabel(fontSize: 24)
+        buildingLabel = getRoomLabel(fontSize: 14)
+        buildingLabel.textColor = .warmGrey
+        
+        cardView.addSubview(roomLabel)
+        cardView.addSubview(buildingLabel)
+        
+        roomLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 20).isActive = true
+        roomLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 10).isActive = true
+        
+        buildingLabel.leadingAnchor.constraint(equalTo: roomLabel.leadingAnchor).isActive = true
+        buildingLabel.topAnchor.constraint(equalTo: roomLabel.bottomAnchor, constant: 5).isActive = true
     }
     
     private func getRoomLabel(fontSize: CGFloat) -> UILabel {
@@ -61,26 +71,43 @@ extension HomeLaundryCell {
         label.font = UIFont(name: "HelveticaNeue", size: fontSize)
         label.textColor = .black
         label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
     
-    private func getWasherDryerLabel(isWasher: Bool) -> UILabel {
-        let label = getRoomLabel(fontSize: 14)
-        label.text = isWasher ? "Washers" : "Dryers"
-        return label
+    // MARK: Machine View
+    private func prepareWasherDryerMachineViews() {
+        washerView = getMachineView(isWasher: true)
+        dryerView = getMachineView(isWasher: true)
+        
+        cardView.addSubview(washerView)
+        cardView.addSubview(dryerView)
+        
+        _ = washerView.anchor(buildingLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 100)
+        
+        _ = dryerView.anchor(washerView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 100)
     }
     
-    private func getNumMachinesLabel() -> UILabel {
-        let label = getRoomLabel(fontSize: 16)
-        label.textColor = .warmGrey
-        label.textAlignment = .right
-        return label
+    private func getMachineView(isWasher: Bool) -> LaundryMachinesView {
+        let machinesView = LaundryMachinesView(frame: .zero, isWasher: isWasher)
+        machinesView.dataSource = self
+        machinesView.translatesAutoresizingMaskIntoConstraints = false
+        return machinesView
     }
 }
 
 // MARK: - Setup Item
 extension HomeLaundryCell {
     fileprivate func setupCell(with item: HomeViewModelLaundryItem) {
-        print(item.room.name)
+        room = item.room
+        roomLabel.text = room.name
+        buildingLabel.text = room.building
+    }
+}
+
+// MARK: - LaundryMachinesViewDataSource
+extension HomeLaundryCell: LaundryMachinesViewDataSource {
+    func getMachines(_ machinesView: LaundryMachinesView) -> [LaundryMachine] {
+        return machinesView.isWasher ? room.washers : room.dryers
     }
 }

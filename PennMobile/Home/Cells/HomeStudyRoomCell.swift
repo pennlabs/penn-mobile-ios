@@ -21,6 +21,8 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
         }
     }
     
+    var cardView: UIView! = UIView()
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()

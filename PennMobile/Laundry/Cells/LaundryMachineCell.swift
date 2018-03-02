@@ -9,6 +9,7 @@
 import UIKit
 
 class LaundryMachineCell: UICollectionViewCell {
+    static let identifier = "laundryMachineCell"
     
     var machine: LaundryMachine! {
         didSet {

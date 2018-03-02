@@ -16,6 +16,8 @@ protocol HomeCellConformable where Self: UITableViewCell {
     
     var item: HomeViewModelItem? { get set }
     var delegate: HomeCellDelegate! { get set }
+    
+    var cardView: UIView! { get }
 }
 
 // - MARK: Prepare
@@ -27,8 +29,6 @@ extension HomeCellConformable {
     }
     
     fileprivate func prepareCardView() {
-        let cardView = UIView()
-        
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 15.0
         cardView.layer.borderWidth = 1.0
