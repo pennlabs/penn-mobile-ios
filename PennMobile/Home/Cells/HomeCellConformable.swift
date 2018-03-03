@@ -8,8 +8,6 @@
 
 import Foundation
 
-protocol HomeCellDelegate {}
-
 protocol HomeCellConformable where Self: UITableViewCell {
     static var identifier: String { get set }
     static var cellHeight: CGFloat { get set }
@@ -23,7 +21,7 @@ protocol HomeCellConformable where Self: UITableViewCell {
 // - MARK: Prepare
 extension HomeCellConformable {
     func prepareHomeCell() {
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = .clear
         self.selectionStyle = .none
         prepareCardView()
         prepareTypeLabel()

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol HomeViewModelDelegate: TransitionDelegate {}
+protocol HomeViewModelDelegate: HomeCellDelegate {}
 
 class HomeViewModel: NSObject {
     var items = [HomeViewModelItem]()
@@ -119,7 +119,12 @@ extension HomeViewModel {
 
 // MARK: - GeneralHomeCellDelegate
 extension HomeViewModel: HomeCellDelegate {
-    func handleTransition(to page: Page) {
-        delegate.handleTransition(to: page)
+    var allowMachineNotifications: Bool {
+        return delegate.allowMachineNotifications
     }
+    
+    func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void) {
+        delegate.handleMachineCellTapped(for: machine, updateCellIfNeeded)
+    }
+    
 }

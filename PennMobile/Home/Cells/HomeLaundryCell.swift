@@ -44,6 +44,36 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     }
 }
 
+// MARK: - Setup Item
+extension HomeLaundryCell {
+    fileprivate func setupCell(with item: HomeViewModelLaundryItem) {
+        room = item.room
+        roomLabel.text = room.name
+        buildingLabel.text = room.building
+        washerView.reloadData()
+        dryerView.reloadData()
+        graphView.reload(with: room.usageData)
+    }
+}
+
+// MARK: - LaundryMachinesViewDataSource
+extension HomeLaundryCell: LaundryMachinesViewDataSource {
+    func getMachines(_ machinesView: LaundryMachinesView) -> [LaundryMachine] {
+        return machinesView.isWasher ? room.washers : room.dryers
+    }
+}
+
+// MARK: - LaundryMachineViewDelegate
+extension HomeLaundryCell: LaundryMachineViewDelegate {
+    var allowMachineNotifications: Bool {
+        return delegate.allowMachineNotifications
+    }
+    
+    func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void) {
+        delegate.handleMachineCellTapped(for: machine, updateCellIfNeeded)
+    }
+}
+
 // MARK: - Prepare UI Elements
 extension HomeLaundryCell {
     fileprivate func prepareUI() {
@@ -96,6 +126,7 @@ extension HomeLaundryCell {
     private func getMachineView(isWasher: Bool) -> LaundryMachinesView {
         let machinesView = LaundryMachinesView(frame: .zero, isWasher: isWasher)
         machinesView.dataSource = self
+        machinesView.delegate = self
         machinesView.translatesAutoresizingMaskIntoConstraints = false
         return machinesView
     }
@@ -115,24 +146,5 @@ extension HomeLaundryCell {
         
         cardView.addSubview(graphView)
         _ = graphView.anchor(dryerView.bottomAnchor, left: cardView.leftAnchor, bottom: cardView.bottomAnchor, right: cardView.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
-}
-
-// MARK: - Setup Item
-extension HomeLaundryCell {
-    fileprivate func setupCell(with item: HomeViewModelLaundryItem) {
-        room = item.room
-        roomLabel.text = room.name
-        buildingLabel.text = room.building
-        washerView.reloadData()
-        dryerView.reloadData()
-        graphView.reload(with: room.usageData)
-    }
-}
-
-// MARK: - LaundryMachinesViewDataSource
-extension HomeLaundryCell: LaundryMachinesViewDataSource {
-    func getMachines(_ machinesView: LaundryMachinesView) -> [LaundryMachine] {
-        return machinesView.isWasher ? room.washers : room.dryers
     }
 }

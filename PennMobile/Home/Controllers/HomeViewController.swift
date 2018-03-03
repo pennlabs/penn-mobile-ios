@@ -22,6 +22,7 @@ class HomeViewController: GenericViewController {
         trackScreen = true
         
         prepareTableView()
+        prepareRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,7 +39,7 @@ class HomeViewController: GenericViewController {
 extension HomeViewController {
     func prepareTableView() {
         tableView = UITableView()
-        tableView.backgroundColor = .whiteGrey
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         
         view.addSubview(tableView)
@@ -72,9 +73,8 @@ extension HomeViewController {
 
 // MARK: - ViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
-    func handleTransition(to page: Page) {
-        // Make any UI changes before transition here
-        ControllerModel.shared.transition(to: page, withAnimation: true)
+    var allowMachineNotifications: Bool {
+        return true
     }
 }
 
@@ -91,7 +91,7 @@ extension HomeViewController {
         }
     }
     
-    func fetchCellSpecificData() {
+    func fetchCellSpecificData(_ completion: (() -> Void)? = nil) {
         HomeAPIService.instance.fetchData(for: viewModel.items, singleCompletion: { (item) in
             DispatchQueue.main.async {
                 let row = self.viewModel.items.index(where: { (thisItem) -> Bool in
@@ -101,7 +101,23 @@ extension HomeViewController {
                 self.tableView.reloadRows(at: [indexPath], with: .none)
             }
         }) {
-            // TODO: Behavior for when all API calls have finished
+            DispatchQueue.main.async {
+                completion?()
+            }
+        }
+    }
+}
+
+// MARK: - Refreshing
+extension HomeViewController {
+    fileprivate func prepareRefreshControl() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
+    }
+    
+    @objc fileprivate func handleRefresh(_ sender: Any) {
+        fetchCellSpecificData {
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
 }

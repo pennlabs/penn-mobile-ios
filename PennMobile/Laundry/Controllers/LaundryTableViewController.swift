@@ -15,7 +15,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
 
     fileprivate var timer: Timer?
     
-    fileprivate let allowMachineNotifications = true
+    internal let allowMachineNotifications = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,26 +170,6 @@ extension LaundryTableViewController: LaundryCellDelegate {
             rooms.remove(at: index)
             LaundryRoom.setPreferences(for: rooms)
             tableView.reloadData()
-        }
-    }
-    
-    internal func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void) {
-        if !allowMachineNotifications { return }
-        
-        if machine.isUnderNotification() {
-            LaundryNotificationCenter.shared.removeOutstandingNotification(for: machine)
-            updateCellIfNeeded()
-        } else {
-            requestNotification { (granted) in
-                if granted {
-                    LaundryNotificationCenter.shared.notifyWithMessage(for: machine, title: "Ready!", message: "The \(machine.roomName) \(machine.isWasher ? "washer" : "dryer") has finished running.", completion: { (success) in
-                        if success {
-                            updateCellIfNeeded()
-                        }
-                    })
-                    GoogleAnalyticsManager.shared.trackEvent(category: .laundry, action: .registerNotification, label: machine.roomName, value: 0)
-                }
-            }
         }
     }
 }

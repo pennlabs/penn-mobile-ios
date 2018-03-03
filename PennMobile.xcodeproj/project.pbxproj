@@ -31,6 +31,8 @@
 		21640D662012A1CE002F33CA /* OpenClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D652012A1CE002F33CA /* OpenClose.swift */; };
 		21640D682012A23E002F33CA /* DiningHoursData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D672012A23E002F33CA /* DiningHoursData.swift */; };
 		21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD2204A296D008DB6E8 /* LaundryGraphView.swift */; };
+		21640FD5204A51C7008DB6E8 /* HomeCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD4204A51C7008DB6E8 /* HomeCellDelegate.swift */; };
+		21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD6204A5309008DB6E8 /* LaundryMachineCellTappable.swift */; };
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
 		216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640781EBADADA00746B8E /* PennMobileTests.swift */; };
@@ -137,6 +139,8 @@
 		21640D652012A1CE002F33CA /* OpenClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClose.swift; sourceTree = "<group>"; };
 		21640D672012A23E002F33CA /* DiningHoursData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningHoursData.swift; sourceTree = "<group>"; };
 		21640FD2204A296D008DB6E8 /* LaundryGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryGraphView.swift; sourceTree = "<group>"; };
+		21640FD4204A51C7008DB6E8 /* HomeCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellDelegate.swift; sourceTree = "<group>"; };
+		21640FD6204A5309008DB6E8 /* LaundryMachineCellTappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachineCellTappable.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		216640631EBADADA00746B8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2166406D1EBADADA00746B8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
+				21640FD4204A51C7008DB6E8 /* HomeCellDelegate.swift */,
 				21640D5920105B8E002F33CA /* HomeEventCell.swift */,
 				21640D5B20105B98002F33CA /* HomeDiningCell.swift */,
 				21640D5D20105BAC002F33CA /* HomeLaundryCell.swift */,
@@ -635,6 +640,7 @@
 			isa = PBXGroup;
 			children = (
 				B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */,
+				21640FD6204A5309008DB6E8 /* LaundryMachineCellTappable.swift */,
 				CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */,
 			);
 			path = Controllers;
@@ -911,6 +917,7 @@
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
+				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				21640D682012A23E002F33CA /* DiningHoursData.swift in Sources */,
@@ -972,6 +979,7 @@
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5A20105B8E002F33CA /* HomeEventCell.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
+				21640FD5204A51C7008DB6E8 /* HomeCellDelegate.swift in Sources */,
 				216640971EBADC1700746B8E /* DiningVenue.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
