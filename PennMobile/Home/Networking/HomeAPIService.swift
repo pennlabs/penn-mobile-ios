@@ -61,8 +61,8 @@ class HomeAPIService: Requestable {
         override func main() {
             super.main()
             item.fetchData {
-                self.state = .finished
                 self.completion(self.item as! HomeViewModelItem)
+                self.state = .finished
             }
         }
     }
@@ -87,13 +87,15 @@ extension HomeViewModelDiningItem: HomeAPIRequestable {
     }
 }
 
-extension HomeViewModelLaundryItem: HomeAPIRequestable {
+extension HomeViewModelLaundryItem: HomeAPIRequestable {    
     func fetchData(_ completion: @escaping () -> Void) {
-        LaundryAPIService.instance.fetchLaundryData(for: [self.room]) { (rooms) in
-            if let room = rooms?.first {
-                self.room = room
+        LaundryNotificationCenter.shared.updateForExpiredNotifications {
+            LaundryAPIService.instance.fetchLaundryData(for: [self.room]) { (rooms) in
+                if let room = rooms?.first {
+                    self.room = room
+                }
+                completion()
             }
-            completion()
         }
     }
 }

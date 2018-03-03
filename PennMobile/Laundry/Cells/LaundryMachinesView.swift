@@ -12,16 +12,19 @@ protocol LaundryMachinesViewDataSource {
     func getMachines(_ machinesView: LaundryMachinesView) -> [LaundryMachine]
 }
 
+protocol LaundryMachineViewDelegate: LaundryMachineCellTappable {}
+
 final class LaundryMachinesView: UIView {
     static let height: CGFloat = 90
     
     let isWasher: Bool
     var dataSource: LaundryMachinesViewDataSource!
+    var delegate: LaundryMachineViewDelegate!
     
     fileprivate var typeLabel: UILabel!
     fileprivate var numberLabel: UILabel!
     
-    fileprivate var machineCollectionView: UICollectionView!
+    fileprivate var collectionView: UICollectionView!
     
     init(frame: CGRect, isWasher: Bool) {
         self.isWasher = isWasher
@@ -83,16 +86,15 @@ extension LaundryMachinesView {
     private func prepareCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.register(LaundryMachineCell.self, forCellWithReuseIdentifier: LaundryMachineCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = UIColor.clear
         collectionView.showsHorizontalScrollIndicator = false
-        machineCollectionView = collectionView
         
-        addSubview(machineCollectionView)
-        _ = machineCollectionView.anchor(typeLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        addSubview(collectionView)
+        _ = collectionView.anchor(typeLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 }
 
@@ -121,11 +123,23 @@ extension LaundryMachinesView: UICollectionViewDataSource, UICollectionViewDeleg
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 5, left: 20, bottom: 5, right: 5)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let machineArray = dataSource.getMachines(self)
+        let machine = machineArray[indexPath.row]
+        if machine.status == .running && machine.timeRemaining > 0 {
+            delegate.handleMachineCellTapped(for: machine) {
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Reload
 extension LaundryMachinesView {
     func reloadData() {
-        machineCollectionView.reloadData()
+        collectionView.reloadData()
     }
 }

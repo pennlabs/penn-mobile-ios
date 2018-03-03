@@ -94,6 +94,7 @@ final class HomeViewModelLaundryItem: HomeViewModelItem {
     }
     
     var room: LaundryRoom
+    var timer: Timer?       // For decrementing machines
     
     init(room: LaundryRoom) {
         self.room = room

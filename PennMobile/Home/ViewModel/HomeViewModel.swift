@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol HomeViewModelDelegate: TransitionDelegate {}
+protocol HomeViewModelDelegate: HomeCellDelegate {}
 
 class HomeViewModel: NSObject {
     var items = [HomeViewModelItem]()
@@ -103,23 +103,28 @@ extension HomeViewModel: UITableViewDelegate {
 
 // MARK: - Update Data
 extension HomeViewModel {
-    func update(_ completion: () -> Void) {
-//        for item in items {
-//            switch item.type {
-//            case .laundry:
-//                guard let item = item as? HomeViewModelLaundryItem else { break }
-//                item.rooms = LaundryRoom.getDefaultRooms()
-//            default:
-//                break
-//            }
-//        }
+    func updatePreferences(_ completion: () -> Void) {
+        for item in items {
+            switch item.type {
+            case .laundry:
+                guard let item = item as? HomeViewModelLaundryItem, let room = LaundryRoom.getDefaultRooms().first else { continue }
+                item.room = room
+            default:
+                break
+            }
+        }
         completion()
     }
 }
 
 // MARK: - GeneralHomeCellDelegate
 extension HomeViewModel: HomeCellDelegate {
-    func handleTransition(to page: Page) {
-        delegate.handleTransition(to: page)
+    var allowMachineNotifications: Bool {
+        return delegate.allowMachineNotifications
     }
+    
+    func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void) {
+        delegate.handleMachineCellTapped(for: machine, updateCellIfNeeded)
+    }
+    
 }
