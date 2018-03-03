@@ -30,7 +30,9 @@ class HomeViewController: GenericViewController {
         if viewModel == nil {
             fetchViewModel()
         } else {
-            self.fetchCellSpecificData()
+            viewModel.updatePreferences {
+                self.fetchCellSpecificData()
+            }
         }
     }
 }
