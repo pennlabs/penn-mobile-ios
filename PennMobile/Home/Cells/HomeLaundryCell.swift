@@ -112,7 +112,6 @@ extension HomeLaundryCell {
     // MARK: Graph View
     private func prepareGraphView() {
         graphView = LaundryGraphView(frame: .zero)
-        graphView.backgroundColor = .red
         
         cardView.addSubview(graphView)
         _ = graphView.anchor(dryerView.bottomAnchor, left: cardView.leftAnchor, bottom: cardView.bottomAnchor, right: cardView.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
@@ -127,6 +126,7 @@ extension HomeLaundryCell {
         buildingLabel.text = room.building
         washerView.reloadData()
         dryerView.reloadData()
+        graphView.reload(with: room.usageData)
     }
 }
 
