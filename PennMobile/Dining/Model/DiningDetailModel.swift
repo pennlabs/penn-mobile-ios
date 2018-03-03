@@ -10,7 +10,7 @@ import Foundation
 
 class DiningDetailModel {
     static private let server = "http://university-of-pennsylvania.cafebonappetit.com/cafe"
-    
+        
     static private let serverDictionary: [DiningVenueName: String] = {
         var dict = [DiningVenueName: String]()
         dict[.commons] = "1920-commons"
@@ -53,5 +53,20 @@ class DiningDetailModel {
     
     static func set(webview: UIWebView, for venue: DiningVenueName) {
         DiningDetailModel.webviewDictionary[venue] = webview
+    }
+}
+
+// MARK: - Webview Preloading
+extension DiningDetailModel {
+    static func preloadWebview(for venue: DiningVenueName) {
+        DiningAPI.instance.fetchDetailPageHTML(for: venue) { (html) in
+            if let html = html {
+                DispatchQueue.main.async {
+                    let webview = UIWebView(frame: .zero)
+                    webview.loadHTMLString(html, baseURL: nil)
+                    DiningDetailModel.set(webview: webview, for: venue)
+                }
+            }
+        }
     }
 }

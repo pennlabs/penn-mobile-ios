@@ -8,4 +8,4 @@
 
 import Foundation
 
-protocol HomeCellDelegate: LaundryMachineCellTappable {}
+protocol HomeCellDelegate: LaundryMachineCellTappable, DiningCellSelectable {}

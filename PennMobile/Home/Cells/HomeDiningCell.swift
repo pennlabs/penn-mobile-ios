@@ -9,9 +9,13 @@
 import Foundation
 import UIKit
 
+protocol DiningCellSelectable {
+    func handleVenueSelected(_ venue: DiningVenue)
+}
+
 final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     static var identifier: String = "diningCell"
-    static var cellHeight: CGFloat = 3 * DiningCell.cellHeight + 40
+    static var cellHeight: CGFloat = 3 * DiningCell.cellHeight + 40 + 54
     
     var delegate: HomeCellDelegate!
     var item: HomeViewModelItem? {
@@ -25,7 +29,9 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     
     var cardView: UIView! = UIView()
     
+    fileprivate var titleLabel: UILabel!
     fileprivate var tableView: UITableView!
+    fileprivate var seeMoreButton: UIButton!
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -48,7 +54,18 @@ extension HomeDiningCell {
 // MARK: - Prepare UI
 extension HomeDiningCell {
     fileprivate func prepareUI() {
+        prepareTitleLabel()
         prepareTableView()
+    }
+    
+    private func prepareTitleLabel() {
+        titleLabel = UILabel()
+        titleLabel.text = "Popular spots to eat"
+        titleLabel.font = UIFont(name: "HelveticaNeue-Light", size: 20)
+        titleLabel.textColor = .warmGrey
+        
+        cardView.addSubview(titleLabel)
+        _ = titleLabel.anchor(cardView.topAnchor, left: cardView.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 54)
     }
     
     private func prepareTableView() {
@@ -59,7 +76,7 @@ extension HomeDiningCell {
         tableView.register(DiningCell.self, forCellReuseIdentifier: DiningCell.identifier)
         
         cardView.addSubview(tableView)
-        tableView.anchorToTop(cardView.topAnchor, left: cardView.leftAnchor, bottom: cardView.bottomAnchor, right: cardView.rightAnchor)
+        tableView.anchorToTop(titleLabel.bottomAnchor, left: cardView.leftAnchor, bottom: cardView.bottomAnchor, right: cardView.rightAnchor)
     }
 }
 
@@ -89,7 +106,8 @@ extension HomeDiningCell: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Cell selected!")
+        guard let venue = venues?[indexPath.row] else { return }
+        delegate.handleVenueSelected(venue)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

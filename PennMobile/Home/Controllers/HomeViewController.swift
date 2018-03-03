@@ -28,7 +28,9 @@ class HomeViewController: GenericViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if viewModel == nil {
-            fetchViewModel()
+            fetchViewModel {
+                DiningDetailModel.prepare()
+            }
         } else {
             viewModel.updatePreferences {
                 self.fetchCellSpecificData()
@@ -78,17 +80,25 @@ extension HomeViewController: HomeViewModelDelegate {
     var allowMachineNotifications: Bool {
         return true
     }
+    
+    func handleVenueSelected(_ venue: DiningVenue) {
+        let ddc = DiningDetailViewController()
+        ddc.venue = venue
+        navigationController?.pushViewController(ddc, animated: true)
+    }
 }
 
 // MARK: - Networking
 extension HomeViewController {
-    func fetchViewModel() {
+    func fetchViewModel(_ completion: @escaping () -> Void) {
         HomeAPIService.instance.fetchModel { (model) in
             guard let model = model else { return }
             DispatchQueue.main.async {
                 self.setTableViewModel(model)
                 self.tableView.reloadData()
-                self.fetchCellSpecificData()
+                self.fetchCellSpecificData {
+                    completion()
+                }
             }
         }
     }

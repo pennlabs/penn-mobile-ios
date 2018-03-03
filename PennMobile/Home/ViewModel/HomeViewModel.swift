@@ -71,7 +71,7 @@ extension HomeViewModel: UITableViewDataSource {
         
         var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! HomeCellConformable
         cell.item = item
-        cell.delegate = self
+        cell.delegate = self.delegate
         return cell as! UITableViewCell
     }
 }
@@ -115,16 +115,4 @@ extension HomeViewModel {
         }
         completion()
     }
-}
-
-// MARK: - GeneralHomeCellDelegate
-extension HomeViewModel: HomeCellDelegate {
-    var allowMachineNotifications: Bool {
-        return delegate.allowMachineNotifications
-    }
-    
-    func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void) {
-        delegate.handleMachineCellTapped(for: machine, updateCellIfNeeded)
-    }
-    
 }
