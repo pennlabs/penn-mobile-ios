@@ -116,3 +116,12 @@ extension HomeViewModel {
         completion()
     }
 }
+
+// MARK: - Preload Webview
+extension HomeViewModel {
+    func venueToPreload() -> DiningVenue? {
+        let diningItems = self.items.filter { $0.type == .dining }
+        guard let diningItem = diningItems.first as? HomeViewModelDiningItem else { return nil }
+        return diningItem.venues.first
+    }
+}

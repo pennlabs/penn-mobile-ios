@@ -59,6 +59,8 @@ class DiningDetailModel {
 // MARK: - Webview Preloading
 extension DiningDetailModel {
     static func preloadWebview(for venue: DiningVenueName) {
+        if getWebview(for: venue) != nil { return }
+        
         DiningAPI.instance.fetchDetailPageHTML(for: venue) { (html) in
             if let html = html {
                 DispatchQueue.main.async {

@@ -29,7 +29,7 @@ class HomeViewController: GenericViewController {
         super.viewWillAppear(animated)
         if viewModel == nil {
             fetchViewModel {
-                DiningDetailModel.prepare()
+                // TODO: behavior for when model returns
             }
         } else {
             viewModel.updatePreferences {
@@ -97,8 +97,11 @@ extension HomeViewController {
                 self.setTableViewModel(model)
                 self.tableView.reloadData()
                 self.fetchCellSpecificData {
-                    completion()
+                    if let venue = model.venueToPreload() {
+                        DiningDetailModel.preloadWebview(for: venue.venue)
+                    }
                 }
+                completion()
             }
         }
     }

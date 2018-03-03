@@ -48,6 +48,7 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
 extension HomeDiningCell {
     fileprivate func setupCell(with item: HomeViewModelDiningItem) {
         venues = item.venues
+        tableView.reloadData()
     }
 }
 
