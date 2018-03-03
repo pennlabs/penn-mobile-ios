@@ -30,6 +30,7 @@
 		21640D6220114A29002F33CA /* ControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D6120114A28002F33CA /* ControllerModel.swift */; };
 		21640D662012A1CE002F33CA /* OpenClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D652012A1CE002F33CA /* OpenClose.swift */; };
 		21640D682012A23E002F33CA /* DiningHoursData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D672012A23E002F33CA /* DiningHoursData.swift */; };
+		21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD2204A296D008DB6E8 /* LaundryGraphView.swift */; };
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
 		216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640781EBADADA00746B8E /* PennMobileTests.swift */; };
@@ -135,6 +136,7 @@
 		21640D6120114A28002F33CA /* ControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerModel.swift; sourceTree = "<group>"; };
 		21640D652012A1CE002F33CA /* OpenClose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenClose.swift; sourceTree = "<group>"; };
 		21640D672012A23E002F33CA /* DiningHoursData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningHoursData.swift; sourceTree = "<group>"; };
+		21640FD2204A296D008DB6E8 /* LaundryGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryGraphView.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		216640631EBADADA00746B8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2166406D1EBADADA00746B8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -622,6 +624,7 @@
 				B654BAF11F802A050038B9D5 /* LaundryCell.swift */,
 				211DA1AE204921030065BC2C /* LaundryMachinesView.swift */,
 				21640D3F200EF881002F33CA /* LaundryCell + Graph.swift */,
+				21640FD2204A296D008DB6E8 /* LaundryGraphView.swift */,
 				B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */,
 				B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */,
 			);
@@ -922,6 +925,7 @@
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeViewModel.swift in Sources */,
+				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,

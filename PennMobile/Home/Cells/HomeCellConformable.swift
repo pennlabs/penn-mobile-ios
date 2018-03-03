@@ -31,7 +31,7 @@ extension HomeCellConformable {
     
     fileprivate func prepareCardView() {
         cardView.backgroundColor = .white
-        cardView.layer.cornerRadius = 15.0
+        cardView.layer.cornerRadius = 10.0
         cardView.layer.borderWidth = 1.0
         cardView.layer.borderColor = UIColor.clear.cgColor
         

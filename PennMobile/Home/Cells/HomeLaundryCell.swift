@@ -11,7 +11,7 @@ import UIKit
 
 final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     static var identifier = "laundryCell"
-    static var cellHeight: CGFloat = 400.0
+    static var cellHeight: CGFloat = 450.0
 
     var delegate: HomeCellDelegate!
     var item: HomeViewModelItem? {
@@ -27,11 +27,11 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
 
     fileprivate var roomLabel: UILabel!
     fileprivate var buildingLabel: UILabel!
+    fileprivate var hairline: UIView!
     
     fileprivate var washerView: LaundryMachinesView!
     fileprivate var dryerView: LaundryMachinesView!
-    
-    fileprivate var hairline: UIView!
+    fileprivate var graphView: LaundryGraphView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -50,6 +50,7 @@ extension HomeLaundryCell {
         prepareLabels()
         prepareHairline()
         prepareWasherDryerMachineViews()
+        prepareGraphView()
     }
     
     // MARK: Labels
@@ -87,7 +88,6 @@ extension HomeLaundryCell {
         cardView.addSubview(dryerView)
         
         let height = LaundryMachinesView.height
-        
         _ = washerView.anchor(hairline.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
         
         _ = dryerView.anchor(washerView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 6, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
@@ -106,8 +106,16 @@ extension HomeLaundryCell {
         hairline.backgroundColor = .lightGray
         
         cardView.addSubview(hairline)
-        
         _ = hairline.anchor(buildingLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 10, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 1)
+    }
+    
+    // MARK: Graph View
+    private func prepareGraphView() {
+        graphView = LaundryGraphView(frame: .zero)
+        graphView.backgroundColor = .red
+        
+        cardView.addSubview(graphView)
+        _ = graphView.anchor(dryerView.bottomAnchor, left: cardView.leftAnchor, bottom: cardView.bottomAnchor, right: cardView.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 }
 
