@@ -126,6 +126,14 @@ extension LaundryTableViewController {
             return 380.0
         }
     }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section >= rooms.count {
+            return 80.0
+        } else {
+            return 380.0
+        }
+    }
 }
 
 // Laundry API Calls
