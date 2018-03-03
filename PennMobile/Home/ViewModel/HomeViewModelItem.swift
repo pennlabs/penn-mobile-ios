@@ -20,6 +20,7 @@ enum HomeViewModelItemType: String {
 protocol HomeViewModelItem {
     var type: HomeViewModelItemType { get }
     var title: String { get }
+    func equals(item: HomeViewModelItem) -> Bool
 }
 
 // MARK: - HomeViewModelEventItem
@@ -38,6 +39,11 @@ final class HomeViewModelEventItem: HomeViewModelItem {
         self.imageUrl = imageUrl
         
     }
+    
+    func equals(item: HomeViewModelItem) -> Bool {
+        guard let item = item as? HomeViewModelEventItem else { return false }
+        return imageUrl == item.imageUrl
+    }
 }
 
 // MARK: - HomeViewModelEventItem
@@ -55,6 +61,11 @@ final class HomeViewModelDiningItem: HomeViewModelItem {
     init(venues: [DiningVenue]) {
         self.venues = venues
     }
+    
+    func equals(item: HomeViewModelItem) -> Bool {
+        guard let item = item as? HomeViewModelDiningItem else { return false }
+        return venues == item.venues
+    }
 }
 
 // MARK: - HomeViewModelStudyRoomItem
@@ -65,6 +76,10 @@ final class HomeViewModelStudyRoomItem: HomeViewModelItem {
     
     var title: String {
         return "Study Room Booking"
+    }
+    
+    func equals(item: HomeViewModelItem) -> Bool {
+        return true
     }
 }
 
@@ -82,6 +97,11 @@ final class HomeViewModelLaundryItem: HomeViewModelItem {
     
     init(room: LaundryRoom) {
         self.room = room
+    }
+    
+    func equals(item: HomeViewModelItem) -> Bool {
+        guard let item = item as? HomeViewModelLaundryItem else { return false }
+        return room == item.room
     }
 }
 

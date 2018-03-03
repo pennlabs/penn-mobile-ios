@@ -29,9 +29,7 @@ class HomeViewController: GenericViewController {
         if viewModel == nil {
             fetchViewModel()
         } else {
-            viewModel.update {
-                self.fetchAndReloadData()
-            }
+            self.fetchCellSpecificData()
         }
     }
 }
@@ -88,16 +86,22 @@ extension HomeViewController {
             DispatchQueue.main.async {
                 self.setTableViewModel(model)
                 self.tableView.reloadData()
-                self.fetchAndReloadData()
+                self.fetchCellSpecificData()
             }
         }
     }
     
-    func fetchAndReloadData() {
-        HomeAPIService.instance.fetchData(for: viewModel.items) {
+    func fetchCellSpecificData() {
+        HomeAPIService.instance.fetchData(for: viewModel.items, singleCompletion: { (item) in
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                let row = self.viewModel.items.index(where: { (thisItem) -> Bool in
+                    thisItem.equals(item: item)
+                })!
+                let indexPath = IndexPath(row: row, section: 0)
+                self.tableView.reloadRows(at: [indexPath], with: .none)
             }
+        }) {
+            // TODO: Behavior for when all API calls have finished
         }
     }
 }

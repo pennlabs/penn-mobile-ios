@@ -8,9 +8,15 @@
 
 import Foundation
 
+protocol HomeAPIRequestable where Self: HomeViewModelItem {
+    func fetchData(_ completion: @escaping () -> Void)
+}
+
 class HomeAPIService: Requestable {
     
     static let instance = HomeAPIService()
+    
+    typealias APICompletion = (_ item: HomeViewModelItem) -> Void
     
     func fetchModel(_ completion: @escaping (HomeViewModel?) -> Void) {
         let url = "http://api-dev.pennlabs.org/homepage"
@@ -24,57 +30,40 @@ class HomeAPIService: Requestable {
         }
     }
     
-    func fetchData(for items: [HomeViewModelItem], _ completion: @escaping () -> Void) {
+    func fetchData(for items: [HomeViewModelItem], singleCompletion: @escaping APICompletion, finished: @escaping () -> Void) {
         let operationQueue = OperationQueue()
         operationQueue.maxConcurrentOperationCount = 3
         
-        let completionOperation = BlockOperation {
-            completion()
+        let finishedOperation = BlockOperation {
+            finished()
         }
         
         for item in items {
-            var operation: Operation!
-            switch item.type {
-            case .dining:
-                operation = DiningAPIOperation()
-            case .laundry:
-                guard let item = item as? HomeViewModelLaundryItem else { break }
-                operation = LaundryAPIOperation(rooms: [item.room])
-            default:
-                break
-            }
-            guard operation != nil else { continue }
-            completionOperation.addDependency(operation)
+            guard let requestableItem = item as? HomeAPIRequestable else { continue }
+            let operation = HomeAPIOperation(item: requestableItem, completion: singleCompletion)
+            finishedOperation.addDependency(operation)
             operationQueue.addOperation(operation)
         }
         
-        OperationQueue.main.addOperation(completionOperation)
+        OperationQueue.main.addOperation(finishedOperation)
     }
     
-    // MARK: - DiningAPIOperation
-    private class DiningAPIOperation: AsynchronousOperation {
+    // MARK: - HomeAPIOperation
+    private class HomeAPIOperation: AsynchronousOperation {
+        private let item: HomeAPIRequestable
+        private let completion: APICompletion
+        
+        init(item: HomeAPIRequestable, completion: @escaping APICompletion) {
+            self.item = item
+            self.completion = completion
+        }
+        
         override func main() {
             super.main()
-            DiningAPI.instance.fetchDiningHours { (_) in
+            item.fetchData {
                 self.state = .finished
+                self.completion(self.item as! HomeViewModelItem)
             }
-        }
-    }
-    
-    // MARK: - LaundryAPIOperation
-    private class LaundryAPIOperation: AsynchronousOperation {
-        private let rooms: [LaundryRoom]
-        
-        init(rooms: [LaundryRoom]) {
-            self.rooms = rooms
-            super.init()
-        }
-        
-        override func main() {
-            super.main()
-//            LaundryAPIService.instance.fetchLaundryData(for: rooms, withUsageData: false) { (_) in
-//                self.state = .finished
-//            }
         }
     }
 }
@@ -87,5 +76,24 @@ extension HomeViewModelItemType {
         return cellsJSON.map { HomeViewModelItemType(rawValue: $0["type"].stringValue) }
                         .filter { $0 != nil }
                         .map { $0! }
+    }
+}
+
+extension HomeViewModelDiningItem: HomeAPIRequestable {
+    func fetchData(_ completion: @escaping () -> Void) {
+        DiningAPI.instance.fetchDiningHours { _ in
+            completion()
+        }
+    }
+}
+
+extension HomeViewModelLaundryItem: HomeAPIRequestable {
+    func fetchData(_ completion: @escaping () -> Void) {
+        LaundryAPIService.instance.fetchLaundryData(for: [self.room]) { (rooms) in
+            if let room = rooms?.first {
+                self.room = room
+            }
+            completion()
+        }
     }
 }
