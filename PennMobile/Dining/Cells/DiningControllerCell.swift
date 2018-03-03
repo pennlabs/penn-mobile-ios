@@ -9,7 +9,7 @@
 import UIKit
 
 class DiningCell: UITableViewCell {
-    
+    static let identifier = "diningCell"
     static let cellHeight: CGFloat = 112
     
     var venue: DiningVenue! {

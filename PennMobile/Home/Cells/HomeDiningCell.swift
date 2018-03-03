@@ -11,7 +11,7 @@ import UIKit
 
 final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     static var identifier: String = "diningCell"
-    static var cellHeight: CGFloat = 200.0
+    static var cellHeight: CGFloat = 3 * DiningCell.cellHeight + 40
     
     var delegate: HomeCellDelegate!
     var item: HomeViewModelItem? {
@@ -21,12 +21,16 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
         }
     }
     
+    var venues: [DiningVenue]?
+    
     var cardView: UIView! = UIView()
+    
+    fileprivate var tableView: UITableView!
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
-        prepareTextLabel()
+        prepareUI()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,17 +38,61 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     }
 }
 
-// MARK: - Setup and Prepare UI Elements
+// MARK: - Setup
 extension HomeDiningCell {
-    fileprivate func prepareTextLabel() {
-        textLabel?.textColor = UIColor.buttonBlue
-        textLabel?.numberOfLines = 3
+    fileprivate func setupCell(with item: HomeViewModelDiningItem) {
+        venues = item.venues
+    }
+}
+
+// MARK: - Prepare UI
+extension HomeDiningCell {
+    fileprivate func prepareUI() {
+        prepareTableView()
     }
     
-    fileprivate func setupCell(with item: HomeViewModelDiningItem) {
-        textLabel?.text = String(item.venues.map {
-            let timesStr = $0.times?.strFormat ?? ""
-            return $0.name + "  " + timesStr + "\n"
-            }.joined().dropLast())
+    private func prepareTableView() {
+        tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
+        tableView.register(DiningCell.self, forCellReuseIdentifier: DiningCell.identifier)
+        
+        cardView.addSubview(tableView)
+        tableView.anchorToTop(cardView.topAnchor, left: cardView.leftAnchor, bottom: cardView.bottomAnchor, right: cardView.rightAnchor)
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension HomeDiningCell: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return venues?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: DiningCell.identifier, for: indexPath) as! DiningCell
+        cell.venue = venues?[indexPath.row]
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension HomeDiningCell: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.layer.cornerRadius = 8
+        cell.layer.shadowOffset = .zero
+        cell.layer.shadowRadius = 5
+        cell.layer.shadowOpacity = 0.2
+        cell.layer.shadowPath = UIBezierPath(rect: cell.bounds).cgPath
+        cell.layer.shouldRasterize = true
+        cell.layer.rasterizationScale = UIScreen.main.scale
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Cell selected!")
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return DiningCell.cellHeight
     }
 }
