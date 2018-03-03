@@ -79,6 +79,14 @@ extension HomeViewModel: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension HomeViewModel: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return getHeightforRow(at: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return getHeightforRow(at: indexPath)
+    }
+    
+    private func getHeightforRow(at indexPath: IndexPath) -> CGFloat {
         let item = items[indexPath.row]
         switch item.type {
         case .event:
