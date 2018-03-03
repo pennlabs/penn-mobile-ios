@@ -207,7 +207,7 @@ extension LaundryGraphView {
         graphView.isScrollEnabled = true
         
         graphView.rangeMin = 0.0
-        graphView.rangeMax = 1.5
+        graphView.rangeMax = 1.0
         
         graphView.layer.cornerRadius = 15.0
         
@@ -224,7 +224,7 @@ extension LaundryGraphView {
         scrollableGraphView = graphView
         
         addSubview(scrollableGraphView)
-        _ = scrollableGraphView.anchor(graphLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = scrollableGraphView.anchor(graphLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 2, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     func reloadDottedLineLayer() {
@@ -240,8 +240,8 @@ extension LaundryGraphView {
         let xPosition = 50.0 + Double(currentHour * dataPointSpacing)
         
         let linePath = UIBezierPath()
-        linePath.move(to: CGPoint(x: xPosition, y: 25.0))
-        linePath.addLine(to: CGPoint(x: xPosition, y: 60.0))
+        linePath.move(to: CGPoint(x: xPosition, y: 15.0))
+        linePath.addLine(to: CGPoint(x: xPosition, y: 50.0))
         
         dottedLineLayer.path = linePath.cgPath
         dottedLine = dottedLineLayer

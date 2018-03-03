@@ -11,7 +11,7 @@ import UIKit
 
 final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     static var identifier = "laundryCell"
-    static var cellHeight: CGFloat = 450.0
+    static var cellHeight: CGFloat = 420.0
 
     var delegate: HomeCellDelegate!
     var item: HomeViewModelItem? {
