@@ -92,7 +92,8 @@ extension HomeViewModel: UITableViewDelegate {
         case .event:
             return HomeEventCell.cellHeight
         case .dining:
-            return HomeDiningCell.cellHeight
+            let item = item as! HomeViewModelDiningItem
+            return HomeDiningCell.getCellHeight(for: item)
         case .laundry:
             return HomeLaundryCell.cellHeight
         case .studyRoomBooking:

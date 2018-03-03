@@ -10,7 +10,6 @@ import Foundation
 
 protocol HomeCellConformable where Self: UITableViewCell {
     static var identifier: String { get set }
-    static var cellHeight: CGFloat { get set }
     
     var item: HomeViewModelItem? { get set }
     var delegate: HomeCellDelegate! { get set }
