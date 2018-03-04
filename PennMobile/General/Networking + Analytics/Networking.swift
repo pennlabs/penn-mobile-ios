@@ -90,10 +90,10 @@ extension Requestable {
         
         let request = NSMutableURLRequest(url: url)
         
+        let deviceID = getDeviceID()
+        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         request.httpMethod = method.description
         if let params = params {
-            let deviceID = getDeviceID()
-            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             request.setValue("super secret password", forHTTPHeaderField: "Authorization")
             request.httpBody = try JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)

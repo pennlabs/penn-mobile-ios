@@ -19,7 +19,7 @@ class HomeAPIService: Requestable {
     typealias APICompletion = (_ item: HomeViewModelItem) -> Void
     
     func fetchModel(_ completion: @escaping (HomeViewModel?) -> Void) {
-        let url = "https://api.pennlabs.org/homepage"
+        let url = "http://api-dev.pennlabs.org/homepage"
         getRequest(url: url) { (dict) in
             var model: HomeViewModel? = nil
             if let dict = dict {
