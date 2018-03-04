@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol HomeViewModelDelegate: TransitionDelegate {}
+protocol HomeViewModelDelegate: HomeCellDelegate {}
 
 class HomeViewModel: NSObject {
     var items = [HomeViewModelItem]()
@@ -18,37 +18,34 @@ class HomeViewModel: NSObject {
     
     var delegate: HomeViewModelDelegate!
     
-    convenience override init() {
-        let user = User()
-        let event = Event(imageUrl: "eventUrl.com")
-        self.init(user: user, event: event)
+    override init() {
+        items = HomeViewModel.defaultOrdering.map { HomeViewModel.generateItem(for: $0) }
     }
     
-    init(user: User, event: Event? = nil, ordering: [HomeViewModelItemType]? = nil) {
-        items = HomeViewModel.generateItems(user: user, event: event, with: ordering ?? HomeViewModel.defaultOrdering)
-        super.init()
-    }
-    
-    static func generateItems(user: User, event: Event?, with orderedTypes: [HomeViewModelItemType]) -> [HomeViewModelItem] {
-        var items = [HomeViewModelItem]()
-        for type in orderedTypes {
-            let item: HomeViewModelItem
-            switch type {
-            case .event:
-                guard let event = event else { continue }
-                item = HomeViewModelEventItem(imageUrl: event.imageUrl)
-            case .dining:
-                let venues = !user.preferredVenues.isEmpty ? user.preferredVenues : DiningVenue.getDefaultVenues()
-                item = HomeViewModelDiningItem(venues: venues)
-            case .laundry:
-                let rooms = !user.preferredLaundryRooms.isEmpty ? user.preferredLaundryRooms : LaundryRoom.getDefaultRooms()
-                item = HomeViewModelLaundryItem(rooms: rooms)
-            case .studyRoomBooking:
-                item = HomeViewModelStudyRoomItem()
-            }
-            items.append(item)
+    init(json: JSON) throws {
+        guard let cellsJSON = json["cells"].array else {
+            throw NetworkingError.jsonError
         }
-        return items
+        let types = cellsJSON.map { HomeViewModelItemType(rawValue: $0["type"].stringValue) }
+            .filter { $0 != nil }
+            .map { $0! }
+        items = types.map { HomeViewModel.generateItem(for: $0) }
+    }
+    
+    static func generateItem(for type: HomeViewModelItemType, info: JSON? = nil) -> HomeViewModelItem {
+        switch type {
+        case .event:
+            let imageUrl = info?["imageUrl"].string ?? ""
+            return HomeViewModelEventItem(imageUrl: imageUrl)
+        case .dining:
+            let venues = DiningVenue.getDefaultVenues()
+            return HomeViewModelDiningItem(venues: venues)
+        case .laundry:
+            let room = LaundryRoom.getDefaultRooms().first!
+            return HomeViewModelLaundryItem(room: room)
+        case .studyRoomBooking:
+            return HomeViewModelStudyRoomItem()
+        }
     }
 }
 
@@ -72,22 +69,31 @@ extension HomeViewModel: UITableViewDataSource {
             identifier = HomeStudyRoomCell.identifier
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! GeneralHomeCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! HomeCellConformable
         cell.item = item
-        cell.delegate = self
-        return cell
+        cell.delegate = self.delegate
+        return cell as! UITableViewCell
     }
 }
 
 // MARK: - UITableViewDelegate
 extension HomeViewModel: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return getHeightforRow(at: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return getHeightforRow(at: indexPath)
+    }
+    
+    private func getHeightforRow(at indexPath: IndexPath) -> CGFloat {
         let item = items[indexPath.row]
         switch item.type {
         case .event:
             return HomeEventCell.cellHeight
         case .dining:
-            return HomeDiningCell.cellHeight
+            let item = item as! HomeViewModelDiningItem
+            return HomeDiningCell.getCellHeight(for: item)
         case .laundry:
             return HomeLaundryCell.cellHeight
         case .studyRoomBooking:
@@ -98,22 +104,25 @@ extension HomeViewModel: UITableViewDelegate {
 
 // MARK: - Update Data
 extension HomeViewModel {
-    func update() {
+    func updatePreferences(_ completion: () -> Void) {
         for item in items {
             switch item.type {
             case .laundry:
-                guard let item = item as? HomeViewModelLaundryItem else { break }
-                item.rooms = LaundryRoom.getDefaultRooms()
+                guard let item = item as? HomeViewModelLaundryItem, let room = LaundryRoom.getDefaultRooms().first else { continue }
+                item.room = room
             default:
                 break
             }
         }
+        completion()
     }
 }
 
-// MARK: - GeneralHomeCellDelegate
-extension HomeViewModel: GeneralHomeCellDelegate {
-    func handleTransition(to page: Page) {
-        delegate.handleTransition(to: page)
+// MARK: - Preload Webview
+extension HomeViewModel {
+    func venueToPreload() -> DiningVenue? {
+        let diningItems = self.items.filter { $0.type == .dining }
+        guard let diningItem = diningItems.first as? HomeViewModelDiningItem else { return nil }
+        return diningItem.venues.first
     }
 }

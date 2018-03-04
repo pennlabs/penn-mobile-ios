@@ -11,9 +11,8 @@ import ScrollableGraphView
 
 // MARK: - Laundry Cell Delegate
 
-protocol LaundryCellDelegate: class {
-    func deleteLaundryCell(for hall: LaundryRoom)
-    func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void)
+protocol LaundryCellDelegate: class, LaundryMachineCellTappable {
+    func deleteLaundryCell(for room: LaundryRoom)
 }
 
 // MARK: - Laundry Cell
@@ -32,11 +31,11 @@ class LaundryCell: UITableViewCell {
         }
     }
     
-    var usageData: LaundryUsageData?
-    internal lazy var graphData = Array(repeating: 0.0, count: self.numberOfDataPointsInGraph)
+    var usageData: Array<Double>!
+    var graphData = Array(repeating: 0.0, count: LaundryCell.numberOfDataPointsInGraph)
     
     // Number of datapoints displayed in the graph
-    internal let numberOfDataPointsInGraph = 27
+    internal static let numberOfDataPointsInGraph = 27
     
     // Space between data points
     internal let dataPointSpacing = 30

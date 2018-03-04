@@ -9,30 +9,22 @@
 import Foundation
 
 // MARK: - HomeViewModelType
-enum HomeViewModelItemType {
+enum HomeViewModelItemType: String {
     case event
     case dining
     case studyRoomBooking
     case laundry
-    
-    var page: Page? {
-        switch self {
-        case .dining: return .dining
-        case .studyRoomBooking: return .studyRoomBooking
-        case .laundry: return .laundry
-        default: return nil
-        }
-    }
 }
 
 // MARK: - HomeViewModelItem
 protocol HomeViewModelItem {
     var type: HomeViewModelItemType { get }
     var title: String { get }
+    func equals(item: HomeViewModelItem) -> Bool
 }
 
 // MARK: - HomeViewModelEventItem
-class HomeViewModelEventItem: HomeViewModelItem {
+final class HomeViewModelEventItem: HomeViewModelItem {
     var type: HomeViewModelItemType {
         return .event
     }
@@ -47,10 +39,15 @@ class HomeViewModelEventItem: HomeViewModelItem {
         self.imageUrl = imageUrl
         
     }
+    
+    func equals(item: HomeViewModelItem) -> Bool {
+        guard let item = item as? HomeViewModelEventItem else { return false }
+        return imageUrl == item.imageUrl
+    }
 }
 
 // MARK: - HomeViewModelEventItem
-class HomeViewModelDiningItem: HomeViewModelItem {
+final class HomeViewModelDiningItem: HomeViewModelItem {
     var type: HomeViewModelItemType {
         return .dining
     }
@@ -64,10 +61,15 @@ class HomeViewModelDiningItem: HomeViewModelItem {
     init(venues: [DiningVenue]) {
         self.venues = venues
     }
+    
+    func equals(item: HomeViewModelItem) -> Bool {
+        guard let item = item as? HomeViewModelDiningItem else { return false }
+        return venues == item.venues
+    }
 }
 
 // MARK: - HomeViewModelStudyRoomItem
-class HomeViewModelStudyRoomItem: HomeViewModelItem {
+final class HomeViewModelStudyRoomItem: HomeViewModelItem {
     var type: HomeViewModelItemType {
         return .studyRoomBooking
     }
@@ -75,10 +77,14 @@ class HomeViewModelStudyRoomItem: HomeViewModelItem {
     var title: String {
         return "Study Room Booking"
     }
+    
+    func equals(item: HomeViewModelItem) -> Bool {
+        return true
+    }
 }
 
 // MARK: - HomeViewModelLaundryItem
-class HomeViewModelLaundryItem: HomeViewModelItem {
+final class HomeViewModelLaundryItem: HomeViewModelItem {
     var type: HomeViewModelItemType {
         return .laundry
     }
@@ -87,10 +93,16 @@ class HomeViewModelLaundryItem: HomeViewModelItem {
         return "Laundry"
     }
     
-    var rooms: [LaundryRoom]
+    var room: LaundryRoom
+    var timer: Timer?       // For decrementing machines
     
-    init(rooms: [LaundryRoom]) {
-        self.rooms = rooms
+    init(room: LaundryRoom) {
+        self.room = room
+    }
+    
+    func equals(item: HomeViewModelItem) -> Bool {
+        guard let item = item as? HomeViewModelLaundryItem else { return false }
+        return room == item.room
     }
 }
 

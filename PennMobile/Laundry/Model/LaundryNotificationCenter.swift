@@ -46,7 +46,7 @@ class LaundryNotificationCenter {
                                                                 repeats: false)
                 
                 // Schedule the notification.
-                let identifier = "\(machine.roomName)-\(isWasher ? "washer" : "dryer")-\(minutes)-\(Date().timeIntervalSince1970)"
+                let identifier = "\(machine.hashValue)-\(Date().timeIntervalSince1970)"
                 let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
                 let center = UNUserNotificationCenter.current()
                 center.add(request, withCompletionHandler: nil)
