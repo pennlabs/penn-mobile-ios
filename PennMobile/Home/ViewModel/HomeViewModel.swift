@@ -71,7 +71,7 @@ extension HomeViewModel: UITableViewDataSource {
         
         var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! HomeCellConformable
         cell.item = item
-        cell.delegate = self
+        cell.delegate = self.delegate
         return cell as! UITableViewCell
     }
 }
@@ -92,7 +92,8 @@ extension HomeViewModel: UITableViewDelegate {
         case .event:
             return HomeEventCell.cellHeight
         case .dining:
-            return HomeDiningCell.cellHeight
+            let item = item as! HomeViewModelDiningItem
+            return HomeDiningCell.getCellHeight(for: item)
         case .laundry:
             return HomeLaundryCell.cellHeight
         case .studyRoomBooking:
@@ -117,14 +118,11 @@ extension HomeViewModel {
     }
 }
 
-// MARK: - GeneralHomeCellDelegate
-extension HomeViewModel: HomeCellDelegate {
-    var allowMachineNotifications: Bool {
-        return delegate.allowMachineNotifications
+// MARK: - Preload Webview
+extension HomeViewModel {
+    func venueToPreload() -> DiningVenue? {
+        let diningItems = self.items.filter { $0.type == .dining }
+        guard let diningItem = diningItems.first as? HomeViewModelDiningItem else { return nil }
+        return diningItem.venues.first
     }
-    
-    func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void) {
-        delegate.handleMachineCellTapped(for: machine, updateCellIfNeeded)
-    }
-    
 }
