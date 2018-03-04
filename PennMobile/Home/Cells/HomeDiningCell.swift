@@ -15,8 +15,8 @@ protocol DiningCellSelectable {
 
 final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     static var identifier: String = "diningCell"
-    static func getCellHeight(for item: HomeViewModelDiningItem) -> CGFloat {
-        return CGFloat(item.venues.count) * DiningCell.cellHeight + 40 + 54
+    static func getCellHeight(for venues: [DiningVenue]) -> CGFloat {
+        return CGFloat(venues.count) * DiningCell.cellHeight + 40 + 54
     }
     
     var delegate: HomeCellDelegate!

@@ -64,7 +64,7 @@ extension HomeViewController {
         tableView.register(HomeEventCell.self, forCellReuseIdentifier: HomeEventCell.identifier)
         tableView.register(HomeDiningCell.self, forCellReuseIdentifier: HomeDiningCell.identifier)
         tableView.register(HomeLaundryCell.self, forCellReuseIdentifier: HomeLaundryCell.identifier)
-        tableView.register(HomeStudyRoomCell.self, forCellReuseIdentifier: HomeStudyRoomCell.identifier)
+        tableView.register(HomeStudyRoomCell.self, forCellReuseIdentifier: HomeStudyRoomCell.identifier)        
     }
     
     func setTableViewModel(_ model: HomeViewModel) {

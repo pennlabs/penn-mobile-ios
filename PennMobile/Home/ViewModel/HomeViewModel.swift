@@ -18,19 +18,9 @@ class HomeViewModel: NSObject {
     
     var delegate: HomeViewModelDelegate!
     
-//    override init() {
-//        items = HomeViewModel.defaultOrdering.map { HomeViewModel.generateItem(for: $0) }
-//    }
-    
-//    init(json: JSON) throws {
-//        guard let cellsJSON = json["cells"].array else {
-//            throw NetworkingError.jsonError
-//        }
-//        let types = cellsJSON.map { HomeViewModelItemType(rawValue: $0["type"].stringValue) }
-//            .filter { $0 != nil }
-//            .map { $0! }
-//        items = types.map { HomeViewModel.generateItem(for: $0) }
-//    }
+    override init() {
+        items = HomeViewModel.defaultOrdering.map { try! HomeViewModel.generateItem(for: $0) }
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -40,19 +30,8 @@ extension HomeViewModel: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let identifier: String
         let item = items[indexPath.row]
-        switch item.type {
-        case .event:
-            identifier = HomeEventCell.identifier
-        case .dining:
-            identifier = HomeDiningCell.identifier
-        case .laundry:
-            identifier = HomeLaundryCell.identifier
-        case .studyRoomBooking:
-            identifier = HomeStudyRoomCell.identifier
-        }
-        
+        let identifier = item.cellIdentifier
         var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! HomeCellConformable
         cell.item = item
         cell.delegate = self.delegate
@@ -63,26 +42,13 @@ extension HomeViewModel: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension HomeViewModel: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return getHeightforRow(at: indexPath)
+        let item = items[indexPath.row]
+        return item.cellHeight
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return getHeightforRow(at: indexPath)
-    }
-    
-    private func getHeightforRow(at indexPath: IndexPath) -> CGFloat {
         let item = items[indexPath.row]
-        switch item.type {
-        case .event:
-            return HomeEventCell.cellHeight
-        case .dining:
-            let item = item as! HomeViewModelDiningItem
-            return HomeDiningCell.getCellHeight(for: item)
-        case .laundry:
-            return HomeLaundryCell.cellHeight
-        case .studyRoomBooking:
-            return HomeStudyRoomCell.cellHeight
-        }
+        return item.cellHeight
     }
 }
 

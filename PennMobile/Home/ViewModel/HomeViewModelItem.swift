@@ -21,6 +21,8 @@ protocol HomeViewModelItem {
     var type: HomeViewModelItemType { get }
     var title: String { get }
     func equals(item: HomeViewModelItem) -> Bool
+    var cellIdentifier: String { get }
+    var cellHeight: CGFloat { get }
 }
 
 // MARK: - HomeViewModelEventItem
@@ -44,6 +46,14 @@ final class HomeViewModelEventItem: HomeViewModelItem {
         guard let item = item as? HomeViewModelEventItem else { return false }
         return imageUrl == item.imageUrl
     }
+    
+    var cellIdentifier: String {
+        return HomeEventCell.identifier
+    }
+    
+    var cellHeight: CGFloat {
+        return HomeEventCell.cellHeight
+    }
 }
 
 // MARK: - HomeViewModelEventItem
@@ -66,6 +76,14 @@ final class HomeViewModelDiningItem: HomeViewModelItem {
         guard let item = item as? HomeViewModelDiningItem else { return false }
         return venues == item.venues
     }
+    
+    var cellIdentifier: String {
+        return HomeDiningCell.identifier
+    }
+    
+    var cellHeight: CGFloat {
+        return HomeDiningCell.getCellHeight(for: venues)
+    }
 }
 
 // MARK: - HomeViewModelStudyRoomItem
@@ -80,6 +98,14 @@ final class HomeViewModelStudyRoomItem: HomeViewModelItem {
     
     func equals(item: HomeViewModelItem) -> Bool {
         return true
+    }
+    
+    var cellIdentifier: String {
+        return HomeStudyRoomCell.identifier
+    }
+    
+    var cellHeight: CGFloat {
+        return HomeStudyRoomCell.cellHeight
     }
 }
 
@@ -103,6 +129,14 @@ final class HomeViewModelLaundryItem: HomeViewModelItem {
     func equals(item: HomeViewModelItem) -> Bool {
         guard let item = item as? HomeViewModelLaundryItem else { return false }
         return room == item.room
+    }
+    
+    var cellIdentifier: String {
+        return HomeLaundryCell.identifier
+    }
+    
+    var cellHeight: CGFloat {
+        return HomeLaundryCell.cellHeight
     }
 }
 
