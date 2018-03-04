@@ -14,7 +14,7 @@ protocol HomeViewModelDelegate: HomeCellDelegate {}
 class HomeViewModel: NSObject {
     var items = [HomeViewModelItem]()
     
-    static var defaultOrdering: [HomeViewModelItemType] = [.event, .dining, .laundry, .studyRoomBooking]
+    static var defaultOrdering: [HomeViewModelItemType] = [.dining, .laundry, .studyRoomBooking]
     
     var delegate: HomeViewModelDelegate!
     

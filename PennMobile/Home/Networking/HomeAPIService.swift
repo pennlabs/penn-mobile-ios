@@ -21,7 +21,7 @@ class HomeAPIService: Requestable {
     func fetchModel(_ completion: @escaping (HomeViewModel?) -> Void) {
         let url = "http://api-dev.pennlabs.org/homepage"
         getRequest(url: url) { (dict) in
-            var model: HomeViewModel? = nil
+            var model: HomeViewModel? = HomeViewModel()
             if let dict = dict {
                 let json = JSON(dict)
                 model = try? HomeViewModel(json: json)
