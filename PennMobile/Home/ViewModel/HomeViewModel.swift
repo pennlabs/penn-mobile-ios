@@ -52,22 +52,6 @@ extension HomeViewModel: UITableViewDelegate {
     }
 }
 
-// MARK: - Update Data
-extension HomeViewModel {
-    func updatePreferences(_ completion: () -> Void) {
-        for item in items {
-            switch item.type {
-            case .laundry:
-                guard let item = item as? HomeViewModelLaundryItem, let room = LaundryRoom.getDefaultRooms().first else { continue }
-                item.room = room
-            default:
-                break
-            }
-        }
-        completion()
-    }
-}
-
 // MARK: - Preload Webview
 extension HomeViewModel {
     func venueToPreload() -> DiningVenue? {

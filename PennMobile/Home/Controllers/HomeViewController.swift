@@ -32,9 +32,7 @@ class HomeViewController: GenericViewController {
                 // TODO: behavior for when model returns
             }
         } else {
-            viewModel.updatePreferences {
-                self.fetchCellSpecificData()
-            }
+            self.fetchCellSpecificData()
         }
     }
 }
