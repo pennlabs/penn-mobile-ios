@@ -18,35 +18,19 @@ class HomeViewModel: NSObject {
     
     var delegate: HomeViewModelDelegate!
     
-    override init() {
-        items = HomeViewModel.defaultOrdering.map { HomeViewModel.generateItem(for: $0) }
-    }
+//    override init() {
+//        items = HomeViewModel.defaultOrdering.map { HomeViewModel.generateItem(for: $0) }
+//    }
     
-    init(json: JSON) throws {
-        guard let cellsJSON = json["cells"].array else {
-            throw NetworkingError.jsonError
-        }
-        let types = cellsJSON.map { HomeViewModelItemType(rawValue: $0["type"].stringValue) }
-            .filter { $0 != nil }
-            .map { $0! }
-        items = types.map { HomeViewModel.generateItem(for: $0) }
-    }
-    
-    static func generateItem(for type: HomeViewModelItemType, info: JSON? = nil) -> HomeViewModelItem {
-        switch type {
-        case .event:
-            let imageUrl = info?["imageUrl"].string ?? ""
-            return HomeViewModelEventItem(imageUrl: imageUrl)
-        case .dining:
-            let venues = DiningVenue.getDefaultVenues()
-            return HomeViewModelDiningItem(venues: venues)
-        case .laundry:
-            let room = LaundryRoom.getDefaultRooms().first!
-            return HomeViewModelLaundryItem(room: room)
-        case .studyRoomBooking:
-            return HomeViewModelStudyRoomItem()
-        }
-    }
+//    init(json: JSON) throws {
+//        guard let cellsJSON = json["cells"].array else {
+//            throw NetworkingError.jsonError
+//        }
+//        let types = cellsJSON.map { HomeViewModelItemType(rawValue: $0["type"].stringValue) }
+//            .filter { $0 != nil }
+//            .map { $0! }
+//        items = types.map { HomeViewModel.generateItem(for: $0) }
+//    }
 }
 
 // MARK: - UITableViewDataSource

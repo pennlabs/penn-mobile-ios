@@ -98,7 +98,7 @@ extension HomeViewController {
                 self.tableView.reloadData()
                 self.fetchCellSpecificData {
                     if let venue = model.venueToPreload() {
-                        DiningDetailModel.preloadWebview(for: venue.venue)
+                        DiningDetailModel.preloadWebview(for: venue.name)
                     }
                 }
                 completion()

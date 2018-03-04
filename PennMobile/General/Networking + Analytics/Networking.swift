@@ -21,6 +21,7 @@ public enum Method {
 
 enum NetworkingError: String, LocalizedError {
     case jsonError = "JSON error"
+    case other
     var localizedDescription: String { return NSLocalizedString(self.rawValue, comment: "") }
 }
 
@@ -91,11 +92,11 @@ extension Requestable {
         
         request.httpMethod = method.description
         if let params = params {
+            let deviceID = getDeviceID()
+            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             request.setValue("super secret password", forHTTPHeaderField: "Authorization")
-            
             request.httpBody = try JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
-            
         }
         
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in

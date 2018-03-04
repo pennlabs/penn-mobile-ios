@@ -9,6 +9,11 @@
 import Foundation
 import SwiftyJSON
 
+func getDeviceID() -> String {
+    let deviceID = UIDevice.current.identifierForVendor!.uuidString
+    return UserDBManager.shared.dryRun ? "test" : deviceID
+}
+
 class UserDBManager: NSObject {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
@@ -55,7 +60,7 @@ class UserDBManager: NSObject {
 extension UserDBManager {
     func saveDiningPreference(for venue: DiningVenue) {
         let urlString = "\(baseUrl)/dining/preferences"
-        let id = venue.venue.getID()
+        let id = venue.name.getID()
         let params = ["venue_id": id]
         let request = getAnalyticsPostRequest(url: urlString, params: params)
         sendRequest(request)

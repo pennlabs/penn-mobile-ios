@@ -14,9 +14,9 @@ class GSRNetworkManager: NSObject, Requestable {
     
     static let instance = GSRNetworkManager()
     
-    let availUrl = "http://api.pennlabs.org/studyspaces/availability"
-    let locationsUrl = "http://api.pennlabs.org/studyspaces/locations"
-    let bookingUrl = "http://api.pennlabs.org/studyspaces/book"
+    let availUrl = "https://api.pennlabs.org/studyspaces/availability"
+    let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
+    let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
     
     var locations:[Int:String] = [:]
     

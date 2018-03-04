@@ -19,7 +19,7 @@ class HomeAPIService: Requestable {
     typealias APICompletion = (_ item: HomeViewModelItem) -> Void
     
     func fetchModel(_ completion: @escaping (HomeViewModel?) -> Void) {
-        let url = "http://api-dev.pennlabs.org/homepage"
+        let url = "https://api.pennlabs.org/homepage"
         getRequest(url: url) { (dict) in
             var model: HomeViewModel? = nil
             if let dict = dict {
@@ -99,3 +99,72 @@ extension HomeViewModelLaundryItem: HomeAPIRequestable {
         }
     }
 }
+
+extension HomeViewModel {
+    convenience init(json: JSON) throws {
+        self.init()
+        
+        guard let cellsJSON = json["cells"].array else {
+            throw NetworkingError.jsonError
+        }
+        
+        self.items = [HomeViewModelItem]()
+        for json in cellsJSON {
+            guard let type = HomeViewModelItemType(rawValue: json["type"].stringValue) else { continue }
+            let infoJSON = json["info"]
+            let item = try HomeViewModel.generateItem(for: type, infoJSON: infoJSON)
+            items.append(item)
+        }
+    }
+    
+    static func generateItem(for type: HomeViewModelItemType, infoJSON: JSON? = nil) throws -> HomeViewModelItem {
+        switch type {
+        case .event:
+            let imageUrl = infoJSON?["imageUrl"].string ?? ""
+            return HomeViewModelEventItem(imageUrl: imageUrl)
+        case .dining:
+            if let json = infoJSON {
+                return try HomeViewModelDiningItem(json: json)
+            } else {
+                let venues = DiningVenue.getDefaultVenues()
+                return HomeViewModelDiningItem(venues: venues)
+            }
+        case .laundry:
+            if let json = infoJSON {
+                return try HomeViewModelLaundryItem(json: json)
+            } else {
+                let room = LaundryRoom.getDefaultRooms().first!
+                return HomeViewModelLaundryItem(room: room)
+            }
+        case .studyRoomBooking:
+            return HomeViewModelStudyRoomItem()
+        }
+    }
+}
+
+extension HomeViewModelDiningItem {
+    convenience init(json: JSON) throws {
+        guard let ids = json["venues"].arrayObject as? [Int] else {
+            throw NetworkingError.jsonError
+        }
+        var venues: [DiningVenue] = try ids.map { try DiningVenue(id: $0) }
+        if venues.isEmpty {
+            venues = DiningVenue.getDefaultVenues()
+        }
+        self.init(venues: venues)
+    }
+}
+
+extension HomeViewModelLaundryItem {
+    convenience init(json: JSON) throws {
+        let id = json["room_id"].intValue
+        let room: LaundryRoom
+        if let laundryRoom = LaundryAPIService.instance.idToRooms?[id] {
+            room = laundryRoom
+        } else {
+            room = LaundryRoom.getPreferences().first!
+        }
+        self.init(room: room)
+    }
+}
+

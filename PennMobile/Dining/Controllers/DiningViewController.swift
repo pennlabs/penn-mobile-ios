@@ -58,7 +58,7 @@ extension DiningViewController: DiningViewModelDelegate {
         ddc.venue = venue
         navigationController?.pushViewController(ddc, animated: true)
         UserDBManager.shared.saveDiningPreference(for: venue)
-        DatabaseManager.shared.trackEvent(vcName: "Dining", event: ddc.venue.name)
+        DatabaseManager.shared.trackEvent(vcName: "Dining", event: ddc.venue.name.rawValue)
     }
 }
 

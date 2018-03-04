@@ -51,6 +51,10 @@ extension DiningHoursData {
             loadHoursForSingleVenue(for: json)
         }
         
+        if !Storage.fileExists(DiningVenue.directory, in: .caches) {
+            let mapping = getIdMapping(jsonArray: jsonArray)
+            Storage.store(mapping, to: .caches, as: DiningVenue.directory)
+        }
         return true
     }
     
@@ -103,6 +107,16 @@ extension DiningHoursData {
         }
         
         self.load(hours: hours, for: venueName)
+    }
+    
+    fileprivate func getIdMapping(jsonArray: [JSON]) -> [Int: String] {
+        var mapping = [Int: String]()
+        for json in jsonArray {
+            let name = json["name"].stringValue
+            let id = json["id"].intValue
+            mapping[id] = name
+        }
+        return mapping
     }
 }
 
