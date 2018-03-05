@@ -266,7 +266,6 @@
 			children = (
 				2180D2332013F652008C94CF /* Networking */,
 				21640D4E2010501C002F33CA /* Model */,
-				21640D4920104B0B002F33CA /* ViewModel */,
 				21640D4620104354002F33CA /* Cells */,
 				21640D4320103E9F002F33CA /* Controllers */,
 			);
@@ -290,14 +289,6 @@
 				217A784C204DDF19004F1227 /* GSR */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		21640D4920104B0B002F33CA /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				217A7837204D2E2B004F1227 /* HomeGSRCellItem.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		21640D4E2010501C002F33CA /* Model */ = {
@@ -523,6 +514,7 @@
 		217A784C204DDF19004F1227 /* GSR */ = {
 			isa = PBXGroup;
 			children = (
+				217A7837204D2E2B004F1227 /* HomeGSRCellItem.swift */,
 				21640D5F20105BB4002F33CA /* HomeStudyRoomCell.swift */,
 			);
 			path = GSR;
