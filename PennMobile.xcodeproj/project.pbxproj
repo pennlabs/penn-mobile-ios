@@ -48,6 +48,9 @@
 		216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640FD1EBBA5A300746B8E /* NewsViewController.swift */; };
 		217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A782F204D2C72004F1227 /* HomeItemTypes.swift */; };
 		217A7832204D2C7E004F1227 /* HomeViewModelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7831204D2C7E004F1227 /* HomeViewModelItem.swift */; };
+		217A7834204D2DF5004F1227 /* HomeViewModelDiningItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7833204D2DF5004F1227 /* HomeViewModelDiningItem.swift */; };
+		217A7836204D2E0D004F1227 /* HomeViewModelLaundryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7835204D2E0D004F1227 /* HomeViewModelLaundryItem.swift */; };
+		217A7838204D2E2B004F1227 /* HomeViewModelStudyRoomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7837204D2E2B004F1227 /* HomeViewModelStudyRoomItem.swift */; };
 		217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD320139A1800F07C3D /* DiningViewModel.swift */; };
 		217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */; };
 		217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */; };
@@ -166,6 +169,9 @@
 		216640FD1EBBA5A300746B8E /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		217A782F204D2C72004F1227 /* HomeItemTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItemTypes.swift; sourceTree = "<group>"; };
 		217A7831204D2C7E004F1227 /* HomeViewModelItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelItem.swift; sourceTree = "<group>"; };
+		217A7833204D2DF5004F1227 /* HomeViewModelDiningItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelDiningItem.swift; sourceTree = "<group>"; };
+		217A7835204D2E0D004F1227 /* HomeViewModelLaundryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelLaundryItem.swift; sourceTree = "<group>"; };
+		217A7837204D2E2B004F1227 /* HomeViewModelStudyRoomItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelStudyRoomItem.swift; sourceTree = "<group>"; };
 		217C6DD320139A1800F07C3D /* DiningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewModel.swift; sourceTree = "<group>"; };
 		217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
 		217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
@@ -284,6 +290,9 @@
 			children = (
 				217A782F204D2C72004F1227 /* HomeItemTypes.swift */,
 				217A7831204D2C7E004F1227 /* HomeViewModelItem.swift */,
+				217A7833204D2DF5004F1227 /* HomeViewModelDiningItem.swift */,
+				217A7835204D2E0D004F1227 /* HomeViewModelLaundryItem.swift */,
+				217A7837204D2E2B004F1227 /* HomeViewModelStudyRoomItem.swift */,
 				21640D532010526B002F33CA /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
@@ -923,6 +932,7 @@
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
+				217A7838204D2E2B004F1227 /* HomeViewModelStudyRoomItem.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				21640D682012A23E002F33CA /* DiningHoursData.swift in Sources */,
@@ -935,6 +945,7 @@
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
+				217A7836204D2E0D004F1227 /* HomeViewModelLaundryItem.swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeViewModel.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
@@ -970,6 +981,7 @@
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
+				217A7834204D2DF5004F1227 /* HomeViewModelDiningItem.swift in Sources */,
 				21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */,
 				21E1C6FD20256DC6003248EC /* DiningDetailModel.swift in Sources */,
 				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
