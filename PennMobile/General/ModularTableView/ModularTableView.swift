@@ -16,5 +16,7 @@ final class ModularTableView: UITableView {
         }
     }
     
-    
+    func registerTableView(for types: ModularTableViewItemTypes) {
+        types.registerCells(for: self)
+    }
 }

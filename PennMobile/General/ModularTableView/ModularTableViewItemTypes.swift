@@ -8,17 +8,17 @@
 
 import Foundation
 
-protocol ModularTableViewItemTypes {
+protocol ModularTableViewItemTypes: class {
     var cellTypes: [ModularTableViewItem.Type] { get set }
     var tableView: UITableView! { get set }
 }
 
 extension ModularTableViewItemTypes {
-    mutating func registerCells(for tableView: UITableView) {
+    func registerCells(for tableView: UITableView) {
         self.tableView = tableView
     }
     
-    mutating func registerItemType(_ itemType: ModularTableViewItem.Type) {
+    func registerItemType(_ itemType: ModularTableViewItem.Type) {
         cellTypes.append(itemType)
         tableView.register(itemType.associatedCell, forCellReuseIdentifier: itemType.associatedCell.identifier)
     }
