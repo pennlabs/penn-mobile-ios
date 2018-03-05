@@ -11,9 +11,9 @@ import UIKit
 
 class HomeViewController: GenericViewController {
     
-    var viewModel: HomeViewModel!
+    var tableViewModel: HomeTableViewModel!
     
-    var tableView: UITableView!
+    var tableView: ModularTableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,7 @@ class HomeViewController: GenericViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if viewModel == nil {
+        if tableViewModel == nil {
             fetchViewModel {
                 // TODO: behavior for when model returns
             }
@@ -40,7 +40,7 @@ class HomeViewController: GenericViewController {
 // MARK: - Prepare TableView
 extension HomeViewController {
     func prepareTableView() {
-        tableView = UITableView()
+        tableView = ModularTableView()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         
@@ -55,21 +55,13 @@ extension HomeViewController {
             tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
         
-        registerTableViewCells()
+        HomeItemTypes.instance.registerCells(for: tableView)
     }
     
-    func registerTableViewCells() {
-        tableView.register(HomeEventCell.self, forCellReuseIdentifier: HomeEventCell.identifier)
-        tableView.register(HomeDiningCell.self, forCellReuseIdentifier: HomeDiningCell.identifier)
-        tableView.register(HomeLaundryCell.self, forCellReuseIdentifier: HomeLaundryCell.identifier)
-        tableView.register(HomeStudyRoomCell.self, forCellReuseIdentifier: HomeStudyRoomCell.identifier)        
-    }
-    
-    func setTableViewModel(_ model: HomeViewModel) {
-        viewModel = model
-        viewModel.delegate = self
-        tableView.dataSource = viewModel
-        tableView.delegate = viewModel
+    func setModel(_ model: HomeTableViewModel) {
+        tableViewModel = model
+        tableViewModel.delegate = self
+        tableView.model = tableViewModel
     }
 }
 
@@ -92,7 +84,7 @@ extension HomeViewController {
         HomeAPIService.instance.fetchModel { (model) in
             guard let model = model else { return }
             DispatchQueue.main.async {
-                self.setTableViewModel(model)
+                self.setModel(model)
                 self.tableView.reloadData()
                 self.fetchCellSpecificData {
                     if let venue = model.venueToPreload() {
@@ -105,9 +97,10 @@ extension HomeViewController {
     }
     
     func fetchCellSpecificData(_ completion: (() -> Void)? = nil) {
-        HomeAPIService.instance.fetchData(for: viewModel.items, singleCompletion: { (item) in
+        guard let items = tableViewModel.items as? [HomeCellItem] else { return }
+        HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
             DispatchQueue.main.async {
-                let row = self.viewModel.items.index(where: { (thisItem) -> Bool in
+                let row = items.index(where: { (thisItem) -> Bool in
                     thisItem.equals(item: item)
                 })!
                 let indexPath = IndexPath(row: row, section: 0)

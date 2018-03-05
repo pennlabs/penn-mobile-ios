@@ -14,18 +14,20 @@ protocol DiningCellSelectable {
 }
 
 final class HomeDiningCell: UITableViewCell, HomeCellConformable {
-    static var identifier: String = "diningCell"
-    static func getCellHeight(for venues: [DiningVenue]) -> CGFloat {
-        return CGFloat(venues.count) * DiningCell.cellHeight + 40 + 54
-    }
-    
-    var delegate: HomeCellDelegate!
-    var item: HomeViewModelItem? {
+    var delegate: ModularTableViewCellDelegate!
+    var item: ModularTableViewItem! {
         didSet {
-            guard let item = item as? HomeViewModelDiningItem else { return }
+            guard let item = item as? HomeDiningCellItem else { return }
             setupCell(with: item)
         }
     }
+    
+    static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
+        guard let item = item as? HomeDiningCellItem else { return 0.0 }
+        return CGFloat(item.venues.count) * DiningCell.cellHeight + 40 + 54
+    }
+    
+    static var identifier: String = "homeDiningCell"
     
     var venues: [DiningVenue]?
     
@@ -48,7 +50,7 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
 
 // MARK: - Setup
 extension HomeDiningCell {
-    fileprivate func setupCell(with item: HomeViewModelDiningItem) {
+    fileprivate func setupCell(with item: HomeDiningCellItem) {
         venues = item.venues
         tableView.reloadData()
     }
@@ -109,7 +111,7 @@ extension HomeDiningCell: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let venue = venues?[indexPath.row] else { return }
+        guard let venue = venues?[indexPath.row], let delegate = delegate as? DiningCellSelectable else { return }
         delegate.handleVenueSelected(venue)
     }
     
