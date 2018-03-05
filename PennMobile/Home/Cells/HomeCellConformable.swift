@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol HomeCellConformable where Self: UITableViewCell {
+protocol HomeCellConformable: class where Self: UITableViewCell {
     static var identifier: String { get set }
     
     var item: HomeViewModelItem? { get set }

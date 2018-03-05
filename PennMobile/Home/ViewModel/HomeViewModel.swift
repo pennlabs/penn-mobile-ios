@@ -13,14 +13,7 @@ protocol HomeViewModelDelegate: HomeCellDelegate {}
 
 class HomeViewModel: NSObject {
     var items = [HomeViewModelItem]()
-    
-    static var defaultOrdering: [HomeViewModelItemType] = [.dining, .laundry, .studyRoomBooking]
-    
     var delegate: HomeViewModelDelegate!
-    
-    override init() {
-        items = HomeViewModel.defaultOrdering.map { try! HomeViewModel.generateItem(for: $0) }
-    }
 }
 
 // MARK: - UITableViewDataSource
@@ -55,7 +48,7 @@ extension HomeViewModel: UITableViewDelegate {
 // MARK: - Preload Webview
 extension HomeViewModel {
     func venueToPreload() -> DiningVenue? {
-        let diningItems = self.items.filter { $0.type == .dining }
+        let diningItems = self.items.filter { $0.cellIdentifier == HomeDiningCell.identifier }
         guard let diningItem = diningItems.first as? HomeViewModelDiningItem else { return nil }
         return diningItem.venues.first
     }

@@ -55,14 +55,7 @@ extension HomeViewController {
             tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
         
-        registerTableViewCells()
-    }
-    
-    func registerTableViewCells() {
-        tableView.register(HomeEventCell.self, forCellReuseIdentifier: HomeEventCell.identifier)
-        tableView.register(HomeDiningCell.self, forCellReuseIdentifier: HomeDiningCell.identifier)
-        tableView.register(HomeLaundryCell.self, forCellReuseIdentifier: HomeLaundryCell.identifier)
-        tableView.register(HomeStudyRoomCell.self, forCellReuseIdentifier: HomeStudyRoomCell.identifier)        
+        HomeItemTypes.instance.registerCells(for: tableView)
     }
     
     func setTableViewModel(_ model: HomeViewModel) {

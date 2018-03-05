@@ -8,62 +8,59 @@
 
 import Foundation
 
-// MARK: - HomeViewModelType
-enum HomeViewModelItemType: String {
-    case event
-    case dining
-    case studyRoomBooking
-    case laundry
+struct HomeItemTypes {
+    static let instance: HomeItemTypes = HomeItemTypes()
+    private init() {}
+    
+    let dining: HomeViewModelItem.Type = HomeViewModelDiningItem.self
+    let laundry: HomeViewModelItem.Type = HomeViewModelLaundryItem.self
+    let studyRoomBooking: HomeViewModelItem.Type = HomeViewModelStudyRoomItem.self
+    
+    func getItemType(for key: String) -> HomeViewModelItem.Type? {
+        let mirror = Mirror(reflecting: self)
+        for (_, itemType) in mirror.children {
+            guard let itemType = itemType as? HomeViewModelItem.Type else { continue }
+            if key == itemType.jsonKey {
+                return itemType
+            }
+        }
+        return nil
+    }
+    
+    func registerCells(for tableView: UITableView) {
+        let mirror = Mirror(reflecting: self)
+        for (_, itemType) in mirror.children {
+            guard let itemType = itemType as? HomeViewModelItem.Type else { continue }
+            tableView.register(itemType.associatedCell, forCellReuseIdentifier: itemType.associatedCell.identifier)
+        }
+    }
 }
 
 // MARK: - HomeViewModelItem
 protocol HomeViewModelItem {
-    var type: HomeViewModelItemType { get }
     var title: String { get }
     func equals(item: HomeViewModelItem) -> Bool
     var cellIdentifier: String { get }
     var cellHeight: CGFloat { get }
+    static var jsonKey: String { get }
+    static func getItem(for json: JSON?) -> HomeViewModelItem?
+    static var associatedCell: HomeCellConformable.Type { get }
 }
 
-// MARK: - HomeViewModelEventItem
-final class HomeViewModelEventItem: HomeViewModelItem {
-    var type: HomeViewModelItemType {
-        return .event
-    }
-    
-    var title: String {
-        return "Event"
-    }
-    
-    var imageUrl: String
-    
-    init(imageUrl: String) {
-        self.imageUrl = imageUrl
-        
-    }
-    
-    func equals(item: HomeViewModelItem) -> Bool {
-        guard let item = item as? HomeViewModelEventItem else { return false }
-        return imageUrl == item.imageUrl
-    }
-    
+extension HomeViewModelItem {
     var cellIdentifier: String {
-        return HomeEventCell.identifier
-    }
-    
-    var cellHeight: CGFloat {
-        return HomeEventCell.cellHeight
+        return Self.associatedCell.identifier
     }
 }
 
 // MARK: - HomeViewModelEventItem
 final class HomeViewModelDiningItem: HomeViewModelItem {
-    var type: HomeViewModelItemType {
-        return .dining
-    }
-    
     var title: String {
         return "Dining"
+    }
+    
+    static var associatedCell: HomeCellConformable.Type {
+        return HomeDiningCell.self
     }
     
     var venues: [DiningVenue]
@@ -77,46 +74,55 @@ final class HomeViewModelDiningItem: HomeViewModelItem {
         return venues == item.venues
     }
     
-    var cellIdentifier: String {
-        return HomeDiningCell.identifier
-    }
-    
     var cellHeight: CGFloat {
         return HomeDiningCell.getCellHeight(for: venues)
+    }
+    
+    static var jsonKey: String {
+        return "dining"
+    }
+    
+    static func getItem(for json: JSON?) -> HomeViewModelItem? {
+        guard let json = json else { return nil }
+        return try? HomeViewModelDiningItem(json: json)
     }
 }
 
 // MARK: - HomeViewModelStudyRoomItem
 final class HomeViewModelStudyRoomItem: HomeViewModelItem {
-    var type: HomeViewModelItemType {
-        return .studyRoomBooking
-    }
-    
     var title: String {
         return "Study Room Booking"
+    }
+    
+    static var associatedCell: HomeCellConformable.Type {
+        return HomeStudyRoomCell.self
     }
     
     func equals(item: HomeViewModelItem) -> Bool {
         return true
     }
     
-    var cellIdentifier: String {
-        return HomeStudyRoomCell.identifier
-    }
-    
     var cellHeight: CGFloat {
         return HomeStudyRoomCell.cellHeight
+    }
+    
+    static var jsonKey: String {
+         return "studyRoomBooking"
+    }
+    
+    static func getItem(for json: JSON?) -> HomeViewModelItem? {
+        return HomeViewModelStudyRoomItem()
     }
 }
 
 // MARK: - HomeViewModelLaundryItem
 final class HomeViewModelLaundryItem: HomeViewModelItem {
-    var type: HomeViewModelItemType {
-        return .laundry
-    }
-    
     var title: String {
         return "Laundry"
+    }
+    
+    static var associatedCell: HomeCellConformable.Type {
+        return HomeLaundryCell.self
     }
     
     var room: LaundryRoom
@@ -131,12 +137,17 @@ final class HomeViewModelLaundryItem: HomeViewModelItem {
         return room == item.room
     }
     
-    var cellIdentifier: String {
-        return HomeLaundryCell.identifier
-    }
-    
     var cellHeight: CGFloat {
         return HomeLaundryCell.cellHeight
+    }
+    
+    static var jsonKey: String {
+        return "laundry"
+    }
+    
+    static func getItem(for json: JSON?) -> HomeViewModelItem? {
+        guard let json = json else { return nil }
+        return try? HomeViewModelLaundryItem(json: json)
     }
 }
 

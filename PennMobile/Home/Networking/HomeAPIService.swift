@@ -68,17 +68,6 @@ class HomeAPIService: Requestable {
     }
 }
 
-extension HomeViewModelItemType {
-    fileprivate static func parseJSON(_ json: JSON) throws -> [HomeViewModelItemType] {
-        guard let cellsJSON = json["cells"].array else {
-            throw NetworkingError.jsonError
-        }
-        return cellsJSON.map { HomeViewModelItemType(rawValue: $0["type"].stringValue) }
-                        .filter { $0 != nil }
-                        .map { $0! }
-    }
-}
-
 extension HomeViewModelDiningItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
         DiningAPI.instance.fetchDiningHours { _ in
@@ -110,34 +99,11 @@ extension HomeViewModel {
         
         self.items = [HomeViewModelItem]()
         for json in cellsJSON {
-            guard let type = HomeViewModelItemType(rawValue: json["type"].stringValue) else { continue }
+            let type = json["type"].stringValue
             let infoJSON = json["info"]
-            let item = try HomeViewModel.generateItem(for: type, infoJSON: infoJSON)
-            items.append(item)
-        }
-    }
-    
-    static func generateItem(for type: HomeViewModelItemType, infoJSON: JSON? = nil) throws -> HomeViewModelItem {
-        switch type {
-        case .event:
-            let imageUrl = infoJSON?["imageUrl"].string ?? ""
-            return HomeViewModelEventItem(imageUrl: imageUrl)
-        case .dining:
-            if let json = infoJSON {
-                return try HomeViewModelDiningItem(json: json)
-            } else {
-                let venues = DiningVenue.getDefaultVenues()
-                return HomeViewModelDiningItem(venues: venues)
+            if let ItemType = HomeItemTypes.instance.getItemType(for: type), let item = ItemType.getItem(for: infoJSON) {
+                items.append(item)
             }
-        case .laundry:
-            if let json = infoJSON {
-                return try HomeViewModelLaundryItem(json: json)
-            } else {
-                let room = LaundryRoom.getDefaultRooms().first!
-                return HomeViewModelLaundryItem(room: room)
-            }
-        case .studyRoomBooking:
-            return HomeViewModelStudyRoomItem()
         }
     }
 }
