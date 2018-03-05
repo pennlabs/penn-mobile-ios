@@ -51,6 +51,11 @@
 		217A7834204D2DF5004F1227 /* HomeViewModelDiningItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7833204D2DF5004F1227 /* HomeViewModelDiningItem.swift */; };
 		217A7836204D2E0D004F1227 /* HomeViewModelLaundryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7835204D2E0D004F1227 /* HomeViewModelLaundryItem.swift */; };
 		217A7838204D2E2B004F1227 /* HomeViewModelStudyRoomItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7837204D2E2B004F1227 /* HomeViewModelStudyRoomItem.swift */; };
+		217A783B204D97AC004F1227 /* ModularTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A783A204D97AC004F1227 /* ModularTableView.swift */; };
+		217A783D204D97B6004F1227 /* ModularTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A783C204D97B6004F1227 /* ModularTableViewModel.swift */; };
+		217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A783E204D97F8004F1227 /* ModularTableViewItem.swift */; };
+		217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7840204D9802004F1227 /* ModularTableViewItemTypes.swift */; };
+		217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7842204D995C004F1227 /* ModularTableViewCell.swift */; };
 		217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD320139A1800F07C3D /* DiningViewModel.swift */; };
 		217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */; };
 		217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */; };
@@ -172,6 +177,11 @@
 		217A7833204D2DF5004F1227 /* HomeViewModelDiningItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelDiningItem.swift; sourceTree = "<group>"; };
 		217A7835204D2E0D004F1227 /* HomeViewModelLaundryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelLaundryItem.swift; sourceTree = "<group>"; };
 		217A7837204D2E2B004F1227 /* HomeViewModelStudyRoomItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelStudyRoomItem.swift; sourceTree = "<group>"; };
+		217A783A204D97AC004F1227 /* ModularTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableView.swift; sourceTree = "<group>"; };
+		217A783C204D97B6004F1227 /* ModularTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewModel.swift; sourceTree = "<group>"; };
+		217A783E204D97F8004F1227 /* ModularTableViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewItem.swift; sourceTree = "<group>"; };
+		217A7840204D9802004F1227 /* ModularTableViewItemTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewItemTypes.swift; sourceTree = "<group>"; };
+		217A7842204D995C004F1227 /* ModularTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewCell.swift; sourceTree = "<group>"; };
 		217C6DD320139A1800F07C3D /* DiningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewModel.swift; sourceTree = "<group>"; };
 		217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
 		217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
@@ -437,6 +447,7 @@
 		216640C71EBADC9D00746B8E /* General */ = {
 			isa = PBXGroup;
 			children = (
+				217A7839204D977E004F1227 /* ModularTableView */,
 				21ECADA21F30146B00569883 /* Networking + Analytics */,
 				216640C01EBADC8000746B8E /* Generics */,
 				216640C91EBADCA400746B8E /* Extensions.swift */,
@@ -483,6 +494,18 @@
 				B6111DB520184C6F00DC7877 /* Layers */,
 			);
 			path = About;
+			sourceTree = "<group>";
+		};
+		217A7839204D977E004F1227 /* ModularTableView */ = {
+			isa = PBXGroup;
+			children = (
+				217A783A204D97AC004F1227 /* ModularTableView.swift */,
+				217A783C204D97B6004F1227 /* ModularTableViewModel.swift */,
+				217A7842204D995C004F1227 /* ModularTableViewCell.swift */,
+				217A783E204D97F8004F1227 /* ModularTableViewItem.swift */,
+				217A7840204D9802004F1227 /* ModularTableViewItemTypes.swift */,
+			);
+			path = ModularTableView;
 			sourceTree = "<group>";
 		};
 		2180D2332013F652008C94CF /* Networking */ = {
@@ -936,7 +959,9 @@
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				21640D682012A23E002F33CA /* DiningHoursData.swift in Sources */,
+				217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */,
 				21640D5C20105B98002F33CA /* HomeDiningCell.swift in Sources */,
+				217A783D204D97B6004F1227 /* ModularTableViewModel.swift in Sources */,
 				21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */,
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
@@ -944,6 +969,7 @@
 				2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
+				217A783B204D97AC004F1227 /* ModularTableView.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
 				217A7836204D2E0D004F1227 /* HomeViewModelLaundryItem.swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
@@ -953,6 +979,7 @@
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
+				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
@@ -985,6 +1012,7 @@
 				21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */,
 				21E1C6FD20256DC6003248EC /* DiningDetailModel.swift in Sources */,
 				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
+				217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */,
 				217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
 				B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */,
