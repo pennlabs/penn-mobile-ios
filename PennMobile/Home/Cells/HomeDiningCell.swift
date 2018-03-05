@@ -18,6 +18,10 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     static func getCellHeight(for venues: [DiningVenue]) -> CGFloat {
         return CGFloat(venues.count) * DiningCell.cellHeight + 40 + 54
     }
+    static func getCellHeight(for item: HomeViewModelItem) -> CGFloat {
+        guard let item = item as? HomeViewModelDiningItem else { return 0.0 }
+        return getCellHeight(for: item.venues)
+    }
     
     var delegate: HomeCellDelegate!
     var item: HomeViewModelItem? {

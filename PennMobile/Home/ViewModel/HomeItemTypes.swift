@@ -1,5 +1,5 @@
 //
-//  HomeViewModelItem.swift
+//  HomeItemTypes.swift
 //  PennMobile
 //
 //  Created by Josh Doman on 3/5/18.

@@ -15,6 +15,8 @@ protocol HomeCellConformable: class where Self: UITableViewCell {
     var delegate: HomeCellDelegate! { get set }
     
     var cardView: UIView! { get }
+    
+    static func getCellHeight(for item: HomeViewModelItem) -> CGFloat
 }
 
 // - MARK: Prepare

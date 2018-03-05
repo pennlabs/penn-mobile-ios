@@ -12,7 +12,10 @@ import UIKit
 final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     static var identifier = "laundryCell"
     static var cellHeight: CGFloat = 420.0
-
+    static func getCellHeight(for item: HomeViewModelItem) -> CGFloat {
+        return cellHeight
+    }
+    
     var delegate: HomeCellDelegate!
     var item: HomeViewModelItem? {
         didSet {

@@ -12,6 +12,9 @@ import UIKit
 final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     static var identifier = "studyRoomCell"
     static var cellHeight: CGFloat = 200.0
+    static func getCellHeight(for item: HomeViewModelItem) -> CGFloat {
+        return cellHeight
+    }
     
     var delegate: HomeCellDelegate!
     var item: HomeViewModelItem? {
