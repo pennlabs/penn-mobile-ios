@@ -8,30 +8,25 @@
 
 import Foundation
 
-struct HomeItemTypes {
-    static let instance: HomeItemTypes = HomeItemTypes()
+final class HomeItemTypes: ModularTableViewItemTypes {
+    static let instance = HomeItemTypes()
     private init() {}
     
-    let dining: HomeViewModelItem.Type = HomeViewModelDiningItem.self
-    let laundry: HomeViewModelItem.Type = HomeViewModelLaundryItem.self
-    let studyRoomBooking: HomeViewModelItem.Type = HomeViewModelStudyRoomItem.self
-    
-    func getItemType(for key: String) -> HomeViewModelItem.Type? {
+    let dining: HomeCellItem.Type = HomeDiningCellItem.self
+    let laundry: HomeCellItem.Type = HomeLaundryCellItem.self
+    let studyRoomBooking: HomeCellItem.Type = HomeGSRCellItem.self
+}
+
+// MARK: - JSON Parsing
+extension HomeItemTypes {
+    func getItemType(for key: String) -> HomeCellItem.Type? {
         let mirror = Mirror(reflecting: self)
         for (_, itemType) in mirror.children {
-            guard let itemType = itemType as? HomeViewModelItem.Type else { continue }
+            guard let itemType = itemType as? HomeCellItem.Type else { continue }
             if key == itemType.jsonKey {
                 return itemType
             }
         }
         return nil
-    }
-    
-    func registerCells(for tableView: UITableView) {
-        let mirror = Mirror(reflecting: self)
-        for (_, itemType) in mirror.children {
-            guard let itemType = itemType as? HomeViewModelItem.Type else { continue }
-            tableView.register(itemType.associatedCell, forCellReuseIdentifier: itemType.associatedCell.identifier)
-        }
     }
 }

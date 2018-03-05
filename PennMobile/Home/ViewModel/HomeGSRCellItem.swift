@@ -1,5 +1,5 @@
 //
-//  HomeViewModelStudyRoomItem.swift
+//  HomeGSRCellItem.swift
 //  PennMobile
 //
 //  Created by Josh Doman on 3/5/18.
@@ -8,16 +8,16 @@
 
 import Foundation
 
-final class HomeViewModelStudyRoomItem: HomeViewModelItem {
+final class HomeGSRCellItem: HomeCellItem {
     var title: String {
         return "Study Room Booking"
     }
     
-    static var associatedCell: HomeCellConformable.Type {
+    static var associatedCell: ModularTableViewCell.Type {
         return HomeStudyRoomCell.self
     }
     
-    func equals(item: HomeViewModelItem) -> Bool {
+    func equals(item: HomeCellItem) -> Bool {
         return true
     }
     
@@ -25,7 +25,7 @@ final class HomeViewModelStudyRoomItem: HomeViewModelItem {
         return "studyRoomBooking"
     }
     
-    static func getItem(for json: JSON?) -> HomeViewModelItem? {
-        return HomeViewModelStudyRoomItem()
+    static func getItem(for json: JSON?) -> HomeCellItem? {
+        return HomeGSRCellItem()
     }
 }

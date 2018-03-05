@@ -10,13 +10,13 @@ import Foundation
 
 protocol ModularTableViewModelDelegate: ModularTableViewCellDelegate {}
 
-protocol ModularTableViewModel: UITableViewDataSource, UITableViewDelegate {
-    var items: [ModularTableViewItem] { get set }
-    var delegate: ModularTableViewCellDelegate! { get set }
+class ModularTableViewModel: NSObject {
+    var items = [ModularTableViewItem]()
+    var delegate: ModularTableViewCellDelegate!
 }
 
 // MARK: - UITableViewDataSource
-extension ModularTableViewModel {
+extension ModularTableViewModel: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
@@ -24,7 +24,7 @@ extension ModularTableViewModel {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = items[indexPath.row]
         let identifier = item.cellIdentifier
-        var cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ModularTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ModularTableViewCell
         cell.item = item
         cell.delegate = self.delegate
         return cell as! UITableViewCell
@@ -32,7 +32,7 @@ extension ModularTableViewModel {
 }
 
 // MARK: - UITableViewDelegate
-extension ModularTableViewModel {
+extension ModularTableViewModel: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let item = items[indexPath.row]
         return item.cellHeight

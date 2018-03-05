@@ -10,17 +10,15 @@ import Foundation
 import UIKit
 
 final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
-    static var identifier = "studyRoomCell"
-    static var cellHeight: CGFloat = 200.0
-    static func getCellHeight(for item: HomeViewModelItem) -> CGFloat {
-        return cellHeight
+    static var identifier: String = "homeGSRCell"
+    static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
+        return 200.0
     }
     
-    var delegate: HomeCellDelegate!
-    var item: HomeViewModelItem? {
+    var delegate: ModularTableViewCellDelegate!
+    var item: ModularTableViewItem! {
         didSet {
-            guard let item = item as? HomeViewModelStudyRoomItem else { return }
-            setupCell(with: item)
+            
         }
     }
     
@@ -38,7 +36,7 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
 
 // MARK: - Setup and Prepare UI Elements
 extension HomeStudyRoomCell {
-    fileprivate func setupCell(with item: HomeViewModelStudyRoomItem) {
-        textLabel?.text = item.title
+    fileprivate func setupCell(with item: HomeStudyRoomCell) {
+//        textLabel?.text = item.title
     }
 }
