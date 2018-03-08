@@ -31,7 +31,7 @@ extension HomeItemTypes {
     }
 }
 
-// MARK: Default Cells for Testing Purposes
+// MARK: Default Cells for Development Purposes
 extension HomeItemTypes {
     /**
      * Purpose: For building a new cell that is not yet on the API
