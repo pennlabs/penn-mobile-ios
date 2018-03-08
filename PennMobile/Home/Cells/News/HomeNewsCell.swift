@@ -25,10 +25,28 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
         }
     }
     
+    // MARK: Cell Height
+    
+    static let titleFont: UIFont = UIFont(name: "HelveticaNeue-Bold", size: 18)!
+    static let titleEdgeOffset: CGFloat = 16
+    
+    private static var titleHeightDictionary = [String: CGFloat]()
+    
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
-        let imageHeight = HomeNewsCell.getImageHeight()
-        return imageHeight + 40 + 150
+        guard let item = item as? HomeNewsCellItem else { return 0 }
+        let imageHeight = getImageHeight()
+        let width: CGFloat = UIScreen.main.bounds.width - 2 * 20 - 2 * titleEdgeOffset
+        let titleHeight: CGFloat
+        if let height = titleHeightDictionary[item.article.title] {
+            titleHeight = height
+        } else {
+            titleHeight = item.article.title.dynamicHeight(font: titleFont, width: width)
+            titleHeightDictionary[item.article.title] = titleHeight
+        }
+        return imageHeight + 2 * 20 + titleHeight + 80
     }
+    
+    // MARK: Properties
     
     fileprivate var article: Article!
     
@@ -58,7 +76,35 @@ extension HomeNewsCell {
         self.newsImageView.image = item.image
         self.titleLabel.text = article.title
         self.sourceLabel.text = article.source
-        self.dateLabel.text = "2 hours ago"
+        self.dateLabel.text = getDateString(for: article.date)
+    }
+    
+    private func getDateString(for date: Date) -> String {
+        let now = Date()
+        guard let days = now.daysFrom(date: date) else { return "" }
+        if days == 0 {
+            let minutes = now.minutesFrom(date: date)
+            if minutes <= 5 {
+                return "Just now"
+            } else if minutes < 60 {
+                return "\(minutes) minutes ago"
+            } else {
+                let hours = minutes / 60
+                return "\(hours) hours ago"
+            }
+        } else if days == 1 {
+            return "1 day ago"
+        } else if days > 1 && days < 7 {
+            return "\(days) days ago"
+        } else if days >= 7 {
+            let weeks = days / 7
+            if weeks == 1 {
+                return "1 week ago"
+            } else {
+                return "\(weeks) weeks ago"
+            }
+        }
+        return ""
     }
 }
 
@@ -91,11 +137,9 @@ extension HomeNewsCell {
     
     private func prepareImageView() {
         newsImageView = UIImageView()
-        newsImageView.layer.cornerRadius = cardView.layer.cornerRadius
         if #available(iOS 11.0, *) {
+            newsImageView.layer.cornerRadius = cardView.layer.cornerRadius
             newsImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        } else {
-            newsImageView.layer.masksToBounds = true
         }
         newsImageView.clipsToBounds = true
         newsImageView.contentMode = .scaleAspectFill
@@ -116,7 +160,7 @@ extension HomeNewsCell {
     
     private func prepareTitleLabel() {
         titleLabel = UILabel()
-        titleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        titleLabel.font = HomeNewsCell.titleFont
         titleLabel.numberOfLines = 3
         
         let tapGestureRecognizer = getTapGestureRecognizer()
@@ -124,7 +168,7 @@ extension HomeNewsCell {
         titleLabel.isUserInteractionEnabled = true
         
         cardView.addSubview(titleLabel)
-        _ = titleLabel.anchor(newsImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 12, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
+        _ = titleLabel.anchor(newsImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 12, leftConstant: HomeNewsCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomeNewsCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)
     }
     
     private func prepareSourceLabel() {

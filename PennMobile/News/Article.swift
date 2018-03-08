@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 //
 //  Article.swift
 //  PennMobile
@@ -17,7 +16,7 @@ import Foundation
 //
 import Foundation
 
-class Article {
+class Article: Decodable {
     let source: String
     let title: String
     let date: Date

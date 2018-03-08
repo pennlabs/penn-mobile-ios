@@ -10,9 +10,9 @@ import Foundation
 
 class WebviewController: GenericViewController {
     static var lastUpdated = Date()
-    static var webviewDictionary = [String: UIWebView]()
+    static var htmlDictionary = [String: String]()
     
-    var webview: UIWebView!
+    var webview: GenericWebview!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,47 +21,48 @@ class WebviewController: GenericViewController {
     }
     
     func load(for urlString: String) {
-        webview = WebviewController.getWebview(for: urlString)
-        if webview == nil {
-            webview = GenericWebview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-            guard let url = URL(string: urlString) else { return }
-            webview.loadRequest(URLRequest(url: url))
-            WebviewController.set(webview: webview, for: urlString)
-        }
-        
+        webview = GenericWebview(frame: .zero)
         view.addSubview(webview)
         webview.anchorToTop(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        
+        if let html = WebviewController.getHTML(for: urlString) {
+            webview.loadHTMLString(html, baseURL: nil)
+        } else {
+            guard let url = URL(string: urlString) else { return }
+            if let html = try? String(contentsOf: url, encoding: .ascii) {
+                DispatchQueue.main.async {
+                    self.webview.loadHTMLString(html, baseURL: nil)
+                    WebviewController.setHTML(html, for: urlString)
+                }
+            }
+        }
     }
 }
 
 // MARK: - Caching
 extension WebviewController {
-    static func getWebview(for url: String) -> UIWebView? {
+    static func getHTML(for url: String) -> String? {
         if !lastUpdated.isToday {
-            webviewDictionary = [String: UIWebView]()
+            htmlDictionary = [String: String]()
             lastUpdated = Date()
             return nil
         }
-        return WebviewController.webviewDictionary[url]
+        return htmlDictionary[url]
     }
     
-    static func set(webview: UIWebView, for url: String) {
-        WebviewController.webviewDictionary[url] = webview
+    static func setHTML(_ html: String, for url: String) {
+        htmlDictionary[url] = html
     }
 }
 
 // MARK: - Webview Preloading
 extension WebviewController {
     static func preloadWebview(for urlString: String) {
-        if getWebview(for: urlString) != nil { return }
+        if getHTML(for: urlString) != nil { return }
         DispatchQueue.global(qos: .background).async {
             guard let url = URL(string: urlString) else { return }
             if let html = try? String(contentsOf: url, encoding: .ascii) {
-                DispatchQueue.main.async {
-                    let webview = UIWebView(frame: .zero)
-                    webview.loadHTMLString(html, baseURL: nil)
-                    WebviewController.set(webview: webview, for: urlString)
-                }
+                WebviewController.setHTML(html, for: urlString)
             }
         }
     }
