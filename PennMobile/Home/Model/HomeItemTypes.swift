@@ -39,7 +39,7 @@ extension HomeItemTypes {
      *          2) Append cell type to types array below
      *          3) Initialize item in its class (ex: HomeNewsCellItem)
      *
-     * Ex:  (1) let news: HomeCellItem.Type = HomeNewsCellItem.self (above)
+     * Ex:  (1) let news: HomeCellItem.Type = HomeNewsCellItem.self (in HomeItemTypes)
      *
      *      (2) var types = [HomeCellItem.Type]()
      *          types.append(news)
@@ -51,9 +51,8 @@ extension HomeItemTypes {
      *
      * Note: This method should return an empty array when the app is in production
     **/
-    func getDefaultCells() -> [HomeCellItem.Type] {
-        var types = [HomeCellItem.Type]()
-        types.append(studyRoomBooking)
+    func getDefaultItems() -> [HomeCellItem.Type] {
+        let types = [HomeCellItem.Type]()
         return types
     }
 }
