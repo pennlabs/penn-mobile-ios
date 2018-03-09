@@ -24,7 +24,7 @@ open class PutItOnMyTabBarController: UITabBarController, CustomTabBarDelegate {
         NSLayoutConstraint.activate([
             customTabBar.leftAnchor.constraint(equalTo: view.leftAnchor),
             customTabBar.rightAnchor.constraint(equalTo: view.rightAnchor),
-            customTabBar.heightAnchor.constraint(equalTo: tabBar.heightAnchor),
+            customTabBar.topAnchor.constraint(equalTo: tabBar.topAnchor),
             customTabBar.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
         
@@ -93,14 +93,17 @@ open class PutItOnMyTabBarController: UITabBarController, CustomTabBarDelegate {
         return []
     }
     
-    open func titleColors() -> (UIColor, UIColor) {
-        return (.white, .white)
-    }
-    
     open func fontForTitles() -> UIFont {
         return UIFont.systemFont(ofSize: 10)
     }
     
+    func highlightedColor() -> UIColor {
+        return .black
+    }
+    
+    func unHighlightedColor() -> UIColor {
+        return .black
+    }
 }
 
 //extension PutItOnMyTabBarController: CustomTabBarDelegate{
