@@ -26,16 +26,14 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         tableView.allowsSelection = false
         
         tableView.tableFooterView = getFooterViewForTable()
-        
-        self.title = "Laundry"
-        
+                
         rooms = LaundryRoom.getPreferences()
         
         registerHeadersAndCells()
         prepareRefreshControl()
         
         // initialize navigation bar
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
+
 
         
         // Start indicator if there are cells that need to be loaded
@@ -46,15 +44,30 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavBar()
         updateInfo {
             self.hideActivity()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tearDownNavbar()
     }
     
     fileprivate func getFooterViewForTable() -> UIView {
         let v = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 30.0))
         v.backgroundColor = UIColor.clear
         return v
+    }
+    
+    fileprivate func setupNavBar() {
+        self.tabBarController?.title = "Laundry"
+        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
+    }
+    
+    fileprivate func tearDownNavbar() {
+        tabBarController?.navigationItem.rightBarButtonItem = nil
     }
 }
 

@@ -93,12 +93,7 @@
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D31203D39FF0029A460 /* DiningVenueName.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
-		21F5F8E32052E4CF005B143F /* NavigationTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8E22052E4CF005B143F /* NavigationTabBarController.swift */; };
-		21F5F8E62052FEDC005B143F /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8E52052FEDC005B143F /* CustomTabBar.swift */; };
-		21F5F8E82052FF10005B143F /* PutItOnMyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8E72052FF10005B143F /* PutItOnMyTabBarController.swift */; };
-		21F5F8EA2052FF27005B143F /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8E92052FF27005B143F /* TabBarItem.swift */; };
-		21F5F8EC2052FF44005B143F /* UIView + Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8EB2052FF44005B143F /* UIView + Extras.swift */; };
-		21F5F8EE20530037005B143F /* NavigationTabBarController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8ED20530037005B143F /* NavigationTabBarController2.swift */; };
+		21F5F8E32052E4CF005B143F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8E22052E4CF005B143F /* TabBarController.swift */; };
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
 		8D08ACB30BC0C29FD56CE14E /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */; };
 		B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */; };
@@ -221,12 +216,7 @@
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21EB4D31203D39FF0029A460 /* DiningVenueName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueName.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
-		21F5F8E22052E4CF005B143F /* NavigationTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTabBarController.swift; sourceTree = "<group>"; };
-		21F5F8E52052FEDC005B143F /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
-		21F5F8E72052FF10005B143F /* PutItOnMyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutItOnMyTabBarController.swift; sourceTree = "<group>"; };
-		21F5F8E92052FF27005B143F /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
-		21F5F8EB2052FF44005B143F /* UIView + Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extras.swift"; sourceTree = "<group>"; };
-		21F5F8ED20530037005B143F /* NavigationTabBarController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTabBarController2.swift; sourceTree = "<group>"; };
+		21F5F8E22052E4CF005B143F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		2B364FB5448C9559DDEB6B7C /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -375,10 +365,8 @@
 			isa = PBXGroup;
 			children = (
 				216640631EBADADA00746B8E /* AppDelegate.swift */,
-				21F5F8E22052E4CF005B143F /* NavigationTabBarController.swift */,
-				21F5F8ED20530037005B143F /* NavigationTabBarController2.swift */,
+				21F5F8E22052E4CF005B143F /* TabBarController.swift */,
 				21640D6120114A28002F33CA /* ControllerModel.swift */,
-				21F5F8E42052FEC4005B143F /* PutItOnMyTabBar */,
 			);
 			path = "Setup + Navigation";
 			sourceTree = "<group>";
@@ -633,17 +621,6 @@
 			path = "Networking + Analytics";
 			sourceTree = "<group>";
 		};
-		21F5F8E42052FEC4005B143F /* PutItOnMyTabBar */ = {
-			isa = PBXGroup;
-			children = (
-				21F5F8E52052FEDC005B143F /* CustomTabBar.swift */,
-				21F5F8E72052FF10005B143F /* PutItOnMyTabBarController.swift */,
-				21F5F8E92052FF27005B143F /* TabBarItem.swift */,
-				21F5F8EB2052FF44005B143F /* UIView + Extras.swift */,
-			);
-			path = PutItOnMyTabBar;
-			sourceTree = "<group>";
-		};
 		54F8BC3E1191968D76D8E893 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -867,6 +844,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
@@ -877,6 +855,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
@@ -999,7 +978,6 @@
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
 				2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
-				21F5F8E62052FEDC005B143F /* CustomTabBar.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
 				217A783B204D97AC004F1227 /* ModularTableView.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
@@ -1013,7 +991,6 @@
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
-				21F5F8E82052FF10005B143F /* PutItOnMyTabBarController.swift in Sources */,
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
 				217A7832204D2C7E004F1227 /* HomeCellItem.swift in Sources */,
@@ -1021,7 +998,6 @@
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
 				21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */,
-				21F5F8EE20530037005B143F /* NavigationTabBarController2.swift in Sources */,
 				217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */,
 				214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
@@ -1034,7 +1010,6 @@
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				217A7845204DB800004F1227 /* HomeAsynchronousFetching.swift in Sources */,
-				21F5F8EC2052FF44005B143F /* UIView + Extras.swift in Sources */,
 				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
@@ -1066,8 +1041,7 @@
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
-				21F5F8E32052E4CF005B143F /* NavigationTabBarController.swift in Sources */,
-				21F5F8EA2052FF27005B143F /* TabBarItem.swift in Sources */,
+				21F5F8E32052E4CF005B143F /* TabBarController.swift in Sources */,
 				B6111DB720184C8C00DC7877 /* BeakerLayer.swift in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,

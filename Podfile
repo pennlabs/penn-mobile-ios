@@ -14,6 +14,7 @@ pod 'ScrollableGraphView'
 pod 'Firebase', '~> 4.7'
 pod 'Firebase/Messaging'
 pod 'SCLAlertView'
+pod 'ESTabBarController-swift'
 
   target 'PennMobileTests' do
     inherit! :search_paths

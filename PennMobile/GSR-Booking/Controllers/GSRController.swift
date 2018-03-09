@@ -36,7 +36,6 @@ class GSRController: GenericViewController, IndicatorEnabled {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Study Room Booking"
         
         prepareViewModel()
         prepareUI()
@@ -44,6 +43,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.title = "Study Rooom Booking"
         updateForNewDayIfNeeded()
         rangeSlider?.reload()
         refreshBarButton()

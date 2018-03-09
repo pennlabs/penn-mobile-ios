@@ -16,7 +16,6 @@ import FirebaseMessaging
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var navigationController: NavigationTabBarController2!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -47,10 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         
-        navigationController = NavigationTabBarController2()
+        let tabBarController = TabBarController()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navigationController
+        window?.rootViewController = UINavigationController(rootViewController: tabBarController)
         window?.makeKeyAndVisible()
         return true
     }

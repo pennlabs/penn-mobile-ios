@@ -1,0 +1,88 @@
+//
+//  NavigationTabBarController.swift
+//  PennMobile
+//
+//  Created by Josh Doman on 2/16/18.
+//  Copyright © 2018 PennLabs. All rights reserved.
+//
+import Foundation
+import UIKit
+import ESTabBarController_swift
+
+final class TabBarController: ESTabBarController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+//        let v1 = HomeViewController()
+//        let v2 = ExampleViewController()
+//        let v3 = ExampleViewController()
+//        let v4 = ExampleViewController()
+//        let v5 = ExampleViewController()
+//
+//        v1.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Home", image: UIImage(named: "home"), selectedImage: UIImage(named: "home_1"))
+//        v2.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Find", image: UIImage(named: "find"), selectedImage: UIImage(named: "find_1"))
+//        v3.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(), title: nil, image: UIImage(named: "photo_verybig"), selectedImage: UIImage(named: "photo_verybig"))
+//        v4.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Favor", image: UIImage(named: "favor"), selectedImage: UIImage(named: "favor_1"))
+//        v5.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Me", image: UIImage(named: "me"), selectedImage: UIImage(named: "me_1"))
+        ControllerModel.shared.viewControllers.forEach { (vc) in
+            if vc is TabBarShowable {
+                vc.tabBarItem = (vc as! TabBarShowable).getTabBarItem()
+            }
+        }
+        self.viewControllers = ControllerModel.shared.viewControllers
+    }
+}
+
+protocol TabBarShowable {
+    func getTabBarItem() -> UITabBarItem
+}
+
+extension HomeViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let image = UIImage(named: "home_icon")
+        return ESTabBarItem(title: "Home", image: image, selectedImage: image)
+    }
+}
+
+extension DiningViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let image = UIImage(named: "home_icon")
+        return ESTabBarItem(title: "Dining", image: image, selectedImage: image)
+    }
+}
+
+extension GSRController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let image = UIImage(named: "home_icon")
+        return ESTabBarItem(title: "GSR", image: image, selectedImage: image)
+    }
+}
+
+extension LaundryTableViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let image = UIImage(named: "home_icon")
+        return ESTabBarItem(title: "Laundry", image: image, selectedImage: image)
+    }
+}
+
+extension ContactsTableViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let image = UIImage(named: "home_icon")
+        return ESTabBarItem(title: "Contacts", image: image, selectedImage: image)
+    }
+}
+
+extension NewsViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let image = UIImage(named: "home_icon")
+        return ESTabBarItem(title: "News", image: image, selectedImage: image)
+    }
+}
+
+extension AboutViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let image = UIImage(named: "home_icon")
+        return ESTabBarItem(title: "About", image: image, selectedImage: image)
+    }
+}
