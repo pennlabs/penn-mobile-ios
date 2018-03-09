@@ -16,8 +16,6 @@ class DiningDetailViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        removeMenuButton()
-        
         webview = DiningDetailModel.getWebview(for: venue.name)
         if webview == nil {
             webview = GenericWebview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
@@ -35,7 +33,6 @@ class DiningDetailViewController: GenericViewController {
         
         self.screenName = venue.name.rawValue
         self.title = venue.name.rawValue
-        self.isPanEnabled = false
         self.trackScreen = true
     }
 }

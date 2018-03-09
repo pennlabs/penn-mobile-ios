@@ -47,13 +47,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
         updateForNewDayIfNeeded()
         rangeSlider?.reload()
         refreshBarButton()
-        revealViewController().panGestureRecognizer().delegate = self
         fetchData()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        revealViewController().panGestureRecognizer().delegate = nil
     }
 }
 

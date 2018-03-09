@@ -32,8 +32,6 @@
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
 		216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640781EBADADA00746B8E /* PennMobileTests.swift */; };
-		216640871EBADB8300746B8E /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640861EBADB8300746B8E /* SWRevealViewController.m */; };
-		2166408A1EBADBB700746B8E /* MasterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640891EBADBB700746B8E /* MasterTableViewController.swift */; };
 		216640941EBADC1700746B8E /* DiningControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640901EBADC1700746B8E /* DiningControllerCell.swift */; };
 		216640951EBADC1700746B8E /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640911EBADC1700746B8E /* DiningViewController.swift */; };
 		216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640921EBADC1700746B8E /* DiningDetailViewController.swift */; };
@@ -155,9 +153,6 @@
 		216640781EBADADA00746B8E /* PennMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobileTests.swift; sourceTree = "<group>"; };
 		2166407A1EBADADA00746B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
-		216640851EBADB8300746B8E /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		216640861EBADB8300746B8E /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		216640891EBADBB700746B8E /* MasterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterTableViewController.swift; sourceTree = "<group>"; };
 		216640901EBADC1700746B8E /* DiningControllerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningControllerCell.swift; sourceTree = "<group>"; };
 		216640911EBADC1700746B8E /* DiningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewController.swift; sourceTree = "<group>"; };
 		216640921EBADC1700746B8E /* DiningDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningDetailViewController.swift; sourceTree = "<group>"; };
@@ -361,8 +356,6 @@
 				2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */,
 				216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */,
 				216640F81EBB88FB00746B8E /* PrefixHeader.pch */,
-				216640851EBADB8300746B8E /* SWRevealViewController.h */,
-				216640861EBADB8300746B8E /* SWRevealViewController.m */,
 				2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */,
 			);
 			path = Supporting_Files;
@@ -373,7 +366,6 @@
 			children = (
 				216640631EBADADA00746B8E /* AppDelegate.swift */,
 				21F5F8E22052E4CF005B143F /* NavigationTabBarController.swift */,
-				216640891EBADBB700746B8E /* MasterTableViewController.swift */,
 				21640D6120114A28002F33CA /* ControllerModel.swift */,
 			);
 			path = "Setup + Navigation";
@@ -1014,7 +1006,6 @@
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
-				2166408A1EBADBB700746B8E /* MasterTableViewController.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				217A7845204DB800004F1227 /* HomeAsynchronousFetching.swift in Sources */,
 				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
@@ -1048,7 +1039,6 @@
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
-				216640871EBADB8300746B8E /* SWRevealViewController.m in Sources */,
 				21F5F8E32052E4CF005B143F /* NavigationTabBarController.swift in Sources */,
 				B6111DB720184C8C00DC7877 /* BeakerLayer.swift in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
