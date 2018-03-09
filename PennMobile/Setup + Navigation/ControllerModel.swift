@@ -5,7 +5,6 @@
 //  Created by Josh Doman on 1/18/18.
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
-
 import Foundation
 import UIKit
 
@@ -46,6 +45,7 @@ class ControllerModel: NSObject {
     }
     
     let orderedPages: [Page] = [.home, .dining, .studyRoomBooking, .laundry, .news, .contacts, .about]
+    let tabBarOrder: [Page] = [.home, .dining, .laundry, .studyRoomBooking, .news, .about]
     
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }
@@ -53,6 +53,10 @@ class ControllerModel: NSObject {
     
     func viewController(for controller: Page) -> UIViewController {
         return vcDictionary[controller]!
+    }
+    
+    func viewControllers(for pages: [Page]) -> [UIViewController] {
+        return pages.map { viewController(for: $0) }
     }
     
     var firstVC: UIViewController {
@@ -84,8 +88,5 @@ class ControllerModel: NSObject {
 // MARK: - Transitions
 extension ControllerModel {
     func transition(to page: Page, withAnimation: Bool) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let masterVC = appDelegate.masterTableViewController
-        masterVC.transition(to: page)
     }
 }
