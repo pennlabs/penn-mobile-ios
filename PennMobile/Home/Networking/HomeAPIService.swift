@@ -34,6 +34,16 @@ extension HomeTableViewModel {
         }
         
         self.items = [HomeCellItem]()
+        
+        // Initialize default items for development
+        // Note: this should be empty in production
+        for ItemType in HomeItemTypes.instance.getDefaultItems() {
+            if let item = ItemType.getItem(for: nil) {
+                items.append(item)
+            }
+        }
+        
+        // Initialize items from JSON
         for json in cellsJSON {
             let type = json["type"].stringValue
             let infoJSON = json["info"]
