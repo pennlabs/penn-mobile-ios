@@ -31,6 +31,25 @@ final class TabBarController: ESTabBarController {
             }
         }
         self.viewControllers = ControllerModel.shared.viewControllers
+        self.delegate = self
+    }
+}
+
+// MARK: - Transition Animation
+extension TabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        guard let tabBarController = tabBarController as? ESTabBarController, let selectedViewController = tabBarController.selectedViewController else { return false }
+        
+        if tabBarController.selectedViewController == nil || tabBarController.selectedViewController == viewController {
+            return false
+        }
+        
+        let fromView = selectedViewController.view
+        let toView = viewController.view
+        
+        UIView.transition(from: fromView!, to: toView!, duration: 0.3, options: [.transitionCrossDissolve], completion: nil)
+        
+        return true
     }
 }
 
