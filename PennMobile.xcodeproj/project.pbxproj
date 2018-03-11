@@ -15,6 +15,8 @@
 		211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AE204921030065BC2C /* LaundryMachinesView.swift */; };
 		211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DFE531F36A02C00CB73E4 /* DiningAPI.swift */; };
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
+		212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212304C62054EDB900958CE0 /* FlingViewController.swift */; };
+		212304C92054EDED00958CE0 /* FlingTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212304C82054EDED00958CE0 /* FlingTableViewModel.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
 		214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F768E1F07391000B8841C /* DatabaseManager.swift */; };
 		21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D3D200ED954002F33CA /* LaundryMachine.swift */; };
@@ -135,6 +137,8 @@
 		211DA1AE204921030065BC2C /* LaundryMachinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachinesView.swift; sourceTree = "<group>"; };
 		211DFE531F36A02C00CB73E4 /* DiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPI.swift; sourceTree = "<group>"; };
 		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
+		212304C62054EDB900958CE0 /* FlingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingViewController.swift; sourceTree = "<group>"; };
+		212304C82054EDED00958CE0 /* FlingTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingTableViewModel.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		214F768E1F07391000B8841C /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		21640D3D200ED954002F33CA /* LaundryMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachine.swift; sourceTree = "<group>"; };
@@ -267,6 +271,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		212304C52054ED9900958CE0 /* Spring Fling */ = {
+			isa = PBXGroup;
+			children = (
+				212304C62054EDB900958CE0 /* FlingViewController.swift */,
+				212304C82054EDED00958CE0 /* FlingTableViewModel.swift */,
+			);
+			path = "Spring Fling";
+			sourceTree = "<group>";
+		};
 		21640D4220103C8A002F33CA /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,6 +354,7 @@
 				2166408B1EBADBF800746B8E /* Dining */,
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
+				212304C52054ED9900958CE0 /* Spring Fling */,
 				216640EE1EBB867600746B8E /* Contacts */,
 				216640D31EBB80FD00746B8E /* News */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
@@ -982,6 +996,7 @@
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
+				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
@@ -1020,6 +1035,7 @@
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
 				21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */,
+				212304C92054EDED00958CE0 /* FlingTableViewModel.swift in Sources */,
 				217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */,
 				214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
