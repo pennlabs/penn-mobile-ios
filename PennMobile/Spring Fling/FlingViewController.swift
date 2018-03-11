@@ -8,6 +8,8 @@
 
 import Foundation
 
+final class FlingTableViewModel: ModularTableViewModel {}
+
 final class FlingViewController: GenericViewController {
     
     var tableView: ModularTableView!
