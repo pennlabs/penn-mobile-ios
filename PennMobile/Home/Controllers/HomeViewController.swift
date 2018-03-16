@@ -76,6 +76,12 @@ extension HomeViewController: HomeViewModelDelegate {
         ddc.venue = venue
         navigationController?.pushViewController(ddc, animated: true)
     }
+    
+    func handleArticleTapped(_ article: Article) {
+        let webviewController = WebviewController()
+        webviewController.load(for: article.articleUrl)
+        navigationController?.pushViewController(webviewController, animated: true)
+    }
 }
 
 // MARK: - Networking

@@ -49,7 +49,7 @@ import UIKit
     }
     
     private func pan(enabled: Bool) {
-        revealViewController().panGestureRecognizer().isEnabled = enabled
+        revealViewController()?.panGestureRecognizer()?.isEnabled = enabled
     }
 }
 
@@ -96,7 +96,7 @@ class GenericViewController: UIViewController, Trackable {
     }
     
     private func pan(enabled: Bool) {
-        revealViewController().panGestureRecognizer().isEnabled = enabled
+        revealViewController()?.panGestureRecognizer()?.isEnabled = enabled
     }
     
     func removeMenuButton() {

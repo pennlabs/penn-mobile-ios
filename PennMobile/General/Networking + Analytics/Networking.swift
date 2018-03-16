@@ -21,6 +21,7 @@ public enum Method {
 
 enum NetworkingError: String, LocalizedError {
     case jsonError = "JSON error"
+    case invalidDate
     case other
     var localizedDescription: String { return NSLocalizedString(self.rawValue, comment: "") }
 }
