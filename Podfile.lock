@@ -52,6 +52,7 @@ PODS:
   - Protobuf (3.5.0)
   - SCLAlertView (0.7.0)
   - ScrollableGraphView (4.0.4)
+  - SimpleImageViewer (1.1.1)
   - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
@@ -61,6 +62,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.8)
   - SCLAlertView
   - ScrollableGraphView
+  - SimpleImageViewer (~> 1.1.1)
   - SwiftyJSON
 
 SPEC CHECKSUMS:
@@ -81,8 +83,9 @@ SPEC CHECKSUMS:
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
   ScrollableGraphView: 072ea302f4ca27779692656a49d51fe537b2b1e7
+  SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 332b53ba59ec2871cfd4794101a470298609cf8b
+PODFILE CHECKSUM: 955ccb9dd02fc31d210bdabe42493105711c5717
 
 COCOAPODS: 1.4.0

@@ -14,6 +14,7 @@ pod 'ScrollableGraphView'
 pod 'Firebase', '~> 4.7'
 pod 'Firebase/Messaging'
 pod 'SCLAlertView'
+pod 'SimpleImageViewer', '~> 1.1.1'
 
   target 'PennMobileTests' do
     inherit! :search_paths

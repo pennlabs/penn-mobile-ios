@@ -20,6 +20,7 @@
 		211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AE204921030065BC2C /* LaundryMachinesView.swift */; };
 		211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DFE531F36A02C00CB73E4 /* DiningAPI.swift */; };
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
+		212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212304C62054EDB900958CE0 /* FlingViewController.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
 		214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F768E1F07391000B8841C /* DatabaseManager.swift */; };
 		21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D3D200ED954002F33CA /* LaundryMachine.swift */; };
@@ -100,6 +101,9 @@
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D31203D39FF0029A460 /* DiningVenueName.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
+		21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F020538A87005B143F /* HomeFlingCellItem.swift */; };
+		21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F220538A90005B143F /* HomeFlingCell.swift */; };
+		21F5F8F520538AFC005B143F /* FlingPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F420538AFC005B143F /* FlingPerformer.swift */; };
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
 		8D08ACB30BC0C29FD56CE14E /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */; };
 		B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */; };
@@ -142,6 +146,7 @@
 		211DA1AE204921030065BC2C /* LaundryMachinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachinesView.swift; sourceTree = "<group>"; };
 		211DFE531F36A02C00CB73E4 /* DiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPI.swift; sourceTree = "<group>"; };
 		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
+		212304C62054EDB900958CE0 /* FlingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingViewController.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		214F768E1F07391000B8841C /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		21640D3D200ED954002F33CA /* LaundryMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachine.swift; sourceTree = "<group>"; };
@@ -230,6 +235,9 @@
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21EB4D31203D39FF0029A460 /* DiningVenueName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueName.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
+		21F5F8F020538A87005B143F /* HomeFlingCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCellItem.swift; sourceTree = "<group>"; };
+		21F5F8F220538A90005B143F /* HomeFlingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCell.swift; sourceTree = "<group>"; };
+		21F5F8F420538AFC005B143F /* FlingPerformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingPerformer.swift; sourceTree = "<group>"; };
 		2B364FB5448C9559DDEB6B7C /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -278,6 +286,14 @@
 				211B1D742050D0A200B0F470 /* HomeNewsCell.swift */,
 			);
 			path = News;
+    };
+		212304C52054ED9900958CE0 /* Spring Fling */ = {
+			isa = PBXGroup;
+			children = (
+				212304C62054EDB900958CE0 /* FlingViewController.swift */,
+				21F5F8F420538AFC005B143F /* FlingPerformer.swift */,
+			);
+			path = "Spring Fling";
 			sourceTree = "<group>";
 		};
 		21640D4220103C8A002F33CA /* Home */ = {
@@ -304,6 +320,7 @@
 			children = (
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
 				211B1D712050D01B00B0F470 /* News */,
+				21F5F8EF20538A54005B143F /* Spring Fling */,
 				217A784A204DDF05004F1227 /* Dining */,
 				217A784B204DDF0C004F1227 /* Laundry */,
 				217A784C204DDF19004F1227 /* GSR */,
@@ -354,6 +371,7 @@
 				2166408B1EBADBF800746B8E /* Dining */,
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
+				212304C52054ED9900958CE0 /* Spring Fling */,
 				216640EE1EBB867600746B8E /* Contacts */,
 				216640D31EBB80FD00746B8E /* News */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
@@ -649,6 +667,15 @@
 			path = "Networking + Analytics";
 			sourceTree = "<group>";
 		};
+		21F5F8EF20538A54005B143F /* Spring Fling */ = {
+			isa = PBXGroup;
+			children = (
+				21F5F8F020538A87005B143F /* HomeFlingCellItem.swift */,
+				21F5F8F220538A90005B143F /* HomeFlingCell.swift */,
+			);
+			path = "Spring Fling";
+			sourceTree = "<group>";
+		};
 		54F8BC3E1191968D76D8E893 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -877,6 +904,7 @@
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/ScrollableGraphView/ScrollableGraphView.framework",
+				"${BUILT_PRODUCTS_DIR}/SimpleImageViewer/SimpleImageViewer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -887,6 +915,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScrollableGraphView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimpleImageViewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -988,6 +1017,7 @@
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
+				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
@@ -1021,6 +1051,8 @@
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
+				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
+				21F5F8F520538AFC005B143F /* FlingPerformer.swift in Sources */,
 				217A7832204D2C7E004F1227 /* HomeCellItem.swift in Sources */,
 				2189C08D2027CE2600771C1F /* RoomCell.swift in Sources */,
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
@@ -1078,6 +1110,7 @@
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,
+				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
 				216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */,
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
