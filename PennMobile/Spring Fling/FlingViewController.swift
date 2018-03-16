@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SimpleImageViewer
 
 final class FlingTableViewModel: ModularTableViewModel {}
 
@@ -14,11 +15,46 @@ final class FlingViewController: GenericViewController {
     
     var tableView: ModularTableView!
     
+    // For Map Zoom
+    fileprivate var mapImageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Spring Fling"
         prepareTableView()
+        prepareMapImageView()
+        prepareMapBarButton()
         setPerformers()
+    }
+}
+
+// MARK: - Map Image
+extension FlingViewController {
+    fileprivate func prepareMapBarButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Map", style: .done, target: self, action: #selector(handleMapButtonPressed(_:)))
+    }
+    
+    fileprivate func prepareMapImageView() {
+        let image = UIImage(named: "Fling_Map")
+        mapImageView = UIImageView(image: image)
+        mapImageView.contentMode = .scaleAspectFill
+        mapImageView.isHidden = true
+        
+        let widthToHeightRatio = CGFloat(1062/632)
+        let width: CGFloat = 4
+        let height = widthToHeightRatio * width
+        
+        view.addSubview(mapImageView)
+        _ = mapImageView.anchor(tableView.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: -height, leftConstant: 0, bottomConstant: 0, rightConstant: 30, widthConstant: width, heightConstant: height)
+    }
+    
+    @objc fileprivate func handleMapButtonPressed(_ sender: Any?) {
+        let configuration = ImageViewerConfiguration { config in
+            config.imageView = mapImageView
+        }
+        
+        let imageViewerController = ImageViewerController(configuration: configuration)
+        present(imageViewerController, animated: true)
     }
 }
 
