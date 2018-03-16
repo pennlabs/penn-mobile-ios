@@ -212,6 +212,11 @@ extension Date {
     static var midnightToday: Date {
         return midnightYesterday.tomorrow
     }
+    
+    func daysFrom(date: Date) -> Int? {
+        let components = Calendar.current.dateComponents([.day], from: date, to: self)
+        return components.day
+    }
 }
 
 extension LazyMapCollection  {
@@ -266,6 +271,15 @@ public extension MutableCollection where Index == Int {
 extension Optional {
     func nullUnwrap() -> Any {
         return self == nil ? "null" : self!
+    }
+}
+
+extension String {
+    // https://stackoverflow.com/questions/34262863/how-to-calculate-height-of-a-string
+    func dynamicHeight(font: UIFont, width: CGFloat) -> CGFloat{
+        let calString = NSString(string: self)
+        let textSize = calString.boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSFontAttributeName: font], context: nil)
+        return textSize.height
     }
 }
 

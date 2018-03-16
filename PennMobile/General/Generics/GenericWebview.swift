@@ -44,4 +44,11 @@ extension GenericWebview: UIWebViewDelegate {
             load = false
         }
     }
+    
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+//        if navigationType == .linkClicked {
+//            return false
+//        }
+        return true
+    }
 }
