@@ -273,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				212304C62054EDB900958CE0 /* FlingViewController.swift */,
+				21F5F8F420538AFC005B143F /* FlingPerformer.swift */,
 			);
 			path = "Spring Fling";
 			sourceTree = "<group>";
@@ -648,7 +649,6 @@
 			isa = PBXGroup;
 			children = (
 				21F5F8F020538A87005B143F /* HomeFlingCellItem.swift */,
-				21F5F8F420538AFC005B143F /* FlingPerformer.swift */,
 				21F5F8F220538A90005B143F /* HomeFlingCell.swift */,
 			);
 			path = "Spring Fling";
