@@ -15,13 +15,33 @@ final class FlingNetworkManager: Requestable {
     
     fileprivate let flingUrl = "https://api.pennlabs.org/events/fling"
     
-    func fetchPerformers(_ completion: @escaping (_ performers: [FlingPerformer]?) -> Void) {
+    func fetchModel(_ completion: @escaping (_ model: FlingTableViewModel?) -> Void) {
         getRequest(url: flingUrl) { (dict) in
-            var performers: [FlingPerformer]? = nil
+            var model: FlingTableViewModel? = FlingTableViewModel()
             if let dict = dict {
-                
+                let json = JSON(dict)
+                model = try? FlingTableViewModel(json: json)
             }
-            completion(performers)
+            completion(model)
+        }
+    }
+}
+
+extension FlingTableViewModel {
+    convenience init(json: JSON) throws {
+        self.init()
+        
+        guard let eventsJSON = json["events"].array else {
+            throw NetworkingError.jsonError
+        }
+        
+        self.items = [HomeCellItem]()
+        
+        // Initialize Fling Cells from JSON
+        for json in eventsJSON {
+            if let item = HomeFlingCellItem.getItem(for: json) {
+                items.append(item)
+            }
         }
     }
 }

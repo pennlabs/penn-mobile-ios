@@ -77,7 +77,7 @@ final class HomeFlingCell: UITableViewCell, HomeCellConformable {
 extension HomeFlingCell {
     fileprivate func setupCell(with item: HomeFlingCellItem) {
         let performer = item.performer
-        self.performerImageView.image = item.performer.image
+        self.performerImageView.image = item.image
         self.performerLabel.text = performer.name
         self.descriptionLabel.text = performer.description
         self.dateLabel.text = "Today at 7:20pm"

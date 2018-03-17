@@ -7,17 +7,18 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class FlingPerformer {
     let name: String
-    let image: UIImage
+    let imageUrl: String
     let description: String
     let startTime: Date
     let endTime: Date
     
-    init(name: String, image: UIImage, description: String, startTime: Date, endTime: Date) {
+    init(name: String, imageUrl: String, description: String, startTime: Date, endTime: Date) {
         self.name = name
-        self.image = image
+        self.imageUrl = imageUrl
         self.description = description
         self.startTime = startTime
         self.endTime = endTime
@@ -25,7 +26,7 @@ final class FlingPerformer {
     
     static func getDefaultPerformer() -> FlingPerformer {
         let name = "The Dining Philosopher's"
-        let image = UIImage(named: "band_example")!
+        let imageUrl = "https://s3.amazonaws.com/event.editor/events/images/000/000/004/original/band_example.jpg?1521240775"
         let description = "A group of fun loving Jazz musicians from Penn Labs - Josh Doman, Dominic Holmes, Tiffany Chang, and more."
         let startTimeStr = "2018-04-01T17:00:00-05:00"
         let endTimeStr = "2018-04-01T17:20:00-05:00"
@@ -39,6 +40,6 @@ final class FlingPerformer {
         let startTime = formatter.date(from: startTimeStr)!
         let endTime = formatter.date(from: endTimeStr)!
         
-        return FlingPerformer(name: name, image: image, description: description, startTime: startTime, endTime: endTime)
+        return FlingPerformer(name: name, imageUrl: imageUrl, description: description, startTime: startTime, endTime: endTime)
     }
 }

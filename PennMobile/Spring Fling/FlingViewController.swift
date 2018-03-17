@@ -14,6 +14,7 @@ final class FlingTableViewModel: ModularTableViewModel {}
 final class FlingViewController: GenericViewController {
     
     var tableView: ModularTableView!
+    var model: FlingTableViewModel!
     
     // For Map Zoom
     fileprivate var mapImageView: UIImageView!
@@ -24,8 +25,61 @@ final class FlingViewController: GenericViewController {
         prepareTableView()
         prepareMapImageView()
         prepareMapBarButton()
-        setPerformers()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchViewModel {
+            // TODO: do something when fetch has completed
+            print("Done!")
+        }
+    }
+}
+
+// MARK: - Networking
+extension FlingViewController {
+    func fetchViewModel(_ completion: @escaping () -> Void) {
+        FlingNetworkManager.instance.fetchModel { (model) in
+            guard let model = model else { return }
+            DispatchQueue.main.async {
+                self.setTableViewModel(model)
+                self.tableView.reloadData()
+                self.fetchCellSpecificData {
+                    // TODO: do something when done fetching cell specific data
+                }
+                completion()
+            }
+        }
+    }
+    
+    func fetchCellSpecificData(_ completion: (() -> Void)? = nil) {
+        guard let items = model.items as? [HomeCellItem] else { return }
+        HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
+            DispatchQueue.main.async {
+                let row = items.index(where: { (thisItem) -> Bool in
+                    thisItem.equals(item: item)
+                })!
+                let indexPath = IndexPath(row: row, section: 0)
+                self.tableView.reloadRows(at: [indexPath], with: .none)
+            }
+        }) {
+            DispatchQueue.main.async {
+                completion?()
+            }
+        }
+    }
+    
+    
+    func setTableViewModel(_ model: FlingTableViewModel) {
+        self.model = model
+        self.model.delegate = self
+        tableView.model = self.model
+    }
+}
+
+// MARK: - ModularTableViewDelegate
+extension FlingViewController: ModularTableViewModelDelegate {
+    
 }
 
 // MARK: - Map Image
