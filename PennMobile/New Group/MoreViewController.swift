@@ -16,10 +16,15 @@ class MoreViewController: GenericTableViewController {
         setUpTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.topItem?.title = "More"
+    }
+    
     func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)
+        tableView.separatorStyle = .none
         tableView.register(AccountCell.self, forCellReuseIdentifier: "account")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
     }
@@ -35,7 +40,7 @@ extension MoreViewController {
         if (section == 0) {
             return 1
         } else {
-            return 3
+            return ControllerModel.shared.moreOrder.count
         }
     }
     
@@ -59,6 +64,11 @@ extension MoreViewController {
         } else if (indexPath.section == 1) {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                 cell.backgroundColor = .white
+                cell.setUpView(page: ControllerModel.shared.moreOrder[indexPath.row])
+                let separatorHeight = CGFloat(2)
+                let customSeparator = UIView(frame: CGRect(x: 0, y: cell.frame.size.height + 3 + separatorHeight, width: UIScreen.main.bounds.width, height: separatorHeight))
+                customSeparator.backgroundColor = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)
+                cell.addSubview(customSeparator)
                 return cell
             }
         }
@@ -69,7 +79,14 @@ extension MoreViewController {
         if (indexPath.section == 0) {
             return 80
         } else {
-            return 60;
+            return 50;
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath.section == 1) {
+            let targetController = ControllerModel.shared.viewController(for: ControllerModel.shared.moreOrder[indexPath.row])
+            navigationController?.pushViewController(targetController, animated: true)
         }
     }
 }
