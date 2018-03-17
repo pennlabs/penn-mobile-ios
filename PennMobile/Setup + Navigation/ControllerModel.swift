@@ -17,6 +17,7 @@ enum Page: String {
     case dining = "Dining"
     case studyRoomBooking = "Study Room Booking"
     case laundry = "Laundry"
+    case more = "More"
     case news = "News"
     case contacts = "Penn Contacts"
     case about = "About"
@@ -32,6 +33,7 @@ class ControllerModel: NSObject {
         dict[.dining] = DiningViewController()
         dict[.studyRoomBooking] = GSRController()
         dict[.laundry] = LaundryTableViewController()
+        dict[.more] = MoreViewController()
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()
         dict[.about] = AboutViewController()
@@ -44,8 +46,12 @@ class ControllerModel: NSObject {
         }
     }
     
-    let orderedPages: [Page] = [.home, .dining, .studyRoomBooking, .laundry, .news, .contacts, .about]
-    let tabBarOrder: [Page] = [.home, .dining, .laundry, .studyRoomBooking, .news, .about]
+    // let orderedPages: [Page] = [.home, .dining, .studyRoomBooking, .laundry, .more, .news, .contacts, .about]
+    let orderedPages: [Page] = [.home, .dining, .studyRoomBooking, .laundry, .more]
+    let tabBarOrder: [Page] = [.home, .dining, .laundry, .studyRoomBooking, .more, .news, .about]
+    
+    // pages order in MoreViewController:
+    let moreOrder: [Page] = [.news, .contacts, .about]
     
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }

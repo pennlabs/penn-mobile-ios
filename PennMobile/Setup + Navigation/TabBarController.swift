@@ -85,6 +85,13 @@ extension LaundryTableViewController: TabBarShowable {
     }
 }
 
+extension MoreViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let image = UIImage(named: "home_icon")
+        return ESTabBarItem(title: "More", image: image, selectedImage: image)
+    }
+}
+
 extension ContactsTableViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let image = UIImage(named: "home_icon")
@@ -105,3 +112,4 @@ extension AboutViewController: TabBarShowable {
         return ESTabBarItem(title: "About", image: image, selectedImage: image)
     }
 }
+
