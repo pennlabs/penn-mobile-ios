@@ -17,10 +17,18 @@ class MoreCell: UITableViewCell {
         return label
     }()
     
-    func setUpView(page: Page) {
+    var iconImage: UIImageView = {
+        let iv = UIImageView()
+        return iv
+    }()
+    
+    func setUpView(page: Page, icon: UIImage) {
+        iconImage.image = icon
         titleLabel.text = page.rawValue
+        self.addSubview(iconImage)
         self.addSubview(titleLabel)
-        _ = titleLabel.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 15, leftConstant: 10, bottomConstant: 15, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = iconImage.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: nil, topConstant: 15, leftConstant: 10, bottomConstant: 15, rightConstant: 0, widthConstant: 20, heightConstant: 0)
+        _ = titleLabel.anchor(self.topAnchor, left: iconImage.rightAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 15, leftConstant: 10, bottomConstant: 15, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 
     override func awakeFromNib() {

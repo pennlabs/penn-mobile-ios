@@ -64,11 +64,12 @@ extension MoreViewController {
         } else if (indexPath.section == 1) {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                 cell.backgroundColor = .white
-                cell.setUpView(page: ControllerModel.shared.moreOrder[indexPath.row])
+                cell.setUpView(page: ControllerModel.shared.moreOrder[indexPath.row], icon: #imageLiteral(resourceName: "phone"))
                 let separatorHeight = CGFloat(2)
                 let customSeparator = UIView(frame: CGRect(x: 0, y: cell.frame.size.height + 3 + separatorHeight, width: UIScreen.main.bounds.width, height: separatorHeight))
                 customSeparator.backgroundColor = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)
                 cell.addSubview(customSeparator)
+                cell.accessoryType = .disclosureIndicator
                 return cell
             }
         }
@@ -88,5 +89,6 @@ extension MoreViewController {
             let targetController = ControllerModel.shared.viewController(for: ControllerModel.shared.moreOrder[indexPath.row])
             navigationController?.pushViewController(targetController, animated: true)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
