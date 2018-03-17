@@ -35,13 +35,17 @@ extension FlingTableViewModel {
             throw NetworkingError.jsonError
         }
         
-        self.items = [HomeCellItem]()
+        // Initialize empty items
+        var flingItems = [HomeFlingCellItem]()
         
         // Initialize Fling Cells from JSON
         for json in eventsJSON {
-            if let item = HomeFlingCellItem.getItem(for: json) {
-                items.append(item)
+            if let item = HomeFlingCellItem.getItem(for: json) as? HomeFlingCellItem {
+                flingItems.append(item)
             }
         }
+        
+        flingItems.sort()
+        self.items = flingItems
     }
 }

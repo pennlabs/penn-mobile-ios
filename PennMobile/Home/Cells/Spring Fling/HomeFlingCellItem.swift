@@ -70,3 +70,18 @@ extension HomeFlingCellItem {
         self.init(performer: performer)
     }
 }
+
+// MARK: - Sorting
+extension HomeFlingCellItem: Comparable {
+    static func <(lhs: HomeFlingCellItem, rhs: HomeFlingCellItem) -> Bool {
+        let now = Date()
+        if (lhs.performer.endTime > now && rhs.performer.endTime > now) || (lhs.performer.endTime < now && rhs.performer.endTime < now) {
+            return lhs.performer.startTime < rhs.performer.startTime
+        }
+        return lhs.performer.endTime > now
+    }
+    
+    static func ==(lhs: HomeFlingCellItem, rhs: HomeFlingCellItem) -> Bool {
+        return lhs.performer.name == rhs.performer.name && lhs.performer.startTime == rhs.performer.startTime
+    }
+}
