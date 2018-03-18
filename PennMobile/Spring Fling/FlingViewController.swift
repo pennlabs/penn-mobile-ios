@@ -13,7 +13,8 @@ final class FlingTableViewModel: ModularTableViewModel {}
 
 final class FlingViewController: GenericViewController {
     
-    fileprivate var tableView: ModularTableView!
+    fileprivate var performersTableView: ModularTableView!
+    fileprivate var scheduleTableView: UITableView!
     fileprivate var model: FlingTableViewModel!
     fileprivate var headerToolbar: UIToolbar!
     
@@ -25,13 +26,17 @@ final class FlingViewController: GenericViewController {
         self.title = "Spring Fling"
         
         setupNavBar()
-        prepareTableView()
+        prepareScheduleTableView()
+        preparePerformersTableView()
         prepareMapImageView()
         prepareMapBarButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if !scheduleTableView.isHidden {
+            performersTableView.isHidden = true
+        }
         self.fetchViewModel {
             // TODO: do something when fetch has completed
             print("Done!")
@@ -53,7 +58,7 @@ extension FlingViewController: HairlineRemovable {
         headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: headerHeight))
         headerToolbar.backgroundColor = navigationController?.navigationBar.backgroundColor
         
-        let newsSwitcher = UISegmentedControl(items: ["theDP", "UTB", "34th Street"])
+        let newsSwitcher = UISegmentedControl(items: ["Schedule", "Performers"])
         newsSwitcher.center = CGPoint(x: width/2, y: 64 + headerToolbar.frame.size.height/2)
         newsSwitcher.tintColor = UIColor.navRed
         newsSwitcher.selectedSegmentIndex = 0
@@ -65,7 +70,12 @@ extension FlingViewController: HairlineRemovable {
     }
     
     internal func switchTabMode(_ segment: UISegmentedControl) {
-        print("Switched!")
+        scheduleTableView.isHidden = !scheduleTableView.isHidden
+        performersTableView.isHidden = !performersTableView.isHidden
+        
+        if performersTableView.isHidden && scheduleTableView.isHidden {
+            scheduleTableView.isHidden = false
+        }
     }
 }
 
@@ -75,8 +85,8 @@ extension FlingViewController {
         FlingNetworkManager.instance.fetchModel { (model) in
             guard let model = model else { return }
             DispatchQueue.main.async {
-                self.setTableViewModel(model)
-                self.tableView.reloadData()
+                self.setPerformersTableViewModel(model)
+                self.performersTableView.reloadData()
                 self.fetchCellSpecificData {
                     // TODO: do something when done fetching cell specific data
                 }
@@ -93,7 +103,7 @@ extension FlingViewController {
                     thisItem.equals(item: item)
                 })!
                 let indexPath = IndexPath(row: row, section: 0)
-                self.tableView.reloadRows(at: [indexPath], with: .none)
+                self.performersTableView.reloadRows(at: [indexPath], with: .none)
             }
         }) {
             DispatchQueue.main.async {
@@ -103,10 +113,10 @@ extension FlingViewController {
     }
     
     
-    func setTableViewModel(_ model: FlingTableViewModel) {
+    func setPerformersTableViewModel(_ model: FlingTableViewModel) {
         self.model = model
         self.model.delegate = self
-        tableView.model = self.model
+        performersTableView.model = self.model
     }
 }
 
@@ -132,7 +142,7 @@ extension FlingViewController {
         let height = widthToHeightRatio * width
         
         view.addSubview(mapImageView)
-        _ = mapImageView.anchor(tableView.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: -height, leftConstant: 0, bottomConstant: 0, rightConstant: 30, widthConstant: width, heightConstant: height)
+        _ = mapImageView.anchor(performersTableView.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: -height, leftConstant: 0, bottomConstant: 0, rightConstant: 30, widthConstant: width, heightConstant: height)
     }
     
     @objc fileprivate func handleMapButtonPressed(_ sender: Any?) {
@@ -145,25 +155,41 @@ extension FlingViewController {
     }
 }
 
-// MARK: - Prepare TableView
+// MARK: - Prepare TableViews
 extension FlingViewController {
-    func prepareTableView() {
-        tableView = ModularTableView()
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        
-        view.addSubview(tableView)
-        
-        tableView.anchorToTop(nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor)
+    func prepareScheduleTableView() {
+        scheduleTableView = UITableView()
+        scheduleTableView.backgroundColor = .clear
+
+        view.addSubview(scheduleTableView)
+
+        scheduleTableView.anchorToTop(nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor)
         if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+            scheduleTableView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
+            scheduleTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         } else {
-            tableView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
-            tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
+            scheduleTableView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
+            scheduleTableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        }
+    }
+
+    func preparePerformersTableView() {
+        performersTableView = ModularTableView()
+        performersTableView.backgroundColor = .clear
+        performersTableView.separatorStyle = .none
+        
+        view.addSubview(performersTableView)
+        
+        performersTableView.anchorToTop(nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor)
+        if #available(iOS 11.0, *) {
+            performersTableView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
+            performersTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        } else {
+            performersTableView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
+            performersTableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
         
-        HomeItemTypes.instance.registerCells(for: tableView)
+        HomeItemTypes.instance.registerCells(for: performersTableView)
     }
 }
 
@@ -180,7 +206,7 @@ extension FlingViewController {
         }
         let model = FlingTableViewModel()
         model.items = items
-        tableView.model = model
-        tableView.reloadData()
+        performersTableView.model = model
+        performersTableView.reloadData()
     }
 }
