@@ -55,6 +55,7 @@ PODS:
   - ScrollableGraphView (4.0.4)
   - SimpleImageViewer (1.1.1)
   - SwiftyJSON (4.0.0)
+  - TimelineTableViewCell (1.2)
 
 DEPENDENCIES:
   - Firebase (~> 4.7)
@@ -66,6 +67,7 @@ DEPENDENCIES:
   - ScrollableGraphView
   - SimpleImageViewer (~> 1.1.1)
   - SwiftyJSON
+  - TimelineTableViewCell
 
 SPEC CHECKSUMS:
   Firebase: 632216af3ed7f31e3be34776947fdc7546cfb572
@@ -88,7 +90,8 @@ SPEC CHECKSUMS:
   ScrollableGraphView: 072ea302f4ca27779692656a49d51fe537b2b1e7
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
 
-PODFILE CHECKSUM: 2163d7c4be7dd753f3cc2a4bc287a8ba13435c08
+PODFILE CHECKSUM: ad97d2210a67f65707a0e0f5f0e3d4082565ddd6
 
 COCOAPODS: 1.4.0
