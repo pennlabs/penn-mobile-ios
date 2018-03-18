@@ -8,6 +8,7 @@
 
 import Foundation
 import SimpleImageViewer
+import TimelineTableViewCell
 
 final class FlingTableViewModel: ModularTableViewModel {}
 
@@ -20,6 +21,19 @@ final class FlingViewController: GenericViewController {
     
     // For Map Zoom
     fileprivate var mapImageView: UIImageView!
+
+    // (TimelinePoint, Timeline back color, title, description, lineInfo, thumbnail, illustration)
+    let data:[Int: [(TimelinePoint, UIColor, String, String, String?, String?, String?)]] = [0:[
+        (TimelinePoint(), UIColor.black, "Mask and Wig", "", "6:30", "line Info", "Sun"),
+            (TimelinePoint(), UIColor.black, "6:45", "Mask and Wig", nil, nil, "Sun"),
+            (TimelinePoint(), UIColor.black, "Mask and Wig", "7:45 - 8:00", nil, nil, "Sun"),
+            (TimelinePoint(), UIColor.blue, "Mask and Wig", "8:00", nil, nil, "Sun"),
+            (TimelinePoint(), UIColor.black, "Mask and Wig", "8:15", nil, nil, "Sun"),
+            (TimelinePoint(), UIColor.black, "11:30", "Lorem ipsum dolor", nil, nil, "Sun"),
+            (TimelinePoint(), UIColor.black, "15:30", "Lorem ipsum dolor", nil, nil, "Sun"),
+            (TimelinePoint(color: UIColor.green, filled: true), UIColor.green, "16:30", "Lorem ipsum dolor", "150 mins", "Apple", "Sun"),
+            (TimelinePoint(), UIColor.clear, "19:00", "Lorem ipsum dolor", nil, nil, "Moon")
+        ]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +91,61 @@ extension FlingViewController: HairlineRemovable {
             scheduleTableView.isHidden = false
         }
     }
+}
+
+extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let sectionData = data[section] else {
+            return 0
+        }
+        return sectionData.count
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return data.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell",
+                                                 for: indexPath) as! TimelineTableViewCell
+        guard let sectionData = data[indexPath.section] else {
+            return cell
+        }
+        
+        let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnail, illustration) = sectionData[indexPath.row]
+        var timelineFrontColor = UIColor.clear
+        if (indexPath.row > 0) {
+            timelineFrontColor = sectionData[indexPath.row - 1].1
+        }
+        cell.timelinePoint = timelinePoint
+        cell.timeline.frontColor = timelineFrontColor
+        cell.timeline.backColor = timelineBackColor
+        cell.titleLabel.text = title
+        cell.descriptionLabel.text = description
+        cell.descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
+        cell.descriptionLabel.textColor = UIColor(r: 63, g: 63, b: 63)
+        cell.lineInfoLabel.text = lineInfo
+        if let thumbnail = thumbnail {
+            cell.thumbnailImageView.image = UIImage(named: thumbnail)
+        }
+        else {
+            cell.thumbnailImageView.image = nil
+        }
+        if let illustration = illustration {
+            cell.illustrationImageView.image = UIImage(named: illustration)
+        }
+        else {
+            cell.illustrationImageView.image = nil
+        }
+   
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Saturday, April 14th"
+    }
+    
+
 }
 
 // MARK: - Networking
@@ -142,7 +211,7 @@ extension FlingViewController {
         let height = widthToHeightRatio * width
         
         view.addSubview(mapImageView)
-        _ = mapImageView.anchor(performersTableView.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: -height, leftConstant: 0, bottomConstant: 0, rightConstant: 30, widthConstant: width, heightConstant: height)
+        _ = mapImageView.anchor(headerToolbar.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: -height, leftConstant: 0, bottomConstant: 0, rightConstant: 30, widthConstant: width, heightConstant: height)
     }
     
     @objc fileprivate func handleMapButtonPressed(_ sender: Any?) {
@@ -160,6 +229,15 @@ extension FlingViewController {
     func prepareScheduleTableView() {
         scheduleTableView = UITableView()
         scheduleTableView.backgroundColor = .clear
+
+        // Initialize TimelineTableViewCell
+        let bundle = Bundle(for: TimelineTableViewCell.self)
+        let nibUrl = bundle.url(forResource: "TimelineTableViewCell", withExtension: "bundle")
+        let timelineTableViewCellNib = UINib(nibName: "TimelineTableViewCell", bundle: Bundle(url: nibUrl!)!)
+        scheduleTableView.register(timelineTableViewCellNib, forCellReuseIdentifier: "TimelineTableViewCell")
+        
+        scheduleTableView.delegate = self
+        scheduleTableView.dataSource = self
 
         view.addSubview(scheduleTableView)
 
@@ -210,3 +288,10 @@ extension FlingViewController {
         performersTableView.reloadData()
     }
 }
+
+
+
+
+
+
+
