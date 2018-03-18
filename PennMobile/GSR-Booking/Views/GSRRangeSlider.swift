@@ -59,20 +59,11 @@ extension GSRRangeSlider {
             return self.delegate!.existsNonEmptyRoom() ? self.getStringTimeFromValue(maxValue) : ""
         }
         self.setValueFinishedChangingCallback { (min, max) in
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd-hh-mma"
-            print("Start: \(formatter.string(from: self.startDate))")
-            print("Mid: \(formatter.string(from: self.endDate))")
             let totalMinutes = CGFloat(self.startDate.minutesFrom(date: self.endDate))
-            print(totalMinutes)
             let minMinutes = (Int((CGFloat(min) / 100.0) * totalMinutes) / 60) * 60
             let maxMinutes = (Int((CGFloat(max) / 100.0) * totalMinutes) / 60) * 60
-            print(maxMinutes)
             self.minDate = self.startDate.add(minutes: minMinutes).roundedDownToHour
             self.maxDate = self.startDate.add(minutes: maxMinutes).roundedDownToHour
-            print("Start: \(formatter.string(from: self.minDate))")
-            print("Mid: \(formatter.string(from: self.startDate.add(minutes: maxMinutes)))")
-            print("End: \(formatter.string(from: self.maxDate))")
             self.delegate!.parseData(startDate: self.minDate, endDate: self.maxDate)
         }
     }
