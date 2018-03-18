@@ -13,8 +13,9 @@ final class FlingTableViewModel: ModularTableViewModel {}
 
 final class FlingViewController: GenericViewController {
     
-    var tableView: ModularTableView!
-    var model: FlingTableViewModel!
+    fileprivate var tableView: ModularTableView!
+    fileprivate var model: FlingTableViewModel!
+    fileprivate var headerToolbar: UIToolbar!
     
     // For Map Zoom
     fileprivate var mapImageView: UIImageView!
@@ -22,6 +23,8 @@ final class FlingViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Spring Fling"
+        
+        setupNavBar()
         prepareTableView()
         prepareMapImageView()
         prepareMapBarButton()
@@ -33,6 +36,36 @@ final class FlingViewController: GenericViewController {
             // TODO: do something when fetch has completed
             print("Done!")
         }
+    }
+}
+
+// MARK: - Initialize and layout views
+extension FlingViewController: HairlineRemovable {
+    fileprivate func setupNavBar() {
+        //removes hairline from bottom of navbar
+        if let navbar = navigationController?.navigationBar {
+            removeHairline(from: navbar)
+        }
+        
+        let width = view.frame.width
+        let headerHeight = navigationController?.navigationBar.frame.height ?? 44
+        
+        headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: headerHeight))
+        headerToolbar.backgroundColor = navigationController?.navigationBar.backgroundColor
+        
+        let newsSwitcher = UISegmentedControl(items: ["theDP", "UTB", "34th Street"])
+        newsSwitcher.center = CGPoint(x: width/2, y: 64 + headerToolbar.frame.size.height/2)
+        newsSwitcher.tintColor = UIColor.navRed
+        newsSwitcher.selectedSegmentIndex = 0
+        newsSwitcher.isUserInteractionEnabled = true
+        newsSwitcher.addTarget(self, action: #selector(switchTabMode(_:)), for: .valueChanged)
+        
+        view.addSubview(headerToolbar)
+        view.addSubview(newsSwitcher)
+    }
+    
+    internal func switchTabMode(_ segment: UISegmentedControl) {
+        print("Switched!")
     }
 }
 
@@ -123,10 +156,10 @@ extension FlingViewController {
         
         tableView.anchorToTop(nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor)
         if #available(iOS 11.0, *) {
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+            tableView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         } else {
-            tableView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0).isActive = true
+            tableView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
             tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
         
