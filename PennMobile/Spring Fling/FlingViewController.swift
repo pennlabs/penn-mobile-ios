@@ -24,15 +24,24 @@ final class FlingViewController: GenericViewController {
 
     // (TimelinePoint, Timeline back color, title, description, lineInfo, thumbnail, illustration)
     let data:[Int: [(TimelinePoint, UIColor, String, String, String?, String?, String?)]] = [0:[
-        (TimelinePoint(), UIColor.black, "Mask and Wig", "", "6:30", "line Info", "Sun"),
-            (TimelinePoint(), UIColor.black, "6:45", "Mask and Wig", nil, nil, "Sun"),
-            (TimelinePoint(), UIColor.black, "Mask and Wig", "7:45 - 8:00", nil, nil, "Sun"),
-            (TimelinePoint(), UIColor.blue, "Mask and Wig", "8:00", nil, nil, "Sun"),
-            (TimelinePoint(), UIColor.black, "Mask and Wig", "8:15", nil, nil, "Sun"),
-            (TimelinePoint(), UIColor.black, "11:30", "Lorem ipsum dolor", nil, nil, "Sun"),
-            (TimelinePoint(), UIColor.black, "15:30", "Lorem ipsum dolor", nil, nil, "Sun"),
-            (TimelinePoint(color: UIColor.green, filled: true), UIColor.green, "16:30", "Lorem ipsum dolor", "150 mins", "Apple", "Sun"),
-            (TimelinePoint(), UIColor.clear, "19:00", "Lorem ipsum dolor", nil, nil, "Moon")
+        (TimelinePoint(diameter: 5, lineWidth: 0, color: .blue, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil)
         ]]
     
     override func viewDidLoad() {
@@ -125,6 +134,8 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
         cell.descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
         cell.descriptionLabel.textColor = UIColor(r: 63, g: 63, b: 63)
         cell.lineInfoLabel.text = lineInfo
+        //cell.bubbleColor = UIColor(r: 74, g: 144, b: 226)
+        cell.bubbleColor = UIColor(r: 118, g: 191, b: 150)
         if let thumbnail = thumbnail {
             cell.thumbnailImageView.image = UIImage(named: thumbnail)
         }
@@ -143,6 +154,10 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Saturday, April 14th"
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
     
 
@@ -229,6 +244,7 @@ extension FlingViewController {
     func prepareScheduleTableView() {
         scheduleTableView = UITableView()
         scheduleTableView.backgroundColor = .clear
+        scheduleTableView.separatorStyle = .none
 
         // Initialize TimelineTableViewCell
         let bundle = Bundle(for: TimelineTableViewCell.self)
