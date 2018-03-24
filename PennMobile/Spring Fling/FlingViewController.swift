@@ -19,29 +19,32 @@ final class FlingViewController: GenericViewController {
     fileprivate var model: FlingTableViewModel!
     fileprivate var headerToolbar: UIToolbar!
     
+    // TEMP COLORS - TO be deleted in favor of General/Extensions
+    fileprivate static var navigationBlue = UIColor(r: 74, g: 144, b: 226)
+    fileprivate static var dataGreen = UIColor(r: 118, g: 191, b: 150)
+    fileprivate static var highlightYellow = UIColor(r: 240, g: 180, b: 0)
+    
     // For Map Zoom
     fileprivate var mapImageView: UIImageView!
 
     // (TimelinePoint, Timeline back color, title, description, lineInfo, thumbnail, illustration)
     let data:[Int: [(TimelinePoint, UIColor, String, String, String?, String?, String?)]] = [0:[
-        (TimelinePoint(diameter: 5, lineWidth: 0, color: .blue, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil)
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: highlightYellow, filled: true), highlightYellow, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
+            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil)
         ]]
     
     override func viewDidLoad() {
@@ -134,8 +137,11 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
         cell.descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
         cell.descriptionLabel.textColor = UIColor(r: 63, g: 63, b: 63)
         cell.lineInfoLabel.text = lineInfo
-        //cell.bubbleColor = UIColor(r: 74, g: 144, b: 226)
-        cell.bubbleColor = UIColor(r: 118, g: 191, b: 150)
+        if indexPath.row != 5 {
+            cell.bubbleColor = FlingViewController.dataGreen
+        } else {
+            cell.bubbleColor = FlingViewController.highlightYellow
+        }
         if let thumbnail = thumbnail {
             cell.thumbnailImageView.image = UIImage(named: thumbnail)
         }
@@ -157,7 +163,7 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
+        //tableView.deselectRow(at: indexPath, animated: false)
     }
     
 
@@ -245,6 +251,7 @@ extension FlingViewController {
         scheduleTableView = UITableView()
         scheduleTableView.backgroundColor = .clear
         scheduleTableView.separatorStyle = .none
+        scheduleTableView.allowsSelection = false
 
         // Initialize TimelineTableViewCell
         let bundle = Bundle(for: TimelineTableViewCell.self)
