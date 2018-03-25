@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "GSR - Gray.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "GSR - Gray@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "home_icon.png",
+      "filename" : "GSR - Gray@3x.png",
       "scale" : "3x"
     }
   ],
