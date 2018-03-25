@@ -49,24 +49,7 @@ extension HomeFlingCellItem: HomeAPIRequestable {
 // MARK: - JSON Parsing
 extension HomeFlingCellItem {
     convenience init(json: JSON) throws {
-        guard let name = json["name"].string,
-            let description = json["description"].string,
-            let imageUrl = json["image_url"].string,
-            let startTimeStr = json["start_time"].string,
-            let endTimeStr = json["end_time"].string else {
-                throw NetworkingError.jsonError
-        }
-        
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssz"
-        
-        guard let startTime = formatter.date(from: startTimeStr), let endTime = formatter.date(from: endTimeStr) else {
-            throw NetworkingError.jsonError
-        }
-        
-        let performer = FlingPerformer(name: name, imageUrl: imageUrl, description: description, startTime: startTime, endTime: endTime)
+        let performer = try FlingPerformer(json: json)
         self.init(performer: performer)
     }
 }

@@ -10,6 +10,8 @@
 		2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */; };
 		2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */; };
 		2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF221F3F762500CEC3F4 /* ContactCell.swift */; };
+		210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210AC14420684F9B0050D837 /* HomeCellProtocols.swift */; };
+		210AC1472068515C0050D837 /* WebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210AC1462068515C0050D837 /* WebviewController.swift */; };
 		211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */ = {isa = PBXBuildFile; fileRef = 211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */; };
 		211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */; };
 		211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AE204921030065BC2C /* LaundryMachinesView.swift */; };
@@ -132,6 +134,8 @@
 		2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		210AC14420684F9B0050D837 /* HomeCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellProtocols.swift; sourceTree = "<group>"; };
+		210AC1462068515C0050D837 /* WebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewController.swift; sourceTree = "<group>"; };
 		211B11A41F2995AD00A22C8A /* PennMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PennMobile.entitlements; sourceTree = "<group>"; };
 		211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AuthKey_6MBD9SUNGE.p8; sourceTree = "<group>"; };
 		211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellConformable.swift; sourceTree = "<group>"; };
@@ -306,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
+				210AC14420684F9B0050D837 /* HomeCellProtocols.swift */,
 				21F5F8EF20538A54005B143F /* Spring Fling */,
 				217A784A204DDF05004F1227 /* Dining */,
 				217A784B204DDF0C004F1227 /* Laundry */,
@@ -448,6 +453,7 @@
 				212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */,
 				216640C11EBADC9300746B8E /* GenericControllers.swift */,
 				216640C31EBADC9300746B8E /* GenericWebview.swift */,
+				210AC1462068515C0050D837 /* WebviewController.swift */,
 				2196D5E21F5263AC002058A0 /* AnnouncementHeaderView.swift */,
 			);
 			path = Generics;
@@ -1036,6 +1042,7 @@
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
+				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
@@ -1082,6 +1089,7 @@
 				2189C0A02027CE4100771C1F /* GSRVenue.swift in Sources */,
 				215C605D205C88EA00FE271A /* ImageNetworkingManager.swift in Sources */,
 				216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */,
+				210AC1472068515C0050D837 /* WebviewController.swift in Sources */,
 				2189C0872027CDD700771C1F /* GSRNetworkManager.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,

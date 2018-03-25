@@ -10,6 +10,8 @@ import Foundation
 import SimpleImageViewer
 import TimelineTableViewCell
 
+protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
+
 final class FlingTableViewModel: ModularTableViewModel {}
 
 final class FlingViewController: GenericViewController {
@@ -206,7 +208,7 @@ extension FlingViewController {
 }
 
 // MARK: - ModularTableViewDelegate
-extension FlingViewController: ModularTableViewModelDelegate {
+extension FlingViewController: FlingCellDelegate {
     
 }
 
