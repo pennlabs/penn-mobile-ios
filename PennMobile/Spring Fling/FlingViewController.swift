@@ -27,25 +27,7 @@ final class FlingViewController: GenericViewController {
     // For Map Zoom
     fileprivate var mapImageView: UIImageView!
 
-    // (TimelinePoint, Timeline back color, title, description, lineInfo, thumbnail, illustration)
-    let data:[Int: [(TimelinePoint, UIColor, String, String, String?, String?, String?)]] = [0:[
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: highlightYellow, filled: true), highlightYellow, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil),
-            (TimelinePoint(color: .lightGray, filled: true), UIColor.lightGray, "Mask and Wig", "7:45 - 8:00", nil, nil, nil)
-        ]]
+    fileprivate var performers = [FlingPerformer?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,37 +89,57 @@ extension FlingViewController: HairlineRemovable {
 
 extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionData = data[section] else {
-            return 0
-        }
-        return sectionData.count
+        return performers.count
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return data.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell",
                                                  for: indexPath) as! TimelineTableViewCell
-        guard let sectionData = data[indexPath.section] else {
-            return cell
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm"
+        let dateFormatterTwelveHour = DateFormatter()
+        dateFormatterTwelveHour.dateFormat = "h:mm a"
+        
+        var (title, description) = ("", "")
+        var (startTime, endTime) : (Date?, Date?)
+        
+        if let performer = performers[indexPath.row] {
+            (title, description, startTime, endTime) = (performer.name,
+                                                        "\(dateFormatter.string(from: performer.startTime)) - \(dateFormatterTwelveHour.string(from: performer.endTime))",
+                                                        performer.startTime, performer.endTime)
+        } else {
+            (title, description) = ("", "")
         }
         
-        let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnail, illustration) = sectionData[indexPath.row]
-        var timelineFrontColor = UIColor.clear
+        
         if (indexPath.row > 0) {
-            timelineFrontColor = sectionData[indexPath.row - 1].1
+            cell.timeline.frontColor = .lightGray
+        } else {
+            cell.timeline.frontColor = .clear
         }
-        cell.timelinePoint = timelinePoint
-        cell.timeline.frontColor = timelineFrontColor
-        cell.timeline.backColor = timelineBackColor
+        
+        if (startTime != nil && endTime != nil && startTime! < Date() && endTime! > Date()) {
+            cell.timeline.backColor = FlingViewController.highlightYellow
+            cell.bubbleColor = FlingViewController.highlightYellow
+            cell.timelinePoint = TimelinePoint(color: FlingViewController.highlightYellow, filled: true)
+        } else {
+            cell.timeline.backColor = .lightGray
+            cell.bubbleColor = FlingViewController.dataGreen
+            cell.timelinePoint = TimelinePoint(color: .lightGray, filled: true)
+        }
+        
         cell.titleLabel.text = title
         cell.descriptionLabel.text = description
         cell.descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
         cell.descriptionLabel.textColor = UIColor(r: 63, g: 63, b: 63)
-        cell.lineInfoLabel.text = lineInfo
-        if indexPath.row != 5 {
+        
+        //cell.lineInfoLabel.text = lineInfo
+        /*if indexPath.row != 5 {
             cell.bubbleColor = FlingViewController.dataGreen
         } else {
             cell.bubbleColor = FlingViewController.highlightYellow
@@ -153,7 +155,7 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else {
             cell.illustrationImageView.image = nil
-        }
+        }*/
    
         return cell
     }
@@ -207,10 +209,11 @@ extension FlingViewController {
     }
     
     func setScheduleTableViewModel(_ model: FlingTableViewModel) {
-        let performers = model.items.map { (item) -> FlingPerformer in
+        performers = model.items.map { (item) -> FlingPerformer in
             let flingItem = item as! HomeFlingCellItem
             return flingItem.performer
         }
+        performers.sort(by: { ($0!.startTime < $1!.startTime) })
     }
 }
 
