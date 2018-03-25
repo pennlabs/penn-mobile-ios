@@ -19,6 +19,8 @@ final class HomeFlingCell: UITableViewCell, HomeCellConformable {
         }
     }
     
+    var performer: FlingPerformer!
+    
     // MARK: Cell Height
     
     static let nameFont: UIFont = UIFont(name: "HelveticaNeue-Bold", size: 18)!
@@ -76,11 +78,25 @@ final class HomeFlingCell: UITableViewCell, HomeCellConformable {
 // MARK: - Setup Item
 extension HomeFlingCell {
     fileprivate func setupCell(with item: HomeFlingCellItem) {
-        let performer = item.performer
+        self.performer = item.performer
         self.performerImageView.image = item.image
         self.performerLabel.text = performer.name
         self.descriptionLabel.text = performer.description
         self.dateLabel.text = "Today at 7:20pm"
+    }
+}
+
+// MARK: - Gesture Recognizer
+extension HomeFlingCell {
+    fileprivate func getTapGestureRecognizer() -> UITapGestureRecognizer {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapped(_:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        return tapGestureRecognizer
+    }
+    
+    @objc fileprivate func handleTapped(_ sender: Any) {
+        guard let website = performer.website, let delegate = delegate as? URLSelectable else { return }
+        delegate.handleUrlPressed(website)
     }
 }
 
@@ -103,6 +119,10 @@ extension HomeFlingCell {
         performerImageView.clipsToBounds = true
         performerImageView.contentMode = .scaleAspectFill
         
+        let tapGestureRecognizer = getTapGestureRecognizer()
+        performerImageView.addGestureRecognizer(tapGestureRecognizer)
+        performerImageView.isUserInteractionEnabled = true
+        
         cardView.addSubview(performerImageView)
         let height = HomeFlingCell.getImageHeight()
         _ = performerImageView.anchor(cardView.topAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: height)
@@ -117,6 +137,10 @@ extension HomeFlingCell {
         performerLabel = UILabel()
         performerLabel.font = HomeFlingCell.nameFont
         performerLabel.numberOfLines = 3
+        
+        let tapGestureRecognizer = getTapGestureRecognizer()
+        performerLabel.addGestureRecognizer(tapGestureRecognizer)
+        performerLabel.isUserInteractionEnabled = true
         
         cardView.addSubview(performerLabel)
         _ = performerLabel.anchor(performerImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 12, leftConstant: HomeFlingCell.nameEdgeOffset, bottomConstant: 0, rightConstant: HomeFlingCell.nameEdgeOffset, widthConstant: 0, heightConstant: 0)

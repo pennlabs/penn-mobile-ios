@@ -67,6 +67,9 @@ extension HomeViewController {
 
 // MARK: - ViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
+    func handleUrlPressed(_ url: String) {
+    }
+    
     var allowMachineNotifications: Bool {
         return true
     }

@@ -10,6 +10,8 @@ import Foundation
 import SimpleImageViewer
 import TimelineTableViewCell
 
+protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
+
 final class FlingTableViewModel: ModularTableViewModel {}
 
 final class FlingViewController: GenericViewController {
@@ -218,8 +220,12 @@ extension FlingViewController {
 }
 
 // MARK: - ModularTableViewDelegate
-extension FlingViewController: ModularTableViewModelDelegate {
-    
+extension FlingViewController: FlingCellDelegate {
+    func handleUrlPressed(_ url: String) {
+        let wv = WebviewController()
+        wv.load(for: url)
+        navigationController?.pushViewController(wv, animated: true)
+    }
 }
 
 // MARK: - Map Image

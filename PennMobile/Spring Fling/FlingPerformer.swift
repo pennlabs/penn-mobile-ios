@@ -15,13 +15,15 @@ final class FlingPerformer {
     let description: String
     let startTime: Date
     let endTime: Date
+    let website: String?
     
-    init(name: String, imageUrl: String, description: String, startTime: Date, endTime: Date) {
+    init(name: String, imageUrl: String, description: String, startTime: Date, endTime: Date, website: String?) {
         self.name = name
         self.imageUrl = imageUrl
         self.description = description
         self.startTime = startTime
         self.endTime = endTime
+        self.website = website
     }
     
     static func getDefaultPerformer() -> FlingPerformer {
@@ -40,6 +42,37 @@ final class FlingPerformer {
         let startTime = formatter.date(from: startTimeStr)!
         let endTime = formatter.date(from: endTimeStr)!
         
-        return FlingPerformer(name: name, imageUrl: imageUrl, description: description, startTime: startTime, endTime: endTime)
+        return FlingPerformer(name: name, imageUrl: imageUrl, description: description, startTime: startTime, endTime: endTime, website: "http://www.penndischord.com/")
+    }
+}
+
+// MARK: - JSON Parsing
+extension FlingPerformer {
+    convenience init(json: JSON) throws {
+        guard let name = json["name"].string,
+            let description = json["description"].string,
+            let imageUrl = json["image_url"].string,
+            let startTimeStr = json["start_time"].string,
+            let endTimeStr = json["end_time"].string else {
+                throw NetworkingError.jsonError
+        }
+        
+        var website = json["website"].string
+        
+        // Check if valid website
+        if let unwrappedWebsite = website, URL(string: unwrappedWebsite) == nil {
+            website = nil
+        }
+        
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssz"
+        
+        guard let startTime = formatter.date(from: startTimeStr), let endTime = formatter.date(from: endTimeStr) else {
+            throw NetworkingError.jsonError
+        }
+        
+        self.init(name: name, imageUrl: imageUrl, description: description, startTime: startTime, endTime: endTime, website: website)
     }
 }
