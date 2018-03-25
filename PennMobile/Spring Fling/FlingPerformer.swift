@@ -57,7 +57,12 @@ extension FlingPerformer {
                 throw NetworkingError.jsonError
         }
         
-        let website = json["website"].string
+        var website = json["website"].string
+        
+        // Check if valid website
+        if let unwrappedWebsite = website, URL(string: unwrappedWebsite) == nil {
+            website = nil
+        }
         
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)

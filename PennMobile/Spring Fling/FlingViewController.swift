@@ -218,7 +218,11 @@ extension FlingViewController {
 
 // MARK: - ModularTableViewDelegate
 extension FlingViewController: FlingCellDelegate {
-    
+    func handleUrlPressed(_ url: String) {
+        let wv = WebviewController()
+        wv.load(for: url)
+        navigationController?.pushViewController(wv, animated: true)
+    }
 }
 
 // MARK: - Map Image

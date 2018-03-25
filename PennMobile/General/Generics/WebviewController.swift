@@ -23,7 +23,10 @@ class WebviewController: GenericViewController {
         webview = GenericWebview(frame: .zero)
         view.addSubview(webview)
         webview.anchorToTop(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
-
+        
+        guard let url = URL(string: urlString) else { return }
+        webview.loadRequest(URLRequest(url: url))
+        
 //        if let html = WebviewController.getHTML(for: urlString) {
 //            webview.loadHTMLString(html, baseURL: nil)
 //        } else {
