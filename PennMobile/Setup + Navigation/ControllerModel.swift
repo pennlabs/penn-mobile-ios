@@ -52,6 +52,7 @@ class ControllerModel: NSObject {
     
     // pages order in MoreViewController:
     let moreOrder: [Page] = [.news, .contacts, .about]
+    let moreIcons: [UIImage] = [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "phone"), #imageLiteral(resourceName: "Profile")]
     
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }

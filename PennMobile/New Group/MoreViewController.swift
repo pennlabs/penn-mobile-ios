@@ -23,7 +23,7 @@ class MoreViewController: GenericTableViewController {
     func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)
+        tableView.backgroundColor = UIColor.white
         tableView.separatorStyle = .none
         tableView.register(AccountCell.self, forCellReuseIdentifier: "account")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
@@ -64,7 +64,7 @@ extension MoreViewController {
         } else if (indexPath.section == 1) {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                 cell.backgroundColor = .white
-                cell.setUpView(page: ControllerModel.shared.moreOrder[indexPath.row], icon: #imageLiteral(resourceName: "phone"))
+                cell.setUpView(page: ControllerModel.shared.moreOrder[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
                 let separatorHeight = CGFloat(2)
                 let customSeparator = UIView(frame: CGRect(x: 0, y: cell.frame.size.height + 3 + separatorHeight, width: UIScreen.main.bounds.width, height: separatorHeight))
                 customSeparator.backgroundColor = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)

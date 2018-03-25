@@ -31,7 +31,7 @@ class AccountCell: UITableViewCell {
         accountUsername.text = username
         self.addSubview(accountImage)
         self.addSubview(accountUsername)
-        _ = accountImage.anchor(self.topAnchor, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 10, leftConstant: 10, bottomConstant: 0, rightConstant: 0, widthConstant: 60, heightConstant: 60)
+        _ = accountImage.anchor(self.topAnchor, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 10, leftConstant: 15, bottomConstant: 0, rightConstant: 0, widthConstant: 60, heightConstant: 60)
         _ = accountUsername.anchor(self.topAnchor, left: accountImage.rightAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 30, leftConstant: 15, bottomConstant: 30, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 
