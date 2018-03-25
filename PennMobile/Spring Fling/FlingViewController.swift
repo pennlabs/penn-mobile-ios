@@ -174,6 +174,8 @@ extension FlingViewController {
             DispatchQueue.main.async {
                 self.setPerformersTableViewModel(model)
                 self.performersTableView.reloadData()
+                self.setScheduleTableViewModel(model)
+                self.scheduleTableView.reloadData()
                 self.fetchCellSpecificData {
                     // TODO: do something when done fetching cell specific data
                 }
@@ -204,6 +206,13 @@ extension FlingViewController {
         self.model = model
         self.model.delegate = self
         performersTableView.model = self.model
+    }
+    
+    func setScheduleTableViewModel(_ model: FlingTableViewModel) {
+        let performers = model.items.map { (item) -> FlingPerformer in
+            let flingItem = item as! HomeFlingCellItem
+            return flingItem.performer
+        }
     }
 }
 
