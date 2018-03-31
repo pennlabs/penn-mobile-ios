@@ -27,10 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
             LaundryAPIService.instance.clearDirectory()
+            if let ids = UserDefaults.standard.getLaundryPreferences() {
+                UserDBManager.shared.saveLaundryPreferences(for: ids)
+            }
         }
         
         DatabaseManager.shared.dryRun = true
         GoogleAnalyticsManager.shared.dryRun = true
+        UserDBManager.shared.dryRun = true
+        UserDBManager.shared.testRun = true
         
         GoogleAnalyticsManager.prepare()
         LaundryAPIService.instance.prepare()

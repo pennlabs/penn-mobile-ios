@@ -9,13 +9,13 @@
 import UIKit
 
 class DiningCell: UITableViewCell {
-    
+    static let identifier = "diningCell"
     static let cellHeight: CGFloat = 112
     
     var venue: DiningVenue! {
         didSet {
-            venueImage.image = UIImage(named: venue.name.folding(options: .diacriticInsensitive, locale: .current))
-            label.text = venue.name
+            venueImage.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
+            label.text = venue.name.rawValue
             
             updateTimeLabel(with: venue.times)
         }

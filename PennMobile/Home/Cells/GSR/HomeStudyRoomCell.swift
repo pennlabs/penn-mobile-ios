@@ -9,23 +9,24 @@
 import Foundation
 import UIKit
 
-class HomeStudyRoomCell: GeneralHomeCell, Transitionable {
+final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
+    static var identifier: String = "homeGSRCell"
+    static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
+        return 200.0
+    }
     
-    static let identifier = "studyRoomCell"
-    static let cellHeight: CGFloat = 60.0
-    
-    var transitionButton: UIButton!
-    
-    override var item: HomeViewModelItem? {
+    var delegate: ModularTableViewCellDelegate!
+    var item: ModularTableViewItem! {
         didSet {
-            guard let item = item as? HomeViewModelStudyRoomItem else { return }
-            setupCell(with: item)
+            
         }
     }
     
+    var cardView: UIView! = UIView()
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        prepareTransitionButton()
+        prepareHomeCell()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,7 +36,7 @@ class HomeStudyRoomCell: GeneralHomeCell, Transitionable {
 
 // MARK: - Setup and Prepare UI Elements
 extension HomeStudyRoomCell {
-    fileprivate func setupCell(with item: HomeViewModelStudyRoomItem) {
-        textLabel?.text = item.title
+    fileprivate func setupCell(with item: HomeStudyRoomCell) {
+//        textLabel?.text = item.title
     }
 }

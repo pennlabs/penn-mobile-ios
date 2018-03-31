@@ -51,6 +51,10 @@ extension DiningHoursData {
             loadHoursForSingleVenue(for: json)
         }
         
+        if !Storage.fileExists(DiningVenue.directory, in: .caches) {
+            let mapping = getIdMapping(jsonArray: jsonArray)
+            Storage.store(mapping, to: .caches, as: DiningVenue.directory)
+        }
         return true
     }
     
@@ -77,22 +81,42 @@ extension DiningHoursData {
             return
         }
         
+        var closedFlag = false
+        var closedTime: OpenClose?
+        
         for json in timesJSON {
-            guard let type = json["type"].string, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || type == "Late Night" || name.range(of: type) != nil, let open = json["open"].string, let close = json["close"].string else { return }
+            guard let type = json["type"].string, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || type == "Late Night" || type == "Closed" || name.range(of: type) != nil, let open = json["open"].string, let close = json["close"].string else { continue }
             
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm:ss"
             formatter.timeZone = TimeZone(abbreviation: "EST")
             
-            guard let openDate = formatter.date(from: open)?.adjustedFor11_59, let closeDate = formatter.date(from: close)?.adjustedFor11_59 else { return }
+            guard let openDate = formatter.date(from: open)?.adjustedFor11_59, let closeDate = formatter.date(from: close)?.adjustedFor11_59 else { continue }
             
             let time = OpenClose(open: openDate, close: closeDate)
-            if !hours.containsOverlappingTime(with: time) {
+            if type == "Closed" {
+                closedFlag = true
+                closedTime = time
+            } else if !hours.containsOverlappingTime(with: time) {
                 hours.append(time)
             }
         }
         
+        if let closedTime = closedTime, closedFlag {
+            hours = hours.filter { !$0.overlaps(with: closedTime) }
+        }
+        
         self.load(hours: hours, for: venueName)
+    }
+    
+    fileprivate func getIdMapping(jsonArray: [JSON]) -> [Int: String] {
+        var mapping = [Int: String]()
+        for json in jsonArray {
+            let name = json["name"].stringValue
+            let id = json["id"].intValue
+            mapping[id] = name
+        }
+        return mapping
     }
 }
 
