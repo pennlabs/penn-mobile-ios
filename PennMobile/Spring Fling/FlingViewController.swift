@@ -288,6 +288,7 @@ extension FlingViewController {
         scheduleTableView.tableHeaderView?.backgroundColor = .navBarGrey
         scheduleTableView.separatorStyle = .none
         scheduleTableView.allowsSelection = false
+        scheduleTableView.showsVerticalScrollIndicator = false
 
         // Initialize TimelineTableViewCell
         let bundle = Bundle(for: TimelineTableViewCell.self)
