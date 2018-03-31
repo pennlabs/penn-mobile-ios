@@ -68,3 +68,9 @@ extension HomeFlingCellItem: Comparable {
         return lhs.performer.name == rhs.performer.name && lhs.performer.startTime == rhs.performer.startTime
     }
 }
+
+extension Array where Element == HomeFlingCellItem {
+    func equals(_ items: [HomeFlingCellItem]) -> Bool {
+        return self.map { $0.performer }.equals(items.map { $0.performer })
+    }
+}

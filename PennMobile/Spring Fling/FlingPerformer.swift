@@ -76,3 +76,29 @@ extension FlingPerformer {
         self.init(name: name, imageUrl: imageUrl, description: description, startTime: startTime, endTime: endTime, website: website)
     }
 }
+
+extension FlingPerformer: Equatable {
+    static func == (lhs: FlingPerformer, rhs: FlingPerformer) -> Bool {
+        return lhs.name == rhs.name
+            && lhs.imageUrl == rhs.imageUrl
+            && lhs.description == rhs.description
+            && lhs.startTime == rhs.startTime
+            && lhs.endTime == rhs.endTime
+            && lhs.website == rhs.website
+    }
+}
+
+extension Array where Element == FlingPerformer {
+    func equals(_ arr: [FlingPerformer]) -> Bool {
+        if arr.count != count {
+            return false
+        }
+        
+        for i in 0..<(count) {
+            if self[i] != arr[i] {
+                return false
+            }
+        }
+        return true
+    }
+}

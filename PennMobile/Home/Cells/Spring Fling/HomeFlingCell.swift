@@ -82,7 +82,26 @@ extension HomeFlingCell {
         self.performerImageView.image = item.image
         self.performerLabel.text = performer.name
         self.descriptionLabel.text = performer.description
-        self.dateLabel.text = "Today at 7:20pm"
+        self.dateLabel.text = getDateString(for: performer)
+    }
+    
+    private func getDateString(for performer: FlingPerformer) -> String {
+        let now = Date()
+        if performer.startTime < now && now < performer.endTime {
+            return "Happening now"
+        }
+        
+        let formatter = DateFormatter()
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
+        formatter.dateFormat = "h:mma"
+        
+        var prelude = "Starting"
+        if performer.startTime.isToday {
+            prelude = "Today"
+        }
+        
+        return "\(prelude) at \(formatter.string(from: performer.startTime))"
     }
 }
 

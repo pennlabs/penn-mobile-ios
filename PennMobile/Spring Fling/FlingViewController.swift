@@ -29,7 +29,7 @@ final class FlingViewController: GenericViewController {
     // For Map Zoom
     fileprivate var mapImageView: UIImageView!
 
-    fileprivate var performers = [FlingPerformer?]()
+    fileprivate var performers = [FlingPerformer]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,16 +40,19 @@ final class FlingViewController: GenericViewController {
         preparePerformersTableView()
         prepareMapImageView()
         prepareMapBarButton()
+        
+        scheduleTableView.isHidden = true
+        performersTableView.isHidden = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if !scheduleTableView.isHidden {
-            performersTableView.isHidden = true
+        if let navbar = navigationController?.navigationBar {
+            removeHairline(from: navbar)
         }
+        
         self.fetchViewModel {
             // TODO: do something when fetch has completed
-            print("Done!")
         }
     }
 }
@@ -68,7 +71,7 @@ extension FlingViewController: HairlineRemovable {
         headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: headerHeight))
         headerToolbar.backgroundColor = navigationController?.navigationBar.backgroundColor
         
-        let newsSwitcher = UISegmentedControl(items: ["Schedule", "Performers"])
+        let newsSwitcher = UISegmentedControl(items: ["Performers", "Schedule"])
         newsSwitcher.center = CGPoint(x: width/2, y: 64 + headerToolbar.frame.size.height/2)
         newsSwitcher.tintColor = UIColor.navRed
         newsSwitcher.selectedSegmentIndex = 0
@@ -80,12 +83,9 @@ extension FlingViewController: HairlineRemovable {
     }
     
     internal func switchTabMode(_ segment: UISegmentedControl) {
-        scheduleTableView.isHidden = !scheduleTableView.isHidden
-        performersTableView.isHidden = !performersTableView.isHidden
-        
-        if performersTableView.isHidden && scheduleTableView.isHidden {
-            scheduleTableView.isHidden = false
-        }
+        let shouldShowPerformers = segment.selectedSegmentIndex == 0
+        performersTableView.isHidden = !shouldShowPerformers
+        scheduleTableView.isHidden = shouldShowPerformers
     }
 }
 
@@ -110,13 +110,10 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
         var (title, description) = ("", "")
         var (startTime, endTime) : (Date?, Date?)
         
-        if let performer = performers[indexPath.row] {
-            (title, description, startTime, endTime) = (performer.name,
+        let performer = performers[indexPath.row]
+        (title, description, startTime, endTime) = (performer.name,
                                                         "\(dateFormatter.string(from: performer.startTime)) - \(dateFormatterTwelveHour.string(from: performer.endTime))",
                                                         performer.startTime, performer.endTime)
-        } else {
-            (title, description) = ("", "")
-        }
         
         
         if (indexPath.row > 0) {
@@ -173,6 +170,7 @@ extension FlingViewController {
     func fetchViewModel(_ completion: @escaping () -> Void) {
         FlingNetworkManager.instance.fetchModel { (model) in
             guard let model = model else { return }
+            if let prevItems = self.model?.items as? [HomeFlingCellItem], let items = model.items as? [HomeFlingCellItem], prevItems.equals(items) { return }
             DispatchQueue.main.async {
                 self.setPerformersTableViewModel(model)
                 self.performersTableView.reloadData()
@@ -215,7 +213,7 @@ extension FlingViewController {
             let flingItem = item as! HomeFlingCellItem
             return flingItem.performer
         }
-        performers.sort(by: { ($0!.startTime < $1!.startTime) })
+        performers.sort(by: { ($0.startTime < $1.startTime) })
     }
 }
 
@@ -306,25 +304,6 @@ extension FlingViewController {
         HomeItemTypes.instance.registerCells(for: performersTableView)
     }
 }
-
-// MARK: - Performers
-extension FlingViewController {
-    func setPerformers() {
-        let performer1 = FlingPerformer.getDefaultPerformer()
-        let performer2 = FlingPerformer.getDefaultPerformer()
-        let performer3 = FlingPerformer.getDefaultPerformer()
-        
-        let performers = [performer1, performer2, performer3]
-        let items = performers.map { (performer) -> HomeFlingCellItem in
-            return HomeFlingCellItem(performer: performer)
-        }
-        let model = FlingTableViewModel()
-        model.items = items
-        performersTableView.model = model
-        performersTableView.reloadData()
-    }
-}
-
 
 
 
