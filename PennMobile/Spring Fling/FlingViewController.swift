@@ -162,6 +162,30 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Saturday, April 14th"
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            // Customize header view
+            view.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 24)
+            view.textLabel?.textColor = UIColor(r: 63, g: 63, b: 63)
+            view.textLabel?.widthAnchor.constraint(equalToConstant: 300)
+            view.contentView.backgroundColor = UIColor.navBarGrey
+            
+            // Add divider line to header view
+            let dividerLine = UIView()
+            dividerLine.backgroundColor = .lightGray
+            view.addSubview(dividerLine)
+            dividerLine.translatesAutoresizingMaskIntoConstraints = false
+            dividerLine.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            dividerLine.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            dividerLine.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            dividerLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        }
+    }
 
 }
 
@@ -260,7 +284,8 @@ extension FlingViewController {
 extension FlingViewController {
     func prepareScheduleTableView() {
         scheduleTableView = UITableView()
-        scheduleTableView.backgroundColor = .clear
+        scheduleTableView.backgroundColor = .white
+        scheduleTableView.tableHeaderView?.backgroundColor = .navBarGrey
         scheduleTableView.separatorStyle = .none
         scheduleTableView.allowsSelection = false
 
