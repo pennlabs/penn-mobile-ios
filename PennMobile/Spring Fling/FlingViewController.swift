@@ -102,6 +102,8 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell",
                                                  for: indexPath) as! TimelineTableViewCell
         
+        cell.backgroundColor = .white
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm"
         let dateFormatterTwelveHour = DateFormatter()
@@ -284,8 +286,7 @@ extension FlingViewController {
 extension FlingViewController {
     func prepareScheduleTableView() {
         scheduleTableView = UITableView()
-        scheduleTableView.backgroundColor = .white
-        scheduleTableView.tableHeaderView?.backgroundColor = .navBarGrey
+        scheduleTableView.backgroundColor = .navBarGrey
         scheduleTableView.separatorStyle = .none
         scheduleTableView.allowsSelection = false
         scheduleTableView.showsVerticalScrollIndicator = false
@@ -326,6 +327,8 @@ extension FlingViewController {
             performersTableView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
             performersTableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
+        
+        performersTableView.tableFooterView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 30.0))
         
         HomeItemTypes.instance.registerCells(for: performersTableView)
     }

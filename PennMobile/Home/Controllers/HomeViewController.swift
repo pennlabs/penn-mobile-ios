@@ -55,6 +55,8 @@ extension HomeViewController {
             tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
         
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 30.0))
+        
         HomeItemTypes.instance.registerCells(for: tableView)
     }
     

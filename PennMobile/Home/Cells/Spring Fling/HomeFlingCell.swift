@@ -155,7 +155,7 @@ extension HomeFlingCell {
     private func preparePerformerLabel() {
         performerLabel = UILabel()
         performerLabel.font = HomeFlingCell.nameFont
-        performerLabel.numberOfLines = 3
+        performerLabel.numberOfLines = 8
         
         let tapGestureRecognizer = getTapGestureRecognizer()
         performerLabel.addGestureRecognizer(tapGestureRecognizer)
