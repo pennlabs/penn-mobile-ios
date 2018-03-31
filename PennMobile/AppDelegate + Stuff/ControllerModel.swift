@@ -47,7 +47,7 @@ class ControllerModel: NSObject {
         }
     }
     
-    let orderedPages: [Page] = [.fling, .home, .dining, .studyRoomBooking, .laundry, .news, .contacts, .about]
+    let orderedPages: [Page] = [.home, .dining, .fling, .studyRoomBooking, .laundry, .news, .contacts, .about]
     
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }

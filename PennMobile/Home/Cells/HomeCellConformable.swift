@@ -36,6 +36,6 @@ extension HomeCellConformable {
         
         addSubview(cardView)
         cardView.anchorWithConstantsToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
-                                          topConstant: 20, leftConstant: 20, bottomConstant: 20, rightConstant: 20)
+                                          topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20)
     }
 }
