@@ -100,6 +100,7 @@
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D31203D39FF0029A460 /* DiningVenueName.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
+		21F0AE3A20719A86003D6487 /* diningJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = 21F0AE3920719A86003D6487 /* diningJSON.json */; };
 		21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F020538A87005B143F /* HomeFlingCellItem.swift */; };
 		21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F220538A90005B143F /* HomeFlingCell.swift */; };
 		21F5F8F520538AFC005B143F /* FlingPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F420538AFC005B143F /* FlingPerformer.swift */; };
@@ -233,6 +234,7 @@
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21EB4D31203D39FF0029A460 /* DiningVenueName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueName.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
+		21F0AE3920719A86003D6487 /* diningJSON.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = diningJSON.json; path = ../../../../diningJSON.json; sourceTree = "<group>"; };
 		21F5F8F020538A87005B143F /* HomeFlingCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCellItem.swift; sourceTree = "<group>"; };
 		21F5F8F220538A90005B143F /* HomeFlingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCell.swift; sourceTree = "<group>"; };
 		21F5F8F420538AFC005B143F /* FlingPerformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingPerformer.swift; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 			isa = PBXGroup;
 			children = (
 				211DFE531F36A02C00CB73E4 /* DiningAPI.swift */,
+				21F0AE3920719A86003D6487 /* diningJSON.json */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -869,6 +872,7 @@
 				2189C09E2027CE4100771C1F /* locations.json in Resources */,
 				211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
+				21F0AE3A20719A86003D6487 /* diningJSON.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
