@@ -8,13 +8,10 @@
 
 import Foundation
 
-protocol HomeCellConformable where Self: UITableViewCell {
-    static var identifier: String { get set }
-    
-    var item: HomeViewModelItem? { get set }
-    var delegate: HomeCellDelegate! { get set }
-    
-    var cardView: UIView! { get }
+protocol HomeCellDelegate: ModularTableViewCellDelegate, LaundryMachineCellTappable, DiningCellSelectable, URLSelectable {}
+
+protocol HomeCellConformable: ModularTableViewCell where Self: UITableViewCell {
+    var cardView: UIView! { get }    
 }
 
 // - MARK: Prepare
@@ -23,7 +20,6 @@ extension HomeCellConformable {
         self.backgroundColor = .clear
         self.selectionStyle = .none
         prepareCardView()
-        prepareTypeLabel()
     }
     
     fileprivate func prepareCardView() {
@@ -40,18 +36,6 @@ extension HomeCellConformable {
         
         addSubview(cardView)
         cardView.anchorWithConstantsToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
-                                          topConstant: 20, leftConstant: 20, bottomConstant: 20, rightConstant: 20)
-    }
-    
-    fileprivate func prepareTypeLabel() {
-        let typeLabel = UILabel()
-        
-        if let item = item {
-            typeLabel.font = UIFont.systemFont(ofSize: 10)
-            typeLabel.text = item.title
-        }
-        
-        addSubview(typeLabel)
-        typeLabel.anchorWithConstantsToTop(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 8, bottomConstant: 0, rightConstant: 0)
+                                          topConstant: HomeViewController.cellSpacing, leftConstant: HomeViewController.edgeSpacing, bottomConstant: 0, rightConstant: HomeViewController.edgeSpacing)
     }
 }

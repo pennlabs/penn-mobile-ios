@@ -9,16 +9,22 @@
 import Foundation
 import SwiftyJSON
 
+func getDeviceID() -> String {
+    let deviceID = UIDevice.current.identifierForVendor!.uuidString
+    return UserDBManager.shared.testRun ? "test" : deviceID
+}
+
 class UserDBManager: NSObject {
     static let shared = UserDBManager()
-    fileprivate let baseUrl = "https://api.pennlabs.org"
+    fileprivate let baseUrl = "https://api-dev.pennlabs.org"
     
-    var dryRun: Bool = false
+    var dryRun: Bool = true
+    var testRun: Bool = false
     
     fileprivate func getAnalyticsRequest(url: String) -> NSMutableURLRequest {
         let url = URL(string: url)!
         let request = NSMutableURLRequest(url: url)
-        let deviceID = UIDevice.current.identifierForVendor!.uuidString
+        let deviceID = getDeviceID()
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         return request
     }
@@ -45,7 +51,7 @@ class UserDBManager: NSObject {
     }
     
     fileprivate func sendRequest(_ request: NSMutableURLRequest) {
-        if dryRun { return }
+        if dryRun && !testRun { return }
         let task = URLSession.shared.dataTask(with: request as URLRequest)
         task.resume()
     }
@@ -55,7 +61,7 @@ class UserDBManager: NSObject {
 extension UserDBManager {
     func saveDiningPreference(for venue: DiningVenue) {
         let urlString = "\(baseUrl)/dining/preferences"
-        let id = venue.venue.getID()
+        let id = venue.name.getID()
         let params = ["venue_id": id]
         let request = getAnalyticsPostRequest(url: urlString, params: params)
         sendRequest(request)

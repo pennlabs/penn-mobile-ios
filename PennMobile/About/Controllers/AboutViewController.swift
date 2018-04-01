@@ -262,6 +262,6 @@ extension AboutViewController: URLOpenable {
     }
     
     @objc fileprivate func moreInfo() {
-        open(scheme: "http://pennlabs.org/")
+        open(scheme: "https://pennlabs.org/")
     }
 }

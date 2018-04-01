@@ -10,13 +10,15 @@ import Foundation
 import UIKit
 
 final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
-    static var identifier = "laundryCell"
-    static var cellHeight: CGFloat = 420.0
-
-    var delegate: HomeCellDelegate!
-    var item: HomeViewModelItem? {
+    static var identifier: String = "laundryCell"
+    static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
+        return 380.0 + HomeViewController.cellSpacing
+    }
+    
+    var delegate: ModularTableViewCellDelegate!
+    var item: ModularTableViewItem! {
         didSet {
-            guard let item = item as? HomeViewModelLaundryItem else { return }
+            guard let item = item as? HomeLaundryCellItem else { return }
             setupCell(with: item)
         }
     }
@@ -46,7 +48,7 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
 
 // MARK: - Setup Item
 extension HomeLaundryCell {
-    fileprivate func setupCell(with item: HomeViewModelLaundryItem) {
+    fileprivate func setupCell(with item: HomeLaundryCellItem) {
         room = item.room
         roomLabel.text = room.name
         buildingLabel.text = room.building
@@ -66,10 +68,12 @@ extension HomeLaundryCell: LaundryMachinesViewDataSource {
 // MARK: - LaundryMachineViewDelegate
 extension HomeLaundryCell: LaundryMachineViewDelegate {
     var allowMachineNotifications: Bool {
+        guard let delegate = delegate as? LaundryMachineCellTappable else { return false }
         return delegate.allowMachineNotifications
     }
     
     func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void) {
+        guard let delegate = delegate as? LaundryMachineCellTappable else { return }
         delegate.handleMachineCellTapped(for: machine, updateCellIfNeeded)
     }
 }

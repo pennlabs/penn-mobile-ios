@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DatabaseManager.shared.dryRun = true
         GoogleAnalyticsManager.shared.dryRun = true
         UserDBManager.shared.dryRun = true
+        UserDBManager.shared.testRun = true
         
         GoogleAnalyticsManager.prepare()
         LaundryAPIService.instance.prepare()
