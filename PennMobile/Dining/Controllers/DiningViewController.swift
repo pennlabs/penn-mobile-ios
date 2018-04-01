@@ -32,7 +32,10 @@ class DiningViewController: GenericTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchDiningHours()
+        // fetchDiningHours()
+        DiningAPI.instance.fetchHardcodedData { (success) in
+            
+        }
     }
 }
 
