@@ -12,8 +12,10 @@ import UIKit
 class HomeViewController: GenericViewController {
     
     var tableViewModel: HomeTableViewModel!
-    
     var tableView: ModularTableView!
+    
+    static let edgeSpacing: CGFloat = 20
+    static let cellSpacing: CGFloat = 20
 
     override func viewDidLoad() {
         super.viewDidLoad()

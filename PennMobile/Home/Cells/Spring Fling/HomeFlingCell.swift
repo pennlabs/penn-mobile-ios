@@ -51,7 +51,8 @@ final class HomeFlingCell: UITableViewCell, HomeCellConformable {
             descriptionHeight = item.performer.description.dynamicHeight(font: descriptionFont, width: width)
             descriptionHeightDictionary[item.performer.description] = descriptionHeight
         }
-        return imageHeight + 2 * 20 + nameHeight + descriptionHeight + 60
+        let height = imageHeight + HomeViewController.cellSpacing + nameHeight + descriptionHeight + 60
+        return height
     }
     
     // MARK: UI Elements
