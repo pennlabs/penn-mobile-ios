@@ -9,7 +9,7 @@
 import Foundation
 
 class DiningDetailModel {
-    static private let server = "http://university-of-pennsylvania.cafebonappetit.com/cafe"
+    static private let server = "https://university-of-pennsylvania.cafebonappetit.com/cafe"
         
     static private let serverDictionary: [DiningVenueName: String] = {
         var dict = [DiningVenueName: String]()
@@ -59,7 +59,7 @@ class DiningDetailModel {
 // MARK: - Webview Preloading
 extension DiningDetailModel {
     static func preloadWebview(for venue: DiningVenueName) {
-        if getWebview(for: venue) != nil { return }
+        /*if getWebview(for: venue) != nil { return }
         
         DiningAPI.instance.fetchDetailPageHTML(for: venue) { (html) in
             if let html = html {
@@ -69,6 +69,6 @@ extension DiningDetailModel {
                     DiningDetailModel.set(webview: webview, for: venue)
                 }
             }
-        }
+        }*/
     }
 }
