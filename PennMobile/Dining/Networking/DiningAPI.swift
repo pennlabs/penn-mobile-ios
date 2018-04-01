@@ -179,8 +179,6 @@ extension DiningHoursData {
             
             guard let openDate = formatter.date(from: start)?.adjustedFor11_59, let closeDate = formatter.date(from: end)?.adjustedFor11_59 else { continue }
             
-            print(formatter.string(from: openDate))
-            print(formatter.string(from: closeDate))
             let time = OpenClose(open: openDate, close: closeDate)
             hours.append(time)
         }
