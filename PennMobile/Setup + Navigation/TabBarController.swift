@@ -59,65 +59,41 @@ protocol TabBarShowable {
 
 extension HomeViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "Home_Gray_New")
-        let selectedImage = UIImage(named: "Home_Blue_New")
+        let normalImage = UIImage(named: "Home_Grey")
+        let selectedImage = UIImage(named: "Home_Blue")
         return ESTabBarItem(title: "Home", image: normalImage, selectedImage: selectedImage)
     }
 }
 
 extension DiningViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "Dining_Gray_New")
-        let selectedImage = UIImage(named: "Dining_Blue_New")
+        let normalImage = UIImage(named: "Dining_Grey")
+        let selectedImage = UIImage(named: "Dining_Blue")
         return ESTabBarItem(title: "Dining", image: normalImage, selectedImage: selectedImage)
     }
 }
 
 extension GSRController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "GSR_Gray_New")
-        let selectedImage = UIImage(named: "GSR_Blue_New")
+        let normalImage = UIImage(named: "GSR_Grey")
+        let selectedImage = UIImage(named: "GSR_Blue")
         return ESTabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
     }
 }
 
 extension LaundryTableViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "Laundry_Gray_New")
-        let selectedImage = UIImage(named: "Laundry_Blue_New")
+        let normalImage = UIImage(named: "Laundry_Grey")
+        let selectedImage = UIImage(named: "Laundry_Blue")
         return ESTabBarItem(title: "Laundry", image: normalImage, selectedImage: selectedImage)
     }
 }
 
 extension MoreViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "More_Gray_New")
-        let selectedImage = UIImage(named: "More_Blue_New")
+        let normalImage = UIImage(named: "More_Grey")
+        let selectedImage = UIImage(named: "More_Blue")
         return ESTabBarItem(title: "More", image: normalImage, selectedImage: selectedImage)
-    }
-}
-
-extension ContactsTableViewController: TabBarShowable {
-    func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "Home_Gray_New")
-        let selectedImage = UIImage(named: "Home_Blue_New")
-        return ESTabBarItem(title: "Home", image: normalImage, selectedImage: selectedImage)
-    }
-}
-
-extension NewsViewController: TabBarShowable {
-    func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "Home_Gray_New")
-        let selectedImage = UIImage(named: "Home_Blue_New")
-        return ESTabBarItem(title: "Home", image: normalImage, selectedImage: selectedImage)
-    }
-}
-
-extension AboutViewController: TabBarShowable {
-    func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "Home_Gray_New")
-        let selectedImage = UIImage(named: "Home_Blue_New")
-        return ESTabBarItem(title: "Home", image: normalImage, selectedImage: selectedImage)
     }
 }
 
