@@ -20,6 +20,7 @@ enum Page: String {
     case more = "More"
     case news = "News"
     case contacts = "Penn Contacts"
+    case fling = "Spring Fling"
     case about = "About"
 }
 
@@ -36,6 +37,7 @@ class ControllerModel: NSObject {
         dict[.more] = MoreViewController()
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()
+        dict[.fling] = FlingViewController()
         dict[.about] = AboutViewController()
         return dict
     }()
@@ -51,8 +53,8 @@ class ControllerModel: NSObject {
     let tabBarOrder: [Page] = [.home, .dining, .laundry, .studyRoomBooking, .more, .news, .about]
     
     // pages order in MoreViewController:
-    let moreOrder: [Page] = [.news, .contacts, .about]
-    let moreIcons: [UIImage] = [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+    let moreOrder: [Page] = [.fling, .news, .contacts, .about]
+    let moreIcons: [UIImage] = [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
     
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }

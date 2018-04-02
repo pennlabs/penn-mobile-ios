@@ -190,6 +190,7 @@ extension LaundryTableViewController: LaundryCellDelegate {
         if let index = rooms.index(of: room) {
             rooms.remove(at: index)
             LaundryRoom.setPreferences(for: rooms)
+            UserDBManager.shared.saveLaundryPreferences(for: rooms)
             tableView.reloadData()
         }
     }

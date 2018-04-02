@@ -12,8 +12,10 @@ import UIKit
 class HomeViewController: GenericViewController {
     
     var tableViewModel: HomeTableViewModel!
-    
     var tableView: ModularTableView!
+    
+    static let edgeSpacing: CGFloat = 20
+    static let cellSpacing: CGFloat = 20
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +58,8 @@ extension HomeViewController {
             tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
         
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 30.0))
+        
         HomeItemTypes.instance.registerCells(for: tableView)
     }
     
@@ -68,6 +72,9 @@ extension HomeViewController {
 
 // MARK: - ViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
+    func handleUrlPressed(_ url: String) {
+    }
+    
     var allowMachineNotifications: Bool {
         return true
     }

@@ -49,5 +49,19 @@ class GenericViewController: UIViewController, Trackable {
     
     var screenName: String?
     var trackScreen: Bool = false
+    
+    var isPanEnabled: Bool = true {
+        didSet {
+            //pan(enabled: isPanEnabled)
+        }
+    }
+    
+    /*private func pan(enabled: Bool) {
+        revealViewController()?.panGestureRecognizer().isEnabled = enabled
+    }*/
+    
+    func removeMenuButton() {
+        self.navigationItem.leftBarButtonItem = nil
+    }
 }
 

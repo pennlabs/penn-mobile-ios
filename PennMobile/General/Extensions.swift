@@ -149,7 +149,9 @@ extension Date {
     }
     
     var roundedDownToHour: Date {
-        return self.add(minutes: -self.minutes)
+        let comp: DateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour], from: self)
+        return Calendar.current.date(from: comp)!
+        // return self.add(minutes: -self.minutes)
     }
     
     var roundUpToHourIfNeeded: Date {

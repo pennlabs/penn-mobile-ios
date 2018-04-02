@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol HomeCellDelegate: ModularTableViewCellDelegate, LaundryMachineCellTappable, DiningCellSelectable {}
+protocol HomeCellDelegate: ModularTableViewCellDelegate, LaundryMachineCellTappable, DiningCellSelectable, URLSelectable {}
 
 protocol HomeCellConformable: ModularTableViewCell where Self: UITableViewCell {
     var cardView: UIView! { get }    
@@ -36,6 +36,6 @@ extension HomeCellConformable {
         
         addSubview(cardView)
         cardView.anchorWithConstantsToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
-                                          topConstant: 20, leftConstant: 20, bottomConstant: 20, rightConstant: 20)
+                                          topConstant: HomeViewController.cellSpacing, leftConstant: HomeViewController.edgeSpacing, bottomConstant: 0, rightConstant: HomeViewController.edgeSpacing)
     }
 }
