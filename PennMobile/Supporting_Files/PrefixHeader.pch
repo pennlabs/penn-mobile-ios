@@ -17,6 +17,5 @@
 #define PENN_YELLOW [UIColor colorWithRed:192.0/255.0f green:57.0/255.0f blue:43.0/255.0f alpha:1.0f]
 
 #import "MBProgressHUD.h"
-#import "SWRevealViewController.h"
 
 #endif

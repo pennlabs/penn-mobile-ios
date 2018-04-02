@@ -37,8 +37,6 @@
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
 		216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640781EBADADA00746B8E /* PennMobileTests.swift */; };
-		216640871EBADB8300746B8E /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640861EBADB8300746B8E /* SWRevealViewController.m */; };
-		2166408A1EBADBB700746B8E /* MasterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640891EBADBB700746B8E /* MasterTableViewController.swift */; };
 		216640941EBADC1700746B8E /* DiningControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640901EBADC1700746B8E /* DiningControllerCell.swift */; };
 		216640951EBADC1700746B8E /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640911EBADC1700746B8E /* DiningViewController.swift */; };
 		216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640921EBADC1700746B8E /* DiningDetailViewController.swift */; };
@@ -114,6 +112,11 @@
 		B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */; };
 		B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAF11F802A050038B9D5 /* LaundryCell.swift */; };
 		B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B658393A1FABD295009486FC /* LaundryAPIService.swift */; };
+		B6665A182071E63800F49A9C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6665A172071E63800F49A9C /* TabBarController.swift */; };
+		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
+		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
+		CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */; };
+		CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */; };
 		CF29A1751FB788820067D946 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1651FB7887C0067D946 /* Page.swift */; };
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
@@ -167,9 +170,6 @@
 		216640781EBADADA00746B8E /* PennMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobileTests.swift; sourceTree = "<group>"; };
 		2166407A1EBADADA00746B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
-		216640851EBADB8300746B8E /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		216640861EBADB8300746B8E /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		216640891EBADBB700746B8E /* MasterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterTableViewController.swift; sourceTree = "<group>"; };
 		216640901EBADC1700746B8E /* DiningControllerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningControllerCell.swift; sourceTree = "<group>"; };
 		216640911EBADC1700746B8E /* DiningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewController.swift; sourceTree = "<group>"; };
 		216640921EBADC1700746B8E /* DiningDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningDetailViewController.swift; sourceTree = "<group>"; };
@@ -248,9 +248,14 @@
 		B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryTableViewController.swift; sourceTree = "<group>"; };
 		B654BAF11F802A050038B9D5 /* LaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryCell.swift; sourceTree = "<group>"; };
 		B658393A1FABD295009486FC /* LaundryAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryAPIService.swift; sourceTree = "<group>"; };
+		B6665A172071E63800F49A9C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF5C02A7792D4E6978F00EB /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
+		CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
+		CF1CE9BC205D664700C51F46 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
+		CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewCell.swift; sourceTree = "<group>"; };
+		CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		CF29A1651FB7887C0067D946 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
@@ -353,11 +358,12 @@
 		216640621EBADADA00746B8E /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
+				CF1CE9B8205D5BF100C51F46 /* More */,
 				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
 				216640F91EBB898700746B8E /* About */,
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
 				216640C71EBADC9D00746B8E /* General */,
-				216640881EBADBA000746B8E /* AppDelegate + Stuff */,
+				216640881EBADBA000746B8E /* Setup + Navigation */,
 				21640D4220103C8A002F33CA /* Home */,
 				2166408B1EBADBF800746B8E /* Dining */,
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
@@ -388,21 +394,19 @@
 				2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */,
 				216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */,
 				216640F81EBB88FB00746B8E /* PrefixHeader.pch */,
-				216640851EBADB8300746B8E /* SWRevealViewController.h */,
-				216640861EBADB8300746B8E /* SWRevealViewController.m */,
 				2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */,
 			);
 			path = Supporting_Files;
 			sourceTree = "<group>";
 		};
-		216640881EBADBA000746B8E /* AppDelegate + Stuff */ = {
+		216640881EBADBA000746B8E /* Setup + Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				B6665A172071E63800F49A9C /* TabBarController.swift */,
 				216640631EBADADA00746B8E /* AppDelegate.swift */,
-				216640891EBADBB700746B8E /* MasterTableViewController.swift */,
 				21640D6120114A28002F33CA /* ControllerModel.swift */,
 			);
-			path = "AppDelegate + Stuff";
+			path = "Setup + Navigation";
 			sourceTree = "<group>";
 		};
 		2166408B1EBADBF800746B8E /* Dining */ = {
@@ -755,6 +759,18 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		CF1CE9B8205D5BF100C51F46 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */,
+				CF1CE9BC205D664700C51F46 /* MoreCell.swift */,
+				CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */,
+				CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */,
+			);
+			name = More;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		CF29A15F1FB7873A0067D946 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -889,6 +905,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
@@ -902,6 +919,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESTabBarController_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
@@ -1009,11 +1027,13 @@
 				B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */,
 				219F01F41FB7CCFA006BBC4E /* SAConfettiView.swift in Sources */,
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
+				B6665A182071E63800F49A9C /* TabBarController.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
+				CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
@@ -1025,6 +1045,7 @@
 				21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */,
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
+				CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
 				2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
@@ -1038,6 +1059,7 @@
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
+				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
@@ -1062,7 +1084,6 @@
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
-				2166408A1EBADBB700746B8E /* MasterTableViewController.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				217A7845204DB800004F1227 /* HomeAsynchronousFetching.swift in Sources */,
 				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
@@ -1098,7 +1119,6 @@
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
-				216640871EBADB8300746B8E /* SWRevealViewController.m in Sources */,
 				B6111DB720184C8C00DC7877 /* BeakerLayer.swift in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
@@ -1106,6 +1126,7 @@
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
 				216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */,
+				CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */,
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
 				216640CD1EBADCA400746B8E /* GoogleAnalyticsManager.swift in Sources */,

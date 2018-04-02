@@ -29,6 +29,7 @@ class HomeViewController: GenericViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.title = "Home"
         if tableViewModel == nil {
             fetchViewModel {
                 // TODO: behavior for when model returns

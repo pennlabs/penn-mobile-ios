@@ -5,7 +5,6 @@
 //  Created by Josh Doman on 1/18/18.
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
-
 import Foundation
 import UIKit
 
@@ -18,6 +17,7 @@ enum Page: String {
     case dining = "Dining"
     case studyRoomBooking = "Study Room Booking"
     case laundry = "Laundry"
+    case more = "More"
     case news = "News"
     case contacts = "Penn Contacts"
     case fling = "Spring Fling"
@@ -34,6 +34,7 @@ class ControllerModel: NSObject {
         dict[.dining] = DiningViewController()
         dict[.studyRoomBooking] = GSRController()
         dict[.laundry] = LaundryTableViewController()
+        dict[.more] = MoreViewController()
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()
         dict[.fling] = FlingViewController()
@@ -47,7 +48,13 @@ class ControllerModel: NSObject {
         }
     }
     
-    let orderedPages: [Page] = [.dining, .fling, .studyRoomBooking, .laundry, .news, .contacts, .about]
+    // let orderedPages: [Page] = [.home, .dining, .studyRoomBooking, .laundry, .more, .news, .contacts, .about]
+    let orderedPages: [Page] = [.home, .dining, .studyRoomBooking, .laundry, .more]
+    let tabBarOrder: [Page] = [.home, .dining, .laundry, .studyRoomBooking, .more, .news, .about]
+    
+    // pages order in MoreViewController:
+    let moreOrder: [Page] = [.fling, .news, .contacts, .about]
+    let moreIcons: [UIImage] = [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
     
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }
@@ -55,6 +62,10 @@ class ControllerModel: NSObject {
     
     func viewController(for controller: Page) -> UIViewController {
         return vcDictionary[controller]!
+    }
+    
+    func viewControllers(for pages: [Page]) -> [UIViewController] {
+        return pages.map { viewController(for: $0) }
     }
     
     var firstVC: UIViewController {
@@ -86,8 +97,5 @@ class ControllerModel: NSObject {
 // MARK: - Transitions
 extension ControllerModel {
     func transition(to page: Page, withAnimation: Bool) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let masterVC = appDelegate.masterTableViewController
-        masterVC.transition(to: page)
     }
 }

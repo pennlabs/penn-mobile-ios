@@ -16,10 +16,6 @@ import FirebaseMessaging
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var swRevealViewController: SWRevealViewController!
-    var navController: UINavigationController!
-    var masterTableViewController = MasterTableViewController()
-    var homeController = ControllerModel.shared.firstVC
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -45,51 +41,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         if !UserDefaults.standard.isOnboarded() {
-            handleOnboarding(animated: true)
+            //            handleOnboarding(animated: true)
             UserDefaults.standard.setIsOnboarded(value: true)
             return true
         }
         
-        navController = UINavigationController(rootViewController: homeController)
-        navController.isNavigationBarHidden = true
+        let tabBarController = TabBarController()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navController
+        window?.rootViewController = UINavigationController(rootViewController: tabBarController)
         window?.makeKeyAndVisible()
-        
-        presentSWController()
         return true
     }
     
-    func handleOnboarding(animated: Bool) {
-        let vc = UIViewController()
-        vc.view.backgroundColor = .white
-        navController = UINavigationController(rootViewController: vc)
-        navController.isNavigationBarHidden = true
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navController
-        window?.makeKeyAndVisible()
-        
-        let tempVC = UIViewController()
-        tempVC.view.backgroundColor = UIColor.red
-        navController.modalTransitionStyle = .crossDissolve
-        let oc = OnboardingController()
-        oc.delegate = self
-        self.navController.present(oc, animated: animated, completion: nil)
-    }
-    
-    func presentSWController() {
-        
-        let masterNavController = UINavigationController(rootViewController: masterTableViewController)
-        let homeNavController = UINavigationController(rootViewController: homeController)
-        
-        swRevealViewController = SWRevealViewController(rearViewController: masterNavController, frontViewController: homeNavController)
-        
-        self.navController.pushViewController(swRevealViewController, animated: false)
-        
-        masterTableViewController.prepare() //need to call because viewDidLoad not called until menu button is pressed (bug with SWRevealViewController?)
-    }
+    //    func handleOnboarding(animated: Bool) {
+    //        let vc = UIViewController()
+    //        vc.view.backgroundColor = .white
+    //        navController = UINavigationController(rootViewController: vc)
+    //        navController.isNavigationBarHidden = true
+    //
+    //        window = UIWindow(frame: UIScreen.main.bounds)
+    //        window?.rootViewController = navController
+    //        window?.makeKeyAndVisible()
+    //
+    //        let tempVC = UIViewController()
+    //        tempVC.view.backgroundColor = UIColor.red
+    //        navController.modalTransitionStyle = .crossDissolve
+    //        let oc = OnboardingController()
+    //        oc.delegate = self
+    //        self.navController.present(oc, animated: animated, completion: nil)
+    //    }
     
     //Special thanks to Ray Wenderlich
     func registerForPushNotifications() {
@@ -174,17 +155,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DatabaseManager.shared.startSession()
         ControllerModel.shared.visibleVC().viewWillAppear(true)
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         DatabaseManager.shared.endSession()
     }
-
+    
 }
 
 extension AppDelegate: OnboardingDelegate {
     func handleFinishedOnboarding() {
-        navController.viewControllers = [homeController]
-        presentSWController()
     }
 }
 
@@ -231,4 +210,3 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler()
     }
 }
-
