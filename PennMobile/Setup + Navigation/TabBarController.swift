@@ -65,6 +65,14 @@ extension HomeViewController: TabBarShowable {
     }
 }
 
+extension FlingViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Fling_Grey")
+        let selectedImage = UIImage(named: "Fling_Blue")
+        return ESTabBarItem(title: "Fling", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
 extension DiningViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Dining_Grey")
