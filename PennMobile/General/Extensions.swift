@@ -77,6 +77,26 @@ extension UIColor {
     
     static let navRed = UIColor(r: 192, g: 57, b:  43)
     static let navBarGrey = UIColor(r: 247, g: 247, b: 247)
+    
+    // --- New colors for homepage redesign ---
+    // Greys
+    static let primaryTitleGrey = UIColor(r: 63, g: 63, b: 63)
+    static let secondaryTitleGrey = UIColor(r: 155, g: 155, b: 155)
+    static let allbirdsGrey = UIColor(r: 234, g: 234, b: 234)
+    // Colors
+    static let navigationBlue = UIColor(r: 74, g: 144, b: 226)
+    static let interactionGreen = UIColor(r: 118, g: 191, b: 150)
+}
+
+extension UIFont {
+    
+    static let primaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 24)
+    static let secondaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
+    
+    static let footerDescriptionFont = UIFont(name: "AvenirNext-Regular", size: 10)
+    static let footerTransitionFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
+    
+    static let gsrTimeIncrementFont = UIFont(name: "AvenirNext-DemiBold", size: 20)
 }
 
 extension UIBarButtonItem {
