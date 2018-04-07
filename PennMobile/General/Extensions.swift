@@ -92,6 +92,7 @@ extension UIFont {
     
     static let primaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 24)
     static let secondaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
+    static let interiorTitleFont = UIFont(name: "AvenirNext-Regular", size: 20)
     
     static let footerDescriptionFont = UIFont(name: "AvenirNext-Regular", size: 10)
     static let footerTransitionFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
