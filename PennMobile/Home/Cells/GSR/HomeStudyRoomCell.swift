@@ -15,7 +15,7 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     //static var cellHeight: CGFloat = 183.0 + (BookingRowCell.rowHeight * CGFloat(numberOfBookingCellRows))
     static private var numberOfBookingCellRows = 2
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
-        return 183.0 + (BookingRowCell.rowHeight * CGFloat(numberOfBookingCellRows))
+        return 163.0 + (BookingRowCell.rowHeight * CGFloat(numberOfBookingCellRows))
     }
     
     var delegate: ModularTableViewCellDelegate!
@@ -217,10 +217,12 @@ extension HomeStudyRoomCell {
     
     fileprivate func getStudyRoomTableView() -> UITableView {
         let tableView = UITableView()
-        tableView.backgroundColor = .green
+        tableView.backgroundColor = .clear
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.backgroundColor = .green
         tableView.register(BookingRowCell.self, forCellReuseIdentifier: bookingRowIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView

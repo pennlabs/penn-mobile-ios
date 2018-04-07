@@ -17,7 +17,8 @@ internal typealias BookingOptions = (StudyRoomBookingOption?, StudyRoomBookingOp
 
 class BookingRowCell: UITableViewCell {
     
-    static let rowHeight: CGFloat = 76.0
+    static let rowHeight: CGFloat = 82.0
+    //static let rowHeight: CGFloat = 76.0
     
     fileprivate var rowLabel: UILabel!
     fileprivate var bookingLabels: (UILabel?, UILabel?, UILabel?)
@@ -95,9 +96,9 @@ extension BookingRowCell {
         bookingLabels.0!.widthAnchor.constraint(equalTo: bookingLabels.1!.widthAnchor).isActive = true
         bookingLabels.1!.widthAnchor.constraint(equalTo: bookingLabels.2!.widthAnchor).isActive = true
         
-        bookingLabels.0!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3).isActive = true
-        bookingLabels.1!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3).isActive = true
-        bookingLabels.2!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3).isActive = true
+        bookingLabels.0!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
+        bookingLabels.1!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
+        bookingLabels.2!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
     }
     
     // MARK: Buttons
