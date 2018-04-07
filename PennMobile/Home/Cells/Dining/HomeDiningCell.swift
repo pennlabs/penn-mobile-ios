@@ -174,12 +174,10 @@ extension HomeDiningCell {
         
         cardView.addSubview(venueTableView)
         
-        venueTableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        venueTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
-                                            constant: safeInsetValue).isActive = true
-        venueTableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        venueTableView.bottomAnchor.constraint(equalTo: footerDescriptionLabel.topAnchor,
-                                               constant: -safeInsetValue).isActive = true
+        venueTableView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor).isActive = true
+        venueTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor).isActive = true
+        venueTableView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor).isActive = true
+        venueTableView.bottomAnchor.constraint(equalTo: footerDescriptionLabel.topAnchor).isActive = true
     }
 }
 

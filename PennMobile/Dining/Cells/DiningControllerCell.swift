@@ -10,7 +10,7 @@ import UIKit
 class DiningCell: UITableViewCell {
     
     static let identifier = "diningVenueCell"
-    static let cellHeight: CGFloat = 85
+    static let cellHeight: CGFloat = 86
     
     var venue: DiningVenue! {
         didSet {
@@ -19,7 +19,7 @@ class DiningCell: UITableViewCell {
     }
     
     // MARK: - UI Elements
-    fileprivate let safeInsetValue: CGFloat = 0
+    fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
     
     fileprivate var venueImageView: UIImageView!
@@ -81,7 +81,8 @@ extension DiningCell {
         safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue).isActive = true
         safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue).isActive = true
         safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue).isActive = true
-        safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue).isActive = true
+        //safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
     }
     
     // MARK: ImageView
@@ -100,8 +101,9 @@ extension DiningCell {
         titleLabel = getTitleLabel()
         addSubview(titleLabel)
         
-        titleLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor, constant: 14).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: venueImageView.topAnchor).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor, 
+                                            constant: safeInsetValue).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
         
         timesLabel = getTimeLabel()
         addSubview(timesLabel)
