@@ -80,9 +80,8 @@ extension DiningCell {
         
         safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue).isActive = true
         safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue).isActive = true
-        safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue).isActive = true
-        //safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue).isActive = true
-        safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue / 2).isActive = true
+        safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue / 2).isActive = true
     }
     
     // MARK: ImageView

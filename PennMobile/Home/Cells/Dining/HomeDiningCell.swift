@@ -23,8 +23,8 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeDiningCellItem else { return 0.0 }
-        //return (CGFloat(item.venues.count) * DiningCell.cellHeight) + 184
-        return (2.0 * DiningCell.cellHeight) + 184
+        // cell height = (venues * venueHeight) + header + footer + cellInset
+        return (CGFloat(item.venues.count) * DiningCell.cellHeight) + (90.0 + 35.0 + 20.0)
     }
     
     static var identifier: String = "diningCell"
@@ -164,7 +164,7 @@ extension HomeDiningCell {
         footerTransitionButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 6).isActive = true
         
         footerDescriptionLabel.trailingAnchor.constraint(equalTo: footerTransitionButton.leadingAnchor,
-                                                         constant: -10).isActive = true
+                                                        constant: -10).isActive = true
         footerDescriptionLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor).isActive = true
     }
     
@@ -175,9 +175,11 @@ extension HomeDiningCell {
         cardView.addSubview(venueTableView)
         
         venueTableView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor).isActive = true
-        venueTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor).isActive = true
+        venueTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
+                                            constant: safeInsetValue / 2).isActive = true
         venueTableView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor).isActive = true
-        venueTableView.bottomAnchor.constraint(equalTo: footerDescriptionLabel.topAnchor).isActive = true
+        venueTableView.bottomAnchor.constraint(equalTo: footerDescriptionLabel.topAnchor,
+                                            constant: -safeInsetValue / 2).isActive = true
     }
 }
 
