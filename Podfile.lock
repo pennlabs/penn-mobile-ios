@@ -1,4 +1,5 @@
 PODS:
+  - ESTabBarController-swift (2.5)
   - Firebase (4.8.0):
     - Firebase/Core (= 4.8.0)
   - Firebase/Core (4.8.0):
@@ -58,6 +59,7 @@ PODS:
   - TimelineTableViewCell (1.2)
 
 DEPENDENCIES:
+  - ESTabBarController-swift
   - Firebase (~> 4.7)
   - Firebase/Messaging
   - Google/Analytics
@@ -70,6 +72,7 @@ DEPENDENCIES:
   - TimelineTableViewCell
 
 SPEC CHECKSUMS:
+  ESTabBarController-swift: 8daa432f2a9be8ebd25101dc46c84472fd760512
   Firebase: 710decbbc6d9d48530e9a5dba3209740c3532e05
   FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
   FirebaseCore: 3c02ec652db3d03fdc8bc6d9154af3e20d64b6f5
@@ -92,6 +95,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
 
-PODFILE CHECKSUM: ad97d2210a67f65707a0e0f5f0e3d4082565ddd6
+PODFILE CHECKSUM: 9c83b61d474bde74bf1cc1a2c68487fd3dd19a89
 
 COCOAPODS: 1.4.0

@@ -268,9 +268,9 @@ extension FlingViewController {
         mapImageView.contentMode = .scaleAspectFill
         mapImageView.isHidden = true
         
-        let widthToHeightRatio = CGFloat(1062/632)
+        let widthToHeightRatio = CGFloat(2800/1884)
         let width: CGFloat = 4
-        let height = widthToHeightRatio * width
+        let height: CGFloat = widthToHeightRatio * width
         
         view.addSubview(mapImageView)
         _ = mapImageView.anchor(headerToolbar.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: -height, leftConstant: 0, bottomConstant: 0, rightConstant: 30, widthConstant: width, heightConstant: height)

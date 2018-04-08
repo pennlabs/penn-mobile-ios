@@ -5,7 +5,6 @@
 //  Created by Josh Doman on 1/18/18.
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
-
 import Foundation
 import UIKit
 
@@ -18,6 +17,7 @@ enum Page: String {
     case dining = "Dining"
     case studyRoomBooking = "Study Room Booking"
     case laundry = "Laundry"
+    case more = "More"
     case news = "News"
     case contacts = "Penn Contacts"
     case fling = "Spring Fling"
@@ -34,6 +34,7 @@ class ControllerModel: NSObject {
         dict[.dining] = DiningViewController()
         dict[.studyRoomBooking] = GSRController()
         dict[.laundry] = LaundryTableViewController()
+        dict[.more] = MoreViewController()
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()
         dict[.fling] = FlingViewController()
@@ -47,7 +48,34 @@ class ControllerModel: NSObject {
         }
     }
     
-    let orderedPages: [Page] = [.dining, .laundry, .studyRoomBooking, .fling, .news, .contacts, .about]
+    // pages order in tab bar
+    var orderedPages: [Page] {
+        get {
+            if (ControllerModel.isFlingDate()) {
+                return [.home, .fling, .dining, .laundry, .more]
+            }
+            return [.home, .dining, .studyRoomBooking, .laundry, .more]
+        }
+    }
+        
+    // pages order in MoreViewController:
+    var moreOrder: [Page] {
+        get {
+            if (ControllerModel.isFlingDate()) {
+                return [.studyRoomBooking, .news, .contacts, .about]
+            }
+            return [.fling, .news, .contacts, .about]
+        }
+    }
+    var moreIcons: [UIImage] {
+        get {
+            if (ControllerModel.isFlingDate()) {
+                return [#imageLiteral(resourceName: "GSR - Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            } else {
+                return [#imageLiteral(resourceName: "Fling_Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            }
+        }
+    }
     
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }
@@ -55,6 +83,10 @@ class ControllerModel: NSObject {
     
     func viewController(for controller: Page) -> UIViewController {
         return vcDictionary[controller]!
+    }
+    
+    func viewControllers(for pages: [Page]) -> [UIViewController] {
+        return pages.map { viewController(for: $0) }
     }
     
     var firstVC: UIViewController {
@@ -81,13 +113,31 @@ class ControllerModel: NSObject {
     func visibleVC() -> UIViewController {
         return viewController(for: visiblePage())
     }
+    
 }
 
 // MARK: - Transitions
 extension ControllerModel {
     func transition(to page: Page, withAnimation: Bool) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let masterVC = appDelegate.masterTableViewController
-        masterVC.transition(to: page)
+    }
+}
+
+extension ControllerModel {
+    fileprivate static func isFlingDate() -> Bool {
+        let beginDateString = "2018-04-13T05:00:00-04:00"
+        let endDateString = "2018-04-15T05:00:00-04:00"
+        // standard iso formatter
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        let startDate = dateFormatter.date(from: beginDateString)!
+        let endDate = dateFormatter.date(from:endDateString)!
+        // comparison
+        let today = Date()
+        return (today > startDate && today < endDate)
+    }
+    
+    static func isReloadNecessary() -> Bool {
+        return isFlingDate()
     }
 }
