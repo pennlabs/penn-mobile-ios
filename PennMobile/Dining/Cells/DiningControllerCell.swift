@@ -25,6 +25,7 @@ class DiningCell: UITableViewCell {
     fileprivate var venueImageView: UIImageView!
     fileprivate var titleLabel: UILabel!
     fileprivate var timesLabel: UILabel!
+    fileprivate var statusLabel: UILabel!
     fileprivate var menuButton: UIButton!
     fileprivate var locationButton: UIButton!
     
@@ -53,6 +54,15 @@ extension DiningCell {
         venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
         titleLabel.text = venue.name.rawValue
         updateTimeLabel(with: venue.times)
+        if venue.times!.isEmpty {
+            statusLabel.text = "CLOSED TODAY"
+            statusLabel.textColor = .secondaryInformationGrey
+            statusLabel.font = .secondaryInformationFont
+        } else {
+            statusLabel.text = "OPEN"
+            statusLabel.textColor = .informationYellow
+            statusLabel.font = .primaryInformationFont
+        }
     }
     
     fileprivate func updateTimeLabel(with times: [OpenClose]?) {
@@ -67,6 +77,7 @@ extension DiningCell {
 extension DiningCell {
     
     fileprivate func prepareUI() {
+        
         prepareSafeArea()
         prepareImageView()
         prepareLabels()
@@ -99,16 +110,21 @@ extension DiningCell {
     fileprivate func prepareLabels() {
         titleLabel = getTitleLabel()
         addSubview(titleLabel)
-        
-        titleLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor, 
-                                            constant: safeInsetValue).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
-        
+        statusLabel = getStatusLabel()
+        addSubview(statusLabel)
         timesLabel = getTimeLabel()
         addSubview(timesLabel)
         
+        titleLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor,
+                                            constant: safeInsetValue).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        
+        statusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
+        statusLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 3).isActive = true
+        //statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
         timesLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        timesLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4).isActive = true
+        timesLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3).isActive = true
     }
     
     // MARK: Buttons
@@ -162,8 +178,17 @@ extension DiningCell {
     
     fileprivate func getTimeLabel() -> UILabel {
         let label = UILabel()
-        label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.font = .secondaryInformationFont
+        label.textColor = .secondaryInformationGrey
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+
+    fileprivate func getStatusLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .primaryInformationFont
+        label.textColor = .informationYellow
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

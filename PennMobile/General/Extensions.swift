@@ -86,6 +86,8 @@ extension UIColor {
     // Colors
     static let navigationBlue = UIColor(r: 74, g: 144, b: 226)
     static let interactionGreen = UIColor(r: 118, g: 191, b: 150)
+    static let informationYellow = UIColor(r: 255, g: 193, b: 7)
+    static let secondaryInformationGrey = UIColor(r: 155, g: 155, b: 155)
 }
 
 extension UIFont {
@@ -93,6 +95,9 @@ extension UIFont {
     static let primaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 24)
     static let secondaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
     static let interiorTitleFont = UIFont(name: "AvenirNext-Regular", size: 20)
+
+    static let primaryInformationFont = UIFont(name: "AvenirNext-DemiBold", size: 14)
+    static let secondaryInformationFont = UIFont(name: "AvenirNext-Regular", size: 14)
     
     static let footerDescriptionFont = UIFont(name: "AvenirNext-Regular", size: 10)
     static let footerTransitionFont = UIFont(name: "AvenirNext-DemiBold", size: 10)

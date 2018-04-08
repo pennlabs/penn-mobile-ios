@@ -80,7 +80,7 @@ extension Array where Element == OpenClose {
         }
         
         if self.isEmpty {
-            timesString = "CLOSED"
+            timesString = ""
         }
         return timesString
     }

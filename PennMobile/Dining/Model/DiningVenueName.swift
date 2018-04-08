@@ -10,11 +10,11 @@ import Foundation
 
 enum DiningVenueName: String {
     case commons = "1920 Commons"
-    case mcclelland = "McClelland"
-    case nch = "New College"
+    case mcclelland = "McClelland Express"
+    case nch = "New College House"
     case hill = "Hill House"
     case english = "English House"
-    case falk = "Falk Kosher"
+    case falk = "Falk Kosher Dining"
     case frontera = "Tortas Frontera"
     case gourmetGrocer = "Gourmet Grocer"
     case houston = "Houston Market"
