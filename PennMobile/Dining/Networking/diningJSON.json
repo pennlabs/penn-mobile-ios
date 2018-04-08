@@ -1,0 +1,1168 @@
+{
+	"venues": [
+		{
+			"name": "1920 Commons",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "3:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "9:00pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "9:00pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "9:00pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "9:00pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "7:30pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "3:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "7:30pm"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "McClelland Express",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": [
+						{
+							"start": "8:00pm",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "8:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "8:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "8:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "8:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "8:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": []
+				},
+			]
+		},
+		{
+			"name": "New College House",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": [
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "5:00pm",
+							"end": "7:00pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": []
+				},
+			]
+		},
+		{
+			"name": "Hill House",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "3:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "9:00pm"
+						},
+						{
+							"start": "9:00pm",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "7:30am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "9:00pm"
+						},
+						{
+							"start": "9:00pm",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "7:30am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "9:00pm"
+						},
+						{
+							"start": "9:00pm",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "7:30am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "9:00pm"
+						},
+						{
+							"start": "9:00pm",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "7:30am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "9:00pm"
+						},
+						{
+							"start": "9:00pm",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "7:30am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "7:00pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "3:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "7:00pm"
+						},
+						{
+							"start": "9:00pm",
+							"end": "11:59pm"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "English House",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": []
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "8:30am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "8:30am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "8:30am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "8:30am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "8:30am",
+							"end": "10:00am"
+						},
+						{
+							"start": "11:00am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:00pm",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": []
+				}
+			]
+		},
+		{
+			"name": "MBA Cafe",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": []
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "4:00pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "4:00pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "4:00pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "4:00pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": []
+				},
+				{
+					"day": "Saturday",
+					"meals": []
+				}
+			]
+		},
+		{
+			"name": "Pret a Manger",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "4:00pm"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "7:30am",
+							"end": "9:00pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "7:30am",
+							"end": "9:00pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "7:30am",
+							"end": "9:00pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "7:30am",
+							"end": "9:00pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "4:00pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "4:00pm"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Joe's Café",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": []
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "5:00pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "5:00pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "5:00pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "5:00pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "8:30am",
+							"end": "2:00pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": []
+				}
+			]
+		},
+		{
+			"name": "1920 Starbucks",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "7:30am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+         			"meals": [
+						{
+							"start": "7:30am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+          			"meals": [
+						{
+							"start": "7:30am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+          			"meals": [
+						{
+							"start": "7:30am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+          			"meals": [
+						{
+							"start": "7:30am",
+							"end": "9:30pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "6:30pm"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Falk Kosher Dining",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": []
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "11:30am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:30pm",
+							"end": "7:30pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "11:30am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:30pm",
+							"end": "7:30pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "11:30am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:30pm",
+							"end": "7:30pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "11:30am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:30pm",
+							"end": "7:30pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "11:30am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:30pm",
+							"end": "7:00pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": [
+						{
+							"start": "11:30am",
+							"end": "2:00pm"
+						},
+						{
+							"start": "5:30pm",
+							"end": "7:00pm"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Frontera",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "10:00pm"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "10:00pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "10:00pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "10:00pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "10:00pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "10:00pm"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Gourmet Grocer",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "11:59pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "8:00am",
+							"end": "9:30pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "6:30pm"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Houston Market",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": [
+						{
+							"start": "12:00pm",
+							"end": "7:00pm"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "7:00pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "7:00pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "7:00pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "7:00pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "11:00am",
+							"end": "5:00pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": []
+				}
+			]
+		},
+		{
+			"name": "Beefsteak",
+			"schedule": [
+				{
+					"day": "Sunday",
+         			"meals": [
+						{
+							"start": "10:00am",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "10:00am",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Tuesday",
+          			"meals": [
+						{
+							"start": "10:00am",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Wednesday",
+          			"meals": [
+						{
+							"start": "10:00am",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Thursday",
+          			"meals": [
+						{
+							"start": "10:00am",
+							"end": "8:00pm"
+						}
+					]
+				},
+				{
+					"day": "Friday",
+          			"meals": [
+						{
+							"start": "10:00am",
+							"end": "6:00pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": []
+				}
+			]
+		},
+		{
+			"name": "Mark's Café",
+			"schedule": [
+				{
+					"day": "Sunday",
+					"meals": [
+						{
+							"start": "12:00pm",
+							"end": "2:00am"
+						}
+					]
+				},
+				{
+					"day": "Monday",
+					"meals": [
+						{
+							"start": "8:30am",
+							"end": "2:00am"
+						}
+					]
+				},
+        		{
+					"day": "Tuesday",
+					"meals": [
+						{
+							"start": "8:30am",
+							"end": "2:00am"
+						}
+					]
+				},
+        		{
+         			"day": "Wednesday",
+          			"meals": [
+            			{
+              				"start": "8:30am",
+              				"end": "2:00am"
+            			}
+          			]
+        		},
+        		{
+					"day": "Thursday",
+					"meals": [
+						{
+							"start": "8:30am",
+							"end": "2:00am"
+						}
+					]
+				},
+        		{
+					"day": "Friday",
+					"meals": [
+						{
+							"start": "8:30am",
+							"end": "5:00pm"
+						}
+					]
+				},
+				{
+					"day": "Saturday",
+					"meals": [
+						{
+							"start": "12:00pm",
+							"end": "6:00pm"
+						}
+					]
+				}
+			]
+		}
+	]
+}
