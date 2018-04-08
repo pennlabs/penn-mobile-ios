@@ -26,6 +26,8 @@ final class FlingViewController: GenericViewController {
     fileprivate static var dataGreen = UIColor(r: 118, g: 191, b: 150)
     fileprivate static var highlightYellow = UIColor(r: 240, g: 180, b: 0)
     
+    var isDrawn:Bool = false
+    
     // For Map Zoom
     fileprivate var mapImageView: UIImageView!
 
@@ -99,69 +101,60 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleCell") as? ScheduleCell {
-            cell.setUp
+        if #available(iOS 11, *) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell",
+                                                     for: indexPath) as! TimelineTableViewCell
+            cell.backgroundColor = .white
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "h:mm"
+            let dateFormatterTwelveHour = DateFormatter()
+            dateFormatterTwelveHour.dateFormat = "h:mm a"
+            
+            var (title, description) = ("", "")
+            var (startTime, endTime) : (Date?, Date?)
+            
+            let performer = performers[indexPath.row]
+            (title, description, startTime, endTime) = (performer.name,
+                                                        "\(dateFormatter.string(from: performer.startTime)) - \(dateFormatterTwelveHour.string(from: performer.endTime))",
+                performer.startTime, performer.endTime)
+            
+            if (indexPath.row > 0) {
+                cell.timeline.frontColor = .lightGray
+            } else {
+                cell.timeline.frontColor = .clear
+            }
+            if (startTime != nil && endTime != nil && startTime! < Date() && endTime! > Date()) {
+                cell.timeline.backColor = FlingViewController.highlightYellow
+                cell.bubbleColor = FlingViewController.highlightYellow
+                cell.timelinePoint = TimelinePoint(color: FlingViewController.highlightYellow, filled: true)
+            } else {
+                cell.timeline.backColor = .lightGray
+                cell.bubbleColor = FlingViewController.dataGreen
+                cell.timelinePoint = TimelinePoint(color: .lightGray, filled: true)
+            }
+            cell.titleLabel.text = title
+            cell.descriptionLabel.text = description
+            cell.descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
+            cell.descriptionLabel.textColor = UIColor(r: 63, g: 63, b: 63)
+            return cell
+        } else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleCell") as? ScheduleCell {
+                cell.setUpView(for: performers[indexPath.row], isFirst: indexPath.row == 0)
+                isDrawn = true
+                return cell
+            }
         }
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell",
-//                                                 for: indexPath) as! TimelineTableViewCell
-//
-//        cell.backgroundColor = .white
-//
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "h:mm"
-//        let dateFormatterTwelveHour = DateFormatter()
-//        dateFormatterTwelveHour.dateFormat = "h:mm a"
-//
-//        var (title, description) = ("", "")
-//        var (startTime, endTime) : (Date?, Date?)
-//
-//        let performer = performers[indexPath.row]
-//        (title, description, startTime, endTime) = (performer.name,
-//                                                        "\(dateFormatter.string(from: performer.startTime)) - \(dateFormatterTwelveHour.string(from: performer.endTime))",
-//                                                        performer.startTime, performer.endTime)
-//
-//
-//        if (indexPath.row > 0) {
-//            cell.timeline.frontColor = .lightGray
-//        } else {
-//            cell.timeline.frontColor = .clear
-//        }
-//
-//        if (startTime != nil && endTime != nil && startTime! < Date() && endTime! > Date()) {
-//            cell.timeline.backColor = FlingViewController.highlightYellow
-//            cell.bubbleColor = FlingViewController.highlightYellow
-//            cell.timelinePoint = TimelinePoint(color: FlingViewController.highlightYellow, filled: true)
-//        } else {
-//            cell.timeline.backColor = .lightGray
-//            cell.bubbleColor = FlingViewController.dataGreen
-//            cell.timelinePoint = TimelinePoint(color: .lightGray, filled: true)
-//        }
-//
-//        cell.titleLabel.text = title
-//        cell.descriptionLabel.text = description
-//        cell.descriptionLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
-//        cell.descriptionLabel.textColor = UIColor(r: 63, g: 63, b: 63)
-//
-//        //cell.lineInfoLabel.text = lineInfo
-//        /*if indexPath.row != 5 {
-//            cell.bubbleColor = FlingViewController.dataGreen
-//        } else {
-//            cell.bubbleColor = FlingViewController.highlightYellow
-//        }
-//        if let thumbnail = thumbnail {
-//            cell.thumbnailImageView.image = UIImage(named: thumbnail)
-//        }
-//        else {
-//            cell.thumbnailImageView.image = nil
-//        }
-//        if let illustration = illustration {
-//            cell.illustrationImageView.image = UIImage(named: illustration)
-//        }
-//        else {
-//            cell.illustrationImageView.image = nil
-//        }*/
-//
-//        return cell
+        return ScheduleCell()
+    }
+    
+    @available(iOS 10, *)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if #available(iOS 11, *) {
+            return 100
+        } else {
+            return 70
+        }
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -189,6 +182,14 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
             dividerLine.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             dividerLine.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             dividerLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if (indexPath.row == 0 && isDrawn) {
+            if let currCell = cell as? ScheduleCell {
+                currCell.redrawLine()
+            }
         }
     }
 
