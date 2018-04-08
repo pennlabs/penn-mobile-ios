@@ -57,9 +57,7 @@ class ControllerModel: NSObject {
             return [.home, .dining, .studyRoomBooking, .laundry, .more]
         }
     }
-    
-//    let tabBarOrder: [Page] = [.home, .dining, .laundry, .studyRoomBooking, .more, .news, .about]
-    
+        
     // pages order in MoreViewController:
     var moreOrder: [Page] {
         get {
