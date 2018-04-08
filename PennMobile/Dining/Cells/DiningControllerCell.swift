@@ -54,7 +54,7 @@ extension DiningCell {
         venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
         titleLabel.text = venue.name.rawValue
         updateTimeLabel(with: venue.times)
-        if venue.times!.isEmpty {
+        if venue.times != nil, venue.times!.isEmpty {
             statusLabel.text = "CLOSED TODAY"
             statusLabel.textColor = .secondaryInformationGrey
             statusLabel.font = .secondaryInformationFont
