@@ -35,7 +35,12 @@ class GSRNetworkManager: NSObject, Requestable {
     }
     
     func getAvailability(for gsrId: Int, date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
-        let dateStr = date.string
+        self.getAvailability(for: gsrId, dateStr: date.string) { (rooms) in
+            callback(rooms)
+        }
+    }
+
+    func getAvailability(for gsrId: Int, dateStr: String, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
         let url = "\(availUrl)/\(gsrId)?date=\(dateStr)&available=true"
         getRequest(url: url) { (dict) in
             var rooms: [GSRRoom]!
