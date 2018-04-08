@@ -42,7 +42,6 @@ final class TabBarController: ESTabBarController {
                     vc.tabBarItem = (vc as! TabBarShowable).getTabBarItem()
                 }
             }
-            controllerModel.hasLoadedFling = true
             self.viewControllers = controllerModel.viewControllers
             self.delegate = self
         }

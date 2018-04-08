@@ -116,11 +116,6 @@ class ControllerModel: NSObject {
         return viewController(for: visiblePage())
     }
     
-    public var hasLoadedFling = false
-    
-    // just for testing:
-    public var openTimes = 0
-    
 }
 
 // MARK: - Transitions
