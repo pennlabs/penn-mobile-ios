@@ -49,29 +49,35 @@ class ControllerModel: NSObject {
     }
     
     // pages order in tab bar
-    let orderedPages:[Page] = {
-        if (AppDelegate.isFlingDate()) {
-            return [.home, .fling, .dining, .laundry, .more]
+    var orderedPages: [Page] {
+        get {
+            if (ControllerModel.isFlingDate()) {
+                return [.home, .fling, .dining, .laundry, .more]
+            }
+            return [.home, .dining, .studyRoomBooking, .laundry, .more]
         }
-        return [.home, .dining, .studyRoomBooking, .laundry, .more]
-    }()
+    }
     
-    let tabBarOrder: [Page] = [.home, .dining, .laundry, .studyRoomBooking, .more, .news, .about]
+//    let tabBarOrder: [Page] = [.home, .dining, .laundry, .studyRoomBooking, .more, .news, .about]
     
     // pages order in MoreViewController:
-    let moreOrder: [Page] = {
-        if (AppDelegate.isFlingDate()) {
-            return [.studyRoomBooking, .news, .contacts, .about]
+    var moreOrder: [Page] {
+        get {
+            if (ControllerModel.isFlingDate()) {
+                return [.studyRoomBooking, .news, .contacts, .about]
+            }
+            return [.fling, .news, .contacts, .about]
         }
-        return [.fling, .news, .contacts, .about]
-    }()
-    let moreIcons: [UIImage] = {
-        if (AppDelegate.isFlingDate()) {
-            return [#imageLiteral(resourceName: "GSR - Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
-        } else {
-            return [#imageLiteral(resourceName: "Fling_Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+    }
+    var moreIcons: [UIImage] {
+        get {
+            if (ControllerModel.isFlingDate()) {
+                return [#imageLiteral(resourceName: "GSR - Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            } else {
+                return [#imageLiteral(resourceName: "Fling_Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            }
         }
-    }()
+    }
     
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }
@@ -118,10 +124,10 @@ extension ControllerModel {
     }
 }
 
-extension AppDelegate {
-    static func isFlingDate() -> Bool {
-        let beginDateString = "2018-04-13T04:00:00+0000"
-        let endDateString = "2018-04-15T04:00:00+0000"
+extension ControllerModel {
+    fileprivate static func isFlingDate() -> Bool {
+        let beginDateString = "2018-04-13T05:00:00-04:00"
+        let endDateString = "2018-04-15T05:00:00-04:00"
         // standard iso formatter
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -131,5 +137,9 @@ extension AppDelegate {
         // comparison
         let today = Date()
         return (today > startDate && today < endDate)
+    }
+    
+    static func isReloadNecessary() -> Bool {
+        return isFlingDate()
     }
 }

@@ -16,6 +16,7 @@ import FirebaseMessaging
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var tabBarController: TabBarController!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -46,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         
-        let tabBarController = TabBarController()
+        tabBarController = TabBarController()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = UINavigationController(rootViewController: tabBarController)
@@ -153,6 +154,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         DatabaseManager.shared.startSession()
+        tabBarController.reloadTabs()
         ControllerModel.shared.visibleVC().viewWillAppear(true)
     }
     
