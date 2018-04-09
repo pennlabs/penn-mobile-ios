@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+protocol GSRBookingSelectable {
+    func handleVenueSelected(_ venue: DiningVenue)
+}
 final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     
     static var identifier = "studyRoomCell"

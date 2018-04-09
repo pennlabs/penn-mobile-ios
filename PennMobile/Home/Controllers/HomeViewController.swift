@@ -84,6 +84,10 @@ extension HomeViewController: HomeViewModelDelegate {
         ddc.venue = venue
         navigationController?.pushViewController(ddc, animated: true)
     }
+    
+    func handleStudyRoomBookingSelected(_ booking: GSRBooking) {
+        print("BOOKING SUBMITTED")
+    }
 }
 
 // MARK: - Networking
