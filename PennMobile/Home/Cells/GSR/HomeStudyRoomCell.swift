@@ -164,7 +164,6 @@ extension HomeStudyRoomCell {
         bookingRowViews = [UIView]()
         for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
             let bookingRowView = getBookingView()
-            bookingRowViews.append(bookingRowView)
             cardView.addSubview(bookingRowView)
             
             bookingRowView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
@@ -176,6 +175,7 @@ extension HomeStudyRoomCell {
             } else {
                 bookingRowView.topAnchor.constraint(equalTo: bookingRowViews[row - 1].bottomAnchor).isActive = true
             }
+            bookingRowViews.append(bookingRowView)
         }
     }
     
@@ -183,7 +183,6 @@ extension HomeStudyRoomCell {
         bookingButtonTimeLabels = [[UILabel]]()
         for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
             var timeLabels = [UILabel]()
-            bookingButtonTimeLabels.append(timeLabels)
             for _ in 0..<3 {
                 let timeLabel = getBookingTimeLabel()
                 cardView.addSubview(timeLabel)
@@ -200,6 +199,7 @@ extension HomeStudyRoomCell {
                 timeLabels[n].bottomAnchor.constraint(equalTo: bookingRowViews[row].bottomAnchor,
                                                       constant: -9).isActive = true
             }
+            bookingButtonTimeLabels.append(timeLabels)
         }
     }
     
@@ -215,34 +215,12 @@ extension HomeStudyRoomCell {
                 bookingRowButtons.append(button)
                 cardView.addSubview(button)
                 button.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+                button.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
                 button.topAnchor.constraint(equalTo: bookingRowViews[row].topAnchor, constant: 2).isActive = true
+                button.centerXAnchor.constraint(equalTo: bookingButtonTimeLabels[row][n].centerXAnchor).isActive = true
             }
-            
             bookingButtons.append(bookingRowButtons)
         }
-        
-        
-        /*
-         bookingButtons = (getBookingButton(), getBookingButton(), getBookingButton())
-         addSubview(bookingButtons.0!)
-         addSubview(bookingButtons.1!)
-         addSubview(bookingButtons.2!)
-         
-         bookingButtons.0!.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
-         bookingButtons.0!.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
-         bookingButtons.1!.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
-         bookingButtons.1!.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
-         bookingButtons.2!.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
-         bookingButtons.2!.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
-         
-         bookingButtons.0!.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-         bookingButtons.1!.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-         bookingButtons.2!.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
-         
-         bookingButtons.0!.centerXAnchor.constraint(equalTo: bookingLabels.0!.centerXAnchor).isActive = true
-         bookingButtons.1!.centerXAnchor.constraint(equalTo: bookingLabels.1!.centerXAnchor).isActive = true
-         bookingButtons.2!.centerXAnchor.constraint(equalTo: bookingLabels.2!.centerXAnchor).isActive = true
-        */
     }
     
     fileprivate func prepareBookingRowLabels() {
