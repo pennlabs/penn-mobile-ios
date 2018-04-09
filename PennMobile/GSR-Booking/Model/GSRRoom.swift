@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - Init
 class GSRRoom {
     let name: String
     let roomId: Int
@@ -62,5 +63,15 @@ extension Array where Element == GSRRoom {
             }
         }
         return (min, max)
+    }
+    
+    func first60() -> GSRTimeSlot {
+        for room in self {
+            for timeSlot in room.timeSlots {
+                if timeSlot.next != nil {
+                    
+                }
+            }
+        }
     }
 }

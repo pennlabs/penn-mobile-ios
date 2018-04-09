@@ -27,6 +27,16 @@ public class GSRTimeSlot: NSObject {
     static func ==(lhs: GSRTimeSlot, rhs: GSRTimeSlot) -> Bool {
         return lhs.roomId == rhs.roomId && lhs.isAvailable == rhs.isAvailable && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime
     }
+    
+    func getLocalTimeString() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "MMM d, h:mm a"
+        let dateStringStart = formatter.string(from: self.startTime)
+        let dateStringEnd = formatter.string(from: self.endTime)
+        return "\(dateStringStart) -> \(dateStringEnd)"
+    }
+
 }
 
 extension Array where Element: GSRTimeSlot {
@@ -39,5 +49,21 @@ extension Array where Element: GSRTimeSlot {
             currTime = currTime.next!
         }
         return num
+    }
+    
+    var first60: GSRTimeSlot? {
+        for slot in self {
+            if slot.next != nil {
+                return slot
+            }
+        }
+    }
+    
+    var first90: GSRTimeSlot? {
+        for slot in self {
+            if slot.next != nil && slot.next!.next != nil {
+                return slot
+            }
+        }
     }
 }

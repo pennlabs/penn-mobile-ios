@@ -62,8 +62,7 @@ extension HomeGSRCellItem: HomeAPIRequestable {
         formatter.dateFormat = "yyyy-MM-dd"
         let dateString = formatter.string(from: Date())
         
-        GSRNetworkManager.instance.getAvailability(for: 1086, dateStr: "2018-04-08") { (rooms) in
-            //dump(rooms)
+        GSRNetworkManager.instance.getAvailability(for: 1086, dateStr: "2018-04-10") { (rooms) in
             if let _ = rooms {
                 self.filterForTimeConstraints(rooms!)
             }
@@ -72,18 +71,18 @@ extension HomeGSRCellItem: HomeAPIRequestable {
     }
     
     private func filterForTimeConstraints(_ rooms: [GSRRoom]) {
-        let wic_rooms = rooms.filter { $0.gid == 1889 }
-        dump(getFirst30(wic_rooms))
+        let wicRooms = rooms.filter { $0.gid == 1889 }
+        let wicRoomsWith60 = wicRooms.filter { $0.timeSlots.first60 != nil }
+        let wicRoomsWith90 = wicRooms.filter { $0.timeSlots.first90 != nil }
+
+        let first30TimeSlot = getFirst30(wicRooms)
+        
     }
     
-    private func getFirst30(_ rooms: [GSRRoom]) {
-        let first30 : GSRRoom? = rooms.min { (room1, room2) -> Bool in
-            if room1.timeSlots.first != nil && room2.timeSlots.first != nil {
-                return room1.timeSlots.first!.startTime < room2.timeSlots.first!.startTime
-            }
-            return false
-            }
-        dump(first30)
+    private func getFirst30(_ rooms: [GSRRoom]) -> GSRTimeSlot? {
+        let first30TimeSlot : GSRTimeSlot? = rooms.min()?.timeSlots.first
+        print(first30TimeSlot?.getLocalTimeString())
+        return first30TimeSlot
     }
     
     private func getFirst60(_ rooms: [GSRRoom]) {
