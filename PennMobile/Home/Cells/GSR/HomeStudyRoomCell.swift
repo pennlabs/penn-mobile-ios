@@ -30,7 +30,7 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
             setupCell(with: item)
         }
     }
-    var bookingOptions: [(GSRTimeSlot?, GSRTimeSlot?, GSRTimeSlot?)]?
+    var bookingOptions: [[GSRBooking?]]?
     
     var cardView: UIView! = UIView()
     // Custom UI elements (some should be abstracted)

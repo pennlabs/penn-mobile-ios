@@ -21,7 +21,7 @@ final class HomeGSRCellItem: HomeCellItem {
     init() {
     }
     
-    var bookingOptions: [(GSRTimeSlot?, GSRTimeSlot?, GSRTimeSlot?)]?
+    var bookingOptions: [[GSRBooking?]]?
     
     func equals(item: HomeCellItem) -> Bool {
         guard let _ = item as? HomeGSRCellItem else { return false }
@@ -70,8 +70,28 @@ extension HomeGSRCellItem: HomeAPIRequestable {
         let firstBoothSlot60 = getFirst60(wicBoothsWith60)
         let firstBoothSlot90 = getFirst90(wicBoothsWith90)
         
-        self.bookingOptions = [(firstRoomSlot30, firstRoomSlot60, firstRoomSlot90),
-                               (firstBoothSlot30, firstBoothSlot60, firstBoothSlot90)]
+        let gsrLoc = GSRLocation(lid: 1086, gid: 1889, name: "Weigle", service: "libcal")
+        self.bookingOptions = [[getBooking(gsrLoc, firstBoothSlot30, 1),
+                                getBooking(gsrLoc, firstBoothSlot60, 2),
+                                getBooking(gsrLoc, firstBoothSlot90, 3)],
+                               [getBooking(gsrLoc, firstRoomSlot30, 1),
+                                getBooking(gsrLoc, firstRoomSlot60, 2),
+                                getBooking(gsrLoc, firstRoomSlot90, 3)]]
+    }
+    
+    private func getBooking(_ location: GSRLocation, _ slot: GSRTimeSlot?, _ numSlots: Int) -> GSRBooking? {
+        guard let slot = slot else { return nil }
+        var endTime = slot.endTime
+        if numSlots == 2 {
+            guard let lastSlot = slot.next else { return nil }
+            endTime = lastSlot.endTime
+        }
+        if numSlots == 3 {
+            guard let _ = slot.next else { return nil }
+            guard let lastSlot = slot.next!.next else { return nil }
+            endTime = lastSlot.endTime
+        }
+        return GSRBooking(location: location, roomId: slot.roomId, start: slot.startTime, end: endTime)
     }
     
     private func getFirst30(_ rooms: [GSRRoom]) -> GSRTimeSlot? {
