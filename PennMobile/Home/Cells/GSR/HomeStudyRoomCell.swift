@@ -16,9 +16,11 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     
     static var identifier = "studyRoomCell"
 
-    static private var numberOfBookingCellRows = 2
+    fileprivate static let numberOfBookingCellRows = 2
+    fileprivate static let bookingRowHeight : CGFloat = 82
+    
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
-        return 163.0 + (BookingRowCell.rowHeight * CGFloat(numberOfBookingCellRows))
+        return 163.0 + (bookingRowHeight * CGFloat(numberOfBookingCellRows))
     }
     
     var delegate: ModularTableViewCellDelegate!
@@ -77,7 +79,6 @@ extension HomeStudyRoomCell {
         secondaryTitleLabel.text = "BOOK A ROOM"
         primaryTitleLabel.text = "Van Pelt Library"
         self.bookingOptions = item.bookingOptions
-        studyRoomTableView.reloadData()
         footerDescriptionLabel.text = "Showing next available bookings."
     }
 }
@@ -88,32 +89,6 @@ extension HomeStudyRoomCell : HomeGSRBookingButtonDelegate {
     }
 }
 
-/*
-// MARK: - tableView datasource
-extension HomeStudyRoomCell: UITableViewDataSource {
-    
-    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: bookingRowIdentifier) as? BookingRowCell
-        if let _ = bookingOptions {
-            cell?.bookingOptions = self.bookingOptions![indexPath.row]
-            if indexPath.row == 0 {
-                cell?.rowLabelText = "Booths"
-            } else {
-                cell?.rowLabelText = "Rooms"
-            }
-        }
-        return cell!
-    }
-    
-    internal func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return BookingRowCell.rowHeight
-    }
-}*/
-
 // MARK: - Initialize & Layout UI Elements
 extension HomeStudyRoomCell {
     
@@ -123,6 +98,7 @@ extension HomeStudyRoomCell {
         prepareDividerLine()
         prepareFooter()
         prepareBookingViews()
+        prepareBookingLabels()
         prepareBookingButtons()
     }
     
@@ -193,12 +169,38 @@ extension HomeStudyRoomCell {
         bookingViewTop.trailingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         bookingViewTop.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
                                             constant: safeInsetValue).isActive = true
+        bookingViewTop.heightAnchor.constraint(equalToConstant: HomeStudyRoomCell.bookingRowHeight)
         
         bookingViewBottom.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         bookingViewBottom.trailingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         bookingViewBottom.topAnchor.constraint(equalTo: bookingViewTop.bottomAnchor).isActive = true
-        bookingViewBottom.bottomAnchor.constraint(equalTo: footerDescriptionLabel.topAnchor,
-                                                  constant: -safeInsetValue).isActive = true
+        
+    }
+    
+    fileprivate func prepareBookingLabels() {
+        /*
+        rowLabel = getRowLabel()
+        addSubview(rowLabel)
+        
+        rowLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        rowLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
+        bookingLabels = (getTimeLabel(), getTimeLabel(), getTimeLabel())
+        addSubview(bookingLabels.0!)
+        addSubview(bookingLabels.1!)
+        addSubview(bookingLabels.2!)
+        
+        bookingLabels.0!.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 47).isActive = true
+        bookingLabels.1!.leadingAnchor.constraint(equalTo: bookingLabels.0!.trailingAnchor).isActive = true
+        bookingLabels.2!.leadingAnchor.constraint(equalTo: bookingLabels.1!.trailingAnchor).isActive = true
+        bookingLabels.2!.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        
+        bookingLabels.0!.widthAnchor.constraint(equalTo: bookingLabels.1!.widthAnchor).isActive = true
+        bookingLabels.1!.widthAnchor.constraint(equalTo: bookingLabels.2!.widthAnchor).isActive = true
+        
+        bookingLabels.0!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
+        bookingLabels.1!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
+        bookingLabels.2!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true*/
     }
     
     fileprivate func prepareBookingButtons() {
