@@ -44,6 +44,7 @@ class HomeGSRBookingButton : UIButton {
     @objc fileprivate func bookingButtonTapped() {
         if let booking = booking {
             delegate?.handleBookingSelected(booking)
+            print("Booking made!")
         }
     }
 }

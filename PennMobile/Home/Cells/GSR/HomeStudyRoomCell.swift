@@ -74,13 +74,33 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
 // MARK: - Setup UI Elements
 extension HomeStudyRoomCell {
     
-    /*fileprivate func setupCell(with item: HomeViewModelStudyRoomItem) {
-    }*/
     fileprivate func setupCell(with item: HomeGSRCellItem) {
         secondaryTitleLabel.text = "BOOK A ROOM"
         primaryTitleLabel.text = "Van Pelt Library"
-        self.bookingOptions = item.bookingOptions
+        bookingOptions = item.bookingOptions
+        updateBookingButtons()
+        bookingButtonRowLabels[0].text = "Booths"
+        bookingButtonRowLabels[1].text = "Rooms"
         footerDescriptionLabel.text = "Showing next available bookings."
+    }
+    
+    fileprivate func updateBookingButtons() {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "h:mma"
+        formatter.amSymbol = "a"
+        formatter.pmSymbol = "p"
+        
+        for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
+            for n in 0..<3 {
+                bookingButtons[row][n].booking = bookingOptions?[row][n]
+                if let _ = bookingOptions, bookingOptions![row][n] != nil {
+                    bookingButtonTimeLabels[row][n].text = formatter.string(from: (bookingOptions![row][n]?.start)!)
+                } else {
+                    bookingButtonTimeLabels[row][n].text = ""
+                }
+            }
+        }
     }
 }
 
@@ -211,7 +231,7 @@ extension HomeStudyRoomCell {
         for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
             var bookingRowButtons = [HomeGSRBookingButton]()
             for n in 0..<3 {
-                let button = HomeGSRBookingButton()
+                let button = getBookingButton()
                 bookingRowButtons.append(button)
                 cardView.addSubview(button)
                 button.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
@@ -299,8 +319,6 @@ extension HomeStudyRoomCell {
         label.textColor = .secondaryTitleGrey
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
-        // test
-        label.text = "TEST"
         return label
     }
     
@@ -310,13 +328,12 @@ extension HomeStudyRoomCell {
         label.textColor = .secondaryTitleGrey
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        // test
-        label.text = "TEST"
         return label
     }
     
     fileprivate func getBookingButton() -> HomeGSRBookingButton {
         let button = HomeGSRBookingButton()
+        button.delegate = self
         return button
     }
     
