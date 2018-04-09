@@ -99,8 +99,9 @@ extension HomeStudyRoomCell {
         prepareDividerLine()
         prepareFooter()
         prepareBookingViews()
-        prepareBookingLabels()
+        prepareBookingTimeLabels()
         prepareBookingButtons()
+        prepareBookingRowLabels()
     }
     
     // MARK: Safe Area
@@ -178,37 +179,84 @@ extension HomeStudyRoomCell {
         }
     }
     
-    fileprivate func prepareBookingLabels() {
+    fileprivate func prepareBookingTimeLabels() {
+        bookingButtonTimeLabels = [[UILabel]]()
         for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
-            
+            var timeLabels = [UILabel]()
+            bookingButtonTimeLabels.append(timeLabels)
+            for _ in 0..<3 {
+                let timeLabel = getBookingTimeLabel()
+                cardView.addSubview(timeLabel)
+                timeLabels.append(timeLabel)
+            }
+            timeLabels[0].leadingAnchor.constraint(equalTo: bookingRowViews[row].leadingAnchor,
+                                                   constant: 47).isActive = true
+            timeLabels[2].trailingAnchor.constraint(equalTo: bookingRowViews[row].trailingAnchor).isActive = true
+            for n in 0..<3 {
+                if n != 0 {
+                    timeLabels[n].leadingAnchor.constraint(equalTo: timeLabels[n - 1].trailingAnchor).isActive = true
+                    timeLabels[n].widthAnchor.constraint(equalTo: timeLabels[n - 1].widthAnchor).isActive = true
+                }
+                timeLabels[n].bottomAnchor.constraint(equalTo: bookingRowViews[row].bottomAnchor,
+                                                      constant: -9).isActive = true
+            }
         }
-        /*
-        rowLabel = getRowLabel()
-        addSubview(rowLabel)
-        
-        rowLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        rowLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
-        bookingLabels = (getTimeLabel(), getTimeLabel(), getTimeLabel())
-        addSubview(bookingLabels.0!)
-        addSubview(bookingLabels.1!)
-        addSubview(bookingLabels.2!)
-        
-        bookingLabels.0!.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 47).isActive = true
-        bookingLabels.1!.leadingAnchor.constraint(equalTo: bookingLabels.0!.trailingAnchor).isActive = true
-        bookingLabels.2!.leadingAnchor.constraint(equalTo: bookingLabels.1!.trailingAnchor).isActive = true
-        bookingLabels.2!.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        
-        bookingLabels.0!.widthAnchor.constraint(equalTo: bookingLabels.1!.widthAnchor).isActive = true
-        bookingLabels.1!.widthAnchor.constraint(equalTo: bookingLabels.2!.widthAnchor).isActive = true
-        
-        bookingLabels.0!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
-        bookingLabels.1!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true
-        bookingLabels.2!.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9).isActive = true*/
     }
     
     fileprivate func prepareBookingButtons() {
+        
+        let buttonSize: CGFloat = 53
+        
+        bookingButtons = [[HomeGSRBookingButton]]()
+        for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
+            var bookingRowButtons = [HomeGSRBookingButton]()
+            for n in 0..<3 {
+                let button = HomeGSRBookingButton()
+                bookingRowButtons.append(button)
+                cardView.addSubview(button)
+                button.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+                button.topAnchor.constraint(equalTo: bookingRowViews[row].topAnchor, constant: 2).isActive = true
+            }
+            
+            bookingButtons.append(bookingRowButtons)
+        }
+        
+        
+        /*
+         bookingButtons = (getBookingButton(), getBookingButton(), getBookingButton())
+         addSubview(bookingButtons.0!)
+         addSubview(bookingButtons.1!)
+         addSubview(bookingButtons.2!)
+         
+         bookingButtons.0!.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+         bookingButtons.0!.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
+         bookingButtons.1!.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+         bookingButtons.1!.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
+         bookingButtons.2!.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
+         bookingButtons.2!.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
+         
+         bookingButtons.0!.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
+         bookingButtons.1!.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
+         bookingButtons.2!.topAnchor.constraint(equalTo: topAnchor, constant: 2).isActive = true
+         
+         bookingButtons.0!.centerXAnchor.constraint(equalTo: bookingLabels.0!.centerXAnchor).isActive = true
+         bookingButtons.1!.centerXAnchor.constraint(equalTo: bookingLabels.1!.centerXAnchor).isActive = true
+         bookingButtons.2!.centerXAnchor.constraint(equalTo: bookingLabels.2!.centerXAnchor).isActive = true
+        */
     }
+    
+    fileprivate func prepareBookingRowLabels() {
+        /*bookingButtonRowLabels = [UILabel!]()
+         for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
+         let rowLabel = getBookingRowLabel()
+         bookingButtonRowLabels.append(rowLabel)
+         cardView.addSubview(rowLabel)
+         
+         rowLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+         rowLabel.centerYAnchor.constraint()
+         }*/
+    }
+    
     
     /*// Mark: TableView
     fileprivate func prepareTableView() {
@@ -280,6 +328,7 @@ extension HomeStudyRoomCell {
         let label = UILabel()
         label.font = .secondaryTitleFont
         label.textColor = .secondaryTitleGrey
+        label.text = "TEST"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
