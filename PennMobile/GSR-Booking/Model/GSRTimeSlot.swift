@@ -57,6 +57,7 @@ extension Array where Element: GSRTimeSlot {
                 return slot
             }
         }
+        return nil
     }
     
     var first90: GSRTimeSlot? {
@@ -65,5 +66,6 @@ extension Array where Element: GSRTimeSlot {
                 return slot
             }
         }
+        return nil
     }
 }

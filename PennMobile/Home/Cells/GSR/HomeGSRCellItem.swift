@@ -74,6 +74,10 @@ extension HomeGSRCellItem: HomeAPIRequestable {
         let wicRooms = rooms.filter { $0.gid == 1889 }
         let wicRoomsWith60 = wicRooms.filter { $0.timeSlots.first60 != nil }
         let wicRoomsWith90 = wicRooms.filter { $0.timeSlots.first90 != nil }
+        
+        print("WIC Rooms with 30: \(wicRooms.count)")
+        print("WIC Rooms with 60: \(wicRoomsWith60.count)")
+        print("WIC Rooms with 90: \(wicRoomsWith90.count)")
 
         let first30TimeSlot = getFirst30(wicRooms)
         
@@ -86,7 +90,7 @@ extension HomeGSRCellItem: HomeAPIRequestable {
     }
     
     private func getFirst60(_ rooms: [GSRRoom]) {
-        
+        //let first60TimeSlot : GSRTimeSlot?
     }
     
     private func getFirst90() {
