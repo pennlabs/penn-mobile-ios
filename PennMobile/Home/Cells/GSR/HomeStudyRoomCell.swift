@@ -12,7 +12,7 @@ import UIKit
 final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     
     static var identifier = "studyRoomCell"
-    //static var cellHeight: CGFloat = 183.0 + (BookingRowCell.rowHeight * CGFloat(numberOfBookingCellRows))
+
     static private var numberOfBookingCellRows = 2
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         return 163.0 + (BookingRowCell.rowHeight * CGFloat(numberOfBookingCellRows))
@@ -25,9 +25,9 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
             setupCell(with: item)
         }
     }
+    var bookingOptions: [(GSRTimeSlot?, GSRTimeSlot?, GSRTimeSlot?)]?
     
     var cardView: UIView! = UIView()
-    
     // Custom UI elements (some should be abstracted)
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
@@ -56,10 +56,6 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     @objc fileprivate func transitionButtonTapped() {
         print("Button Tapped!")
     }
-    
-    let option1 = StudyRoomBookingOption.init(name: nil, duration: nil, timeDescription: "5-6p")
-    let option2 = StudyRoomBookingOption.init(name: nil, duration: nil, timeDescription: "7-8p")
-    let option3 = StudyRoomBookingOption.init(name: nil, duration: nil, timeDescription: "9-10:30p")
 }
 
 // MARK: - Setup UI Elements
@@ -70,7 +66,8 @@ extension HomeStudyRoomCell {
     fileprivate func setupCell(with item: HomeGSRCellItem) {
         secondaryTitleLabel.text = "BOOK A ROOM"
         primaryTitleLabel.text = "Van Pelt Library"
-        
+        self.bookingOptions = item.bookingOptions
+        studyRoomTableView.reloadData()
         footerDescriptionLabel.text = "Showing next available bookings."
     }
 }
@@ -84,7 +81,14 @@ extension HomeStudyRoomCell: UITableViewDataSource {
     
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: bookingRowIdentifier) as? BookingRowCell
-        cell?.bookingOptions = (option1, option2, option3)
+        if let _ = bookingOptions {
+            cell?.bookingOptions = self.bookingOptions![indexPath.row]
+            if indexPath.row == 0 {
+                cell?.rowLabelText = "Booths"
+            } else {
+                cell?.rowLabelText = "Rooms"
+            }
+        }
         return cell!
     }
     

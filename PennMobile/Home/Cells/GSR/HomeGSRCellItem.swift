@@ -38,29 +38,13 @@ final class HomeGSRCellItem: HomeCellItem {
     }
 }
 
-/*
-// MARK: - JSON Parsing
-extension HomeGSRCellItem {
-    convenience init(json: JSON) throws {
-        guard let ids = json["venues"].arrayObject as? [Int] else {
-            throw NetworkingError.jsonError
-        }
-        var venues: [DiningVenue] = ids.map { try? DiningVenue(id: $0) }.filter { $0 != nil}.map { $0! }
-        if venues.isEmpty {
-            venues = DiningVenue.getDefaultVenues()
-        }
-        self.init(venues: venues)
-    }
-}*/
-
-// MARK: - API Fetching
+// MARK: - API Fetching and Parsing
 extension HomeGSRCellItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
         
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd"
-        let dateString = formatter.string(from: Date())
         
         GSRNetworkManager.instance.getAvailability(for: 1086, dateStr: "2018-04-10") { (rooms) in
             if let _ = rooms {
@@ -71,22 +55,13 @@ extension HomeGSRCellItem: HomeAPIRequestable {
     }
     
     private func filterForTimeConstraints(_ rooms: [GSRRoom]) {
-        let wicRooms = rooms.filter { $0.gid == 1889 && $0.capacity == 8 }
-        let wicBooths = rooms.filter { $0.gid == 1889 && $0.capacity == 6 }
-        //let wicRooms = rooms
-        //let wicBooths = rooms
+        let wicRooms = rooms.filter { $0.gid == 1889 && $0.name.contains("Rm") }
+        let wicBooths = rooms.filter { $0.gid == 1889 && $0.name.contains("Booth") }
         
         let wicRoomsWith60 = wicRooms.filter { $0.timeSlots.first60 != nil }
-        let wicRoomsWith90 = wicRooms.filter { $0.timeSlots.first90 != nil }
+        let wicRoomsWith90 = wicRoomsWith60.filter { $0.timeSlots.first90 != nil }
         let wicBoothsWith60 = wicBooths.filter { $0.timeSlots.first60 != nil }
-        let wicBoothsWith90 = wicBooths.filter { $0.timeSlots.first90 != nil }
-        
-        print("WIC Rooms with 30: \(wicRooms.count)")
-        print("WIC Rooms with 60: \(wicRoomsWith60.count)")
-        print("WIC Rooms with 90: \(wicRoomsWith90.count)")
-        print("WIC Booths with 30: \(wicBooths.count)")
-        print("WIC Booths with 60: \(wicBoothsWith60.count)")
-        print("WIC Booths with 90: \(wicBoothsWith90.count)")
+        let wicBoothsWith90 = wicBoothsWith60.filter { $0.timeSlots.first90 != nil }
 
         let firstRoomSlot30 = getFirst30(wicRooms)
         let firstRoomSlot60 = getFirst60(wicRoomsWith60)

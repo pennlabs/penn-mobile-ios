@@ -13,12 +13,11 @@ struct StudyRoomBookingOption {
     let timeDescription: String?
 }
 
-internal typealias BookingOptions = (StudyRoomBookingOption?, StudyRoomBookingOption?, StudyRoomBookingOption?)
+internal typealias BookingOptions = (GSRTimeSlot?, GSRTimeSlot?, GSRTimeSlot?)
 
 class BookingRowCell: UITableViewCell {
     
     static let rowHeight: CGFloat = 82.0
-    //static let rowHeight: CGFloat = 76.0
     
     fileprivate var rowLabel: UILabel!
     fileprivate var bookingLabels: (UILabel?, UILabel?, UILabel?)
@@ -29,6 +28,12 @@ class BookingRowCell: UITableViewCell {
     var bookingOptions: BookingOptions {
         didSet {
             setupCell(with: bookingOptions)
+        }
+    }
+    
+    var rowLabelText: String? {
+        didSet {
+            self.rowLabel.text = rowLabelText
         }
     }
     
@@ -51,18 +56,56 @@ class BookingRowCell: UITableViewCell {
 extension BookingRowCell {
     fileprivate func setupCell(with options: BookingOptions) {
         
-        rowLabel.text = "Booth"
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "h:m"
         
-        bookingLabels.0!.text = options.0?.timeDescription ?? ""
-        bookingLabels.1!.text = options.1?.timeDescription ?? ""
-        bookingLabels.2!.text = options.2?.timeDescription ?? ""
-        
-        bookingButtons.2!.isEnabled = false
+        if let _ = options.0 {
+            bookingLabels.0!.text = formatter.string(from: options.0!.startTime)
+            bookingButtons.0!.isEnabled = true
+        } else {
+            bookingLabels.0!.text = ""
+            bookingButtons.0!.isEnabled = false
+        }
+        if let _ = options.1 {
+            bookingLabels.1!.text = formatter.string(from: options.1!.startTime)
+            bookingButtons.1!.isEnabled = true
+        } else {
+            bookingLabels.1!.text = ""
+            bookingButtons.1!.isEnabled = false
+        }
+        if let _ = options.2 {
+            bookingLabels.2!.text = formatter.string(from: options.0!.startTime)
+            bookingButtons.2!.isEnabled = true
+        } else {
+            bookingLabels.2!.text = ""
+            bookingButtons.2!.isEnabled = false
+        }
         bookingIncrementLabels.2!.textColor = .allbirdsGrey
         
         bookingIncrementLabels.0!.text = "30'"
         bookingIncrementLabels.1!.text = "60'"
         bookingIncrementLabels.2!.text = "90'"
+        
+        updateButtonsUI()
+    }
+    
+    fileprivate func updateButtonsUI() {
+        if bookingButtons.0!.isEnabled {
+            bookingIncrementLabels.0!.textColor = .interactionGreen
+        } else {
+            bookingIncrementLabels.0!.textColor = .allbirdsGrey
+        }
+        if bookingButtons.1!.isEnabled {
+            bookingIncrementLabels.1!.textColor = .interactionGreen
+        } else {
+            bookingIncrementLabels.1!.textColor = .allbirdsGrey
+        }
+        if bookingButtons.2!.isEnabled {
+            bookingIncrementLabels.2!.textColor = .interactionGreen
+        } else {
+            bookingIncrementLabels.2!.textColor = .allbirdsGrey
+        }
     }
 }
 
