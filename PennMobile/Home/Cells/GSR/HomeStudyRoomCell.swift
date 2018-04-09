@@ -40,8 +40,15 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     
     fileprivate var dividerLine: UIView!
     
-    fileprivate let bookingRowIdentifier = "StudyRoomBookingsRow"
-    fileprivate var studyRoomTableView: UITableView!
+    //fileprivate let bookingRowIdentifier = "StudyRoomBookingsRow"
+    //fileprivate var studyRoomTableView: UITableView!
+    
+    fileprivate var bookingViewTop: UIView!
+    fileprivate var bookingViewBottom: UIView!
+    
+    fileprivate var bookingButtons: [[HomeGSRBookingButton]]!
+    fileprivate var bookingButtonTimeLabels: [[UILabel]]!
+    fileprivate var bookingButtonRowLabels: [UILabel]!
     
     fileprivate var footerDescriptionLabel: UILabel!
     fileprivate var footerTransitionButton: UIButton!
@@ -114,10 +121,9 @@ extension HomeStudyRoomCell {
         prepareSafeArea()
         prepareTitleLabels()
         prepareDividerLine()
+        prepareFooter()
         prepareBookingViews()
         prepareBookingButtons()
-        prepareFooter()
-        //prepareTableView()
     }
     
     // MARK: Safe Area
@@ -159,14 +165,6 @@ extension HomeStudyRoomCell {
         dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
     }
     
-    fileprivate func prepareBookingViews() {
-        bookingViewTop = getBookingView()
-        bookingViewBottom = getBookingView()
-        
-        cardView.addSubview(bookingViewTop)
-        cardView.addSubview(bookingViewBottom)
-    }
-    
     // MARK: Footer
     fileprivate func prepareFooter() {
         footerTransitionButton = getFooterTransitionButton()
@@ -182,6 +180,28 @@ extension HomeStudyRoomCell {
         footerDescriptionLabel.trailingAnchor.constraint(equalTo: footerTransitionButton.leadingAnchor,
                                                          constant: -10).isActive = true
         footerDescriptionLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor).isActive = true
+    }
+    
+    fileprivate func prepareBookingViews() {
+        bookingViewTop = getBookingView()
+        bookingViewBottom = getBookingView()
+        
+        cardView.addSubview(bookingViewTop)
+        cardView.addSubview(bookingViewBottom)
+        
+        bookingViewTop.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        bookingViewTop.trailingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        bookingViewTop.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
+                                            constant: safeInsetValue).isActive = true
+        
+        bookingViewBottom.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        bookingViewBottom.trailingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        bookingViewBottom.topAnchor.constraint(equalTo: bookingViewTop.bottomAnchor).isActive = true
+        bookingViewBottom.bottomAnchor.constraint(equalTo: footerDescriptionLabel.topAnchor,
+                                                  constant: -safeInsetValue).isActive = true
+    }
+    
+    fileprivate func prepareBookingButtons() {
     }
     
     /*// Mark: TableView
@@ -234,24 +254,34 @@ extension HomeStudyRoomCell {
         return view
     }
     
-    /*fileprivate func getStudyRoomTableView() -> UITableView {
-        let tableView = UITableView()
-        tableView.backgroundColor = .clear
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.backgroundColor = .green
-        tableView.register(BookingRowCell.self, forCellReuseIdentifier: bookingRowIdentifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }*/
-    
     fileprivate func getBookingView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .red
         return view
+    }
+    
+    fileprivate func getBookingRowLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryTitleFont
+        label.textColor = .secondaryTitleGrey
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
+    fileprivate func getBookingTimeLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryTitleFont
+        label.textColor = .secondaryTitleGrey
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
+    fileprivate func getBookingButton() -> HomeGSRBookingButton {
+        let button = HomeGSRBookingButton()
+        return button
     }
     
     fileprivate func getFooterDescriptionLabel() -> UILabel {
