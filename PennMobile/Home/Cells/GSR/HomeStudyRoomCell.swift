@@ -169,15 +169,19 @@ extension HomeStudyRoomCell {
         bookingViewTop.trailingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         bookingViewTop.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
                                             constant: safeInsetValue).isActive = true
-        bookingViewTop.heightAnchor.constraint(equalToConstant: HomeStudyRoomCell.bookingRowHeight)
+        bookingViewTop.heightAnchor.constraint(equalToConstant: HomeStudyRoomCell.bookingRowHeight).isActive = true
         
         bookingViewBottom.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         bookingViewBottom.trailingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         bookingViewBottom.topAnchor.constraint(equalTo: bookingViewTop.bottomAnchor).isActive = true
+        bookingViewBottom.heightAnchor.constraint(equalTo: bookingViewTop.heightAnchor).isActive = true
         
     }
     
     fileprivate func prepareBookingLabels() {
+        for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
+            
+        }
         /*
         rowLabel = getRowLabel()
         addSubview(rowLabel)
