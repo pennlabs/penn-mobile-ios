@@ -224,15 +224,15 @@ extension HomeStudyRoomCell {
     }
     
     fileprivate func prepareBookingRowLabels() {
-        /*bookingButtonRowLabels = [UILabel!]()
-         for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
-         let rowLabel = getBookingRowLabel()
-         bookingButtonRowLabels.append(rowLabel)
-         cardView.addSubview(rowLabel)
+        bookingButtonRowLabels = [UILabel!]()
+        for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
+            let rowLabel = getBookingRowLabel()
+            bookingButtonRowLabels.append(rowLabel)
+            cardView.addSubview(rowLabel)
          
-         rowLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-         rowLabel.centerYAnchor.constraint()
-         }*/
+            rowLabel.leadingAnchor.constraint(equalTo: bookingRowViews[row].leadingAnchor).isActive = true
+            rowLabel.centerYAnchor.constraint(equalTo: bookingButtons[row][0].centerYAnchor).isActive = true
+         }
     }
     
     
@@ -299,6 +299,8 @@ extension HomeStudyRoomCell {
         label.textColor = .secondaryTitleGrey
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
+        // test
+        label.text = "TEST"
         return label
     }
     
@@ -306,9 +308,10 @@ extension HomeStudyRoomCell {
         let label = UILabel()
         label.font = .secondaryTitleFont
         label.textColor = .secondaryTitleGrey
-        label.text = "TEST"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
+        // test
+        label.text = "TEST"
         return label
     }
     
