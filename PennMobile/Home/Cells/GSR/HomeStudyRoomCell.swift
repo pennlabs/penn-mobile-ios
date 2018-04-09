@@ -48,6 +48,7 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     fileprivate var bookingViewTop: UIView!
     fileprivate var bookingViewBottom: UIView!
     
+    fileprivate var bookingRowViews: [UIView]!
     fileprivate var bookingButtons: [[HomeGSRBookingButton]]!
     fileprivate var bookingButtonTimeLabels: [[UILabel]]!
     fileprivate var bookingButtonRowLabels: [UILabel]!
@@ -159,23 +160,22 @@ extension HomeStudyRoomCell {
     }
     
     fileprivate func prepareBookingViews() {
-        bookingViewTop = getBookingView()
-        bookingViewBottom = getBookingView()
-        
-        cardView.addSubview(bookingViewTop)
-        cardView.addSubview(bookingViewBottom)
-        
-        bookingViewTop.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        bookingViewTop.trailingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        bookingViewTop.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
-                                            constant: safeInsetValue).isActive = true
-        bookingViewTop.heightAnchor.constraint(equalToConstant: HomeStudyRoomCell.bookingRowHeight).isActive = true
-        
-        bookingViewBottom.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        bookingViewBottom.trailingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        bookingViewBottom.topAnchor.constraint(equalTo: bookingViewTop.bottomAnchor).isActive = true
-        bookingViewBottom.heightAnchor.constraint(equalTo: bookingViewTop.heightAnchor).isActive = true
-        
+        bookingRowViews = [UIView]()
+        for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
+            let bookingRowView = getBookingView()
+            bookingRowViews.append(bookingRowView)
+            cardView.addSubview(bookingRowView)
+            
+            bookingRowView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+            bookingRowView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+            bookingRowView.heightAnchor.constraint(equalToConstant: HomeStudyRoomCell.bookingRowHeight).isActive = true
+            
+            if row == 0 {
+                bookingRowView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor, constant: safeInsetValue).isActive = true
+            } else {
+                bookingRowView.topAnchor.constraint(equalTo: bookingRowViews[row - 1].bottomAnchor).isActive = true
+            }
+        }
     }
     
     fileprivate func prepareBookingLabels() {
@@ -263,7 +263,7 @@ extension HomeStudyRoomCell {
     fileprivate func getBookingView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .red
+        view.backgroundColor = .clear
         return view
     }
     
