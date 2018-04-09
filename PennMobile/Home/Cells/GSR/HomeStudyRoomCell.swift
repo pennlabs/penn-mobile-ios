@@ -75,6 +75,13 @@ extension HomeStudyRoomCell {
     }
 }
 
+extension HomeStudyRoomCell : HomeGSRBookingButtonDelegate {
+    func handleBookingSelected(_ booking: GSRBooking) {
+        print("Handle booking!")
+    }
+}
+
+/*
 // MARK: - tableView datasource
 extension HomeStudyRoomCell: UITableViewDataSource {
     
@@ -98,12 +105,7 @@ extension HomeStudyRoomCell: UITableViewDataSource {
     internal func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return BookingRowCell.rowHeight
     }
-}
-
-// MARK: - tableView delegate
-extension HomeStudyRoomCell: UITableViewDelegate {
-    
-}
+}*/
 
 // MARK: - Initialize & Layout UI Elements
 extension HomeStudyRoomCell {
@@ -112,8 +114,10 @@ extension HomeStudyRoomCell {
         prepareSafeArea()
         prepareTitleLabels()
         prepareDividerLine()
+        prepareBookingViews()
+        prepareBookingButtons()
         prepareFooter()
-        prepareTableView()
+        //prepareTableView()
     }
     
     // MARK: Safe Area
@@ -155,6 +159,14 @@ extension HomeStudyRoomCell {
         dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
     }
     
+    fileprivate func prepareBookingViews() {
+        bookingViewTop = getBookingView()
+        bookingViewBottom = getBookingView()
+        
+        cardView.addSubview(bookingViewTop)
+        cardView.addSubview(bookingViewBottom)
+    }
+    
     // MARK: Footer
     fileprivate func prepareFooter() {
         footerTransitionButton = getFooterTransitionButton()
@@ -172,7 +184,7 @@ extension HomeStudyRoomCell {
         footerDescriptionLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor).isActive = true
     }
     
-    // Mark: TableView
+    /*// Mark: TableView
     fileprivate func prepareTableView() {
         studyRoomTableView = getStudyRoomTableView()
         
@@ -184,7 +196,7 @@ extension HomeStudyRoomCell {
         studyRoomTableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
         studyRoomTableView.bottomAnchor.constraint(equalTo: footerDescriptionLabel.topAnchor,
                                                    constant: -safeInsetValue).isActive = true
-    }
+    }*/
 }
 
 // MARK: - Define UI Elements
@@ -222,7 +234,7 @@ extension HomeStudyRoomCell {
         return view
     }
     
-    fileprivate func getStudyRoomTableView() -> UITableView {
+    /*fileprivate func getStudyRoomTableView() -> UITableView {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.delegate = self
@@ -233,6 +245,13 @@ extension HomeStudyRoomCell {
         tableView.register(BookingRowCell.self, forCellReuseIdentifier: bookingRowIdentifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
+    }*/
+    
+    fileprivate func getBookingView() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .red
+        return view
     }
     
     fileprivate func getFooterDescriptionLabel() -> UILabel {
