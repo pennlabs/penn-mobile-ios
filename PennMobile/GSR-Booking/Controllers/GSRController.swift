@@ -46,7 +46,14 @@ class GSRController: GenericViewController, IndicatorEnabled {
         self.tabBarController?.title = "Study Rooom Booking"
         updateForNewDayIfNeeded()
         rangeSlider?.reload()
-        fetchData()
+        if viewModel.allRooms.isEmpty {
+            self.showActivity()
+        }
+        fetchData {
+            DispatchQueue.main.async {
+                self.hideActivity()
+            }
+        }
         prepareBarButton()
         refreshBarButton()
     }
@@ -115,7 +122,7 @@ extension GSRController {
 
 // MARK: - ViewModelDelegate + Networking
 extension GSRController: GSRViewModelDelegate {
-    func fetchData() {
+    func fetchData(_ callback: @escaping () -> Void) {
         let locationId = viewModel.getSelectedLocation().lid
         let date = viewModel.getSelectedDate()
         GSRNetworkManager.instance.getAvailability(for: locationId, date: date) { (rooms) in
@@ -126,6 +133,7 @@ extension GSRController: GSRViewModelDelegate {
                     self.rangeSlider.reload()
                     self.refreshBarButton()
                 }
+                callback()
             }
         }
     }
@@ -188,7 +196,7 @@ extension GSRController: GSRBookable {
                 if success {
                     self.fetchData()
                 } else {
-                    self.presentLoginController(with: booking)
+                    GSRUser.clear()
                 }
             }
         } else {
