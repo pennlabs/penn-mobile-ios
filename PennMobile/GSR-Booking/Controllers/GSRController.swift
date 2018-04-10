@@ -194,7 +194,9 @@ extension GSRController: GSRBookable {
             booking.user = user
             submitBooking(for: booking) { (success) in
                 if success {
-                    self.fetchData()
+                    self.fetchData {
+                        // Do something when finished
+                    }
                 } else {
                     GSRUser.clear()
                 }

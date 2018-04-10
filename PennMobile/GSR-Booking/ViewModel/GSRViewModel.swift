@@ -77,7 +77,9 @@ extension GSRViewModel: UIPickerViewDataSource, UIPickerViewDelegate {
         } else if component == 1 {
             selectedLocation = locations[row]
         }
-        delegate!.fetchData()
+        delegate!.fetchData {
+            // Do something when finished
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
