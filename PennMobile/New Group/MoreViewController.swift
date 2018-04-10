@@ -12,7 +12,6 @@ class MoreViewController: GenericTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.topItem?.title = "More"
         setUpTableView()
     }
     

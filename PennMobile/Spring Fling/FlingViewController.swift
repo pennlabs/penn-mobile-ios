@@ -35,13 +35,10 @@ final class FlingViewController: GenericViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Spring Fling"
-        
         setupNavBar()
         prepareScheduleTableView()
         preparePerformersTableView()
         prepareMapImageView()
-        prepareMapBarButton()
         
         scheduleTableView.isHidden = true
         performersTableView.isHidden = false
@@ -49,12 +46,21 @@ final class FlingViewController: GenericViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.title = "Spring Fling"
+        prepareMapBarButton()
         if let navbar = navigationController?.navigationBar {
             removeHairline(from: navbar)
         }
         
         self.fetchViewModel {
             // TODO: do something when fetch has completed
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let navbar = navigationController?.navigationBar {
+            addBackHairline(from: navbar)
         }
     }
 }
@@ -259,7 +265,7 @@ extension FlingViewController: FlingCellDelegate {
 // MARK: - Map Image
 extension FlingViewController {
     fileprivate func prepareMapBarButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Map", style: .done, target: self, action: #selector(handleMapButtonPressed(_:)))
+        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Map", style: .done, target: self, action: #selector(handleMapButtonPressed(_:)))
     }
     
     fileprivate func prepareMapImageView() {
@@ -300,7 +306,7 @@ extension FlingViewController {
         let nibUrl = bundle.url(forResource: "TimelineTableViewCell", withExtension: "bundle")
         let timelineTableViewCellNib = UINib(nibName: "TimelineTableViewCell", bundle: Bundle(url: nibUrl!)!)
         scheduleTableView.register(timelineTableViewCellNib, forCellReuseIdentifier: "TimelineTableViewCell")
-        scheduleTableView.register(ScheduleCell, forCellReuseIdentifier: "ScheduleCell")
+        scheduleTableView.register(ScheduleCell.self, forCellReuseIdentifier: "ScheduleCell")
         
         scheduleTableView.delegate = self
         scheduleTableView.dataSource = self

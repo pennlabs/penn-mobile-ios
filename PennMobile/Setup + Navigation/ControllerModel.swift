@@ -52,9 +52,9 @@ class ControllerModel: NSObject {
     var orderedPages: [Page] {
         get {
             if (ControllerModel.isFlingDate()) {
-                return [.home, .fling, .dining, .laundry, .more]
+                return [.fling, .dining, .laundry, .studyRoomBooking, .more]
             }
-            return [.home, .dining, .studyRoomBooking, .laundry, .more]
+            return [.dining, .studyRoomBooking, .laundry, .fling, .more]
         }
     }
         
@@ -62,17 +62,17 @@ class ControllerModel: NSObject {
     var moreOrder: [Page] {
         get {
             if (ControllerModel.isFlingDate()) {
-                return [.studyRoomBooking, .news, .contacts, .about]
+                return [.news, .contacts, .about]
             }
-            return [.fling, .news, .contacts, .about]
+            return [.news, .contacts, .about]
         }
     }
     var moreIcons: [UIImage] {
         get {
             if (ControllerModel.isFlingDate()) {
-                return [#imageLiteral(resourceName: "GSR - Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+                return [ #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
             } else {
-                return [#imageLiteral(resourceName: "Fling_Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+                return [ #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
             }
         }
     }
