@@ -14,7 +14,7 @@ protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
 
 final class FlingTableViewModel: ModularTableViewModel {}
 
-final class FlingViewController: GenericViewController {
+final class FlingViewController: GenericViewController, IndicatorEnabled {
     
     fileprivate var performersTableView: ModularTableView!
     fileprivate var scheduleTableView: UITableView!
@@ -52,8 +52,13 @@ final class FlingViewController: GenericViewController {
             removeHairline(from: navbar)
         }
         
+        if self.model == nil {
+            showActivity()
+        }
         self.fetchViewModel {
-            // TODO: do something when fetch has completed
+            DispatchQueue.main.async {
+                self.hideActivity()
+            }
         }
     }
     
