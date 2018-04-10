@@ -16,20 +16,23 @@ class HomeGSRBookingButton : UIButton {
     var booking : GSRBooking? {
         didSet {
             self.isEnabled = (booking != nil)
+            if isEnabled {
+                incrementLabel.textColor = .interactionGreen
+            } else {
+                incrementLabel.textColor = .allbirdsGrey
+            }
         }
     }
     var delegate : HomeGSRBookingButtonDelegate?
+    var incrementLabel : UILabel!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
+    convenience init(withIncrement increment: Int) {
+        self.init()
+        setupButton()
+        setupIncrementLabel(increment)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
+    private func setupButton() {
         backgroundColor = .clear
         titleLabel?.font = .footerTransitionFont
         addTarget(self, action: #selector(bookingButtonTapped), for: .touchUpInside)
@@ -39,6 +42,30 @@ class HomeGSRBookingButton : UIButton {
         setImage(UIImage(named: "Available-GSR-Enabled"), for: .highlighted)
         setImage(UIImage(named: "Disabled-GSR"), for: .disabled)
         tintColor = .clear
+    }
+    
+    private func setupIncrementLabel(_ increment: Int) {
+        incrementLabel = getIncrementLabel()
+        switch increment {
+        case 0: incrementLabel.text = "30'"
+        case 1: incrementLabel.text = "60'"
+        default: incrementLabel.text = "90'"
+        }
+        self.addSubview(incrementLabel)
+        
+        incrementLabel.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        incrementLabel.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        incrementLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        incrementLabel.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 2).isActive = true
+    }
+    
+    fileprivate func getIncrementLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .gsrTimeIncrementFont
+        label.textColor = .interactionGreen
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }
     
     @objc fileprivate func bookingButtonTapped() {

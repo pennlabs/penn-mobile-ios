@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol GSRBookingSelectable {
-    func handleVenueSelected(_ venue: DiningVenue)
+    func handleBookingRequested(_ booking: GSRBooking)
 }
 final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     
@@ -41,9 +41,6 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     fileprivate var primaryTitleLabel: UILabel!
     
     fileprivate var dividerLine: UIView!
-    
-    //fileprivate let bookingRowIdentifier = "StudyRoomBookingsRow"
-    //fileprivate var studyRoomTableView: UITableView!
     
     fileprivate var bookingViewTop: UIView!
     fileprivate var bookingViewBottom: UIView!
@@ -106,7 +103,8 @@ extension HomeStudyRoomCell {
 
 extension HomeStudyRoomCell : HomeGSRBookingButtonDelegate {
     func handleBookingSelected(_ booking: GSRBooking) {
-        print("Handle booking!")
+        guard let delegate = delegate as? GSRBookingSelectable else { return }
+        delegate.handleBookingRequested(booking)
     }
 }
 
@@ -231,7 +229,7 @@ extension HomeStudyRoomCell {
         for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
             var bookingRowButtons = [HomeGSRBookingButton]()
             for n in 0..<3 {
-                let button = getBookingButton()
+                let button = getBookingButton(n)
                 bookingRowButtons.append(button)
                 cardView.addSubview(button)
                 button.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
@@ -331,8 +329,8 @@ extension HomeStudyRoomCell {
         return label
     }
     
-    fileprivate func getBookingButton() -> HomeGSRBookingButton {
-        let button = HomeGSRBookingButton()
+    fileprivate func getBookingButton(_ increment: Int) -> HomeGSRBookingButton {
+        let button = HomeGSRBookingButton(withIncrement: increment)
         button.delegate = self
         return button
     }

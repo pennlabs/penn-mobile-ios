@@ -71,7 +71,8 @@ extension HomeViewController {
 }
 
 // MARK: - ViewModelDelegate
-extension HomeViewController: HomeViewModelDelegate {
+extension HomeViewController: HomeViewModelDelegate, GSRBookable {
+    
     func handleUrlPressed(_ url: String) {
     }
     
@@ -85,8 +86,15 @@ extension HomeViewController: HomeViewModelDelegate {
         navigationController?.pushViewController(ddc, animated: true)
     }
     
-    func handleStudyRoomBookingSelected(_ booking: GSRBooking) {
-        print("BOOKING SUBMITTED")
+    func handleBookingRequested(_ booking: GSRBooking) {
+        if GSRUser.hasSavedUser() {
+            booking.user = GSRUser.getUser()
+            submitBooking(for: booking) { (completion) in
+                print("Completed: \(completion)")
+            }
+        } else {
+            print("No user found")
+        }
     }
 }
 
