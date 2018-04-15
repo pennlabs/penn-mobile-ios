@@ -18,6 +18,12 @@ class DiningCell: UITableViewCell {
         }
     }
     
+    var isHomepage: Bool = false {
+        didSet {
+            setupCell(with: venue)
+        }
+    }
+    
     // MARK: - UI Elements
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
@@ -52,7 +58,13 @@ class DiningCell: UITableViewCell {
 extension DiningCell {
     fileprivate func setupCell(with venue: DiningVenue) {
         venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
-        titleLabel.text = venue.name.rawValue
+        
+        if isHomepage {
+            titleLabel.text = DiningVenueName.getShortVenueName(for: venue.name)
+        } else {
+            titleLabel.text = venue.name.rawValue
+        }
+        
         updateTimeLabel(with: venue.times)
         if venue.times != nil, venue.times!.isEmpty {
             statusLabel.text = "CLOSED TODAY"
@@ -162,7 +174,7 @@ extension DiningCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 10.0
+        //imageView.layer.cornerRadius = 10.0
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }

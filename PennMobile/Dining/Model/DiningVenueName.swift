@@ -9,22 +9,34 @@
 import Foundation
 
 enum DiningVenueName: String {
-    case commons = "1920 Commons"
-    case mcclelland = "McClelland Express"
-    case nch = "New College House"
-    case hill = "Hill House"
-    case english = "English House"
-    case falk = "Falk Kosher Dining"
-    case frontera = "Tortas Frontera"
+    case commons =       "1920 Commons"
+    case mcclelland =    "McClelland"
+    case nch =           "NCH Dining"
+    case hill =          "Hill House"
+    case english =       "English House"
+    case falk =          "Falk Kosher"
+    case frontera =      "Tortas Frontera"
     case gourmetGrocer = "Gourmet Grocer"
-    case houston = "Houston Market"
-    case joes = "Joe's Café"
-    case marks = "Mark's Café"
-    case beefsteak = "Beefsteak"
-    case starbucks = "Starbucks"
-    case pret = "Pret a Manger"
-    case mbaCafe = "MBA Café"
+    case houston =       "Houston Market"
+    case joes =          "Joe's Café"
+    case marks =         "Mark's Café"
+    case beefsteak =     "Beefsteak"
+    case starbucks =     "Starbucks"
+    case pret =          "Pret a Manger"
+    case mbaCafe =       "MBA Café"
     case unknown
+    
+    static func getShortVenueName(for venueName: DiningVenueName) -> String {
+        switch venueName {
+        case commons:           return "Commons"
+        case english:           return "English"
+        case frontera:          return "Frontera"
+        case gourmetGrocer:     return "G. Grocer"
+        case houston:           return "Houston"
+        case pret:              return "Pret"
+        default:                return venueName.rawValue
+        }
+    }
     
     static func getVenueName(for apiName: String) -> DiningVenueName {
         if apiName.contains("MBA") {

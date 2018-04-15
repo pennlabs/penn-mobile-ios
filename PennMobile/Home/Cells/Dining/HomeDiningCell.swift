@@ -91,6 +91,9 @@ extension HomeDiningCell: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension HomeDiningCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? DiningCell {
+            cell.isHomepage = true
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
