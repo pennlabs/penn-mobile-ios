@@ -22,6 +22,7 @@ enum Page: String {
     case contacts = "Penn Contacts"
     case fling = "Spring Fling"
     case about = "About"
+    case mentalHealth = "Mental Health"
 }
 
 class ControllerModel: NSObject {
@@ -39,6 +40,7 @@ class ControllerModel: NSObject {
         dict[.contacts] = ContactsTableViewController()
         dict[.fling] = FlingViewController()
         dict[.about] = AboutViewController()
+        dict[.mentalHealth] = MentalHealthViewController()
         return dict
     }()
     
@@ -62,17 +64,17 @@ class ControllerModel: NSObject {
     var moreOrder: [Page] {
         get {
             if (ControllerModel.isFlingDate()) {
-                return [.news, .contacts, .about]
+                return [.news, .contacts, .about, .mentalHealth]
             }
-            return [.news, .contacts, .about]
+            return [.news, .contacts, .about, .mentalHealth]
         }
     }
     var moreIcons: [UIImage] {
         get {
             if (ControllerModel.isFlingDate()) {
-                return [ #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+                return [ #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs"), #imageLiteral(resourceName: "Contacts")]
             } else {
-                return [ #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+                return [ #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs"), #imageLiteral(resourceName: "Contacts")]
             }
         }
     }
