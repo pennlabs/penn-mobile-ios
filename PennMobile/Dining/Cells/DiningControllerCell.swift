@@ -66,22 +66,25 @@ extension DiningCell {
         }
         
         updateTimeLabel(with: venue.times)
+        
         if venue.times != nil, venue.times!.isEmpty {
             statusLabel.text = "CLOSED TODAY"
             statusLabel.textColor = .secondaryInformationGrey
             statusLabel.font = .secondaryInformationFont
-        } else {
+        } else if venue.times != nil && venue.times!.isOpen {
             statusLabel.text = "OPEN"
             statusLabel.textColor = .informationYellow
             statusLabel.font = .primaryInformationFont
+        } else {
+            statusLabel.text = "CLOSED"
+            statusLabel.textColor = .secondaryInformationGrey
+            statusLabel.font = .secondaryInformationFont
         }
     }
     
     fileprivate func updateTimeLabel(with times: [OpenClose]?) {
         timesLabel.text = times?.strFormat
-        if let times = times, times.count > 3 {
-            timesLabel.shrinkUntilFits(numberOfLines: 1, increment: 0.5)
-        }
+        timesLabel.layoutIfNeeded()
     }
 }
 
@@ -133,10 +136,11 @@ extension DiningCell {
         
         statusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         statusLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 3).isActive = true
-        //statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
+        timesLabel.invalidateIntrinsicContentSize()
         timesLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         timesLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3).isActive = true
+        timesLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
     }
     
     // MARK: Buttons
@@ -194,6 +198,10 @@ extension DiningCell {
         label.textColor = .secondaryInformationGrey
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.allowsDefaultTighteningForTruncation = true
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.3
+        label.numberOfLines = 1
         return label
     }
 
