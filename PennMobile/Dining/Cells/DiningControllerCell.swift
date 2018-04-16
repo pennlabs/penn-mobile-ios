@@ -32,8 +32,6 @@ class DiningCell: UITableViewCell {
     fileprivate var titleLabel: UILabel!
     fileprivate var timesLabel: UILabel!
     fileprivate var statusLabel: UILabel!
-    fileprivate var menuButton: UIButton!
-    fileprivate var locationButton: UIButton!
     
     // MARK: - Init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -43,14 +41,6 @@ class DiningCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc fileprivate func menuButtonTapped() {
-        print("Menu button Tapped!")
-    }
-    
-    @objc fileprivate func locationButtonTapped() {
-        print("Location button Tapped!")
     }
 }
 
@@ -96,7 +86,6 @@ extension DiningCell {
         prepareSafeArea()
         prepareImageView()
         prepareLabels()
-        prepareButtons()
     }
     
     // MARK: Safe Area
@@ -133,35 +122,14 @@ extension DiningCell {
         titleLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor,
                                             constant: safeInsetValue).isActive = true
         titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
         
         statusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         statusLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 3).isActive = true
         
-        timesLabel.invalidateIntrinsicContentSize()
         timesLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         timesLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3).isActive = true
         timesLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-    }
-    
-    // MARK: Buttons
-    fileprivate func prepareButtons() {
-        let buttonSize: CGFloat = 20
-        
-        menuButton = getMenuButton()
-        addSubview(menuButton)
-        
-        menuButton.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
-        menuButton.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
-        menuButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        menuButton.bottomAnchor.constraint(equalTo: venueImageView.bottomAnchor).isActive = true
-        
-        locationButton = getLocationButton()
-        addSubview(locationButton)
-        
-        locationButton.widthAnchor.constraint(equalToConstant: buttonSize).isActive = true
-        locationButton.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
-        locationButton.leadingAnchor.constraint(equalTo: menuButton.trailingAnchor, constant: 14).isActive = true
-        locationButton.bottomAnchor.constraint(equalTo: menuButton.bottomAnchor).isActive = true
     }
 }
 
@@ -189,6 +157,7 @@ extension DiningCell {
         label.textColor = .primaryTitleGrey
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.shrinkUntilFits()
         return label
     }
     
@@ -198,10 +167,7 @@ extension DiningCell {
         label.textColor = .secondaryInformationGrey
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.allowsDefaultTighteningForTruncation = true
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.3
-        label.numberOfLines = 1
+        label.shrinkUntilFits()
         return label
     }
 
@@ -212,28 +178,6 @@ extension DiningCell {
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }
-    
-    fileprivate func getMenuButton() -> UIButton {
-        let button = UIButton()/*
-         button.setImage(UIImage(named: "menu-icon"), for: .normal)
-         button.setImage(UIImage(named: "Available-GSR-Enabled"), for: .selected)
-         button.setImage(UIImage(named: "Available-GSR-Enabled"), for: .highlighted)
-         button.setImage(UIImage(named: "Disabled-GSR"), for: .disabled)*/
-        button.addTarget(self, action: #selector(menuButtonTapped), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }
-    
-    fileprivate func getLocationButton() -> UIButton {
-        let button = UIButton()/*
-         button.setImage(UIImage(named: "location-icon"), for: .normal)
-         button.setImage(UIImage(named: "Available-GSR-Enabled"), for: .selected)
-         button.setImage(UIImage(named: "Available-GSR-Enabled"), for: .highlighted)
-         button.setImage(UIImage(named: "Disabled-GSR"), for: .disabled)*/
-        button.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }
 }
 
