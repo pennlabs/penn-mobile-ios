@@ -60,12 +60,12 @@ extension WebviewController {
 // MARK: - Webview Preloading
 extension WebviewController {
     static func preloadWebview(for urlString: String) {
-        if getHTML(for: urlString) != nil { return }
-        DispatchQueue.global(qos: .background).async {
-            guard let url = URL(string: urlString) else { return }
-            if let html = try? String(contentsOf: url, encoding: .ascii) {
-                WebviewController.setHTML(html, for: urlString)
-            }
-        }
+//        if getHTML(for: urlString) != nil { return }
+//        DispatchQueue.global(qos: .background).async {
+//            guard let url = URL(string: urlString) else { return }
+//            if let html = try? String(contentsOf: url, encoding: .ascii) {
+//                WebviewController.setHTML(html, for: urlString)
+//            }
+//        }
     }
 }

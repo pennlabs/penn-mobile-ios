@@ -128,3 +128,70 @@ extension DiningHoursData {
     }
 }
 
+extension DiningAPI {
+    func fetchHardcodedData(_ completion: @escaping (_ success: Bool) -> Void) {
+        if let filePath = Bundle.main.path(forResource: "diningJSON", ofType: "json"),
+            let data = NSData(contentsOfFile: filePath) {
+            let json = try! JSON(data: data as Data)
+            let success: Bool = DiningHoursData.shared.loadHardcodedData(for: json)
+            completion(success)
+        }
+    }
+}
+
+extension DiningHoursData {
+    fileprivate func loadHardcodedData(for json: JSON) -> Bool {
+        guard let jsonArray = json["venues"].array else {
+            return false
+        }
+        
+        for json in jsonArray {
+            loadHardcodedHoursForSingleVenue(for: json)
+        }
+        return true
+    }
+    
+    fileprivate func loadHardcodedHoursForSingleVenue(for json: JSON) {
+        guard let name = json["name"].string, let scheduleJSON = json["schedule"].array else {
+            return
+        }
+        let venueName = DiningVenueName.getVenueName(for: name)
+        if venueName == .unknown {
+            return
+        }
+        
+        let today: String = Date().dayOfWeek
+        var mealsJSON: [JSON]!
+        for json in scheduleJSON {
+            let day = json["day"].stringValue
+            if today == day {
+                mealsJSON = json["meals"].array
+            }
+        }
+        
+        if mealsJSON == nil {
+            return
+        }
+        
+        var hours = [OpenClose]()
+        
+        let formatter = DateFormatter()
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
+        formatter.dateFormat = "h:mma"
+        formatter.timeZone = TimeZone(abbreviation: "EST")
+        
+        for json in mealsJSON {
+            let start = json["start"].stringValue
+            let end = json["end"].stringValue
+            
+            guard let openDate = formatter.date(from: start)?.adjustedFor11_59, let closeDate = formatter.date(from: end)?.adjustedFor11_59 else { continue }
+            
+            let time = OpenClose(open: openDate, close: closeDate)
+            hours.append(time)
+        }
+        
+        self.load(hours: hours, for: venueName)
+    }
+}
+

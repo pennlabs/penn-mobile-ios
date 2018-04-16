@@ -33,6 +33,19 @@ final class TabBarController: ESTabBarController {
         self.viewControllers = ControllerModel.shared.viewControllers
         self.delegate = self
     }
+    
+    func reloadTabs() {
+        let controllerModel = ControllerModel.shared
+        if (ControllerModel.isReloadNecessary()) {
+            controllerModel.viewControllers.forEach { (vc) in
+                if vc is TabBarShowable {
+                    vc.tabBarItem = (vc as! TabBarShowable).getTabBarItem()
+                }
+            }
+            self.viewControllers = controllerModel.viewControllers
+            self.delegate = self
+        }
+    }
 }
 
 // MARK: - Transition Animation
