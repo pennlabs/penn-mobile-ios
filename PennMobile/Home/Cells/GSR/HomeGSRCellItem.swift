@@ -43,10 +43,11 @@ extension HomeGSRCellItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
         
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd"
         
-        GSRNetworkManager.instance.getAvailability(for: 1086, dateStr: "2018-04-11") { (rooms) in
+        let dateString = formatter.string(from: Date().roundedDownToHour)
+        
+        GSRNetworkManager.instance.getAvailability(for: 1086, dateStr: dateString) { (rooms) in
             if let _ = rooms {
                 self.filterForTimeConstraints(rooms!)
             }
