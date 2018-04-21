@@ -146,7 +146,7 @@ extension DiningCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        //imageView.layer.cornerRadius = 10.0
+        imageView.layer.cornerRadius = 5.0
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }
