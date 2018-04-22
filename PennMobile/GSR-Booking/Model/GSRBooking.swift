@@ -22,4 +22,13 @@ class GSRBooking {
         self.start = start
         self.end = end
     }
+    
+    func getLocalTimeString() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "MMM d, h:mm a"
+        let dateStringStart = formatter.string(from: self.start)
+        let dateStringEnd = formatter.string(from: self.end)
+        return "\(dateStringStart) -> \(dateStringEnd)"
+    }
 }

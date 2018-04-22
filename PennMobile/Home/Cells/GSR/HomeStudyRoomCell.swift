@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol GSRBookingSelectable {
-    func handleBookingRequested(_ booking: GSRBooking)
+    func handleBookingSelected(_ booking: GSRBooking)
 }
 final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     
@@ -104,7 +104,7 @@ extension HomeStudyRoomCell {
 extension HomeStudyRoomCell : HomeGSRBookingButtonDelegate {
     func handleBookingSelected(_ booking: GSRBooking) {
         guard let delegate = delegate as? GSRBookingSelectable else { return }
-        delegate.handleBookingRequested(booking)
+        delegate.handleBookingSelected(booking)
     }
 }
 
