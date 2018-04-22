@@ -51,9 +51,9 @@ class ControllerModel: NSObject {
     // pages order in tab bar
     var orderedPages: [Page] {
         get {
-            if (ControllerModel.isFlingDate()) {
-                return [.fling, .dining, .laundry, .studyRoomBooking, .more]
-            }
+//            if (ControllerModel.isFlingDate()) {
+//                return [.dining, .laundry, .studyRoomBooking, .news, .more]
+//            }
             return [.dining, .studyRoomBooking, .laundry, .fling, .more]
         }
     }
@@ -61,19 +61,20 @@ class ControllerModel: NSObject {
     // pages order in MoreViewController:
     var moreOrder: [Page] {
         get {
-            if (ControllerModel.isFlingDate()) {
-                return [.news, .contacts, .about]
-            }
+//            if (ControllerModel.isFlingDate()) {
+//                return [.contacts, .about]
+//            }
             return [.news, .contacts, .about]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            if (ControllerModel.isFlingDate()) {
-                return [ #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
-            } else {
-                return [ #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
-            }
+//            if (ControllerModel.isFlingDate()) {
+//                return [ #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+//            } else {
+//                return [ #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+//            }
+            return [ #imageLiteral(resourceName: "News-Icon"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
         }
     }
     

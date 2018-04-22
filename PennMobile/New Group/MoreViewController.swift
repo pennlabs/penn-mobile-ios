@@ -28,7 +28,6 @@ class MoreViewController: GenericTableViewController {
         //tableView.register(AccountCell.self, forCellReuseIdentifier: "account")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
     }
-    
 }
 
 extension MoreViewController {
