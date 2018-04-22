@@ -54,7 +54,7 @@ class ControllerModel: NSObject {
 //            if (ControllerModel.isFlingDate()) {
 //                return [.dining, .laundry, .studyRoomBooking, .news, .more]
 //            }
-            return [.dining, .studyRoomBooking, .laundry, .fling, .more]
+            return [.dining, .studyRoomBooking, .laundry, .contacts, .more]
         }
     }
         
@@ -64,7 +64,7 @@ class ControllerModel: NSObject {
 //            if (ControllerModel.isFlingDate()) {
 //                return [.contacts, .about]
 //            }
-            return [.news, .contacts, .about]
+            return [.news, .about]
         }
     }
     var moreIcons: [UIImage] {
@@ -74,7 +74,7 @@ class ControllerModel: NSObject {
 //            } else {
 //                return [ #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
 //            }
-            return [ #imageLiteral(resourceName: "News-Icon"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            return [ #imageLiteral(resourceName: "News-Icon"), #imageLiteral(resourceName: "Penn Labs")]
         }
     }
     

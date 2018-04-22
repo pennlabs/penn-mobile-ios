@@ -96,8 +96,8 @@ extension NewsViewController: TabBarShowable {
 
 extension ContactsTableViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "Contacts")
-        let selectedImage = UIImage(named: "Contacts")
+        let normalImage = UIImage(named: "Phone-Gray")
+        let selectedImage = UIImage(named: "Phone-Blue")
         return ESTabBarItem(title: "Contacts", image: normalImage, selectedImage: selectedImage)
     }
 }
