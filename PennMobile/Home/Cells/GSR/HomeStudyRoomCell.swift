@@ -73,7 +73,7 @@ extension HomeStudyRoomCell {
     
     fileprivate func setupCell(with item: HomeGSRCellItem) {
         secondaryTitleLabel.text = "BOOK A ROOM"
-        primaryTitleLabel.text = "Van Pelt Library"
+        primaryTitleLabel.text = "VP - Weigel Information Commons"
         bookingOptions = item.bookingOptions
         updateBookingButtons()
         bookingButtonRowLabels[0].text = "Booths"
