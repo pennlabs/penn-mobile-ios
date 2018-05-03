@@ -109,7 +109,7 @@ extension DiningViewModel: UITableViewDelegate {
         return (shouldShowAnnouncement && section == 0) ? AnnouncementHeaderView.headerHeight : DiningHeaderView.headerHeight
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    /*func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.layer.cornerRadius = 8
         cell.layer.shadowOffset = .zero
         cell.layer.shadowRadius = 5
@@ -117,7 +117,7 @@ extension DiningViewModel: UITableViewDelegate {
         cell.layer.shadowPath = UIBezierPath(rect: cell.bounds).cgPath
         cell.layer.shouldRasterize = true
         cell.layer.rasterizationScale = UIScreen.main.scale
-    }
+    }*/
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let venue = getVenue(for: indexPath)
