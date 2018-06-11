@@ -97,7 +97,6 @@ extension HomeGSRCellItem: HomeAPIRequestable {
     
     private func getFirst30(_ rooms: [GSRRoom]) -> GSRTimeSlot? {
         let first30TimeSlot : GSRTimeSlot? = rooms.min()?.timeSlots.first
-        print(first30TimeSlot?.getLocalTimeString() ?? "no slots availible")
         return first30TimeSlot
     }
     
@@ -109,7 +108,6 @@ extension HomeGSRCellItem: HomeAPIRequestable {
             return lhsFirst60.startTime <= rhsFirst60.startTime
         }
         let first60TimeSlot : GSRTimeSlot? = first60Room?.timeSlots.first60
-        print(first60TimeSlot?.getLocalTimeString() ?? "no slots availible")
         return first60TimeSlot
     }
     
@@ -121,7 +119,6 @@ extension HomeGSRCellItem: HomeAPIRequestable {
             return lhsFirst90.startTime <= rhsFirst90.startTime
         }
         let first90TimeSlot : GSRTimeSlot? = first90Room?.timeSlots.first90
-        print(first90TimeSlot?.getLocalTimeString() ?? "no slots availible")
         return first90TimeSlot
     }
 }
