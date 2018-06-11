@@ -51,9 +51,6 @@ class ControllerModel: NSObject {
     // pages order in tab bar
     var orderedPages: [Page] {
         get {
-//            if (ControllerModel.isFlingDate()) {
-//                return [.dining, .laundry, .studyRoomBooking, .news, .more]
-//            }
             return [.dining, .studyRoomBooking, .laundry, .contacts, .more]
         }
     }
@@ -61,19 +58,11 @@ class ControllerModel: NSObject {
     // pages order in MoreViewController:
     var moreOrder: [Page] {
         get {
-//            if (ControllerModel.isFlingDate()) {
-//                return [.contacts, .about]
-//            }
             return [.news, .about]
         }
     }
     var moreIcons: [UIImage] {
         get {
-//            if (ControllerModel.isFlingDate()) {
-//                return [ #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
-//            } else {
-//                return [ #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
-//            }
             return [ #imageLiteral(resourceName: "News-Icon"), #imageLiteral(resourceName: "Penn Labs")]
         }
     }
