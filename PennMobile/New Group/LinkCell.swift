@@ -22,5 +22,4 @@ class LinkCell: UITableViewCell {
         addSubview(linkLabel)
         _ = linkLabel.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 15, leftConstant: 15, bottomConstant: 15, rightConstant: 50, widthConstant: 0, heightConstant: 0)
     }
-
 }

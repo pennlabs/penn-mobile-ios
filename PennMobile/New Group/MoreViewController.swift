@@ -29,21 +29,14 @@ class MoreViewController: GenericTableViewController {
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
         tableView.register(LinkCell.self, forCellReuseIdentifier: "link")
     }
-    
 }
 
 extension MoreViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        //  return 3
         return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        /*if (section == 0) {
-            return 1
-        } else {
-            return ControllerModel.shared.moreOrder.count
-        }*/
         if (section == 0) {
             return ControllerModel.shared.moreOrder.count
         }
@@ -55,7 +48,7 @@ extension MoreViewController {
         if (section == 0) {
             headerView.setUpView(title: "FEATURES")
         } else {
-            headerView.setUpView(title: "OTHER LINKS")
+            headerView.setUpView(title: "RESOURCES")
         }
         return headerView
     }
@@ -85,11 +78,7 @@ extension MoreViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        /*if (indexPath.section == 0) {
-            return 80
-        } else {*/
-            return 50
-        //}
+        return 50
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -97,19 +86,8 @@ extension MoreViewController {
             let targetController = ControllerModel.shared.viewController(for: ControllerModel.shared.moreOrder[indexPath.row])
             navigationController?.pushViewController(targetController, animated: true)
         } else {
-            popUpAndGoTo(link: LinkModel.shared.links[indexPath.row])
+            UIApplication.shared.open(LinkModel.shared.links[indexPath.row].url, options: [:])
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    private func popUpAndGoTo(link: Link) {
-        let alert = UIAlertController(title: "Redirect to External Link", message: "You will be redirected to \(link.name), Are you sure to continue?", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
-            UIApplication.shared.open(link.url, options: [:])
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    
 }

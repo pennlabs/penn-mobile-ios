@@ -414,7 +414,6 @@
 				B6665A172071E63800F49A9C /* TabBarController.swift */,
 				216640631EBADADA00746B8E /* AppDelegate.swift */,
 				21640D6120114A28002F33CA /* ControllerModel.swift */,
-				CF1F230B208D3A0D0070AA92 /* LinkModel.swift */,
 			);
 			path = "Setup + Navigation";
 			sourceTree = "<group>";
@@ -777,6 +776,7 @@
 				CF1CE9BC205D664700C51F46 /* MoreCell.swift */,
 				CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */,
 				CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */,
+				CF1F230B208D3A0D0070AA92 /* LinkModel.swift */,
 				CF1F2309208D399C0070AA92 /* LinkCell.swift */,
 			);
 			name = More;
@@ -807,6 +807,7 @@
 				2166405D1EBADADA00746B8E /* Frameworks */,
 				2166405E1EBADADA00746B8E /* Resources */,
 				2679ED981A534643B56D29EB /* [CP] Embed Pods Frameworks */,
+				C55095EBDB6560C5DB0E4763 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -825,6 +826,8 @@
 				216640701EBADADA00746B8E /* Sources */,
 				216640711EBADADA00746B8E /* Frameworks */,
 				216640721EBADADA00746B8E /* Resources */,
+				63BCA44948173446C365034C /* [CP] Embed Pods Frameworks */,
+				27DF81B61B3B52CB0AF2F823 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -946,6 +949,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		27DF81B61B3B52CB0AF2F823 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5C6A5F00FED43335EF7B761B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -980,6 +998,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		63BCA44948173446C365034C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C55095EBDB6560C5DB0E4763 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
