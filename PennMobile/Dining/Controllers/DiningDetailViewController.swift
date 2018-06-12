@@ -12,10 +12,12 @@ class DiningDetailViewController: GenericViewController {
     
     var venue: DiningVenue!
 
+    fileprivate var stackView: UIStackView!
+
     fileprivate var primaryLabel: UILabel!
     fileprivate var secondaryLabel: UILabel!
     fileprivate var venueImageView: UIImageView!
-    fileprivate var timesLabel: UILabel!
+    fileprivate var timeLabel: UILabel!
     fileprivate var statusLabel: UILabel!
     
     override func viewDidLoad() {
@@ -30,9 +32,29 @@ class DiningDetailViewController: GenericViewController {
 // MARK: - Initialize UI elements
 extension DiningDetailViewController {
 	fileprivate func setupUI() {
-        let primaryLabel = getPrimaryLabel()
-        let secondaryLabel = getSecondaryLabel()
-        let arrangedSubviews: [UIView] = [getPrimaryLabel(), getSecondaryLabel(), getVenueImageView()]
+        primaryLabel = getPrimaryLabel()
+        secondaryLabel = getSecondaryLabel()
+        venueImageView = getVenueImageView()
+        timeLabel = getTimeLabel()
+        statusLabel = getStatusLabel()
+
+        // Initialize and setup stackView
+        let arrangedSubviews: [UIView] = [primaryLabel, secondaryLabel, venueImageView, timeLabel, statusLabel]
+        stackView = UIStackView(arrangedSubviews: arrangedSubviews)
+        configure(stackView)
+        layout(stackView)
+    }
+    
+    fileprivate func configure(_ sv: UIStackView) {
+        sv.axis = .vertical
+        sv.distribution = .equalSpacing
+        sv.alignment = .top
+        sv.spacing = 10
+        sv.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    fileprivate func layout(_ sv: UIStackView) {
+        self.view.addSubview(sv)
     }
 
     fileprivate func getPrimaryLabel() -> UILabel {
