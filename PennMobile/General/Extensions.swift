@@ -65,6 +65,7 @@ extension UIColor {
         self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
     
+    // --- Deprecated colors ---
     static let warmGrey = UIColor(r: 115, g: 115, b: 115)
     static let whiteGrey = UIColor(r: 248, g: 248, b: 248)
     static let paleTeal = UIColor(r: 149, g: 207, b: 175)

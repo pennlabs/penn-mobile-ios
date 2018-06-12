@@ -11,28 +11,74 @@ import UIKit
 class DiningDetailViewController: GenericViewController {
     
     var venue: DiningVenue!
-    var webview: UIWebView!
+
+    fileprivate var primaryLabel: UILabel!
+    fileprivate var secondaryLabel: UILabel!
+    fileprivate var venueImageView: UIImageView!
+    fileprivate var timesLabel: UILabel!
+    fileprivate var statusLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        webview = DiningDetailModel.getWebview(for: venue.name)
-        if webview == nil {
-            webview = GenericWebview(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-            guard let urlString = DiningDetailModel.getUrl(for: venue.name),
-                let url = URL(string: urlString) else {
-                return
-            }
-            webview.loadRequest(URLRequest(url: url))
-            DiningDetailModel.set(webview: webview, for: venue.name)
-        }
-        
-        view.addSubview(webview)
-        webview.translatesAutoresizingMaskIntoConstraints = false
-        webview.anchorToTop(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
-        
-        self.screenName = venue.name.rawValue
-        self.title = venue.name.rawValue
-        self.trackScreen = true
+        self.view.backgroundColor = .yellow
+        self.setupUI()
     }
+}
+
+
+// MARK: - Initialize UI elements
+extension DiningDetailViewController {
+	fileprivate func setupUI() {
+        let primaryLabel = getPrimaryLabel()
+        let secondaryLabel = getSecondaryLabel()
+        let arrangedSubviews: [UIView] = [getPrimaryLabel(), getSecondaryLabel(), getVenueImageView()]
+    }
+
+    fileprivate func getPrimaryLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .primaryTitleFont
+        label.textColor = .primaryTitleGrey
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+
+   	fileprivate func getSecondaryLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryTitleFont
+        label.textColor = .secondaryTitleGrey
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+
+    fileprivate func getTimeLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryInformationFont
+        label.textColor = .secondaryInformationGrey
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.shrinkUntilFits()
+        return label
+    }
+
+    fileprivate func getStatusLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .primaryInformationFont
+        label.textColor = .informationYellow
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+
+    fileprivate func getVenueImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 5.0
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }
+
 }
