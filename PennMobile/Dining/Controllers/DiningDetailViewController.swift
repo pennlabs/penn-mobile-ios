@@ -17,8 +17,10 @@ class DiningDetailViewController: GenericViewController {
         }
     }
 
-    fileprivate var stackView: UIStackView!
+    fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
+
+    fileprivate var stackView: UIStackView!
 
     fileprivate var primaryLabel: UILabel!
     fileprivate var secondaryLabel: UILabel!
@@ -66,6 +68,8 @@ class DiningDetailViewController: GenericViewController {
 // MARK: - Initialize UI elements
 extension DiningDetailViewController {
 	fileprivate func prepareUI() {
+		prepareSafeArea()
+
         primaryLabel = getPrimaryLabel()
         secondaryLabel = getSecondaryLabel()
         venueImageView = getVenueImageView()
@@ -77,6 +81,7 @@ extension DiningDetailViewController {
         stackView = UIStackView(arrangedSubviews: arrangedSubviews)
         configure(stackView)
         layout(stackView)
+        layoutSubviews(stackView)
         
         if venue != nil { updateUI(with: venue) }
     }
@@ -84,7 +89,7 @@ extension DiningDetailViewController {
     fileprivate func configure(_ sv: UIStackView) {
         sv.axis = .vertical
         sv.distribution = .equalSpacing
-        sv.alignment = .top
+        sv.alignment = .fill
         sv.spacing = 10
         sv.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -92,21 +97,37 @@ extension DiningDetailViewController {
     fileprivate func layout(_ sv: UIStackView) {
         self.view.addSubview(sv)
 
-        sv.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        sv.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        sv.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        sv.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        sv.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        sv.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        sv.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        sv.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor).isActive = true
+    }
+
+    fileprivate func layoutSubviews(_ sv: UIStackView) {
+    	prepareImageView()
     }
 
     private func prepareSafeArea() {
         safeArea = getSafeAreaView()
         
-        cardView.addSubview(safeArea)
+        view.addSubview(safeArea)
         
-        safeArea.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: safeInsetValue).isActive = true
-        safeArea.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -safeInsetValue).isActive = true
-        safeArea.topAnchor.constraint(equalTo: cardView.topAnchor, constant: safeInsetValue).isActive = true
-        safeArea.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: safeInsetValue).isActive = true
+        safeArea.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.topAnchor.constraint(equalTo: view.topAnchor, constant: safeInsetValue).isActive = true
+        safeArea.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -safeInsetValue).isActive = true
+    }
+
+    fileprivate func prepareImageView() {       
+        venueImageView.widthAnchor.constraint(equalToConstant: 130).isActive = true
+        venueImageView.heightAnchor.constraint(equalToConstant: 72).isActive = true
+        venueImageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
+    }
+
+    fileprivate func getSafeAreaView() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }
 
     fileprivate func getPrimaryLabel() -> UILabel {
