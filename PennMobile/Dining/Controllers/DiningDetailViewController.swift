@@ -10,9 +10,15 @@ import UIKit
 
 class DiningDetailViewController: GenericViewController {
     
-    var venue: DiningVenue!
+    var venue: DiningVenue! {
+        didSet {
+            guard stackView != nil else { return }
+            updateUI(with: venue)
+        }
+    }
 
     fileprivate var stackView: UIStackView!
+    fileprivate var safeArea: UIView!
 
     fileprivate var primaryLabel: UILabel!
     fileprivate var secondaryLabel: UILabel!
@@ -24,14 +30,42 @@ class DiningDetailViewController: GenericViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .yellow
-        self.setupUI()
+        self.prepareUI()
+    }
+
+    fileprivate func updateUI(with venue: DiningVenue) {
+        
+    	primaryLabel.text = venue.name.rawValue
+        secondaryLabel.text = "Dining Hall"
+        venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
+        
+        updateTimeLabel(with: venue.times)
+        
+        if venue.times != nil, venue.times!.isEmpty {
+            statusLabel.text = "CLOSED TODAY"
+            statusLabel.textColor = .secondaryInformationGrey
+            statusLabel.font = .secondaryInformationFont
+        } else if venue.times != nil && venue.times!.isOpen {
+            statusLabel.text = "OPEN"
+            statusLabel.textColor = .informationYellow
+            statusLabel.font = .primaryInformationFont
+        } else {
+            statusLabel.text = "CLOSED"
+            statusLabel.textColor = .secondaryInformationGrey
+            statusLabel.font = .secondaryInformationFont
+        }
+    }
+    
+    fileprivate func updateTimeLabel(with times: [OpenClose]?) {
+        timeLabel.text = times?.strFormat
+        timeLabel.layoutIfNeeded()
     }
 }
 
 
 // MARK: - Initialize UI elements
 extension DiningDetailViewController {
-	fileprivate func setupUI() {
+	fileprivate func prepareUI() {
         primaryLabel = getPrimaryLabel()
         secondaryLabel = getSecondaryLabel()
         venueImageView = getVenueImageView()
@@ -43,6 +77,8 @@ extension DiningDetailViewController {
         stackView = UIStackView(arrangedSubviews: arrangedSubviews)
         configure(stackView)
         layout(stackView)
+        
+        if venue != nil { updateUI(with: venue) }
     }
     
     fileprivate func configure(_ sv: UIStackView) {
@@ -55,6 +91,22 @@ extension DiningDetailViewController {
     
     fileprivate func layout(_ sv: UIStackView) {
         self.view.addSubview(sv)
+
+        sv.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        sv.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        sv.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        sv.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+
+    private func prepareSafeArea() {
+        safeArea = getSafeAreaView()
+        
+        cardView.addSubview(safeArea)
+        
+        safeArea.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: safeInsetValue).isActive = true
+        safeArea.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.topAnchor.constraint(equalTo: cardView.topAnchor, constant: safeInsetValue).isActive = true
+        safeArea.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -safeInsetValue).isActive = true
     }
 
     fileprivate func getPrimaryLabel() -> UILabel {
