@@ -10,6 +10,12 @@ import Foundation
 import UIKit
 
 class BuildingHeaderView: UITableViewHeaderFooterView {
+
+    var venue: DiningVenue! {
+        didSet {
+            print("Got the data!")
+        }
+    }
     
     static let headerHeight: CGFloat = 134
     static let identifier = "BuildingHeaderView"

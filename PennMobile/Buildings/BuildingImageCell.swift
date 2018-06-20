@@ -1,5 +1,5 @@
 //
-//  BuildingImageTableViewCell.swift
+//  BuildingImageCell.swift
 //  PennMobile
 //
 //  Created by dominic on 6/19/18.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-class BuildingImageTableViewCell: UITableViewCell {
+class BuildingImageCell: UITableViewCell {
     
-    static let identifier = "buildingImageCell"
+    static let identifier = "BuildingImageCell"
     static let cellHeight: CGFloat = 188
 
-    var buildingImage: UIImage! {
+    var venue: DiningVenue! {
         didSet {
-            setupCell(with: buildingImage)
+            setupCell(with: venue)
         }
     }
 
@@ -33,15 +33,14 @@ class BuildingImageTableViewCell: UITableViewCell {
 }
 
 // MARK: - Setup Cell
-extension BuildingImageTableViewCell {
-    
-    fileprivate func setupCell(with buildingImage: UIImage) {
-        buildingImageView.image = buildingImage
+extension BuildingImageCell {
+    fileprivate func setupCell(with venue: DiningVenue) {
+        buildingImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
     }
 }
 
 // MARK: - Initialize and Prepare UI
-extension BuildingImageTableViewCell {
+extension BuildingImageCell {
 
     fileprivate func prepareUI() {
         prepareImageView()
@@ -59,13 +58,13 @@ extension BuildingImageTableViewCell {
 }
 
 //MARK: - Define UI Elements
-extension BuildingImageTableViewCell {
-    
+extension BuildingImageCell {
     fileprivate func getBuildingImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.backgroundColor = .blue
         return imageView
     }
 }

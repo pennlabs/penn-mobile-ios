@@ -13,12 +13,14 @@ class DiningDetailViewController: UITableViewController {
     var venue: DiningVenue! {
         didSet {
             updateUI(with: venue)
+            self.tableView.reloadData()
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        registerHeadersAndCells(for: self.tableView)
         self.view.backgroundColor = .yellow
     }
 }
@@ -59,7 +61,7 @@ extension DiningDetailViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BuildingImageCell.identifier, for: indexPath) as! BuildingImageCell
-        //cell.venue = //getVenue(for: indexPath)
+        cell.venue = self.venue
         return cell
     }
     
@@ -73,6 +75,7 @@ extension DiningDetailViewController {
 extension DiningDetailViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: BuildingHeaderView.identifier) as! BuildingHeaderView
+        view.venue = self.venue
         return view
     }
     
