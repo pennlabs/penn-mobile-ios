@@ -114,6 +114,7 @@
 		B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAF11F802A050038B9D5 /* LaundryCell.swift */; };
 		B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B658393A1FABD295009486FC /* LaundryAPIService.swift */; };
 		B6665A182071E63800F49A9C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6665A172071E63800F49A9C /* TabBarController.swift */; };
+		B6C3499920D9DF4000FEBE89 /* BuildingImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C3499820D9DF4000FEBE89 /* BuildingImageCell.swift */; };
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
 		CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */; };
@@ -251,6 +252,7 @@
 		B654BAF11F802A050038B9D5 /* LaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryCell.swift; sourceTree = "<group>"; };
 		B658393A1FABD295009486FC /* LaundryAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryAPIService.swift; sourceTree = "<group>"; };
 		B6665A172071E63800F49A9C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		B6C3499820D9DF4000FEBE89 /* BuildingImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingImageCell.swift; sourceTree = "<group>"; };
 		B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF5C02A7792D4E6978F00EB /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 				216640C71EBADC9D00746B8E /* General */,
 				216640881EBADBA000746B8E /* Setup + Navigation */,
 				21640D4220103C8A002F33CA /* Home */,
+				B6C3499720D9DEF400FEBE89 /* Buildings */,
 				2166408B1EBADBF800746B8E /* Dining */,
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
@@ -762,6 +765,15 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		B6C3499720D9DEF400FEBE89 /* Buildings */ = {
+			isa = PBXGroup;
+			children = (
+				B6C3499820D9DF4000FEBE89 /* BuildingImageCell.swift */,
+			);
+			name = Buildings;
+			path = Home/Buildings;
+			sourceTree = "<group>";
+		};
 		CF1CE9B8205D5BF100C51F46 /* More */ = {
 			isa = PBXGroup;
 			children = (
@@ -1015,6 +1027,7 @@
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
+				B6C3499920D9DF4000FEBE89 /* BuildingImageCell.swift in Sources */,
 				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,

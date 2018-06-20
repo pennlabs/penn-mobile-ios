@@ -8,11 +8,10 @@
 
 import UIKit
 
-class DiningDetailViewController: GenericViewController {
+class DiningDetailTVC: UITableViewController {
     
     var venue: DiningVenue! {
         didSet {
-            guard stackView != nil else { return }
             updateUI(with: venue)
         }
     }
@@ -20,13 +19,10 @@ class DiningDetailViewController: GenericViewController {
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
 
-    fileprivate var stackView: UIStackView!
-
-    fileprivate var primaryLabel: UILabel!
-    fileprivate var secondaryLabel: UILabel!
-    fileprivate var venueImageView: UIImageView!
-    fileprivate var timeLabel: UILabel!
-    fileprivate var statusLabel: UILabel!
+    fileprivate var buildingTitleLabel: UILabel!
+    fileprivate var buildingTypeLabel: UILabel!
+    fileprivate var buildingHoursLabel: UILabel!
+    fileprivate var buildingImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +62,7 @@ class DiningDetailViewController: GenericViewController {
 
 
 // MARK: - Initialize UI elements
-extension DiningDetailViewController {
+extension DiningDetailTVC {
 	fileprivate func prepareUI() {
 		prepareSafeArea()
 
@@ -88,7 +84,7 @@ extension DiningDetailViewController {
     
     fileprivate func configure(_ sv: UIStackView) {
         sv.axis = .vertical
-        sv.distribution = .equalSpacing
+        sv.distribution = .fillProportionally
         sv.alignment = .fill
         sv.spacing = 10
         sv.translatesAutoresizingMaskIntoConstraints = false
@@ -119,9 +115,9 @@ extension DiningDetailViewController {
     }
 
     fileprivate func prepareImageView() {       
-        venueImageView.widthAnchor.constraint(equalToConstant: 130).isActive = true
-        venueImageView.heightAnchor.constraint(equalToConstant: 72).isActive = true
-        venueImageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
+        buildingImageView.widthAnchor.constraint(equalToConstant: 130).isActive = true
+        buildingImageView.heightAnchor.constraint(equalToConstant: 72).isActive = true
+        buildingImageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
     }
 
     fileprivate func getSafeAreaView() -> UIView {
@@ -134,6 +130,8 @@ extension DiningDetailViewController {
         let label = UILabel()
         label.font = .primaryTitleFont
         label.textColor = .primaryTitleGrey
+        
+        label.backgroundColor = .green
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -143,6 +141,8 @@ extension DiningDetailViewController {
         let label = UILabel()
         label.font = .secondaryTitleFont
         label.textColor = .secondaryTitleGrey
+        
+        label.backgroundColor = .green
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -152,6 +152,8 @@ extension DiningDetailViewController {
         let label = UILabel()
         label.font = .secondaryInformationFont
         label.textColor = .secondaryInformationGrey
+        
+        label.backgroundColor = .green
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()
