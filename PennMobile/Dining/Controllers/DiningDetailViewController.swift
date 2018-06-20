@@ -23,6 +23,8 @@ class DiningDetailTVC: UITableViewController {
     fileprivate var buildingTypeLabel: UILabel!
     fileprivate var buildingHoursLabel: UILabel!
     fileprivate var buildingImageView: UIImageView!
+
+    // MARK: - ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,35 +32,121 @@ class DiningDetailTVC: UITableViewController {
         self.view.backgroundColor = .yellow
         self.prepareUI()
     }
+}
+
+// MARK: - Setup and Update UI
+extension DiningDetailTVC {
 
     fileprivate func updateUI(with venue: DiningVenue) {
         
-    	primaryLabel.text = venue.name.rawValue
-        secondaryLabel.text = "Dining Hall"
-        venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
-        
-        updateTimeLabel(with: venue.times)
-        
+        buildingTitleLabel.text = venue.name.rawValue
+        buildingTypeLabel.text = "Dining Hall"
+
         if venue.times != nil, venue.times!.isEmpty {
-            statusLabel.text = "CLOSED TODAY"
-            statusLabel.textColor = .secondaryInformationGrey
-            statusLabel.font = .secondaryInformationFont
+            buildingHoursLabel.text = "CLOSED TODAY"
+            buildingHoursLabel.textColor = .secondaryInformationGrey
+            buildingHoursLabel.font = .secondaryInformationFont
         } else if venue.times != nil && venue.times!.isOpen {
-            statusLabel.text = "OPEN"
-            statusLabel.textColor = .informationYellow
-            statusLabel.font = .primaryInformationFont
+            buildingHoursLabel.text = "OPEN"
+            buildingHoursLabel.textColor = .informationYellow
+            buildingHoursLabel.font = .primaryInformationFont
         } else {
-            statusLabel.text = "CLOSED"
-            statusLabel.textColor = .secondaryInformationGrey
-            statusLabel.font = .secondaryInformationFont
+            buildingHoursLabel.text = "CLOSED"
+            buildingHoursLabel.textColor = .secondaryInformationGrey
+            buildingHoursLabel.font = .secondaryInformationFont
         }
     }
+}
+
+// MARK: - UITableViewDataSource
+extension DiningDetailTVC: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
-    fileprivate func updateTimeLabel(with times: [OpenClose]?) {
-        timeLabel.text = times?.strFormat
-        timeLabel.layoutIfNeeded()
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
+        cell.venue = getVenue(for: indexPath)
+        return cell
+    }
+    
+    func registerHeadersAndCells(for tableView: UITableView) {
+        tableView.register(DiningCell.self, forCellReuseIdentifier: diningCell)
+        tableView.register(DiningHeaderView.self, forHeaderFooterViewReuseIdentifier: headerView)
+        tableView.register(AnnouncementHeaderView.self, forHeaderFooterViewReuseIdentifier: announcementHeader)
     }
 }
+
+// MARK: - UITableViewDelegate
+extension DiningDetailTVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "BuildingHeaderView") as! BuildingHeaderView
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return BuildingImageCell.cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return BuildingHeaderView.headerHeight
+    }
+    
+    /*func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let venue = getVenue(for: indexPath)
+        delegate?.handleSelection(for: venue)
+    }*/
+}
+
+// MARK: - Initialize and Prepare UI
+extension BuildingImageTableViewCell {
+
+    fileprivate func prepareUI() {
+
+        primaryLabel = getPrimaryLabel()
+        secondaryLabel = getSecondaryLabel()
+        venueImageView = getVenueImageView()
+        timeLabel = getTimeLabel()
+        statusLabel = getStatusLabel()
+
+        // Initialize and setup stackView
+        let arrangedSubviews: [UIView] = [primaryLabel, secondaryLabel, venueImageView, timeLabel, statusLabel]
+        stackView = UIStackView(arrangedSubviews: arrangedSubviews)
+        configure(stackView)
+        layout(stackView)
+        layoutSubviews(stackView)
+        
+        if venue != nil { updateUI(with: venue) }
+    }
+    }
+
+    fileprivate func prepareImageView() {
+        buildingImageView = getBuildingImageView()
+        addSubview(buildingImageView)
+
+        buildingImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        buildingImageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        buildingImageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        buildingImageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+    }
+}
+
+//MARK: - Define UI Elements
+extension BuildingImageTableViewCell {
+    fileprivate func getBuildingImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }
+}
+
+/*
 
 
 // MARK: - Initialize UI elements
@@ -179,3 +267,4 @@ extension DiningDetailTVC {
     }
 
 }
+*/
