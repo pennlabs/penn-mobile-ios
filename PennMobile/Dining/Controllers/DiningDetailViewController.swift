@@ -51,40 +51,50 @@ extension DiningDetailViewController {
 
 // MARK: - UITableViewDataSource
 extension DiningDetailViewController {
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 2
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0: return BuildingHeaderCell.cellHeight
+        case 1: return BuildingImageCell.cellHeight
+        default: return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: BuildingImageCell.identifier, for: indexPath) as! BuildingImageCell
+        let cell : BuildingCell
+        switch indexPath.row {
+        case 0: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHeaderCell.identifier, for: indexPath) as! BuildingHeaderCell
+        case 1: cell = tableView.dequeueReusableCell(withIdentifier: BuildingImageCell.identifier, for: indexPath) as! BuildingImageCell
+        default: cell = BuildingCell()
+        }
         cell.venue = self.venue
         return cell
     }
     
     func registerHeadersAndCells(for tableView: UITableView) {
         tableView.register(BuildingImageCell.self, forCellReuseIdentifier: BuildingImageCell.identifier)
-        tableView.register(BuildingHeaderView.self, forHeaderFooterViewReuseIdentifier: BuildingHeaderView.identifier)
+        tableView.register(BuildingHeaderCell.self, forCellReuseIdentifier: BuildingHeaderCell.identifier)
     }
 }
 
 // MARK: - UITableViewDelegate
 extension DiningDetailViewController {
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    /*override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: BuildingHeaderView.identifier) as! BuildingHeaderView
         view.venue = self.venue
         return view
-    }
+    }*/
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return BuildingImageCell.cellHeight
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    /*override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return BuildingHeaderView.headerHeight
-    }
+    }*/
 
 }

@@ -117,6 +117,7 @@
 		B6C3499B20D9EB3E00FEBE89 /* BuildingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C3499A20D9EB3E00FEBE89 /* BuildingHeaderView.swift */; };
 		B6E49F7920D9F17E003F4002 /* BuildingImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F7720D9F17D003F4002 /* BuildingImageCell.swift */; };
 		B6E49F7B20DC83AB003F4002 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F7A20DC83AB003F4002 /* BuildingHeaderCell.swift */; };
+		B6E49F7D20DC8A2C003F4002 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F7C20DC8A2C003F4002 /* BuildingCell.swift */; };
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
 		CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */; };
@@ -257,6 +258,7 @@
 		B6C3499A20D9EB3E00FEBE89 /* BuildingHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingHeaderView.swift; sourceTree = "<group>"; };
 		B6E49F7720D9F17D003F4002 /* BuildingImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingImageCell.swift; sourceTree = "<group>"; };
 		B6E49F7A20DC83AB003F4002 /* BuildingHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingHeaderCell.swift; sourceTree = "<group>"; };
+		B6E49F7C20DC8A2C003F4002 /* BuildingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingCell.swift; sourceTree = "<group>"; };
 		B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF5C02A7792D4E6978F00EB /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
@@ -773,6 +775,7 @@
 		B6E49F7520D9F17D003F4002 /* Buildings */ = {
 			isa = PBXGroup;
 			children = (
+				B6E49F7C20DC8A2C003F4002 /* BuildingCell.swift */,
 				B6E49F7720D9F17D003F4002 /* BuildingImageCell.swift */,
 				B6E49F7A20DC83AB003F4002 /* BuildingHeaderCell.swift */,
 			);
@@ -1092,6 +1095,7 @@
 				216640971EBADC1700746B8E /* DiningVenue.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
+				B6E49F7D20DC8A2C003F4002 /* BuildingCell.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
 				B6111DB720184C8C00DC7877 /* BeakerLayer.swift in Sources */,

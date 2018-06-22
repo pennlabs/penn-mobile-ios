@@ -8,12 +8,12 @@
 
 import UIKit
 
-class BuildingImageCell: UITableViewCell {
+class BuildingImageCell: BuildingCell {
     
     static let identifier = "BuildingImageCell"
     static let cellHeight: CGFloat = 188
 
-    var venue: DiningVenue! {
+    override var venue: DiningVenue! {
         didSet {
             setupCell(with: venue)
         }

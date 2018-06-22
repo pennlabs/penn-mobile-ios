@@ -8,18 +8,20 @@
 
 import UIKit
 
-class BuildingHeaderCell: UITableViewCell {
-    
+class BuildingHeaderCell: BuildingCell {
+
     static let identifier = "BuildingHeaderCell"
     static let cellHeight: CGFloat = 188
-    
-    var venue: DiningVenue! {
+
+    override var venue: DiningVenue! {
         didSet {
             setupCell(with: venue)
         }
     }
-    
-    fileprivate var buildingHeaderView: UIImageView!
+
+    fileprivate var buildingTitleLabel : UILabel!
+    fileprivate var buildingDescriptionLabel : UILabel!
+    fileprivate var buildingHoursLabel : UILabel!
     
     // MARK: - Init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -32,40 +34,77 @@ class BuildingHeaderCell: UITableViewCell {
     }
 }
 
-// MARK: - Setup Cell
 extension BuildingHeaderCell {
+
     fileprivate func setupCell(with venue: DiningVenue) {
-        buildingHeaderView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
+        buildingTitleLabel.text = DiningVenueName.getVenueName(for: venue.name)
+        buildingDescriptionLabel.text = "Campus Dining Hall"
+
+        if venue.times != nil, venue.times!.isEmpty {
+            buildingHoursLabel.text = "CLOSED TODAY"
+            buildingHoursLabel.textColor = .secondaryInformationGrey
+            buildingHoursLabel.font = .secondaryInformationFont
+        } else if venue.times != nil && venue.times!.isOpen {
+            buildingHoursLabel.text = "OPEN"
+            buildingHoursLabel.textColor = .informationYellow
+            buildingHoursLabel.font = .primaryInformationFont
+        } else {
+            buildingHoursLabel.text = "CLOSED"
+            buildingHoursLabel.textColor = .secondaryInformationGrey
+            buildingHoursLabel.font = .secondaryInformationFont
+        }
     }
 }
 
-// MARK: - Initialize and Prepare UI
 extension BuildingHeaderCell {
-    
+
     fileprivate func prepareUI() {
-        prepareHeaderView()
-    }
-    
-    fileprivate func prepareHeaderView() {
-        buildingHeaderView = getBuildingHeaderView()
-        addSubview(buildingHeaderView)
-        
-        buildingHeaderView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        buildingHeaderView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        buildingHeaderView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        buildingHeaderView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-    }
-}
+        buildingTitleLabel = getBuildingTitleLabel()
+        buildingDescriptionLabel = getBuildingDescriptionLabel()
+        buildingHoursLabel = getBuildingHoursLabel()
 
-//MARK: - Define UI Elements
-extension BuildingHeaderCell {
-    fileprivate func getBuildingHeaderView() -> UIImageView {
-        let imageView = UIHeaderView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .blue
-        return imageView
+        layoutLabels()
+    }
+
+    fileprivate func layoutLabels() {
+        addSubview(buildingTitleLabel)
+        addSubview(buildingDescriptionLabel)
+        addSubview(buildingHoursLabel)
+
+        let inset: CGFloat = 28
+        
+        _ = buildingDescriptionLabel.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: nil,
+            topConstant: 0, leftConstant: inset, bottomConstant: inset, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+
+        _ = buildingTitleLabel.anchor(nil, left: leftAnchor, bottom: buildingDescriptionLabel.topAnchor, right: nil, 
+            topConstant: 0, leftConstant: inset, bottomConstant: inset, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+
+        _ = buildingHoursLabel.anchor(nil, left: nil, bottom: bottomAnchor, right: rightAnchor, 
+            topConstant: 0, leftConstant: 0, bottomConstant: inset, rightConstant: inset, widthConstant: 0, heightConstant: 0)
+    }
+
+    fileprivate func getBuildingTitleLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .primaryTitleFont
+        label.textColor = .primaryTitleGrey
+        label.textAlignment = .left
+        return label
+    }
+
+    fileprivate func getBuildingDescriptionLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .interiorTitleFont
+        label.textColor = .secondaryTitleGrey
+        label.textAlignment = .left
+        return label
+    }
+
+    fileprivate func getBuildingHoursLabel() -> UILabel{
+        let label = UILabel()
+        label.font = .interiorTitleFont
+        label.textColor = UIColor.informationYellow
+        label.textAlignment = .right
+        return label
     }
 }
 
