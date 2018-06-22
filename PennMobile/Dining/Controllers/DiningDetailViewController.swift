@@ -29,23 +29,7 @@ class DiningDetailViewController: UITableViewController {
 extension DiningDetailViewController {
 
     fileprivate func updateUI(with venue: DiningVenue) {
-        
-        /*buildingTitleLabel.text = venue.name.rawValue
-        buildingTypeLabel.text = "Dining Hall"
 
-        if venue.times != nil, venue.times!.isEmpty {
-            buildingHoursLabel.text = "CLOSED TODAY"
-            buildingHoursLabel.textColor = .secondaryInformationGrey
-            buildingHoursLabel.font = .secondaryInformationFont
-        } else if venue.times != nil && venue.times!.isOpen {
-            buildingHoursLabel.text = "OPEN"
-            buildingHoursLabel.textColor = .informationYellow
-            buildingHoursLabel.font = .primaryInformationFont
-        } else {
-            buildingHoursLabel.text = "CLOSED"
-            buildingHoursLabel.textColor = .secondaryInformationGrey
-            buildingHoursLabel.font = .secondaryInformationFont
-        }*/
     }
 }
 
@@ -57,13 +41,14 @@ extension DiningDetailViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0: return BuildingHeaderCell.cellHeight
         case 1: return BuildingImageCell.cellHeight
+        case 2: return BuildingMapCell.cellHeight
         default: return 0
         }
     }
@@ -73,6 +58,7 @@ extension DiningDetailViewController {
         switch indexPath.row {
         case 0: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHeaderCell.identifier, for: indexPath) as! BuildingHeaderCell
         case 1: cell = tableView.dequeueReusableCell(withIdentifier: BuildingImageCell.identifier, for: indexPath) as! BuildingImageCell
+        case 2: cell = tableView.dequeueReusableCell(withIdentifier: BuildingMapCell.identifier, for: indexPath) as! BuildingMapCell
         default: cell = BuildingCell()
         }
         cell.venue = self.venue
@@ -80,8 +66,9 @@ extension DiningDetailViewController {
     }
     
     func registerHeadersAndCells(for tableView: UITableView) {
-        tableView.register(BuildingImageCell.self, forCellReuseIdentifier: BuildingImageCell.identifier)
         tableView.register(BuildingHeaderCell.self, forCellReuseIdentifier: BuildingHeaderCell.identifier)
+        tableView.register(BuildingImageCell.self, forCellReuseIdentifier: BuildingImageCell.identifier)
+        tableView.register(BuildingMapCell.self, forCellReuseIdentifier: BuildingMapCell.identifier)
     }
 }
 
