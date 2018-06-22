@@ -33,7 +33,7 @@ class BuildingImageCell: UITableViewCell {
 }
 
 // MARK: - Setup Cell
-extension BuildingImageCell {
+extension BuildingImageCell { 
     fileprivate func setupCell(with venue: DiningVenue) {
         buildingImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
     }
