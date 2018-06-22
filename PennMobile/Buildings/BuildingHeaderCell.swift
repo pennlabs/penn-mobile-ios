@@ -34,6 +34,7 @@ class BuildingHeaderCell: BuildingCell {
     }
 }
 
+// MARK: - Setup Cell
 extension BuildingHeaderCell {
 
     fileprivate func setupCell(with venue: DiningVenue) {
@@ -56,6 +57,7 @@ extension BuildingHeaderCell {
     }
 }
 
+// MARK: - Initialize and Prepare UI
 extension BuildingHeaderCell {
 
     fileprivate func prepareUI() {

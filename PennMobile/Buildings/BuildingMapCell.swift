@@ -35,6 +35,7 @@ class BuildingMapCell: BuildingCell {
     }
 }
 
+// MARK: - Setup Cell
 extension BuildingMapCell {
     
     fileprivate func setupCell(with venue: DiningVenue) {
@@ -57,6 +58,7 @@ extension BuildingMapCell {
     }
 }
 
+// MARK: - Initialize and Prepare UI
 extension BuildingMapCell {
     
     fileprivate func prepareUI() {
