@@ -162,7 +162,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = ""
         label.font = .primaryInformationFont
-        label.textColor = .allbirdsGrey
+        label.textColor = .secondaryInformationGrey
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
@@ -173,7 +173,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = ""
         label.font = .primaryInformationFont
-        label.textColor = .allbirdsGrey
+        label.textColor = .secondaryInformationGrey
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
@@ -202,7 +202,7 @@ class LaundryCell: UITableViewCell {
         let day = Date.currentDayOfWeek
         label.text = day
         label.font = .primaryInformationFont
-        label.textColor = .allbirdsGrey
+        label.textColor = .secondaryInformationGrey
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
