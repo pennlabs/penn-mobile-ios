@@ -45,7 +45,8 @@ extension HomeGSRCellItem: HomeAPIRequestable {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         
-        let dateString = formatter.string(from: Date().roundedDownToHour)
+        //let dateString = formatter.string(from: Date().roundedDownToHour)
+        let dateString = formatter.string(from: Date().add(minutes: 1440).roundedDownToHour)
         
         GSRNetworkManager.instance.getAvailability(for: 1086, dateStr: dateString) { (rooms) in
             if let _ = rooms {
@@ -72,15 +73,15 @@ extension HomeGSRCellItem: HomeAPIRequestable {
         let firstBoothSlot90 = getFirst90(wicBoothsWith90)
         
         let gsrLoc = GSRLocation(lid: 1086, gid: 1889, name: "Weigle", service: "libcal")
-        self.bookingOptions = [[getBooking(gsrLoc, firstBoothSlot30, 1),
-                                getBooking(gsrLoc, firstBoothSlot60, 2),
-                                getBooking(gsrLoc, firstBoothSlot90, 3)],
-                               [getBooking(gsrLoc, firstRoomSlot30, 1),
-                                getBooking(gsrLoc, firstRoomSlot60, 2),
-                                getBooking(gsrLoc, firstRoomSlot90, 3)]]
+        self.bookingOptions = [[getBooking(gsrLoc, firstBoothSlot30.0, 1, firstBoothSlot30.1),
+                                getBooking(gsrLoc, firstBoothSlot60.0, 2, firstBoothSlot60.1),
+                                getBooking(gsrLoc, firstBoothSlot90.0, 3, firstBoothSlot90.1)],
+                               [getBooking(gsrLoc, firstRoomSlot30.0, 1, firstRoomSlot30.1),
+                                getBooking(gsrLoc, firstRoomSlot60.0, 2, firstRoomSlot60.1),
+                                getBooking(gsrLoc, firstRoomSlot90.0, 3, firstRoomSlot90.1)]]
     }
     
-    private func getBooking(_ location: GSRLocation, _ slot: GSRTimeSlot?, _ numSlots: Int) -> GSRBooking? {
+    private func getBooking(_ location: GSRLocation, _ slot: GSRTimeSlot?, _ numSlots: Int, _ room: GSRRoom?) -> GSRBooking? {
         guard let slot = slot else { return nil }
         var endTime = slot.endTime
         if numSlots == 2 {
@@ -92,15 +93,16 @@ extension HomeGSRCellItem: HomeAPIRequestable {
             guard let lastSlot = slot.next!.next else { return nil }
             endTime = lastSlot.endTime
         }
-        return GSRBooking(location: location, roomId: slot.roomId, start: slot.startTime, end: endTime)
+        return GSRBooking(location: location, roomId: slot.roomId, start: slot.startTime, end: endTime, name: room?.name)
     }
     
-    private func getFirst30(_ rooms: [GSRRoom]) -> GSRTimeSlot? {
-        let first30TimeSlot : GSRTimeSlot? = rooms.min()?.timeSlots.first
-        return first30TimeSlot
+    private func getFirst30(_ rooms: [GSRRoom]) -> (GSRTimeSlot?, GSRRoom?) {
+        let minRoom : GSRRoom? = rooms.min()
+        let first30TimeSlot : GSRTimeSlot? = minRoom?.timeSlots.first
+        return (first30TimeSlot, minRoom)
     }
     
-    private func getFirst60(_ rooms: [GSRRoom]) -> GSRTimeSlot? {
+    private func getFirst60(_ rooms: [GSRRoom]) -> (GSRTimeSlot?, GSRRoom?) {
         let first60Room : GSRRoom? = rooms.min { (lhs, rhs) -> Bool in
             guard let lhsFirst60 = lhs.timeSlots.first60, let rhsFirst60 = rhs.timeSlots.first60 else {
                 return false
@@ -108,10 +110,10 @@ extension HomeGSRCellItem: HomeAPIRequestable {
             return lhsFirst60.startTime <= rhsFirst60.startTime
         }
         let first60TimeSlot : GSRTimeSlot? = first60Room?.timeSlots.first60
-        return first60TimeSlot
+        return (first60TimeSlot, first60Room)
     }
     
-    private func getFirst90(_ rooms: [GSRRoom]) -> GSRTimeSlot? {
+    private func getFirst90(_ rooms: [GSRRoom]) -> (GSRTimeSlot?, GSRRoom?) {
         let first90Room : GSRRoom? = rooms.min { (lhs, rhs) -> Bool in
             guard let lhsFirst90 = lhs.timeSlots.first90, let rhsFirst90 = rhs.timeSlots.first90 else {
                 return false
@@ -119,6 +121,6 @@ extension HomeGSRCellItem: HomeAPIRequestable {
             return lhsFirst90.startTime <= rhsFirst90.startTime
         }
         let first90TimeSlot : GSRTimeSlot? = first90Room?.timeSlots.first90
-        return first90TimeSlot
+        return (first90TimeSlot, first90Room)
     }
 }

@@ -91,8 +91,8 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
     }
     
     private func confirmBookingWanted(_ booking: GSRBooking) {
-        let message = "Booking: \(booking.location.name). TimeSlot: \(booking.getLocalTimeString())"
-        let alert = UIAlertController(title: "Book GSR?",
+        let message = "Booking \(booking.getRoomName()) from \(booking.getLocalTimeString())"
+        let alert = UIAlertController(title: "Confirm Booking",
                                       message: message,
                                       preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

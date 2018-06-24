@@ -73,7 +73,7 @@ extension HomeStudyRoomCell {
     
     fileprivate func setupCell(with item: HomeGSRCellItem) {
         secondaryTitleLabel.text = "BOOK A ROOM"
-        primaryTitleLabel.text = "VP WIC"
+        primaryTitleLabel.text = "Van Pelt - WIC"
         bookingOptions = item.bookingOptions
         updateBookingButtons()
         bookingButtonRowLabels[0].text = "Booths"
@@ -242,7 +242,7 @@ extension HomeStudyRoomCell {
     }
     
     fileprivate func prepareBookingRowLabels() {
-        bookingButtonRowLabels = [UILabel!]()
+        bookingButtonRowLabels = [UILabel]()
         for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
             let rowLabel = getBookingRowLabel()
             bookingButtonRowLabels.append(rowLabel)
@@ -348,7 +348,7 @@ extension HomeStudyRoomCell {
         let button = UIButton()
         button.setTitleColor(.navigationBlue, for: .normal)
         button.setTitleColor(.secondaryTitleGrey, for: .highlighted)
-        button.setTitle("See more ❯", for: .normal)
+        //button.setTitle("See more ❯", for: .normal)
         button.titleLabel?.font = .footerTransitionFont
         button.addTarget(self, action: #selector(transitionButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false

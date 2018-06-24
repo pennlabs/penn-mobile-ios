@@ -32,7 +32,7 @@ class GoogleAnalyticsManager: NSObject {
     }
     
     func trackEvent(category: EventCategory, action: EventAction, label: String, value: NSNumber) {
-        GAI.sharedInstance().defaultTracker?.send(GAIDictionaryBuilder.createEvent(withCategory: category.rawValue, action: action.rawValue, label: label, value: value).build() as! [AnyHashable : Any]!)
+        GAI.sharedInstance().defaultTracker?.send(GAIDictionaryBuilder.createEvent(withCategory: category.rawValue, action: action.rawValue, label: label, value: value).build() as! [AnyHashable : Any]?)
     }
     
     enum EventCategory: String {

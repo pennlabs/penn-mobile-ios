@@ -15,6 +15,12 @@ class GSRBooking {
     let end: Date
     var user: GSRUser! = nil
     var groupName = "Penn Mobile Booking"
+    var name: String?
+    
+    convenience init(location: GSRLocation, roomId: Int, start: Date, end: Date, name: String?) {
+        self.init(location: location, roomId: roomId, start: start, end: end)
+        self.name = name
+    }
     
     init(location: GSRLocation, roomId: Int, start: Date, end: Date) {
         self.location = location
@@ -30,5 +36,9 @@ class GSRBooking {
         let dateStringStart = formatter.string(from: self.start)
         let dateStringEnd = formatter.string(from: self.end)
         return "\(dateStringStart) -> \(dateStringEnd)"
+    }
+    
+    func getRoomName() -> String {
+        if name != nil { return name! } else { return location.name }
     }
 }
