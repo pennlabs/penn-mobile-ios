@@ -45,8 +45,7 @@ extension HomeGSRCellItem: HomeAPIRequestable {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         
-        //let dateString = formatter.string(from: Date().roundedDownToHour)
-        let dateString = formatter.string(from: Date().add(minutes: 1440).roundedDownToHour)
+        let dateString = formatter.string(from: Date().roundedDownToHour)
         
         GSRNetworkManager.instance.getAvailability(for: 1086, dateStr: dateString) { (rooms) in
             if let _ = rooms {
