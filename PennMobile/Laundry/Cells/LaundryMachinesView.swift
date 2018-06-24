@@ -52,10 +52,10 @@ extension LaundryMachinesView {
         addSubview(typeLabel)
         addSubview(numberLabel)
         
-        typeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        typeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14).isActive = true
         typeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         
-        numberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+        numberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -14).isActive = true
         numberLabel.centerYAnchor.constraint(equalTo: typeLabel.centerYAnchor, constant: 0).isActive = true
     }
     

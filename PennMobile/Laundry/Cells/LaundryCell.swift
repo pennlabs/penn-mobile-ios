@@ -23,7 +23,7 @@ class LaundryCell: UITableViewCell {
     
     var room: LaundryRoom! {
         didSet {
-            roomLabel.text = room.building
+            roomLabel.text = room.building.uppercased()
             roomFloorLabel.text = room.name
             washerCollectionView?.reloadData()
             dryerCollectionView?.reloadData()
@@ -40,6 +40,8 @@ class LaundryCell: UITableViewCell {
     // Space between data points
     internal let dataPointSpacing = 30
     
+    internal let safeInsetValue: CGFloat = 14
+    
     // MARK: - Define UI Element Variables
     
     fileprivate var washerCollectionView: UICollectionView?
@@ -54,9 +56,8 @@ class LaundryCell: UITableViewCell {
         let bg = UIView()
         
         // corner radius for cell. a seperate variable controls corner radius of the Graph
-        bg.layer.cornerRadius = 15.0
-        
-        // border
+        bg.layer.cornerRadius = 10.0
+
         //bg.layer.borderWidth = 0.0
         bg.layer.borderWidth = 1.0
         bg.layer.borderColor = UIColor.clear.cgColor
@@ -120,8 +121,8 @@ class LaundryCell: UITableViewCell {
     fileprivate let roomLabel: UILabel = {
         let label = UILabel()
         label.text = "Laundry Room"
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.textColor = .warmGrey
+        label.font = .secondaryTitleFont
+        label.textColor = .secondaryTitleGrey
         label.textAlignment = .left
         return label
     }()
@@ -129,8 +130,8 @@ class LaundryCell: UITableViewCell {
     fileprivate let roomFloorLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = UIFont(name: "HelveticaNeue", size: 24)
-        label.textColor = .black
+        label.font = .primaryTitleFont
+        label.textColor = .primaryTitleGrey
         label.textAlignment = .left
         return label
     }()
@@ -138,8 +139,8 @@ class LaundryCell: UITableViewCell {
     fileprivate let washersLabel: UILabel = {
         let label = UILabel()
         label.text = "Washers"
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.textColor = .black
+        label.font = .secondaryInformationFont
+        label.textColor = .primaryTitleGrey
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .left
@@ -149,8 +150,8 @@ class LaundryCell: UITableViewCell {
     fileprivate let dryersLabel: UILabel = {
         let label = UILabel()
         label.text = "Dryers"
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.textColor = .black
+        label.font = .secondaryInformationFont
+        label.textColor = .primaryTitleGrey
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .left
@@ -160,8 +161,8 @@ class LaundryCell: UITableViewCell {
     fileprivate let numWashersLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = UIFont(name: "HelveticaNeue", size: 16)
-        label.textColor = .warmGrey
+        label.font = .primaryInformationFont
+        label.textColor = .informationYellow
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
@@ -171,9 +172,8 @@ class LaundryCell: UITableViewCell {
     fileprivate let numDryersLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = UIFont(name: "HelveticaNeue", size: 16)
-        
-        label.textColor = .warmGrey
+        label.font = .primaryInformationFont
+        label.textColor = .informationYellow
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
@@ -189,8 +189,8 @@ class LaundryCell: UITableViewCell {
     fileprivate let graphLabel: UILabel = {
         let label = UILabel()
         label.text = "Popular Times"
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.textColor = .black
+        label.font = .secondaryInformationFont
+        label.textColor = .primaryTitleGrey
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .left
@@ -201,18 +201,26 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         let day = Date.currentDayOfWeek
         label.text = day
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.textColor = .warmGrey
+        label.font = .primaryInformationFont
+        label.textColor = .interactionGreen
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
         return label
     }()
     
-    fileprivate let borderView: UIView = {
-        let bv = UIView()
-        bv.backgroundColor = .lightGray
-        return bv
+    fileprivate let safeArea: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    fileprivate let dividerLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .allbirdsGrey
+        view.layer.cornerRadius = 2.0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     // MARK: - Init
@@ -244,10 +252,16 @@ extension LaundryCell {
                           topConstant: 20, leftConstant: 20, bottomConstant: 0, rightConstant: 20,
                           widthConstant: 0, heightConstant: 0)
         
+        bgView.addSubview(safeArea)
+        safeArea.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: safeInsetValue).isActive = true
+        safeArea.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.topAnchor.constraint(equalTo: bgView.topAnchor, constant: safeInsetValue).isActive = true
+        safeArea.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -safeInsetValue).isActive = true
+        
         bgView.addSubview(roomLabel)
         bgView.addSubview(roomFloorLabel)
         bgView.addSubview(washersDryersView)
-        bgView.addSubview(borderView)
+        bgView.addSubview(dividerLine)
         bgView.addSubview(washerView)
         
         bgView.addSubview(washerCollectionViewContainer)
@@ -287,15 +301,15 @@ extension LaundryCell {
             equalTo: roomFloorLabel.centerYAnchor).isActive = true
         
         // WashersDryersView
-        _ = washersDryersView.anchor(bgView.topAnchor, left: bgView.leftAnchor,
+        _ = washersDryersView.anchor(dividerLine.bottomAnchor, left: bgView.leftAnchor,
                                      bottom: nil, right: bgView.rightAnchor,
-                                     topConstant: 70, leftConstant: 0, bottomConstant: 10, rightConstant: 0,
+                                     topConstant: 16, leftConstant: 0, bottomConstant: 10, rightConstant: 0,
                                      widthConstant: 0, heightConstant: 200.0)
         
-        _ = borderView.anchor(nil, left: washersDryersView.leftAnchor,
-                              bottom: washersDryersView.topAnchor, right: washersDryersView.rightAnchor,
-                              topConstant: 0, leftConstant: 10, bottomConstant: 0, rightConstant: 10,
-                              widthConstant: 0, heightConstant: 1)
+        dividerLine.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        dividerLine.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        dividerLine.topAnchor.constraint(equalTo: roomFloorLabel.bottomAnchor, constant: 14).isActive = true
+        dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
         
         // Washer View
         _ = washerView.anchor(washersDryersView.topAnchor, left: washersDryersView.leftAnchor,
@@ -339,54 +353,38 @@ extension LaundryCell {
         
         // Building Floor Label
         roomFloorLabel.translatesAutoresizingMaskIntoConstraints = false
-        roomFloorLabel.leadingAnchor.constraint(
-            equalTo: bgView.leadingAnchor,
-            constant: 20).isActive = true
-        roomFloorLabel.topAnchor.constraint(
-            equalTo: bgView.topAnchor,
-            constant: 10).isActive = true
+        roomFloorLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        roomFloorLabel.topAnchor.constraint(equalTo: roomLabel.bottomAnchor, constant: 10).isActive = true
         
         // Room Label (Building name)
         roomLabel.translatesAutoresizingMaskIntoConstraints = false
-        roomLabel.leadingAnchor.constraint(
-            equalTo: bgView.leadingAnchor,
-            constant: 20).isActive = true
-        roomLabel.topAnchor.constraint(
-            equalTo: roomFloorLabel.bottomAnchor,
-            constant: 3).isActive = true
+        roomLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        roomLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
         
         // "Washers" Label
         washersLabel.translatesAutoresizingMaskIntoConstraints = false
-        washersLabel.leadingAnchor.constraint(
-            equalTo: washerView.leadingAnchor,
-            constant: 20).isActive = true
+        washersLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         washersLabel.topAnchor.constraint(
             equalTo: washerView.topAnchor,
             constant: 8).isActive = true
         
         // "Num Washers" Label
         numWashersLabel.translatesAutoresizingMaskIntoConstraints = false
-        numWashersLabel.trailingAnchor.constraint(
-            equalTo: washerView.trailingAnchor,
-            constant: -10).isActive = true
+        numWashersLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
         numWashersLabel.centerYAnchor.constraint(
             equalTo: washersLabel.centerYAnchor,
             constant: 0).isActive = true
         
         // "Dryers" Label
         dryersLabel.translatesAutoresizingMaskIntoConstraints = false
-        dryersLabel.leadingAnchor.constraint(
-            equalTo: dryerView.leadingAnchor,
-            constant: 20).isActive = true
+        dryersLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         dryersLabel.topAnchor.constraint(
             equalTo: dryerView.topAnchor,
             constant: 2).isActive = true
         
         // "Num Dryers" Label
         numDryersLabel.translatesAutoresizingMaskIntoConstraints = false
-        numDryersLabel.trailingAnchor.constraint(
-            equalTo: dryerView.trailingAnchor,
-            constant: -10).isActive = true
+        numDryersLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
         numDryersLabel.centerYAnchor.constraint(
             equalTo: dryersLabel.centerYAnchor,
             constant: 0).isActive = true
@@ -394,14 +392,14 @@ extension LaundryCell {
         // "Busy times on _" Graph Label
         graphLabel.translatesAutoresizingMaskIntoConstraints = false
         graphLabel.leadingAnchor.constraint(
-            equalTo: washersLabel.leadingAnchor).isActive = true
+            equalTo: safeArea.leadingAnchor).isActive = true
         graphLabel.topAnchor.constraint(
             equalTo: graphViewContainer.topAnchor,
             constant: 0).isActive = true
         
         graphDayLabel.translatesAutoresizingMaskIntoConstraints = false
         graphDayLabel.trailingAnchor.constraint(
-            equalTo: numWashersLabel.trailingAnchor).isActive = true
+            equalTo: safeArea.trailingAnchor).isActive = true
         graphDayLabel.topAnchor.constraint(
             equalTo: graphLabel.topAnchor).isActive = true
         
@@ -427,7 +425,17 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let machineArray = collectionView == washerCollectionView ? room.washers : room.dryers
         numWashersLabel.text = "\(room.washers.numberOpenMachines()) of \(room.washers.count) open"
+        if room.washers.numberOpenMachines() > 0 {
+            numWashersLabel.textColor = .interactionGreen
+        } else {
+            numWashersLabel.textColor = .informationYellow
+        }
         numDryersLabel.text = "\(room.dryers.numberOpenMachines()) of \(room.dryers.count) open"
+        if room.dryers.numberOpenMachines() > 0 {
+            numDryersLabel.textColor = .interactionGreen
+        } else {
+            numDryersLabel.textColor = .informationYellow
+        }
         return machineArray.count
     }
     
@@ -440,7 +448,7 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 55, height: 55)
+        return CGSize(width: 50, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
