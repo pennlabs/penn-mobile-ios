@@ -60,23 +60,24 @@ extension LaundryMachinesView {
     }
     
     private func getTypeLabel() -> UILabel {
-        let label = getRoomLabel(fontSize: 14)
+        let label = getRoomLabel()
         label.text = isWasher ? "Washers" : "Dryers"
         return label
     }
     
     private func getNumMachinesLabel() -> UILabel {
-        let label = getRoomLabel(fontSize: 16)
-        label.text = "0 of 9 open"
-        label.textColor = .warmGrey
+        let label = UILabel()
+        label.font = .primaryInformationFont
+        label.textColor = .informationYellow
         label.textAlignment = .right
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
     
-    private func getRoomLabel(fontSize: CGFloat) -> UILabel {
+    private func getRoomLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: fontSize)
-        label.textColor = .black
+        label.font = .secondaryInformationFont
+        label.textColor = .primaryTitleGrey
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -103,6 +104,9 @@ extension LaundryMachinesView: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let machines = dataSource.getMachines(self)
         numberLabel.text = "\(machines.numberOpenMachines()) of \(machines.count) open"
+        if machines.numberOpenMachines() > 0 {
+            numberLabel.textColor = .interactionGreen
+        }
         return machines.count
     }
     
