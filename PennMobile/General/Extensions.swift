@@ -191,6 +191,7 @@ extension Date {
     var dayOfWeek: String {
         let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        myCalendar.timeZone = TimeZone(abbreviation: "EST")!
         let myComponents = myCalendar.components(.weekday, from: self)
         let weekDay = myComponents.weekday!
         return weekdayArray[weekDay-1]
