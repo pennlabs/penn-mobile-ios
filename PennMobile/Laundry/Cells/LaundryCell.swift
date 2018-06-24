@@ -162,7 +162,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = ""
         label.font = .primaryInformationFont
-        label.textColor = .informationYellow
+        label.textColor = .allbirdsGrey
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
@@ -173,7 +173,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = ""
         label.font = .primaryInformationFont
-        label.textColor = .informationYellow
+        label.textColor = .allbirdsGrey
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
@@ -202,7 +202,7 @@ class LaundryCell: UITableViewCell {
         let day = Date.currentDayOfWeek
         label.text = day
         label.font = .primaryInformationFont
-        label.textColor = .interactionGreen
+        label.textColor = .allbirdsGrey
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
@@ -425,17 +425,7 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let machineArray = collectionView == washerCollectionView ? room.washers : room.dryers
         numWashersLabel.text = "\(room.washers.numberOpenMachines()) of \(room.washers.count) open"
-        if room.washers.numberOpenMachines() > 0 {
-            numWashersLabel.textColor = .interactionGreen
-        } else {
-            numWashersLabel.textColor = .informationYellow
-        }
         numDryersLabel.text = "\(room.dryers.numberOpenMachines()) of \(room.dryers.count) open"
-        if room.dryers.numberOpenMachines() > 0 {
-            numDryersLabel.textColor = .interactionGreen
-        } else {
-            numDryersLabel.textColor = .informationYellow
-        }
         return machineArray.count
     }
     
