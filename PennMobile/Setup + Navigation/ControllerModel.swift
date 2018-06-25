@@ -53,29 +53,19 @@ class ControllerModel: NSObject {
     // pages order in tab bar
     var orderedPages: [Page] {
         get {
-            if (ControllerModel.isFlingDate()) {
-                return [.fling, .dining, .laundry, .studyRoomBooking, .more]
-            }
-            return [.dining, .studyRoomBooking, .laundry, .fling, .more]
+            return [.dining, .studyRoomBooking, .laundry, .contacts, .more]
         }
     }
         
     // pages order in MoreViewController:
     var moreOrder: [Page] {
         get {
-            if (ControllerModel.isFlingDate()) {
-                return [.news, .contacts, .about, .mentalHealth]
-            }
-            return [.news, .contacts, .about, .mentalHealth]
+            return [.news, .about]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            if (ControllerModel.isFlingDate()) {
-                return [ #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs"), #imageLiteral(resourceName: "Contacts")]
-            } else {
-                return [ #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs"), #imageLiteral(resourceName: "Contacts")]
-            }
+            return [ #imageLiteral(resourceName: "News-Icon"), #imageLiteral(resourceName: "Penn Labs")]
         }
     }
     

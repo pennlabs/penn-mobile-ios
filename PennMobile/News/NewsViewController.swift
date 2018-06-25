@@ -25,6 +25,9 @@ class NewsViewController: GenericViewController, HairlineRemovable {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         webview.hideActivity()
+        if let navbar = navigationController?.navigationBar {
+            addBackHairline(from: navbar)
+        }
     }
     
     private func setupNavBar() {

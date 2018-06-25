@@ -118,6 +118,8 @@
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
 		CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */; };
 		CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */; };
+		CF1F230A208D399C0070AA92 /* LinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F2309208D399C0070AA92 /* LinkCell.swift */; };
+		CF1F230C208D3A0D0070AA92 /* LinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F230B208D3A0D0070AA92 /* LinkModel.swift */; };
 		CF29A1751FB788820067D946 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1651FB7887C0067D946 /* Page.swift */; };
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
@@ -260,6 +262,8 @@
 		CF1CE9BC205D664700C51F46 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewCell.swift; sourceTree = "<group>"; };
 		CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
+		CF1F2309208D399C0070AA92 /* LinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
+		CF1F230B208D3A0D0070AA92 /* LinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkModel.swift; sourceTree = "<group>"; };
 		CF29A1651FB7887C0067D946 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
@@ -365,9 +369,9 @@
 		216640621EBADADA00746B8E /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
-				CF1CE9B8205D5BF100C51F46 /* More */,
 				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
 				216640F91EBB898700746B8E /* About */,
+				CF1CE9B8205D5BF100C51F46 /* More */,
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
 				216640C71EBADC9D00746B8E /* General */,
 				216640881EBADBA000746B8E /* Setup + Navigation */,
@@ -783,6 +787,8 @@
 				CF1CE9BC205D664700C51F46 /* MoreCell.swift */,
 				CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */,
 				CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */,
+				CF1F230B208D3A0D0070AA92 /* LinkModel.swift */,
+				CF1F2309208D399C0070AA92 /* LinkCell.swift */,
 			);
 			name = More;
 			path = "New Group";
@@ -812,7 +818,7 @@
 				2166405D1EBADADA00746B8E /* Frameworks */,
 				2166405E1EBADADA00746B8E /* Resources */,
 				2679ED981A534643B56D29EB /* [CP] Embed Pods Frameworks */,
-				9A7D3736BCAB346BB22146D8 /* [CP] Copy Pods Resources */,
+				C55095EBDB6560C5DB0E4763 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -831,8 +837,8 @@
 				216640701EBADADA00746B8E /* Sources */,
 				216640711EBADADA00746B8E /* Frameworks */,
 				216640721EBADADA00746B8E /* Resources */,
-				6B3070EE25B37ACA0E25E9B3 /* [CP] Embed Pods Frameworks */,
-				384F3880C717CED84BD337F1 /* [CP] Copy Pods Resources */,
+				63BCA44948173446C365034C /* [CP] Embed Pods Frameworks */,
+				27DF81B61B3B52CB0AF2F823 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -954,7 +960,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		384F3880C717CED84BD337F1 /* [CP] Copy Pods Resources */ = {
+		27DF81B61B3B52CB0AF2F823 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1005,7 +1011,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6B3070EE25B37ACA0E25E9B3 /* [CP] Embed Pods Frameworks */ = {
+		63BCA44948173446C365034C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1020,7 +1026,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9A7D3736BCAB346BB22146D8 /* [CP] Copy Pods Resources */ = {
+		C55095EBDB6560C5DB0E4763 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1066,6 +1072,7 @@
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
+				CF1F230A208D399C0070AA92 /* LinkCell.swift in Sources */,
 				2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
@@ -1118,6 +1125,7 @@
 				21E1C6FD20256DC6003248EC /* DiningDetailModel.swift in Sources */,
 				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
 				217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */,
+				CF1F230C208D3A0D0070AA92 /* LinkModel.swift in Sources */,
 				217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
 				B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */,

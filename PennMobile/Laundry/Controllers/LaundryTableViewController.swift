@@ -19,23 +19,18 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.screenName = "Laundry"
         tableView.backgroundView = nil
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.allowsSelection = false
-        
         tableView.tableFooterView = getFooterViewForTable()
                 
         rooms = LaundryRoom.getPreferences()
         
         registerHeadersAndCells()
         prepareRefreshControl()
-        
-        // initialize navigation bar
 
-
-        
         // Start indicator if there are cells that need to be loaded
         if !rooms.isEmpty {
             showActivity()
@@ -57,7 +52,6 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     }
     
     fileprivate func setupNavBar() {
-        self.tabBarController?.title = "Laundry"
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
     }
 }
