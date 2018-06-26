@@ -33,6 +33,19 @@ final class TabBarController: ESTabBarController {
         self.viewControllers = ControllerModel.shared.viewControllers
         self.delegate = self
     }
+    
+    func reloadTabs() {
+        let controllerModel = ControllerModel.shared
+        if (ControllerModel.isReloadNecessary()) {
+            controllerModel.viewControllers.forEach { (vc) in
+                if vc is TabBarShowable {
+                    vc.tabBarItem = (vc as! TabBarShowable).getTabBarItem()
+                }
+            }
+            self.viewControllers = controllerModel.viewControllers
+            self.delegate = self
+        }
+    }
 }
 
 // MARK: - Transition Animation
@@ -62,6 +75,14 @@ extension HomeViewController: TabBarShowable {
         let normalImage = UIImage(named: "Home_Grey")
         let selectedImage = UIImage(named: "Home_Blue")
         return ESTabBarItem(title: "Home", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension FlingViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Fling_Grey")
+        let selectedImage = UIImage(named: "Fling_Blue")
+        return ESTabBarItem(title: "Fling", image: normalImage, selectedImage: selectedImage)
     }
 }
 

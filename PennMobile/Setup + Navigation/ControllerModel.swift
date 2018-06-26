@@ -48,13 +48,34 @@ class ControllerModel: NSObject {
         }
     }
     
-    // let orderedPages: [Page] = [.home, .dining, .studyRoomBooking, .laundry, .more, .news, .contacts, .about]
-    let orderedPages: [Page] = [.home, .dining, .studyRoomBooking, .laundry, .more]
-    let tabBarOrder: [Page] = [.home, .dining, .laundry, .studyRoomBooking, .more, .news, .about]
-    
+    // pages order in tab bar
+    var orderedPages: [Page] {
+        get {
+            if (ControllerModel.isFlingDate()) {
+                return [.home, .fling, .dining, .laundry, .more]
+            }
+            return [.home, .dining, .studyRoomBooking, .laundry, .more]
+        }
+    }
+        
     // pages order in MoreViewController:
-    let moreOrder: [Page] = [.fling, .news, .contacts, .about]
-    let moreIcons: [UIImage] = [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+    var moreOrder: [Page] {
+        get {
+            if (ControllerModel.isFlingDate()) {
+                return [.studyRoomBooking, .news, .contacts, .about]
+            }
+            return [.fling, .news, .contacts, .about]
+        }
+    }
+    var moreIcons: [UIImage] {
+        get {
+            if (ControllerModel.isFlingDate()) {
+                return [#imageLiteral(resourceName: "GSR - Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            } else {
+                return [#imageLiteral(resourceName: "Fling_Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            }
+        }
+    }
     
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }
@@ -92,10 +113,31 @@ class ControllerModel: NSObject {
     func visibleVC() -> UIViewController {
         return viewController(for: visiblePage())
     }
+    
 }
 
 // MARK: - Transitions
 extension ControllerModel {
     func transition(to page: Page, withAnimation: Bool) {
+    }
+}
+
+extension ControllerModel {
+    fileprivate static func isFlingDate() -> Bool {
+        let beginDateString = "2018-04-13T05:00:00-04:00"
+        let endDateString = "2018-04-15T05:00:00-04:00"
+        // standard iso formatter
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        let startDate = dateFormatter.date(from: beginDateString)!
+        let endDate = dateFormatter.date(from:endDateString)!
+        // comparison
+        let today = Date()
+        return (today > startDate && today < endDate)
+    }
+    
+    static func isReloadNecessary() -> Bool {
+        return isFlingDate()
     }
 }
