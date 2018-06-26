@@ -12,6 +12,7 @@ class BuildingHoursCell: BuildingCell {
     
     static let identifier = "BuildingHoursCell"
     static let cellHeight: CGFloat = 188
+    static let numDays: Int = 7
     
     override var venue: DiningVenue! {
         didSet {
@@ -19,9 +20,11 @@ class BuildingHoursCell: BuildingCell {
         }
     }
     
-    fileprivate var buildingTitleLabel : UILabel!
-    fileprivate var buildingDescriptionLabel : UILabel!
-    fileprivate var buildingHoursLabel : UILabel!
+    fileprivate let safeInsetValue: CGFloat = 14
+    fileprivate var safeArea: UIView!
+    
+    fileprivate var dayLabels: [UILabel]!
+    fileprivate var hourLabels: [UILabel]!
     
     // MARK: - Init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -38,22 +41,6 @@ class BuildingHoursCell: BuildingCell {
 extension BuildingHoursCell {
     
     fileprivate func setupCell(with venue: DiningVenue) {
-        buildingTitleLabel.text = DiningVenueName.getVenueName(for: venue.name)
-        buildingDescriptionLabel.text = "Campus Dining Hall"
-        
-        if venue.times != nil, venue.times!.isEmpty {
-            buildingHoursLabel.text = "CLOSED TODAY"
-            buildingHoursLabel.textColor = .secondaryInformationGrey
-            buildingHoursLabel.font = .secondaryInformationFont
-        } else if venue.times != nil && venue.times!.isOpen {
-            buildingHoursLabel.text = "OPEN"
-            buildingHoursLabel.textColor = .informationYellow
-            buildingHoursLabel.font = .primaryInformationFont
-        } else {
-            buildingHoursLabel.text = "CLOSED"
-            buildingHoursLabel.textColor = .secondaryInformationGrey
-            buildingHoursLabel.font = .secondaryInformationFont
-        }
     }
 }
 
@@ -61,51 +48,69 @@ extension BuildingHoursCell {
 extension BuildingHoursCell {
     
     fileprivate func prepareUI() {
-        buildingTitleLabel = getBuildingTitleLabel()
-        buildingDescriptionLabel = getBuildingDescriptionLabel()
-        buildingHoursLabel = getBuildingHoursLabel()
+        prepareSafeArea()
         
+        dayLabels = [UILabel](); hourLabels = [UILabel]()
+        
+        for _ in 0 ..< BuildingHoursCell.numDays {
+            dayLabels.append(getDayLabel())
+            hourLabels.append(getHourLabel())
+        }
         layoutLabels()
     }
     
+    // MARK: Safe Area
+    fileprivate func prepareSafeArea() {
+        safeArea = getSafeAreaView()
+        addSubview(safeArea)
+        NSLayoutConstraint.activate([
+            safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue),
+            safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue),
+            safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue),
+            safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue)
+        ])
+    }
+    
+    // MARK: Layout Labels
     fileprivate func layoutLabels() {
-        addSubview(buildingTitleLabel)
-        addSubview(buildingDescriptionLabel)
-        addSubview(buildingHoursLabel)
-        
-        let inset: CGFloat = 28
-        
-        _ = buildingDescriptionLabel.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: nil,
-                                            topConstant: 0, leftConstant: inset, bottomConstant: inset, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        _ = buildingTitleLabel.anchor(nil, left: leftAnchor, bottom: buildingDescriptionLabel.topAnchor, right: nil,
-                                      topConstant: 0, leftConstant: inset, bottomConstant: inset, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        _ = buildingHoursLabel.anchor(nil, left: nil, bottom: bottomAnchor, right: rightAnchor,
-                                      topConstant: 0, leftConstant: 0, bottomConstant: inset, rightConstant: inset, widthConstant: 0, heightConstant: 0)
+        for day in 0 ..< BuildingHoursCell.numDays {
+            let dayLabel = dayLabels[day]
+            let hourLabel = hourLabels[day]
+            
+            addSubview(dayLabel)
+            addSubview(hourLabel)
+            
+            if day == 0 {
+                _ = dayLabel.anchor(safeArea.topAnchor, left: safeArea.leftAnchor, bottom: nil, right: nil)
+                _ = hourLabel.anchor(safeArea.topAnchor, left: nil, bottom: nil, right: safeArea.rightAnchor)
+            } else {
+                _ = dayLabel.anchor(dayLabels[day - 1].bottomAnchor, left: safeArea.leftAnchor, topConstant: safeInsetValue)
+                _ = hourLabel.anchor(hourLabels[day - 1].bottomAnchor, right: safeArea.rightAnchor, topConstant: safeInsetValue)
+            }
+        }
     }
     
-    fileprivate func getBuildingTitleLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .primaryTitleFont
-        label.textColor = .primaryTitleGrey
-        label.textAlignment = .left
-        return label
-    }
-    
-    fileprivate func getBuildingDescriptionLabel() -> UILabel {
+    fileprivate func getDayLabel() -> UILabel{
         let label = UILabel()
         label.font = .interiorTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = UIColor.informationYellow
         label.textAlignment = .left
+        label.text = "Day"
         return label
     }
     
-    fileprivate func getBuildingHoursLabel() -> UILabel{
+    fileprivate func getHourLabel() -> UILabel{
         let label = UILabel()
         label.font = .interiorTitleFont
         label.textColor = UIColor.informationYellow
         label.textAlignment = .right
+        label.text = "Hour"
         return label
+    }
+    
+    fileprivate func getSafeAreaView() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }
 }
