@@ -11,7 +11,7 @@ import UIKit
 struct DiningMenuItem {
     var name: String!
     var details: String?
-    var options: [DiningMenuItemType]
+    var specialties: [DiningMenuItemType]
 }
 
 enum DiningMenuItemType {
@@ -26,10 +26,10 @@ class BuildingFoodMenuCell: BuildingCell {
     override var venue: DiningVenue! {
         didSet {
             let tempMenu = [
-                DiningMenuItem(name: "Corn", details: "some corn", options: [.vegan, .vegetarian]),
-                DiningMenuItem(name: "Spaghettigeddon", details: "by clint", options: [.jain, .lowGluten]),
-                DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", options: [.seafood]),
-                DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", options: []),
+                DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
+                DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
+                DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
+                DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: []),
             ]
             setupCell(with: venue, menu: tempMenu)
         }

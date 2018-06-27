@@ -11,7 +11,7 @@ import UIKit
 class BuildingHoursCell: BuildingCell {
     
     static let identifier = "BuildingHoursCell"
-    static let cellHeight: CGFloat = 188
+    static let cellHeight: CGFloat = 168
     static let numDays: Int = 7
     
     override var venue: DiningVenue! {
@@ -41,6 +41,20 @@ class BuildingHoursCell: BuildingCell {
 extension BuildingHoursCell {
     
     fileprivate func setupCell(with venue: DiningVenue) {
+        let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        for day in 0 ..< BuildingHoursCell.numDays {
+            let dayLabel = dayLabels[day]
+            let hourLabel = hourLabels[day]
+
+            dayLabel.text = weekdayArray[day]
+            hourLabel.text = "-- sample Hours --"
+
+            if weekdayArray[day] == Date.currentDayOfWeek {
+                dayLabel.font = .secondaryInformationFont
+                dayLabel.textColor = .interactionGreen
+                hourLabel.textColor = .interactionGreen
+            }
+        }
     }
 }
 
@@ -84,16 +98,16 @@ extension BuildingHoursCell {
                 _ = dayLabel.anchor(safeArea.topAnchor, left: safeArea.leftAnchor, bottom: nil, right: nil)
                 _ = hourLabel.anchor(safeArea.topAnchor, left: nil, bottom: nil, right: safeArea.rightAnchor)
             } else {
-                _ = dayLabel.anchor(dayLabels[day - 1].bottomAnchor, left: safeArea.leftAnchor, topConstant: safeInsetValue)
-                _ = hourLabel.anchor(hourLabels[day - 1].bottomAnchor, right: safeArea.rightAnchor, topConstant: safeInsetValue)
+                _ = dayLabel.anchor(dayLabels[day - 1].bottomAnchor, left: safeArea.leftAnchor, topConstant: 0)
+                _ = hourLabel.anchor(hourLabels[day - 1].bottomAnchor, right: safeArea.rightAnchor, topConstant: 0)
             }
         }
     }
     
     fileprivate func getDayLabel() -> UILabel{
         let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = UIColor.informationYellow
+        label.font = .secondaryInformationFont
+        label.textColor = UIColor.primaryTitleGrey
         label.textAlignment = .left
         label.text = "Day"
         return label
@@ -101,8 +115,8 @@ extension BuildingHoursCell {
     
     fileprivate func getHourLabel() -> UILabel{
         let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = UIColor.informationYellow
+        label.font = .primaryInformationFont
+        label.textColor = UIColor.primaryTitleGrey
         label.textAlignment = .right
         label.text = "Hour"
         return label
