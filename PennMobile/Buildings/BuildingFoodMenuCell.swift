@@ -8,6 +8,16 @@
 
 import UIKit
 
+struct DiningMenuItem {
+    var name: String!
+    var details: String?
+    var options: [DiningMenuItemType]
+}
+
+enum DiningMenuItemType {
+    case vegan, lowGluten, seafood, vegetarian, jain
+}
+
 class BuildingFoodMenuCell: BuildingCell {
     
     static let identifier = "BuildingFoodMenuCell"
@@ -15,7 +25,13 @@ class BuildingFoodMenuCell: BuildingCell {
     
     override var venue: DiningVenue! {
         didSet {
-            setupCell(with: venue)
+            let tempMenu = [
+                DiningMenuItem(name: "Corn", details: "some corn", options: [.vegan, .vegetarian]),
+                DiningMenuItem(name: "Spaghettigeddon", details: "by clint", options: [.jain, .lowGluten]),
+                DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", options: [.seafood]),
+                DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", options: []),
+            ]
+            setupCell(with: venue, menu: tempMenu)
         }
     }
     
@@ -38,7 +54,8 @@ class BuildingFoodMenuCell: BuildingCell {
 // MARK: - Setup Cell
 extension BuildingFoodMenuCell {
     
-    fileprivate func setupCell(with venue: DiningVenue) {
+    fileprivate func setupCell(with venue: DiningVenue, menu: [DiningMenuItem?]) {
+        
     }
 }
 
