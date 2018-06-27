@@ -49,7 +49,8 @@ extension DiningDetailViewController {
         case 0: return BuildingHeaderCell.cellHeight
         case 1: return BuildingImageCell.cellHeight
         case 2: return BuildingHoursCell.cellHeight
-        case 3: return BuildingMapCell.cellHeight
+        case 3: return BuildingFoodMenuCell.cellHeight
+        case 4: return BuildingMapCell.cellHeight
         default: return 0
         }
     }
@@ -60,7 +61,8 @@ extension DiningDetailViewController {
         case 0: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHeaderCell.identifier, for: indexPath) as! BuildingHeaderCell
         case 1: cell = tableView.dequeueReusableCell(withIdentifier: BuildingImageCell.identifier, for: indexPath) as! BuildingImageCell
         case 2: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHoursCell.identifier, for: indexPath) as! BuildingHoursCell
-        case 3: cell = tableView.dequeueReusableCell(withIdentifier: BuildingMapCell.identifier, for: indexPath) as! BuildingMapCell
+        case 3: cell = tableView.dequeueReusableCell(withIdentifier: BuildingFoodMenuCell.identifier, for: indexPath) as! BuildingFoodMenuCell
+        case 4: cell = tableView.dequeueReusableCell(withIdentifier: BuildingMapCell.identifier, for: indexPath) as! BuildingMapCell
         default: cell = BuildingCell()
         }
         cell.venue = self.venue
@@ -71,6 +73,7 @@ extension DiningDetailViewController {
         tableView.register(BuildingHeaderCell.self, forCellReuseIdentifier: BuildingHeaderCell.identifier)
         tableView.register(BuildingImageCell.self, forCellReuseIdentifier: BuildingImageCell.identifier)
         tableView.register(BuildingHoursCell.self, forCellReuseIdentifier: BuildingHoursCell.identifier)
+        tableView.register(BuildingFoodMenuCell.self, forCellReuseIdentifier: BuildingFoodMenuCell.identifier)
         tableView.register(BuildingMapCell.self, forCellReuseIdentifier: BuildingMapCell.identifier)
     }
 }
