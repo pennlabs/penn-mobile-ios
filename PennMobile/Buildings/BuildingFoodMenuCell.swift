@@ -35,6 +35,12 @@ class BuildingFoodMenuCell: BuildingCell {
         }
     }
     
+    fileprivate var menu: [DiningMenuItem?]? {
+        didSet {
+            menuTableView.reloadData()
+        }
+    }
+    
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
     
@@ -55,18 +61,29 @@ class BuildingFoodMenuCell: BuildingCell {
 extension BuildingFoodMenuCell {
     
     fileprivate func setupCell(with venue: DiningVenue, menu: [DiningMenuItem?]) {
-        
+        self.menu = menu
+        menuTableView.reloadData()
     }
 }
 
 // MARK: - Menu Table View Datasource
 extension BuildingFoodMenuCell: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return menu?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: DiningMenuItemCell.identifier) as? DiningMenuItemCell else { return UITableViewCell() }
+        guard let menu = menu, menu.count > indexPath.row else { return UITableViewCell() }
+        
+        if let item = menu[indexPath.row] {
+            cell.menuItem = item
+        }
+        return cell
     }
 }
 
@@ -107,6 +124,9 @@ extension BuildingFoodMenuCell {
     
     fileprivate func getTableView() -> UITableView {
         let tableView = UITableView()
+        tableView.register(DiningMenuItemCell.self, forCellReuseIdentifier: DiningMenuItemCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
         return tableView
     }
     

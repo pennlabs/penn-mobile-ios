@@ -121,6 +121,7 @@
 		B6E49F7F20DC8FE9003F4002 /* BuildingMapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F7E20DC8FE9003F4002 /* BuildingMapCell.swift */; };
 		B6E49F8120E1F48D003F4002 /* BuildingHoursCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F8020E1F48D003F4002 /* BuildingHoursCell.swift */; };
 		B6E49F8320E3260D003F4002 /* BuildingFoodMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F8220E3260D003F4002 /* BuildingFoodMenuCell.swift */; };
+		B6E49F8520E32C78003F4002 /* DiningMenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F8420E32C78003F4002 /* DiningMenuItemCell.swift */; };
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
 		CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */; };
@@ -265,6 +266,7 @@
 		B6E49F7E20DC8FE9003F4002 /* BuildingMapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingMapCell.swift; sourceTree = "<group>"; };
 		B6E49F8020E1F48D003F4002 /* BuildingHoursCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingHoursCell.swift; sourceTree = "<group>"; };
 		B6E49F8220E3260D003F4002 /* BuildingFoodMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingFoodMenuCell.swift; sourceTree = "<group>"; };
+		B6E49F8420E32C78003F4002 /* DiningMenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuItemCell.swift; sourceTree = "<group>"; };
 		B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96A5260A3618F9B6489DFCF /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF5C02A7792D4E6978F00EB /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 				B6C3499A20D9EB3E00FEBE89 /* BuildingHeaderView.swift */,
 				216640901EBADC1700746B8E /* DiningCell.swift */,
 				217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */,
+				B6E49F8420E32C78003F4002 /* DiningMenuItemCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1024,6 +1027,7 @@
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				21640D682012A23E002F33CA /* DiningHoursData.swift in Sources */,
+				B6E49F8520E32C78003F4002 /* DiningMenuItemCell.swift in Sources */,
 				217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */,
 				21640D5C20105B98002F33CA /* HomeDiningCell.swift in Sources */,
 				217A783D204D97B6004F1227 /* ModularTableViewModel.swift in Sources */,
