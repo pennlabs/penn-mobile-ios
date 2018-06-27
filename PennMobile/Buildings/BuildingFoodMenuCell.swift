@@ -11,8 +11,7 @@ import UIKit
 class BuildingFoodMenuCell: BuildingCell {
     
     static let identifier = "BuildingFoodMenuCell"
-    static let cellHeight: CGFloat = 188
-    static let numDays: Int = 7
+    static let cellHeight: CGFloat = 250
     
     override var venue: DiningVenue! {
         didSet {
@@ -23,8 +22,7 @@ class BuildingFoodMenuCell: BuildingCell {
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
     
-    fileprivate var dayLabels: [UILabel]!
-    fileprivate var hourLabels: [UILabel]!
+    fileprivate var menuTableView: UITableView!
     
     // MARK: - Init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -44,19 +42,29 @@ extension BuildingFoodMenuCell {
     }
 }
 
+// MARK: - Menu Table View Datasource
+extension BuildingFoodMenuCell: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+}
+
+// MARK: - Menu Table View Delegate
+extension BuildingFoodMenuCell: UITableViewDelegate {
+    
+}
+
 // MARK: - Initialize and Prepare UI
 extension BuildingFoodMenuCell {
     
     fileprivate func prepareUI() {
         prepareSafeArea()
-        
-        dayLabels = [UILabel](); hourLabels = [UILabel]()
-        
-        for _ in 0 ..< BuildingFoodMenuCell.numDays {
-            dayLabels.append(getDayLabel())
-            hourLabels.append(getHourLabel())
-        }
-        layoutLabels()
+
+        layoutTableView()
     }
     
     // MARK: Safe Area
@@ -72,25 +80,20 @@ extension BuildingFoodMenuCell {
     }
     
     // MARK: Layout Labels
-    fileprivate func layoutLabels() {
-        for day in 0 ..< BuildingFoodMenuCell.numDays {
-            let dayLabel = dayLabels[day]
-            let hourLabel = hourLabels[day]
-            
-            addSubview(dayLabel)
-            addSubview(hourLabel)
-            
-            if day == 0 {
-                _ = dayLabel.anchor(safeArea.topAnchor, left: safeArea.leftAnchor, bottom: nil, right: nil)
-                _ = hourLabel.anchor(safeArea.topAnchor, left: nil, bottom: nil, right: safeArea.rightAnchor)
-            } else {
-                _ = dayLabel.anchor(dayLabels[day - 1].bottomAnchor, left: safeArea.leftAnchor, topConstant: safeInsetValue)
-                _ = hourLabel.anchor(hourLabels[day - 1].bottomAnchor, right: safeArea.rightAnchor, topConstant: safeInsetValue)
-            }
-        }
+    fileprivate func layoutTableView() {
+        
+        menuTableView = getTableView()
+        addSubview(menuTableView)
+        
+        _ = menuTableView.anchor(safeArea.topAnchor, left: safeArea.leftAnchor, bottom: safeArea.bottomAnchor, right: safeArea.rightAnchor)
     }
     
-    fileprivate func getDayLabel() -> UILabel{
+    fileprivate func getTableView() -> UITableView {
+        let tableView = UITableView()
+        return tableView
+    }
+    
+    fileprivate func getDayLabel() -> UILabel {
         let label = UILabel()
         label.font = .interiorTitleFont
         label.textColor = UIColor.informationYellow
