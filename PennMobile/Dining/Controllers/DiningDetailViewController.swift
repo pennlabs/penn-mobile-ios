@@ -21,7 +21,7 @@ class DiningDetailViewController: UITableViewController {
         super.viewDidLoad()
         
         registerHeadersAndCells(for: self.tableView)
-        self.view.backgroundColor = .yellow
+        self.view.backgroundColor = .white
     }
 }
 
@@ -66,6 +66,7 @@ extension DiningDetailViewController {
         default: cell = BuildingCell()
         }
         cell.venue = self.venue
+        cell.selectionStyle = .none
         return cell
     }
     
@@ -80,6 +81,10 @@ extension DiningDetailViewController {
 
 // MARK: - UITableViewDelegate
 extension DiningDetailViewController {
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     /*override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: BuildingHeaderView.identifier) as! BuildingHeaderView
         view.venue = self.venue

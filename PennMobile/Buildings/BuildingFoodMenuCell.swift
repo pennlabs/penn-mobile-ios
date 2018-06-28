@@ -25,18 +25,21 @@ class BuildingFoodMenuCell: BuildingCell {
     
     override var venue: DiningVenue! {
         didSet {
-            let tempMenu = [
+            let tempMenu = [[
                 DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
                 DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
                 DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
                 DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: []),
-            ]
-            setupCell(with: venue, menu: tempMenu)
+            ]]
+            self.menu = tempMenu
         }
     }
     
-    fileprivate var menu: [DiningMenuItem?]? {
+    fileprivate var menu: [[DiningMenuItem]]? {
         didSet {
+            if let _ = menu {
+                setupCell(menu: menu!)
+            }
             menuTableView.reloadData()
         }
     }
@@ -60,8 +63,7 @@ class BuildingFoodMenuCell: BuildingCell {
 // MARK: - Setup Cell
 extension BuildingFoodMenuCell {
     
-    fileprivate func setupCell(with venue: DiningVenue, menu: [DiningMenuItem?]) {
-        self.menu = menu
+    fileprivate func setupCell(menu: [[DiningMenuItem]]) {
         menuTableView.reloadData()
     }
 }
@@ -69,20 +71,23 @@ extension BuildingFoodMenuCell {
 // MARK: - Menu Table View Datasource
 extension BuildingFoodMenuCell: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menu?.count ?? 0
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let _ = menu, menu!.count > section else { return 0 }
+        return menu![section].count
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: DiningMenuItemCell.identifier) as? DiningMenuItemCell else { return UITableViewCell() }
-        guard let menu = menu, menu.count > indexPath.row else { return UITableViewCell() }
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: DiningMenuItemCell.identifier) as? DiningMenuItemCell,
+            let menu = menu, menu.count > indexPath.section,
+            menu[indexPath.section].count > indexPath.row
+        else { return UITableViewCell() }
         
-        if let item = menu[indexPath.row] {
-            cell.menuItem = item
-        }
+        cell.menuItem = menu[indexPath.section][indexPath.row]
+        
         return cell
     }
 }
@@ -97,7 +102,6 @@ extension BuildingFoodMenuCell {
     
     fileprivate func prepareUI() {
         prepareSafeArea()
-
         layoutTableView()
     }
     
@@ -123,29 +127,14 @@ extension BuildingFoodMenuCell {
     }
     
     fileprivate func getTableView() -> UITableView {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: safeArea.frame, style: .grouped)
         tableView.register(DiningMenuItemCell.self, forCellReuseIdentifier: DiningMenuItemCell.identifier)
+        tableView.isUserInteractionEnabled = false
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
-    }
-    
-    fileprivate func getDayLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = UIColor.informationYellow
-        label.textAlignment = .left
-        label.text = "Day"
-        return label
-    }
-    
-    fileprivate func getHourLabel() -> UILabel{
-        let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = UIColor.informationYellow
-        label.textAlignment = .right
-        label.text = "Hour"
-        return label
     }
     
     fileprivate func getSafeAreaView() -> UIView {

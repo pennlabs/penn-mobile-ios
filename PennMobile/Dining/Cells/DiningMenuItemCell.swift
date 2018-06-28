@@ -11,7 +11,7 @@ import UIKit
 class DiningMenuItemCell: UITableViewCell {
     
     static let identifier = "DiningMenuItemCell"
-    static let cellHeight: CGFloat = 26
+    static let cellHeight: CGFloat = 20
     
     var menuItem: DiningMenuItem! {
         didSet {
@@ -94,16 +94,25 @@ extension DiningMenuItemCell {
     fileprivate func getCircleView(for itemType: DiningMenuItemType) -> CircleColorView {
         switch itemType {
         case .vegetarian:   return CircleColorView(with: .green)
+        case .vegan:        return CircleColorView(with: .purple)
         case .jain:         return CircleColorView(with: .yellow)
-        default:            return CircleColorView(with: .black)
+        case .seafood:      return CircleColorView(with: .blue)
+        case .lowGluten:    return CircleColorView(with: .orange)
         }
     }
 }
 
 // MARK: - Circle View
 class CircleColorView: UIView {
+    private enum Constants {
+        static let CircleDimensions = (w: 12, h: 12)
+    }
+    
     convenience init(with color: UIColor) {
-        self.init(frame: CGRect(x: 0, y: (DiningMenuItemCell.cellHeight / 2) - 5, width: 10, height: 10))
+        self.init(frame: CGRect(x: 0,
+                                y: Int(DiningMenuItemCell.cellHeight / 2) - Int(Constants.CircleDimensions.h / 2),
+                                width: Constants.CircleDimensions.w,
+                                height: Constants.CircleDimensions.h))
         self.backgroundColor = color
     }
     override func layoutSubviews() {
