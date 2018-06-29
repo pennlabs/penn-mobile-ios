@@ -25,12 +25,32 @@ class BuildingFoodMenuCell: BuildingCell {
     
     override var venue: DiningVenue! {
         didSet {
-            let tempMenu = [[
-                DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
-                DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
-                DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
-                DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: []),
-            ]]
+            let tempMenu = [
+                [
+                    DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
+                    DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
+                    DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
+                    DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: []),
+                ],
+                [
+                    DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
+                    DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
+                    DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
+                    DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: [.jain]),
+                ],
+                [
+                    DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
+                    DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
+                    DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
+                    DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: []),
+                ],
+                [
+                    DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
+                    DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
+                    DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
+                    DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: [.seafood]),
+                ]
+            ]
             self.menu = tempMenu
         }
     }
@@ -90,11 +110,26 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
         
         return cell
     }
+    
+    // MARK: Header/Footer Methods
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .red
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 30
+    }
 }
 
 // MARK: - Menu Table View Delegate
 extension BuildingFoodMenuCell: UITableViewDelegate {
-    
+
 }
 
 // MARK: - Initialize and Prepare UI
@@ -131,6 +166,7 @@ extension BuildingFoodMenuCell {
         tableView.register(DiningMenuItemCell.self, forCellReuseIdentifier: DiningMenuItemCell.identifier)
         tableView.isUserInteractionEnabled = false
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
         tableView.delegate = self
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false

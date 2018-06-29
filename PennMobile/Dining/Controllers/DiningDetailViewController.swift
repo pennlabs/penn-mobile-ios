@@ -23,6 +23,15 @@ class DiningDetailViewController: UITableViewController {
         registerHeadersAndCells(for: self.tableView)
         self.view.backgroundColor = .white
     }
+    
+    var menuCellExpanded = false
+    var requestedCellHeights: Dictionary<String, CGFloat> = [
+        BuildingHeaderCell.identifier: BuildingHeaderCell.cellHeight,
+        BuildingImageCell.identifier: BuildingImageCell.cellHeight,
+        BuildingMapCell.identifier: BuildingMapCell.cellHeight,
+        BuildingHoursCell.identifier: BuildingHoursCell.cellHeight,
+        BuildingFoodMenuCell.identifier: BuildingFoodMenuCell.cellHeight
+    ]
 }
 
 // MARK: - Setup and Update UI
@@ -34,7 +43,12 @@ extension DiningDetailViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension DiningDetailViewController {
+extension DiningDetailViewController: CellUpdateDelegate {
+    
+    func cellRequiresNewLayout(with height: CGFloat, for cell: String) {
+        requestedCellHeights[cell] = height
+        tableView.reloadData()
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -49,7 +63,7 @@ extension DiningDetailViewController {
         case 0: return BuildingHeaderCell.cellHeight
         case 1: return BuildingImageCell.cellHeight
         case 2: return BuildingHoursCell.cellHeight
-        case 3: return BuildingFoodMenuCell.cellHeight
+        case 3: return requestedCellHeights[BuildingFoodMenuCell.identifier]!
         case 4: return BuildingMapCell.cellHeight
         default: return 0
         }
@@ -83,7 +97,17 @@ extension DiningDetailViewController {
 extension DiningDetailViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        if let _ = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {
+            if menuCellExpanded {
+                menuCellExpanded = !menuCellExpanded
+                requestedCellHeights[BuildingFoodMenuCell.identifier] = 150
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                menuCellExpanded = !menuCellExpanded
+                requestedCellHeights[BuildingFoodMenuCell.identifier] = 400
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
     }
     /*override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: BuildingHeaderView.identifier) as! BuildingHeaderView
