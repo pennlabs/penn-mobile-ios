@@ -94,6 +94,7 @@ extension UIFont {
     
     static let primaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 24)
     static let secondaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
+
     static let interiorTitleFont = UIFont(name: "AvenirNext-Regular", size: 20)
 
     static let primaryInformationFont = UIFont(name: "AvenirNext-DemiBold", size: 14)
@@ -197,6 +198,7 @@ extension Date {
     var dayOfWeek: String {
         let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        myCalendar.timeZone = TimeZone(abbreviation: "EST")!
         let myComponents = myCalendar.components(.weekday, from: self)
         let weekDay = myComponents.weekday!
         return weekdayArray[weekDay-1]
