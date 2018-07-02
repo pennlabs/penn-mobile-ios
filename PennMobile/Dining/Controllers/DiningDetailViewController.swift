@@ -12,6 +12,7 @@ class DiningDetailViewController: UITableViewController {
     
     var venue: DiningVenue! {
         didSet {
+            fetchDiningMenus()
             updateUI(with: venue)
             self.tableView.reloadData()
         }
@@ -32,6 +33,22 @@ class DiningDetailViewController: UITableViewController {
         BuildingHoursCell.identifier: BuildingHoursCell.cellHeight,
         BuildingFoodMenuCell.identifier: BuildingFoodMenuCell.cellHeight
     ]
+}
+
+//Mark: Networking to retrieve today's menus
+extension DiningDetailViewController {
+    fileprivate func fetchDiningMenus() {
+        //UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        DiningMenuAPI.instance.fetchDiningMenu(for: venue.name) { (success) in
+            DispatchQueue.main.async {
+                if success {
+                    self.tableView.reloadData()
+                }
+                //UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            }
+        }
+    }
 }
 
 // MARK: - Setup and Update UI
