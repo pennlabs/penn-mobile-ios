@@ -12,17 +12,18 @@ class DiningMenuData {
     
     static let shared = DiningMenuData()
     
-    fileprivate var hoursDictionary = Dictionary<DiningVenueName, [OpenClose]>()
+    fileprivate var menus = Dictionary<Int, DiningMenu>()
     
-    func load(hours: [OpenClose], for venue: DiningVenueName) {
-        hoursDictionary[venue] = hours
+    func load(menu: DiningMenu, for venue: DiningVenueName) {
+        menus[venue.getID()] = menu
     }
     
-    func getHours(for venue: DiningVenueName) -> [OpenClose]? {
-        return hoursDictionary[venue]
+    func getMeals(for venue: DiningVenueName) -> [DiningMeal]? {
+        guard menus.keys.contains(venue.getID()) else { return nil }
+        return menus[venue.getID()]?.menu.meals
     }
     
-    func clearHours() {
-        hoursDictionary = Dictionary<DiningVenueName, [OpenClose]>()
+    func clearMenus() {
+        menus = Dictionary<Int, DiningMenu>()
     }
 }
