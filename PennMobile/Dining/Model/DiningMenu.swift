@@ -91,5 +91,11 @@ struct DiningAttribute: Codable {
 }
 
 enum DiningAttributeType : String, Codable {
-    case Vegetarian
+    case vegetarian = "Vegetarian"
+    case gluten = "Made without Gluten- Containing Ingredients"
+    case farm = "Farm to Fork"
+    case vegan = "Vegan"
+    case seafood = "Seafood Watch"
+    case humane = "Humane"
 }
+
