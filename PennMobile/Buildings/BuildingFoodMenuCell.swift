@@ -25,33 +25,7 @@ class BuildingFoodMenuCell: BuildingCell {
     
     override var venue: DiningVenue! {
         didSet {
-            let tempMenu = [
-                [
-                    DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
-                    DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
-                    DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
-                    DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: []),
-                ],
-                [
-                    DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
-                    DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
-                    DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
-                    DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: [.jain]),
-                ],
-                [
-                    DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
-                    DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
-                    DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
-                    DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: []),
-                ],
-                [
-                    DiningMenuItem(name: "Corn", details: "some corn", specialties: [.vegan, .vegetarian]),
-                    DiningMenuItem(name: "Spaghettigeddon", details: "by clint", specialties: [.jain, .lowGluten]),
-                    DiningMenuItem(name: "Grilled Magicarp", details: "*struggles*", specialties: [.seafood]),
-                    DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: [.seafood]),
-                ]
-            ]
-            //self.menu = tempMenu
+            self.meals = venue.meals
         }
     }
     
