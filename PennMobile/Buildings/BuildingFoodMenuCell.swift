@@ -51,16 +51,15 @@ class BuildingFoodMenuCell: BuildingCell {
                     DiningMenuItem(name: "Mystery Meat", details: "sold by a traveling salesman", specialties: [.seafood]),
                 ]
             ]
-            self.menu = tempMenu
+            //self.menu = tempMenu
         }
     }
     
-    fileprivate var menu: [[DiningMenuItem]]? {
+    fileprivate var meals: [DiningMeal]? {
         didSet {
-            if let _ = menu {
-                setupCell(menu: menu!)
+            if let _ = meals {
+                setupCell(meals: meals!)
             }
-            menuTableView.reloadData()
         }
     }
     
@@ -83,7 +82,7 @@ class BuildingFoodMenuCell: BuildingCell {
 // MARK: - Setup Cell
 extension BuildingFoodMenuCell {
     
-    fileprivate func setupCell(menu: [[DiningMenuItem]]) {
+    fileprivate func setupCell(meals: [DiningMeal]) {
         menuTableView.reloadData()
     }
 }
@@ -91,22 +90,22 @@ extension BuildingFoodMenuCell {
 // MARK: - Menu Table View Datasource
 extension BuildingFoodMenuCell: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return menu?.count ?? 0
+        return meals?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let _ = menu, menu!.count > section else { return 0 }
-        return menu![section].count
+        guard let _ = meals, meals!.count > section else { return 0 }
+        return meals![section].stations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard
             let cell = tableView.dequeueReusableCell(withIdentifier: DiningMenuItemCell.identifier) as? DiningMenuItemCell,
-            let menu = menu, menu.count > indexPath.section,
-            menu[indexPath.section].count > indexPath.row
+            let meals = meals, meals.count > indexPath.section,
+            meals[indexPath.section].stations.count > indexPath.row
         else { return UITableViewCell() }
         
-        cell.menuItem = menu[indexPath.section][indexPath.row]
+        cell.station = meals[indexPath.section].stations[indexPath.row]
         
         return cell
     }

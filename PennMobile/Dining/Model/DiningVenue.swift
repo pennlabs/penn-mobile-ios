@@ -22,6 +22,10 @@ class DiningVenue: NSObject {
         return DiningHoursData.shared.getHours(for: name)
     }
     
+    var meals: [DiningMeal]? {
+        return DiningMenuData.shared.getMeals(for: name)
+    }
+    
     init(venue: DiningVenueName) {
         self.name = venue
     }

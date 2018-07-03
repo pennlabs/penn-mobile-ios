@@ -19,6 +19,12 @@ class DiningMenuItemCell: UITableViewCell {
         }
     }
     
+    var station: DiningStation! {
+        didSet {
+            setupCell(with: station)
+        }
+    }
+    
     // MARK: - UI Elements
     fileprivate var nameLabel: UILabel!
     fileprivate var circleViews: [CircleColorView?] = [CircleColorView?]()
@@ -51,6 +57,10 @@ extension DiningMenuItemCell {
         }
         
         layoutCircleViews()
+    }
+    
+    fileprivate func setupCell(with station: DiningStation) {
+        nameLabel.text = station.description
     }
 }
 
