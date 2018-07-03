@@ -40,12 +40,24 @@ struct TableItem: Codable {
      txtNutritionInfo: "",
      txtPrice: "",
      txtTitle: "scrambled eggs"*/
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        do {
+            self.tblAttributes = try container.decodeIfPresent(TextAttribute.self,
+                                                               forKey: .tblAttributes)
+        } catch {
+            self.tblAttributes = nil
+        }
+    }
 }
 
 struct TextAttribute: Codable {
-    //let txtAttribute: [DiningAttribute?]
+    let attributes: [DiningAttribute]
+    enum CodingKeys : String, CodingKey {
+        case attributes = "txtAttribute"
+    }
 }
 
 struct DiningAttribute: Codable {
-    //let description: String?
+    let description: String
 }
