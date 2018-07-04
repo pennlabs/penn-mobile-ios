@@ -101,7 +101,7 @@ extension DiningHoursData {
             guard let openDate = formatter.date(from: openString)?.adjustedFor11_59,
                   let closeDate = formatter.date(from: closeString)?.adjustedFor11_59 else { continue }
             
-            let time = OpenClose(open: openDate, close: closeDate)
+            let time = OpenClose(open: openDate, close: closeDate, meal: type)
             if type == "Closed" {
                 closedFlag = true
                 closedTime = time
@@ -184,10 +184,11 @@ extension DiningHoursData {
         for json in mealsJSON {
             let start = json["start"].stringValue
             let end = json["end"].stringValue
+            let type = json["type"].stringValue
             
             guard let openDate = formatter.date(from: start)?.adjustedFor11_59, let closeDate = formatter.date(from: end)?.adjustedFor11_59 else { continue }
             
-            let time = OpenClose(open: openDate, close: closeDate)
+            let time = OpenClose(open: openDate, close: closeDate, meal: type)
             hours.append(time)
         }
         

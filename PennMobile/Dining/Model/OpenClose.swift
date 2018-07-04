@@ -11,6 +11,7 @@ import Foundation
 struct OpenClose: Equatable {
     let open: Date
     let close: Date
+    let meal: String
     
     static func ==(lhs: OpenClose, rhs: OpenClose) -> Bool {
         return lhs.open == rhs.open && lhs.close == rhs.close
@@ -27,7 +28,7 @@ struct OpenClose: Equatable {
     func withoutMinutes() -> OpenClose {
         let newOpen = open.roundedDownToHour
         let newClose = close.roundedDownToHour
-        return OpenClose(open: newOpen, close: newClose)
+        return OpenClose(open: newOpen, close: newClose, meal: meal)
     }
 }
 
@@ -54,6 +55,22 @@ extension Array where Element == OpenClose {
             }
         }
         return false
+    }
+    
+    var nextOpen: OpenClose? {
+        let now = Date()
+        for index in self.indices {
+            let open_close = self[index]
+            
+            // If the call is currently open, return the current timeslot
+            if open_close.open < now && open_close.close > now { return open_close }
+            
+            // If the hall is closed but about to open again, return the next timeslot
+            if index + 1 < self.count {
+                if self[index].close < now && self[index + 1].open > now { return self[index + 1] }
+            }
+        }
+        return nil
     }
     
     var strFormat: String {

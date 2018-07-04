@@ -28,14 +28,28 @@ class BuildingFoodMenuCell: BuildingCell {
             self.meals = venue.meals
         }
     }
-    
     fileprivate var meals: [DiningMeal]? {
         didSet {
-            if let _ = meals {
-                setupCell(meals: meals!)
+            guard let meals = meals else { return }
+            guard let nextOpen = venue.times?.nextOpen else {
+                setupCell(meal: meals.last)
+                return
             }
+            
+            // Find the menu cooresponding to the current timeslot
+            let nextMeal = meals.first(where: { $0.description == nextOpen.meal })
+            setupCell(meal: nextMeal)
         }
     }
+    fileprivate var currentMeal: DiningMeal? {
+        didSet {
+            self.filteredStations = currentMeal?.stations.filter({ (station) -> Bool in
+                if DiningStationFilter.isUselessStation
+                // Make this a class possibly?
+            })
+        }
+    }
+    fileprivate var filteredStations: [DiningStation]
     
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
@@ -56,7 +70,8 @@ class BuildingFoodMenuCell: BuildingCell {
 // MARK: - Setup Cell
 extension BuildingFoodMenuCell {
     
-    fileprivate func setupCell(meals: [DiningMeal]) {
+    fileprivate func setupCell(meal: DiningMeal?) {
+        self.currentMeal = meal
         menuTableView.reloadData()
     }
 }
@@ -64,12 +79,16 @@ extension BuildingFoodMenuCell {
 // MARK: - Menu Table View Datasource
 extension BuildingFoodMenuCell: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return meals?.count ?? 0
+        return self.currentMeal?.stations.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let _ = meals, meals!.count > section else { return 0 }
-        return meals![section].stations.count
+        var count = meals![section].stations.count
+        for item in meals![section].stations {
+            count += item.menuItem.count
+        }
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,7 +121,7 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
 
 // MARK: - Menu Table View Delegate
 extension BuildingFoodMenuCell: UITableViewDelegate {
-
+    
 }
 
 // MARK: - Initialize and Prepare UI
