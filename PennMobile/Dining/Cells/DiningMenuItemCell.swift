@@ -13,15 +13,9 @@ class DiningMenuItemCell: UITableViewCell {
     static let identifier = "DiningMenuItemCell"
     static let cellHeight: CGFloat = 20
     
-    var menuItem: DiningMenuItem! {
+    var menuItem: MenuItem! {
         didSet {
             setupCell(with: menuItem)
-        }
-    }
-    
-    var station: DiningStation! {
-        didSet {
-            setupCell(with: station)
         }
     }
     
@@ -42,25 +36,20 @@ class DiningMenuItemCell: UITableViewCell {
 
 // MARK: - Setup Cell
 extension DiningMenuItemCell {
-    fileprivate func setupCell(with item: DiningMenuItem) {
-        nameLabel.text = item.name
+    fileprivate func setupCell(with item: MenuItem) {
+        nameLabel.text = item.title
         
-        let types = item.specialties
-        guard types.count > 0 else { return }
+        guard let types = item.attributes else { return }
         
-        for i in types.indices {
+        for i in types.attributes.indices {
             if circleViews.indices.contains(i) {
-                circleViews[i] = getCircleView(for: types[i])
+                circleViews[i] = getCircleView(for: types.attributes[i])
             } else {
-                circleViews.append(getCircleView(for: types[i]))
+                circleViews.append(getCircleView(for: types.attributes[i]))
             }
         }
         
         layoutCircleViews()
-    }
-    
-    fileprivate func setupCell(with station: DiningStation) {
-        nameLabel.text = station.description
     }
 }
 
@@ -101,13 +90,13 @@ extension DiningMenuItemCell {
         return label
     }
     
-    fileprivate func getCircleView(for itemType: DiningMenuItemType) -> CircleColorView {
-        switch itemType {
+    fileprivate func getCircleView(for itemType: DiningAttribute) -> CircleColorView {
+        switch itemType.description {
         case .vegetarian:   return CircleColorView(with: .green)
         case .vegan:        return CircleColorView(with: .purple)
-        case .jain:         return CircleColorView(with: .yellow)
         case .seafood:      return CircleColorView(with: .blue)
-        case .lowGluten:    return CircleColorView(with: .orange)
+        case .gluten:       return CircleColorView(with: .orange)
+        default:            return CircleColorView(with: .white)
         }
     }
 }

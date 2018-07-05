@@ -44,6 +44,17 @@ struct DiningMeal: Codable {
         case stations = "tblStation"
         case description = "txtDayPartDescription"
     }
+    
+    func usefulStations() -> [DiningStation] {
+        var filteredStations = [DiningStation]()
+        let filterWords = ["beverage", "soda", "sandwich", "coffee", "salad", "dessert", "condiment"]
+        for station in stations {
+            if !filterWords.contains(where: station.description.contains) {
+                filteredStations.append(station)
+            }
+        }
+        return filteredStations
+    }
 }
 
 struct DiningStation: Codable {

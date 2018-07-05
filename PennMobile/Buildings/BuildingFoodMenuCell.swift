@@ -21,7 +21,7 @@ enum DiningMenuItemType {
 class BuildingFoodMenuCell: BuildingCell {
     
     static let identifier = "BuildingFoodMenuCell"
-    static let cellHeight: CGFloat = 250
+    static let cellHeight: CGFloat = 100
     
     override var venue: DiningVenue! {
         didSet {
@@ -43,13 +43,10 @@ class BuildingFoodMenuCell: BuildingCell {
     }
     fileprivate var currentMeal: DiningMeal? {
         didSet {
-            self.filteredStations = currentMeal?.stations.filter({ (station) -> Bool in
-                if DiningStationFilter.isUselessStation
-                // Make this a class possibly?
-            })
+            self.filteredStations = currentMeal?.usefulStations()
         }
     }
-    fileprivate var filteredStations: [DiningStation]
+    fileprivate var filteredStations: [DiningStation]?
     
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
@@ -79,13 +76,13 @@ extension BuildingFoodMenuCell {
 // MARK: - Menu Table View Datasource
 extension BuildingFoodMenuCell: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.currentMeal?.stations.count
+        return filteredStations?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let _ = meals, meals!.count > section else { return 0 }
-        var count = meals![section].stations.count
-        for item in meals![section].stations {
+        guard let filteredStations = filteredStations, filteredStations.count > section else { return 0 }
+        var count = 0
+        for item in filteredStations {
             count += item.menuItem.count
         }
         return count
@@ -94,28 +91,33 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard
             let cell = tableView.dequeueReusableCell(withIdentifier: DiningMenuItemCell.identifier) as? DiningMenuItemCell,
-            let meals = meals, meals.count > indexPath.section,
-            meals[indexPath.section].stations.count > indexPath.row
+            let filteredStations = filteredStations, filteredStations.count > indexPath.section,
+            filteredStations[indexPath.section].menuItem.count > indexPath.row
         else { return UITableViewCell() }
         
-        cell.station = meals[indexPath.section].stations[indexPath.row]
+        cell.menuItem = filteredStations[indexPath.section].menuItem[indexPath.row]
         
         return cell
     }
     
-    // MARK: Header/Footer Methods
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .red
-        return view
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let filteredStations = filteredStations, filteredStations.count > section else { return nil }
+        return filteredStations[section].description
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.1
+        return 20.0
     }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 30
+    func getMenuRequiredHeight() -> CGFloat {
+        var total: CGFloat = 0.0
+        guard let sections = filteredStations else { return total }
+        
+        total += (CGFloat(sections.count) * 20.0)
+        for each in sections {
+            total += (CGFloat(each.menuItem.count) * DiningMenuItemCell.cellHeight)
+        }
+        return total
     }
 }
 

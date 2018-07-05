@@ -114,14 +114,14 @@ extension DiningDetailViewController: CellUpdateDelegate {
 extension DiningDetailViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let _ = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {
+        if let cell = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {
             if menuCellExpanded {
                 menuCellExpanded = !menuCellExpanded
-                requestedCellHeights[BuildingFoodMenuCell.identifier] = 150
+                requestedCellHeights[BuildingFoodMenuCell.identifier] = 100
                 tableView.reloadRows(at: [indexPath], with: .automatic)
             } else {
                 menuCellExpanded = !menuCellExpanded
-                requestedCellHeights[BuildingFoodMenuCell.identifier] = 400
+                requestedCellHeights[BuildingFoodMenuCell.identifier] = cell.getMenuRequiredHeight()
                 tableView.reloadRows(at: [indexPath], with: .automatic)
             }
         }
