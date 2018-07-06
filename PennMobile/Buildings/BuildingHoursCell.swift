@@ -41,13 +41,17 @@ class BuildingHoursCell: BuildingCell {
 extension BuildingHoursCell {
     
     fileprivate func setupCell(with venue: DiningVenue) {
-        let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        let weekdayArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         for day in 0 ..< BuildingHoursCell.numDays {
             let dayLabel = dayLabels[day]
             let hourLabel = hourLabels[day]
 
             dayLabel.text = weekdayArray[day]
-            hourLabel.text = "-- sample Hours --"
+            
+            if let times = venue.times {
+                hourLabel.text = times.strFormat
+                hourLabel.layoutIfNeeded()
+            }
 
             if weekdayArray[day] == Date.currentDayOfWeek {
                 dayLabel.font = .secondaryInformationFont

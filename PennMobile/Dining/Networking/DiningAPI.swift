@@ -49,6 +49,9 @@ extension DiningHoursData {
         
         for json in jsonArray {
             loadHoursForSingleVenue(for: json)
+            
+            let venueName = DiningVenueName.getVenueName(for: json["name"].stringValue)
+            let _ = loadWeeklyHoursForSingleVenue(with: json, for: venueName)
         }
         
         if !Storage.fileExists(DiningVenue.directory, in: .caches) {
@@ -115,6 +118,19 @@ extension DiningHoursData {
         }
         
         self.load(hours: hours, for: venueName)
+    }
+    
+    fileprivate func loadWeeklyHoursForSingleVenue(with json: JSON, for venue: DiningVenueName) -> Bool {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(OpenClose.dateFormatter())
+        do {
+            let decodedHours = try decoder.decode(DiningVenueForWeek.self, from: json.rawData())
+            dump(decodedHours)
+        } catch {
+            print(error)
+            return false
+        }
+        return true
     }
     
     fileprivate func getIdMapping(jsonArray: [JSON]) -> [Int: String] {

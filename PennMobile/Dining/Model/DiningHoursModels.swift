@@ -8,13 +8,41 @@
 
 import Foundation
 
-struct OpenClose: Equatable {
+struct DiningVenueForWeek: Codable {
+    let dailyMenuURL: String
+    let dateHours: [DiningVenueDateHours]?
+    let facilityURL: String
+    let id: Int
+    let name: String
+    let venueType: DiningVenueType
+    let weeklyMenuURL: String
+}
+
+struct DiningVenueDateHours: Codable {
+    let date: String
+    let meal: [OpenClose]
+}
+
+struct OpenClose: Equatable, Codable {
     let open: Date
     let close: Date
     let meal: String
     
+    enum CodingKeys: String, CodingKey {
+        case open = "open"
+        case close = "close"
+        case meal = "type"
+    }
+    
     static func ==(lhs: OpenClose, rhs: OpenClose) -> Bool {
         return lhs.open == rhs.open && lhs.close == rhs.close
+    }
+    
+    static func dateFormatter() -> DateFormatter {
+        let df = DateFormatter()
+        df.dateFormat = "HH:mm:ss"
+        df.timeZone = TimeZone(abbreviation: "EST")
+        return df
     }
     
     var description: String {

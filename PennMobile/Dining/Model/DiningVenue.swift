@@ -6,9 +6,9 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-enum DiningVenueType {
-    case dining
-    case retail
+enum DiningVenueType: String, Codable {
+    case dining = "residential"
+    case retail = "retail"
 }
 
 class DiningVenue: NSObject {

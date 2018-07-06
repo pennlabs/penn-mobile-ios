@@ -21,7 +21,7 @@ enum DiningMenuItemType {
 class BuildingFoodMenuCell: BuildingCell {
     
     static let identifier = "BuildingFoodMenuCell"
-    static let cellHeight: CGFloat = 100
+    static let cellHeight: CGFloat = 200
     
     override var venue: DiningVenue! {
         didSet {
