@@ -123,6 +123,8 @@ extension DiningDetailViewController {
                 menuCellExpanded = !menuCellExpanded
                 requestedCellHeights[BuildingFoodMenuCell.identifier] = cell.getMenuRequiredHeight()
                 tableView.reloadRows(at: [indexPath], with: .automatic)
+                cell.venue = self.venue
+                cell.menuTableView.reloadData()
             }
         }
     }

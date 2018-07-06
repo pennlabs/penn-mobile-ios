@@ -32,18 +32,19 @@ class BuildingFoodMenuCell: BuildingCell {
         didSet {
             guard let meals = meals else { return }
             guard let nextOpen = venue.times?.nextOpen else {
-                setupCell(meal: meals.last)
+                self.currentMeal = meals.last
                 return
             }
             
             // Find the menu cooresponding to the current timeslot
             let nextMeal = meals.first(where: { $0.description == nextOpen.meal })
-            setupCell(meal: nextMeal)
+            self.currentMeal = nextMeal
         }
     }
     fileprivate var currentMeal: DiningMeal? {
         didSet {
             self.filteredStations = currentMeal?.usefulStations()
+            setupCell()
         }
     }
     fileprivate var filteredStations: [DiningStation]?
@@ -51,7 +52,7 @@ class BuildingFoodMenuCell: BuildingCell {
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
     
-    fileprivate var menuTableView: UITableView!
+    var menuTableView: UITableView!
     
     // MARK: - Init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -62,13 +63,13 @@ class BuildingFoodMenuCell: BuildingCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 // MARK: - Setup Cell
 extension BuildingFoodMenuCell {
     
-    fileprivate func setupCell(meal: DiningMeal?) {
-        self.currentMeal = meal
+    fileprivate func setupCell() {
         menuTableView.reloadData()
     }
 }
@@ -81,11 +82,7 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let filteredStations = filteredStations, filteredStations.count > section else { return 0 }
-        var count = 0
-        for item in filteredStations {
-            count += item.menuItem.count
-        }
-        return count
+        return filteredStations[section].menuItem.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
