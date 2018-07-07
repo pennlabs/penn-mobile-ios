@@ -41,21 +41,23 @@ class BuildingHoursCell: BuildingCell {
 extension BuildingHoursCell {
     
     fileprivate func setupCell(with venue: DiningVenue) {
+        
         let weekdayArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        let timeStringsForWeek = venue.timeStringsForWeek
+        
         for day in 0 ..< BuildingHoursCell.numDays {
             let dayLabel = dayLabels[day]
             let hourLabel = hourLabels[day]
 
             dayLabel.text = weekdayArray[day]
             
-            if let times = venue.times {
-                hourLabel.text = times.strFormat
-                hourLabel.layoutIfNeeded()
-            }
+            hourLabel.text = timeStringsForWeek[day]
+            hourLabel.layoutIfNeeded()
 
             if weekdayArray[day] == Date.currentDayOfWeek {
-                dayLabel.font = .secondaryInformationFont
+                dayLabel.font = .primaryInformationFont
                 dayLabel.textColor = .interactionGreen
+                hourLabel.font = .primaryInformationFont
                 hourLabel.textColor = .interactionGreen
             }
         }
@@ -119,7 +121,7 @@ extension BuildingHoursCell {
     
     fileprivate func getHourLabel() -> UILabel{
         let label = UILabel()
-        label.font = .primaryInformationFont
+        label.font = .secondaryInformationFont
         label.textColor = UIColor.primaryTitleGrey
         label.textAlignment = .right
         label.text = "Hour"

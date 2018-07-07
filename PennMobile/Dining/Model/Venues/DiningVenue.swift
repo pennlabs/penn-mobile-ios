@@ -22,6 +22,23 @@ class DiningVenue: NSObject {
         return DiningHoursData.shared.getHours(for: name)
     }
     
+    func times(on day: String) -> [OpenClose]? {
+        return DiningHoursData.shared.getHours(for: name, on: day)
+    }
+    
+    var timeStringsForWeek: [String] {
+        var timesForDay = [String]()
+        let dateStringsForCurrentWeek = Date().dateStringsForCurrentWeek
+        for day in dateStringsForCurrentWeek {
+            if let timesOnDay = times(on: day) {
+                timesForDay.append(timesOnDay.strFormat)
+            } else {
+                timesForDay.append("Closed")
+            }
+        }
+        return timesForDay
+    }
+    
     var meals: [DiningMeal]? {
         return DiningMenuData.shared.getMeals(for: name)
     }

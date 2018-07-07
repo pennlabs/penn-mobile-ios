@@ -50,12 +50,6 @@ struct OpenClose: Equatable {
         return df
     }()
     
-    static let dateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd"
-        return df
-    }()
-    
     var description: String {
         return open.description + " - " + close.description
     }
@@ -115,6 +109,7 @@ extension Array where Element == OpenClose {
     var strFormat: String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "EST")
         formatter.dateFormat = "h:mma"
         formatter.amSymbol = "a"
         formatter.pmSymbol = "p"

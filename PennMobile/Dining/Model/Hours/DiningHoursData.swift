@@ -15,7 +15,7 @@ class DiningHoursData {
     fileprivate var hoursDictionary = Dictionary<String, [OpenClose]>()
     
     lazy var todayString = {
-        return OpenClose.dateFormatter.string(from: Date())
+        return Date.dayOfMonthFormatter.string(from: Date())
     }()
     
     func load(hours: [OpenClose], for venue: DiningVenueName) {

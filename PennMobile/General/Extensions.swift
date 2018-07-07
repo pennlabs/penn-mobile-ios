@@ -203,6 +203,29 @@ extension Date {
         return weekdayArray[weekDay-1]
     }
     
+    var integerDayOfWeek: Int {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        let myComponents = myCalendar.components(.weekday, from: self)
+        return myComponents.weekday! - 1
+    }
+    
+    static let dayOfMonthFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        df.timeZone = TimeZone(abbreviation: "EST")
+        return df
+    }()
+    
+    var dateStringsForCurrentWeek: [String] {
+        var dateStrings = [String]()
+        let formatter = Date.dayOfMonthFormatter
+        let currentDayOfWeek = Date().integerDayOfWeek
+        for day in 0 ..< 7 {
+            dateStrings.append(formatter.string(from: Date().add(minutes: 1440 * (day - currentDayOfWeek))))
+        }
+        return dateStrings
+    }
+    
     var adjustedFor11_59: Date {
         if self.minutes == 59 {
             return self.add(minutes: 1)
