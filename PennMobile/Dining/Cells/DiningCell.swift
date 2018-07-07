@@ -82,7 +82,7 @@ extension DiningCell {
 extension DiningCell {
     
     fileprivate func prepareUI() {
-        
+        self.accessoryType = .disclosureIndicator
         prepareSafeArea()
         prepareImageView()
         prepareLabels()
@@ -121,11 +121,12 @@ extension DiningCell {
         
         titleLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor,
                                             constant: safeInsetValue).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        
         titleLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
         
         statusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        statusLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 3).isActive = true
+        statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
         timesLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         timesLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3).isActive = true
