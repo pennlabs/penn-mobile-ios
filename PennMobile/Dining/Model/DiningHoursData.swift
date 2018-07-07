@@ -12,17 +12,29 @@ class DiningHoursData {
     
     static let shared = DiningHoursData()
     
-    fileprivate var hoursDictionary = Dictionary<DiningVenueName, [OpenClose]>()
+    fileprivate var hoursDictionary = Dictionary<String, [OpenClose]>()
+    
+    lazy var todayString = {
+        return OpenClose.dateFormatter.string(from: Date())
+    }()
     
     func load(hours: [OpenClose], for venue: DiningVenueName) {
-        hoursDictionary[venue] = hours
+        hoursDictionary["\(venue.getID()).\(todayString)"] = hours
+    }
+    
+    func load(hours: [OpenClose], on day: String, for venue: DiningVenueName) {
+        hoursDictionary["\(venue.getID()).\(day)"] = hours
     }
     
     func getHours(for venue: DiningVenueName) -> [OpenClose]? {
-        return hoursDictionary[venue]
+        return hoursDictionary["\(venue.getID()).\(todayString)"]
+    }
+    
+    func getHours(for venue: DiningVenueName, on day: String) -> [OpenClose]? {
+        return hoursDictionary["\(venue.getID()).\(day)"]
     }
     
     func clearHours() {
-        hoursDictionary = Dictionary<DiningVenueName, [OpenClose]>()
+        hoursDictionary = Dictionary<String, [OpenClose]>()
     }
 }

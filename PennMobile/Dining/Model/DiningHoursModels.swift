@@ -20,12 +20,12 @@ struct DiningVenueForWeek: Codable {
 
 struct DiningVenueDateHours: Codable {
     let date: String
-    let meal: [OpenClose]
+    let meal: [CodableOpenClose]
 }
 
-struct OpenClose: Equatable, Codable {
-    let open: Date
-    let close: Date
+struct CodableOpenClose: Codable {
+    let open: String
+    let close: String
     let meal: String
     
     enum CodingKeys: String, CodingKey {
@@ -33,17 +33,28 @@ struct OpenClose: Equatable, Codable {
         case close = "close"
         case meal = "type"
     }
-    
-    static func ==(lhs: OpenClose, rhs: OpenClose) -> Bool {
-        return lhs.open == rhs.open && lhs.close == rhs.close
-    }
-    
-    static func dateFormatter() -> DateFormatter {
+}
+
+// CodableOpenClose is used to decode the JSON, and then it is mapped to OpenClose
+// This is required because OpenClose needs to know the date string from one level higher
+
+struct OpenClose: Equatable {
+    let open: Date
+    let close: Date
+    let meal: String
+
+    static let completeformatter: DateFormatter = {
         let df = DateFormatter()
-        df.dateFormat = "HH:mm:ss"
+        df.dateFormat = "yyyy-MM-dd:HH:mm:ss"
         df.timeZone = TimeZone(abbreviation: "EST")
         return df
-    }
+    }()
+    
+    static let dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        return df
+    }()
     
     var description: String {
         return open.description + " - " + close.description
