@@ -20,7 +20,6 @@ enum Page: String {
     case more = "More"
     case news = "News"
     case contacts = "Penn Contacts"
-    case fling = "Spring Fling"
     case about = "About"
 }
 
@@ -37,7 +36,6 @@ class ControllerModel: NSObject {
         dict[.more] = MoreViewController()
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()
-        dict[.fling] = FlingViewController()
         dict[.about] = AboutViewController()
         return dict
     }()
@@ -51,9 +49,6 @@ class ControllerModel: NSObject {
     // pages order in tab bar
     var orderedPages: [Page] {
         get {
-            if (ControllerModel.isFlingDate()) {
-                return [.home, .fling, .dining, .laundry, .more]
-            }
             return [.home, .dining, .studyRoomBooking, .laundry, .more]
         }
     }
@@ -61,19 +56,12 @@ class ControllerModel: NSObject {
     // pages order in MoreViewController:
     var moreOrder: [Page] {
         get {
-            if (ControllerModel.isFlingDate()) {
-                return [.studyRoomBooking, .news, .contacts, .about]
-            }
-            return [.fling, .news, .contacts, .about]
+            return [.news, .contacts, .about]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            if (ControllerModel.isFlingDate()) {
-                return [#imageLiteral(resourceName: "GSR - Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
-            } else {
-                return [#imageLiteral(resourceName: "Fling_Colored"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
-            }
+            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
         }
     }
     
