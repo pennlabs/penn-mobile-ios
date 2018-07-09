@@ -8,7 +8,6 @@
 
 import Foundation
 
-// MARK: - Init
 class GSRRoom {
     let name: String
     let roomId: Int

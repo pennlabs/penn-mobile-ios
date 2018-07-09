@@ -20,7 +20,7 @@ extension GSRBookable where Self: UIViewController {
                 let alertView = SCLAlertView()
                 var action: GoogleAnalyticsManager.EventAction = .failed
                 if success {
-                    alertView.showSuccess("Success!", subTitle: "You booked a space in \(booking.location.name). You should receive a confirmation email in the next few minutes.")
+                    alertView.showSuccess("Success!", subTitle: "You should receive a confirmation email in the next few minutes.")
                     action = .success
                 } else if let msg = errorMessage {
                     alertView.showError("Uh oh!", subTitle: msg)

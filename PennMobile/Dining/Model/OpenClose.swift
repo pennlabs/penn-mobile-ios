@@ -46,16 +46,6 @@ extension Array where Element == OpenClose {
         })
     }
     
-    var isOpen: Bool {
-        let now = Date()
-        for open_close in self {
-            if open_close.open < now && open_close.close > now {
-                return true
-            }
-        }
-        return false
-    }
-    
     var strFormat: String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -90,7 +80,7 @@ extension Array where Element == OpenClose {
         }
         
         if self.isEmpty {
-            timesString = ""
+            timesString = "CLOSED"
         }
         return timesString
     }

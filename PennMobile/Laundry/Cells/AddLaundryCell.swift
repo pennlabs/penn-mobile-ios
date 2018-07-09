@@ -52,8 +52,8 @@ class AddLaundryCell: UITableViewCell {
     private let chooseRoomLabel: UILabel = {
         let label = UILabel()
         label.text = "0 of 3 rooms selected"
-        label.font = .secondaryInformationFont
-        label.textColor = .secondaryInformationGrey
+        label.font = UIFont(name: "HelveticaNeue-Light", size: 16)
+        label.textColor = UIColor.darkGray
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .center
@@ -62,12 +62,12 @@ class AddLaundryCell: UITableViewCell {
     
     private lazy var addRoomButton: UIButton = {
         let b = UIButton()
-        b.setTitleColor(UIColor(red: 0.161, green: 0.502, blue: 0.725, alpha: 1.0),
+        b.setTitleColor(UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0),
                         for: .normal)
-        b.setTitleColor(UIColor(red: 0.161, green: 0.502, blue: 0.725, alpha: 0.3),
+        b.setTitleColor(UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 0.3),
                         for: UIControlState.highlighted)
         b.setTitle("Select a room", for: .normal)
-        b.titleLabel?.font = UIFont.primaryInformationFont
+        b.titleLabel?.font = UIFont(name: "HelveticaNeue-Light", size: 16)
         b.addTarget(self, action: #selector(addRoom), for: .touchUpInside)
         return b
     }()

@@ -13,9 +13,9 @@ PODS:
     - FirebaseInstanceID (~> 2.0)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.15):
+  - FirebaseCore (4.0.13):
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseInstanceID (2.0.9):
+  - FirebaseInstanceID (2.0.8):
     - FirebaseCore (~> 4.0)
   - FirebaseMessaging (2.0.8):
     - FirebaseAnalytics (~> 4.0)

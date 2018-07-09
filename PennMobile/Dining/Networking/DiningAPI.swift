@@ -87,19 +87,11 @@ extension DiningHoursData {
         for json in timesJSON {
             guard let type = json["type"].string, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || type == "Late Night" || type == "Closed" || name.range(of: type) != nil, let open = json["open"].string, let close = json["close"].string else { continue }
             
-            let longFormatter = DateFormatter()
-            longFormatter.dateFormat = "yyyy-MM-dd"
-            let todayString = longFormatter.string(from: Date())
-            
             let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd:HH:mm:ss"
+            formatter.dateFormat = "HH:mm:ss"
             formatter.timeZone = TimeZone(abbreviation: "EST")
             
-            let openString = todayString + ":" + open
-            let closeString = todayString + ":" + close
-            
-            guard let openDate = formatter.date(from: openString)?.adjustedFor11_59,
-                  let closeDate = formatter.date(from: closeString)?.adjustedFor11_59 else { continue }
+            guard let openDate = formatter.date(from: open)?.adjustedFor11_59, let closeDate = formatter.date(from: close)?.adjustedFor11_59 else { continue }
             
             let time = OpenClose(open: openDate, close: closeDate)
             if type == "Closed" {

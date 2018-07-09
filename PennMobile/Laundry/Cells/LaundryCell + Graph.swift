@@ -18,10 +18,9 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         let graphView = ScrollableGraphView(frame: frame, dataSource: self)
         let referenceLines = ReferenceLines()
         
-        let lineColor = UIColor(red: 0.161, green: 0.502, blue: 0.725, alpha: 1.0)
-        let fillColorTop = UIColor(red: 0.161, green: 0.502, blue: 0.725, alpha: 0.8)
-        let fillColorBottom = UIColor(red: 0.161, green: 0.502, blue: 0.725, alpha: 0.1)
-        
+        let lineColor = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0)
+        let fillColorTop = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 0.8)
+        let fillColorBottom = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 0.1)
         let dataLabelColor = UIColor.warmGrey
         
         // Line plot
@@ -61,7 +60,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         graphView.rangeMin = 0.0
         graphView.rangeMax = 1.5
         
-        graphView.layer.cornerRadius = 10.0
+        graphView.layer.cornerRadius = 15.0
         
         graphView.addReferenceLines(referenceLines: referenceLines)
         graphView.addPlot(plot: dataLinePlot)

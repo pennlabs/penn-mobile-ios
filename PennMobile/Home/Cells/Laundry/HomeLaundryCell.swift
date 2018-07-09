@@ -12,7 +12,7 @@ import UIKit
 final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     static var identifier: String = "laundryCell"
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
-        return 310.0 + HomeViewController.cellSpacing
+        return 380.0 + HomeViewController.cellSpacing
     }
     
     var delegate: ModularTableViewCellDelegate!
@@ -27,16 +27,13 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     
     var cardView: UIView! = UIView()
 
-    // Custom UI elements (some should be abstracted)
-    fileprivate let safeInsetValue: CGFloat = 14
-    fileprivate var safeArea: UIView!
-    
-    fileprivate var secondaryTitleLabel: UILabel!
-    fileprivate var primaryTitleLabel: UILabel!
-    fileprivate var dividerLine: UIView!
+    fileprivate var roomLabel: UILabel!
+    fileprivate var buildingLabel: UILabel!
+    fileprivate var hairline: UIView!
     
     fileprivate var washerView: LaundryMachinesView!
     fileprivate var dryerView: LaundryMachinesView!
+    fileprivate var graphView: LaundryGraphView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -53,10 +50,11 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
 extension HomeLaundryCell {
     fileprivate func setupCell(with item: HomeLaundryCellItem) {
         room = item.room
-        primaryTitleLabel.text = room.name
-        secondaryTitleLabel.text = "LAUNDRY - " + room.building.uppercased()
+        roomLabel.text = room.name
+        buildingLabel.text = room.building
         washerView.reloadData()
         dryerView.reloadData()
+        graphView.reload(with: room.usageData)
     }
 }
 
@@ -83,49 +81,36 @@ extension HomeLaundryCell: LaundryMachineViewDelegate {
 // MARK: - Prepare UI Elements
 extension HomeLaundryCell {
     fileprivate func prepareUI() {
-        prepareSafeArea()
-        prepareTitleLabels()
-        prepareDividerLine()
+        prepareLabels()
+        prepareHairline()
         prepareWasherDryerMachineViews()
-    }
-    
-    // MARK: Safe Area
-    fileprivate func prepareSafeArea() {
-        safeArea = getSafeAreaView()
-        
-        cardView.addSubview(safeArea)
-        
-        safeArea.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: safeInsetValue).isActive = true
-        safeArea.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -safeInsetValue).isActive = true
-        safeArea.topAnchor.constraint(equalTo: cardView.topAnchor, constant: safeInsetValue).isActive = true
-        safeArea.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -safeInsetValue).isActive = true
+        prepareGraphView()
     }
     
     // MARK: Labels
-    fileprivate func prepareTitleLabels() {
-        secondaryTitleLabel = getSecondaryLabel()
-        primaryTitleLabel = getPrimaryLabel()
+    
+    fileprivate func prepareLabels() {
+        roomLabel = getRoomLabel(fontSize: 24)
+        buildingLabel = getRoomLabel(fontSize: 14)
+        buildingLabel.textColor = .warmGrey
         
-        cardView.addSubview(secondaryTitleLabel)
-        cardView.addSubview(primaryTitleLabel)
+        cardView.addSubview(roomLabel)
+        cardView.addSubview(buildingLabel)
         
-        secondaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        secondaryTitleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        roomLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 20).isActive = true
+        roomLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 10).isActive = true
         
-        primaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        primaryTitleLabel.topAnchor.constraint(equalTo: secondaryTitleLabel.bottomAnchor, constant: 10).isActive = true
+        buildingLabel.leadingAnchor.constraint(equalTo: roomLabel.leadingAnchor).isActive = true
+        buildingLabel.topAnchor.constraint(equalTo: roomLabel.bottomAnchor, constant: 5).isActive = true
     }
     
-    // MARK: Divider Line
-    fileprivate func prepareDividerLine() {
-        dividerLine = getDividerLine()
-        
-        cardView.addSubview(dividerLine)
-        
-        dividerLine.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        dividerLine.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        dividerLine.topAnchor.constraint(equalTo: primaryTitleLabel.bottomAnchor, constant: 14).isActive = true
-        dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
+    private func getRoomLabel(fontSize: CGFloat) -> UILabel {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: fontSize)
+        label.textColor = .black
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }
     
     // MARK: Machine View
@@ -137,7 +122,7 @@ extension HomeLaundryCell {
         cardView.addSubview(dryerView)
         
         let height = LaundryMachinesView.height
-        _ = washerView.anchor(dividerLine.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
+        _ = washerView.anchor(hairline.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
         
         _ = dryerView.anchor(washerView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 6, leftConstant: 0, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: height)
     }
@@ -149,40 +134,21 @@ extension HomeLaundryCell {
         machinesView.translatesAutoresizingMaskIntoConstraints = false
         return machinesView
     }
-}
-
-// MARK: - UI Element Definitions
-extension HomeLaundryCell {
     
-    fileprivate func getSafeAreaView() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    // MARK: Hairline
+    private func prepareHairline() {
+        hairline = UIView()
+        hairline.backgroundColor = .lightGray
+        
+        cardView.addSubview(hairline)
+        _ = hairline.anchor(buildingLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 10, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 1)
     }
     
-    fileprivate func getSecondaryLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
-    fileprivate func getPrimaryLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .primaryTitleFont
-        label.textColor = .primaryTitleGrey
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
-    fileprivate func getDividerLine() -> UIView {
-        let view = UIView()
-        view.backgroundColor = .allbirdsGrey
-        view.layer.cornerRadius = 2.0
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    // MARK: Graph View
+    private func prepareGraphView() {
+        graphView = LaundryGraphView(frame: .zero)
+        
+        cardView.addSubview(graphView)
+        _ = graphView.anchor(dryerView.bottomAnchor, left: cardView.leftAnchor, bottom: cardView.bottomAnchor, right: cardView.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 }

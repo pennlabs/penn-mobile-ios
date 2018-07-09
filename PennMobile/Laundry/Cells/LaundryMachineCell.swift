@@ -34,8 +34,8 @@ class LaundryMachineCell: UICollectionViewCell {
     private let timerLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = .primaryInformationFont
-        label.textColor = .darkGray
+        label.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+        label.textColor = UIColor.darkGray
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .center
@@ -57,7 +57,7 @@ class LaundryMachineCell: UICollectionViewCell {
         self.addSubview(timerLabel)
         _ = timerLabel.anchor(topAnchor, left: leftAnchor,
                                bottom: bottomAnchor, right: rightAnchor,
-                               topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
+                               topConstant: -10, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
                                widthConstant: 0, heightConstant: 0)
         
         self.addSubview(bellView)

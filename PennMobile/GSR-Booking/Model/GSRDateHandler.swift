@@ -21,7 +21,6 @@ class GSRDateHandler {
         cal.timeZone = TimeZone(abbreviation: "EST")!
         
         let startDate = cal.startOfDay(for: Date())
-        dump(startDate)
         let endDate = startDate.dateIn(days: 6)
         
         let dateRange = cal.dateRange(startDate: startDate,
@@ -32,12 +31,12 @@ class GSRDateHandler {
         for date in dateRange {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone(abbreviation: "EST")!
             formatter.dateFormat = "yyyy-MM-dd"
             let string = formatter.string(from: date)
             let day = (cal as NSCalendar).components(NSCalendar.Unit.day, from: date).day
             dates.append(GSRDate(string: string, dayOfWeek: date.dayOfWeek, day: day!))
         }
+        
         return dates
     }
 }

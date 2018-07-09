@@ -121,7 +121,7 @@ extension LaundryTableViewController {
         if indexPath.section >= rooms.count {
             return 80.0
         } else {
-            return 418.0
+            return 380.0
         }
     }
     
@@ -129,7 +129,7 @@ extension LaundryTableViewController {
         if indexPath.section >= rooms.count {
             return 80.0
         } else {
-            return 418.0
+            return 380.0
         }
     }
 }

@@ -71,8 +71,7 @@ extension HomeViewController {
 }
 
 // MARK: - ViewModelDelegate
-extension HomeViewController: HomeViewModelDelegate, GSRBookable {
-    
+extension HomeViewController: HomeViewModelDelegate {
     func handleUrlPressed(_ url: String) {
     }
     
@@ -84,37 +83,6 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         let ddc = DiningDetailViewController()
         ddc.venue = venue
         navigationController?.pushViewController(ddc, animated: true)
-    }
-    
-    func handleBookingSelected(_ booking: GSRBooking) {
-        confirmBookingWanted(booking)
-    }
-    
-    private func confirmBookingWanted(_ booking: GSRBooking) {
-        let message = "Booking \(booking.getRoomName()) from \(booking.getLocalTimeString())"
-        let alert = UIAlertController(title: "Confirm Booking",
-                                      message: message,
-                                      preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(cancelAction)
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
-            self.handleBookingRequested(booking)
-        }))
-        present(alert, animated: true)
-    }
-    
-    private func handleBookingRequested(_ booking: GSRBooking) {
-        if GSRUser.hasSavedUser() {
-            booking.user = GSRUser.getUser()
-            submitBooking(for: booking) { (completion) in
-                print("Completed: \(completion)")
-            }
-        } else {
-            let glc = GSRLoginController()
-            glc.booking = booking
-            let nvc = UINavigationController(rootViewController: glc)
-            present(nvc, animated: true, completion: nil)
-        }
     }
 }
 
