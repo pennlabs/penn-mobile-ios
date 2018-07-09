@@ -11,8 +11,8 @@ import Foundation
 protocol GSRRangeSliderDelegate {
     func parseData(startDate: Date, endDate: Date)
     func existsNonEmptyRoom() -> Bool
-    func getMinDate() -> Date
-    func getMaxDate() -> Date
+    func getMinDate() -> Date?
+    func getMaxDate() -> Date?
 }
 
 class GSRRangeSlider: RangeSlider {

@@ -4,5 +4,4 @@
 
 #import <Google/Analytics.h>
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "SWRevealViewController.h"
 #import "SupportItem.h"

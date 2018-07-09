@@ -11,12 +11,13 @@ import UIKit
 
 class DiningHeaderView: UITableViewHeaderFooterView {
     
-    static let headerHeight: CGFloat = 54
+    static let headerHeight: CGFloat = 60
     
     var label: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        label.textColor = UIColor.warmGrey
+        label.font = .primaryTitleFont
+        label.textColor = .primaryTitleGrey
+        label.textAlignment = .left
         return label
     }()
     

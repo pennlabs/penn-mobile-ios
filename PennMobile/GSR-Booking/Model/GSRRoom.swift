@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - Init
 class GSRRoom {
     let name: String
     let roomId: Int
@@ -50,21 +51,14 @@ extension GSRRoom: Comparable {
 }
 
 extension Array where Element == GSRRoom {
-    func getMinMaxDates(day: GSRDate) -> (Date, Date) {
-        let midnightYesterday = Date.midnightYesterday
-        let midnightToday = Date.midnightToday
-
-        if isEmpty {
-            return (midnightYesterday, midnightToday)
-        }
-
-        var min = midnightToday
-        var max = midnightYesterday
+    func getMinMaxDates(day: GSRDate) -> (Date?, Date?) {
+        var min: Date? = nil
+        var max: Date? = nil
         for room in self {
-            if let firstStartTime = room.timeSlots.first?.startTime, firstStartTime < min {
+            if let firstStartTime = room.timeSlots.first?.startTime, min == nil || (firstStartTime < min!) {
                 min = firstStartTime
             }
-            if let lastEndTime = room.timeSlots.last?.endTime, lastEndTime > max {
+            if let lastEndTime = room.timeSlots.last?.endTime, max == nil || (lastEndTime > max!) {
                 max = lastEndTime
             }
         }

@@ -216,11 +216,16 @@ extension GSRViewModel: GSRRangeSliderDelegate {
         delegate.refreshDataUI()
     }
     
-    func getMinDate() -> Date {
-        return allRooms.getMinMaxDates(day: selectedDate).0
+    // If today, return current time. Otherwise, return earliest available time
+    func getMinDate() -> Date? {
+        if selectedDate.day == dates[0].day {
+            return Date().roundedDownToHour
+        } else {
+            return allRooms.getMinMaxDates(day: selectedDate).0
+        }
     }
     
-    func getMaxDate() -> Date {
+    func getMaxDate() -> Date? {
         return allRooms.getMinMaxDates(day: selectedDate).1
     }
 }

@@ -31,7 +31,7 @@ class RoomSelectionViewController: UIViewController, ShowsAlert, Trackable {
         super.viewDidLoad()
         
         navigationItem.title = "\(chosenRooms.count)/\(maxNumHalls) Chosen"
-        self.navigationController?.navigationBar.tintColor = UIColor.navRed
+        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
         
@@ -68,11 +68,13 @@ extension RoomSelectionViewController: RoomSelectionViewDelegate {
 // Mark: Hall selection
 extension RoomSelectionViewController {
     @objc fileprivate func handleSave() {
-        delegate?.saveSelection(for: selectionView.chosenRooms)
+        let rooms = selectionView.chosenRooms
+        delegate?.saveSelection(for: rooms)
         _ = selectionView.resignFirstResponder()
-        for room in selectionView.chosenRooms {
+        for room in rooms {
             GoogleAnalyticsManager.shared.trackEvent(category: .laundry, action: .addRoom, label: room.name, value: 0)
         }
+        UserDBManager.shared.saveLaundryPreferences(for: rooms)
         dismiss(animated: true, completion: nil)
     }
 

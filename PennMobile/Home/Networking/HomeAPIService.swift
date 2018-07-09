@@ -8,61 +8,49 @@
 
 import Foundation
 
-class HomeAPIService {
-    
+final class HomeAPIService: Requestable {
     static let instance = HomeAPIService()
-    
-    func fetchData(for items: [HomeViewModelItem], _ completion: @escaping () -> Void) {
-        let operationQueue = OperationQueue()
-        operationQueue.maxConcurrentOperationCount = 3
+    private init() {}
         
-        let completionOperation = BlockOperation {
-            completion()
-        }
-        
-        for item in items {
-            var operation: Operation!
-            switch item.type {
-            case .dining:
-                operation = DiningAPIOperation()
-            case .laundry:
-                guard let item = item as? HomeViewModelLaundryItem else { break }
-                operation = LaundryAPIOperation(rooms: item.rooms)
-            default:
-                break
+    func fetchModel(_ completion: @escaping (HomeTableViewModel?) -> Void) {
+        let url = "http://api-dev.pennlabs.org/homepage"
+        getRequest(url: url) { (dict) in
+            var model: HomeTableViewModel? = HomeTableViewModel()
+            if let dict = dict {
+                let json = JSON(dict)
+                model = try? HomeTableViewModel(json: json)
             }
-            guard operation != nil else { continue }
-            completionOperation.addDependency(operation)
-            operationQueue.addOperation(operation)
-        }
-        
-        OperationQueue.main.addOperation(completionOperation)
-    }
-    
-    // MARK: - DiningAPIOperation
-    private class DiningAPIOperation: AsynchronousOperation {
-        override func main() {
-            super.main()
-            DiningAPI.instance.fetchDiningHours { (_) in
-                self.state = .finished
-            }
+            completion(model)
         }
     }
-    
-    // MARK: - LaundryAPIOperation
-    private class LaundryAPIOperation: AsynchronousOperation {
-        private let rooms: [LaundryRoom]
+}
+
+extension HomeTableViewModel {
+    convenience init(json: JSON) throws {
+        self.init()
         
-        init(rooms: [LaundryRoom]) {
-            self.rooms = rooms
-            super.init()
+        guard let cellsJSON = json["cells"].array else {
+            throw NetworkingError.jsonError
         }
         
-        override func main() {
-            super.main()
-            LaundryAPIService.instance.fetchLaundryData(for: rooms, withUsageData: false) { (_) in
-                self.state = .finished
+        self.items = [HomeCellItem]()
+        
+        // Initialize default items for development
+        // Note: this should be empty in production
+        for ItemType in HomeItemTypes.instance.getDefaultItems() {
+            if let item = ItemType.getItem(for: nil) {
+                items.append(item)
+            }
+        }
+        
+        // Initialize items from JSON
+        for json in cellsJSON {
+            let type = json["type"].stringValue
+            let infoJSON = json["info"]
+            if let ItemType = HomeItemTypes.instance.getItemType(for: type), let item = ItemType.getItem(for: infoJSON) {
+                items.append(item)
             }
         }
     }
 }
+

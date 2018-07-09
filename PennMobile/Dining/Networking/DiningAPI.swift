@@ -51,6 +51,10 @@ extension DiningHoursData {
             loadHoursForSingleVenue(for: json)
         }
         
+        if !Storage.fileExists(DiningVenue.directory, in: .caches) {
+            let mapping = getIdMapping(jsonArray: jsonArray)
+            Storage.store(mapping, to: .caches, as: DiningVenue.directory)
+        }
         return true
     }
     
@@ -77,19 +81,114 @@ extension DiningHoursData {
             return
         }
         
+        var closedFlag = false
+        var closedTime: OpenClose?
+        
         for json in timesJSON {
-            guard let type = json["type"].string, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || type == "Late Night" || name.range(of: type) != nil, let open = json["open"].string, let close = json["close"].string else { return }
+            guard let type = json["type"].string, type == "Lunch" || type == "Brunch" || type == "Dinner" || type == "Breakfast" || type == "Late Night" || type == "Closed" || name.range(of: type) != nil, let open = json["open"].string, let close = json["close"].string else { continue }
+            
+            let longFormatter = DateFormatter()
+            longFormatter.dateFormat = "yyyy-MM-dd"
+            let todayString = longFormatter.string(from: Date())
             
             let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm:ss"
+            formatter.dateFormat = "yyyy-MM-dd:HH:mm:ss"
             formatter.timeZone = TimeZone(abbreviation: "EST")
             
-            guard let openDate = formatter.date(from: open)?.adjustedFor11_59, let closeDate = formatter.date(from: close)?.adjustedFor11_59 else { return }
+            let openString = todayString + ":" + open
+            let closeString = todayString + ":" + close
+            
+            guard let openDate = formatter.date(from: openString)?.adjustedFor11_59,
+                  let closeDate = formatter.date(from: closeString)?.adjustedFor11_59 else { continue }
             
             let time = OpenClose(open: openDate, close: closeDate)
-            if !hours.containsOverlappingTime(with: time) {
+            if type == "Closed" {
+                closedFlag = true
+                closedTime = time
+            } else if !hours.containsOverlappingTime(with: time) {
                 hours.append(time)
             }
+        }
+        
+        if let closedTime = closedTime, closedFlag {
+            hours = hours.filter { !$0.overlaps(with: closedTime) }
+        }
+        
+        self.load(hours: hours, for: venueName)
+    }
+    
+    fileprivate func getIdMapping(jsonArray: [JSON]) -> [Int: String] {
+        var mapping = [Int: String]()
+        for json in jsonArray {
+            let name = json["name"].stringValue
+            let id = json["id"].intValue
+            mapping[id] = name
+        }
+        return mapping
+    }
+}
+
+extension DiningAPI {
+    func fetchHardcodedData(_ completion: @escaping (_ success: Bool) -> Void) {
+        if let filePath = Bundle.main.path(forResource: "diningJSON", ofType: "json"),
+            let data = NSData(contentsOfFile: filePath) {
+            let json = try! JSON(data: data as Data)
+            let success: Bool = DiningHoursData.shared.loadHardcodedData(for: json)
+            completion(success)
+        }
+    }
+}
+
+extension DiningHoursData {
+    fileprivate func loadHardcodedData(for json: JSON) -> Bool {
+        guard let jsonArray = json["venues"].array else {
+            return false
+        }
+        
+        for json in jsonArray {
+            loadHardcodedHoursForSingleVenue(for: json)
+        }
+        return true
+    }
+    
+    fileprivate func loadHardcodedHoursForSingleVenue(for json: JSON) {
+        guard let name = json["name"].string, let scheduleJSON = json["schedule"].array else {
+            return
+        }
+        let venueName = DiningVenueName.getVenueName(for: name)
+        if venueName == .unknown {
+            return
+        }
+        
+        let today: String = Date().dayOfWeek
+        var mealsJSON: [JSON]!
+        for json in scheduleJSON {
+            let day = json["day"].stringValue
+            if today == day {
+                mealsJSON = json["meals"].array
+            }
+        }
+        
+        if mealsJSON == nil {
+            return
+        }
+        
+        var hours = [OpenClose]()
+        
+        let formatter = DateFormatter()
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
+        formatter.dateFormat = "h:mma"
+        formatter.timeZone = TimeZone(abbreviation: "EST")
+        
+        for json in mealsJSON {
+            let start = json["start"].stringValue
+            let end = json["end"].stringValue
+            
+            guard let openDate = formatter.date(from: start)?.adjustedFor11_59, let closeDate = formatter.date(from: end)?.adjustedFor11_59 else { continue }
+            
+            let time = OpenClose(open: openDate, close: closeDate)
+            hours.append(time)
         }
         
         self.load(hours: hours, for: venueName)
