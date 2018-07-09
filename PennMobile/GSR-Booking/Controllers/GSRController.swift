@@ -46,8 +46,16 @@ class GSRController: GenericViewController, IndicatorEnabled {
         self.tabBarController?.title = "Study Rooom Booking"
         updateForNewDayIfNeeded()
         rangeSlider?.reload()
+        if viewModel.allRooms.isEmpty {
+            self.showActivity()
+        }
+        fetchData {
+            DispatchQueue.main.async {
+                self.hideActivity()
+            }
+        }
+        prepareBarButton()
         refreshBarButton()
-        fetchData()
     }
 }
 
@@ -58,7 +66,6 @@ extension GSRController {
         prepareRangeSlider()
         prepareTableView()
         prepareEmptyView()
-        prepareBarButton()
     }
     
     private func preparePickerView() {
@@ -99,9 +106,9 @@ extension GSRController {
         _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
-    private func prepareBarButton() {
+    fileprivate func prepareBarButton() {
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
-        navigationItem.rightBarButtonItem = barButton
+        self.tabBarController?.navigationItem.rightBarButtonItem = barButton
     }
 }
 
@@ -115,7 +122,7 @@ extension GSRController {
 
 // MARK: - ViewModelDelegate + Networking
 extension GSRController: GSRViewModelDelegate {
-    func fetchData() {
+    func fetchData(_ callback: @escaping () -> Void) {
         let locationId = viewModel.getSelectedLocation().lid
         let date = viewModel.getSelectedDate()
         GSRNetworkManager.instance.getAvailability(for: locationId, date: date) { (rooms) in
@@ -126,6 +133,7 @@ extension GSRController: GSRViewModelDelegate {
                     self.rangeSlider.reload()
                     self.refreshBarButton()
                 }
+                callback()
             }
         }
     }
@@ -186,9 +194,11 @@ extension GSRController: GSRBookable {
             booking.user = user
             submitBooking(for: booking) { (success) in
                 if success {
-                    self.fetchData()
+                    self.fetchData {
+                        // Do something when finished
+                    }
                 } else {
-                    self.presentLoginController(with: booking)
+                    GSRUser.clear()
                 }
             }
         } else {

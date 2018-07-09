@@ -32,8 +32,8 @@ class ContactsTableViewController: GenericTableViewController, ShowsAlert {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.screenName = "Contacts"
         navigationItem.rightBarButtonItem = addRemoveButton
-        self.title = "Contacts"
         
         tableView.dataSource = self
         tableView.delegate = self

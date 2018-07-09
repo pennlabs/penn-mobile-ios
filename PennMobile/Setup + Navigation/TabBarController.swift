@@ -13,18 +13,6 @@ final class TabBarController: ESTabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let v1 = HomeViewController()
-//        let v2 = ExampleViewController()
-//        let v3 = ExampleViewController()
-//        let v4 = ExampleViewController()
-//        let v5 = ExampleViewController()
-//
-//        v1.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Home", image: UIImage(named: "home"), selectedImage: UIImage(named: "home_1"))
-//        v2.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Find", image: UIImage(named: "find"), selectedImage: UIImage(named: "find_1"))
-//        v3.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(), title: nil, image: UIImage(named: "photo_verybig"), selectedImage: UIImage(named: "photo_verybig"))
-//        v4.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Favor", image: UIImage(named: "favor"), selectedImage: UIImage(named: "favor_1"))
-//        v5.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Me", image: UIImage(named: "me"), selectedImage: UIImage(named: "me_1"))
         ControllerModel.shared.viewControllers.forEach { (vc) in
             if vc is TabBarShowable {
                 vc.tabBarItem = (vc as! TabBarShowable).getTabBarItem()
@@ -85,6 +73,23 @@ extension FlingViewController: TabBarShowable {
         return ESTabBarItem(title: "Fling", image: normalImage, selectedImage: selectedImage)
     }
 }
+
+extension NewsViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "News_Grey")
+        let selectedImage = UIImage(named: "News_Blue")
+        return ESTabBarItem(title: "News", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension ContactsTableViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Phone-Gray")
+        let selectedImage = UIImage(named: "Phone-Blue")
+        return ESTabBarItem(title: "Contacts", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
 
 extension DiningViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {

@@ -14,12 +14,11 @@ class DiningViewController: GenericTableViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.screenName = "Dining"
+
         tableView.separatorStyle = .none
         tableView.dataSource = self
-        
-        self.screenName = "Dining"
-        
+
         viewModel.delegate = self
         viewModel.registerHeadersAndCells(for: tableView)
         
@@ -31,6 +30,7 @@ class DiningViewController: GenericTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         fetchDiningHours()
         self.tabBarController?.title = "Dining"
     }

@@ -18,7 +18,9 @@ import UIKit
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.tintColor = UIColor.navRed
+        tabBarController?.title = screenName
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
         
         if trackScreen {
             trackScreen(screenName)
@@ -39,7 +41,9 @@ class GenericViewController: UIViewController, Trackable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        tabBarController?.title = screenName
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
         self.navigationController?.navigationBar.tintColor = UIColor.navRed
         
         if trackScreen {

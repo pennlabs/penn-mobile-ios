@@ -21,6 +21,7 @@ enum Page: String {
     case news = "News"
     case contacts = "Penn Contacts"
     case about = "About"
+    case mentalHealth = "Mental Health"
 }
 
 class ControllerModel: NSObject {
@@ -37,6 +38,7 @@ class ControllerModel: NSObject {
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()
         dict[.about] = AboutViewController()
+        dict[.mentalHealth] = MentalHealthViewController()
         return dict
     }()
     

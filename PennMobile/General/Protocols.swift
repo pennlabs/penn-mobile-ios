@@ -89,6 +89,12 @@ extension HairlineRemovable {
         }
     }
     
+    func addBackHairline(from view: UIView) {
+        if let hairline = findHairlineImageViewUnder(view: view) {
+            hairline.isHidden = false
+        }
+    }
+    
     //finds hairline underview if there is one
     private func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
         if view is UIImageView && view.bounds.size.height <= 1 {

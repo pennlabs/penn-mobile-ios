@@ -21,7 +21,7 @@ enum GSRState {
 protocol GSRViewModelDelegate: ShowsAlert {
     func refreshDataUI()
     func refreshSelectionUI()
-    func fetchData()
+    func fetchData(_ callback: @escaping () -> Void)
 }
 
 class GSRViewModel: NSObject {
@@ -33,8 +33,8 @@ class GSRViewModel: NSObject {
     fileprivate lazy var selectedLocation = self.locations[0]
     
     // MARK: Room Data
-    fileprivate var allRooms = [GSRRoom]()
-    fileprivate var currentRooms = [GSRRoom]()
+    var allRooms = [GSRRoom]()
+    var currentRooms = [GSRRoom]()
     
     // MARK: Current Selection
     fileprivate var currentSelection = [GSRTimeSlot]()
@@ -77,7 +77,9 @@ extension GSRViewModel: UIPickerViewDataSource, UIPickerViewDelegate {
         } else if component == 1 {
             selectedLocation = locations[row]
         }
-        delegate!.fetchData()
+        delegate!.fetchData {
+            // Do something when finished
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
