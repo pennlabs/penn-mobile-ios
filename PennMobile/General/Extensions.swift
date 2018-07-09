@@ -77,6 +77,33 @@ extension UIColor {
     
     static let navRed = UIColor(r: 192, g: 57, b:  43)
     static let navBarGrey = UIColor(r: 247, g: 247, b: 247)
+    
+    // --- New colors for homepage redesign ---
+    // Greys
+    static let primaryTitleGrey = UIColor(r: 63, g: 63, b: 63)
+    static let secondaryTitleGrey = UIColor(r: 155, g: 155, b: 155)
+    static let allbirdsGrey = UIColor(r: 234, g: 234, b: 234)
+    // Colors
+    static let navigationBlue = UIColor(r: 74, g: 144, b: 226)
+    static let interactionGreen = UIColor(r: 118, g: 191, b: 150)
+    static let informationYellow = UIColor(r: 255, g: 193, b: 7)
+    static let secondaryInformationGrey = UIColor(r: 155, g: 155, b: 155)
+}
+
+extension UIFont {
+    
+    static let primaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 24)
+    static let secondaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
+
+    static let interiorTitleFont = UIFont(name: "AvenirNext-Regular", size: 20)
+
+    static let primaryInformationFont = UIFont(name: "AvenirNext-DemiBold", size: 14)
+    static let secondaryInformationFont = UIFont(name: "AvenirNext-Regular", size: 14)
+    
+    static let footerDescriptionFont = UIFont(name: "AvenirNext-Regular", size: 10)
+    static let footerTransitionFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
+    
+    static let gsrTimeIncrementFont = UIFont(name: "AvenirNext-DemiBold", size: 20)
 }
 
 extension UIBarButtonItem {
@@ -171,6 +198,7 @@ extension Date {
     var dayOfWeek: String {
         let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        myCalendar.timeZone = TimeZone(abbreviation: "EST")!
         let myComponents = myCalendar.components(.weekday, from: self)
         let weekDay = myComponents.weekday!
         return weekdayArray[weekDay-1]
@@ -272,17 +300,11 @@ extension Optional {
 }
 
 extension UILabel {
-    var numberOfVisibleLines: Int {
-        let textSize = CGSize(width: CGFloat(self.frame.size.width), height: CGFloat(MAXFLOAT))
-        let rHeight: Int = lroundf(Float(self.sizeThatFits(textSize).height))
-        let charSize: Int = lroundf(Float(self.font.pointSize))
-        return rHeight / charSize
-    }
-    
-    func shrinkUntilFits(numberOfLines: Int, increment: CGFloat) {
-        while self.numberOfVisibleLines > numberOfLines {
-            self.font = self.font.withSize(self.font.pointSize - increment)
-        }
+    func shrinkUntilFits() {
+        self.allowsDefaultTighteningForTruncation = true
+        self.adjustsFontSizeToFitWidth = true
+        self.minimumScaleFactor = 0.3
+        self.numberOfLines = 1
     }
 }
 
