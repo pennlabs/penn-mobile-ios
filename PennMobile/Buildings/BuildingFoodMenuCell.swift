@@ -108,6 +108,7 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
     
     func getMenuRequiredHeight() -> CGFloat {
         var total: CGFloat = 0.0
+        total += (2.0 * safeInsetValue)
         guard let sections = filteredStations else { return total }
         
         total += (CGFloat(sections.count) * 20.0)

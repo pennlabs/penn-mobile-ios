@@ -72,7 +72,7 @@ DEPENDENCIES:
   - TimelineTableViewCell
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - ESTabBarController-swift
     - Firebase
     - FirebaseAnalytics
@@ -122,4 +122,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9c83b61d474bde74bf1cc1a2c68487fd3dd19a89
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.5.0
