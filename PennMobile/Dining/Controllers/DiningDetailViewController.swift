@@ -21,6 +21,10 @@ class DiningDetailViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Override the default table view with a grouped style
+        self.tableView = UITableView(frame: self.tableView.frame, style: .grouped)
+        tableView.separatorStyle = .none
+        
         registerHeadersAndCells(for: self.tableView)
         self.view.backgroundColor = .white
     }
@@ -68,15 +72,15 @@ extension DiningDetailViewController: CellUpdateDelegate {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
+        switch indexPath.section {
         case 0: return BuildingHeaderCell.cellHeight
         case 1: return BuildingImageCell.cellHeight
         case 2: return BuildingHoursCell.cellHeight
@@ -88,7 +92,7 @@ extension DiningDetailViewController: CellUpdateDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : BuildingCell
-        switch indexPath.row {
+        switch indexPath.section {
         case 0: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHeaderCell.identifier, for: indexPath) as! BuildingHeaderCell
         case 1: cell = tableView.dequeueReusableCell(withIdentifier: BuildingImageCell.identifier, for: indexPath) as! BuildingImageCell
         case 2: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHoursCell.identifier, for: indexPath) as! BuildingHoursCell
@@ -107,6 +111,32 @@ extension DiningDetailViewController: CellUpdateDelegate {
         tableView.register(BuildingHoursCell.self, forCellReuseIdentifier: BuildingHoursCell.identifier)
         tableView.register(BuildingFoodMenuCell.self, forCellReuseIdentifier: BuildingFoodMenuCell.identifier)
         tableView.register(BuildingMapCell.self, forCellReuseIdentifier: BuildingMapCell.identifier)
+    }
+    
+    // Section headers
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0: return 0.0
+        case 1: return 0.0
+        case 2: return BuildingSectionHeader.headerHeight
+        case 3: return BuildingSectionHeader.headerHeight
+        default: return 0.0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch section {
+        case 0: return nil
+        case 1: return nil
+        case 2: let header = BuildingSectionHeader(); header.label.text = "Hours"; return header
+        case 3: let header = BuildingSectionHeader(); header.label.text = "Menu"; return header
+        default: return nil
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.0
     }
 }
 
@@ -128,14 +158,5 @@ extension DiningDetailViewController {
             }
         }
     }
-    /*override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: BuildingHeaderView.identifier) as! BuildingHeaderView
-        view.venue = self.venue
-        return view
-    }*/
-    
-    /*override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return BuildingHeaderView.headerHeight
-    }*/
 
 }

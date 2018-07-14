@@ -115,7 +115,7 @@
 		B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAF11F802A050038B9D5 /* LaundryCell.swift */; };
 		B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B658393A1FABD295009486FC /* LaundryAPIService.swift */; };
 		B6665A182071E63800F49A9C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6665A172071E63800F49A9C /* TabBarController.swift */; };
-		B6C3499B20D9EB3E00FEBE89 /* BuildingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C3499A20D9EB3E00FEBE89 /* BuildingHeaderView.swift */; };
+		B6BE958820FA9B2600F0B99F /* BuildingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BE958720FA9B2600F0B99F /* BuildingSectionHeader.swift */; };
 		B6E49F7920D9F17E003F4002 /* BuildingImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F7720D9F17D003F4002 /* BuildingImageCell.swift */; };
 		B6E49F7B20DC83AB003F4002 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F7A20DC83AB003F4002 /* BuildingHeaderCell.swift */; };
 		B6E49F7D20DC8A2C003F4002 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F7C20DC8A2C003F4002 /* BuildingCell.swift */; };
@@ -264,7 +264,7 @@
 		B654BAF11F802A050038B9D5 /* LaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryCell.swift; sourceTree = "<group>"; };
 		B658393A1FABD295009486FC /* LaundryAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryAPIService.swift; sourceTree = "<group>"; };
 		B6665A172071E63800F49A9C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		B6C3499A20D9EB3E00FEBE89 /* BuildingHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingHeaderView.swift; sourceTree = "<group>"; };
+		B6BE958720FA9B2600F0B99F /* BuildingSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingSectionHeader.swift; sourceTree = "<group>"; };
 		B6E49F7720D9F17D003F4002 /* BuildingImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildingImageCell.swift; sourceTree = "<group>"; };
 		B6E49F7A20DC83AB003F4002 /* BuildingHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingHeaderCell.swift; sourceTree = "<group>"; };
 		B6E49F7C20DC8A2C003F4002 /* BuildingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingCell.swift; sourceTree = "<group>"; };
@@ -466,7 +466,6 @@
 		2166408F1EBADC0C00746B8E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				B6C3499A20D9EB3E00FEBE89 /* BuildingHeaderView.swift */,
 				216640901EBADC1700746B8E /* DiningCell.swift */,
 				217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */,
 				B6E49F8420E32C78003F4002 /* DiningMenuItemCell.swift */,
@@ -828,6 +827,7 @@
 				B6E49F7E20DC8FE9003F4002 /* BuildingMapCell.swift */,
 				B6E49F8020E1F48D003F4002 /* BuildingHoursCell.swift */,
 				B6E49F8220E3260D003F4002 /* BuildingFoodMenuCell.swift */,
+				B6BE958720FA9B2600F0B99F /* BuildingSectionHeader.swift */,
 			);
 			path = Buildings;
 			sourceTree = "<group>";
@@ -1149,6 +1149,7 @@
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
 				216640971EBADC1700746B8E /* DiningVenue.swift in Sources */,
+				B6BE958820FA9B2600F0B99F /* BuildingSectionHeader.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				B6E49F7D20DC8A2C003F4002 /* BuildingCell.swift in Sources */,
@@ -1159,7 +1160,6 @@
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
-				B6C3499B20D9EB3E00FEBE89 /* BuildingHeaderView.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
 				216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */,
 				CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */,
