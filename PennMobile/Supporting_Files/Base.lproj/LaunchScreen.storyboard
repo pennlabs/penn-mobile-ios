@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14295.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14270.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,18 +21,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gzw-MZ-60i">
-                                <rect key="frame" x="0.0" y="729" width="375" height="49"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <items>
-                                    <tabBarItem title="Home" image="Home_Grey" id="Txr-9Q-6SV"/>
-                                    <tabBarItem title="Dining" image="Dining_Grey" id="3rq-I3-mHd"/>
-                                    <tabBarItem title="GSR" image="GSR_Grey" id="Pvh-0j-nCU"/>
-                                    <tabBarItem title="Laundry" image="Laundry_Grey" id="iaC-sr-TBf"/>
-                                    <tabBarItem systemItem="more" id="4u1-hM-VSJ"/>
-                                </items>
-                            </tabBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lLN-zr-4G1">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
@@ -46,15 +34,29 @@
                                     <navigationItem title="Home" id="mYT-iR-9H6"/>
                                 </items>
                             </navigationBar>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gzw-MZ-60i">
+                                <rect key="frame" x="0.0" y="729" width="375" height="83"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <tabBarItem title="Home" image="Home_Grey" id="Txr-9Q-6SV"/>
+                                    <tabBarItem title="Dining" image="Dining_Grey" id="3rq-I3-mHd"/>
+                                    <tabBarItem title="GSR" image="GSR_Grey" id="Pvh-0j-nCU"/>
+                                    <tabBarItem title="Laundry" image="Laundry_Grey" id="iaC-sr-TBf"/>
+                                    <tabBarItem systemItem="more" id="4u1-hM-VSJ"/>
+                                </items>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Gzw-MZ-60i" secondAttribute="bottom" id="0sX-bn-Nfl"/>
                             <constraint firstAttribute="trailing" secondItem="RLg-yL-qKT" secondAttribute="trailing" id="1Od-kV-XfL"/>
                             <constraint firstItem="RLg-yL-qKT" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="2ts-lS-IwW"/>
                             <constraint firstAttribute="trailing" secondItem="lLN-zr-4G1" secondAttribute="trailing" id="ASf-v7-hu6"/>
                             <constraint firstItem="lLN-zr-4G1" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Fd7-W0-rNE"/>
                             <constraint firstItem="RLg-yL-qKT" firstAttribute="top" secondItem="lLN-zr-4G1" secondAttribute="bottom" id="GE3-mh-ivP"/>
                             <constraint firstItem="lLN-zr-4G1" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Mqv-Ts-slG"/>
+                            <constraint firstAttribute="trailing" secondItem="Gzw-MZ-60i" secondAttribute="trailing" id="jAL-t2-SXo"/>
+                            <constraint firstItem="Gzw-MZ-60i" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="pp1-fX-d3k"/>
                             <constraint firstItem="RLg-yL-qKT" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="tED-pI-PMf"/>
                         </constraints>
                     </view>
