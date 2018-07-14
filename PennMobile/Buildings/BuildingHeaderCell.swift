@@ -11,7 +11,7 @@ import UIKit
 class BuildingHeaderCell: BuildingCell {
 
     static let identifier = "BuildingHeaderCell"
-    static let cellHeight: CGFloat = 188
+    static let cellHeight: CGFloat = 104
 
     override var venue: DiningVenue! {
         didSet {
@@ -73,7 +73,7 @@ extension BuildingHeaderCell {
         addSubview(buildingDescriptionLabel)
         addSubview(buildingHoursLabel)
 
-        let inset: CGFloat = 28
+        let inset: CGFloat = 14
         
         _ = buildingDescriptionLabel.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: nil,
             topConstant: 0, leftConstant: inset, bottomConstant: inset, rightConstant: 0, widthConstant: 0, heightConstant: 0)
@@ -81,8 +81,9 @@ extension BuildingHeaderCell {
         _ = buildingTitleLabel.anchor(nil, left: leftAnchor, bottom: buildingDescriptionLabel.topAnchor, right: nil, 
             topConstant: 0, leftConstant: inset, bottomConstant: inset, rightConstant: 0, widthConstant: 0, heightConstant: 0)
 
-        _ = buildingHoursLabel.anchor(nil, left: nil, bottom: bottomAnchor, right: rightAnchor, 
-            topConstant: 0, leftConstant: 0, bottomConstant: inset, rightConstant: inset, widthConstant: 0, heightConstant: 0)
+        _ = buildingHoursLabel.anchor(nil, left: nil, bottom: nil, right: rightAnchor,
+            topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: inset, widthConstant: 0, heightConstant: 0)
+        buildingHoursLabel.centerYAnchor.constraint(equalTo: buildingDescriptionLabel.centerYAnchor).isActive = true
     }
 
     fileprivate func getBuildingTitleLabel() -> UILabel {
@@ -95,7 +96,7 @@ extension BuildingHeaderCell {
 
     fileprivate func getBuildingDescriptionLabel() -> UILabel {
         let label = UILabel()
-        label.font = .interiorTitleFont
+        label.font = .secondaryInformationFont
         label.textColor = .secondaryTitleGrey
         label.textAlignment = .left
         return label
@@ -103,8 +104,8 @@ extension BuildingHeaderCell {
 
     fileprivate func getBuildingHoursLabel() -> UILabel{
         let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = UIColor.informationYellow
+        label.font = .secondaryInformationFont
+        label.textColor = .informationYellow
         label.textAlignment = .right
         return label
     }
