@@ -72,7 +72,7 @@ extension DiningDetailViewController: CellUpdateDelegate {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -146,11 +146,17 @@ extension DiningDetailViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {
             if menuCellExpanded {
-                menuCellExpanded = !menuCellExpanded
-                requestedCellHeights[BuildingFoodMenuCell.identifier] = 100
+                menuCellExpanded = false
+                cell.isExpanded = false
+                cell.fogView?.isHidden = false
+                requestedCellHeights[BuildingFoodMenuCell.identifier] = BuildingFoodMenuCell.cellHeight
                 tableView.reloadRows(at: [indexPath], with: .automatic)
+                cell.venue = self.venue
+                cell.menuTableView.reloadData()
             } else {
-                menuCellExpanded = !menuCellExpanded
+                menuCellExpanded = true
+                cell.isExpanded = true
+                cell.fogView?.isHidden = true
                 requestedCellHeights[BuildingFoodMenuCell.identifier] = cell.getMenuRequiredHeight()
                 tableView.reloadRows(at: [indexPath], with: .automatic)
                 cell.venue = self.venue

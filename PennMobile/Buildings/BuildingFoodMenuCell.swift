@@ -51,12 +51,13 @@ class BuildingFoodMenuCell: BuildingCell {
     
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
-    
+    var fogView: UIView?
     var menuTableView: UITableView!
     
     // MARK: - Init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        print(self.isExpanded)
         prepareUI()
     }
     
@@ -130,6 +131,7 @@ extension BuildingFoodMenuCell {
     fileprivate func prepareUI() {
         prepareSafeArea()
         layoutTableView()
+        prepareFogView()
     }
     
     // MARK: Safe Area
@@ -142,6 +144,22 @@ extension BuildingFoodMenuCell {
             safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue),
             safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue)
             ])
+    }
+    
+    // MARK: Fog View
+    fileprivate func prepareFogView() {
+        fogView = getFogView()
+        addSubview(fogView!)
+        _ = fogView!.anchor(nil, left: self.leftAnchor, bottom: self.menuTableView.bottomAnchor, right: self.rightAnchor, heightConstant: 80.0)
+    }
+    
+    fileprivate func getFogView() -> UIView {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 80.0))
+        let gradient = CAGradientLayer()
+        gradient.frame = view.frame
+        gradient.colors = [UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0).cgColor, UIColor.white.cgColor]
+        view.layer.insertSublayer(gradient, at: 0)
+        return view
     }
     
     // MARK: Layout Labels
