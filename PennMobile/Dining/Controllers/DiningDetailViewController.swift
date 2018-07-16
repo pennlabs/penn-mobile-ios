@@ -148,19 +148,15 @@ extension DiningDetailViewController {
             if menuCellExpanded {
                 menuCellExpanded = false
                 cell.isExpanded = false
-                cell.fogView?.isHidden = false
                 requestedCellHeights[BuildingFoodMenuCell.identifier] = BuildingFoodMenuCell.cellHeight
                 tableView.reloadRows(at: [indexPath], with: .automatic)
-                cell.venue = self.venue
-                cell.menuTableView.reloadData()
+                cell.setupCell()
             } else {
                 menuCellExpanded = true
                 cell.isExpanded = true
-                cell.fogView?.isHidden = true
                 requestedCellHeights[BuildingFoodMenuCell.identifier] = cell.getMenuRequiredHeight()
                 tableView.reloadRows(at: [indexPath], with: .automatic)
-                cell.venue = self.venue
-                cell.menuTableView.reloadData()
+                cell.setupCell()
             }
         }
     }

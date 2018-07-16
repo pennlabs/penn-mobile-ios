@@ -57,7 +57,6 @@ class BuildingFoodMenuCell: BuildingCell {
     // MARK: - Init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        print(self.isExpanded)
         prepareUI()
     }
     
@@ -70,7 +69,7 @@ class BuildingFoodMenuCell: BuildingCell {
 // MARK: - Setup Cell
 extension BuildingFoodMenuCell {
     
-    fileprivate func setupCell() {
+    func setupCell() {
         menuTableView.reloadData()
     }
 }
@@ -122,7 +121,6 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
 
 // MARK: - Menu Table View Delegate
 extension BuildingFoodMenuCell: UITableViewDelegate {
-    
 }
 
 // MARK: - Initialize and Prepare UI
@@ -131,7 +129,7 @@ extension BuildingFoodMenuCell {
     fileprivate func prepareUI() {
         prepareSafeArea()
         layoutTableView()
-        prepareFogView()
+        //prepareFogView()
     }
     
     // MARK: Safe Area
