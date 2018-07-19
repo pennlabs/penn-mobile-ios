@@ -18,6 +18,7 @@ enum Page: String {
     case studyRoomBooking = "Study Room Booking"
     case laundry = "Laundry"
     case more = "More"
+    case fitness = "Fitness"
     case news = "News"
     case contacts = "Penn Contacts"
     case about = "About"
@@ -34,6 +35,7 @@ class ControllerModel: NSObject {
         dict[.studyRoomBooking] = GSRController()
         dict[.laundry] = LaundryTableViewController()
         dict[.more] = MoreViewController()
+        dict[.fitness] = FitnessViewController()
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()
         dict[.about] = AboutViewController()
@@ -56,12 +58,12 @@ class ControllerModel: NSObject {
     // pages order in MoreViewController:
     var moreOrder: [Page] {
         get {
-            return [.news, .contacts, .about]
+            return [.fitness, .news, .contacts, .about]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            return [#imageLiteral(resourceName: "News") ,#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
         }
     }
     
