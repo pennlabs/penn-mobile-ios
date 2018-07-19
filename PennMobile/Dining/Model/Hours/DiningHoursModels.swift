@@ -8,13 +8,47 @@
 
 import Foundation
 
+struct DiningVenueForWeek: Codable {
+    let dailyMenuURL: String
+    let dateHours: [DiningVenueDateHours]?
+    let facilityURL: String
+    let id: Int
+    let name: String
+    let venueType: DiningVenueType
+    let weeklyMenuURL: String
+}
+
+struct DiningVenueDateHours: Codable {
+    let date: String
+    let meal: [CodableOpenClose]
+}
+
+struct CodableOpenClose: Codable {
+    let open: String
+    let close: String
+    let meal: String
+    
+    enum CodingKeys: String, CodingKey {
+        case open = "open"
+        case close = "close"
+        case meal = "type"
+    }
+}
+
+// CodableOpenClose is used to decode the JSON, and then it is mapped to OpenClose
+// This is required because OpenClose needs to know the date string from one level higher
+
 struct OpenClose: Equatable {
     let open: Date
     let close: Date
-    
-    static func ==(lhs: OpenClose, rhs: OpenClose) -> Bool {
-        return lhs.open == rhs.open && lhs.close == rhs.close
-    }
+    let meal: String
+
+    static let completeformatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd:HH:mm:ss"
+        df.timeZone = TimeZone(abbreviation: "EST")
+        return df
+    }()
     
     var description: String {
         return open.description + " - " + close.description
@@ -27,7 +61,7 @@ struct OpenClose: Equatable {
     func withoutMinutes() -> OpenClose {
         let newOpen = open.roundedDownToHour
         let newClose = close.roundedDownToHour
-        return OpenClose(open: newOpen, close: newClose)
+        return OpenClose(open: newOpen, close: newClose, meal: meal)
     }
 }
 
@@ -56,9 +90,26 @@ extension Array where Element == OpenClose {
         return false
     }
     
+    var nextOpen: OpenClose? {
+        let now = Date()
+        for index in self.indices {
+            let open_close = self[index]
+            
+            // If the call is currently open, return the current timeslot
+            if open_close.open < now && open_close.close > now { return open_close }
+            
+            // If the hall is closed but about to open again, return the next timeslot
+            if index + 1 < self.count {
+                if self[index].close < now && self[index + 1].open > now { return self[index + 1] }
+            }
+        }
+        return nil
+    }
+    
     var strFormat: String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "EST")
         formatter.dateFormat = "h:mma"
         formatter.amSymbol = "a"
         formatter.pmSymbol = "p"

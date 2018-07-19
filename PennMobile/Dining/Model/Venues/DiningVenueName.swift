@@ -38,6 +38,10 @@ enum DiningVenueName: String {
         }
     }
     
+    static func getVenueName(for venueName: DiningVenueName) -> String {
+        return venueName.rawValue
+    }
+    
     static func getVenueName(for apiName: String) -> DiningVenueName {
         if apiName.contains("MBA") {
             return .mbaCafe

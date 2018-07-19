@@ -65,6 +65,7 @@ extension UIColor {
         self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
     
+    // --- Deprecated colors ---
     static let warmGrey = UIColor(r: 115, g: 115, b: 115)
     static let whiteGrey = UIColor(r: 248, g: 248, b: 248)
     static let paleTeal = UIColor(r: 149, g: 207, b: 175)
@@ -202,6 +203,29 @@ extension Date {
         let myComponents = myCalendar.components(.weekday, from: self)
         let weekDay = myComponents.weekday!
         return weekdayArray[weekDay-1]
+    }
+    
+    var integerDayOfWeek: Int {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        let myComponents = myCalendar.components(.weekday, from: self)
+        return myComponents.weekday! - 1
+    }
+    
+    static let dayOfMonthFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        df.timeZone = TimeZone(abbreviation: "EST")
+        return df
+    }()
+    
+    var dateStringsForCurrentWeek: [String] {
+        var dateStrings = [String]()
+        let formatter = Date.dayOfMonthFormatter
+        let currentDayOfWeek = Date().integerDayOfWeek
+        for day in 0 ..< 7 {
+            dateStrings.append(formatter.string(from: Date().add(minutes: 1440 * (day - currentDayOfWeek))))
+        }
+        return dateStrings
     }
     
     var adjustedFor11_59: Date {
