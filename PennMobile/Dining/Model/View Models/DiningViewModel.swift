@@ -6,7 +6,6 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 protocol DiningViewModelDelegate {
