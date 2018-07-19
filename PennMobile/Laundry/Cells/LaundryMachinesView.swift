@@ -52,31 +52,32 @@ extension LaundryMachinesView {
         addSubview(typeLabel)
         addSubview(numberLabel)
         
-        typeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        typeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14).isActive = true
         typeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         
-        numberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+        numberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -14).isActive = true
         numberLabel.centerYAnchor.constraint(equalTo: typeLabel.centerYAnchor, constant: 0).isActive = true
     }
     
     private func getTypeLabel() -> UILabel {
-        let label = getRoomLabel(fontSize: 14)
+        let label = getRoomLabel()
         label.text = isWasher ? "Washers" : "Dryers"
         return label
     }
     
     private func getNumMachinesLabel() -> UILabel {
-        let label = getRoomLabel(fontSize: 16)
-        label.text = "0 of 9 open"
-        label.textColor = .warmGrey
+        let label = UILabel()
+        label.font = .primaryInformationFont
+        label.textColor = .secondaryInformationGrey
         label.textAlignment = .right
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
     
-    private func getRoomLabel(fontSize: CGFloat) -> UILabel {
+    private func getRoomLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: fontSize)
-        label.textColor = .black
+        label.font = .secondaryInformationFont
+        label.textColor = .primaryTitleGrey
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -116,7 +117,7 @@ extension LaundryMachinesView: UICollectionViewDataSource, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 55, height: 55)
+        return CGSize(width: 50, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
