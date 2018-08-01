@@ -14,8 +14,8 @@ class FitnessViewModel: NSObject {
 
     internal let fitnessCell = "fitnessCell"
     
-    func getFacility(for indexPath: IndexPath) -> FitnessSchedule {
-        return FitnessFacilityData.shared.getSchedule(for: facilities[indexPath.row])!
+    func getFacility(for indexPath: IndexPath) -> FitnessSchedule? {
+        return FitnessFacilityData.shared.getSchedule(for: facilities[indexPath.row])
     }
 }
 
