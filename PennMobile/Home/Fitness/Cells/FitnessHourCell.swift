@@ -11,7 +11,7 @@ import UIKit
 class FitnessHourCell: UITableViewCell {
     
     static let identifier = "fitnessHourCell"
-    static let cellHeight: CGFloat = 86
+    static let cellHeight: CGFloat = 150
     
     var schedule: FitnessSchedule! {
         didSet {
@@ -47,8 +47,9 @@ class FitnessHourCell: UITableViewCell {
 
 // MARK: - Setup Cell
 extension FitnessHourCell {
-    fileprivate func setupCell(with schedule: FitnessSchedule) {
+    fileprivate func setupCell(with schedule: FitnessSchedule?) {
         //venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
+        guard let schedule = schedule else { return }
         
         if isHomepage {
             titleLabel.text = schedule.name.rawValue
@@ -56,7 +57,10 @@ extension FitnessHourCell {
             titleLabel.text = schedule.name.rawValue
         }
         
-        updateTimeLabels(start: schedule.start, end: schedule.end)
+        if schedule.start != nil && schedule.end != nil {
+            updateTimeLabels(start: schedule.start!, end: schedule.end!)
+        }
+        
     }
     
     fileprivate func updateTimeLabels(start: Date, end: Date) {

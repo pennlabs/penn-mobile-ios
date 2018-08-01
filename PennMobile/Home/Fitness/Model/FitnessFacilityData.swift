@@ -16,8 +16,11 @@ class FitnessFacilityData {
     
     func load(inputSchedules: FitnessSchedules) {
         schedules = Dictionary<FitnessFacilityName, FitnessSchedule>()
-        for schedule in inputSchedules.schedules {
-            schedules[schedule.name] = schedule
+        guard inputSchedules.schedules != nil else { return }
+        for schedule in inputSchedules.schedules! {
+            if schedule != nil {
+                schedules[schedule!.name] = schedule
+            }
         }
     }
     

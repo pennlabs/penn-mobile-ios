@@ -10,12 +10,13 @@ import Foundation
 
 enum FitnessFacilityName: String, Codable {
     
-    case sherr =       "Sherr Pool"
-    case ringe =       "Ringe"
+    case sherr =       "Sheerr Pool"
+    case ringe =       "Ringe-CLOSED"
     case climbing =    "Climbing Wall"
     case membership =  "Membership Services"
     case fox =         "Fox Fitness"
     case pottruck =    "Pottruck Hours"
+    case rockwell =    "Basketball - Rockwell"
     case unknown
     
     static let all = [pottruck, fox, sherr, ringe, climbing, membership]

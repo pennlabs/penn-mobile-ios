@@ -32,6 +32,7 @@ extension FitnessFacilityData {
     fileprivate func loadHoursForFacilities(with json: JSON) -> Bool {
         
         let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
         
         do {
             let decodedSchedules = try decoder.decode(FitnessSchedules.self, from: json.rawData())

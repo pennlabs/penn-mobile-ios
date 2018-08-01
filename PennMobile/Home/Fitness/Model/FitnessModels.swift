@@ -9,7 +9,7 @@
 import Foundation
 
 struct FitnessSchedules: Codable {
-    let schedules: [FitnessSchedule]
+    let schedules: [FitnessSchedule?]?
     
     enum CodingKeys : String, CodingKey {
         case schedules = "schedule"
@@ -19,8 +19,8 @@ struct FitnessSchedules: Codable {
 struct FitnessSchedule: Codable {
     let allDay: Bool
     let name: FitnessFacilityName
-    let start: Date
-    let end: Date
+    let start: Date?
+    let end: Date?
     
     enum CodingKeys : String, CodingKey {
         case allDay = "all_day"
