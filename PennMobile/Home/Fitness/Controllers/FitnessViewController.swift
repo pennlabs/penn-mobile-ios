@@ -8,21 +8,19 @@
 
 import UIKit
 
-class FitnessViewController: GenericTableViewController {
+class FitnessViewController: UITableViewController {
     
     fileprivate var viewModel = FitnessViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLine
+        //self.screenName = "Fitness"
+        
+        self.registerHeadersAndCells(for: tableView)
         tableView.dataSource = self
-        
-        self.screenName = "Fitness"
-        
-        viewModel.registerHeadersAndCells(for: tableView)
-        
-        tableView.dataSource = viewModel
+        tableView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,5 +42,31 @@ extension FitnessViewController {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
         }
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension FitnessViewController {
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (section == 0) ? viewModel.facilities.count : 0
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: FitnessHourCell.identifier, for: indexPath) as! FitnessHourCell
+        cell.schedule = viewModel.getFacility(for: indexPath)
+        return cell
+    }
+    
+    func registerHeadersAndCells(for tableView: UITableView) {
+        tableView.register(FitnessHourCell.self, forCellReuseIdentifier: FitnessHourCell.identifier)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return FitnessHourCell.cellHeight
     }
 }
