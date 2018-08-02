@@ -76,8 +76,7 @@ extension FitnessHourCell {
             statusLabel.font = .secondaryInformationFont
         }
         
-        // REPLACE THIS vvv
-        timesLabel.text = "Test String"
+        timesLabel.text = start.strFormat() + " - " + end.strFormat()
         timesLabel.layoutIfNeeded()
     }
 }

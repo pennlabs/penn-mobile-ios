@@ -147,6 +147,27 @@ extension Date {
         return calendar.date(from: nowComponents)! as Date
     }
     
+    // Formats individual dates to be similar to those used on the Dining Screen
+    func strFormat() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "EST")
+        formatter.dateFormat = "h:mma"
+        formatter.amSymbol = "a"
+        formatter.pmSymbol = "p"
+        var timesString = ""
+        
+        if self.minutes == 0 {
+            formatter.dateFormat = "ha"
+        } else {
+            formatter.dateFormat = "h:mma"
+        }
+        
+        let open = formatter.string(from: self)
+        timesString += open
+        return timesString
+    }
+    
     var localTime: Date {
         return self.convert(to: "GMT")
     }
