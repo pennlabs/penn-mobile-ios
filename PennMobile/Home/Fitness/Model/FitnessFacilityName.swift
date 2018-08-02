@@ -10,16 +10,16 @@ import Foundation
 
 enum FitnessFacilityName: String, Codable {
     
-    case sherr =       "Sheerr Pool"
-    case ringe =       "Ringe-CLOSED"
+    case sheerr =      "Sheerr Pool"
+    case ringe =       "Ringe"
     case climbing =    "Climbing Wall"
     case membership =  "Membership Services"
     case fox =         "Fox Fitness"
-    case pottruck =    "Pottruck Hours"
+    case pottruck =    "Pottruck Fitness"
     case rockwell =    "Basketball - Rockwell"
     case unknown
     
-    static let all = [pottruck, fox, sherr, ringe, climbing, membership]
+    static let all = [pottruck, fox, sheerr, ringe, climbing, membership]
     
     static func getFacilityName(for facilityName: DiningVenueName) -> String {
         return facilityName.rawValue
