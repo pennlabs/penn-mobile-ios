@@ -13,6 +13,6 @@ class FitnessViewModel: NSObject {
     let facilities: [FitnessFacilityName] = FitnessFacilityName.all
     
     func getFacility(for indexPath: IndexPath) -> FitnessSchedule? {
-        return FitnessFacilityData.shared.getSchedule(for: facilities[indexPath.row])
+        return FitnessFacilityData.shared.getScheduleForToday(for: facilities[indexPath.row])
     }
 }

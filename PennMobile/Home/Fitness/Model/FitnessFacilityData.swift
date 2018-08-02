@@ -29,7 +29,7 @@ class FitnessFacilityData {
         }
     }
     
-    func getSchedule(for venue: FitnessFacilityName) -> FitnessSchedule? {
+    func getScheduleForToday(for venue: FitnessFacilityName) -> FitnessSchedule? {
         dump(schedules)
         guard schedules.keys.contains(venue) else { return nil }
         return schedules[venue]!.first(where: { (schedule) -> Bool in
