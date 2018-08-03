@@ -12,7 +12,7 @@ import MapKit
 class BuildingMapCell: BuildingCell {
     
     static let identifier = "BuildingMapCell"
-    static let cellHeight: CGFloat = 188
+    static let cellHeight: CGFloat = 220
     
     override var venue: DiningVenue! {
         didSet {
@@ -20,9 +20,9 @@ class BuildingMapCell: BuildingCell {
         }
     }
     
-    fileprivate var buildingTitleLabel : UILabel!
-    fileprivate var buildingDescriptionLabel : UILabel!
-    fileprivate var buildingHoursLabel : UILabel!
+    fileprivate let safeInsetValue: CGFloat = 14
+    fileprivate var safeArea: UIView!
+    fileprivate var mapView: MKMapView!
     
     // MARK: - Init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -39,22 +39,6 @@ class BuildingMapCell: BuildingCell {
 extension BuildingMapCell {
     
     fileprivate func setupCell(with venue: DiningVenue) {
-        buildingTitleLabel.text = DiningVenueName.getVenueName(for: venue.name)
-        buildingDescriptionLabel.text = "Campus Dining Hall"
-        
-        if venue.times != nil, venue.times!.isEmpty {
-            buildingHoursLabel.text = "CLOSED TODAY"
-            buildingHoursLabel.textColor = .secondaryInformationGrey
-            buildingHoursLabel.font = .secondaryInformationFont
-        } else if venue.times != nil && venue.times!.isOpen {
-            buildingHoursLabel.text = "OPEN"
-            buildingHoursLabel.textColor = .informationYellow
-            buildingHoursLabel.font = .primaryInformationFont
-        } else {
-            buildingHoursLabel.text = "CLOSED"
-            buildingHoursLabel.textColor = .secondaryInformationGrey
-            buildingHoursLabel.font = .secondaryInformationFont
-        }
     }
 }
 
@@ -62,51 +46,48 @@ extension BuildingMapCell {
 extension BuildingMapCell {
     
     fileprivate func prepareUI() {
-        buildingTitleLabel = getBuildingTitleLabel()
-        buildingDescriptionLabel = getBuildingDescriptionLabel()
-        buildingHoursLabel = getBuildingHoursLabel()
-        
-        layoutLabels()
+        prepareSafeArea()
+        prepareMapView()
     }
     
-    fileprivate func layoutLabels() {
-        addSubview(buildingTitleLabel)
-        addSubview(buildingDescriptionLabel)
-        addSubview(buildingHoursLabel)
-        
-        let inset: CGFloat = 28
-        
-        _ = buildingDescriptionLabel.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: nil,
-                                            topConstant: 0, leftConstant: inset, bottomConstant: inset, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        _ = buildingTitleLabel.anchor(nil, left: leftAnchor, bottom: buildingDescriptionLabel.topAnchor, right: nil,
-                                      topConstant: 0, leftConstant: inset, bottomConstant: inset, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        _ = buildingHoursLabel.anchor(nil, left: nil, bottom: bottomAnchor, right: rightAnchor,
-                                      topConstant: 0, leftConstant: 0, bottomConstant: inset, rightConstant: inset, widthConstant: 0, heightConstant: 0)
+    // MARK: Safe Area
+    fileprivate func prepareSafeArea() {
+        safeArea = getSafeAreaView()
+        addSubview(safeArea)
+        NSLayoutConstraint.activate([
+            safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue),
+            safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue),
+            safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue),
+            safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue)
+            ])
     }
     
-    fileprivate func getBuildingTitleLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .primaryTitleFont
-        label.textColor = .primaryTitleGrey
-        label.textAlignment = .left
-        return label
+    // MARK: Map View
+    fileprivate func prepareMapView() {
+        mapView = getMapView()
+        addSubview(mapView)
+        NSLayoutConstraint.activate([
+            mapView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            mapView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            mapView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            mapView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+            ])
     }
     
-    fileprivate func getBuildingDescriptionLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = .secondaryTitleGrey
-        label.textAlignment = .left
-        return label
+    fileprivate func getSafeAreaView() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }
     
-    fileprivate func getBuildingHoursLabel() -> UILabel{
-        let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = UIColor.informationYellow
-        label.textAlignment = .right
-        return label
+    fileprivate func getMapView() -> MKMapView {
+        let mv = MKMapView(frame: safeArea.frame)
+        mv.translatesAutoresizingMaskIntoConstraints = false
+        mv.layer.cornerRadius = 10.0
+        
+        // Set default loc. to Penn's coordinates: 39.9522° N, -75.1932° W
+        mv.setCenter(CLLocationCoordinate2DMake(39.9522, -75.1932), animated: true)
+        
+        return mv
     }
 }

@@ -72,7 +72,7 @@ extension DiningDetailViewController: CellUpdateDelegate {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return (venue.meals != nil) ? 4 : 3
+        return (venue.meals != nil) ? 5 : 4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -130,12 +130,8 @@ extension DiningDetailViewController: CellUpdateDelegate {
         case 0: return 0.0
         case 1: return 0.0
         case 2: return BuildingSectionHeader.headerHeight
-        case 3:
-            if venue.meals != nil {
-                return BuildingSectionHeader.headerHeight
-            } else {
-                return 0
-            }
+        case 3: return BuildingSectionHeader.headerHeight
+        case 4: return BuildingSectionHeader.headerHeight
         default: return 0.0
         }
     }
@@ -149,8 +145,9 @@ extension DiningDetailViewController: CellUpdateDelegate {
             if venue.meals != nil {
                 let header = BuildingSectionHeader(); header.label.text = "Menu"; return header
             } else {
-                return nil
+                let header = BuildingSectionHeader(); header.label.text = "Map"; return header
             }
+        case 4: let header = BuildingSectionHeader(); header.label.text = "Map"; return header
         default: return nil
         }
     }
