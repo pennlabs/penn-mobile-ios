@@ -61,10 +61,11 @@ extension FitnessHourCell {
         statusLabel.text = "CLOSED TODAY"
         statusLabel.textColor = .secondaryInformationGrey
         statusLabel.font = .secondaryInformationFont
+        
+        if let _ = name.getImageName() { venueImageView.image = UIImage(named: name.getImageName()!) }
     }
     
     fileprivate func setupCell(with schedule: FitnessSchedule?) {
-        //venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
         guard let schedule = schedule else { return }
         
         if schedule.start != nil && schedule.end != nil {

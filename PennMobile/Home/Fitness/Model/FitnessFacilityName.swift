@@ -31,12 +31,16 @@ enum FitnessFacilityName: String, Codable {
         }
     }
     
-    static func getFacilityName(for apiName: String) -> FitnessFacilityName {
-        for facility in FitnessFacilityName.all {
-            if apiName.contains(facility.rawValue) {
-                return facility
-            }
+    func getImageName() -> String? {
+        switch self {
+        case .sheerr: return "sheerr"
+        case .ringe: return "ringe"
+        case .climbing: return "climbing"
+        case .membership: return "membership"
+        case .fox: return "fox"
+        case .pottruck: return "pottruck"
+        case .rockwell: return "rockwell"
+        default: return nil
         }
-        return .unknown
     }
 }
