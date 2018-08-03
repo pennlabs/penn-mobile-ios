@@ -30,7 +30,6 @@ class FitnessFacilityData {
     }
     
     func getScheduleForToday(for venue: FitnessFacilityName) -> FitnessSchedule? {
-        dump(schedules)
         guard schedules.keys.contains(venue) else { return nil }
         return schedules[venue]!.first(where: { (schedule) -> Bool in
             if schedule.start != nil {
@@ -40,7 +39,20 @@ class FitnessFacilityData {
         })
     }
     
-    func clearMenus() {
+    func getActiveFacilities() -> [FitnessFacilityName?] {
+        var activeFacilities = [FitnessFacilityName]()
+        
+        for (name, schedule) in schedules {
+            if schedule.contains(where: { (s) -> Bool in
+                return (s.start != nil && s.start!.isToday)
+            }) {
+                activeFacilities.append(name)
+            }
+        }
+        return activeFacilities
+    }
+    
+    func clearSchedules() {
         schedules = Dictionary<FitnessFacilityName, [FitnessSchedule]>()
     }
 }

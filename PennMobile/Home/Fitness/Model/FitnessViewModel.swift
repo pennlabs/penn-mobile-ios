@@ -10,9 +10,15 @@ import UIKit
 
 class FitnessViewModel: NSObject {
     
-    let facilities: [FitnessFacilityName] = FitnessFacilityName.all
+    var facilities = [FitnessFacilityName?]()
     
     func getFacility(for indexPath: IndexPath) -> FitnessSchedule? {
-        return FitnessFacilityData.shared.getScheduleForToday(for: facilities[indexPath.row])
+        if (facilities.isEmpty) { facilities = FitnessFacilityData.shared.getActiveFacilities() }
+        guard !facilities.isEmpty && indexPath.row < facilities.count && facilities[indexPath.row] != nil else { return nil }
+        return FitnessFacilityData.shared.getScheduleForToday(for: facilities[indexPath.row]!)
+    }
+    
+    func activeFacilities() -> [FitnessFacilityName?] {
+        return FitnessFacilityData.shared.getActiveFacilities()
     }
 }
