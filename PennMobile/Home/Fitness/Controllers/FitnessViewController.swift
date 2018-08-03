@@ -53,11 +53,12 @@ extension FitnessViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (section == 0) ? viewModel.activeFacilities().count : 0
+        return (section == 0) ? viewModel.facilities.count : 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FitnessHourCell.identifier, for: indexPath) as! FitnessHourCell
+        cell.name = viewModel.facilities[indexPath.row]
         cell.schedule = viewModel.getFacility(for: indexPath)
         return cell
     }

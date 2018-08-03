@@ -20,14 +20,14 @@ enum FitnessFacilityName: String, Codable {
     case rockwell =    "Basketball - Rockwell"
     case unknown
     
-    static let all = [pottruck, fox, sheerr, ringe, climbing, membership]
+    static let all = [pottruck, fox, sheerr, climbing, ringe, rockwell, membership]
     
-    static func getFacilityName(for facilityName: FitnessFacilityName) -> String {
-        switch facilityName {
+    func getFacilityName() -> String {
+        switch self {
         case .pottruck: return "Pottruck Fitness"
         case .rockwell: return "Rockwell"
         case .ringe: return "Ringe"
-        default: return facilityName.rawValue
+        default: return self.rawValue
         }
     }
     

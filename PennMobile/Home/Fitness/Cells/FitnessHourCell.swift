@@ -19,6 +19,12 @@ class FitnessHourCell: UITableViewCell {
         }
     }
     
+    var name: FitnessFacilityName! {
+        didSet {
+            setupCell(with: name)
+        }
+    }
+    
     var isHomepage: Bool = false {
         didSet {
             setupCell(with: schedule)
@@ -47,15 +53,19 @@ class FitnessHourCell: UITableViewCell {
 
 // MARK: - Setup Cell
 extension FitnessHourCell {
+    
+    fileprivate func setupCell(with name: FitnessFacilityName) {
+        titleLabel.text = name.getFacilityName()
+        
+        // Label will say CLOSED by default
+        statusLabel.text = "CLOSED TODAY"
+        statusLabel.textColor = .secondaryInformationGrey
+        statusLabel.font = .secondaryInformationFont
+    }
+    
     fileprivate func setupCell(with schedule: FitnessSchedule?) {
         //venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
         guard let schedule = schedule else { return }
-        
-        if isHomepage {
-            titleLabel.text = schedule.name.rawValue
-        } else {
-            titleLabel.text = schedule.name.rawValue
-        }
         
         if schedule.start != nil && schedule.end != nil {
             updateTimeLabels(start: schedule.start!, end: schedule.end!)
