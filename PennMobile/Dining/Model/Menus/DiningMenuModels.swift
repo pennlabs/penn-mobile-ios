@@ -47,10 +47,10 @@ struct DiningMeal: Codable {
     
     func usefulStations() -> [DiningStation] {
         var filteredStations = [DiningStation]()
-        let filterWords = ["BEVERAGE", "SODA", "COMMONS DELI", "COFFEE",
-                           "SALAD", "DESSERT", "CONDIMENT", "TOAST",
-                           "FRUIT PLUS", "CEREAL", "HILL DELI", "HILL GRILL",
-                           "SWEETS", "RISE AND DINE"]
+        let filterWords = ["BEVERAGE", "SODA", "COFFEE", "CONDIMENT"]
+        //                   "SALAD", "DESSERT", "CONDIMENT", "TOAST",
+        //                   "FRUIT PLUS", "CEREAL", "HILL DELI", "HILL GRILL",
+        //                   "SWEETS", "RISE AND DINE"]
         for station in stations {
             if !filterWords.contains(where: station.description.uppercased().contains) {
                 filteredStations.append(station)
