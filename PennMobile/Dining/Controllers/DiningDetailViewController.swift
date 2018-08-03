@@ -42,14 +42,14 @@ class DiningDetailViewController: UITableViewController {
 //Mark: Networking to retrieve today's menus
 extension DiningDetailViewController {
     fileprivate func fetchDiningMenus() {
-        //UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         DiningMenuAPI.instance.fetchDiningMenu(for: venue.name) { (success) in
             DispatchQueue.main.async {
                 if success {
                     self.tableView.reloadData()
                 }
-                //UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
         }
     }
@@ -72,7 +72,7 @@ extension DiningDetailViewController: CellUpdateDelegate {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return (venue.meals != nil) ? 4 : 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -84,7 +84,12 @@ extension DiningDetailViewController: CellUpdateDelegate {
         case 0: return BuildingHeaderCell.cellHeight
         case 1: return BuildingImageCell.cellHeight
         case 2: return BuildingHoursCell.cellHeight
-        case 3: return requestedCellHeights[BuildingFoodMenuCell.identifier]!
+        case 3:
+            if venue.meals != nil {
+                return requestedCellHeights[BuildingFoodMenuCell.identifier]!
+            } else {
+                return BuildingMapCell.cellHeight
+            }
         case 4: return BuildingMapCell.cellHeight
         default: return 0
         }
@@ -96,7 +101,12 @@ extension DiningDetailViewController: CellUpdateDelegate {
         case 0: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHeaderCell.identifier, for: indexPath) as! BuildingHeaderCell
         case 1: cell = tableView.dequeueReusableCell(withIdentifier: BuildingImageCell.identifier, for: indexPath) as! BuildingImageCell
         case 2: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHoursCell.identifier, for: indexPath) as! BuildingHoursCell
-        case 3: cell = tableView.dequeueReusableCell(withIdentifier: BuildingFoodMenuCell.identifier, for: indexPath) as! BuildingFoodMenuCell
+        case 3:
+            if venue.meals != nil {
+                cell = tableView.dequeueReusableCell(withIdentifier: BuildingFoodMenuCell.identifier, for: indexPath) as! BuildingFoodMenuCell
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: BuildingMapCell.identifier, for: indexPath) as! BuildingMapCell
+            }
         case 4: cell = tableView.dequeueReusableCell(withIdentifier: BuildingMapCell.identifier, for: indexPath) as! BuildingMapCell
         default: cell = BuildingCell()
         }
@@ -120,7 +130,12 @@ extension DiningDetailViewController: CellUpdateDelegate {
         case 0: return 0.0
         case 1: return 0.0
         case 2: return BuildingSectionHeader.headerHeight
-        case 3: return BuildingSectionHeader.headerHeight
+        case 3:
+            if venue.meals != nil {
+                return BuildingSectionHeader.headerHeight
+            } else {
+                return 0
+            }
         default: return 0.0
         }
     }
@@ -130,7 +145,12 @@ extension DiningDetailViewController: CellUpdateDelegate {
         case 0: return nil
         case 1: return nil
         case 2: let header = BuildingSectionHeader(); header.label.text = "Hours"; return header
-        case 3: let header = BuildingSectionHeader(); header.label.text = "Menu"; return header
+        case 3:
+            if venue.meals != nil {
+                let header = BuildingSectionHeader(); header.label.text = "Menu"; return header
+            } else {
+                return nil
+            }
         default: return nil
         }
     }
