@@ -163,10 +163,10 @@ extension DiningDetailViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if let _ = tableView.cellForRow(at: indexPath) as? BuildingMapCell {
+        if let cell = tableView.cellForRow(at: indexPath) as? BuildingMapCell {
             let mapViewController = MapViewController()
             navigationController?.pushViewController(mapViewController, animated: true)
-            // Set the map's initial coordinates
+            mapViewController.venue = cell.venue.name
         }
         //}
         /*if let cell = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {

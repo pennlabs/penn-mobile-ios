@@ -39,6 +39,7 @@ class BuildingMapCell: BuildingCell {
 extension BuildingMapCell {
     
     fileprivate func setupCell(with venue: DiningVenue) {
+        mapView.setRegion(PennCoordinate.shared.getRegion(for: venue.name, at: .close), animated: false)
     }
 }
 

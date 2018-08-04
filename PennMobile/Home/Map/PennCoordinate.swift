@@ -10,8 +10,8 @@ import Foundation
 import MapKit
 
 enum PennCoordinateScale: Double {
-    case close = 300.0
-    case far   = 900.0
+    case close = 150.0
+    case far   = 1000.0
 }
 
 class PennCoordinate {
