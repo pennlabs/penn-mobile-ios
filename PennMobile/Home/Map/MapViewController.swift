@@ -17,6 +17,7 @@ class MapViewController: UIViewController {
         didSet {
             guard let venue = venue else { return }
             self.region = PennCoordinate.shared.getRegion(for: venue, at: .close)
+            self.annotation = PennCoordinate.shared.getAnnotation(for: venue)
         }
     }
     
@@ -24,6 +25,7 @@ class MapViewController: UIViewController {
         didSet {
             guard let facility = facility else { return }
             self.region = PennCoordinate.shared.getRegion(for: facility, at: .close)
+            self.annotation = PennCoordinate.shared.getAnnotation(for: facility)
         }
     }
     
@@ -34,6 +36,7 @@ class MapViewController: UIViewController {
             }
         }
     }
+    var annotation: MKAnnotation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +68,7 @@ extension MapViewController {
     fileprivate func getMapView() -> MKMapView {
         let mv = MKMapView(frame: view.frame)
         mv.setRegion(region, animated: false)
+        if annotation != nil { mv.addAnnotation(annotation!) }
         mv.translatesAutoresizingMaskIntoConstraints = false
         return mv
     }

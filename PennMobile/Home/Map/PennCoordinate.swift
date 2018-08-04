@@ -14,6 +14,7 @@ enum PennCoordinateScale: Double {
     case far   = 1000.0
 }
 
+// MARK: - Coordinates and Regions
 class PennCoordinate {
     
     static let shared = PennCoordinate()
@@ -72,6 +73,26 @@ class PennCoordinate {
     // TODO: Implement a switch statement that matches GSR venue IDs with GPS coords
     func getCoordinates(for gsr: GSRVenue) -> CLLocationCoordinate2D {
         return getDefault()
+    }
+}
+
+// MARK: - Placemarks
+extension PennCoordinate {
+    
+    func getAnnotation(for facility: FitnessFacilityName) -> MKAnnotation {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = getCoordinates(for: facility)
+        annotation.title = facility.getFacilityName()
+        annotation.subtitle = "Penn Recreation"
+        return annotation
+    }
+    
+    func getAnnotation(for venue: DiningVenueName) -> MKAnnotation {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = getCoordinates(for: venue)
+        annotation.title = DiningVenueName.getVenueName(for: venue)
+        annotation.subtitle = "Penn Dining"
+        return annotation
     }
 }
 

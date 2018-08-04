@@ -40,6 +40,7 @@ extension BuildingMapCell {
     
     fileprivate func setupCell(with venue: DiningVenue) {
         mapView.setRegion(PennCoordinate.shared.getRegion(for: venue.name, at: .close), animated: false)
+        mapView.addAnnotation(PennCoordinate.shared.getAnnotation(for: venue.name))
     }
 }
 
