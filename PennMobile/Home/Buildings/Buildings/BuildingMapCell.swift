@@ -85,9 +85,8 @@ extension BuildingMapCell {
         mv.translatesAutoresizingMaskIntoConstraints = false
         mv.layer.cornerRadius = 10.0
         mv.isScrollEnabled = false
-        
-        // Set default loc. to Penn's coordinates: 39.9522° N, -75.1932° W
-        mv.setCenter(CLLocationCoordinate2DMake(39.9522, -75.1932), animated: true)
+
+        mv.setRegion(PennCoordinate.shared.getDefaultRegion(at: .close), animated: false)
         
         return mv
     }

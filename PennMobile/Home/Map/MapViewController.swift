@@ -44,8 +44,7 @@ extension MapViewController {
     
     fileprivate func getMapView() -> MKMapView {
         let mv = MKMapView(frame: view.frame)
-        // Set default loc. to Penn's coordinates: (39.9522, -75.1932)
-        mv.setCenter(CLLocationCoordinate2DMake(39.9522, -75.1932), animated: true)
+        mv.setRegion(PennCoordinate.shared.getDefaultRegion(at: .far), animated: false)
         mv.translatesAutoresizingMaskIntoConstraints = false
         return mv
     }
