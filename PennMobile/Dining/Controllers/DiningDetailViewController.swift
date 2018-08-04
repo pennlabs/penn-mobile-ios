@@ -161,7 +161,15 @@ extension DiningDetailViewController: CellUpdateDelegate {
 extension DiningDetailViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if let _ = tableView.cellForRow(at: indexPath) as? BuildingMapCell {
+            let mapViewController = MapViewController()
+            navigationController?.pushViewController(mapViewController, animated: true)
+            // Set the map's initial coordinates
+        }
+        //}
+        /*if let cell = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {
             if menuCellExpanded {
                 menuCellExpanded = false
                 cell.isExpanded = false
@@ -175,7 +183,7 @@ extension DiningDetailViewController {
                 tableView.reloadRows(at: [indexPath], with: .automatic)
                 cell.setupCell()
             }
-        }
+        }*/
     }
 
 }

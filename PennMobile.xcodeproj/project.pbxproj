@@ -123,6 +123,7 @@
 		B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6111DB12018497400DC7877 /* GoogleService-Info.plist */; };
 		B6111DB420184C4A00DC7877 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6111DB320184C4A00DC7877 /* AboutViewController.swift */; };
 		B6111DB720184C8C00DC7877 /* BeakerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6111DB620184C8C00DC7877 /* BeakerLayer.swift */; };
+		B62875EB2115302200FB2873 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875EA2115302200FB2873 /* MapViewController.swift */; };
 		B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5631FA43FC600922E98 /* LaundryRoom.swift */; };
 		B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */; };
 		B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */; };
@@ -281,6 +282,7 @@
 		B6111DB12018497400DC7877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6111DB320184C4A00DC7877 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		B6111DB620184C8C00DC7877 /* BeakerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerLayer.swift; sourceTree = "<group>"; };
+		B62875EA2115302200FB2873 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B650C5631FA43FC600922E98 /* LaundryRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryRoom.swift; sourceTree = "<group>"; };
 		B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachineCell.swift; sourceTree = "<group>"; };
 		B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryTableViewController.swift; sourceTree = "<group>"; };
@@ -398,7 +400,7 @@
 		216640621EBADADA00746B8E /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
-				CF1CE9B8205D5BF100C51F46 /* More */,
+				CF1CE9B8205D5BF100C51F46 /* More Tab */,
 				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
 				216640F91EBB898700746B8E /* About */,
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
@@ -406,6 +408,7 @@
 				216640881EBADBA000746B8E /* Setup + Navigation */,
 				B62875E82112591700FB2873 /* Buildings */,
 				97E79E0A2100DBC300D3D606 /* Fitness */,
+				B62875E921152FF500FB2873 /* Map */,
 				21640D4220103C8A002F33CA /* Home */,
 				2166408B1EBADBF800746B8E /* Dining */,
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
@@ -848,6 +851,15 @@
 			path = Home/Buildings/Buildings;
 			sourceTree = "<group>";
 		};
+		B62875E921152FF500FB2873 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				B62875EA2115302200FB2873 /* MapViewController.swift */,
+			);
+			name = Map;
+			path = Home/Map;
+			sourceTree = "<group>";
+		};
 		B654BAE81F801F030038B9D5 /* Laundry */ = {
 			isa = PBXGroup;
 			children = (
@@ -909,7 +921,7 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		CF1CE9B8205D5BF100C51F46 /* More */ = {
+		CF1CE9B8205D5BF100C51F46 /* More Tab */ = {
 			isa = PBXGroup;
 			children = (
 				CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */,
@@ -917,7 +929,7 @@
 				CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */,
 				CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */,
 			);
-			name = More;
+			name = "More Tab";
 			path = "New Group";
 			sourceTree = "<group>";
 		};
@@ -1198,6 +1210,7 @@
 				978693F920EAE1BB00C4A8A1 /* DiningMenuAPI.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
+				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				217A7845204DB800004F1227 /* HomeAsynchronousFetching.swift in Sources */,
