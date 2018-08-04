@@ -12,7 +12,7 @@ import MapKit
 class BuildingMapCell: BuildingCell {
     
     static let identifier = "BuildingMapCell"
-    static let cellHeight: CGFloat = 220
+    static let cellHeight: CGFloat = 240
     
     override var venue: DiningVenue! {
         didSet {
@@ -84,6 +84,7 @@ extension BuildingMapCell {
         let mv = MKMapView(frame: safeArea.frame)
         mv.translatesAutoresizingMaskIntoConstraints = false
         mv.layer.cornerRadius = 10.0
+        mv.isScrollEnabled = false
         
         // Set default loc. to Penn's coordinates: 39.9522° N, -75.1932° W
         mv.setCenter(CLLocationCoordinate2DMake(39.9522, -75.1932), animated: true)
