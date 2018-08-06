@@ -125,6 +125,7 @@
 		B6111DB720184C8C00DC7877 /* BeakerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6111DB620184C8C00DC7877 /* BeakerLayer.swift */; };
 		B62875EB2115302200FB2873 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875EA2115302200FB2873 /* MapViewController.swift */; };
 		B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875EC2115433100FB2873 /* PennCoordinate.swift */; };
+		B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875F82118F95300FB2873 /* BuildingProtocol.swift */; };
 		B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5631FA43FC600922E98 /* LaundryRoom.swift */; };
 		B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */; };
 		B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */; };
@@ -265,13 +266,13 @@
 		978693F820EAE1BB00C4A8A1 /* DiningMenuAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuAPI.swift; sourceTree = "<group>"; };
 		978693FA20EAE3B900C4A8A1 /* DiningMenuData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuData.swift; sourceTree = "<group>"; };
 		978693FC20EB0ADD00C4A8A1 /* DiningMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuModels.swift; sourceTree = "<group>"; };
-		97E79DFC2100DA1200D3D606 /* BuildingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingCell.swift; path = PennMobile/Home/Buildings/Buildings/BuildingCell.swift; sourceTree = SOURCE_ROOT; };
-		97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingHeaderCell.swift; path = PennMobile/Home/Buildings/Buildings/BuildingHeaderCell.swift; sourceTree = SOURCE_ROOT; };
-		97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingSectionHeader.swift; path = PennMobile/Home/Buildings/Buildings/BuildingSectionHeader.swift; sourceTree = SOURCE_ROOT; };
-		97E79DFF2100DA1200D3D606 /* BuildingMapCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingMapCell.swift; path = PennMobile/Home/Buildings/Buildings/BuildingMapCell.swift; sourceTree = SOURCE_ROOT; };
-		97E79E002100DA1200D3D606 /* BuildingImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingImageCell.swift; path = PennMobile/Home/Buildings/Buildings/BuildingImageCell.swift; sourceTree = SOURCE_ROOT; };
-		97E79E012100DA1200D3D606 /* BuildingHoursCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingHoursCell.swift; path = PennMobile/Home/Buildings/Buildings/BuildingHoursCell.swift; sourceTree = SOURCE_ROOT; };
-		97E79E022100DA1200D3D606 /* BuildingFoodMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingFoodMenuCell.swift; path = PennMobile/Home/Buildings/Buildings/BuildingFoodMenuCell.swift; sourceTree = SOURCE_ROOT; };
+		97E79DFC2100DA1200D3D606 /* BuildingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingCell.swift; sourceTree = SOURCE_ROOT; };
+		97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingHeaderCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingHeaderCell.swift; sourceTree = SOURCE_ROOT; };
+		97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingSectionHeader.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingSectionHeader.swift; sourceTree = SOURCE_ROOT; };
+		97E79DFF2100DA1200D3D606 /* BuildingMapCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingMapCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingMapCell.swift; sourceTree = SOURCE_ROOT; };
+		97E79E002100DA1200D3D606 /* BuildingImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingImageCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingImageCell.swift; sourceTree = SOURCE_ROOT; };
+		97E79E012100DA1200D3D606 /* BuildingHoursCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingHoursCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingHoursCell.swift; sourceTree = SOURCE_ROOT; };
+		97E79E022100DA1200D3D606 /* BuildingFoodMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingFoodMenuCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingFoodMenuCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79E0F2100DD5000D3D606 /* FitnessHourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessHourCell.swift; sourceTree = "<group>"; };
 		97E79E112100DE0C00D3D606 /* FitnessModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessModels.swift; sourceTree = "<group>"; };
 		97E79E132100E1FA00D3D606 /* FitnessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewController.swift; sourceTree = "<group>"; };
@@ -285,6 +286,7 @@
 		B6111DB620184C8C00DC7877 /* BeakerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerLayer.swift; sourceTree = "<group>"; };
 		B62875EA2115302200FB2873 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B62875EC2115433100FB2873 /* PennCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCoordinate.swift; sourceTree = "<group>"; };
+		B62875F82118F95300FB2873 /* BuildingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingProtocol.swift; sourceTree = "<group>"; };
 		B650C5631FA43FC600922E98 /* LaundryRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryRoom.swift; sourceTree = "<group>"; };
 		B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachineCell.swift; sourceTree = "<group>"; };
 		B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryTableViewController.swift; sourceTree = "<group>"; };
@@ -841,13 +843,8 @@
 		B62875E82112591700FB2873 /* Buildings */ = {
 			isa = PBXGroup;
 			children = (
-				97E79DFC2100DA1200D3D606 /* BuildingCell.swift */,
-				97E79E022100DA1200D3D606 /* BuildingFoodMenuCell.swift */,
-				97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */,
-				97E79E012100DA1200D3D606 /* BuildingHoursCell.swift */,
-				97E79E002100DA1200D3D606 /* BuildingImageCell.swift */,
-				97E79DFF2100DA1200D3D606 /* BuildingMapCell.swift */,
-				97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */,
+				B62875F72118F93300FB2873 /* Models */,
+				B62875F62118F8FF00FB2873 /* Cells */,
 			);
 			name = Buildings;
 			path = Home/Buildings/Buildings;
@@ -861,6 +858,28 @@
 			);
 			name = Map;
 			path = Home/Map;
+			sourceTree = "<group>";
+		};
+		B62875F62118F8FF00FB2873 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				97E79DFC2100DA1200D3D606 /* BuildingCell.swift */,
+				97E79E022100DA1200D3D606 /* BuildingFoodMenuCell.swift */,
+				97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */,
+				97E79E012100DA1200D3D606 /* BuildingHoursCell.swift */,
+				97E79E002100DA1200D3D606 /* BuildingImageCell.swift */,
+				97E79DFF2100DA1200D3D606 /* BuildingMapCell.swift */,
+				97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		B62875F72118F93300FB2873 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B62875F82118F95300FB2873 /* BuildingProtocol.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		B654BAE81F801F030038B9D5 /* Laundry */ = {
@@ -1249,6 +1268,7 @@
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
 				216640971EBADC1700746B8E /* DiningVenue.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
+				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,

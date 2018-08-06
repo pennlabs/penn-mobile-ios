@@ -99,7 +99,9 @@ extension DiningDetailViewController: CellUpdateDelegate {
         let cell : BuildingCell
         switch indexPath.section {
         case 0: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHeaderCell.identifier, for: indexPath) as! BuildingHeaderCell
-        case 1: cell = tableView.dequeueReusableCell(withIdentifier: BuildingImageCell.identifier, for: indexPath) as! BuildingImageCell
+        case 1:
+            cell = tableView.dequeueReusableCell(withIdentifier: BuildingImageCell.identifier, for: indexPath) as! BuildingImageCell
+            (cell as! BuildingImageCell).building = self.venue
         case 2: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHoursCell.identifier, for: indexPath) as! BuildingHoursCell
         case 3:
             if venue.meals != nil {
@@ -112,6 +114,7 @@ extension DiningDetailViewController: CellUpdateDelegate {
         }
         cell.venue = self.venue
         cell.selectionStyle = .none
+
         return cell
     }
     

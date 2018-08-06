@@ -90,3 +90,23 @@ extension DiningVenue {
         return nil
     }
 }
+
+extension DiningVenue: BuildingDetailDisplayable {
+    func cellsToDisplay() -> [BuildingCellType] {
+        return [.title, .image, .weekHours, .foodMenu, .map]
+    }
+    
+    func numberOfCellsToDisplay() -> Int {
+        return 5
+    }
+    
+    func getBuildingType() -> BuildingType {
+        return .diningHall
+    }
+}
+
+extension DiningVenue: BuildingImageDisplayable {
+    func getImage() -> String {
+        return self.name.rawValue.folding(options: .diacriticInsensitive, locale: .current)
+    }
+}

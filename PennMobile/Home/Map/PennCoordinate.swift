@@ -11,6 +11,7 @@ import MapKit
 
 enum PennCoordinateScale: Double {
     case close = 150.0
+    case mid = 300.0
     case far   = 1000.0
 }
 

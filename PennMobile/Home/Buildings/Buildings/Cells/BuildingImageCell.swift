@@ -13,9 +13,9 @@ class BuildingImageCell: BuildingCell {
     static let identifier = "BuildingImageCell"
     static let cellHeight: CGFloat = 188
 
-    override var venue: DiningVenue! {
+    var building: BuildingImageDisplayable! {
         didSet {
-            setupCell(with: venue)
+            setupCell(with: building)
         }
     }
 
@@ -34,8 +34,8 @@ class BuildingImageCell: BuildingCell {
 
 // MARK: - Setup Cell
 extension BuildingImageCell { 
-    fileprivate func setupCell(with venue: DiningVenue) {
-        buildingImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
+    fileprivate func setupCell(with building: BuildingImageDisplayable) {
+        buildingImageView.image = UIImage(named: building.getImage())
     }
 }
 
