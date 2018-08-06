@@ -14,9 +14,9 @@ class BuildingMapCell: BuildingCell {
     static let identifier = "BuildingMapCell"
     static let cellHeight: CGFloat = 240
     
-    override var venue: DiningVenue! {
+    var building: BuildingMapDisplayable! {
         didSet {
-            setupCell(with: venue)
+            setupCell(with: building)
         }
     }
     
@@ -38,9 +38,9 @@ class BuildingMapCell: BuildingCell {
 // MARK: - Setup Cell
 extension BuildingMapCell {
     
-    fileprivate func setupCell(with venue: DiningVenue) {
-        mapView.setRegion(PennCoordinate.shared.getRegion(for: venue.name, at: .close), animated: false)
-        mapView.addAnnotation(PennCoordinate.shared.getAnnotation(for: venue.name))
+    fileprivate func setupCell(with building: BuildingMapDisplayable) {
+        mapView.setRegion(building.getRegion(), animated: false)
+        mapView.addAnnotation(building.getAnnotation())
     }
 }
 

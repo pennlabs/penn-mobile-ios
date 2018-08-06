@@ -13,8 +13,8 @@ protocol CellUpdateDelegate: class {
 }
 
 class BuildingCell: UITableViewCell {
-    
-    var venue: DiningVenue!
+
     var delegate: CellUpdateDelegate!
     var isExpanded = false
+
 }

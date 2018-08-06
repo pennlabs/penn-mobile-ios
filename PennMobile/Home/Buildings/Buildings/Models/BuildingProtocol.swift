@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 enum BuildingCellType {
     case title
@@ -35,10 +36,16 @@ protocol BuildingHeaderDisplayable {
     func getStatus() -> BuildingHeaderState
 }
 
-protocol BuildingImageDisplayable {
-    func getImage() -> String
+protocol BuildingImageDisplayable { func getImage() -> String }
+
+protocol BuildingHoursDisplayable { func getTimeStrings() -> [String] }
+
+protocol BuildingMenusDisplayable {
+    func getMeals() -> [DiningMeal]?
+    func getTimes() -> [OpenClose]?
 }
 
-protocol BuildingHoursDisplayable {
-    func getTimeStrings() -> [String]
+protocol BuildingMapDisplayable {
+    func getRegion() -> MKCoordinateRegion
+    func getAnnotation() -> MKAnnotation
 }

@@ -23,15 +23,17 @@ class BuildingFoodMenuCell: BuildingCell {
     static let identifier = "BuildingFoodMenuCell"
     static let cellHeight: CGFloat = 200
     
-    override var venue: DiningVenue! {
+    var building: BuildingMenusDisplayable! {
         didSet {
-            self.meals = venue.meals
+            self.meals = building.getMeals()
         }
     }
+    
+    
     fileprivate var meals: [DiningMeal]? {
         didSet {
             guard let meals = meals else { return }
-            guard let nextOpen = venue.times?.nextOpen else {
+            guard let nextOpen = building.getTimes()?.nextOpen else {
                 self.currentMeal = meals.last
                 return
             }

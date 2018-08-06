@@ -98,21 +98,28 @@ extension DiningDetailViewController: CellUpdateDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : BuildingCell
         switch indexPath.section {
-        case 0: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHeaderCell.identifier, for: indexPath) as! BuildingHeaderCell
+        case 0:
+            cell = tableView.dequeueReusableCell(withIdentifier: BuildingHeaderCell.identifier, for: indexPath) as! BuildingHeaderCell
+            (cell as! BuildingHeaderCell).building = self.venue
         case 1:
             cell = tableView.dequeueReusableCell(withIdentifier: BuildingImageCell.identifier, for: indexPath) as! BuildingImageCell
             (cell as! BuildingImageCell).building = self.venue
-        case 2: cell = tableView.dequeueReusableCell(withIdentifier: BuildingHoursCell.identifier, for: indexPath) as! BuildingHoursCell
+        case 2:
+            cell = tableView.dequeueReusableCell(withIdentifier: BuildingHoursCell.identifier, for: indexPath) as! BuildingHoursCell
+            (cell as! BuildingHoursCell).building = self.venue
         case 3:
             if venue.meals != nil {
                 cell = tableView.dequeueReusableCell(withIdentifier: BuildingFoodMenuCell.identifier, for: indexPath) as! BuildingFoodMenuCell
+                (cell as! BuildingFoodMenuCell).building = self.venue
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: BuildingMapCell.identifier, for: indexPath) as! BuildingMapCell
+                (cell as! BuildingMapCell).building = self.venue
             }
-        case 4: cell = tableView.dequeueReusableCell(withIdentifier: BuildingMapCell.identifier, for: indexPath) as! BuildingMapCell
+        case 4:
+            cell = tableView.dequeueReusableCell(withIdentifier: BuildingMapCell.identifier, for: indexPath) as! BuildingMapCell
+            (cell as! BuildingMapCell).building = self.venue
         default: cell = BuildingCell()
         }
-        cell.venue = self.venue
         cell.selectionStyle = .none
 
         return cell
@@ -169,7 +176,7 @@ extension DiningDetailViewController {
         if let cell = tableView.cellForRow(at: indexPath) as? BuildingMapCell {
             let mapViewController = MapViewController()
             navigationController?.pushViewController(mapViewController, animated: true)
-            mapViewController.venue = cell.venue.name
+            mapViewController.building = cell.building
         }
         //}
         /*if let cell = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {

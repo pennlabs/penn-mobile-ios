@@ -13,6 +13,14 @@ class MapViewController: UIViewController {
     
     fileprivate var mapView: MKMapView?
     
+    var building: BuildingMapDisplayable? {
+        didSet {
+            guard let building = building else { return }
+            self.region = building.getRegion()
+            self.annotation = building.getAnnotation()
+        }
+    }
+    
     var venue: DiningVenueName? {
         didSet {
             guard let venue = venue else { return }

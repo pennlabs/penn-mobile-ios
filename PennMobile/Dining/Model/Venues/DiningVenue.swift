@@ -147,3 +147,26 @@ extension DiningVenue: BuildingHoursDisplayable {
         return self.timeStringsForWeek
     }
 }
+
+// MARK: - Building Menus Displayable
+extension DiningVenue: BuildingMenusDisplayable {
+    func getMeals() -> [DiningMeal]? {
+        return self.meals
+    }
+    func getTimes() -> [OpenClose]? {
+        return self.times
+    }
+}
+
+// MARK: - Building Map Displayable
+import MapKit
+
+extension DiningVenue: BuildingMapDisplayable {
+    func getRegion() -> MKCoordinateRegion {
+        return PennCoordinate.shared.getRegion(for: self.name, at: .close)
+    }
+    
+    func getAnnotation() -> MKAnnotation {
+        return PennCoordinate.shared.getAnnotation(for: self.name)
+    }
+}
