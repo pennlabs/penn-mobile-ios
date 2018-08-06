@@ -18,12 +18,6 @@ class BuildingHeaderCell: BuildingCell {
 
     static let identifier = "BuildingHeaderCell"
     static let cellHeight: CGFloat = 104
-
-    override var venue: DiningVenue! {
-        didSet {
-            setupCell(with: venue)
-        }
-    }
     
     var building: BuildingHeaderDisplayable! {
         didSet {
@@ -56,25 +50,6 @@ extension BuildingHeaderCell {
             buildingHoursLabel.textColor = .informationYellow
             buildingHoursLabel.font = .primaryInformationFont
         } else {
-            buildingHoursLabel.textColor = .secondaryInformationGrey
-            buildingHoursLabel.font = .secondaryInformationFont
-        }
-    }
-
-    fileprivate func setupCell(with venue: DiningVenue) {
-        buildingTitleLabel.text = DiningVenueName.getVenueName(for: venue.name)
-        buildingDescriptionLabel.text = "Campus Dining Hall"
-
-        if venue.times != nil, venue.times!.isEmpty {
-            buildingHoursLabel.text = "CLOSED TODAY"
-            buildingHoursLabel.textColor = .secondaryInformationGrey
-            buildingHoursLabel.font = .secondaryInformationFont
-        } else if venue.times != nil && venue.times!.isOpen {
-            buildingHoursLabel.text = "OPEN"
-            buildingHoursLabel.textColor = .informationYellow
-            buildingHoursLabel.font = .primaryInformationFont
-        } else {
-            buildingHoursLabel.text = "CLOSED"
             buildingHoursLabel.textColor = .secondaryInformationGrey
             buildingHoursLabel.font = .secondaryInformationFont
         }

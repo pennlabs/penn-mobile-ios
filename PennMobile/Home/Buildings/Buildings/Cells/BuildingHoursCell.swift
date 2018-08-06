@@ -14,15 +14,14 @@ class BuildingHoursCell: BuildingCell {
     static let cellHeight: CGFloat = 168
     static let numDays: Int = 7
     
-    override var venue: DiningVenue! {
+    var building: BuildingHoursDisplayable! {
         didSet {
-            setupCell(with: venue)
+            setupCell(with: building)
         }
     }
     
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
-    
     fileprivate var dayLabels: [UILabel]!
     fileprivate var hourLabels: [UILabel]!
     
@@ -40,20 +39,16 @@ class BuildingHoursCell: BuildingCell {
 // MARK: - Setup Cell
 extension BuildingHoursCell {
     
-    fileprivate func setupCell(with venue: DiningVenue) {
-        
+    fileprivate func setupCell(with building: BuildingHoursDisplayable) {
         let weekdayArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-        let timeStringsForWeek = venue.timeStringsForWeek
+        let timeStringsForWeek = building.getTimeStrings()
         
         for day in 0 ..< BuildingHoursCell.numDays {
             let dayLabel = dayLabels[day]
             let hourLabel = hourLabels[day]
-
             dayLabel.text = weekdayArray[day]
-            
             hourLabel.text = timeStringsForWeek[day]
             hourLabel.layoutIfNeeded()
-
             if weekdayArray[day] == Date.currentDayOfWeek {
                 dayLabel.font = .primaryInformationFont
                 dayLabel.textColor = .interactionGreen

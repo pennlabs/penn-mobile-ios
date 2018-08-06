@@ -9,6 +9,13 @@
 enum DiningVenueType: String, Codable {
     case dining = "residential"
     case retail = "retail"
+    
+    func getFullDisplayName() -> String {
+        switch self {
+        case .dining: return "Campus Dining Hall"
+        case .retail: return "Campus Retail Dining"
+        }
+    }
 }
 
 class DiningVenue: NSObject {
@@ -91,6 +98,7 @@ extension DiningVenue {
     }
 }
 
+// MARK: - Building Detail Protocol Methods
 extension DiningVenue: BuildingDetailDisplayable {
     func cellsToDisplay() -> [BuildingCellType] {
         return [.title, .image, .weekHours, .foodMenu, .map]
@@ -105,8 +113,37 @@ extension DiningVenue: BuildingDetailDisplayable {
     }
 }
 
+// MARK: - Building Header Displayable
+extension DiningVenue: BuildingHeaderDisplayable {
+    func getTitle() -> String {
+        return DiningVenueName.getVenueName(for: self.name)
+    }
+    
+    func getSubtitle() -> String {
+        return DiningVenueName.getType(for: self.name).getFullDisplayName()
+    }
+    
+    func getStatus() -> BuildingHeaderState {
+        if self.times != nil && self.times!.isOpen {
+            return .open
+        } else if self.times != nil && !self.times!.isOpen {
+            return .closed
+        } else {
+            return .closedToday
+        }
+    }
+}
+
+// MARK: - Building Image Displayable
 extension DiningVenue: BuildingImageDisplayable {
     func getImage() -> String {
         return self.name.rawValue.folding(options: .diacriticInsensitive, locale: .current)
+    }
+}
+
+// MARK: - Building Hours Displayable
+extension DiningVenue: BuildingHoursDisplayable {
+    func getTimeStrings() -> [String] {
+        return self.timeStringsForWeek
     }
 }

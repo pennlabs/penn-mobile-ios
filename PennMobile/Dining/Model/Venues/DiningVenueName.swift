@@ -57,6 +57,14 @@ enum DiningVenueName: String {
         return .unknown
     }
     
+    static func getType(for venue: DiningVenueName) -> DiningVenueType {
+        if venue == .commons || venue == .english || venue == .falk || venue == .hill || venue == .nch || venue == .mcclelland {
+            return .dining
+        } else {
+            return .retail
+        }
+    }
+    
     func getID() -> Int {
         switch self {
         case .commons:

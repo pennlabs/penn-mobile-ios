@@ -38,3 +38,7 @@ protocol BuildingHeaderDisplayable {
 protocol BuildingImageDisplayable {
     func getImage() -> String
 }
+
+protocol BuildingHoursDisplayable {
+    func getTimeStrings() -> [String]
+}
