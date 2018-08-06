@@ -864,8 +864,8 @@
 			isa = PBXGroup;
 			children = (
 				97E79DFC2100DA1200D3D606 /* BuildingCell.swift */,
-				97E79E022100DA1200D3D606 /* BuildingFoodMenuCell.swift */,
 				97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */,
+				97E79E022100DA1200D3D606 /* BuildingFoodMenuCell.swift */,
 				97E79E012100DA1200D3D606 /* BuildingHoursCell.swift */,
 				97E79E002100DA1200D3D606 /* BuildingImageCell.swift */,
 				97E79DFF2100DA1200D3D606 /* BuildingMapCell.swift */,

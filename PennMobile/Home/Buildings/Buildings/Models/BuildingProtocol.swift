@@ -29,10 +29,10 @@ protocol BuildingDetailDisplayable {
     func getBuildingType() -> BuildingType
 }
 
-protocol BuildingTitleDisplayable {
+protocol BuildingHeaderDisplayable {
     func getTitle() -> String
     func getSubtitle() -> String
-    func getTodayHours() -> [OpenClose]?
+    func getStatus() -> BuildingHeaderState
 }
 
 protocol BuildingImageDisplayable {

@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum BuildingHeaderState: String {
+    case open = "OPEN"
+    case closed = "CLOSED"
+    case closedToday = "CLOSED TODAY"
+}
+
 class BuildingHeaderCell: BuildingCell {
 
     static let identifier = "BuildingHeaderCell"
@@ -16,6 +22,12 @@ class BuildingHeaderCell: BuildingCell {
     override var venue: DiningVenue! {
         didSet {
             setupCell(with: venue)
+        }
+    }
+    
+    var building: BuildingHeaderDisplayable! {
+        didSet {
+            setupCell(with: building)
         }
     }
 
@@ -36,6 +48,18 @@ class BuildingHeaderCell: BuildingCell {
 
 // MARK: - Setup Cell
 extension BuildingHeaderCell {
+    
+    fileprivate func setupCell(with building: BuildingHeaderDisplayable) {
+        let status = building.getStatus()
+        buildingTitleLabel.text = status.rawValue
+        if status == .open {
+            buildingHoursLabel.textColor = .informationYellow
+            buildingHoursLabel.font = .primaryInformationFont
+        } else {
+            buildingHoursLabel.textColor = .secondaryInformationGrey
+            buildingHoursLabel.font = .secondaryInformationFont
+        }
+    }
 
     fileprivate func setupCell(with venue: DiningVenue) {
         buildingTitleLabel.text = DiningVenueName.getVenueName(for: venue.name)
