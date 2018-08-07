@@ -160,7 +160,6 @@ extension DiningVenue: BuildingMenusDisplayable {
 
 // MARK: - Building Map Displayable
 import MapKit
-
 extension DiningVenue: BuildingMapDisplayable {
     func getRegion() -> MKCoordinateRegion {
         return PennCoordinate.shared.getRegion(for: self.name, at: .close)

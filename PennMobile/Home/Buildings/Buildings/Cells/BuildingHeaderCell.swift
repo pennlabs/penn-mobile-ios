@@ -44,8 +44,11 @@ class BuildingHeaderCell: BuildingCell {
 extension BuildingHeaderCell {
     
     fileprivate func setupCell(with building: BuildingHeaderDisplayable) {
+        buildingTitleLabel.text = building.getTitle()
+        buildingDescriptionLabel.text = building.getSubtitle()
+        
         let status = building.getStatus()
-        buildingTitleLabel.text = status.rawValue
+        buildingHoursLabel.text = status.rawValue
         if status == .open {
             buildingHoursLabel.textColor = .informationYellow
             buildingHoursLabel.font = .primaryInformationFont
