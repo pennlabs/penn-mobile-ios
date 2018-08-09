@@ -145,7 +145,6 @@ extension BuildingFoodMenuCell {
     fileprivate func prepareUI() {
         prepareSafeArea()
         layoutTableView()
-        prepareFogView()
     }
     
     // MARK: Safe Area
@@ -161,19 +160,19 @@ extension BuildingFoodMenuCell {
     }
     
     // MARK: Fog View
-    fileprivate func prepareFogView() {
+    func addFogView() {
         fogView = getFogView()
         addSubview(fogView!)
         _ = fogView!.anchor(nil, left: self.leftAnchor, bottom: self.menuTableView.bottomAnchor, right: self.rightAnchor, heightConstant: 80.0)
     }
     
     fileprivate func getFogView() -> UIView {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width + 100.0, height: 80.0))
+        let fogView = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width + 100.0, height: 80.0))
         let gradient = CAGradientLayer()
-        gradient.frame = view.frame
+        gradient.frame = fogView.frame
         gradient.colors = [UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0).cgColor, UIColor.white.cgColor]
-        view.layer.insertSublayer(gradient, at: 0)
-        return view
+        fogView.layer.insertSublayer(gradient, at: 0)
+        return fogView
     }
     
     // MARK: Layout Labels

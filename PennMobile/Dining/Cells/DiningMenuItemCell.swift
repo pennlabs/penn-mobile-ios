@@ -94,15 +94,7 @@ extension DiningMenuItemCell {
     fileprivate func getCircleView(for itemType: DiningAttribute) -> CircleColorView {
         // Get bounds, taking into account the safe area insets of parent cell
         let maxX = Int(frame.maxX - 14.0)
-        
-        switch itemType.description {
-        case .vegetarian:   return CircleColorView(with: .green, startingX: maxX)
-        case .vegan:        return CircleColorView(with: .purple, startingX: maxX)
-        case .seafood:      return CircleColorView(with: .blue, startingX: maxX)
-        case .gluten:       return CircleColorView(with: .orange, startingX: maxX)
-        case .farm:         return CircleColorView(with: .orange, startingX: maxX)
-        case .humane:       return CircleColorView(with: .orange, startingX: maxX)
-        }
+        return CircleColorView(with: itemType.description.getColor(), startingX: maxX)
     }
 }
 

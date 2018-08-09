@@ -111,6 +111,9 @@ extension DiningDetailViewController: CellUpdateDelegate {
             if venue.meals != nil {
                 cell = tableView.dequeueReusableCell(withIdentifier: BuildingFoodMenuCell.identifier, for: indexPath) as! BuildingFoodMenuCell
                 (cell as! BuildingFoodMenuCell).building = self.venue
+                if !menuCellExpanded {
+                    (cell as! BuildingFoodMenuCell).addFogView()
+                }
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: BuildingMapCell.identifier, for: indexPath) as! BuildingMapCell
                 (cell as! BuildingMapCell).building = self.venue
@@ -178,22 +181,17 @@ extension DiningDetailViewController {
             navigationController?.pushViewController(mapViewController, animated: true)
             mapViewController.building = cell.building
         }
-        //}
-        /*if let cell = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {
+        
+        if let cell = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {
+            menuCellExpanded = !menuCellExpanded
+            
             if menuCellExpanded {
-                menuCellExpanded = false
-                cell.isExpanded = false
-                requestedCellHeights[BuildingFoodMenuCell.identifier] = BuildingFoodMenuCell.cellHeight
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-                cell.setupCell()
-            } else {
-                menuCellExpanded = true
-                cell.isExpanded = true
                 requestedCellHeights[BuildingFoodMenuCell.identifier] = cell.getMenuRequiredHeight()
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-                cell.setupCell()
+            } else {
+                requestedCellHeights[BuildingFoodMenuCell.identifier] = BuildingFoodMenuCell.cellHeight
             }
-        }*/
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
     }
 
 }
