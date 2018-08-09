@@ -123,15 +123,19 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
     }
     
     func getMenuRequiredHeight() -> CGFloat {
+        return menuTableView.contentSize.height
+        /*
         var total: CGFloat = 0.0
         total += (2.0 * safeInsetValue)
-        guard let sections = filteredStations else { return total }
+        guard let sections = filteredStations,sections.count > 0 else { return total }
         
-        total += (CGFloat(sections.count) * 20.0)
-        for each in sections {
-            total += (CGFloat(each.menuItem.count) * DiningMenuItemCell.cellHeight)
+        total += (tableView(menuTableView, heightForHeaderInSection: 0) * CGFloat(sections.count))
+        total += ((menuTableView.footerView(forSection: 0)?.frame.height ?? 0.0) * CGFloat(sections.count))
+        
+        for each in sections.indices {
+            total += (CGFloat(sections[each].menuItem.count) * DiningMenuItemCell.cellHeight)
         }
-        return total
+        return total*/
     }
 }
 
@@ -184,8 +188,8 @@ extension BuildingFoodMenuCell {
         _ = menuTableView.anchor(safeArea.topAnchor, left: safeArea.leftAnchor, bottom: safeArea.bottomAnchor, right: safeArea.rightAnchor)
     }
     
-    fileprivate func getTableView() -> UITableView {
-        let tableView = UITableView(frame: safeArea.frame, style: .grouped)
+    fileprivate func getTableView() -> MenuTableView {
+        let tableView = MenuTableView(frame: safeArea.frame, style: .grouped)
         tableView.register(DiningMenuItemCell.self, forCellReuseIdentifier: DiningMenuItemCell.identifier)
         tableView.isUserInteractionEnabled = false
         tableView.separatorStyle = .none

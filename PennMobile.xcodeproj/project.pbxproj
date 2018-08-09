@@ -132,6 +132,7 @@
 		B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAF11F802A050038B9D5 /* LaundryCell.swift */; };
 		B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B658393A1FABD295009486FC /* LaundryAPIService.swift */; };
 		B6665A182071E63800F49A9C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6665A172071E63800F49A9C /* TabBarController.swift */; };
+		B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67881D7211CBF2A000DA750 /* MenuTableView.swift */; };
 		B6E49F8520E32C78003F4002 /* DiningMenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F8420E32C78003F4002 /* DiningMenuItemCell.swift */; };
 		B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */; };
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
@@ -293,6 +294,7 @@
 		B654BAF11F802A050038B9D5 /* LaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryCell.swift; sourceTree = "<group>"; };
 		B658393A1FABD295009486FC /* LaundryAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryAPIService.swift; sourceTree = "<group>"; };
 		B6665A172071E63800F49A9C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		B67881D7211CBF2A000DA750 /* MenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableView.swift; sourceTree = "<group>"; };
 		B6E49F8420E32C78003F4002 /* DiningMenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuItemCell.swift; sourceTree = "<group>"; };
 		B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
@@ -866,6 +868,7 @@
 				97E79DFC2100DA1200D3D606 /* BuildingCell.swift */,
 				97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */,
 				97E79E022100DA1200D3D606 /* BuildingFoodMenuCell.swift */,
+				B67881D7211CBF2A000DA750 /* MenuTableView.swift */,
 				97E79E012100DA1200D3D606 /* BuildingHoursCell.swift */,
 				97E79E002100DA1200D3D606 /* BuildingImageCell.swift */,
 				97E79DFF2100DA1200D3D606 /* BuildingMapCell.swift */,
@@ -1230,6 +1233,7 @@
 				2189C08C2027CE2600771C1F /* GSRTimeCell.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
+				B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */,
 				978693F920EAE1BB00C4A8A1 /* DiningMenuAPI.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
