@@ -1,9 +1,11 @@
 PennMobile iOS
 ===============
 
-The official iOS app of the University of Pennsylvania. Made with 💝 by Penn Labs.
+The official iOS app of the University of Pennsylvania.
 
 [![Penn Mobile on the App Store](pennmobile.png)](https://itunes.apple.com/us/app/penn-mobile/id944829399)
+
+Made with 💝 by Penn Labs.
 
 ## Features
 
@@ -25,10 +27,10 @@ NOTE: this repo requires [CocoaPods](http://cocoapods.org/) to work correctly. P
 
 ## Penn Labs
 
+[![More Info about Penn Labs](pennlabs-banner.png)](https://itunes.apple.com/us/app/penn-mobile/id944829399)
+
 Penn Labs is a team of student software engineers, product designers, and business developers.
 
 Penn Labs empowers others to make connections: connections to resources, connections to people, and connections to the greater Penn community.
 
 Our ultimate goal is improving the Penn community. We aim to do so not only by creating high-quality products, but also by giving back to the community with educational resources and technical support.
-
-[![More Info about Penn Labs](pennlabs-banner.png)](https://itunes.apple.com/us/app/penn-mobile/id944829399)
