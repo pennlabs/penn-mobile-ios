@@ -48,13 +48,14 @@ extension BuildingHoursCell {
             let hourLabel = hourLabels[day]
             dayLabel.text = weekdayArray[day]
             hourLabel.text = timeStringsForWeek[day]
-            hourLabel.layoutIfNeeded()
             if weekdayArray[day] == Date.currentDayOfWeek {
                 dayLabel.font = .primaryInformationFont
                 dayLabel.textColor = .interactionGreen
                 hourLabel.font = .primaryInformationFont
                 hourLabel.textColor = .interactionGreen
             }
+            // Shrink label if needed
+            hourLabel.layoutIfNeeded()
         }
     }
 }
@@ -97,10 +98,10 @@ extension BuildingHoursCell {
             
             if day == 0 {
                 _ = dayLabel.anchor(safeArea.topAnchor, left: safeArea.leftAnchor, bottom: nil, right: nil)
-                _ = hourLabel.anchor(safeArea.topAnchor, left: nil, bottom: nil, right: safeArea.rightAnchor)
+                _ = hourLabel.anchor(safeArea.topAnchor, left: dayLabel.rightAnchor, bottom: nil, right: safeArea.rightAnchor)
             } else {
                 _ = dayLabel.anchor(dayLabels[day - 1].bottomAnchor, left: safeArea.leftAnchor, topConstant: 0)
-                _ = hourLabel.anchor(hourLabels[day - 1].bottomAnchor, right: safeArea.rightAnchor, topConstant: 0)
+                _ = hourLabel.anchor(hourLabels[day - 1].bottomAnchor, left: safeArea.leftAnchor, right: safeArea.rightAnchor, topConstant: 0, leftConstant: 100)
             }
         }
     }
@@ -120,6 +121,7 @@ extension BuildingHoursCell {
         label.textColor = UIColor.primaryTitleGrey
         label.textAlignment = .right
         label.text = "Hour"
+        label.shrinkUntilFits()
         return label
     }
     
