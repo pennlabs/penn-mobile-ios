@@ -65,14 +65,15 @@ extension DiningMenuItemCell {
         nameLabel = getNameLabel()
         addSubview(nameLabel)
         
-        _ = nameLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, leftConstant: 30)
+        _ = nameLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
     }
     
     // MARK: Circle Views
     fileprivate func layoutCircleViews() {
         for i in circleViews.indices {
-            guard let _ = circleViews[i] else { return }
-            circleViews[i]!.frame = circleViews[i]!.frame.offsetBy(dx: 5.0 * CGFloat(i), dy: 0.0)
+            // Limit number of circles to 3
+            guard let _ = circleViews[i], i <= 4 else { break }
+            circleViews[i]!.frame = circleViews[i]!.frame.offsetBy(dx: -8.0 * CGFloat(i), dy: 0.0)
             addSubview(circleViews[i]!)
         }
     }
@@ -91,12 +92,16 @@ extension DiningMenuItemCell {
     }
     
     fileprivate func getCircleView(for itemType: DiningAttribute) -> CircleColorView {
+        // Get bounds, taking into account the safe area insets of parent cell
+        let maxX = Int(frame.maxX - 14.0)
+        
         switch itemType.description {
-        case .vegetarian:   return CircleColorView(with: .green)
-        case .vegan:        return CircleColorView(with: .purple)
-        case .seafood:      return CircleColorView(with: .blue)
-        case .gluten:       return CircleColorView(with: .orange)
-        default:            return CircleColorView(with: .white)
+        case .vegetarian:   return CircleColorView(with: .green, startingX: maxX)
+        case .vegan:        return CircleColorView(with: .purple, startingX: maxX)
+        case .seafood:      return CircleColorView(with: .blue, startingX: maxX)
+        case .gluten:       return CircleColorView(with: .orange, startingX: maxX)
+        case .farm:         return CircleColorView(with: .orange, startingX: maxX)
+        case .humane:       return CircleColorView(with: .orange, startingX: maxX)
         }
     }
 }
@@ -104,11 +109,11 @@ extension DiningMenuItemCell {
 // MARK: - Circle View
 class CircleColorView: UIView {
     private enum Constants {
-        static let CircleDimensions = (w: 12, h: 12)
+        static let CircleDimensions = (w: 10, h: 10)
     }
     
-    convenience init(with color: UIColor) {
-        self.init(frame: CGRect(x: 0,
+    convenience init(with color: UIColor, startingX: Int) {
+        self.init(frame: CGRect(x: startingX,
                                 y: Int(DiningMenuItemCell.cellHeight / 2) - Int(Constants.CircleDimensions.h / 2),
                                 width: Constants.CircleDimensions.w,
                                 height: Constants.CircleDimensions.h))

@@ -57,8 +57,8 @@ extension BuildingMapCell {
         safeArea = getSafeAreaView()
         addSubview(safeArea)
         NSLayoutConstraint.activate([
-            safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue),
-            safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue),
+            safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue * 2),
+            safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue * 2),
             safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue),
             safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue)
             ])

@@ -6,7 +6,7 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct DiningMenuDocument: Codable {
     let document: DiningMenu
@@ -111,5 +111,16 @@ enum DiningAttributeType : String, Codable {
     case vegan = "Vegan"
     case seafood = "Seafood Watch"
     case humane = "Humane"
+    
+    func getColor() -> UIColor {
+        switch self {
+        case .vegetarian: return UIColor(rgb: 0xB3EACB)
+        case .vegan: return UIColor(rgb: 0x3EA66B)
+        case .farm: return UIColor(rgb: 0xF5DE9B)
+        case .gluten: return UIColor(rgb: 0xF0B400)
+        case .humane: return UIColor(rgb: 0xA0AAF1)
+        case .seafood: return UIColor(rgb: 0x6274F1)
+        }
+    }
 }
 

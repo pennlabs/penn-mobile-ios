@@ -15,8 +15,8 @@ class FitnessViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.separatorStyle = .singleLine
-        //self.screenName = "Fitness"
+        tableView.separatorStyle = .none
+        self.title = "Fitness"
         
         self.registerHeadersAndCells(for: tableView)
         tableView.dataSource = self

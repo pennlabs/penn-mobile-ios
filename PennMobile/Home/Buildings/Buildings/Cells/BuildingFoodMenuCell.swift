@@ -23,6 +23,8 @@ class BuildingFoodMenuCell: BuildingCell {
     static let identifier = "BuildingFoodMenuCell"
     static let cellHeight: CGFloat = 200
     
+    static let menuHeaderHeight: CGFloat = 40.0
+    
     var building: BuildingMenusDisplayable! {
         didSet {
             self.meals = building.getMeals()
@@ -104,8 +106,20 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
         return filteredStations[section].description
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: frame.width, height: BuildingFoodMenuCell.menuHeaderHeight))
+        label.textColor = UIColor.darkGray
+        label.font = UIFont.primaryInformationFont
+        label.textAlignment = .center
+        
+        if let filteredStations = filteredStations, filteredStations.count > section {
+            label.text = filteredStations[section].description.uppercased()
+        }
+        return label
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20.0
+        return BuildingFoodMenuCell.menuHeaderHeight
     }
     
     func getMenuRequiredHeight() -> CGFloat {
@@ -131,7 +145,7 @@ extension BuildingFoodMenuCell {
     fileprivate func prepareUI() {
         prepareSafeArea()
         layoutTableView()
-        //prepareFogView()
+        prepareFogView()
     }
     
     // MARK: Safe Area
@@ -139,8 +153,8 @@ extension BuildingFoodMenuCell {
         safeArea = getSafeAreaView()
         addSubview(safeArea)
         NSLayoutConstraint.activate([
-            safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue),
-            safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue),
+            safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue * 2),
+            safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue * 2),
             safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue),
             safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue)
             ])
@@ -154,7 +168,7 @@ extension BuildingFoodMenuCell {
     }
     
     fileprivate func getFogView() -> UIView {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 80.0))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width + 100.0, height: 80.0))
         let gradient = CAGradientLayer()
         gradient.frame = view.frame
         gradient.colors = [UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0).cgColor, UIColor.white.cgColor]
