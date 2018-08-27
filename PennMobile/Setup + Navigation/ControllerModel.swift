@@ -31,12 +31,12 @@ class ControllerModel: NSObject {
     
     let vcDictionary: [Page: UIViewController] = {
         var dict = [Page: UIViewController]()
-        dict[.home] = HomeViewController()
+        //dict[.home] = HomeViewController()
         dict[.dining] = DiningViewController()
         dict[.studyRoomBooking] = GSRController()
         dict[.laundry] = LaundryTableViewController()
-        dict[.more] = MoreViewController()
         dict[.fitness] = FitnessViewController()
+        dict[.more] = MoreViewController()
         dict[.map] = MapViewController()
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()
@@ -53,19 +53,19 @@ class ControllerModel: NSObject {
     // pages order in tab bar
     var orderedPages: [Page] {
         get {
-            return [.home, .dining, .studyRoomBooking, .laundry, .more]
+            return [.dining, .studyRoomBooking, .laundry, .fitness, .more]
         }
     }
         
     // pages order in MoreViewController:
     var moreOrder: [Page] {
         get {
-            return [.fitness, .map, .news, .contacts, .about]
+            return [.news, .contacts, .about]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            return [#imageLiteral(resourceName: "News") ,#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
         }
     }
     
@@ -86,7 +86,8 @@ class ControllerModel: NSObject {
     }
     
     var firstPage: Page {
-        return UserDefaults.standard.isOnboarded() ? orderedPages[0] : .laundry
+        //return UserDefaults.standard.isOnboarded() ? orderedPages[0] : .laundry
+        return orderedPages[0]
     }
     
     func visibleVCIndex() -> IndexPath {

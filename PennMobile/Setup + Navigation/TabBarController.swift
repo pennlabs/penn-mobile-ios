@@ -110,6 +110,14 @@ extension LaundryTableViewController: TabBarShowable {
     }
 }
 
+extension FitnessViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Fitness_Grey")
+        let selectedImage = UIImage(named: "Fitness_Blue")
+        return ESTabBarItem(title: "Fitness", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
 extension MoreViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "More_Grey")
