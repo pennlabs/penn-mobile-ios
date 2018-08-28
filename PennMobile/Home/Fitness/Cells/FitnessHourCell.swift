@@ -96,7 +96,8 @@ extension FitnessHourCell {
 extension FitnessHourCell {
     
     fileprivate func prepareUI() {
-        self.accessoryType = .disclosureIndicator
+        //self.accessoryType = .disclosureIndicator
+        self.accessoryType = .none
         prepareSafeArea()
         prepareImageView()
         prepareLabels()
