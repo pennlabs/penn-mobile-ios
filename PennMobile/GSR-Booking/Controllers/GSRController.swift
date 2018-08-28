@@ -43,12 +43,34 @@ class GSRController: GenericViewController, IndicatorEnabled {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.title = "Study Rooom Booking"
         updateForNewDayIfNeeded()
         rangeSlider?.reload()
-        refreshBarButton()
         fetchData()
-        prepareBarButton()
+        setupNavBar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setupNavBar()
+        super.viewDidAppear(animated)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        tabBarController?.navigationItem.rightBarButtonItem = nil
+        super.viewDidDisappear(animated)
+    }
+    
+    private func setupNavBar() {
+        self.tabBarController?.title = "Study Room Booking"
+        barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
+        barButton.tintColor = UIColor.navigationBlue
+        
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = barButton
+    }
+    
+    private func tearDownNavBar() {
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
     }
 }
 
@@ -59,7 +81,6 @@ extension GSRController {
         prepareRangeSlider()
         prepareTableView()
         prepareEmptyView()
-        prepareBarButton()
     }
     
     private func preparePickerView() {
@@ -98,11 +119,6 @@ extension GSRController {
         
         view.addSubview(emptyView)
         _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
-    
-    fileprivate func prepareBarButton() {
-        barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
-        navigationItem.rightBarButtonItem = barButton
     }
 }
 

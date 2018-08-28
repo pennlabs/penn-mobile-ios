@@ -13,12 +13,12 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.tintColor = UIColor.navRed
+        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.tintColor = UIColor.navRed
+        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
         
         if trackScreen {
             trackScreen(screenName)
@@ -34,13 +34,13 @@ class GenericViewController: UIViewController, Trackable {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        self.navigationController?.navigationBar.tintColor = UIColor.navRed
+        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.tintColor = UIColor.navRed
+        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
         
         if trackScreen {
             trackScreen(screenName ?? title)

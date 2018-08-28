@@ -37,6 +37,23 @@ class DiningDetailViewController: UITableViewController {
         BuildingHoursCell.identifier: BuildingHoursCell.cellHeight,
         BuildingFoodMenuCell.identifier: BuildingFoodMenuCell.cellHeight
     ]
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupNavBar()
+        super.viewDidAppear(animated)
+    }
+
+    private func setupNavBar() {
+        let barButton = UIBarButtonItem(title: "More", style: .plain, target: self, action: #selector(handleBarButtonPressed(_:)))
+        barButton.tintColor = UIColor.navigationBlue
+        self.navigationItem.rightBarButtonItem = barButton
+    }
+    
+    @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
+        if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
 }
 
 //Mark: Networking to retrieve today's menus
