@@ -13,18 +13,7 @@ final class TabBarController: ESTabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let v1 = HomeViewController()
-//        let v2 = ExampleViewController()
-//        let v3 = ExampleViewController()
-//        let v4 = ExampleViewController()
-//        let v5 = ExampleViewController()
-//
-//        v1.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Home", image: UIImage(named: "home"), selectedImage: UIImage(named: "home_1"))
-//        v2.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Find", image: UIImage(named: "find"), selectedImage: UIImage(named: "find_1"))
-//        v3.tabBarItem = ESTabBarItem.init(ExampleIrregularityContentView(), title: nil, image: UIImage(named: "photo_verybig"), selectedImage: UIImage(named: "photo_verybig"))
-//        v4.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Favor", image: UIImage(named: "favor"), selectedImage: UIImage(named: "favor_1"))
-//        v5.tabBarItem = ESTabBarItem.init(ExampleIrregularityBasicContentView(), title: "Me", image: UIImage(named: "me"), selectedImage: UIImage(named: "me_1"))
+
         ControllerModel.shared.viewControllers.forEach { (vc) in
             if vc is TabBarShowable {
                 vc.tabBarItem = (vc as! TabBarShowable).getTabBarItem()
@@ -60,7 +49,7 @@ extension TabBarController: UITabBarControllerDelegate {
         let fromView = selectedViewController.view
         let toView = viewController.view
         
-        UIView.transition(from: fromView!, to: toView!, duration: 0.3, options: [.transitionCrossDissolve], completion: nil)
+        UIView.transition(from: fromView!, to: toView!, duration: 0.0, options: [], completion: nil)
         
         return true
     }
@@ -107,6 +96,14 @@ extension LaundryTableViewController: TabBarShowable {
         let normalImage = UIImage(named: "Laundry_Grey")
         let selectedImage = UIImage(named: "Laundry_Blue")
         return ESTabBarItem(title: "Laundry", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension FitnessViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Fitness_Grey")
+        let selectedImage = UIImage(named: "Fitness_Blue")
+        return ESTabBarItem(title: "Fitness", image: normalImage, selectedImage: selectedImage)
     }
 }
 

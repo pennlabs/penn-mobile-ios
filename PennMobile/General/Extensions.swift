@@ -1,6 +1,5 @@
 //
 //  Extensions.swift
-//  WillYou
 //
 //  Created by Josh Doman on 12/13/16.
 //  Copyright © 2016 Josh Doman. All rights reserved.
@@ -65,6 +64,23 @@ extension UIColor {
         self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
     
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    convenience init(rgb: Int) {
+        self.init(
+            red: (rgb >> 16) & 0xFF,
+            green: (rgb >> 8) & 0xFF,
+            blue: rgb & 0xFF
+        )
+    }
+    
+    // --- Deprecated colors ---
     static let warmGrey = UIColor(r: 115, g: 115, b: 115)
     static let whiteGrey = UIColor(r: 248, g: 248, b: 248)
     static let paleTeal = UIColor(r: 149, g: 207, b: 175)
@@ -146,6 +162,27 @@ extension Date {
         return calendar.date(from: nowComponents)! as Date
     }
     
+    // Formats individual dates to be similar to those used on the Dining Screen
+    func strFormat() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "EST")
+        formatter.dateFormat = "h:mma"
+        formatter.amSymbol = "a"
+        formatter.pmSymbol = "p"
+        var timesString = ""
+        
+        if self.minutes == 0 {
+            formatter.dateFormat = "ha"
+        } else {
+            formatter.dateFormat = "h:mma"
+        }
+        
+        let open = formatter.string(from: self)
+        timesString += open
+        return timesString
+    }
+    
     var localTime: Date {
         return self.convert(to: "GMT")
     }
@@ -202,6 +239,29 @@ extension Date {
         let myComponents = myCalendar.components(.weekday, from: self)
         let weekDay = myComponents.weekday!
         return weekdayArray[weekDay-1]
+    }
+    
+    var integerDayOfWeek: Int {
+        let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        let myComponents = myCalendar.components(.weekday, from: self)
+        return myComponents.weekday! - 1
+    }
+    
+    static let dayOfMonthFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        df.timeZone = TimeZone(abbreviation: "EST")
+        return df
+    }()
+    
+    var dateStringsForCurrentWeek: [String] {
+        var dateStrings = [String]()
+        let formatter = Date.dayOfMonthFormatter
+        let currentDayOfWeek = Date().integerDayOfWeek
+        for day in 0 ..< 7 {
+            dateStrings.append(formatter.string(from: Date().add(minutes: 1440 * (day - currentDayOfWeek))))
+        }
+        return dateStrings
     }
     
     var adjustedFor11_59: Date {

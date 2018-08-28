@@ -38,6 +38,10 @@ enum DiningVenueName: String {
         }
     }
     
+    static func getVenueName(for venueName: DiningVenueName) -> String {
+        return venueName.rawValue
+    }
+    
     static func getVenueName(for apiName: String) -> DiningVenueName {
         if apiName.contains("MBA") {
             return .mbaCafe
@@ -51,6 +55,14 @@ enum DiningVenueName: String {
             }
         }
         return .unknown
+    }
+    
+    static func getType(for venue: DiningVenueName) -> DiningVenueType {
+        if venue == .commons || venue == .english || venue == .falk || venue == .hill || venue == .nch || venue == .mcclelland {
+            return .dining
+        } else {
+            return .retail
+        }
     }
     
     func getID() -> Int {

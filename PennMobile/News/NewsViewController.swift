@@ -34,7 +34,11 @@ class NewsViewController: GenericViewController, HairlineRemovable {
         }
         
         let width = view.frame.width
-        let headerHeight = navigationController?.navigationBar.frame.height ?? 44
+        
+        var headerHeight: CGFloat = 44
+        if let headerFrame = navigationController?.navigationBar.frame {
+            headerHeight = headerFrame.height + headerFrame.origin.y
+        }
         
         let headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: headerHeight))
         headerToolbar.backgroundColor = navigationController?.navigationBar.backgroundColor
@@ -51,7 +55,14 @@ class NewsViewController: GenericViewController, HairlineRemovable {
     }
     
     private func setupWebview() {
-        webview = GenericWebview(frame: CGRect(x: 0, y: 108, width: self.view.bounds.width, height: self.view.bounds.height - 108))
+        
+        var headerHeight: CGFloat = 44
+        if let headerFrame = navigationController?.navigationBar.frame {
+            headerHeight = headerFrame.height + headerFrame.origin.y
+        }
+        headerHeight += 64
+        
+        webview = GenericWebview(frame: CGRect(x: 0, y: headerHeight, width: self.view.bounds.width, height: self.view.bounds.height - headerHeight))
         view.addSubview(webview)
         webview.loadRequest(URLRequest(url: URL(string: urlArray[0])!))
     }

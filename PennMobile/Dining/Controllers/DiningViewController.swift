@@ -33,6 +33,9 @@ class DiningViewController: GenericTableViewController {
         super.viewWillAppear(animated)
         fetchDiningHours()
         self.tabBarController?.title = "Dining"
+        // fetchDiningHours()
+        DiningAPI.instance.fetchHardcodedData { (success) in
+        }
     }
 }
 

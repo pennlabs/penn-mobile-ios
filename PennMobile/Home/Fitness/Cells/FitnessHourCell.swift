@@ -1,26 +1,33 @@
 //
-//  DiningControllerCell.swift
+//  FitnessHourCell.swift
 //  PennMobile
 //
-//  Created by Josh Doman on 3/30/17.
-//  Copyright © 2017 PennLabs. All rights reserved.
+//  Created by raven on 7/19/18.
+//  Copyright © 2018 PennLabs. All rights reserved.
 //
+
 import UIKit
 
-class DiningCell: UITableViewCell {
+class FitnessHourCell: UITableViewCell {
     
-    static let identifier = "diningVenueCell"
+    static let identifier = "fitnessHourCell"
     static let cellHeight: CGFloat = 86
     
-    var venue: DiningVenue! {
+    var schedule: FitnessSchedule! {
         didSet {
-            setupCell(with: venue)
+            setupCell(with: schedule)
+        }
+    }
+    
+    var name: FitnessFacilityName! {
+        didSet {
+            setupCell(with: name)
         }
     }
     
     var isHomepage: Bool = false {
         didSet {
-            setupCell(with: venue)
+            setupCell(with: schedule)
         }
     }
     
@@ -45,23 +52,32 @@ class DiningCell: UITableViewCell {
 }
 
 // MARK: - Setup Cell
-extension DiningCell {
-    fileprivate func setupCell(with venue: DiningVenue) {
-        venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
+extension FitnessHourCell {
+    
+    fileprivate func setupCell(with name: FitnessFacilityName) {
+        titleLabel.text = name.getFacilityName()
         
-        if isHomepage {
-            titleLabel.text = DiningVenueName.getShortVenueName(for: venue.name)
-        } else {
-            titleLabel.text = venue.name.rawValue
+        // Label will say CLOSED by default
+        statusLabel.text = "CLOSED TODAY"
+        statusLabel.textColor = .secondaryInformationGrey
+        statusLabel.font = .secondaryInformationFont
+        
+        if let _ = name.getImageName() { venueImageView.image = UIImage(named: name.getImageName()!) }
+    }
+    
+    fileprivate func setupCell(with schedule: FitnessSchedule?) {
+        guard let schedule = schedule else { return }
+        
+        if schedule.start != nil && schedule.end != nil {
+            updateTimeLabels(start: schedule.start!, end: schedule.end!)
         }
         
-        updateTimeLabel(with: venue.times)
+    }
+    
+    fileprivate func updateTimeLabels(start: Date, end: Date) {
+        let now = Date()
         
-        if venue.times != nil, venue.times!.isEmpty {
-            statusLabel.text = "CLOSED TODAY"
-            statusLabel.textColor = .secondaryInformationGrey
-            statusLabel.font = .secondaryInformationFont
-        } else if venue.times != nil && venue.times!.isOpen {
+        if start < now && end > now {
             statusLabel.text = "OPEN"
             statusLabel.textColor = .informationYellow
             statusLabel.font = .primaryInformationFont
@@ -70,19 +86,18 @@ extension DiningCell {
             statusLabel.textColor = .secondaryInformationGrey
             statusLabel.font = .secondaryInformationFont
         }
-    }
-    
-    fileprivate func updateTimeLabel(with times: [OpenClose]?) {
-        timesLabel.text = times?.strFormat
+        
+        timesLabel.text = start.strFormat() + " - " + end.strFormat()
         timesLabel.layoutIfNeeded()
     }
 }
 
 // MARK: - Initialize and Layout UI Elements
-extension DiningCell {
+extension FitnessHourCell {
     
     fileprivate func prepareUI() {
-        
+        //self.accessoryType = .disclosureIndicator
+        self.accessoryType = .none
         prepareSafeArea()
         prepareImageView()
         prepareLabels()
@@ -121,11 +136,12 @@ extension DiningCell {
         
         titleLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor,
                                             constant: safeInsetValue).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        
         titleLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
         
         statusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        statusLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 3).isActive = true
+        statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
         timesLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         timesLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3).isActive = true
@@ -134,7 +150,7 @@ extension DiningCell {
 }
 
 // MARK: - Define UI Elements
-extension DiningCell {
+extension FitnessHourCell {
     
     fileprivate func getSafeAreaView() -> UIView {
         let view = UIView()
@@ -170,7 +186,7 @@ extension DiningCell {
         label.shrinkUntilFits()
         return label
     }
-
+    
     fileprivate func getStatusLabel() -> UILabel {
         let label = UILabel()
         label.font = .primaryInformationFont
