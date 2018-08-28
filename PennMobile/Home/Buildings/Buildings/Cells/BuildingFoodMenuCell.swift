@@ -123,11 +123,9 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
     }
     
     func getMenuRequiredHeight() -> CGFloat {
-        return menuTableView.contentSize.height
-        /*
         var total: CGFloat = 0.0
         total += (2.0 * safeInsetValue)
-        guard let sections = filteredStations,sections.count > 0 else { return total }
+        guard let sections = filteredStations, sections.count > 0 else { return total }
         
         total += (tableView(menuTableView, heightForHeaderInSection: 0) * CGFloat(sections.count))
         total += ((menuTableView.footerView(forSection: 0)?.frame.height ?? 0.0) * CGFloat(sections.count))
@@ -135,7 +133,7 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
         for each in sections.indices {
             total += (CGFloat(sections[each].menuItem.count) * DiningMenuItemCell.cellHeight)
         }
-        return total*/
+        return total
     }
 }
 
