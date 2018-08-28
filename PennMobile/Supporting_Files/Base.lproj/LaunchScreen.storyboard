@@ -31,17 +31,17 @@
                                     <constraint firstAttribute="height" constant="44" id="FIQ-op-vCy"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Home" id="mYT-iR-9H6"/>
+                                    <navigationItem title="Dining" id="mYT-iR-9H6"/>
                                 </items>
                             </navigationBar>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gzw-MZ-60i">
                                 <rect key="frame" x="0.0" y="729" width="375" height="83"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
-                                    <tabBarItem title="Home" image="Home_Grey" id="Txr-9Q-6SV"/>
-                                    <tabBarItem title="Dining" image="Dining_Grey" id="3rq-I3-mHd"/>
-                                    <tabBarItem title="GSR" image="GSR_Grey" id="Pvh-0j-nCU"/>
+                                    <tabBarItem title="Dining" image="Dining_Grey" id="Txr-9Q-6SV"/>
+                                    <tabBarItem title="GSR" image="GSR_Grey" id="3rq-I3-mHd"/>
                                     <tabBarItem title="Laundry" image="Laundry_Grey" id="iaC-sr-TBf"/>
+                                    <tabBarItem title="Fitness" image="Fitness_Grey" id="Pvh-0j-nCU"/>
                                     <tabBarItem systemItem="more" id="4u1-hM-VSJ"/>
                                 </items>
                             </tabBar>
@@ -72,8 +72,8 @@
     </scenes>
     <resources>
         <image name="Dining_Grey" width="24" height="24"/>
+        <image name="Fitness_Grey" width="24" height="24"/>
         <image name="GSR_Grey" width="24" height="24"/>
-        <image name="Home_Grey" width="24" height="24"/>
         <image name="Laundry_Grey" width="24" height="24"/>
     </resources>
 </document>
