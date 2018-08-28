@@ -128,11 +128,14 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
         guard let sections = filteredStations, sections.count > 0 else { return total }
         
         total += (tableView(menuTableView, heightForHeaderInSection: 0) * CGFloat(sections.count))
-        total += ((menuTableView.footerView(forSection: 0)?.frame.height ?? 0.0) * CGFloat(sections.count))
+        
+        // Calculated footer height
+        total += (15 * CGFloat(sections.count))
         
         for each in sections.indices {
             total += (CGFloat(sections[each].menuItem.count) * DiningMenuItemCell.cellHeight)
         }
+        
         return total
     }
 }

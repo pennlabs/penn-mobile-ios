@@ -47,7 +47,7 @@ struct DiningMeal: Codable {
     
     func usefulStations() -> [DiningStation] {
         var filteredStations = [DiningStation]()
-        let filterWords = ["BEVERAGE", "SODA", "COFFEE", "CONDIMENT"]
+        let filterWords = ["BEVERAGE", "SODA", "COFFEE", "CONDIMENT", "TOAST"]
         //                   "SALAD", "DESSERT", "CONDIMENT", "TOAST",
         //                   "FRUIT PLUS", "CEREAL", "HILL DELI", "HILL GRILL",
         //                   "SWEETS", "RISE AND DINE"]
