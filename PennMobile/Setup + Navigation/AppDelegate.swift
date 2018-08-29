@@ -41,11 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        if !UserDefaults.standard.isOnboarded() {
+        /*if !UserDefaults.standard.isOnboarded() {
             //            handleOnboarding(animated: true)
             UserDefaults.standard.setIsOnboarded(value: true)
             return true
-        }
+        }*/
         
         tabBarController = TabBarController()
         
