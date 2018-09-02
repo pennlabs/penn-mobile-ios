@@ -29,10 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        DatabaseManager.shared.dryRun = false
-        GoogleAnalyticsManager.shared.dryRun = false
-        UserDBManager.shared.dryRun = false
-        UserDBManager.shared.testRun = false
+        DatabaseManager.shared.dryRun = true
+        GoogleAnalyticsManager.shared.dryRun = true
+        UserDBManager.shared.dryRun = true
+        UserDBManager.shared.testRun = true
         
         GoogleAnalyticsManager.prepare()
         LaundryAPIService.instance.prepare()
@@ -41,11 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        if !UserDefaults.standard.isOnboarded() {
+        /*if !UserDefaults.standard.isOnboarded() {
             //            handleOnboarding(animated: true)
             UserDefaults.standard.setIsOnboarded(value: true)
             return true
-        }
+        }*/
         
         tabBarController = TabBarController()
         
