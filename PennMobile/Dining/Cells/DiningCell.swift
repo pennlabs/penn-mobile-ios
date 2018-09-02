@@ -57,16 +57,18 @@ extension DiningCell {
         
         updateTimeLabel(with: venue.times)
         
-        if venue.times != nil, venue.times!.isEmpty {
-            statusLabel.text = "CLOSED TODAY"
-            statusLabel.textColor = .secondaryInformationGrey
-            statusLabel.font = .secondaryInformationFont
-        } else if venue.times != nil && venue.times!.isOpen {
-            statusLabel.text = "OPEN"
-            statusLabel.textColor = .informationYellow
-            statusLabel.font = .primaryInformationFont
+        if let times = venue.times, !times.isEmpty {
+            if times.isOpen {
+                statusLabel.text = "OPEN"
+                statusLabel.textColor = .informationYellow
+                statusLabel.font = .primaryInformationFont
+            } else {
+                statusLabel.text = "CLOSED"
+                statusLabel.textColor = .secondaryInformationGrey
+                statusLabel.font = .secondaryInformationFont
+            }
         } else {
-            statusLabel.text = "CLOSED"
+            statusLabel.text = "CLOSED TODAY"
             statusLabel.textColor = .secondaryInformationGrey
             statusLabel.font = .secondaryInformationFont
         }

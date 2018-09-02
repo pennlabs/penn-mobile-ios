@@ -72,6 +72,7 @@ extension DiningDetailViewController {
     }
 }
 
+
 // MARK: - Setup and Update UI
 extension DiningDetailViewController {
 

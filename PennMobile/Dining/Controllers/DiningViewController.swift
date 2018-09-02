@@ -26,16 +26,18 @@ class DiningViewController: GenericTableViewController {
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
         
-        DiningDetailModel.preloadWebview(for: venueToPreload)
+        prepareRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchDiningHours()
         self.tabBarController?.title = "Dining"
-        // fetchDiningHours()
-        DiningAPI.instance.fetchHardcodedData { (success) in
-        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        refreshControl?.endRefreshing()
     }
 }
 
@@ -48,9 +50,22 @@ extension DiningViewController {
                 if success {
                     self.tableView.reloadData()
                 }
+                self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
         }
+    }
+}
+
+// MARK: - UIRefreshControl
+extension DiningViewController {
+    fileprivate func prepareRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
+    }
+    
+    @objc fileprivate func handleRefresh(_ sender: Any) {
+        fetchDiningHours()
     }
 }
 
