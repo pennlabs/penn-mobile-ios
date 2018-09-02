@@ -20,7 +20,6 @@ enum DiningVenueName: String {
     case houston =       "Houston Market"
     case joes =          "Joe's Café"
     case marks =         "Mark's Café"
-    case beefsteak =     "Beefsteak"
     case starbucks =     "Starbucks"
     case pret =          "Pret a Manger"
     case mbaCafe =       "MBA Café"
@@ -89,8 +88,6 @@ enum DiningVenueName: String {
             return 642
         case .marks:
             return 640
-        case .beefsteak:
-            return 1441
         case .starbucks:
             return 1163
         case .pret:
