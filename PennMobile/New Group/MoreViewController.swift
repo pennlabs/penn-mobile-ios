@@ -30,21 +30,28 @@ class MoreViewController: GenericTableViewController {
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
     }
     
+    fileprivate struct PennLink {
+        let title: String
+        let url: String
+    }
+    
+    fileprivate let pennLinks: [PennLink] = [
+        PennLink(title: "Penn Labs", url: "https://pennlabs.org"),
+        PennLink(title: "Penn Homepage", url: "https://upenn.edu"),
+        PennLink(title: "CampusExpress", url: "https://prod.campusexpress.upenn.edu"),
+        PennLink(title: "Canvas", url: "https://canvas.upenn.edu"),
+        PennLink(title: "PennInTouch", url: "https://pennintouch.apps.upenn.edu"),
+        PennLink(title: "PennPortal", url: "https://portal.apps.upenn.edu/penn_portal")]
+    
 }
 
 extension MoreViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        //return 2
-        return 1
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        /*if (section == 0) {
-            return 1
-        } else {
-            return ControllerModel.shared.moreOrder.count
-        }*/
-        return ControllerModel.shared.moreOrder.count
+        return section == 0 ? ControllerModel.shared.moreOrder.count : pennLinks.count
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -54,7 +61,7 @@ extension MoreViewController {
         } else {
             headerView.setUpView(title: "FEATURES")
         }*/
-        headerView.setUpView(title: "FEATURES")
+        section == 0 ? headerView.setUpView(title: "FEATURES") : headerView.setUpView(title: "LINKS")
         return headerView
     }
     
@@ -66,9 +73,10 @@ extension MoreViewController {
                 return cell
             }
         } else if (indexPath.section == 1) {*/
+        if indexPath.section == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                 cell.backgroundColor = .white
-                cell.setUpView(page: ControllerModel.shared.moreOrder[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
+                cell.setUpView(with: ControllerModel.shared.moreOrder[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
                 let separatorHeight = CGFloat(2)
                 let customSeparator = UIView(frame: CGRect(x: 0, y: cell.frame.size.height + 3 + separatorHeight, width: UIScreen.main.bounds.width, height: separatorHeight))
                 customSeparator.backgroundColor = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)
@@ -76,23 +84,34 @@ extension MoreViewController {
                 cell.accessoryType = .disclosureIndicator
                 return cell
             }
-        //}
+        } else {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
+                cell.backgroundColor = .white
+                cell.setUpView(with: pennLinks[indexPath.row].title)
+                let separatorHeight = CGFloat(2)
+                let customSeparator = UIView(frame: CGRect(x: 0, y: cell.frame.size.height + 3 + separatorHeight, width: UIScreen.main.bounds.width, height: separatorHeight))
+                customSeparator.backgroundColor = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)
+                cell.addSubview(customSeparator)
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            }
+        }
         return UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        /*if (indexPath.section == 0) {
-            return 80
-        } else {*/
-            return 50
-        //}
+        return 50
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //if (indexPath.section == 1) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == 0 {
             let targetController = ControllerModel.shared.viewController(for: ControllerModel.shared.moreOrder[indexPath.row])
             navigationController?.pushViewController(targetController, animated: true)
-        //}
-        tableView.deselectRow(at: indexPath, animated: true)
+        } else if indexPath.section == 1 {
+            if let url = URL(string: pennLinks[indexPath.row].url) {
+                UIApplication.shared.open(url, options: [:])
+            }
+        }
     }
 }
