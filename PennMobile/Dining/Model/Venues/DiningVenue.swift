@@ -21,7 +21,7 @@ enum DiningVenueType: String, Codable {
 class DiningVenue: NSObject {
     
     static let diningNames: [DiningVenueName] = [.commons, .mcclelland, .nch, .hill, .english, .falk]
-    static let retailNames: [DiningVenueName] = [.frontera, .gourmetGrocer, .houston, .joes, .marks, .beefsteak, .starbucks, .pret, .mbaCafe]
+    static let retailNames: [DiningVenueName] = [.houston, .frontera, .gourmetGrocer, .joes, .marks, .starbucks, .pret, .mbaCafe]
     
     var name: DiningVenueName
     
@@ -124,10 +124,8 @@ extension DiningVenue: BuildingHeaderDisplayable {
     }
     
     func getStatus() -> BuildingHeaderState {
-        if self.times != nil && self.times!.isOpen {
-            return .open
-        } else if self.times != nil && !self.times!.isOpen {
-            return .closed
+        if let times = self.times, !times.isEmpty {
+            return times.isOpen ? .open : .closed
         } else {
             return .closedToday
         }

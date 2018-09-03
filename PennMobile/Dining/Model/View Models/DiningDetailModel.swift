@@ -15,7 +15,6 @@ class DiningDetailModel {
         var dict = [DiningVenueName: String]()
         dict[.commons] = "1920-commons"
         dict[.mcclelland] = "mcclelland"
-        dict[.beefsteak] = "beefsteak"
         dict[.falk] = "falk-dining-commons"
         dict[.english] = "kings-court-english-house"
         dict[.gourmetGrocer] = "1920-gourmet-grocer"

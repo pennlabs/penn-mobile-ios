@@ -21,6 +21,8 @@ class FitnessViewController: UITableViewController {
         self.registerHeadersAndCells(for: tableView)
         tableView.dataSource = self
         tableView.delegate = self
+        
+        tableView.allowsSelection = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,25 +59,43 @@ extension FitnessViewController {
 extension FitnessViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (section == 0) ? viewModel.facilities.count : 0
+        return (section == 0) ? viewModel.pottruckFacilities.count : viewModel.otherFacilities.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FitnessHourCell.identifier, for: indexPath) as! FitnessHourCell
-        cell.name = viewModel.facilities[indexPath.row]
-        cell.schedule = viewModel.getFacility(for: indexPath)
+        if indexPath.section == 0 {
+            cell.name = viewModel.pottruckFacilities[indexPath.row]
+            cell.schedule = viewModel.getPottruckFacility(for: indexPath.row)
+        } else if indexPath.section == 1 {
+            cell.name = viewModel.otherFacilities[indexPath.row]
+            cell.schedule = viewModel.getOtherFacility(for: indexPath.row)
+        }
         return cell
     }
     
     func registerHeadersAndCells(for tableView: UITableView) {
         tableView.register(FitnessHourCell.self, forCellReuseIdentifier: FitnessHourCell.identifier)
+        tableView.register(FitnessHeaderView.self, forHeaderFooterViewReuseIdentifier: FitnessHeaderView.identifier)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return FitnessHourCell.cellHeight
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: FitnessHeaderView.identifier) as! FitnessHeaderView
+        
+        let headerTitle: String = (section == 0 ? "Pottruck" : "Other Facilities")
+        view.label.text = headerTitle
+        return view
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return FitnessHeaderView.headerHeight
     }
 }
