@@ -124,10 +124,8 @@ extension DiningVenue: BuildingHeaderDisplayable {
     }
     
     func getStatus() -> BuildingHeaderState {
-        if self.times != nil && self.times!.isOpen {
-            return .open
-        } else if self.times != nil && !self.times!.isOpen {
-            return .closed
+        if let times = self.times, !times.isEmpty {
+            return times.isOpen ? .open : .closed
         } else {
             return .closedToday
         }
