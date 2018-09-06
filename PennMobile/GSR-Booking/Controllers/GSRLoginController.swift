@@ -44,7 +44,7 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
         firstNameField.text = user.firstName
         lastNameField.text = user.lastName
         emailField.text = user.email
-        phoneNumberField.text = user.phone
+        //phoneNumberField.text = user.phone
     }
     
     override func viewWillDisappear(_ animated: Bool) {

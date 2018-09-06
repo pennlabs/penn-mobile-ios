@@ -15,7 +15,7 @@ protocol GSRSelectionDelegate {
 }
 
 class RoomCell: UITableViewCell {
-    static let cellHeight: CGFloat = 100
+    static let cellHeight: CGFloat = 90
     static let identifier = "roomCell"
     
     var room: GSRRoom! {
@@ -64,9 +64,9 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         let timeSlot = room.timeSlots[indexPath.row]
         cell.timeSlot = timeSlot
         if delegate.containsTimeSlot(timeSlot) {
-            cell.backgroundColor = Colors.blue.color()
+            cell.backgroundColor = .informationYellow
         } else {
-            cell.backgroundColor = Colors.green.color()
+            cell.backgroundColor = .interactionGreen
         }
         return cell
     }
@@ -91,13 +91,13 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         let timeSlot = room.timeSlots[indexPath.row]
         delegate?.handleSelection(for: room, timeSlot: timeSlot, action: SelectionType.add)
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = Colors.blue.color()
+        cell?.backgroundColor = .informationYellow
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let timeSlot = room.timeSlots[indexPath.row]
         delegate?.handleSelection(for: room, timeSlot: timeSlot, action: SelectionType.remove)
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = Colors.green.color()
+        cell?.backgroundColor = .interactionGreen
     }
 }

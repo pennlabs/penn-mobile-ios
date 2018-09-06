@@ -26,14 +26,14 @@ class GSRTimeCell: UICollectionViewCell {
     private let toLabel: UILabel = {
         let label = UILabel()
         label.text = "to"
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.secondaryInformationFont
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = Colors.green.color()
+        backgroundColor = .interactionGreen
         setupView()
     }
     
@@ -45,13 +45,13 @@ class GSRTimeCell: UICollectionViewCell {
         toLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         toLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
-        startLabel.font = UIFont.systemFont(ofSize: 17)
-        endLabel.font = UIFont.systemFont(ofSize: 17)
+        startLabel.font = UIFont.primaryInformationFont
+        endLabel.font = UIFont.primaryInformationFont
         
-        _ = startLabel.anchor(topAnchor, left: nil, bottom: nil, right: nil, topConstant: 4, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = startLabel.anchor(topAnchor, left: nil, bottom: nil, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         startLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
-        _ = endLabel.anchor(nil, left: nil, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = endLabel.anchor(nil, left: nil, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         endLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
