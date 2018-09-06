@@ -23,12 +23,19 @@ class FitnessViewController: UITableViewController {
         tableView.delegate = self
         
         tableView.allowsSelection = false
+        
+        prepareRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchFitnessHours()
         self.tabBarController?.title = "Fitness"
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        refreshControl?.endRefreshing()
     }
 }
 
@@ -41,9 +48,22 @@ extension FitnessViewController {
                 if success {
                     self.tableView.reloadData()
                 }
+                self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
         }
+    }
+}
+
+// MARK: - UIRefreshControl
+extension FitnessViewController {
+    fileprivate func prepareRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
+    }
+    
+    @objc fileprivate func handleRefresh(_ sender: Any) {
+        fetchFitnessHours()
     }
 }
 
