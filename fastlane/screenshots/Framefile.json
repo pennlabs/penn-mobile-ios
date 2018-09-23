@@ -1,0 +1,46 @@
+{
+    "device_frame_version": "latest",
+    "default": {
+        "keyword": {
+            "font": "./fonts/AvenirNextLTPro-Bold.otf"
+        },
+        "title": {
+            "font": "./fonts/AvenirNextLTPro-Regular.otf",
+            "color": "#ffffff"
+        },
+        "background": "./background.jpg",
+        "padding": 50
+    },
+    "data": [
+        {
+            "filter": "Dining",
+            "keyword": {
+                "color": "#ffffff"
+            }
+        },
+        {
+            "filter": "Building",
+            "keyword": {
+                "color": "#ffffff"
+            }
+        },
+        {
+            "filter": "GSR",
+            "keyword": {
+                "color": "#ffffff"
+            }
+        },
+        {
+            "filter": "Laundry",
+            "keyword": {
+                "color": "#ffffff"
+            }
+        },
+        {
+            "filter": "More",
+            "keyword": {
+                "color": "#ffffff"
+            }
+        }
+    ]
+}
