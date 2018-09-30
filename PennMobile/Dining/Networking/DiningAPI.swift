@@ -181,6 +181,7 @@ extension DiningHoursData {
             let start = json["start"].stringValue
             let end = json["end"].stringValue
             let type = json["type"].stringValue
+            // comment
             
             guard let openDate = formatter.date(from: start)?.adjustedFor11_59, let closeDate = formatter.date(from: end)?.adjustedFor11_59 else { continue }
             
