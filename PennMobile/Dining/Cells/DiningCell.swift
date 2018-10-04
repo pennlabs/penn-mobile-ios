@@ -68,7 +68,7 @@ extension DiningCell {
                 statusLabel.font = .secondaryInformationFont
             }
         } else {
-            statusLabel.text = "CLOSED TODAY"
+            statusLabel.text = ""
             statusLabel.textColor = .secondaryInformationGrey
             statusLabel.font = .secondaryInformationFont
         }
