@@ -72,11 +72,16 @@ extension DiningViewController {
 // MARK: - DiningViewModelDelegate
 extension DiningViewController: DiningViewModelDelegate {
     func handleSelection(for venue: DiningVenue) {
-        let ddc = DiningDetailViewController()
-        ddc.venue = venue
-        navigationController?.pushViewController(ddc, animated: true)
+        //let ddc = DiningDetailViewController()
+        //ddc.venue = venue
+        //navigationController?.pushViewController(ddc, animated: true)
+        
         UserDBManager.shared.saveDiningPreference(for: venue)
-        DatabaseManager.shared.trackEvent(vcName: "Dining", event: ddc.venue.name.rawValue)
+        DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name.rawValue)
+        
+        if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:])
+        }
     }
 }
 
