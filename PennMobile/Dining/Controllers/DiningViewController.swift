@@ -80,7 +80,12 @@ extension DiningViewController: DiningViewModelDelegate {
         DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name.rawValue)
         
         if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
-            UIApplication.shared.open(url, options: [:])
+//            UIApplication.shared.open(url, options: [:])
+            let vc = UIViewController()
+            let webView = GenericWebview(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+            webView.loadRequest(URLRequest(url: url))
+            vc.view.addSubview(webView)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
