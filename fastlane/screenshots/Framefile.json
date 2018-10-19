@@ -6,7 +6,7 @@
         },
         "title": {
             "font": "./fonts/AvenirNextLTPro-Regular.otf",
-            "color": "#ffffff"
+            "color": "#575757"
         },
         "background": "./background.jpg",
         "padding": 50
@@ -15,31 +15,31 @@
         {
             "filter": "Dining",
             "keyword": {
-                "color": "#ffffff"
-            }
-        },
-        {
-            "filter": "Building",
-            "keyword": {
-                "color": "#ffffff"
+                "color": "#12274b"
             }
         },
         {
             "filter": "GSR",
             "keyword": {
-                "color": "#ffffff"
+                "color": "#12274b"
             }
         },
         {
             "filter": "Laundry",
             "keyword": {
-                "color": "#ffffff"
+                "color": "#12274b"
+            }
+        },
+        {
+            "filter": "Fitness",
+            "keyword": {
+                "color": "#12274b"
             }
         },
         {
             "filter": "More",
             "keyword": {
-                "color": "#ffffff"
+                "color": "#12274b"
             }
         }
     ]

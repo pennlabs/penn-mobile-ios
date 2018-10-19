@@ -40,21 +40,17 @@ class FastlaneUIAutomation: XCTestCase {
         let app = XCUIApplication()
         
         snapshot("01Dining", waitForLoadingIndicator: true)
-        app.tables/*@START_MENU_TOKEN@*/.cells.containing(.image, identifier:"1920 Commons")/*[[".cells.containing(.staticText, identifier:\"11 - 3  |  5 - 7:30\")",".cells.containing(.staticText, identifier:\"1920 Commons\")",".cells.containing(.image, identifier:\"1920 Commons\")"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.children(matching: .other).element.tap()
-        snapshot("02Building", waitForLoadingIndicator: true)
-        app.navigationBars["Dining"].buttons["Dining"].tap()
-        
         let tabBarsQuery = app.tabBars
         tabBarsQuery.children(matching: .other).element(boundBy: 1).tap()
         // GSR takes a while, run with fast wifi to avoid loading indicators on the screenshots
-        snapshot("03GSR", timeWaitingForIdle: 5)
+        snapshot("02GSR", timeWaitingForIdle: 5)
         tabBarsQuery.otherElements["Laundry - tab - 3 of 5"].tap()
         // Laundry takes a while, run with fast wifi to avoid loading indicators on the screenshots
         snapshot("03Laundry", timeWaitingForIdle: 5)
         tabBarsQuery.otherElements["Fitness - tab - 4 of 5"].tap()
-        snapshot("05Fitness", waitForLoadingIndicator: true)
+        snapshot("04Fitness", waitForLoadingIndicator: true)
         tabBarsQuery.otherElements["More - tab - 5 of 5"].tap()
-        snapshot("06More", waitForLoadingIndicator: true)
+        snapshot("05More", waitForLoadingIndicator: true)
         
     }
     
