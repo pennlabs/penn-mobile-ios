@@ -10,7 +10,7 @@ import UIKit
 import UserNotifications
 import FirebaseCore
 import FirebaseInstanceID
-import FirebaseMessaging
+//import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -169,11 +169,11 @@ extension AppDelegate: OnboardingDelegate {
     }
 }
 
-extension AppDelegate: MessagingDelegate {
-    func application(received remoteMessage: MessagingRemoteMessage) {
-        //        print("Received data message: \(remoteMessage.appData)")
-    }
-}
+//extension AppDelegate: MessagingDelegate {
+//    func application(received remoteMessage: MessagingRemoteMessage) {
+//        //        print("Received data message: \(remoteMessage.appData)")
+//    }
+//}
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     // Receive displayed notifications for iOS 10 devices.
@@ -183,7 +183,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = notification.request.content.userInfo
         
         // With swizzling disabled you must let Messaging know about the message, for Analytics
-        Messaging.messaging().appDidReceiveMessage(userInfo)
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
         
         // Print message ID.
         //        if let messageID = userInfo[gcmMessageIDKey] {

@@ -57,8 +57,8 @@ extension FitnessHourCell {
     fileprivate func setupCell(with name: FitnessFacilityName) {
         titleLabel.text = name.getFacilityName()
         
-        // Label will say CLOSED by default
-        statusLabel.text = "CLOSED TODAY"
+        // Label will say nothing by default
+        statusLabel.text = ""
         statusLabel.textColor = .secondaryInformationGrey
         statusLabel.font = .secondaryInformationFont
         
