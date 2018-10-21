@@ -47,9 +47,11 @@ extension DiningViewController {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         DiningAPI.instance.fetchDiningHours { (success) in
             DispatchQueue.main.async {
-                if success {
-                    self.tableView.reloadData()
+                if !success {
+                    DiningHoursData.shared.clearHours()
                 }
+                self.tableView.reloadData()
+                
                 self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
