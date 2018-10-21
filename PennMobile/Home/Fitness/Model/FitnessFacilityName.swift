@@ -11,13 +11,13 @@ import Foundation
 enum FitnessFacilityName: String, Codable {
     
     // These names reflect what is given by the API, do not change. Customize name in getFacilityName()
-    case sheerr =      "Sheerr Pool"
+    case sheerr =      "Sheerr Pool Hours"
     case ringe =       "Ringe"
     case climbing =    "Climbing Wall"
     case membership =  "Membership Services"
     case fox =         "Fox Fitness"
     case pottruck =    "Pottruck Hours"
-    case rockwell =    "Basketball - Rockwell"
+    case rockwell =    "Pottruck Courts"
     case unknown
     
     static let all = [pottruck, fox, sheerr, climbing, ringe, rockwell, membership]

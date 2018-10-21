@@ -66,7 +66,11 @@ extension FitnessHourCell {
     }
     
     fileprivate func setupCell(with schedule: FitnessSchedule?) {
-        guard let schedule = schedule else { return }
+        guard let schedule = schedule else {
+            statusLabel.text = ""
+            timesLabel.text = ""
+            return
+        }
         
         if schedule.start != nil && schedule.end != nil {
             updateTimeLabels(start: schedule.start!, end: schedule.end!)

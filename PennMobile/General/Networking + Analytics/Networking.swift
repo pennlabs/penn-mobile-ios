@@ -89,6 +89,7 @@ extension Requestable {
         }
         
         let request = NSMutableURLRequest(url: url)
+        request.cachePolicy = .reloadIgnoringCacheData
         
         let deviceID = getDeviceID()
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
