@@ -45,9 +45,10 @@ extension FitnessViewController {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         FitnessAPI.instance.fetchFitnessHours { (success) in
             DispatchQueue.main.async {
-                if success {
-                    self.tableView.reloadData()
+                if !success {
+                    FitnessFacilityData.shared.clearSchedules()
                 }
+                self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }

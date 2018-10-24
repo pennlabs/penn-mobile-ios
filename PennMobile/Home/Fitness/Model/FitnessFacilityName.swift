@@ -14,10 +14,10 @@ enum FitnessFacilityName: String, Codable {
     case sheerr =      "Sheerr Pool"
     case ringe =       "Ringe"
     case climbing =    "Climbing Wall"
-    case membership =  "Membership Services"
+    case membership =  "Membership"
     case fox =         "Fox Fitness"
-    case pottruck =    "Pottruck Hours"
-    case rockwell =    "Basketball - Rockwell"
+    case pottruck =    "Pottruck"
+    case rockwell =    "Pottruck Courts"
     case unknown
     
     static let all = [pottruck, fox, sheerr, climbing, ringe, rockwell, membership]

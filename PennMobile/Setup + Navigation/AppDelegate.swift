@@ -10,6 +10,7 @@ import UIKit
 import UserNotifications
 import FirebaseCore
 import FirebaseInstanceID
+import StoreKit
 //import FirebaseMessaging
 
 @UIApplicationMain
@@ -52,6 +53,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = UINavigationController(rootViewController: tabBarController)
         window?.makeKeyAndVisible()
+        
+        // Keep track locally of app sessions (for app review prompting)
+        let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
+        UserDefaults.standard.set(sessionCount+1, forKey:"launchCount")
+        UserDefaults.standard.synchronize()
+        if sessionCount == 3 {
+            SKStoreReviewController.requestReview()
+        }
+        
         return true
     }
     
