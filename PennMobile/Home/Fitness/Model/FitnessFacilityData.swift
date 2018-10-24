@@ -32,8 +32,8 @@ class FitnessFacilityData {
     func getScheduleForToday(for venue: FitnessFacilityName) -> FitnessSchedule? {
         guard schedules.keys.contains(venue) else { return nil }
         return schedules[venue]!.first(where: { (schedule) -> Bool in
-            if schedule.start != nil {
-                return schedule.start!.isToday
+            if let hours = schedule.hours.first {
+                return hours.start?.isToday ?? false
             }
             return false
         })
@@ -44,7 +44,7 @@ class FitnessFacilityData {
         
         for (name, schedule) in schedules {
             if schedule.contains(where: { (s) -> Bool in
-                return (s.start != nil && s.start!.isToday)
+                return (s.hours.first?.start?.isToday ?? false)
             }) {
                 activeFacilities.append(name)
             }

@@ -17,27 +17,35 @@ struct FitnessSchedules: Codable {
 }
 
 struct FitnessSchedule: Codable {
-    let allDay: Bool
     let name: FitnessFacilityName
+    let hours: [FitnessScheduleOpenClose]
+    
+    enum CodingKeys : String, CodingKey {
+        case name = "name"
+        case hours = "hours"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.hours = try container.decode([FitnessScheduleOpenClose].self, forKey: .hours)
+        do {
+            self.name = try container.decodeIfPresent(FitnessFacilityName.self, forKey: .name) ?? .unknown
+        } catch {
+            self.name = .unknown
+            print("ERROR: Unknown fitness facility name")
+        }
+    }
+}
+
+struct FitnessScheduleOpenClose: Codable {
+    
+    let allDay: Bool
     let start: Date?
     let end: Date?
     
     enum CodingKeys : String, CodingKey {
         case allDay = "all_day"
-        case name = "name"
         case start = "start"
         case end = "end"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.allDay = try container.decode(Bool.self, forKey: .allDay)
-        self.start = try container.decodeIfPresent(Date.self, forKey: .start)
-        self.end = try container.decodeIfPresent(Date.self, forKey: .end)
-        do {
-            self.name = try container.decodeIfPresent(FitnessFacilityName.self, forKey: .name) ?? .unknown
-        } catch {
-            self.name = .unknown
-        }
     }
 }

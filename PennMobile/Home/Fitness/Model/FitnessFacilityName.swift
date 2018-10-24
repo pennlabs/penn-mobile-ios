@@ -11,12 +11,12 @@ import Foundation
 enum FitnessFacilityName: String, Codable {
     
     // These names reflect what is given by the API, do not change. Customize name in getFacilityName()
-    case sheerr =      "Sheerr Pool Hours"
+    case sheerr =      "Sheerr Pool"
     case ringe =       "Ringe"
     case climbing =    "Climbing Wall"
     case membership =  "Membership"
     case fox =         "Fox Fitness"
-    case pottruck =    "Pottruck Hours"
+    case pottruck =    "Pottruck"
     case rockwell =    "Pottruck Courts"
     case unknown
     
