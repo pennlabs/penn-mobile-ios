@@ -15,16 +15,27 @@ class DiningAPI: Requestable {
     
     let diningUrl = "https://api.pennlabs.org/dining/venues"
     
-    func fetchDiningHours(_ completion: @escaping (_ success: Bool) -> Void) {
-        getRequest(url: diningUrl) { (dictionary) in
+    func fetchDiningHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
+        getRequest(url: diningUrl) { (dictionary, error, statusCode) in
+            
             if dictionary == nil {
-                completion(false)
+                completion(false, true)
+                return
+            }
+            
+            if statusCode == nil {
+                completion(false, false)
+                return
+            }
+            
+            if statusCode != 200 {
+                completion(false, true)
                 return
             }
             
             let json = JSON(dictionary!)
             let success = DiningHoursData.shared.loadHoursForAllVenues(for: json)
-            completion(success)
+            completion(success, false)
         }
     }
     

@@ -45,10 +45,29 @@ class DiningViewController: GenericTableViewController {
 extension DiningViewController {
     fileprivate func fetchDiningHours() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        DiningAPI.instance.fetchDiningHours { (success) in
+        DiningAPI.instance.fetchDiningHours { (success, error) in
             DispatchQueue.main.async {
-                if !success {
+                if success {
                     DiningHoursData.shared.clearHours()
+                    
+                    let errorBar = UIView()
+                    self.navigationController!.view.addSubview(errorBar)
+                    var heightConstraint: NSLayoutConstraint!
+                    heightConstraint = errorBar.heightAnchor.constraint(equalToConstant: 0)
+                    heightConstraint.isActive = true
+                    errorBar.backgroundColor = .redingTerminal
+                    errorBar.translatesAutoresizingMaskIntoConstraints = false
+//                    errorBar.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    errorBar.topAnchor.constraint(equalTo: self.navigationController!.navigationBar.bottomAnchor).isActive = true
+                    errorBar.leadingAnchor.constraint(equalTo: self.navigationController!.view.leadingAnchor).isActive = true
+                    errorBar.trailingAnchor.constraint(equalTo: self.navigationController!.view.trailingAnchor).isActive = true
+                    errorBar.layoutIfNeeded()
+                    heightConstraint.constant = 50
+                    
+                    UIView.animate(withDuration: 5, delay: 0.5, options: [], animations: {
+                        self.view.layoutIfNeeded()
+                    })
+                    
                 }
                 self.tableView.reloadData()
                 
