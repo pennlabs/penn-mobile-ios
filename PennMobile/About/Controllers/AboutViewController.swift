@@ -87,15 +87,15 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         subtitle.isSelectable = false
         subtitle.textContainer.maximumNumberOfLines = 0
         
-        let str = "Hi, we’re PennLabs: a team of student software engineers, product designers, and business developers."
+        let str = "Hi, we’re Penn Labs: a team of student software engineers, product designers, and business developers."
         let font = UIFont(name: "AvenirNext-Regular", size: 18)!
         let boldFont = UIFont(name: "AvenirNext-Bold", size: 18)!
         
         let attributedString = NSMutableAttributedString(string: str, attributes: [NSFontAttributeName : font])
-        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(10, 8))
-        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(38, 18))
-        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(57, 18))
-        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(80, 20))
+        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(10, 9))
+        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(39, 18))
+        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(58, 18))
+        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(81, 20))
         
         subtitle.attributedText = attributedString
         subtitle.textColor = UIColor.darkGray
@@ -124,7 +124,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     
     func setupButton() {
         learnMoreButton = UIButton()
-        learnMoreButton.backgroundColor = UIColor(red: 65/255.0, green: 128/255.0, blue: 180/255.0, alpha: 1.0)
+        learnMoreButton.backgroundColor = .spruceHarborBlue
         learnMoreButton.titleLabel?.font =  UIFont(name: "AvenirNext-DemiBold", size: 16)
         learnMoreButton.setTitle("Learn More", for: [])
         learnMoreButton.setTitleColor(UIColor.white, for: [])
