@@ -11,6 +11,7 @@ class DiningViewController: GenericTableViewController {
     fileprivate var viewModel = DiningViewModel()
     
     fileprivate let venueToPreload: DiningVenueName = .commons
+    fileprivate var navigationVC: HomeNavigationController?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +26,6 @@ class DiningViewController: GenericTableViewController {
         
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
-        
         prepareRefreshControl()
     }
     
@@ -33,10 +33,12 @@ class DiningViewController: GenericTableViewController {
         super.viewWillAppear(animated)
         fetchDiningHours()
         self.tabBarController?.title = "Dining"
+        navigationVC = self.navigationController as? HomeNavigationController
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.navigationVC!.hideBar(animated: false)
         refreshControl?.endRefreshing()
     }
 }
@@ -47,26 +49,20 @@ extension DiningViewController {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         DiningAPI.instance.fetchDiningHours { (success, error) in
             DispatchQueue.main.async {
-                if success {
+                if !success {
                     DiningHoursData.shared.clearHours()
                     
-                    let errorBar = UIView()
-                    self.navigationController!.view.addSubview(errorBar)
-                    var heightConstraint: NSLayoutConstraint!
-                    heightConstraint = errorBar.heightAnchor.constraint(equalToConstant: 0)
-                    heightConstraint.isActive = true
-                    errorBar.backgroundColor = .redingTerminal
-                    errorBar.translatesAutoresizingMaskIntoConstraints = false
-//                    errorBar.heightAnchor.constraint(equalToConstant: 0).isActive = true
-                    errorBar.topAnchor.constraint(equalTo: self.navigationController!.navigationBar.bottomAnchor).isActive = true
-                    errorBar.leadingAnchor.constraint(equalTo: self.navigationController!.view.leadingAnchor).isActive = true
-                    errorBar.trailingAnchor.constraint(equalTo: self.navigationController!.view.trailingAnchor).isActive = true
-                    errorBar.layoutIfNeeded()
-                    heightConstraint.constant = 50
+                    if error {
+                        self.navigationVC!.addStatusBar(text: .apiError)
+                    } else {
+                        self.navigationVC!.addStatusBar(text: .noInternet)
+                    }
                     
-                    UIView.animate(withDuration: 5, delay: 0.5, options: [], animations: {
-                        self.view.layoutIfNeeded()
-                    })
+                    self.navigationVC!.animateBarDown()
+                    
+                } else {
+                    
+                    //what to do when request is successful
                     
                 }
                 self.tableView.reloadData()
@@ -87,6 +83,7 @@ extension DiningViewController {
     
     @objc fileprivate func handleRefresh(_ sender: Any) {
         fetchDiningHours()
+        self.navigationVC!.hideBar(animated: true)
     }
 }
 

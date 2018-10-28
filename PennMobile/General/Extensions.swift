@@ -369,6 +369,9 @@ extension UILabel {
     }
 }
 
+extension UINavigationController {
+}
+
 extension Dictionary where Key == String, Value == String {
     
     /// Build string representation of HTTP parameter dictionary of keys and objects

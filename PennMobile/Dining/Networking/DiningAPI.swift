@@ -14,14 +14,9 @@ class DiningAPI: Requestable {
     static let instance = DiningAPI()
     
     let diningUrl = "https://api.pennlabs.org/dining/venues"
-    
+
     func fetchDiningHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
         getRequest(url: diningUrl) { (dictionary, error, statusCode) in
-            
-            if dictionary == nil {
-                completion(false, true)
-                return
-            }
             
             if statusCode == nil {
                 completion(false, false)
@@ -29,6 +24,11 @@ class DiningAPI: Requestable {
             }
             
             if statusCode != 200 {
+                completion(false, true)
+                return
+            }
+            
+            if dictionary == nil {
                 completion(false, true)
                 return
             }
