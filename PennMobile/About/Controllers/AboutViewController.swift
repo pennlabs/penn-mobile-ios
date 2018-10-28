@@ -2,266 +2,265 @@
 //  AboutViewController.swift
 //  PennMobile
 //
-//  Created by Dominic Holmes on 12/30/17.
-//  Copyright © 2017 PennLabs. All rights reserved.
+//  Created by Marta García Ferreiro on 10/26/18.
+//  Copyright © 2018 PennLabs. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-class AboutViewController: GenericViewController {
+class Member {
+    var name: String
+    var image: UIImage?
     
-    private var panGesture: UIPanGestureRecognizer?
+    // initialize properties of the class Member
+    init (name: String, image: UIImage?) {
+        self.name = name
+        self.image = image
+    }
+}
+
+class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    private var beaker: BeakerLayer?
+    var logo: UIImageView!
+    var subtitle: UITextView!
+    var descriptionTextView: UITextView!
+    var learnMoreButton: UIButton!
+    var madeWithLoveLabel: UILabel!
+    var copyrightLabel: UILabel!
+    var members = [[Member]]()
+    var collectionView: UICollectionView?
+    
+    private func loadMembers() {
+        
+        let dom = Member(name: "Dominic Holmes", image: UIImage(named: "dom"))
+        let ben = Member(name: "Ben Leimberger", image: UIImage(named: "ben"))
+        let carin = Member(name: "Carin Gan", image: UIImage(named: "carin"))
+        let salib = Member(name: "Daniel Salib", image: UIImage(named: "salib"))
+        let marta = Member(name: "Marta García", image: UIImage(named: "marta"))
+        let grace = Member(name: "Grace Jiang", image: UIImage(named: "grace"))
+        let josh = Member(name: "Josh Doman", image: UIImage(named: "josh"))
+        let tiff = Member(name: "Tiffany Chang", image: UIImage(named: "tiff"))
+        let zhilei = Member(name: "Zhilei Zheng", image: UIImage(named: "zhilei"))
+        let laura = Member(name: "Laura Gao", image: UIImage(named: "laura"))
+        let yagil = Member(name: "Yagil Burowski", image: UIImage(named: "yagil"))
+        let adel = Member(name: "Adel Qalieh", image: UIImage(named: "adel"))
+        
+        var currentMembers = [Member]()
+        var pastMembers = [Member]()
+        
+        //fill the arrays with the members
+        pastMembers += [yagil, laura, adel]
+        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei]
+        members += [currentMembers, pastMembers]
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "About"
+        view.backgroundColor = .white
         
-        // Add views to the view controller, draw beaker
-        layoutViews()
-        
-        // Initialize the pan gesture to control the water in beaker
-        panGesture  = UIPanGestureRecognizer()
-        panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.didPan(_:)))
-        bgView.isUserInteractionEnabled = true
-        bgView.addGestureRecognizer(panGesture!)
+        loadMembers()
+        setupLogo()
+        setupSubtitle()
+        setupDescription()
+        setupButton()
+        setupCollection()
+        setUpMadeWithLoveLabel()
+        setupCopyrightLabel()
+        setupStack()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let initialCP = CGPoint(x: -200, y: -50)
-        if let _ = beaker {
-            let newBeakerPath = beaker!.getBeakerPath(with: initialCP)
-            beaker!.path = newBeakerPath
-            beaker!.controlPoint = initialCP
-        }
+    // MARK: set up logo and informational text
+    
+    func setupLogo() {
+        let logoImage: UIImage = UIImage(named: "logo")!
+        logo = UIImageView(image: logoImage)
+        logo.translatesAutoresizingMaskIntoConstraints = false
+        logo.widthAnchor.constraint(equalToConstant: 230.0).isActive = true
+        logo.heightAnchor.constraint(equalToConstant: 129.0).isActive = true
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        releaseBeaker()
+    func setupSubtitle() {
+        
+        subtitle = UITextView()
+        subtitle.isEditable = false
+        subtitle.isSelectable = false
+        subtitle.textContainer.maximumNumberOfLines = 0
+        
+        let str = "Hi, we’re Penn Labs: a team of student software engineers, product designers, and business developers."
+        let font = UIFont(name: "AvenirNext-Regular", size: 18)!
+        let boldFont = UIFont(name: "AvenirNext-Bold", size: 18)!
+        
+        let attributedString = NSMutableAttributedString(string: str, attributes: [NSFontAttributeName : font])
+        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(10, 9))
+        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(39, 18))
+        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(58, 18))
+        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(81, 20))
+        
+        subtitle.attributedText = attributedString
+        subtitle.textColor = UIColor.darkGray
+        subtitle.textAlignment = .center
+        subtitle.isScrollEnabled = false
+        
+        subtitle.translatesAutoresizingMaskIntoConstraints = false
+        subtitle.widthAnchor.constraint(equalToConstant: 280.0).isActive = true
     }
     
-    @objc func didPan(_ sender: UIPanGestureRecognizer){
-        let translation = sender.translation(in: self.view)
-        if sender.state == .began {
-        } else if sender.state == .changed {
-            adjustBeaker(with: translation)
-        } else if sender.state == .ended {
-            releaseBeaker()
-        }
-    }
-    
-    fileprivate func layoutViews() {
-        // Background view
-        self.view.addSubview(bgView)
-        _ = bgView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor,
-                          topConstant: 60, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
-                          widthConstant: 0, heightConstant: 0)
-        // Layout views
-        bgView.addSubview(logoView)
-        bgView.addSubview(descView)
-        _ = logoView.anchor(bgView.topAnchor, left: bgView.leftAnchor,
-                            bottom: nil, right: bgView.rightAnchor,
-                            topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
-                            widthConstant: 0, heightConstant: 170)
-        _ = descView.anchor(logoView.bottomAnchor, left: logoView.leftAnchor,
-                            bottom: bgView.bottomAnchor, right: logoView.rightAnchor,
-                            topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
-                            widthConstant: 0, heightConstant: 0)
-        
-        // Layout logo image view
-        bgView.addSubview(labsLogoImageView)
-        labsLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-        labsLogoImageView.centerXAnchor.constraint(
-            equalTo: logoView.centerXAnchor).isActive = true
-        labsLogoImageView.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
-        labsLogoImageView.widthAnchor.constraint(equalToConstant: 217.5).isActive = true
-        labsLogoImageView.topAnchor.constraint(
-            equalTo: logoView.topAnchor,
-            constant: 40).isActive = true
-        
-        // Initialize & draw the beaker
-        beaker = BeakerLayer()
-        labsLogoImageView.layer.addSublayer(beaker!)
-        labsLogoImageView.layer.addSublayer(beaker!.createParticles())
-        labsLogoImageView.layer.addSublayer(beaker!.getGlassShapeLayer())
-        
-        // Labels
-        bgView.addSubview(pennLabsLabel)
-        pennLabsLabel.translatesAutoresizingMaskIntoConstraints = false
-        pennLabsLabel.centerXAnchor.constraint(
-            equalTo: descView.centerXAnchor).isActive = true
-        pennLabsLabel.topAnchor.constraint(
-            equalTo: descView.topAnchor).isActive = true
-        
-        bgView.addSubview(copyrightLabel)
-        copyrightLabel.translatesAutoresizingMaskIntoConstraints = false
-        copyrightLabel.centerXAnchor.constraint(
-            equalTo: descView.centerXAnchor).isActive = true
-        copyrightLabel.bottomAnchor.constraint(
-            equalTo: descView.bottomAnchor,
-            constant: -20).isActive = true
-        
-        bgView.addSubview(featureButton)
-        bgView.addSubview(infoButton)
-        featureButton.translatesAutoresizingMaskIntoConstraints = false
-        infoButton.translatesAutoresizingMaskIntoConstraints = false
-        featureButton.bottomAnchor.constraint(
-            equalTo: copyrightLabel.topAnchor,
-            constant: -10).isActive = true
-        featureButton.centerXAnchor.constraint(
-            equalTo: copyrightLabel.centerXAnchor,
-            constant: -56).isActive = true
-        infoButton.bottomAnchor.constraint(
-            equalTo: copyrightLabel.topAnchor,
-            constant: -10).isActive = true
-        infoButton.centerXAnchor.constraint(
-            equalTo: copyrightLabel.centerXAnchor,
-            constant: 56).isActive = true
-        
-        bgView.addSubview(descriptionTextView)
+    func setupDescription() {
+        descriptionTextView = UITextView()
+        descriptionTextView.isEditable = false
+        descriptionTextView.isSelectable = false
+        descriptionTextView.textContainer.maximumNumberOfLines = 0
+        descriptionTextView.text = "Penn Labs empowers others to make connections: connections to resources, connections to people, and connections to the greater Penn community.\n\n Our ultimate goal is improving the Penn community. We aim to do so not only by creating high quality products, but also by giving back to the community with educational resources and technical support."
+        descriptionTextView.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        descriptionTextView.textColor = .darkGray
+        descriptionTextView.textAlignment = .center
+        descriptionTextView.isScrollEnabled = false
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
-        descriptionTextView.widthAnchor.constraint(
-            equalTo: descView.widthAnchor,
-            constant: -20).isActive = true
-        descriptionTextView.topAnchor.constraint(
-            equalTo: pennLabsLabel.bottomAnchor,
-            constant: 20).isActive = true
-        descriptionTextView.centerXAnchor.constraint(
-            equalTo: descView.centerXAnchor).isActive = true
-        descriptionTextView.bottomAnchor.constraint(
-            equalTo: featureButton.topAnchor,
-            constant: -10).isActive = true
+        descriptionTextView.widthAnchor.constraint(equalToConstant: 280.0).isActive = true
     }
     
-    // Layout Views
-    fileprivate let bgView: UIView = {
-        let v = UIView()
-        v.backgroundColor = .white
-        return v
-    }()
+    // MARK: set up learn more button
     
-    fileprivate let logoView: UIView = {
-        let v = UIView()
-        v.backgroundColor = .clear
-        return v
-    }()
+    func setupButton() {
+        learnMoreButton = UIButton()
+        learnMoreButton.backgroundColor = .spruceHarborBlue
+        learnMoreButton.titleLabel?.font =  UIFont(name: "AvenirNext-DemiBold", size: 16)
+        learnMoreButton.setTitle("Learn More", for: [])
+        learnMoreButton.setTitleColor(UIColor.white, for: [])
+        
+        learnMoreButton.layer.cornerRadius = 36.0/2
+        learnMoreButton.layer.masksToBounds = true
+        learnMoreButton.translatesAutoresizingMaskIntoConstraints = false
+        learnMoreButton.heightAnchor.constraint(equalToConstant: 36.0).isActive = true
+        learnMoreButton.widthAnchor.constraint(equalToConstant: 132.0).isActive = true
+        learnMoreButton.addTarget(self, action: #selector(didTapLearnMoreButton), for: .touchUpInside)
+    }
     
-    fileprivate let descView: UIView = {
-        let v = UIView()
-        v.backgroundColor = .clear
-        return v
-    }()
-    
-    // Logo Image View
-    fileprivate let labsLogoImageView: UIImageView = {
-        let iv = UIImageView(image: UIImage(named: "LabsLogoNoBeaker"))
-        iv.backgroundColor = .clear
-        return iv
-    }()
-    
-    // Labels & TextViews
-    fileprivate let pennLabsLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Built by students. For students."
-        label.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        label.textColor = .black
-        label.textAlignment = .center
-        return label
-    }()
-    
-    fileprivate let descriptionTextView: UITextView = {
-        let v = UITextView()
-        v.isEditable = false
-        v.isSelectable = false
-        v.textContainer.maximumNumberOfLines = 0
-        v.text = "Penn Labs is a non-profit, student-run organization at the University of Pennsylvania dedicated to building technology for student use and supporting an open-source development environment on-campus. Penn Labs is sponsored by the UA, the Provost’s Office and VPUL.\n\n Currently being developed by Josh Doman, Zhilei Zhang, and Dominic Holmes. Designed by Tiffany Chang, Josh Doman, Dominic Holmes, and Laura Gao. Special thanks to Yagil Burowski, Adel Qalieh, and everyone else who came before us."
-        v.font = UIFont(name: "HelveticaNeue", size: 13)
-        v.textColor = .darkGray
-        v.textAlignment = .center
-        v.backgroundColor = .clear
-        v.isScrollEnabled = false
-        return v
-    }()
-    
-    fileprivate let featureButton: UIButton = {
-        let b = UIButton(type: .system)
-        b.contentRect(forBounds: CGRect(x: 0, y: 0, width: 150, height: 30))
-        b.setTitle("Feature Request", for: .normal)
-        b.setTitleColor(.buttonBlue, for: .normal)
-        b.addTarget(self, action: #selector(featureRequest), for: .touchUpInside)
-        return b
-    }()
-    
-    fileprivate let infoButton: UIButton = {
-        let b = UIButton(type: .system)
-        b.contentRect(forBounds: CGRect(x: 0, y: 0, width: 150, height: 30))
-        b.setTitle("More Info", for: .normal)
-        b.setTitleColor(.buttonBlue, for: .normal)
-        b.addTarget(self, action: #selector(moreInfo), for: .touchUpInside)
-        return b
-    }()
-    
-    fileprivate let copyrightLabel: UILabel = {
-        let label = UILabel()
-        label.text = "© 2018 Penn Labs"
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.textColor = .darkGray
-        label.textAlignment = .center
-        return label
-    }()
-    
-    // Beaker animations
-    
-    func adjustBeaker(with newControlPoint: CGPoint) {
-        if let _ = beaker {
-            let animation = CABasicAnimation(keyPath: "path")
-            animation.fromValue = beaker!.path
-            let newBeakerPath = beaker!.getBeakerPath(with: newControlPoint)
-            animation.toValue = newBeakerPath
-            animation.duration = 0.5
-            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-            animation.isRemovedOnCompletion = false
-            beaker!.add(animation, forKey: "animatePanGesture")
-            beaker!.path = newBeakerPath
-            beaker!.controlPoint = newControlPoint
+    @objc func didTapLearnMoreButton(sender: UIButton!) {
+        if let url = URL(string: "https://pennlabs.org") {
+            UIApplication.shared.open(url, options: [:])
         }
     }
     
-    func releaseBeaker() {
-        if let _ = beaker {
-            let animation = CAKeyframeAnimation(keyPath: "path")
-            let cx = beaker!.controlPoint.x
-            let cy = beaker!.controlPoint.y
-            let newBeakerPath = beaker!.getBeakerPath(with: CGPoint(x: 0, y: 0))
-            animation.values = [
-                beaker!.getBeakerPath(with: CGPoint(x:  cx / 1.0,  y:  cy / 1.0)),
-                beaker!.getBeakerPath(with: CGPoint(x:  cx / 2.0,  y: -cy / 2.0)),
-                beaker!.getBeakerPath(with: CGPoint(x:  cx / 4.0,  y:  cy / 4.0)),
-                beaker!.getBeakerPath(with: CGPoint(x:  cx / 8.0,  y: -cy / 8.0)),
-                beaker!.getBeakerPath(with: CGPoint(x:  cx / 16.0, y:  cy / 16.0)),
-                beaker!.getBeakerPath(with: CGPoint(x:  0.0,       y: 0.0))
-            ]
-            animation.keyTimes = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
-            animation.duration = 1.1
-            //animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-            animation.isRemovedOnCompletion = false
-            beaker!.add(animation, forKey: "animatePanGesture")
-            beaker!.path = newBeakerPath
-        }
-    }
-}
-
-// Mark: Delete cell
-extension AboutViewController: URLOpenable {
-    @objc fileprivate func featureRequest() {
-        open(scheme: "https://docs.google.com/forms/d/e/1FAIpQLSd1Ov_SDwjDKbPmOCNzOOjU5j1tqmvhXnMgGP2o-gcedvrYLA/viewform")
+    func setUpMadeWithLoveLabel() {
+        madeWithLoveLabel = UILabel()
+        madeWithLoveLabel.font = UIFont(name: "AvenirNext-Medium", size: 18)
+        madeWithLoveLabel.text = "Made with \u{1F496} by Penn Labs"
+        madeWithLoveLabel.textColor = .darkGray
+        madeWithLoveLabel.textAlignment = .center
+        madeWithLoveLabel.translatesAutoresizingMaskIntoConstraints = false
+        madeWithLoveLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
-    @objc fileprivate func moreInfo() {
-        open(scheme: "https://pennlabs.org/")
+    func setupCopyrightLabel() {
+        copyrightLabel = UILabel()
+        copyrightLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        copyrightLabel.text = "Penn Labs \u{00A9} 2018"
+        copyrightLabel.textColor = .darkGray
+        copyrightLabel.textAlignment = .center
+        copyrightLabel.translatesAutoresizingMaskIntoConstraints = false
+        copyrightLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+    }
+    
+    // MARK: set up collection view
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if (kind == UICollectionElementKindSectionHeader) {
+            let section = indexPath.section
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "AboutPageSectionHeader", for: indexPath) as! AboutPageCollectionViewHeader
+            header.label.text = (section == 0) ? "Meet the Team" : "Alumni"
+            return header
+        }
+        return AboutPageCollectionViewHeader()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.bounds.width, height: 40)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return members[section].count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 83.0, height: 105.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        //create cell that has the properties of the CollectionViewCell we defined, otherwise it gives an error
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AboutPageCell", for: indexPath) as? AboutPageCollectionViewCell else {
+            fatalError("The dequeued cell is not an instance of AboutPageCollectionViewCell.")
+        }
+        //put the data for the people in the cell
+        let member = members[indexPath.section][indexPath.row]
+        cell.name.text = member.name
+        cell.profileImage.image = member.image
+        return cell
+    }
+    
+    func setupCollection() {
+        let frame = self.view.frame
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        self.collectionView?.backgroundColor = .white
+        self.collectionView?.isScrollEnabled = false
+        self.collectionView?.register(AboutPageCollectionViewCell.self, forCellWithReuseIdentifier: "AboutPageCell")
+        self.collectionView?.register(AboutPageCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "AboutPageSectionHeader")
+        
+        collectionView?.translatesAutoresizingMaskIntoConstraints = false
+        collectionView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        collectionView?.heightAnchor.constraint(equalToConstant: 600).isActive = true
+        
+    }
+    
+    // MARK: set up scroll view and stack view
+    
+    func setupStack() {
+        let space = UIView()
+        space.translatesAutoresizingMaskIntoConstraints = false
+        space.widthAnchor.constraint(equalToConstant: 1.0).isActive = true
+        space.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        
+        let smallSpace = UIView()
+        space.translatesAutoresizingMaskIntoConstraints = false
+        space.widthAnchor.constraint(equalToConstant: 1.0).isActive = true
+        space.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
+        
+        let stackView = UIStackView(arrangedSubviews: [space, logo, subtitle, descriptionTextView, learnMoreButton, smallSpace, collectionView!, madeWithLoveLabel, copyrightLabel])
+        
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 20
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(scrollView)
+        
+        //add constraints to scrollView
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        scrollView.addSubview(stackView)
+        
+        //add constraints to stackView
+        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        
     }
 }
