@@ -8,7 +8,7 @@
 
 import UIKit
 
-class statusBar: UIView {
+class StatusBar: UIView {
 
     /*
     // Only override draw() if you perform custom drawing.

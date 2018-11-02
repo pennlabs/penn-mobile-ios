@@ -31,9 +31,9 @@ class DiningViewController: GenericTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchDiningHours()
         self.tabBarController?.title = "Dining"
         navigationVC = self.navigationController as? HomeNavigationController
+        fetchDiningHours()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -58,8 +58,6 @@ extension DiningViewController {
                         self.navigationVC!.addStatusBar(text: .noInternet)
                     }
                     
-                    self.navigationVC!.animateBarDown()
-                    
                 } else {
                     
                     //what to do when request is successful
@@ -83,7 +81,6 @@ extension DiningViewController {
     
     @objc fileprivate func handleRefresh(_ sender: Any) {
         fetchDiningHours()
-        self.navigationVC!.hideBar(animated: true)
     }
 }
 
@@ -98,7 +95,6 @@ extension DiningViewController: DiningViewModelDelegate {
         DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name.rawValue)
         
         if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
-//            UIApplication.shared.open(url, options: [:])
             let vc = UIViewController()
             let webView = GenericWebview(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             webView.loadRequest(URLRequest(url: url))
