@@ -87,6 +87,7 @@ extension DiningViewController: DiningViewModelDelegate {
             let webView = GenericWebview(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             webView.loadRequest(URLRequest(url: url))
             vc.view.addSubview(webView)
+            vc.title = venue.name.rawValue
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
