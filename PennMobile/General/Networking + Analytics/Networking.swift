@@ -73,55 +73,6 @@ extension Method: CustomStringConvertible {
 protocol Requestable {}
 
 extension Requestable {
-//    internal func getRequest(url: String, callback: @escaping (_ json: NSDictionary?) -> ()) {
-//        do {
-//            try request(method: .get, url: url, params: nil) { (dict) in
-//                callback(dict)
-//            }
-//        } catch {
-//            callback(nil)
-//        }
-//    }
-//
-//    internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ json: NSDictionary?) -> ())? = nil) throws {
-//        guard let url = URL(string: url) else {
-//            return
-//        }
-//
-//        let request = NSMutableURLRequest(url: url)
-//        request.cachePolicy = .reloadIgnoringCacheData
-//
-//        let deviceID = getDeviceID()
-//        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
-//        request.httpMethod = method.description
-//        if let params = params {
-//            request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-//            request.setValue("super secret password", forHTTPHeaderField: "Authorization")
-//            request.httpBody = try JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
-//        }
-//
-//        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
-//
-//            if let error = error {
-//                print(error.localizedDescription)
-//            } else if let httpResponse = response as? HTTPURLResponse {
-//                if httpResponse.statusCode == 200 {
-//                }
-//            }
-//
-//            if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-//                if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-//                    callback?(json)
-//                }
-//            } else {
-//                callback?(nil)
-//            }
-//
-//        })
-//        task.resume()
-//    }
-    
-    
     internal func getRequest(url: String, callback: @escaping (_ json: NSDictionary?,  _ error: Error?, _ status: Int?) -> ()) {
         request(method: .get, url: url, params: nil) { (dict, error, status) in
             callback(dict, error, status)
