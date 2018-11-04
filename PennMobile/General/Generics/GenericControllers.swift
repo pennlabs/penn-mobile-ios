@@ -14,12 +14,12 @@ import UIKit
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationVC = self.navigationController as? HomeNavigationController
         navigationVC?.navigationBar.tintColor = UIColor.navigationBlue
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationVC = self.navigationController as? HomeNavigationController
         navigationVC?.navigationBar.tintColor = UIColor.navigationBlue
         
         if trackScreen {
@@ -29,7 +29,6 @@ import UIKit
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        print("view will disappear")
         navigationVC?.hideBar(animated: false)
     }
     

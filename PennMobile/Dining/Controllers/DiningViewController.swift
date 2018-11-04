@@ -52,7 +52,6 @@ extension DiningViewController {
                     if error {
                         self.navigationVC?.addStatusBar(text: .apiError)
                     } else {
-                        print("shit")
                         self.navigationVC?.addStatusBar(text: .noInternet)
                     }
                     
