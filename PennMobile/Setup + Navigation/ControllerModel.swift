@@ -31,7 +31,7 @@ class ControllerModel: NSObject {
     
     let vcDictionary: [Page: UIViewController] = {
         var dict = [Page: UIViewController]()
-        //dict[.home] = HomeViewController()
+        dict[.home] = HomeViewController()
         dict[.dining] = DiningViewController()
         dict[.studyRoomBooking] = GSRController()
         dict[.laundry] = LaundryTableViewController()
@@ -53,19 +53,19 @@ class ControllerModel: NSObject {
     // pages order in tab bar
     var orderedPages: [Page] {
         get {
-            return [.dining, .studyRoomBooking, .laundry, .fitness, .more]
+            return [.home, .dining, .studyRoomBooking, .laundry, .more]
         }
     }
         
     // pages order in MoreViewController:
     var moreOrder: [Page] {
         get {
-            return [.news, .contacts, .about]
+            return [.fitness, .news, .contacts, .about]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
         }
     }
     
