@@ -58,6 +58,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        self.title = "About"
         
         loadMembers()
         setupLogo()
