@@ -35,6 +35,7 @@ class HomeNavigationController: UINavigationController {
     }
     
     func hideBar(animated: Bool) {
+        guard bar != nil else { return }
         if (animated) {
             UIView.animate(withDuration: 0.5) {
                 self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(-1 * self.bar!.height))
