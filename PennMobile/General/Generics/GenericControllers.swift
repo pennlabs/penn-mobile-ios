@@ -9,20 +9,28 @@
 import UIKit
 
 @objc class GenericTableViewController: UITableViewController, Trackable {
+    
+    var navigationVC: HomeNavigationController?
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
+        navigationVC = self.navigationController as? HomeNavigationController
+        navigationVC?.navigationBar.tintColor = UIColor.navigationBlue
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
+        navigationVC?.navigationBar.tintColor = UIColor.navigationBlue
         
         if trackScreen {
             trackScreen(screenName)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        print("view will disappear")
+        navigationVC?.hideBar(animated: false)
     }
     
     var screenName: String?
@@ -31,20 +39,29 @@ import UIKit
 
 class GenericViewController: UIViewController, Trackable {
     
+    var navigationVC: HomeNavigationController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
+        navigationVC = self.navigationController as? HomeNavigationController
+        navigationVC?.navigationBar.tintColor = UIColor.navigationBlue
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
+        navigationVC?.navigationBar.tintColor = UIColor.navigationBlue
         
         if trackScreen {
             trackScreen(screenName ?? title)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        print("view will disappear")
+        navigationVC?.hideBar(animated: false)
     }
     
     var screenName: String?

@@ -11,7 +11,6 @@ class DiningViewController: GenericTableViewController {
     fileprivate var viewModel = DiningViewModel()
     
     fileprivate let venueToPreload: DiningVenueName = .commons
-    fileprivate var navigationVC: HomeNavigationController?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +31,11 @@ class DiningViewController: GenericTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.title = "Dining"
-        navigationVC = self.navigationController as? HomeNavigationController
         fetchDiningHours()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationVC!.hideBar(animated: false)
         refreshControl?.endRefreshing()
     }
 }
@@ -53,9 +50,10 @@ extension DiningViewController {
                     DiningHoursData.shared.clearHours()
                     
                     if error {
-                        self.navigationVC!.addStatusBar(text: .apiError)
+                        self.navigationVC?.addStatusBar(text: .apiError)
                     } else {
-                        self.navigationVC!.addStatusBar(text: .noInternet)
+                        print("shit")
+                        self.navigationVC?.addStatusBar(text: .noInternet)
                     }
                     
                 } else {

@@ -14,15 +14,26 @@ class FitnessAPI: Requestable {
     
     let fitnessScheduleUrl = "https://api.pennlabs.org/fitness/schedule"
     
-    func fetchFitnessHours(_ completion: @escaping (_ success: Bool) -> Void) {
+    func fetchFitnessHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
         getRequest(url: fitnessScheduleUrl) { (dictionary, error, statusCode) in
-            if dictionary == nil {
-                completion(false)
+            if statusCode == nil {
+                completion(false, false)
                 return
             }
+            
+            if statusCode != 200 {
+                completion(false, true)
+                return
+            }
+            
+            if dictionary == nil {
+                completion(false, true)
+                return
+            }
+            
             let json = JSON(dictionary!)
             let success = FitnessFacilityData.shared.loadHoursForFacilities(with: json)
-            completion(success)
+            completion(success, false)
         }
     }
 }
