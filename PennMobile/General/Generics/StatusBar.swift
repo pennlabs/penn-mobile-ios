@@ -66,5 +66,13 @@ class StatusBar: UIView {
         barText.font = .primaryInformationFont
     }
     
+    func makeClear() {
+        self.isHidden = true //dom check this out
+    }
+    
+    func notClear() {
+        self.isHidden = false //dom check this out
+    }
+    
 
 }
