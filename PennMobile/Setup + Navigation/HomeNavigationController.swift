@@ -39,15 +39,10 @@ class HomeNavigationController: UINavigationController {
     func hideBar(animated: Bool) {
         guard bar != nil else { return }
         if (animated) {
-//            UIView.animate(withDuration: 0.5) {
-//
-//                self.bar!.makeClear()
-//            }
             UIView.animate(withDuration: 0.5, animations: {
                     self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(-1 * self.bar!.height))
-            }) { (success) in
-                self.bar!.makeClear() //dom check out this func in StatusBar.swift
-            }
+                    self.bar!.alpha = 0
+            })
         } else {
             self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(-1 * self.bar!.height))
         }
