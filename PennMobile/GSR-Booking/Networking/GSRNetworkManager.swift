@@ -23,7 +23,7 @@ class GSRNetworkManager: NSObject, Requestable {
     
     func getLocations (callback: @escaping (([Int:String]?) -> Void)) {
         let url = locationsUrl
-        getRequest(url: url) { (dict) in
+        getRequest(url: url) { (dict, error, statusCode) in
             if let dict = dict {
                 let json = JSON(dict)
                 self.locations = self.parseLocations(json: json)
@@ -42,7 +42,7 @@ class GSRNetworkManager: NSObject, Requestable {
 
     func getAvailability(for gsrId: Int, dateStr: String, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
         let url = "\(availUrl)/\(gsrId)?date=\(dateStr)&available=true"
-        getRequest(url: url) { (dict) in
+        getRequest(url: url) { (dict, error, statusCode) in
             var rooms: [GSRRoom]!
             if let dict = dict {
                 let json = JSON(dict)
