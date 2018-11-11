@@ -16,6 +16,7 @@ final class HomeItemTypes: ModularTableViewItemTypes {
     let laundry: HomeCellItem.Type = HomeLaundryCellItem.self
     let studyRoomBooking: HomeCellItem.Type = HomeGSRCellItem.self
     let fling: HomeCellItem.Type = HomeFlingCellItem.self
+    let event: HomeCellItem.Type = HomeEventCellItem.self
 }
 
 // MARK: - JSON Parsing

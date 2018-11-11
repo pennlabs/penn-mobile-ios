@@ -104,6 +104,8 @@ extension UIColor {
     static let interactionGreen = UIColor(r: 118, g: 191, b: 150)
     static let informationYellow = UIColor(r: 255, g: 193, b: 7)
     static let secondaryInformationGrey = UIColor(r: 155, g: 155, b: 155)
+    static let dataGreen = UIColor(r: 118, g: 191, b: 150)
+    static let highlightYellow = UIColor(r: 240, g: 180, b: 0)
 }
 
 extension UIFont {
