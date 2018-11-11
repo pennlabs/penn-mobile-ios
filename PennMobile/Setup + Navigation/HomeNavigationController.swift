@@ -29,7 +29,7 @@ class HomeNavigationController: UINavigationController {
         guard bar != nil else { return }
         bar!.isHidden = false
 
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.4) {
             self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(self.bar!.height))
         }
         
@@ -41,7 +41,7 @@ class HomeNavigationController: UINavigationController {
             }
         })
         guard animateBarDispatchItem != nil else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: animateBarDispatchItem!)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5, execute: animateBarDispatchItem!)
     }
     
     func hideBar(animated: Bool) {
@@ -52,7 +52,7 @@ class HomeNavigationController: UINavigationController {
         // Hide the bar
         guard bar != nil else { return }
         if (animated) {
-            UIView.animate(withDuration: 0.5, animations: {
+            UIView.animate(withDuration: 0.4, animations: {
                 self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(-1 * self.bar!.height))
                 }, completion: { (didComplete) in
                     self.bar!.isHidden = true
