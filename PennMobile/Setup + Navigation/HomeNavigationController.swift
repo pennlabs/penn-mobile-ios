@@ -16,6 +16,12 @@ class HomeNavigationController: UINavigationController {
         super.viewDidLoad()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        guard let bar = bar else { return }
+        bar.makeHiddenTimeRange = nil
+    }
+    
     //adds a status bar and animates it down
     func addStatusBar(text: StatusBar.statusBarText) {
         bar?.removeFromSuperview()
@@ -27,12 +33,24 @@ class HomeNavigationController: UINavigationController {
     fileprivate func animateBarDown() {
         guard bar != nil else { return }
         bar!.notClear()
-        UIView.animate(withDuration: 0.5) {
+
+        UIView.animate(withDuration: 0.5, animations: {
             self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(self.bar!.height))
+        }) { _ in
+            //self.bar!.timerIsValid = true
         }
         
+        bar!.barHideTime = DispatchTime.now()
+        bar!.makeHiddenTimeRange = [DispatchTime.now() + 2.5, DispatchTime.now() + 3.5]
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.hideBar(animated: true)
+            guard let bar = self.bar, bar.makeHiddenTimeRange != nil else { return }
+            print(bar.makeHiddenTimeRange![0] < DispatchTime.now() && bar.makeHiddenTimeRange![1] > DispatchTime.now())
+            print(bar.makeHiddenTimeRange![0])
+            print(DispatchTime.now())
+            print(bar.makeHiddenTimeRange![1])
+            if !bar.isHidden && bar.makeHiddenTimeRange![0] < DispatchTime.now() && bar.makeHiddenTimeRange![1] > DispatchTime.now() {
+                self.hideBar(animated: true)
+            }
         }
     }
     
@@ -40,13 +58,14 @@ class HomeNavigationController: UINavigationController {
         guard bar != nil else { return }
         if (animated) {
             UIView.animate(withDuration: 0.5, animations: {
-                    self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(-1 * self.bar!.height))
-                    self.bar!.alpha = 0
-            })
+                self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(-1 * self.bar!.height))
+                }, completion: { (didComplete) in
+                    self.bar!.isHidden = true
+                })
         } else {
             self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(-1 * self.bar!.height))
+            self.bar!.isHidden = true
         }
-//        bar!.makeClear()
     }
     
     func setupBar(text: StatusBar.statusBarText) {

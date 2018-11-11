@@ -21,6 +21,11 @@ class StatusBar: UIView {
     fileprivate var barText = UILabel()
     var height: Int = 0
     
+    // This is set to false when the page is navigated away from
+    var timerIsValid: Bool = true
+    var barHideTime: DispatchTime?
+    var makeHiddenTimeRange: [DispatchTime]?
+    
     fileprivate var status: statusBarText
     
     
