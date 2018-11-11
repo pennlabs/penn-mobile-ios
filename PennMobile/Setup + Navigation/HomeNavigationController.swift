@@ -11,18 +11,13 @@ import UIKit
 class HomeNavigationController: UINavigationController {
     
     fileprivate var bar: StatusBar?
+    fileprivate var animateBarDispatchItem: DispatchWorkItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        guard let bar = bar else { return }
-        bar.makeHiddenTimeRange = nil
-    }
-    
-    //adds a status bar and animates it down
+    // Adds a status bar and animates it down
     func addStatusBar(text: StatusBar.statusBarText) {
         bar?.removeFromSuperview()
         bar = StatusBar(text: text)
@@ -32,29 +27,29 @@ class HomeNavigationController: UINavigationController {
     
     fileprivate func animateBarDown() {
         guard bar != nil else { return }
-        bar!.notClear()
+        bar!.isHidden = false
 
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.5) {
             self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(self.bar!.height))
-        }) { _ in
-            //self.bar!.timerIsValid = true
         }
         
-        bar!.barHideTime = DispatchTime.now()
-        bar!.makeHiddenTimeRange = [DispatchTime.now() + 2.5, DispatchTime.now() + 3.5]
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            guard let bar = self.bar, bar.makeHiddenTimeRange != nil else { return }
-            print(bar.makeHiddenTimeRange![0] < DispatchTime.now() && bar.makeHiddenTimeRange![1] > DispatchTime.now())
-            print(bar.makeHiddenTimeRange![0])
-            print(DispatchTime.now())
-            print(bar.makeHiddenTimeRange![1])
-            if !bar.isHidden && bar.makeHiddenTimeRange![0] < DispatchTime.now() && bar.makeHiddenTimeRange![1] > DispatchTime.now() {
+        // Make a dispatch item, and schedule it for 3 seconds in the future. The dispatch item becomes invalid if the view disappears.
+        animateBarDispatchItem = DispatchWorkItem(block: {
+            guard let bar = self.bar else { return }
+            if !bar.isHidden {
                 self.hideBar(animated: true)
             }
-        }
+        })
+        guard animateBarDispatchItem != nil else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: animateBarDispatchItem!)
     }
     
     func hideBar(animated: Bool) {
+        // Cancel any in-flight timers that would call hideBar() a second time upon returning to the screen
+        if animateBarDispatchItem != nil {
+            animateBarDispatchItem!.cancel()
+        }
+        // Hide the bar
         guard bar != nil else { return }
         if (animated) {
             UIView.animate(withDuration: 0.5, animations: {

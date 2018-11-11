@@ -9,25 +9,11 @@
 import UIKit
 
 class StatusBar: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
     
     fileprivate var barText = UILabel()
     var height: Int = 0
     
-    // This is set to false when the page is navigated away from
-    var timerIsValid: Bool = true
-    var barHideTime: DispatchTime?
-    var makeHiddenTimeRange: [DispatchTime]?
-    
     fileprivate var status: statusBarText
-    
     
     enum statusBarText : String {
         case noInternet = "No Internet Connection"
@@ -70,14 +56,4 @@ class StatusBar: UIView {
         barText.textColor = .white
         barText.font = .primaryInformationFont
     }
-    
-    func makeClear() {
-        self.isHidden = true //dom check this out
-    }
-    
-    func notClear() {
-        self.isHidden = false //dom check this out
-    }
-    
-
 }
