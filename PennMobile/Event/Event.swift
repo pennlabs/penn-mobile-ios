@@ -37,7 +37,7 @@ final class Event {
     static func getDefaultEvent() -> Event {
         let name = "Thanksgiving BYO"
         let club = "Penn Labs"
-        let imageUrl = "https://theromehello.com/wp-content/uploads/2018/03/Latinas-Who-Travel-Meet-ups-and-Events.jpg"
+        let imageUrl = "http://aldianews.com/sites/default/files/styles/article_image/public/articles/Huntsman_Hall_at_the_University_of_Pennsylvania_0.jpg?itok=X6FdZpNH"
         let description =  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
         let startTimeStr = "2018-04-01T17:00:00-05:00"
         let endTimeStr = "2018-04-01T17:20:00-05:00"

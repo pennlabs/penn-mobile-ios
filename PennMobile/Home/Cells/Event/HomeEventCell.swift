@@ -74,8 +74,7 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
 
         // Compute overall height
         //let height = imageHeight + HomeViewController.cellSpacing + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
-        let height = (width / 2) + HomeViewController.cellSpacing + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
-        print(height)
+        let height = imageHeight + HomeViewController.cellSpacing + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
         return height
     }
     
@@ -219,7 +218,7 @@ extension HomeEventCell {
         descriptionLabel = UILabel()
         descriptionLabel.font = HomeEventCell.descriptionFont
         descriptionLabel.textColor = UIColor.warmGrey
-        descriptionLabel.numberOfLines = 3
+        descriptionLabel.numberOfLines = 0
         
         cardView.addSubview(descriptionLabel)
         _ = descriptionLabel.anchor(eventLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: 8, rightConstant: 8)
