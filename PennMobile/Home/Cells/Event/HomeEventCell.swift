@@ -20,10 +20,13 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
     }
     var event: Event!
     
+    fileprivate let padding = UIView.padding
+    
+    
     // MARK: - Compute Cell Height
     // Declare fonts statically, so that the height can be computed
     static let nameFont: UIFont = UIFont(name: "AvenirNext-DemiBold", size: 24)!
-    static let nameEdgeOffset: CGFloat = UIView.padding
+    static let nameEdgeOffset: CGFloat = padding
     static let locationFont: UIFont = UIFont(name: "AvenirNext-DemiBold", size: 14)!
     static let clubFont: UIFont = UIFont(name: "AvenirNext-DemiBold", size: 14)!
     static let dateFont: UIFont = UIFont(name: "AvenirNext-DemiBold", size: 14)!
@@ -71,7 +74,7 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
         clubHeightDictionary[item.event.club] = clubHeight
 
         // Compute overall height
-        let height = (UIView.padding * 5.0) + imageHeight + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
+        let height = (padding * 2.5) + imageHeight + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
         return height
     }
     
@@ -147,11 +150,7 @@ extension HomeEventCell {
 extension HomeEventCell {
     fileprivate func prepareUI() {
         prepareImageView()
-        prepareDateLabel()
-        prepareLocationLabel()
-        prepareEventLabel()
-        prepareDescriptionLabel()
-        prepareClubLabel()
+        prepareLabels()
     }
     
     private func prepareImageView() {
@@ -177,53 +176,69 @@ extension HomeEventCell {
         return 0.5 * cardWidth
     }
     
-    private func prepareDateLabel() {
-        dateLabel = UILabel()
-        dateLabel.font = HomeEventCell.dateFont
-        dateLabel.textColor = UIColor.navigationBlue
+    private func prepareLabels() {
+        // Initialize labels
+        dateLabel = getDateLabel()
+        locationLabel = getLocationLabel()
+        eventLabel = getEventLabel()
+        descriptionLabel = getDescriptionLabel()
+        clubLabel = getClubLabel()
         
+        // Add labels to subview
         cardView.addSubview(dateLabel)
-        _ = dateLabel.anchor(eventImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: UIView.padding, leftConstant: UIView.padding)
-    }
-    
-    private func prepareLocationLabel() {
-        locationLabel = UILabel()
-        locationLabel.font = HomeEventCell.locationFont
-        locationLabel.textColor = UIColor.navigationBlue
-        
         cardView.addSubview(locationLabel)
-        _ = locationLabel.anchor(eventImageView.bottomAnchor, left: nil, bottom: nil, right: cardView.rightAnchor, topConstant: UIView.padding, rightConstant: UIView.padding)
-    }
-    
-    private func prepareEventLabel() {
-        eventLabel = UILabel()
-        eventLabel.font = HomeEventCell.nameFont
-        
-        let tapGestureRecognizer = getTapGestureRecognizer()
-        eventLabel.addGestureRecognizer(tapGestureRecognizer)
-        eventLabel.isUserInteractionEnabled = true
-        
         cardView.addSubview(eventLabel)
-        _ = eventLabel.anchor(dateLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: UIView.padding, leftConstant: UIView.padding, rightConstant: UIView.padding)
-    }
-    
-    private func prepareDescriptionLabel() {
-        descriptionLabel = UILabel()
-        descriptionLabel.font = HomeEventCell.descriptionFont
-        descriptionLabel.textColor = UIColor.warmGrey
-        descriptionLabel.numberOfLines = 0
-        
         cardView.addSubview(descriptionLabel)
-        _ = descriptionLabel.anchor(eventLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: UIView.padding, leftConstant: UIView.padding, rightConstant: UIView.padding)
+        cardView.addSubview(clubLabel)
+        
+        _ = dateLabel.anchor(eventImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.centerXAnchor, topConstant: padding, leftConstant: padding, rightConstant: -10)
+        
+        _ = locationLabel.anchor(eventImageView.bottomAnchor, left: cardView.centerXAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: padding, leftConstant: 10, rightConstant: padding)
+        
+        _ = eventLabel.anchor(dateLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: padding / 2, leftConstant: padding, rightConstant: padding)
+        
+        _ = descriptionLabel.anchor(eventLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: padding / 2, leftConstant: padding, rightConstant: padding)
+        
+        _ = clubLabel.anchor(descriptionLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: nil, topConstant: padding / 2, leftConstant: padding)
+    }
+
+    fileprivate func getDateLabel() -> UILabel {
+        let label = UILabel()
+        label.font = HomeEventCell.dateFont
+        label.textColor = UIColor.navigationBlue
+        return label
     }
     
-    private func prepareClubLabel() {
-        clubLabel = UILabel()
-        clubLabel.font = HomeEventCell.clubFont
-        clubLabel.textColor = UIColor.navigationBlue
-        
-        cardView.addSubview(clubLabel)
-        _ = clubLabel.anchor(descriptionLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: nil, topConstant: UIView.padding, leftConstant: UIView.padding)
+    fileprivate func getLocationLabel() -> UILabel {
+        let label = UILabel()
+        label.font = HomeEventCell.locationFont
+        label.textColor = UIColor.navigationBlue
+        label.textAlignment = .right
+        label.numberOfLines = 0
+        return label
+    }
+    
+    fileprivate func getEventLabel() -> UILabel {
+        let label = UILabel()
+        label.font = HomeEventCell.nameFont
+        label.textColor = UIColor.primaryTitleGrey
+        return label
+    }
+    
+    fileprivate func getDescriptionLabel() -> UILabel {
+        let label = UILabel()
+        label.font = HomeEventCell.descriptionFont
+        label.textColor = UIColor.warmGrey
+        // Change this to limit the number of description lines
+        label.numberOfLines = 0
+        return label
+    }
+    
+    fileprivate func getClubLabel() -> UILabel {
+        let label = UILabel()
+        label.font = HomeEventCell.clubFont
+        label.textColor = UIColor.lightGray
+        return label
     }
 }
 
