@@ -23,10 +23,13 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
     
     // MARK: Cell Height
     
-    static let nameFont: UIFont = UIFont(name: "HelveticaNeue-Bold", size: 18)!
+    static let nameFont: UIFont = UIFont(name: "AvenirNext-DemiBold", size: 24)!
     static let nameEdgeOffset: CGFloat = 16
     
-    static let descriptionFont: UIFont = UIFont(name: "HelveticaNeue", size: 14)!
+    static let locationFont: UIFont = UIFont(name: "AvenirNext-DemiBold", size: 12)!
+    static let clubFont: UIFont = UIFont(name: "AvenirNext-DemiBold", size: 12)!
+    static let dateFont: UIFont = UIFont(name: "AvenirNext-DemiBold", size: 12)!
+    static let descriptionFont: UIFont = UIFont(name: "AvenirNext-Regular", size: 12)!
     
     private static var nameHeightDictionary = [String: CGFloat]()
     private static var descriptionHeightDictionary = [String: CGFloat]()
@@ -36,6 +39,7 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
         let imageHeight = getImageHeight()
         let width: CGFloat = UIScreen.main.bounds.width - 2 * 20 - 2 * nameEdgeOffset
         
+        // Compute event name height
         let nameHeight: CGFloat
         if let height = nameHeightDictionary[item.event.name] {
             nameHeight = height
@@ -44,6 +48,7 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
             nameHeightDictionary[item.event.name] = nameHeight
         }
         
+        // Compute event description height
         let descriptionHeight: CGFloat
         if let height = descriptionHeightDictionary[item.event.description] {
             descriptionHeight = height
@@ -51,6 +56,16 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
             descriptionHeight = item.event.description.dynamicHeight(font: descriptionFont, width: width)
             descriptionHeightDictionary[item.event.description] = descriptionHeight
         }
+        
+        // Compute event duration/location height
+        let durationLocationHeight: CGFloat
+        if let height = descriptionHeightDictionary[item.event.club] {
+            durationLocationHeight = height
+        } else {
+            durationLocationHeight = item.event.club.dynamicHeight(font: clubFont, width: width)
+            descriptionHeightDictionary[item.event.description] = descriptionHeight
+        }
+        
         let height = imageHeight + HomeViewController.cellSpacing + nameHeight + descriptionHeight + 60
         return height
     }
