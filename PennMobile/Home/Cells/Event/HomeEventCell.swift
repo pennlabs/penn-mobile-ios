@@ -73,7 +73,9 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
         clubHeightDictionary[item.event.club] = clubHeight
 
         // Compute overall height
-        let height = imageHeight + HomeViewController.cellSpacing + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
+        //let height = imageHeight + HomeViewController.cellSpacing + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
+        let height = (width / 2) + HomeViewController.cellSpacing + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
+        print(height)
         return height
     }
     
@@ -86,7 +88,7 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
     fileprivate var clubLabel: UILabel!
     fileprivate var descriptionLabel: UILabel!
     fileprivate var dateLabel: UILabel!
-    fileprivate var timeLabel: UILabel!
+    //fileprivate var timeLabel: UILabel!
     fileprivate var locationLabel: UILabel!
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -109,7 +111,7 @@ extension HomeEventCell {
         self.clubLabel.text = event.club
         self.descriptionLabel.text = event.description
         self.dateLabel.text = getDateString(for: event)
-        self.timeLabel.text = getTimeString(for: event)
+//        self.timeLabel.text = getTimeString(for: event)
         self.locationLabel.text = event.location
     }
     
@@ -153,11 +155,11 @@ extension HomeEventCell {
 extension HomeEventCell {
     fileprivate func prepareUI() {
         prepareImageView()
-        prepareEventLabel()
-        prepareClubLabel()
-        prepareDescriptionLabel()
         prepareDateLabel()
         prepareLocationLabel()
+        prepareEventLabel()
+        prepareDescriptionLabel()
+        prepareClubLabel()
     }
     
     private func prepareImageView() {
@@ -183,6 +185,24 @@ extension HomeEventCell {
         return 0.5 * cardWidth
     }
     
+    private func prepareDateLabel() {
+        dateLabel = UILabel()
+        dateLabel.font = HomeEventCell.dateFont
+        dateLabel.textColor = UIColor.navigationBlue
+        
+        cardView.addSubview(dateLabel)
+        _ = dateLabel.anchor(eventImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: 8)
+    }
+    
+    private func prepareLocationLabel() {
+        locationLabel = UILabel()
+        locationLabel.font = HomeEventCell.locationFont
+        locationLabel.textColor = UIColor.navigationBlue
+        
+        cardView.addSubview(locationLabel)
+        _ = locationLabel.anchor(eventImageView.bottomAnchor, left: nil, bottom: nil, right: cardView.rightAnchor, topConstant: 8, rightConstant: 8)
+    }
+    
     private func prepareEventLabel() {
         eventLabel = UILabel()
         eventLabel.font = HomeEventCell.nameFont
@@ -192,16 +212,7 @@ extension HomeEventCell {
         eventLabel.isUserInteractionEnabled = true
         
         cardView.addSubview(eventLabel)
-        _ = eventLabel.anchor(eventImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 12, leftConstant: HomeEventCell.nameEdgeOffset, bottomConstant: 0, rightConstant: HomeEventCell.nameEdgeOffset, widthConstant: 0, heightConstant: 0)
-    }
-    
-    private func prepareClubLabel() {
-        clubLabel = UILabel()
-        clubLabel.font = HomeEventCell.descriptionFont
-        clubLabel.textColor = UIColor.black
-        
-        cardView.addSubview(clubLabel)
-        _ = clubLabel.anchor(eventLabel.bottomAnchor, left: eventLabel.leftAnchor, bottom: nil, right: eventLabel.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = eventLabel.anchor(dateLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: 8, rightConstant: 8)
     }
     
     private func prepareDescriptionLabel() {
@@ -211,25 +222,16 @@ extension HomeEventCell {
         descriptionLabel.numberOfLines = 3
         
         cardView.addSubview(descriptionLabel)
-        _ = descriptionLabel.anchor(clubLabel.bottomAnchor, left: clubLabel.leftAnchor, bottom: nil, right: clubLabel.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = descriptionLabel.anchor(eventLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: 8, rightConstant: 8)
     }
     
-    private func prepareDateLabel() {
-        dateLabel = UILabel()
-        dateLabel.font = HomeEventCell.dateFont
-        dateLabel.textColor = UIColor.warmGrey
+    private func prepareClubLabel() {
+        clubLabel = UILabel()
+        clubLabel.font = HomeEventCell.clubFont
+        clubLabel.textColor = UIColor.navigationBlue
         
-        cardView.addSubview(dateLabel)
-        _ = dateLabel.anchor(descriptionLabel.bottomAnchor, left: descriptionLabel.leftAnchor, bottom: nil, right: descriptionLabel.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
-
-    private func prepareLocationLabel() {
-        locationLabel = UILabel()
-        locationLabel.font = HomeEventCell.locationFont
-        locationLabel.textColor = UIColor.warmGrey
-
-        cardView.addSubview(locationLabel)
-        _ = locationLabel.anchor(timeLabel.bottomAnchor, left: timeLabel.leftAnchor, bottom: cardView.bottomAnchor, right: timeLabel.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        cardView.addSubview(clubLabel)
+        _ = clubLabel.anchor(descriptionLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: nil, topConstant: 8, leftConstant: 8)
     }
 }
 
