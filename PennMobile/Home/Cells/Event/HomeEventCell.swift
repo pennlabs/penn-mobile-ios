@@ -33,6 +33,19 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
     
     private static var nameHeightDictionary = [String: CGFloat]()
     private static var descriptionHeightDictionary = [String: CGFloat]()
+    private static var dateHeightDictionary = [String: CGFloat]()
+    private static var clubHeightDictionary = [String: CGFloat]()
+    private static var locationHeightDictionary = [String: CGFloat]()
+    
+    private static func getLabelHeight(for string: String, of width: CGFloat, with font: UIFont, from dict: [String: CGFloat]) -> CGFloat {
+        let labelHeight: CGFloat
+        if let height = dict[string] {
+            labelHeight = height
+        } else {
+            labelHeight = string.dynamicHeight(font: font, width: width)
+        }
+        return labelHeight
+    }
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeEventCellItem else { return 0 }
@@ -40,33 +53,27 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
         let width: CGFloat = UIScreen.main.bounds.width - 2 * 20 - 2 * nameEdgeOffset
         
         // Compute event name height
-        let nameHeight: CGFloat
-        if let height = nameHeightDictionary[item.event.name] {
-            nameHeight = height
-        } else {
-            nameHeight = item.event.name.dynamicHeight(font: nameFont, width: width)
-            nameHeightDictionary[item.event.name] = nameHeight
-        }
+        let nameHeight = getLabelHeight(for: item.event.name, of: width, with: nameFont, from: nameHeightDictionary)
+        nameHeightDictionary[item.event.name] = nameHeight
         
         // Compute event description height
-        let descriptionHeight: CGFloat
-        if let height = descriptionHeightDictionary[item.event.description] {
-            descriptionHeight = height
-        } else {
-            descriptionHeight = item.event.description.dynamicHeight(font: descriptionFont, width: width)
-            descriptionHeightDictionary[item.event.description] = descriptionHeight
-        }
+        let descriptionHeight = getLabelHeight(for: item.event.description, of: width, with: descriptionFont, from: descriptionHeightDictionary)
+        descriptionHeightDictionary[item.event.description] = descriptionHeight
         
-        // Compute event duration/location height
-        let durationLocationHeight: CGFloat
-        if let height = descriptionHeightDictionary[item.event.club] {
-            durationLocationHeight = height
-        } else {
-            durationLocationHeight = item.event.club.dynamicHeight(font: clubFont, width: width)
-            descriptionHeightDictionary[item.event.description] = descriptionHeight
-        }
+        // Compute event date height
+        let dateHeight = getLabelHeight(for: item.event.timeDescription(), of: (width / 2) - 10.0, with: dateFont, from: dateHeightDictionary)
+        dateHeightDictionary[item.event.timeDescription()] = dateHeight
         
-        let height = imageHeight + HomeViewController.cellSpacing + nameHeight + descriptionHeight + 60
+        // Compute event location height
+        let locationHeight = getLabelHeight(for: item.event.location, of: (width / 2) - 10.0, with: locationFont, from: locationHeightDictionary)
+        locationHeightDictionary[item.event.location] = locationHeight
+        
+        // Compute event club name height
+        let clubHeight = getLabelHeight(for: item.event.club, of: (width / 2), with: clubFont, from: clubHeightDictionary)
+        clubHeightDictionary[item.event.club] = clubHeight
+
+        // Compute overall height
+        let height = imageHeight + HomeViewController.cellSpacing + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
         return height
     }
     
@@ -150,7 +157,6 @@ extension HomeEventCell {
         prepareClubLabel()
         prepareDescriptionLabel()
         prepareDateLabel()
-        prepareTimeLabel()
         prepareLocationLabel()
     }
     
@@ -200,7 +206,7 @@ extension HomeEventCell {
     
     private func prepareDescriptionLabel() {
         descriptionLabel = UILabel()
-        descriptionLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        descriptionLabel.font = HomeEventCell.descriptionFont
         descriptionLabel.textColor = UIColor.warmGrey
         descriptionLabel.numberOfLines = 3
         
@@ -210,29 +216,19 @@ extension HomeEventCell {
     
     private func prepareDateLabel() {
         dateLabel = UILabel()
-        dateLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        dateLabel.font = HomeEventCell.dateFont
         dateLabel.textColor = UIColor.warmGrey
         
         cardView.addSubview(dateLabel)
         _ = dateLabel.anchor(descriptionLabel.bottomAnchor, left: descriptionLabel.leftAnchor, bottom: nil, right: descriptionLabel.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
-    
-    private func prepareTimeLabel() {
-        timeLabel = UILabel()
-        timeLabel.font = UIFont(name: "HelveticaNeue", size: 14)
-        timeLabel.textColor = UIColor.warmGrey
-
-        cardView.addSubview(timeLabel)
-        _ = timeLabel.anchor(dateLabel.bottomAnchor, left: dateLabel.leftAnchor, bottom: nil, right: dateLabel.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
 
     private func prepareLocationLabel() {
         locationLabel = UILabel()
-        locationLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        locationLabel.font = HomeEventCell.locationFont
         locationLabel.textColor = UIColor.warmGrey
 
         cardView.addSubview(locationLabel)
-//        _ = locationLabel.anchor(nil, left: eventLabel.leftAnchor, bottom: cardView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         _ = locationLabel.anchor(timeLabel.bottomAnchor, left: timeLabel.leftAnchor, bottom: cardView.bottomAnchor, right: timeLabel.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 }

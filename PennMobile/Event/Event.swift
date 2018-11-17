@@ -30,6 +30,10 @@ final class Event {
         self.website = website
     }
     
+    func timeDescription() -> String {
+        return startTime.description + " to " + endTime.description
+    }
+    
     static func getDefaultEvent() -> Event {
         let name = "Thanksgiving BYO"
         let club = "Penn Labs"
