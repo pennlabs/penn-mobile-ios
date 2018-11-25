@@ -51,7 +51,7 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeEventCellItem else { return 0 }
         let imageHeight = getImageHeight()
-        let width: CGFloat = UIScreen.main.bounds.width - 2 * 20 - 2 * nameEdgeOffset
+        let width: CGFloat = UIScreen.main.bounds.width - (2 * 20) - (2 * nameEdgeOffset)
         
         // Compute event name height
         let nameHeight = getLabelHeight(for: item.event.name, of: width, with: nameFont, from: nameHeightDictionary)
@@ -191,11 +191,20 @@ extension HomeEventCell {
         cardView.addSubview(descriptionLabel)
         cardView.addSubview(clubLabel)
         
-        _ = dateLabel.anchor(eventImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.centerXAnchor, topConstant: padding, leftConstant: padding, rightConstant: -10)
+        _ = dateLabel.anchor(eventImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.centerXAnchor, topConstant: padding, leftConstant: padding, rightConstant: 10)
         
         _ = locationLabel.anchor(eventImageView.bottomAnchor, left: cardView.centerXAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: padding, leftConstant: 10, rightConstant: padding)
         
-        _ = eventLabel.anchor(dateLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: padding / 2, leftConstant: padding, rightConstant: padding)
+        // Custom constraints for eventLabel, to constrain itself to the max(dateLabel, locationLabel)
+        eventLabel.translatesAutoresizingMaskIntoConstraints = false
+        eventLabel.topAnchor.constraint(greaterThanOrEqualTo: dateLabel.bottomAnchor, constant: padding / 2).isActive = true
+        let lowPriorityEventAnchor = eventLabel.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: padding / 2)
+        lowPriorityEventAnchor.priority = 999 // 1 less than the dateLabel priority
+        lowPriorityEventAnchor.isActive = true
+        eventLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: padding).isActive = true
+        eventLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -padding).isActive = true
+        
+        //_ = eventLabel.anchor(dateLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: padding / 2, leftConstant: padding, rightConstant: padding)
         
         _ = descriptionLabel.anchor(eventLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: padding / 2, leftConstant: padding, rightConstant: padding)
         
