@@ -51,7 +51,7 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeEventCellItem else { return 0 }
         let imageHeight = getImageHeight()
-        let width: CGFloat = UIScreen.main.bounds.width - (2 * 20) - (2 * nameEdgeOffset)
+        let width: CGFloat = UIScreen.main.bounds.width - 2 * 20 - 2 * nameEdgeOffset
         
         // Compute event name height
         let nameHeight = getLabelHeight(for: item.event.name, of: width, with: nameFont, from: nameHeightDictionary)
@@ -72,9 +72,9 @@ final class HomeEventCell: UITableViewCell, HomeCellConformable {
         // Compute event club name height
         let clubHeight = getLabelHeight(for: item.event.club, of: (width / 2), with: clubFont, from: clubHeightDictionary)
         clubHeightDictionary[item.event.club] = clubHeight
-
+        
         // Compute overall height
-        let height = (padding * 2.5) + imageHeight + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
+        let height = (padding * 5) + imageHeight + nameHeight + descriptionHeight + max(dateHeight, locationHeight) + clubHeight
         return height
     }
     
@@ -106,11 +106,11 @@ extension HomeEventCell {
         self.eventLabel.text = event.name
         self.clubLabel.text = event.club
         self.descriptionLabel.text = event.description
-        self.dateLabel.text = getDateString(for: event)
+        self.dateLabel.text = event.timeDescription()
         self.locationLabel.text = event.location
     }
     
-    private func getTimeString(for event: Event) -> String {
+    /*private func getTimeString(for event: Event) -> String {
         let now = Date()
         if event.startTime < now && now < event.endTime && event.startTime.isToday {
             return "Happening now"
@@ -128,8 +128,8 @@ extension HomeEventCell {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, MMM d, yyyy"
         
-        return "\(formatter.string(from: event.startTime))"
-    }
+        return "This is a long date because there is stuff in front etc... \(formatter.string(from: event.startTime))"
+    }*/
 }
 
 // MARK: - Tap Gesture Recognizers
@@ -198,8 +198,9 @@ extension HomeEventCell {
         // Custom constraints for eventLabel, to constrain itself to the max(dateLabel, locationLabel)
         eventLabel.translatesAutoresizingMaskIntoConstraints = false
         eventLabel.topAnchor.constraint(greaterThanOrEqualTo: dateLabel.bottomAnchor, constant: padding / 2).isActive = true
-        let lowPriorityEventAnchor = eventLabel.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: padding / 2)
-        lowPriorityEventAnchor.priority = 999 // 1 less than the dateLabel priority
+        eventLabel.topAnchor.constraint(greaterThanOrEqualTo: locationLabel.bottomAnchor, constant: padding / 2).isActive = true
+        let lowPriorityEventAnchor = eventLabel.topAnchor.constraint(equalTo: topAnchor)
+        lowPriorityEventAnchor.priority = 500 // less than the dateLabel, locationLabel priorities
         lowPriorityEventAnchor.isActive = true
         eventLabel.leftAnchor.constraint(equalTo: cardView.leftAnchor, constant: padding).isActive = true
         eventLabel.rightAnchor.constraint(equalTo: cardView.rightAnchor, constant: -padding).isActive = true
@@ -215,6 +216,8 @@ extension HomeEventCell {
         let label = UILabel()
         label.font = HomeEventCell.dateFont
         label.textColor = UIColor.navigationBlue
+        label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }
     

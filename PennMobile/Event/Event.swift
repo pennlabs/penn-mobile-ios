@@ -31,7 +31,7 @@ final class Event {
     }
     
     func timeDescription() -> String {
-        return startTime.description + " to " + endTime.description
+        return "date" //startTime.description + " to " + endTime.description
     }
     
     static func getDefaultEvent() -> Event {
@@ -43,7 +43,7 @@ final class Event {
 
         let startTimeStr = "2018-04-01T17:00:00-05:00"
         let endTimeStr = "2018-04-01T17:20:00-05:00"
-        let location = "JMHH 365 in Huntsman Hall at the University of Pennsylvania in Philadelphia"
+        let location = "JMHH 365"
         
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
