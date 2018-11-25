@@ -31,7 +31,29 @@ final class Event {
     }
     
     func timeDescription() -> String {
-        return "date" //startTime.description + " to " + endTime.description
+        return getTimeString(for: self) + " on " + getDateString(for: self)
+    }
+    
+    private func getTimeString(for event: Event) -> String {
+        let now = Date()
+        if event.startTime < now && now < event.endTime && event.startTime.isToday {
+        return "Happening now"
+        }
+
+        let formatter = DateFormatter()
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
+        formatter.dateFormat = "h:mma"
+
+        //return "\(formatter.string(from: event.startTime)) to \(formatter.string(from: event.endTime))"
+        return "\(formatter.string(from: event.startTime))"
+    }
+     
+    private func getDateString(for event: Event) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, MMM d"
+
+        return "\(formatter.string(from: event.startTime))"
     }
     
     static func getDefaultEvent() -> Event {

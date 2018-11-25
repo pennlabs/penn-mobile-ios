@@ -109,27 +109,6 @@ extension HomeEventCell {
         self.dateLabel.text = event.timeDescription()
         self.locationLabel.text = event.location
     }
-    
-    /*private func getTimeString(for event: Event) -> String {
-        let now = Date()
-        if event.startTime < now && now < event.endTime && event.startTime.isToday {
-            return "Happening now"
-        }
-        
-        let formatter = DateFormatter()
-        formatter.amSymbol = "am"
-        formatter.pmSymbol = "pm"
-        formatter.dateFormat = "h:mma"
-        
-        return "\(formatter.string(from: event.startTime)) to \(formatter.string(from: event.endTime))"
-    }
-    
-    private func getDateString(for event: Event) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, MMM d, yyyy"
-        
-        return "This is a long date because there is stuff in front etc... \(formatter.string(from: event.startTime))"
-    }*/
 }
 
 // MARK: - Tap Gesture Recognizers
