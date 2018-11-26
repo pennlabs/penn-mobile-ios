@@ -30,11 +30,39 @@ final class Event {
         self.website = website
     }
     
+    func timeDescription() -> String {
+        return getTimeString(for: self) + " on " + getDateString(for: self)
+    }
+    
+    private func getTimeString(for event: Event) -> String {
+        let now = Date()
+        if event.startTime < now && now < event.endTime && event.startTime.isToday {
+        return "Happening now"
+        }
+
+        let formatter = DateFormatter()
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
+        formatter.dateFormat = "h:mma"
+
+        //return "\(formatter.string(from: event.startTime)) to \(formatter.string(from: event.endTime))"
+        return "\(formatter.string(from: event.startTime))"
+    }
+     
+    private func getDateString(for event: Event) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, MMM d"
+
+        return "\(formatter.string(from: event.startTime))"
+    }
+    
     static func getDefaultEvent() -> Event {
-        let name = "Thanksgiving BYO"
+        let name = "Advance Registration"
         let club = "Penn Labs"
-        let imageUrl = "https://theromehello.com/wp-content/uploads/2018/03/Latinas-Who-Travel-Meet-ups-and-Events.jpg"
-        let description =  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        let imageUrl = "https://i.imgur.com/xu0XTjl.png"
+        //let description =  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        let description =  "Advance Registration kicks off on Tuesday for the spring semester. Don’t forget to use penncourses.com for all you course search needs!"
+
         let startTimeStr = "2018-04-01T17:00:00-05:00"
         let endTimeStr = "2018-04-01T17:20:00-05:00"
         let location = "JMHH 365"

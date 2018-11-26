@@ -56,6 +56,8 @@ extension UIView {
         return anchors
     }
     
+    // Value to be used for element padding app-wide
+    static let padding: CGFloat = 14.0
 }
 
 extension UIColor {

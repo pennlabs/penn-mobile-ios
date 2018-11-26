@@ -17,7 +17,7 @@ final class EventTableViewModel: ModularTableViewModel {}
 final class EventViewController: GenericViewController {
     
     fileprivate var eventsTableView: ModularTableView!
-    fileprivate var scheduleTableView: UITableView!
+    //fileprivate var scheduleTableView: UITableView!
     fileprivate var model: EventTableViewModel!
     fileprivate var headerToolbar: UIToolbar!
     
@@ -31,7 +31,7 @@ final class EventViewController: GenericViewController {
         prepareScheduleTableView()
         prepareEventsTableView()
         
-        scheduleTableView.isHidden = true
+        //scheduleTableView.isHidden = true
         eventsTableView.isHidden = false
     }
     
@@ -75,7 +75,7 @@ extension EventViewController: HairlineRemovable {
     internal func switchTabMode(_ segment: UISegmentedControl) {
         let shouldShowEvents = segment.selectedSegmentIndex == 0
         eventsTableView.isHidden = !shouldShowEvents
-        scheduleTableView.isHidden = shouldShowEvents
+        //scheduleTableView.isHidden = shouldShowEvents
     }
 }
 
@@ -89,6 +89,7 @@ extension EventViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // This is only for the timeline tableview (very confusing having it in here)
         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell",
                                                  for: indexPath) as! TimelineTableViewCell
         
@@ -173,7 +174,7 @@ extension EventViewController {
         self.setEventsTableViewModel(model!)
         self.eventsTableView.reloadData()
         self.setScheduleTableViewModel(model!)
-        self.scheduleTableView.reloadData()
+        //self.scheduleTableView.reloadData()
         self.fetchCellSpecificData {
         }
         
@@ -187,7 +188,7 @@ extension EventViewController {
                 self.setEventsTableViewModel(model)
                 self.eventsTableView.reloadData()
                 self.setScheduleTableViewModel(model)
-                self.scheduleTableView.reloadData()
+                //self.scheduleTableView.reloadData()
                 self.fetchCellSpecificData {
                     // TODO: do something when done fetching cell specific data
                 }
@@ -241,7 +242,7 @@ extension EventViewController: EventCellDelegate {
 // MARK: - Prepare TableViews
 extension EventViewController {
     func prepareScheduleTableView() {
-        scheduleTableView = UITableView()
+        /*scheduleTableView = UITableView()
         scheduleTableView.backgroundColor = .navBarGrey
         scheduleTableView.separatorStyle = .none
         scheduleTableView.allowsSelection = false
@@ -265,7 +266,7 @@ extension EventViewController {
         } else {
             scheduleTableView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
             scheduleTableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        }
+        }*/
     }
     
     func prepareEventsTableView() {

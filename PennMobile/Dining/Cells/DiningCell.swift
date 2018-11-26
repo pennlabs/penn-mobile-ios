@@ -128,7 +128,7 @@ extension DiningCell {
         titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
         
         statusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 2).isActive = true
         
         timesLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         timesLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3).isActive = true
