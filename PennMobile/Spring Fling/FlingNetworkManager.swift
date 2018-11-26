@@ -16,7 +16,7 @@ final class FlingNetworkManager: Requestable {
     fileprivate let flingUrl = "https://api.pennlabs.org/events/fling"
     
     func fetchModel(_ completion: @escaping (_ model: FlingTableViewModel?) -> Void) {
-        getRequest(url: flingUrl) { (dict) in
+        getRequest(url: flingUrl) { (dict, error, statusCode) in
             var model: FlingTableViewModel? = FlingTableViewModel()
             if let dict = dict {
                 let json = JSON(dict)

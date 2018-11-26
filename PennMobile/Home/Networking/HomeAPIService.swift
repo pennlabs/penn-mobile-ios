@@ -14,7 +14,7 @@ final class HomeAPIService: Requestable {
         
     func fetchModel(_ completion: @escaping (HomeTableViewModel?) -> Void) {
         let url = "http://api-dev.pennlabs.org/homepage"
-        getRequest(url: url) { (dict) in
+        getRequest(url: url) { (dict, error, statusCode) in
             var model: HomeTableViewModel? = HomeTableViewModel()
             if let dict = dict {
                 let json = JSON(dict)

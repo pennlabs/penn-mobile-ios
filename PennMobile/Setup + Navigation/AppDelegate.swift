@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController = TabBarController()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: tabBarController)
+        window?.rootViewController = HomeNavigationController(rootViewController: tabBarController)
         window?.makeKeyAndVisible()
         
         // Keep track locally of app sessions (for app review prompting)
