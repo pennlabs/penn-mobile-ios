@@ -49,6 +49,9 @@ extension HomeCalendarCell {
     private func prepareTitleLabel() {
         titleLabel = UILabel()
         titleLabel.text = "Upcoming Events"
+        titleLabel.font = .primaryTitleFont
+        titleLabel.textColor = .primaryTitleGrey
+        titleLabel.textAlignment = .left
         
         cardView.addSubview(titleLabel)
         _ = titleLabel.anchor(cardView.topAnchor, left: cardView.leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 20, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
@@ -61,10 +64,4 @@ extension HomeCalendarCell {
         _ = myLabel.anchor(nil, left: cardView.leftAnchor, bottom: cardView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 20, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 0)   }
 }
 
-// MARK: - Setup Item
-extension HomeCalendarCell {
-    func setupCell(with item: HomeCalendarCellItem) {
-        self.myLabel.text = item.myData
-    }
-}
 
