@@ -33,7 +33,7 @@ class ControllerModel: NSObject {
     
     let vcDictionary: [Page: UIViewController] = {
         var dict = [Page: UIViewController]()
-        //dict[.home] = HomeViewController()
+        dict[.home] = HomeViewController()
         dict[.dining] = DiningViewController()
         dict[.studyRoomBooking] = GSRController()
         dict[.laundry] = LaundryTableViewController()
@@ -57,7 +57,7 @@ class ControllerModel: NSObject {
     // pages order in tab bar
     var orderedPages: [Page] {
         get {
-            return [.dining, .studyRoomBooking, .laundry, .fitness, .more]
+            return [.home, .dining, .studyRoomBooking, .laundry, .more]
         }
     }
         
