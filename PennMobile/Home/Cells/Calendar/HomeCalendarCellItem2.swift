@@ -1,47 +1,48 @@
 //
-//  HomeCalendarCellItem.swift
+//  HomeCalendarCellItem2.swift
 //  PennMobile
 //
-//  Created by Marta García Ferreiro on 11/6/18.
+//  Created by Marta García Ferreiro on 12/7/18.
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 
 import Foundation
 
-final class HomeCalendarCellItem: HomeCellItem {
+final class HomeCalendarCellItem2: HomeCellItem {
     
     static var jsonKey: String {
         return "calendar"
     }
     
     var events: [CalendarEvent]?
-    var event: CalendarEvent
     
-    init(event: CalendarEvent) {
-        //self.events = events
-        self.event = CalendarEvent.getDefaultCalendarEvent()
+    init(defaultEvent: CalendarEvent) {
+        CalendarAPI.instance.fetchCalendar { events in
+            self.events = events
+            //print(events!)
+        }
     }
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
-        return HomeCalendarCellItem(event: CalendarEvent.getDefaultCalendarEvent())
+        return HomeCalendarCellItem2(defaultEvent: CalendarEvent.getDefaultCalendarEvent())
         // TODO: Implement me
-        guard let json = json else { return nil }
-        return try? HomeCalendarCellItem(json: json)
+        //guard let json = json else { return nil }
+        //return try? HomeCalendarCellItem2(json: json)
     }
     
     static var associatedCell: ModularTableViewCell.Type {
-        return HomeCalendarCell.self
+        return HomeCalendarCellTable.self
     }
     
     func equals(item: HomeCellItem) -> Bool {
-        guard let item = item as? HomeCalendarCellItem else { return false }
+        guard let item = item as? HomeCalendarCellItem2 else { return false }
         guard let events = events, let itemEvents = item.events else { return false }
         return events == itemEvents
     }
 }
 
 // MARK: - API Fetching
-extension HomeCalendarCellItem: HomeAPIRequestable {
+extension HomeCalendarCellItem2: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
         CalendarAPI.instance.fetchCalendar { events in
             self.events = events
@@ -53,11 +54,10 @@ extension HomeCalendarCellItem: HomeAPIRequestable {
 }
 
 // MARK: - JSON Parsing
-extension HomeCalendarCellItem {
+extension HomeCalendarCellItem2 {
     convenience init(json: JSON) throws {
         let event = CalendarEvent.getDefaultCalendarEvent()
-        //let events = try CalendarEvent(json: json)
-        self.init(event: event)
+        self.init(defaultEvent: event)
         print("initialized event")
     }
 }

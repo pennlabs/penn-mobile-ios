@@ -16,6 +16,8 @@ class CalendarAPI: Requestable {
     
     let calendarUrl = "https://api.pennlabs.org/calendar/"
     
+    var calendarEvents: [CalendarEvent]?
+    
     func fetchCalendar(_ completion: @escaping (_ events: [CalendarEvent]?) -> Void) {
         getRequest(url: calendarUrl) { (dictionary) in
             if dictionary == nil {
@@ -39,6 +41,7 @@ class CalendarAPI: Requestable {
                     let event = CalendarEvent(name: name, start: startDate, end: endDate)
                     events.append(event)
                 }
+                self.calendarEvents = events
                 completion(events)
             }
         }
