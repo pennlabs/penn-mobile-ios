@@ -57,6 +57,9 @@ extension HomeItemTypes {
     func getDefaultItems() -> [HomeCellItem.Type] {
         var types = [HomeCellItem.Type]()
         types.append(calendar)
+        types.append(fling)
+        types.append(dining)
+        //types.append(event)
         return types
     }
 }

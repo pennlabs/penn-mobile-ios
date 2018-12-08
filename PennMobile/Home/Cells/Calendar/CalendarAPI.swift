@@ -12,6 +12,7 @@ import SwiftyJSON
 class CalendarAPI: Requestable {
     
     static let instance = CalendarAPI()
+    private init() {}
     
     let calendarUrl = "https://api.pennlabs.org/calendar/"
     
@@ -35,7 +36,7 @@ class CalendarAPI: Requestable {
                     let startDate = dateFormatter.date(from: start)!
                     let endDate = dateFormatter.date(from: end)!
                     
-                    let event = CalendarEvent(start: startDate, name: name, end: endDate)
+                    let event = CalendarEvent(name: name, start: startDate, end: endDate)
                     events.append(event)
                 }
                 completion(events)
@@ -44,4 +45,3 @@ class CalendarAPI: Requestable {
     }
 
 }
-

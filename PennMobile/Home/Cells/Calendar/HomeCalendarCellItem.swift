@@ -10,30 +10,32 @@ import Foundation
 
 final class HomeCalendarCellItem: HomeCellItem {
     
+    static var jsonKey: String {
+        return "calendar"
+    }
+    var events: [CalendarEvent]?
+    var event: CalendarEvent
+    
+    init(event: CalendarEvent) {
+        //self.events = events
+        self.event = CalendarEvent.getDefaultCalendarEvent()
+    }
+    
+    static func getItem(for json: JSON?) -> HomeCellItem? {
+        return HomeCalendarCellItem(event: CalendarEvent.getDefaultCalendarEvent())
+        // TODO: Implement me
+        guard let json = json else { return nil }
+        return try? HomeCalendarCellItem(json: json)
+    }
+    
     static var associatedCell: ModularTableViewCell.Type {
         return HomeCalendarCell.self
     }
     
-    var events: [CalendarEvent]?
-    
     func equals(item: HomeCellItem) -> Bool {
         guard let item = item as? HomeCalendarCellItem else { return false }
-        guard let events = events, let itemEvents = item.events else { return false }
-        return events == itemEvents
+        return event.name == item.event.name
     }
-    /*func equals(item: HomeCellItem) -> Bool {
-        guard let item = item as? HomeCalendarCellItem else { return false }
-        return events! == item.events!
-    }*/
-    
-    static var jsonKey: String {
-        return "calendar"
-    }
-    
-    static func getItem(for json: JSON?) -> HomeCellItem? {
-        return HomeCalendarCellItem()
-    }
-    
 }
 
 // MARK: - API Fetching
@@ -41,8 +43,25 @@ extension HomeCalendarCellItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
         CalendarAPI.instance.fetchCalendar { events in
             self.events = events
+            print("fetched calendar items")
             completion()
         }
+    }
+}
+
+// MARK: - JSON Parsing
+extension HomeCalendarCellItem {
+    convenience init(json: JSON) throws {
+        let event = CalendarEvent.getDefaultCalendarEvent()
+        //let events = try CalendarEvent(json: json)
+        self.init(event: event)
+        print("initialized event")
+    }
+}
+
+extension Array where Element == HomeCalendarCellItem {
+    func equals(_ items: [HomeCalendarCellItem]) -> Bool {
+        return self.map { $0.event }.equals(items.map { $0.event })
     }
 }
 
