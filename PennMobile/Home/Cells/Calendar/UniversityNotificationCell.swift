@@ -52,6 +52,7 @@ class UniversityNotificationCell: UITableViewCell {
                 event.notes = notes
                 event.location = location
                 event.calendar = eventStore.defaultCalendarForNewEvents
+                print(event.eventIdentifier)
                 do {
                     try eventStore.save(event, span: EKSpan.thisEvent)
                     print("event saved")

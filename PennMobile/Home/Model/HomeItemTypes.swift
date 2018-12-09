@@ -18,7 +18,6 @@ final class HomeItemTypes: ModularTableViewItemTypes {
     let fling: HomeCellItem.Type = HomeFlingCellItem.self
     let event: HomeCellItem.Type = HomeEventCellItem.self
     let calendar: HomeCellItem.Type = HomeCalendarCellItem.self
-    let calendarTable: HomeCellItem.Type = HomeCalendarCellItem2.self
 }
 
 // MARK: - JSON Parsing
@@ -57,8 +56,7 @@ extension HomeItemTypes {
     **/
     func getDefaultItems() -> [HomeCellItem.Type] {
         var types = [HomeCellItem.Type]()
-        //types.append(calendar)
-        types.append(calendarTable)
+        types.append(calendar)
         return types
     }
 }

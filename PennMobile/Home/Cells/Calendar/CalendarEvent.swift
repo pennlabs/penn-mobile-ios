@@ -44,26 +44,6 @@ final class CalendarEvent {
     }
 }
 
-// MARK: - JSON Parsing
-extension CalendarEvent {
-    convenience init(json: JSON) throws {
-        guard let name = json["name"].string,
-            let startTimeStr = json["start"].string,
-            let endTimeStr = json["end"].string
-            else {
-                throw NetworkingError.jsonError
-        }
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        
-        guard let startTime = formatter.date(from: startTimeStr), let endTime = formatter.date(from: endTimeStr) else {
-            throw NetworkingError.jsonError
-        }
-        self.init(name: name, start: startTime, end: endTime)
-    }
-}
-
 extension CalendarEvent: Equatable {
     static func == (lhs: CalendarEvent, rhs: CalendarEvent) -> Bool {
         return lhs.name == rhs.name

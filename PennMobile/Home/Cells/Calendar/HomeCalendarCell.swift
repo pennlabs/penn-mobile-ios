@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import EventKit
 
 final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
+    var cardView: UIView! = UIView()
     
-    var eventStore : EKEventStore = EKEventStore()
+    var delegate: ModularTableViewCellDelegate!
     
     static var identifier: String = "calendarCell"
     
@@ -22,53 +22,25 @@ final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
         }
     }
     
-    var delegate: ModularTableViewCellDelegate!
-    var event: CalendarEvent!
-    
-    fileprivate let padding = UIView.padding
-    
-    // MARK: - Compute Cell Height
-    // Declare fonts statically, so that the height can be computed
-    static let nameFont: UIFont = UIFont(name: "AvenirNext-DemiBold", size: 24)!
-    static let nameEdgeOffset: CGFloat = padding
-    static let dateFont: UIFont = UIFont(name: "AvenirNext-DemiBold", size: 14)!
-    
-    private static var nameHeightDictionary = [String: CGFloat]()
-    private static var dateHeightDictionary = [String: CGFloat]()
-    
-    private static func getLabelHeight(for string: String, of width: CGFloat, with font: UIFont, from dict: [String: CGFloat]) -> CGFloat {
-        let labelHeight: CGFloat
-        if let height = dict[string] {
-            labelHeight = height
-        } else {
-            labelHeight = string.dynamicHeight(font: font, width: width)
-        }
-        return labelHeight
-    }
-    
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
-        guard let item = item as? HomeCalendarCellItem else { return 0 }
-        let width: CGFloat = UIScreen.main.bounds.width - 2 * 20 - 2 * nameEdgeOffset
-        
-        // Compute event name height
-        let nameHeight = getLabelHeight(for: item.event.name, of: width, with: nameFont, from: nameHeightDictionary)
-        nameHeightDictionary[item.event.name] = nameHeight
-        
-        // Compute event date height
-        let dateHeight = getLabelHeight(for: item.event.getDateString(), of: (width / 2) - 10.0, with: dateFont, from: dateHeightDictionary)
-        dateHeightDictionary[item.event.getDateString()] = dateHeight
-        
-        // Compute overall height
-        let height = (padding * 5) + nameHeight + dateHeight
-        return height
+        guard let item = item as? HomeCalendarCellItem else { return 0.0 }
+        // cell height = (venues * venueHeight) + header + footer + cellInset
+        return (CGFloat(item.events?.count ?? 0) * UniversityNotificationCell.cellHeight) + (90.0 + 38.0 + 20.0)
     }
     
-    // MARK: Declare UI Elements
-    var cardView: UIView! = UIView()
-    fileprivate var eventLabel: UILabel!
-    fileprivate var dateLabel: UILabel!
-    fileprivate var addToCalendarButton: UIButton!
+    var events: [CalendarEvent]?
     
+    // Custom UI elements (some should be abstracted)
+    fileprivate let safeInsetValue: CGFloat = 14
+    fileprivate var safeArea: UIView!
+    
+    fileprivate var secondaryTitleLabel: UILabel!
+    fileprivate var primaryTitleLabel: UILabel!
+    
+    fileprivate var dividerLine: UIView!
+    fileprivate var calendarEventTableView: UITableView!
+    
+    // Mark: - Init
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
@@ -78,99 +50,149 @@ final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Add event to calendar
-    func addEventToCalendar(title: String, startDate: Date, endDate: Date, notes: String?, location: String) {
-        eventStore.requestAccess(to: EKEntityType.event, completion: {
-            granted, error in
-            if (granted) && (error == nil) {
-                print("granted \(granted)")
-                print("error  \(String(describing: error))")
-                self.eventStore = EKEventStore()
-                let event: EKEvent = EKEvent(eventStore: self.eventStore)
-                event.title = title
-                event.startDate = startDate
-                event.endDate = endDate
-                event.notes = notes
-                event.location = location
-                event.calendar = self.eventStore.defaultCalendarForNewEvents
-                do {
-                    try self.eventStore.save(event, span: EKSpan.thisEvent)
-                    print("event saved")
-                } catch {
-                }
-            }
-        })
-    }
 }
 
-// MARK: - Setup Home Cell Item
+// MARK: - Setup UI Elements
 extension HomeCalendarCell {
     fileprivate func setupCell(with item: HomeCalendarCellItem) {
-        self.event = item.event
-        //self.event = CalendarEvent.getDefaultCalendarEvent()
-        self.eventLabel.text = event.name
-        self.dateLabel.text = event.getDateString()
+        events = item.events
+        print(events?.count ?? 0)
+        calendarEventTableView.reloadData()
+        secondaryTitleLabel.text = "UNIVERSITY NOTIFICATIONS"
+        primaryTitleLabel.text = "Upcoming University Events"
     }
 }
 
-// MARK: - Prepare UI
+// MARK: - UITableViewDataSource
+extension HomeCalendarCell: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return events?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: UniversityNotificationCell.identifier, for: indexPath) as! UniversityNotificationCell
+        let event = events![indexPath.row]
+        cell.calendarEvent = event
+        return cell
+    }
+}
+
+// MARK: - Initialize & Layout UI Elements
 extension HomeCalendarCell {
     fileprivate func prepareUI() {
-        prepareLabels()
+        prepareSafeArea()
+        prepareTitleLabels()
+        prepareDividerLine()
+        prepareTableView()
     }
     
-    private func prepareLabels() {
-        // Initialize labels
-        dateLabel = getDateLabel()
-        eventLabel = getEventLabel()
-        addToCalendarButton = getAddToCalendarButton()
+    private func prepareSafeArea() {
+        safeArea = getSafeAreaView()
         
-        // Add labels to subview
-        cardView.addSubview(dateLabel)
-        cardView.addSubview(eventLabel)
-        cardView.addSubview(addToCalendarButton)
+        cardView.addSubview(safeArea)
         
-        _ = eventLabel.anchor(cardView.topAnchor, left: cardView.leftAnchor, bottom: nil, right: nil, topConstant: padding, leftConstant: padding, rightConstant: 10)
-        _ = dateLabel.anchor(cardView.topAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.centerXAnchor, topConstant: 60, leftConstant: padding, bottomConstant: padding, rightConstant: 10)
-        _ = addToCalendarButton.anchor(cardView.topAnchor, left: nil, bottom: nil, right: cardView.rightAnchor, topConstant: 60, leftConstant: 10, bottomConstant: padding, rightConstant: padding)
+        safeArea.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: safeInsetValue).isActive = true
+        safeArea.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.topAnchor.constraint(equalTo: cardView.topAnchor, constant: safeInsetValue).isActive = true
+        safeArea.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -safeInsetValue).isActive = true
+    }
+    
+    // MARK: Labels
+    fileprivate func prepareTitleLabels() {
+        secondaryTitleLabel = getSecondaryLabel()
+        primaryTitleLabel = getPrimaryLabel()
         
-    }
-    
-    fileprivate func getDateLabel() -> UILabel {
-        let label = UILabel()
-        label.font = HomeEventCell.dateFont
-        label.textColor = UIColor.navigationBlue
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        return label
-    }
-    
-    fileprivate func getEventLabel() -> UILabel {
-        let label = UILabel()
-        label.font = HomeEventCell.nameFont
-        label.textColor = UIColor.primaryTitleGrey
-        return label
-    }
-    
-    fileprivate func getAddToCalendarButton() -> UIButton {
-        let button = UIButton()
-        button.backgroundColor = UIColor.navigationBlue
-        button.titleLabel?.font =  HomeEventCell.clubFont
-        button.setTitle("Add To Calendar", for: [])
-        button.setTitleColor(UIColor.white, for: [])
+        cardView.addSubview(secondaryTitleLabel)
+        cardView.addSubview(primaryTitleLabel)
         
-        button.layer.cornerRadius = 40.0/2
-        button.layer.masksToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 150.0).isActive = true
-        button.addTarget(self, action: #selector(didTapAddToCalendarButton), for: .touchUpInside)
-        return button
+        secondaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        secondaryTitleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        
+        primaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        primaryTitleLabel.topAnchor.constraint(equalTo: secondaryTitleLabel.bottomAnchor, constant: 10).isActive = true
     }
     
-    @objc func didTapAddToCalendarButton(sender: UIButton!) {
-        addEventToCalendar(title: event.name, startDate: event.start, endDate: event.end, notes: "", location: "")
+    // MARK: Divider Line
+    fileprivate func prepareDividerLine() {
+        dividerLine = getDividerLine()
+        
+        cardView.addSubview(dividerLine)
+        
+        dividerLine.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        dividerLine.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        dividerLine.topAnchor.constraint(equalTo: primaryTitleLabel.bottomAnchor, constant: 14).isActive = true
+        dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
     }
-
+    
+    // Mark: TableView
+    fileprivate func prepareTableView() {
+        calendarEventTableView = getEventTableView()
+        
+        cardView.addSubview(calendarEventTableView)
+        
+        calendarEventTableView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor).isActive = true
+        calendarEventTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
+                                                    constant: safeInsetValue / 2).isActive = true
+        calendarEventTableView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor).isActive = true
+        calendarEventTableView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor).isActive = true
+    }
 }
+
+// MARK: - UITableViewDelegate
+extension HomeCalendarCell: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UniversityNotificationCell.cellHeight
+    }
+}
+
+// MARK: - Define UI Elements
+extension HomeCalendarCell {
+    
+    fileprivate func getSafeAreaView() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }
+    
+    fileprivate func getSecondaryLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryTitleFont
+        label.textColor = .secondaryTitleGrey
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
+    fileprivate func getPrimaryLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .primaryTitleFont
+        label.textColor = .primaryTitleGrey
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
+    fileprivate func getDividerLine() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .allbirdsGrey
+        view.layer.cornerRadius = 2.0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }
+    
+    fileprivate func getEventTableView() -> UITableView {
+        let tableView = UITableView()
+        tableView.backgroundColor = .clear
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
+        tableView.register(UniversityNotificationCell.self, forCellReuseIdentifier: UniversityNotificationCell.identifier)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }
+}
+
+
+

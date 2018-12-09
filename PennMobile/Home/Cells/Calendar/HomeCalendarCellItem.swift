@@ -15,18 +15,18 @@ final class HomeCalendarCellItem: HomeCellItem {
     }
     
     var events: [CalendarEvent]?
-    var event: CalendarEvent
     
-    init(event: CalendarEvent) {
-        //self.events = events
-        self.event = CalendarEvent.getDefaultCalendarEvent()
+    init(defaultEvent: CalendarEvent) {
+        CalendarAPI.instance.fetchCalendar { events in
+            self.events = events
+        }
     }
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
-        return HomeCalendarCellItem(event: CalendarEvent.getDefaultCalendarEvent())
+        return HomeCalendarCellItem(defaultEvent: CalendarEvent.getDefaultCalendarEvent())
         // TODO: Implement me
-        guard let json = json else { return nil }
-        return try? HomeCalendarCellItem(json: json)
+        //guard let json = json else { return nil }
+        //return try? HomeCalendarCellItem2(json: json)
     }
     
     static var associatedCell: ModularTableViewCell.Type {
@@ -56,8 +56,7 @@ extension HomeCalendarCellItem: HomeAPIRequestable {
 extension HomeCalendarCellItem {
     convenience init(json: JSON) throws {
         let event = CalendarEvent.getDefaultCalendarEvent()
-        //let events = try CalendarEvent(json: json)
-        self.init(event: event)
+        self.init(defaultEvent: event)
         print("initialized event")
     }
 }
