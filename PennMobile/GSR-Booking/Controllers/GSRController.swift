@@ -16,6 +16,9 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var pickerView: UIPickerView!
     fileprivate var emptyView: EmptyView!
     fileprivate var barButton: UIBarButtonItem!
+    fileprivate var gsrBarButton: UIBarButtonItem!
+    
+    public var sessionID: String?
     
     var currentDay = Date()
     
@@ -64,7 +67,10 @@ class GSRController: GenericViewController, IndicatorEnabled {
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
         barButton.tintColor = UIColor.navigationBlue
         
-        tabBarController?.navigationItem.leftBarButtonItem = nil
+        gsrBarButton = UIBarButtonItem(title: "WH-GSR", style: .done, target: self, action: #selector(handleGSRBarButtonPressed(_:)))
+        gsrBarButton.tintColor = UIColor.navigationBlue
+        
+        tabBarController?.navigationItem.leftBarButtonItem = gsrBarButton
         tabBarController?.navigationItem.rightBarButtonItem = barButton
     }
     
@@ -191,6 +197,13 @@ extension GSRController: GSRBookable {
         }
     }
     
+    @objc fileprivate func handleGSRBarButtonPressed(_ sender: Any) {
+        let wv = GSRWebviewLoginController()
+        wv.delegate = self
+        let nvc = UINavigationController(rootViewController: wv)
+        present(nvc, animated: true, completion: nil)
+    }
+    
     private func presentLoginController(with booking: GSRBooking? = nil) {
         let glc = GSRLoginController()
         glc.booking = booking
@@ -222,5 +235,12 @@ extension GSRController {
             viewModel.updateDates()
             pickerView.reloadAllComponents()
         }
+    }
+}
+
+// MARK: - GSRWebviewLoginDelegate
+extension GSRController: GSRWebviewLoginDelegate {
+    func updateSessionID(_ sessionID: String) {
+        self.sessionID = sessionID
     }
 }

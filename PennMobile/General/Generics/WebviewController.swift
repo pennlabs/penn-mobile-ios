@@ -21,6 +21,7 @@ class WebviewController: GenericViewController {
     
     func load(for urlString: String) {
         webview = GenericWebview(frame: .zero)
+        webview.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(webview)
         webview.anchorToTop(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         
