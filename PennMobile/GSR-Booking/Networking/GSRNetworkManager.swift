@@ -41,7 +41,7 @@ class GSRNetworkManager: NSObject, Requestable {
     }
 
     func getAvailability(for gsrId: Int, dateStr: String, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
-        let url = "\(availUrl)/\(gsrId)?date=\(dateStr)&available=true"
+        let url = "\(availUrl)/\(gsrId)?date=\(dateStr)"
         getRequest(url: url) { (dict, error, statusCode) in
             var rooms: [GSRRoom]!
             if let dict = dict {
@@ -138,7 +138,7 @@ extension GSRRoom {
         var times = [GSRTimeSlot]()
         let jsonTimeArray = json["times"].arrayValue
         for timeJSON in jsonTimeArray {
-            if let time = try? GSRTimeSlot(roomId: roomId, json: timeJSON), time.isAvailable {
+            if let time = try? GSRTimeSlot(roomId: roomId, json: timeJSON) {
                 if let prevTime = times.last, prevTime.endTime == time.startTime {
                     times.last?.next = time
                     time.prev = times.last

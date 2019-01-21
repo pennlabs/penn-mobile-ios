@@ -147,6 +147,9 @@ extension GSRViewModel: GSRSelectionDelegate {
     }
     
     func validateChoice(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) -> Bool {
+        if !timeSlot.isAvailable {
+            return false
+        }
         switch action {
         case .add:
             return validateAddition(timeSlot)

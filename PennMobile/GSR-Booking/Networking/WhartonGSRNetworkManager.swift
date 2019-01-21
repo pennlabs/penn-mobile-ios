@@ -159,7 +159,7 @@ extension WhartonGSRNetworkManager {
         let timesJSONArray = json["times"].arrayValue.flatMap { $0.arrayValue }
         let timesArray = try timesJSONArray.map { (json) -> GSRTimeSlot in
             return try GSRTimeSlot(json: json)
-            }.filter { $0.isAvailable }
+            }
         
         var rooms = [GSRRoom]()
         

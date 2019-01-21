@@ -29,19 +29,34 @@ class GSRRoom {
 
 extension GSRRoom: Comparable {
     static func <(lhs: GSRRoom, rhs: GSRRoom) -> Bool {
-        guard let lhsStart = lhs.timeSlots.first?.startTime, let rhsStart = rhs.timeSlots.first?.startTime else {
-            return false
-        }
-        
-        if lhsStart == rhsStart {
-            let lhsNumRow = lhs.timeSlots.numberInRow
-            let rhsNumRow = rhs.timeSlots.numberInRow
-            if lhsNumRow == rhsNumRow {
-                return lhs.timeSlots.count > rhs.timeSlots.count
+//        guard let lhsStart = lhs.timeSlots.first?.startTime, let rhsStart = rhs.timeSlots.first?.startTime else {
+//            return false
+//        }
+//
+//        if lhsStart == rhsStart {
+//            let lhsNumRow = lhs.timeSlots.numberInRow
+//            let rhsNumRow = rhs.timeSlots.numberInRow
+//            if lhsNumRow == rhsNumRow {
+//                return lhs.timeSlots.count > rhs.timeSlots.count
+//            }
+//            return lhsNumRow > rhsNumRow
+//        } else {
+//            return lhsStart < rhsStart
+//        }
+        if lhs.name.contains("F") {
+            if rhs.name.contains("F") {
+                return lhs.name < rhs.name
+            } else {
+                return true
             }
-            return lhsNumRow > rhsNumRow
+        } else if lhs.name.contains("G") {
+            if rhs.name.contains("G") {
+                return lhs.name < rhs.name
+            } else {
+                return true
+            }
         } else {
-            return lhsStart < rhsStart
+            return lhs.name < rhs.name
         }
     }
     

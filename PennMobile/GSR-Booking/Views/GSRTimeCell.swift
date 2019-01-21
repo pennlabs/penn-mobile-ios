@@ -17,6 +17,7 @@ class GSRTimeCell: UICollectionViewCell {
         didSet {
             startLabel.text = format(date: timeSlot.startTime)
             endLabel.text = format(date: timeSlot.endTime)
+            backgroundColor = timeSlot.isAvailable ? UIColor.interactionGreen : UIColor.secondaryInformationGrey
         }
     }
     
@@ -33,7 +34,6 @@ class GSRTimeCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .interactionGreen
         setupView()
     }
     
