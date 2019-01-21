@@ -15,7 +15,7 @@ class GSRRoom {
     let gid: Int
     let imageUrl: String?
     let capacity: Int
-    let timeSlots: [GSRTimeSlot]
+    var timeSlots: [GSRTimeSlot]! = nil
     
     init(name: String, roomId: Int, gid: Int, imageUrl: String?, capacity: Int, timeSlots: [GSRTimeSlot]) {
         self.name = name
@@ -78,5 +78,55 @@ extension Array where Element == GSRRoom {
             }
         }
         return (min, max)
+    }
+}
+
+extension GSRRoom {
+    func addMissingTimeslots(minDate: Date, maxDate: Date) {
+        var newTimes = [GSRTimeSlot]()
+        
+        // Fill in early slots
+        if let earliestTime = timeSlots.first {
+            var currTime = earliestTime
+            while currTime.startTime > minDate {
+                let currNewTime = GSRTimeSlot(roomId: roomId, isAvailable: false, startTime: currTime.startTime.add(minutes: -30), endTime: currTime.startTime)
+                currNewTime.next = currTime
+                currTime.prev = currNewTime
+                newTimes.insert(currNewTime, at: 0)
+                currTime = currNewTime
+            }
+        }
+        
+        // Fill in middle slots
+        for i in 0..<timeSlots.count {
+            var prevTime = timeSlots[i]
+            newTimes.append(prevTime)
+            
+            if i == timeSlots.count - 1 { break }
+            let nextTime = timeSlots[i+1]
+            var currNewTime = prevTime
+            
+            while prevTime.endTime != nextTime.startTime {
+                currNewTime = GSRTimeSlot(roomId: roomId, isAvailable: false, startTime: prevTime.endTime, endTime: prevTime.endTime.add(minutes: 30))
+                prevTime.next = currNewTime
+                currNewTime.prev = prevTime
+                newTimes.append(currNewTime)
+                prevTime = currNewTime
+            }
+        }
+        
+        // Fill in early slots
+        if let latestTime = timeSlots.last {
+            var currTime = latestTime
+            while currTime.endTime < maxDate {
+                let currNewTime = GSRTimeSlot(roomId: roomId, isAvailable: false, startTime: currTime.startTime.add(minutes: 30), endTime: currTime.startTime)
+                currNewTime.prev = currTime
+                currTime.next = currNewTime
+                newTimes.append(currNewTime)
+                currTime = currNewTime
+            }
+        }
+        
+        self.timeSlots = newTimes
     }
 }

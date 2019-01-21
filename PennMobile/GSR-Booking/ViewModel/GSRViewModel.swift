@@ -133,8 +133,12 @@ extension GSRViewModel {
         self.allRooms = rooms
         self.currentRooms = rooms
         self.currentSelection = []
+        
+        if let minDate = getMinDate(), let maxDate = getMaxDate() {
+            rooms.forEach { $0.addMissingTimeslots(minDate: minDate, maxDate: maxDate) }
+        }
     }
-    
+        
     func updateDates() {
         dates = GSRDateHandler.generateDates()
     }
@@ -204,7 +208,7 @@ extension GSRViewModel: GSRRangeSliderDelegate {
         return !allRooms.isEmpty
     }
     
-    func parseData(startDate: Date, endDate: Date) {
+    func updateCurrentRooms(startDate: Date, endDate: Date) {
         var currentRooms = [GSRRoom]()
         for room in allRooms {
             let timeSlots = room.timeSlots.filter {
@@ -216,6 +220,10 @@ extension GSRViewModel: GSRRangeSliderDelegate {
             }
         }
         self.currentRooms = currentRooms.sorted()
+    }
+    
+    func parseData(startDate: Date, endDate: Date) {
+        updateCurrentRooms(startDate: startDate, endDate: endDate)
         delegate.refreshDataUI()
     }
     

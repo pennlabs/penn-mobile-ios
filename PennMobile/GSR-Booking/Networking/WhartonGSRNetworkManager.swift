@@ -190,13 +190,12 @@ extension GSRTimeSlot {
     convenience init(json: JSON) throws {
         guard let id = Int(json["id"].stringValue),
             let isReserved = json["reserved"].bool,
-            let startStr = json["start_time"].string,
-            let endStr = json["end_time"].string else {
+            let startStr = json["start_time"].string else {
                 throw NetworkingError.jsonError
         }
         
         let startDate = try GSRTimeSlot.extractDate(from: startStr)
-        let endDate = try GSRTimeSlot.extractDate(from: endStr)
+        let endDate = startDate.add(minutes: 30)
         self.init(roomId: id, isAvailable: !isReserved, startTime: startDate, endTime: endDate)
     }
     
