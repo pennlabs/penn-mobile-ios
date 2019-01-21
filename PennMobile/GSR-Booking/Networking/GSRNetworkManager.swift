@@ -65,6 +65,16 @@ class GSRNetworkManager: NSObject, Requestable {
     }
     
     func makeBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
+        if booking.location.service == "wharton" {
+            WhartonGSRNetworkManager.instance.bookRoom(booking: booking) { (success, errorMsg) in
+                callback(success, errorMsg)
+            }
+        } else {
+            makeLibcalBooking(for: booking, callback)
+        }
+    }
+    
+    func makeLibcalBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let start = dateFormatter.string(from: booking.start)

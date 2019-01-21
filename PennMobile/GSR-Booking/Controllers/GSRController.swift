@@ -139,15 +139,29 @@ extension GSRController {
 // MARK: - ViewModelDelegate + Networking
 extension GSRController: GSRViewModelDelegate {
     func fetchData() {
-        let locationId = viewModel.getSelectedLocation().lid
+        let location = viewModel.getSelectedLocation()
         let date = viewModel.getSelectedDate()
-        GSRNetworkManager.instance.getAvailability(for: locationId, date: date) { (rooms) in
-            DispatchQueue.main.async {
-                if let rooms = rooms {
-                    self.viewModel.updateData(with: rooms)
-                    self.refreshDataUI()
-                    self.rangeSlider.reload()
-                    self.refreshBarButton()
+        if location.service == "wharton" {
+            guard let sessionID = sessionID else { return }
+            WhartonGSRNetworkManager.instance.getAvailability(sessionID: sessionID, date: date) { (rooms) in
+                DispatchQueue.main.async {
+                    if let rooms = rooms {
+                        self.viewModel.updateData(with: rooms)
+                        self.refreshDataUI()
+                        self.rangeSlider.reload()
+                        self.refreshBarButton()
+                    }
+                }
+            }
+        } else {
+            GSRNetworkManager.instance.getAvailability(for: location.lid, date: date) { (rooms) in
+                DispatchQueue.main.async {
+                    if let rooms = rooms {
+                        self.viewModel.updateData(with: rooms)
+                        self.refreshDataUI()
+                        self.rangeSlider.reload()
+                        self.refreshBarButton()
+                    }
                 }
             }
         }
@@ -212,17 +226,33 @@ extension GSRController: GSRBookable {
     }
     
     private func submitPressed(for booking: GSRBooking) {
-        if let user = GSRUser.getUser() {
-            booking.user = user
-            submitBooking(for: booking) { (success) in
-                if success {
-                    self.fetchData()
-                } else {
-                    self.presentLoginController(with: booking)
+        let location = viewModel.getSelectedLocation()
+        if location.service == "wharton" {
+            if let sessionId = sessionID {
+                booking.sessionId = sessionId
+                submitBooking(for: booking) { (success) in
+                    if success {
+                        self.fetchData()
+                    } else {
+                        // TODO: Handle error message
+                    }
                 }
+            } else {
+                
             }
         } else {
-            presentLoginController(with: booking)
+            if let user = GSRUser.getUser() {
+                booking.user = user
+                submitBooking(for: booking) { (success) in
+                    if success {
+                        self.fetchData()
+                    } else {
+                        self.presentLoginController(with: booking)
+                    }
+                }
+            } else {
+                presentLoginController(with: booking)
+            }
         }
     }
 }
