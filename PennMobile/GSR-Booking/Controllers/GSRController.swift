@@ -244,12 +244,8 @@ extension GSRController: GSRBookable {
                     if success {
                         self.fetchData()
                     } else {
-                        self.presentWebviewLoginController {
-                            booking.sessionId = sessionId
-                            self.submitBooking(for: booking) { (success) in
-                                self.fetchData()
-                            }
-                        }
+                        self.viewModel.clearSelection()
+                        self.refreshDataUI()
                     }
                 }
             } else {

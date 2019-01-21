@@ -171,7 +171,7 @@ extension GSRViewModel: GSRSelectionDelegate {
         
         var flag = false
         for selection in currentSelection {
-            flag = flag || timeSlot == selection.prev || timeSlot == selection.next
+            flag = flag || timeSlot == selection.prev || timeSlot == selection.next || timeSlot == selection
         }
         return flag
     }
@@ -189,6 +189,7 @@ extension GSRViewModel: GSRSelectionDelegate {
     func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) {
         switch action {
         case .add:
+            if currentSelection.contains(timeSlot) { break }
             currentSelection.append(timeSlot)
             break
         case .remove:
@@ -199,6 +200,10 @@ extension GSRViewModel: GSRSelectionDelegate {
         if currentSelection.count == 0 || (currentSelection.count == 1 && action == .add) {
             delegate.refreshSelectionUI()
         }
+    }
+    
+    func clearSelection() {
+        currentSelection = []
     }
 }
 
