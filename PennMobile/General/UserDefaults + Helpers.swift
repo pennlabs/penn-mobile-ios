@@ -19,6 +19,8 @@ extension UserDefaults {
         case isOnboarded
         case gsrUSer
         case appVersion
+        case gsrSessionID
+        case gsrSessoinIDTimestamp
     }
 }
 
@@ -141,6 +143,31 @@ extension UserDefaults {
         let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
         set(version, forKey: UserDefaultsKeys.appVersion.rawValue)
         synchronize()
+    }
+}
+
+// MARK: - GSR SessionID Caching
+extension UserDefaults {
+    func set(sessionID: String) {
+        let now = Date()
+        set(sessionID, forKey: UserDefaultsKeys.gsrSessionID.rawValue)
+        set(now, forKey: UserDefaultsKeys.gsrSessoinIDTimestamp.rawValue)
+        synchronize()
+    }
+    
+    func getSessionID() -> String? {
+        if let timestamp = object(forKey: UserDefaultsKeys.gsrSessoinIDTimestamp.rawValue) as? Date,
+            let sessionID = string(forKey: UserDefaultsKeys.gsrSessionID.rawValue),
+            let diffInDays = Calendar.current.dateComponents([.day], from: timestamp, to: Date()).day,
+            diffInDays <= 14 {
+            return sessionID
+        }
+        return nil
+    }
+    
+    func clearSessionID() {
+        removeObject(forKey: UserDefaultsKeys.gsrSessionID.rawValue)
+        removeObject(forKey: UserDefaultsKeys.gsrSessoinIDTimestamp.rawValue)
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 class GSRController: GenericViewController, IndicatorEnabled {
     
@@ -17,8 +18,6 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var emptyView: EmptyView!
     fileprivate var barButton: UIBarButtonItem!
     fileprivate var gsrBarButton: UIBarButtonItem!
-    
-    public var sessionID: String?
     
     var currentDay = Date()
     
@@ -142,7 +141,7 @@ extension GSRController: GSRViewModelDelegate {
         let location = viewModel.getSelectedLocation()
         let date = viewModel.getSelectedDate()
         if location.service == "wharton" {
-            guard let sessionID = sessionID else { return }
+            guard let sessionID = UserDefaults.standard.getSessionID() else { return }
             WhartonGSRNetworkManager.instance.getAvailability(sessionID: sessionID, date: date) { (rooms) in
                 DispatchQueue.main.async {
                     if let rooms = rooms {
@@ -203,6 +202,13 @@ extension GSRController: GSRBookable {
             break
         case .loggedIn:
             GSRUser.clear()
+            UserDefaults.standard.clearSessionID()
+            let dataStore = WKWebsiteDataStore.default()
+            dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+                dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+                                     for: records.filter { $0.displayName.contains("upenn") },
+                                     completionHandler: {})
+            }
             refreshBarButton()
             break
         case .readyToSubmit(let booking):
@@ -212,8 +218,12 @@ extension GSRController: GSRBookable {
     }
     
     @objc fileprivate func handleGSRBarButtonPressed(_ sender: Any) {
+        presentWebviewLoginController()
+    }
+    
+    private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {
         let wv = GSRWebviewLoginController()
-        wv.delegate = self
+        wv.completion = completion
         let nvc = UINavigationController(rootViewController: wv)
         present(nvc, animated: true, completion: nil)
     }
@@ -228,17 +238,27 @@ extension GSRController: GSRBookable {
     private func submitPressed(for booking: GSRBooking) {
         let location = viewModel.getSelectedLocation()
         if location.service == "wharton" {
-            if let sessionId = sessionID {
+            if let sessionId = UserDefaults.standard.getSessionID() {
                 booking.sessionId = sessionId
                 submitBooking(for: booking) { (success) in
                     if success {
                         self.fetchData()
                     } else {
-                        // TODO: Handle error message
+                        self.presentWebviewLoginController {
+                            booking.sessionId = sessionId
+                            self.submitBooking(for: booking) { (success) in
+                                self.fetchData()
+                            }
+                        }
                     }
                 }
             } else {
-                
+                presentWebviewLoginController {
+                    booking.sessionId = UserDefaults.standard.getSessionID()
+                    self.submitBooking(for: booking) { (success) in
+                        self.fetchData()
+                    }
+                }
             }
         } else {
             if let user = GSRUser.getUser() {
@@ -265,12 +285,5 @@ extension GSRController {
             viewModel.updateDates()
             pickerView.reloadAllComponents()
         }
-    }
-}
-
-// MARK: - GSRWebviewLoginDelegate
-extension GSRController: GSRWebviewLoginDelegate {
-    func updateSessionID(_ sessionID: String) {
-        self.sessionID = sessionID
     }
 }

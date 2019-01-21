@@ -9,14 +9,10 @@
 import UIKit
 import WebKit
 
-protocol GSRWebviewLoginDelegate {
-    func updateSessionID(_ sessionID: String)
-}
-
 class GSRWebviewLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate{
     
     var webView: WKWebView!
-    var delegate: GSRWebviewLoginDelegate!
+    var completion: (() -> Void)?
     
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
@@ -54,9 +50,10 @@ class GSRWebviewLoginController: UIViewController, WKUIDelegate, WKNavigationDel
             cookieStore.getAllCookies { (cookies) in
                 for cookie in cookies {
                     if cookie.name == "sessionid" {
-                        self.delegate.updateSessionID(cookie.value)
+                        UserDefaults.standard.set(sessionID: cookie.value)
                         decisionHandler(.cancel)
                         self.dismiss(animated: true, completion: nil)
+                        self.completion?()
                         return
                     }
                 }
