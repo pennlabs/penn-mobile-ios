@@ -75,7 +75,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
         var request = URLRequest(url: url)
         
         request.httpMethod = "GET"
-        let sessionCookie = "sessionid=h137cblz2nvlk8yky17smamr3npntoyw"//"sessionid=\(sessionID!)"
+        let sessionCookie = "sessionid=\(sessionID)"
         request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             
