@@ -41,15 +41,19 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                             //data recieved and parsed successfully
                             if let dict = json {
                                 let json = JSON(dict)
-                                let rooms = try? self.parseAvailabilityJSON(json)
-                                callback(rooms)
+                                if json["error"].string != nil {
+                                    UserDefaults.standard.clearSessionID()
+                                    self.getAvailabilityWithoutSessionID(date: date, callback: callback)
+                                } else {
+                                    let rooms = try? self.parseAvailabilityJSON(json)
+                                    callback(rooms)
+                                }
                             }
                             return
                         }
                     }
                 }
-                UserDefaults.standard.clearSessionID()
-                self.getAvailabilityWithoutSessionID(date: date, callback: callback)
+                callback(nil)
             }
             
         })
