@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WebKit
 
 //Mark: UserDefaultsKeys
 extension UserDefaults {
@@ -168,6 +169,14 @@ extension UserDefaults {
     func clearSessionID() {
         removeObject(forKey: UserDefaultsKeys.gsrSessionID.rawValue)
         removeObject(forKey: UserDefaultsKeys.gsrSessoinIDTimestamp.rawValue)
+        DispatchQueue.main.async {
+            let dataStore = WKWebsiteDataStore.default()
+            dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+                dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+                                     for: records.filter { $0.displayName.contains("upenn") },
+                                     completionHandler: {})
+            }
+        }
     }
 }
 

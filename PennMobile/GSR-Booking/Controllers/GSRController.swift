@@ -66,9 +66,6 @@ class GSRController: GenericViewController, IndicatorEnabled {
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
         barButton.tintColor = UIColor.navigationBlue
         
-        gsrBarButton = UIBarButtonItem(title: "WH-GSR", style: .done, target: self, action: #selector(handleGSRBarButtonPressed(_:)))
-        gsrBarButton.tintColor = UIColor.navigationBlue
-        
         tabBarController?.navigationItem.leftBarButtonItem = gsrBarButton
         tabBarController?.navigationItem.rightBarButtonItem = barButton
     }
@@ -141,7 +138,7 @@ extension GSRController: GSRViewModelDelegate {
         let location = viewModel.getSelectedLocation()
         let date = viewModel.getSelectedDate()
         if location.service == "wharton" {
-            guard let sessionID = UserDefaults.standard.getSessionID() else { return }
+            let sessionID = UserDefaults.standard.getSessionID()
             WhartonGSRNetworkManager.instance.getAvailability(sessionID: sessionID, date: date) { (rooms) in
                 DispatchQueue.main.async {
                     if let rooms = rooms {
@@ -198,27 +195,21 @@ extension GSRController: GSRBookable {
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
         switch viewModel.state {
         case .loggedOut:
-            presentLoginController()
+            if viewModel.getSelectedLocation().service == "wharton" {
+                presentWebviewLoginController(nil)
+            } else {
+                presentLoginController()
+            }
             break
         case .loggedIn:
             GSRUser.clear()
             UserDefaults.standard.clearSessionID()
-            let dataStore = WKWebsiteDataStore.default()
-            dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-                dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
-                                     for: records.filter { $0.displayName.contains("upenn") },
-                                     completionHandler: {})
-            }
             refreshBarButton()
             break
         case .readyToSubmit(let booking):
             submitPressed(for: booking)
             break
         }
-    }
-    
-    @objc fileprivate func handleGSRBarButtonPressed(_ sender: Any) {
-        presentWebviewLoginController()
     }
     
     private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {
@@ -250,9 +241,11 @@ extension GSRController: GSRBookable {
                 }
             } else {
                 presentWebviewLoginController {
-                    booking.sessionId = UserDefaults.standard.getSessionID()
-                    self.submitBooking(for: booking) { (success) in
-                        self.fetchData()
+                    if let sessionId = UserDefaults.standard.getSessionID() {
+                        booking.sessionId = sessionId
+                        self.submitBooking(for: booking) { (success) in
+                            self.fetchData()
+                        }
                     }
                 }
             }

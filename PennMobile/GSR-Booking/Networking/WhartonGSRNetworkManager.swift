@@ -14,15 +14,21 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
     static let instance = WhartonGSRNetworkManager()
     
     let availUrl = "https://apps.wharton.upenn.edu/gsr/api/app/grid_view"
+    let availUrlNoSessionID = "https://api.pennlabs.org/studyspaces/gsr"
     let bookURL = "https://apps.wharton.upenn.edu/gsr/reserve"
     
-    func getAvailability(sessionID: String, date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
+    func getAvailability(sessionID: String?, date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
+        if sessionID == nil {
+            getAvailabilityWithoutSessionID(date: date, callback: callback)
+            return
+        }
+        
         let urlStr = "\(availUrl)/?search_time=\(date.string)%2005:00&building_code=1"
         let url = URL(string: urlStr)!
         var request = URLRequest(url: url)
         
         request.httpMethod = "GET"
-        let sessionCookie = "sessionid=\(sessionID)"
+        let sessionCookie = "sessionid=\(sessionID!)"
         request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             if error != nil {
@@ -42,11 +48,24 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                         }
                     }
                 }
-                callback(nil)
+                UserDefaults.standard.clearSessionID()
+                self.getAvailabilityWithoutSessionID(date: date, callback: callback)
             }
             
         })
         task.resume()
+    }
+    
+    func getAvailabilityWithoutSessionID(date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
+        let url = "\(availUrlNoSessionID)?date=\(date.string)"
+        getRequest(url: url) { (dict, _, _) in
+            var rooms: [GSRRoom]? = nil
+            if let dict = dict {
+                let json = JSON(dict)
+                rooms = try? self.parseAvailabilityJSON(json)
+            }
+            callback(rooms)
+        }
     }
     
     func bookRoom(booking: GSRBooking, callback: @escaping ((_ success: Bool, _ errorMsg: String?) -> Void)) {
@@ -56,7 +75,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
         var request = URLRequest(url: url)
         
         request.httpMethod = "GET"
-        let sessionCookie = "sessionid=\(sessionID)"
+        let sessionCookie = "sessionid=h137cblz2nvlk8yky17smamr3npntoyw"//"sessionid=\(sessionID!)"
         request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             
@@ -77,7 +96,8 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                         return
                     }
                 }
-                callback(false, "Login invalid. Logout and try again.")
+                UserDefaults.standard.clearSessionID()
+                callback(false, "Login invalid. Please resubmit and try again.")
             }
             
         })
@@ -127,7 +147,6 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                         }
                     }
                 }
-                print(httpResponse.statusCode)
                 callback(false, nil)
             }
             
@@ -164,6 +183,7 @@ extension WhartonGSRNetworkManager {
         var rooms = [GSRRoom]()
         
         let roomJSONArray = json["rooms"].arrayValue
+        let now = Date()
         for jsonStr in roomJSONArray {
             let str = jsonStr.stringValue
             let strArr = str.split(separator: " ")
@@ -172,6 +192,7 @@ extension WhartonGSRNetworkManager {
             
             var times = [GSRTimeSlot]()
             for time in timesArray.filter({ $0.roomId == id }) {
+                if time.endTime <= now { continue }
                 if let prevTime = times.last, prevTime.endTime == time.startTime {
                     times.last?.next = time
                     time.prev = times.last

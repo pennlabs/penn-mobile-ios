@@ -135,7 +135,7 @@ extension GSRViewModel {
         self.currentSelection = []
         
         if let minDate = getMinDate(), let maxDate = getMaxDate() {
-            rooms.forEach { $0.addMissingTimeslots(minDate: minDate, maxDate: maxDate) }
+            rooms.forEach { $0.addMissingTimeslots(minDate: max(minDate, Date()), maxDate: maxDate) }
         }
     }
         

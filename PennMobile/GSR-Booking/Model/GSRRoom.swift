@@ -88,7 +88,8 @@ extension GSRRoom {
         // Fill in early slots
         if let earliestTime = timeSlots.first {
             var currTime = earliestTime
-            while currTime.startTime > minDate {
+            let minTime = minDate.add(minutes: 30)
+            while currTime.startTime >= minTime {
                 let currNewTime = GSRTimeSlot(roomId: roomId, isAvailable: false, startTime: currTime.startTime.add(minutes: -30), endTime: currTime.startTime)
                 currNewTime.next = currTime
                 currTime.prev = currNewTime
@@ -118,8 +119,9 @@ extension GSRRoom {
         // Fill in early slots
         if let latestTime = timeSlots.last {
             var currTime = latestTime
-            while currTime.endTime < maxDate {
-                let currNewTime = GSRTimeSlot(roomId: roomId, isAvailable: false, startTime: currTime.startTime.add(minutes: 30), endTime: currTime.startTime)
+            let maxTime = maxDate.add(minutes: -30)
+            while currTime.endTime <= maxTime {
+                let currNewTime = GSRTimeSlot(roomId: roomId, isAvailable: false, startTime: currTime.endTime, endTime: currTime.endTime.add(minutes: 30))
                 currNewTime.prev = currTime
                 currTime.next = currNewTime
                 newTimes.append(currNewTime)
