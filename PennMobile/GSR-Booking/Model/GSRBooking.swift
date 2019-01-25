@@ -14,6 +14,7 @@ class GSRBooking {
     let start: Date
     let end: Date
     var user: GSRUser! = nil
+    var sessionId: String! = nil
     var groupName = "Penn Mobile Booking"
     var name: String?
     

@@ -59,7 +59,6 @@ class GenericViewController: UIViewController, Trackable {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        print("view will disappear")
         navigationVC?.hideBar(animated: false)
     }
     

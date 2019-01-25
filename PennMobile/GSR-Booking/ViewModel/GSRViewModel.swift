@@ -48,7 +48,7 @@ class GSRViewModel: NSObject {
             if let booking = getBooking() {
                 return .readyToSubmit(booking)
             } else {
-                return GSRUser.hasSavedUser() ? .loggedIn : .loggedOut
+                return GSRUser.hasSavedUser() || UserDefaults.standard.getSessionID() != nil ? .loggedIn : .loggedOut
             }
         }
     }
@@ -133,8 +133,12 @@ extension GSRViewModel {
         self.allRooms = rooms
         self.currentRooms = rooms
         self.currentSelection = []
+        
+        if let minDate = getMinDate(), let maxDate = getMaxDate() {
+            rooms.forEach { $0.addMissingTimeslots(minDate: max(minDate, Date()), maxDate: maxDate) }
+        }
     }
-    
+        
     func updateDates() {
         dates = GSRDateHandler.generateDates()
     }
@@ -147,6 +151,9 @@ extension GSRViewModel: GSRSelectionDelegate {
     }
     
     func validateChoice(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) -> Bool {
+        if !timeSlot.isAvailable {
+            return false
+        }
         switch action {
         case .add:
             return validateAddition(timeSlot)
@@ -164,7 +171,7 @@ extension GSRViewModel: GSRSelectionDelegate {
         
         var flag = false
         for selection in currentSelection {
-            flag = flag || timeSlot == selection.prev || timeSlot == selection.next
+            flag = flag || timeSlot == selection.prev || timeSlot == selection.next || timeSlot == selection
         }
         return flag
     }
@@ -182,6 +189,7 @@ extension GSRViewModel: GSRSelectionDelegate {
     func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) {
         switch action {
         case .add:
+            if currentSelection.contains(timeSlot) { break }
             currentSelection.append(timeSlot)
             break
         case .remove:
@@ -193,6 +201,10 @@ extension GSRViewModel: GSRSelectionDelegate {
             delegate.refreshSelectionUI()
         }
     }
+    
+    func clearSelection() {
+        currentSelection = []
+    }
 }
 
 // MARK: - GSRRangeSliderDelegate
@@ -201,7 +213,7 @@ extension GSRViewModel: GSRRangeSliderDelegate {
         return !allRooms.isEmpty
     }
     
-    func parseData(startDate: Date, endDate: Date) {
+    func updateCurrentRooms(startDate: Date, endDate: Date) {
         var currentRooms = [GSRRoom]()
         for room in allRooms {
             let timeSlots = room.timeSlots.filter {
@@ -213,6 +225,10 @@ extension GSRViewModel: GSRRangeSliderDelegate {
             }
         }
         self.currentRooms = currentRooms.sorted()
+    }
+    
+    func parseData(startDate: Date, endDate: Date) {
+        updateCurrentRooms(startDate: startDate, endDate: endDate)
         delegate.refreshDataUI()
     }
     
