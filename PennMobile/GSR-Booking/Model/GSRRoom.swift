@@ -107,7 +107,7 @@ extension GSRRoom {
             let nextTime = timeSlots[i+1]
             var currNewTime = prevTime
             
-            while prevTime.endTime != nextTime.startTime {
+            while prevTime.endTime < nextTime.startTime {
                 currNewTime = GSRTimeSlot(roomId: roomId, isAvailable: false, startTime: prevTime.endTime, endTime: prevTime.endTime.add(minutes: 30))
                 prevTime.next = currNewTime
                 currNewTime.prev = prevTime
