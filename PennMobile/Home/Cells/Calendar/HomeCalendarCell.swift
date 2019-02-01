@@ -25,7 +25,7 @@ final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeCalendarCellItem else { return 0.0 }
         // cell height = (venues * venueHeight) + header + footer + cellInset
-        return (CGFloat(item.events?.count ?? 0) * UniversityNotificationCell.cellHeight) + (90.0 + 38.0 + 20.0)
+        return (CGFloat(item.events?.count ?? 0) * UniversityNotificationCell.cellHeight) + (90.0 + 14.0 + 20.0)
     }
     
     var events: [CalendarEvent]?
@@ -71,6 +71,7 @@ extension HomeCalendarCell: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UniversityNotificationCell.identifier, for: indexPath) as! UniversityNotificationCell
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
         let event = events![indexPath.row]
         cell.calendarEvent = event
         return cell
@@ -134,7 +135,7 @@ extension HomeCalendarCell {
         calendarEventTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
                                                     constant: safeInsetValue / 2).isActive = true
         calendarEventTableView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor).isActive = true
-        calendarEventTableView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor).isActive = true
+        calendarEventTableView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: safeInsetValue / 2).isActive = true
     }
 }
 

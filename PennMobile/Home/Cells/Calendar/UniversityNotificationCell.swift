@@ -12,7 +12,10 @@ import EventKit
 class UniversityNotificationCell: UITableViewCell {
     
     static let identifier = "universityNotificationCell"
-    static let cellHeight: CGFloat = 120
+    static let cellHeight: CGFloat = 110
+    let eventStore : EKEventStore = EKEventStore()
+    var added: Bool = false
+    var event: EKEvent!
     
     var calendarEvent: CalendarEvent! {
         didSet {
@@ -23,6 +26,7 @@ class UniversityNotificationCell: UITableViewCell {
     // MARK: Declare UI Elements
     fileprivate var eventLabel: UILabel!
     fileprivate var dateLabel: UILabel!
+    fileprivate var pennCrest: UIImageView!
     fileprivate var addToCalendarButton: UIButton!
     
     // MARK: - Init
@@ -38,23 +42,22 @@ class UniversityNotificationCell: UITableViewCell {
     // MARK: - Add event to calendar
     func addEventToCalendar(title: String, startDate: Date, endDate: Date, notes: String?, location: String) {
         
-        let eventStore : EKEventStore = EKEventStore()
+        //let eventStore : EKEventStore = EKEventStore()
         
         eventStore.requestAccess(to: EKEntityType.event, completion: {
             granted, error in
             if (granted) && (error == nil) {
-                print("granted \(granted)")
-                print("error  \(String(describing: error))")
-                let event: EKEvent = EKEvent(eventStore: eventStore)
-                event.title = title
-                event.startDate = startDate
-                event.endDate = endDate
-                event.notes = notes
-                event.location = location
-                event.calendar = eventStore.defaultCalendarForNewEvents
-                print(event.eventIdentifier)
+                //let event: EKEvent = EKEvent(eventStore: self.eventStore)
+                self.event = EKEvent(eventStore: self.eventStore)
+                self.event.title = title
+                self.event.startDate = startDate
+                self.event.endDate = endDate
+                self.event.notes = notes
+                self.event.location = location
+                self.event.calendar = self.eventStore.defaultCalendarForNewEvents
+                print(self.event.eventIdentifier)
                 do {
-                    try eventStore.save(event, span: EKSpan.thisEvent)
+                    try self.eventStore.save(self.event, span: EKSpan.thisEvent)
                     print("event saved")
                 } catch {
                 }
@@ -84,32 +87,48 @@ extension UniversityNotificationCell {
         
         eventLabel = getEventLabel()
         dateLabel = getDateLabel()
-        addToCalendarButton = getAddToCalendarButton()
+        pennCrest = getPennCrest()
+        //addToCalendarButton = getAddToCalendarButton()
         
         addSubview(eventLabel)
         addSubview(dateLabel)
-        addSubview(addToCalendarButton)
+        addSubview(pennCrest)
+        //addSubview(addToCalendarButton)
         
-        _ = eventLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: padding, leftConstant: padding, rightConstant: 10)
-        _ = dateLabel.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: centerXAnchor, topConstant: 60, leftConstant: padding, bottomConstant: padding, rightConstant: 10)
-        _ = addToCalendarButton.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: 60, leftConstant: 10, bottomConstant: padding, rightConstant: padding)
+        _ = eventLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: padding, leftConstant: 125, rightConstant: padding)
+        _ = dateLabel.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 60, leftConstant: 125, bottomConstant: 13, rightConstant: padding)
+        _ = pennCrest.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 13, leftConstant: 30, widthConstant: 83, heightConstant: 83)
+        
+//        _ = addToCalendarButton.anchor(topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, topConstant: 60, leftConstant: 10, bottomConstant: padding, rightConstant: padding)
         
     }
     
     fileprivate func getDateLabel() -> UILabel {
         let label = UILabel()
-        label.font = HomeEventCell.dateFont
-        label.textColor = UIColor.navigationBlue
-        label.textAlignment = .left
-        label.numberOfLines = 0
+        label.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        //label.font = .secondaryTitleFont
+        label.textColor = .secondaryTitleGrey
+        label.textAlignment = .center
         return label
     }
     
     fileprivate func getEventLabel() -> UILabel {
         let label = UILabel()
-        label.font = .interiorTitleFont
+        label.font = UIFont(name: "AvenirNext-Regular", size: 20)
+        label.textAlignment = .center
         label.textColor = UIColor.primaryTitleGrey
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
         return label
+    }
+    
+    fileprivate func getPennCrest() -> UIImageView {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.widthAnchor.constraint(equalToConstant: 83).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 83).isActive = true
+        image.image = UIImage(named: "upenn")
+        return image
     }
     
     fileprivate func getAddToCalendarButton() -> UIButton {
@@ -118,7 +137,6 @@ extension UniversityNotificationCell {
         button.titleLabel?.font =  HomeEventCell.clubFont
         button.setTitle("Add To Calendar", for: [])
         button.setTitleColor(UIColor.white, for: [])
-        
         button.layer.cornerRadius = 35.0/2
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -129,6 +147,24 @@ extension UniversityNotificationCell {
     }
     
     @objc func didTapAddToCalendarButton(sender: UIButton!) {
-        addEventToCalendar(title: calendarEvent.name, startDate: calendarEvent.start, endDate: calendarEvent.end, notes: "", location: "")
+        
+        if (added) {
+            //sender.setImage(UIImage(named:"Checked.png"), for: [])
+            
+            do {
+                try eventStore.remove(event, span: EKSpan.thisEvent)
+                print("event removed")
+            } catch {
+                print("couldn't remove")
+            }
+            sender.setTitle("Add To Calendar", for: [])
+            added = false;
+        }
+        else {
+            addEventToCalendar(title: calendarEvent.name, startDate: calendarEvent.start, endDate: calendarEvent.end, notes: "", location: "")
+            sender.setTitle("Remove From Calendar", for: [])
+            added = true
+            //sender.setImage(UIImage(named:"Checked.png"), for: [])
+        }
     }
 }
