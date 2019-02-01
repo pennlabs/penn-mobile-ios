@@ -13,6 +13,7 @@ class HomeViewController: GenericViewController {
     
     var tableViewModel: HomeTableViewModel!
     var tableView: ModularTableView!
+    var loadingView: UIActivityIndicatorView!
     
     static let edgeSpacing: CGFloat = 20
     static let cellSpacing: CGFloat = 20
@@ -31,8 +32,13 @@ class HomeViewController: GenericViewController {
         super.viewWillAppear(animated)
         self.tabBarController?.title = "Home"
         if tableViewModel == nil {
+            let timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(hideLoadingView), userInfo: nil, repeats: false)
+            self.tableView.isHidden = true
+            self.addLoadingView()
             fetchViewModel {
-                // TODO: behavior for when model returns
+                if !timer.isValid {
+                    self.hideLoadingView()
+                }
             }
         } else {
             self.fetchCellSpecificData()
@@ -68,6 +74,24 @@ extension HomeViewController {
         tableViewModel.delegate = self
         tableView.model = tableViewModel
     }
+    
+    func addLoadingView() {
+        loadingView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        loadingView.color = .black
+        view.addSubview(loadingView)
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.startAnimating()
+    }
+    
+    func hideLoadingView() {
+        if tableViewModel != nil {
+            self.tableView.isHidden = false
+            self.loadingView.stopAnimating()
+        }
+    }
+    
 }
 
 // MARK: - ViewModelDelegate
