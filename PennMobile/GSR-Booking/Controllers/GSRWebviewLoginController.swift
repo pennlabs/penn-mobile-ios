@@ -50,11 +50,13 @@ class GSRWebviewLoginController: UIViewController, WKUIDelegate, WKNavigationDel
             cookieStore.getAllCookies { (cookies) in
                 for cookie in cookies {
                     if cookie.name == "sessionid" {
-                        UserDefaults.standard.set(sessionID: cookie.value)
-                        decisionHandler(.cancel)
-                        self.dismiss(animated: true, completion: nil)
-                        self.completion?()
-                        return
+                        DispatchQueue.main.async {
+                            UserDefaults.standard.set(sessionID: cookie.value)
+                            decisionHandler(.cancel)
+                            self.dismiss(animated: true, completion: nil)
+                            self.completion?()
+                            return
+                        }
                     }
                 }
                 decisionHandler(.allow)
