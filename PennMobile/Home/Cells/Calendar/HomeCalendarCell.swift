@@ -56,7 +56,6 @@ final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
 extension HomeCalendarCell {
     fileprivate func setupCell(with item: HomeCalendarCellItem) {
         events = item.events
-        print(events?.count ?? 0)
         calendarEventTableView.reloadData()
         secondaryTitleLabel.text = "UNIVERSITY NOTIFICATIONS"
         primaryTitleLabel.text = "Upcoming University Events"

@@ -42,8 +42,6 @@ class UniversityNotificationCell: UITableViewCell {
     // MARK: - Add event to calendar
     func addEventToCalendar(title: String, startDate: Date, endDate: Date, notes: String?, location: String) {
         
-        //let eventStore : EKEventStore = EKEventStore()
-        
         eventStore.requestAccess(to: EKEntityType.event, completion: {
             granted, error in
             if (granted) && (error == nil) {
@@ -67,7 +65,6 @@ class UniversityNotificationCell: UITableViewCell {
 }
 
 // MARK: - Set up cell
-
 extension UniversityNotificationCell {
     fileprivate func setupCell(with calendarEvent: CalendarEvent) {
         eventLabel.text = calendarEvent.name
@@ -130,6 +127,8 @@ extension UniversityNotificationCell {
         image.image = UIImage(named: "upenn")
         return image
     }
+
+// MARK: - Add to Calendar feature not finished and not in use (ignore code below)
     
     fileprivate func getAddToCalendarButton() -> UIButton {
         let button = UIButton()
