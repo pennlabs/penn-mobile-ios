@@ -74,6 +74,10 @@ extension HomeViewController {
 extension HomeViewController: HomeViewModelDelegate, GSRBookable {
     
     func handleUrlPressed(_ url: String) {
+        let wv = WebviewController()
+        wv.load(for: url)
+        wv.title = "The Daily Pennsylvanian"
+        navigationController?.pushViewController(wv, animated: true)
     }
     
     var allowMachineNotifications: Bool {
