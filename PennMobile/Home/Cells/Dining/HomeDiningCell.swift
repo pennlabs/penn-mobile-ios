@@ -10,6 +10,7 @@ import UIKit
 
 protocol DiningCellSelectable {
     func handleVenueSelected(_ venue: DiningVenue)
+    func handleSettingsTapped()
 }
 
 final class HomeDiningCell: UITableViewCell, HomeCellConformable {
@@ -40,6 +41,8 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     fileprivate var secondaryTitleLabel: UILabel!
     fileprivate var primaryTitleLabel: UILabel!
     
+    fileprivate var settingsButton: UIButton!
+    
     fileprivate var dividerLine: UIView!
     fileprivate var venueTableView: UITableView!
     
@@ -55,6 +58,11 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc fileprivate func settingsButtonTapped() {
+        guard let delegate = delegate as? DiningCellSelectable else { return }
+        delegate.handleSettingsTapped()
     }
     
     @objc fileprivate func transitionButtonTapped() {
@@ -131,15 +139,20 @@ extension HomeDiningCell {
     fileprivate func prepareTitleLabels() {
         secondaryTitleLabel = getSecondaryLabel()
         primaryTitleLabel = getPrimaryLabel()
+        settingsButton = getSettingsButton()
         
         cardView.addSubview(secondaryTitleLabel)
         cardView.addSubview(primaryTitleLabel)
+        cardView.addSubview(settingsButton)
         
         secondaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         secondaryTitleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
         
         primaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         primaryTitleLabel.topAnchor.constraint(equalTo: secondaryTitleLabel.bottomAnchor, constant: 10).isActive = true
+        
+        settingsButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        settingsButton.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
     }
     
     // MARK: Divider Line
@@ -211,6 +224,17 @@ extension HomeDiningCell {
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }
+    
+    fileprivate func getSettingsButton() -> UIButton {
+        let button = UIButton()
+        button.setTitleColor(.navigationBlue, for: .normal)
+        button.setTitleColor(.secondaryTitleGrey, for: .highlighted)
+        button.setTitle("Settings", for: .normal)
+        button.titleLabel?.font = .footerTransitionFont
+        button.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }
     
     fileprivate func getDividerLine() -> UIView {

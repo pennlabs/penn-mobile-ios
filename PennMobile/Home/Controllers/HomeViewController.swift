@@ -94,6 +94,10 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         confirmBookingWanted(booking)
     }
     
+    func handleSettingsTapped() {
+        print("Settings tapped")
+    }
+    
     private func confirmBookingWanted(_ booking: GSRBooking) {
         let message = "Booking \(booking.getRoomName()) from \(booking.getLocalTimeString())"
         let alert = UIAlertController(title: "Confirm Booking",
