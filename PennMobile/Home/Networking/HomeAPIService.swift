@@ -13,7 +13,11 @@ final class HomeAPIService: Requestable {
     private init() {}
         
     func fetchModel(_ completion: @escaping (HomeTableViewModel?) -> Void) {
+<<<<<<< HEAD
         let url = "http://127.0.0.1:5000/homepage"//"http://api-dev.pennlabs.org/homepage"
+=======
+        let url = "http://localhost:5000/homepage" //"http://api-dev.pennlabs.org/homepage"
+>>>>>>> fixed gsr reloading bug
         getRequest(url: url) { (dict, error, statusCode) in
             var model: HomeTableViewModel? = HomeTableViewModel()
             if let dict = dict {

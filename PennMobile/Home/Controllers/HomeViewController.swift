@@ -35,7 +35,7 @@ class HomeViewController: GenericViewController {
                 // TODO: behavior for when model returns
             }
         } else {
-            self.fetchCellSpecificData()
+            self.fetchAllCellData()
         }
     }
 }
@@ -111,7 +111,7 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         if GSRUser.hasSavedUser() {
             booking.user = GSRUser.getUser()
             submitBooking(for: booking) { (completion) in
-                print("Completed: \(completion)")
+                self.fetchCellData(for: [HomeItemTypes.instance.studyRoomBooking])
             }
         } else {
             let glc = GSRLoginController()
@@ -129,11 +129,16 @@ extension HomeViewController {
             guard let model = model else { return }
             DispatchQueue.main.async {
                 self.setModel(model)
+<<<<<<< HEAD
                 UIView.transition(with: self.tableView,
                                   duration: 0.35,
                                   options: .transitionCrossDissolve,
                                   animations: { self.tableView.reloadData() })
                 self.fetchCellSpecificData {
+=======
+                self.tableView.reloadData()
+                self.fetchAllCellData {
+>>>>>>> fixed gsr reloading bug
                     if let venue = model.venueToPreload() {
                         DiningDetailModel.preloadWebview(for: venue.name)
                     }
@@ -143,11 +148,20 @@ extension HomeViewController {
         }
     }
     
-    func fetchCellSpecificData(_ completion: (() -> Void)? = nil) {
-        guard let items = tableViewModel.items as? [HomeCellItem] else { return }
+    func fetchAllCellData(_ completion: (() -> Void)? = nil) {
+        fetchCellData(for: HomeItemTypes.instance.getAllTypes(), completion)
+    }
+    
+    func fetchCellData(for itemTypes: [HomeCellItem.Type], _ completion: (() -> Void)? = nil) {
+        guard let allItems = tableViewModel.items as? [HomeCellItem] else { return }
+        let items = allItems.filter { (item) -> Bool in
+            return itemTypes.contains(where: { (itemType) -> Bool in
+                return itemType.jsonKey == type(of: item).jsonKey
+            })
+        }
         HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
             DispatchQueue.main.async {
-                let row = items.index(where: { (thisItem) -> Bool in
+                let row = allItems.index(where: { (thisItem) -> Bool in
                     thisItem.equals(item: item)
                 })!
                 let indexPath = IndexPath(row: row, section: 0)
@@ -169,7 +183,7 @@ extension HomeViewController {
     }
     
     @objc fileprivate func handleRefresh(_ sender: Any) {
-        fetchCellSpecificData {
+        fetchAllCellData {
             self.tableView.refreshControl?.endRefreshing()
         }
     }
