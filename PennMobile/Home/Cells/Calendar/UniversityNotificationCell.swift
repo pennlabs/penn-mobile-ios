@@ -41,7 +41,7 @@ class UniversityNotificationCell: UITableViewCell {
 extension UniversityNotificationCell {
     fileprivate func setupCell(with calendarEvent: CalendarEvent) {
         eventLabel.text = calendarEvent.name
-        dateLabel.text = calendarEvent.getDateString()
+        dateLabel.text = calendarEvent.getDateString(fullLength: true)
     }
 }
 
@@ -52,7 +52,6 @@ extension UniversityNotificationCell {
     }
     
     fileprivate func prepareLabels() {
-        
         let padding = UIView.padding
         
         eventLabel = getEventLabel()
@@ -63,28 +62,27 @@ extension UniversityNotificationCell {
         addSubview(dateLabel)
         addSubview(pennCrest)
         
-        _ = eventLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: padding, leftConstant: 125, rightConstant: padding)
-        _ = dateLabel.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 60, leftConstant: 125, bottomConstant: 13, rightConstant: padding)
-        _ = pennCrest.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 13, leftConstant: 30, widthConstant: 83, heightConstant: 83)
+        _ = eventLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: padding, leftConstant: 120, rightConstant: padding, heightConstant: 50)
+        _ = dateLabel.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 50, leftConstant: 120, bottomConstant: 25, rightConstant: padding)
+        _ = pennCrest.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 13, leftConstant: 25, widthConstant: 83, heightConstant: 83)
         
     }
     
     fileprivate func getDateLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        //label.font = .secondaryTitleFont
+        label.font = UIFont(name: "AvenirNext-Regular", size: 12)
         label.textColor = .secondaryTitleGrey
         label.textAlignment = .center
+        label.numberOfLines = 1
         return label
     }
     
     fileprivate func getEventLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-Regular", size: 20)
+        label.font = UIFont(name: "AvenirNext-Regular", size: 18)
         label.textAlignment = .center
         label.textColor = UIColor.primaryTitleGrey
-        label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         return label
     }
     

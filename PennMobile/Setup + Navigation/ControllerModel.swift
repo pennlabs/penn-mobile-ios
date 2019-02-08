@@ -44,7 +44,6 @@ class ControllerModel: NSObject {
         dict[.contacts] = ContactsTableViewController()
         dict[.about] = AboutViewController()
         dict[.fling] = FlingViewController()
-        dict[.event] = EventViewController()
         return dict
     }()
     

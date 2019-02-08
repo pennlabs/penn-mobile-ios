@@ -102,11 +102,6 @@
 		21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F220538A90005B143F /* HomeFlingCell.swift */; };
 		21F5F8F520538AFC005B143F /* FlingPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F420538AFC005B143F /* FlingPerformer.swift */; };
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
-		92947FCB218F55460024764F /* HomeEventCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92947FCA218F55460024764F /* HomeEventCellItem.swift */; };
-		92947FCD218F55540024764F /* HomeEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92947FCC218F55540024764F /* HomeEventCell.swift */; };
-		92947FD1218F57F30024764F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92947FD0218F57F30024764F /* Event.swift */; };
-		92947FD3218F58030024764F /* EventNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92947FD2218F58030024764F /* EventNetworkManager.swift */; };
-		92947FD5218F58170024764F /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92947FD4218F58170024764F /* EventViewController.swift */; };
 		978693F920EAE1BB00C4A8A1 /* DiningMenuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978693F820EAE1BB00C4A8A1 /* DiningMenuAPI.swift */; };
 		978693FB20EAE3B900C4A8A1 /* DiningMenuData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978693FA20EAE3B900C4A8A1 /* DiningMenuData.swift */; };
 		978693FD20EB0ADD00C4A8A1 /* DiningMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978693FC20EB0ADD00C4A8A1 /* DiningMenuModels.swift */; };
@@ -276,11 +271,6 @@
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		63E68F5C0B46A4FB7ED5B47B /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
-		92947FCA218F55460024764F /* HomeEventCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventCellItem.swift; sourceTree = "<group>"; };
-		92947FCC218F55540024764F /* HomeEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEventCell.swift; sourceTree = "<group>"; };
-		92947FD0218F57F30024764F /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		92947FD2218F58030024764F /* EventNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventNetworkManager.swift; sourceTree = "<group>"; };
-		92947FD4218F58170024764F /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		978693F820EAE1BB00C4A8A1 /* DiningMenuAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuAPI.swift; sourceTree = "<group>"; };
 		978693FA20EAE3B900C4A8A1 /* DiningMenuData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuData.swift; sourceTree = "<group>"; };
 		978693FC20EB0ADD00C4A8A1 /* DiningMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuModels.swift; sourceTree = "<group>"; };
@@ -388,7 +378,6 @@
 			children = (
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
 				210AC14420684F9B0050D837 /* HomeCellProtocols.swift */,
-				92947FC9218F54F40024764F /* Event */,
 				C13F9E93219284E9000B866A /* Calendar */,
 				21F5F8EF20538A54005B143F /* Spring Fling */,
 				217A784A204DDF05004F1227 /* Dining */,
@@ -445,7 +434,6 @@
 				2166408B1EBADBF800746B8E /* Dining */,
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
-				92947FCF218F575E0024764F /* Event */,
 				212304C52054ED9900958CE0 /* Spring Fling */,
 				216640EE1EBB867600746B8E /* Contacts */,
 				216640D31EBB80FD00746B8E /* News */,
@@ -769,25 +757,6 @@
 				4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		92947FC9218F54F40024764F /* Event */ = {
-			isa = PBXGroup;
-			children = (
-				92947FCA218F55460024764F /* HomeEventCellItem.swift */,
-				92947FCC218F55540024764F /* HomeEventCell.swift */,
-			);
-			path = Event;
-			sourceTree = "<group>";
-		};
-		92947FCF218F575E0024764F /* Event */ = {
-			isa = PBXGroup;
-			children = (
-				92947FD0218F57F30024764F /* Event.swift */,
-				92947FD2218F58030024764F /* EventNetworkManager.swift */,
-				92947FD4218F58170024764F /* EventViewController.swift */,
-			);
-			path = Event;
 			sourceTree = "<group>";
 		};
 		975BC27C20F07607009F93AB /* Venues */ = {
@@ -1265,7 +1234,6 @@
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
-				92947FCD218F55540024764F /* HomeEventCell.swift in Sources */,
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
 				97E79E1A2100E51A00D3D606 /* FitnessFacilityName.swift in Sources */,
 				97E79E082100DA1200D3D606 /* BuildingHoursCell.swift in Sources */,
@@ -1291,7 +1259,6 @@
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
 				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
-				92947FD1218F57F30024764F /* Event.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				217A7845204DB800004F1227 /* HomeAsynchronousFetching.swift in Sources */,
@@ -1319,7 +1286,6 @@
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				2189C0A82027CE4B00771C1F /* ThumbLayer.swift in Sources */,
 				2189C0842027CDB800771C1F /* GSRLoginController.swift in Sources */,
-				92947FD5218F58170024764F /* EventViewController.swift in Sources */,
 				211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */,
 				2189C0A02027CE4100771C1F /* GSRVenue.swift in Sources */,
 				215C605D205C88EA00FE271A /* ImageNetworkingManager.swift in Sources */,
@@ -1340,11 +1306,9 @@
 				97E79E142100E1FA00D3D606 /* FitnessViewController.swift in Sources */,
 				B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
-				92947FCB218F55460024764F /* HomeEventCellItem.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
-				92947FD3218F58030024764F /* EventNetworkManager.swift in Sources */,
 				B64830A2213C939200FD2B17 /* FitnessHeaderView.swift in Sources */,
 				216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */,
 				C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */,

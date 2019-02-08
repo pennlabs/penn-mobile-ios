@@ -58,7 +58,7 @@ extension HomeCalendarCell {
         events = item.events
         calendarEventTableView.reloadData()
         secondaryTitleLabel.text = "UNIVERSITY NOTIFICATIONS"
-        primaryTitleLabel.text = "Upcoming University Events"
+        primaryTitleLabel.text = "University Events"
     }
 }
 

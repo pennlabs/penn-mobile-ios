@@ -19,9 +19,9 @@ final class CalendarEvent {
         self.end = end
     }
     
-    func getDateString() -> String {
+    func getDateString(fullLength: Bool) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, MMM. d"
+        formatter.dateFormat = fullLength ? "EEEE, MMM. d" : "E. MMM. d"
         
         let startString = "\(formatter.string(from: start))"
         let endString = "\(formatter.string(from: end))"
