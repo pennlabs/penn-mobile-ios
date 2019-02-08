@@ -55,7 +55,7 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
             subtitleHeight = item.article.subtitle.dynamicHeight(font: subtitleFont, width: width)
             subtitleHeightDictionary[item.article.subtitle] = subtitleHeight
         }
-        let height = imageHeight + HomeViewController.cellSpacing + titleHeight + subtitleHeight + 66
+        let height = imageHeight + HomeViewController.cellSpacing + titleHeight + subtitleHeight + 48
         return height
     }
     
@@ -179,8 +179,11 @@ extension HomeNewsCell {
         dateLabel = UILabel()
         dateLabel.font = UIFont(name: "HelveticaNeue", size: 14)
         dateLabel.textColor = UIColor.warmGrey
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         cardView.addSubview(dateLabel)
-        _ = dateLabel.anchor(nil, left: titleLabel.leftAnchor, bottom: cardView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+//        _ = dateLabel.anchor(nil, left: titleLabel.leftAnchor, bottom: cardView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        dateLabel.centerYAnchor.constraint(equalTo: sourceLabel.centerYAnchor).isActive = true
+        dateLabel.rightAnchor.constraint(equalTo: articleImageView.rightAnchor, constant: -HomeNewsCell.titleEdgeOffset).isActive = true
     }
 }
