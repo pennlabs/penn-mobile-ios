@@ -20,6 +20,9 @@
 		212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212304C62054EDB900958CE0 /* FlingViewController.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
 		214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F768E1F07391000B8841C /* DatabaseManager.swift */; };
+		21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21508165220D2499002F7EA1 /* HomeNewsCellItem.swift */; };
+		21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21508167220D24A1002F7EA1 /* HomeNewsCell.swift */; };
+		2150816A220D24C4002F7EA1 /* NewsArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21508169220D24C4002F7EA1 /* NewsArticle.swift */; };
 		215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215C6059205C837400FE271A /* FlingNetworkManager.swift */; };
 		215C605D205C88EA00FE271A /* ImageNetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215C605C205C88EA00FE271A /* ImageNetworkingManager.swift */; };
 		21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D3D200ED954002F33CA /* LaundryMachine.swift */; };
@@ -178,6 +181,9 @@
 		212304C62054EDB900958CE0 /* FlingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingViewController.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		214F768E1F07391000B8841C /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		21508165220D2499002F7EA1 /* HomeNewsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCellItem.swift; sourceTree = "<group>"; };
+		21508167220D24A1002F7EA1 /* HomeNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCell.swift; sourceTree = "<group>"; };
+		21508169220D24C4002F7EA1 /* NewsArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticle.swift; sourceTree = "<group>"; };
 		215C6059205C837400FE271A /* FlingNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingNetworkManager.swift; sourceTree = "<group>"; };
 		215C605C205C88EA00FE271A /* ImageNetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNetworkingManager.swift; sourceTree = "<group>"; };
 		21640D3D200ED954002F33CA /* LaundryMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachine.swift; sourceTree = "<group>"; };
@@ -352,6 +358,16 @@
 			path = "Spring Fling";
 			sourceTree = "<group>";
 		};
+		21508164220D2481002F7EA1 /* News */ = {
+			isa = PBXGroup;
+			children = (
+				21508165220D2499002F7EA1 /* HomeNewsCellItem.swift */,
+				21508167220D24A1002F7EA1 /* HomeNewsCell.swift */,
+				21508169220D24C4002F7EA1 /* NewsArticle.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
 		21640D4220103C8A002F33CA /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -376,6 +392,7 @@
 			children = (
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
 				210AC14420684F9B0050D837 /* HomeCellProtocols.swift */,
+				21508164220D2481002F7EA1 /* News */,
 				21F5F8EF20538A54005B143F /* Spring Fling */,
 				217A784A204DDF05004F1227 /* Dining */,
 				217A784B204DDF0C004F1227 /* Laundry */,
@@ -1233,6 +1250,7 @@
 				217A7832204D2C7E004F1227 /* HomeCellItem.swift in Sources */,
 				2189C08D2027CE2600771C1F /* RoomCell.swift in Sources */,
 				978693FB20EAE3B900C4A8A1 /* DiningMenuData.swift in Sources */,
+				2150816A220D24C4002F7EA1 /* NewsArticle.swift in Sources */,
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
 				21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */,
@@ -1258,6 +1276,7 @@
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
 				216640941EBADC1700746B8E /* DiningCell.swift in Sources */,
+				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
@@ -1283,6 +1302,7 @@
 				2189C0872027CDD700771C1F /* GSRNetworkManager.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
+				21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */,
 				216640971EBADC1700746B8E /* DiningVenue.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
 				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,
