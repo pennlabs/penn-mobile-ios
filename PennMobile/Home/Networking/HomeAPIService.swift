@@ -18,6 +18,7 @@ final class HomeAPIService: Requestable {
             var model: HomeTableViewModel? = HomeTableViewModel()
             if let dict = dict {
                 let json = JSON(dict)
+                print(json)
                 model = try? HomeTableViewModel(json: json)
             }
             completion(model)
