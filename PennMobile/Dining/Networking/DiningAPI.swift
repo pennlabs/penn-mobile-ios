@@ -14,6 +14,7 @@ class DiningAPI: Requestable {
     static let instance = DiningAPI()
     
     let diningUrl = "https://api.pennlabs.org/dining/venues"
+    let diningPrefs =  "https://api-dev.pennlabs.org/dining/preferences/V2"
 
     func fetchDiningHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
         getRequest(url: diningUrl) { (dictionary, error, statusCode) in
@@ -49,6 +50,10 @@ class DiningAPI: Requestable {
             let html = try? String(contentsOf: url, encoding: .ascii)
             completion(html)
         }
+    }
+    
+    func saveDiningSettings(venues: [DiningVenueName], completion: (Bool) -> ()) {
+        
     }
 }
 

@@ -91,7 +91,10 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
     }
     
     func handleSettingsTapped() {
-        print("Settings tapped")
+        let diningSettings = DiningCellSettingsController()
+        diningSettings.delegate = self
+        let nvc = UINavigationController(rootViewController: diningSettings)
+        showDetailViewController(nvc, sender: nil)
     }
     
     private func confirmBookingWanted(_ booking: GSRBooking) {
@@ -177,6 +180,18 @@ extension HomeViewController {
     @objc fileprivate func handleRefresh(_ sender: Any) {
         fetchAllCellData {
             self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+}
+
+extension HomeViewController : DiningCellSettingsDelegate {
+    func saveSelection(for cafes: [DiningVenueName]) {
+        UserDBManager.shared.saveDiningPreference(for: cafes) { (success) in
+            if success {
+                self.fetchViewModel({
+                    self.tableView.reloadData()
+                })
+            }
         }
     }
 }

@@ -78,6 +78,7 @@ extension Requestable {
             callback(dict, error, status)
         }
     }
+
     
     internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ json: NSDictionary?, _ error: Error?, _ status: Int?) -> ())? = nil)  {
         guard let url = URL(string: url) else {
@@ -89,6 +90,7 @@ extension Requestable {
         
         let deviceID = getDeviceID()
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+        print(deviceID)
         request.httpMethod = method.description
         if let params = params {
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
