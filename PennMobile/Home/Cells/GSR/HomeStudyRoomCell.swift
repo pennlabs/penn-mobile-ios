@@ -30,6 +30,7 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
             setupCell(with: item)
         }
     }
+    
     var bookingOptions: [[GSRBooking?]]?
     
     var cardView: UIView! = UIView()

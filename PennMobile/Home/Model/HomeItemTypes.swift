@@ -33,6 +33,13 @@ extension HomeItemTypes {
     }
 }
 
+extension HomeItemTypes {
+    func getAllTypes() -> [HomeCellItem.Type] {
+        let mirror = Mirror(reflecting: self)
+        return mirror.children.map { $0.value as! HomeCellItem.Type }
+    }
+}
+
 // MARK: Default Cells for Development Purposes
 extension HomeItemTypes {
     /**
