@@ -23,7 +23,7 @@ class GSRNetworkManager: NSObject, Requestable {
     
     func getLocations (callback: @escaping (([Int:String]?) -> Void)) {
         let url = locationsUrl
-        getRequest(url: url) { (dict) in
+        getRequest(url: url) { (dict, error, statusCode) in
             if let dict = dict {
                 let json = JSON(dict)
                 self.locations = self.parseLocations(json: json)
@@ -41,8 +41,8 @@ class GSRNetworkManager: NSObject, Requestable {
     }
 
     func getAvailability(for gsrId: Int, dateStr: String, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
-        let url = "\(availUrl)/\(gsrId)?date=\(dateStr)&available=true"
-        getRequest(url: url) { (dict) in
+        let url = "\(availUrl)/\(gsrId)?date=\(dateStr)"
+        getRequest(url: url) { (dict, error, statusCode) in
             var rooms: [GSRRoom]!
             if let dict = dict {
                 let json = JSON(dict)
@@ -65,6 +65,16 @@ class GSRNetworkManager: NSObject, Requestable {
     }
     
     func makeBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
+        if booking.location.service == "wharton" {
+            WhartonGSRNetworkManager.instance.bookRoom(booking: booking) { (success, errorMsg) in
+                callback(success, errorMsg)
+            }
+        } else {
+            makeLibcalBooking(for: booking, callback)
+        }
+    }
+    
+    func makeLibcalBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let start = dateFormatter.string(from: booking.start)
@@ -128,7 +138,7 @@ extension GSRRoom {
         var times = [GSRTimeSlot]()
         let jsonTimeArray = json["times"].arrayValue
         for timeJSON in jsonTimeArray {
-            if let time = try? GSRTimeSlot(roomId: roomId, json: timeJSON), time.isAvailable {
+            if let time = try? GSRTimeSlot(roomId: roomId, json: timeJSON) {
                 if let prevTime = times.last, prevTime.endTime == time.startTime {
                     times.last?.next = time
                     time.prev = times.last

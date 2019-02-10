@@ -25,14 +25,13 @@ class DiningViewController: GenericTableViewController {
         
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
-        
         prepareRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchDiningHours()
         self.tabBarController?.title = "Dining"
+        fetchDiningHours()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -45,10 +44,21 @@ class DiningViewController: GenericTableViewController {
 extension DiningViewController {
     fileprivate func fetchDiningHours() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        DiningAPI.instance.fetchDiningHours { (success) in
+        DiningAPI.instance.fetchDiningHours { (success, error) in
             DispatchQueue.main.async {
                 if !success {
                     DiningHoursData.shared.clearHours()
+                    
+                    if error {
+                        self.navigationVC?.addStatusBar(text: .apiError)
+                    } else {
+                        self.navigationVC?.addStatusBar(text: .noInternet)
+                    }
+                    
+                } else {
+                    
+                    //what to do when request is successful
+                    
                 }
                 self.tableView.reloadData()
                 
@@ -82,7 +92,6 @@ extension DiningViewController: DiningViewModelDelegate {
         DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name.rawValue)
         
         if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
-//            UIApplication.shared.open(url, options: [:])
             let vc = UIViewController()
             let webView = GenericWebview(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             webView.loadRequest(URLRequest(url: url))

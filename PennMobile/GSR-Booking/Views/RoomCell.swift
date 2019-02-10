@@ -66,7 +66,7 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         if delegate.containsTimeSlot(timeSlot) {
             cell.backgroundColor = .informationYellow
         } else {
-            cell.backgroundColor = .interactionGreen
+            cell.backgroundColor = timeSlot.isAvailable ? UIColor.interactionGreen : UIColor.secondaryInformationGrey
         }
         return cell
     }

@@ -105,6 +105,7 @@ extension UIColor {
     static let navigationBlue = UIColor(r: 74, g: 144, b: 226)
     static let interactionGreen = UIColor(r: 118, g: 191, b: 150)
     static let informationYellow = UIColor(r: 255, g: 193, b: 7)
+    static let redingTerminal = UIColor(r: 226, g: 81, b: 82)
     static let secondaryInformationGrey = UIColor(r: 155, g: 155, b: 155)
 
     static let dataGreen = UIColor(r: 118, g: 191, b: 150)
@@ -398,4 +399,11 @@ extension Dictionary where Key == String, Value == String {
     
 }
 
-
+extension String {
+    // https://stackoverflow.com/questions/34262863/how-to-calculate-height-of-a-string
+    func dynamicHeight(font: UIFont, width: CGFloat) -> CGFloat{
+        let calString = NSString(string: self)
+        let textSize = calString.boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSFontAttributeName: font], context: nil)
+        return textSize.height
+    }
+}

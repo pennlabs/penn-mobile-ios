@@ -44,25 +44,17 @@ extension Array where Element: GSRTimeSlot {
         if count == 0 { return 0 }
         var num = 1
         var currTime: GSRTimeSlot = first!
-        while currTime.next != nil {
+        while currTime.isAvailable && currTime.next != nil {
             num += 1
             currTime = currTime.next!
         }
         return num
     }
     
-    var first60: GSRTimeSlot? {
+    func firstTimeslot(duration: Int) -> GSRTimeSlot? {
+        let numSlots = duration / 30
         for slot in self {
-            if slot.next != nil {
-                return slot
-            }
-        }
-        return nil
-    }
-    
-    var first90: GSRTimeSlot? {
-        for slot in self {
-            if slot.next != nil && slot.next!.next != nil {
+            if [slot].numberInRow >= numSlots {
                 return slot
             }
         }

@@ -17,6 +17,7 @@ final class HomeItemTypes: ModularTableViewItemTypes {
     let studyRoomBooking: HomeCellItem.Type = HomeGSRCellItem.self
     let fling: HomeCellItem.Type = HomeFlingCellItem.self
     let calendar: HomeCellItem.Type = HomeCalendarCellItem.self
+    let news: HomeCellItem.Type = HomeNewsCellItem.self
 }
 
 // MARK: - JSON Parsing
@@ -30,6 +31,13 @@ extension HomeItemTypes {
             }
         }
         return nil
+    }
+}
+
+extension HomeItemTypes {
+    func getAllTypes() -> [HomeCellItem.Type] {
+        let mirror = Mirror(reflecting: self)
+        return mirror.children.map { $0.value as! HomeCellItem.Type }
     }
 }
 

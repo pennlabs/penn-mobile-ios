@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GoogleAnalyticsManager.shared.dryRun = true
         UserDBManager.shared.dryRun = true
         UserDBManager.shared.testRun = true
-        
+      
         LaundryAPIService.instance.prepare {
             GoogleAnalyticsManager.prepare()
             
@@ -62,6 +62,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if sessionCount == 3 {
                 SKStoreReviewController.requestReview()
             }
+        }
+        
+        /*if !UserDefaults.standard.isOnboarded() {
+            //            handleOnboarding(animated: true)
+            UserDefaults.standard.setIsOnboarded(value: true)
+            return true
+        }*/
+        
+        tabBarController = TabBarController()
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = HomeNavigationController(rootViewController: tabBarController)
+        window?.makeKeyAndVisible()
+        
+        // Keep track locally of app sessions (for app review prompting)
+        let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
+        UserDefaults.standard.set(sessionCount+1, forKey:"launchCount")
+        UserDefaults.standard.synchronize()
+        if sessionCount == 3 {
+            SKStoreReviewController.requestReview()
         }
         
         return true

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FitnessViewController: UITableViewController {
+class FitnessViewController: GenericTableViewController {
     
     fileprivate var viewModel = FitnessViewModel()
     
@@ -32,7 +32,7 @@ class FitnessViewController: UITableViewController {
         fetchFitnessHours()
         self.tabBarController?.title = "Fitness"
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         refreshControl?.endRefreshing()
@@ -43,10 +43,21 @@ class FitnessViewController: UITableViewController {
 extension FitnessViewController {
     fileprivate func fetchFitnessHours() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        FitnessAPI.instance.fetchFitnessHours { (success) in
+        FitnessAPI.instance.fetchFitnessHours { (success, error) in
             DispatchQueue.main.async {
                 if !success {
-                    FitnessFacilityData.shared.clearSchedules()
+                    DiningHoursData.shared.clearHours()
+                    
+                    if error {
+                        self.navigationVC?.addStatusBar(text: .apiError)
+                    } else {
+                        self.navigationVC?.addStatusBar(text: .noInternet)
+                    }
+                    
+                } else {
+                    
+                    //what to do when request is successful
+                    
                 }
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()

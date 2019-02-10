@@ -59,25 +59,18 @@ extension HomeGSRCellItem: HomeAPIRequestable {
         let wicRooms = rooms.filter { $0.gid == 1889 && $0.name.contains("Rm") }
         let wicBooths = rooms.filter { $0.gid == 1889 && $0.name.contains("Booth") }
         
-        let wicRoomsWith60 = wicRooms.filter { $0.timeSlots.first60 != nil }
-        let wicRoomsWith90 = wicRoomsWith60.filter { $0.timeSlots.first90 != nil }
-        let wicBoothsWith60 = wicBooths.filter { $0.timeSlots.first60 != nil }
-        let wicBoothsWith90 = wicBoothsWith60.filter { $0.timeSlots.first90 != nil }
-
-        let firstRoomSlot30 = getFirst30(wicRooms)
-        let firstRoomSlot60 = getFirst60(wicRoomsWith60)
-        let firstRoomSlot90 = getFirst90(wicRoomsWith90)
-        let firstBoothSlot30 = getFirst30(wicBooths)
-        let firstBoothSlot60 = getFirst60(wicBoothsWith60)
-        let firstBoothSlot90 = getFirst90(wicBoothsWith90)
-        
         let gsrLoc = GSRLocation(lid: 1086, gid: 1889, name: "Weigle", service: "libcal")
-        self.bookingOptions = [[getBooking(gsrLoc, firstBoothSlot30.0, 1, firstBoothSlot30.1),
-                                getBooking(gsrLoc, firstBoothSlot60.0, 2, firstBoothSlot60.1),
-                                getBooking(gsrLoc, firstBoothSlot90.0, 3, firstBoothSlot90.1)],
-                               [getBooking(gsrLoc, firstRoomSlot30.0, 1, firstRoomSlot30.1),
-                                getBooking(gsrLoc, firstRoomSlot60.0, 2, firstRoomSlot60.1),
-                                getBooking(gsrLoc, firstRoomSlot90.0, 3, firstRoomSlot90.1)]]
+        var roomBookings = [GSRBooking?]()
+        for i in 1...3 {
+            let roomSlot = getFirstOpenRoom(wicRooms, duration: 30*i)
+            roomBookings.append(getBooking(gsrLoc, roomSlot.0, 1, roomSlot.1))
+        }
+        var boothBookings = [GSRBooking?]()
+        for i in 1...3 {
+            let roomSlot = getFirstOpenRoom(wicBooths, duration: 30*i)
+            boothBookings.append(getBooking(gsrLoc, roomSlot.0, 1, roomSlot.1))
+        }
+        self.bookingOptions = [boothBookings, roomBookings]
     }
     
     private func getBooking(_ location: GSRLocation, _ slot: GSRTimeSlot?, _ numSlots: Int, _ room: GSRRoom?) -> GSRBooking? {
@@ -95,31 +88,17 @@ extension HomeGSRCellItem: HomeAPIRequestable {
         return GSRBooking(location: location, roomId: slot.roomId, start: slot.startTime, end: endTime, name: room?.name)
     }
     
-    private func getFirst30(_ rooms: [GSRRoom]) -> (GSRTimeSlot?, GSRRoom?) {
-        let minRoom : GSRRoom? = rooms.min()
-        let first30TimeSlot : GSRTimeSlot? = minRoom?.timeSlots.first
-        return (first30TimeSlot, minRoom)
-    }
-    
-    private func getFirst60(_ rooms: [GSRRoom]) -> (GSRTimeSlot?, GSRRoom?) {
-        let first60Room : GSRRoom? = rooms.min { (lhs, rhs) -> Bool in
-            guard let lhsFirst60 = lhs.timeSlots.first60, let rhsFirst60 = rhs.timeSlots.first60 else {
+    private func getFirstOpenRoom(_ rooms: [GSRRoom], duration: Int) -> (GSRTimeSlot?, GSRRoom?) {
+        let firstOpenRoom: GSRRoom? = rooms.min { (lhs, rhs) -> Bool in
+            guard let lhsFirst = lhs.timeSlots.firstTimeslot(duration: duration) else {
                 return false
             }
-            return lhsFirst60.startTime <= rhsFirst60.startTime
-        }
-        let first60TimeSlot : GSRTimeSlot? = first60Room?.timeSlots.first60
-        return (first60TimeSlot, first60Room)
-    }
-    
-    private func getFirst90(_ rooms: [GSRRoom]) -> (GSRTimeSlot?, GSRRoom?) {
-        let first90Room : GSRRoom? = rooms.min { (lhs, rhs) -> Bool in
-            guard let lhsFirst90 = lhs.timeSlots.first90, let rhsFirst90 = rhs.timeSlots.first90 else {
-                return false
+            guard let rhsFirst = rhs.timeSlots.firstTimeslot(duration: duration) else {
+                return true
             }
-            return lhsFirst90.startTime <= rhsFirst90.startTime
+            return lhsFirst.startTime <= rhsFirst.startTime
         }
-        let first90TimeSlot : GSRTimeSlot? = first90Room?.timeSlots.first90
-        return (first90TimeSlot, first90Room)
+        let firstTimeSlot : GSRTimeSlot? = firstOpenRoom?.timeSlots.firstTimeslot(duration: duration)
+        return (firstTimeSlot, firstOpenRoom)
     }
 }
