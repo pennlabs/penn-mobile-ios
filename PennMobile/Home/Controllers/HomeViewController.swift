@@ -163,17 +163,22 @@ extension HomeViewController {
     func fetchCellData(for items: [HomeCellItem], _ completion: (() -> Void)? = nil) {
         HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
             DispatchQueue.main.async {
-                let row = items.index(where: { (thisItem) -> Bool in
-                    thisItem.equals(item: item)
-                })!
-                let indexPath = IndexPath(row: row, section: 0)
-                self.tableView.reloadRows(at: [indexPath], with: .none)
+                self.reloadItem(item)
             }
         }) {
             DispatchQueue.main.async {
                 completion?()
             }
         }
+    }
+    
+    func reloadItem(_ item: HomeCellItem) {
+        guard let allItems = tableViewModel.items as? [HomeCellItem] else { return }
+        let row = allItems.index(where: { (thisItem) -> Bool in
+            thisItem.equals(item: item)
+        })!
+        let indexPath = IndexPath(row: row, section: 0)
+        self.tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
 
@@ -193,17 +198,15 @@ extension HomeViewController {
 
 extension HomeViewController : DiningCellSettingsDelegate {
     func saveSelection(for cafes: [DiningVenue]) {
-        UserDBManager.shared.saveDiningPreference(for: cafes) { (success) in
-            if success {
-                guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
-                if cafes.count == 0 {
-                    diningItem.venues = DiningVenue.getDefaultVenues()
-                } else {
-                    diningItem.venues = cafes
-                }
-                
-                self.fetchCellData(for: [diningItem])
-            }
+        guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
+        if cafes.count == 0 {
+            diningItem.venues = DiningVenue.getDefaultVenues()
+        } else {
+            diningItem.venues = cafes
         }
+        
+        reloadItem(diningItem)
+        self.fetchCellData(for: [diningItem])
+        UserDBManager.shared.saveDiningPreference(for: cafes)
     }
 }

@@ -16,7 +16,7 @@ func getDeviceID() -> String {
 
 class UserDBManager: NSObject {
     static let shared = UserDBManager()
-    fileprivate let baseUrl = "http://api-dev.pennlabs.org"
+    fileprivate let baseUrl = "http://api.pennlabs.org"
     
     var dryRun: Bool = true
     var testRun: Bool = false
@@ -65,23 +65,12 @@ class UserDBManager: NSObject {
 
 // MARK: - Dining
 extension UserDBManager {
-    func saveDiningPreference(for venue: DiningVenue) {
+    func saveDiningPreference(for venues: [DiningVenue]) {
         let urlString = "\(baseUrl)/dining/preferences"
-        let id = venue.name.getID()
-        let params = ["venue_id": id]
-        let request = getAnalyticsPostRequest(url: urlString, params: params)
-        sendRequest(request)
-    }
-    
-    func saveDiningPreference(for venues: [DiningVenue], callback: @escaping (Bool) -> ()) {
-        let urlString = "\(baseUrl)/dining/preferences/V2"
-        let ids = venues.map {$0.getID()}
-        print(ids)
+        let ids = venues.map { $0.getID() }.filter { $0 != nil}.map { $0! }
         let params = ["venues": ids]
         let request = getAnalyticsPostRequest(url: urlString, params: params)
-        sendRequest(request) { (data, response, error) in
-            callback(error == nil)
-        }
+        sendRequest(request)
     }
 }
 
