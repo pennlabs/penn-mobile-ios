@@ -94,8 +94,9 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         confirmBookingWanted(booking)
     }
     
-    func handleSettingsTapped() {
+    func handleSettingsTapped(venues: [DiningVenue]) {
         let diningSettings = DiningCellSettingsController()
+        diningSettings.setupFromVenues(venues: venues)
         diningSettings.delegate = self
         let nvc = UINavigationController(rootViewController: diningSettings)
         showDetailViewController(nvc, sender: nil)
@@ -155,15 +156,10 @@ extension HomeViewController {
     }
     
     func fetchCellData(for itemTypes: [HomeCellItem.Type], _ completion: (() -> Void)? = nil) {
-        guard let allItems = tableViewModel.items as? [HomeCellItem] else { return }
-        let items = allItems.filter { (item) -> Bool in
-            return itemTypes.contains(where: { (itemType) -> Bool in
-                return itemType.jsonKey == type(of: item).jsonKey
-            })
-        }
+        let items = tableViewModel.getItems(for: itemTypes)
         HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
             DispatchQueue.main.async {
-                let row = allItems.index(where: { (thisItem) -> Bool in
+                let row = items.index(where: { (thisItem) -> Bool in
                     thisItem.equals(item: item)
                 })!
                 let indexPath = IndexPath(row: row, section: 0)

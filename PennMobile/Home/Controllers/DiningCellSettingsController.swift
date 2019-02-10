@@ -36,6 +36,16 @@ class DiningCellSettingsController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        for cafe in chosenCafes {
+            if let index = cafes.index(of: cafe) {
+                tableView.selectRow(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .none)
+            }
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -50,9 +60,14 @@ class DiningCellSettingsController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
-        
-        cell.textLabel?.text = cafes[indexPath.row].rawValue
         cell.selectionStyle = .none
+        cell.textLabel?.text = cafes[indexPath.row].rawValue
+        
+        if chosenCafes.contains(cafes[indexPath.row]) {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
 
         return cell
     }
@@ -89,5 +104,9 @@ class DiningCellSettingsController: UITableViewController {
     func handleSave() {
         delegate?.saveSelection(for: chosenCafes)
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func setupFromVenues(venues: [DiningVenue]) {
+        chosenCafes = venues.map {$0.name}
     }
 }

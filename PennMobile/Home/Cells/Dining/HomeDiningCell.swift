@@ -10,7 +10,7 @@ import UIKit
 
 protocol DiningCellSelectable {
     func handleVenueSelected(_ venue: DiningVenue)
-    func handleSettingsTapped()
+    func handleSettingsTapped(venues: [DiningVenue])
 }
 
 final class HomeDiningCell: UITableViewCell, HomeCellConformable {
@@ -62,7 +62,12 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     
     @objc fileprivate func settingsButtonTapped() {
         guard let delegate = delegate as? DiningCellSelectable else { return }
-        delegate.handleSettingsTapped()
+        guard let venues = venues else {
+            delegate.handleSettingsTapped(venues: [])
+            return
+        }
+        
+        delegate.handleSettingsTapped(venues: venues)
     }
     
     @objc fileprivate func transitionButtonTapped() {
