@@ -1,6 +1,12 @@
 {
     "locations": [
                   {
+                  "lid": 9999,
+                  "gid": 9999,
+                  "name": "Huntsman",
+                  "service": "wharton"
+                  },
+                  {
                   "lid": 1086,
                   "gid": 1889,
                   "name": "Weigle",
@@ -40,29 +46,8 @@
                   "service": "libcal"
                   },
                   {
-                  "lid": 2637,
-                  "name": "Fisher Fine Arts",
-                  "service": "libcal"
-                  },
-                  {
                   "lid": 1090,
                   "name": "Levin Building",
-                  "service": "libcal"
-                  },
-                  {
-                  "lid": 2634,
-                  "gid": 2634,
-                  "name": "Museum Library",
-                  "service": "libcal"
-                  },
-                  {
-                  "lid": 2636,
-                  "name": "VP Seminar",
-                  "service": "libcal"
-                  },
-                  {
-                  "lid": 2611,
-                  "name": "VP Special Use",
                   "service": "libcal"
                   }
                 ]
