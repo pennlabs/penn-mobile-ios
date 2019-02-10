@@ -74,6 +74,10 @@ extension HomeViewController {
 extension HomeViewController: HomeViewModelDelegate, GSRBookable {
     
     func handleUrlPressed(_ url: String) {
+        let wv = WebviewController()
+        wv.load(for: url)
+        wv.title = "The Daily Pennsylvanian"
+        navigationController?.pushViewController(wv, animated: true)
     }
     
     var allowMachineNotifications: Bool {
@@ -125,7 +129,10 @@ extension HomeViewController {
             guard let model = model else { return }
             DispatchQueue.main.async {
                 self.setModel(model)
-                self.tableView.reloadData()
+                UIView.transition(with: self.tableView,
+                                  duration: 0.35,
+                                  options: .transitionCrossDissolve,
+                                  animations: { self.tableView.reloadData() })
                 self.fetchAllCellData {
                     if let venue = model.venueToPreload() {
                         DiningDetailModel.preloadWebview(for: venue.name)
