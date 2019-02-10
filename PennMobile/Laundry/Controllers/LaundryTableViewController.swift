@@ -26,6 +26,8 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         tableView.allowsSelection = false
         
         tableView.tableFooterView = getFooterViewForTable()
+        // header view to make space for the error bar
+        tableView.tableHeaderView = getHeaderViewForTable()
                 
         rooms = LaundryRoom.getPreferences()
         
@@ -34,8 +36,6 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         
         // initialize navigation bar
 
-
-        
         // Start indicator if there are cells that need to be loaded
         if !rooms.isEmpty {
             showActivity()
@@ -52,6 +52,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     
     override func viewDidAppear(_ animated: Bool) {
         setupNavBar()
+        self.navigationVC?.addPermanentStatusBar(text: .laundryDown)
         super.viewDidAppear(animated)
     }
     
@@ -62,6 +63,12 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     
     fileprivate func getFooterViewForTable() -> UIView {
         let v = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 30.0))
+        v.backgroundColor = UIColor.clear
+        return v
+    }
+    
+    fileprivate func getHeaderViewForTable() -> UIView {
+        let v = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 70.0))
         v.backgroundColor = UIColor.clear
         return v
     }
