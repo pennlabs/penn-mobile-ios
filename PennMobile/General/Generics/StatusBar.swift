@@ -18,6 +18,7 @@ class StatusBar: UIView {
     enum statusBarText : String {
         case noInternet = "No Internet Connection"
         case apiError = "Penn servers are temporarily down.\nPlease try again later."
+        case laundryDown = "Penn's laundry servers are currently not updating.\nWe hope this will be fixed shortly."
     }
     
     public required init?(coder aDecoder: NSCoder) {
