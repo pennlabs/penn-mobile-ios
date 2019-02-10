@@ -41,7 +41,7 @@ class UniversityNotificationCell: UITableViewCell {
 extension UniversityNotificationCell {
     fileprivate func setupCell(with calendarEvent: CalendarEvent) {
         eventLabel.text = calendarEvent.name
-        dateLabel.text = calendarEvent.getDateString(fullLength: true)
+        dateLabel.text = calendarEvent.getDateString(fullLength: false)
     }
 }
 
@@ -70,10 +70,11 @@ extension UniversityNotificationCell {
     
     fileprivate func getDateLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        label.font = UIFont(name: "AvenirNext-Regular", size: 14)
         label.textColor = .secondaryTitleGrey
         label.textAlignment = .center
         label.numberOfLines = 1
+        label.shrinkUntilFits()
         return label
     }
     
