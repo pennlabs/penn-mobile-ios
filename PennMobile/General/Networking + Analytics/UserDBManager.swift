@@ -73,9 +73,9 @@ extension UserDBManager {
         sendRequest(request)
     }
     
-    func saveDiningPreference(for venues: [DiningVenueName], callback: @escaping (Bool) -> ()) {
+    func saveDiningPreference(for venues: [DiningVenue], callback: @escaping (Bool) -> ()) {
         let urlString = "\(baseUrl)/dining/preferences/V2"
-        let ids = venues.map { $0.getID() }
+        let ids = venues.map {$0.getID()}
         print(ids)
         let params = ["venues": ids]
         let request = getAnalyticsPostRequest(url: urlString, params: params)

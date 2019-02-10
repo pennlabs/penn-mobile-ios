@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DiningCellSettingsDelegate {
-    func saveSelection(for cafes: [DiningVenueName])
+    func saveSelection(for cafes: [DiningVenue])
 }
 
 class DiningCellSettingsController: UITableViewController {
@@ -102,7 +102,8 @@ class DiningCellSettingsController: UITableViewController {
     }
 
     func handleSave() {
-        delegate?.saveSelection(for: chosenCafes)
+        let chosenVenues = chosenCafes.map {DiningVenue(venue: $0)}
+        delegate?.saveSelection(for: chosenVenues)
         self.dismiss(animated: true, completion: nil)
     }
 
