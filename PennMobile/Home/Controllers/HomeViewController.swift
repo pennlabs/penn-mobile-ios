@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 class HomeViewController: GenericViewController {
-    
+
     var tableViewModel: HomeTableViewModel!
     var tableView: ModularTableView!
-    
+
     static let edgeSpacing: CGFloat = 20
     static let cellSpacing: CGFloat = 20
 
@@ -22,11 +22,11 @@ class HomeViewController: GenericViewController {
         self.title = "Home"
         view.backgroundColor = .white
         trackScreen = true
-        
+
         prepareTableView()
         prepareRefreshControl()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.title = "Home"
@@ -46,9 +46,9 @@ extension HomeViewController {
         tableView = ModularTableView()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-        
+
         view.addSubview(tableView)
-        
+
         tableView.anchorToTop(nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor)
         if #available(iOS 11.0, *) {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
@@ -57,12 +57,12 @@ extension HomeViewController {
             tableView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0).isActive = true
             tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
-        
+
         tableView.tableFooterView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 30.0))
-        
+
         HomeItemTypes.instance.registerCells(for: tableView)
     }
-    
+
     func setModel(_ model: HomeTableViewModel) {
         tableViewModel = model
         tableViewModel.delegate = self
@@ -72,28 +72,28 @@ extension HomeViewController {
 
 // MARK: - ViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate, GSRBookable {
-    
+
     func handleUrlPressed(_ url: String) {
         let wv = WebviewController()
         wv.load(for: url)
         wv.title = "The Daily Pennsylvanian"
         navigationController?.pushViewController(wv, animated: true)
     }
-    
+
     var allowMachineNotifications: Bool {
         return true
     }
-    
+
     func handleVenueSelected(_ venue: DiningVenue) {
         let ddc = DiningDetailViewController()
         ddc.venue = venue
         navigationController?.pushViewController(ddc, animated: true)
     }
-    
+
     func handleBookingSelected(_ booking: GSRBooking) {
         confirmBookingWanted(booking)
     }
-    
+
     func handleSettingsTapped(venues: [DiningVenue]) {
         let diningSettings = DiningCellSettingsController()
         diningSettings.setupFromVenues(venues: venues)
@@ -101,7 +101,7 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         let nvc = UINavigationController(rootViewController: diningSettings)
         showDetailViewController(nvc, sender: nil)
     }
-    
+
     private func confirmBookingWanted(_ booking: GSRBooking) {
         let message = "Booking \(booking.getRoomName()) from \(booking.getLocalTimeString())"
         let alert = UIAlertController(title: "Confirm Booking",
@@ -114,7 +114,7 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         }))
         present(alert, animated: true)
     }
-    
+
     private func handleBookingRequested(_ booking: GSRBooking) {
         if GSRUser.hasSavedUser() {
             booking.user = GSRUser.getUser()
@@ -150,11 +150,11 @@ extension HomeViewController {
             }
         }
     }
-    
+
     func fetchAllCellData(_ completion: (() -> Void)? = nil) {
         fetchCellData(for: HomeItemTypes.instance.getAllTypes(), completion)
     }
-    
+
     func fetchCellData(for itemTypes: [HomeCellItem.Type], _ completion: (() -> Void)? = nil) {
         let items = tableViewModel.getItems(for: itemTypes)
         HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
@@ -179,7 +179,7 @@ extension HomeViewController {
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
     }
-    
+
     @objc fileprivate func handleRefresh(_ sender: Any) {
         fetchAllCellData {
             self.tableView.refreshControl?.endRefreshing()
