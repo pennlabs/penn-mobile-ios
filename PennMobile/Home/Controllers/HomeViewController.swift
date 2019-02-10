@@ -157,6 +157,10 @@ extension HomeViewController {
 
     func fetchCellData(for itemTypes: [HomeCellItem.Type], _ completion: (() -> Void)? = nil) {
         let items = tableViewModel.getItems(for: itemTypes)
+        self.fetchCellData(for: items)
+    }
+    
+    func fetchCellData(for items: [HomeCellItem], _ completion: (() -> Void)? = nil) {
         HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
             DispatchQueue.main.async {
                 let row = items.index(where: { (thisItem) -> Bool in
@@ -188,12 +192,12 @@ extension HomeViewController {
 }
 
 extension HomeViewController : DiningCellSettingsDelegate {
-    func saveSelection(for cafes: [DiningVenueName]) {
+    func saveSelection(for cafes: [DiningVenue]) {
         UserDBManager.shared.saveDiningPreference(for: cafes) { (success) in
             if success {
-                self.fetchViewModel({
-                    self.tableView.reloadData()
-                })
+                guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
+                diningItem.venues = cafes
+                self.fetchCellData(for: [diningItem])
             }
         }
     }
