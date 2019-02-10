@@ -112,7 +112,7 @@ extension HomeNewsCell {
     fileprivate func prepareUI() {
         prepareImageView()
         prepareSourceLabel()
-        preprareTitleLabel()
+        prepareTitleLabel()
         if HomeNewsCell.showSubtitle {
             prepareSubtitleLabel()
         }
@@ -152,7 +152,7 @@ extension HomeNewsCell {
         _ = sourceLabel.anchor(articleImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 12, leftConstant: HomeNewsCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomeNewsCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)
     }
     
-    private func preprareTitleLabel() {
+    private func prepareTitleLabel() {
         titleLabel = UILabel()
         titleLabel.font = HomeNewsCell.titleFont
         titleLabel.numberOfLines = 8
