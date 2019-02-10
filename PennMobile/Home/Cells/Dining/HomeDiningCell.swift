@@ -158,6 +158,8 @@ extension HomeDiningCell {
 
         settingsButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
         settingsButton.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        settingsButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        settingsButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
     }
 
     // MARK: Divider Line
@@ -234,8 +236,9 @@ extension HomeDiningCell {
     fileprivate func getSettingsButton() -> UIButton {
         let button = UIButton()
         button.setTitleColor(.navigationBlue, for: .normal)
+        button.tintColor = .navigationBlue
         button.setTitleColor(.secondaryTitleGrey, for: .highlighted)
-        button.setTitle("Settings", for: .normal)
+        button.setImage(#imageLiteral(resourceName: "settingsButton").withRenderingMode(.alwaysTemplate), for: .normal)
         button.titleLabel?.font = .footerTransitionFont
         button.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
