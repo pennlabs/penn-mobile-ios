@@ -41,12 +41,12 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                             //data recieved and parsed successfully
                             if let dict = json {
                                 let json = JSON(dict)
-                                if json["error"].string != nil {
+                                let rooms = try? self.parseAvailabilityJSON(json)
+                                if let rooms = rooms, !rooms.isEmpty {
+                                    callback(rooms)
+                                } else {
                                     UserDefaults.standard.clearSessionID()
                                     self.getAvailabilityWithoutSessionID(date: date, callback: callback)
-                                } else {
-                                    let rooms = try? self.parseAvailabilityJSON(json)
-                                    callback(rooms)
                                 }
                             }
                             return
@@ -179,6 +179,9 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
 
 extension WhartonGSRNetworkManager {
     func parseAvailabilityJSON(_ json: JSON) throws -> [GSRRoom] {
+        guard json["error"].string == nil else {
+            throw NetworkingError.other
+        }
         let timesJSONArray = json["times"].arrayValue.flatMap { $0.arrayValue }
         let timesArray = try timesJSONArray.map { (json) -> GSRTimeSlot in
             return try GSRTimeSlot(json: json)
