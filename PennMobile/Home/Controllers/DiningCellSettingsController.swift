@@ -103,13 +103,6 @@ class DiningCellSettingsController: UITableViewController {
 
     func handleSave() {
         var chosenVenues = chosenCafes.map {DiningVenue(venue: $0)}
-//        var chosenSet = Set<DiningVenue>.init()
-//        for venue in chosenVenues {
-//            chosenSet.insert(venue)
-//        }
-//        
-//        chosenVenues = Array(chosenSet)
-        
         delegate?.saveSelection(for: chosenVenues)
         self.dismiss(animated: true, completion: nil)
     }
