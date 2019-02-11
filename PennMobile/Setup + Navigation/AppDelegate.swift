@@ -34,13 +34,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GoogleAnalyticsManager.shared.dryRun = true
         UserDBManager.shared.dryRun = true
         UserDBManager.shared.testRun = true
-        
-        GoogleAnalyticsManager.prepare()
-        LaundryAPIService.instance.prepare()
-        LaundryNotificationCenter.shared.prepare()
-        GSRLocationModel.shared.prepare()
-        
-        FirebaseApp.configure()
+      
+        LaundryAPIService.instance.prepare {
+            GoogleAnalyticsManager.prepare()
+            
+            LaundryNotificationCenter.shared.prepare()
+            GSRLocationModel.shared.prepare()
+            
+            FirebaseApp.configure()
+            
+            /*if !UserDefaults.standard.isOnboarded() {
+             //            handleOnboarding(animated: true)
+             UserDefaults.standard.setIsOnboarded(value: true)
+             return true
+             }*/
+            
+            self.tabBarController = TabBarController()
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = UINavigationController(rootViewController: self.tabBarController)
+            self.window?.makeKeyAndVisible()
+            
+            // Keep track locally of app sessions (for app review prompting)
+            let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
+            UserDefaults.standard.set(sessionCount+1, forKey:"launchCount")
+            UserDefaults.standard.synchronize()
+            if sessionCount == 3 {
+                SKStoreReviewController.requestReview()
+            }
+        }
         
         /*if !UserDefaults.standard.isOnboarded() {
             //            handleOnboarding(animated: true)

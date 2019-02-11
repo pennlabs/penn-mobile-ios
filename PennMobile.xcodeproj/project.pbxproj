@@ -143,6 +143,11 @@
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
 		C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */; };
 		C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */; };
+		C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */; };
+		C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA30219F90E5000FC573 /* CalendarEvent.swift */; };
+		C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */; };
+		C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F9E9621928576000B866A /* HomeCalendarCell.swift */; };
+		C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F9E9821928638000B866A /* HomeCalendarCellItem.swift */; };
 		C5D39C0A9622F0E6A49E7F1D /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E68F5C0B46A4FB7ED5B47B /* Pods_PennMobileTests.framework */; };
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
@@ -316,6 +321,11 @@
 		B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
+		C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAPI.swift; sourceTree = "<group>"; };
+		C11DFA30219F90E5000FC573 /* CalendarEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEvent.swift; sourceTree = "<group>"; };
+		C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversityNotificationCell.swift; sourceTree = "<group>"; };
+		C13F9E9621928576000B866A /* HomeCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarCell.swift; sourceTree = "<group>"; };
+		C13F9E9821928638000B866A /* HomeCalendarCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarCellItem.swift; sourceTree = "<group>"; };
 		CEF5C02A7792D4E6978F00EB /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		CF1CE9BC205D664700C51F46 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
@@ -395,6 +405,7 @@
 			children = (
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
 				210AC14420684F9B0050D837 /* HomeCellProtocols.swift */,
+				C13F9E93219284E9000B866A /* Calendar */,
 				21508164220D2481002F7EA1 /* News */,
 				21F5F8EF20538A54005B143F /* Spring Fling */,
 				217A784A204DDF05004F1227 /* Dining */,
@@ -976,6 +987,18 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		C13F9E93219284E9000B866A /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				C11DFA30219F90E5000FC573 /* CalendarEvent.swift */,
+				C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */,
+				C13F9E9821928638000B866A /* HomeCalendarCellItem.swift */,
+				C13F9E9621928576000B866A /* HomeCalendarCell.swift */,
+				C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
 		CF1CE9B8205D5BF100C51F46 /* More Tab */ = {
 			isa = PBXGroup;
 			children = (
@@ -1276,7 +1299,9 @@
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				217A7845204DB800004F1227 /* HomeAsynchronousFetching.swift in Sources */,
+				C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */,
 				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
+				C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */,
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
 				216640941EBADC1700746B8E /* DiningCell.swift in Sources */,
@@ -1285,6 +1310,7 @@
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
+				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */,
 				97E79E072100DA1200D3D606 /* BuildingImageCell.swift in Sources */,
 				21E1C6FD20256DC6003248EC /* DiningDetailModel.swift in Sources */,
@@ -1325,12 +1351,14 @@
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
 				B64830A2213C939200FD2B17 /* FitnessHeaderView.swift in Sources */,
 				216640C61EBADC9300746B8E /* GenericWebview.swift in Sources */,
+				C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */,
 				B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */,
 				CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */,
 				97E79E092100DA1200D3D606 /* BuildingFoodMenuCell.swift in Sources */,
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
 				216640CD1EBADCA400746B8E /* GoogleAnalyticsManager.swift in Sources */,
+				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

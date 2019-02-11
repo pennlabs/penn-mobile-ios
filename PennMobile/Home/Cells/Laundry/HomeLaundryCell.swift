@@ -27,8 +27,7 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     
     var cardView: UIView! = UIView()
 
-    // Custom UI elements (some should be abstracted)
-    fileprivate let safeInsetValue: CGFloat = 14
+    fileprivate let padding: CGFloat = UIView.padding
     fileprivate var safeArea: UIView!
     
     fileprivate var secondaryTitleLabel: UILabel!
@@ -95,10 +94,10 @@ extension HomeLaundryCell {
         
         cardView.addSubview(safeArea)
         
-        safeArea.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: safeInsetValue).isActive = true
-        safeArea.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -safeInsetValue).isActive = true
-        safeArea.topAnchor.constraint(equalTo: cardView.topAnchor, constant: safeInsetValue).isActive = true
-        safeArea.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: padding).isActive = true
+        safeArea.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -padding).isActive = true
+        safeArea.topAnchor.constraint(equalTo: cardView.topAnchor, constant: padding).isActive = true
+        safeArea.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -padding).isActive = true
     }
     
     // MARK: Labels
