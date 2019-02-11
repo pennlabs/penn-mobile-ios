@@ -19,12 +19,12 @@ class CalendarAPI: Requestable {
     var calendarEvents: [CalendarEvent]?
     
     func fetchCalendar(_ completion: @escaping (_ events: [CalendarEvent]?) -> Void) {
-        getRequest(url: calendarUrl) { (dictionary) in
-            if dictionary == nil {
+        getRequest(url: calendarUrl) { (dict, _, _) in
+            guard let dict = dict else {
                 completion(nil)
                 return
             }
-            let json = JSON(dictionary!)
+            let json = JSON(dict)
             if let jsonArray = json["calendar"].array {
                 var events = [CalendarEvent]()
                 for json in jsonArray {
