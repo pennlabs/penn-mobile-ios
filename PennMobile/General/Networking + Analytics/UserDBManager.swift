@@ -16,7 +16,7 @@ func getDeviceID() -> String {
 
 class UserDBManager: NSObject {
     static let shared = UserDBManager()
-    fileprivate let baseUrl = "https://api-dev.pennlabs.org"
+    fileprivate let baseUrl = "https://api.pennlabs.org"
     
     var dryRun: Bool = true
     var testRun: Bool = false
@@ -55,14 +55,20 @@ class UserDBManager: NSObject {
         let task = URLSession.shared.dataTask(with: request as URLRequest)
         task.resume()
     }
+    
+    fileprivate func sendRequest(_ request: NSMutableURLRequest, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        if dryRun && !testRun { return }
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: callback)
+        task.resume()
+    }
 }
 
 // MARK: - Dining
 extension UserDBManager {
-    func saveDiningPreference(for venue: DiningVenue) {
+    func saveDiningPreference(for venues: [DiningVenue]) {
         let urlString = "\(baseUrl)/dining/preferences"
-        let id = venue.name.getID()
-        let params = ["venue_id": id]
+        let ids = venues.map { $0.getID() }.filter { $0 != nil}.map { $0! }
+        let params = ["venues": ids]
         let request = getAnalyticsPostRequest(url: urlString, params: params)
         sendRequest(request)
     }
