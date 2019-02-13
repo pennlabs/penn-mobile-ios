@@ -41,19 +41,23 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                             //data recieved and parsed successfully
                             if let dict = json {
                                 let json = JSON(dict)
-                                let rooms = try? self.parseAvailabilityJSON(json)
-                                if let rooms = rooms, !rooms.isEmpty {
-                                    callback(rooms)
-                                } else {
+                                do {
+                                    let rooms = try self.parseAvailabilityJSON(json)
+                                    if !rooms.isEmpty {
+                                        callback(rooms)
+                                        return
+                                    }
+                                } catch NetworkingError.authenticationError {
+                                    // Clear session ID if no longer valid
                                     UserDefaults.standard.clearSessionID()
-                                    self.getAvailabilityWithoutSessionID(date: date, callback: callback)
+                                } catch {
                                 }
                             }
-                            return
                         }
                     }
                 }
-                callback(nil)
+                // Unless a valid set of rooms is returns, ping the server
+                self.getAvailabilityWithoutSessionID(date: date, callback: callback)
             }
             
         })
@@ -180,7 +184,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
 extension WhartonGSRNetworkManager {
     func parseAvailabilityJSON(_ json: JSON) throws -> [GSRRoom] {
         guard json["error"].string == nil else {
-            throw NetworkingError.other
+            throw NetworkingError.authenticationError
         }
         let timesJSONArray = json["times"].arrayValue.flatMap { $0.arrayValue }
         let timesArray = try timesJSONArray.map { (json) -> GSRTimeSlot in
