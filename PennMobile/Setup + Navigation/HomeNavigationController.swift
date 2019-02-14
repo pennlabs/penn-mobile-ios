@@ -25,6 +25,16 @@ class HomeNavigationController: UINavigationController {
         animateBarDown()
     }
     
+    func addPermanentStatusBar(text: StatusBar.statusBarText) {
+        bar?.removeFromSuperview()
+        bar = StatusBar(text: text)
+        setupBar(text: text)
+        guard bar != nil else { return }
+        UIView.animate(withDuration: 0.4) {
+            self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(self.bar!.height))
+        }
+    }
+    
     fileprivate func animateBarDown() {
         guard bar != nil else { return }
         bar!.isHidden = false

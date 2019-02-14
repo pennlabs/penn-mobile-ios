@@ -41,19 +41,23 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                             //data recieved and parsed successfully
                             if let dict = json {
                                 let json = JSON(dict)
-                                if json["error"].string != nil {
+                                do {
+                                    let rooms = try self.parseAvailabilityJSON(json)
+                                    if !rooms.isEmpty {
+                                        callback(rooms)
+                                        return
+                                    }
+                                } catch NetworkingError.authenticationError {
+                                    // Clear session ID if no longer valid
                                     UserDefaults.standard.clearSessionID()
-                                    self.getAvailabilityWithoutSessionID(date: date, callback: callback)
-                                } else {
-                                    let rooms = try? self.parseAvailabilityJSON(json)
-                                    callback(rooms)
+                                } catch {
                                 }
                             }
-                            return
                         }
                     }
                 }
-                callback(nil)
+                // Unless a valid set of rooms is returns, ping the server
+                self.getAvailabilityWithoutSessionID(date: date, callback: callback)
             }
             
         })
@@ -179,6 +183,9 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
 
 extension WhartonGSRNetworkManager {
     func parseAvailabilityJSON(_ json: JSON) throws -> [GSRRoom] {
+        guard json["error"].string == nil else {
+            throw NetworkingError.authenticationError
+        }
         let timesJSONArray = json["times"].arrayValue.flatMap { $0.arrayValue }
         let timesArray = try timesJSONArray.map { (json) -> GSRTimeSlot in
             return try GSRTimeSlot(json: json)

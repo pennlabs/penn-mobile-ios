@@ -48,9 +48,9 @@ class GSRWebviewLoginController: UIViewController, WKUIDelegate, WKNavigationDel
         if url.absoluteString == "https://apps.wharton.upenn.edu/gsr/" {
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
             cookieStore.getAllCookies { (cookies) in
-                for cookie in cookies {
-                    if cookie.name == "sessionid" {
-                        DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    for cookie in cookies {
+                        if cookie.name == "sessionid" {
                             UserDefaults.standard.set(sessionID: cookie.value)
                             decisionHandler(.cancel)
                             self.dismiss(animated: true, completion: nil)
@@ -58,8 +58,8 @@ class GSRWebviewLoginController: UIViewController, WKUIDelegate, WKNavigationDel
                             return
                         }
                     }
+                    decisionHandler(.allow)
                 }
-                decisionHandler(.allow)
             }
         } else {
             decisionHandler(.allow)
