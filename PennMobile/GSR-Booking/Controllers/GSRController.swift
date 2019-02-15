@@ -212,18 +212,8 @@ extension GSRController: GSRBookable {
     }
     
     @objc fileprivate func handleBookingsBarButtonPressed(_ sender: Any) {
-        guard let sessionID = UserDefaults.standard.getSessionID() else {
-            return
-        }
-        WhartonGSRNetworkManager.instance.getReservations(for: sessionID) { (reservations) in
-            if let reservations = reservations {
-                for reservation in reservations {
-                    print(reservation.location, reservation.startTime, reservation.endTime)
-                }
-            } else {
-                print("Unable to retrieve your reservations.")
-            }
-        }
+        let grc = GSRReservationsController()
+        navigationVC?.pushViewController(grc, animated: true)
     }
     
     private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {

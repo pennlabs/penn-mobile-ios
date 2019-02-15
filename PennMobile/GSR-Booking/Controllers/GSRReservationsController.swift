@@ -11,20 +11,41 @@ import UIKit
 
 class GSRReservationsController: UITableViewController {
     
+    var reservations: [GSRReservation]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Your Bookings"
+        
+        tableView.delegate = self
         
         guard let sessionID = UserDefaults.standard.getSessionID() else {
             return
         }
         WhartonGSRNetworkManager.instance.getReservations(for: sessionID) { (reservations) in
-            if let reservations = reservations {
-                for reservation in reservations {
-                    print(reservation.location, reservation.startTime, reservation.endTime)
+            DispatchQueue.main.async {
+                if let reservations = reservations {
+                    self.reservations = reservations
+                    self.tableView.dataSource = self
+                } else {
+                    // TODO: Handle failure to retrieve reservations.
                 }
-            } else {
-                print("Unable to retrieve your reservations.")
             }
         }
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension GSRReservationsController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return reservations?.count ?? 0
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        let reservation = reservations[indexPath.row]
+        cell.textLabel?.text = "\(reservation.location) \(reservation.startTime) \(reservation.endTime)"
+        return cell
     }
 }
