@@ -235,8 +235,8 @@ extension HomeDiningCell {
 
     fileprivate func getSettingsButton() -> UIButton {
         let button = UIButton()
-        button.tintColor = .navigationBlue
-        button.setImage(#imageLiteral(resourceName: "settingsButton").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.tintColor = .secondaryTitleGrey
+        button.setImage(#imageLiteral(resourceName: "settings").withRenderingMode(.alwaysTemplate), for: .normal)
         button.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
