@@ -27,6 +27,7 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
                 if let reservations = reservations {
                     self.reservations = reservations
                     self.tableView.dataSource = self
+                    self.tableView.reloadData()
                 } else {
                     // TODO: Handle failure to retrieve reservations.
                 }
