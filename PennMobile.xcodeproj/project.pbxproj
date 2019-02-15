@@ -94,6 +94,8 @@
 		219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01F51FB7E14A006BBC4E /* SelectionCell.swift */; };
 		219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */; };
 		219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */; };
+		21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6B6CF22162652003A357D /* GSRReservationsController.swift */; };
+		21A6B6D222162702003A357D /* GSRReservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6B6D122162702003A357D /* GSRReservation.swift */; };
 		21E1C6FD20256DC6003248EC /* DiningDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E1C6FC20256DC6003248EC /* DiningDetailModel.swift */; };
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D31203D39FF0029A460 /* DiningVenueName.swift */; };
@@ -259,6 +261,8 @@
 		219F01F51FB7E14A006BBC4E /* SelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCell.swift; sourceTree = "<group>"; };
 		219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionView.swift; sourceTree = "<group>"; };
 		219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryNotificationCenter.swift; sourceTree = "<group>"; };
+		21A6B6CF22162652003A357D /* GSRReservationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRReservationsController.swift; sourceTree = "<group>"; };
+		21A6B6D122162702003A357D /* GSRReservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRReservation.swift; sourceTree = "<group>"; };
 		21E1C6FC20256DC6003248EC /* DiningDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailModel.swift; sourceTree = "<group>"; };
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21EB4D31203D39FF0029A460 /* DiningVenueName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueName.swift; sourceTree = "<group>"; };
@@ -659,6 +663,7 @@
 			isa = PBXGroup;
 			children = (
 				2189C0982027CE4000771C1F /* GSRBooking.swift */,
+				21A6B6D122162702003A357D /* GSRReservation.swift */,
 				2189C0932027CE3F00771C1F /* GSRDateHandler.swift */,
 				2189C0942027CE3F00771C1F /* GSRLocationModel.swift */,
 				2189C0992027CE4000771C1F /* GSRRoom.swift */,
@@ -695,6 +700,7 @@
 			children = (
 				2189C0802027CDB800771C1F /* GSRBookable.swift */,
 				2189C0822027CDB800771C1F /* GSRController.swift */,
+				21A6B6CF22162652003A357D /* GSRReservationsController.swift */,
 				21EF283821F509C0001B05B7 /* GSRWebviewLoginController.swift */,
 				2189C0812027CDB800771C1F /* GSRLoginController.swift */,
 			);
@@ -1176,6 +1182,7 @@
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				97E79E1C2100F32E00D3D606 /* FitnessViewModel.swift in Sources */,
 				B6665A182071E63800F49A9C /* TabBarController.swift in Sources */,
+				21A6B6D222162702003A357D /* GSRReservation.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
 				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
@@ -1213,6 +1220,7 @@
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
+				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
 				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,

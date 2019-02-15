@@ -17,7 +17,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var pickerView: UIPickerView!
     fileprivate var emptyView: EmptyView!
     fileprivate var barButton: UIBarButtonItem!
-    fileprivate var gsrBarButton: UIBarButtonItem!
+    fileprivate var bookingsBarButton: UIBarButtonItem!
     
     var currentDay = Date()
     
@@ -57,6 +57,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
     }
 
     override func viewDidDisappear(_ animated: Bool) {
+        tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = nil
         super.viewDidDisappear(animated)
     }
@@ -66,13 +67,11 @@ class GSRController: GenericViewController, IndicatorEnabled {
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
         barButton.tintColor = UIColor.navigationBlue
         
-        tabBarController?.navigationItem.leftBarButtonItem = gsrBarButton
+        bookingsBarButton = UIBarButtonItem(title: "Bookings", style: .done, target: self, action: #selector(handleBookingsBarButtonPressed(_:)))
+        bookingsBarButton.tintColor = UIColor.navigationBlue
+        
+        tabBarController?.navigationItem.leftBarButtonItem = bookingsBarButton
         tabBarController?.navigationItem.rightBarButtonItem = barButton
-    }
-    
-    private func tearDownNavBar() {
-        tabBarController?.navigationItem.leftBarButtonItem = nil
-        tabBarController?.navigationItem.rightBarButtonItem = nil
     }
 }
 
@@ -209,6 +208,21 @@ extension GSRController: GSRBookable {
         case .readyToSubmit(let booking):
             submitPressed(for: booking)
             break
+        }
+    }
+    
+    @objc fileprivate func handleBookingsBarButtonPressed(_ sender: Any) {
+        guard let sessionID = UserDefaults.standard.getSessionID() else {
+            return
+        }
+        WhartonGSRNetworkManager.instance.getReservations(for: sessionID) { (reservations) in
+            if let reservations = reservations {
+                for reservation in reservations {
+                    print(reservation.location, reservation.startTime, reservation.endTime)
+                }
+            } else {
+                print("Unable to retrieve your reservations.")
+            }
         }
     }
     
