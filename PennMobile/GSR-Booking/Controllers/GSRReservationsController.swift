@@ -9,13 +9,18 @@
 import Foundation
 import UIKit
 
+<<<<<<< HEAD
 class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEnabled {
     
     var reservations: [GSRReservation]!
+=======
+class GSRReservationsController: UITableViewController {
+>>>>>>> networking
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+<<<<<<< HEAD
         title = "Your Bookings"
         
         tableView.delegate = self
@@ -68,6 +73,18 @@ extension GSRReservationsController: ReservationCellDelegate {
                 } else if let errorMsg = errorMsg {
                     self.showAlert(withMsg: errorMsg, title: "Uh oh!", completion: nil)
                 }
+=======
+        guard let sessionID = UserDefaults.standard.getSessionID() else {
+            return
+        }
+        WhartonGSRNetworkManager.instance.getReservations(for: sessionID) { (reservations) in
+            if let reservations = reservations {
+                for reservation in reservations {
+                    print(reservation.location, reservation.startTime, reservation.endTime)
+                }
+            } else {
+                print("Unable to retrieve your reservations.")
+>>>>>>> networking
             }
         }
     }
