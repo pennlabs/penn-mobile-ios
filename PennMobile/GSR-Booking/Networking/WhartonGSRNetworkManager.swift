@@ -18,9 +18,13 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
     let bookURL = "https://apps.wharton.upenn.edu/gsr/reserve"
     let reservationURL = "https://api.pennlabs.org/studyspaces/gsr/reservations"
 <<<<<<< HEAD
+<<<<<<< HEAD
     let deleteURL = "https://api.pennlabs.org/studyspaces/gsr/delete"
 =======
 >>>>>>> networking
+=======
+    let deleteURL = "https://api.pennlabs.org/studyspaces/gsr/delete"
+>>>>>>> reservation cell & deletion
     
     func getAvailability(sessionID: String?, date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
         if sessionID == nil {
@@ -180,6 +184,9 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
     }
     
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> reservation cell & deletion
     func deleteReservation(sessionID: String, bookingID: Int, callback: @escaping ((_ success: Bool, _ errorMsg: String?) -> Void)) {
         let url = URL(string: deleteURL)!
         var request = URLRequest(url: url)
@@ -208,8 +215,11 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
         task.resume()
     }
     
+<<<<<<< HEAD
 =======
 >>>>>>> networking
+=======
+>>>>>>> reservation cell & deletion
     func getMatch(for pattern: String, in text: String) -> String {
         let regex = try! NSRegularExpression(pattern: pattern)
         let result = regex.matches(in: text as String, range:NSMakeRange(0, text.utf16.count))
