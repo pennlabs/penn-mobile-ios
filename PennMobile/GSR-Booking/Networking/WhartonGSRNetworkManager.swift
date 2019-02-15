@@ -17,6 +17,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
     let availUrlNoSessionID = "https://api.pennlabs.org/studyspaces/gsr"
     let bookURL = "https://apps.wharton.upenn.edu/gsr/reserve"
     let reservationURL = "https://api.pennlabs.org/studyspaces/gsr/reservations"
+    let deleteURL = "https://api.pennlabs.org/studyspaces/gsr/delete"
     
     func getAvailability(sessionID: String?, date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
         if sessionID == nil {
@@ -173,6 +174,34 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
             }
             callback(reservations)
         }
+    }
+    
+    func deleteReservation(sessionID: String, bookingID: Int, callback: @escaping ((_ success: Bool, _ errorMsg: String?) -> Void)) {
+        let url = URL(string: deleteURL)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+
+        let params = ["sessionid": sessionID, "booking": String(bookingID)]
+        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
+            
+            if error != nil {
+                callback(false, "Unable to connect to the Internet.")
+            } else if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                        let json = JSON(data)
+                        let success = json["result"].string != nil
+                        let errorMsg = json["error"].string
+                        callback(success, errorMsg)
+                        return
+                    }
+                }
+                callback(false, "Something went wrong. Please try again.")
+            }
+        })
+        task.resume()
     }
     
     func getMatch(for pattern: String, in text: String) -> String {
