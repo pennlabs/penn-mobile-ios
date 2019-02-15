@@ -16,6 +16,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
     let availUrl = "https://apps.wharton.upenn.edu/gsr/api/app/grid_view"
     let availUrlNoSessionID = "https://api.pennlabs.org/studyspaces/gsr"
     let bookURL = "https://apps.wharton.upenn.edu/gsr/reserve"
+    let reservationURL = "https://api.pennlabs.org/studyspaces/gsr/reservations"
     
     func getAvailability(sessionID: String?, date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
         if sessionID == nil {
@@ -161,6 +162,19 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
         task.resume()
     }
     
+    // MARK: Get Reservatoins
+    func getReservations(for sessionID: String, callback: @escaping ((_ reservations: [GSRReservation]?) -> Void)) {
+        let url = "\(reservationURL)?sessionid=\(sessionID)"
+        getRequest(url: url) { (dict, error, _) in
+            var reservations: [GSRReservation]?
+            if let dict = dict {
+                let json = JSON(dict)
+                reservations = try? self.parseReservation(json: json)
+            }
+            callback(reservations)
+        }
+    }
+    
     func getMatch(for pattern: String, in text: String) -> String {
         let regex = try! NSRegularExpression(pattern: pattern)
         let result = regex.matches(in: text as String, range:NSMakeRange(0, text.utf16.count))
@@ -237,5 +251,32 @@ extension GSRTimeSlot {
             throw NetworkingError.jsonError
         }
         return date
+    }
+}
+
+// MARK: - Reservation JSON Parsing
+extension WhartonGSRNetworkManager {
+    func parseReservation(json: JSON) throws -> [GSRReservation] {
+        guard json["error"].string == nil else {
+            throw NetworkingError.authenticationError
+        }
+        guard let reservationJSONArray = json["reservations"].array else {
+            throw NetworkingError.jsonError
+        }
+        
+        var reservations = [GSRReservation]()
+        for reservationJSON in reservationJSONArray {
+            guard let id = reservationJSON["booking_id"].int,
+                let dateStr = reservationJSON["date"].string,
+                let startTime = reservationJSON["startTime"].string,
+                let endTime = reservationJSON["endTime"].string,
+                let location = reservationJSON["location"].string else {
+                    throw NetworkingError.jsonError
+            }
+            
+            let reservation = GSRReservation(id: id, date: dateStr, location: location, startTime: startTime, endTime: endTime)
+            reservations.append(reservation)
+        }
+        return reservations
     }
 }
