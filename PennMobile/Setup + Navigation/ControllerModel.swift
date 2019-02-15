@@ -23,12 +23,14 @@ enum Page: String {
     case news = "News"
     case contacts = "Penn Contacts"
     case about = "About"
+    case fling = "Fling"
+    case event = "Event"
 }
 
 class ControllerModel: NSObject {
-    
+
     static var shared = ControllerModel()
-    
+
     let vcDictionary: [Page: UIViewController] = {
         var dict = [Page: UIViewController]()
         dict[.home] = HomeViewController()
@@ -41,55 +43,56 @@ class ControllerModel: NSObject {
         dict[.news] = NewsViewController()
         dict[.contacts] = ContactsTableViewController()
         dict[.about] = AboutViewController()
+        dict[.fling] = FlingViewController()
         return dict
     }()
-    
+
     var viewControllers: [UIViewController] {
         return orderedPages.map { (title) -> UIViewController in
             return vcDictionary[title]!
         }
     }
-    
+
     // pages order in tab bar
     var orderedPages: [Page] {
         get {
             return [.home, .dining, .studyRoomBooking, .laundry, .more]
         }
     }
-        
+
     // pages order in MoreViewController:
     var moreOrder: [Page] {
         get {
-            return [.fitness, .news, .contacts, .about]
+            return [.news, .contacts, .about, .fling, .event]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs"), #imageLiteral(resourceName: "Fling_Colored"), #imageLiteral(resourceName: "Fling_Colored")]
         }
     }
-    
+
     var displayNames: [String] {
         return orderedPages.map { $0.rawValue }
     }
-    
+
     func viewController(for controller: Page) -> UIViewController {
         return vcDictionary[controller]!
     }
-    
+
     func viewControllers(for pages: [Page]) -> [UIViewController] {
         return pages.map { viewController(for: $0) }
     }
-    
+
     var firstVC: UIViewController {
         return viewController(for: firstPage)
     }
-    
+
     var firstPage: Page {
         //return UserDefaults.standard.isOnboarded() ? orderedPages[0] : .laundry
         return orderedPages[0]
     }
-    
+
     func visibleVCIndex() -> IndexPath {
         for vc in viewControllers {
             if vc.isVisible {
@@ -98,15 +101,15 @@ class ControllerModel: NSObject {
         }
         return IndexPath(row: 0, section: 0)
     }
-    
+
     func visiblePage() -> Page {
         return orderedPages[visibleVCIndex().row]
     }
-    
+
     func visibleVC() -> UIViewController {
         return viewController(for: visiblePage())
     }
-    
+
 }
 
 // MARK: - Transitions
@@ -129,7 +132,7 @@ extension ControllerModel {
         let today = Date()
         return (today > startDate && today < endDate)
     }
-    
+
     static func isReloadNecessary() -> Bool {
         return isFlingDate()
     }

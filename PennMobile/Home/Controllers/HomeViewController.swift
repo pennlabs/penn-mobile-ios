@@ -94,6 +94,14 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         confirmBookingWanted(booking)
     }
 
+    func handleSettingsTapped(venues: [DiningVenue]) {
+        let diningSettings = DiningCellSettingsController()
+        diningSettings.setupFromVenues(venues: venues)
+        diningSettings.delegate = self
+        let nvc = UINavigationController(rootViewController: diningSettings)
+        showDetailViewController(nvc, sender: nil)
+    }
+
     private func confirmBookingWanted(_ booking: GSRBooking) {
         let message = "Booking \(booking.getRoomName()) from \(booking.getLocalTimeString())"
         let alert = UIAlertController(title: "Confirm Booking",
@@ -129,7 +137,10 @@ extension HomeViewController {
             guard let model = model else { return }
             DispatchQueue.main.async {
                 self.setModel(model)
-                self.tableView.reloadData()
+                UIView.transition(with: self.tableView,
+                                  duration: 0.35,
+                                  options: .transitionCrossDissolve,
+                                  animations: { self.tableView.reloadData() })
                 self.fetchAllCellData {
                     if let venue = model.venueToPreload() {
                         DiningDetailModel.preloadWebview(for: venue.name)
@@ -145,25 +156,29 @@ extension HomeViewController {
     }
 
     func fetchCellData(for itemTypes: [HomeCellItem.Type], _ completion: (() -> Void)? = nil) {
-        guard let allItems = tableViewModel.items as? [HomeCellItem] else { return }
-        let items = allItems.filter { (item) -> Bool in
-            return itemTypes.contains(where: { (itemType) -> Bool in
-                return itemType.jsonKey == type(of: item).jsonKey
-            })
-        }
+        let items = tableViewModel.getItems(for: itemTypes)
+        self.fetchCellData(for: items)
+    }
+
+    func fetchCellData(for items: [HomeCellItem], _ completion: (() -> Void)? = nil) {
         HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
             DispatchQueue.main.async {
-                let row = allItems.index(where: { (thisItem) -> Bool in
-                    thisItem.equals(item: item)
-                })!
-                let indexPath = IndexPath(row: row, section: 0)
-                self.tableView.reloadRows(at: [indexPath], with: .none)
+                self.reloadItem(item)
             }
         }) {
             DispatchQueue.main.async {
                 completion?()
             }
         }
+    }
+
+    func reloadItem(_ item: HomeCellItem) {
+        guard let allItems = tableViewModel.items as? [HomeCellItem] else { return }
+        let row = allItems.index(where: { (thisItem) -> Bool in
+            thisItem.equals(item: item)
+        })!
+        let indexPath = IndexPath(row: row, section: 0)
+        self.tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
 
@@ -178,5 +193,20 @@ extension HomeViewController {
         fetchAllCellData {
             self.tableView.refreshControl?.endRefreshing()
         }
+    }
+}
+
+extension HomeViewController : DiningCellSettingsDelegate {
+    func saveSelection(for cafes: [DiningVenue]) {
+        guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
+        if cafes.count == 0 {
+            diningItem.venues = DiningVenue.getDefaultVenues()
+        } else {
+            diningItem.venues = cafes
+        }
+
+        reloadItem(diningItem)
+        self.fetchCellData(for: [diningItem])
+        UserDBManager.shared.saveDiningPreference(for: cafes)
     }
 }

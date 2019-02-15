@@ -8,70 +8,72 @@
 import UIKit
 
 extension UIView {
-    
+
     @available(iOS 9.0, *)
     func anchorToTop(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil) {
-        
+
         anchorWithConstantsToTop(top, left: left, bottom: bottom, right: right, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
     }
-    
+
     @available(iOS 9.0, *)
     func anchorWithConstantsToTop(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0) {
-        
+
         _ = anchor(top, left: left, bottom: bottom, right: right, topConstant: topConstant, leftConstant: leftConstant, bottomConstant: bottomConstant, rightConstant: rightConstant)
     }
-    
+
     @available(iOS 9.0, *)
     func anchor(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
         translatesAutoresizingMaskIntoConstraints = false
-        
+
         var anchors = [NSLayoutConstraint]()
-        
+
         if let top = top {
             anchors.append(topAnchor.constraint(equalTo: top, constant: topConstant))
         }
-        
+
         if let left = left {
             anchors.append(leftAnchor.constraint(equalTo: left, constant: leftConstant))
         }
-        
+
         if let bottom = bottom {
             anchors.append(bottomAnchor.constraint(equalTo: bottom, constant: -bottomConstant))
         }
-        
+
         if let right = right {
             anchors.append(rightAnchor.constraint(equalTo: right, constant: -rightConstant))
         }
-        
+
         if widthConstant > 0 {
             anchors.append(widthAnchor.constraint(equalToConstant: widthConstant))
         }
-        
+
         if heightConstant > 0 {
             anchors.append(heightAnchor.constraint(equalToConstant: heightConstant))
         }
-        
+
         anchors.forEach({$0.isActive = true})
-        
+
         return anchors
     }
-    
+
+    // Value to be used for element padding app-wide
+    static let padding: CGFloat = 14.0
 }
 
 extension UIColor {
-    
+
     convenience init(r: CGFloat, g: CGFloat, b: CGFloat) {
         self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
-    
+
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")
         assert(green >= 0 && green <= 255, "Invalid green component")
         assert(blue >= 0 && blue <= 255, "Invalid blue component")
-        
+
         self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
     }
-    
+
     convenience init(rgb: Int) {
         self.init(
             red: (rgb >> 16) & 0xFF,
@@ -79,7 +81,7 @@ extension UIColor {
             blue: rgb & 0xFF
         )
     }
-    
+
     // --- Deprecated colors ---
     static let warmGrey = UIColor(r: 115, g: 115, b: 115)
     static let whiteGrey = UIColor(r: 248, g: 248, b: 248)
@@ -88,12 +90,12 @@ extension UIColor {
     static let marigold = UIColor(r: 255, g: 193, b: 7)
     static let oceanBlue = UIColor(r: 73, g: 144, b: 226)
     static let frenchBlue = UIColor(r: 63, g: 81, b: 181)
-    
+
     static let buttonBlue = UIColor(r: 14, g: 122, b: 254)
-    
+
     static let navRed = UIColor(r: 192, g: 57, b:  43)
     static let navBarGrey = UIColor(r: 247, g: 247, b: 247)
-    
+
     // --- New colors for homepage redesign ---
     // Greys
     static let primaryTitleGrey = UIColor(r: 63, g: 63, b: 63)
@@ -105,11 +107,16 @@ extension UIColor {
     static let informationYellow = UIColor(r: 255, g: 193, b: 7)
     static let redingTerminal = UIColor(r: 226, g: 81, b: 82)
     static let secondaryInformationGrey = UIColor(r: 155, g: 155, b: 155)
+
+    static let dataGreen = UIColor(r: 118, g: 191, b: 150)
+    static let highlightYellow = UIColor(r: 240, g: 180, b: 0)
+
     static let spruceHarborBlue = UIColor(r: 41, g: 128, b: 185)
+
 }
 
 extension UIFont {
-    
+
     static let primaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 24)
     static let secondaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
 
@@ -117,10 +124,10 @@ extension UIFont {
 
     static let primaryInformationFont = UIFont(name: "AvenirNext-DemiBold", size: 14)
     static let secondaryInformationFont = UIFont(name: "AvenirNext-Regular", size: 14)
-    
+
     static let footerDescriptionFont = UIFont(name: "AvenirNext-Regular", size: 10)
     static let footerTransitionFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
-    
+
     static let gsrTimeIncrementFont = UIFont(name: "AvenirNext-DemiBold", size: 20)
 }
 
@@ -131,7 +138,7 @@ extension UIBarButtonItem {
         button.tintColor = color
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         button.addTarget(target, action: action, for: .touchUpInside)
-        
+
         let barButtonItem = UIBarButtonItem(customView: button)
         return barButtonItem
     }
@@ -145,12 +152,12 @@ extension Date {
         }
         return 0
     }
-    
+
     //returns date in local time
     static var currentLocalDate: Date {
         return Date().localTime
     }
-    
+
     func convert(to timezone: String) -> Date {
         var nowComponents = DateComponents()
         let calendar = Calendar.current
@@ -163,7 +170,7 @@ extension Date {
         nowComponents.timeZone = TimeZone(abbreviation: timezone)!
         return calendar.date(from: nowComponents)! as Date
     }
-    
+
     // Formats individual dates to be similar to those used on the Dining Screen
     func strFormat() -> String {
         let formatter = DateFormatter()
@@ -173,53 +180,53 @@ extension Date {
         formatter.amSymbol = "a"
         formatter.pmSymbol = "p"
         var timesString = ""
-        
+
         if self.minutes == 0 {
             formatter.dateFormat = "ha"
         } else {
             formatter.dateFormat = "h:mma"
         }
-        
+
         let open = formatter.string(from: self)
         timesString += open
         return timesString
     }
-    
+
     var localTime: Date {
         return self.convert(to: "GMT")
     }
-    
+
     var minutes: Int {
         let calendar = Calendar.current
         let minutes = calendar.component(.minute, from: self)
         return minutes
     }
-    
+
     var hour: Int {
         let calendar = Calendar.current
         let minutes = calendar.component(.hour, from: self)
         return minutes
     }
-    
+
     func add(minutes: Int) -> Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
-    
+
     func add(seconds: Int) -> Date {
         return Calendar.current.date(byAdding: .second, value: seconds, to: self)!
     }
-    
+
     func add(milliseconds: Int) -> Date {
         let millisecondsSince1970 = Int((self.timeIntervalSince1970 * 1000.0).rounded())
         return Date(timeIntervalSince1970: TimeInterval((milliseconds + millisecondsSince1970) / 1000))
     }
-    
+
     var roundedDownToHour: Date {
         let comp: DateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour], from: self)
         return Calendar.current.date(from: comp)!
         // return self.add(minutes: -self.minutes)
     }
-    
+
     var roundUpToHourIfNeeded: Date {
         if minutes > 0 {
             return self.add(minutes: 60 - self.minutes)
@@ -227,13 +234,13 @@ extension Date {
             return self
         }
     }
-    
+
     static var currentDayOfWeek: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE" // Monday, Friday, etc.
         return dateFormatter.string(from: Date())
     }
-        
+
     var dayOfWeek: String {
         let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
@@ -242,20 +249,20 @@ extension Date {
         let weekDay = myComponents.weekday!
         return weekdayArray[weekDay-1]
     }
-    
+
     var integerDayOfWeek: Int {
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
         let myComponents = myCalendar.components(.weekday, from: self)
         return myComponents.weekday! - 1
     }
-    
+
     static let dayOfMonthFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
         df.timeZone = TimeZone(abbreviation: "EST")
         return df
     }()
-    
+
     var dateStringsForCurrentWeek: [String] {
         var dateStrings = [String]()
         let formatter = Date.dayOfMonthFormatter
@@ -265,34 +272,34 @@ extension Date {
         }
         return dateStrings
     }
-    
+
     var adjustedFor11_59: Date {
         if self.minutes == 59 {
             return self.add(minutes: 1)
         }
         return self
     }
-    
+
     func dateIn(days: Int) -> Date {
         let start = Calendar.current.startOfDay(for: self)
         return Calendar.current.date(byAdding: .day, value: days, to: start)!
     }
-    
+
     var tomorrow: Date {
         return self.dateIn(days: 1)
     }
-    
+
     var isToday: Bool {
         return Calendar.current.isDateInToday(self)
     }
-    
+
     static func midnight(for dateStr: String) -> Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter.date(from: dateStr)!
     }
-    
+
     static var midnightYesterday: Date  {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -300,7 +307,7 @@ extension Date {
         let dateStr = formatter.string(from: Date())
         return formatter.date(from: dateStr)!
     }
-    
+
     static var midnightToday: Date {
         return midnightYesterday.tomorrow
     }
@@ -334,7 +341,7 @@ public extension Collection {
         list.shuffleInPlace()
         return list
     }
-    
+
     var random: Generator.Element? {
         return shuffle().first
     }
@@ -345,7 +352,7 @@ public extension MutableCollection where Index == Int {
     mutating func shuffleInPlace() {
         // empty and single-element collections don't shuffle
         if count < 2 { return }
-        
+
         for i in startIndex ..< endIndex - 1 {
             let j = Int(arc4random_uniform(UInt32(endIndex - i))) + i
             guard i != j else { continue }
@@ -371,7 +378,7 @@ extension UILabel {
 }
 
 extension Dictionary where Key == String, Value == String {
-    
+
     /// Build string representation of HTTP parameter dictionary of keys and objects
     ///
     /// This percent escapes in compliance with RFC 3986
@@ -379,17 +386,17 @@ extension Dictionary where Key == String, Value == String {
     /// http://www.ietf.org/rfc/rfc3986.txt
     ///
     /// - returns: String representation in the form of key1=value1&key2=value2 where the keys and values are percent escaped
-    
+
     func stringFromHttpParameters() -> String {
         let parameterArray = map { key, value -> String in
             let escapedKey = key.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
             let escapedValue: String = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
             return "\(escapedKey)=\(escapedValue)"
         }
-        
+
         return parameterArray.joined(separator: "&")
     }
-    
+
 }
 
 extension String {

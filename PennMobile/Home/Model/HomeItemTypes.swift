@@ -11,11 +11,12 @@ import Foundation
 final class HomeItemTypes: ModularTableViewItemTypes {
     static let instance = HomeItemTypes()
     private init() {}
-    
+
     let dining: HomeCellItem.Type = HomeDiningCellItem.self
     let laundry: HomeCellItem.Type = HomeLaundryCellItem.self
     let studyRoomBooking: HomeCellItem.Type = HomeGSRCellItem.self
     let fling: HomeCellItem.Type = HomeFlingCellItem.self
+    let calendar: HomeCellItem.Type = HomeCalendarCellItem.self
     let news: HomeCellItem.Type = HomeNewsCellItem.self
 }
 
