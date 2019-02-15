@@ -63,12 +63,12 @@ class ControllerModel: NSObject {
     // pages order in MoreViewController:
     var moreOrder: [Page] {
         get {
-            return [.news, .contacts, .about, .fling, .event]
+            return [.news, .fitness, .contacts, .about,]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs"), #imageLiteral(resourceName: "Fling_Colored"), #imageLiteral(resourceName: "Fling_Colored")]
+            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Fitness_Blue"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
         }
     }
 
