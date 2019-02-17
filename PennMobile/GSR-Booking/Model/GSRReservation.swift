@@ -14,4 +14,5 @@ struct GSRReservation {
     let location: String
     let startTime: String
     let endTime: String
+    let building: String
 }
