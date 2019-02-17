@@ -164,7 +164,7 @@ extension HomeViewController {
 
     func fetchCellData(for itemTypes: [HomeCellItem.Type], _ completion: (() -> Void)? = nil) {
         let items = tableViewModel.getItems(for: itemTypes)
-        self.fetchCellData(for: items)
+        self.fetchCellData(for: items, completion)
     }
 
     func fetchCellData(for items: [HomeCellItem], _ completion: (() -> Void)? = nil) {
