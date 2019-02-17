@@ -319,7 +319,7 @@ extension WhartonGSRNetworkManager {
                     throw NetworkingError.jsonError
             }
             
-            let reservation = GSRReservation(id: id, date: dateStr, location: location, startTime: startTime, endTime: endTime)
+            let reservation = GSRReservation(id: id, date: dateStr, location: location, startTime: startTime, endTime: endTime, building: "Huntsman")
             reservations.append(reservation)
         }
         return reservations

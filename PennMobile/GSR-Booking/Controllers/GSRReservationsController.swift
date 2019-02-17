@@ -15,8 +15,12 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
 
     override func viewDidLoad() {
         super.viewDidLoad()
+<<<<<<< HEAD
 
 <<<<<<< HEAD
+=======
+                
+>>>>>>> gsr reservations cells with image
         title = "Your Bookings"
 
         tableView.delegate = self
@@ -47,6 +51,7 @@ extension GSRReservationsController {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReservationCell.identifer, for: indexPath) as! ReservationCell
         cell.reservation = reservations[indexPath.row]
         cell.delegate = self
+        cell.selectionStyle = UITableViewCellSelectionStyle.none;
         return cell
     }
 
@@ -111,7 +116,7 @@ extension GSRReservationsController {
 
 // MARK: - ReservationCellDelegate
 extension GSRReservationsController: ReservationCellDelegate {
-    func deleteReservaton(_ reservation: GSRReservation) {
+    func deleteReservation(_ reservation: GSRReservation) {
         guard let sessionID = UserDefaults.standard.getSessionID() else { return }
         showActivity()
         WhartonGSRNetworkManager.instance.deleteReservation(sessionID: sessionID, bookingID: reservation.id) { (success, errorMsg) in
