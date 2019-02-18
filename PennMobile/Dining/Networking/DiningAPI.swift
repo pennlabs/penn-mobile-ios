@@ -51,10 +51,6 @@ class DiningAPI: Requestable {
             completion(html)
         }
     }
-    
-    func saveDiningSettings(venues: [DiningVenueName], completion: (Bool) -> ()) {
-        
-    }
 }
 
 extension DiningHoursData {
