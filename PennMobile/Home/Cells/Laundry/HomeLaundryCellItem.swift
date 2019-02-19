@@ -41,8 +41,10 @@ extension HomeLaundryCellItem {
         let room: LaundryRoom
         if let laundryRoom = LaundryAPIService.instance.idToRooms?[id] {
             room = laundryRoom
+        } else if let laundryRoom = LaundryRoom.getPreferences().first {
+            room = laundryRoom
         } else {
-            room = LaundryRoom.getPreferences().first!
+            room = LaundryRoom.getLaundryHall(for: 0)!
         }
         self.init(room: room)
     }

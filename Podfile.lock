@@ -1,5 +1,8 @@
 PODS:
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
   - ESTabBarController-swift (2.6.2)
+  - Fabric (1.9.0)
   - Firebase (4.13.0):
     - Firebase/Core (= 4.13.0)
   - Firebase/Core (4.13.0):
@@ -47,7 +50,9 @@ PODS:
   - TimelineTableViewCell (1.2)
 
 DEPENDENCIES:
+  - Crashlytics (~> 3.12.0)
   - ESTabBarController-swift
+  - Fabric (~> 1.9.0)
   - Firebase (~> 4.7)
   - Google/Analytics
   - Kingfisher (~> 4.0)
@@ -60,7 +65,9 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Crashlytics
     - ESTabBarController-swift
+    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -82,7 +89,9 @@ SPEC REPOS:
     - TimelineTableViewCell
 
 SPEC CHECKSUMS:
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   ESTabBarController-swift: f0a8679e43df1e60b7b36bbcaf1dc98ba6273c7d
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
@@ -103,6 +112,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
 
-PODFILE CHECKSUM: 7ef7fec2b8dfaee66262d4a7908c690fac03cf1b
+PODFILE CHECKSUM: 8684f48cb89eab97ceceaca28cec43615cc4e421
 
 COCOAPODS: 1.5.3

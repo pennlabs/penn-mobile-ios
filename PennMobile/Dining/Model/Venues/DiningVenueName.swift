@@ -10,29 +10,33 @@ import Foundation
 
 enum DiningVenueName: String {
     case commons =       "1920 Commons"
-    case mcclelland =    "McClelland"
-    case nch =           "NCH Dining"
+    case mcclelland =    "McClelland Express"
+    case nch =           "New College House"
     case hill =          "Hill House"
     case english =       "English House"
-    case falk =          "Falk Kosher"
-    case frontera =      "Tortas Frontera"
-    case gourmetGrocer = "Gourmet Grocer"
+    case falk =          "Falk Kosher Dining"
+    case frontera =      "Tortas Frontera at the ARCH"
+    case gourmetGrocer = "1920 Gourmet Grocer"
     case houston =       "Houston Market"
     case joes =          "Joe's Café"
     case marks =         "Mark's Café"
-    case starbucks =     "Starbucks"
-    case pret =          "Pret a Manger"
-    case mbaCafe =       "MBA Café"
+    case starbucks =     "1920 Starbucks"
+    case pret =          "Pret a Manger Locust Walk"
+    case mbaCafe =       "Pret a Manger MBA"
     case unknown
     
     static func getShortVenueName(for venueName: DiningVenueName) -> String {
         switch venueName {
+        case nch:               return "NCH Dining"
+        case mcclelland:        return "McClelland"
+        case falk:              return "Falk Kosher"
         case commons:           return "Commons"
         case english:           return "English"
         case frontera:          return "Frontera"
         case gourmetGrocer:     return "G. Grocer"
         case houston:           return "Houston"
         case pret:              return "Pret"
+        case mbaCafe:           return "MBA Cafe"
         default:                return venueName.rawValue
         }
     }

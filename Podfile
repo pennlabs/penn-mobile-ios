@@ -17,6 +17,8 @@ pod 'ESTabBarController-swift'
 pod 'SimpleImageViewer', '~> 1.1.1'
 pod 'Kingfisher', '~> 4.0'
 pod 'TimelineTableViewCell'
+pod 'Fabric', '~> 1.9.0'
+pod 'Crashlytics', '~> 3.12.0'
 
   target 'PennMobileTests' do
     inherit! :search_paths
