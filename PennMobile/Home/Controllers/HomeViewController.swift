@@ -16,6 +16,10 @@ class HomeViewController: GenericViewController {
 
     static let edgeSpacing: CGFloat = 20
     static let cellSpacing: CGFloat = 20
+    
+    static let refreshInterval: Int = 10
+    
+    var lastRefresh: Date = Date()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,17 +29,28 @@ class HomeViewController: GenericViewController {
 
         prepareTableView()
         prepareRefreshControl()
+        
+        registerForNotifications()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.title = "Home"
-        if tableViewModel == nil {
+        self.refreshTableView()
+    }
+}
+
+// MARK: - Home Page Networking
+extension HomeViewController {
+    fileprivate func refreshTableView(_ completion: (() -> Void)? = nil) {
+        let now = Date()
+        if tableViewModel == nil || now > lastRefresh.add(minutes: HomeViewController.refreshInterval) {
             fetchViewModel {
-                // TODO: behavior for when model returns
+                self.lastRefresh = Date()
+                completion?()
             }
         } else {
-            self.fetchAllCellData()
+            self.fetchAllCellData(completion)
         }
     }
 }
@@ -197,7 +212,7 @@ extension HomeViewController {
     }
 
     @objc fileprivate func handleRefresh(_ sender: Any) {
-        fetchAllCellData {
+        self.refreshTableView {
             self.tableView.refreshControl?.endRefreshing()
         }
     }
@@ -217,3 +232,36 @@ extension HomeViewController : DiningCellSettingsDelegate {
         UserDBManager.shared.saveDiningPreference(for: cafes)
     }
 }
+
+// MARK: - Laundry Updating
+extension HomeViewController {
+    @objc fileprivate func updateLaundryItemForPreferences(_ sender: Any) {
+        var preferences = LaundryRoom.getPreferences()
+        guard let laundryItems = self.tableViewModel.getItems(for: [HomeItemTypes.instance.laundry]) as? [HomeLaundryCellItem] else { return }
+        var outdatedItems = [HomeLaundryCellItem]()
+        for item in laundryItems {
+            if preferences.contains(item.room) {
+                preferences.remove(at: preferences.firstIndex(of: item.room)!)
+            } else {
+                outdatedItems.append(item)
+            }
+        }
+        
+        for i in 0..<(outdatedItems.count) {
+            if i < preferences.count {
+                outdatedItems[i].room = preferences[i]
+            }
+        }
+        
+        self.fetchCellData(for: [HomeItemTypes.instance.laundry])
+    }
+}
+
+// MARK: - Register for Notifications
+extension HomeViewController {
+    func registerForNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLaundryItemForPreferences(_:)), name: Notification.Name(rawValue: "LaundryUpdateNotification") , object: nil)
+    }
+}
+
+
