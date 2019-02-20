@@ -204,7 +204,6 @@ extension GSRNetworkManager {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                         let json = JSON(data)
-                        print(json)
                         if let result = json["result"].array?.first {
                             let success = result["cancelled"].boolValue
                             let errorMsg = result["error"].string

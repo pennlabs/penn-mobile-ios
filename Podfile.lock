@@ -93,12 +93,18 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
 <<<<<<< HEAD
+<<<<<<< HEAD
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   ESTabBarController-swift: 58cca4ab7de980657d99a02181c1ff310983e975
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
 =======
   ESTabBarController-swift: 58cca4ab7de980657d99a02181c1ff310983e975
 >>>>>>> implemented libcal bookings
+=======
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  ESTabBarController-swift: 58cca4ab7de980657d99a02181c1ff310983e975
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+>>>>>>> rebased on development
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
