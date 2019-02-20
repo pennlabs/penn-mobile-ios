@@ -202,6 +202,7 @@ extension LaundryTableViewController: RoomSelectionVCDelegate {
         LaundryRoom.setPreferences(for: rooms)
         self.rooms = rooms
         self.tableView.reloadData()
+        sendUpdateNotification()
     }
 }
 
@@ -213,7 +214,15 @@ extension LaundryTableViewController: LaundryCellDelegate {
             LaundryRoom.setPreferences(for: rooms)
             UserDBManager.shared.saveLaundryPreferences(for: rooms)
             tableView.reloadData()
+            sendUpdateNotification()
         }
+    }
+}
+
+// MARK: - Home Page Notification
+extension LaundryTableViewController {
+    fileprivate func sendUpdateNotification() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "LaundryUpdateNotification"), object: nil)
     }
 }
 

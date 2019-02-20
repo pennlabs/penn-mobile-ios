@@ -11,9 +11,9 @@ import Foundation
 final class HomeAPIService: Requestable {
     static let instance = HomeAPIService()
     private init() {}
-        
+
     func fetchModel(_ completion: @escaping (HomeTableViewModel?) -> Void) {
-        let url = "http://api-dev.pennlabs.org/homepage"
+        let url = "https://api.pennlabs.org/homepage"
         getRequest(url: url) { (dict, error, statusCode) in
             var model: HomeTableViewModel? = HomeTableViewModel()
             if let dict = dict {
@@ -28,13 +28,13 @@ final class HomeAPIService: Requestable {
 extension HomeTableViewModel {
     convenience init(json: JSON) throws {
         self.init()
-        
+
         guard let cellsJSON = json["cells"].array else {
             throw NetworkingError.jsonError
         }
-        
+
         self.items = [HomeCellItem]()
-        
+
         // Initialize default items for development
         // Note: this should be empty in production
         for ItemType in HomeItemTypes.instance.getDefaultItems() {
@@ -42,7 +42,7 @@ extension HomeTableViewModel {
                 items.append(item)
             }
         }
-        
+
         // Initialize items from JSON
         for json in cellsJSON {
             let type = json["type"].stringValue
@@ -53,4 +53,3 @@ extension HomeTableViewModel {
         }
     }
 }
-

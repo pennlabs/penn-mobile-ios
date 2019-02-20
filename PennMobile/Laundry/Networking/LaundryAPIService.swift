@@ -19,11 +19,16 @@ class LaundryAPIService: Requestable {
     public var idToRooms: [Int: LaundryRoom]?
     
     // Prepare the service
-    func prepare() {
+    func prepare(_ completion: @escaping () -> Void) {
         if Storage.fileExists(LaundryRoom.directory, in: .caches) {
             self.idToRooms = Storage.retrieve(LaundryRoom.directory, from: .caches, as: Dictionary<Int, LaundryRoom>.self)
+            completion()
         } else {
-            loadIds { _ in }
+            loadIds { (_) in
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
         }
     }
     
