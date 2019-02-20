@@ -15,31 +15,24 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
 
     override func viewDidLoad() {
         super.viewDidLoad()
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-=======
-                
->>>>>>> gsr reservations cells with image
         title = "Your Bookings"
 
         tableView.delegate = self
         tableView.register(ReservationCell.self, forCellReuseIdentifier: ReservationCell.identifer)
-<<<<<<< HEAD
 
-        guard let sessionID = UserDefaults.standard.getSessionID() else { return }
-        WhartonGSRNetworkManager.instance.getReservations(for: sessionID) { (reservations) in
-=======
-        
+        tableView.tableFooterView = UIView()
+
         let sessionID = UserDefaults.standard.getSessionID()
         let email = GSRUser.getUser()?.email
         if sessionID == nil && email == nil {
             // TODO: Handle user that is not logged in
             return
         }
+        self.showActivity()
         GSRNetworkManager.instance.getReservations(sessionID: sessionID, email: email) { (reservations) in
->>>>>>> implemented libcal bookings
             DispatchQueue.main.async {
+                self.hideActivity()
                 if let reservations = reservations {
                     self.reservations = reservations
                     self.tableView.dataSource = self
