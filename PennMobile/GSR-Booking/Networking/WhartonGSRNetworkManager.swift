@@ -310,18 +310,18 @@ extension WhartonGSRNetworkManager {
         }
         
         var reservations = [GSRReservation]()
-        for reservationJSON in reservationJSONArray {
-            guard let id = reservationJSON["booking_id"].int,
-                let dateStr = reservationJSON["date"].string,
-                let startTime = reservationJSON["startTime"].string,
-                let endTime = reservationJSON["endTime"].string,
-                let location = reservationJSON["location"].string else {
-                    throw NetworkingError.jsonError
-            }
-            
-            let reservation = GSRReservation(id: id, date: dateStr, location: location, startTime: startTime, endTime: endTime, building: "Huntsman")
-            reservations.append(reservation)
-        }
+//        for reservationJSON in reservationJSONArray {
+//            guard let id = reservationJSON["booking_id"].int,
+//                let dateStr = reservationJSON["date"].string,
+//                let startTime = reservationJSON["startTime"].string,
+//                let endTime = reservationJSON["endTime"].string,
+//                let location = reservationJSON["location"].string else {
+//                    throw NetworkingError.jsonError
+//            }
+//
+//            let reservation = GSRReservation(id: id, date: dateStr, location: location, startTime: startTime, endTime: endTime, building: "Huntsman")
+//            reservations.append(reservation)
+//        }
         return reservations
     }
 }

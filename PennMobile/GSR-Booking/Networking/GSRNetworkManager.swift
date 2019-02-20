@@ -17,6 +17,7 @@ class GSRNetworkManager: NSObject, Requestable {
     let availUrl = "https://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
     let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
+    let reservationURL = "http://localhost:5000/studyspaces/reservations"
     
     var locations:[Int:String] = [:]
     var bookingRequestOutstanding = false
@@ -116,6 +117,83 @@ class GSRNetworkManager: NSObject, Requestable {
             self.bookingRequestOutstanding = false
         })
         task.resume()
+    }
+}
+
+// MARK: - Get Reservatoins
+extension GSRNetworkManager {
+    func getReservations(sessionID: String?, email: String?, _ callback: @escaping (_ reservations: [GSRReservation]?) -> Void) {
+        let url: String
+        if let sessionID = sessionID, let email = email {
+            url = "\(reservationURL)?sessionid=\(sessionID)&email=\(email)"
+        } else if let sessionID = sessionID {
+            url = "\(reservationURL)?sessionid=\(sessionID)"
+        } else if let email = email {
+            url = "\(reservationURL)?email=\(email)"
+        } else {
+            url = reservationURL
+        }
+        getRequest(url: url) { (dict, error, status) in
+            var reservations: [GSRReservation]? = nil
+            if let dict = dict {
+                let json = JSON(dict)
+                reservations = try? self.parseReservation(json: json)
+            }
+            callback(reservations)
+        }
+    }
+    
+    func parseReservation(json: JSON) throws -> [GSRReservation] {
+        guard json["error"].string == nil else {
+            throw NetworkingError.authenticationError
+        }
+        guard let reservationJSONArray = json["reservations"].array else {
+            throw NetworkingError.jsonError
+        }
+        
+        var reservations = [GSRReservation]()
+        for reservationJSON in reservationJSONArray {
+            guard let roomName = reservationJSON["name"].string,
+                let gid = reservationJSON["gid"].int,
+                let lid = reservationJSON["lid"].int,
+                let bookingID = reservationJSON["booking_id"].string,
+                let startDateStr = reservationJSON["fromDate"].string,
+                let endDateStr = reservationJSON["toDate"].string,
+                let serviceStr = reservationJSON["service"].string,
+                let service = GSRService(rawValue: serviceStr) else {
+                    throw NetworkingError.jsonError
+            }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            guard let startDate = formatter.date(from: startDateStr),
+                let endDate = formatter.date(from: endDateStr) else {
+                    throw NetworkingError.jsonError
+            }
+            
+            let reservation = GSRReservation(roomName: roomName, gid: gid, lid: lid, bookingID: bookingID, startDate: startDate, endDate: endDate, service: service)
+            reservations.append(reservation)
+        }
+        return reservations
+    }
+}
+
+// MARK: - Delete Reservation
+extension GSRNetworkManager {
+    func deleteReservation(reservation: GSRReservation, sessionID: String?, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> Void) {
+        switch reservation.service {
+        case .libcal:
+            // TODO: implement libcal deletions
+            callback(false, "Sorry! Deleting library bookings is not yet available.")
+            break
+        case .wharton:
+            guard let sessionID = sessionID else {
+                callback(false, "Please log in and try again.")
+                return
+            }
+            WhartonGSRNetworkManager.instance.deleteReservation(sessionID: sessionID, bookingID: Int(reservation.bookingID)!, callback: callback)
+            break
+        }
     }
 }
 

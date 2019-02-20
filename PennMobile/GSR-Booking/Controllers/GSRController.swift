@@ -38,7 +38,13 @@ class GSRController: GenericViewController, IndicatorEnabled {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+<<<<<<< HEAD
 
+=======
+        
+        UserDefaults.standard.set(sessionID: "dpa7trlicczhjsf1s0bragq4l7ylxjnk")
+        
+>>>>>>> implemented libcal bookings
         prepareViewModel()
         prepareUI()
     }

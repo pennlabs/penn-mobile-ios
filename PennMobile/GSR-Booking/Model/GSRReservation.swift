@@ -8,11 +8,17 @@
 
 import Foundation
 
+enum GSRService: String {
+    case wharton
+    case libcal
+}
+
 struct GSRReservation {
-    let id: Int
-    let date: String
-    let location: String
-    let startTime: String
-    let endTime: String
-    let building: String
+    let roomName: String
+    let gid: Int
+    let lid: Int
+    let bookingID: String
+    let startDate: Date
+    let endDate: Date
+    let service: GSRService
 }
