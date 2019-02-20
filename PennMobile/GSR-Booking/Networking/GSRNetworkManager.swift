@@ -17,7 +17,8 @@ class GSRNetworkManager: NSObject, Requestable {
     let availUrl = "https://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
     let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
-    let reservationURL = "http://localhost:5000/studyspaces/reservations"
+    let reservationURL = "http://api-dev.pennlabs.org/studyspaces/reservations"
+    let cancelURL = "http://api-dev.pennlabs.org/studyspaces/cancel"
     
     var locations:[Int:String] = [:]
     var bookingRequestOutstanding = false
@@ -181,19 +182,41 @@ extension GSRNetworkManager {
 // MARK: - Delete Reservation
 extension GSRNetworkManager {
     func deleteReservation(reservation: GSRReservation, sessionID: String?, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> Void) {
-        switch reservation.service {
-        case .libcal:
-            // TODO: implement libcal deletions
-            callback(false, "Sorry! Deleting library bookings is not yet available.")
-            break
-        case .wharton:
+        let url = URL(string: cancelURL)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        var params = ["booking_id": reservation.bookingID]
+        
+        if reservation.service == .wharton {
             guard let sessionID = sessionID else {
                 callback(false, "Please log in and try again.")
                 return
             }
-            WhartonGSRNetworkManager.instance.deleteReservation(sessionID: sessionID, bookingID: Int(reservation.bookingID)!, callback: callback)
-            break
+            params["sessionid"] = sessionID
         }
+        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
+            
+            if error != nil {
+                callback(false, "Unable to connect to the Internet.")
+            } else if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                        let json = JSON(data)
+                        print(json)
+                        if let result = json["result"].array?.first {
+                            let success = result["cancelled"].boolValue
+                            let errorMsg = result["error"].string
+                            callback(success, errorMsg)
+                            return
+                        }
+                    }
+                }
+                callback(false, "Something went wrong. Please try again.")
+            }
+        })
+        task.resume()
     }
 }
 
