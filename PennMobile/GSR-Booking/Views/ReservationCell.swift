@@ -20,10 +20,18 @@ class ReservationCell: UITableViewCell {
     
     var reservation: GSRReservation! {
         didSet {
-            locationLabel.text = reservation.location
-            dateLabel.text = reservation.date
-            timeLabel.text = "\(reservation.startTime) - \(reservation.endTime)"
-            buildingImage.image = UIImage(named: reservation.building)
+            locationLabel.text = reservation.roomName
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM d, YYYY"
+            dateLabel.text = formatter.string(from: reservation.startDate)
+            
+            formatter.dateFormat = "h:mm a"
+            let startStr = formatter.string(from: reservation.startDate)
+            let endStr = formatter.string(from: reservation.endDate)
+            timeLabel.text = "\(startStr) - \(endStr)"
+            
+            buildingImage.image = UIImage(named: "Huntsman")
         }
     }
     

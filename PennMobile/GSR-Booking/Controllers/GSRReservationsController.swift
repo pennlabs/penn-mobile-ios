@@ -21,8 +21,13 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         tableView.delegate = self
         tableView.register(ReservationCell.self, forCellReuseIdentifier: ReservationCell.identifer)
         
-        guard let sessionID = UserDefaults.standard.getSessionID() else { return }
-        WhartonGSRNetworkManager.instance.getReservations(for: sessionID) { (reservations) in
+        let sessionID = UserDefaults.standard.getSessionID()
+        let email = GSRUser.getUser()?.email
+        if sessionID == nil && email == nil {
+            // TODO: Handle user that is not logged in
+            return
+        }
+        GSRNetworkManager.instance.getReservations(sessionID: sessionID, email: email) { (reservations) in
             DispatchQueue.main.async {
                 if let reservations = reservations {
                     self.reservations = reservations
@@ -58,13 +63,13 @@ extension GSRReservationsController {
 // MARK: - ReservationCellDelegate
 extension GSRReservationsController: ReservationCellDelegate {
     func deleteReservation(_ reservation: GSRReservation) {
-        guard let sessionID = UserDefaults.standard.getSessionID() else { return }
         showActivity()
-        WhartonGSRNetworkManager.instance.deleteReservation(sessionID: sessionID, bookingID: reservation.id) { (success, errorMsg) in
+        let sessionID = UserDefaults.standard.getSessionID()
+        GSRNetworkManager.instance.deleteReservation(reservation: reservation, sessionID: sessionID) { (success, errorMsg) in
             DispatchQueue.main.async {
                 self.hideActivity()
                 if success {
-                    self.reservations = self.reservations.filter { $0.id != reservation.id }
+                    self.reservations = self.reservations.filter { $0.bookingID != reservation.bookingID }
                     self.tableView.reloadData()
                 } else if let errorMsg = errorMsg {
                     self.showAlert(withMsg: errorMsg, title: "Uh oh!", completion: nil)
