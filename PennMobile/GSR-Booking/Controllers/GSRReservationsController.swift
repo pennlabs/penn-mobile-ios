@@ -20,6 +20,7 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         
         tableView.delegate = self
         tableView.register(ReservationCell.self, forCellReuseIdentifier: ReservationCell.identifer)
+        tableView.tableFooterView = UIView()
         
         let sessionID = UserDefaults.standard.getSessionID()
         let email = GSRUser.getUser()?.email
@@ -27,8 +28,10 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
             // TODO: Handle user that is not logged in
             return
         }
+        self.showActivity()
         GSRNetworkManager.instance.getReservations(sessionID: sessionID, email: email) { (reservations) in
             DispatchQueue.main.async {
+                self.hideActivity()
                 if let reservations = reservations {
                     self.reservations = reservations
                     self.tableView.dataSource = self
