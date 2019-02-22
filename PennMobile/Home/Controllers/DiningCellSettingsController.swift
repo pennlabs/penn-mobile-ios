@@ -99,12 +99,14 @@ class DiningCellSettingsController: UITableViewController {
 
     func handleCancel() {
         self.dismiss(animated: true, completion: nil)
+        FirebaseAnalyticsManager.shared.trackEvent(action: .updateDiningPreferences, result: .cancelled, content: chosenCafes.count)
     }
 
     func handleSave() {
-        var chosenVenues = chosenCafes.map {DiningVenue(venue: $0)}
+        let chosenVenues = chosenCafes.map {DiningVenue(venue: $0)}
         delegate?.saveSelection(for: chosenVenues)
         self.dismiss(animated: true, completion: nil)
+        FirebaseAnalyticsManager.shared.trackEvent(action: .updateDiningPreferences, result: .success, content: chosenCafes.count)
     }
 
     func setupFromVenues(venues: [DiningVenue]) {

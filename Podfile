@@ -7,7 +7,6 @@ target 'PennMobile' do
 
   # Pods for PennMobile
 
-pod 'Google/Analytics'
 pod 'MBProgressHUD', '~> 0.8'
 pod 'SwiftyJSON'
 pod 'ScrollableGraphView'
