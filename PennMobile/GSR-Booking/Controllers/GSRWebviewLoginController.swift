@@ -44,7 +44,6 @@ class GSRWebviewLoginController: UIViewController, WKUIDelegate, WKNavigationDel
             return
         }
         
-        
         if url.absoluteString == "https://apps.wharton.upenn.edu/gsr/" {
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
             cookieStore.getAllCookies { (cookies) in

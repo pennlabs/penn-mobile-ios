@@ -88,10 +88,10 @@ extension HomeViewController {
 // MARK: - ViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate, GSRBookable {
 
-    func handleUrlPressed(_ url: String) {
+    func handleUrlPressed(url: String, title: String) {
         let wv = WebviewController()
         wv.load(for: url)
-        wv.title = "The Daily Pennsylvanian"
+        wv.title = title
         navigationController?.pushViewController(wv, animated: true)
         FirebaseAnalyticsManager.shared.trackEvent(action: .viewHomeNewsArticle, result: .none, content: url)
     }
