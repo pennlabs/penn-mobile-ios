@@ -13,7 +13,7 @@ final class HomeAPIService: Requestable {
     private init() {}
 
     func fetchModel(_ completion: @escaping (HomeTableViewModel?) -> Void) {
-        let url = "http://localhost:5000/homepage?sessionid=hi"//"https://api.pennlabs.org/homepage"
+        let url = "https://api.pennlabs.org/homepage"
         getRequest(url: url) { (dict, error, statusCode) in
             var model: HomeTableViewModel? = HomeTableViewModel()
             if let dict = dict {
