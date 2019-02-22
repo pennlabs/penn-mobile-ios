@@ -16,7 +16,7 @@ class GSRNetworkManager: NSObject, Requestable {
     
     let availUrl = "https://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
-    let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
+    let bookingUrl = "http://api-dev.pennlabs.org/studyspaces/book"
     let reservationURL = "http://api-dev.pennlabs.org/studyspaces/reservations"
     let cancelURL = "http://api-dev.pennlabs.org/studyspaces/cancel"
     
@@ -85,6 +85,7 @@ class GSRNetworkManager: NSObject, Requestable {
         let params: [String: String] = [
             "building" : String(booking.location.lid),
             "room" : String(booking.roomId),
+            "lid": String(booking.location.lid),
             "start" : start,
             "end" : end,
             "firstname" : user.firstName,
@@ -98,6 +99,8 @@ class GSRNetworkManager: NSObject, Requestable {
         guard let url = URL(string: bookingUrl) else { return }
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "POST"
+        let deviceID = getDeviceID()
+        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8);
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             var success = false
@@ -180,6 +183,8 @@ extension GSRNetworkManager {
         let url = URL(string: cancelURL)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        let deviceID = getDeviceID()
+        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         
         var params = ["booking_id": reservation.bookingID]
         
@@ -203,6 +208,9 @@ extension GSRNetworkManager {
                             let success = result["cancelled"].boolValue
                             let errorMsg = result["error"].string
                             callback(success, errorMsg)
+                            return
+                        } else if let errorMsg = json["error"].string {
+                            callback(false, errorMsg)
                             return
                         }
                     }
