@@ -96,9 +96,8 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                         let csrfHeader = self.getMatch(for: "csrftoken=(.*?);", in: csrfHeaderStr)
                         let str = dataString as String
                         let csrfToken = self.getMatch(for: "<input name=\"csrfmiddlewaretoken\" type=\"hidden\" value=\"(.*?)\"/>", in: str)
-                        let userId = self.getMatch(for: "<input id=\"id_user\" name=\"user\" type=\"hidden\" value=\"(.*?)\"/>", in: str)
                         
-                        self.reserveRoom(booking: booking, csrfHeader: csrfHeader, csrfToken: csrfToken, userId: userId, callback: { (success, errorMsg)  in
+                        self.reserveRoom(booking: booking, csrfHeader: csrfHeader, csrfToken: csrfToken, callback: { (success, errorMsg)  in
                             callback(success, errorMsg)
                         })
                         return
@@ -112,7 +111,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
         task.resume()
     }
     
-    func reserveRoom(booking: GSRBooking, csrfHeader: String, csrfToken: String, userId: String, callback: @escaping ((_ success: Bool, _ errorMsg: String?) -> Void)) {
+    func reserveRoom(booking: GSRBooking, csrfHeader: String, csrfToken: String, callback: @escaping ((_ success: Bool, _ errorMsg: String?) -> Void)) {
         let sessionID: String = booking.sessionId
         let urlStr = getBookingUrl(for: booking)
         let url = URL(string: urlStr)!
@@ -133,7 +132,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
         dateFormatter.dateFormat = "MMMM d, yyyy"
         let dateStr = dateFormatter.string(from: booking.start)
         
-        let params = ["csrfmiddlewaretoken": csrfToken, "user": userId, "room": String(booking.roomId), "start_time": startStr, "end_time": endStr, "date": dateStr]
+        let params = ["csrfmiddlewaretoken": csrfToken, "room": String(booking.roomId), "start_time": startStr, "end_time": endStr, "date": dateStr]
         request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
