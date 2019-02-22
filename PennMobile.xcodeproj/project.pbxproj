@@ -151,6 +151,7 @@
 		C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */; };
 		C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F9E9621928576000B866A /* HomeCalendarCell.swift */; };
 		C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F9E9821928638000B866A /* HomeCalendarCellItem.swift */; };
+		C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */; };
 		C5D39C0A9622F0E6A49E7F1D /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E68F5C0B46A4FB7ED5B47B /* Pods_PennMobileTests.framework */; };
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
@@ -332,6 +333,7 @@
 		C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversityNotificationCell.swift; sourceTree = "<group>"; };
 		C13F9E9621928576000B866A /* HomeCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarCell.swift; sourceTree = "<group>"; };
 		C13F9E9821928638000B866A /* HomeCalendarCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarCellItem.swift; sourceTree = "<group>"; };
+		C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReservationsCell.swift; sourceTree = "<group>"; };
 		CEF5C02A7792D4E6978F00EB /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		CF1CE9BC205D664700C51F46 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
@@ -725,6 +727,7 @@
 				2189C0882027CE2600771C1F /* GSRTimeCell.swift */,
 				2189C0892027CE2600771C1F /* RoomCell.swift */,
 				21A6B6D32216824B003A357D /* ReservationCell.swift */,
+				C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1340,6 +1343,7 @@
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
+				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */,

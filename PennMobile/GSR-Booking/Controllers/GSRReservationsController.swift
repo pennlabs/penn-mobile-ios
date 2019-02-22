@@ -19,7 +19,8 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         title = "Your Bookings"
         
         tableView.delegate = self
-        tableView.register(ReservationCell.self, forCellReuseIdentifier: ReservationCell.identifer)
+        tableView.register(ReservationCell.self, forCellReuseIdentifier: ReservationCell.identifier)
+        tableView.register(NoReservationsCell.self, forCellReuseIdentifier: NoReservationsCell.identifier)
         tableView.tableFooterView = UIView()
         
         let sessionID = UserDefaults.standard.getSessionID()
@@ -47,15 +48,33 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
 // MARK: - UITableViewDataSource
 extension GSRReservationsController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reservations?.count ?? 0
+        return max(reservations?.count ?? 0, 1)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReservationCell.identifer, for: indexPath) as! ReservationCell
+        if (self.reservations?.count ?? 0 == 0) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: NoReservationsCell.identifier, for: indexPath) as! NoReservationsCell
+            cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, UIScreen.main.bounds.width)
+            return cell
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: ReservationCell.identifier, for: indexPath) as! ReservationCell
         cell.reservation = reservations[indexPath.row]
         cell.delegate = self
         cell.selectionStyle = UITableViewCellSelectionStyle.none;
         return cell
+        
+//        if self.rooms.count > indexPath.section {
+//            let room = rooms[indexPath.section]
+//            let cell = tableView.dequeueReusableCell(withIdentifier: laundryCell) as! LaundryCell
+//            cell.room = room
+//            cell.delegate = self
+//            return cell
+//        } else {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: addLaundryCell) as! AddLaundryCell
+//            cell.delegate = self
+//            cell.numberOfRoomsSelected = self.rooms.count
+//            return cell
+//        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
