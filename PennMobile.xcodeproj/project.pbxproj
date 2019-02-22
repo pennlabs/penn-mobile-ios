@@ -1213,12 +1213,8 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"$(SRCROOT)/PennMobile/Supporting_Files/Info.plist",
-			);
-			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
