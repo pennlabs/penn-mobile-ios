@@ -15,6 +15,12 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
     var item: ModularTableViewItem! {
         didSet {
             guard let item = item as? HomeNewsCellItem else { return }
+            if item.showSubtitle && subtitleLabel == nil {
+                self.prepareSubtitleLabel()
+            } else if !item.showSubtitle && subtitleLabel != nil {
+                subtitleLabel.removeFromSuperview()
+                subtitleLabel = nil
+            }
             setupCell(with: item)
         }
     }
@@ -26,7 +32,7 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
     static let titleFont: UIFont = UIFont.primaryInformationFont!.withSize(18)
     static let titleEdgeOffset: CGFloat = 16
     
-    static let subtitleFont: UIFont = UIFont.primaryInformationFont!.withSize(14)
+    static let subtitleFont: UIFont = UIFont(name: "HelveticaNeue", size: 14)!//UIFont.primaryInformationFont!.withSize(14)
     
     private static var titleHeightDictionary = [String: CGFloat]()
     private static var subtitleHeightDictionary = [String: CGFloat]()
@@ -47,12 +53,12 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
         }
         
         let subtitleHeight: CGFloat
-        if !showSubtitle {
+        if !item.showSubtitle {
             subtitleHeight = 0
         } else if let height = subtitleHeightDictionary[item.article.subtitle] {
             subtitleHeight = height
         } else {
-            subtitleHeight = item.article.subtitle.dynamicHeight(font: subtitleFont, width: width)
+            subtitleHeight = item.article.subtitle.dynamicHeight(font: subtitleFont, width: width) + 4
             subtitleHeightDictionary[item.article.subtitle] = subtitleHeight
         }
         let height = imageHeight + HomeViewController.cellSpacing + titleHeight + subtitleHeight + 48
@@ -103,7 +109,7 @@ extension HomeNewsCell {
     
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? URLSelectable else { return }
-        delegate.handleUrlPressed(article.articleUrl)
+        delegate.handleUrlPressed(url: article.articleUrl, title: article.source)
     }
 }
 
@@ -113,9 +119,6 @@ extension HomeNewsCell {
         prepareImageView()
         prepareSourceLabel()
         prepareTitleLabel()
-        if HomeNewsCell.showSubtitle {
-            prepareSubtitleLabel()
-        }
         prepareDateLabel()
     }
     
@@ -165,14 +168,14 @@ extension HomeNewsCell {
         _ = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: HomeNewsCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomeNewsCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)
     }
     
-    private func prepareSubtitleLabel() {
+    fileprivate func prepareSubtitleLabel() {
         subtitleLabel = UILabel()
         subtitleLabel.font = HomeNewsCell.subtitleFont
         subtitleLabel.textColor = UIColor.warmGrey
-        subtitleLabel.numberOfLines = 3
+        subtitleLabel.numberOfLines = 5
         
         cardView.addSubview(subtitleLabel)
-        _ = subtitleLabel.anchor(titleLabel.bottomAnchor, left: titleLabel.leftAnchor, bottom: nil, right: titleLabel.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = subtitleLabel.anchor(titleLabel.bottomAnchor, left: titleLabel.leftAnchor, bottom: nil, right: titleLabel.rightAnchor, topConstant: 6, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     private func prepareDateLabel() {

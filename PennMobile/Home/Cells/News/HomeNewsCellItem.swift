@@ -16,6 +16,7 @@ final class HomeNewsCellItem: HomeCellItem {
     
     let article: NewsArticle
     var image: UIImage?
+    var showSubtitle = false
     
     init(article: NewsArticle) {
         self.article = article
@@ -51,5 +52,6 @@ extension HomeNewsCellItem {
     convenience init(json: JSON) throws {
         let article = try NewsArticle(json: json)
         self.init(article: article)
+        self.showSubtitle = json["show_subtitle"].boolValue
     }
 }
