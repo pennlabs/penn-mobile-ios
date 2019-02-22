@@ -26,18 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.setAppVersion()
         }
         
-        DatabaseManager.shared.dryRun = true
-        GoogleAnalyticsManager.shared.dryRun = true
         UserDBManager.shared.dryRun = true
         UserDBManager.shared.testRun = true
+        
+        FirebaseApp.configure()
       
         LaundryAPIService.instance.prepare {
-            GoogleAnalyticsManager.prepare()
-            
             LaundryNotificationCenter.shared.prepare()
             GSRLocationModel.shared.prepare()
-            
-            FirebaseApp.configure()
             
             /*if !UserDefaults.standard.isOnboarded() {
              //            handleOnboarding(animated: true)

@@ -35,7 +35,7 @@ enum DBError: String, LocalizedError {
     
     internal var sessionStarted = false
     
-    var dryRun: Bool = false //prevents any requests being sent
+    var dryRun: Bool = true //prevents any requests being sent
     
     func append(toQueue request: DBRequest) {
         self.batchRequests.append(request)

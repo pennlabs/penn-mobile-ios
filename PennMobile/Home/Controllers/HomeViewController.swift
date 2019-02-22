@@ -125,6 +125,7 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         wv.load(for: url)
         wv.title = title
         navigationController?.pushViewController(wv, animated: true)
+        FirebaseAnalyticsManager.shared.trackEvent(action: .viewHomeNewsArticle, result: .none, content: url)
     }
 
     var allowMachineNotifications: Bool {
