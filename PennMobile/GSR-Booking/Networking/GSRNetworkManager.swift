@@ -19,6 +19,7 @@ class GSRNetworkManager: NSObject, Requestable {
     let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
     
     var locations:[Int:String] = [:]
+    var bookingRequestOutstanding = false
     
     
     func getLocations (callback: @escaping (([Int:String]?) -> Void)) {
@@ -65,9 +66,12 @@ class GSRNetworkManager: NSObject, Requestable {
     }
     
     func makeBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
+        bookingRequestOutstanding = true
+        print(bookingRequestOutstanding)
         if booking.location.service == "wharton" {
             WhartonGSRNetworkManager.instance.bookRoom(booking: booking) { (success, errorMsg) in
                 callback(success, errorMsg)
+                self.bookingRequestOutstanding = false
             }
         } else {
             makeLibcalBooking(for: booking, callback)
@@ -109,6 +113,7 @@ class GSRNetworkManager: NSObject, Requestable {
                 errorMessage = errorMessage.replacingOccurrences(of: "\n", with: " ")
             }
             callback(success, errorMessage)
+            self.bookingRequestOutstanding = false
         })
         task.resume()
     }

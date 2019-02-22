@@ -102,7 +102,7 @@ class DiningCellSettingsController: UITableViewController {
     }
 
     func handleSave() {
-        var chosenVenues = chosenCafes.map {DiningVenue(venue: $0)}
+        let chosenVenues = chosenCafes.map {DiningVenue(venue: $0)}
         delegate?.saveSelection(for: chosenVenues)
         self.dismiss(animated: true, completion: nil)
     }
