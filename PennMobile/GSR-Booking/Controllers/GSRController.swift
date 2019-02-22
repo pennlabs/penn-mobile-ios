@@ -202,9 +202,20 @@ extension GSRController: GSRBookable {
             }
             break
         case .loggedIn:
-            GSRUser.clear()
-            UserDefaults.standard.clearSessionID()
-            refreshBarButton()
+            let message = "Are you sure you wish to log out?"
+            let alert = UIAlertController(title: "Confirm Logout",
+                                          message: message,
+                                          preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(cancelAction)
+            alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
+                DispatchQueue.main.async {
+                    GSRUser.clear()
+                    UserDefaults.standard.clearSessionID()
+                    self.refreshBarButton()
+                }
+            }))
+            present(alert, animated: true)
             break
         case .readyToSubmit(let booking):
             submitPressed(for: booking)
