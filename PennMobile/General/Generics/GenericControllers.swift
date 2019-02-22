@@ -43,7 +43,7 @@ class GenericViewController: UIViewController, Trackable {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationVC = self.navigationController as? HomeNavigationController
+        navigationVC = navigationController as? HomeNavigationController
         navigationVC?.navigationBar.tintColor = UIColor.navigationBlue
     }
     

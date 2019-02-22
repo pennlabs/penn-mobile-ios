@@ -238,6 +238,10 @@ extension GSRController: GSRBookable {
     }
     
     private func submitPressed(for booking: GSRBooking) {
+        if GSRNetworkManager.instance.bookingRequestOutstanding {
+            return
+        }
+        
         let location = viewModel.getSelectedLocation()
         if location.service == "wharton" {
             if let sessionId = UserDefaults.standard.getSessionID() {

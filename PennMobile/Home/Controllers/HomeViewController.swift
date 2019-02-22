@@ -20,13 +20,16 @@ class HomeViewController: GenericViewController {
     static let refreshInterval: Int = 10
     
     var lastRefresh: Date = Date()
+    
+    var loadingView: UIActivityIndicatorView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Home"
         view.backgroundColor = .white
         trackScreen = true
-
+        
+        prepareLoadingView()
         prepareTableView()
         prepareRefreshControl()
         
@@ -36,7 +39,12 @@ class HomeViewController: GenericViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.title = "Home"
-        self.refreshTableView()
+        if tableViewModel == nil {
+            self.startLoadingViewAnimation()
+        }
+        self.refreshTableView {
+            self.stopLoadingViewAnimation()
+        }
     }
 }
 
@@ -61,6 +69,7 @@ extension HomeViewController {
         tableView = ModularTableView()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.isHidden = true // Initially while loading
 
         view.addSubview(tableView)
 
@@ -82,6 +91,29 @@ extension HomeViewController {
         tableViewModel = model
         tableViewModel.delegate = self
         tableView.model = tableViewModel
+    }
+    
+    func prepareLoadingView() {
+        loadingView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        loadingView.color = .black
+        view.addSubview(loadingView)
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func startLoadingViewAnimation() {
+        if !loadingView.isHidden {
+            loadingView.startAnimating()
+        }
+    }
+    
+    func stopLoadingViewAnimation() {
+        if tableView.isHidden {
+            self.tableView.isHidden = false
+            self.loadingView.isHidden = true
+            self.loadingView.stopAnimating()
+        }
     }
 }
 
@@ -155,9 +187,15 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
 // MARK: - Networking
 extension HomeViewController {
     func fetchViewModel(_ completion: @escaping () -> Void) {
-        HomeAPIService.instance.fetchModel { (model) in
-            guard let model = model else { return }
+        HomeAPIService.instance.fetchModel { (model, error) in
             DispatchQueue.main.async {
+                if error != nil {
+                    let navigationVC = self.navigationController as? HomeNavigationController
+                    navigationVC?.addPermanentStatusBar(text: error == NetworkingError.noInternet ? StatusBar.StatusBarText.noInternet : .apiError)
+                    completion()
+                    return
+                }
+                guard let model = model else { return }
                 self.setModel(model)
                 UIView.transition(with: self.tableView,
                                   duration: 0.35,

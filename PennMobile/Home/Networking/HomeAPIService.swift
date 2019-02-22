@@ -12,15 +12,23 @@ final class HomeAPIService: Requestable {
     static let instance = HomeAPIService()
     private init() {}
 
-    func fetchModel(_ completion: @escaping (HomeTableViewModel?) -> Void) {
+    func fetchModel(_ completion: @escaping (_ model: HomeTableViewModel?, _ error: NetworkingError?) -> Void) {
         let url = "https://api.pennlabs.org/homepage"
         getRequest(url: url) { (dict, error, statusCode) in
+            if error != nil {
+                completion(nil, NetworkingError.noInternet)
+                return
+            }
             var model: HomeTableViewModel? = HomeTableViewModel()
+            var error: NetworkingError? = NetworkingError.jsonError
             if let dict = dict {
                 let json = JSON(dict)
                 model = try? HomeTableViewModel(json: json)
+                if model != nil {
+                    error = nil
+                }
             }
-            completion(model)
+            completion(model, error)
         }
     }
 }

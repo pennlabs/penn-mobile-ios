@@ -18,14 +18,14 @@ class HomeNavigationController: UINavigationController {
     }
     
     // Adds a status bar and animates it down
-    func addStatusBar(text: StatusBar.statusBarText) {
+    func addStatusBar(text: StatusBar.StatusBarText) {
         bar?.removeFromSuperview()
         bar = StatusBar(text: text)
         setupBar(text: text)
         animateBarDown()
     }
     
-    func addPermanentStatusBar(text: StatusBar.statusBarText) {
+    func addPermanentStatusBar(text: StatusBar.StatusBarText) {
         bar?.removeFromSuperview()
         bar = StatusBar(text: text)
         setupBar(text: text)
@@ -73,7 +73,7 @@ class HomeNavigationController: UINavigationController {
         }
     }
     
-    func setupBar(text: StatusBar.statusBarText) {
+    func setupBar(text: StatusBar.StatusBarText) {
         self.view.insertSubview(bar!, belowSubview: self.navigationBar)
         bar!.translatesAutoresizingMaskIntoConstraints = false
         bar!.topAnchor.constraint(equalTo: self.navigationBar.bottomAnchor, constant: text == .noInternet ? -50 : -70 ).isActive = true
