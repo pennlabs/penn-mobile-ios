@@ -15,12 +15,14 @@ protocol ReservationCellDelegate {
 
 class ReservationCell: UITableViewCell {
     
-    static let identifer = "reservationCell"
-    static let cellHeight: CGFloat = 107
+    static let identifier = "reservationCell"
+    static let cellHeight: CGFloat = 127
     
     var reservation: GSRReservation! {
         didSet {
-            locationLabel.text = reservation.roomName
+            var roomNameArray = reservation.roomName.split(separator: ":")
+            let roomName = String(roomNameArray[0])
+            locationLabel.text = roomName
             
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM d, YYYY"
@@ -31,7 +33,9 @@ class ReservationCell: UITableViewCell {
             let endStr = formatter.string(from: reservation.endDate)
             timeLabel.text = "\(startStr) - \(endStr)"
             
-            buildingImage.image = UIImage(named: "Huntsman")
+            buildingImage.image = UIImage(named: String(reservation.gid) + String(reservation.lid))
+            
+            //buildingImage.image = UIImage(named: "Huntsman")
         }
     }
     
@@ -65,21 +69,20 @@ extension ReservationCell {
     
     private func prepareLocationLabel() {
         locationLabel = UILabel()
-        locationLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 14)
+        locationLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
         locationLabel.textColor = .primaryTitleGrey
-        locationLabel.textAlignment = .center
+        locationLabel.textAlignment = .left
         locationLabel.numberOfLines = 1
-        locationLabel.shrinkUntilFits()
         
         addSubview(locationLabel)
-        _ = locationLabel.anchor(topAnchor, left: buildingImage.rightAnchor, bottom: nil, right: nil, topConstant: 14, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = locationLabel.anchor(topAnchor, left: buildingImage.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 14, leftConstant: 25, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
     }
     
     private func prepareDateLabel() {
         dateLabel = UILabel()
-        dateLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        dateLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
         dateLabel.textColor = .secondaryTitleGrey
-        dateLabel.textAlignment = .center
+        dateLabel.textAlignment = .left
         dateLabel.numberOfLines = 1
         dateLabel.shrinkUntilFits()
         
@@ -89,9 +92,9 @@ extension ReservationCell {
     
     private func prepareTimeLabel() {
         timeLabel = UILabel()
-        timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
         timeLabel.textColor = .secondaryTitleGrey
-        timeLabel.textAlignment = .center
+        timeLabel.textAlignment = .left
         timeLabel.numberOfLines = 1
         timeLabel.shrinkUntilFits()
         
@@ -105,13 +108,13 @@ extension ReservationCell {
         deleteButton.addTarget(self, action: #selector(handleDeletePressed(_:)), for: .touchUpInside)
         deleteButton.backgroundColor = .redingTerminal
         deleteButton.layer.cornerRadius = 4
-        deleteButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        deleteButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 12)
         deleteButton.titleLabel?.textColor = .white
         deleteButton.tintColor = .white
         deleteButton.titleLabel?.textAlignment = .center
         
         addSubview(deleteButton)
-        _ = deleteButton.anchor(timeLabel.bottomAnchor, left: buildingImage.rightAnchor, bottom: bottomAnchor, right: nil, topConstant: 3, leftConstant: 25, bottomConstant: 14, rightConstant: 0, widthConstant: 90, heightConstant: 19)    }
+        _ = deleteButton.anchor(timeLabel.bottomAnchor, left: buildingImage.rightAnchor, bottom: bottomAnchor, right: nil, topConstant: 5, leftConstant: 25, bottomConstant: 14, rightConstant: 0, widthConstant: 90, heightConstant: 24)    }
     
     func handleDeletePressed(_ sender: Any) {
         self.delegate.deleteReservation(reservation)
@@ -124,7 +127,7 @@ extension ReservationCell {
         buildingImage.clipsToBounds = true
         buildingImage.layer.cornerRadius = 8.0
         addSubview(buildingImage)
-        _ = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 14, leftConstant: 25, bottomConstant: 14, widthConstant: 127, heightConstant: 79)
+        _ = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 20, widthConstant: 139, heightConstant: 87)
     }
     
 }
