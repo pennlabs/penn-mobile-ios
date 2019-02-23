@@ -245,8 +245,9 @@ extension FlingViewController {
 
 // MARK: - ModularTableViewDelegate
 extension FlingViewController: FlingCellDelegate {
-    func handleUrlPressed(_ url: String) {
+    func handleUrlPressed(url: String, title: String) {
         let wv = WebviewController()
+        wv.title = title
         wv.load(for: url)
         navigationController?.pushViewController(wv, animated: true)
     }

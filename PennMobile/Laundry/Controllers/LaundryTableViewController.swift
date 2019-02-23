@@ -26,8 +26,6 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         tableView.allowsSelection = false
         
         tableView.tableFooterView = getFooterViewForTable()
-        // header view to make space for the error bar
-        tableView.tableHeaderView = getHeaderViewForTable()
                 
         rooms = LaundryRoom.getPreferences()
         
@@ -46,13 +44,22 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         super.viewWillAppear(animated)
         updateInfo {
             self.hideActivity()
+            
+            // Check if laundry is working
+            LaundryAPIService.instance.checkIfWorking { (isWorking) in
+                DispatchQueue.main.async {
+                    if let isWorking = isWorking, !isWorking {
+                        self.tableView.tableHeaderView = self.getHeaderViewForTable()
+                        self.navigationVC?.addPermanentStatusBar(text: .laundryDown)
+                    }
+                }
+            }
         }
         setupNavBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         setupNavBar()
-        self.navigationVC?.addPermanentStatusBar(text: .laundryDown)
         super.viewDidAppear(animated)
     }
     
@@ -195,6 +202,7 @@ extension LaundryTableViewController: RoomSelectionVCDelegate {
         LaundryRoom.setPreferences(for: rooms)
         self.rooms = rooms
         self.tableView.reloadData()
+        sendUpdateNotification()
     }
 }
 
@@ -206,7 +214,15 @@ extension LaundryTableViewController: LaundryCellDelegate {
             LaundryRoom.setPreferences(for: rooms)
             UserDBManager.shared.saveLaundryPreferences(for: rooms)
             tableView.reloadData()
+            sendUpdateNotification()
         }
+    }
+}
+
+// MARK: - Home Page Notification
+extension LaundryTableViewController {
+    fileprivate func sendUpdateNotification() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "LaundryUpdateNotification"), object: nil)
     }
 }
 

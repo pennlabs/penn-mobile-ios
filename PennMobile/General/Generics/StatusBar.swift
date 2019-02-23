@@ -13,9 +13,9 @@ class StatusBar: UIView {
     fileprivate var barText = UILabel()
     var height: Int = 0
     
-    fileprivate var status: statusBarText
+    fileprivate var status: StatusBarText
     
-    enum statusBarText : String {
+    enum StatusBarText : String {
         case noInternet = "No Internet Connection"
         case apiError = "Penn servers are temporarily down.\nPlease try again later."
         case laundryDown = "Penn's laundry servers are currently not updating.\nWe hope this will be fixed shortly."
@@ -33,7 +33,7 @@ class StatusBar: UIView {
         self.backgroundColor = .redingTerminal
     }
     
-    public convenience init(text: statusBarText) {
+    public convenience init(text: StatusBarText) {
         self.init(frame: .zero)
         self.status = text
         self.height = self.status == .noInternet ? 50 : 70

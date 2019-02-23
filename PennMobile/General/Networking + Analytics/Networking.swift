@@ -20,6 +20,7 @@ public enum Method {
 }
 
 enum NetworkingError: String, LocalizedError {
+    case noInternet
     case jsonError = "JSON error"
     case authenticationError = "Unable to authenticate"
     case other
@@ -79,6 +80,7 @@ extension Requestable {
             callback(dict, error, status)
         }
     }
+
     
     internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ json: NSDictionary?, _ error: Error?, _ status: Int?) -> ())? = nil)  {
         guard let url = URL(string: url) else {

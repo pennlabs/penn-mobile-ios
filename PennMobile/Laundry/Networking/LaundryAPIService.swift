@@ -14,15 +14,21 @@ class LaundryAPIService: Requestable {
     
     fileprivate let laundryUrl = "https://api.pennlabs.org/laundry/rooms"
     fileprivate let idsUrl = "https://api.pennlabs.org/laundry/halls/ids"
+    fileprivate let statusURL = "https://api.pennlabs.org/laundry/status"
     
     public var idToRooms: [Int: LaundryRoom]?
     
     // Prepare the service
-    func prepare() {
+    func prepare(_ completion: @escaping () -> Void) {
         if Storage.fileExists(LaundryRoom.directory, in: .caches) {
             self.idToRooms = Storage.retrieve(LaundryRoom.directory, from: .caches, as: Dictionary<Int, LaundryRoom>.self)
+            completion()
         } else {
-            loadIds { _ in }
+            loadIds { (_) in
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
         }
     }
     
@@ -70,6 +76,21 @@ extension LaundryAPIService {
                 }
             }
             callback(rooms)
+        }
+    }
+}
+
+// MARK: - Laundry Status API
+extension LaundryAPIService {
+    func checkIfWorking(_ callback: @escaping (_ isWorking: Bool?) -> Void) {
+        getRequest(url: statusURL) { (dict, _, _) in
+            if let dict = dict {
+                let json = JSON(dict)
+                let isWorking = json["is_working"].bool
+                callback(isWorking)
+            } else {
+                callback(nil)
+            }
         }
     }
 }

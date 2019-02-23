@@ -1,0 +1,46 @@
+{
+    "device_frame_version": "latest",
+    "default": {
+        "keyword": {
+            "font": "./fonts/AvenirNextLTPro-Bold.otf"
+        },
+        "title": {
+            "font": "./fonts/AvenirNextLTPro-Regular.otf",
+            "color": "#575757"
+        },
+        "background": "./background.jpg",
+        "padding": 50
+    },
+    "data": [
+        {
+            "filter": "Dining",
+            "keyword": {
+                "color": "#12274b"
+            }
+        },
+        {
+            "filter": "GSR",
+            "keyword": {
+                "color": "#12274b"
+            }
+        },
+        {
+            "filter": "Laundry",
+            "keyword": {
+                "color": "#12274b"
+            }
+        },
+        {
+            "filter": "Fitness",
+            "keyword": {
+                "color": "#12274b"
+            }
+        },
+        {
+            "filter": "More",
+            "keyword": {
+                "color": "#12274b"
+            }
+        }
+    ]
+}

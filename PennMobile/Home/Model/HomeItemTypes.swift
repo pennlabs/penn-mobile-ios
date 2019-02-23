@@ -11,11 +11,12 @@ import Foundation
 final class HomeItemTypes: ModularTableViewItemTypes {
     static let instance = HomeItemTypes()
     private init() {}
-    
+
     let dining: HomeCellItem.Type = HomeDiningCellItem.self
     let laundry: HomeCellItem.Type = HomeLaundryCellItem.self
     let studyRoomBooking: HomeCellItem.Type = HomeGSRCellItem.self
-    let fling: HomeCellItem.Type = HomeFlingCellItem.self
+    let calendar: HomeCellItem.Type = HomeCalendarCellItem.self
+    let news: HomeCellItem.Type = HomeNewsCellItem.self
 }
 
 // MARK: - JSON Parsing
@@ -29,6 +30,13 @@ extension HomeItemTypes {
             }
         }
         return nil
+    }
+}
+
+extension HomeItemTypes {
+    func getAllTypes() -> [HomeCellItem.Type] {
+        let mirror = Mirror(reflecting: self)
+        return mirror.children.map { $0.value as! HomeCellItem.Type }
     }
 }
 
@@ -54,7 +62,6 @@ extension HomeItemTypes {
     **/
     func getDefaultItems() -> [HomeCellItem.Type] {
         var types = [HomeCellItem.Type]()
-        types.append(fling)
         return types
     }
 }
