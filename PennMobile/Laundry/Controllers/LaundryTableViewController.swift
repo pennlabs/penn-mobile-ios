@@ -34,8 +34,6 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         
         // initialize navigation bar
 
-
-        
         // Start indicator if there are cells that need to be loaded
         if !rooms.isEmpty {
             showActivity()
@@ -46,6 +44,16 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         super.viewWillAppear(animated)
         updateInfo {
             self.hideActivity()
+            
+            // Check if laundry is working
+            LaundryAPIService.instance.checkIfWorking { (isWorking) in
+                DispatchQueue.main.async {
+                    if let isWorking = isWorking, !isWorking {
+                        self.tableView.tableHeaderView = self.getHeaderViewForTable()
+                        self.navigationVC?.addPermanentStatusBar(text: .laundryDown)
+                    }
+                }
+            }
         }
         setupNavBar()
     }
@@ -62,6 +70,12 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     
     fileprivate func getFooterViewForTable() -> UIView {
         let v = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 30.0))
+        v.backgroundColor = UIColor.clear
+        return v
+    }
+    
+    fileprivate func getHeaderViewForTable() -> UIView {
+        let v = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 70.0))
         v.backgroundColor = UIColor.clear
         return v
     }
@@ -188,6 +202,7 @@ extension LaundryTableViewController: RoomSelectionVCDelegate {
         LaundryRoom.setPreferences(for: rooms)
         self.rooms = rooms
         self.tableView.reloadData()
+        sendUpdateNotification()
     }
 }
 
@@ -199,7 +214,15 @@ extension LaundryTableViewController: LaundryCellDelegate {
             LaundryRoom.setPreferences(for: rooms)
             UserDBManager.shared.saveLaundryPreferences(for: rooms)
             tableView.reloadData()
+            sendUpdateNotification()
         }
+    }
+}
+
+// MARK: - Home Page Notification
+extension LaundryTableViewController {
+    fileprivate func sendUpdateNotification() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "LaundryUpdateNotification"), object: nil)
     }
 }
 

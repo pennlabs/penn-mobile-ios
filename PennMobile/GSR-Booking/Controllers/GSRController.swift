@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 class GSRController: GenericViewController, IndicatorEnabled {
     
@@ -16,6 +17,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var pickerView: UIPickerView!
     fileprivate var emptyView: EmptyView!
     fileprivate var barButton: UIBarButtonItem!
+    fileprivate var gsrBarButton: UIBarButtonItem!
     
     var currentDay = Date()
     
@@ -64,7 +66,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
         barButton.tintColor = UIColor.navigationBlue
         
-        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.leftBarButtonItem = gsrBarButton
         tabBarController?.navigationItem.rightBarButtonItem = barButton
     }
     
@@ -133,15 +135,29 @@ extension GSRController {
 // MARK: - ViewModelDelegate + Networking
 extension GSRController: GSRViewModelDelegate {
     func fetchData() {
-        let locationId = viewModel.getSelectedLocation().lid
+        let location = viewModel.getSelectedLocation()
         let date = viewModel.getSelectedDate()
-        GSRNetworkManager.instance.getAvailability(for: locationId, date: date) { (rooms) in
-            DispatchQueue.main.async {
-                if let rooms = rooms {
-                    self.viewModel.updateData(with: rooms)
-                    self.refreshDataUI()
-                    self.rangeSlider.reload()
-                    self.refreshBarButton()
+        if location.service == "wharton" {
+            let sessionID = UserDefaults.standard.getSessionID()
+            WhartonGSRNetworkManager.instance.getAvailability(sessionID: sessionID, date: date) { (rooms) in
+                DispatchQueue.main.async {
+                    if let rooms = rooms {
+                        self.viewModel.updateData(with: rooms)
+                        self.refreshDataUI()
+                        self.rangeSlider.reload()
+                        self.refreshBarButton()
+                    }
+                }
+            }
+        } else {
+            GSRNetworkManager.instance.getAvailability(for: location.lid, date: date) { (rooms) in
+                DispatchQueue.main.async {
+                    if let rooms = rooms {
+                        self.viewModel.updateData(with: rooms)
+                        self.refreshDataUI()
+                        self.rangeSlider.reload()
+                        self.refreshBarButton()
+                    }
                 }
             }
         }
@@ -179,16 +195,39 @@ extension GSRController: GSRBookable {
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
         switch viewModel.state {
         case .loggedOut:
-            presentLoginController()
+            if viewModel.getSelectedLocation().service == "wharton" {
+                presentWebviewLoginController(nil)
+            } else {
+                presentLoginController()
+            }
             break
         case .loggedIn:
-            GSRUser.clear()
-            refreshBarButton()
+            let message = "Are you sure you wish to log out?"
+            let alert = UIAlertController(title: "Confirm Logout",
+                                          message: message,
+                                          preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(cancelAction)
+            alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
+                DispatchQueue.main.async {
+                    GSRUser.clear()
+                    UserDefaults.standard.clearSessionID()
+                    self.refreshBarButton()
+                }
+            }))
+            present(alert, animated: true)
             break
         case .readyToSubmit(let booking):
             submitPressed(for: booking)
             break
         }
+    }
+    
+    private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {
+        let wv = GSRWebviewLoginController()
+        wv.completion = completion
+        let nvc = UINavigationController(rootViewController: wv)
+        present(nvc, animated: true, completion: nil)
     }
     
     private func presentLoginController(with booking: GSRBooking? = nil) {
@@ -199,17 +238,45 @@ extension GSRController: GSRBookable {
     }
     
     private func submitPressed(for booking: GSRBooking) {
-        if let user = GSRUser.getUser() {
-            booking.user = user
-            submitBooking(for: booking) { (success) in
-                if success {
-                    self.fetchData()
-                } else {
-                    self.presentLoginController(with: booking)
+        if GSRNetworkManager.instance.bookingRequestOutstanding {
+            return
+        }
+        
+        let location = viewModel.getSelectedLocation()
+        if location.service == "wharton" {
+            if let sessionId = UserDefaults.standard.getSessionID() {
+                booking.sessionId = sessionId
+                submitBooking(for: booking) { (success) in
+                    if success {
+                        self.fetchData()
+                    } else {
+                        self.viewModel.clearSelection()
+                        self.refreshDataUI()
+                    }
+                }
+            } else {
+                presentWebviewLoginController {
+                    if let sessionId = UserDefaults.standard.getSessionID() {
+                        booking.sessionId = sessionId
+                        self.submitBooking(for: booking) { (success) in
+                            self.fetchData()
+                        }
+                    }
                 }
             }
         } else {
-            presentLoginController(with: booking)
+            if let user = GSRUser.getUser() {
+                booking.user = user
+                submitBooking(for: booking) { (success) in
+                    if success {
+                        self.fetchData()
+                    } else {
+                        self.presentLoginController(with: booking)
+                    }
+                }
+            } else {
+                presentLoginController(with: booking)
+            }
         }
     }
 }

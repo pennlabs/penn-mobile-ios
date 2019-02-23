@@ -9,7 +9,7 @@
 import Foundation
 
 final class HomeFlingCell: UITableViewCell, HomeCellConformable {
-    static var identifier: String = "homeNewsCell"
+    static var identifier: String = "flingCell"
     
     var delegate: ModularTableViewCellDelegate!
     var item: ModularTableViewItem! {
@@ -116,7 +116,7 @@ extension HomeFlingCell {
     
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let website = performer.website, let delegate = delegate as? URLSelectable else { return }
-        delegate.handleUrlPressed(website)
+        delegate.handleUrlPressed(url: website, title: performer.name)
     }
 }
 
@@ -194,14 +194,5 @@ extension HomeFlingCell {
         cardView.addSubview(moreButton)
         _ = moreButton.anchor(nil, left: nil, bottom: nil, right: performerLabel.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         moreButton.centerYAnchor.constraint(equalTo: dateLabel.centerYAnchor).isActive = true
-    }
-}
-
-extension String {
-    // https://stackoverflow.com/questions/34262863/how-to-calculate-height-of-a-string
-    func dynamicHeight(font: UIFont, width: CGFloat) -> CGFloat{
-        let calString = NSString(string: self)
-        let textSize = calString.boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSFontAttributeName: font], context: nil)
-        return textSize.height
     }
 }

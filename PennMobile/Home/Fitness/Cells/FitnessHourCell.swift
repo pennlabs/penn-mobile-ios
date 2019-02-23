@@ -66,18 +66,28 @@ extension FitnessHourCell {
     }
     
     fileprivate func setupCell(with schedule: FitnessSchedule?) {
-        guard let schedule = schedule else { return }
+        guard let schedule = schedule else {
+            statusLabel.text = ""
+            timesLabel.text = ""
+            return
+        }
         
-        if schedule.start != nil && schedule.end != nil {
-            updateTimeLabels(start: schedule.start!, end: schedule.end!)
+        if !schedule.hours.isEmpty && schedule.hours.first?.start != nil && schedule.hours.first?.end != nil {
+            updateTimeLabels(schedule.hours)
         }
         
     }
     
-    fileprivate func updateTimeLabels(start: Date, end: Date) {
+    fileprivate func updateTimeLabels(_ hours: [FitnessScheduleOpenClose]) {
         let now = Date()
         
-        if start < now && end > now {
+        var isOpen = false
+        for openClose in hours {
+            guard openClose.start != nil && openClose.end != nil else { continue }
+            if openClose.start! < now && openClose.end! > now { isOpen = true }
+        }
+        
+        if isOpen {
             statusLabel.text = "OPEN"
             statusLabel.textColor = .informationYellow
             statusLabel.font = .primaryInformationFont
@@ -87,7 +97,13 @@ extension FitnessHourCell {
             statusLabel.font = .secondaryInformationFont
         }
         
-        timesLabel.text = start.strFormat() + " - " + end.strFormat()
+        var displayText = ""
+        for oc in hours.indices {
+            guard let start = hours[oc].start, let end = hours[oc].end else { continue }
+            displayText += start.strFormat() + " - " + end.strFormat()
+            if oc != hours.count - 1 { displayText += "  |  " }
+        }
+        timesLabel.text = displayText
         timesLabel.layoutIfNeeded()
     }
 }
@@ -141,7 +157,7 @@ extension FitnessHourCell {
         titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
         
         statusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 2).isActive = true
         
         timesLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
         timesLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3).isActive = true

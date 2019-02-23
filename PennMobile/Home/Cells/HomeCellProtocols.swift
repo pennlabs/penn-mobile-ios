@@ -9,5 +9,5 @@
 import Foundation
 
 protocol URLSelectable {
-    func handleUrlPressed(_ url: String)
+    func handleUrlPressed(url: String, title: String)
 }

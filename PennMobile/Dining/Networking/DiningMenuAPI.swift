@@ -15,7 +15,7 @@ class DiningMenuAPI: Requestable {
     let diningMenuUrl = "https://api.pennlabs.org/dining/daily_menu/"
     
     func fetchDiningMenu(for venue: DiningVenueName, _ completion: @escaping (_ success: Bool) -> Void) {
-        getRequest(url: (diningMenuUrl + String(venue.getID()))) { (dictionary) in
+        getRequest(url: (diningMenuUrl + String(venue.getID()))) { (dictionary, error, statusCode) in
             if dictionary == nil {
                 completion(false)
                 return

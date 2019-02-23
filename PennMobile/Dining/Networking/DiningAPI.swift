@@ -14,17 +14,29 @@ class DiningAPI: Requestable {
     static let instance = DiningAPI()
     
     let diningUrl = "https://api.pennlabs.org/dining/venues"
-    
-    func fetchDiningHours(_ completion: @escaping (_ success: Bool) -> Void) {
-        getRequest(url: diningUrl) { (dictionary) in
+    let diningPrefs =  "https://api.pennlabs.org/dining/preferences"
+
+    func fetchDiningHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
+        getRequest(url: diningUrl) { (dictionary, error, statusCode) in
+            
+            if statusCode == nil {
+                completion(false, false)
+                return
+            }
+            
+            if statusCode != 200 {
+                completion(false, true)
+                return
+            }
+            
             if dictionary == nil {
-                completion(false)
+                completion(false, true)
                 return
             }
             
             let json = JSON(dictionary!)
             let success = DiningHoursData.shared.loadHoursForAllVenues(for: json)
-            completion(success)
+            completion(success, false)
         }
     }
     
@@ -123,72 +135,3 @@ extension DiningHoursData {
         return mapping
     }
 }
-
-extension DiningAPI {
-    func fetchHardcodedData(_ completion: @escaping (_ success: Bool) -> Void) {
-        if let filePath = Bundle.main.path(forResource: "diningJSON", ofType: "json"),
-            let data = NSData(contentsOfFile: filePath) {
-            let json = try! JSON(data: data as Data)
-            let success: Bool = DiningHoursData.shared.loadHardcodedData(for: json)
-            completion(success)
-        }
-    }
-}
-
-extension DiningHoursData {
-    fileprivate func loadHardcodedData(for json: JSON) -> Bool {
-        guard let jsonArray = json["venues"].array else {
-            return false
-        }
-        
-        for json in jsonArray {
-            loadHardcodedHoursForSingleVenue(for: json)
-        }
-        return true
-    }
-    
-    fileprivate func loadHardcodedHoursForSingleVenue(for json: JSON) {
-        guard let name = json["name"].string, let scheduleJSON = json["schedule"].array else {
-            return
-        }
-        let venueName = DiningVenueName.getVenueName(for: name)
-        if venueName == .unknown {
-            return
-        }
-        
-        let today: String = Date().dayOfWeek
-        var mealsJSON: [JSON]!
-        for json in scheduleJSON {
-            let day = json["day"].stringValue
-            if today == day {
-                mealsJSON = json["meals"].array
-            }
-        }
-        
-        if mealsJSON == nil {
-            return
-        }
-        
-        var hours = [OpenClose]()
-        
-        let formatter = DateFormatter()
-        formatter.amSymbol = "am"
-        formatter.pmSymbol = "pm"
-        formatter.dateFormat = "h:mma"
-        formatter.timeZone = TimeZone(abbreviation: "EST")
-        
-        for json in mealsJSON {
-            let start = json["start"].stringValue
-            let end = json["end"].stringValue
-            let type = json["type"].stringValue
-            
-            guard let openDate = formatter.date(from: start)?.adjustedFor11_59, let closeDate = formatter.date(from: end)?.adjustedFor11_59 else { continue }
-            
-            let time = OpenClose(open: openDate, close: closeDate, meal: type)
-            hours.append(time)
-        }
-        
-        self.load(hours: hours, for: venueName)
-    }
-}
-

@@ -49,8 +49,12 @@ class LaundryRoom: Codable {
         
         let dataMax = usageData.max()!
         let dataMin = usageData.min()!
-        for i in usageData.indices {
-            usageData[i] = ((dataMax - usageData[i]) / (dataMax - dataMin))
+        if dataMin == dataMax {
+            usageData = Array.init(repeating: 0.01, count: usageData.count)
+        } else {
+            for i in usageData.indices {
+                usageData[i] = ((dataMax - usageData[i]) / (dataMax - dataMin))
+            }
         }
     }
     

@@ -10,6 +10,7 @@ import UIKit
 import UserNotifications
 import FirebaseCore
 import FirebaseInstanceID
+import StoreKit
 //import FirebaseMessaging
 
 @UIApplicationMain
@@ -23,35 +24,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
-            LaundryAPIService.instance.clearDirectory()
-            if let ids = UserDefaults.standard.getLaundryPreferences() {
-                UserDBManager.shared.saveLaundryPreferences(for: ids)
-            }
         }
         
-        DatabaseManager.shared.dryRun = true
-        GoogleAnalyticsManager.shared.dryRun = true
         UserDBManager.shared.dryRun = true
         UserDBManager.shared.testRun = true
         
-        GoogleAnalyticsManager.prepare()
-        LaundryAPIService.instance.prepare()
-        LaundryNotificationCenter.shared.prepare()
-        GSRLocationModel.shared.prepare()
-        
         FirebaseApp.configure()
-        
-        /*if !UserDefaults.standard.isOnboarded() {
-            //            handleOnboarding(animated: true)
-            UserDefaults.standard.setIsOnboarded(value: true)
-            return true
-        }*/
-        
-        tabBarController = TabBarController()
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: tabBarController)
-        window?.makeKeyAndVisible()
+      
+        LaundryAPIService.instance.prepare {
+            LaundryNotificationCenter.shared.prepare()
+            GSRLocationModel.shared.prepare()
+            
+            /*if !UserDefaults.standard.isOnboarded() {
+             //            handleOnboarding(animated: true)
+             UserDefaults.standard.setIsOnboarded(value: true)
+             return true
+             }*/
+            
+            self.tabBarController = TabBarController()
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = HomeNavigationController(rootViewController: self.tabBarController)
+            self.window?.makeKeyAndVisible()
+            
+            // Keep track locally of app sessions (for app review prompting)
+            let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
+            UserDefaults.standard.set(sessionCount+1, forKey:"launchCount")
+            UserDefaults.standard.synchronize()
+            if sessionCount == 3 {
+                SKStoreReviewController.requestReview()
+            }
+        }
         return true
     }
     

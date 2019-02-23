@@ -14,15 +14,21 @@ class LaundryAPIService: Requestable {
     
     fileprivate let laundryUrl = "https://api.pennlabs.org/laundry/rooms"
     fileprivate let idsUrl = "https://api.pennlabs.org/laundry/halls/ids"
+    fileprivate let statusURL = "https://api.pennlabs.org/laundry/status"
     
     public var idToRooms: [Int: LaundryRoom]?
     
     // Prepare the service
-    func prepare() {
+    func prepare(_ completion: @escaping () -> Void) {
         if Storage.fileExists(LaundryRoom.directory, in: .caches) {
             self.idToRooms = Storage.retrieve(LaundryRoom.directory, from: .caches, as: Dictionary<Int, LaundryRoom>.self)
+            completion()
         } else {
-            loadIds { _ in }
+            loadIds { (_) in
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
         }
     }
     
@@ -41,7 +47,7 @@ class LaundryAPIService: Requestable {
     }
     
     private func fetchIds(callback: @escaping ([Int: LaundryRoom]?) -> ()) {
-        getRequest(url: idsUrl) { (dictionary) in
+        getRequest(url: idsUrl) { (dictionary, error, statusCode) in
             if let dict = dictionary {
                 let json = JSON(dict)
                 let hallsDictionary = try? Dictionary<Int, LaundryRoom>(json: json)
@@ -58,7 +64,7 @@ extension LaundryAPIService {
     func fetchLaundryData(for rooms: [LaundryRoom], _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
         let ids: String = rooms.map { $0.id }.map { String($0) }.joined(separator: ",")
         let url = "\(laundryUrl)/\(ids)"
-        getRequest(url: url) { (dict) in
+        getRequest(url: url) { (dict, error, statusCode) in
             var rooms: [LaundryRoom]?
             if let dict = dict {
                 let json = JSON(dict)
@@ -70,6 +76,21 @@ extension LaundryAPIService {
                 }
             }
             callback(rooms)
+        }
+    }
+}
+
+// MARK: - Laundry Status API
+extension LaundryAPIService {
+    func checkIfWorking(_ callback: @escaping (_ isWorking: Bool?) -> Void) {
+        getRequest(url: statusURL) { (dict, _, _) in
+            if let dict = dict {
+                let json = JSON(dict)
+                let isWorking = json["is_working"].bool
+                callback(isWorking)
+            } else {
+                callback(nil)
+            }
         }
     }
 }
