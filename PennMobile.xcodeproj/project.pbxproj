@@ -127,7 +127,6 @@
 		B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */; };
 		B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6111DB12018497400DC7877 /* GoogleService-Info.plist */; };
 		B6111DB420184C4A00DC7877 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6111DB320184C4A00DC7877 /* AboutViewController.swift */; };
-		B6111DB720184C8C00DC7877 /* BeakerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6111DB620184C8C00DC7877 /* BeakerLayer.swift */; };
 		B6214B69217A87740024DA68 /* FastlaneUIAutomation in Resources */ = {isa = PBXBuildFile; fileRef = B6214B68217A87740024DA68 /* FastlaneUIAutomation */; };
 		B62875EB2115302200FB2873 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875EA2115302200FB2873 /* MapViewController.swift */; };
 		B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875EC2115433100FB2873 /* PennCoordinate.swift */; };
@@ -151,7 +150,7 @@
 		C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */; };
 		C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F9E9621928576000B866A /* HomeCalendarCell.swift */; };
 		C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F9E9821928638000B866A /* HomeCalendarCellItem.swift */; };
-		C5D39C0A9622F0E6A49E7F1D /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E68F5C0B46A4FB7ED5B47B /* Pods_PennMobileTests.framework */; };
+		C7AD1F1F3D08D942CB10E82A /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA209F5CFBFD53D5AD1EF143 /* Pods_PennMobileTests.framework */; };
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
 		CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */; };
@@ -324,10 +323,10 @@
 		97E79E172100E4AA00D3D606 /* FitnessFacilityData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityData.swift; sourceTree = "<group>"; };
 		97E79E192100E51A00D3D606 /* FitnessFacilityName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityName.swift; sourceTree = "<group>"; };
 		97E79E1B2100F32E00D3D606 /* FitnessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewModel.swift; sourceTree = "<group>"; };
+		AA209F5CFBFD53D5AD1EF143 /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLaundryCell.swift; sourceTree = "<group>"; };
 		B6111DB12018497400DC7877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6111DB320184C4A00DC7877 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		B6111DB620184C8C00DC7877 /* BeakerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerLayer.swift; sourceTree = "<group>"; };
 		B6214B68217A87740024DA68 /* FastlaneUIAutomation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FastlaneUIAutomation; sourceTree = "<group>"; };
 		B62875EA2115302200FB2873 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B62875EC2115433100FB2873 /* PennCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCoordinate.swift; sourceTree = "<group>"; };
@@ -382,6 +381,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7AD1F1F3D08D942CB10E82A /* Pods_PennMobileTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -829,6 +829,7 @@
 			isa = PBXGroup;
 			children = (
 				B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */,
+				AA209F5CFBFD53D5AD1EF143 /* Pods_PennMobileTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
