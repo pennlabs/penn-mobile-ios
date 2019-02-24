@@ -18,6 +18,7 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
 
         title = "Your Bookings"
         
+        tableView.dataSource = nil // Don't try to load data initially since reservations will be nil
         tableView.delegate = self
         tableView.register(ReservationCell.self, forCellReuseIdentifier: ReservationCell.identifier)
         tableView.register(NoReservationsCell.self, forCellReuseIdentifier: NoReservationsCell.identifier)
