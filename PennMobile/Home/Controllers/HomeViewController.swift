@@ -235,11 +235,12 @@ extension HomeViewController {
 
     func reloadItem(_ item: HomeCellItem) {
         guard let allItems = tableViewModel.items as? [HomeCellItem] else { return }
-        let row = allItems.index(where: { (thisItem) -> Bool in
+        if let row = allItems.index(where: { (thisItem) -> Bool in
             thisItem.equals(item: item)
-        })!
-        let indexPath = IndexPath(row: row, section: 0)
-        self.tableView.reloadRows(at: [indexPath], with: .none)
+        }) {
+            let indexPath = IndexPath(row: row, section: 0)
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
     }
 }
 
