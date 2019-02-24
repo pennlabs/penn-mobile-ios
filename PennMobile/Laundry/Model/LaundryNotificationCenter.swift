@@ -21,7 +21,6 @@ class LaundryNotificationCenter {
     
     func notifyWithMessage(for machine: LaundryMachine, title: String?, message: String?, completion: @escaping (_ success: Bool) -> Void) {
         let center = UNUserNotificationCenter.current()
-        let isWasher = machine.isWasher
         let minutes = machine.timeRemaining
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             if error != nil {
