@@ -30,6 +30,7 @@ PODS:
   - SCLAlertView (0.8)
   - ScrollableGraphView (4.0.6)
   - SimpleImageViewer (1.1.1)
+  - SimulatorStatusMagic (2.4.1)
   - SwiftyJSON (4.2.0)
   - TimelineTableViewCell (1.2)
 
@@ -43,6 +44,7 @@ DEPENDENCIES:
   - SCLAlertView
   - ScrollableGraphView
   - SimpleImageViewer (~> 1.1.1)
+  - SimulatorStatusMagic
   - SwiftyJSON
   - TimelineTableViewCell
 
@@ -62,6 +64,7 @@ SPEC REPOS:
     - SCLAlertView
     - ScrollableGraphView
     - SimpleImageViewer
+    - SimulatorStatusMagic
     - SwiftyJSON
     - TimelineTableViewCell
 
@@ -80,9 +83,10 @@ SPEC CHECKSUMS:
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
+  SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
 
-PODFILE CHECKSUM: cf19690531861c9a0ce4c4e54228ebf75ce37f36
+PODFILE CHECKSUM: 03860b5945e83f73c69b5b7bc7adb61ae26eb759
 
 COCOAPODS: 1.5.3

@@ -5,22 +5,6 @@
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
-      <BuildActionEntries>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2166405F1EBADADA00746B8E"
-               BuildableName = "PennMobile.app"
-               BlueprintName = "PennMobile"
-               ReferencedContainer = "container:PennMobile.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-      </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
@@ -32,39 +16,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "216640731EBADADA00746B8E"
-               BuildableName = "PennMobileTests.xctest"
-               BlueprintName = "PennMobileTests"
-               ReferencedContainer = "container:PennMobile.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B6B1E06F214440C600CCBBCD"
-               BuildableName = "Fastlane.xctest"
-               BlueprintName = "Fastlane"
-               ReferencedContainer = "container:PennMobile.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "F223D45E2221D838007506FB"
                BuildableName = "AutomatedScreenshotUITests.xctest"
                BlueprintName = "AutomatedScreenshotUITests"
-               ReferencedContainer = "container:PennMobile.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B6B1E0612144408B00CCBBCD"
-               BuildableName = "PennMobileUITests.xctest"
-               BlueprintName = "PennMobileUITests"
                ReferencedContainer = "container:PennMobile.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -101,16 +55,6 @@
             ReferencedContainer = "container:PennMobile.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "-FIRAnalyticsDebugEnabled"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-FIRDebugEnabled"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -120,8 +64,7 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2166405F1EBADADA00746B8E"
@@ -129,7 +72,7 @@
             BlueprintName = "PennMobile"
             ReferencedContainer = "container:PennMobile.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
