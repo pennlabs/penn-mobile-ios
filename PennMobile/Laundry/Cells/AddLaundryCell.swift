@@ -65,14 +65,14 @@ class AddLaundryCell: UITableViewCell {
         b.setTitleColor(UIColor(red: 0.161, green: 0.502, blue: 0.725, alpha: 1.0),
                         for: .normal)
         b.setTitleColor(UIColor(red: 0.161, green: 0.502, blue: 0.725, alpha: 0.3),
-                        for: UIControlState.highlighted)
+                        for: UIControl.State.highlighted)
         b.setTitle("Select a room", for: .normal)
         b.titleLabel?.font = UIFont.primaryInformationFont
         b.addTarget(self, action: #selector(addRoom), for: .touchUpInside)
         return b
     }()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setupView()

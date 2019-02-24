@@ -54,7 +54,7 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     fileprivate var footerDescriptionLabel: UILabel!
     fileprivate var footerTransitionButton: UIButton!
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
         prepareUI()
