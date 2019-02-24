@@ -407,3 +407,24 @@ extension String {
         return textSize.height
     }
 }
+
+extension String {
+    func getMatches(for pattern: String) -> [String] {
+        let regex = try! NSRegularExpression(pattern: pattern)
+        let result = regex.matches(in: self, range:NSMakeRange(0, self.utf16.count))
+        var matches = [String]()
+        for res in result {
+            let r = res.rangeAt(1)
+            let start = self.index(self.startIndex, offsetBy: r.location)
+            let end = self.index(self.startIndex, offsetBy: r.location + r.length)
+            matches.append(String(self[start..<end]))
+        }
+        return matches
+    }
+    
+    func removingRegexMatches(pattern: String, replaceWith: String = "") -> String {
+        let regex = try! NSRegularExpression(pattern: pattern)
+        let range = NSMakeRange(0, self.count)
+        return regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: replaceWith)
+    }
+}

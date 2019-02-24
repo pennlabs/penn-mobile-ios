@@ -22,6 +22,7 @@ class HomeViewController: GenericViewController {
     var lastRefresh: Date = Date()
     
     var loadingView: UIActivityIndicatorView!
+    var barButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,7 @@ class HomeViewController: GenericViewController {
         prepareLoadingView()
         prepareTableView()
         prepareRefreshControl()
+        prepareBarButton()
         
         registerForNotifications()
     }
@@ -255,6 +257,21 @@ extension HomeViewController {
         self.refreshTableView {
             self.tableView.refreshControl?.endRefreshing()
         }
+    }
+}
+
+// MARK: - Bar Button
+extension HomeViewController {
+    fileprivate func prepareBarButton() {
+        barButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
+        barButton.tintColor = UIColor.navigationBlue
+        tabBarController?.navigationItem.rightBarButtonItem = barButton
+    }
+    
+    @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
+        let lwc = LoginWebviewController()
+        let nvc = UINavigationController(rootViewController: lwc)
+        present(nvc, animated: true, completion: nil)
     }
 }
 

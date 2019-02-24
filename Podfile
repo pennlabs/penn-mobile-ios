@@ -18,6 +18,7 @@ pod 'Kingfisher', '~> 4.0'
 pod 'TimelineTableViewCell'
 pod 'Fabric', '~> 1.9.0'
 pod 'Crashlytics', '~> 3.12.0'
+pod 'SwiftSoup'
 
   target 'PennMobileTests' do
     inherit! :search_paths
