@@ -63,7 +63,7 @@ class ContactCell: UITableViewCell {
         detailTextLabel?.frame = CGRect(x: 64, y: detailTextLabel!.frame.origin.y, width: contentView.bounds.width - 64 - 20, height: detailTextLabel!.frame.height)
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
         self.detailTextLabel?.numberOfLines = 5
@@ -81,7 +81,7 @@ class ContactCell: UITableViewCell {
         phoneButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
-    internal func handleCall(_ sender: UIButton) {
+    @objc internal func handleCall(_ sender: UIButton) {
         if let phoneNumber = contact.phoneFiltered {
             delegate?.call(number: phoneNumber)
         }

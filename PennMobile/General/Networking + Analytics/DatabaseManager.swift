@@ -41,7 +41,7 @@ enum DBError: String, LocalizedError {
         self.batchRequests.append(request)
     }
     
-    func sendCurrentBatch() {
+    @objc func sendCurrentBatch() {
         if dryRun || batchRequests.isEmpty { return }
         
         do {

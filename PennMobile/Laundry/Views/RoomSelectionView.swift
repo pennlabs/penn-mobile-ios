@@ -77,7 +77,7 @@ extension RoomSelectionView {
     }
     
     fileprivate func setUpSearchBar() {
-        searchBar.searchBarStyle = UISearchBarStyle.prominent
+        searchBar.searchBarStyle = UISearchBar.Style.prominent
         searchBar.placeholder = "Search..."
         searchBar.sizeToFit()
         searchBar.isTranslucent = false

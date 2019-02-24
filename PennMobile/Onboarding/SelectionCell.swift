@@ -60,12 +60,12 @@ class SelectionCell: UICollectionViewCell, RoomSelectionViewDelegate {
         navigationBar.topItem?.titleView = label
     }
     
-    func handleCancel() {
+    @objc func handleCancel() {
         _ = selectionView.resignFirstResponder()
         delegate?.handleCancel()
     }
     
-    func handleSave() {
+    @objc func handleSave() {
         _ = selectionView.resignFirstResponder()
         delegate?.saveSelection(for: selectionView.chosenRooms)
     }

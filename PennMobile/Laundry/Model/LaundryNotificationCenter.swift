@@ -41,7 +41,7 @@ class LaundryNotificationCenter {
                 }
                 
                 // Deliver the notification when minutes expire.
-                content.sound = UNNotificationSound.default()
+                content.sound = UNNotificationSound.default
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(60 * minutes),
                                                                 repeats: false)
                 

@@ -82,7 +82,7 @@ extension FlingViewController: HairlineRemovable {
         view.addSubview(newsSwitcher)
     }
     
-    internal func switchTabMode(_ segment: UISegmentedControl) {
+    @objc internal func switchTabMode(_ segment: UISegmentedControl) {
         let shouldShowPerformers = segment.selectedSegmentIndex == 0
         performersTableView.isHidden = !shouldShowPerformers
         scheduleTableView.isHidden = shouldShowPerformers
