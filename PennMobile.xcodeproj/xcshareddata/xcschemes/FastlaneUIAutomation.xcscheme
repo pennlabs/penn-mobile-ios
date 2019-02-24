@@ -39,15 +39,6 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2166405F1EBADADA00746B8E"
-            BuildableName = "PennMobile.app"
-            BlueprintName = "PennMobile"
-            ReferencedContainer = "container:PennMobile.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -61,6 +52,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B6B1E07D214440EF00CCBBCD"
+            BuildableName = "FastlaneUIAutomation.xctest"
+            BlueprintName = "FastlaneUIAutomation"
+            ReferencedContainer = "container:PennMobile.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

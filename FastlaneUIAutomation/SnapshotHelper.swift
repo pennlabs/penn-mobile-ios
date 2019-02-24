@@ -114,14 +114,10 @@ open class Snapshot: NSObject {
         } catch {
             print("Couldn't detect/set locale...")
         }
-        
         if locale.isEmpty {
             locale = Locale(identifier: deviceLanguage).identifier
         }
-        
-        if !locale.isEmpty {
-            app.launchArguments += ["-AppleLocale", "\"\(locale)\""]
-        }
+        app.launchArguments += ["-AppleLocale", "\"\(locale)\""]
     }
 
     class func setLaunchArguments(_ app: XCUIApplication) {
@@ -277,4 +273,4 @@ private extension CGFloat {
 
 // Please don't remove the lines below
 // They are used to detect outdated configuration files
-// SnapshotHelperVersion [1.13]
+// SnapshotHelperVersion [1.12]

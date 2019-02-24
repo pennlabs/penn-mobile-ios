@@ -7,27 +7,21 @@ target 'PennMobile' do
 
   # Pods for PennMobile
 
-  pod 'MBProgressHUD', '~> 0.8'
-  pod 'SwiftyJSON'
-  pod 'ScrollableGraphView'
-  pod 'Firebase', '~> 4.7'
-  pod 'SCLAlertView'
-  pod 'ESTabBarController-swift'
-  pod 'SimpleImageViewer', '~> 1.1.1'
-  pod 'Kingfisher', '~> 4.0'
-  pod 'TimelineTableViewCell'
-  pod 'Fabric', '~> 1.9.0'
-  pod 'Crashlytics', '~> 3.12.0'
+pod 'MBProgressHUD', '~> 0.8'
+pod 'SwiftyJSON'
+pod 'ScrollableGraphView'
+pod 'Firebase', '~> 4.7'
+pod 'SCLAlertView'
+pod 'ESTabBarController-swift'
+pod 'SimpleImageViewer', '~> 1.1.1'
+pod 'Kingfisher', '~> 4.0'
+pod 'TimelineTableViewCell'
+pod 'Fabric', '~> 1.9.0'
+pod 'Crashlytics', '~> 3.12.0'
 
   target 'PennMobileTests' do
     inherit! :search_paths
     # Pods for testing
   end
-  
-  target 'AutomatedScreenshotUITests' do
-      inherit! :search_paths
-      # Pods for testing
-      pod 'SimulatorStatusMagic'
-  end
-  
+
 end
