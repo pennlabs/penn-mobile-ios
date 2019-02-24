@@ -253,7 +253,7 @@ extension WhartonGSRNetworkManager {
                 times.append(time)
             }
             
-            let room = GSRRoom(name: name, roomId: id, gid: 9999, imageUrl: nil, capacity: 5, timeSlots: times)
+            let room = GSRRoom(name: name, roomId: id, gid: 1, imageUrl: nil, capacity: 5, timeSlots: times)
             rooms.append(room)
         }
         return rooms

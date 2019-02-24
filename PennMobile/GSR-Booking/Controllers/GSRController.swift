@@ -18,11 +18,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var emptyView: EmptyView!
     fileprivate var barButton: UIBarButtonItem!
     fileprivate var bookingsBarButton: UIBarButtonItem!
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> cfcc22e3b383ae79f4f07c19fd81f39537d2f2a9
     var currentDay = Date()
 
     var barButtonTitle: String {
@@ -43,9 +39,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefaults.standard.set(sessionID: "dpa7trlicczhjsf1s0bragq4l7ylxjnk")
-        
-        UserDefaults.standard.set(sessionID: "dpa7trlicczhjsf1s0bragq4l7ylxjnk")
-        
+                
         prepareViewModel()
         prepareUI()
     }
@@ -73,17 +67,10 @@ class GSRController: GenericViewController, IndicatorEnabled {
         self.tabBarController?.title = "Study Room Booking"
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
         barButton.tintColor = UIColor.navigationBlue
-<<<<<<< HEAD
 
         bookingsBarButton = UIBarButtonItem(title: "Bookings", style: .done, target: self, action: #selector(handleBookingsBarButtonPressed(_:)))
         bookingsBarButton.tintColor = UIColor.navigationBlue
-
-=======
         
-        bookingsBarButton = UIBarButtonItem(title: "Bookings", style: .done, target: self, action: #selector(handleBookingsBarButtonPressed(_:)))
-        bookingsBarButton.tintColor = UIColor.navigationBlue
-        
->>>>>>> cfcc22e3b383ae79f4f07c19fd81f39537d2f2a9
         tabBarController?.navigationItem.leftBarButtonItem = bookingsBarButton
         tabBarController?.navigationItem.rightBarButtonItem = barButton
     }
@@ -235,20 +222,12 @@ extension GSRController: GSRBookable {
             break
         }
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> cfcc22e3b383ae79f4f07c19fd81f39537d2f2a9
     @objc fileprivate func handleBookingsBarButtonPressed(_ sender: Any) {
         let grc = GSRReservationsController()
         navigationVC?.pushViewController(grc, animated: true)
     }
-<<<<<<< HEAD
-
-=======
     
->>>>>>> cfcc22e3b383ae79f4f07c19fd81f39537d2f2a9
     private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {
         let wv = GSRWebviewLoginController()
         wv.completion = completion
