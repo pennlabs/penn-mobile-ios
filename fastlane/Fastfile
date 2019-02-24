@@ -11,25 +11,14 @@
 #
 
 # Uncomment the line if you want fastlane to automatically update itself
-update_fastlane
+# update_fastlane
 
 default_platform(:ios)
 
 platform :ios do
-  desc "Generate app screenshots"
+  desc "Generate new localized screenshots"
   lane :screenshots do
-    capture_screenshots(workspace: "PennMobile.xcworkspace", scheme: "AutomatedScreenshotUITests")
-  end
-
-  desc "Frame all screenshots"
-  lane :frame do
+    capture_screenshots(workspace: "PennMobile.xcworkspace", scheme: "FastlaneUIAutomation")
     frameit(white: true, path: './fastlane/screenshots')
   end
-
-  desc "Capture and frame new screenshots"
-  lane :capture_and_frame do
-    capture_screenshots(workspace: "PennMobile.xcworkspace", scheme: "AutomatedScreenshotUITests")
-    frameit(white: true, path: './fastlane/screenshots')
-  end
-
 end

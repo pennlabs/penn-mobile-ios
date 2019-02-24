@@ -13,12 +13,6 @@
     },
     "data": [
         {
-            "filter": "Home",
-            "keyword": {
-                "color": "#12274b"
-            }
-        },
-        {
             "filter": "Dining",
             "keyword": {
                 "color": "#12274b"
@@ -32,6 +26,12 @@
         },
         {
             "filter": "Laundry",
+            "keyword": {
+                "color": "#12274b"
+            }
+        },
+        {
+            "filter": "Fitness",
             "keyword": {
                 "color": "#12274b"
             }
