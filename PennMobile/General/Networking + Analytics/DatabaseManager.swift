@@ -44,14 +44,10 @@ enum DBError: String, LocalizedError {
     @objc func sendCurrentBatch() {
         if dryRun || batchRequests.isEmpty { return }
         
-        do {
-            let url = DatabaseManager.dbURL + "/batch"
-            try request(method: .post, url: url, params: batchRequests.encode())
-            batchRequests.removeAll() //only runs if error not thrown
-            batchTimer?.invalidate()
-        } catch {
-            print("Caught: \(error)")
-        }
+        let url = DatabaseManager.dbURL + "/batch"
+        request(method: .post, url: url, params: batchRequests.encode())
+        batchRequests.removeAll() //only runs if error not thrown
+        batchTimer?.invalidate()
     }
 }
 
