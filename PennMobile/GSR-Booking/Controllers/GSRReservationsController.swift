@@ -17,7 +17,7 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         super.viewDidLoad()
 
         title = "Your Bookings"
-
+        
         tableView.delegate = self
         tableView.register(ReservationCell.self, forCellReuseIdentifier: ReservationCell.identifier)
         tableView.register(NoReservationsCell.self, forCellReuseIdentifier: NoReservationsCell.identifier)

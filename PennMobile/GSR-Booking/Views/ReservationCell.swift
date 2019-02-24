@@ -20,9 +20,7 @@ class ReservationCell: UITableViewCell {
     
     var reservation: GSRReservation! {
         didSet {
-            var roomNameArray = reservation.roomName.split(separator: ":")
-            let roomName = String(roomNameArray[0])
-            locationLabel.text = roomName
+            locationLabel.text = String(reservation.roomName.split(separator: ":").first ?? "")
             
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM d, YYYY"
@@ -33,9 +31,8 @@ class ReservationCell: UITableViewCell {
             let endStr = formatter.string(from: reservation.endDate)
             timeLabel.text = "\(startStr) - \(endStr)"
             
-            buildingImage.image = UIImage(named: String(reservation.gid) + String(reservation.lid))
-            
-            //buildingImage.image = UIImage(named: "Huntsman")
+            let imageName = "lid-\(reservation.lid)-gid-\(reservation.gid)"
+            buildingImage.image = UIImage(named: imageName)
         }
     }
     
