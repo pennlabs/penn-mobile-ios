@@ -193,6 +193,29 @@ extension StudentNetworkManager {
 extension StudentNetworkManager {
     fileprivate func parseStudent(from html: String) throws -> Student {
         // TODO: complete parsing
-        return Student(firstName: "Joshua", lastName: "Doman", pennkey: "joshdo")
+        let namePattern = "white-space:nowrap; overflow:hidden; width: .*>\\s*(.*?)\\s*<\\/div>"
+        let fullName: String! = html.getMatches(for: namePattern).first
+        
+        let photoPattern = "alt=\"User photo\" src=\"(.*?)\""
+        let encodedPhotoUrl = html.getMatches(for: photoPattern).first
+        let photoUrl: String! = encodedPhotoUrl?.replacingOccurrences(of: "&amp;", with: "&")
+        
+        guard fullName != nil && photoUrl != nil  else {
+            throw NetworkingError.parsingError
+        }
+        
+        let substrings = fullName.split(separator: " ")
+        let firstName: String
+        var lastName: String
+        if substrings.count < 2 {
+            firstName = fullName
+            lastName = fullName
+        } else {
+            firstName = String(substrings[1])
+            lastName = String(substrings[0])
+            lastName.removeLast()
+        }
+        
+        return Student(firstName: firstName, lastName: lastName, photoUrl: photoUrl, pennkey: "joshdo")
     }
 }

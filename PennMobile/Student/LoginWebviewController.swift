@@ -48,11 +48,13 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
         
         let hasReferer = request.allHTTPHeaderFields?["Referer"] != nil
         if url.absoluteString == urlStr, hasReferer {
+            let pennkey = request.httpBody
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
             cookieStore.getAllCookies { (cookies) in
                 StudentNetworkManager.instance.getStudent(request: request, cookies: cookies, callback: { student in
                     DispatchQueue.main.async {
                         if let student = student {
+                            print(student.firstName, student.lastName, student.photoUrl)
                             student.courses?.forEach { print($0.description) }
                         }
                         self.dismiss(animated: true, completion: nil)
