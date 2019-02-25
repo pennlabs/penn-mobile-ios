@@ -14,7 +14,7 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
     var webView: WKWebView!
     var completion: (() -> Void)?
     
-    private let urlStr = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobile"
+    private let urlStr = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
@@ -50,9 +50,11 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
         if url.absoluteString == urlStr, hasReferer {
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
             cookieStore.getAllCookies { (cookies) in
-                CourseNetworkManager.instance.getCourses(request: request, cookies: cookies, callback: { courses in
+                StudentNetworkManager.instance.getStudent(request: request, cookies: cookies, callback: { student in
                     DispatchQueue.main.async {
-                        courses?.forEach { print($0.description) }
+                        if let student = student {
+                            student.courses?.forEach { print($0.description) }
+                        }
                         self.dismiss(animated: true, completion: nil)
                         decisionHandler(.cancel)
                     }

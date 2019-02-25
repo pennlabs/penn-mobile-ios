@@ -9,13 +9,76 @@
 import Foundation
 import SwiftSoup
 
-class CourseNetworkManager: NSObject {
+class StudentNetworkManager: NSObject {
     
-    static let instance = CourseNetworkManager()
+    static let instance = StudentNetworkManager()
     
-    private let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
-    private let courseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileSchedule"
-    
+    fileprivate let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
+    fileprivate let degreeURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileAdvisors"
+    fileprivate let courseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileSchedule"
+}
+
+// MARK: - Student
+extension StudentNetworkManager {
+    func getStudent(request: URLRequest, cookies: [HTTPCookie], callback: @escaping ((_ student: Student?) -> Void)) {
+        var mutableRequest: URLRequest = request
+        let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
+        mutableRequest.addValue(cookieStr, forHTTPHeaderField: "Cookie")
+        
+        let task = URLSession.shared.dataTask(with: mutableRequest, completionHandler: { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    // Set correct long-term cookie
+                    let setCookieStr = httpResponse.allHeaderFields["Set-Cookie"] as? String
+                    guard let sessionID: String = setCookieStr?.getMatches(for: "=(.*?);").first else {
+                        callback(nil)
+                        return
+                    }
+                    let newCookieStr = cookieStr.removingRegexMatches(pattern: "JSESSIONID=(.*?);", replaceWith: "JSESSIONID=\(sessionID);")
+                    mutableRequest.url = URL(string: self.courseURL)
+                    
+                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
+                        if let student = try? self.parseStudent(from: html) {
+                            self.getCoursesHelper(cookieStr: newCookieStr, callback: { (courses) in
+                                student.courses = courses
+                                callback(student)
+                            })
+                            return
+                        }
+                    }
+                }
+            }
+            callback(nil)
+        })
+        task.resume()
+    }
+}
+
+// MARK: - Degrees
+extension StudentNetworkManager {
+    func getDegrees(cookieStr: String, callback: @escaping ((_ degrees: Set<Degree>?) -> Void)) {
+        let url = URL(string: degreeURL)!
+        var request = URLRequest(url: url)
+        request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
+        
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
+                        let degrees = try? self.parseDegrees(from: html)
+                        callback(degrees)
+                        return
+                    }
+                }
+            }
+            callback(nil)
+        })
+        task.resume()
+    }
+}
+
+// MARK: - Courses
+extension StudentNetworkManager {
     func getCourses(request: URLRequest, cookies: [HTTPCookie], callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         var mutableRequest: URLRequest = request
         let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
@@ -28,7 +91,7 @@ class CourseNetworkManager: NSObject {
                     let sessionID: String = setCookieStr?.getMatches(for: "=(.*?);").first ?? ""
                     let newCookieStr = cookieStr.removingRegexMatches(pattern: "JSESSIONID=(.*?);", replaceWith: "JSESSIONID=\(sessionID);")
                     mutableRequest.url = URL(string: self.courseURL)
-                    self.getCourses(cookieStr: newCookieStr, callback: callback)
+                    self.getCoursesHelper(cookieStr: newCookieStr, callback: callback)
                     return
                 }
             }
@@ -37,7 +100,7 @@ class CourseNetworkManager: NSObject {
         task.resume()
     }
     
-    fileprivate func getCourses(cookieStr: String, terms: [String]? = nil, courses: Set<Course>? = nil, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+    fileprivate func getCoursesHelper(cookieStr: String, terms: [String]? = nil, courses: Set<Course>? = nil, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         if terms != nil && terms!.isEmpty {
             callback(courses)
             return
@@ -76,7 +139,7 @@ class CourseNetworkManager: NSObject {
                             }
                             
                             newTerms = Array(newTerms?.dropFirst() ?? [])
-                            self.getCourses(cookieStr: cookieStr, terms: newTerms, courses: newCourses, callback: callback)
+                            self.getCoursesHelper(cookieStr: cookieStr, terms: newTerms, courses: newCourses, callback: callback)
                             return
                         } catch {
                         }
@@ -90,7 +153,7 @@ class CourseNetworkManager: NSObject {
 }
 
 // MARK: - Course Parsing
-extension CourseNetworkManager {
+extension StudentNetworkManager {
     fileprivate func parseCourses(from html: String, term: String) throws -> Set<Course> {
         let doc: Document = try SwiftSoup.parse(html)
         let element: Element = try doc.select("li").filter { $0.id() == "fullClassesDiv" }.first!
@@ -115,5 +178,21 @@ extension CourseNetworkManager {
         let doc: Document = try SwiftSoup.parse(html)
         let terms: [String] = try doc.select("option").map { try $0.val() }
         return terms
+    }
+}
+
+// MARK: - Degree Parsing
+extension StudentNetworkManager {
+    fileprivate func parseDegrees(from html: String) throws -> Set<Degree> {
+        // TODO: complete parsing
+        return Set<Degree>()
+    }
+}
+
+// MARK: - Basic Student Profile Parsing
+extension StudentNetworkManager {
+    fileprivate func parseStudent(from html: String) throws -> Student {
+        // TODO: complete parsing
+        return Student(firstName: "Joshua", lastName: "Doman", pennkey: "joshdo")
     }
 }
