@@ -14,7 +14,11 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
     var webView: WKWebView!
     var completion: (() -> Void)?
     
+    private let loginURL = "https://weblogin.pennkey.upenn.edu/login"
     private let urlStr = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
+    
+    private var pennkey: String!
+    private var password: String!
     
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
@@ -46,16 +50,20 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
             return
         }
         
+        if url.absoluteString == loginURL {
+            if let data = request.httpBody, let str = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
+                print(str)
+            }
+        }
+        
         let hasReferer = request.allHTTPHeaderFields?["Referer"] != nil
         if url.absoluteString == urlStr, hasReferer {
-            let pennkey = request.httpBody
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
             cookieStore.getAllCookies { (cookies) in
                 StudentNetworkManager.instance.getStudent(request: request, cookies: cookies, callback: { student in
                     DispatchQueue.main.async {
                         if let student = student {
-                            print(student.firstName, student.lastName, student.photoUrl)
-                            student.courses?.forEach { print($0.description) }
+                            student.degrees?.forEach { print($0.description) }
                         }
                         self.dismiss(animated: true, completion: nil)
                         decisionHandler(.cancel)

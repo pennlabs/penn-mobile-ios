@@ -39,9 +39,12 @@ extension StudentNetworkManager {
                     
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
                         if let student = try? self.parseStudent(from: html) {
-                            self.getCoursesHelper(cookieStr: newCookieStr, callback: { (courses) in
+                            self.getCourses(cookieStr: newCookieStr, callback: { (courses) in
                                 student.courses = courses
-                                callback(student)
+                                self.getDegrees(cookieStr: newCookieStr, callback: { (degrees) in
+                                    student.degrees = degrees
+                                    callback(student)
+                                })
                             })
                             return
                         }
@@ -79,20 +82,34 @@ extension StudentNetworkManager {
 
 // MARK: - Courses
 extension StudentNetworkManager {
-    func getCourses(request: URLRequest, cookies: [HTTPCookie], callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
-        var mutableRequest: URLRequest = request
-        let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
-        mutableRequest.addValue(cookieStr, forHTTPHeaderField: "Cookie")
+    fileprivate func getCourses(cookieStr: String, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+        let url = URL(string: courseURL)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
         
-        let task = URLSession.shared.dataTask(with: mutableRequest, completionHandler: { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
-                    let setCookieStr = httpResponse.allHeaderFields["Set-Cookie"] as? String
-                    let sessionID: String = setCookieStr?.getMatches(for: "=(.*?);").first ?? ""
-                    let newCookieStr = cookieStr.removingRegexMatches(pattern: "JSESSIONID=(.*?);", replaceWith: "JSESSIONID=\(sessionID);")
-                    mutableRequest.url = URL(string: self.courseURL)
-                    self.getCoursesHelper(cookieStr: newCookieStr, callback: callback)
-                    return
+                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
+                        do {
+                            let terms = try self.parseTerms(from: html)
+                            
+                            if let currentTerm = terms.first {
+                                var courses = try self.parseCourses(from: html, term: currentTerm)
+                                let remainingTerms = Array(terms.dropFirst())
+                                self.getCoursesFast(cookieStr: cookieStr, terms: remainingTerms, callback: { (remainingCourses) in
+                                    courses.formUnion(remainingCourses)
+                                    callback(courses)
+                                })
+                            } else {
+                                let emptySet = Set<Course>()
+                                callback(emptySet)
+                            }
+                            return
+                        } catch {
+                        }
+                    }
                 }
             }
             callback(nil)
@@ -100,49 +117,46 @@ extension StudentNetworkManager {
         task.resume()
     }
     
-    fileprivate func getCoursesHelper(cookieStr: String, terms: [String]? = nil, courses: Set<Course>? = nil, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
-        if terms != nil && terms!.isEmpty {
-            callback(courses)
-            return
+    fileprivate func getCoursesFast(cookieStr: String, terms: [String], callback: @escaping ((_ courses: Set<Course>) -> Void)) {
+        let dispatchGroup = DispatchGroup()
+        var courses = Set<Course>()
+        
+        for term in terms {
+            dispatchGroup.enter()   // <<---
+            self.getCoursesFastHelper(cookieStr: cookieStr, term: term) { (subCourses) in
+                DispatchQueue.main.async {
+                    if let subCourses = subCourses {
+                        courses.formUnion(subCourses)
+                    }
+                    dispatchGroup.leave()
+                }
+            }
         }
         
-        let url = URL(string: terms == nil ? courseURL: baseURL)!
+        dispatchGroup.notify(queue: .main) {
+            callback(courses)
+        }
+    }
+    
+    fileprivate func getCoursesFastHelper(cookieStr: String, term: String, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+        let url = URL(string: baseURL)!
         var request = URLRequest(url: url)
-        request.httpMethod = terms == nil ? "GET" : "POST"
+        request.httpMethod = "POST"
         request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
         
-        if let terms = terms {
-            let params = [
-                "fastStart": "mobileChangeStudentScheduleTermData",
-                "term": terms[0],
-                ]
-            request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
-        }
+        let params = [
+            "fastStart": "mobileChangeStudentScheduleTermData",
+            "term": term,
+            ]
+        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                        do {
-                            var newTerms = terms
-                            if terms == nil {
-                                newTerms = try self.parseTerms(from: html)
-                            }
-                            
-                            var newCourses: Set<Course>? = nil
-                            if let currentTerm = newTerms?.first {
-                                newCourses = try self.parseCourses(from: html, term: currentTerm)
-                            }
-                            
-                            if let oldCourses = courses {
-                                newCourses?.formUnion(oldCourses)
-                            }
-                            
-                            newTerms = Array(newTerms?.dropFirst() ?? [])
-                            self.getCoursesHelper(cookieStr: cookieStr, terms: newTerms, courses: newCourses, callback: callback)
-                            return
-                        } catch {
-                        }
+                        let courses: Set<Course>? = try? self.parseCourses(from: html, term: term)
+                        callback(courses)
+                        return
                     }
                 }
             }
@@ -184,8 +198,41 @@ extension StudentNetworkManager {
 // MARK: - Degree Parsing
 extension StudentNetworkManager {
     fileprivate func parseDegrees(from html: String) throws -> Set<Degree> {
-        // TODO: complete parsing
-        return Set<Degree>()
+        let doc: Document = try SwiftSoup.parse(html)
+        guard let element: Element = try doc.getElementsByClass("data").first() else {
+            throw NetworkingError.parsingError
+        }
+        let subElements = try element.select("li")
+        var degrees = Set<Degree>()
+        for element in subElements {
+            let text = try element.text()
+            guard let divisionStr = text.getMatches(for: "Division: (.*?)\\) ").first,
+                let degreeStr = text.getMatches(for: "Degree: (.*?)\\)").first,
+                let expectedGradTerm = text.getMatches(for: "Expected graduation term: (.*?\\d) ").first else {
+                    throw NetworkingError.parsingError
+            }
+            let majorStr = text.getMatches(for: "\\d\\. (.*?)\\)")
+            var majors = Set<Major>()
+            for str in majorStr {
+                let nameCode = try splitNameCode(str: str)
+                majors.insert(Major(name: nameCode.name, code: nameCode.code))
+            }
+            let divisionNameCode = try splitNameCode(str: divisionStr)
+            let degreeNameCode = try splitNameCode(str: degreeStr)
+            let degree = Degree(divisionName: divisionNameCode.name, divisionCode: divisionNameCode.code, degreeName: degreeNameCode.name, degreeCode: degreeNameCode.code, majors: majors, expectedGradTerm: expectedGradTerm)
+            degrees.insert(degree)
+        }
+        return degrees
+    }
+    
+    private func splitNameCode(str: String) throws -> (name: String, code: String) {
+        let split = str.split(separator: "(")
+        if split.count != 2 {
+            throw NetworkingError.parsingError
+        }
+        let name = String(split[0].dropLast())
+        let code = String(split[1])
+        return (name, code)
     }
 }
 
@@ -216,6 +263,6 @@ extension StudentNetworkManager {
             lastName.removeLast()
         }
         
-        return Student(firstName: firstName, lastName: lastName, photoUrl: photoUrl, pennkey: "joshdo")
+        return Student(firstName: firstName, lastName: lastName, photoUrl: photoUrl)
     }
 }
