@@ -38,31 +38,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDBManager.shared.testRun = true
         
         FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
-      
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = RootViewController()
-        self.window?.makeKeyAndVisible()
+        FirebaseApp.configure()
+        
+        ControllerModel.shared.prepare()
+        LaundryNotificationCenter.shared.prepare()
+        GSRLocationModel.shared.prepare()
+        LaundryAPIService.instance.prepare {
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = RootViewController()
+            self.window?.makeKeyAndVisible()
+        }
         
         return true
     }
-    
-    //    func handleOnboarding(animated: Bool) {
-    //        let vc = UIViewController()
-    //        vc.view.backgroundColor = .white
-    //        navController = UINavigationController(rootViewController: vc)
-    //        navController.isNavigationBarHidden = true
-    //
-    //        window = UIWindow(frame: UIScreen.main.bounds)
-    //        window?.rootViewController = navController
-    //        window?.makeKeyAndVisible()
-    //
-    //        let tempVC = UIViewController()
-    //        tempVC.view.backgroundColor = UIColor.red
-    //        navController.modalTransitionStyle = .crossDissolve
-    //        let oc = OnboardingController()
-    //        oc.delegate = self
-    //        self.navController.present(oc, animated: animated, completion: nil)
-    //    }
     
     //Special thanks to Ray Wenderlich
     func registerForPushNotifications() {

@@ -15,15 +15,7 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
-        FirebaseApp.configure()
-        ControllerModel.shared.prepare()
-        LaundryNotificationCenter.shared.prepare()
-        GSRLocationModel.shared.prepare()
-        LaundryAPIService.instance.prepare {
-            DispatchQueue.main.async {
-                self.switchToView()
-            }
-        }
+        switchToView()
     }
     
     private func switchToView() {
