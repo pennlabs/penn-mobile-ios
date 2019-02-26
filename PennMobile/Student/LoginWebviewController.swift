@@ -12,7 +12,8 @@ import WebKit
 class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     var webView: WKWebView!
-    var completion: ((_ student: Student?) -> Void)!
+    var loginCompletion: ((_ student: Student?) -> Void)!
+    var coursesRetrieved: ((_ course: Set<Course>?) -> Void)!
     
     private let loginURL = "https://weblogin.pennkey.upenn.edu/login"
     private let urlStr = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
@@ -89,25 +90,24 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
                                 StudentNetworkManager.instance.getPennKey(cookies: cookies, callback: { pennkey in
                                     DispatchQueue.main.async {
                                         student.pennkey = pennkey
-                                        self.completion(student)
+                                        self.loginCompletion(student)
                                         self.dismiss(animated: true, completion: nil)
                                         decisionHandler(.cancel)
                                     }
                                 })
                             } else {
-                                self.completion(student)
+                                self.loginCompletion(student)
                                 self.dismiss(animated: true, completion: nil)
                                 decisionHandler(.cancel)
                             }
                         } else {
-                            self.completion(nil)
+                            self.loginCompletion(nil)
                             self.dismiss(animated: true, completion: nil)
                             decisionHandler(.cancel)
                         }
                     }
                 }, allCoursesCallback: { courses in
-                    print("All Courses Callback")
-                    courses?.forEach { print($0.description) }
+                    self.coursesRetrieved(courses)
                 })
             }
         } else {

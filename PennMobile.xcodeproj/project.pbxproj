@@ -97,12 +97,15 @@
 		219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01F51FB7E14A006BBC4E /* SelectionCell.swift */; };
 		219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */; };
 		219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */; };
+		21B556172224FDC500D80F61 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B556162224FDC500D80F61 /* RootViewController.swift */; };
+		21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B556182224FDF700D80F61 /* SplashViewController.swift */; };
 		21B8BBB02223187D00EBC1D0 /* LoginWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */; };
 		21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB1222318A600EBC1D0 /* Course.swift */; };
 		21B8BBB4222318BE00EBC1D0 /* StudentNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */; };
 		21B8BBB622231F9F00EBC1D0 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB522231F9F00EBC1D0 /* Student.swift */; };
 		21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB72223963C00EBC1D0 /* Degree.swift */; };
 		21B8BBBA2224798C00EBC1D0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB92224798B00EBC1D0 /* Building.swift */; };
+		21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */; };
 		21E1C6FD20256DC6003248EC /* DiningDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E1C6FC20256DC6003248EC /* DiningDetailModel.swift */; };
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D31203D39FF0029A460 /* DiningVenueName.swift */; };
@@ -300,12 +303,15 @@
 		219F01F51FB7E14A006BBC4E /* SelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCell.swift; sourceTree = "<group>"; };
 		219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionView.swift; sourceTree = "<group>"; };
 		219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryNotificationCenter.swift; sourceTree = "<group>"; };
+		21B556162224FDC500D80F61 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		21B556182224FDF700D80F61 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWebviewController.swift; sourceTree = "<group>"; };
 		21B8BBB1222318A600EBC1D0 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentNetworkManager.swift; sourceTree = "<group>"; };
 		21B8BBB522231F9F00EBC1D0 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		21B8BBB72223963C00EBC1D0 /* Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Degree.swift; sourceTree = "<group>"; };
 		21B8BBB92224798B00EBC1D0 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
+		21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		21E1C6FC20256DC6003248EC /* DiningDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailModel.swift; sourceTree = "<group>"; };
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21EB4D31203D39FF0029A460 /* DiningVenueName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueName.swift; sourceTree = "<group>"; };
@@ -515,6 +521,7 @@
 		216640621EBADADA00746B8E /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
+				21B8BBBB2224F98B00EBC1D0 /* Login */,
 				CF1CE9B8205D5BF100C51F46 /* More Tab */,
 				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
 				216640F91EBB898700746B8E /* About */,
@@ -566,6 +573,8 @@
 				B6665A172071E63800F49A9C /* TabBarController.swift */,
 				216640631EBADADA00746B8E /* AppDelegate.swift */,
 				EF389EC521861B8500E29C6A /* HomeNavigationController.swift */,
+				21B556162224FDC500D80F61 /* RootViewController.swift */,
+				21B556182224FDF700D80F61 /* SplashViewController.swift */,
 				21640D6120114A28002F33CA /* ControllerModel.swift */,
 			);
 			path = "Setup + Navigation";
@@ -827,6 +836,14 @@
 				21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */,
 			);
 			path = Student;
+			sourceTree = "<group>";
+		};
+		21B8BBBB2224F98B00EBC1D0 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		21ECADA21F30146B00569883 /* Networking + Analytics */ = {
@@ -1540,11 +1557,14 @@
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */,
 				21EF283B21F52031001B05B7 /* WhartonGSRNetworkManager.swift in Sources */,
+				21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
+				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				97E79E142100E1FA00D3D606 /* FitnessViewController.swift in Sources */,
+				21B556172224FDC500D80F61 /* RootViewController.swift in Sources */,
 				B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,

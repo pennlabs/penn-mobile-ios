@@ -19,6 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var tabBarController: TabBarController!
     
+    static var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    var rootViewController: RootViewController {
+        return window!.rootViewController as! RootViewController
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -42,10 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
              return true
              }*/
             
-            self.tabBarController = TabBarController()
-            
             self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = HomeNavigationController(rootViewController: self.tabBarController)
+            self.window?.rootViewController = RootViewController()
             self.window?.makeKeyAndVisible()
             
             // Keep track locally of app sessions (for app review prompting)
