@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SimpleImageViewer
+//import SimpleImageViewer
 import TimelineTableViewCell
 
 protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
@@ -274,12 +274,12 @@ extension FlingViewController {
     }
     
     @objc fileprivate func handleMapButtonPressed(_ sender: Any?) {
-        let configuration = ImageViewerConfiguration { config in
-            config.imageView = mapImageView
-        }
-        
-        let imageViewerController = ImageViewerController(configuration: configuration)
-        present(imageViewerController, animated: true)
+//        let configuration = ImageViewerConfiguration { config in
+//            config.imageView = mapImageView
+//        }
+//
+//        let imageViewerController = ImageViewerController(configuration: configuration)
+//        present(imageViewerController, animated: true)
     }
 }
 
