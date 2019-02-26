@@ -13,19 +13,34 @@ class Course: Hashable {
     let term: String
     let code: String
     let section: String
+    let building: Building?
+    let room: String?
+    let daysOfWeek: String
+    let startTime: String
+    let endTime: String
     let instructors: [String]
     
-    init(name: String, term: String, code: String, section: String, instructors: [String]) {
+    init(name: String, term: String, code: String, section: String, building: Building?, room: String?, daysOfWeek: String, startTime: String, endTime: String, instructors: [String]) {
         self.name = name
         self.term = term
         self.code = code
         self.section = section
         self.instructors = instructors
+        self.building = building
+        self.room = room
+        self.daysOfWeek = daysOfWeek
+        self.startTime = startTime
+        self.endTime = endTime
     }
     
     var description: String {
         let instructorStr = instructors.joined(separator: ", ")
-        return "\(term) \(code)-\(section) \(instructorStr)"
+        let str = "\(term) \(name) \(code)-\(section) \(instructorStr) \(daysOfWeek) \(startTime) \(endTime)"
+        if let building = building, let room = room {
+            return "\(str) \(building.code) \(room)"
+        } else {
+            return str
+        }
     }
     
     var hashValue: Int {

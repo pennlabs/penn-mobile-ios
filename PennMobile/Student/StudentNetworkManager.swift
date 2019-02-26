@@ -14,6 +14,7 @@ class StudentNetworkManager: NSObject {
     static let instance = StudentNetworkManager()
     
     fileprivate let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
+    fileprivate let reauthURL = "https://weblogin.pennkey.upenn.edu/login?factors=UPENN.EDU&cosign-pennkey-idp_reauth-0&https://idp.pennkey.upenn.edu/idp/Authn/ReauthRemoteUser?conversation=e1s1"
     fileprivate let degreeURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileAdvisors"
     fileprivate let courseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileSchedule"
 }
@@ -43,11 +44,41 @@ extension StudentNetworkManager {
                                 student.courses = courses
                                 self.getDegrees(cookieStr: newCookieStr, callback: { (degrees) in
                                     student.degrees = degrees
-                                    callback(student)
+                                    self.getPennKey(cookieStr: cookieStr, callback: { (pennkey) in
+                                        student.pennkey = pennkey
+                                        callback(student)
+                                    })
                                 })
                             })
                             return
                         }
+                    }
+                }
+            }
+            callback(nil)
+        })
+        task.resume()
+    }
+}
+
+// MARK: - PennKey
+/**
+ * Note: WKWebview does not allow you to view HTTPBody (form data containing pennkey + password),
+ *       so we must make a reauth request to get pennkey
+ **/
+extension StudentNetworkManager {
+    func getPennKey(cookieStr: String, callback: @escaping ((_ pennkey: String?) -> Void)) {
+        let url = URL(string: reauthURL)!
+        var request = URLRequest(url: url)
+        request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
+        
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
+                        let pennkey = html.getMatches(for: "name=\"login\" value=\"(.*?)\"").first
+                        callback(pennkey)
+                        return
                     }
                 }
             }
@@ -96,11 +127,10 @@ extension StudentNetworkManager {
                             let terms = try self.parseTerms(from: html)
                             
                             if let currentTerm = terms.first {
-                                var courses = try self.parseCourses(from: html, term: currentTerm)
+                                let courses = try self.parseCourses(from: html, term: currentTerm)
                                 let remainingTerms = Array(terms.dropFirst())
-                                self.getCoursesFast(cookieStr: cookieStr, terms: remainingTerms, callback: { (remainingCourses) in
-                                    courses.formUnion(remainingCourses)
-                                    callback(courses)
+                                self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: courses, callback: { (allCourses) in
+                                    callback(allCourses)
                                 })
                             } else {
                                 let emptySet = Set<Course>()
@@ -117,28 +147,15 @@ extension StudentNetworkManager {
         task.resume()
     }
     
-    fileprivate func getCoursesFast(cookieStr: String, terms: [String], callback: @escaping ((_ courses: Set<Course>) -> Void)) {
-        let dispatchGroup = DispatchGroup()
-        var courses = Set<Course>()
-        
-        for term in terms {
-            dispatchGroup.enter()   // <<---
-            self.getCoursesFastHelper(cookieStr: cookieStr, term: term) { (subCourses) in
-                DispatchQueue.main.async {
-                    if let subCourses = subCourses {
-                        courses.formUnion(subCourses)
-                    }
-                    dispatchGroup.leave()
-                }
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
+    fileprivate func getCoursesHelper(cookieStr: String, terms: [String], courses: Set<Course>, callback: @escaping ((_ courses: Set<Course>) -> Void)) {
+        if terms.isEmpty {
             callback(courses)
+            return
         }
-    }
-    
-    fileprivate func getCoursesFastHelper(cookieStr: String, term: String, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+
+        let term = terms.first!
+        let remainingTerms = Array(terms.dropFirst())
+        
         let url = URL(string: baseURL)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -154,15 +171,18 @@ extension StudentNetworkManager {
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                        let courses: Set<Course>? = try? self.parseCourses(from: html, term: term)
-                        callback(courses)
-                        return
+                        if let subCourses: Set<Course> = try? self.parseCourses(from: html, term: term) {
+                            let newCourses = courses.union(subCourses)
+                            self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: newCourses, callback: callback)
+                            return
+                        }
                     }
                 }
             }
-            callback(nil)
+            callback(courses)
         })
         task.resume()
+        
     }
 }
 
@@ -170,20 +190,55 @@ extension StudentNetworkManager {
 extension StudentNetworkManager {
     fileprivate func parseCourses(from html: String, term: String) throws -> Set<Course> {
         let doc: Document = try SwiftSoup.parse(html)
-        let element: Element = try doc.select("li").filter { $0.id() == "fullClassesDiv" }.first!
+        guard let element: Element = (try doc.select("li").filter { $0.id() == "fullClassesDiv" }).first else {
+            throw NetworkingError.parsingError
+        }
         var subHtml = try element.html()
         subHtml.append("<") // For edge case where instructor is at EOF
+        
+        let buildingCodes = subHtml.getMatches(for: "mobileSchedule\">(.*?) <")
+        let buildingIds = subHtml.getMatches(for: "BuildingId=(.*?)&amp;")
+        let rooms = subHtml.getMatches(for: "&nbsp; (.*?)&")
+        let daysOfWeekArr = subHtml.getMatches(for: "<\\/span><\\/a> <br>(.*?)&nbsp")
+        let startTimes = subHtml.getMatches(for: "<\\/span><\\/a> <br>.*?&nbsp;(.*?) <span class=\"ampm\">")
+        let endTimes = subHtml.getMatches(for: "<\\/span> - (.*?) <")
+        let AMPMs = subHtml.getMatches(for: "<span class=\"ampm\">(.*?)<")
+        
         let instructors: [String] = subHtml.getMatches(for: "Instructor\\(s\\): (.*?)\\s*<")
         let nameCodes: [String] = try element.select("b").map { try $0.text() }
+        
+        if buildingCodes.count != buildingIds.count && buildingIds.count != rooms.count
+            && rooms.count >= instructors.count && nameCodes.count >= 2*instructors.count {
+            throw NetworkingError.parsingError
+        }
+        
         var courses = [Course]()
         for i in 0..<instructors.count {
-            let courseInstructors = instructors[i].split(separator: ",").map { String($0) }
+            var building: Building? = nil
+            var room: String? = nil
+            if i <= buildingCodes.count - 1 && i <= buildingIds.count - 1 && i <= rooms.count - 1 {
+                if let buildingId = Int(buildingIds[i]) {
+                    building = Building(code: buildingCodes[i], id: buildingId)
+                    room = rooms[i]
+                }
+            }
+            
+            var daysOfWeek: String = ""
+            var startTime: String = ""
+            var endTime: String = ""
+            if i <= daysOfWeekArr.count - 1 && i <= startTimes.count - 1 && i <= endTimes.count - 1 && 2*i <= AMPMs.count - 1 {
+                daysOfWeek = daysOfWeekArr[i]
+                startTime = "\(startTimes[i]) \(AMPMs[2*i])"
+                endTime = "\(endTimes[i]) \(AMPMs[2*i+1])"
+            }
+            
+            let courseInstructors = instructors[i].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
             let name = nameCodes[2*i]
             let fullCode = nameCodes[2*i+1].replacingOccurrences(of: " ", with: "")
             let codePieces = fullCode.split(separator: "-")
             let courseCode = "\(codePieces[0])-\(codePieces[1])"
             let section = String(codePieces[2])
-            courses.append(Course(name: name, term: term, code: courseCode, section: section, instructors: courseInstructors))
+            courses.append(Course(name: name, term: term, code: courseCode, section: section, building: building, room: room, daysOfWeek: daysOfWeek, startTime: startTime, endTime: endTime, instructors: courseInstructors))
         }
         return Set(courses)
     }

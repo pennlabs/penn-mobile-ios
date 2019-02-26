@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDBManager.shared.dryRun = true
         UserDBManager.shared.testRun = true
         
+        FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
         FirebaseApp.configure()
       
         LaundryAPIService.instance.prepare {

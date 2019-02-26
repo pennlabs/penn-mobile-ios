@@ -50,12 +50,6 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
             return
         }
         
-        if url.absoluteString == loginURL {
-            if let data = request.httpBody, let str = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                print(str)
-            }
-        }
-        
         let hasReferer = request.allHTTPHeaderFields?["Referer"] != nil
         if url.absoluteString == urlStr, hasReferer {
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
@@ -64,6 +58,8 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
                     DispatchQueue.main.async {
                         if let student = student {
                             student.degrees?.forEach { print($0.description) }
+                            student.courses?.forEach { print($0.description) }
+                            print(student.getPotentialEmail())
                         }
                         self.dismiss(animated: true, completion: nil)
                         decisionHandler(.cancel)
