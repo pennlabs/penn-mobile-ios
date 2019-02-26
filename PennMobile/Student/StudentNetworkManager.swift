@@ -44,10 +44,7 @@ extension StudentNetworkManager {
                                 student.courses = courses
                                 self.getDegrees(cookieStr: newCookieStr, callback: { (degrees) in
                                     student.degrees = degrees
-                                    self.getPennKey(cookieStr: cookieStr, callback: { (pennkey) in
-                                        student.pennkey = pennkey
-                                        callback(student)
-                                    })
+                                    callback(student)
                                 })
                             })
                             return
@@ -59,6 +56,48 @@ extension StudentNetworkManager {
         })
         task.resume()
     }
+    
+    func getStudent(request: URLRequest, cookies: [HTTPCookie], initialCallback: @escaping (_ student: Student?) -> Void, allCoursesCallback: @escaping (_ courses: Set<Course>?) -> Void) {
+        var mutableRequest: URLRequest = request
+        let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
+        mutableRequest.addValue(cookieStr, forHTTPHeaderField: "Cookie")
+        
+        let task = URLSession.shared.dataTask(with: mutableRequest, completionHandler: { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    // Set correct long-term cookie
+                    let setCookieStr = httpResponse.allHeaderFields["Set-Cookie"] as? String
+                    guard let sessionID: String = setCookieStr?.getMatches(for: "=(.*?);").first else {
+                        initialCallback(nil)
+                        return
+                    }
+                    let newCookieStr = cookieStr.removingRegexMatches(pattern: "JSESSIONID=(.*?);", replaceWith: "JSESSIONID=\(sessionID);")
+                    mutableRequest.url = URL(string: self.courseURL)
+                    
+                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
+                        if let student = try? self.parseStudent(from: html) {
+                            self.getCourses(cookieStr: newCookieStr, currentOnly: true, callback: { (courses) in
+                                student.courses = courses
+                                self.getPennKey(cookieStr: cookieStr, callback: { (pennkey) in
+                                    student.pennkey = pennkey
+                                    self.getDegrees(cookieStr: newCookieStr, callback: { (degrees) in
+                                        student.degrees = degrees
+                                        initialCallback(student)
+                                        self.getCourses(cookieStr: newCookieStr, currentOnly: false, callback: { (courses) in
+                                            allCoursesCallback(courses)
+                                        })
+                                    })
+                                })
+                            })
+                            return
+                        }
+                    }
+                }
+            }
+            initialCallback(nil)
+        })
+        task.resume()
+    }
 }
 
 // MARK: - PennKey
@@ -67,7 +106,12 @@ extension StudentNetworkManager {
  *       so we must make a reauth request to get pennkey
  **/
 extension StudentNetworkManager {
-    func getPennKey(cookieStr: String, callback: @escaping ((_ pennkey: String?) -> Void)) {
+    func getPennKey(cookies: [HTTPCookie], callback: @escaping ((_ pennkey: String?) -> Void)) {
+        let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
+        self.getPennKey(cookieStr: cookieStr, callback: callback)
+    }
+    
+    fileprivate func getPennKey(cookieStr: String, callback: @escaping ((_ pennkey: String?) -> Void)) {
         let url = URL(string: reauthURL)!
         var request = URLRequest(url: url)
         request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
@@ -113,7 +157,7 @@ extension StudentNetworkManager {
 
 // MARK: - Courses
 extension StudentNetworkManager {
-    fileprivate func getCourses(cookieStr: String, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+    fileprivate func getCourses(cookieStr: String, currentOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         let url = URL(string: courseURL)!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -128,10 +172,14 @@ extension StudentNetworkManager {
                             
                             if let currentTerm = terms.first {
                                 let courses = try self.parseCourses(from: html, term: currentTerm)
-                                let remainingTerms = Array(terms.dropFirst())
-                                self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: courses, callback: { (allCourses) in
-                                    callback(allCourses)
-                                })
+                                if currentOnly {
+                                    callback(courses)
+                                } else {
+                                    let remainingTerms = Array(terms.dropFirst())
+                                    self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: courses, callback: { (allCourses) in
+                                        callback(allCourses)
+                                    })
+                                }
                             } else {
                                 let emptySet = Set<Course>()
                                 callback(emptySet)

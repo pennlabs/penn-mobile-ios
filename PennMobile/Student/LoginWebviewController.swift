@@ -12,13 +12,13 @@ import WebKit
 class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     var webView: WKWebView!
-    var completion: (() -> Void)?
+    var completion: ((_ student: Student?) -> Void)!
     
     private let loginURL = "https://weblogin.pennkey.upenn.edu/login"
     private let urlStr = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     
-    private var pennkey: String!
-    private var password: String!
+    private var pennkey: String?
+    private let testPennKey = "joshdo"
     
     override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
@@ -52,22 +52,59 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
         
         let hasReferer = request.allHTTPHeaderFields?["Referer"] != nil
         if url.absoluteString == urlStr, hasReferer {
+            // Webview has redirected to PennInTouch.
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
             cookieStore.getAllCookies { (cookies) in
                 StudentNetworkManager.instance.getStudent(request: request, cookies: cookies, callback: { student in
                     DispatchQueue.main.async {
                         if let student = student {
-                            student.degrees?.forEach { print($0.description) }
-                            student.courses?.forEach { print($0.description) }
-                            print(student.getPotentialEmail())
+                            if self.pennkey == nil {
+                                // PennKey not guaranteed to be fetched yet. If it's not, fetch it before continuing.
+                                StudentNetworkManager.instance.getPennKey(cookies: cookies, callback: { pennkey in
+                                    DispatchQueue.main.async {
+                                        student.pennkey = pennkey
+                                        self.completion(student)
+                                        self.dismiss(animated: true, completion: nil)
+                                        decisionHandler(.cancel)
+                                    }
+                                })
+                            } else {
+                                self.completion(student)
+                                self.dismiss(animated: true, completion: nil)
+                                decisionHandler(.cancel)
+                            }
+                        } else {
+                            self.completion(nil)
+                            self.dismiss(animated: true, completion: nil)
+                            decisionHandler(.cancel)
                         }
-                        self.dismiss(animated: true, completion: nil)
-                        decisionHandler(.cancel)
                     }
                 })
             }
         } else {
             decisionHandler(.allow)
+        }
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        guard let url = webView.url else {
+            return
+        }
+        
+        if url.absoluteString == loginURL {
+            // Webview has redirected to 2FA login. Fetch the PennKey now in order to dismiss in case this is an AppStore tester.
+            let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+            cookieStore.getAllCookies { (cookies) in
+                StudentNetworkManager.instance.getPennKey(cookies: cookies, callback: { pennkey in
+                    DispatchQueue.main.async {
+                        self.pennkey = pennkey
+                        if !UserDBManager.shared.testRun && pennkey == self.testPennKey {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                })
+            }
+            return
         }
     }
     
