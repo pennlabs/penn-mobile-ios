@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import StoreKit
 
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
 class RootViewController: UIViewController {
@@ -36,6 +37,14 @@ class RootViewController: UIViewController {
         let tabBarController = TabBarController()
         let homeNVC = HomeNavigationController(rootViewController: tabBarController)
         animateFadeTransition(to: homeNVC)
+        
+        // Keep track locally of app sessions (for app review prompting)
+        let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
+        UserDefaults.standard.set(sessionCount+1, forKey:"launchCount")
+        UserDefaults.standard.synchronize()
+        if sessionCount == 3 {
+            SKStoreReviewController.requestReview()
+        }
     }
     
     func switchToLogout() {

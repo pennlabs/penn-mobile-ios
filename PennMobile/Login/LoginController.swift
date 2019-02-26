@@ -49,6 +49,7 @@ extension LoginController {
     func loginCompletion(_ student: Student?) {
         if let student = student {
             // Login Successful
+            print(student.description)
             AppDelegate.shared.rootViewController.switchToMainScreen()
         } else {
             showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)
@@ -56,6 +57,7 @@ extension LoginController {
     }
     
     func coursesRetreived(_ courses: Set<Course>?) {
-        
+        print("-------------All Courses--------------")
+        courses?.forEach { print($0.description) }
     }
 }

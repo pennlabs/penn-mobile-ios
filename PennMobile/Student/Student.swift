@@ -47,4 +47,22 @@ class Student: NSObject {
         }
         return potentialEmail
     }
+    
+    override var description: String {
+        var str = "\(firstName) \(lastName) \(photoUrl)"
+        if let email = getPotentialEmail() {
+            str = "\(str)\n\(email)"
+        }
+        if let degrees = degrees {
+            for degree in degrees {
+                str = "\(str)\n\(degree.description)"
+            }
+        }
+        if let courses = courses {
+            for course in courses {
+                str = "\(str)\n\(course.description)"
+            }
+        }
+        return str
+    }
 }

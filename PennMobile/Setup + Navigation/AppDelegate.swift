@@ -38,30 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDBManager.shared.testRun = true
         
         FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
-        FirebaseApp.configure()
       
-        LaundryAPIService.instance.prepare {
-            LaundryNotificationCenter.shared.prepare()
-            GSRLocationModel.shared.prepare()
-            
-            /*if !UserDefaults.standard.isOnboarded() {
-             //            handleOnboarding(animated: true)
-             UserDefaults.standard.setIsOnboarded(value: true)
-             return true
-             }*/
-            
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = RootViewController()
-            self.window?.makeKeyAndVisible()
-            
-            // Keep track locally of app sessions (for app review prompting)
-            let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
-            UserDefaults.standard.set(sessionCount+1, forKey:"launchCount")
-            UserDefaults.standard.synchronize()
-            if sessionCount == 3 {
-                SKStoreReviewController.requestReview()
-            }
-        }
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = RootViewController()
+        self.window?.makeKeyAndVisible()
+        
         return true
     }
     
