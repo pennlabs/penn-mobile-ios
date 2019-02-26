@@ -14,7 +14,7 @@ class GSRNetworkManager: NSObject, Requestable {
     
     static let instance = GSRNetworkManager()
     
-    let availUrl = "https://api.pennlabs.org/studyspaces/availability"
+    let availUrl = "http://localhost:5000/studyspaces/availability"
     let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
     let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
     
@@ -42,7 +42,10 @@ class GSRNetworkManager: NSObject, Requestable {
     }
 
     func getAvailability(for gsrId: Int, dateStr: String, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
-        let url = "\(availUrl)/\(gsrId)?date=\(dateStr)"
+        var url = "\(availUrl)/\(gsrId)?date=\(dateStr)"
+        if let sessionID = UserDefaults.standard.getSessionID() {
+            url = "\(url)&sessionid=\(sessionID)"
+        }
         getRequest(url: url) { (dict, error, statusCode) in
             var rooms: [GSRRoom]!
             if let dict = dict {

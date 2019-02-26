@@ -1,8 +1,8 @@
 {
     "locations": [
                   {
-                  "lid": 9999,
-                  "gid": 9999,
+                  "lid": 1,
+                  "gid": 1,
                   "name": "Huntsman",
                   "service": "wharton"
                   },

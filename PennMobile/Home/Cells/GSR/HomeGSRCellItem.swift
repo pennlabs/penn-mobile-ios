@@ -48,8 +48,8 @@ extension HomeGSRCellItem: HomeAPIRequestable {
         let dateString = formatter.string(from: Date().roundedDownToHour)
         
         GSRNetworkManager.instance.getAvailability(for: 1086, dateStr: dateString) { (rooms) in
-            if let _ = rooms {
-                self.filterForTimeConstraints(rooms!)
+            if let rooms = rooms {
+                self.filterForTimeConstraints(rooms)
             }
             completion()
         }
