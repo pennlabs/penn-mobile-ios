@@ -76,14 +76,14 @@ extension StudentNetworkManager {
                     
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
                         if let student = try? self.parseStudent(from: html) {
-                            self.getCourses(cookieStr: newCookieStr, currentOnly: true, callback: { (courses) in
+                            self.getCourses(cookieStr: newCookieStr, currentTermOnly: true, callback: { (courses) in
                                 student.courses = courses
                                 self.getPennKey(cookieStr: cookieStr, callback: { (pennkey) in
                                     student.pennkey = pennkey
                                     self.getDegrees(cookieStr: newCookieStr, callback: { (degrees) in
                                         student.degrees = degrees
                                         initialCallback(student)
-                                        self.getCourses(cookieStr: newCookieStr, currentOnly: false, callback: { (courses) in
+                                        self.getCourses(cookieStr: newCookieStr, currentTermOnly: false, callback: { (courses) in
                                             allCoursesCallback(courses)
                                         })
                                     })
@@ -157,7 +157,7 @@ extension StudentNetworkManager {
 
 // MARK: - Courses
 extension StudentNetworkManager {
-    fileprivate func getCourses(cookieStr: String, currentOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+    fileprivate func getCourses(cookieStr: String, currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         let url = URL(string: courseURL)!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -170,10 +170,20 @@ extension StudentNetworkManager {
                         do {
                             let terms = try self.parseTerms(from: html)
                             
-                            if let currentTerm = terms.first {
-                                let courses = try self.parseCourses(from: html, term: currentTerm)
-                                if currentOnly {
-                                    callback(courses)
+                            if let firstTerm = terms.first {
+                                let courses = try self.parseCourses(from: html, term: firstTerm)
+                                if currentTermOnly {
+                                    let currentTerm = self.currentTerm()
+                                    if firstTerm == currentTerm {
+                                        // If first term in list is the current term, return those courses
+                                        callback(courses)
+                                    } else {
+                                        // Otherwise, we need to do another request but for just the current term
+                                        let remainingTerms = [currentTerm]
+                                        self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
+                                            callback(courses)
+                                        })
+                                    }
                                 } else {
                                     let remainingTerms = Array(terms.dropFirst())
                                     self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: courses, callback: { (allCourses) in
@@ -195,7 +205,8 @@ extension StudentNetworkManager {
         task.resume()
     }
     
-    fileprivate func getCoursesHelper(cookieStr: String, terms: [String], courses: Set<Course>, callback: @escaping ((_ courses: Set<Course>) -> Void)) {
+    // Returns a set of courses for the provided terms unioned with the courses initially provided
+    private func getCoursesHelper(cookieStr: String, terms: [String], courses: Set<Course>, callback: @escaping ((_ courses: Set<Course>) -> Void)) {
         if terms.isEmpty {
             callback(courses)
             return
@@ -230,7 +241,24 @@ extension StudentNetworkManager {
             callback(courses)
         })
         task.resume()
-        
+    }
+    
+    private func currentTerm() -> String {
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        let year = formatter.string(from: now)
+        formatter.dateFormat = "M"
+        let month = Int(formatter.string(from: now))!
+        let code: String
+        if month <= 5 {
+            code = "A"
+        } else if month >= 8 {
+            code = "C"
+        } else {
+            code = "B"
+        }
+        return "\(year)\(code)"
     }
 }
 

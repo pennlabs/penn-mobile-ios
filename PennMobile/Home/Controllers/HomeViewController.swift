@@ -260,7 +260,7 @@ extension HomeViewController {
     }
 }
 
-// MARK: - Bar Button
+// MARK: - Login Bar Button
 extension HomeViewController {
     fileprivate func prepareBarButton() {
         barButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
@@ -270,8 +270,13 @@ extension HomeViewController {
     
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
         let lwc = LoginWebviewController()
+        lwc.completion = loginCompleted
         let nvc = UINavigationController(rootViewController: lwc)
         present(nvc, animated: true, completion: nil)
+    }
+    
+    func loginCompleted(_ student: Student?) {
+        student?.courses?.forEach { print($0.description) }
     }
 }
 
