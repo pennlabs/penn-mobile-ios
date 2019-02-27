@@ -11,7 +11,7 @@ import Foundation
 class Student: NSObject {
     let firstName: String
     let lastName: String
-    let photoUrl: String
+    let photoUrl: String?
     
     var pennkey: String!
     var degrees: Set<Degree>?
@@ -19,7 +19,7 @@ class Student: NSObject {
     
     var preferredEmail: String?
     
-    init(firstName: String, lastName: String, photoUrl: String) {
+    init(firstName: String, lastName: String, photoUrl: String?) {
         self.firstName = firstName
         self.lastName = lastName
         self.photoUrl = photoUrl
@@ -49,7 +49,10 @@ class Student: NSObject {
     }
     
     override var description: String {
-        var str = "\(firstName) \(lastName) \(photoUrl)"
+        var str = "\(firstName) \(lastName)"
+        if let photoUrl = photoUrl {
+            str = "\(str)\n\(photoUrl)"
+        }
         if let email = getPotentialEmail() {
             str = "\(str)\n\(email)"
         }

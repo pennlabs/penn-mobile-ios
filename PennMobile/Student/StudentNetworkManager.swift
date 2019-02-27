@@ -378,7 +378,7 @@ extension StudentNetworkManager {
         let encodedPhotoUrl = html.getMatches(for: photoPattern).first
         let photoUrl: String! = encodedPhotoUrl?.replacingOccurrences(of: "&amp;", with: "&")
         
-        guard fullName != nil && photoUrl != nil  else {
+        guard fullName != nil else {
             throw NetworkingError.parsingError
         }
         
