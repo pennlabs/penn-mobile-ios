@@ -24,3 +24,6 @@ PennMobile/Supporting_Files/AuthKey_6MBD9SUNGE.p8
 .DS_Store
 *.xcuserstate
 parse/config/global.json
+
+#Fastlane
+fastlane

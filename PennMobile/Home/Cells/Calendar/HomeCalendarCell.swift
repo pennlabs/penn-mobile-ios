@@ -41,7 +41,7 @@ final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
     fileprivate var calendarEventTableView: UITableView!
     
     // Mark: - Init
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
         prepareUI()
@@ -70,7 +70,7 @@ extension HomeCalendarCell: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UniversityNotificationCell.identifier, for: indexPath) as! UniversityNotificationCell
-        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         let event = events![indexPath.row]
         cell.calendarEvent = event
         return cell

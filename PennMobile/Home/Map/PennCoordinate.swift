@@ -26,7 +26,7 @@ class PennCoordinate {
     }
     
     func getDefaultRegion(at scale: PennCoordinateScale) -> MKCoordinateRegion {
-        return MKCoordinateRegionMakeWithDistance(getDefault(), scale.rawValue, scale.rawValue)
+        return MKCoordinateRegion.init(center: getDefault(), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
     }
     
     func getCoordinates(for venue: DiningVenueName) -> CLLocationCoordinate2D {
@@ -50,7 +50,7 @@ class PennCoordinate {
     }
     
     func getRegion(for venue: DiningVenueName, at scale: PennCoordinateScale) -> MKCoordinateRegion {
-        return MKCoordinateRegionMakeWithDistance(getCoordinates(for: venue), scale.rawValue, scale.rawValue)
+        return MKCoordinateRegion.init(center: getCoordinates(for: venue), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
     }
     
     func getCoordinates(for facility: FitnessFacilityName) -> CLLocationCoordinate2D {
@@ -67,7 +67,7 @@ class PennCoordinate {
     }
     
     func getRegion(for facility: FitnessFacilityName, at scale: PennCoordinateScale) -> MKCoordinateRegion {
-        return MKCoordinateRegionMakeWithDistance(getCoordinates(for: facility), scale.rawValue, scale.rawValue)
+        return MKCoordinateRegion.init(center: getCoordinates(for: facility), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
     }
     
     // TODO: Implement a switch statement that matches GSR venue IDs with GPS coords

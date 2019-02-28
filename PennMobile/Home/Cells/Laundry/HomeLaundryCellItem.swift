@@ -39,12 +39,12 @@ extension HomeLaundryCellItem {
     convenience init(json: JSON) throws {
         let id = json["room_id"].intValue
         let room: LaundryRoom
-        if let laundryRoom = LaundryAPIService.instance.idToRooms?[id] {
+        if let laundryRoom = LaundryRoom.getLaundryHall(for: id) {
             room = laundryRoom
         } else if let laundryRoom = LaundryRoom.getPreferences().first {
             room = laundryRoom
         } else {
-            room = LaundryRoom.getLaundryHall(for: 0)!
+            room = LaundryRoom.getDefaultRoom()
         }
         self.init(room: room)
     }

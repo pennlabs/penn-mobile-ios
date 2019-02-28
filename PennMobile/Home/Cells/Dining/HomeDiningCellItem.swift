@@ -51,7 +51,7 @@ extension HomeDiningCellItem {
 // MARK: - API Fetching
 extension HomeDiningCellItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
-        DiningAPI.instance.fetchDiningHours { _ in
+        DiningAPI.instance.fetchDiningHours { _,_  in
             completion()
         }
     }

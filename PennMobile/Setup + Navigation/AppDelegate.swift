@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var tabBarController: TabBarController!
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         if UserDefaults.standard.isNewAppVersion() {
@@ -138,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let bgTask = self.backgroundTask {
                 DispatchQueue.main.async {
                     application.endBackgroundTask(bgTask)
-                    self.backgroundTask = UIBackgroundTaskInvalid
+                    self.backgroundTask = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
                 }
             }
         }
@@ -150,14 +150,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if let bgTask = self.backgroundTask {
                 application.endBackgroundTask(bgTask)
-                self.backgroundTask = UIBackgroundTaskInvalid
+                self.backgroundTask = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
             }
         }
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         DatabaseManager.shared.startSession()
-        tabBarController.reloadTabs()
+        tabBarController?.reloadTabs()
         ControllerModel.shared.visibleVC().viewWillAppear(true)
     }
     
@@ -183,7 +183,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let userInfo = notification.request.content.userInfo
+        // let userInfo = notification.request.content.userInfo
         
         // With swizzling disabled you must let Messaging know about the message, for Analytics
         // Messaging.messaging().appDidReceiveMessage(userInfo)
@@ -214,4 +214,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         completionHandler()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIBackgroundTaskIdentifier(_ input: UIBackgroundTaskIdentifier) -> Int {
+	return input.rawValue
 }

@@ -134,7 +134,7 @@ extension ContactsTableViewController {
             }))
             
             alertController.addAction(UIAlertAction(title: "Settings", style: .default, handler: { (_) in
-                guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                     return
                 }
                 
