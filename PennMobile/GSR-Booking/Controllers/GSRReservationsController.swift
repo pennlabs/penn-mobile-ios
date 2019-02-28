@@ -12,6 +12,8 @@ import UIKit
 class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEnabled {
 
     var reservations: [GSRReservation]!
+    
+    fileprivate var barButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,21 +29,16 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         let sessionID = UserDefaults.standard.getSessionID()
         let email = GSRUser.getUser()?.email
         if sessionID == nil && email == nil {
-            // TODO: Handle user that is not logged in
+            self.prepareLoginButton()
+            self.tableView.dataSource = self
             return
         }
-        self.showActivity()
-        GSRNetworkManager.instance.getReservations(sessionID: sessionID, email: email) { (reservations) in
-            DispatchQueue.main.async {
-                self.hideActivity()
-                if let reservations = reservations {
-                    self.reservations = reservations
-                    self.tableView.dataSource = self
-                    self.tableView.reloadData()
-                } else {
-                    // TODO: Handle failure to retrieve reservations.
-                }
-            }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchData { (success) in
+            // Handle if not successful
         }
     }
 }
@@ -63,43 +60,12 @@ extension GSRReservationsController {
         cell.delegate = self
         cell.selectionStyle = UITableViewCellSelectionStyle.none;
         return cell
-
-//        if self.rooms.count > indexPath.section {
-//            let room = rooms[indexPath.section]
-//            let cell = tableView.dequeueReusableCell(withIdentifier: laundryCell) as! LaundryCell
-//            cell.room = room
-//            cell.delegate = self
-//            return cell
-//        } else {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: addLaundryCell) as! AddLaundryCell
-//            cell.delegate = self
-//            cell.numberOfRoomsSelected = self.rooms.count
-//            return cell
-//        }
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return ReservationCell.cellHeight
     }
 }
-
-//// MARK: - UITableViewDataSource
-//extension GSRReservationsController {
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return reservations?.count ?? 0
-//    }
-//
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: ReservationCell.identifer, for: indexPath) as! ReservationCell
-//        cell.reservation = reservations[indexPath.row]
-//        cell.delegate = self
-//        return cell
-//    }
-//
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return ReservationCell.cellHeight
-//    }
-//}
 
 // MARK: - ReservationCellDelegate
 extension GSRReservationsController: ReservationCellDelegate {
@@ -114,6 +80,73 @@ extension GSRReservationsController: ReservationCellDelegate {
                     self.tableView.reloadData()
                 } else if let errorMsg = errorMsg {
                     self.showAlert(withMsg: errorMsg, title: "Uh oh!", completion: nil)
+                }
+            }
+        }
+    }
+}
+
+// MARK: Login Button
+extension GSRReservationsController {
+    func prepareLoginButton() {
+        barButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
+        barButton.tintColor = UIColor.navigationBlue
+        navigationItem.rightBarButtonItem = barButton
+    }
+    
+    func handleBarButtonPressed(_ sender: Any) {
+        let alertController = UIAlertController(title: "Select GSR System", message: "Choose the system to login for.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Library", style: .default, handler: { (_) in
+            DispatchQueue.main.async {
+                self.presentLoginFlow(isWharton: false)
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "Wharton", style: .default, handler: { (_) in
+            DispatchQueue.main.async {
+                self.presentLoginFlow(isWharton: true)
+            }
+        }))
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func presentLoginFlow(isWharton: Bool) {
+        if isWharton {
+            let wv = GSRWebviewLoginController()
+            wv.completion = {
+                let sessionID = UserDefaults.standard.getSessionID()
+                if sessionID == nil {
+                    self.showAlert(withMsg: "Uh oh!", title: "Login invalid. Please try again.", completion: nil)
+                    return
+                }
+            }
+            let nvc = UINavigationController(rootViewController: wv)
+            present(nvc, animated: true, completion: nil)
+        } else {
+            let glc = GSRLoginController()
+            let nvc = UINavigationController(rootViewController: glc)
+            present(nvc, animated: true, completion: nil)
+        }
+    }
+    
+    func fetchData(_ completion: @escaping (_ success: Bool) -> Void) {
+        let sessionID = UserDefaults.standard.getSessionID()
+        let email = GSRUser.getUser()?.email
+        if sessionID == nil && email == nil {
+            completion(false)
+            return
+        }
+        
+        self.showActivity()
+        GSRNetworkManager.instance.getReservations(sessionID: sessionID, email: email) { (reservations) in
+            DispatchQueue.main.async {
+                self.hideActivity()
+                if let reservations = reservations {
+                    self.reservations = reservations
+                    self.tableView.dataSource = self
+                    self.tableView.reloadData()
+                    completion(true)
+                } else {
+                    completion(false)
                 }
             }
         }
