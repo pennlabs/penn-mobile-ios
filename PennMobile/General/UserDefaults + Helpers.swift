@@ -12,6 +12,7 @@ import WebKit
 //Mark: UserDefaultsKeys
 extension UserDefaults {
     enum UserDefaultsKeys: String {
+        case accountID
         case deviceUUID
         case deviceToken
         case controllerSettings
@@ -22,6 +23,18 @@ extension UserDefaults {
         case appVersion
         case gsrSessionID
         case gsrSessoinIDTimestamp
+    }
+}
+
+// MARK: AccountID
+extension UserDefaults {
+    func set(accountID: String) {
+        set(accountID, forKey: UserDefaultsKeys.accountID.rawValue)
+        synchronize()
+    }
+    
+    func getAccountID() -> String? {
+        return string(forKey: UserDefaultsKeys.accountID.rawValue)
     }
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Student: NSObject {
+class Student: Codable {
     let firstName: String
     let lastName: String
     let photoUrl: String?
@@ -18,6 +18,15 @@ class Student: NSObject {
     var courses: Set<Course>?
     
     var preferredEmail: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case firstName = "first"
+        case lastName = "last"
+        case photoUrl = "photo_url"
+        case pennkey
+        case degrees
+        case courses
+    }
     
     init(firstName: String, lastName: String, photoUrl: String?) {
         self.firstName = firstName
@@ -29,7 +38,7 @@ class Student: NSObject {
         guard let degrees = degrees, let pennkey = pennkey else { return nil }
         var potentialEmail: String? = nil
         for degree in degrees {
-            switch degree.divisionCode {
+            switch degree.schoolCode {
             case "WH":
                 return "\(pennkey)@wharton.upenn.edu"
             case "EAS":
@@ -48,7 +57,7 @@ class Student: NSObject {
         return potentialEmail
     }
     
-    override var description: String {
+    var description: String {
         var str = "\(firstName) \(lastName)"
         if let photoUrl = photoUrl {
             str = "\(str)\n\(photoUrl)"

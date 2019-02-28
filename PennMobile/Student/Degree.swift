@@ -8,17 +8,26 @@
 
 import Foundation
 
-class Degree: Hashable {
-    let divisionName: String
-    let divisionCode: String
+class Degree: Codable, Hashable {
+    let schoolName: String
+    let schoolCode: String
     let degreeName: String
     let degreeCode: String
     let majors: Set<Major>
     let expectedGradTerm: String
     
-    init(divisionName: String, divisionCode: String, degreeName: String, degreeCode: String, majors: Set<Major>, expectedGradTerm: String) {
-        self.divisionName = divisionName
-        self.divisionCode = divisionCode
+    enum CodingKeys: String, CodingKey {
+        case schoolName = "school_name"
+        case schoolCode = "school_code"
+        case degreeName = "degree_name"
+        case degreeCode = "degree_code"
+        case majors
+        case expectedGradTerm = "expected_grad"
+    }
+    
+    init(schoolName: String, schoolCode: String, degreeName: String, degreeCode: String, majors: Set<Major>, expectedGradTerm: String) {
+        self.schoolName = schoolName
+        self.schoolCode = schoolCode
         self.degreeName = degreeName
         self.degreeCode = degreeCode
         self.majors = majors
@@ -27,7 +36,7 @@ class Degree: Hashable {
     
     var description: String {
         let majorStr = majors.map { $0.description }.joined(separator: "\n")
-        return "\(divisionName) (\(divisionCode))\n\(degreeName) (\(degreeCode))\n\(majorStr)\n\(expectedGradTerm)"
+        return "\(schoolName) (\(schoolCode))\n\(degreeName) (\(degreeCode))\n\(majorStr)\n\(expectedGradTerm)"
     }
     
     var hashValue: Int {
@@ -35,15 +44,20 @@ class Degree: Hashable {
     }
     
     static func == (lhs: Degree, rhs: Degree) -> Bool {
-        return lhs.divisionCode == rhs.divisionCode && lhs.degreeCode == rhs.degreeCode
+        return lhs.schoolCode == rhs.schoolCode && lhs.degreeCode == rhs.degreeCode
             && lhs.expectedGradTerm == rhs.expectedGradTerm
             && lhs.majors.map { $0.hashValue }.reduce(0, +) == rhs.majors.map { $0.hashValue }.reduce(0, +)
     }
 }
 
-class Major: Hashable {
+class Major: Codable, Hashable {
     let name: String
     let code: String
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "major_name"
+        case code = "major_code"
+    }
     
     init(name: String, code: String) {
         self.name = name

@@ -275,7 +275,7 @@ extension StudentNetworkManager {
         let buildingCodes = subHtml.getMatches(for: "mobileSchedule\">(.*?) <")
         let buildingIds = subHtml.getMatches(for: "BuildingId=(.*?)&amp;")
         let rooms = subHtml.getMatches(for: "&nbsp; (.*?)&")
-        let daysOfWeekArr = subHtml.getMatches(for: "<\\/span><\\/a> <br>(.*?)&nbsp")
+        let weekdaysArr = subHtml.getMatches(for: "<\\/span><\\/a> <br>(.*?)&nbsp")
         let startTimes = subHtml.getMatches(for: "<\\/span><\\/a> <br>.*?&nbsp;(.*?) <span class=\"ampm\">")
         let endTimes = subHtml.getMatches(for: "<\\/span> - (.*?) <")
         let AMPMs = subHtml.getMatches(for: "<span class=\"ampm\">(.*?)<")
@@ -299,11 +299,11 @@ extension StudentNetworkManager {
                 }
             }
             
-            var daysOfWeek: String = ""
+            var weekdays: String = ""
             var startTime: String = ""
             var endTime: String = ""
-            if i <= daysOfWeekArr.count - 1 && i <= startTimes.count - 1 && i <= endTimes.count - 1 && 2*i <= AMPMs.count - 1 {
-                daysOfWeek = daysOfWeekArr[i]
+            if i <= weekdaysArr.count - 1 && i <= startTimes.count - 1 && i <= endTimes.count - 1 && 2*i <= AMPMs.count - 1 {
+                weekdays = weekdaysArr[i]
                 startTime = "\(startTimes[i]) \(AMPMs[2*i])"
                 endTime = "\(endTimes[i]) \(AMPMs[2*i+1])"
             }
@@ -314,7 +314,7 @@ extension StudentNetworkManager {
             let codePieces = fullCode.split(separator: "-")
             let courseCode = "\(codePieces[0])-\(codePieces[1])"
             let section = String(codePieces[2])
-            courses.append(Course(name: name, term: term, code: courseCode, section: section, building: building, room: room, daysOfWeek: daysOfWeek, startTime: startTime, endTime: endTime, instructors: courseInstructors))
+            courses.append(Course(name: name, term: term, code: courseCode, section: section, building: building, room: room, weekdays: weekdays, startTime: startTime, endTime: endTime, instructors: courseInstructors))
         }
         return Set(courses)
     }
@@ -337,7 +337,7 @@ extension StudentNetworkManager {
         var degrees = Set<Degree>()
         for element in subElements {
             let text = try element.text()
-            guard let divisionStr = text.getMatches(for: "Division: (.*?)\\) ").first,
+            guard let schoolStr = text.getMatches(for: "Division: (.*?)\\) ").first,
                 let degreeStr = text.getMatches(for: "Degree: (.*?)\\)").first,
                 let expectedGradTerm = text.getMatches(for: "Expected graduation term: (.*?\\d) ").first else {
                     throw NetworkingError.parsingError
@@ -348,9 +348,9 @@ extension StudentNetworkManager {
                 let nameCode = try splitNameCode(str: str)
                 majors.insert(Major(name: nameCode.name, code: nameCode.code))
             }
-            let divisionNameCode = try splitNameCode(str: divisionStr)
+            let schoolNameCode = try splitNameCode(str: schoolStr)
             let degreeNameCode = try splitNameCode(str: degreeStr)
-            let degree = Degree(divisionName: divisionNameCode.name, divisionCode: divisionNameCode.code, degreeName: degreeNameCode.name, degreeCode: degreeNameCode.code, majors: majors, expectedGradTerm: expectedGradTerm)
+            let degree = Degree(schoolName: schoolNameCode.name, schoolCode: schoolNameCode.code, degreeName: degreeNameCode.name, degreeCode: degreeNameCode.code, majors: majors, expectedGradTerm: expectedGradTerm)
             degrees.insert(degree)
         }
         return degrees

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Building {
+struct Building: Codable {
     let code: String
     let id: Int
     
