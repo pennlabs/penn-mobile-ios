@@ -14,7 +14,7 @@ class GSRNetworkManager: NSObject, Requestable {
     
     static let instance = GSRNetworkManager()
     
-    let availUrl = "http://localhost:5000/studyspaces/availability"
+    let availUrl = "https://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
     let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
     
@@ -103,6 +103,8 @@ class GSRNetworkManager: NSObject, Requestable {
         guard let url = URL(string: bookingUrl) else { return }
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "POST"
+        let deviceID = getDeviceID()
+        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8);
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             var success = false
