@@ -16,9 +16,9 @@ class GSRNetworkManager: NSObject, Requestable {
     
     let availUrl = "https://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
-    let bookingUrl = "http://api-dev.pennlabs.org/studyspaces/book"
-    let reservationURL = "http://api-dev.pennlabs.org/studyspaces/reservations"
-    let cancelURL = "http://api-dev.pennlabs.org/studyspaces/cancel"
+    let bookingUrl = "http://api.pennlabs.org/studyspaces/book"
+    let reservationURL = "http://api.pennlabs.org/studyspaces/reservations"
+    let cancelURL = "http://api.pennlabs.org/studyspaces/cancel"
     
     var locations:[Int:String] = [:]
     var bookingRequestOutstanding = false
@@ -79,7 +79,6 @@ class GSRNetworkManager: NSObject, Requestable {
         let basicParams = [
             "lid" : String(booking.location.lid),
             "room" : String(booking.roomId),
-            "lid": String(booking.location.lid),
             "start" : start,
             "end" : end,
         ]
@@ -108,7 +107,8 @@ class GSRNetworkManager: NSObject, Requestable {
         request.httpMethod = "POST"
         let deviceID = getDeviceID()
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
-        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8);
+        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
+        self.bookingRequestOutstanding = true
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             var success = false
             var errorMessage = "Unable to connect to the internet. Please reconnect and try again."
