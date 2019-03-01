@@ -50,7 +50,7 @@ class ReservationCell: UITableViewCell {
     fileprivate var deleteButton: UIButton!
     fileprivate var buildingImage: UIImageView!
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.prepareUI()
     }
@@ -119,7 +119,7 @@ extension ReservationCell {
         addSubview(deleteButton)
         _ = deleteButton.anchor(timeLabel.bottomAnchor, left: buildingImage.rightAnchor, bottom: bottomAnchor, right: nil, topConstant: 5, leftConstant: 25, bottomConstant: 14, rightConstant: 0, widthConstant: 90, heightConstant: 24)    }
     
-    func handleDeletePressed(_ sender: Any) {
+    @objc func handleDeletePressed(_ sender: Any) {
         self.delegate.deleteReservation(reservation)
     }
     

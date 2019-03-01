@@ -21,7 +21,6 @@ class LaundryNotificationCenter {
     
     func notifyWithMessage(for machine: LaundryMachine, title: String?, message: String?, completion: @escaping (_ success: Bool) -> Void) {
         let center = UNUserNotificationCenter.current()
-        let isWasher = machine.isWasher
         let minutes = machine.timeRemaining
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             if error != nil {
@@ -41,7 +40,7 @@ class LaundryNotificationCenter {
                 }
                 
                 // Deliver the notification when minutes expire.
-                content.sound = UNNotificationSound.default()
+                content.sound = UNNotificationSound.default
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(60 * minutes),
                                                                 repeats: false)
                 

@@ -94,8 +94,9 @@ extension HomeViewController {
     }
     
     func prepareLoadingView() {
-        loadingView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        loadingView = UIActivityIndicatorView(style: .whiteLarge)
         loadingView.color = .black
+        loadingView.isHidden = false
         view.addSubview(loadingView)
         loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -235,11 +236,12 @@ extension HomeViewController {
 
     func reloadItem(_ item: HomeCellItem) {
         guard let allItems = tableViewModel.items as? [HomeCellItem] else { return }
-        let row = allItems.index(where: { (thisItem) -> Bool in
+        if let row = allItems.index(where: { (thisItem) -> Bool in
             thisItem.equals(item: item)
-        })!
-        let indexPath = IndexPath(row: row, section: 0)
-        self.tableView.reloadRows(at: [indexPath], with: .none)
+        }) {
+            let indexPath = IndexPath(row: row, section: 0)
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
     }
 }
 
