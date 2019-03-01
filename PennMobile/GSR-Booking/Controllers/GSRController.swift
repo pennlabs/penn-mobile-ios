@@ -37,9 +37,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var viewModel: GSRViewModel!
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-        UserDefaults.standard.set(sessionID: "dpa7trlicczhjsf1s0bragq4l7ylxjnk")
-                
+        super.viewDidLoad()                
         prepareViewModel()
         prepareUI()
     }
