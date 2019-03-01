@@ -24,7 +24,7 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
 
         let sessionID = UserDefaults.standard.getSessionID()
         let email = GSRUser.getUser()?.email
-        if (sessionID == nil && (email == nil || email!.contains("wharton"))) || (sessionID != nil && email == nil) {
+        if sessionID == nil && (email == nil || email!.contains("wharton")) {
             self.prepareLoginButton()
             self.tableView.dataSource = self
             return
