@@ -11,12 +11,13 @@ import UIKit
 
 class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEnabled {
 
-    var reservations: [GSRReservation]!
+    fileprivate var reservations: [GSRReservation]!
+    fileprivate var loginButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = "Your Bookings"
+        setupNavBar()
+        UserDefaults.standard.set(sessionID: "dpa7trlicczhjsf1s0bragq4l7ylxjnk")
         
         tableView.dataSource = nil // Don't try to load data initially since reservations will be nil
         tableView.delegate = self
@@ -27,8 +28,11 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         let sessionID = UserDefaults.standard.getSessionID()
         let email = GSRUser.getUser()?.email
         if sessionID == nil && email == nil {
-            // TODO: Handle user that is not logged in
+            // Handle user that is not logged in
+            loginButton.title = "Login"
             return
+        } else {
+            loginButton.title = "Logout"
         }
         self.showActivity()
         GSRNetworkManager.instance.getReservations(sessionID: sessionID, email: email) { (reservations) in
@@ -44,16 +48,35 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
             }
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setupNavBar()
+        refreshBarButton()
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        navigationController?.navigationItem.leftBarButtonItem = nil
+        navigationController?.navigationItem.rightBarButtonItem = nil
+        super.viewDidDisappear(animated)
+    }
+    
+    private func setupNavBar() {
+        self.navigationController?.title = "Your Reservations"
+        loginButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
+        loginButton.tintColor = UIColor.navigationBlue
+        navigationController?.navigationItem.rightBarButtonItem = loginButton
+    }
 }
 
 // MARK: - UITableViewDataSource
 extension GSRReservationsController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return max(reservations?.count ?? 0, 1)
+        return max(reservations.count, 1)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (self.reservations?.count ?? 0 == 0) {
+        if (self.reservations.count == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: NoReservationsCell.identifier, for: indexPath) as! NoReservationsCell
             cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, UIScreen.main.bounds.width)
             return cell
@@ -64,42 +87,12 @@ extension GSRReservationsController {
         cell.selectionStyle = UITableViewCellSelectionStyle.none;
         return cell
 
-//        if self.rooms.count > indexPath.section {
-//            let room = rooms[indexPath.section]
-//            let cell = tableView.dequeueReusableCell(withIdentifier: laundryCell) as! LaundryCell
-//            cell.room = room
-//            cell.delegate = self
-//            return cell
-//        } else {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: addLaundryCell) as! AddLaundryCell
-//            cell.delegate = self
-//            cell.numberOfRoomsSelected = self.rooms.count
-//            return cell
-//        }
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return ReservationCell.cellHeight
     }
 }
-
-//// MARK: - UITableViewDataSource
-//extension GSRReservationsController {
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return reservations?.count ?? 0
-//    }
-//
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: ReservationCell.identifer, for: indexPath) as! ReservationCell
-//        cell.reservation = reservations[indexPath.row]
-//        cell.delegate = self
-//        return cell
-//    }
-//
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return ReservationCell.cellHeight
-//    }
-//}
 
 // MARK: - ReservationCellDelegate
 extension GSRReservationsController: ReservationCellDelegate {
@@ -118,4 +111,58 @@ extension GSRReservationsController: ReservationCellDelegate {
             }
         }
     }
+}
+
+// MARK: - Bar Button Refresh + Handler
+extension GSRReservationsController {
+    fileprivate func refreshBarButton() {
+        self.loginButton.tintColor = .clear
+        let sessionID = UserDefaults.standard.getSessionID()
+        let email = GSRUser.getUser()?.email
+        if sessionID == nil && email == nil {
+            // Handle user that is not logged in
+            loginButton.title = "Login"
+            return
+        } else {
+            loginButton.title = "Logout"
+        }
+        self.loginButton.tintColor = nil
+    }
+    
+    private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {
+        let wv = GSRWebviewLoginController()
+        wv.completion = completion
+        let nvc = UINavigationController(rootViewController: wv)
+        present(nvc, animated: true, completion: nil)
+    }
+    
+    private func presentLoginController(with booking: GSRBooking? = nil) {
+        let glc = GSRLoginController()
+        glc.booking = booking
+        let nvc = UINavigationController(rootViewController: glc)
+        present(nvc, animated: true, completion: nil)
+    }
+    
+    @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
+        if (loginButton.title == "Login") {
+            presentWebviewLoginController(nil)
+        }
+        else {
+            let message = "Are you sure you wish to log out?"
+            let alert = UIAlertController(title: "Confirm Logout",
+                                          message: message,
+                                          preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(cancelAction)
+            alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
+                DispatchQueue.main.async {
+                    GSRUser.clear()
+                    UserDefaults.standard.clearSessionID()
+                    self.refreshBarButton()
+                }
+            }))
+            present(alert, animated: true)
+        }
+}
+    
 }
