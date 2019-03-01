@@ -44,7 +44,10 @@ class GSRNetworkManager: NSObject, Requestable {
     }
 
     func getAvailability(for gsrId: Int, dateStr: String, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
-        let url = "\(availUrl)/\(gsrId)?date=\(dateStr)"
+        var url = "\(availUrl)/\(gsrId)?date=\(dateStr)"
+        if let sessionID = UserDefaults.standard.getSessionID() {
+            url = "\(url)&sessionid=\(sessionID)"
+        }
         getRequest(url: url) { (dict, error, statusCode) in
             var rooms: [GSRRoom]!
             if let dict = dict {
@@ -68,37 +71,37 @@ class GSRNetworkManager: NSObject, Requestable {
     }
     
     func makeBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
-        bookingRequestOutstanding = true
-        print(bookingRequestOutstanding)
-        if booking.location.service == "wharton" {
-            WhartonGSRNetworkManager.instance.bookRoom(booking: booking) { (success, errorMsg) in
-                callback(success, errorMsg)
-                self.bookingRequestOutstanding = false
-            }
-        } else {
-            makeLibcalBooking(for: booking, callback)
-        }
-    }
-    
-    func makeLibcalBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let start = dateFormatter.string(from: booking.start)
         let end = dateFormatter.string(from: booking.end)
-        let user: GSRUser = booking.user
-        let params: [String: String] = [
-            "building" : String(booking.location.lid),
+        
+        let basicParams = [
+            "lid" : String(booking.location.lid),
             "room" : String(booking.roomId),
             "lid": String(booking.location.lid),
             "start" : start,
             "end" : end,
-            "firstname" : user.firstName,
-            "lastname" : user.lastName,
-            "email" : user.email,
-            "phone" : user.phone,
-            "groupname" : booking.groupName,
-            "size" : "2-3"
         ]
+        let extraParams: [String: String]
+        if booking.location.service == "wharton" {
+            let sessionID: String = booking.sessionId
+            extraParams = [
+                "sessionid": sessionID
+            ]
+        } else {
+            let user: GSRUser = booking.user
+            extraParams = [
+                "firstname" : user.firstName,
+                "lastname" : user.lastName,
+                "email" : user.email,
+                "phone" : user.phone,
+                "groupname" : booking.groupName,
+                "size" : "2-3"
+            ]
+        }
+        
+        let params = basicParams.merging(extraParams, uniquingKeysWith: { (first, _) in first })
         
         guard let url = URL(string: bookingUrl) else { return }
         let request = NSMutableURLRequest(url: url)
@@ -244,7 +247,7 @@ extension GSRRoom {
         guard let name = json["name"].string, let roomId = json["room_id"].int, let gid = json["gid"].int else {
             throw NetworkingError.jsonError
         }
-        
+
         let capacity = json["capacity"].intValue
         let imageUrl = json["thumbnail"].string
         

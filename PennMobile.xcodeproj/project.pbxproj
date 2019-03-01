@@ -105,7 +105,6 @@
 		21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D31203D39FF0029A460 /* DiningVenueName.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
 		21EF283921F509C0001B05B7 /* GSRWebviewLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EF283821F509C0001B05B7 /* GSRWebviewLoginController.swift */; };
-		21EF283B21F52031001B05B7 /* WhartonGSRNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EF283A21F52031001B05B7 /* WhartonGSRNetworkManager.swift */; };
 		21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F020538A87005B143F /* HomeFlingCellItem.swift */; };
 		21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F220538A90005B143F /* HomeFlingCell.swift */; };
 		21F5F8F520538AFC005B143F /* FlingPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F420538AFC005B143F /* FlingPerformer.swift */; };
@@ -307,7 +306,6 @@
 		21EB4D31203D39FF0029A460 /* DiningVenueName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueName.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
 		21EF283821F509C0001B05B7 /* GSRWebviewLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRWebviewLoginController.swift; sourceTree = "<group>"; };
-		21EF283A21F52031001B05B7 /* WhartonGSRNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhartonGSRNetworkManager.swift; sourceTree = "<group>"; };
 		21F5F8F020538A87005B143F /* HomeFlingCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCellItem.swift; sourceTree = "<group>"; };
 		21F5F8F220538A90005B143F /* HomeFlingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCell.swift; sourceTree = "<group>"; };
 		21F5F8F420538AFC005B143F /* FlingPerformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingPerformer.swift; sourceTree = "<group>"; };
@@ -803,7 +801,6 @@
 			isa = PBXGroup;
 			children = (
 				2189C0862027CDD700771C1F /* GSRNetworkManager.swift */,
-				21EF283A21F52031001B05B7 /* WhartonGSRNetworkManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1521,7 +1518,6 @@
 				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */,
-				21EF283B21F52031001B05B7 /* WhartonGSRNetworkManager.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
 				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
