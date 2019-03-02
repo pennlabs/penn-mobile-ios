@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 protocol TransitionDelegate {
-    func handleTransition(to page: Page)
+    func handleTransition(to feature: Feature)
 }
 
-enum Page: String {
+enum Feature: String {
     case home = "Home"
     case dining = "Dining"
     case studyRoomBooking = "Study Room Booking"
@@ -31,8 +31,8 @@ class ControllerModel: NSObject {
 
     static var shared = ControllerModel()
 
-    let vcDictionary: [Page: UIViewController] = {
-        var dict = [Page: UIViewController]()
+    let vcDictionary: [Feature: UIViewController] = {
+        var dict = [Feature: UIViewController]()
         dict[.home] = HomeViewController()
         dict[.dining] = DiningViewController()
         dict[.studyRoomBooking] = GSRController()
@@ -48,20 +48,20 @@ class ControllerModel: NSObject {
     }()
 
     var viewControllers: [UIViewController] {
-        return orderedPages.map { (title) -> UIViewController in
+        return orderedFeatures.map { (title) -> UIViewController in
             return vcDictionary[title]!
         }
     }
 
-    // pages order in tab bar
-    var orderedPages: [Page] {
+    // Features order in tab bar
+    var orderedFeatures: [Feature] {
         get {
             return [.home, .dining, .studyRoomBooking, .laundry, .more]
         }
     }
 
-    // pages order in MoreViewController:
-    var moreOrder: [Page] {
+    // Features order in MoreViewController:
+    var moreOrder: [Feature] {
         get {
             return [.news, .fitness, .contacts, .about,]
         }
@@ -73,24 +73,24 @@ class ControllerModel: NSObject {
     }
 
     var displayNames: [String] {
-        return orderedPages.map { $0.rawValue }
+        return orderedFeatures.map { $0.rawValue }
     }
 
-    func viewController(for controller: Page) -> UIViewController {
+    func viewController(for controller: Feature) -> UIViewController {
         return vcDictionary[controller]!
     }
 
-    func viewControllers(for pages: [Page]) -> [UIViewController] {
-        return pages.map { viewController(for: $0) }
+    func viewControllers(for features: [Feature]) -> [UIViewController] {
+        return features.map { viewController(for: $0) }
     }
 
     var firstVC: UIViewController {
-        return viewController(for: firstPage)
+        return viewController(for: firstFeature)
     }
 
-    var firstPage: Page {
-        //return UserDefaults.standard.isOnboarded() ? orderedPages[0] : .laundry
-        return orderedPages[0]
+    var firstFeature: Feature {
+        //return UserDefaults.standard.isOnboarded() ? orderedFeatures[0] : .laundry
+        return orderedFeatures[0]
     }
 
     func visibleVCIndex() -> IndexPath {
@@ -102,19 +102,19 @@ class ControllerModel: NSObject {
         return IndexPath(row: 0, section: 0)
     }
 
-    func visiblePage() -> Page {
-        return orderedPages[visibleVCIndex().row]
+    func visibleFeature() -> Feature {
+        return orderedFeatures[visibleVCIndex().row]
     }
 
     func visibleVC() -> UIViewController {
-        return viewController(for: visiblePage())
+        return viewController(for: visibleFeature())
     }
 
 }
 
 // MARK: - Transitions
 extension ControllerModel {
-    func transition(to page: Page, withAnimation: Bool) {
+    func transition(to feature: Feature, withAnimation: Bool) {
     }
 }
 
