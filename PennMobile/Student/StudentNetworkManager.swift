@@ -271,14 +271,18 @@ extension StudentNetworkManager {
         }
         var subHtml = try element.html()
         subHtml.append("<") // For edge case where instructor is at EOF
+        if term == "2017A" {
+            print(subHtml)
+            subHtml = "<br><b>Wharton Field Challenge: Flcp-School of the Future</b> <br><a href=\"#\" onclick=\"return fastGoToUrl(event, 'fast2.do?fastButtonId=T2XO9V8H','','T2XO9V8H',false);\" style=\"display:inline;\" id=\"T2XO9V8H_text\"><span class=\"fastButtonLinkText\"><b>MGMT-353-007</b></span></a> <br>TBA <br> 01/11/2017 - 04/26/2017 <br>Instructor(s): Keith W Weigelt <br><br><b>International Security</b> <br><a href=\"#\" onclick=\"return fastGoToUrl(event, 'fast2.do?fastButtonId=T2XO9V8J','','T2XO9V8J',false);\" style=\"display:inline;\" id=\"T2XO9V8J_text\"><span class=\"fastButtonLinkText\"><b>PSCI-151-001</b></span></a> <br>MW&nbsp;11:00 <span class=\"ampm\">AM</span> - 12:00 <span class=\"ampm\">PM</span> <br> 01/11/2017 - 04/26/2017 <br>Instructor(s): Avery M. Goldstein <br><br><b>International Security</b> <br><a href=\"#\" onclick=\"return fastGoToUrl(event, 'fast2.do?fastButtonId=T2XO9V8L','','T2XO9V8L',false);\" style=\"display:inline;\" id=\"T2XO9V8L_text\"><span class=\"fastButtonLinkText\"><b>PSCI-151-206</b></span></a> <br>R&nbsp;3:00 <span class=\"ampm\">PM</span> - 4:00 <span class=\"ampm\">PM</span> <br> 01/11/2017 - 04/26/2017 <br>Instructor(s): Vivienne Born<"
+        }
         
         let buildingCodes = subHtml.getMatches(for: "mobileSchedule\">(.*?) <")
         let buildingIds = subHtml.getMatches(for: "BuildingId=(.*?)&amp;")
         let rooms = subHtml.getMatches(for: "&nbsp; (.*?)&")
-        let weekdaysArr = subHtml.getMatches(for: "<\\/span><\\/a> <br>(.*?)&nbsp")
-        let startTimes = subHtml.getMatches(for: "<\\/span><\\/a> <br>.*?&nbsp;(.*?) <span class=\"ampm\">")
-        let endTimes = subHtml.getMatches(for: "<\\/span> - (.*?) <")
-        let AMPMs = subHtml.getMatches(for: "<span class=\"ampm\">(.*?)<")
+        let weekdaysArr = subHtml.getMatches(for: "<\\/span><\\/a> <br>(.*?)[& ]")
+        var startTimes = subHtml.getMatches(for: "<\\/span><\\/a> <br>.*?&nbsp;(.*?) <span class=\"ampm\">")
+        var endTimes = subHtml.getMatches(for: "<\\/span> - (.*?) <")
+        var AMPMs = subHtml.getMatches(for: "<span class=\"ampm\">(.*?)<")
         
         let instructors: [String] = subHtml.getMatches(for: "Instructor\\(s\\): (.*?)\\s*<")
         let nameCodes: [String] = try element.select("b").map { try $0.text() }
@@ -303,9 +307,17 @@ extension StudentNetworkManager {
             var startTime: String = ""
             var endTime: String = ""
             if i <= weekdaysArr.count - 1 && i <= startTimes.count - 1 && i <= endTimes.count - 1 && 2*i <= AMPMs.count - 1 {
-                weekdays = weekdaysArr[i]
-                startTime = "\(startTimes[i]) \(AMPMs[2*i])"
-                endTime = "\(endTimes[i]) \(AMPMs[2*i+1])"
+                if weekdaysArr[i] == "TBA" {
+                    // Adding empty start and end time so that class indices line up
+                    startTimes.insert("", at: i)
+                    endTimes.insert("", at: i)
+                    AMPMs.insert("", at: i)
+                    AMPMs.insert("", at: i+1)
+                } else {
+                    weekdays = weekdaysArr[i]
+                    startTime = "\(startTimes[i]) \(AMPMs[2*i])"
+                    endTime = "\(endTimes[i]) \(AMPMs[2*i+1])"
+                }
             }
             
             let courseInstructors = instructors[i].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
