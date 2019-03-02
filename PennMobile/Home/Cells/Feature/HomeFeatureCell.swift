@@ -107,8 +107,8 @@ extension HomeFeatureCell {
     }
     
     @objc fileprivate func handleTapped(_ sender: Any) {
-        guard let delegate = delegate as? URLSelectable else { return }
-        //delegate.handleUrlPressed(url: featureAnnouncement.postUrl, title: post.source)
+        guard let delegate = delegate as? FeatureNavigatable else { return }
+        delegate.navigateToFeature(feature: announcement.feature)
     }
 }
 
@@ -184,7 +184,6 @@ extension HomeFeatureCell {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         cardView.addSubview(dateLabel)
-        //        _ = dateLabel.anchor(nil, left: titleLabel.leftAnchor, bottom: cardView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         dateLabel.centerYAnchor.constraint(equalTo: sourceLabel.centerYAnchor).isActive = true
         dateLabel.rightAnchor.constraint(equalTo: announcementImageView.rightAnchor, constant: -HomeFeatureCell.titleEdgeOffset).isActive = true
     }
