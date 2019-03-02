@@ -23,7 +23,7 @@ enum Feature: String {
     case news = "News"
     case contacts = "Penn Contacts"
     case about = "About"
-    case fling = "Fling"
+    case fling = "Spring Fling"
     case event = "Event"
 }
 

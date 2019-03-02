@@ -187,8 +187,8 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
     
     func navigateToFeature(feature: Feature) {
         let vc = ControllerModel.shared.viewController(for: feature)
-        let nvc = UINavigationController(rootViewController: vc)
-        navigationController?.pushViewController(nvc, animated: true)
+        vc.title = feature.rawValue
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
