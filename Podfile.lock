@@ -29,7 +29,6 @@ PODS:
   - nanopb/encode (0.3.901)
   - SCLAlertView (0.8)
   - ScrollableGraphView (4.0.6)
-  - SimpleImageViewer (1.1.1)
   - SwiftyJSON (4.2.0)
   - TimelineTableViewCell (1.2)
 
@@ -38,11 +37,10 @@ DEPENDENCIES:
   - ESTabBarController-swift
   - Fabric (~> 1.9.0)
   - Firebase (~> 4.7)
-  - Kingfisher (~> 4.0)
+  - Kingfisher
   - MBProgressHUD (~> 0.8)
   - SCLAlertView
   - ScrollableGraphView
-  - SimpleImageViewer (~> 1.1.1)
   - SwiftyJSON
   - TimelineTableViewCell
 
@@ -61,7 +59,6 @@ SPEC REPOS:
     - nanopb
     - SCLAlertView
     - ScrollableGraphView
-    - SimpleImageViewer
     - SwiftyJSON
     - TimelineTableViewCell
 
@@ -79,10 +76,9 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
-  SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
 
-PODFILE CHECKSUM: cf19690531861c9a0ce4c4e54228ebf75ce37f36
+PODFILE CHECKSUM: b47d38465e988f7885c4aee8d91c65cafb1b6f0c
 
 COCOAPODS: 1.5.3

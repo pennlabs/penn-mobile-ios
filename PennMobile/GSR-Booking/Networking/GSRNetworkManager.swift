@@ -16,7 +16,9 @@ class GSRNetworkManager: NSObject, Requestable {
     
     let availUrl = "https://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
-    let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
+    let bookingUrl = "http://api.pennlabs.org/studyspaces/book"
+    let reservationURL = "http://api.pennlabs.org/studyspaces/reservations"
+    let cancelURL = "http://api.pennlabs.org/studyspaces/cancel"
     
     var locations:[Int:String] = [:]
     var bookingRequestOutstanding = false
@@ -42,7 +44,10 @@ class GSRNetworkManager: NSObject, Requestable {
     }
 
     func getAvailability(for gsrId: Int, dateStr: String, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
-        let url = "\(availUrl)/\(gsrId)?date=\(dateStr)"
+        var url = "\(availUrl)/\(gsrId)?date=\(dateStr)"
+        if let sessionID = UserDefaults.standard.getSessionID() {
+            url = "\(url)&sessionid=\(sessionID)"
+        }
         getRequest(url: url) { (dict, error, statusCode) in
             var rooms: [GSRRoom]!
             if let dict = dict {
@@ -66,41 +71,44 @@ class GSRNetworkManager: NSObject, Requestable {
     }
     
     func makeBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
-        bookingRequestOutstanding = true
-        print(bookingRequestOutstanding)
-        if booking.location.service == "wharton" {
-            WhartonGSRNetworkManager.instance.bookRoom(booking: booking) { (success, errorMsg) in
-                callback(success, errorMsg)
-                self.bookingRequestOutstanding = false
-            }
-        } else {
-            makeLibcalBooking(for: booking, callback)
-        }
-    }
-    
-    func makeLibcalBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let start = dateFormatter.string(from: booking.start)
         let end = dateFormatter.string(from: booking.end)
-        let user: GSRUser = booking.user
-        let params: [String: String] = [
-            "building" : String(booking.location.lid),
+        
+        let basicParams = [
+            "lid" : String(booking.location.lid),
             "room" : String(booking.roomId),
             "start" : start,
             "end" : end,
-            "firstname" : user.firstName,
-            "lastname" : user.lastName,
-            "email" : user.email,
-            "phone" : user.phone,
-            "groupname" : booking.groupName,
-            "size" : "2-3"
         ]
+        let extraParams: [String: String]
+        if booking.location.service == "wharton" {
+            let sessionID: String = booking.sessionId
+            extraParams = [
+                "sessionid": sessionID
+            ]
+        } else {
+            let user: GSRUser = booking.user
+            extraParams = [
+                "firstname" : user.firstName,
+                "lastname" : user.lastName,
+                "email" : user.email,
+                "phone" : user.phone,
+                "groupname" : booking.groupName,
+                "size" : "2-3"
+            ]
+        }
+        
+        let params = basicParams.merging(extraParams, uniquingKeysWith: { (first, _) in first })
         
         guard let url = URL(string: bookingUrl) else { return }
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "POST"
-        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8);
+        let deviceID = getDeviceID()
+        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
+        self.bookingRequestOutstanding = true
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             var success = false
             var errorMessage = "Unable to connect to the internet. Please reconnect and try again."
@@ -114,6 +122,109 @@ class GSRNetworkManager: NSObject, Requestable {
             }
             callback(success, errorMessage)
             self.bookingRequestOutstanding = false
+        })
+        task.resume()
+    }
+}
+
+// MARK: - Get Reservatoins
+extension GSRNetworkManager {
+    func getReservations(sessionID: String?, email: String?, _ callback: @escaping (_ reservations: [GSRReservation]?) -> Void) {
+        let url: String
+        if let sessionID = sessionID, let email = email {
+            url = "\(reservationURL)?sessionid=\(sessionID)&email=\(email)"
+        } else if let sessionID = sessionID {
+            url = "\(reservationURL)?sessionid=\(sessionID)"
+        } else if let email = email {
+            url = "\(reservationURL)?email=\(email)"
+        } else {
+            url = reservationURL
+        }
+        getRequest(url: url) { (dict, error, status) in
+            var reservations: [GSRReservation]? = nil
+            if let dict = dict {
+                let json = JSON(dict)
+                reservations = try? self.parseReservation(json: json)
+            }
+            callback(reservations)
+        }
+    }
+    
+    func parseReservation(json: JSON) throws -> [GSRReservation] {
+        guard json["error"].string == nil else {
+            throw NetworkingError.authenticationError
+        }
+        guard let reservationJSONArray = json["reservations"].array else {
+            throw NetworkingError.jsonError
+        }
+        
+        var reservations = [GSRReservation]()
+        for reservationJSON in reservationJSONArray {
+            guard let roomName = reservationJSON["name"].string,
+                let gid = reservationJSON["gid"].int,
+                let lid = reservationJSON["lid"].int,
+                let bookingID = reservationJSON["booking_id"].string,
+                let startDateStr = reservationJSON["fromDate"].string,
+                let endDateStr = reservationJSON["toDate"].string,
+                let serviceStr = reservationJSON["service"].string,
+                let service = GSRService(rawValue: serviceStr) else {
+                    throw NetworkingError.jsonError
+            }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            guard let startDate = formatter.date(from: startDateStr),
+                let endDate = formatter.date(from: endDateStr) else {
+                    throw NetworkingError.jsonError
+            }
+            
+            let reservation = GSRReservation(roomName: roomName, gid: gid, lid: lid, bookingID: bookingID, startDate: startDate, endDate: endDate, service: service)
+            reservations.append(reservation)
+        }
+        return reservations
+    }
+}
+
+// MARK: - Delete Reservation
+extension GSRNetworkManager {
+    func deleteReservation(reservation: GSRReservation, sessionID: String?, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> Void) {
+        let url = URL(string: cancelURL)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let deviceID = getDeviceID()
+        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+        
+        var params = ["booking_id": reservation.bookingID]
+        
+        if reservation.service == .wharton {
+            guard let sessionID = sessionID else {
+                callback(false, "Please log in and try again.")
+                return
+            }
+            params["sessionid"] = sessionID
+        }
+        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
+            
+            if error != nil {
+                callback(false, "Unable to connect to the Internet.")
+            } else if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                        let json = JSON(data)
+                        if let result = json["result"].array?.first {
+                            let success = result["cancelled"].boolValue
+                            let errorMsg = result["error"].string
+                            callback(success, errorMsg)
+                            return
+                        } else if let errorMsg = json["error"].string {
+                            callback(false, errorMsg)
+                            return
+                        }
+                    }
+                }
+                callback(false, "Something went wrong. Please try again.")
+            }
         })
         task.resume()
     }
@@ -136,7 +247,7 @@ extension GSRRoom {
         guard let name = json["name"].string, let roomId = json["room_id"].int, let gid = json["gid"].int else {
             throw NetworkingError.jsonError
         }
-        
+
         let capacity = json["capacity"].intValue
         let imageUrl = json["thumbnail"].string
         

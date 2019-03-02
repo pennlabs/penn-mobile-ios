@@ -13,7 +13,9 @@ class LaundryMachineCell: UICollectionViewCell {
     
     var machine: LaundryMachine! {
         didSet {
-            updateCell(with: machine)
+            if let machine = machine {
+                updateCell(with: machine)
+            }
         }
     }
     

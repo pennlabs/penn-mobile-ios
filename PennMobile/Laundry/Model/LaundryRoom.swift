@@ -27,6 +27,12 @@ class LaundryRoom: Codable {
     
     var usageData: Array<Double>! = nil
     
+    init(id: Int, name: String, building: String) {
+        self.id = id
+        self.name = name
+        self.building = building
+    }
+    
     init(json: JSON) {
         self.id = json["id"].intValue
         self.name = json["hall_name"].string ?? "Unknown"
@@ -118,5 +124,12 @@ extension LaundryRoom {
             rooms.append(nextRoom)
         }
         return rooms
+    }
+}
+
+// MARK: - Default Room
+extension LaundryRoom {
+    static func getDefaultRoom() -> LaundryRoom {
+        return LaundryRoom(id: 0, name: "Bishop White", building: "Quad")
     }
 }

@@ -10,17 +10,17 @@ import UIKit
 import WebKit
 
 class GSRController: GenericViewController, IndicatorEnabled {
-    
+
     // MARK: UI Elements
     fileprivate var tableView: UITableView!
     fileprivate var rangeSlider: GSRRangeSlider!
     fileprivate var pickerView: UIPickerView!
     fileprivate var emptyView: EmptyView!
     fileprivate var barButton: UIBarButtonItem!
-    fileprivate var gsrBarButton: UIBarButtonItem!
-    
+    fileprivate var bookingsBarButton: UIBarButtonItem!
+
     var currentDay = Date()
-    
+
     var barButtonTitle: String {
         get {
             switch viewModel.state {
@@ -33,16 +33,15 @@ class GSRController: GenericViewController, IndicatorEnabled {
             }
         }
     }
-    
+
     fileprivate var viewModel: GSRViewModel!
-    
+
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
+        super.viewDidLoad()                
         prepareViewModel()
         prepareUI()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateForNewDayIfNeeded()
@@ -50,29 +49,28 @@ class GSRController: GenericViewController, IndicatorEnabled {
         fetchData()
         setupNavBar()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         setupNavBar()
         super.viewDidAppear(animated)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
+        tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = nil
         super.viewDidDisappear(animated)
     }
-    
+
     private func setupNavBar() {
         self.tabBarController?.title = "Study Room Booking"
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
         barButton.tintColor = UIColor.navigationBlue
+
+        bookingsBarButton = UIBarButtonItem(title: "Bookings", style: .done, target: self, action: #selector(handleBookingsBarButtonPressed(_:)))
+        bookingsBarButton.tintColor = UIColor.navigationBlue
         
-        tabBarController?.navigationItem.leftBarButtonItem = gsrBarButton
+        tabBarController?.navigationItem.leftBarButtonItem = bookingsBarButton
         tabBarController?.navigationItem.rightBarButtonItem = barButton
-    }
-    
-    private func tearDownNavBar() {
-        tabBarController?.navigationItem.leftBarButtonItem = nil
-        tabBarController?.navigationItem.rightBarButtonItem = nil
     }
 }
 
@@ -84,41 +82,41 @@ extension GSRController {
         prepareTableView()
         prepareEmptyView()
     }
-    
+
     private func preparePickerView() {
         pickerView = UIPickerView(frame: .zero)
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         pickerView.delegate = viewModel
         pickerView.dataSource = viewModel
-        
+
         view.addSubview(pickerView)
         pickerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
         pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
-    
+
     private func prepareRangeSlider() {
         rangeSlider = GSRRangeSlider()
         rangeSlider.delegate = viewModel
-        
+
         view.addSubview(rangeSlider)
         _ = rangeSlider.anchor(pickerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 30)
     }
-    
+
     private func prepareTableView() {
         tableView = UITableView(frame: .zero)
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
         tableView.register(RoomCell.self, forCellReuseIdentifier: RoomCell.identifier)
         tableView.tableFooterView = UIView()
-        
+
         view.addSubview(tableView)
         _ = tableView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
-    
+
     private func prepareEmptyView() {
         emptyView = EmptyView()
         emptyView.isHidden = true
-        
+
         view.addSubview(emptyView)
         _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
@@ -137,19 +135,19 @@ extension GSRController: GSRViewModelDelegate {
     func fetchData() {
         let location = viewModel.getSelectedLocation()
         let date = viewModel.getSelectedDate()
-        if location.service == "wharton" {
-            let sessionID = UserDefaults.standard.getSessionID()
-            WhartonGSRNetworkManager.instance.getAvailability(sessionID: sessionID, date: date) { (rooms) in
-                DispatchQueue.main.async {
-                    if let rooms = rooms {
-                        self.viewModel.updateData(with: rooms)
-                        self.refreshDataUI()
-                        self.rangeSlider.reload()
-                        self.refreshBarButton()
-                    }
-                }
-            }
-        } else {
+//        if location.service == "wharton" {
+//            let sessionID = UserDefaults.standard.getSessionID()
+//            WhartonGSRNetworkManager.instance.getAvailability(sessionID: sessionID, date: date) { (rooms) in
+//                DispatchQueue.main.async {
+//                    if let rooms = rooms {
+//                        self.viewModel.updateData(with: rooms)
+//                        self.refreshDataUI()
+//                        self.rangeSlider.reload()
+//                        self.refreshBarButton()
+//                    }
+//                }
+//            }
+//        } else {
             GSRNetworkManager.instance.getAvailability(for: location.lid, date: date) { (rooms) in
                 DispatchQueue.main.async {
                     if let rooms = rooms {
@@ -160,15 +158,15 @@ extension GSRController: GSRViewModelDelegate {
                     }
                 }
             }
-        }
+//        }
     }
-    
+
     func refreshDataUI() {
         emptyView.isHidden = !viewModel.isEmpty
         tableView.isHidden = viewModel.isEmpty
         self.tableView.reloadData()
     }
-    
+
     func refreshSelectionUI() {
         self.refreshBarButton()
     }
@@ -191,7 +189,7 @@ extension GSRController: GSRBookable {
         barButton.title = barButtonTitle
         self.barButton.tintColor = nil
     }
-    
+
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
         switch viewModel.state {
         case .loggedOut:
@@ -222,6 +220,11 @@ extension GSRController: GSRBookable {
             break
         }
     }
+
+    @objc fileprivate func handleBookingsBarButtonPressed(_ sender: Any) {
+        let grc = GSRReservationsController()
+        navigationVC?.pushViewController(grc, animated: true)
+    }
     
     private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {
         let wv = GSRWebviewLoginController()
@@ -229,19 +232,19 @@ extension GSRController: GSRBookable {
         let nvc = UINavigationController(rootViewController: wv)
         present(nvc, animated: true, completion: nil)
     }
-    
+
     private func presentLoginController(with booking: GSRBooking? = nil) {
         let glc = GSRLoginController()
         glc.booking = booking
         let nvc = UINavigationController(rootViewController: glc)
         present(nvc, animated: true, completion: nil)
     }
-    
+
     private func submitPressed(for booking: GSRBooking) {
         if GSRNetworkManager.instance.bookingRequestOutstanding {
             return
         }
-        
+
         let location = viewModel.getSelectedLocation()
         if location.service == "wharton" {
             if let sessionId = UserDefaults.standard.getSessionID() {

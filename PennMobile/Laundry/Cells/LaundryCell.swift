@@ -81,7 +81,7 @@ class LaundryCell: UITableViewCell {
         xb.clipsToBounds = true
         xb.layer.cornerRadius = 20
         xb.layer.masksToBounds = true
-        xb.setBackgroundImage(UIImage(named: "x_button"), for: UIControlState.normal)
+        xb.setBackgroundImage(UIImage(named: "x_button"), for: UIControl.State.normal)
         xb.setBackgroundImage(UIImage(named: "x_button_selected"), for: .selected)
         xb.setBackgroundImage(UIImage(named: "x_button_selected"), for: .highlighted)
         xb.addTarget(self, action: #selector(deleteRoom), for: .touchUpInside)
@@ -225,7 +225,7 @@ class LaundryCell: UITableViewCell {
     
     // MARK: - Init
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
