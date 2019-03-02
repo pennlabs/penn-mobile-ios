@@ -270,63 +270,54 @@ extension StudentNetworkManager {
             throw NetworkingError.parsingError
         }
         var subHtml = try element.html()
-        subHtml.append("<") // For edge case where instructor is at EOF
-        if term == "2017A" {
-            print(subHtml)
-            subHtml = "<br><b>Wharton Field Challenge: Flcp-School of the Future</b> <br><a href=\"#\" onclick=\"return fastGoToUrl(event, 'fast2.do?fastButtonId=T2XO9V8H','','T2XO9V8H',false);\" style=\"display:inline;\" id=\"T2XO9V8H_text\"><span class=\"fastButtonLinkText\"><b>MGMT-353-007</b></span></a> <br>TBA <br> 01/11/2017 - 04/26/2017 <br>Instructor(s): Keith W Weigelt <br><br><b>International Security</b> <br><a href=\"#\" onclick=\"return fastGoToUrl(event, 'fast2.do?fastButtonId=T2XO9V8J','','T2XO9V8J',false);\" style=\"display:inline;\" id=\"T2XO9V8J_text\"><span class=\"fastButtonLinkText\"><b>PSCI-151-001</b></span></a> <br>MW&nbsp;11:00 <span class=\"ampm\">AM</span> - 12:00 <span class=\"ampm\">PM</span> <br> 01/11/2017 - 04/26/2017 <br>Instructor(s): Avery M. Goldstein <br><br><b>International Security</b> <br><a href=\"#\" onclick=\"return fastGoToUrl(event, 'fast2.do?fastButtonId=T2XO9V8L','','T2XO9V8L',false);\" style=\"display:inline;\" id=\"T2XO9V8L_text\"><span class=\"fastButtonLinkText\"><b>PSCI-151-206</b></span></a> <br>R&nbsp;3:00 <span class=\"ampm\">PM</span> - 4:00 <span class=\"ampm\">PM</span> <br> 01/11/2017 - 04/26/2017 <br>Instructor(s): Vivienne Born<"
-        }
-        
-        let buildingCodes = subHtml.getMatches(for: "mobileSchedule\">(.*?) <")
-        let buildingIds = subHtml.getMatches(for: "BuildingId=(.*?)&amp;")
-        let rooms = subHtml.getMatches(for: "&nbsp; (.*?)&")
-        let weekdaysArr = subHtml.getMatches(for: "<\\/span><\\/a> <br>(.*?)[& ]")
-        var startTimes = subHtml.getMatches(for: "<\\/span><\\/a> <br>.*?&nbsp;(.*?) <span class=\"ampm\">")
-        var endTimes = subHtml.getMatches(for: "<\\/span> - (.*?) <")
-        var AMPMs = subHtml.getMatches(for: "<span class=\"ampm\">(.*?)<")
-        
-        let instructors: [String] = subHtml.getMatches(for: "Instructor\\(s\\): (.*?)\\s*<")
-        let nameCodes: [String] = try element.select("b").map { try $0.text() }
-        
-        if buildingCodes.count != buildingIds.count && buildingIds.count != rooms.count
-            && rooms.count >= instructors.count && nameCodes.count >= 2*instructors.count {
-            throw NetworkingError.parsingError
-        }
+        subHtml.append("<")
         
         var courses = [Course]()
-        for i in 0..<instructors.count {
-            var building: Building? = nil
-            var room: String? = nil
-            if i <= buildingCodes.count - 1 && i <= buildingIds.count - 1 && i <= rooms.count - 1 {
-                if let buildingId = Int(buildingIds[i]) {
-                    building = Building(code: buildingCodes[i], id: buildingId)
-                    room = rooms[i]
-                }
-            }
+
+        let htmlSections = subHtml.getMatches(for: "br><br(.*?Instructor\\(s\\):.*?<)")
+        for section in htmlSections {
+            let buildingCodes = section.getMatches(for: "mobileSchedule\">(.*?) <")
+            let buildingIds = section.getMatches(for: "BuildingId=(.*?)&amp;")
+            let rooms = section.getMatches(for: "&nbsp; (.*?)&")
+            let weekdaysArr = section.getMatches(for: "<\\/span><\\/a> <br>(.*?)[& ]")
+            var startTimes = section.getMatches(for: "<\\/span><\\/a> <br>.*?&nbsp;(.*?) <span class=\"ampm\">")
+            var endTimes = section.getMatches(for: "<\\/span> - (.*?) <")
+            var AMPMs = section.getMatches(for: "<span class=\"ampm\">(.*?)<")
             
-            var weekdays: String = ""
-            var startTime: String = ""
-            var endTime: String = ""
-            if i <= weekdaysArr.count - 1 && i <= startTimes.count - 1 && i <= endTimes.count - 1 && 2*i <= AMPMs.count - 1 {
-                if weekdaysArr[i] == "TBA" {
-                    // Adding empty start and end time so that class indices line up
-                    startTimes.insert("", at: i)
-                    endTimes.insert("", at: i)
-                    AMPMs.insert("", at: i)
-                    AMPMs.insert("", at: i+1)
-                } else {
-                    weekdays = weekdaysArr[i]
-                    startTime = "\(startTimes[i]) \(AMPMs[2*i])"
-                    endTime = "\(endTimes[i]) \(AMPMs[2*i+1])"
-                }
-            }
+            let instructors: [String] = section.getMatches(for: "Instructor\\(s\\): (.*?)\\s*<")
+            let name = section.getMatches(for: "><b>(.*?)<\\/b> <br>")
+            let code = section.getMatches(for: "\"><b>(.*?)<\\/b>")
             
-            let courseInstructors = instructors[i].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
-            let name = nameCodes[2*i]
-            let fullCode = nameCodes[2*i+1].replacingOccurrences(of: " ", with: "")
-            let codePieces = fullCode.split(separator: "-")
-            let courseCode = "\(codePieces[0])-\(codePieces[1])"
-            let section = String(codePieces[2])
-            courses.append(Course(name: name, term: term, code: courseCode, section: section, building: building, room: room, weekdays: weekdays, startTime: startTime, endTime: endTime, instructors: courseInstructors))
+            if name.count > 0 && code.count > 0 && instructors.count > 0 {
+                var building: Building? = nil
+                var room: String? = nil
+                if buildingCodes.count > 0 && buildingIds.count > 0 && rooms.count > 0 {
+                    if let buildingId = Int(buildingIds[0]) {
+                        building = Building(code: buildingCodes[0], id: buildingId)
+                        room = rooms[0]
+                    }
+                }
+                
+                var weekdays: String = ""
+                if weekdaysArr.count > 0 {
+                    weekdays = weekdaysArr[0]
+                }
+                
+                var startTime: String = ""
+                var endTime: String = ""
+                if startTimes.count > 0 && endTimes.count > 0 && AMPMs.count == 2 {
+                    startTime = "\(startTimes[0]) \(AMPMs[0])"
+                    endTime = "\(endTimes[0]) \(AMPMs[1])"
+                }
+                
+                let courseInstructors = instructors[0].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+                let name = name[0]
+                let fullCode = code[0].replacingOccurrences(of: " ", with: "")
+                let codePieces = fullCode.split(separator: "-")
+                let courseCode = "\(codePieces[0])-\(codePieces[1])"
+                let section = String(codePieces[2])
+                courses.append(Course(name: name, term: term, code: courseCode, section: section, building: building, room: room, weekdays: weekdays, startTime: startTime, endTime: endTime, instructors: courseInstructors))
+            }
         }
         return Set(courses)
     }
