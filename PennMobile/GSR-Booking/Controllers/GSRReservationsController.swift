@@ -21,6 +21,9 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         tableView.register(ReservationCell.self, forCellReuseIdentifier: ReservationCell.identifier)
         tableView.register(NoReservationsCell.self, forCellReuseIdentifier: NoReservationsCell.identifier)
         tableView.tableFooterView = UIView()
+        
+        self.title = "Your Bookings"
+        self.navigationController?.navigationBar.topItem?.title = "Back"
 
         let sessionID = UserDefaults.standard.getSessionID()
         let email = GSRUser.getUser()?.email
@@ -29,9 +32,6 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
             self.tableView.dataSource = self
             return
         }
-        
-        self.title = "Your Bookings"
-        self.navigationController?.navigationBar.topItem?.title = "Back"
     }
     
     override func viewWillAppear(_ animated: Bool) {
