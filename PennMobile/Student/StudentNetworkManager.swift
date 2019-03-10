@@ -280,9 +280,11 @@ extension StudentNetworkManager {
             let buildingIds = section.getMatches(for: "BuildingId=(.*?)&amp;")
             let rooms = section.getMatches(for: "&nbsp; (.*?)&")
             let weekdaysArr = section.getMatches(for: "<\\/span><\\/a> <br>(.*?)[& ]")
-            var startTimes = section.getMatches(for: "<\\/span><\\/a> <br>.*?&nbsp;(.*?) <span class=\"ampm\">")
-            var endTimes = section.getMatches(for: "<\\/span> - (.*?) <")
-            var AMPMs = section.getMatches(for: "<span class=\"ampm\">(.*?)<")
+            let startTimes = section.getMatches(for: "<\\/span><\\/a> <br>.*?&nbsp;(.*?) <span class=\"ampm\">")
+            let endTimes = section.getMatches(for: "<\\/span> - (.*?) <")
+            let AMPMs = section.getMatches(for: "<span class=\"ampm\">(.*?)<")
+            let startDates = section.getMatches(for: "<br> (.*?) -")
+            let endDates = section.getMatches(for: "<br> .*? - (.*?) ")
             
             let instructors: [String] = section.getMatches(for: "Instructor\\(s\\): (.*?)\\s*<")
             let name = section.getMatches(for: "><b>(.*?)<\\/b> <br>")
@@ -310,13 +312,25 @@ extension StudentNetworkManager {
                     endTime = "\(endTimes[0]) \(AMPMs[1])"
                 }
                 
+                var startDate = ""
+                var endDate = ""
+                if let startStr = startDates.first, let endStr = endDates.first {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "MM/dd/yyyy"
+                    if let sDate = formatter.date(from: startStr), let eDate = formatter.date(from: endStr) {
+                        formatter.dateFormat = "yyyy-MM-dd"
+                        startDate = formatter.string(from: sDate)
+                        endDate = formatter.string(from: eDate)
+                    }
+                }
+                
                 let courseInstructors = instructors[0].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
                 let name = name[0]
                 let fullCode = code[0].replacingOccurrences(of: " ", with: "")
                 let codePieces = fullCode.split(separator: "-")
                 let courseCode = "\(codePieces[0])-\(codePieces[1])"
                 let section = String(codePieces[2])
-                courses.append(Course(name: name, term: term, code: courseCode, section: section, building: building, room: room, weekdays: weekdays, startTime: startTime, endTime: endTime, instructors: courseInstructors))
+                courses.append(Course(name: name, term: term, code: courseCode, section: section, building: building, room: room, weekdays: weekdays, startDate: startDate, endDate: endDate, startTime: startTime, endTime: endTime, instructors: courseInstructors))
             }
         }
         return Set(courses)

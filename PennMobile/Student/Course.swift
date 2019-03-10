@@ -26,6 +26,8 @@ class Course: Codable, Hashable {
     let building: Building?
     let room: String?
     let weekdays: String
+    let startDate: String
+    let endDate: String
     let startTime: String
     let endTime: String
     let instructors: [String]
@@ -38,12 +40,14 @@ class Course: Codable, Hashable {
         case building
         case room
         case weekdays
-        case startTime = "start"
-        case endTime = "end"
+        case startDate = "start_date"
+        case endDate = "end_date"
+        case startTime = "start_time"
+        case endTime = "end_time"
         case instructors
     }
     
-    init(name: String, term: String, code: String, section: String, building: Building?, room: String?, weekdays: String, startTime: String, endTime: String, instructors: [String]) {
+    init(name: String, term: String, code: String, section: String, building: Building?, room: String?, weekdays: String, startDate: String, endDate: String, startTime: String, endTime: String, instructors: [String]) {
         self.name = name
         self.term = term
         self.code = code
@@ -52,13 +56,15 @@ class Course: Codable, Hashable {
         self.building = building
         self.room = room
         self.weekdays = weekdays
+        self.startDate = startDate
+        self.endDate = endDate
         self.startTime = startTime
         self.endTime = endTime
     }
     
     var description: String {
         let instructorStr = instructors.joined(separator: ", ")
-        let str = "\(term) \(name) \(code)-\(section) \(instructorStr) \(weekdays) \(startTime) \(endTime)"
+        let str = "\(term) \(name) \(code)-\(section) \(instructorStr) \(weekdays) \(startDate) - \(endDate) \(startTime) \(endTime)"
         if let building = building, let room = room {
             return "\(str) \(building.code) \(room)"
         } else {
