@@ -233,7 +233,7 @@ extension LaundryGraphView {
         let dottedLineLayer = CAShapeLayer()
         dottedLineLayer.strokeColor = UIColor.warmGrey.cgColor
         dottedLineLayer.lineWidth = 1.0
-        dottedLineLayer.lineCap = kCALineCapRound
+        dottedLineLayer.lineCap = CAShapeLayerLineCap.round
         dottedLineLayer.lineDashPattern = [.init(integerLiteral: 5)]
         
         let currentHour = Calendar.current.component(.hour, from: Date())

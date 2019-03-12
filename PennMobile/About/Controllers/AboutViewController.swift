@@ -92,11 +92,11 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         let font = UIFont(name: "AvenirNext-Regular", size: 18)!
         let boldFont = UIFont(name: "AvenirNext-Bold", size: 18)!
         
-        let attributedString = NSMutableAttributedString(string: str, attributes: [NSFontAttributeName : font])
-        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(10, 9))
-        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(39, 18))
-        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(58, 18))
-        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: NSMakeRange(81, 20))
+        let attributedString = NSMutableAttributedString(string: str, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font) : font]))
+        attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(10, 9))
+        attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(39, 18))
+        attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(58, 18))
+        attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(81, 20))
         
         subtitle.attributedText = attributedString
         subtitle.textColor = UIColor.darkGray
@@ -170,7 +170,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if (kind == UICollectionElementKindSectionHeader) {
+        if (kind == UICollectionView.elementKindSectionHeader) {
             let section = indexPath.section
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "AboutPageSectionHeader", for: indexPath) as! AboutPageCollectionViewHeader
             header.label.text = (section == 0) ? "Meet the Team" : "Alumni"
@@ -214,7 +214,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         self.collectionView?.backgroundColor = .white
         self.collectionView?.isScrollEnabled = false
         self.collectionView?.register(AboutPageCollectionViewCell.self, forCellWithReuseIdentifier: "AboutPageCell")
-        self.collectionView?.register(AboutPageCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "AboutPageSectionHeader")
+        self.collectionView?.register(AboutPageCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "AboutPageSectionHeader")
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
@@ -264,4 +264,15 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

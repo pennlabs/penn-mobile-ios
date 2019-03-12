@@ -66,7 +66,7 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
         return button
     }()
     
-    func handleNextPage() {
+    @objc func handleNextPage() {
         if pageControl.currentPage == pages.count {
             return
         }
@@ -78,7 +78,7 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
         moveOffscreen(pageNumber: pageControl.currentPage)
     }
     
-    func handleSkip() {
+    @objc func handleSkip() {
         terminateOnboarding()
     }
     

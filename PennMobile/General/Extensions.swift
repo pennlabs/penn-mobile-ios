@@ -134,7 +134,7 @@ extension UIFont {
 extension UIBarButtonItem {
     static func itemWith(colorfulImage: UIImage?, color: UIColor, target: AnyObject, action: Selector) -> UIBarButtonItem {
         let button = UIButton(type: .custom)
-        button.setImage(colorfulImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate), for: .normal)
+        button.setImage(colorfulImage?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
         button.tintColor = color
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         button.addTarget(target, action: action, for: .touchUpInside)
@@ -336,13 +336,13 @@ extension DateFormatter {
 
 public extension Collection {
     /// Return a copy of `self` with its elements shuffled
-    func shuffle() -> [Generator.Element] {
+    func shuffle() -> [Iterator.Element] {
         var list = Array(self)
         list.shuffleInPlace()
         return list
     }
 
-    var random: Generator.Element? {
+    var random: Iterator.Element? {
         return shuffle().first
     }
 }
@@ -403,11 +403,12 @@ extension String {
     // https://stackoverflow.com/questions/34262863/how-to-calculate-height-of-a-string
     func dynamicHeight(font: UIFont, width: CGFloat) -> CGFloat{
         let calString = NSString(string: self)
-        let textSize = calString.boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSFontAttributeName: font], context: nil)
+        let textSize = calString.boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font]), context: nil)
         return textSize.height
     }
 }
 
+<<<<<<< HEAD
 extension String {
     func getMatches(for pattern: String) -> [String] {
         let regex = try! NSRegularExpression(pattern: pattern)
@@ -427,4 +428,15 @@ extension String {
         let range = NSMakeRange(0, self.count)
         return regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: replaceWith)
     }
+=======
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+>>>>>>> development
 }

@@ -22,7 +22,7 @@ extension UserDefaults {
         case gsrUSer
         case appVersion
         case gsrSessionID
-        case gsrSessoinIDTimestamp
+        case gsrSessionIDTimestamp
     }
 }
 
@@ -165,15 +165,15 @@ extension UserDefaults {
     func set(sessionID: String) {
         let now = Date()
         set(sessionID, forKey: UserDefaultsKeys.gsrSessionID.rawValue)
-        set(now, forKey: UserDefaultsKeys.gsrSessoinIDTimestamp.rawValue)
+        set(now, forKey: UserDefaultsKeys.gsrSessionIDTimestamp.rawValue)
         synchronize()
     }
     
     func getSessionID() -> String? {
-        if let timestamp = object(forKey: UserDefaultsKeys.gsrSessoinIDTimestamp.rawValue) as? Date,
+        if let timestamp = object(forKey: UserDefaultsKeys.gsrSessionIDTimestamp.rawValue) as? Date,
             let sessionID = string(forKey: UserDefaultsKeys.gsrSessionID.rawValue),
             let diffInDays = Calendar.current.dateComponents([.day], from: timestamp, to: Date()).day,
-            diffInDays <= 14 {
+            diffInDays <= 13 {
             return sessionID
         }
         return nil
@@ -181,7 +181,7 @@ extension UserDefaults {
     
     func clearSessionID() {
         removeObject(forKey: UserDefaultsKeys.gsrSessionID.rawValue)
-        removeObject(forKey: UserDefaultsKeys.gsrSessoinIDTimestamp.rawValue)
+        removeObject(forKey: UserDefaultsKeys.gsrSessionIDTimestamp.rawValue)
         DispatchQueue.main.async {
             let dataStore = WKWebsiteDataStore.default()
             dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in

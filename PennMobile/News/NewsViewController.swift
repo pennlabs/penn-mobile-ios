@@ -67,7 +67,7 @@ class NewsViewController: GenericViewController, HairlineRemovable {
         webview.loadRequest(URLRequest(url: URL(string: urlArray[0])!))
     }
     
-    internal func switchNewsSource(_ segment: UISegmentedControl) {
+    @objc internal func switchNewsSource(_ segment: UISegmentedControl) {
         webview.loadRequest(URLRequest(url: URL(string: urlArray[segment.selectedSegmentIndex])!))
     }
 }

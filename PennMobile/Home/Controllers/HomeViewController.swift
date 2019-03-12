@@ -94,8 +94,9 @@ extension HomeViewController {
     }
     
     func prepareLoadingView() {
-        loadingView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        loadingView = UIActivityIndicatorView(style: .whiteLarge)
         loadingView.color = .black
+        loadingView.isHidden = false
         view.addSubview(loadingView)
         loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true

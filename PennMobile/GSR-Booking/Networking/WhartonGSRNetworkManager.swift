@@ -16,6 +16,8 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
     let availUrl = "https://apps.wharton.upenn.edu/gsr/api/app/grid_view"
     let availUrlNoSessionID = "https://api.pennlabs.org/studyspaces/gsr"
     let bookURL = "https://apps.wharton.upenn.edu/gsr/reserve"
+    let reservationURL = "https://api.pennlabs.org/studyspaces/gsr/reservations"
+    let deleteURL = "https://api.pennlabs.org/studyspaces/gsr/delete"
     
     func getAvailability(sessionID: String?, date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
         if sessionID == nil {
@@ -161,13 +163,54 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
         task.resume()
     }
     
+    // MARK: Get Reservatoins
+    func getReservations(for sessionID: String, callback: @escaping ((_ reservations: [GSRReservation]?) -> Void)) {
+        let url = "\(reservationURL)?sessionid=\(sessionID)"
+        getRequest(url: url) { (dict, error, _) in
+            var reservations: [GSRReservation]?
+            if let dict = dict {
+                let json = JSON(dict)
+                reservations = try? self.parseReservation(json: json)
+            }
+            callback(reservations)
+        }
+    }
+    
+    func deleteReservation(sessionID: String, bookingID: Int, callback: @escaping ((_ success: Bool, _ errorMsg: String?) -> Void)) {
+        let url = URL(string: deleteURL)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+
+        let params = ["sessionid": sessionID, "booking": String(bookingID)]
+        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
+            
+            if error != nil {
+                callback(false, "Unable to connect to the Internet.")
+            } else if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                        let json = JSON(data)
+                        let success = json["result"].string != nil
+                        let errorMsg = json["error"].string
+                        callback(success, errorMsg)
+                        return
+                    }
+                }
+                callback(false, "Something went wrong. Please try again.")
+            }
+        })
+        task.resume()
+    }
+    
     func getMatch(for pattern: String, in text: String) -> String {
         let regex = try! NSRegularExpression(pattern: pattern)
         let result = regex.matches(in: text as String, range:NSMakeRange(0, text.utf16.count))
-        let r = result[0].rangeAt(1)
+        let r = result[0].range(at: 1)
         let start = text.index(text.startIndex, offsetBy: r.location)
         let end = text.index(text.startIndex, offsetBy: r.location + r.length)
-        return text[start..<end]
+        return String(text[start..<end])
     }
     
     func getBookingUrl(for booking: GSRBooking) -> String {
@@ -210,7 +253,7 @@ extension WhartonGSRNetworkManager {
                 times.append(time)
             }
             
-            let room = GSRRoom(name: name, roomId: id, gid: 9999, imageUrl: nil, capacity: 5, timeSlots: times)
+            let room = GSRRoom(name: name, roomId: id, gid: 1, imageUrl: nil, capacity: 5, timeSlots: times)
             rooms.append(room)
         }
         return rooms
@@ -237,5 +280,32 @@ extension GSRTimeSlot {
             throw NetworkingError.jsonError
         }
         return date
+    }
+}
+
+// MARK: - Reservation JSON Parsing
+extension WhartonGSRNetworkManager {
+    func parseReservation(json: JSON) throws -> [GSRReservation] {
+        guard json["error"].string == nil else {
+            throw NetworkingError.authenticationError
+        }
+        guard let reservationJSONArray = json["reservations"].array else {
+            throw NetworkingError.jsonError
+        }
+        
+        var reservations = [GSRReservation]()
+//        for reservationJSON in reservationJSONArray {
+//            guard let id = reservationJSON["booking_id"].int,
+//                let dateStr = reservationJSON["date"].string,
+//                let startTime = reservationJSON["startTime"].string,
+//                let endTime = reservationJSON["endTime"].string,
+//                let location = reservationJSON["location"].string else {
+//                    throw NetworkingError.jsonError
+//            }
+//
+//            let reservation = GSRReservation(id: id, date: dateStr, location: location, startTime: startTime, endTime: endTime, building: "Huntsman")
+//            reservations.append(reservation)
+//        }
+        return reservations
     }
 }
