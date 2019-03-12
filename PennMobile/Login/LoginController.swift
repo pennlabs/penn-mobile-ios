@@ -12,6 +12,7 @@ import UIKit
 class LoginController: UIViewController, ShowsAlert {
     
     var loginButton: UIButton!
+    var skipButton: UIButton!
     
     fileprivate var coursesToSave: Set<Course>?
     
@@ -26,6 +27,7 @@ class LoginController: UIViewController, ShowsAlert {
 extension LoginController {
     fileprivate func prepareUI() {
         prepareLoginButton()
+        prepareSkipButton()
     }
     
     fileprivate func prepareLoginButton() {
@@ -40,12 +42,28 @@ extension LoginController {
         loginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
+    fileprivate func prepareSkipButton() {
+        skipButton = UIButton(type: .system)
+        skipButton.setTitle("Skip", for: .normal)
+        skipButton.setTitleColor(UIColor.buttonBlue, for: .normal)
+        skipButton.addTarget(self, action: #selector(handleSkip(_:)), for: .touchUpInside)
+        skipButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(skipButton)
+        skipButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 30).isActive = true
+        skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
     func handleLogin(_ sender: Any) {
         let lwc = LoginWebviewController()
         lwc.loginCompletion = loginCompletion(_:)
         lwc.coursesRetrieved = coursesRetreived(_:)
         let nvc = UINavigationController(rootViewController: lwc)
         present(nvc, animated: true, completion: nil)
+    }
+    
+    func handleSkip(_ sender: Any) {
+        AppDelegate.shared.rootViewController.switchToMainScreen()
     }
     
     func loginCompletion(_ student: Student?) {

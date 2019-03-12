@@ -99,6 +99,9 @@
 		219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */; };
 		21B556172224FDC500D80F61 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B556162224FDC500D80F61 /* RootViewController.swift */; };
 		21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B556182224FDF700D80F61 /* SplashViewController.swift */; };
+		21B649202236F2F300AC5B7F /* HomeCoursesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6491F2236F2F300AC5B7F /* HomeCoursesCell.swift */; };
+		21B649222236F2FC00AC5B7F /* HomeCoursesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B649212236F2FC00AC5B7F /* HomeCoursesCellItem.swift */; };
+		21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B649232236FFD300AC5B7F /* BuildingMapWebviewController.swift */; };
 		21B8BBB02223187D00EBC1D0 /* LoginWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */; };
 		21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB1222318A600EBC1D0 /* Course.swift */; };
 		21B8BBB4222318BE00EBC1D0 /* StudentNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */; };
@@ -305,6 +308,9 @@
 		219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryNotificationCenter.swift; sourceTree = "<group>"; };
 		21B556162224FDC500D80F61 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		21B556182224FDF700D80F61 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		21B6491F2236F2F300AC5B7F /* HomeCoursesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoursesCell.swift; sourceTree = "<group>"; };
+		21B649212236F2FC00AC5B7F /* HomeCoursesCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoursesCellItem.swift; sourceTree = "<group>"; };
+		21B649232236FFD300AC5B7F /* BuildingMapWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingMapWebviewController.swift; sourceTree = "<group>"; };
 		21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWebviewController.swift; sourceTree = "<group>"; };
 		21B8BBB1222318A600EBC1D0 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentNetworkManager.swift; sourceTree = "<group>"; };
@@ -463,6 +469,7 @@
 			children = (
 				21640D4420103EB8002F33CA /* HomeViewController.swift */,
 				EFD6F358220E334100382783 /* DiningCellSettingsController.swift */,
+				21B649232236FFD300AC5B7F /* BuildingMapWebviewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -472,6 +479,7 @@
 			children = (
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
 				210AC14420684F9B0050D837 /* HomeCellProtocols.swift */,
+				21B6491E2236F2E200AC5B7F /* Courses */,
 				C13F9E93219284E9000B866A /* Calendar */,
 				21508164220D2481002F7EA1 /* News */,
 				21F5F8EF20538A54005B143F /* Spring Fling */,
@@ -823,6 +831,15 @@
 				219F01F81FB8AC22006BBC4E /* RoomSelectionView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		21B6491E2236F2E200AC5B7F /* Courses */ = {
+			isa = PBXGroup;
+			children = (
+				21B6491F2236F2F300AC5B7F /* HomeCoursesCell.swift */,
+				21B649212236F2FC00AC5B7F /* HomeCoursesCellItem.swift */,
+			);
+			path = Courses;
 			sourceTree = "<group>";
 		};
 		21B8BBAE222317C200EBC1D0 /* Student */ = {
@@ -1431,8 +1448,10 @@
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				97E79E1C2100F32E00D3D606 /* FitnessViewModel.swift in Sources */,
 				B6665A182071E63800F49A9C /* TabBarController.swift in Sources */,
+				21B649202236F2F300AC5B7F /* HomeCoursesCell.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
+				21B649222236F2FC00AC5B7F /* HomeCoursesCellItem.swift in Sources */,
 				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
@@ -1475,6 +1494,7 @@
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
 				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,
+				21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,

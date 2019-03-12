@@ -183,6 +183,11 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
             present(nvc, animated: true, completion: nil)
         }
     }
+    
+    func handleBuildingSelected(searchTerm: String) {
+        let bmwc = BuildingMapWebviewController(searchTerm: searchTerm)
+        self.navigationController?.pushViewController(bmwc, animated: true)
+    }
 }
 
 // MARK: - Networking
