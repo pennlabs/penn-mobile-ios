@@ -20,7 +20,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.2.0)
   - "GoogleToolboxForMac/NSData+zlib (2.2.0)":
     - GoogleToolboxForMac/Defines (= 2.2.0)
-  - Kingfisher (4.10.1)
+  - Kingfisher (5.1.1)
   - MBProgressHUD (0.9.2)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -29,11 +29,7 @@ PODS:
   - nanopb/encode (0.3.901)
   - SCLAlertView (0.8)
   - ScrollableGraphView (4.0.6)
-<<<<<<< HEAD
-  - SimpleImageViewer (1.1.1)
   - SwiftSoup (1.7.4)
-=======
->>>>>>> development
   - SwiftyJSON (4.2.0)
   - TimelineTableViewCell (1.2)
 
@@ -46,11 +42,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.8)
   - SCLAlertView
   - ScrollableGraphView
-<<<<<<< HEAD
-  - SimpleImageViewer (~> 1.1.1)
   - SwiftSoup
-=======
->>>>>>> development
   - SwiftyJSON
   - TimelineTableViewCell
 
@@ -69,11 +61,7 @@ SPEC REPOS:
     - nanopb
     - SCLAlertView
     - ScrollableGraphView
-<<<<<<< HEAD
-    - SimpleImageViewer
     - SwiftSoup
-=======
->>>>>>> development
     - SwiftyJSON
     - TimelineTableViewCell
 
@@ -86,23 +74,15 @@ SPEC CHECKSUMS:
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
-  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  Kingfisher: 2558186963e5be42d98c5b110ccb3130148b77e4
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
-<<<<<<< HEAD
-  SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
 
-PODFILE CHECKSUM: ff2bbbd1ebd7672a33315e25f28b429a7619b6b7
-=======
-  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
-  TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
-
-PODFILE CHECKSUM: b47d38465e988f7885c4aee8d91c65cafb1b6f0c
->>>>>>> development
+PODFILE CHECKSUM: 35b0715da5496471f465226d335648c68386361f
 
 COCOAPODS: 1.5.3

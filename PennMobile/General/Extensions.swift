@@ -408,14 +408,13 @@ extension String {
     }
 }
 
-<<<<<<< HEAD
 extension String {
     func getMatches(for pattern: String) -> [String] {
         let regex = try! NSRegularExpression(pattern: pattern)
         let result = regex.matches(in: self, range:NSMakeRange(0, self.utf16.count))
         var matches = [String]()
         for res in result {
-            let r = res.rangeAt(1)
+            let r = res.range(at: 1)
             let start = self.index(self.startIndex, offsetBy: r.location)
             let end = self.index(self.startIndex, offsetBy: r.location + r.length)
             matches.append(String(self[start..<end]))
@@ -428,15 +427,15 @@ extension String {
         let range = NSMakeRange(0, self.count)
         return regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: replaceWith)
     }
-=======
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
-}
+    
+    // Helper function inserted by Swift 4.2 migrator.
+    fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+        guard let input = input else { return nil }
+        return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+    }
 
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
-	return input.rawValue
->>>>>>> development
+    // Helper function inserted by Swift 4.2 migrator.
+    fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+        return input.rawValue
+    }
 }

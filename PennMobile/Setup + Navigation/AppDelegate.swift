@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var tabBarController: TabBarController!
     
-<<<<<<< HEAD
     static var shared: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
@@ -28,10 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return window!.rootViewController as! RootViewController
     }
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-=======
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
->>>>>>> development
         // Override point for customization after application launch.
         
         if UserDefaults.standard.isNewAppVersion() {

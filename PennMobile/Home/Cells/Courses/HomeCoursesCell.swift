@@ -44,7 +44,7 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
     //fileprivate var calendarEventTableView: UITableView!
     
     // Mark: - Init
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
         prepareUI()
@@ -156,7 +156,7 @@ extension HomeCoursesCell {
 //}
 
 extension HomeCoursesCell {
-    func handleTapped(_ sender: Any) {
+    @objc func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? BuildingMapSelectable, let code = courses?.first?.building?.code else { return }
         delegate.handleBuildingSelected(searchTerm: code)
     }

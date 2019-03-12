@@ -22,10 +22,10 @@ class RootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addChildViewController(current)
+        addChild(current)
         current.view.frame = view.bounds
         view.addSubview(current.view)
-        current.didMove(toParentViewController: self) 
+        current.didMove(toParent: self) 
     }
     
     func showLoginScreen() {
@@ -53,39 +53,39 @@ class RootViewController: UIViewController {
     }
     
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
-        current.willMove(toParentViewController: nil)
-        addChildViewController(new)
+        current.willMove(toParent: nil)
+        addChild(new)
         
         transition(from: current, to: new, duration: 0.3, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
         }) { completed in
-            self.current.removeFromParentViewController()
-            new.didMove(toParentViewController: self)
+            self.current.removeFromParent()
+            new.didMove(toParent: self)
             self.current = new
             completion?()
         }
     }
     
     private func animateDismissTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
-        current.willMove(toParentViewController: nil)
-        addChildViewController(new)
+        current.willMove(toParent: nil)
+        addChild(new)
         transition(from: current, to: new, duration: 0.3, options: [], animations: {
             new.view.frame = self.view.bounds
         }) { completed in
-            self.current.removeFromParentViewController()
-            new.didMove(toParentViewController: self)
+            self.current.removeFromParent()
+            new.didMove(toParent: self)
             self.current = new
             completion?()
         }
     }
     
     private func moveto(controller: UIViewController) {
-        addChildViewController(controller)
+        addChild(controller)
         controller.view.frame = view.bounds
         view.addSubview(controller.view)
-        controller.didMove(toParentViewController: self)
-        current.willMove(toParentViewController: nil)
+        controller.didMove(toParent: self)
+        current.willMove(toParent: nil)
         current.view.removeFromSuperview()
-        current.removeFromParentViewController()
+        current.removeFromParent()
         current = controller
     }
     

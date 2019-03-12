@@ -54,7 +54,7 @@ extension LoginController {
         skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
-    func handleLogin(_ sender: Any) {
+    @objc func handleLogin(_ sender: Any) {
         let lwc = LoginWebviewController()
         lwc.loginCompletion = loginCompletion(_:)
         lwc.coursesRetrieved = coursesRetreived(_:)
@@ -62,7 +62,7 @@ extension LoginController {
         present(nvc, animated: true, completion: nil)
     }
     
-    func handleSkip(_ sender: Any) {
+    @objc func handleSkip(_ sender: Any) {
         AppDelegate.shared.rootViewController.switchToMainScreen()
     }
     
