@@ -56,32 +56,6 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
             // Webview has redirected to PennInTouch.
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
             cookieStore.getAllCookies { (cookies) in
-//                StudentNetworkManager.instance.getStudent(request: request, cookies: cookies, callback: { student in
-//                    DispatchQueue.main.async {
-//                        if let student = student {
-//                            if self.pennkey == nil {
-//                                // PennKey not guaranteed to be fetched yet. If it's not, fetch it before continuing.
-//                                StudentNetworkManager.instance.getPennKey(cookies: cookies, callback: { pennkey in
-//                                    DispatchQueue.main.async {
-//                                        student.pennkey = pennkey
-//                                        self.completion(student)
-//                                        self.dismiss(animated: true, completion: nil)
-//                                        decisionHandler(.cancel)
-//                                    }
-//                                })
-//                            } else {
-//                                self.completion(student)
-//                                self.dismiss(animated: true, completion: nil)
-//                                decisionHandler(.cancel)
-//                            }
-//                        } else {
-//                            self.completion(nil)
-//                            self.dismiss(animated: true, completion: nil)
-//                            decisionHandler(.cancel)
-//                        }
-//                    }
-//                })
-                
                 StudentNetworkManager.instance.getStudent(request: request, cookies: cookies, initialCallback: { student in
                     DispatchQueue.main.async {
                         if let student = student {
@@ -90,12 +64,14 @@ class LoginWebviewController: UIViewController, WKUIDelegate, WKNavigationDelega
                                 StudentNetworkManager.instance.getPennKey(cookies: cookies, callback: { pennkey in
                                     DispatchQueue.main.async {
                                         student.pennkey = pennkey
+                                        student.setEmail()
                                         self.loginCompletion(student)
                                         self.dismiss(animated: true, completion: nil)
                                         decisionHandler(.cancel)
                                     }
                                 })
                             } else {
+                                student.setEmail()
                                 self.loginCompletion(student)
                                 self.dismiss(animated: true, completion: nil)
                                 decisionHandler(.cancel)

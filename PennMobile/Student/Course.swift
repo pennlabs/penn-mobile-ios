@@ -16,6 +16,7 @@ struct CoursesJSON: Codable {
 class Course: Codable, Hashable {
     let name: String
     let term: String
+    let dept: String
     let code: String
     let section: String
     let building: String?
@@ -27,9 +28,10 @@ class Course: Codable, Hashable {
     let endTime: String
     let instructors: [String]
     
-    init(name: String, term: String, code: String, section: String, building: String?, room: String?, weekdays: String, startDate: String, endDate: String, startTime: String, endTime: String, instructors: [String]) {
+    init(name: String, term: String, dept: String, code: String, section: String, building: String?, room: String?, weekdays: String, startDate: String, endDate: String, startTime: String, endTime: String, instructors: [String]) {
         self.name = name
         self.term = term
+        self.dept = dept
         self.code = code
         self.section = section
         self.instructors = instructors
@@ -44,7 +46,7 @@ class Course: Codable, Hashable {
     
     var description: String {
         let instructorStr = instructors.joined(separator: ", ")
-        let str = "\(term) \(name) \(code)-\(section) \(instructorStr) \(weekdays) \(startDate) - \(endDate) \(startTime) \(endTime)"
+        let str = "\(term) \(name) \(dept)-\(code)-\(section) \(instructorStr) \(weekdays) \(startDate) - \(endDate) \(startTime) \(endTime)"
         if let building = building, let room = room {
             return "\(str) \(building) \(room)"
         } else {
@@ -53,7 +55,7 @@ class Course: Codable, Hashable {
     }
     
     var hashValue: Int {
-        return "\(term)\(code)\(section)".hashValue
+        return "\(term)\(dept)\(code)\(section)".hashValue
     }
     
     static func == (lhs: Course, rhs: Course) -> Bool {

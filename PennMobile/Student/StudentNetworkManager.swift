@@ -321,9 +321,10 @@ extension StudentNetworkManager {
                 let name = name[0]
                 let fullCode = code[0].replacingOccurrences(of: " ", with: "")
                 let codePieces = fullCode.split(separator: "-")
-                let courseCode = "\(codePieces[0])-\(codePieces[1])"
+                let dept = String(codePieces[0])
+                let code = String(codePieces[1])
                 let section = String(codePieces[2])
-                courses.append(Course(name: name, term: term, code: courseCode, section: section, building: building, room: room, weekdays: weekdays, startDate: startDate, endDate: endDate, startTime: startTime, endTime: endTime, instructors: courseInstructors))
+                courses.append(Course(name: name, term: term, dept: dept, code: code, section: section, building: building, room: room, weekdays: weekdays, startDate: startDate, endDate: endDate, startTime: startTime, endTime: endTime, instructors: courseInstructors))
             }
         }
         return Set(courses)
@@ -413,6 +414,6 @@ extension StudentNetworkManager {
             lastName.removeLast()
         }
         
-        return Student(first: firstName, last: lastName, photoUrl: photoUrl)
+        return Student(first: firstName, last: lastName, imageUrl: photoUrl)
     }
 }

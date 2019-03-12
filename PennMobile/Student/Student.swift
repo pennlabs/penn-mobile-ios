@@ -11,27 +11,27 @@ import Foundation
 class Student: Codable {
     let first: String
     let last: String
-    let photoUrl: String?
-    
     var pennkey: String!
+    var email: String?
+    let imageUrl: String?
+    
     var degrees: Set<Degree>?
     var courses: Set<Course>?
     
-    var preferredEmail: String?
-    
-    init(first: String, last: String, photoUrl: String?) {
+    init(first: String, last: String, imageUrl: String?) {
         self.first = first
         self.last = last
-        self.photoUrl = photoUrl
+        self.imageUrl = imageUrl
     }
     
-    func getPotentialEmail() -> String? {
-        guard let degrees = degrees, let pennkey = pennkey else { return nil }
+    func setEmail() {
+        guard let degrees = degrees, let pennkey = pennkey else { return }
         var potentialEmail: String? = nil
         for degree in degrees {
             switch degree.schoolCode {
             case "WH":
-                return "\(pennkey)@wharton.upenn.edu"
+                email = "\(pennkey)@wharton.upenn.edu"
+                return
             case "EAS":
                 potentialEmail = "\(pennkey)@seas.upenn.edu"
                 break
@@ -45,15 +45,15 @@ class Student: Codable {
                 break
             }
         }
-        return potentialEmail
+        email = potentialEmail
     }
     
     var description: String {
         var str = "\(first) \(last)"
-        if let photoUrl = photoUrl {
-            str = "\(str)\n\(photoUrl)"
+        if let imageUrl = imageUrl {
+            str = "\(str)\n\(imageUrl)"
         }
-        if let email = getPotentialEmail() {
+        if let email = email {
             str = "\(str)\n\(email)"
         }
         if let degrees = degrees {

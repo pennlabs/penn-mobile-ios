@@ -16,7 +16,7 @@ func getDeviceID() -> String {
 
 class UserDBManager: NSObject {
     static let shared = UserDBManager()
-    fileprivate let baseUrl = "http://localhost:5000"//"https://api.pennlabs.org"
+    fileprivate let baseUrl = "https://api.pennlabs.org"
     
     var dryRun: Bool = true
     var testRun: Bool = false
@@ -114,6 +114,7 @@ extension UserDBManager {
                     } else {
                         if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                             let json = JSON(data)
+                            print(json)
                             let error = json["error"].stringValue
                             print(error)
                         }
