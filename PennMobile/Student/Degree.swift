@@ -16,15 +16,6 @@ class Degree: Codable, Hashable {
     let majors: Set<Major>
     let expectedGradTerm: String
     
-    enum CodingKeys: String, CodingKey {
-        case schoolName = "school_name"
-        case schoolCode = "school_code"
-        case degreeName = "degree_name"
-        case degreeCode = "degree_code"
-        case majors
-        case expectedGradTerm = "expected_grad"
-    }
-    
     init(schoolName: String, schoolCode: String, degreeName: String, degreeCode: String, majors: Set<Major>, expectedGradTerm: String) {
         self.schoolName = schoolName
         self.schoolCode = schoolCode

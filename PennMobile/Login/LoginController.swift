@@ -69,7 +69,6 @@ extension LoginController {
     func loginCompletion(_ student: Student?) {
         if let student = student {
             // Login Successful
-            print(student.description)
             UserDBManager.shared.saveStudent(student) { (accountID) in
                 DispatchQueue.main.async {
                     if let accountID = accountID {
@@ -77,7 +76,6 @@ extension LoginController {
                         print(accountID)
                         if let courses = self.coursesToSave {
                             UserDBManager.shared.saveCourses(courses, accountID: accountID) { (success) in
-                                print(success)
                             }
                         }
                     }
@@ -90,12 +88,9 @@ extension LoginController {
     }
     
     func coursesRetreived(_ courses: Set<Course>?) {
-        print("-------------All Courses--------------")
-        courses?.forEach { print($0.description) }
         if let courses = courses {
             if let accountID = UserDefaults.standard.getAccountID() {
                 UserDBManager.shared.saveCourses(courses, accountID: accountID) { (success) in
-                    print(success)
                 }
             } else {
                 self.coursesToSave = courses

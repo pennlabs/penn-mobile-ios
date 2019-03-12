@@ -157,8 +157,8 @@ extension HomeCoursesCell {
 
 extension HomeCoursesCell {
     @objc func handleTapped(_ sender: Any) {
-        guard let delegate = delegate as? BuildingMapSelectable, let code = courses?.first?.building?.code else { return }
-        delegate.handleBuildingSelected(searchTerm: code)
+        guard let delegate = delegate as? BuildingMapSelectable, let building = courses?.first?.building else { return }
+        delegate.handleBuildingSelected(searchTerm: building)
     }
 }
 

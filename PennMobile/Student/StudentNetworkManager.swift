@@ -169,30 +169,26 @@ extension StudentNetworkManager {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
                         do {
                             let terms = try self.parseTerms(from: html)
+                            let selectedTerm = try self.parseSelectedTerm(from: html)
                             
-                            if let firstTerm = terms.first {
-                                let courses = try self.parseCourses(from: html, term: firstTerm)
-                                if currentTermOnly {
-                                    let currentTerm = self.currentTerm()
-                                    if firstTerm == currentTerm {
-                                        // If first term in list is the current term, return those courses
-                                        callback(courses)
-                                    } else {
-                                        // Otherwise, we need to do another request but for just the current term
-                                        let remainingTerms = [currentTerm]
-                                        self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
-                                            callback(courses)
-                                        })
-                                    }
+                            let courses = try self.parseCourses(from: html, term: selectedTerm)
+                            if currentTermOnly {
+                                let currentTerm = self.currentTerm()
+                                if selectedTerm == currentTerm {
+                                    // If first term in list is the current term, return those courses
+                                    callback(courses)
                                 } else {
-                                    let remainingTerms = Array(terms.dropFirst())
-                                    self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: courses, callback: { (allCourses) in
-                                        callback(allCourses)
+                                    // Otherwise, we need to do another request but for just the current term
+                                    let remainingTerms = [currentTerm]
+                                    self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
+                                        callback(courses)
                                     })
                                 }
                             } else {
-                                let emptySet = Set<Course>()
-                                callback(emptySet)
+                                let remainingTerms = terms.filter { $0 != selectedTerm }
+                                self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: courses, callback: { (allCourses) in
+                                    callback(allCourses)
+                                })
                             }
                             return
                         } catch {
@@ -277,7 +273,6 @@ extension StudentNetworkManager {
         let htmlSections = subHtml.getMatches(for: "br><br(.*?Instructor\\(s\\):.*?<)")
         for section in htmlSections {
             let buildingCodes = section.getMatches(for: "mobileSchedule\">(.*?) <")
-            let buildingIds = section.getMatches(for: "BuildingId=(.*?)&amp;")
             let rooms = section.getMatches(for: "&nbsp; (.*?)&")
             let weekdaysArr = section.getMatches(for: "<\\/span><\\/a> <br>(.*?)[& ]")
             let startTimes = section.getMatches(for: "<\\/span><\\/a> <br>.*?&nbsp;(.*?) <span class=\"ampm\">")
@@ -291,13 +286,11 @@ extension StudentNetworkManager {
             let code = section.getMatches(for: "\"><b>(.*?)<\\/b>")
             
             if name.count > 0 && code.count > 0 && instructors.count > 0 {
-                var building: Building? = nil
+                var building: String? = nil
                 var room: String? = nil
-                if buildingCodes.count > 0 && buildingIds.count > 0 && rooms.count > 0 {
-                    if let buildingId = Int(buildingIds[0]) {
-                        building = Building(code: buildingCodes[0], id: buildingId)
-                        room = rooms[0]
-                    }
+                if buildingCodes.count > 0 && rooms.count > 0 {
+                    building = buildingCodes[0]
+                    room = rooms[0]
                 }
                 
                 var weekdays: String = ""
@@ -340,6 +333,15 @@ extension StudentNetworkManager {
         let doc: Document = try SwiftSoup.parse(html)
         let terms: [String] = try doc.select("option").map { try $0.val() }
         return terms
+    }
+    
+    fileprivate func parseSelectedTerm(from html: String) throws -> String {
+        let doc: Document = try SwiftSoup.parse(html)
+        let term = try doc.select("option[selected='selected']").map { try $0.val() }.first
+        if term == nil {
+            throw NetworkingError.parsingError
+        }
+        return term!
     }
 }
 
@@ -411,6 +413,6 @@ extension StudentNetworkManager {
             lastName.removeLast()
         }
         
-        return Student(firstName: firstName, lastName: lastName, photoUrl: photoUrl)
+        return Student(first: firstName, last: lastName, photoUrl: photoUrl)
     }
 }

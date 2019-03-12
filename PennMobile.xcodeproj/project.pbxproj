@@ -110,7 +110,6 @@
 		21B8BBB4222318BE00EBC1D0 /* StudentNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */; };
 		21B8BBB622231F9F00EBC1D0 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB522231F9F00EBC1D0 /* Student.swift */; };
 		21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB72223963C00EBC1D0 /* Degree.swift */; };
-		21B8BBBA2224798C00EBC1D0 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB92224798B00EBC1D0 /* Building.swift */; };
 		21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */; };
 		21E1C6FD20256DC6003248EC /* DiningDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E1C6FC20256DC6003248EC /* DiningDetailModel.swift */; };
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
@@ -322,7 +321,6 @@
 		21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentNetworkManager.swift; sourceTree = "<group>"; };
 		21B8BBB522231F9F00EBC1D0 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		21B8BBB72223963C00EBC1D0 /* Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Degree.swift; sourceTree = "<group>"; };
-		21B8BBB92224798B00EBC1D0 /* Building.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
 		21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		21E1C6FC20256DC6003248EC /* DiningDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDetailModel.swift; sourceTree = "<group>"; };
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
@@ -860,7 +858,6 @@
 				21B8BBB522231F9F00EBC1D0 /* Student.swift */,
 				21B8BBB72223963C00EBC1D0 /* Degree.swift */,
 				21B8BBB1222318A600EBC1D0 /* Course.swift */,
-				21B8BBB92224798B00EBC1D0 /* Building.swift */,
 				21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */,
 			);
 			path = Student;
@@ -1468,7 +1465,6 @@
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */,
-				21B8BBBA2224798C00EBC1D0 /* Building.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,

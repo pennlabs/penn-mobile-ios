@@ -11,11 +11,6 @@ import Foundation
 struct CoursesJSON: Codable {
     let accountID: String
     let courses: Set<Course>
-    
-    enum CodingKeys: String, CodingKey {
-        case accountID = "account_id"
-        case courses
-    }
 }
 
 class Course: Codable, Hashable {
@@ -23,7 +18,7 @@ class Course: Codable, Hashable {
     let term: String
     let code: String
     let section: String
-    let building: Building?
+    let building: String?
     let room: String?
     let weekdays: String
     let startDate: String
@@ -32,22 +27,7 @@ class Course: Codable, Hashable {
     let endTime: String
     let instructors: [String]
     
-    enum CodingKeys: String, CodingKey {
-        case name
-        case term
-        case code
-        case section
-        case building
-        case room
-        case weekdays
-        case startDate = "start_date"
-        case endDate = "end_date"
-        case startTime = "start_time"
-        case endTime = "end_time"
-        case instructors
-    }
-    
-    init(name: String, term: String, code: String, section: String, building: Building?, room: String?, weekdays: String, startDate: String, endDate: String, startTime: String, endTime: String, instructors: [String]) {
+    init(name: String, term: String, code: String, section: String, building: String?, room: String?, weekdays: String, startDate: String, endDate: String, startTime: String, endTime: String, instructors: [String]) {
         self.name = name
         self.term = term
         self.code = code
@@ -66,7 +46,7 @@ class Course: Codable, Hashable {
         let instructorStr = instructors.joined(separator: ", ")
         let str = "\(term) \(name) \(code)-\(section) \(instructorStr) \(weekdays) \(startDate) - \(endDate) \(startTime) \(endTime)"
         if let building = building, let room = room {
-            return "\(str) \(building.code) \(room)"
+            return "\(str) \(building) \(room)"
         } else {
             return str
         }

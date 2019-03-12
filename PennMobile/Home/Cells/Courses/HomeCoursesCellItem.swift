@@ -21,8 +21,16 @@ final class HomeCoursesCellItem: HomeCellItem {
     }
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
-        let defaultCourse = Course(name: "Strategic Cost Analysis", term: "2019A", code: "ACCT-102", section: "003", building: Building(code: "MEYH", id: 81), room: "255", weekdays: "MW", startDate: "", endDate: "", startTime: "", endTime: "", instructors: ["Matthew J. Bloomfield"])
-        return HomeCoursesCellItem(courses: [defaultCourse])
+//        let defaultCourse = Course(name: "Strategic Cost Analysis", term: "2019A", code: "ACCT-102", section: "003", building: "MEYH", room: "255", weekdays: "MW", startDate: "", endDate: "", startTime: "", endTime: "", instructors: ["Matthew J. Bloomfield"])
+        guard let json = json, let data: Data = try? json.rawData()  else { return nil }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        do {
+            let courses = try decoder.decode([Course].self, from: data)
+            return HomeCoursesCellItem(courses: courses)
+        } catch {
+            return nil
+        }
     }
     
     static var associatedCell: ModularTableViewCell.Type {

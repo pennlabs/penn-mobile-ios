@@ -9,8 +9,8 @@
 import Foundation
 
 class Student: Codable {
-    let firstName: String
-    let lastName: String
+    let first: String
+    let last: String
     let photoUrl: String?
     
     var pennkey: String!
@@ -19,18 +19,9 @@ class Student: Codable {
     
     var preferredEmail: String?
     
-    enum CodingKeys: String, CodingKey {
-        case firstName = "first"
-        case lastName = "last"
-        case photoUrl = "photo_url"
-        case pennkey
-        case degrees
-        case courses
-    }
-    
-    init(firstName: String, lastName: String, photoUrl: String?) {
-        self.firstName = firstName
-        self.lastName = lastName
+    init(first: String, last: String, photoUrl: String?) {
+        self.first = first
+        self.last = last
         self.photoUrl = photoUrl
     }
     
@@ -58,7 +49,7 @@ class Student: Codable {
     }
     
     var description: String {
-        var str = "\(firstName) \(lastName)"
+        var str = "\(first) \(last)"
         if let photoUrl = photoUrl {
             str = "\(str)\n\(photoUrl)"
         }

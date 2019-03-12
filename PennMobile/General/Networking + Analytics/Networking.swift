@@ -93,6 +93,9 @@ extension Requestable {
         
         let deviceID = getDeviceID()
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+        if let accountID = UserDefaults.standard.getAccountID() {
+            request.setValue(accountID, forHTTPHeaderField: "X-Account-ID")
+        }
         request.httpMethod = method.description
         if let params = params {
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")

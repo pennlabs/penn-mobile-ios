@@ -93,6 +93,7 @@ extension UserDBManager {
 extension UserDBManager {
     func saveStudent(_ student: Student, _ completion: @escaping (_ accountID: String?) -> Void) {
         let jsonEncoder = JSONEncoder()
+        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
         do {
             let url = URL(string: "\(baseUrl)/account/register")!
             var request = URLRequest(url: url)
@@ -129,6 +130,7 @@ extension UserDBManager {
     
     func saveCourses(_ courses: Set<Course>, accountID: String, _ completion: @escaping (_ success: Bool) -> Void) {
         let jsonEncoder = JSONEncoder()
+        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
         do {
             let url = URL(string: "\(baseUrl)/account/courses")!
             var request = URLRequest(url: url)
