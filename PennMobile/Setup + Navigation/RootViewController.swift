@@ -35,6 +35,12 @@ class RootViewController: UIViewController {
         moveto(controller: loginController)
     }
     
+    func showMainScreen() {
+        let tabBarController = TabBarController()
+        let homeNVC = HomeNavigationController(rootViewController: tabBarController)
+        moveto(controller: homeNVC)
+    }
+    
     func switchToMainScreen() {
         let tabBarController = TabBarController()
         let homeNVC = HomeNavigationController(rootViewController: tabBarController)

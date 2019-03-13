@@ -26,6 +26,7 @@ extension UserDefaults {
         case pennkey
         case password
         case cookies
+        case wharton
     }
 }
 
@@ -214,6 +215,18 @@ extension UserDefaults {
     
     func getPassword() -> String? {
         return string(forKey: UserDefaultsKeys.password.rawValue)
+    }
+}
+
+// MARK: - Wharton Flag
+extension UserDefaults {
+    func set(isInWharton: Bool) {
+        set(isInWharton, forKey: UserDefaultsKeys.wharton.rawValue)
+        synchronize()
+    }
+    
+    func getWhartonFlag() -> Bool {
+        return bool(forKey: UserDefaultsKeys.wharton.rawValue)
     }
 }
 

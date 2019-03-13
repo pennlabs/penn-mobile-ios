@@ -70,6 +70,7 @@ extension LoginController {
         if let student = student, let accountID = accountID {
             // Login Successful
             UserDefaults.standard.set(accountID: accountID)
+            UserDefaults.standard.set(isInWharton: student.isInWharton())
             if let email = student.email {
                 let user = GSRUser(firstName: student.first, lastName: student.last, email: email, phone: "2158986533")
                 GSRUser.save(user: user)

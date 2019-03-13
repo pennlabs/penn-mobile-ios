@@ -19,9 +19,9 @@ class SplashViewController: UIViewController {
     }
     
     private func switchToView() {
-        let loggedIn = false
+        let loggedIn = UserDefaults.standard.getAccountID() != nil
         if loggedIn {
-            //AppDelegate.shared.rootViewController.switchToMainScreen()
+            AppDelegate.shared.rootViewController.showMainScreen()
         } else {
             AppDelegate.shared.rootViewController.showLoginScreen()
         }

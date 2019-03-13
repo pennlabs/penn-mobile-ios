@@ -537,12 +537,12 @@
 		216640621EBADADA00746B8E /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
-				21B8BBBB2224F98B00EBC1D0 /* Login */,
 				CF1CE9B8205D5BF100C51F46 /* More Tab */,
 				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
 				216640F91EBB898700746B8E /* About */,
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
 				216640C71EBADC9D00746B8E /* General */,
+				21B8BBBB2224F98B00EBC1D0 /* Login */,
 				216640881EBADBA000746B8E /* Setup + Navigation */,
 				B62875E82112591700FB2873 /* Buildings */,
 				97E79E0A2100DBC300D3D606 /* Fitness */,
@@ -552,7 +552,6 @@
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
 				212304C52054ED9900958CE0 /* Spring Fling */,
-				21B8BBAE222317C200EBC1D0 /* Student */,
 				216640EE1EBB867600746B8E /* Contacts */,
 				216640D31EBB80FD00746B8E /* News */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
@@ -854,7 +853,7 @@
 			path = Courses;
 			sourceTree = "<group>";
 		};
-		21B8BBAE222317C200EBC1D0 /* Student */ = {
+		21B8BBBB2224F98B00EBC1D0 /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */,
@@ -862,13 +861,6 @@
 				21B8BBB72223963C00EBC1D0 /* Degree.swift */,
 				21B8BBB1222318A600EBC1D0 /* Course.swift */,
 				21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */,
-			);
-			path = Student;
-			sourceTree = "<group>";
-		};
-		21B8BBBB2224F98B00EBC1D0 /* Login */ = {
-			isa = PBXGroup;
-			children = (
 				21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */,
 			);
 			path = Login;
