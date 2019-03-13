@@ -9,11 +9,36 @@
 import Foundation
 import SwiftSoup
 
-class StudentNetworkManager: NSObject {
+protocol CookieRequestable {}
+
+extension CookieRequestable {
+    func makeRequest(with req: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        var request = req
+        if let cookies = HTTPCookieStorage.shared.cookies {
+            var cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
+            cookieStr = cookieStr + "fastStartPage=fast.do;"
+            request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
+        }
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                if let url = httpResponse.url, let allHeaderFields = httpResponse.allHeaderFields as? [String: String] {
+                    let newCookies = HTTPCookie.cookies(withResponseHeaderFields: allHeaderFields, for: url)
+                    for cookie in newCookies {
+                        HTTPCookieStorage.shared.setCookie(cookie)
+                    }
+                }
+            }
+            completionHandler(data, response, error)
+        })
+        task.resume()
+    }
+}
+
+class StudentNetworkManager: NSObject, CookieRequestable {
     
     static let instance = StudentNetworkManager()
     
-    fileprivate let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
+    fileprivate let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=fullSite"
     fileprivate let reauthURL = "https://weblogin.pennkey.upenn.edu/login?factors=UPENN.EDU&cosign-pennkey-idp_reauth-0&https://idp.pennkey.upenn.edu/idp/Authn/ReauthRemoteUser?conversation=e1s1"
     fileprivate let degreeURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileAdvisors"
     fileprivate let courseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileSchedule"
@@ -21,94 +46,42 @@ class StudentNetworkManager: NSObject {
 
 // MARK: - Student
 extension StudentNetworkManager {
-    func getStudent(cookies: [HTTPCookie], initialCallback: @escaping (_ student: Student?) -> Void, allCoursesCallback: @escaping (_ courses: Set<Course>?) -> Void) {
+    func getStudent(initialCallback: @escaping (_ student: Student?) -> Void, allCoursesCallback: @escaping (_ courses: Set<Course>?) -> Void) {
         let url = URL(string: baseURL)!
-        var request = URLRequest(url: url)
-        let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
-        request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
-        
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+        let request = URLRequest(url: url)
+        makeRequest(with: request) { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
-                    // Set correct long-term cookie
-                    let setCookieStr = httpResponse.allHeaderFields["Set-Cookie"] as? String
-                    guard let sessionID: String = setCookieStr?.getMatches(for: "=(.*?);").first else {
-                        initialCallback(nil)
-                        return
-                    }
-                    let newCookieStr = cookieStr.removingRegexMatches(pattern: "JSESSIONID=(.*?);", replaceWith: "JSESSIONID=\(sessionID);")
-                    
-                    let cookies = HTTPCookieStorage.shared.cookies ?? []
-                    if let jsessionCookie = (cookies.filter { $0.name == "JSESSIONID" }).first, let properties = jsessionCookie.properties {
-                        var prop = properties
-                        prop.updateValue(sessionID, forKey: HTTPCookiePropertyKey.value)
-                        let newCookie = HTTPCookie(properties: prop)!
-                        HTTPCookieStorage.shared.setCookie(newCookie)
-                    }
-                    
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
                         if let student = try? self.parseStudent(from: html) {
-                            self.getCourses(cookieStr: newCookieStr, currentTermOnly: true, callback: { (courses) in
+                            self.getCourses(currentTermOnly: true, callback: { (courses) in
                                 student.courses = courses
-                                self.getDegrees(cookieStr: newCookieStr, callback: { (degrees) in
+                                self.getDegrees(callback: { (degrees) in
                                     student.degrees = degrees
                                     initialCallback(student)
-                                    self.getCourses(cookieStr: newCookieStr, currentTermOnly: false, callback: { (courses) in
+                                    self.getCourses(currentTermOnly: false, callback: { (courses) in
                                         allCoursesCallback(courses)
                                     })
                                 })
                             })
                             return
+                        } else {
+                            print(html)
                         }
                     }
                 }
             }
             initialCallback(nil)
-        })
-        task.resume()
-    }
-}
-
-// MARK: - PennKey
-/**
- * Note: WKWebview does not allow you to view HTTPBody (form data containing pennkey + password),
- *       so we must make a reauth request to get pennkey
- **/
-extension StudentNetworkManager {
-    func getPennKey(cookies: [HTTPCookie], callback: @escaping ((_ pennkey: String?) -> Void)) {
-        let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
-        self.getPennKey(cookieStr: cookieStr, callback: callback)
-    }
-    
-    fileprivate func getPennKey(cookieStr: String, callback: @escaping ((_ pennkey: String?) -> Void)) {
-        let url = URL(string: reauthURL)!
-        var request = URLRequest(url: url)
-        request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
-        
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                        let pennkey = html.getMatches(for: "name=\"login\" value=\"(.*?)\"").first
-                        callback(pennkey)
-                        return
-                    }
-                }
-            }
-            callback(nil)
-        })
-        task.resume()
+        }
     }
 }
 
 // MARK: - Degrees
 extension StudentNetworkManager {
-    func getDegrees(cookieStr: String, callback: @escaping ((_ degrees: Set<Degree>?) -> Void)) {
+    func getDegrees(callback: @escaping ((_ degrees: Set<Degree>?) -> Void)) {
         let url = URL(string: degreeURL)!
-        var request = URLRequest(url: url)
-        request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
-        
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+        let request = URLRequest(url: url)
+        makeRequest(with: request) { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
@@ -119,20 +92,16 @@ extension StudentNetworkManager {
                 }
             }
             callback(nil)
-        })
-        task.resume()
+        }
     }
 }
 
 // MARK: - Courses
 extension StudentNetworkManager {
-    fileprivate func getCourses(cookieStr: String, currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+    fileprivate func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         let url = URL(string: courseURL)!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
-        
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+        let request = URLRequest(url: url)
+        makeRequest(with: request) { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
@@ -149,13 +118,13 @@ extension StudentNetworkManager {
                                 } else {
                                     // Otherwise, we need to do another request but for just the current term
                                     let remainingTerms = [currentTerm]
-                                    self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
+                                    self.getCoursesHelper(terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
                                         callback(courses)
                                     })
                                 }
                             } else {
                                 let remainingTerms = terms.filter { $0 != selectedTerm }
-                                self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: courses, callback: { (allCourses) in
+                                self.getCoursesHelper(terms: remainingTerms, courses: courses, callback: { (allCourses) in
                                     callback(allCourses)
                                 })
                             }
@@ -166,12 +135,11 @@ extension StudentNetworkManager {
                 }
             }
             callback(nil)
-        })
-        task.resume()
+        }
     }
     
     // Returns a set of courses for the provided terms unioned with the courses initially provided
-    private func getCoursesHelper(cookieStr: String, terms: [String], courses: Set<Course>, callback: @escaping ((_ courses: Set<Course>) -> Void)) {
+    private func getCoursesHelper(terms: [String], courses: Set<Course>, callback: @escaping ((_ courses: Set<Course>) -> Void)) {
         if terms.isEmpty {
             callback(courses)
             return
@@ -183,7 +151,6 @@ extension StudentNetworkManager {
         let url = URL(string: baseURL)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
         
         let params = [
             "fastStart": "mobileChangeStudentScheduleTermData",
@@ -191,21 +158,20 @@ extension StudentNetworkManager {
             ]
         request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
         
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+        makeRequest(with: request) { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
                         if let subCourses: Set<Course> = try? self.parseCourses(from: html, term: term) {
                             let newCourses = courses.union(subCourses)
-                            self.getCoursesHelper(cookieStr: cookieStr, terms: remainingTerms, courses: newCourses, callback: callback)
+                            self.getCoursesHelper(terms: remainingTerms, courses: newCourses, callback: callback)
                             return
                         }
                     }
                 }
             }
             callback(courses)
-        })
-        task.resume()
+        }
     }
     
     private func currentTerm() -> String {

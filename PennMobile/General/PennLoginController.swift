@@ -77,32 +77,33 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
             return
         }
         
-        let hasReferer = request.allHTTPHeaderFields?["Referer"] != nil
-        if url.absoluteString == urlStr, hasReferer {
-            // Webview has redirected to desired site.
-            webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { (cookies) in
-                cookies.forEach({ (cookie) in
-                    HTTPCookieStorage.shared.setCookie(cookie)
-                })
-            }
-            self.handleSuccessfulNavigation(webView, decisionHandler: decisionHandler)
-        } else {
-            if url.absoluteString == loginURL {
-                webView.evaluateJavaScript("document.getElementById('pennkey').value;") { (result, error) in
-                    if let pennkey = result as? String {
-                        webView.evaluateJavaScript("document.getElementById('password').value;") { (result, error) in
-                            if let password = result as? String {
-                                self.pennkey = pennkey
-                                self.password = password
+        webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { (cookies) in
+            cookies.forEach({ (cookie) in
+                HTTPCookieStorage.shared.setCookie(cookie)
+            })
+            
+            let hasReferer = request.allHTTPHeaderFields?["Referer"] != nil
+            if url.absoluteString == self.urlStr, hasReferer {
+                // Webview has redirected to desired site.
+                self.handleSuccessfulNavigation(webView, decisionHandler: decisionHandler)
+            } else {
+                if url.absoluteString == self.loginURL || (url.absoluteString.contains(self.loginURL) && url.absoluteString.contains("cosign-pennkey-idp_reauth-0")) {
+                    webView.evaluateJavaScript("document.getElementById('pennkey').value;") { (result, error) in
+                        if let pennkey = result as? String {
+                            webView.evaluateJavaScript("document.getElementById('password').value;") { (result, error) in
+                                if let password = result as? String {
+                                    self.pennkey = pennkey
+                                    self.password = password
+                                }
+                                decisionHandler(.allow)
                             }
+                        } else {
                             decisionHandler(.allow)
                         }
-                    } else {
-                        decisionHandler(.allow)
                     }
+                } else {
+                    decisionHandler(.allow)
                 }
-            } else {
-                decisionHandler(.allow)
             }
         }
     }

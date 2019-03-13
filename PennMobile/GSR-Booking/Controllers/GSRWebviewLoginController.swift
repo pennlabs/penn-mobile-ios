@@ -12,6 +12,7 @@ import WebKit
 class GSRWebviewLoginController: PennLoginController {
     
     var completion: (() -> Void)?
+    var shouldAnimate = true
     
     override var urlStr: String {
         return "https://apps.wharton.upenn.edu/gsr/"
@@ -25,8 +26,9 @@ class GSRWebviewLoginController: PennLoginController {
                     HTTPCookieStorage.shared.setCookie(cookie)
                 }
                 decisionHandler(.cancel)
-                self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: self.shouldAnimate, completion: nil)
                 self.completion?()
+                UserDefaults.standard.storeCookies()
             }
         }
     }

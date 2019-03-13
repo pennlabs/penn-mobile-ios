@@ -22,6 +22,8 @@ class HomeViewController: GenericViewController {
     var lastRefresh: Date = Date()
     
     var loadingView: UIActivityIndicatorView!
+    
+    fileprivate var barButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +47,29 @@ class HomeViewController: GenericViewController {
         self.refreshTableView {
             self.stopLoadingViewAnimation()
         }
+        
+        setupBarButton()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupBarButton()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        tabBarController?.navigationItem.rightBarButtonItem = nil
+        super.viewDidDisappear(animated)
+    }
+    
+    func setupBarButton() {
+        barButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
+        barButton.tintColor = UIColor.navigationBlue
+        
+        tabBarController?.navigationItem.rightBarButtonItem = barButton
+    }
+    
+    @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
+        AppDelegate.shared.rootViewController.showLoginScreen()
     }
 }
 

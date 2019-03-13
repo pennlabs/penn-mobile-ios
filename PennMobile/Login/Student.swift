@@ -24,6 +24,10 @@ class Student: Codable {
         self.imageUrl = imageUrl
     }
     
+    func isInWharton() -> Bool {
+        return email?.contains("wharton") ?? false
+    }
+    
     func setEmail() {
         guard let degrees = degrees, let pennkey = pennkey else { return }
         var potentialEmail: String? = nil

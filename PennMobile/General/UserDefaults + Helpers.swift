@@ -25,6 +25,7 @@ extension UserDefaults {
         case gsrSessionIDTimestamp
         case pennkey
         case password
+        case cookies
     }
 }
 
@@ -216,3 +217,27 @@ extension UserDefaults {
     }
 }
 
+// MARK: - Cookies
+extension UserDefaults {
+    func storeCookies() {
+        guard let cookies = HTTPCookieStorage.shared.cookies else { return }
+        
+        var cookieDict = [String : AnyObject]()
+        for cookie in cookies {
+            cookieDict[cookie.name] = cookie.properties as AnyObject?
+        }
+        
+        set(cookieDict, forKey: UserDefaultsKeys.cookies.rawValue)
+    }
+    
+    func restoreCookies() {
+        let cookiesStorage = HTTPCookieStorage.shared
+        if let cookieDictionary = self.dictionary(forKey: UserDefaultsKeys.cookies.rawValue) {
+            for (_, cookieProperties) in cookieDictionary {
+                if let cookie = HTTPCookie(properties: cookieProperties as! [HTTPCookiePropertyKey : Any] ) {
+                    cookiesStorage.setCookie(cookie)
+                }
+            }
+        }
+    }
+}

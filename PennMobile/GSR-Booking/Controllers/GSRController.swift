@@ -55,7 +55,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
         super.viewDidAppear(animated)
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = nil
         super.viewDidDisappear(animated)
@@ -222,7 +222,7 @@ extension GSRController: GSRBookable {
 
     @objc fileprivate func handleBookingsBarButtonPressed(_ sender: Any) {
         let grc = GSRReservationsController()
-        navigationVC?.pushViewController(grc, animated: true)
+        self.navigationController?.pushViewController(grc, animated: true)
     }
     
     private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {

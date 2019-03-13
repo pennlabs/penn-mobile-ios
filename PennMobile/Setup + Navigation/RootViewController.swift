@@ -25,7 +25,9 @@ class RootViewController: UIViewController {
         addChild(current)
         current.view.frame = view.bounds
         view.addSubview(current.view)
-        current.didMove(toParent: self) 
+        current.didMove(toParent: self)
+        
+        UserDefaults.standard.restoreCookies()
     }
     
     func showLoginScreen() {

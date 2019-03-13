@@ -56,7 +56,7 @@ extension LoginController {
     
     @objc func handleLogin(_ sender: Any) {
         let lwc = LoginWebviewController()
-        lwc.loginCompletion = loginCompletion(_:)
+        lwc.loginCompletion = loginCompletion(_:_:)
         lwc.coursesRetrieved = coursesRetreived(_:)
         let nvc = UINavigationController(rootViewController: lwc)
         present(nvc, animated: true, completion: nil)
@@ -66,22 +66,15 @@ extension LoginController {
         AppDelegate.shared.rootViewController.switchToMainScreen()
     }
     
-    func loginCompletion(_ student: Student?) {
-        if let student = student {
+    func loginCompletion(_ student: Student?, _ accountID: String?) {
+        if let student = student, let accountID = accountID {
             // Login Successful
-            UserDBManager.shared.saveStudent(student) { (accountID) in
-                DispatchQueue.main.async {
-                    if let accountID = accountID {
-                        UserDefaults.standard.set(accountID: accountID)
-                        print(accountID)
-                        if let courses = self.coursesToSave {
-                            UserDBManager.shared.saveCourses(courses, accountID: accountID) { (success) in
-                            }
-                        }
-                    }
-                    AppDelegate.shared.rootViewController.switchToMainScreen()
-                }
+            UserDefaults.standard.set(accountID: accountID)
+            if let email = student.email {
+                let user = GSRUser(firstName: student.first, lastName: student.last, email: email, phone: "2158986533")
+                GSRUser.save(user: user)
             }
+            AppDelegate.shared.rootViewController.switchToMainScreen()
         } else {
             showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)
         }
