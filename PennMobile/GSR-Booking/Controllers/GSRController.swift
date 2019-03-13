@@ -209,7 +209,6 @@ extension GSRController: GSRBookable {
             alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
                 DispatchQueue.main.async {
                     GSRUser.clear()
-                    UserDefaults.standard.clearSessionID()
                     self.refreshBarButton()
                 }
             }))
@@ -247,7 +246,7 @@ extension GSRController: GSRBookable {
 
         let location = viewModel.getSelectedLocation()
         if location.service == "wharton" {
-            if let sessionId = UserDefaults.standard.getSessionID() {
+            if let sessionId = GSRUser.getSessionID() {
                 booking.sessionId = sessionId
                 submitBooking(for: booking) { (success) in
                     if success {
@@ -259,7 +258,7 @@ extension GSRController: GSRBookable {
                 }
             } else {
                 presentWebviewLoginController {
-                    if let sessionId = UserDefaults.standard.getSessionID() {
+                    if let sessionId = GSRUser.getSessionID() {
                         booking.sessionId = sessionId
                         self.submitBooking(for: booking) { (success) in
                             self.fetchData()

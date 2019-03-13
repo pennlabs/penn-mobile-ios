@@ -21,48 +21,13 @@ class StudentNetworkManager: NSObject {
 
 // MARK: - Student
 extension StudentNetworkManager {
-    func getStudent(request: URLRequest, cookies: [HTTPCookie], callback: @escaping ((_ student: Student?) -> Void)) {
-        var mutableRequest: URLRequest = request
+    func getStudent(cookies: [HTTPCookie], initialCallback: @escaping (_ student: Student?) -> Void, allCoursesCallback: @escaping (_ courses: Set<Course>?) -> Void) {
+        let url = URL(string: baseURL)!
+        var request = URLRequest(url: url)
         let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
-        mutableRequest.addValue(cookieStr, forHTTPHeaderField: "Cookie")
+        request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
         
-        let task = URLSession.shared.dataTask(with: mutableRequest, completionHandler: { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    // Set correct long-term cookie
-                    let setCookieStr = httpResponse.allHeaderFields["Set-Cookie"] as? String
-                    guard let sessionID: String = setCookieStr?.getMatches(for: "=(.*?);").first else {
-                        callback(nil)
-                        return
-                    }
-                    let newCookieStr = cookieStr.removingRegexMatches(pattern: "JSESSIONID=(.*?);", replaceWith: "JSESSIONID=\(sessionID);")
-                    mutableRequest.url = URL(string: self.courseURL)
-                    
-                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                        if let student = try? self.parseStudent(from: html) {
-                            self.getCourses(cookieStr: newCookieStr, callback: { (courses) in
-                                student.courses = courses
-                                self.getDegrees(cookieStr: newCookieStr, callback: { (degrees) in
-                                    student.degrees = degrees
-                                    callback(student)
-                                })
-                            })
-                            return
-                        }
-                    }
-                }
-            }
-            callback(nil)
-        })
-        task.resume()
-    }
-    
-    func getStudent(request: URLRequest, cookies: [HTTPCookie], initialCallback: @escaping (_ student: Student?) -> Void, allCoursesCallback: @escaping (_ courses: Set<Course>?) -> Void) {
-        var mutableRequest: URLRequest = request
-        let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
-        mutableRequest.addValue(cookieStr, forHTTPHeaderField: "Cookie")
-        
-        let task = URLSession.shared.dataTask(with: mutableRequest, completionHandler: { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     // Set correct long-term cookie
@@ -72,7 +37,14 @@ extension StudentNetworkManager {
                         return
                     }
                     let newCookieStr = cookieStr.removingRegexMatches(pattern: "JSESSIONID=(.*?);", replaceWith: "JSESSIONID=\(sessionID);")
-                    mutableRequest.url = URL(string: self.courseURL)
+                    
+                    let cookies = HTTPCookieStorage.shared.cookies ?? []
+                    if let jsessionCookie = (cookies.filter { $0.name == "JSESSIONID" }).first, let properties = jsessionCookie.properties {
+                        var prop = properties
+                        prop.updateValue(sessionID, forKey: HTTPCookiePropertyKey.value)
+                        let newCookie = HTTPCookie(properties: prop)!
+                        HTTPCookieStorage.shared.setCookie(newCookie)
+                    }
                     
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
                         if let student = try? self.parseStudent(from: html) {

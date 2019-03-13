@@ -27,6 +27,26 @@ struct GSRUser: Codable {
     }
     
     static func clear() {
-        return UserDefaults.standard.clearGSRUser()
+        UserDefaults.standard.clearGSRUser()
+        clearSessionID()
+    }
+    
+    static func getSessionID() -> String? {
+        let cookie = getSessionCookie()
+        return cookie?.value
+    }
+    
+    static func clearSessionID() {
+        guard let cookie = getSessionCookie() else { return }
+        HTTPCookieStorage.shared.deleteCookie(cookie)
+    }
+    
+    private static func getSessionCookie() -> HTTPCookie? {
+        guard let cookies = HTTPCookieStorage.shared.cookies else { return nil }
+        if let cookie = (cookies.filter { $0.name == "sessionid" }).first {
+            return cookie
+        } else {
+            return nil
+        }
     }
 }

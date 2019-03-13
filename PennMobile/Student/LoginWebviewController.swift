@@ -18,11 +18,11 @@ class LoginWebviewController: PennLoginController {
         return "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     }
     
-    override func handleSuccessfulNavigation(_ webView: WKWebView, decidePolicy navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        let request = navigationAction.request
+    override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        //let request = navigationAction.request
         let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
         cookieStore.getAllCookies { (cookies) in
-            StudentNetworkManager.instance.getStudent(request: request, cookies: cookies, initialCallback: { student in
+            StudentNetworkManager.instance.getStudent(cookies: cookies, initialCallback: { student in
                 DispatchQueue.main.async {
                     if let student = student {
                         student.pennkey = self.pennkey
