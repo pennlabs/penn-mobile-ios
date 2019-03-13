@@ -23,6 +23,8 @@ extension UserDefaults {
         case appVersion
         case gsrSessionID
         case gsrSessionIDTimestamp
+        case pennkey
+        case password
     }
 }
 
@@ -190,6 +192,27 @@ extension UserDefaults {
                                      completionHandler: {})
             }
         }
+    }
+}
+
+// MARK: - PennKey Password
+extension UserDefaults {
+    func set(pennkey: String) {
+        set(pennkey, forKey: UserDefaultsKeys.pennkey.rawValue)
+        synchronize()
+    }
+    
+    func getPennKey() -> String? {
+        return string(forKey: UserDefaultsKeys.pennkey.rawValue)
+    }
+    
+    func set(password: String) {
+        set(password, forKey: UserDefaultsKeys.password.rawValue)
+        synchronize()
+    }
+    
+    func getPassword() -> String? {
+        return string(forKey: UserDefaultsKeys.password.rawValue)
     }
 }
 

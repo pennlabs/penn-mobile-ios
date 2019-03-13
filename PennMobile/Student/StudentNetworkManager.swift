@@ -78,14 +78,11 @@ extension StudentNetworkManager {
                         if let student = try? self.parseStudent(from: html) {
                             self.getCourses(cookieStr: newCookieStr, currentTermOnly: true, callback: { (courses) in
                                 student.courses = courses
-                                self.getPennKey(cookieStr: cookieStr, callback: { (pennkey) in
-                                    student.pennkey = pennkey
-                                    self.getDegrees(cookieStr: newCookieStr, callback: { (degrees) in
-                                        student.degrees = degrees
-                                        initialCallback(student)
-                                        self.getCourses(cookieStr: newCookieStr, currentTermOnly: false, callback: { (courses) in
-                                            allCoursesCallback(courses)
-                                        })
+                                self.getDegrees(cookieStr: newCookieStr, callback: { (degrees) in
+                                    student.degrees = degrees
+                                    initialCallback(student)
+                                    self.getCourses(cookieStr: newCookieStr, currentTermOnly: false, callback: { (courses) in
+                                        allCoursesCallback(courses)
                                     })
                                 })
                             })

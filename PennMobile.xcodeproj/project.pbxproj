@@ -18,6 +18,7 @@
 		211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DFE531F36A02C00CB73E4 /* DiningAPI.swift */; };
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
 		212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212304C62054EDB900958CE0 /* FlingViewController.swift */; };
+		2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2130A5052238C2F000DFEEC7 /* PennLoginController.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
 		214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F768E1F07391000B8841C /* DatabaseManager.swift */; };
 		21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21508165220D2499002F7EA1 /* HomeNewsCellItem.swift */; };
@@ -222,6 +223,7 @@
 		211DFE531F36A02C00CB73E4 /* DiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPI.swift; sourceTree = "<group>"; };
 		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
 		212304C62054EDB900958CE0 /* FlingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingViewController.swift; sourceTree = "<group>"; };
+		2130A5052238C2F000DFEEC7 /* PennLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLoginController.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		214F768E1F07391000B8841C /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		21508165220D2499002F7EA1 /* HomeNewsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCellItem.swift; sourceTree = "<group>"; };
@@ -659,6 +661,7 @@
 				21879B1D1FB3FF54003CF552 /* Storage.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
 				2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */,
+				2130A5052238C2F000DFEEC7 /* PennLoginController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1580,6 +1583,7 @@
 				2189C0872027CDD700771C1F /* GSRNetworkManager.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
+				2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */,
 				21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */,
 				216640971EBADC1700746B8E /* DiningVenue.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
