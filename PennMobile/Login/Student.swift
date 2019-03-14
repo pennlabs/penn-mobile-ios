@@ -73,3 +73,10 @@ class Student: Codable {
         return str
     }
 }
+
+extension Student: Equatable {
+    static func == (lhs: Student, rhs: Student) -> Bool {
+        return lhs.first == rhs.first && lhs.last == rhs.last && lhs.imageUrl == rhs.imageUrl
+                && lhs.pennkey == rhs.pennkey && lhs.email == rhs.email
+    }
+}

@@ -60,7 +60,7 @@ extension HomeCoursesCell {
     fileprivate func setupCell(with item: HomeCoursesCellItem) {
         courses = item.courses
         //calendarEventTableView.reloadData()
-        secondaryTitleLabel.text = "Course Schedule"
+        secondaryTitleLabel.text = "COURSE SCHEDULE"
         primaryTitleLabel.text = "Today's Courses"
     }
 }

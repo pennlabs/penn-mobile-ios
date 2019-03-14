@@ -9,37 +9,11 @@
 import Foundation
 import SwiftSoup
 
-protocol CookieRequestable {}
-
-extension CookieRequestable {
-    func makeRequest(with req: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        var request = req
-        if let cookies = HTTPCookieStorage.shared.cookies {
-            var cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
-            cookieStr = cookieStr + "fastStartPage=fast.do;"
-            request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
-        }
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if let url = httpResponse.url, let allHeaderFields = httpResponse.allHeaderFields as? [String: String] {
-                    let newCookies = HTTPCookie.cookies(withResponseHeaderFields: allHeaderFields, for: url)
-                    for cookie in newCookies {
-                        HTTPCookieStorage.shared.setCookie(cookie)
-                    }
-                }
-            }
-            completionHandler(data, response, error)
-        })
-        task.resume()
-    }
-}
-
-class StudentNetworkManager: NSObject, CookieRequestable {
+class StudentNetworkManager: NSObject {
     
     static let instance = StudentNetworkManager()
     
-    fileprivate let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=fullSite"
-    fileprivate let reauthURL = "https://weblogin.pennkey.upenn.edu/login?factors=UPENN.EDU&cosign-pennkey-idp_reauth-0&https://idp.pennkey.upenn.edu/idp/Authn/ReauthRemoteUser?conversation=e1s1"
+    fileprivate let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     fileprivate let degreeURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileAdvisors"
     fileprivate let courseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileSchedule"
 }
@@ -49,7 +23,7 @@ extension StudentNetworkManager {
     func getStudent(initialCallback: @escaping (_ student: Student?) -> Void, allCoursesCallback: @escaping (_ courses: Set<Course>?) -> Void) {
         let url = URL(string: baseURL)!
         let request = URLRequest(url: url)
-        makeRequest(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
@@ -71,6 +45,7 @@ extension StudentNetworkManager {
             }
             initialCallback(nil)
         }
+        task.resume()
     }
 }
 
@@ -79,7 +54,7 @@ extension StudentNetworkManager {
     func getDegrees(callback: @escaping ((_ degrees: Set<Degree>?) -> Void)) {
         let url = URL(string: degreeURL)!
         let request = URLRequest(url: url)
-        makeRequest(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
@@ -91,6 +66,7 @@ extension StudentNetworkManager {
             }
             callback(nil)
         }
+        task.resume()
     }
 }
 
@@ -99,7 +75,7 @@ extension StudentNetworkManager {
     fileprivate func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         let url = URL(string: courseURL)!
         let request = URLRequest(url: url)
-        makeRequest(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
@@ -134,6 +110,7 @@ extension StudentNetworkManager {
             }
             callback(nil)
         }
+        task.resume()
     }
     
     // Returns a set of courses for the provided terms unioned with the courses initially provided
@@ -144,7 +121,7 @@ extension StudentNetworkManager {
         }
 
         let term = terms.first!
-        let remainingTerms = Array(terms.dropFirst())
+        let remainingTerms = terms.filter { $0 != term }
         
         let url = URL(string: baseURL)!
         var request = URLRequest(url: url)
@@ -156,7 +133,7 @@ extension StudentNetworkManager {
             ]
         request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
         
-        makeRequest(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
@@ -170,6 +147,7 @@ extension StudentNetworkManager {
             }
             callback(courses)
         }
+        task.resume()
     }
     
     private func currentTerm() -> String {

@@ -129,7 +129,7 @@ extension UserDBManager {
         }
     }
     
-    func saveCourses(_ courses: Set<Course>, accountID: String, _ completion: @escaping (_ success: Bool) -> Void) {
+    func saveCourses(_ courses: Set<Course>, accountID: String, _ completion: ((_ success: Bool) -> Void)? = nil) {
         let jsonEncoder = JSONEncoder()
         jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
         do {
@@ -158,12 +158,12 @@ extension UserDBManager {
                         }
                     }
                 }
-                completion(success)
+                completion?(success)
             })
             task.resume()
         }
         catch {
-            completion(false)
+            completion?(false)
         }
     }
 }

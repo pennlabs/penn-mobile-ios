@@ -87,7 +87,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
                 // Webview has redirected to desired site.
                 self.handleSuccessfulNavigation(webView, decisionHandler: decisionHandler)
             } else {
-                if url.absoluteString == self.loginURL || (url.absoluteString.contains(self.loginURL) && url.absoluteString.contains("cosign-pennkey-idp_reauth-0")) {
+                if url.absoluteString == self.loginURL {
                     webView.evaluateJavaScript("document.getElementById('pennkey').value;") { (result, error) in
                         if let pennkey = result as? String {
                             webView.evaluateJavaScript("document.getElementById('password').value;") { (result, error) in
@@ -143,14 +143,9 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     
     func autofillCredentials() {
         guard let pennkey = pennkey, let password = password else { return }
-        let script = """
-        document.getElementById('pennkey').value = '\(pennkey)';
-        document.getElementById('password').value = '\(password)';
-        """
-        webView.evaluateJavaScript(script) { (result, error) in
-            if result == nil {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: self.autofillCredentials)
-            }
+        webView.evaluateJavaScript("document.getElementById('pennkey').value = '\(pennkey)'") { (_, _) in
+        }
+        webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_, _) in
         }
     }
     

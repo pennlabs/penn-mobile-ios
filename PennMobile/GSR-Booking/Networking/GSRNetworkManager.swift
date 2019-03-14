@@ -299,20 +299,16 @@ extension GSRNetworkManager {
         return "https://apps.wharton.upenn.edu/gsr/secured-pennkey/?next=/gsr/"
     }
     
-    func getSessionID(_ callback: @escaping ((_ success: Bool) -> Void)) {
+    func getSessionID(_ callback: (((_ success: Bool) -> Void))? = nil) {
         let url = URL(string: whartonUrl)!
-        var request = URLRequest(url: url)
-        if let cookies = HTTPCookieStorage.shared.cookies {
-            let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
-            request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
-        }
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+        let request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             var success = false
             if let cookies = HTTPCookieStorage.shared.cookies {
                 success = cookies.contains { $0.name == "sessionid" }
             }
-            callback(success)
-        })
+            callback?(success)
+        }
         task.resume()
     }
 }

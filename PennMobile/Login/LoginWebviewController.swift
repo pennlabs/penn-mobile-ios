@@ -11,8 +11,9 @@ import WebKit
 
 class LoginWebviewController: PennLoginController {
     
-    var loginCompletion: ((_ student: Student?, _ accountID: String?) -> Void)!
-    var coursesRetrieved: ((_ course: Set<Course>?) -> Void)!
+    var loginCompletion: ((_ successful: Bool) -> Void)!
+    
+    private var coursesToSave: Set<Course>?
     
     override var urlStr: String {
         return "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
@@ -37,20 +38,35 @@ class LoginWebviewController: PennLoginController {
                     }
                 } else {
                     self.dismiss(animated: true, completion: nil)
-                    self.loginCompletion(nil, nil)
+                    self.loginCompletion(false)
                 }
             }
         }, allCoursesCallback: { courses in
-            self.coursesRetrieved(courses)
+            if let courses = courses {
+                if let accountID = UserDefaults.standard.getAccountID() {
+                    UserDBManager.shared.saveCourses(courses, accountID: accountID)
+                } else {
+                    self.coursesToSave = courses
+                }
+            }
             UserDefaults.standard.storeCookies()
         })
     }
     
     fileprivate func saveStudent(_ student: Student) {
+        UserDefaults.standard.saveStudent(student)
+        UserDefaults.standard.set(isInWharton: student.isInWharton())
+        if let email = student.email {
+            let user = GSRUser(firstName: student.first, lastName: student.last, email: email, phone: "2158986533")
+            GSRUser.save(user: user)
+        }
         UserDBManager.shared.saveStudent(student) { (accountID) in
             DispatchQueue.main.async {
+                if let accountID = accountID {
+                    UserDefaults.standard.set(accountID: accountID)
+                }
                 self.dismiss(animated: true, completion: nil)
-                self.loginCompletion(student, accountID)
+                self.loginCompletion(accountID != nil)
             }
         }
     }

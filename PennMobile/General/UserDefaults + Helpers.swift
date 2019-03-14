@@ -25,6 +25,7 @@ extension UserDefaults {
         case password
         case cookies
         case wharton
+        case student
     }
 }
 
@@ -151,6 +152,29 @@ extension UserDefaults {
     }
 }
 
+// MARK: - Student
+extension UserDefaults {
+    func saveStudent(_ student: Student) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(student) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.student.rawValue)
+        }
+        synchronize()
+    }
+    
+    func getStudent() -> Student? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.student.rawValue) {
+            return try? decoder.decode(Student.self, from: decodedData)
+        }
+        return nil
+    }
+    
+    func clearStudent() {
+        removeObject(forKey: UserDefaultsKeys.student.rawValue)
+    }
+}
+
 // MARK: - App Version
 extension UserDefaults {
     func isNewAppVersion() -> Bool {
@@ -194,7 +218,7 @@ extension UserDefaults {
         synchronize()
     }
     
-    func getWhartonFlag() -> Bool {
+    func isInWharton() -> Bool {
         return bool(forKey: UserDefaultsKeys.wharton.rawValue)
     }
     
@@ -210,7 +234,7 @@ extension UserDefaults {
         
         var cookieDict = [String : AnyObject]()
         for cookie in cookies {
-            cookieDict[cookie.name] = cookie.properties as AnyObject?
+            cookieDict[cookie.name + cookie.domain] = cookie.properties as AnyObject?
         }
         
         set(cookieDict, forKey: UserDefaultsKeys.cookies.rawValue)

@@ -28,8 +28,12 @@ class RootViewController: UIViewController {
         current.didMove(toParent: self)
         
         UserDefaults.standard.restoreCookies()
-        if UserDefaults.standard.getWhartonFlag() && GSRUser.getSessionID() == nil {
-            GSRNetworkManager.instance.getSessionID { (success) in
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if UserDefaults.standard.isInWharton() && GSRUser.getSessionID() == nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                GSRNetworkManager.instance.getSessionID()
             }
         }
     }
@@ -66,6 +70,7 @@ class RootViewController: UIViewController {
         UserDefaults.standard.clearAccountID()
         UserDefaults.standard.clearCookies()
         UserDefaults.standard.clearWhartonFlag()
+        UserDefaults.standard.clearStudent()
         UserDefaults.standard.clearGSRUser()
     }
     

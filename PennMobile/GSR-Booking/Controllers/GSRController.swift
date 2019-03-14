@@ -50,17 +50,6 @@ class GSRController: GenericViewController, IndicatorEnabled {
         setupNavBar()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        setupNavBar()
-        super.viewDidAppear(animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        tabBarController?.navigationItem.leftBarButtonItem = nil
-        tabBarController?.navigationItem.rightBarButtonItem = nil
-        super.viewDidDisappear(animated)
-    }
-
     private func setupNavBar() {
         self.tabBarController?.title = "Study Room Booking"
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
@@ -196,7 +185,7 @@ extension GSRController: GSRBookable {
             if viewModel.getSelectedLocation().service == "wharton" {
                 presentWebviewLoginController(nil)
             } else {
-                presentLoginController()
+                self.presentLoginController()
             }
             break
         case .loggedIn:

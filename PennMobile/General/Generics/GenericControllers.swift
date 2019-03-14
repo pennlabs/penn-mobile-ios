@@ -25,6 +25,9 @@ import UIKit
         if trackScreen {
             trackScreen(screenName)
         }
+        
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -55,6 +58,9 @@ class GenericViewController: UIViewController, Trackable {
         if trackScreen {
             trackScreen(screenName ?? title)
         }
+        
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
     }
     
     override func viewWillDisappear(_ animated: Bool) {

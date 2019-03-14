@@ -14,8 +14,6 @@ class LoginController: UIViewController, ShowsAlert {
     var loginButton: UIButton!
     var skipButton: UIButton!
     
-    fileprivate var coursesToSave: Set<Course>?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -56,8 +54,7 @@ extension LoginController {
     
     @objc func handleLogin(_ sender: Any) {
         let lwc = LoginWebviewController()
-        lwc.loginCompletion = loginCompletion(_:_:)
-        lwc.coursesRetrieved = coursesRetreived(_:)
+        lwc.loginCompletion = loginCompletion(_:)
         let nvc = UINavigationController(rootViewController: lwc)
         present(nvc, animated: true, completion: nil)
     }
@@ -66,29 +63,12 @@ extension LoginController {
         AppDelegate.shared.rootViewController.switchToMainScreen()
     }
     
-    func loginCompletion(_ student: Student?, _ accountID: String?) {
-        if let student = student, let accountID = accountID {
+    func loginCompletion(_ successful: Bool) {
+        if successful {
             // Login Successful
-            UserDefaults.standard.set(accountID: accountID)
-            UserDefaults.standard.set(isInWharton: student.isInWharton())
-            if let email = student.email {
-                let user = GSRUser(firstName: student.first, lastName: student.last, email: email, phone: "2158986533")
-                GSRUser.save(user: user)
-            }
             AppDelegate.shared.rootViewController.switchToMainScreen()
         } else {
             showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)
-        }
-    }
-    
-    func coursesRetreived(_ courses: Set<Course>?) {
-        if let courses = courses {
-            if let accountID = UserDefaults.standard.getAccountID() {
-                UserDBManager.shared.saveCourses(courses, accountID: accountID) { (success) in
-                }
-            } else {
-                self.coursesToSave = courses
-            }
         }
     }
 }

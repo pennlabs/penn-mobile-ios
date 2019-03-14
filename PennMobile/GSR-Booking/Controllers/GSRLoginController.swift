@@ -38,13 +38,22 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
         prepareUI()
-        firstNameField.becomeFirstResponder()
         
-        guard let user = GSRUser.getUser() else { return }
-        firstNameField.text = user.firstName
-        lastNameField.text = user.lastName
-        emailField.text = user.email
-        //phoneNumberField.text = user.phone
+        if let user = GSRUser.getUser() {
+            firstNameField.text = user.firstName
+            lastNameField.text = user.lastName
+            emailField.text = user.email
+            firstNameField.becomeFirstResponder()
+        } else if let student = UserDefaults.standard.getStudent() {
+            firstNameField.text = student.first
+            lastNameField.text = student.last
+            emailField.text = student.email
+            if firstNameField.text != nil && emailField.text == nil {
+                emailField.becomeFirstResponder()
+            }
+        } else {
+            firstNameField.becomeFirstResponder()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

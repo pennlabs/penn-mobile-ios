@@ -47,37 +47,6 @@ class HomeViewController: GenericViewController {
         self.refreshTableView {
             self.stopLoadingViewAnimation()
         }
-        
-        setupBarButton()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setupBarButton()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        tabBarController?.navigationItem.rightBarButtonItem = nil
-        super.viewDidDisappear(animated)
-    }
-    
-    func setupBarButton() {
-        if UserDefaults.standard.getAccountID() == nil { return }
-        barButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(handleLogout(_:)))
-        barButton.tintColor = UIColor.navigationBlue
-        
-        tabBarController?.navigationItem.rightBarButtonItem = barButton
-    }
-    
-    @objc fileprivate func handleLogout(_ sender: Any) {
-        let alertController = UIAlertController(title: "Are you sure?", message: "Please confirm that you wish to logout.", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
-            DispatchQueue.main.async {
-                AppDelegate.shared.rootViewController.switchToLogout()
-            }
-        }))
-        present(alertController, animated: true, completion: nil)
     }
 }
 
