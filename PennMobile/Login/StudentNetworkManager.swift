@@ -65,8 +65,6 @@ extension StudentNetworkManager {
                                 })
                             })
                             return
-                        } else {
-                            print(html)
                         }
                     }
                 }

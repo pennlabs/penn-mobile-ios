@@ -28,6 +28,10 @@ class RootViewController: UIViewController {
         current.didMove(toParent: self)
         
         UserDefaults.standard.restoreCookies()
+        if UserDefaults.standard.getWhartonFlag() && GSRUser.getSessionID() == nil {
+            GSRNetworkManager.instance.getSessionID { (success) in
+            }
+        }
     }
     
     func showLoginScreen() {
@@ -58,6 +62,11 @@ class RootViewController: UIViewController {
     func switchToLogout() {
         let loginController = LoginController()
         animateDismissTransition(to: loginController)
+        HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
+        UserDefaults.standard.clearAccountID()
+        UserDefaults.standard.clearCookies()
+        UserDefaults.standard.clearWhartonFlag()
+        UserDefaults.standard.clearGSRUser()
     }
     
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
@@ -76,8 +85,7 @@ class RootViewController: UIViewController {
     private func animateDismissTransition(to new: UIViewController, completion: (() -> Void)? = nil) {
         current.willMove(toParent: nil)
         addChild(new)
-        transition(from: current, to: new, duration: 0.3, options: [], animations: {
-            new.view.frame = self.view.bounds
+        transition(from: current, to: new, duration: 0.2, options: [.transitionCrossDissolve], animations: {
         }) { completed in
             self.current.removeFromParent()
             new.didMove(toParent: self)

@@ -21,8 +21,6 @@ extension UserDefaults {
         case isOnboarded
         case gsrUSer
         case appVersion
-        case gsrSessionID
-        case gsrSessionIDTimestamp
         case pennkey
         case password
         case cookies
@@ -39,6 +37,10 @@ extension UserDefaults {
     
     func getAccountID() -> String? {
         return string(forKey: UserDefaultsKeys.accountID.rawValue)
+    }
+    
+    func clearAccountID() {
+        removeObject(forKey: UserDefaultsKeys.accountID.rawValue)
     }
 }
 
@@ -164,39 +166,6 @@ extension UserDefaults {
     }
 }
 
-// MARK: - GSR SessionID Caching
-extension UserDefaults {
-    func set(sessionID: String) {
-        let now = Date()
-        set(sessionID, forKey: UserDefaultsKeys.gsrSessionID.rawValue)
-        set(now, forKey: UserDefaultsKeys.gsrSessionIDTimestamp.rawValue)
-        synchronize()
-    }
-    
-    func getSessionID() -> String? {
-        if let timestamp = object(forKey: UserDefaultsKeys.gsrSessionIDTimestamp.rawValue) as? Date,
-            let sessionID = string(forKey: UserDefaultsKeys.gsrSessionID.rawValue),
-            let diffInDays = Calendar.current.dateComponents([.day], from: timestamp, to: Date()).day,
-            diffInDays <= 13 {
-            return sessionID
-        }
-        return nil
-    }
-    
-    func clearSessionID() {
-        removeObject(forKey: UserDefaultsKeys.gsrSessionID.rawValue)
-        removeObject(forKey: UserDefaultsKeys.gsrSessionIDTimestamp.rawValue)
-        DispatchQueue.main.async {
-            let dataStore = WKWebsiteDataStore.default()
-            dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-                dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
-                                     for: records.filter { $0.displayName.contains("upenn") },
-                                     completionHandler: {})
-            }
-        }
-    }
-}
-
 // MARK: - PennKey Password
 extension UserDefaults {
     func set(pennkey: String) {
@@ -228,6 +197,10 @@ extension UserDefaults {
     func getWhartonFlag() -> Bool {
         return bool(forKey: UserDefaultsKeys.wharton.rawValue)
     }
+    
+    func clearWhartonFlag() {
+        removeObject(forKey: UserDefaultsKeys.wharton.rawValue)
+    }
 }
 
 // MARK: - Cookies
@@ -252,5 +225,9 @@ extension UserDefaults {
                 }
             }
         }
+    }
+    
+    func clearCookies() {
+        removeObject(forKey: UserDefaultsKeys.cookies.rawValue)
     }
 }

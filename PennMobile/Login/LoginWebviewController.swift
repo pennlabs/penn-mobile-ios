@@ -28,7 +28,7 @@ class LoginWebviewController: PennLoginController {
                     student.setEmail()
                     
                     if student.isInWharton(), GSRUser.getSessionID() == nil {
-                        self.presentGSRWebviewLoginController {
+                        GSRNetworkManager.instance.getSessionID { success in
                             self.saveStudent(student)
                         }
                         return
@@ -44,14 +44,6 @@ class LoginWebviewController: PennLoginController {
             self.coursesRetrieved(courses)
             UserDefaults.standard.storeCookies()
         })
-    }
-    
-    fileprivate func presentGSRWebviewLoginController(_ completion: @escaping () -> Void) {
-        let glc = GSRWebviewLoginController()
-        glc.completion = completion
-        glc.shouldAnimate = false
-        let nvc = UINavigationController(rootViewController: glc)
-        present(nvc, animated: false, completion: nil)
     }
     
     fileprivate func saveStudent(_ student: Student) {

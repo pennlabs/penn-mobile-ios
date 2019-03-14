@@ -45,7 +45,7 @@ class GSRNetworkManager: NSObject, Requestable {
 
     func getAvailability(for gsrId: Int, dateStr: String, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
         var url = "\(availUrl)/\(gsrId)?date=\(dateStr)"
-        if let sessionID = UserDefaults.standard.getSessionID() {
+        if let sessionID = GSRUser.getSessionID() {
             url = "\(url)&sessionid=\(sessionID)"
         }
         getRequest(url: url) { (dict, error, statusCode) in
@@ -286,5 +286,33 @@ extension GSRTimeSlot {
             throw NetworkingError.jsonError
         }
         return date
+    }
+}
+
+// MARK: - Session ID
+extension GSRNetworkManager {
+    private var whartonUrl: String {
+        return "https://apps.wharton.upenn.edu/gsr/"
+    }
+    
+    private var whartonAuthUrl: String {
+        return "https://apps.wharton.upenn.edu/gsr/secured-pennkey/?next=/gsr/"
+    }
+    
+    func getSessionID(_ callback: @escaping ((_ success: Bool) -> Void)) {
+        let url = URL(string: whartonUrl)!
+        var request = URLRequest(url: url)
+        if let cookies = HTTPCookieStorage.shared.cookies {
+            let cookieStr = cookies.map {"\($0.name)=\($0.value);"}.joined()
+            request.addValue(cookieStr, forHTTPHeaderField: "Cookie")
+        }
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            var success = false
+            if let cookies = HTTPCookieStorage.shared.cookies {
+                success = cookies.contains { $0.name == "sessionid" }
+            }
+            callback(success)
+        })
+        task.resume()
     }
 }
