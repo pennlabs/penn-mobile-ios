@@ -11,8 +11,10 @@ import UIKit
 
 class LoginController: UIViewController, ShowsAlert {
     
-    var loginButton: UIButton!
-    var skipButton: UIButton!
+    fileprivate var loginButton: UIButton!
+    fileprivate var skipButton: UIButton!
+    
+    fileprivate var isFirstAttempt = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,8 +69,20 @@ extension LoginController {
         if successful {
             // Login Successful
             AppDelegate.shared.rootViewController.switchToMainScreen()
+        } else if UserDefaults.standard.getStudent() != nil {
+            // Successfully retrieved Student profile from PennInTouch but failed to send to DB
+            AppDelegate.shared.rootViewController.switchToMainScreen()
         } else {
-            showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)
+            // Failed to retrieve Student profile from PennInTouch (possibly down)
+            GSRNetworkManager.instance.getSessionID { (success) in
+                // Get Wharton Session ID
+                if success || !self.isFirstAttempt {
+                    AppDelegate.shared.rootViewController.switchToMainScreen()
+                } else {
+                    self.showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)
+                    self.isFirstAttempt = false
+                }
+            }
         }
     }
 }

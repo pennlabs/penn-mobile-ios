@@ -44,8 +44,10 @@ class LoginWebviewController: PennLoginController {
         }, allCoursesCallback: { courses in
             if let courses = courses {
                 if let accountID = UserDefaults.standard.getAccountID() {
+                    // Save courses to DB
                     UserDBManager.shared.saveCourses(courses, accountID: accountID)
                 } else {
+                    // If account ID has not yet been retrieved, cache courses and send them later
                     self.coursesToSave = courses
                 }
             }
@@ -64,6 +66,10 @@ class LoginWebviewController: PennLoginController {
             DispatchQueue.main.async {
                 if let accountID = accountID {
                     UserDefaults.standard.set(accountID: accountID)
+                    if let coursesToSave = self.coursesToSave, !coursesToSave.isEmpty {
+                        // Send cached courses to server
+                        UserDBManager.shared.saveCourses(coursesToSave, accountID: accountID)
+                    }
                 }
                 self.dismiss(animated: true, completion: nil)
                 self.loginCompletion(accountID != nil)

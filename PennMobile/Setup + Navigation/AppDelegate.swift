@@ -135,12 +135,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DatabaseManager.shared.startSession()
         tabBarController?.reloadTabs()
         ControllerModel.shared.visibleVC().viewWillAppear(true)
+        rootViewController.viewWillAppear(true)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
         DatabaseManager.shared.endSession()
     }
-    
 }
 
 extension AppDelegate: OnboardingDelegate {

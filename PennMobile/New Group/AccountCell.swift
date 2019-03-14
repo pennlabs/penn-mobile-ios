@@ -56,8 +56,8 @@ extension AccountCell {
     private func prepareImageView() {
         accountImageView = UIImageView()
         accountImageView.layer.cornerRadius = 40
-        accountImageView.layer.masksToBounds = true
         accountImageView.clipsToBounds = true
+        accountImageView.contentMode = .scaleAspectFill
         
         self.addSubview(accountImageView)
         _ = accountImageView.anchor(nil, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 0, widthConstant: 80, heightConstant: 80)

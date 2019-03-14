@@ -30,10 +30,25 @@ class RootViewController: UIViewController {
         UserDefaults.standard.restoreCookies()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // If student is in Wharton but does not have a session ID, retrieve one if possible
         if UserDefaults.standard.isInWharton() && GSRUser.getSessionID() == nil {
+            // Wait 0.5 seconds so that the home page request is not held up
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 GSRNetworkManager.instance.getSessionID()
+            }
+        }
+        
+        // If student is saved locally but not on DB, save on DB and show main screen
+        if UserDefaults.standard.getAccountID() == nil, let student = UserDefaults.standard.getStudent() {
+            UserDBManager.shared.saveStudent(student) { (accountID) in
+                if let accountID = accountID {
+                    UserDefaults.standard.set(accountID: accountID)
+                }
+                if self.current is LoginController {
+                    self.switchToMainScreen()
+                }
             }
         }
     }
