@@ -316,17 +316,19 @@ extension StudentNetworkManager {
             throw NetworkingError.parsingError
         }
         
-        let substrings = fullName.split(separator: " ")
-        let firstName: String
-        var lastName: String
+        let substrings = fullName.split(separator: ",")
+        var firstName: String
+        let lastName: String
         if substrings.count < 2 {
             firstName = fullName
             lastName = fullName
         } else {
             firstName = String(substrings[1])
             lastName = String(substrings[0])
-            lastName.removeLast()
+            firstName.removeFirst()
         }
+        
+        firstName = firstName.removingRegexMatches(pattern: " .$", replaceWith: "")
         
         return Student(first: firstName, last: lastName, imageUrl: photoUrl)
     }

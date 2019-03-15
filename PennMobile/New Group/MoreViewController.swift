@@ -13,20 +13,26 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     var student: Student?
     
     fileprivate var barButton: UIBarButtonItem!
+    
+    private var shouldShowProfile: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        student = UserDefaults.standard.getStudent()
+        if shouldShowProfile {
+            student = UserDefaults.standard.getStudent()
+        }
         setUpTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.title = "More"
-        let student = UserDefaults.standard.getStudent()
-        if self.student != student {
-            self.student = student
-            tableView.reloadData()
+        if shouldShowProfile {
+            let student = UserDefaults.standard.getStudent()
+            if self.student != student {
+                self.student = student
+                tableView.reloadData()
+            }
         }
         setupNavBar()
     }
