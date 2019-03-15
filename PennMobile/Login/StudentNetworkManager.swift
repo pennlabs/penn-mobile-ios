@@ -273,11 +273,15 @@ extension StudentNetworkManager {
                 let expectedGradTerm = text.getMatches(for: "Expected graduation term: (.*?\\d) ").first else {
                     throw NetworkingError.parsingError
             }
-            let majorStr = text.getMatches(for: "\\d\\. (.*?)\\)")
             var majors = Set<Major>()
-            for str in majorStr {
-                let nameCode = try splitNameCode(str: str)
-                majors.insert(Major(name: nameCode.name, code: nameCode.code))
+            if let majorText = text.getMatches(for: "Major\\(s\\):(.*?)Expected graduation term").first?.split(separator: ":").first {
+                let majorStr = String(majorText).getMatches(for: "\\d\\. (.*?)\\)")
+                for str in majorStr {
+                    if let nameCode = try? splitNameCode(str: str) {
+                        majors.insert(Major(name: nameCode.name, code: nameCode.code))
+                        print(nameCode.name, nameCode.code)
+                    }
+                }
             }
             let schoolNameCode = try splitNameCode(str: schoolStr)
             let degreeNameCode = try splitNameCode(str: degreeStr)
