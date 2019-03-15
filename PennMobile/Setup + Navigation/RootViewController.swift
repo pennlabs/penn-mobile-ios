@@ -57,7 +57,7 @@ class RootViewController: UIViewController {
         }
         
         // If student is saved locally but not on DB, save on DB and show main screen
-        if UserDefaults.standard.getAccountID() == nil, let student = UserDefaults.standard.getStudent() {
+        if UserDefaults.standard.getAccountID() == nil, let student = Student.getStudent() {
             UserDBManager.shared.saveStudent(student) { (accountID) in
                 DispatchQueue.main.async {
                     if let accountID = accountID {
@@ -103,8 +103,8 @@ class RootViewController: UIViewController {
         UserDefaults.standard.clearAccountID()
         UserDefaults.standard.clearCookies()
         UserDefaults.standard.clearWhartonFlag()
-        UserDefaults.standard.clearStudent()
-        UserDefaults.standard.clearGSRUser()
+        Student.clear()
+        GSRUser.clear()
     }
     
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {

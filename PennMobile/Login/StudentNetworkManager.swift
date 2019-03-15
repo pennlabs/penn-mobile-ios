@@ -279,7 +279,6 @@ extension StudentNetworkManager {
                 for str in majorStr {
                     if let nameCode = try? splitNameCode(str: str) {
                         majors.insert(Major(name: nameCode.name, code: nameCode.code))
-                        print(nameCode.name, nameCode.code)
                     }
                 }
             }

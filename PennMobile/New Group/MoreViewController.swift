@@ -19,7 +19,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     override func viewDidLoad() {
         super.viewDidLoad()
         if shouldShowProfile {
-            student = UserDefaults.standard.getStudent()
+            student = Student.getStudent()
         }
         setUpTableView()
     }
@@ -28,7 +28,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         super.viewWillAppear(animated)
         self.tabBarController?.title = "More"
         if shouldShowProfile {
-            let student = UserDefaults.standard.getStudent()
+            let student = Student.getStudent()
             if self.student != student {
                 self.student = student
                 tableView.reloadData()
@@ -38,7 +38,8 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     }
     
     private func setupNavBar() {
-        barButton = UIBarButtonItem(title: student == nil ? "Login" : "Logout", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
+        let isLoggedIn = UserDefaults.standard.getAccountID() != nil
+        barButton = UIBarButtonItem(title: isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
         barButton.tintColor = UIColor.navigationBlue
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = barButton
@@ -136,12 +137,8 @@ extension MoreViewController {
 // MARK: - Login/Logout
 extension MoreViewController {
     @objc fileprivate func handleLoginLogout(_ sender: Any) {
-        if student == nil {
-            let lwc = LoginWebviewController()
-            lwc.loginCompletion = loginCompletion(_:)
-            let nvc = UINavigationController(rootViewController: lwc)
-            present(nvc, animated: true, completion: nil)
-        } else {
+        let isLoggedIn = UserDefaults.standard.getAccountID() != nil
+        if isLoggedIn {
             let alertController = UIAlertController(title: "Are you sure?", message: "Please confirm that you wish to logout.", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
@@ -150,12 +147,17 @@ extension MoreViewController {
                 }
             }))
             present(alertController, animated: true, completion: nil)
+        } else {
+            let lwc = LoginWebviewController()
+            lwc.loginCompletion = loginCompletion(_:)
+            let nvc = UINavigationController(rootViewController: lwc)
+            present(nvc, animated: true, completion: nil)
         }
     }
     
     func loginCompletion(_ successful: Bool) {
         if successful {
-            self.student = UserDefaults.standard.getStudent()
+            self.student = Student.getStudent()
             tableView.reloadData()
         } else {
             showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)

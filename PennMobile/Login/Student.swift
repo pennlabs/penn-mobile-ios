@@ -18,6 +18,8 @@ class Student: Codable {
     var degrees: Set<Degree>?
     var courses: Set<Course>?
     
+    fileprivate static var student: Student?
+    
     init(first: String, last: String, imageUrl: String?) {
         self.first = first
         self.last = last
@@ -71,6 +73,23 @@ class Student: Codable {
             }
         }
         return str
+    }
+    
+    static func getStudent() -> Student? {
+        if student == nil {
+            student = UserDefaults.standard.getStudent()
+        }
+        return student
+    }
+    
+    static func saveStudent(_ thisStudent: Student) {
+        UserDefaults.standard.saveStudent(thisStudent)
+        student = thisStudent
+    }
+    
+    static func clear() {
+        UserDefaults.standard.clearStudent()
+        student = nil
     }
 }
 

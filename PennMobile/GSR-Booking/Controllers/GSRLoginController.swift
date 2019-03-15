@@ -44,7 +44,7 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
             lastNameField.text = user.lastName
             emailField.text = user.email
             firstNameField.becomeFirstResponder()
-        } else if let student = UserDefaults.standard.getStudent() {
+        } else if let student = Student.getStudent() {
             firstNameField.text = student.first
             lastNameField.text = student.last
             emailField.text = student.email

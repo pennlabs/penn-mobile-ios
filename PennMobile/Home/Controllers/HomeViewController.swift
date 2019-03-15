@@ -27,7 +27,7 @@ class HomeViewController: GenericViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Home"
+        self.title = getTitle()
         view.backgroundColor = .white
         trackScreen = true
         
@@ -40,13 +40,31 @@ class HomeViewController: GenericViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.title = "Home"
+        self.tabBarController?.title = getTitle()
         if tableViewModel == nil {
             self.startLoadingViewAnimation()
         }
         self.refreshTableView {
             self.stopLoadingViewAnimation()
         }
+    }
+    
+    fileprivate var titleCacheTimestamp = Date()
+    
+    fileprivate func getTitle() -> String? {
+        let now = Date()
+        if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.title != nil {
+            return self.title
+        } else {
+            if let student = Student.getStudent() {
+                let intros = ["Welcome", "Howdy", "Hi there", "Hello"]
+                self.title = "\(intros.random!), \(student.first)!"
+            } else {
+                return "Home"
+            }
+            return self.title
+        }
+        
     }
 }
 
