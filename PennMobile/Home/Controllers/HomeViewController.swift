@@ -27,7 +27,7 @@ class HomeViewController: GenericViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = getTitle()
+        self.title = "Home"
         view.backgroundColor = .white
         trackScreen = true
         
@@ -50,21 +50,27 @@ class HomeViewController: GenericViewController {
     }
     
     fileprivate var titleCacheTimestamp = Date()
+    fileprivate var displayTitle: String?
     
     fileprivate func getTitle() -> String? {
         let now = Date()
-        if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.title != nil {
-            return self.title
+        if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.displayTitle != nil {
+            return self.displayTitle
         } else {
-            if let student = Student.getStudent() {
+            let firstName = Student.getStudent()?.first ?? GSRUser.getUser()?.firstName
+            if let firstName = firstName {
                 let intros = ["Welcome", "Howdy", "Hi there", "Hello"]
-                self.title = "\(intros.random!), \(student.first)!"
+                self.displayTitle = "\(intros.random!), \(firstName)!"
+                titleCacheTimestamp = Date()
             } else {
-                return "Home"
+                self.displayTitle = "Home"
             }
-            return self.title
+            return self.displayTitle
         }
-        
+    }
+    
+    func clearTitleCache() {
+        displayTitle = nil
     }
 }
 

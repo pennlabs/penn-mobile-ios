@@ -25,6 +25,11 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
     
     var booking: GSRBooking!
     
+    var shouldShowCancel: Bool = true
+    var shouldShowSuccessMessage: Bool = false
+    
+    var message: String? // "Built by Eric Wang '21 and Josh Doman '20. Special thanks to Yagil Burowski '17 for donating the original design of this feature to Penn Labs."
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -35,7 +40,9 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: #selector(saveCredentials(_:)))
         }
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
+        if shouldShowCancel {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
+        }
         
         prepareUI()
         
@@ -56,6 +63,10 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
         } else {
             firstNameField.becomeFirstResponder()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -176,8 +187,9 @@ extension GSRLoginController {
     }
     
     private func prepareMessage() {
+        guard let message = message else { return }
         let messageView = UITextView()
-        messageView.text = "Built by Eric Wang '21 and Josh Doman '20. Special thanks to Yagil Burowski '17 for donating the original design of this feature to Penn Labs."
+        messageView.text = message
         messageView.textColor = UIColor.lightGray
         messageView.isScrollEnabled = false
         messageView.isEditable = false
@@ -230,6 +242,10 @@ extension GSRLoginController: GSRBookable {
         } else {
             GSRUser.save(user: user)
             dismiss(animated: true, completion: nil)
+            
+            if shouldShowSuccessMessage {
+                showAlert(withMsg: "Your information has been saved.", title: "Success!", completion: nil)
+            }
         }
     }
     

@@ -105,6 +105,12 @@ class RootViewController: UIViewController {
         UserDefaults.standard.clearWhartonFlag()
         Student.clear()
         GSRUser.clear()
+        
+        // Clear cache so that home title updates with new first name
+        guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
+            return
+        }
+        homeVC.clearTitleCache()
     }
     
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {

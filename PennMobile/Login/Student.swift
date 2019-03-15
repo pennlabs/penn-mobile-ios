@@ -9,8 +9,8 @@
 import Foundation
 
 class Student: Codable {
-    let first: String
-    let last: String
+    var first: String
+    var last: String
     var pennkey: String!
     var email: String?
     let imageUrl: String?
@@ -85,6 +85,20 @@ class Student: Codable {
     static func saveStudent(_ thisStudent: Student) {
         UserDefaults.standard.saveStudent(thisStudent)
         student = thisStudent
+    }
+    
+    static func update(firstName: String? = nil, lastName: String? = nil, email: String? = nil) {
+        guard let student = getStudent() else { return }
+        if let firstName = firstName {
+            student.first = firstName
+        }
+        if let lastName = lastName {
+            student.last = lastName
+        }
+        if let email = email {
+            student.email = email
+        }
+        saveStudent(student)
     }
     
     static func clear() {
