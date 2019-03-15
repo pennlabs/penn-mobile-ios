@@ -23,8 +23,8 @@ class LoginWebviewController: PennLoginController {
         StudentNetworkManager.instance.getStudent(initialCallback: { student in
             DispatchQueue.main.async {
                 decisionHandler(.cancel)
-                UserDefaults.standard.storeCookies()
                 if let student = student {
+                    UserDefaults.standard.storeCookies()
                     student.pennkey = self.pennkey
                     student.setEmail()
                     
@@ -37,6 +37,8 @@ class LoginWebviewController: PennLoginController {
                         self.saveStudent(student)
                     }
                 } else {
+                    UserDefaults.standard.clearCookies()
+                    HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
                     self.dismiss(animated: true, completion: nil)
                     self.loginCompletion(false)
                 }

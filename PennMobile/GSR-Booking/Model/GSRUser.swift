@@ -39,6 +39,7 @@ struct GSRUser: Codable {
     static func clearSessionID() {
         guard let cookie = getSessionCookie() else { return }
         HTTPCookieStorage.shared.deleteCookie(cookie)
+        UserDefaults.standard.storeCookies()
     }
     
     static func getSessionCookie() -> HTTPCookie? {

@@ -29,6 +29,10 @@ class GSRWebviewLoginController: PennLoginController {
                 self.dismiss(animated: self.shouldAnimate, completion: nil)
                 self.completion?()
                 UserDefaults.standard.storeCookies()
+                
+                if GSRUser.getSessionCookie() != nil {
+                    UserDefaults.standard.set(isInWharton: true)
+                }
             }
         }
     }

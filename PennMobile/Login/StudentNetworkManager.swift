@@ -322,7 +322,6 @@ extension StudentNetworkManager {
 // MARK: - Basic Student Profile Parsing
 extension StudentNetworkManager {
     fileprivate func parseStudent(from html: String) throws -> Student {
-        // TODO: complete parsing
         let namePattern = "white-space:nowrap; overflow:hidden; width: .*>\\s*(.*?)\\s*<\\/div>"
         let fullName: String! = html.getMatches(for: namePattern).first
         
