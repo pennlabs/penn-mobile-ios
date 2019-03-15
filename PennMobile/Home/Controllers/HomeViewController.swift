@@ -106,7 +106,7 @@ extension HomeViewController {
     }
     
     func startLoadingViewAnimation() {
-        if !loadingView.isHidden {
+        if loadingView != nil && !loadingView.isHidden {
             loadingView.startAnimating()
         }
     }

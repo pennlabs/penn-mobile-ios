@@ -290,7 +290,7 @@ extension GSRTimeSlot {
 }
 
 // MARK: - Session ID
-extension GSRNetworkManager: CookieRequestable {
+extension GSRNetworkManager {
     private var whartonUrl: String {
         return "https://apps.wharton.upenn.edu/gsr/"
     }
@@ -312,7 +312,7 @@ extension GSRNetworkManager: CookieRequestable {
     func getSessionIDWithDownFlag(_ callback: @escaping ((_ success: Bool, _ serviceDown: Bool) -> Void)) {
         let url = URL(string: whartonUrl)!
         let request = URLRequest(url: url)
-        makeRequest(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let urlStr = response?.url?.absoluteString, urlStr == self.serviceDown {
                 callback(false, true)
                 return
@@ -334,6 +334,7 @@ extension GSRNetworkManager: CookieRequestable {
                 callback(true, false)
             }
         }
+        task.resume()
     }
     
     private func getSessionIDHelper(html: String, response: HTTPURLResponse, callback: (((_ success: Bool) -> Void))?) {

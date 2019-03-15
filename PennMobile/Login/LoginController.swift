@@ -80,7 +80,7 @@ extension LoginController {
                     if success || !self.isFirstAttempt {
                         AppDelegate.shared.rootViewController.switchToMainScreen()
                     } else {
-                        self.showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)
+                        self.showAlert(withMsg: "Unable to connect to Penn servers. Please try again.", title: "Uh oh!", completion: nil)
                         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
                         self.isFirstAttempt = false
                     }
