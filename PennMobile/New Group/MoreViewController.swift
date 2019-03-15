@@ -110,6 +110,10 @@ extension MoreViewController {
         return (student != nil && indexPath.section == 0) ? AccountCell.cellHeight : 50
     }
     
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return (student != nil && indexPath.section == 0) ? AccountCell.cellHeight : 50
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == (student == nil ? 0 : 1) {
