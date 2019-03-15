@@ -58,10 +58,6 @@ class LoginWebviewController: PennLoginController {
     fileprivate func saveStudent(_ student: Student) {
         UserDefaults.standard.saveStudent(student)
         UserDefaults.standard.set(isInWharton: student.isInWharton())
-        if let email = student.email {
-            let user = GSRUser(firstName: student.first, lastName: student.last, email: email, phone: "2158986533")
-            GSRUser.save(user: user)
-        }
         UserDBManager.shared.saveStudent(student) { (accountID) in
             DispatchQueue.main.async {
                 if let accountID = accountID {

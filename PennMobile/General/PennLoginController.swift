@@ -37,7 +37,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
                     dispatchGroup.leave()
                 }
             }
-            
+
             dispatchGroup.notify(queue: DispatchQueue.main) {
                 self.configureAndLoad(wkDataStore: wkDataStore)
             }
@@ -143,9 +143,9 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     
     func autofillCredentials() {
         guard let pennkey = pennkey, let password = password else { return }
-        webView.evaluateJavaScript("document.getElementById('pennkey').value = '\(pennkey)'") { (_, _) in
+        webView.evaluateJavaScript("document.getElementById('pennkey').value = '\(pennkey)'") { (_,_) in
         }
-        webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_, _) in
+        webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_,_) in
         }
     }
     

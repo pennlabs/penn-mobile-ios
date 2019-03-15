@@ -14,6 +14,8 @@ import StoreKit
 class RootViewController: UIViewController {
     private var current: UIViewController
     
+    private var lastLoginAttempt: Date?
+    
     init() {
         self.current = SplashViewController()
         super.init(nibName: nil, bundle: nil)
@@ -33,21 +35,37 @@ class RootViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // If student is in Wharton but does not have a session ID, retrieve one if possible
+        let now = Date()
         if UserDefaults.standard.isInWharton() && GSRUser.getSessionID() == nil {
+            if lastLoginAttempt != nil && lastLoginAttempt!.minutesFrom(date: now) < 720 {
+                // Don't try to auto re-login if it's been less than 12 hours since last attempt
+                return
+            }
+            self.lastLoginAttempt = now
             // Wait 0.5 seconds so that the home page request is not held up
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                GSRNetworkManager.instance.getSessionID()
+                GSRNetworkManager.instance.getSessionIDWithDownFlag { (success, serviceDown) in
+                    DispatchQueue.main.async {
+                        if !success && !serviceDown {
+                            let gwc = GSRWebviewLoginController()
+                            let nvc = UINavigationController(rootViewController: gwc)
+                            self.current.present(nvc, animated: true, completion: nil)
+                        }
+                    }
+                }
             }
         }
         
         // If student is saved locally but not on DB, save on DB and show main screen
         if UserDefaults.standard.getAccountID() == nil, let student = UserDefaults.standard.getStudent() {
             UserDBManager.shared.saveStudent(student) { (accountID) in
-                if let accountID = accountID {
-                    UserDefaults.standard.set(accountID: accountID)
-                }
-                if self.current is LoginController {
-                    self.switchToMainScreen()
+                DispatchQueue.main.async {
+                    if let accountID = accountID {
+                        UserDefaults.standard.set(accountID: accountID)
+                    }
+                    if self.current is LoginController {
+                        self.switchToMainScreen()
+                    }
                 }
             }
         }
@@ -75,7 +93,7 @@ class RootViewController: UIViewController {
         UserDefaults.standard.synchronize()
         if sessionCount == 3 {
             SKStoreReviewController.requestReview()
-        }
+        }        
     }
     
     func switchToLogout() {

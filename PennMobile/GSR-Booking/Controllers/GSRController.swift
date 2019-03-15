@@ -183,9 +183,9 @@ extension GSRController: GSRBookable {
         switch viewModel.state {
         case .loggedOut:
             if viewModel.getSelectedLocation().service == "wharton" {
-                presentWebviewLoginController(nil)
+                presentWebviewLoginController()
             } else {
-                self.presentLoginController()
+                presentLoginController()
             }
             break
         case .loggedIn:

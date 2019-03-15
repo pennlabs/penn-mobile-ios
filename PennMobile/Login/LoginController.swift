@@ -75,12 +75,15 @@ extension LoginController {
         } else {
             // Failed to retrieve Student profile from PennInTouch (possibly down)
             GSRNetworkManager.instance.getSessionID { (success) in
-                // Get Wharton Session ID
-                if success || !self.isFirstAttempt {
-                    AppDelegate.shared.rootViewController.switchToMainScreen()
-                } else {
-                    self.showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)
-                    self.isFirstAttempt = false
+                DispatchQueue.main.async {
+                    // Get Wharton Session ID
+                    if success || !self.isFirstAttempt {
+                        AppDelegate.shared.rootViewController.switchToMainScreen()
+                    } else {
+                        self.showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)
+                        HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
+                        self.isFirstAttempt = false
+                    }
                 }
             }
         }

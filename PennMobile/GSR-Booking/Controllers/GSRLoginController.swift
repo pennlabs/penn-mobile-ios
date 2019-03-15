@@ -50,6 +50,8 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
             emailField.text = student.email
             if firstNameField.text != nil && emailField.text == nil {
                 emailField.becomeFirstResponder()
+            } else {
+                firstNameField.becomeFirstResponder()
             }
         } else {
             firstNameField.becomeFirstResponder()

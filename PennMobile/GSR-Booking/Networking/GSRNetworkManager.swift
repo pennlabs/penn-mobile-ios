@@ -290,19 +290,78 @@ extension GSRTimeSlot {
 }
 
 // MARK: - Session ID
-extension GSRNetworkManager {
+extension GSRNetworkManager: CookieRequestable {
     private var whartonUrl: String {
         return "https://apps.wharton.upenn.edu/gsr/"
     }
     
-    private var whartonAuthUrl: String {
-        return "https://apps.wharton.upenn.edu/gsr/secured-pennkey/?next=/gsr/"
+    private var authUrl: String {
+        return "https://apps.wharton.upenn.edu/django-shib/Shibboleth.sso/SAML2/POST"
+    }
+    
+    private var serviceDown: String {
+        return "https://servicedown.wharton.upenn.edu/"
+    }
+    
+    func getSessionIDWithDownFlag(_ callback: @escaping ((_ success: Bool, _ serviceDown: Bool) -> Void)) {
+        let url = URL(string: whartonUrl)!
+        let request = URLRequest(url: url)
+        makeRequest(with: request) { (data, response, error) in
+            if let urlStr = response?.url?.absoluteString, urlStr == self.serviceDown {
+                callback(false, true)
+                return
+            }
+            
+            var success = false
+            if let cookies = HTTPCookieStorage.shared.cookies {
+                success = cookies.contains { $0.name == "sessionid" }
+            }
+            if !success {
+                if let response = response as? HTTPURLResponse {
+                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                        self.getSessionIDHelper(html: html as String, response: response, callback: { (success) in
+                            callback(success, false)
+                        })
+                    }
+                }
+            } else {
+                callback(true, false)
+            }
+        }
     }
     
     func getSessionID(_ callback: (((_ success: Bool) -> Void))? = nil) {
-        let url = URL(string: whartonUrl)!
-        let request = URLRequest(url: url)
+        self.getSessionIDWithDownFlag { (success, _) in
+            callback?(success)
+        }
+    }
+    
+    private func getSessionIDHelper(html: String, response: HTTPURLResponse, callback: (((_ success: Bool) -> Void))?) {
+        guard let samlResponse = html.getMatches(for: "<input type=\"hidden\" name=\"SAMLResponse\" value=\"(.*?)\"/>").first,
+            let relayState = html.getMatches(for: "<input type=\"hidden\" name=\"RelayState\" value=\"(.*?)\"/>").first?.replacingOccurrences(of: "&#x3a;", with: ":") else {
+            callback?(false)
+            return
+        }
+
+        let url = URL(string: authUrl)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        let params: [String: String] = [
+            "RelayState": String(relayState),
+            "SAMLResponse": samlResponse
+        ]
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        let encodedParams = params.stringFromHttpParameters()
+        print(encodedParams)
+        request.httpBody = encodedParams.data(using: String.Encoding.utf8)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let response = response as? HTTPURLResponse {
+                print(response.statusCode)
+                if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                    print(html)
+                }
+            }
             var success = false
             if let cookies = HTTPCookieStorage.shared.cookies {
                 success = cookies.contains { $0.name == "sessionid" }
