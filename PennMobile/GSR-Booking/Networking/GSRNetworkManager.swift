@@ -9,7 +9,6 @@
 import Foundation
 import SwiftyJSON
 
-
 class GSRNetworkManager: NSObject, Requestable {
     
     static let instance = GSRNetworkManager()
