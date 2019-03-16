@@ -102,6 +102,10 @@
 		21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6B6CF22162652003A357D /* GSRReservationsController.swift */; };
 		21A6B6D222162702003A357D /* GSRReservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6B6D122162702003A357D /* GSRReservation.swift */; };
 		21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6B6D32216824B003A357D /* ReservationCell.swift */; };
+		21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ABE2A6223D7DE900199D29 /* ScheduleLayout.swift */; };
+		21ABE2AA223D7DEA00199D29 /* ScheduleTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ABE2A7223D7DE900199D29 /* ScheduleTable.swift */; };
+		21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ABE2AC223D7E2B00199D29 /* Event.swift */; };
+		21ABE2AF223D7E2B00199D29 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ABE2AD223D7E2B00199D29 /* Time.swift */; };
 		21B556172224FDC500D80F61 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B556162224FDC500D80F61 /* RootViewController.swift */; };
 		21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B556182224FDF700D80F61 /* SplashViewController.swift */; };
 		21B649202236F2F300AC5B7F /* HomeCoursesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6491F2236F2F300AC5B7F /* HomeCoursesCell.swift */; };
@@ -315,6 +319,10 @@
 		21A6B6CF22162652003A357D /* GSRReservationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRReservationsController.swift; sourceTree = "<group>"; };
 		21A6B6D122162702003A357D /* GSRReservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRReservation.swift; sourceTree = "<group>"; };
 		21A6B6D32216824B003A357D /* ReservationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCell.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		21ABE2A6223D7DE900199D29 /* ScheduleLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleLayout.swift; sourceTree = "<group>"; };
+		21ABE2A7223D7DE900199D29 /* ScheduleTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTable.swift; sourceTree = "<group>"; };
+		21ABE2AC223D7E2B00199D29 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		21ABE2AD223D7E2B00199D29 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		21B556162224FDC500D80F61 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		21B556182224FDF700D80F61 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		21B6491F2236F2F300AC5B7F /* HomeCoursesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoursesCell.swift; sourceTree = "<group>"; };
@@ -847,11 +855,23 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		21ABE2A5223D7D3300199D29 /* ScheduleView */ = {
+			isa = PBXGroup;
+			children = (
+				21ABE2AC223D7E2B00199D29 /* Event.swift */,
+				21ABE2AD223D7E2B00199D29 /* Time.swift */,
+				21ABE2A6223D7DE900199D29 /* ScheduleLayout.swift */,
+				21ABE2A7223D7DE900199D29 /* ScheduleTable.swift */,
+			);
+			path = ScheduleView;
+			sourceTree = "<group>";
+		};
 		21B6491E2236F2E200AC5B7F /* Courses */ = {
 			isa = PBXGroup;
 			children = (
 				21B6491F2236F2F300AC5B7F /* HomeCoursesCell.swift */,
 				21B649212236F2FC00AC5B7F /* HomeCoursesCellItem.swift */,
+				21ABE2A5223D7D3300199D29 /* ScheduleView */,
 			);
 			path = Courses;
 			sourceTree = "<group>";
@@ -1485,6 +1505,7 @@
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21B8BBB4222318BE00EBC1D0 /* StudentNetworkManager.swift in Sources */,
+				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
 				CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
@@ -1502,6 +1523,7 @@
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
+				21ABE2AA223D7DEA00199D29 /* ScheduleTable.swift in Sources */,
 				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,
 				21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
@@ -1538,10 +1560,12 @@
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */,
 				B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */,
+				21ABE2AF223D7E2B00199D29 /* Time.swift in Sources */,
 				21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */,
 				C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */,
 				978693F920EAE1BB00C4A8A1 /* DiningMenuAPI.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
+				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
 				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,

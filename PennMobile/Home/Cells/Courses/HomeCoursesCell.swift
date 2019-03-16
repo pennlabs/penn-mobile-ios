@@ -28,10 +28,12 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeCoursesCellItem else { return 0.0 }
-        return 60 + CGFloat(80 * item.courses.count)
+        let events = item.courses.getEvents()
+        let scheduleHeight = ScheduleTable.calculateHeightForEvents(for: events)
+        return 110 + scheduleHeight
     }
     
-    var courses: [Course]?
+    var courses: [Course]!
     
     // Custom UI elements (some should be abstracted)
     fileprivate let safeInsetValue: CGFloat = 14
@@ -41,7 +43,7 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
     fileprivate var primaryTitleLabel: UILabel!
     
     fileprivate var dividerLine: UIView!
-    //fileprivate var calendarEventTableView: UITableView!
+    fileprivate var courseScheduleTable: ScheduleTable!
     
     // Mark: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -59,26 +61,14 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
 extension HomeCoursesCell {
     fileprivate func setupCell(with item: HomeCoursesCellItem) {
         courses = item.courses
-        //calendarEventTableView.reloadData()
         secondaryTitleLabel.text = "COURSE SCHEDULE"
         primaryTitleLabel.text = "Today's Courses"
+        courseScheduleTable.delegate = self
+        
+        let coursesHeight = ScheduleTable.calculateHeightForEvents(for: courses.getEvents())
+        courseScheduleTable.heightAnchor.constraint(equalToConstant: coursesHeight).isActive = true
     }
 }
-
-//// MARK: - UITableViewDataSource
-//extension HomeCalendarCell: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return events?.count ?? 0
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: UniversityNotificationCell.identifier, for: indexPath) as! UniversityNotificationCell
-//        cell.selectionStyle = UITableViewCellSelectionStyle.none
-//        let event = events![indexPath.row]
-//        cell.calendarEvent = event
-//        return cell
-//    }
-//}
 
 // MARK: - Initialize & Layout UI Elements
 extension HomeCoursesCell {
@@ -86,7 +76,7 @@ extension HomeCoursesCell {
         prepareSafeArea()
         prepareTitleLabels()
         prepareDividerLine()
-//        prepareTableView()
+        prepareScheduleTable()
     }
     
     private func prepareSafeArea() {
@@ -108,12 +98,6 @@ extension HomeCoursesCell {
         cardView.addSubview(secondaryTitleLabel)
         cardView.addSubview(primaryTitleLabel)
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapped(_:)))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-        
-        primaryTitleLabel.addGestureRecognizer(tapGestureRecognizer)
-        primaryTitleLabel.isUserInteractionEnabled = true
-        
         secondaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         secondaryTitleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
         
@@ -133,35 +117,31 @@ extension HomeCoursesCell {
         dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
     }
     
-//    // Mark: TableView
-//    fileprivate func prepareTableView() {
-//        calendarEventTableView = getEventTableView()
-//
-//        cardView.addSubview(calendarEventTableView)
-//
-//        calendarEventTableView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor).isActive = true
-//        calendarEventTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
-//                                                    constant: safeInsetValue / 2).isActive = true
-//        calendarEventTableView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor).isActive = true
-//        calendarEventTableView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: safeInsetValue / 2).isActive = true
-//    }
-}
-
-//// MARK: - UITableViewDelegate
-//extension HomeCoursesCell: UITableViewDelegate {
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UniversityNotificationCell.cellHeight
-//    }
-//}
-
-extension HomeCoursesCell {
-    @objc func handleTapped(_ sender: Any) {
-        guard let delegate = delegate as? BuildingMapSelectable, let building = courses?.first?.building else { return }
-        delegate.handleBuildingSelected(searchTerm: building)
+    // MARK: Schedule Table
+    fileprivate func prepareScheduleTable() {
+        courseScheduleTable = getScheduleTable()
+        cardView.addSubview(courseScheduleTable)
+        
+        _ = courseScheduleTable.anchor(dividerLine.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 }
 
+extension HomeCoursesCell: ScheduleTableDelegate {
+    func getEvents() -> [Event] {
+        return courses.getEvents()
+    }
+    
+    func getEmptyMessage() -> String {
+        return "No Courses Today"
+    }
+    
+    func handleEventTapped(_ event: Event) {
+        guard let delegate = delegate as? BuildingMapSelectable,
+            let course = (courses.filter { $0.getEvent() == event }).first,
+            let searchTerm = course.building else { return }
+        delegate.handleBuildingSelected(searchTerm: searchTerm)
+    }
+}
 
 // MARK: - Define UI Elements
 extension HomeCoursesCell {
@@ -198,15 +178,10 @@ extension HomeCoursesCell {
         return view
     }
     
-//    fileprivate func getEventTableView() -> UITableView {
-//        let tableView = UITableView()
-//        tableView.backgroundColor = .clear
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//        tableView.separatorStyle = .none
-//        tableView.isScrollEnabled = false
-//        tableView.register(UniversityNotificationCell.self, forCellReuseIdentifier: UniversityNotificationCell.identifier)
-//        tableView.translatesAutoresizingMaskIntoConstraints = false
-//        return tableView
-//    }
+    fileprivate func getScheduleTable() -> ScheduleTable {
+        let scheduleView = ScheduleTable(frame: .zero)
+        scheduleView.translatesAutoresizingMaskIntoConstraints = false
+        scheduleView.clipsToBounds = true
+        return scheduleView
+    }
 }
