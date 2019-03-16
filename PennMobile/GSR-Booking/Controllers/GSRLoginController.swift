@@ -44,24 +44,25 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         }
         
-        prepareUI()
-        
-        if let user = GSRUser.getUser() {
-            firstNameField.text = user.firstName
-            lastNameField.text = user.lastName
-            emailField.text = user.email
-            firstNameField.becomeFirstResponder()
-        } else if let student = Student.getStudent() {
-            firstNameField.text = student.first
-            lastNameField.text = student.last
-            emailField.text = student.email
-            if firstNameField.text != nil && emailField.text == nil {
-                emailField.becomeFirstResponder()
+        self.prepareUI()
+        DispatchQueue.main.async {
+            if let user = GSRUser.getUser() {
+                self.firstNameField.text = user.firstName
+                self.lastNameField.text = user.lastName
+                self.emailField.text = user.email
+                self.firstNameField.becomeFirstResponder()
+            } else if let student = Student.getStudent() {
+                self.firstNameField.text = student.first
+                self.lastNameField.text = student.last
+                self.emailField.text = student.email
+                if self.firstNameField.text != nil && self.emailField.text == nil {
+                    self.emailField.becomeFirstResponder()
+                } else {
+                    self.firstNameField.becomeFirstResponder()
+                }
             } else {
-                firstNameField.becomeFirstResponder()
+                self.firstNameField.becomeFirstResponder()
             }
-        } else {
-            firstNameField.becomeFirstResponder()
         }
     }
     
