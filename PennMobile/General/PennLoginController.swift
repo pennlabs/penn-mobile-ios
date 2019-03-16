@@ -22,6 +22,8 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     
     final private var webView: WKWebView!
     
+    final fileprivate var secureStore: SecureStore!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -48,8 +50,22 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         navigationItem.title = "PennKey Login"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
-        pennkey = UserDefaults.standard.getPennKey()
-        password = UserDefaults.standard.getPassword()
+        let genericPwdQueryable =
+            GenericPasswordQueryable(service: "PennWebLogin")
+        secureStore =
+            SecureStore(secureStoreQueryable: genericPwdQueryable)
+        
+        do {
+            pennkey = try secureStore.getValue(for: "PennKey")
+        } catch {
+            pennkey = nil
+        }
+        
+        do {
+            password = try secureStore.getValue(for: "PennKey Password")
+        } catch {
+            password = nil
+        }
     }
     
     func configureAndLoad(wkDataStore: WKWebsiteDataStore) {
@@ -130,8 +146,8 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         
         if url.absoluteString == loginURL {
             guard let pennkey = pennkey, let password = password else { return }
-            UserDefaults.standard.set(pennkey: pennkey)
-            UserDefaults.standard.set(password: password)
+            try? secureStore.setValue(pennkey, for: "PennKey")
+            try? secureStore.setValue(password, for: "PennKey Password")
             if !UserDBManager.shared.testRun && pennkey == self.testPennKey {
                 self.dismiss(animated: true, completion: nil)
             }
@@ -142,9 +158,10 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     }
     
     func autofillCredentials() {
-        guard let pennkey = pennkey, let password = password else { return }
+        guard let pennkey = pennkey else { return }
         webView.evaluateJavaScript("document.getElementById('pennkey').value = '\(pennkey)'") { (_,_) in
         }
+        guard let password = password else { return }
         webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_,_) in
         }
     }

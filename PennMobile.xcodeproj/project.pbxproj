@@ -68,6 +68,7 @@
 		2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */; };
 		2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2180D2342013F65C008C94CF /* HomeAPIService.swift */; };
 		21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21879B1D1FB3FF54003CF552 /* Storage.swift */; };
+		2188C6D7223C7E8400F18D90 /* SecureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2188C6D6223C7E8300F18D90 /* SecureStore.swift */; };
 		2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0802027CDB800771C1F /* GSRBookable.swift */; };
 		2189C0842027CDB800771C1F /* GSRLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0812027CDB800771C1F /* GSRLoginController.swift */; };
 		2189C0852027CDB800771C1F /* GSRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0822027CDB800771C1F /* GSRController.swift */; };
@@ -280,6 +281,7 @@
 		2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequestable.swift; sourceTree = "<group>"; };
 		2180D2342013F65C008C94CF /* HomeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPIService.swift; sourceTree = "<group>"; };
 		21879B1D1FB3FF54003CF552 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		2188C6D6223C7E8300F18D90 /* SecureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStore.swift; sourceTree = "<group>"; };
 		2189C0802027CDB800771C1F /* GSRBookable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRBookable.swift; sourceTree = "<group>"; };
 		2189C0812027CDB800771C1F /* GSRLoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRLoginController.swift; sourceTree = "<group>"; };
 		2189C0822027CDB800771C1F /* GSRController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRController.swift; sourceTree = "<group>"; };
@@ -657,6 +659,7 @@
 				216640C01EBADC8000746B8E /* Generics */,
 				216640C91EBADCA400746B8E /* Extensions.swift */,
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
+				2188C6D6223C7E8300F18D90 /* SecureStore.swift */,
 				21879B1D1FB3FF54003CF552 /* Storage.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
 				2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */,
@@ -1253,6 +1256,9 @@
 						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -1521,6 +1527,7 @@
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
 				21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */,
+				2188C6D7223C7E8400F18D90 /* SecureStore.swift in Sources */,
 				217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */,
 				214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,

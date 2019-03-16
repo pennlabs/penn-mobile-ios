@@ -21,8 +21,6 @@ extension UserDefaults {
         case isOnboarded
         case gsrUSer
         case appVersion
-        case pennkey
-        case password
         case cookies
         case wharton
         case student
@@ -187,27 +185,6 @@ extension UserDefaults {
         let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
         set(version, forKey: UserDefaultsKeys.appVersion.rawValue)
         synchronize()
-    }
-}
-
-// MARK: - PennKey Password
-extension UserDefaults {
-    func set(pennkey: String) {
-        set(pennkey, forKey: UserDefaultsKeys.pennkey.rawValue)
-        synchronize()
-    }
-    
-    func getPennKey() -> String? {
-        return string(forKey: UserDefaultsKeys.pennkey.rawValue)
-    }
-    
-    func set(password: String) {
-        set(password, forKey: UserDefaultsKeys.password.rawValue)
-        synchronize()
-    }
-    
-    func getPassword() -> String? {
-        return string(forKey: UserDefaultsKeys.password.rawValue)
     }
 }
 
