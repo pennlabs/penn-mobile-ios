@@ -52,14 +52,17 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
     
     private func getRemainingCourses() {
         guard let student = Student.getStudent(), let permissionGranted = self.coursesPermission, permissionGranted else { return }
-        StudentNetworkManager.instance.getCourses(currentTermOnly: false) { (courses) in
-            if let courses = courses,
-                let accountID = UserDefaults.standard.getAccountID() {
+        // Wait 1 second for homepage to be fetched from server
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            StudentNetworkManager.instance.getCourses(currentTermOnly: false) { (courses) in
+                if let courses = courses,
+                    let accountID = UserDefaults.standard.getAccountID() {
                     // Save courses to DB if permission was granted
                     UserDBManager.shared.saveCourses(courses, accountID: accountID)
                     student.courses = courses
+                }
+                UserDefaults.standard.storeCookies()
             }
-            UserDefaults.standard.storeCookies()
         }
     }
     
