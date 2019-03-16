@@ -20,7 +20,7 @@ class StudentNetworkManager: NSObject {
 
 // MARK: - Student
 extension StudentNetworkManager {
-    func getStudent(initialCallback: @escaping (_ student: Student?) -> Void, allCoursesCallback: @escaping (_ courses: Set<Course>?) -> Void) {
+    func getStudent(callback: @escaping (_ student: Student?) -> Void) {
         let url = URL(string: baseURL)!
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -32,10 +32,7 @@ extension StudentNetworkManager {
                                 student.courses = courses
                                 self.getDegrees(callback: { (degrees) in
                                     student.degrees = degrees
-                                    initialCallback(student)
-                                    self.getCourses(currentTermOnly: false, callback: { (courses) in
-                                        allCoursesCallback(courses)
-                                    })
+                                    callback(student)
                                 })
                             })
                             return
@@ -43,7 +40,7 @@ extension StudentNetworkManager {
                     }
                 }
             }
-            initialCallback(nil)
+            callback(nil)
         }
         task.resume()
     }
@@ -72,7 +69,7 @@ extension StudentNetworkManager {
 
 // MARK: - Courses
 extension StudentNetworkManager {
-    fileprivate func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+    func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         let url = URL(string: courseURL)!
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in

@@ -9,18 +9,20 @@
 import Foundation
 import WebKit
 
-class LoginWebviewController: PennLoginController {
+class LoginWebviewController: PennLoginController, IndicatorEnabled {
     
     var loginCompletion: ((_ successful: Bool) -> Void)!
     
     private var coursesToSave: Set<Course>?
+    private var coursesPermission: Bool?
     
     override var urlStr: String {
         return "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     }
     
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        StudentNetworkManager.instance.getStudent(initialCallback: { student in
+        self.showActivity()
+        StudentNetworkManager.instance.getStudent { (student) in
             DispatchQueue.main.async {
                 decisionHandler(.cancel)
                 if let student = student {
@@ -37,27 +39,47 @@ class LoginWebviewController: PennLoginController {
                         self.saveStudent(student)
                     }
                 } else {
+                    self.hideActivity()
                     UserDefaults.standard.clearCookies()
                     HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
                     self.dismiss(animated: true, completion: nil)
                     self.loginCompletion(false)
                 }
+                UserDefaults.standard.storeCookies()
             }
-        }, allCoursesCallback: { courses in
-            if let courses = courses {
-                if let accountID = UserDefaults.standard.getAccountID() {
-                    // Save courses to DB
+        }
+    }
+    
+    private func getRemainingCourses() {
+        guard let student = Student.getStudent(), let permissionGranted = self.coursesPermission, permissionGranted else { return }
+        StudentNetworkManager.instance.getCourses(currentTermOnly: false) { (courses) in
+            if let courses = courses,
+                let accountID = UserDefaults.standard.getAccountID() {
+                    // Save courses to DB if permission was granted
                     UserDBManager.shared.saveCourses(courses, accountID: accountID)
-                } else {
-                    // If account ID has not yet been retrieved, cache courses and send them later
-                    self.coursesToSave = courses
-                }
+                    student.courses = courses
             }
             UserDefaults.standard.storeCookies()
-        })
+        }
     }
     
     fileprivate func saveStudent(_ student: Student) {
+        if let courses = student.courses, !courses.isEmpty {
+            DispatchQueue.main.async {
+                self.obtainCoursePermission { (granted) in
+                    if !granted {
+                        student.courses = nil
+                    }
+                    self.coursesPermission = granted
+                    self.saveStudentHelper(student)
+                }
+            }
+        } else {
+            saveStudentHelper(student)
+        }
+    }
+    
+    fileprivate func saveStudentHelper(_ student: Student) {
         UserDefaults.standard.saveStudent(student)
         UserDefaults.standard.set(isInWharton: student.isInWharton())
         UserDBManager.shared.saveStudent(student) { (accountID) in
@@ -69,9 +91,27 @@ class LoginWebviewController: PennLoginController {
                         UserDBManager.shared.saveCourses(coursesToSave, accountID: accountID)
                     }
                 }
+                self.hideActivity()
                 self.dismiss(animated: true, completion: nil)
                 self.loginCompletion(accountID != nil)
+                self.getRemainingCourses()
             }
         }
+    }
+    
+    fileprivate func obtainCoursePermission(_ callback: @escaping (_ granted: Bool) -> Void) {
+        self.hideActivity()
+        let title = "\"PennMobile\" Would Like To Access Your Courses"
+        let message = "Access is needed to display your course schedule on the app."
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Don't Allow", style: .default, handler:{ (UIAlertAction) in
+            callback(false)
+        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:{ (UIAlertAction) in
+            callback(true)
+        }))
+        present(alert, animated: true)
     }
 }
