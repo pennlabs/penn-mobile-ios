@@ -6,11 +6,18 @@
 //  Copyright © 2017 Josh Doman. All rights reserved.
 //
 
-struct Event: Hashable {
+class Event: Hashable {
     let name: String
     let location: String?
     let startTime: Time
     let endTime: Time
+    
+    init(name: String, location: String?, startTime: Time, endTime: Time) {
+        self.name = name
+        self.location = location
+        self.startTime = startTime
+        self.endTime = endTime
+    }
     
     func isConflicting(with event: Event) -> Bool {
         return event.occurs(at: self.startTime) || self.occurs(at: event.startTime)
@@ -161,5 +168,27 @@ struct Event: Hashable {
 extension Array where Element: Course {
     func getEvents() -> [Event] {
         return self.map { $0.getEvent() }.filter { $0 != nil }.map { $0! }
+    }
+}
+
+extension Array where Element: Event {
+    func getTimes() -> [Time] {
+        var times = [Time]()
+        for event in self {
+            let startTime = event.startTime
+            if !times.contains(startTime) {
+                times.append(startTime)
+            }
+            
+            let endTime = event.endTime
+            if !times.contains(endTime) {
+                times.append(endTime)
+            }
+        }
+        
+        times.sort { (time1, time2) -> Bool in
+            return time1.rawMinutes() < time2.rawMinutes()
+        }
+        return times
     }
 }

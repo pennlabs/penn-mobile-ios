@@ -44,7 +44,7 @@ final class HomeCoursesCellItem: HomeCellItem {
     private static func getFakeItem() -> HomeCellItem? {
         guard let student = Student.getStudent(), let courses = student.courses else { return nil }
         let todaysCourses = courses.filter { (course) -> Bool in
-            course.term.contains("2019A") && course.weekdays.contains("M")
+            course.term.contains("2019A") && course.weekdays.contains("T")
         }
         return HomeCoursesCellItem(courses: Array(todaysCourses))
     }

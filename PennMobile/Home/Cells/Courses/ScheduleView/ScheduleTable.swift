@@ -88,24 +88,7 @@ class ScheduleTable: UIView {
     }
     
     private func loadTimes() {
-        var tempTimes = [Time]()
-        for event in events {
-            let startTime = event.startTime
-            if !tempTimes.contains(startTime) {
-                tempTimes.append(startTime)
-            }
-            
-            let endTime = event.endTime
-            if !tempTimes.contains(endTime) {
-                tempTimes.append(endTime)
-            }
-        }
-        
-        tempTimes.sort { (time1, time2) -> Bool in
-            return time1.rawMinutes() < time2.rawMinutes()
-        }
-        
-        times = tempTimes
+        times = events.getTimes()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -116,18 +99,10 @@ class ScheduleTable: UIView {
         if events.isEmpty {
             return 80.0
         }
-        
-        let minStartTime = minimumStartTime(for: events)
-        var maxEndTime = Time(hour: 12, minutes: 0, isAm: true)
-        for event in events {
-            let eventEndTime = event.endTime
-            if eventEndTime.rawMinutes() > maxEndTime.rawMinutes() {
-                maxEndTime = eventEndTime
-            }
-        }
-        
-        return topOffset + bottomOffset +
-            heightForHour * CGFloat(maxEndTime.rawMinutes() - minStartTime.rawMinutes()) / 60.0
+
+        let times = events.getTimes()
+        let collectionViewHeight = getYOffsetForTime(for: times.count - 1, in: times, heightForHour: heightForHour)
+        return topOffset + bottomOffset + collectionViewHeight
     }
     
     public func reloadData() {
@@ -291,16 +266,24 @@ extension ScheduleTable: ScheduleLayoutDelegate {
     
     func collectionView(collectionView: UICollectionView, yOffsetForCellAtIndexPath indexPath: IndexPath, heightForHour: CGFloat) -> CGFloat {
         if indexPath.section == 0 {
-            return getYOffsetForTime(for: times[indexPath.item], heightForHour: heightForHour)
+            return ScheduleTable.getYOffsetForTime(for: indexPath.item, in: times, heightForHour: heightForHour)
         }
         
         let event = events[indexPath.item]
-        return getYOffsetForTime(for: event.startTime, heightForHour: heightForHour)
+        let index = times.firstIndex(of: event.startTime)!
+        return ScheduleTable.getYOffsetForTime(for: index, in: times, heightForHour: heightForHour)
     }
     
-    private func getYOffsetForTime(for time: Time, heightForHour: CGFloat) -> CGFloat {
-        let minStartTime = ScheduleTable.minimumStartTime(for: events)
-        return heightForHour * CGFloat(time.rawMinutes() - minStartTime.rawMinutes()) / 60.0
+    static func getYOffsetForTime(for index: Int, in times: [Time], heightForHour: CGFloat) -> CGFloat {
+        let time = times[index]
+        if index == 0 {
+            return 0.0
+        } else {
+            let prevTime = times[index - 1]
+            let prevYOffset = getYOffsetForTime(for: index - 1, in: times, heightForHour: heightForHour)
+            let diff = time.rawMinutes() - prevTime.rawMinutes()
+            return heightForHour * min(1.5, CGFloat(diff) / 60.0) + prevYOffset
+        }
     }
     
     //returns all conflicting events, including the event itself, when most conflicting events occur

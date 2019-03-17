@@ -61,8 +61,24 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
 extension HomeCoursesCell {
     fileprivate func setupCell(with item: HomeCoursesCellItem) {
         courses = item.courses
+        if let course = courses.first {
+            if course.isTaughtToday {
+                primaryTitleLabel.text = "Today's Courses"
+            } else if course.isTaughtTomorrow {
+                primaryTitleLabel.text = "Tomorrow's Courses"
+            } else {
+                for i in 2..<7 {
+                    if course.isTaughtInNDays(days: i) {
+                        let dayOfWeek = Date().dateIn(days: i).dayOfWeek
+                        primaryTitleLabel.text = "\(dayOfWeek)'s Courses"
+                        break
+                    }
+                }
+            }
+        } else {
+            primaryTitleLabel.text = "Your Courses"
+        }
         secondaryTitleLabel.text = "COURSE SCHEDULE"
-        primaryTitleLabel.text = "Today's Courses"
         courseScheduleTable.delegate = self
         
         let coursesHeight = ScheduleTable.calculateHeightForEvents(for: courses.getEvents())

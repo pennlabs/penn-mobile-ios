@@ -78,3 +78,26 @@ class Course: Codable, Hashable {
         return Time(hour: hour, minutes: minutes, isAm: amStr == "AM")
     }
 }
+
+extension Course {
+    static var weekdayAbbreviations: [String] {
+        return ["S", "M", "T", "W", "R", "F", "S"]
+    }
+    
+    var isTaughtToday: Bool {
+        get {
+            return isTaughtInNDays(days: 0)
+        }
+    }
+    
+    var isTaughtTomorrow: Bool {
+        get {
+            return isTaughtInNDays(days: 1)
+        }
+    }
+    
+    func isTaughtInNDays(days: Int) -> Bool {
+        let weekday = Date().integerDayOfWeek
+        return weekdays.contains(Course.weekdayAbbreviations[(weekday + days) % 7])
+    }
+}
