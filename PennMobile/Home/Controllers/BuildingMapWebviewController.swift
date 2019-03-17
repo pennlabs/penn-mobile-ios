@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-class BuildingMapWebviewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
+class BuildingMapWebviewController: UIViewController, WKUIDelegate, WKNavigationDelegate, IndicatorEnabled {
     
     private var webView: WKWebView!
     
@@ -41,9 +41,11 @@ class BuildingMapWebviewController: UIViewController, WKUIDelegate, WKNavigation
         webView.load(myRequest)
         
         navigationItem.title = "Building Map"
+        self.showActivity()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.hideActivity()
         if self.isInitialLoad {
             navigateWebview()
             self.isInitialLoad = false

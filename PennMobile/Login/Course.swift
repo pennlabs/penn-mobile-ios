@@ -61,4 +61,43 @@ class Course: Codable, Hashable {
     static func == (lhs: Course, rhs: Course) -> Bool {
         return lhs.term == rhs.term && lhs.code == rhs.code && lhs.section == rhs.section
     }
+    
+    func getEvent() -> Event? {
+        guard let startTime = getTime(from: startTime), let endTime = getTime(from: endTime) else { return nil }
+        var location: String? = nil
+        if let building = building, let room = room {
+            location = "\(building) \(room)"
+        }
+        return Event(name: "\(dept)\(code)", location: location, startTime: startTime, endTime: endTime)
+    }
+    
+    private func getTime(from str: String) -> Time? {
+        guard let hourStr = str.getMatches(for: "^(.*?):").first, let hour = Int(String(hourStr)) else { return nil }
+        guard let minuteStr = str.getMatches(for: ":(.*?) ").first, let minutes = Int(String(minuteStr)) else { return nil }
+        guard let amStr = str.getMatches(for: " (.*?)$").first else { return nil }
+        return Time(hour: hour, minutes: minutes, isAm: amStr == "AM")
+    }
+}
+
+extension Course {
+    static var weekdayAbbreviations: [String] {
+        return ["S", "M", "T", "W", "R", "F", "S"]
+    }
+    
+    var isTaughtToday: Bool {
+        get {
+            return isTaughtInNDays(days: 0)
+        }
+    }
+    
+    var isTaughtTomorrow: Bool {
+        get {
+            return isTaughtInNDays(days: 1)
+        }
+    }
+    
+    func isTaughtInNDays(days: Int) -> Bool {
+        let weekday = Date().integerDayOfWeek
+        return weekdays.contains(Course.weekdayAbbreviations[(weekday + days) % 7])
+    }
 }
