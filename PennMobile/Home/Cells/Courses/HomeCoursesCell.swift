@@ -63,14 +63,14 @@ extension HomeCoursesCell {
         courses = item.courses
         if let course = courses.first {
             if course.isTaughtToday {
-                primaryTitleLabel.text = "Today's Courses"
+                primaryTitleLabel.text = "Today's Schedule"
             } else if course.isTaughtTomorrow {
-                primaryTitleLabel.text = "Tomorrow's Courses"
+                primaryTitleLabel.text = "Tomorrow's Schedule"
             } else {
                 for i in 2..<7 {
                     if course.isTaughtInNDays(days: i) {
                         let dayOfWeek = Date().dateIn(days: i).dayOfWeek
-                        primaryTitleLabel.text = "\(dayOfWeek)'s Courses"
+                        primaryTitleLabel.text = "\(dayOfWeek)'s Schedule"
                         break
                     }
                 }
