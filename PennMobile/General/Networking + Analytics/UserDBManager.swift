@@ -111,13 +111,6 @@ extension UserDBManager {
                             let json = JSON(data)
                             accountID = json["account_id"].string
                         }
-                    } else {
-                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                            let json = JSON(data)
-                            print(json)
-                            let error = json["error"].stringValue
-                            print(error)
-                        }
                     }
                 }
                 completion(accountID)

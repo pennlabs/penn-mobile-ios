@@ -78,21 +78,14 @@ extension ScheduleEventCell {
         _ = label.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
-    private var imageUrl: String {
-        return "https://mobile.apps.upenn.edu/mobile/assets/images/building.png"
-    }
-    
     private func prepareImageView() {
         imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .clear
+        imageView.image = UIImage(named: "PennPin")
         
         addSubview(imageView)
         _ = imageView.anchor(label.topAnchor, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 4, widthConstant: 0, heightConstant: 20)
-        
-        ImageNetworkingManager.instance.downloadImage(imageUrl: imageUrl) { (image) in
-            self.imageView.image = image
-        }
     }
 }

@@ -83,6 +83,7 @@ extension HomeCoursesCell {
         
         let coursesHeight = ScheduleTable.calculateHeightForEvents(for: courses.getEvents())
         courseScheduleTable.heightAnchor.constraint(equalToConstant: coursesHeight).isActive = true
+        courseScheduleTable.reloadData()
     }
 }
 
