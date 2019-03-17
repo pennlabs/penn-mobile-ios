@@ -309,65 +309,6 @@ extension ScheduleTable: ScheduleLayoutDelegate {
     }
 }
 
-private class ScheduleEventCell: UICollectionViewCell {
-    
-    public var event: Event! {
-        didSet {
-            var str = event.name
-            if let location = event.location {
-                str += "\n\(location)"
-            }
-            
-            let attributedString = NSMutableAttributedString(string: str)
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 2 // Whatever line spacing you want in points
-            attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-            label.attributedText = attributedString;
-        }
-    }
-    
-    private var color: UIColor = UIColor(r: 73, g: 144, b: 226) {
-        didSet {
-            backgroundColor = color
-        }
-    }
-    
-    private let label: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 2
-        label.font = UIFont(name: "HelveticaNeue", size: 12)
-        label.textColor = UIColor(r: 248, g: 248, b: 248)
-        return label
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = color
-        layer.cornerRadius = 4
-        layer.masksToBounds = true
-//        isUserInteractionEnabled = true
-        
-        addSubview(label)
-        
-        _ = label.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 4, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
-    
-    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        if let attributes = layoutAttributes as? ScheduleLayoutAttributes {
-            color = attributes.color
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override class var requiresConstraintBasedLayout: Bool {
-        return true
-    }
-}
-
 private class TimeCell: UICollectionViewCell {
     
     var time: Time! {
