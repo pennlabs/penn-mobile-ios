@@ -20,10 +20,12 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         tableView.delegate = self
         tableView.register(ReservationCell.self, forCellReuseIdentifier: ReservationCell.identifier)
         tableView.register(NoReservationsCell.self, forCellReuseIdentifier: NoReservationsCell.identifier)
+        tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
+        tableView.tableHeaderView = UIView()
         
         self.title = "Your Bookings"
-        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
+    self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
 
         let sessionID = UserDefaults.standard.getSessionID()
         let email = GSRUser.getUser()?.email

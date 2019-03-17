@@ -24,7 +24,7 @@ final class HomeReservationsCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeReservationsCellItem else { return 0.0 }
-        return (CGFloat(item.reservations.count) * ReservationCell.cellHeight) + (90.0 + 14.0 + 20.0)
+        return (CGFloat(item.reservations.count) * ReservationCell.cellHeight) + (90.0 + 14.0 + 20.0 + 7.0)
     }
     
     var reservations: [GSRReservation]?
@@ -124,16 +124,16 @@ extension HomeReservationsCell {
         dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
     }
     
-    // Mark: TableView
+    // MARK: TableView
     fileprivate func prepareTableView() {
         reservationTableView = getReservationTableView()
         
         cardView.addSubview(reservationTableView)
         
         reservationTableView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor).isActive = true
-        reservationTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor, constant: safeInsetValue / 2).isActive = true
+        reservationTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor, constant: 0).isActive = true
         reservationTableView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor).isActive = true
-        reservationTableView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: safeInsetValue / 2).isActive = true
+        reservationTableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: safeInsetValue).isActive = true
     }
 }
 
