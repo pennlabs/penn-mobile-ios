@@ -36,17 +36,24 @@ class HomeViewController: GenericViewController {
         prepareRefreshControl()
         
         registerForNotifications()
+        
+        self.navigationItem.leftBarButtonItem = nil
+        self.navigationItem.rightBarButtonItem = nil
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.title = getTitle()
         if tableViewModel == nil {
             self.startLoadingViewAnimation()
         }
         self.refreshTableView {
             self.stopLoadingViewAnimation()
         }
+    }
+    
+    override func setupNavBar() {
+        super.setupNavBar()
+        self.tabBarController?.title = getTitle()
     }
     
     fileprivate var titleCacheTimestamp = Date()
@@ -69,8 +76,9 @@ class HomeViewController: GenericViewController {
         }
     }
     
-    func clearTitleCache() {
+    func clearCache() {
         displayTitle = nil
+        tableViewModel = nil
     }
 }
 

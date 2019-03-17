@@ -22,11 +22,14 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
             student = Student.getStudent()
         }
         setUpTableView()
+        
+        let isLoggedIn = UserDefaults.standard.getAccountID() != nil
+        barButton = UIBarButtonItem(title: isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
+        barButton.tintColor = UIColor.navigationBlue
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.title = "More"
         if shouldShowProfile {
             let student = Student.getStudent()
             if self.student != student {
@@ -34,10 +37,10 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
                 tableView.reloadData()
             }
         }
-        setupNavBar()
     }
     
-    private func setupNavBar() {
+    override func setupNavBar() {
+        self.tabBarController?.title = "More"
         let isLoggedIn = UserDefaults.standard.getAccountID() != nil
         barButton = UIBarButtonItem(title: isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
         barButton.tintColor = UIColor.navigationBlue
@@ -182,7 +185,7 @@ extension MoreViewController {
             guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
                 return
             }
-            homeVC.clearTitleCache()
+            homeVC.clearCache()
         } else {
             showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)
         }

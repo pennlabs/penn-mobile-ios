@@ -47,10 +47,9 @@ class GSRController: GenericViewController, IndicatorEnabled {
         updateForNewDayIfNeeded()
         rangeSlider?.reload()
         fetchData()
-        setupNavBar()
     }
 
-    private func setupNavBar() {
+    override func setupNavBar() {
         self.tabBarController?.title = "Study Room Booking"
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
         barButton.tintColor = UIColor.navigationBlue

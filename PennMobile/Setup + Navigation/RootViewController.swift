@@ -110,7 +110,7 @@ class RootViewController: UIViewController {
         guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
             return
         }
-        homeVC.clearTitleCache()
+        homeVC.clearCache()
     }
     
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {

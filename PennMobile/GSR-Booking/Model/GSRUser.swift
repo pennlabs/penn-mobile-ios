@@ -21,7 +21,7 @@ struct GSRUser: Codable {
             guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
                 return
             }
-            homeVC.clearTitleCache()
+            homeVC.clearCache()
         }
         Student.update(firstName: user.firstName, lastName: user.lastName, email: user.email)
     }

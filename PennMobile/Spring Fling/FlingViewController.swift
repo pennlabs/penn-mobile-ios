@@ -14,7 +14,7 @@ protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
 
 final class FlingTableViewModel: ModularTableViewModel {}
 
-final class FlingViewController: GenericViewController {
+final class FlingViewController: GenericViewController, HairlineRemovable {
     
     fileprivate var performersTableView: ModularTableView!
     fileprivate var scheduleTableView: UITableView!
@@ -35,7 +35,6 @@ final class FlingViewController: GenericViewController {
         super.viewDidLoad()
         self.title = "Spring Fling"
         
-        setupNavBar()
         prepareScheduleTableView()
         preparePerformersTableView()
         prepareMapImageView()
@@ -55,11 +54,8 @@ final class FlingViewController: GenericViewController {
             // TODO: do something when fetch has completed
         }
     }
-}
-
-// MARK: - Initialize and layout views
-extension FlingViewController: HairlineRemovable {
-    fileprivate func setupNavBar() {
+    
+    override func setupNavBar() {
         //removes hairline from bottom of navbar
         if let navbar = navigationController?.navigationBar {
             removeHairline(from: navbar)

@@ -55,7 +55,6 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
                 }
             }
         }
-        setupNavBar()
     }
     
     fileprivate func getFooterViewForTable() -> UIView {
@@ -70,7 +69,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         return v
     }
     
-    private func setupNavBar() {
+    override func setupNavBar() {
         self.tabBarController?.title = "Laundry"
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
