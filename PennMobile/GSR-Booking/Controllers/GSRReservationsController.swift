@@ -23,7 +23,7 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         tableView.tableFooterView = UIView()
         
         self.title = "Your Bookings"
-        self.navigationController?.navigationBar.topItem?.title = "Back"
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
 
         let sessionID = UserDefaults.standard.getSessionID()
         let email = GSRUser.getUser()?.email
