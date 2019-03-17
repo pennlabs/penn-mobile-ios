@@ -18,6 +18,14 @@ class ReservationCell: UITableViewCell {
     static let identifier = "reservationCell"
     static let cellHeight: CGFloat = 127
     
+    var isHomepage: Bool = false {
+        didSet {
+            if isHomepage {
+                adjustForHome()
+            }
+        }
+    }
+    
     var reservation: GSRReservation! {
         didSet {
             locationLabel.text = String(reservation.roomName.split(separator: ":").first ?? "")
@@ -44,6 +52,8 @@ class ReservationCell: UITableViewCell {
     
     var delegate: ReservationCellDelegate!
     
+    fileprivate let safeInsetValue: CGFloat = 14
+    fileprivate var safeArea: UIView!
     fileprivate var locationLabel: UILabel!
     fileprivate var dateLabel: UILabel!
     fileprivate var timeLabel: UILabel!
@@ -63,11 +73,23 @@ class ReservationCell: UITableViewCell {
 // MARK: - Prepare UI
 extension ReservationCell {
     fileprivate func prepareUI() {
+        prepareSafeArea()
         prepareBuildingImage()
         prepareLocationLabel()
         prepareDateLabel()
         prepareTimeLabel()
         prepareDeleteButton()
+    }
+    
+    // MARK: Safe Area
+    fileprivate func prepareSafeArea() {
+        safeArea = UIView()
+        safeArea.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(safeArea)
+        safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue).isActive = true
+        safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue / 2).isActive = true
+        safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue / 2).isActive = true
     }
     
     private func prepareLocationLabel() {
@@ -133,4 +155,16 @@ extension ReservationCell {
         _ = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 20, widthConstant: 139, heightConstant: 87)
     }
     
+}
+
+// MARK: - Homepage
+extension ReservationCell {
+    func adjustForHome() {
+        buildingImage.widthAnchor.constraint(equalToConstant: 160).isActive = true
+//        buildingImage.heightAnchor.constraint(equalToConstant: 72).isActive = true
+//        buildingImage.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+//        buildingImage.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor).isActive = true
+//        _ = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 20, widthConstant: 139, heightConstant: 87)
+    }
+
 }
