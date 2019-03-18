@@ -148,6 +148,7 @@ extension ReservationCell {
 extension ReservationCell {
     func adjustForHome() {
         buildingImage.widthAnchor.constraint(equalToConstant: 130).isActive = true
+        //buildingImage.heightAnchor.constraint(equalToConstant: 72).isActive = true
         buildingImage.layer.cornerRadius = 5.0
         buildingImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 14).isActive = true
         locationLabel.leftAnchor.constraint(equalTo: buildingImage.rightAnchor, constant: 14).isActive = true
