@@ -80,7 +80,7 @@ extension ReservationCell {
     
     private func prepareLocationLabel() {
         locationLabel = UILabel()
-        locationLabel.font = UIFont(name: "AvenirNext-Regular", size: 18)
+        locationLabel.font = UIFont(name: "AvenirNext-Regular", size: 16)
         locationLabel.textColor = .primaryTitleGrey
         locationLabel.textAlignment = .left
         locationLabel.numberOfLines = 1
