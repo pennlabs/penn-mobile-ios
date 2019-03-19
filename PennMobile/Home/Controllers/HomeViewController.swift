@@ -54,6 +54,7 @@ class HomeViewController: GenericViewController {
     override func setupNavBar() {
         super.setupNavBar()
         self.tabBarController?.title = getTitle()
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
     }
     
     fileprivate var titleCacheTimestamp = Date()

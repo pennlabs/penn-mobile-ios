@@ -40,7 +40,8 @@ class BuildingMapWebviewController: UIViewController, WKUIDelegate, WKNavigation
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
         
-        navigationItem.title = "Building Map"
+        self.title = "Building Map"
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
         self.showActivity()
     }
     
