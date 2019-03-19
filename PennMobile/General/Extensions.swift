@@ -116,7 +116,7 @@ extension UIColor {
 }
 
 extension UIFont {
-
+    static let avenirMedium = UIFont(name: "Avenir-Medium", size: 20)
     static let primaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 24)
     static let secondaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
 
