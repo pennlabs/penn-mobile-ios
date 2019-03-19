@@ -125,7 +125,7 @@ extension HomeViewController {
     func setModel(_ model: HomeTableViewModel) {
         tableViewModel = model
         tableViewModel.delegate = self
-        tableView.model = tableViewModel
+        tableView?.model = tableViewModel
     }
     
     func prepareLoadingView() {

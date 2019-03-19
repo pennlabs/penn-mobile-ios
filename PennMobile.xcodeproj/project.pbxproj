@@ -103,6 +103,7 @@
 		21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6B6CF22162652003A357D /* GSRReservationsController.swift */; };
 		21A6B6D222162702003A357D /* GSRReservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6B6D122162702003A357D /* GSRReservation.swift */; };
 		21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A6B6D32216824B003A357D /* ReservationCell.swift */; };
+		21A9D942224087980000444D /* CourseMeetingTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A9D941224087980000444D /* CourseMeetingTime.swift */; };
 		21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ABE2A6223D7DE900199D29 /* ScheduleLayout.swift */; };
 		21ABE2AA223D7DEA00199D29 /* ScheduleTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ABE2A7223D7DE900199D29 /* ScheduleTable.swift */; };
 		21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ABE2AC223D7E2B00199D29 /* Event.swift */; };
@@ -321,6 +322,7 @@
 		21A6B6CF22162652003A357D /* GSRReservationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRReservationsController.swift; sourceTree = "<group>"; };
 		21A6B6D122162702003A357D /* GSRReservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRReservation.swift; sourceTree = "<group>"; };
 		21A6B6D32216824B003A357D /* ReservationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCell.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		21A9D941224087980000444D /* CourseMeetingTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseMeetingTime.swift; sourceTree = "<group>"; };
 		21ABE2A6223D7DE900199D29 /* ScheduleLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleLayout.swift; sourceTree = "<group>"; };
 		21ABE2A7223D7DE900199D29 /* ScheduleTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTable.swift; sourceTree = "<group>"; };
 		21ABE2AC223D7E2B00199D29 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -886,6 +888,7 @@
 				21B8BBB522231F9F00EBC1D0 /* Student.swift */,
 				21B8BBB72223963C00EBC1D0 /* Degree.swift */,
 				21B8BBB1222318A600EBC1D0 /* Course.swift */,
+				21A9D941224087980000444D /* CourseMeetingTime.swift */,
 				21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */,
 				21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */,
 			);
@@ -1596,6 +1599,7 @@
 				217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */,
 				217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
+				21A9D942224087980000444D /* CourseMeetingTime.swift in Sources */,
 				B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */,
 				219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */,
 				21640D662012A1CE002F33CA /* DiningHoursModels.swift in Sources */,

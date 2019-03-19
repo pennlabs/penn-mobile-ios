@@ -28,7 +28,9 @@ class Course: Codable, Hashable {
     let endTime: String
     let instructors: [String]
     
-    init(name: String, term: String, dept: String, code: String, section: String, building: String?, room: String?, weekdays: String, startDate: String, endDate: String, startTime: String, endTime: String, instructors: [String]) {
+    let meetingTimes: [CourseMeetingTime]?
+    
+    init(name: String, term: String, dept: String, code: String, section: String, building: String?, room: String?, weekdays: String, startDate: String, endDate: String, startTime: String, endTime: String, instructors: [String], meetingTimes: [CourseMeetingTime]?) {
         self.name = name
         self.term = term
         self.dept = dept
@@ -42,16 +44,21 @@ class Course: Codable, Hashable {
         self.endDate = endDate
         self.startTime = startTime
         self.endTime = endTime
+        self.meetingTimes = meetingTimes
     }
     
     var description: String {
         let instructorStr = instructors.joined(separator: ", ")
-        let str = "\(term) \(name) \(dept)-\(code)-\(section) \(instructorStr) \(weekdays) \(startDate) - \(endDate) \(startTime) \(endTime)"
+        var str = "\(term) \(name) \(dept)-\(code)-\(section) \(instructorStr) \(weekdays) \(startDate) - \(endDate) \(startTime) \(endTime)"
         if let building = building, let room = room {
-            return "\(str) \(building) \(room)"
-        } else {
-            return str
+            str = "\(str) \(building) \(room)"
         }
+        if let meetingTimes = meetingTimes {
+            for meeting in meetingTimes {
+                str = str + "\n\(meeting.description)"
+            }
+        }
+        return str
     }
     
     var hashValue: Int {
