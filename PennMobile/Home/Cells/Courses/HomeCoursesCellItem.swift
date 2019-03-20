@@ -14,9 +14,12 @@ final class HomeCoursesCellItem: HomeCellItem {
         return "courses"
     }
     
+    let weekday: String
     let courses: [Course]
     
-    init(courses: [Course]) {
+    init(weekday: String, courses: [Course]) {
+        self.weekday = weekday
+        
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
         self.courses = courses.sorted(by: { (c1, c2) -> Bool in
@@ -29,23 +32,15 @@ final class HomeCoursesCellItem: HomeCellItem {
     }
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
-        guard let json = json, let data: Data = try? json.rawData()  else { return nil }
+        guard let json = json, let weekday = json["weekday"].string, let data: Data = try? json["courses"].rawData()  else { return nil }
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
             let courses = try decoder.decode([Course].self, from: data)
-            return HomeCoursesCellItem(courses: courses)
+            return HomeCoursesCellItem(weekday: weekday, courses: courses)
         } catch {
             return nil
         }
-    }
-    
-    private static func getFakeItem() -> HomeCellItem? {
-        guard let student = Student.getStudent(), let courses = student.courses else { return nil }
-        let todaysCourses = courses.filter { (course) -> Bool in
-            course.term.contains("2019A") && course.weekdays.contains("T")
-        }
-        return HomeCoursesCellItem(courses: Array(todaysCourses))
     }
     
     static var associatedCell: ModularTableViewCell.Type {
