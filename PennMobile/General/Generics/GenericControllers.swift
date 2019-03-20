@@ -82,7 +82,6 @@ class GenericViewController: UIViewController, Trackable {
     }
     
     func setupNavBar() {
-        tabBarController?.navigationItem.title = title
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = nil
     }
