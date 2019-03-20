@@ -11,6 +11,12 @@ import UIKit
 
 class LoginController: UIViewController, ShowsAlert {
     
+    fileprivate var backgroundImage: UIImageView!
+    
+    fileprivate var iconShadow: CAShapeLayer!
+    fileprivate var icon: UIImageView!
+    fileprivate var titleLabel: UILabel!
+    
     fileprivate var loginShadow: CAShapeLayer!
     fileprivate var loginGradient: CAGradientLayer!
     fileprivate var loginButton: UIButton!
@@ -35,9 +41,13 @@ class LoginController: UIViewController, ShowsAlert {
         loginShadow.shadowPath = loginShadow.path
         loginButton.layer.insertSublayer(loginShadow, at: 0)
         
-        skipShadow.path = UIBezierPath(roundedRect: loginButton.bounds, cornerRadius: 20).cgPath
-        skipShadow.shadowPath = loginShadow.path
+        skipShadow.path = UIBezierPath(roundedRect: skipButton.bounds, cornerRadius: 20).cgPath
+        skipShadow.shadowPath = skipShadow.path
         skipButton.layer.insertSublayer(skipShadow, at: 0)
+        
+//        iconShadow.path = UIBezierPath(rect: icon.bounds).cgPath
+//        iconShadow.shadowPath = iconShadow.path
+//        icon.layer.insertSublayer(iconShadow, at: 0)
     }
 }
 
@@ -85,8 +95,20 @@ extension LoginController {
 // MARK: - Prepare UI
 extension LoginController {
     fileprivate func prepareUI() {
+        prepareBackgroundImage()
         prepareLoginButton()
         prepareSkipButton()
+        prepareIcon()
+        prepareTitleLabel()
+    }
+    
+    fileprivate func prepareBackgroundImage() {
+        let iconImage: UIImage = UIImage(named: "LoginBackground")!
+        backgroundImage = UIImageView(image: iconImage)
+        backgroundImage.contentMode = .scaleAspectFill
+        
+        view.addSubview(backgroundImage)
+        backgroundImage.anchorToTop(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
     }
     
     fileprivate func prepareLoginButton() {
@@ -99,8 +121,8 @@ extension LoginController {
         loginShadow = CAShapeLayer()
         loginShadow.fillColor = UIColor.white.cgColor
         loginShadow.shadowColor = UIColor.darkGray.cgColor
-        loginShadow.shadowOffset = CGSize(width: 1.0, height: 2.0)
-        loginShadow.shadowOpacity = 0.8
+        loginShadow.shadowOffset = CGSize(width: 0.5, height: 1.5)
+        loginShadow.shadowOpacity = 0.5
         loginShadow.shadowRadius = 2
         
         // Add gradient
@@ -125,8 +147,8 @@ extension LoginController {
         
         view.addSubview(loginButton)
         loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loginButton.widthAnchor.constraint(equalToConstant: 260).isActive = true
+        loginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 30).isActive = true
+        loginButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
@@ -158,36 +180,39 @@ extension LoginController {
         view.addSubview(skipButton)
         skipButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 30).isActive = true
         skipButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        skipButton.widthAnchor.constraint(equalToConstant: 260).isActive = true
-        skipButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-    }
-}
-
-/**
- * View with a gradient layer.
- */
-class GradientView: UIView {
-    
-    let gradient : CAGradientLayer
-    
-    init(gradient: CAGradientLayer) {
-        self.gradient = gradient
-        super.init(frame: .zero)
-        self.gradient.frame = self.bounds
-        self.layer.insertSublayer(self.gradient, at: 0)
+        skipButton.widthAnchor.constraint(equalTo: loginButton.widthAnchor).isActive = true
+        skipButton.heightAnchor.constraint(equalTo: loginButton.heightAnchor).isActive = true
     }
     
-    convenience init(colors: [UIColor], locations:[Float] = [0.0, 1.0]) {
-        let gradient = CAGradientLayer()
-        gradient.colors = colors.map { $0.cgColor }
-        gradient.locations = locations.map { NSNumber(value: $0) }
-        self.init(gradient: gradient)
+    fileprivate func prepareIcon() {
+        let iconImage: UIImage = UIImage(named: "LaunchIcon")!
+        icon = UIImageView(image: iconImage)
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add drop shadow
+        icon.layer.shadowColor = UIColor.darkGray.cgColor
+        icon.layer.shadowOffset = CGSize(width: 1, height: 2)
+        icon.layer.shadowOpacity = 0.5
+        icon.layer.shadowRadius = 1.0
+        icon.clipsToBounds = false
+        
+        view.addSubview(icon)
+        icon.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        icon.bottomAnchor.constraint(equalTo: loginButton.topAnchor, constant: -150).isActive = true
+        icon.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        icon.heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
     
-    override func layoutSublayers(of layer: CALayer) {
-        super.layoutSublayers(of: layer)
-        self.gradient.frame = self.bounds
+    fileprivate func prepareTitleLabel() {
+        titleLabel = UILabel()
+        titleLabel.font = UIFont.avenirMedium?.withSize(25)
+        titleLabel.textColor = UIColor(red: 74, green: 74, blue: 74)
+        titleLabel.textAlignment = .center
+        titleLabel.text = "Penn Mobile"
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(titleLabel)
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: icon.bottomAnchor, constant: 12).isActive = true
     }
-    
-    required init?(coder: NSCoder) { fatalError("no init(coder:)") }
 }
