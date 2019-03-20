@@ -51,7 +51,8 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
     }
     
     private func getRemainingCourses() {
-        guard let student = Student.getStudent(), let permissionGranted = self.coursesPermission, permissionGranted else { return }
+        // Check if student not null and course permission has been granted
+        guard let student = Student.getStudent(), UserDefaults.standard.coursePermissionGranted() else { return }
         // Wait 1 second for homepage to be fetched from server
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             StudentNetworkManager.instance.getCourses(currentTermOnly: false) { (courses) in
@@ -67,13 +68,13 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
     }
     
     fileprivate func saveStudent(_ student: Student) {
-        if let courses = student.courses, !courses.isEmpty {
+        if let courses = student.courses, !courses.isEmpty, !UserDefaults.standard.coursePermissionGranted() {
             DispatchQueue.main.async {
                 self.obtainCoursePermission { (granted) in
+                    UserDefaults.standard.setCoursePermission(granted)
                     if !granted {
                         student.courses = nil
                     }
-                    self.coursesPermission = granted
                     self.saveStudentHelper(student)
                 }
             }

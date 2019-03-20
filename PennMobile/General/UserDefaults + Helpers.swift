@@ -24,6 +24,7 @@ extension UserDefaults {
         case cookies
         case wharton
         case student
+        case coursePermission
     }
 }
 
@@ -230,5 +231,17 @@ extension UserDefaults {
     
     func clearCookies() {
         removeObject(forKey: UserDefaultsKeys.cookies.rawValue)
+    }
+}
+
+// MARK: - Course Permission
+extension UserDefaults {
+    func setCoursePermission(_ granted: Bool) {
+        set(granted, forKey: UserDefaultsKeys.coursePermission.rawValue)
+        synchronize()
+    }
+    
+    func coursePermissionGranted() -> Bool {
+        return bool(forKey: UserDefaultsKeys.coursePermission.rawValue)
     }
 }
