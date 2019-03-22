@@ -132,8 +132,14 @@ extension HomeCoursesCell: ScheduleTableDelegate {
         return courses.getEvents()
     }
     
-    func getEmptyMessage() -> String {
-        return "No Courses Today"
+    func getEmptyMessage() -> NSAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        paragraphStyle.alignment = .center
+        
+        let attrString = NSMutableAttributedString(string: "Nothing planned. Enjoy the time off 🎉")
+        attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        return attrString
     }
     
     func handleEventTapped(_ event: Event) {

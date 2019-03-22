@@ -10,7 +10,7 @@ import UIKit
 
 protocol ScheduleTableDelegate {
     func getEvents() -> [Event]
-    func getEmptyMessage() -> String
+    func getEmptyMessage() -> NSAttributedString
     func handleEventTapped(_ event: Event)
 }
 
@@ -33,16 +33,14 @@ class ScheduleTable: UIView {
         cv.allowsSelection = true
         cv.isScrollEnabled = false
         cv.backgroundColor = .clear
-//        cv.isUserInteractionEnabled = true
         return cv
     }()
     
     private let emptyView: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
-        label.numberOfLines = 2
-        label.font = UIFont(name: "HelveticaNeue", size: 16)
-        label.textColor = UIColor(r: 115, g: 115, b: 115)
+        label.numberOfLines = 3
+        label.font = UIFont(name: "HelveticaNeue", size: 19)
+        label.textColor = UIColor.warmGrey
         return label
     }()
     
@@ -59,7 +57,6 @@ class ScheduleTable: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.isUserInteractionEnabled = true
         setupView()
     }
     
@@ -69,7 +66,9 @@ class ScheduleTable: UIView {
         
         addSubview(emptyView)
         
-        emptyView.anchorWithConstantsToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 80, bottomConstant: 0, rightConstant: 80)
+        emptyView.anchorWithConstantsToTop(topAnchor, left: nil, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
+        emptyView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        emptyView.widthAnchor.constraint(equalTo: widthAnchor, constant: -50).isActive = true
         
         addSubview(collectionView)
         
@@ -83,7 +82,7 @@ class ScheduleTable: UIView {
         didSet {
             loadTimes()
             emptyView.isHidden = !events.isEmpty
-            emptyView.text = delegate.getEmptyMessage()
+            emptyView.attributedText = delegate.getEmptyMessage()
         }
     }
     
@@ -97,7 +96,7 @@ class ScheduleTable: UIView {
     
     public static func calculateHeightForEvents(for events: [Event]) -> CGFloat {
         if events.isEmpty {
-            return 80.0
+            return 100.0
         }
 
         let times = events.getTimes()
