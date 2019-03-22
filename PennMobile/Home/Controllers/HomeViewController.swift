@@ -43,11 +43,13 @@ class HomeViewController: GenericViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if tableViewModel == nil {
-            self.startLoadingViewAnimation()
-        }
-        self.refreshTableView {
-            self.stopLoadingViewAnimation()
+        if tableView != nil {
+            if tableViewModel == nil {
+                self.startLoadingViewAnimation()
+            }
+            self.refreshTableView {
+                self.stopLoadingViewAnimation()
+            }
         }
     }
     

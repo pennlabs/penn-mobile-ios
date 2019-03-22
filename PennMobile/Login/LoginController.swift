@@ -44,10 +44,6 @@ class LoginController: UIViewController, ShowsAlert {
         skipShadow.path = UIBezierPath(roundedRect: skipButton.bounds, cornerRadius: 20).cgPath
         skipShadow.shadowPath = skipShadow.path
         skipButton.layer.insertSublayer(skipShadow, at: 0)
-        
-//        iconShadow.path = UIBezierPath(rect: icon.bounds).cgPath
-//        iconShadow.shadowPath = iconShadow.path
-//        icon.layer.insertSublayer(iconShadow, at: 0)
     }
 }
 

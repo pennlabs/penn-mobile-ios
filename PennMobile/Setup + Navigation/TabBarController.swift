@@ -23,6 +23,10 @@ final class TabBarController: ESTabBarController {
         self.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     func reloadTabs() {
         let controllerModel = ControllerModel.shared
         if (ControllerModel.isReloadNecessary()) {
