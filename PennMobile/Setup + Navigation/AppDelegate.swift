@@ -134,7 +134,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         DatabaseManager.shared.startSession()
         tabBarController?.reloadTabs()
-        ControllerModel.shared.visibleVC().viewWillAppear(true)
         rootViewController.viewWillAppear(true)
     }
     

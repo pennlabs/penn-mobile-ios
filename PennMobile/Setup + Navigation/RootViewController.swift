@@ -34,6 +34,28 @@ class RootViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if UserDefaults.standard.getAccountID() != nil {
+            ControllerModel.shared.firstVC.viewWillAppear(animated)
+        } else {
+            // If student is saved locally but not on DB, save on DB and show main screen
+            if let student = Student.getStudent() {
+                UserDBManager.shared.saveStudent(student) { (accountID) in
+                    DispatchQueue.main.async {
+                        if let accountID = accountID {
+                            UserDefaults.standard.set(accountID: accountID)
+                        }
+                        if self.current is LoginController {
+                            self.switchToMainScreen()
+                        }
+                    }
+                }
+            } else if self.current is HomeNavigationController {
+                // Switch to logout screen if user is not logged in
+                self.switchToLogout()
+            }
+        }
+        
         // If student is in Wharton but does not have a session ID, retrieve one if possible
         let now = Date()
         if UserDefaults.standard.isInWharton() && GSRUser.getSessionID() == nil {
@@ -51,20 +73,6 @@ class RootViewController: UIViewController {
                             let nvc = UINavigationController(rootViewController: gwc)
                             self.current.present(nvc, animated: true, completion: nil)
                         }
-                    }
-                }
-            }
-        }
-        
-        // If student is saved locally but not on DB, save on DB and show main screen
-        if UserDefaults.standard.getAccountID() == nil, let student = Student.getStudent() {
-            UserDBManager.shared.saveStudent(student) { (accountID) in
-                DispatchQueue.main.async {
-                    if let accountID = accountID {
-                        UserDefaults.standard.set(accountID: accountID)
-                    }
-                    if self.current is LoginController {
-                        self.switchToMainScreen()
                     }
                 }
             }

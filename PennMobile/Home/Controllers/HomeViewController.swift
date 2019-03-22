@@ -277,7 +277,7 @@ extension HomeViewController {
     }
 
     func reloadItem(_ item: HomeCellItem) {
-        guard let allItems = tableViewModel.items as? [HomeCellItem] else { return }
+        guard let allItems = tableViewModel?.items as? [HomeCellItem] else { return }
         if let row = allItems.index(where: { (thisItem) -> Bool in
             thisItem.equals(item: item)
         }) {
