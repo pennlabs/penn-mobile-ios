@@ -36,7 +36,7 @@ class RootViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if UserDefaults.standard.getAccountID() != nil {
-            ControllerModel.shared.firstVC.viewWillAppear(animated)
+            ControllerModel.shared.visibleVC().viewWillAppear(animated)
         } else {
             // If student is saved locally but not on DB, save on DB and show main screen
             if let student = Student.getStudent() {
@@ -101,7 +101,7 @@ class RootViewController: UIViewController {
         UserDefaults.standard.synchronize()
         if sessionCount == 3 {
             SKStoreReviewController.requestReview()
-        }        
+        }
     }
     
     func switchToLogout() {
