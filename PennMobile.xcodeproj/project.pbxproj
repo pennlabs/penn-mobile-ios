@@ -117,7 +117,7 @@
 		21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */; };
 		21B8BBB02223187D00EBC1D0 /* LoginWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */; };
 		21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB1222318A600EBC1D0 /* Course.swift */; };
-		21B8BBB4222318BE00EBC1D0 /* StudentNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */; };
+		21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */; };
 		21B8BBB622231F9F00EBC1D0 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB522231F9F00EBC1D0 /* Student.swift */; };
 		21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB72223963C00EBC1D0 /* Degree.swift */; };
 		21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */; };
@@ -338,7 +338,7 @@
 		21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusExpressNetworkManager.swift; sourceTree = "<group>"; };
 		21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWebviewController.swift; sourceTree = "<group>"; };
 		21B8BBB1222318A600EBC1D0 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
-		21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentNetworkManager.swift; sourceTree = "<group>"; };
+		21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		21B8BBB522231F9F00EBC1D0 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		21B8BBB72223963C00EBC1D0 /* Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Degree.swift; sourceTree = "<group>"; };
 		21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -894,7 +894,7 @@
 				21B8BBB72223963C00EBC1D0 /* Degree.swift */,
 				21B8BBB1222318A600EBC1D0 /* Course.swift */,
 				21A9D941224087980000444D /* CourseMeetingTime.swift */,
-				21B8BBB3222318BE00EBC1D0 /* StudentNetworkManager.swift */,
+				21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */,
 				21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */,
 				21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */,
 			);
@@ -1516,7 +1516,7 @@
 				21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */,
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
-				21B8BBB4222318BE00EBC1D0 /* StudentNetworkManager.swift in Sources */,
+				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
 				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
 				CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */,

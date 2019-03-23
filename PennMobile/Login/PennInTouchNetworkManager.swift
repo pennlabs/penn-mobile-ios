@@ -9,9 +9,9 @@
 import Foundation
 import SwiftSoup
 
-class StudentNetworkManager: NSObject {
+class PennInTouchNetworkManager: NSObject {
     
-    static let instance = StudentNetworkManager()
+    static let instance = PennInTouchNetworkManager()
     
     fileprivate let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     fileprivate let degreeURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileAdvisors"
@@ -19,7 +19,7 @@ class StudentNetworkManager: NSObject {
 }
 
 // MARK: - Student
-extension StudentNetworkManager {
+extension PennInTouchNetworkManager {
     func getStudent(callback: @escaping (_ student: Student?) -> Void) {
         let url = URL(string: baseURL)!
         let request = URLRequest(url: url)
@@ -47,7 +47,7 @@ extension StudentNetworkManager {
 }
 
 // MARK: - Degrees
-extension StudentNetworkManager {
+extension PennInTouchNetworkManager {
     func getDegrees(callback: @escaping ((_ degrees: Set<Degree>?) -> Void)) {
         let url = URL(string: degreeURL)!
         let request = URLRequest(url: url)
@@ -68,7 +68,7 @@ extension StudentNetworkManager {
 }
 
 // MARK: - Courses
-extension StudentNetworkManager {
+extension PennInTouchNetworkManager {
     func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         let url = URL(string: courseURL)!
         let request = URLRequest(url: url)
@@ -167,7 +167,7 @@ extension StudentNetworkManager {
 }
 
 // MARK: - Course Parsing
-extension StudentNetworkManager {
+extension PennInTouchNetworkManager {
     fileprivate func parseCourses(from html: String, term: String) throws -> Set<Course> {
         let doc: Document = try SwiftSoup.parse(html)
         guard let element: Element = (try doc.select("li").filter { $0.id() == "fullClassesDiv" }).first else {
@@ -289,7 +289,7 @@ extension StudentNetworkManager {
 }
 
 // MARK: - Degree Parsing
-extension StudentNetworkManager {
+extension PennInTouchNetworkManager {
     fileprivate func parseDegrees(from html: String) throws -> Set<Degree> {
         let doc: Document = try SwiftSoup.parse(html)
         guard let element: Element = try doc.getElementsByClass("data").first() else {
@@ -333,7 +333,7 @@ extension StudentNetworkManager {
 }
 
 // MARK: - Basic Student Profile Parsing
-extension StudentNetworkManager {
+extension PennInTouchNetworkManager {
     fileprivate func parseStudent(from html: String) throws -> Student {
         let namePattern = "white-space:nowrap; overflow:hidden; width: .*>\\s*(.*?)\\s*<\\/div>"
         let fullName: String! = html.getMatches(for: namePattern).first

@@ -22,7 +22,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
     
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         self.showActivity()
-        StudentNetworkManager.instance.getStudent { (student) in
+        PennInTouchNetworkManager.instance.getStudent { (student) in
             DispatchQueue.main.async {
                 decisionHandler(.cancel)
                 if let student = student {
@@ -55,7 +55,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
         guard let student = Student.getStudent(), UserDefaults.standard.coursePermissionGranted() else { return }
         // Wait 1 second for homepage to be fetched from server
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            StudentNetworkManager.instance.getCourses(currentTermOnly: false) { (courses) in
+            PennInTouchNetworkManager.instance.getCourses(currentTermOnly: false) { (courses) in
                 if let courses = courses,
                     let accountID = UserDefaults.standard.getAccountID() {
                     // Save courses to DB if permission was granted
