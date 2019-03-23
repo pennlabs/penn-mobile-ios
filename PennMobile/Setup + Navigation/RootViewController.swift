@@ -35,30 +35,30 @@ class RootViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if UserDefaults.standard.getAccountID() != nil {
-            ControllerModel.shared.visibleVC().viewWillAppear(animated)
-        } else {
+        if self.current is HomeNavigationController {
+            if UserDefaults.standard.getAccountID() == nil {
+                // Switch to logout screen if user is not logged in
+                self.switchToLogout(false)
+            } else {
+                ControllerModel.shared.visibleVC().viewWillAppear(animated)
+            }
+        } else if UserDefaults.standard.getAccountID() == nil, let student = Student.getStudent() {
             // If student is saved locally but not on DB, save on DB and show main screen
-            if let student = Student.getStudent() {
-                UserDBManager.shared.saveStudent(student) { (accountID) in
-                    DispatchQueue.main.async {
-                        if let accountID = accountID {
-                            UserDefaults.standard.set(accountID: accountID)
-                        }
-                        if self.current is LoginController {
-                            self.switchToMainScreen()
-                        }
+            UserDBManager.shared.saveStudent(student) { (accountID) in
+                DispatchQueue.main.async {
+                    if let accountID = accountID {
+                        UserDefaults.standard.set(accountID: accountID)
+                    }
+                    if self.current is LoginController {
+                        self.switchToMainScreen()
                     }
                 }
-            } else if self.current is HomeNavigationController {
-                // Switch to logout screen if user is not logged in
-                self.switchToLogout()
             }
         }
         
         // If student is in Wharton but does not have a session ID, retrieve one if possible
-        let now = Date()
         if UserDefaults.standard.isInWharton() && GSRUser.getSessionID() == nil {
+            let now = Date()
             if lastLoginAttempt != nil && lastLoginAttempt!.minutesFrom(date: now) < 720 {
                 // Don't try to auto re-login if it's been less than 12 hours since last attempt
                 return
@@ -68,7 +68,8 @@ class RootViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 GSRNetworkManager.instance.getSessionIDWithDownFlag { (success, serviceDown) in
                     DispatchQueue.main.async {
-                        if !success && !serviceDown {
+                        if !success && !serviceDown && self.current is HomeNavigationController {
+                            // Only pop up login controller if not successful, service is not down, and not on login screen
                             let gwc = GSRWebviewLoginController()
                             let nvc = UINavigationController(rootViewController: gwc)
                             self.current.present(nvc, animated: true, completion: nil)
@@ -76,7 +77,7 @@ class RootViewController: UIViewController {
                     }
                 }
             }
-        }
+        }        
     }
     
     func showLoginScreen() {
@@ -104,15 +105,18 @@ class RootViewController: UIViewController {
         }
     }
     
-    func switchToLogout() {
+    func switchToLogout(_ shouldClearData: Bool = true) {
         let loginController = LoginController()
         animateDismissTransition(to: loginController)
-        HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
-        UserDefaults.standard.clearAccountID()
-        UserDefaults.standard.clearCookies()
-        UserDefaults.standard.clearWhartonFlag()
-        Student.clear()
-        GSRUser.clear()
+        
+        if shouldClearData {
+            HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
+            UserDefaults.standard.clearAccountID()
+            UserDefaults.standard.clearCookies()
+            UserDefaults.standard.clearWhartonFlag()
+            Student.clear()
+            GSRUser.clear()
+        }
         
         // Clear cache so that home title updates with new first name
         guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {

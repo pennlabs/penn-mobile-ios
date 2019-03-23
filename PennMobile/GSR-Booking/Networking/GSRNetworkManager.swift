@@ -289,18 +289,20 @@ extension GSRTimeSlot {
 }
 
 // MARK: - Session ID
-extension GSRNetworkManager {
-    private var whartonUrl: String {
-        return "https://apps.wharton.upenn.edu/gsr/"
-    }
-    
-    private var authUrl: String {
-        return "https://apps.wharton.upenn.edu/django-shib/Shibboleth.sso/SAML2/POST"
-    }
+extension GSRNetworkManager: PennAuthRequestable {
     
     private var serviceDown: String {
         return "https://servicedown.wharton.upenn.edu/"
     }
+    
+    private var whartonUrl: String {
+        return "https://apps.wharton.upenn.edu/gsr/"
+    }
+    
+    private var shibbolethUrl: String {
+        return "https://apps.wharton.upenn.edu/django-shib/Shibboleth.sso/SAML2/POST"
+    }
+
     
     func getSessionID(_ callback: (((_ success: Bool) -> Void))? = nil) {
         self.getSessionIDWithDownFlag { (success, _) in
@@ -309,64 +311,13 @@ extension GSRNetworkManager {
     }
     
     func getSessionIDWithDownFlag(_ callback: @escaping ((_ success: Bool, _ serviceDown: Bool) -> Void)) {
-        let url = URL(string: whartonUrl)!
-        let request = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        makeAuthRequest(targetUrl: whartonUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
             if let urlStr = response?.url?.absoluteString, urlStr == self.serviceDown {
                 callback(false, true)
                 return
             }
             
-            var success = false
-            if let cookies = HTTPCookieStorage.shared.cookies {
-                success = cookies.contains { $0.name == "sessionid" }
-            }
-            if !success {
-                if let response = response as? HTTPURLResponse {
-                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                        self.getSessionIDHelper(html: html as String, response: response, callback: { (success) in
-                            callback(success, false)
-                        })
-                    }
-                }
-            } else {
-                callback(true, false)
-            }
+            callback(GSRUser.getSessionID() != nil, false)
         }
-        task.resume()
-    }
-    
-    private func getSessionIDHelper(html: String, response: HTTPURLResponse, callback: (((_ success: Bool) -> Void))?) {
-        guard let samlResponse = html.getMatches(for: "<input type=\"hidden\" name=\"SAMLResponse\" value=\"(.*?)\"/>").first,
-            let relayState = html.getMatches(for: "<input type=\"hidden\" name=\"RelayState\" value=\"(.*?)\"/>").first?.replacingOccurrences(of: "&#x3a;", with: ":") else {
-            callback?(false)
-            return
-        }
-
-        let url = URL(string: authUrl)!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        let params: [String: String] = [
-            "RelayState": String(relayState),
-            "SAMLResponse": samlResponse
-        ]
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        let characterSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
-        let parameterArray = params.map { key, value -> String in
-            let escapedKey = key.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
-            let escapedValue: String = value.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
-            return "\(escapedKey)=\(escapedValue)"
-        }
-        let encodedParams = parameterArray.joined(separator: "&")
-        request.httpBody = encodedParams.data(using: String.Encoding.utf8)
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            var success = false
-            if let cookies = HTTPCookieStorage.shared.cookies {
-                success = cookies.contains { $0.name == "sessionid" }
-            }
-            callback?(success)
-        }
-        task.resume()
     }
 }
