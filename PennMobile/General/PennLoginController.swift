@@ -150,7 +150,9 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
             try? secureStore.setValue(password, for: "PennKey Password")
             if !UserDBManager.shared.testRun && pennkey == self.testPennKey {
                 self.dismiss(animated: true, completion: nil)
+                return
             }
+            trustDevice()
             return
         } else if url.absoluteString.contains(loginURL) {
             self.autofillCredentials()
@@ -163,6 +165,11 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         }
         guard let password = password else { return }
         webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_,_) in
+        }
+    }
+    
+    func trustDevice() {
+        webView.evaluateJavaScript("document.getElementById('trustUA').value = 'true'") { (_, _) in
         }
     }
     
