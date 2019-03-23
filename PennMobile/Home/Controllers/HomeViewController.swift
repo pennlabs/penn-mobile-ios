@@ -224,6 +224,19 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         let bmwc = BuildingMapWebviewController(searchTerm: searchTerm)
         self.navigationController?.pushViewController(bmwc, animated: true)
     }
+    
+    func handleCourseRefresh() {
+        let message = "Has there been a change to your schedule? If so, would you like Penn Mobile to update your courses?"
+        let alert = UIAlertController(title: "Update Courses",
+                                      message: message,
+                                      preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:{ (UIAlertAction) in
+            print("get courses")
+        }))
+        present(alert, animated: true)
+    }
 }
 
 // MARK: - Networking

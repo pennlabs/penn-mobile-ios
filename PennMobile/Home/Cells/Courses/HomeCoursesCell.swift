@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol CourseRefreshable {
+    func handleCourseRefresh()
+}
+
 protocol BuildingMapSelectable {
     func handleBuildingSelected(searchTerm: String)
 }
@@ -45,6 +49,8 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
     fileprivate var dividerLine: UIView!
     fileprivate var courseScheduleTable: ScheduleTable!
     
+    fileprivate var refreshButton: UIButton!
+    
     // Mark: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -77,6 +83,7 @@ extension HomeCoursesCell {
         prepareSafeArea()
         prepareTitleLabels()
         prepareDividerLine()
+        prepareRefreshButton()
         prepareScheduleTable()
     }
     
@@ -124,6 +131,27 @@ extension HomeCoursesCell {
         cardView.addSubview(courseScheduleTable)
         
         _ = courseScheduleTable.anchor(dividerLine.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+    }
+    
+    // MARK: Refresh Button
+    fileprivate func prepareRefreshButton() {
+        refreshButton = UIButton()
+        refreshButton.tintColor = UIColor.navigationBlue
+        refreshButton.setImage(UIImage(named: "refresh")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        refreshButton.addTarget(self, action: #selector(refreshButtonTapped(_:)), for: .touchUpInside)
+        refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        cardView.addSubview(refreshButton)
+        
+        refreshButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        refreshButton.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        refreshButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        refreshButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+    }
+    
+    @objc private func refreshButtonTapped(_ sender: Any) {
+        guard let delegate = delegate as? CourseRefreshable else { return }
+        delegate.handleCourseRefresh()
     }
 }
 

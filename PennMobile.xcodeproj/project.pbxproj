@@ -115,6 +115,7 @@
 		21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B649232236FFD300AC5B7F /* BuildingMapWebviewController.swift */; };
 		21B653B92245EB67001A97C5 /* PennAuthRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B653B82245EB67001A97C5 /* PennAuthRequestable.swift */; };
 		21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */; };
+		21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B653BD2246F338001A97C5 /* CoursesWebviewController.swift */; };
 		21B8BBB02223187D00EBC1D0 /* LoginWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */; };
 		21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB1222318A600EBC1D0 /* Course.swift */; };
 		21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */; };
@@ -336,6 +337,7 @@
 		21B649232236FFD300AC5B7F /* BuildingMapWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingMapWebviewController.swift; sourceTree = "<group>"; };
 		21B653B82245EB67001A97C5 /* PennAuthRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennAuthRequestable.swift; sourceTree = "<group>"; };
 		21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusExpressNetworkManager.swift; sourceTree = "<group>"; };
+		21B653BD2246F338001A97C5 /* CoursesWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesWebviewController.swift; sourceTree = "<group>"; };
 		21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWebviewController.swift; sourceTree = "<group>"; };
 		21B8BBB1222318A600EBC1D0 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 				216640F91EBB898700746B8E /* About */,
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
 				216640C71EBADC9D00746B8E /* General */,
+				21B653BC2246F31E001A97C5 /* Courses */,
 				21B8BBBB2224F98B00EBC1D0 /* Login */,
 				216640881EBADBA000746B8E /* Setup + Navigation */,
 				B62875E82112591700FB2873 /* Buildings */,
@@ -886,14 +889,22 @@
 			path = Courses;
 			sourceTree = "<group>";
 		};
+		21B653BC2246F31E001A97C5 /* Courses */ = {
+			isa = PBXGroup;
+			children = (
+				21B8BBB1222318A600EBC1D0 /* Course.swift */,
+				21A9D941224087980000444D /* CourseMeetingTime.swift */,
+				21B653BD2246F338001A97C5 /* CoursesWebviewController.swift */,
+			);
+			path = Courses;
+			sourceTree = "<group>";
+		};
 		21B8BBBB2224F98B00EBC1D0 /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */,
 				21B8BBB522231F9F00EBC1D0 /* Student.swift */,
 				21B8BBB72223963C00EBC1D0 /* Degree.swift */,
-				21B8BBB1222318A600EBC1D0 /* Course.swift */,
-				21A9D941224087980000444D /* CourseMeetingTime.swift */,
 				21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */,
 				21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */,
 				21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */,
@@ -1649,6 +1660,7 @@
 				CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */,
 				97E79E092100DA1200D3D606 /* BuildingFoodMenuCell.swift in Sources */,
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
+				21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
 				216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */,
 				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,
