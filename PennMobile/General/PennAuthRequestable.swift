@@ -34,7 +34,6 @@ extension PennAuthRequestable {
                 let urlStr = response.url?.absoluteString {
                 if urlStr == targetUrl {
                     completionHandler(data, response, error)
-                    UserDefaults.standard.storeCookies()
                 } else if urlStr.contains(self.reauthUrl) {
                     self.makeRequestWithReauth(shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
                 } else {
@@ -42,8 +41,8 @@ extension PennAuthRequestable {
                 }
             } else {
                 completionHandler(nil, nil, NetworkingError.authenticationError)
-                UserDefaults.standard.storeCookies()
             }
+            UserDefaults.standard.storeCookies()
         }
         task.resume()
     }
@@ -107,8 +106,8 @@ extension PennAuthRequestable {
                 self.makeRequestWithShibboleth(shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
             } else {
                 completionHandler(nil, nil, NetworkingError.authenticationError)
-                UserDefaults.standard.storeCookies()
             }
+            UserDefaults.standard.storeCookies()
         }
         task.resume()
     }
