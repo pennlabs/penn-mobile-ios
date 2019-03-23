@@ -18,7 +18,6 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     
     open var pennkey: String?
     private var password: String?
-    final private let testPennKey = "joshdo"
     
     final private var webView: WKWebView!
     
@@ -148,10 +147,6 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
             guard let pennkey = pennkey, let password = password else { return }
             try? secureStore.setValue(pennkey, for: "PennKey")
             try? secureStore.setValue(password, for: "PennKey Password")
-            if !UserDBManager.shared.testRun && pennkey == self.testPennKey {
-                self.dismiss(animated: true, completion: nil)
-                return
-            }
             trustDevice()
             return
         } else if url.absoluteString.contains(loginURL) {

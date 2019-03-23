@@ -58,18 +58,13 @@ extension LoginController {
             AppDelegate.shared.rootViewController.switchToMainScreen()
         } else {
             // Failed to retrieve Student profile from PennInTouch (possibly down)
-            GSRNetworkManager.instance.getSessionID { (success) in
-                DispatchQueue.main.async {
-                    // Get Wharton Session ID
-                    if success || !self.isFirstAttempt {
-                        AppDelegate.shared.rootViewController.switchToMainScreen()
-                    } else {
-                        self.showAlert(withMsg: "Unable to connect to Penn servers. Please try again.", title: "Uh oh!", completion: nil)
-                        HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
-                        self.isFirstAttempt = false
-                    }
-                }
+            if !self.isFirstAttempt {
+                AppDelegate.shared.rootViewController.switchToMainScreen()
+            } else {
+                self.showAlert(withMsg: "If you are not a student, please select \"Continue as Guest\"", title: "Please Try Again", completion: nil)
+                self.isFirstAttempt = false
             }
+            HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         }
     }
 }
