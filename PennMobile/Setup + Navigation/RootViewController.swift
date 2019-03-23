@@ -77,7 +77,7 @@ class RootViewController: UIViewController {
                     }
                 }
             }
-        }        
+        }
     }
     
     func showLoginScreen() {
