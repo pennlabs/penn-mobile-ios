@@ -13,6 +13,8 @@ class MapViewController: UIViewController {
     
     fileprivate var mapView: MKMapView?
     
+    var searchTerm: String?
+    
     var building: BuildingMapDisplayable? {
         didSet {
             guard let building = building else { return }
@@ -53,7 +55,28 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.title = "Penn Map" // THIS DOESN'T WORK
+        self.title = "Penn Map"
+        
+        guard let searchTerm = searchTerm else { return }
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
+        self.region = MKCoordinateRegion.init(center: PennCoordinate.shared.getDefault(), latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
+        self.getCoordinates(for: searchTerm) { (coordinates, title) in
+            DispatchQueue.main.async {
+                if let coordinates = coordinates {
+                    self.region = MKCoordinateRegion.init(center: coordinates, latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
+                    if let title = title {
+                        let thisAnnotation = MKPointAnnotation()
+                        thisAnnotation.coordinate = coordinates
+                        thisAnnotation.title = title
+                        thisAnnotation.subtitle = title
+                        self.annotation = thisAnnotation
+                        self.mapView?.addAnnotation(thisAnnotation)
+                    }
+                } else {
+                    self.region = MKCoordinateRegion.init(center: PennCoordinate.shared.getDefault(), latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
+                }
+            }
+        }
     }
 }
 
@@ -79,5 +102,24 @@ extension MapViewController {
         if annotation != nil { mv.addAnnotation(annotation!) }
         mv.translatesAutoresizingMaskIntoConstraints = false
         return mv
+    }
+}
+
+extension MapViewController {
+    func getCoordinates(for searchTerm: String, _ callback: @escaping (_ coordinates: CLLocationCoordinate2D?, _ title: String?) -> Void) {
+        let url = URL(string: "https://mobile.apps.upenn.edu/mobile/jsp/fast.do?webService=googleMapsSearch&searchTerm=\(searchTerm)")!
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let data = data, let json = try? JSON(data: data), let locationJSON = json.arrayValue.first {
+                if let latitudeStr = locationJSON["latitude"].string, let longitudeStr = locationJSON["longitude"].string, let title = locationJSON["title"].string {
+                    if let latitude = Double(latitudeStr), let longitude = Double(longitudeStr) {
+                        let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                        callback(coordinates, title)
+                        return
+                    }
+                }
+            }
+            callback(nil, nil)
+        }
+        task.resume()
     }
 }
