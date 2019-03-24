@@ -25,11 +25,23 @@ import UIKit
         if trackScreen {
             trackScreen(screenName)
         }
+        
+        setupNavBar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupNavBar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         navigationVC?.hideBar(animated: false)
+    }
+    
+    func setupNavBar() {
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
     }
     
     var screenName: String?
@@ -55,11 +67,23 @@ class GenericViewController: UIViewController, Trackable {
         if trackScreen {
             trackScreen(screenName ?? title)
         }
+        
+        setupNavBar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupNavBar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         navigationVC?.hideBar(animated: false)
+    }
+    
+    func setupNavBar() {
+        tabBarController?.navigationItem.leftBarButtonItem = nil
+        tabBarController?.navigationItem.rightBarButtonItem = nil
     }
     
     var screenName: String?
