@@ -80,6 +80,7 @@ extension LoginController {
     
     @objc fileprivate func handleSkip(_ sender: Any) {
         AppDelegate.shared.rootViewController.switchToMainScreen()
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Selected Continue as Guest", result: "Selected Continue as Guest", content: "Selected Continue as Guest")
     }
 }
 
