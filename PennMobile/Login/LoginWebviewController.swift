@@ -39,6 +39,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                         self.saveStudent(student)
                     }
                 } else {
+                    FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed Login")
                     self.hideActivity()
                     UserDefaults.standard.clearCookies()
                     HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
@@ -99,6 +100,12 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                 self.dismiss(animated: true, completion: nil)
                 self.loginCompletion(accountID != nil)
                 self.getRemainingCourses()
+                
+                if accountID == nil {
+                    FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed Login")
+                } else {
+                    FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Successful Login", content: "Successful Login")
+                }
             }
         }
     }

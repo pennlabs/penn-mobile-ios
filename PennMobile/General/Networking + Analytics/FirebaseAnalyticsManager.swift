@@ -24,6 +24,14 @@ class FirebaseAnalyticsManager: NSObject {
             ])
     }
     
+    func trackEvent(action: String, result: String, content: Any) {
+        Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+            AnalyticsParameterItemID: action,
+            AnalyticsParameterItemName: result,
+            AnalyticsParameterContentType: content
+            ])
+    }
+    
     enum EventAction: String {
         case viewHomeNewsArticle = "HomeNews"
         case attemptBooking = "Booking"
