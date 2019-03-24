@@ -160,7 +160,11 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable, GSRDeletable {
             if successful {
                 guard let reservationItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.reservations]).first as? HomeReservationsCellItem else { return }
                 reservationItem.reservations = reservationItem.reservations.filter { $0.bookingID != reservation.bookingID }
-                self.reloadItem(reservationItem)
+                if reservationItem.reservations.isEmpty {
+                    self.removeItem(reservationItem)
+                } else {
+                    self.reloadItem(reservationItem)
+                }
             }
         }
     }
@@ -340,6 +344,17 @@ extension HomeViewController {
         }) {
             let indexPath = IndexPath(row: row, section: 0)
             self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+    
+    func removeItem(_ item: HomeCellItem) {
+        guard let allItems = tableViewModel?.items as? [HomeCellItem] else { return }
+        if let row = allItems.index(where: { (thisItem) -> Bool in
+            thisItem.equals(item: item)
+        }) {
+            let indexPath = IndexPath(row: row, section: 0)
+            tableViewModel.items.remove(at: row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 }
