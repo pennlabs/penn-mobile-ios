@@ -39,9 +39,6 @@ class HomeViewController: GenericViewController {
         
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.rightBarButtonItem = nil
-        
-        
-        UserDefaults.standard.setCoursePermission(false)
     }
 
     override func viewWillAppear(_ animated: Bool) {
