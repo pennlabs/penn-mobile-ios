@@ -58,11 +58,12 @@ class MapViewController: UIViewController {
         self.title = "Penn Map"
         
         guard let searchTerm = searchTerm else { return }
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
         self.region = MKCoordinateRegion.init(center: PennCoordinate.shared.getDefault(), latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
         self.getCoordinates(for: searchTerm) { (coordinates, title) in
             DispatchQueue.main.async {
                 if let coordinates = coordinates {
-                    self.region = MKCoordinateRegion.init(center: coordinates, latitudinalMeters: PennCoordinateScale.close.rawValue, longitudinalMeters: PennCoordinateScale.close.rawValue)
+                    self.region = MKCoordinateRegion.init(center: coordinates, latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
                     if let title = title {
                         let thisAnnotation = MKPointAnnotation()
                         thisAnnotation.coordinate = coordinates
