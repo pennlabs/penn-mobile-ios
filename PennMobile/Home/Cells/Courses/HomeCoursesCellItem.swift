@@ -20,8 +20,6 @@ final class HomeCoursesCellItem: HomeCellItem {
     init(weekday: String, courses: [Course]) {
         self.weekday = weekday
         self.courses = courses.sorted()
-        
-        _ = self.courses.removeLast()
     }
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
