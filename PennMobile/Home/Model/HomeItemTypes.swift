@@ -18,6 +18,7 @@ final class HomeItemTypes: ModularTableViewItemTypes {
     let calendar: HomeCellItem.Type = HomeCalendarCellItem.self
     let news: HomeCellItem.Type = HomeNewsCellItem.self
     let reservations: HomeCellItem.Type = HomeReservationsCellItem.self
+    let courses: HomeCellItem.Type = HomeCoursesCellItem.self
 }
 
 // MARK: - JSON Parsing

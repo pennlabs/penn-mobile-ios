@@ -55,17 +55,6 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
                 }
             }
         }
-        setupNavBar()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        setupNavBar()
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        tearDownNavBar()
-        super.viewDidDisappear(animated)
     }
     
     fileprivate func getFooterViewForTable() -> UIView {
@@ -80,15 +69,10 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         return v
     }
     
-    private func setupNavBar() {
+    override func setupNavBar() {
         self.tabBarController?.title = "Laundry"
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
-    }
-    
-    private func tearDownNavBar() {
-        tabBarController?.navigationItem.leftBarButtonItem = nil
-        tabBarController?.navigationItem.rightBarButtonItem = nil
     }
 }
 

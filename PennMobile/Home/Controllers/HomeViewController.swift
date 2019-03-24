@@ -22,6 +22,8 @@ class HomeViewController: GenericViewController {
     var lastRefresh: Date = Date()
     
     var loadingView: UIActivityIndicatorView!
+    
+    fileprivate var barButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,17 +36,50 @@ class HomeViewController: GenericViewController {
         prepareRefreshControl()
         
         registerForNotifications()
+        
+        self.navigationItem.leftBarButtonItem = nil
+        self.navigationItem.rightBarButtonItem = nil
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.title = "Home"
         if tableViewModel == nil {
             self.startLoadingViewAnimation()
         }
         self.refreshTableView {
             self.stopLoadingViewAnimation()
         }
+    }
+    
+    override func setupNavBar() {
+        super.setupNavBar()
+        self.tabBarController?.title = getTitle()
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
+    }
+    
+    fileprivate var titleCacheTimestamp = Date()
+    fileprivate var displayTitle: String?
+    
+    fileprivate func getTitle() -> String? {
+        let now = Date()
+        if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.displayTitle != nil {
+            return self.displayTitle
+        } else {
+            let firstName = Student.getStudent()?.first ?? GSRUser.getUser()?.firstName
+            if let firstName = firstName {
+                let intros = ["Welcome", "Howdy", "Hi there", "Hello"]
+                self.displayTitle = "\(intros.random!), \(firstName)!"
+                titleCacheTimestamp = Date()
+            } else {
+                self.displayTitle = "Home"
+            }
+            return self.displayTitle
+        }
+    }
+    
+    func clearCache() {
+        displayTitle = nil
+        tableViewModel = nil
     }
 }
 
@@ -90,7 +125,7 @@ extension HomeViewController {
     func setModel(_ model: HomeTableViewModel) {
         tableViewModel = model
         tableViewModel.delegate = self
-        tableView.model = tableViewModel
+        tableView?.model = tableViewModel
     }
     
     func prepareLoadingView() {
@@ -104,7 +139,7 @@ extension HomeViewController {
     }
     
     func startLoadingViewAnimation() {
-        if !loadingView.isHidden {
+        if loadingView != nil && !loadingView.isHidden {
             loadingView.startAnimating()
         }
     }
@@ -193,6 +228,61 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable, GSRDeletable {
             present(nvc, animated: true, completion: nil)
         }
     }
+    
+    func handleBuildingSelected(searchTerm: String) {
+//        let bmwc = BuildingMapWebviewController(searchTerm: searchTerm)
+        let mapVC = MapViewController()
+        mapVC.searchTerm = searchTerm
+        self.navigationController?.pushViewController(mapVC, animated: true)
+    }
+    
+    // MARK: Course Refresh
+    func handleCourseRefresh() {
+        let message = "Has there been a change to your schedule? If so, would you like Penn Mobile to update your courses?"
+        let alert = UIAlertController(title: "Update Courses",
+                                      message: message,
+                                      preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:{ (UIAlertAction) in
+            self.showCourseWebviewController()
+        }))
+        present(alert, animated: true)
+    }
+    
+    // MARK: Login to enable courses
+    func handleLoggingIn() {
+        let cwc = CoursesWebviewController()
+        cwc.currentTermOnly = false
+        self.tableViewModel = nil
+        cwc.completion = { courses in
+            if courses != nil {
+                UserDefaults.standard.setCoursePermission(true)
+            }
+        }
+        let nvc = UINavigationController(rootViewController: cwc)
+        self.present(nvc, animated: true, completion: nil)
+    }
+}
+
+// MARK: - Course Refreshing
+extension HomeViewController: ShowsAlert {
+    fileprivate func showCourseWebviewController() {
+        let cwc = CoursesWebviewController()
+        cwc.completion = self.courseRefreshCompletion(_:)
+        let nvc = UINavigationController(rootViewController: cwc)
+        self.present(nvc, animated: true, completion: nil)
+    }
+    
+    private func courseRefreshCompletion(_ courses: Set<Course>?) {
+        if let courses = courses, let courseItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.courses]).first as? HomeCoursesCellItem {
+            courseItem.courses = Array(courses).filterByWeekday(for: courseItem.weekday).sorted()
+            reloadItem(courseItem)
+            showAlert(withMsg: "Your courses have been updated.", title: "Success!", completion: nil)
+        } else {
+            showAlert(withMsg: "Unable to access your courses. Please try again later.", title: "Uh oh!", completion: nil)
+        }
+    }
 }
 
 // MARK: - Networking
@@ -244,7 +334,7 @@ extension HomeViewController {
     }
 
     func reloadItem(_ item: HomeCellItem) {
-        guard let allItems = tableViewModel.items as? [HomeCellItem] else { return }
+        guard let allItems = tableViewModel?.items as? [HomeCellItem] else { return }
         if let row = allItems.index(where: { (thisItem) -> Bool in
             thisItem.equals(item: item)
         }) {

@@ -12,6 +12,7 @@ import WebKit
 //Mark: UserDefaultsKeys
 extension UserDefaults {
     enum UserDefaultsKeys: String {
+        case accountID
         case deviceUUID
         case deviceToken
         case controllerSettings
@@ -20,8 +21,26 @@ extension UserDefaults {
         case isOnboarded
         case gsrUSer
         case appVersion
-        case gsrSessionID
-        case gsrSessionIDTimestamp
+        case cookies
+        case wharton
+        case student
+        case coursePermission
+    }
+}
+
+// MARK: AccountID
+extension UserDefaults {
+    func set(accountID: String) {
+        set(accountID, forKey: UserDefaultsKeys.accountID.rawValue)
+        synchronize()
+    }
+    
+    func getAccountID() -> String? {
+        return string(forKey: UserDefaultsKeys.accountID.rawValue)
+    }
+    
+    func clearAccountID() {
+        removeObject(forKey: UserDefaultsKeys.accountID.rawValue)
     }
 }
 
@@ -132,6 +151,29 @@ extension UserDefaults {
     }
 }
 
+// MARK: - Student
+extension UserDefaults {
+    func saveStudent(_ student: Student) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(student) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.student.rawValue)
+        }
+        synchronize()
+    }
+    
+    func getStudent() -> Student? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.student.rawValue) {
+            return try? decoder.decode(Student.self, from: decodedData)
+        }
+        return nil
+    }
+    
+    func clearStudent() {
+        removeObject(forKey: UserDefaultsKeys.student.rawValue)
+    }
+}
+
 // MARK: - App Version
 extension UserDefaults {
     func isNewAppVersion() -> Bool {
@@ -147,36 +189,59 @@ extension UserDefaults {
     }
 }
 
-// MARK: - GSR SessionID Caching
+// MARK: - Wharton Flag
 extension UserDefaults {
-    func set(sessionID: String) {
-        let now = Date()
-        set(sessionID, forKey: UserDefaultsKeys.gsrSessionID.rawValue)
-        set(now, forKey: UserDefaultsKeys.gsrSessionIDTimestamp.rawValue)
+    func set(isInWharton: Bool) {
+        set(isInWharton, forKey: UserDefaultsKeys.wharton.rawValue)
         synchronize()
     }
     
-    func getSessionID() -> String? {
-        if let timestamp = object(forKey: UserDefaultsKeys.gsrSessionIDTimestamp.rawValue) as? Date,
-            let sessionID = string(forKey: UserDefaultsKeys.gsrSessionID.rawValue),
-            let diffInDays = Calendar.current.dateComponents([.day], from: timestamp, to: Date()).day,
-            diffInDays <= 13 {
-            return sessionID
-        }
-        return nil
+    func isInWharton() -> Bool {
+        return bool(forKey: UserDefaultsKeys.wharton.rawValue)
     }
     
-    func clearSessionID() {
-        removeObject(forKey: UserDefaultsKeys.gsrSessionID.rawValue)
-        removeObject(forKey: UserDefaultsKeys.gsrSessionIDTimestamp.rawValue)
-        DispatchQueue.main.async {
-            let dataStore = WKWebsiteDataStore.default()
-            dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-                dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
-                                     for: records.filter { $0.displayName.contains("upenn") },
-                                     completionHandler: {})
-            }
-        }
+    func clearWhartonFlag() {
+        removeObject(forKey: UserDefaultsKeys.wharton.rawValue)
     }
 }
 
+// MARK: - Cookies
+extension UserDefaults {
+    func storeCookies() {
+        guard let cookies = HTTPCookieStorage.shared.cookies else { return }
+        
+        var cookieDict = [String : AnyObject]()
+        for cookie in cookies {
+            cookieDict[cookie.name + cookie.domain] = cookie.properties as AnyObject?
+        }
+        
+        set(cookieDict, forKey: UserDefaultsKeys.cookies.rawValue)
+    }
+    
+    func restoreCookies() {
+        let cookiesStorage = HTTPCookieStorage.shared
+        if let cookieDictionary = self.dictionary(forKey: UserDefaultsKeys.cookies.rawValue) {
+            for (_, cookieProperties) in cookieDictionary {
+                if let cookie = HTTPCookie(properties: cookieProperties as! [HTTPCookiePropertyKey : Any] ) {
+                    cookiesStorage.setCookie(cookie)
+                }
+            }
+        }
+    }
+    
+    func clearCookies() {
+        removeObject(forKey: UserDefaultsKeys.cookies.rawValue)
+    }
+}
+
+// MARK: - Course Permission
+extension UserDefaults {
+    func setCoursePermission(_ granted: Bool) {
+        set(granted, forKey: UserDefaultsKeys.coursePermission.rawValue)
+        synchronize()
+    }
+    
+    func coursePermissionGranted() -> Bool {
+        return bool(forKey: UserDefaultsKeys.coursePermission.rawValue)
+    }
+}

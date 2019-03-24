@@ -8,42 +8,88 @@
 
 import UIKit
 
+//protocol AccountCellDelegate {
+//    func handleLogout()
+//}
+
 class AccountCell: UITableViewCell {
     
-    var accountImage: UIImageView = {
-        let imgView = UIImageView()
-        imgView.layer.cornerRadius = 30
-        imgView.layer.masksToBounds = true
-        imgView.clipsToBounds = true
-        return imgView
-    }()
+    static let cellHeight: CGFloat = 100
     
-    var accountUsername: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.warmGrey
-        label.font = UIFont(name: "HelveticaNeue-Light", size: 19)
-        label.textAlignment = .left
-        return label
-    }()
+    var student: Student! {
+        didSet {
+            nameLabel.text = "\(student.first) \(student.last)"
+            if let imageUrl = student.imageUrl {
+                ImageNetworkingManager.instance.downloadImage(imageUrl: imageUrl) { (image) in
+                    self.accountImageView.image = image
+                }
+            } else {
+                accountImageView.image = UIImage(named: "Franklin")
+            }
+        }
+    }
     
-    func setUpView(avatar: UIImage, username: String) {
-        accountImage.image = avatar
-        accountUsername.text = username
-        self.addSubview(accountImage)
-        self.addSubview(accountUsername)
-        _ = accountImage.anchor(self.topAnchor, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 10, leftConstant: 15, bottomConstant: 0, rightConstant: 0, widthConstant: 60, heightConstant: 60)
-        _ = accountUsername.anchor(self.topAnchor, left: accountImage.rightAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 30, leftConstant: 15, bottomConstant: 30, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+//    var delegate: AccountCellDelegate!
+    
+    fileprivate var accountImageView: UIImageView!
+    fileprivate var nameLabel: UILabel!
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        prepareUI()
+        selectionStyle = .none
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+}
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+// MARK: - Prepare UI
+extension AccountCell {
+    fileprivate func prepareUI() {
+        prepareImageView()
+//        prepareLogoutButton()
+        prepareUsername()
     }
-
+    
+    private func prepareImageView() {
+        accountImageView = UIImageView()
+        accountImageView.layer.cornerRadius = 40
+        accountImageView.clipsToBounds = true
+        accountImageView.contentMode = .scaleAspectFill
+        
+        self.addSubview(accountImageView)
+        _ = accountImageView.anchor(nil, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 0, widthConstant: 80, heightConstant: 80)
+        accountImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+    
+    private func prepareUsername() {
+        nameLabel = UILabel()
+        nameLabel.textColor = UIColor.warmGrey
+        nameLabel.font = UIFont(name: "HelveticaNeue-Light", size: 19)
+        nameLabel.textAlignment = .left
+        nameLabel.numberOfLines = 3
+        
+        self.addSubview(nameLabel)
+        _ = nameLabel.anchor(nil, left: accountImageView.rightAnchor, bottom: self.bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 12, widthConstant: 0, heightConstant: 0)
+        nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+    
+//    private func prepareLogoutButton() {
+//        logoutButton = UIButton(type: .system)
+//        logoutButton.setTitle("Logout", for: .normal)
+//        logoutButton.setTitleColor(UIColor.buttonBlue, for: .normal)
+//        logoutButton.addTarget(self, action: #selector(handleLogout(_:)), for: .touchUpInside)
+//        logoutButton.translatesAutoresizingMaskIntoConstraints = false
+//
+//        addSubview(logoutButton)
+//        logoutButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+//        logoutButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
+//        logoutButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+//    }
+    
+//    @objc fileprivate func handleLogout(_ sender: Any) {
+//        delegate.handleLogout()
+//    }
 }

@@ -30,13 +30,17 @@ class DiningViewController: GenericTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.title = "Dining"
         fetchDiningHours()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         refreshControl?.endRefreshing()
+    }
+    
+    override func setupNavBar() {
+        super.setupNavBar()
+        self.tabBarController?.title = "Dining"
     }
 }
 

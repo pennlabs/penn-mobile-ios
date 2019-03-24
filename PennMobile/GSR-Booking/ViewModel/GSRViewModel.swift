@@ -48,7 +48,7 @@ class GSRViewModel: NSObject {
             if let booking = getBooking() {
                 return .readyToSubmit(booking)
             } else {
-                return GSRUser.hasSavedUser() || UserDefaults.standard.getSessionID() != nil ? .loggedIn : .loggedOut
+                return GSRUser.hasSavedUser() || GSRUser.getSessionID() != nil ? .loggedIn : .loggedOut
             }
         }
     }
