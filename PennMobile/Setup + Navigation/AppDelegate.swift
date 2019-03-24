@@ -44,10 +44,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LaundryNotificationCenter.shared.prepare()
         GSRLocationModel.shared.prepare()
         LaundryAPIService.instance.prepare {
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = RootViewController()
-            self.window?.makeKeyAndVisible()
         }
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = RootViewController()
+        self.window?.makeKeyAndVisible()
         
         return true
     }
