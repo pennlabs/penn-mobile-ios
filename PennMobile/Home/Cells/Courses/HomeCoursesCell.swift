@@ -51,6 +51,8 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
     
     fileprivate var refreshButton: UIButton!
     
+    fileprivate var courseTableHeightConstraint: NSLayoutConstraint?
+    
     // Mark: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -71,8 +73,13 @@ extension HomeCoursesCell {
         secondaryTitleLabel.text = "COURSE SCHEDULE"
         courseScheduleTable.delegate = self
         
+        if let heightConstraint = courseTableHeightConstraint {
+            courseScheduleTable.removeConstraint(heightConstraint)
+        }
+        
         let coursesHeight = ScheduleTable.calculateHeightForEvents(for: courses.getEvents())
-        courseScheduleTable.heightAnchor.constraint(equalToConstant: coursesHeight).isActive = true
+        courseTableHeightConstraint = courseScheduleTable.heightAnchor.constraint(equalToConstant: coursesHeight)
+        courseTableHeightConstraint?.isActive = true
         courseScheduleTable.reloadData()
     }
 }

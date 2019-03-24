@@ -225,6 +225,7 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         self.navigationController?.pushViewController(bmwc, animated: true)
     }
     
+    // MARK: Course Refresh
     func handleCourseRefresh() {
         let message = "Has there been a change to your schedule? If so, would you like Penn Mobile to update your courses?"
         let alert = UIAlertController(title: "Update Courses",
@@ -233,9 +234,29 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:{ (UIAlertAction) in
-            print("get courses")
+            self.showCourseWebviewController()
         }))
         present(alert, animated: true)
+    }
+}
+
+// MARK: - Course Refreshing
+extension HomeViewController: ShowsAlert {
+    fileprivate func showCourseWebviewController() {
+        let cwc = CoursesWebviewController()
+        cwc.completion = self.courseRefreshCompletion(_:)
+        let nvc = UINavigationController(rootViewController: cwc)
+        self.present(nvc, animated: true, completion: nil)
+    }
+    
+    private func courseRefreshCompletion(_ courses: Set<Course>?) {
+        if let courses = courses, let courseItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.courses]).first as? HomeCoursesCellItem {
+            courseItem.courses = Array(courses).filterByWeekday(for: courseItem.weekday).sorted()
+            reloadItem(courseItem)
+            showAlert(withMsg: "Your courses have been updated.", title: "Success!", completion: nil)
+        } else {
+            showAlert(withMsg: "Unable to access your courses. Please try again later.", title: "Uh oh!", completion: nil)
+        }
     }
 }
 

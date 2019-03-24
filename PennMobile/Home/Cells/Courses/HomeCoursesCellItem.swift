@@ -15,20 +15,13 @@ final class HomeCoursesCellItem: HomeCellItem {
     }
     
     let weekday: String
-    let courses: [Course]
+    var courses: [Course]
     
     init(weekday: String, courses: [Course]) {
         self.weekday = weekday
+        self.courses = courses.sorted()
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
-        self.courses = courses.sorted(by: { (c1, c2) -> Bool in
-            let date1 = formatter.date(from: c1.startTime)
-            let date2 = formatter.date(from: c2.startTime)
-            if date1 == nil { return true }
-            if date2 == nil { return false }
-            return date1! < date2!
-        })
+        _ = self.courses.removeLast()
     }
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
@@ -49,8 +42,6 @@ final class HomeCoursesCellItem: HomeCellItem {
     
     func equals(item: HomeCellItem) -> Bool {
         guard let item = item as? HomeCoursesCellItem else { return false }
-        let courses = self.courses
-        let itemCourses = item.courses
-        return courses == itemCourses
+        return weekday == item.weekday
     }
 }

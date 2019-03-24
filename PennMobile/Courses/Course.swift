@@ -66,7 +66,7 @@ class Course: Codable, Hashable {
     }
     
     static func == (lhs: Course, rhs: Course) -> Bool {
-        return lhs.term == rhs.term && lhs.code == rhs.code && lhs.section == rhs.section
+        return lhs.term == rhs.term && lhs.dept == rhs.dept && lhs.code == rhs.code && lhs.section == rhs.section
     }
     
     func getEvent() -> Event? {
@@ -106,5 +106,100 @@ extension Course {
     func isTaughtInNDays(days: Int) -> Bool {
         let weekday = Date().integerDayOfWeek
         return weekdays.contains(Course.weekdayAbbreviations[(weekday + days) % 7])
+    }
+    
+    func hasSameMeetingTime(as course: Course) -> Bool {
+        return startTime == course.startTime && endTime == course.endTime && building == course.building && room == course.room
+    }
+}
+
+extension Course: Comparable {
+    static func < (lhs: Course, rhs: Course) -> Bool {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        let date1 = formatter.date(from: lhs.startTime)
+        let date2 = formatter.date(from: rhs.startTime)
+        if date1 == nil { return true }
+        if date2 == nil { return false }
+        return date1! < date2!
+    }
+}
+
+extension Array where Element == Course {
+    // weekday: "Today", "Tomorrow", "Monday", "Tuesday", etc.
+    func filterByWeekday(for fullWeekday: String) -> [Course] {
+        var courses = [Course]()
+        let weekdayAbbr = weekdayMapping(for: fullWeekday)
+        for course in self {
+            if let meetingTimes = course.meetingTimes {
+                for meetingTime in meetingTimes {
+                    if meetingTime.weekday == weekdayAbbr {
+                        let courseEvent = Course(name: course.name, term: course.term, dept: course.dept, code: course.code, section: course.section, building: meetingTime.building, room: meetingTime.room, weekdays: weekdayAbbr, startDate: course.startDate, endDate: course.endDate, startTime: meetingTime.startTime, endTime: meetingTime.endTime, instructors: course.instructors, meetingTimes: nil)
+                        courses.append(courseEvent)
+                    }
+                }
+            }
+        }
+        return courses
+    }
+    
+    private func weekdayMapping(for weekday: String) -> String {
+        switch weekday {
+        case "Monday":
+            return "M"
+        case "Tuesday":
+            return "T"
+        case "Wednesday":
+            return "W"
+        case "Thursday":
+            return "R"
+        case "Friday":
+            return "F"
+        case "Saturday":
+            return "S"
+        case "Sunday":
+            return "S"
+        case "Today":
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE"
+            return weekdayMapping(for: dateFormatter.string(from: Date()))
+        case "Tomorrow":
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE"
+            return weekdayMapping(for: dateFormatter.string(from: Date().tomorrow))
+        default:
+            return ""
+        }
+    }
+    
+    func equalsCourseEvents(_ courses: [Course]) -> Bool {
+        for c1 in courses {
+            var exists = false
+            let courseCandidates = self.filter { c1 == $0 }
+            for course in courseCandidates {
+                if c1.hasSameMeetingTime(as: course) {
+                    exists = true
+                }
+            }
+            
+            if !exists {
+                return false
+            }
+        }
+        
+        for c2 in self {
+            var exists = false
+            let courseCandidates = courses.filter { c2 == $0 }
+            for course in courseCandidates {
+                if c2.hasSameMeetingTime(as: course) {
+                    exists = true
+                }
+            }
+            
+            if !exists {
+                return false
+            }
+        }
+        return true
     }
 }
