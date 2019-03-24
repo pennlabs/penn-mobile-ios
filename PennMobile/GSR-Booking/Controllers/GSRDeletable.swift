@@ -14,7 +14,7 @@ extension GSRDeletable where Self: UIViewController {
     func deleteReservation(_ reservation: GSRReservation, _ callback: @escaping (_ success: Bool) -> Void) {
         confirmDelete {
             self.showActivity()
-            let sessionID = UserDefaults.standard.getSessionID()
+            let sessionID = GSRUser.getSessionID()
             GSRNetworkManager.instance.deleteReservation(reservation: reservation, sessionID: sessionID) { (success, errorMsg) in
                 DispatchQueue.main.async {
                     self.hideActivity()

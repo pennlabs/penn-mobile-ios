@@ -23,6 +23,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
 
     var barButtonTitle: String {
         get {
+            guard let viewModel = viewModel else { return "Login" }
             switch viewModel.state {
             case .loggedIn:
                 return "Logout"

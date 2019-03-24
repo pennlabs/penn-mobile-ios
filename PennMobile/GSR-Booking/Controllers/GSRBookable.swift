@@ -22,8 +22,8 @@ extension GSRBookable where Self: UIViewController {
                 if success {
                     alertView.showSuccess("Success!", subTitle: "You booked a space in \(booking.location.name). You should receive a confirmation email in the next few minutes.")
                     result = .success
-//                    guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
-//                    homeVC
+                    guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
+                    homeVC.clearCache()
                 } else if let msg = errorMessage {
                     alertView.showError("Uh oh!", subTitle: msg)
                 }
