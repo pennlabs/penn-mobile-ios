@@ -39,6 +39,9 @@ class HomeViewController: GenericViewController {
         
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.rightBarButtonItem = nil
+        
+        
+        UserDefaults.standard.setCoursePermission(false)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -237,6 +240,20 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
             self.showCourseWebviewController()
         }))
         present(alert, animated: true)
+    }
+    
+    // MARK: Login to enable courses
+    func handleLoggingIn() {
+        let cwc = CoursesWebviewController()
+        cwc.currentTermOnly = false
+        self.tableViewModel = nil
+        cwc.completion = { courses in
+            if courses != nil {
+                UserDefaults.standard.setCoursePermission(true)
+            }
+        }
+        let nvc = UINavigationController(rootViewController: cwc)
+        self.present(nvc, animated: true, completion: nil)
     }
 }
 

@@ -12,6 +12,10 @@ protocol CourseRefreshable {
     func handleCourseRefresh()
 }
 
+protocol CourseLoginable {
+    func handleLoggingIn()
+}
+
 protocol BuildingMapSelectable {
     func handleBuildingSelected(searchTerm: String)
 }
@@ -32,6 +36,11 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeCoursesCellItem else { return 0.0 }
+        
+        if !UserDefaults.standard.coursePermissionGranted() {
+            return 260
+        }
+        
         let events = item.courses.getEvents()
         let scheduleHeight = ScheduleTable.calculateHeightForEvents(for: events)
         return 110 + scheduleHeight
@@ -52,6 +61,9 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
     fileprivate var refreshButton: UIButton!
     
     fileprivate var courseTableHeightConstraint: NSLayoutConstraint?
+    
+    fileprivate var enableCoursesView: UIView!
+    fileprivate var enableCourseLabel: UILabel!
     
     // Mark: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -81,6 +93,16 @@ extension HomeCoursesCell {
         courseTableHeightConstraint = courseScheduleTable.heightAnchor.constraint(equalToConstant: coursesHeight)
         courseTableHeightConstraint?.isActive = true
         courseScheduleTable.reloadData()
+        
+        if UserDefaults.standard.coursePermissionGranted() {
+            refreshButton.isHidden = false
+            enableCoursesView.isHidden = true
+            courseScheduleTable.isHidden = false
+        } else {
+            refreshButton.isHidden = true
+            enableCoursesView.isHidden = false
+            courseScheduleTable.isHidden = true
+        }
     }
 }
 
@@ -92,6 +114,7 @@ extension HomeCoursesCell {
         prepareDividerLine()
         prepareRefreshButton()
         prepareScheduleTable()
+        prepareEnableCoursesView()
     }
     
     private func prepareSafeArea() {
@@ -172,16 +195,22 @@ extension HomeCoursesCell: ScheduleTableDelegate {
         paragraphStyle.lineSpacing = 4
         paragraphStyle.alignment = .center
         
-        let attrString = NSMutableAttributedString(string: "Nothing planned. Enjoy the time off 🎉")
+        let attrString = NSMutableAttributedString(string: "Nothing planned. Enjoy the day off 🎉")
         attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         return attrString
     }
+
     
     func handleEventTapped(_ event: Event) {
         guard let delegate = delegate as? BuildingMapSelectable,
             let course = (courses.filter { $0.getEvent() == event }).first,
             let searchTerm = course.building else { return }
         delegate.handleBuildingSelected(searchTerm: searchTerm)
+    }
+    
+    @objc func handleLoggingIn(_ sender: Any) {
+        guard let delegate  = delegate as? CourseLoginable else { return }
+        delegate.handleLoggingIn()
     }
 }
 
@@ -225,5 +254,70 @@ extension HomeCoursesCell {
         scheduleView.translatesAutoresizingMaskIntoConstraints = false
         scheduleView.clipsToBounds = true
         return scheduleView
+    }
+    
+    func getEnableCoursesText() -> NSAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        paragraphStyle.alignment = .center
+        
+        let attrString = NSMutableAttributedString(string: "Please give Penn Mobile permisson to access your courses!")
+        attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        return attrString
+    }
+    
+    fileprivate func prepareEnableCoursesView() {
+        enableCoursesView = UIView()
+        enableCoursesView!.isHidden = true
+        guard let enableCoursesView = enableCoursesView else { return }
+        enableCoursesView.backgroundColor = .white
+        cardView.addSubview(enableCoursesView)
+        enableCoursesView.translatesAutoresizingMaskIntoConstraints = false
+        enableCoursesView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+         _ = enableCoursesView.anchor(dividerLine.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        enableCoursesView.clipsToBounds = true
+        
+        prepareEnableCoursesLabel()
+        prepareEnableCoursesButton()
+    }
+    
+    fileprivate func prepareEnableCoursesLabel() {
+        enableCourseLabel = UILabel()
+        enableCourseLabel.textAlignment = .center
+        enableCourseLabel.numberOfLines = 2
+        enableCourseLabel.font = UIFont(name: "HelveticaNeue", size: 19)
+        enableCourseLabel.textColor = UIColor.warmGrey
+        enableCourseLabel.attributedText = getEnableCoursesText()
+        
+        enableCourseLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+        enableCoursesView?.addSubview(enableCourseLabel)
+        enableCourseLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        enableCourseLabel.topAnchor.constraint(equalTo: enableCoursesView!.topAnchor, constant: 20).isActive = true
+        enableCourseLabel.widthAnchor.constraint(equalTo: cardView.widthAnchor, constant: -40).isActive = true
+        enableCourseLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor).isActive = true
+    }
+    
+    fileprivate func prepareEnableCoursesButton() {
+        let loginButton = UIButton(type: .system)
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.layer.cornerRadius = 20
+        loginButton.layer.masksToBounds = false
+        loginButton.backgroundColor = UIColor(r: 26, g: 142, b: 221)
+
+        let attributedString = NSMutableAttributedString(string: "Grant Permission")
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: CGFloat(1.2), range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: attributedString.length))
+        
+        loginButton.setAttributedTitle(attributedString, for: .normal)
+        loginButton.titleLabel?.font = UIFont.avenirMedium?.withSize(15)
+        loginButton.addTarget(self, action: #selector(handleLoggingIn(_:)), for: .touchUpInside)
+        
+        enableCoursesView!.addSubview(loginButton)
+        loginButton.topAnchor.constraint(equalTo: enableCourseLabel.bottomAnchor, constant: 20).isActive = true
+        loginButton.centerXAnchor.constraint(equalTo: enableCoursesView.centerXAnchor).isActive = true
+        loginButton.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 }

@@ -11,6 +11,7 @@ import WebKit
 
 class CoursesWebviewController: PennLoginController, IndicatorEnabled {
     
+    var currentTermOnly = true
     var completion: ((_ courses: Set<Course>?) -> Void)!
     
     override var urlStr: String {
@@ -19,7 +20,7 @@ class CoursesWebviewController: PennLoginController, IndicatorEnabled {
     
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         self.showActivity()
-        PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true) { (courses) in
+        PennInTouchNetworkManager.instance.getCourses(currentTermOnly: self.currentTermOnly) { (courses) in
             DispatchQueue.main.async {
                 if let courses = courses {
                     decisionHandler(.cancel)
@@ -42,10 +43,14 @@ class CoursesWebviewController: PennLoginController, IndicatorEnabled {
     private func saveCoursesAndDismiss(_ courses: Set<Course>?) {
         if let courses = courses, let accountID = UserDefaults.standard.getAccountID() {
             UserDBManager.shared.saveCourses(courses, accountID: accountID)
+            UserDBManager.shared.saveCourses(courses, accountID: accountID) { (_) in
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: {
+                        self.completion(courses)
+                    })
+                }
+            }
         }
-        self.dismiss(animated: true, completion: {
-            self.completion(courses)
-        })
         UserDefaults.standard.storeCookies()
     }
 }
