@@ -69,34 +69,14 @@ extension GSRReservationsController {
 }
 
 // MARK: - ReservationCellDelegate
-extension GSRReservationsController: ReservationCellDelegate {
+extension GSRReservationsController: ReservationCellDelegate, GSRDeletable {
     func deleteReservation(_ reservation: GSRReservation) {
-        confirmDelete {
-            self.showActivity()
-            let sessionID = UserDefaults.standard.getSessionID()
-            GSRNetworkManager.instance.deleteReservation(reservation: reservation, sessionID: sessionID) { (success, errorMsg) in
-                DispatchQueue.main.async {
-                    self.hideActivity()
-                    if success {
-                        self.reservations = self.reservations.filter { $0.bookingID != reservation.bookingID }
-                        self.tableView.reloadData()
-                    } else if let errorMsg = errorMsg {
-                        self.showAlert(withMsg: errorMsg, title: "Uh oh!", completion: nil)
-                    }
-                }
+        deleteReservation(reservation) { (success) in
+            if success {
+                self.reservations = self.reservations.filter { $0.bookingID != reservation.bookingID }
+                self.tableView.reloadData()
             }
         }
-    }
-    
-    func confirmDelete(_ callback: @escaping () -> Void) {
-        let alertController = UIAlertController(title: "Are you sure?", message: "Please confirm that you wish to delete this booking.", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
-            DispatchQueue.main.async {
-                callback()
-            }
-        }))
-        present(alertController, animated: true, completion: nil)
     }
 }
 

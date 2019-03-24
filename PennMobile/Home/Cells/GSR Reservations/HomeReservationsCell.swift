@@ -24,7 +24,7 @@ final class HomeReservationsCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeReservationsCellItem else { return 0.0 }
-        return (CGFloat(item.reservations.count) * ReservationCell.cellHeight) + (90.0 + 14.0 + 20.0 + 7.0)
+        return (CGFloat(item.reservations.count) * ReservationCell.cellHeight) + (90.0 + 20.0)// + 20.0 + 7.0)
     }
     
     var reservations: [GSRReservation]?
@@ -61,8 +61,8 @@ extension HomeReservationsCell {
     }
 }
 
-// MARK: - UITableViewDataSource
-extension HomeReservationsCell: UITableViewDataSource {
+// MARK: - UITableViewDataSource, UITableViewDelegate
+extension HomeReservationsCell: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return reservations?.count ?? 0
     }
@@ -70,11 +70,16 @@ extension HomeReservationsCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReservationCell.identifier, for: indexPath) as! ReservationCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.isHomepage = true
+        cell.isHomePageCell = true
         let reservation = reservations![indexPath.row]
         cell.reservation = reservation
+        cell.delegate = self
         return cell
-    }    
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return ReservationCell.cellHeight
+    }
 }
 
 // MARK: - Initialize & Layout UI Elements
@@ -130,18 +135,18 @@ extension HomeReservationsCell {
         
         cardView.addSubview(reservationTableView)
         
-        reservationTableView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor).isActive = true
-        reservationTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor, constant: 0).isActive = true
-        reservationTableView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor).isActive = true
-        reservationTableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: safeInsetValue).isActive = true
+        reservationTableView.leftAnchor.constraint(equalTo: safeArea.leftAnchor).isActive = true
+        reservationTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor).isActive = true
+        reservationTableView.rightAnchor.constraint(equalTo: cardView.rightAnchor).isActive = true
+        reservationTableView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor).isActive = true
     }
 }
 
 // MARK: - UITableViewDelegate
-extension HomeReservationsCell: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ReservationCell.cellHeight
+extension HomeReservationsCell: ReservationCellDelegate {
+    func deleteReservation(_ reservation: GSRReservation) {
+        guard let delegate = delegate as? ReservationCellDelegate else { return }
+        delegate.deleteReservation(reservation)
     }
 }
 
