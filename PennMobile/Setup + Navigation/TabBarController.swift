@@ -44,6 +44,12 @@ final class TabBarController: ESTabBarController {
 // MARK: - Transition Animation
 extension TabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if let vc = viewController as? GenericTableViewController {
+            vc.setupNavBar()
+        } else if let vc = viewController as? GenericViewController {
+            vc.setupNavBar()
+        }
+        
         guard let tabBarController = tabBarController as? ESTabBarController, let selectedViewController = tabBarController.selectedViewController else { return false }
         
         if tabBarController.selectedViewController == nil || tabBarController.selectedViewController == viewController {
