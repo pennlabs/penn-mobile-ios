@@ -153,12 +153,16 @@ extension GSRNetworkManager {
         guard json["error"].string == nil else {
             throw NetworkingError.authenticationError
         }
-        guard let reservationJSONArray = json["reservations"].array else {
+        return try parseReservationsFromArray(json: json["reservations"])
+    }
+    
+    func parseReservationsFromArray(json: JSON) throws -> [GSRReservation] {
+        guard let jsonArray = json.array else {
             throw NetworkingError.jsonError
         }
         
         var reservations = [GSRReservation]()
-        for reservationJSON in reservationJSONArray {
+        for reservationJSON in jsonArray {
             guard let roomName = reservationJSON["name"].string,
                 let gid = reservationJSON["gid"].int,
                 let lid = reservationJSON["lid"].int,

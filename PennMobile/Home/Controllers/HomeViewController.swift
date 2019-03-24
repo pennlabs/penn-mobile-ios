@@ -154,8 +154,17 @@ extension HomeViewController {
 }
 
 // MARK: - ViewModelDelegate
-extension HomeViewController: HomeViewModelDelegate, GSRBookable {
-
+extension HomeViewController: HomeViewModelDelegate, GSRBookable, GSRDeletable {
+    func deleteReservation(_ reservation: GSRReservation) {
+        deleteReservation(reservation) { (successful) in
+            if successful {
+                guard let reservationItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.reservations]).first as? HomeReservationsCellItem else { return }
+                reservationItem.reservations = reservationItem.reservations.filter { $0.bookingID != reservation.bookingID }
+                self.reloadItem(reservationItem)
+            }
+        }
+    }
+    
     func handleUrlPressed(url: String, title: String) {
         let wv = WebviewController()
         wv.load(for: url)
