@@ -26,6 +26,11 @@ final class CalendarEvent {
         let startString = "\(formatter.string(from: start))"
         let endString = "\(formatter.string(from: end))"
         
+        if (startString == endString) {
+            formatter.dateFormat = "EEEE, MMM. d"
+            let date = "\(formatter.string(from: start))"
+            return date
+        }
         return startString + " - " + endString
     }
 }

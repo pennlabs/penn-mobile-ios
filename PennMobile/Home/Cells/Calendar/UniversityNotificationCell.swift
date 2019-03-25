@@ -12,7 +12,7 @@ import EventKit
 class UniversityNotificationCell: UITableViewCell {
     
     static let identifier = "universityNotificationCell"
-    static let cellHeight: CGFloat = 110
+    static let cellHeight: CGFloat = 107
     
     var calendarEvent: CalendarEvent! {
         didSet {
@@ -62,8 +62,8 @@ extension UniversityNotificationCell {
         addSubview(dateLabel)
         addSubview(pennCrest)
         
-        _ = eventLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: padding, leftConstant: 120, rightConstant: padding, heightConstant: 50)
-        _ = dateLabel.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 50, leftConstant: 120, bottomConstant: 25, rightConstant: padding)
+        _ = eventLabel.anchor(topAnchor, left: pennCrest.rightAnchor, bottom: nil, right: rightAnchor, topConstant: padding, leftConstant: padding, rightConstant: padding)
+        _ = dateLabel.anchor(eventLabel.bottomAnchor, left: pennCrest.rightAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 7, leftConstant: padding, bottomConstant: 22, rightConstant: padding)
         _ = pennCrest.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 13, leftConstant: 25, widthConstant: 83, heightConstant: 83)
         
     }
