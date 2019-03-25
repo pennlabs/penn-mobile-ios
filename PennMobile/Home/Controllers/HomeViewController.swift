@@ -249,7 +249,9 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable, GSRDeletable {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:{ (UIAlertAction) in
-            self.showCourseWebviewController()
+            //self.showCourseWebviewController()
+            self.showActivity()
+            PennInTouchNetworkManager.instance.getCoursesWithAuth(currentTermOnly: true, callback: self.handleNetworkCourseRefreshCompletion(_:))
         }))
         present(alert, animated: true)
     }
@@ -273,18 +275,31 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable, GSRDeletable {
 extension HomeViewController: ShowsAlert {
     fileprivate func showCourseWebviewController() {
         let cwc = CoursesWebviewController()
-        cwc.completion = self.courseRefreshCompletion(_:)
+        cwc.completion = self.handleCourseRefresh(_:)
         let nvc = UINavigationController(rootViewController: cwc)
         self.present(nvc, animated: true, completion: nil)
     }
     
-    private func courseRefreshCompletion(_ courses: Set<Course>?) {
-        if let courses = courses, let courseItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.courses]).first as? HomeCoursesCellItem {
-            courseItem.courses = Array(courses).filterByWeekday(for: courseItem.weekday).sorted()
-            reloadItem(courseItem)
-            showAlert(withMsg: "Your courses have been updated.", title: "Success!", completion: nil)
-        } else {
-            showAlert(withMsg: "Unable to access your courses. Please try again later.", title: "Uh oh!", completion: nil)
+    fileprivate func handleNetworkCourseRefreshCompletion(_ courses: Set<Course>?) {
+        DispatchQueue.main.async {
+            self.hideActivity()
+            if courses == nil {
+                self.showCourseWebviewController()
+            } else {
+                self.handleCourseRefresh(courses)
+            }
+        }
+    }
+    
+    private func handleCourseRefresh(_ courses: Set<Course>?) {
+        DispatchQueue.main.async {
+            if let courses = courses, let courseItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.courses]).first as? HomeCoursesCellItem {
+                courseItem.courses = Array(courses).filterByWeekday(for: courseItem.weekday).sorted()
+                self.reloadItem(courseItem)
+                self.showAlert(withMsg: "Your courses have been updated.", title: "Success!", completion: nil)
+            } else {
+                self.showAlert(withMsg: "Unable to access your courses. Please try again later.", title: "Uh oh!", completion: nil)
+            }
         }
     }
 }

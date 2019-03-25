@@ -9,13 +9,15 @@
 import Foundation
 import SwiftSoup
 
-class PennInTouchNetworkManager: NSObject {
+class PennInTouchNetworkManager: NSObject, PennAuthRequestable {
     
     static let instance = PennInTouchNetworkManager()
     
     fileprivate let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     fileprivate let degreeURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileAdvisors"
     fileprivate let courseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileSchedule"
+    
+    fileprivate let shibbolethUrl = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do/Shibboleth.sso/SAML2/POST"
 }
 
 // MARK: - Student
@@ -69,6 +71,12 @@ extension PennInTouchNetworkManager {
 
 // MARK: - Courses
 extension PennInTouchNetworkManager {
+    func getCoursesWithAuth(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+        makeAuthRequest(targetUrl: courseURL, shibbolethUrl: shibbolethUrl) { (_, _, _) in
+            self.getCourses(currentTermOnly: currentTermOnly, callback: callback)
+        }
+    }
+    
     func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         let url = URL(string: courseURL)!
         let request = URLRequest(url: url)
