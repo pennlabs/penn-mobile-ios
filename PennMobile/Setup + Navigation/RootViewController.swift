@@ -30,6 +30,8 @@ class RootViewController: UIViewController {
         current.didMove(toParent: self)
         
         UserDefaults.standard.restoreCookies()
+        
+        CampusExpressNetworkManager.instance.getHousingData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
