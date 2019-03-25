@@ -63,8 +63,7 @@ extension HomeItemTypes {
      * Note: This method should return an empty array when the app is in production
     **/
     func getDefaultItems() -> [HomeCellItem.Type] {
-        var types = [HomeCellItem.Type]()
-        types.append(calendar)
+        let types = [HomeCellItem.Type]()
         return types
     }
 }
