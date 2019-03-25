@@ -80,19 +80,22 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
 // MARK: - Setup UI Elements
 extension HomeCoursesCell {
     fileprivate func setupCell(with item: HomeCoursesCellItem) {
-        courses = item.courses
         primaryTitleLabel.text = "\(item.weekday)'s Schedule"
         secondaryTitleLabel.text = "COURSE SCHEDULE"
-        courseScheduleTable.delegate = self
         
-        if let heightConstraint = courseTableHeightConstraint {
-            courseScheduleTable.removeConstraint(heightConstraint)
+        if courses != item.courses {
+            courses = item.courses
+            courseScheduleTable.delegate = self
+
+            if let heightConstraint = self.courseTableHeightConstraint {
+                self.courseScheduleTable.removeConstraint(heightConstraint)
+            }
+            
+            let coursesHeight = ScheduleTable.calculateHeightForEvents(for: item.courses.getEvents())
+            self.courseTableHeightConstraint = self.courseScheduleTable.heightAnchor.constraint(equalToConstant: coursesHeight)
+            self.courseTableHeightConstraint?.isActive = true
+            self.courseScheduleTable.reloadData()
         }
-        
-        let coursesHeight = ScheduleTable.calculateHeightForEvents(for: courses.getEvents())
-        courseTableHeightConstraint = courseScheduleTable.heightAnchor.constraint(equalToConstant: coursesHeight)
-        courseTableHeightConstraint?.isActive = true
-        courseScheduleTable.reloadData()
         
         if UserDefaults.standard.coursePermissionGranted() {
             refreshButton.isHidden = false

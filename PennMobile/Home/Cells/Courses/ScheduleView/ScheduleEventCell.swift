@@ -42,6 +42,10 @@ class ScheduleEventCell: UICollectionViewCell {
         layer.cornerRadius = 4
         layer.masksToBounds = true
         
+        // Spead up FPS
+//        layer.shouldRasterize = true
+//        layer.rasterizationScale = UIScreen.main.scale
+        
         prepareUI()
     }
     
