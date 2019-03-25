@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol HomeCellDelegate: ModularTableViewCellDelegate, LaundryMachineCellTappable, DiningCellSelectable, GSRBookingSelectable, URLSelectable {}
+protocol HomeCellDelegate: ModularTableViewCellDelegate, LaundryMachineCellTappable, DiningCellSelectable, GSRBookingSelectable, URLSelectable, ReservationCellDelegate, BuildingMapSelectable, CourseRefreshable, CourseLoginable {}
 
 protocol HomeCellConformable: ModularTableViewCell where Self: UITableViewCell {
     var cardView: UIView! { get }    

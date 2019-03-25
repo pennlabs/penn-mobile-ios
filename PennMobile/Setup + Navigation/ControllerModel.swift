@@ -31,21 +31,22 @@ class ControllerModel: NSObject {
 
     static var shared = ControllerModel()
 
-    let vcDictionary: [Page: UIViewController] = {
-        var dict = [Page: UIViewController]()
-        dict[.home] = HomeViewController()
-        dict[.dining] = DiningViewController()
-        dict[.studyRoomBooking] = GSRController()
-        dict[.laundry] = LaundryTableViewController()
-        dict[.fitness] = FitnessViewController()
-        dict[.more] = MoreViewController()
-        dict[.map] = MapViewController()
-        dict[.news] = NewsViewController()
-        dict[.contacts] = ContactsTableViewController()
-        dict[.about] = AboutViewController()
-        dict[.fling] = FlingViewController()
-        return dict
-    }()
+    var vcDictionary: [Page: UIViewController]!
+    
+    func prepare() {
+        vcDictionary = [Page: UIViewController]()
+        vcDictionary[.home] = HomeViewController()
+        vcDictionary[.dining] = DiningViewController()
+        vcDictionary[.studyRoomBooking] = GSRController()
+        vcDictionary[.laundry] = LaundryTableViewController()
+        vcDictionary[.fitness] = FitnessViewController()
+        vcDictionary[.more] = MoreViewController()
+        vcDictionary[.map] = MapViewController()
+        vcDictionary[.news] = NewsViewController()
+        vcDictionary[.contacts] = ContactsTableViewController()
+        vcDictionary[.about] = AboutViewController()
+        vcDictionary[.fling] = FlingViewController()
+    }
 
     var viewControllers: [UIViewController] {
         return orderedPages.map { (title) -> UIViewController in

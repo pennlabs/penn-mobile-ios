@@ -21,6 +21,7 @@ public enum Method {
 
 enum NetworkingError: String, LocalizedError {
     case noInternet
+    case parsingError
     case jsonError = "JSON error"
     case authenticationError = "Unable to authenticate"
     case other
@@ -92,6 +93,9 @@ extension Requestable {
         
         let deviceID = getDeviceID()
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+        if let accountID = UserDefaults.standard.getAccountID() {
+            request.setValue(accountID, forHTTPHeaderField: "X-Account-ID")
+        }
         request.httpMethod = method.description
         if let params = params {
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")

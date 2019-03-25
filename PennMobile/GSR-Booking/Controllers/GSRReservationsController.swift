@@ -20,18 +20,20 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         tableView.delegate = self
         tableView.register(ReservationCell.self, forCellReuseIdentifier: ReservationCell.identifier)
         tableView.register(NoReservationsCell.self, forCellReuseIdentifier: NoReservationsCell.identifier)
+        tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
+        tableView.tableHeaderView = UIView()
+        
+        self.title = "Your Bookings"
+    self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
 
-        let sessionID = UserDefaults.standard.getSessionID()
+        let sessionID = GSRUser.getSessionID()
         let email = GSRUser.getUser()?.email
         if sessionID == nil && (email == nil || email!.contains("wharton")) {
             self.prepareLoginButton()
             self.tableView.dataSource = self
             return
         }
-        
-        self.title = "Your Bookings"
-        self.navigationController?.navigationBar.topItem?.title = "Back"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,34 +69,14 @@ extension GSRReservationsController {
 }
 
 // MARK: - ReservationCellDelegate
-extension GSRReservationsController: ReservationCellDelegate {
+extension GSRReservationsController: ReservationCellDelegate, GSRDeletable {
     func deleteReservation(_ reservation: GSRReservation) {
-        confirmDelete {
-            self.showActivity()
-            let sessionID = UserDefaults.standard.getSessionID()
-            GSRNetworkManager.instance.deleteReservation(reservation: reservation, sessionID: sessionID) { (success, errorMsg) in
-                DispatchQueue.main.async {
-                    self.hideActivity()
-                    if success {
-                        self.reservations = self.reservations.filter { $0.bookingID != reservation.bookingID }
-                        self.tableView.reloadData()
-                    } else if let errorMsg = errorMsg {
-                        self.showAlert(withMsg: errorMsg, title: "Uh oh!", completion: nil)
-                    }
-                }
+        deleteReservation(reservation) { (success) in
+            if success {
+                self.reservations = self.reservations.filter { $0.bookingID != reservation.bookingID }
+                self.tableView.reloadData()
             }
         }
-    }
-    
-    func confirmDelete(_ callback: @escaping () -> Void) {
-        let alertController = UIAlertController(title: "Are you sure?", message: "Please confirm that you wish to delete this booking.", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
-            DispatchQueue.main.async {
-                callback()
-            }
-        }))
-        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -125,7 +107,7 @@ extension GSRReservationsController {
         if isWharton {
             let wv = GSRWebviewLoginController()
             wv.completion = {
-                let sessionID = UserDefaults.standard.getSessionID()
+                let sessionID = GSRUser.getSessionID()
                 if sessionID == nil {
                     self.showAlert(withMsg: "Uh oh!", title: "Login invalid. Please try again.", completion: nil)
                     return
@@ -141,7 +123,7 @@ extension GSRReservationsController {
     }
     
     func fetchData(_ completion: @escaping (_ success: Bool) -> Void) {
-        let sessionID = UserDefaults.standard.getSessionID()
+        let sessionID = GSRUser.getSessionID()
         let email = GSRUser.getUser()?.email
         if sessionID == nil && email == nil {
             completion(false)

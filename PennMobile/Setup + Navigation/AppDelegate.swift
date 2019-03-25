@@ -19,6 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var tabBarController: TabBarController!
     
+    static var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    var rootViewController: RootViewController {
+        return window!.rootViewController as! RootViewController
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -28,53 +36,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UserDBManager.shared.dryRun = true
         UserDBManager.shared.testRun = true
-        
+
+        FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
         FirebaseApp.configure()
-      
+        
+        ControllerModel.shared.prepare()
+        LaundryNotificationCenter.shared.prepare()
+        GSRLocationModel.shared.prepare()
         LaundryAPIService.instance.prepare {
-            LaundryNotificationCenter.shared.prepare()
-            GSRLocationModel.shared.prepare()
-            
-            /*if !UserDefaults.standard.isOnboarded() {
-             //            handleOnboarding(animated: true)
-             UserDefaults.standard.setIsOnboarded(value: true)
-             return true
-             }*/
-            
-            self.tabBarController = TabBarController()
-            
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = HomeNavigationController(rootViewController: self.tabBarController)
-            self.window?.makeKeyAndVisible()
-            
-            // Keep track locally of app sessions (for app review prompting)
-            let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
-            UserDefaults.standard.set(sessionCount+1, forKey:"launchCount")
-            UserDefaults.standard.synchronize()
-            if sessionCount == 3 {
-                SKStoreReviewController.requestReview()
-            }
         }
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = RootViewController()
+        self.window?.makeKeyAndVisible()
+        
         return true
     }
-    
-    //    func handleOnboarding(animated: Bool) {
-    //        let vc = UIViewController()
-    //        vc.view.backgroundColor = .white
-    //        navController = UINavigationController(rootViewController: vc)
-    //        navController.isNavigationBarHidden = true
-    //
-    //        window = UIWindow(frame: UIScreen.main.bounds)
-    //        window?.rootViewController = navController
-    //        window?.makeKeyAndVisible()
-    //
-    //        let tempVC = UIViewController()
-    //        tempVC.view.backgroundColor = UIColor.red
-    //        navController.modalTransitionStyle = .crossDissolve
-    //        let oc = OnboardingController()
-    //        oc.delegate = self
-    //        self.navController.present(oc, animated: animated, completion: nil)
-    //    }
     
     //Special thanks to Ray Wenderlich
     func registerForPushNotifications() {
@@ -158,13 +135,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         DatabaseManager.shared.startSession()
         tabBarController?.reloadTabs()
-        ControllerModel.shared.visibleVC().viewWillAppear(true)
+        rootViewController.viewWillAppear(true)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
         DatabaseManager.shared.endSession()
     }
-    
 }
 
 extension AppDelegate: OnboardingDelegate {
