@@ -53,6 +53,13 @@ class GSRNetworkManager: NSObject, Requestable {
                 let json = JSON(dict)
                 rooms = Array<GSRRoom>(json: json)
             }
+            
+            if statusCode == 400 && gsrId == 1 {
+                // If Session ID invalid, clear it and try again without one
+                GSRUser.clearSessionID()
+                self.getAvailability(for: gsrId, dateStr: dateStr, callback: callback)
+                return
+            }
             callback(rooms)
         }
     }
