@@ -37,7 +37,7 @@ class Degree: Codable, Hashable {
     static func == (lhs: Degree, rhs: Degree) -> Bool {
         return lhs.schoolCode == rhs.schoolCode && lhs.degreeCode == rhs.degreeCode
             && lhs.expectedGradTerm == rhs.expectedGradTerm
-            && lhs.majors.map { $0.hashValue }.reduce(0, +) == rhs.majors.map { $0.hashValue }.reduce(0, +)
+            && lhs.majors.hashValue == rhs.majors.hashValue
     }
 }
 

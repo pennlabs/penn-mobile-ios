@@ -20,7 +20,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.2.0)
   - "GoogleToolboxForMac/NSData+zlib (2.2.0)":
     - GoogleToolboxForMac/Defines (= 2.2.0)
-  - Kingfisher (5.1.1)
+  - Kingfisher (5.3.0)
   - MBProgressHUD (0.9.2)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -38,7 +38,7 @@ DEPENDENCIES:
   - ESTabBarController-swift
   - Fabric (~> 1.9.0)
   - Firebase (~> 4.7)
-  - Kingfisher
+  - Kingfisher (~> 5.3)
   - MBProgressHUD (~> 0.8)
   - SCLAlertView
   - ScrollableGraphView
@@ -74,7 +74,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
-  Kingfisher: 2558186963e5be42d98c5b110ccb3130148b77e4
+  Kingfisher: 4692c783ffb99e9e2e40a6eb3e518c3b96c6fa8c
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
@@ -83,6 +83,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
 
-PODFILE CHECKSUM: 35b0715da5496471f465226d335648c68386361f
+PODFILE CHECKSUM: 61a58a8e0ac10a4cf7455dc40fa1965b5a21a4ec
 
 COCOAPODS: 1.5.3
