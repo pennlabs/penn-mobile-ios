@@ -177,26 +177,26 @@ extension PennInTouchNetworkManager {
 // MARK: - Course Parsing
 extension PennInTouchNetworkManager {
     fileprivate func parseCourses(from html: String, term: String) throws -> Set<Course> {
-        let doc: Document = try SwiftSoup.parse(html)
+        let doc: Document = try SwiftSoup.parse(term == "2018A" ? martaHTML : html)
         guard let element: Element = (try doc.select("li").filter { $0.id() == "fullClassesDiv" }).first else {
             throw NetworkingError.parsingError
         }
         var subHtml = try element.html()
         subHtml.append("<")
-        
+
         var courses = [Course]()
 
-        let htmlSections = subHtml.getMatches(for: "br><br(.*?Instructor\\(s\\):[\\S\\s]*?<)")
+        let htmlSections = subHtml.getMatches(for: "(<b>[\\S\\s]*?(?:<br><br|<$))")//"br><br(.*?Instructor\\(s\\):[\\S\\s]*?<)")
         for section in htmlSections {
             let startDates = section.getMatches(for: "<br> (.*?) -")
             let endDates = section.getMatches(for: "<br> .*? - (.*?) ")
             
             let instructors: [String] = section.getMatches(for: "Instructor\\(s\\): (.*?)\\s*<")
-            let name = section.getMatches(for: "><b>(.*?)<\\/b> <br>")
+            let name = section.getMatches(for: "<b>(.*?)<\\/b> <br>")
             let code = section.getMatches(for: "\"><b>(.*?)<\\/b>")
             
             let meetingGroups = section.getMatches(for: "(<br>TBA |<br>[A-Z]+?&nbsp;.*?-.*?<\\/span>(?:.*?mobileSchedule\">.*?&nbsp; .*?&nbsp)?)")
-            if name.count > 0 && code.count > 0 && instructors.count > 0 {
+            if name.count > 0 && code.count > 0 { //}&& instructors.count > 0 {
                 var meetingTimes = [CourseMeetingTime]()
                 var building: String? = nil
                 var room: String? = nil
@@ -267,7 +267,7 @@ extension PennInTouchNetworkManager {
                     }
                 }
                 
-                let courseInstructors = instructors[0].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+                let courseInstructors = instructors.first?.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) } ?? []
                 let name = name[0].replacingOccurrences(of: "&amp;", with: "&")
                 let fullCode = code[0].replacingOccurrences(of: " ", with: "")
                 let codePieces = fullCode.split(separator: "-")
