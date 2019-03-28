@@ -58,8 +58,8 @@ extension PennAuthRequestable {
         }
         
         // Check if have two factor trusted browser cookie (may have expired)
-        let cookies = HTTPCookieStorage.shared.cookies ?? []
-        let isTwoFactorTrusted = !cookies.filter { $0.name == "twoFactorTrustedBrowser" }.isEmpty
+//        let cookies = HTTPCookieStorage.shared.cookies ?? []
+        let isTwoFactorTrusted = true //!cookies.filter { $0.name == "twoFactorTrustedBrowser" }.isEmpty
         
         let genericPwdQueryable =
             GenericPasswordQueryable(service: "PennWebLogin")
