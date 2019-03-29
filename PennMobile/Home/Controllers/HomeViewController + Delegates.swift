@@ -155,10 +155,16 @@ extension HomeViewController: ShowsAlert {
     fileprivate func handleNetworkCourseRefreshCompletion(_ courses: Set<Course>?) {
         DispatchQueue.main.async {
             self.hideActivity()
-            if courses == nil {
-                self.showCourseWebviewController()
+            if let courses = courses {
+                if let accountID = UserDefaults.standard.getAccountID() {
+                    UserDBManager.shared.saveCourses(courses, accountID: accountID, { (success) in
+                        self.handleCourseRefresh(courses)
+                    })
+                } else {
+                    self.handleCourseRefresh(courses)
+                }
             } else {
-                self.handleCourseRefresh(courses)
+                self.showCourseWebviewController()
             }
         }
     }
