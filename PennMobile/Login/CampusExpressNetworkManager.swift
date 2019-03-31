@@ -67,20 +67,20 @@ extension CampusExpressNetworkManager {
         print(diningPlan)
         
         if try noPlan?.text() == "You are not currently signed up for a Dining Plan." {
-            return DiningBalances(hasDiningPlan: false, planName: nil, diningDollars: nil, visits: nil, guestVisits: nil)
+            return DiningBalances(hasDiningPlan: false, balancesAsOf: nil, planName: nil, diningDollars: nil, visits: nil, addOnVisits: nil, guestVisits: nil)
         }
         
+        let balancesAsOf = try doc.select("h4").first()?.text()
+        print(balancesAsOf!)
         let subElements = try doc.select("li")
         let visits = Int (try subElements.get(0).text().split(separator: " ")[1])
         print(visits!)
         let guestVisits = Int (try subElements.get(1).text().split(separator: " ")[2])
         print(guestVisits!)
-//        let addOnVisits = Int (try subElements.get(2).text().split(separator: " ")[1])
-//        let totalVisits = visits! + addOnVisits!
-//        print(totalVisits)
+        let addOnVisits = Int (try subElements.get(2).text().split(separator: " ")[1])
         let diningDollars = String (try subElements.get(3).text().split(separator: " ")[2])
         print(diningDollars)
-        return DiningBalances(hasDiningPlan: true, planName: diningPlan, diningDollars: diningDollars, visits: visits, guestVisits: guestVisits)
+        return DiningBalances(hasDiningPlan: true, balancesAsOf: balancesAsOf,  planName: diningPlan, diningDollars: diningDollars, visits: visits, addOnVisits: addOnVisits, guestVisits: guestVisits)
     }
 }
 

@@ -11,7 +11,7 @@ import Foundation
 class DiningBalancesCell: UITableViewCell {
     
     static let identifier = "diningBalancesCell"
-    static let cellHeight: CGFloat = 100
+    static let cellHeight: CGFloat = 130
     
     var diningBalances: DiningBalances! {
         didSet {
@@ -24,10 +24,10 @@ class DiningBalancesCell: UITableViewCell {
     fileprivate var safeArea: UIView!
     
     fileprivate var venueImageView: UIImageView!
-    fileprivate var diningPlanLabel: UILabel!
     fileprivate var diningDollarsLabel: UILabel!
     fileprivate var visitsLabel: UILabel!
     fileprivate var guestVisitsLabel: UILabel!
+    fileprivate var balancesAsOfLabel: UILabel!
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -45,8 +45,10 @@ extension DiningBalancesCell {
     
     fileprivate func setupCell(with diningBalances: DiningBalances) {
         diningDollarsLabel.text = "Dining Dollars: " + diningBalances.diningDollars!
-        visitsLabel.text = "Swipes: " + String (diningBalances.visits!)
+        visitsLabel.text = "Swipes: " + String (diningBalances.totalVisits!)
         guestVisitsLabel.text = "Guest Swipes: " + String (diningBalances.guestVisits!)
+        balancesAsOfLabel.text = diningBalances.balancesAsOf!
+        venueImageView.image = UIImage(named: "1920 Commons")
     }
 }
 
@@ -74,20 +76,10 @@ extension DiningBalancesCell {
     fileprivate func prepareImageView() {
         venueImageView = getVenueImageView()
         addSubview(venueImageView)
-        
         venueImageView.widthAnchor.constraint(equalToConstant: 130).isActive = true
-        venueImageView.heightAnchor.constraint(equalToConstant: 72).isActive = true
+        venueImageView.heightAnchor.constraint(equalToConstant: 85).isActive = true
         venueImageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        venueImageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor).isActive = true
-    }
-    
-    fileprivate func getVenueImageView() -> UIImageView {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 5.0
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+        venueImageView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 3).isActive = true
     }
     
     // MARK: Labels
@@ -98,21 +90,37 @@ extension DiningBalancesCell {
         addSubview(visitsLabel)
         guestVisitsLabel = getGuestVisitsLabel()
         addSubview(guestVisitsLabel)
+        balancesAsOfLabel = getBalancesAsOfLabel()
+        addSubview(balancesAsOfLabel)
         
         diningDollarsLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor, constant: safeInsetValue).isActive = true
         diningDollarsLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 3).isActive = true
         
         visitsLabel.leadingAnchor.constraint(equalTo: diningDollarsLabel.leadingAnchor).isActive = true
-        visitsLabel.topAnchor.constraint(equalTo: diningDollarsLabel.bottomAnchor, constant: 3).isActive = true
+        visitsLabel.topAnchor.constraint(equalTo: diningDollarsLabel.bottomAnchor, constant: 2).isActive = true
         
         guestVisitsLabel.leadingAnchor.constraint(equalTo: diningDollarsLabel.leadingAnchor).isActive = true
-        guestVisitsLabel.topAnchor.constraint(equalTo: visitsLabel.bottomAnchor, constant: 3).isActive = true
+        guestVisitsLabel.topAnchor.constraint(equalTo: visitsLabel.bottomAnchor, constant: 2).isActive = true
+        
+        balancesAsOfLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        balancesAsOfLabel.topAnchor.constraint(equalTo: venueImageView.bottomAnchor, constant: 7).isActive = true
+        balancesAsOfLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -3).isActive = true
     }
     
+    // MARK: Get UI elements
     fileprivate func getSafeAreaView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }
+    
+    fileprivate func getVenueImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 5.0
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }
     
     fileprivate func getDiningDollarsLabel() -> UILabel {
@@ -139,6 +147,16 @@ extension DiningBalancesCell {
         let label = UILabel()
         label.font = .interiorTitleFont
         label.textColor = .primaryTitleGrey
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.shrinkUntilFits()
+        return label
+    }
+    
+    fileprivate func getBalancesAsOfLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryInformationFont
+        label.textColor = .secondaryInformationGrey
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()

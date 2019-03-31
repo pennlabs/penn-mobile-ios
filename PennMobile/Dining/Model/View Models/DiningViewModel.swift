@@ -67,7 +67,7 @@ extension DiningViewModel: UITableViewDataSource {
         if shouldShowDiningBalances && indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: diningBalancesCell, for: indexPath) as! DiningBalancesCell
             cell.selectionStyle = .none
-            cell.diningBalances = DiningBalances(hasDiningPlan: true, planName: "Test", diningDollars: "$97.23", visits: 48, guestVisits: 0)
+            cell.diningBalances = DiningBalances(hasDiningPlan: true, balancesAsOf: "Current Balances as of March 29, 2019",  planName: "Balanced Eating Naturally", diningDollars: "$97.23", visits: 48, addOnVisits: 0, guestVisits: 0)
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
