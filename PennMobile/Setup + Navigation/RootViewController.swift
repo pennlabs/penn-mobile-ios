@@ -30,7 +30,15 @@ class RootViewController: UIViewController {
         current.didMove(toParent: self)
         
         UserDefaults.standard.restoreCookies()
-        CampusExpressNetworkManager.instance.getDiningData()
+        CampusExpressNetworkManager.instance.getDiningData { (diningBalances) in
+            if let diningBalances = diningBalances,
+                let accountID = UserDefaults.standard.getAccountID() {
+                // Save courses to DB if permission was granted
+//                UserDBManager.shared.saveCourses(courses, accountID: accountID)
+//                student.courses = courses
+            }
+            UserDefaults.standard.storeCookies()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
