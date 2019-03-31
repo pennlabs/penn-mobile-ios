@@ -44,7 +44,6 @@ class DiningBalancesCell: UITableViewCell {
 extension DiningBalancesCell {
     
     fileprivate func setupCell(with diningBalances: DiningBalances) {
-        diningPlanLabel.text = "Dining Plan: " + diningBalances.planName!
         diningDollarsLabel.text = "Dining Dollars: " + diningBalances.diningDollars!
         visitsLabel.text = "Swipes: " + String (diningBalances.visits!)
         guestVisitsLabel.text = "Guest Swipes: " + String (diningBalances.guestVisits!)
@@ -93,8 +92,6 @@ extension DiningBalancesCell {
     
     // MARK: Labels
     fileprivate func prepareLabels() {
-        diningPlanLabel = getDiningPlanLabel()
-        addSubview(diningPlanLabel)
         diningDollarsLabel = getDiningDollarsLabel()
         addSubview(diningDollarsLabel)
         visitsLabel = getVisitsLabel()
@@ -102,16 +99,13 @@ extension DiningBalancesCell {
         guestVisitsLabel = getGuestVisitsLabel()
         addSubview(guestVisitsLabel)
         
-        diningPlanLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor, constant: safeInsetValue).isActive = true
-        diningPlanLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 3).isActive = true
+        diningDollarsLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor, constant: safeInsetValue).isActive = true
+        diningDollarsLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 3).isActive = true
         
-        diningDollarsLabel.leadingAnchor.constraint(equalTo: diningPlanLabel.leadingAnchor).isActive = true
-        diningDollarsLabel.topAnchor.constraint(equalTo: diningPlanLabel.bottomAnchor, constant: 3).isActive = true
-        
-        visitsLabel.leadingAnchor.constraint(equalTo: diningPlanLabel.leadingAnchor).isActive = true
+        visitsLabel.leadingAnchor.constraint(equalTo: diningDollarsLabel.leadingAnchor).isActive = true
         visitsLabel.topAnchor.constraint(equalTo: diningDollarsLabel.bottomAnchor, constant: 3).isActive = true
         
-        guestVisitsLabel.leadingAnchor.constraint(equalTo: diningPlanLabel.leadingAnchor).isActive = true
+        guestVisitsLabel.leadingAnchor.constraint(equalTo: diningDollarsLabel.leadingAnchor).isActive = true
         guestVisitsLabel.topAnchor.constraint(equalTo: visitsLabel.bottomAnchor, constant: 3).isActive = true
     }
     
@@ -119,16 +113,6 @@ extension DiningBalancesCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    }
-    
-    fileprivate func getDiningPlanLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = .primaryTitleGrey
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.shrinkUntilFits()
-        return label
     }
     
     fileprivate func getDiningDollarsLabel() -> UILabel {

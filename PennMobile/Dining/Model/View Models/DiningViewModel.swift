@@ -27,14 +27,11 @@ class DiningViewModel: NSObject {
     internal let headerView = "headerView"
     internal let diningCell = "diningCell"
     internal let diningBalancesCell = "diningBalancesCell"
-    internal let announcementHeader = "announcementHeader"
     
-    var shouldShowAnnouncement = false
     var shouldShowDiningBalances = true
-    var announcement: String?
     
     func getType(forSection section: Int) -> DiningVenueType {
-        let index = shouldShowAnnouncement ? section - 2 : section - 1
+        let index = shouldShowDiningBalances ? section - 1 : section
         return ordering[index]
     }
     
@@ -56,21 +53,18 @@ class DiningViewModel: NSObject {
 // MARK: - UITableViewDataSource
 extension DiningViewModel: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return ordering.count + (shouldShowAnnouncement ? 1 : 0) + (shouldShowDiningBalances ? 1 : 0)
+        return ordering.count + (shouldShowDiningBalances ? 1 : 0)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if shouldShowAnnouncement && section == 0 {
-            return 0
-        }
-        if shouldShowAnnouncement && section == 1 || !shouldShowAnnouncement && section == 0 {
+        if shouldShowDiningBalances && section == 0 {
             return 1
         }
         return getVenues(forSection: section).count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (!shouldShowAnnouncement && indexPath.section == 0 || shouldShowAnnouncement && indexPath.section == 1) {
+        if shouldShowDiningBalances && indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: diningBalancesCell, for: indexPath) as! DiningBalancesCell
             cell.selectionStyle = .none
             cell.diningBalances = DiningBalances(hasDiningPlan: true, planName: "Test", diningDollars: "$97.23", visits: 48, guestVisits: 0)
@@ -85,18 +79,13 @@ extension DiningViewModel: UITableViewDataSource {
         tableView.register(DiningCell.self, forCellReuseIdentifier: diningCell)
         tableView.register(DiningBalancesCell.self, forCellReuseIdentifier: diningBalancesCell)
         tableView.register(DiningHeaderView.self, forHeaderFooterViewReuseIdentifier: headerView)
-        tableView.register(AnnouncementHeaderView.self, forHeaderFooterViewReuseIdentifier: announcementHeader)
     }
 }
 
 // MARK: - UITableViewDelegate
 extension DiningViewModel: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if shouldShowAnnouncement && section == 0 {
-            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: announcementHeader) as! AnnouncementHeaderView
-            view.announcement = announcement ?? ""
-            return view
-        } else if shouldShowAnnouncement && section == 1 || !shouldShowAnnouncement && section == 0 {
+        if shouldShowDiningBalances && section == 0 {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
             view.label.text = balancesHeader
             return view
@@ -119,18 +108,18 @@ extension DiningViewModel: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (!shouldShowAnnouncement && indexPath.row == 0 || shouldShowAnnouncement && indexPath.row == 1) {
+        if shouldShowDiningBalances && indexPath.section == 0 {
             return DiningBalancesCell.cellHeight
         }
         return DiningCell.cellHeight
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return (shouldShowAnnouncement && section == 0) ? AnnouncementHeaderView.headerHeight : DiningHeaderView.headerHeight
+        return DiningHeaderView.headerHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if ((!shouldShowAnnouncement && indexPath.section > 0 || shouldShowAnnouncement && indexPath.section > 1)) {
+        if shouldShowDiningBalances && indexPath.section > 0 || !shouldShowDiningBalances {
             let venue = getVenue(for: indexPath)
             delegate?.handleSelection(for: venue)
         }
