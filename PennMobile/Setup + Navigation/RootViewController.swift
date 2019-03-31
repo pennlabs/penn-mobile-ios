@@ -29,7 +29,8 @@ class RootViewController: UIViewController {
         view.addSubview(current.view)
         current.didMove(toParent: self)
         
-        UserDefaults.standard.restoreCookies()        
+        UserDefaults.standard.restoreCookies()
+        CampusExpressNetworkManager.instance.getDiningData()
     }
     
     override func viewWillAppear(_ animated: Bool) {

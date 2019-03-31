@@ -172,6 +172,7 @@
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
 		C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */; };
 		C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */; };
+		C11B38E322508A8D009B752A /* DiningBalances.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11B38E222508A8D009B752A /* DiningBalances.swift */; };
 		C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */; };
 		C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA30219F90E5000FC573 /* CalendarEvent.swift */; };
 		C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */; };
@@ -404,6 +405,7 @@
 		B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
+		C11B38E222508A8D009B752A /* DiningBalances.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalances.swift; sourceTree = "<group>"; };
 		C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAPI.swift; sourceTree = "<group>"; };
 		C11DFA30219F90E5000FC573 /* CalendarEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEvent.swift; sourceTree = "<group>"; };
 		C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversityNotificationCell.swift; sourceTree = "<group>"; };
@@ -918,6 +920,7 @@
 				21B8BBB72223963C00EBC1D0 /* Degree.swift */,
 				21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */,
 				21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */,
+				C11B38E222508A8D009B752A /* DiningBalances.swift */,
 				21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */,
 			);
 			path = Login;
@@ -1531,6 +1534,7 @@
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */,
+				C11B38E322508A8D009B752A /* DiningBalances.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,
