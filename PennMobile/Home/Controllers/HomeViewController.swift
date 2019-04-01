@@ -93,6 +93,8 @@ extension HomeViewController {
                 completion?()
             }
         } else {
+            // Reload visibile cell, then get data for each cell, and reload again
+            self.tableView.reloadData()
             self.fetchAllCellData(completion)
         }
     }

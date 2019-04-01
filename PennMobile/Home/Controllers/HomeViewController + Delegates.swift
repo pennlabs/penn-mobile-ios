@@ -181,3 +181,10 @@ extension HomeViewController: ShowsAlert {
         }
     }
 }
+
+extension HomeViewController: GSRLocationSelectable {
+    func handleSelectedLocation(_ location: GSRLocation) {
+        let gc = GSRController()
+        navigationController?.pushViewController(gc, animated: true)
+    }
+}

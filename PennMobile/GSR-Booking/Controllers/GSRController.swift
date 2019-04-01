@@ -38,7 +38,8 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var viewModel: GSRViewModel!
 
     override func viewDidLoad() {
-        super.viewDidLoad()                
+        super.viewDidLoad()
+        self.title = "Study Room Booking"
         prepareViewModel()
         prepareUI()
     }
