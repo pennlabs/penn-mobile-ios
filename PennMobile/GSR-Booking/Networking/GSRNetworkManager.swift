@@ -15,9 +15,9 @@ class GSRNetworkManager: NSObject, Requestable {
     
     let availUrl = "https://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
-    let bookingUrl = "http://api.pennlabs.org/studyspaces/book"
-    let reservationURL = "http://api.pennlabs.org/studyspaces/reservations"
-    let cancelURL = "http://api.pennlabs.org/studyspaces/cancel"
+    let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
+    let reservationURL = "https://api.pennlabs.org/studyspaces/reservations"
+    let cancelURL = "https://api.pennlabs.org/studyspaces/cancel"
     
     var locations:[Int:String] = [:]
     var bookingRequestOutstanding = false
