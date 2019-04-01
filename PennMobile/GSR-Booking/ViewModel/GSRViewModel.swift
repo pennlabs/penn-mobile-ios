@@ -275,3 +275,10 @@ extension GSRViewModel {
         return GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)
     }
 }
+
+// MARK: - Select Location
+extension GSRViewModel {
+    func getLocationIndex(_ location: GSRLocation) -> Int {
+        return locations.index(of: location)!
+    }
+}

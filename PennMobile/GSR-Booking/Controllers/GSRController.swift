@@ -36,12 +36,19 @@ class GSRController: GenericViewController, IndicatorEnabled {
     }
 
     fileprivate var viewModel: GSRViewModel!
+    
+    var startingLocation: GSRLocation?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Study Room Booking"
         prepareViewModel()
         prepareUI()
+        
+        if let location = startingLocation {
+            let index = viewModel.getLocationIndex(location)
+            self.pickerView.selectRow(index, inComponent: 1, animated: true)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
