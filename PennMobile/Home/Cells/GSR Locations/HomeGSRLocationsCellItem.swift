@@ -29,7 +29,9 @@ final class HomeGSRLocationsCellItem: HomeCellItem {
     }
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
-        let locations = GSRLocationModel.shared.getLocations().filter { [1, 1889, 4368].contains($0.gid!) }
+        guard let lids = json?.arrayObject as? [Int] else { return nil }
+        var locations = GSRLocationModel.shared.getLocations().filter { lids.contains( $0.lid ) }
+        locations = locations.filter { $0.lid != 1086 || $0.gid == 1889 }
         return HomeGSRLocationsCellItem(locations: locations)
     }
 }
