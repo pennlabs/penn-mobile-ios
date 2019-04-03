@@ -48,7 +48,7 @@ class GSRViewModel: NSObject {
             if let booking = getBooking() {
                 return .readyToSubmit(booking)
             } else {
-                return GSRUser.hasSavedUser() || UserDefaults.standard.getSessionID() != nil ? .loggedIn : .loggedOut
+                return GSRUser.hasSavedUser() || GSRUser.getSessionID() != nil ? .loggedIn : .loggedOut
             }
         }
     }
@@ -273,5 +273,12 @@ extension GSRViewModel {
         }
         endTime = timeSlot.endTime
         return GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)
+    }
+}
+
+// MARK: - Select Location
+extension GSRViewModel {
+    func getLocationIndex(_ location: GSRLocation) -> Int {
+        return locations.index(of: location)!
     }
 }

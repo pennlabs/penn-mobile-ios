@@ -9,16 +9,15 @@
 import Foundation
 import SwiftyJSON
 
-
 class GSRNetworkManager: NSObject, Requestable {
     
     static let instance = GSRNetworkManager()
     
     let availUrl = "https://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
-    let bookingUrl = "http://api.pennlabs.org/studyspaces/book"
-    let reservationURL = "http://api.pennlabs.org/studyspaces/reservations"
-    let cancelURL = "http://api.pennlabs.org/studyspaces/cancel"
+    let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
+    let reservationURL = "https://api.pennlabs.org/studyspaces/reservations"
+    let cancelURL = "https://api.pennlabs.org/studyspaces/cancel"
     
     var locations:[Int:String] = [:]
     var bookingRequestOutstanding = false
@@ -45,7 +44,7 @@ class GSRNetworkManager: NSObject, Requestable {
 
     func getAvailability(for gsrId: Int, dateStr: String, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
         var url = "\(availUrl)/\(gsrId)?date=\(dateStr)"
-        if let sessionID = UserDefaults.standard.getSessionID() {
+        if let sessionID = GSRUser.getSessionID() {
             url = "\(url)&sessionid=\(sessionID)"
         }
         getRequest(url: url) { (dict, error, statusCode) in
@@ -53,6 +52,13 @@ class GSRNetworkManager: NSObject, Requestable {
             if let dict = dict {
                 let json = JSON(dict)
                 rooms = Array<GSRRoom>(json: json)
+            }
+            
+            if statusCode == 400 && gsrId == 1 {
+                // If Session ID invalid, clear it and try again without one
+                GSRUser.clearSessionID()
+                self.getAvailability(for: gsrId, dateStr: dateStr, callback: callback)
+                return
             }
             callback(rooms)
         }
@@ -154,12 +160,16 @@ extension GSRNetworkManager {
         guard json["error"].string == nil else {
             throw NetworkingError.authenticationError
         }
-        guard let reservationJSONArray = json["reservations"].array else {
+        return try parseReservationsFromArray(json: json["reservations"])
+    }
+    
+    func parseReservationsFromArray(json: JSON) throws -> [GSRReservation] {
+        guard let jsonArray = json.array else {
             throw NetworkingError.jsonError
         }
         
         var reservations = [GSRReservation]()
-        for reservationJSON in reservationJSONArray {
+        for reservationJSON in jsonArray {
             guard let roomName = reservationJSON["name"].string,
                 let gid = reservationJSON["gid"].int,
                 let lid = reservationJSON["lid"].int,
@@ -286,5 +296,39 @@ extension GSRTimeSlot {
             throw NetworkingError.jsonError
         }
         return date
+    }
+}
+
+// MARK: - Session ID
+extension GSRNetworkManager: PennAuthRequestable {
+    
+    private var serviceDown: String {
+        return "https://servicedown.wharton.upenn.edu/"
+    }
+    
+    private var whartonUrl: String {
+        return "https://apps.wharton.upenn.edu/gsr/"
+    }
+    
+    private var shibbolethUrl: String {
+        return "https://apps.wharton.upenn.edu/django-shib/Shibboleth.sso/SAML2/POST"
+    }
+
+    
+    func getSessionID(_ callback: (((_ success: Bool) -> Void))? = nil) {
+        self.getSessionIDWithDownFlag { (success, _) in
+            callback?(success)
+        }
+    }
+    
+    func getSessionIDWithDownFlag(_ callback: @escaping ((_ success: Bool, _ serviceDown: Bool) -> Void)) {
+        makeAuthRequest(targetUrl: whartonUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
+            if let urlStr = response?.url?.absoluteString, urlStr == self.serviceDown {
+                callback(false, true)
+                return
+            }
+            
+            callback(GSRUser.getSessionID() != nil, false)
+        }
     }
 }

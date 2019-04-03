@@ -23,6 +23,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
 
     var barButtonTitle: String {
         get {
+            guard let viewModel = viewModel else { return "Login" }
             switch viewModel.state {
             case .loggedIn:
                 return "Logout"
@@ -35,11 +36,18 @@ class GSRController: GenericViewController, IndicatorEnabled {
     }
 
     fileprivate var viewModel: GSRViewModel!
+    
+    var startingLocation: GSRLocation?
 
     override func viewDidLoad() {
-        super.viewDidLoad()                
+        super.viewDidLoad()
         prepareViewModel()
         prepareUI()
+        
+        if let location = startingLocation {
+            let index = viewModel.getLocationIndex(location)
+            self.pickerView.selectRow(index, inComponent: 1, animated: true)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -47,21 +55,9 @@ class GSRController: GenericViewController, IndicatorEnabled {
         updateForNewDayIfNeeded()
         rangeSlider?.reload()
         fetchData()
-        setupNavBar()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        setupNavBar()
-        super.viewDidAppear(animated)
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        tabBarController?.navigationItem.leftBarButtonItem = nil
-        tabBarController?.navigationItem.rightBarButtonItem = nil
-        super.viewDidDisappear(animated)
-    }
-
-    private func setupNavBar() {
+    override func setupNavBar() {
         self.tabBarController?.title = "Study Room Booking"
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
         barButton.tintColor = UIColor.navigationBlue
@@ -194,7 +190,7 @@ extension GSRController: GSRBookable {
         switch viewModel.state {
         case .loggedOut:
             if viewModel.getSelectedLocation().service == "wharton" {
-                presentWebviewLoginController(nil)
+                presentWebviewLoginController()
             } else {
                 presentLoginController()
             }
@@ -209,7 +205,6 @@ extension GSRController: GSRBookable {
             alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
                 DispatchQueue.main.async {
                     GSRUser.clear()
-                    UserDefaults.standard.clearSessionID()
                     self.refreshBarButton()
                 }
             }))
@@ -223,7 +218,7 @@ extension GSRController: GSRBookable {
 
     @objc fileprivate func handleBookingsBarButtonPressed(_ sender: Any) {
         let grc = GSRReservationsController()
-        navigationVC?.pushViewController(grc, animated: true)
+        self.navigationController?.pushViewController(grc, animated: true)
     }
     
     private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {
@@ -247,7 +242,7 @@ extension GSRController: GSRBookable {
 
         let location = viewModel.getSelectedLocation()
         if location.service == "wharton" {
-            if let sessionId = UserDefaults.standard.getSessionID() {
+            if let sessionId = GSRUser.getSessionID() {
                 booking.sessionId = sessionId
                 submitBooking(for: booking) { (success) in
                     if success {
@@ -259,7 +254,7 @@ extension GSRController: GSRBookable {
                 }
             } else {
                 presentWebviewLoginController {
-                    if let sessionId = UserDefaults.standard.getSessionID() {
+                    if let sessionId = GSRUser.getSessionID() {
                         booking.sessionId = sessionId
                         self.submitBooking(for: booking) { (success) in
                             self.fetchData()

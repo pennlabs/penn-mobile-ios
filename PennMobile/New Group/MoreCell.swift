@@ -41,12 +41,16 @@ class MoreCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        let separatorHeight = CGFloat(2)
+        let customSeparator = UIView(frame: CGRect(x: 0, y: frame.size.height + 3 + separatorHeight, width: UIScreen.main.bounds.width, height: separatorHeight))
+        customSeparator.backgroundColor = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)
+        addSubview(customSeparator)
     }
     
-
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

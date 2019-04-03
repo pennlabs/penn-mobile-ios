@@ -18,6 +18,18 @@ class ReservationCell: UITableViewCell {
     static let identifier = "reservationCell"
     static let cellHeight: CGFloat = 127
     
+    var isHomePageCell: Bool = false {
+        didSet {
+            if isHomePageCell {
+                if buildingImageLeftConstraint != nil {
+                    buildingImage.removeConstraint(buildingImageLeftConstraint)
+                    buildingImageLeftConstraint = buildingImage.leftAnchor.constraint(equalTo: leftAnchor)
+                    buildingImageLeftConstraint.isActive = true
+                }
+            }
+        }
+    }
+    
     var reservation: GSRReservation! {
         didSet {
             locationLabel.text = String(reservation.roomName.split(separator: ":").first ?? "")
@@ -49,6 +61,8 @@ class ReservationCell: UITableViewCell {
     fileprivate var timeLabel: UILabel!
     fileprivate var deleteButton: UIButton!
     fileprivate var buildingImage: UIImageView!
+    
+    fileprivate var buildingImageLeftConstraint: NSLayoutConstraint!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -130,7 +144,7 @@ extension ReservationCell {
         buildingImage.clipsToBounds = true
         buildingImage.layer.cornerRadius = 8.0
         addSubview(buildingImage)
-        _ = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 20, widthConstant: 139, heightConstant: 87)
+        buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 20, widthConstant: 139, heightConstant: 87)[1]
     }
     
 }

@@ -31,6 +31,7 @@ class ControllerModel: NSObject {
 
     static var shared = ControllerModel()
 
+<<<<<<< HEAD
     let vcDictionary: [Feature: UIViewController] = {
         var dict = [Feature: UIViewController]()
         dict[.home] = HomeViewController()
@@ -46,6 +47,24 @@ class ControllerModel: NSObject {
         dict[.fling] = FlingViewController()
         return dict
     }()
+=======
+    var vcDictionary: [Page: UIViewController]!
+    
+    func prepare() {
+        vcDictionary = [Page: UIViewController]()
+        vcDictionary[.home] = HomeViewController()
+        vcDictionary[.dining] = DiningViewController()
+        vcDictionary[.studyRoomBooking] = GSRController()
+        vcDictionary[.laundry] = LaundryTableViewController()
+        vcDictionary[.fitness] = FitnessViewController()
+        vcDictionary[.more] = MoreViewController()
+        vcDictionary[.map] = MapViewController()
+        vcDictionary[.news] = NewsViewController()
+        vcDictionary[.contacts] = ContactsTableViewController()
+        vcDictionary[.about] = AboutViewController()
+        vcDictionary[.fling] = FlingViewController()
+    }
+>>>>>>> development
 
     var viewControllers: [UIViewController] {
         return orderedFeatures.map { (title) -> UIViewController in

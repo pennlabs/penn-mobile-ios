@@ -17,8 +17,14 @@ final class HomeItemTypes: ModularTableViewItemTypes {
     let studyRoomBooking: HomeCellItem.Type = HomeGSRCellItem.self
     let calendar: HomeCellItem.Type = HomeCalendarCellItem.self
     let news: HomeCellItem.Type = HomeNewsCellItem.self
+<<<<<<< HEAD
     let post: HomeCellItem.Type = HomePostCellItem.self
     let feature: HomeCellItem.Type = HomeFeatureCellItem.self
+=======
+    let reservations: HomeCellItem.Type = HomeReservationsCellItem.self
+    let courses: HomeCellItem.Type = HomeCoursesCellItem.self
+    let gsrLocations: HomeCellItem.Type = HomeGSRLocationsCellItem.self
+>>>>>>> development
 }
 
 // MARK: - JSON Parsing

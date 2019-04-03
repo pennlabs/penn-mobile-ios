@@ -14,3 +14,5 @@ struct GSRLocation {
     let name: String
     let service: String
 }
+
+extension GSRLocation: Equatable {}

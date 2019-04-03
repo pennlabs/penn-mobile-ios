@@ -22,6 +22,8 @@ class HomeViewController: GenericViewController {
     var lastRefresh: Date = Date()
     
     var loadingView: UIActivityIndicatorView!
+    
+    fileprivate var barButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,17 +36,50 @@ class HomeViewController: GenericViewController {
         prepareRefreshControl()
         
         registerForNotifications()
+        
+        self.navigationItem.leftBarButtonItem = nil
+        self.navigationItem.rightBarButtonItem = nil
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.title = "Home"
         if tableViewModel == nil {
             self.startLoadingViewAnimation()
         }
         self.refreshTableView {
             self.stopLoadingViewAnimation()
         }
+    }
+    
+    override func setupNavBar() {
+        super.setupNavBar()
+        self.tabBarController?.title = getTitle()
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
+    }
+    
+    fileprivate var titleCacheTimestamp = Date()
+    fileprivate var displayTitle: String?
+    
+    fileprivate func getTitle() -> String? {
+        let now = Date()
+        if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.displayTitle != nil {
+            return self.displayTitle
+        } else {
+            let firstName = Student.getStudent()?.first ?? GSRUser.getUser()?.firstName
+            if let firstName = firstName {
+                let intros = ["Welcome", "Howdy", "Hi there", "Hello"]
+                self.displayTitle = "\(intros.random!), \(firstName)!"
+                titleCacheTimestamp = Date()
+            } else {
+                self.displayTitle = "Home"
+            }
+            return self.displayTitle
+        }
+    }
+    
+    func clearCache() {
+        displayTitle = nil
+        tableViewModel = nil
     }
 }
 
@@ -58,6 +93,8 @@ extension HomeViewController {
                 completion?()
             }
         } else {
+            // Reload visibile cell, then get data for each cell, and reload again
+            self.tableView.reloadData()
             self.fetchAllCellData(completion)
         }
     }
@@ -90,7 +127,7 @@ extension HomeViewController {
     func setModel(_ model: HomeTableViewModel) {
         tableViewModel = model
         tableViewModel.delegate = self
-        tableView.model = tableViewModel
+        tableView?.model = tableViewModel
     }
     
     func prepareLoadingView() {
@@ -104,7 +141,7 @@ extension HomeViewController {
     }
     
     func startLoadingViewAnimation() {
-        if !loadingView.isHidden {
+        if loadingView != nil && !loadingView.isHidden {
             loadingView.startAnimating()
         }
     }
@@ -118,6 +155,7 @@ extension HomeViewController {
     }
 }
 
+<<<<<<< HEAD
 // MARK: - ViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate, GSRBookable {
 
@@ -192,6 +230,8 @@ extension HomeViewController: HomeViewModelDelegate, GSRBookable {
     }
 }
 
+=======
+>>>>>>> development
 // MARK: - Networking
 extension HomeViewController {
     func fetchViewModel(_ completion: @escaping () -> Void) {
@@ -241,12 +281,23 @@ extension HomeViewController {
     }
 
     func reloadItem(_ item: HomeCellItem) {
-        guard let allItems = tableViewModel.items as? [HomeCellItem] else { return }
+        guard let allItems = tableViewModel?.items as? [HomeCellItem] else { return }
         if let row = allItems.index(where: { (thisItem) -> Bool in
             thisItem.equals(item: item)
         }) {
             let indexPath = IndexPath(row: row, section: 0)
             self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+    
+    func removeItem(_ item: HomeCellItem) {
+        guard let allItems = tableViewModel?.items as? [HomeCellItem] else { return }
+        if let row = allItems.index(where: { (thisItem) -> Bool in
+            thisItem.equals(item: item)
+        }) {
+            let indexPath = IndexPath(row: row, section: 0)
+            tableViewModel.items.remove(at: row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 }
@@ -310,5 +361,3 @@ extension HomeViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateLaundryItemForPreferences(_:)), name: Notification.Name(rawValue: "LaundryUpdateNotification") , object: nil)
     }
 }
-
-
