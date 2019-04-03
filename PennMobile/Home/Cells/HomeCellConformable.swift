@@ -8,15 +8,12 @@
 
 import Foundation
 
-<<<<<<< HEAD
-protocol HomeCellDelegate: ModularTableViewCellDelegate, LaundryMachineCellTappable, DiningCellSelectable,
-                            GSRBookingSelectable, URLSelectable, FeatureNavigatable {}
-=======
 protocol HomeCellDelegate: ModularTableViewCellDelegate, LaundryMachineCellTappable, DiningCellSelectable, GSRBookingSelectable, URLSelectable, ReservationCellDelegate, BuildingMapSelectable, CourseRefreshable, CourseLoginable {}
->>>>>>> development
+
+extension HomeCellDelegate: FeatureNavigatable {}
 
 protocol HomeCellConformable: ModularTableViewCell where Self: UITableViewCell {
-    var cardView: UIView! { get }    
+    var cardView: UIView! { get }
 }
 
 // - MARK: Prepare
@@ -26,19 +23,19 @@ extension HomeCellConformable {
         self.selectionStyle = .none
         prepareCardView()
     }
-    
+
     fileprivate func prepareCardView() {
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 10.0
         cardView.layer.borderWidth = 1.0
         cardView.layer.borderColor = UIColor.clear.cgColor
-        
+
         // Shadows
         cardView.layer.shadowColor = UIColor.black.cgColor
         cardView.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         cardView.layer.shadowOpacity = 0.25
         cardView.layer.shadowRadius = 4.0
-        
+
         addSubview(cardView)
         cardView.anchorWithConstantsToTop(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
                                           topConstant: HomeViewController.cellSpacing, leftConstant: HomeViewController.edgeSpacing, bottomConstant: 0, rightConstant: HomeViewController.edgeSpacing)
