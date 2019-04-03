@@ -12,6 +12,8 @@
 		2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF221F3F762500CEC3F4 /* ContactCell.swift */; };
 		210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210AC14420684F9B0050D837 /* HomeCellProtocols.swift */; };
 		210AC1472068515C0050D837 /* WebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210AC1462068515C0050D837 /* WebviewController.swift */; };
+		2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2119D26622529A0600693CDB /* HomeGSRLocationsCellItem.swift */; };
+		2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2119D26822529A2300693CDB /* HomeGSRLocationsCell.swift */; };
 		211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */ = {isa = PBXBuildFile; fileRef = 211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */; };
 		211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */; };
 		211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AE204921030065BC2C /* LaundryMachinesView.swift */; };
@@ -19,6 +21,7 @@
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
 		212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212304C62054EDB900958CE0 /* FlingViewController.swift */; };
 		2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2130A5052238C2F000DFEEC7 /* PennLoginController.swift */; };
+		2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138E1F72252AFB500E4055A /* GSRLocationCell.swift */; };
 		21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21470EBB223DD34200019C10 /* ScheduleEventCell.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
 		214E254922480818004CB9C4 /* GSRDeletable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E254822480818004CB9C4 /* GSRDeletable.swift */; };
@@ -230,6 +233,8 @@
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		210AC14420684F9B0050D837 /* HomeCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellProtocols.swift; sourceTree = "<group>"; };
 		210AC1462068515C0050D837 /* WebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewController.swift; sourceTree = "<group>"; };
+		2119D26622529A0600693CDB /* HomeGSRLocationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRLocationsCellItem.swift; sourceTree = "<group>"; };
+		2119D26822529A2300693CDB /* HomeGSRLocationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRLocationsCell.swift; sourceTree = "<group>"; };
 		211B11A41F2995AD00A22C8A /* PennMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PennMobile.entitlements; sourceTree = "<group>"; };
 		211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AuthKey_6MBD9SUNGE.p8; sourceTree = "<group>"; };
 		211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellConformable.swift; sourceTree = "<group>"; };
@@ -238,6 +243,7 @@
 		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
 		212304C62054EDB900958CE0 /* FlingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingViewController.swift; sourceTree = "<group>"; };
 		2130A5052238C2F000DFEEC7 /* PennLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLoginController.swift; sourceTree = "<group>"; };
+		2138E1F72252AFB500E4055A /* GSRLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationCell.swift; sourceTree = "<group>"; };
 		21470EBB223DD34200019C10 /* ScheduleEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventCell.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		214E254822480818004CB9C4 /* GSRDeletable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRDeletable.swift; sourceTree = "<group>"; };
@@ -469,6 +475,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2119D265225299D300693CDB /* GSR Locations */ = {
+			isa = PBXGroup;
+			children = (
+				2119D26622529A0600693CDB /* HomeGSRLocationsCellItem.swift */,
+				2119D26822529A2300693CDB /* HomeGSRLocationsCell.swift */,
+			);
+			path = "GSR Locations";
+			sourceTree = "<group>";
+		};
 		212304C52054ED9900958CE0 /* Spring Fling */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,6 +539,7 @@
 				217A784B204DDF0C004F1227 /* Laundry */,
 				C15C4B4C223EB13700E443FD /* GSR Reservations */,
 				217A784C204DDF19004F1227 /* GSR */,
+				2119D265225299D300693CDB /* GSR Locations */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -842,6 +858,7 @@
 				2189C08B2027CE2600771C1F /* EmptyView.swift */,
 				2189C08A2027CE2600771C1F /* GSRRangeSlider.swift */,
 				2189C0882027CE2600771C1F /* GSRTimeCell.swift */,
+				2138E1F72252AFB500E4055A /* GSRLocationCell.swift */,
 				2189C0892027CE2600771C1F /* RoomCell.swift */,
 				21A6B6D32216824B003A357D /* ReservationCell.swift */,
 				C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */,
@@ -1524,6 +1541,7 @@
 				21B649202236F2F300AC5B7F /* HomeCoursesCell.swift in Sources */,
 				21A6B6D222162702003A357D /* GSRReservation.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
+				2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
 				21B649222236F2FC00AC5B7F /* HomeCoursesCellItem.swift in Sources */,
 				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
@@ -1533,6 +1551,7 @@
 				CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
+				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
 				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,
 				21B8BBB02223187D00EBC1D0 /* LoginWebviewController.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
@@ -1555,6 +1574,7 @@
 				CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
 				2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */,
+				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
 				978693FD20EB0ADD00C4A8A1 /* DiningMenuModels.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,

@@ -181,3 +181,12 @@ extension HomeViewController: ShowsAlert {
         }
     }
 }
+
+extension HomeViewController: GSRLocationSelectable {
+    func handleSelectedLocation(_ location: GSRLocation) {
+        let gc = GSRController()
+        gc.startingLocation = location
+        gc.title = "Study Room Booking"
+        navigationController?.pushViewController(gc, animated: true)
+    }
+}
