@@ -8,9 +8,16 @@
 
 import Foundation
 
-protocol HomeCellDelegate: ModularTableViewCellDelegate, LaundryMachineCellTappable, DiningCellSelectable, GSRBookingSelectable, URLSelectable, ReservationCellDelegate, BuildingMapSelectable, CourseRefreshable, CourseLoginable {}
-
-extension HomeCellDelegate: FeatureNavigatable {}
+protocol HomeCellDelegate: ModularTableViewCellDelegate,
+    LaundryMachineCellTappable,
+    DiningCellSelectable,
+    GSRBookingSelectable,
+    URLSelectable,
+    ReservationCellDelegate,
+    BuildingMapSelectable,
+    CourseRefreshable,
+    CourseLoginable,
+    FeatureNavigatable {}
 
 protocol HomeCellConformable: ModularTableViewCell where Self: UITableViewCell {
     var cardView: UIView! { get }
