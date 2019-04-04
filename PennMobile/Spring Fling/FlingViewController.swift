@@ -35,10 +35,11 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
         super.viewDidLoad()
         self.title = "Spring Fling"
         
+        setupThisNavBar()
         prepareScheduleTableView()
         preparePerformersTableView()
-        prepareMapImageView()
-        prepareMapBarButton()
+//        prepareMapImageView()
+//        prepareMapBarButton()
         
         scheduleTableView.isHidden = true
         performersTableView.isHidden = false
@@ -55,16 +56,19 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
         }
     }
     
-    override func setupNavBar() {
+    func setupThisNavBar() {
         //removes hairline from bottom of navbar
         if let navbar = navigationController?.navigationBar {
             removeHairline(from: navbar)
         }
         
         let width = view.frame.width
-        let headerHeight = navigationController?.navigationBar.frame.height ?? 44
         
-        headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: headerHeight))
+        guard let headerFrame = navigationController?.navigationBar.frame else {
+            return
+        }
+        
+        headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: headerFrame.height + headerFrame.origin.y))
         headerToolbar.backgroundColor = navigationController?.navigationBar.backgroundColor
         
         let newsSwitcher = UISegmentedControl(items: ["Performers", "Schedule"])

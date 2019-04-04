@@ -13,7 +13,7 @@ final class HomeAPIService: Requestable {
     private init() {}
 
     func fetchModel(_ completion: @escaping (_ model: HomeTableViewModel?, _ error: NetworkingError?) -> Void) {
-        var url = "https://api.pennlabs.org/homepage"
+        var url = "http://localhost:5000/homepage" //https://api.pennlabs.org/homepage"
         if let sessionID = GSRUser.getSessionID() {
             url = "\(url)?sessionid=\(sessionID)"
         }
