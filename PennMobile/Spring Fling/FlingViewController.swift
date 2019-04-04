@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//import SimpleImageViewer
+import ZoomImageView
 import TimelineTableViewCell
 
 protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
@@ -27,9 +27,12 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
     fileprivate static var highlightYellow = UIColor(r: 240, g: 180, b: 0)
     
     // For Map Zoom
-    fileprivate var mapImageView: UIImageView!
+    fileprivate var mapImageView: ZoomImageView!
 
     fileprivate var performers = [FlingPerformer]()
+    
+    fileprivate var checkInWebview: WebviewController!
+    fileprivate var checkInUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdhRj1NDWZtrdpp6fH2Ji794dhUetzC90VF2sy1KacDdSPuzw/viewform?edit2=2_ABaOnucvxaDKlft_ykI9DmEWK8fGXCUiIPE2Ih6jFghK7-aOWDPjqXL6WWcH0jE"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +41,16 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
         setupThisNavBar()
         prepareScheduleTableView()
         preparePerformersTableView()
-//        prepareMapImageView()
-//        prepareMapBarButton()
+        prepareMapImageView()
+        prepareCheckInButton()
         
-        scheduleTableView.isHidden = true
         performersTableView.isHidden = false
+        scheduleTableView.isHidden = true
+        mapImageView.isHidden = true
+        
+        checkInWebview = WebviewController()
+        checkInWebview.load(for: checkInUrl)
+        checkInWebview.title = "Spring Fling Check-In"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,7 +79,7 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
         headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: headerFrame.height + headerFrame.origin.y))
         headerToolbar.backgroundColor = navigationController?.navigationBar.backgroundColor
         
-        let newsSwitcher = UISegmentedControl(items: ["Performers", "Schedule"])
+        let newsSwitcher = UISegmentedControl(items: ["Performers", "Schedule", "Map"])
         newsSwitcher.center = CGPoint(x: width/2, y: 64 + headerToolbar.frame.size.height/2)
         newsSwitcher.tintColor = UIColor.navRed
         newsSwitcher.selectedSegmentIndex = 0
@@ -83,9 +91,9 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
     }
     
     @objc internal func switchTabMode(_ segment: UISegmentedControl) {
-        let shouldShowPerformers = segment.selectedSegmentIndex == 0
-        performersTableView.isHidden = !shouldShowPerformers
-        scheduleTableView.isHidden = shouldShowPerformers
+        performersTableView.isHidden = segment.selectedSegmentIndex == 0 ? false : true
+        scheduleTableView.isHidden = segment.selectedSegmentIndex == 1 ? false : true
+        mapImageView.isHidden = segment.selectedSegmentIndex == 2 ? false : true
     }
 }
 
@@ -162,7 +170,7 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Saturday, April 14th"
+        return "Saturday, April 13th"
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -246,40 +254,32 @@ extension FlingViewController {
 // MARK: - ModularTableViewDelegate
 extension FlingViewController: FlingCellDelegate {
     func handleUrlPressed(url: String, title: String) {
-        let wv = WebviewController()
-        wv.title = title
-        wv.load(for: url)
-        navigationController?.pushViewController(wv, animated: true)
+        navigationController?.pushViewController(checkInWebview, animated: true)
+    }
+}
+
+// MARK: - Check In
+extension FlingViewController {
+    fileprivate func prepareCheckInButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Check-In", style: .done, target: self, action: #selector(handleCheckInButtonPressed(_:)))
+    }
+    
+    @objc fileprivate func handleCheckInButtonPressed(_ sender: Any?) {
+        navigationController?.pushViewController(checkInWebview, animated: true)
     }
 }
 
 // MARK: - Map Image
-extension FlingViewController {
-    fileprivate func prepareMapBarButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Map", style: .done, target: self, action: #selector(handleMapButtonPressed(_:)))
-    }
-    
+extension FlingViewController: UIScrollViewDelegate {
     fileprivate func prepareMapImageView() {
-        let image = UIImage(named: "Fling_Map")
-        mapImageView = UIImageView(image: image)
-        mapImageView.contentMode = .scaleAspectFill
-        mapImageView.isHidden = true
-        
-        let widthToHeightRatio = CGFloat(2800/1884)
-        let width: CGFloat = 4
-        let height: CGFloat = widthToHeightRatio * width
+        mapImageView = ZoomImageView()
+        mapImageView.image = UIImage(named: "Fling_Map")
         
         view.addSubview(mapImageView)
-        _ = mapImageView.anchor(headerToolbar.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: -height, leftConstant: 0, bottomConstant: 0, rightConstant: 30, widthConstant: width, heightConstant: height)
-    }
-    
-    @objc fileprivate func handleMapButtonPressed(_ sender: Any?) {
-//        let configuration = ImageViewerConfiguration { config in
-//            config.imageView = mapImageView
-//        }
-//
-//        let imageViewerController = ImageViewerController(configuration: configuration)
-//        present(imageViewerController, animated: true)
+        
+        mapImageView.anchorToTop(nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor)
+        mapImageView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
+        mapImageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
     }
 }
 
