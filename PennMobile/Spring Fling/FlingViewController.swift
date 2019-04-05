@@ -32,7 +32,7 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
     fileprivate var performers = [FlingPerformer]()
     
     fileprivate var checkInWebview: WebviewController!
-    fileprivate var checkInUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdhRj1NDWZtrdpp6fH2Ji794dhUetzC90VF2sy1KacDdSPuzw/viewform?edit2=2_ABaOnucvxaDKlft_ykI9DmEWK8fGXCUiIPE2Ih6jFghK7-aOWDPjqXL6WWcH0jE"
+    fileprivate var checkInUrl = "https://docs.google.com/forms/d/e/1FAIpQLSexkehYfGgyAa7RagaCl8rze4KUKQSX9TbcvvA6iXp34TyHew/viewform"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -270,7 +270,7 @@ extension FlingViewController {
 }
 
 // MARK: - Map Image
-extension FlingViewController: UIScrollViewDelegate {
+extension FlingViewController {
     fileprivate func prepareMapImageView() {
         mapImageView = ZoomImageView()
         mapImageView.image = UIImage(named: "Fling_Map")
