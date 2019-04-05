@@ -100,9 +100,18 @@ class RootViewController: UIViewController {
         let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
         UserDefaults.standard.set(sessionCount+1, forKey:"launchCount")
         UserDefaults.standard.synchronize()
-        if sessionCount == 3 {
-            SKStoreReviewController.requestReview()
-        }
+        
+        // This code will ONLY present the review if we're not running Fastlane UI Automation (for screenshots)
+        // If you need to test the SKStoreReviewController, go to the Build Settings and remove the FASTLANE flag under
+        // 'Active Compilation Conditions'. REMEMBER TO ADD IT BACK, or fastlane will fail :)
+        // ps. DON'T ADD IT BACK under the 'Release' category -- this will disable app store reviews in the release version :(
+        #if FASTLANE
+            print("Not presenting the app store review.")
+        #else
+            if sessionCount == 3 {
+                SKStoreReviewController.requestReview()
+            }
+        #endif
     }
     
     func switchToLogout(_ shouldClearData: Bool = true) {
