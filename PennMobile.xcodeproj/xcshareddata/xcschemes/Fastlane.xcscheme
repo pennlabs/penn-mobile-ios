@@ -22,6 +22,26 @@
                ReferencedContainer = "container:PennMobile.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B6B1E0612144408B00CCBBCD"
+               BuildableName = "PennMobileUITests.xctest"
+               BlueprintName = "PennMobileUITests"
+               ReferencedContainer = "container:PennMobile.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F230FB0D225809E900760499"
+               BuildableName = "AutomatedScreenshotUITests.xctest"
+               BlueprintName = "AutomatedScreenshotUITests"
+               ReferencedContainer = "container:PennMobile.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

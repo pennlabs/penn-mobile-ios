@@ -175,7 +175,6 @@
 		B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B658393A1FABD295009486FC /* LaundryAPIService.swift */; };
 		B6665A182071E63800F49A9C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6665A172071E63800F49A9C /* TabBarController.swift */; };
 		B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67881D7211CBF2A000DA750 /* MenuTableView.swift */; };
-		B6B1E08A214442A200CCBBCD /* fastlane in Resources */ = {isa = PBXBuildFile; fileRef = B6B1E089214442A200CCBBCD /* fastlane */; };
 		B6E49F8520E32C78003F4002 /* DiningMenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F8420E32C78003F4002 /* DiningMenuItemCell.swift */; };
 		B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */; };
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
@@ -197,9 +196,12 @@
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
+		E2C0B966B2A90A787F938B8A /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B357990346E03DBD3E73B5C4 /* Pods_AutomatedScreenshotUITests.framework */; };
 		EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC321860B7000E29C6A /* StatusBar.swift */; };
 		EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC521861B8500E29C6A /* HomeNavigationController.swift */; };
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
+		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
+		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,14 +219,7 @@
 			remoteGlobalIDString = 2166405F1EBADADA00746B8E;
 			remoteInfo = PennMobile;
 		};
-		B6B1E075214440C600CCBBCD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 216640581EBADADA00746B8E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2166405F1EBADADA00746B8E;
-			remoteInfo = PennMobile;
-		};
-		B6B1E083214440EF00CCBBCD /* PBXContainerItemProxy */ = {
+		F230FB13225809E900760499 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 216640581EBADADA00746B8E /* Project object */;
 			proxyType = 1;
@@ -378,6 +373,7 @@
 		21F5F8F420538AFC005B143F /* FlingPerformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingPerformer.swift; sourceTree = "<group>"; };
 		2B364FB5448C9559DDEB6B7C /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
+		50FCFE42CF6B04B45704394B /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7FFEDDC58154E96C2BF820AD /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		978693F820EAE1BB00C4A8A1 /* DiningMenuAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuAPI.swift; sourceTree = "<group>"; };
@@ -397,10 +393,10 @@
 		97E79E172100E4AA00D3D606 /* FitnessFacilityData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityData.swift; sourceTree = "<group>"; };
 		97E79E192100E51A00D3D606 /* FitnessFacilityName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityName.swift; sourceTree = "<group>"; };
 		97E79E1B2100F32E00D3D606 /* FitnessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewModel.swift; sourceTree = "<group>"; };
+		B357990346E03DBD3E73B5C4 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLaundryCell.swift; sourceTree = "<group>"; };
 		B6111DB12018497400DC7877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6111DB320184C4A00DC7877 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		B6214B68217A87740024DA68 /* FastlaneUIAutomation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FastlaneUIAutomation; sourceTree = "<group>"; };
 		B62875EA2115302200FB2873 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B62875EC2115433100FB2873 /* PennCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCoordinate.swift; sourceTree = "<group>"; };
 		B62875F82118F95300FB2873 /* BuildingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingProtocol.swift; sourceTree = "<group>"; };
@@ -413,13 +409,12 @@
 		B6665A172071E63800F49A9C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B67881D7211CBF2A000DA750 /* MenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableView.swift; sourceTree = "<group>"; };
 		B6B1E0622144408B00CCBBCD /* PennMobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PennMobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6B1E070214440C600CCBBCD /* Fastlane.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Fastlane.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6B1E07E214440EF00CCBBCD /* FastlaneUIAutomation.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FastlaneUIAutomation.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B1E089214442A200CCBBCD /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = SOURCE_ROOT; };
 		B6E49F8420E32C78003F4002 /* DiningMenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuItemCell.swift; sourceTree = "<group>"; };
 		B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
 		B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9E5F006BE7D02CAB4C4AD4C /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
 		C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAPI.swift; sourceTree = "<group>"; };
@@ -443,6 +438,10 @@
 		EF389EC321860B7000E29C6A /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		EF389EC521861B8500E29C6A /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
 		EFD6F358220E334100382783 /* DiningCellSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCellSettingsController.swift; sourceTree = "<group>"; };
+		F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutomatedScreenshotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedScreenshotUITests.swift; sourceTree = "<group>"; };
+		F230FB12225809E900760499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F230FB1922580ACA00760499 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -470,17 +469,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B6B1E06D214440C600CCBBCD /* Frameworks */ = {
+		F230FB0B225809E900760499 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6B1E07B214440EF00CCBBCD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				E2C0B966B2A90A787F938B8A /* Pods_AutomatedScreenshotUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,8 +584,8 @@
 		216640571EBADADA00746B8E = {
 			isa = PBXGroup;
 			children = (
-				B6214B68217A87740024DA68 /* FastlaneUIAutomation */,
 				B6B1E089214442A200CCBBCD /* fastlane */,
+				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
 				54F8BC3E1191968D76D8E893 /* Frameworks */,
 				216640621EBADADA00746B8E /* PennMobile */,
 				2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */,
@@ -608,8 +601,7 @@
 				216640601EBADADA00746B8E /* PennMobile.app */,
 				216640741EBADADA00746B8E /* PennMobileTests.xctest */,
 				B6B1E0622144408B00CCBBCD /* PennMobileUITests.xctest */,
-				B6B1E070214440C600CCBBCD /* Fastlane.xctest */,
-				B6B1E07E214440EF00CCBBCD /* FastlaneUIAutomation.xctest */,
+				F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1002,6 +994,7 @@
 				B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */,
 				E691F84242807B3459A57BCC /* Pods_PennMobileTests.framework */,
 				7FFEDDC58154E96C2BF820AD /* Pods_PennMobileTests.framework */,
+				B357990346E03DBD3E73B5C4 /* Pods_AutomatedScreenshotUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1013,6 +1006,8 @@
 				CEF5C02A7792D4E6978F00EB /* Pods-PennMobile.release.xcconfig */,
 				7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */,
 				4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */,
+				B9E5F006BE7D02CAB4C4AD4C /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
+				50FCFE42CF6B04B45704394B /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1258,6 +1253,16 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		F230FB0F225809E900760499 /* AutomatedScreenshotUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F230FB1922580ACA00760499 /* SnapshotHelper.swift */,
+				F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */,
+				F230FB12225809E900760499 /* Info.plist */,
+			);
+			path = AutomatedScreenshotUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1318,40 +1323,24 @@
 			productReference = B6B1E0622144408B00CCBBCD /* PennMobileUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		B6B1E06F214440C600CCBBCD /* Fastlane */ = {
+		F230FB0D225809E900760499 /* AutomatedScreenshotUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B6B1E077214440C600CCBBCD /* Build configuration list for PBXNativeTarget "Fastlane" */;
+			buildConfigurationList = F230FB15225809E900760499 /* Build configuration list for PBXNativeTarget "AutomatedScreenshotUITests" */;
 			buildPhases = (
-				B6B1E06C214440C600CCBBCD /* Sources */,
-				B6B1E06D214440C600CCBBCD /* Frameworks */,
-				B6B1E06E214440C600CCBBCD /* Resources */,
+				97A05C0AB208F1FB21DD8B01 /* [CP] Check Pods Manifest.lock */,
+				F230FB0A225809E900760499 /* Sources */,
+				F230FB0B225809E900760499 /* Frameworks */,
+				F230FB0C225809E900760499 /* Resources */,
+				7E3DAC1375891E6F6B136AD1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B6B1E076214440C600CCBBCD /* PBXTargetDependency */,
+				F230FB14225809E900760499 /* PBXTargetDependency */,
 			);
-			name = Fastlane;
-			productName = Fastlane;
-			productReference = B6B1E070214440C600CCBBCD /* Fastlane.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		B6B1E07D214440EF00CCBBCD /* FastlaneUIAutomation */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B6B1E085214440EF00CCBBCD /* Build configuration list for PBXNativeTarget "FastlaneUIAutomation" */;
-			buildPhases = (
-				B6B1E07A214440EF00CCBBCD /* Sources */,
-				B6B1E07B214440EF00CCBBCD /* Frameworks */,
-				B6B1E07C214440EF00CCBBCD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B6B1E084214440EF00CCBBCD /* PBXTargetDependency */,
-			);
-			name = FastlaneUIAutomation;
-			productName = FastlaneUIAutomation;
-			productReference = B6B1E07E214440EF00CCBBCD /* FastlaneUIAutomation.xctest */;
+			name = AutomatedScreenshotUITests;
+			productName = AutomatedScreenshotUITests;
+			productReference = F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -1360,7 +1349,7 @@
 		216640581EBADADA00746B8E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
@@ -1391,14 +1380,8 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2166405F1EBADADA00746B8E;
 					};
-					B6B1E06F214440C600CCBBCD = {
-						CreatedOnToolsVersion = 9.4.1;
-						DevelopmentTeam = VU59R57FGM;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 2166405F1EBADADA00746B8E;
-					};
-					B6B1E07D214440EF00CCBBCD = {
-						CreatedOnToolsVersion = 9.4.1;
+					F230FB0D225809E900760499 = {
+						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = VU59R57FGM;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2166405F1EBADADA00746B8E;
@@ -1422,8 +1405,7 @@
 				2166405F1EBADADA00746B8E /* PennMobile */,
 				216640731EBADADA00746B8E /* PennMobileTests */,
 				B6B1E0612144408B00CCBBCD /* PennMobileUITests */,
-				B6B1E06F214440C600CCBBCD /* Fastlane */,
-				B6B1E07D214440EF00CCBBCD /* FastlaneUIAutomation */,
+				F230FB0D225809E900760499 /* AutomatedScreenshotUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1455,18 +1437,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B6B1E06E214440C600CCBBCD /* Resources */ = {
+		F230FB0C225809E900760499 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6B1E07C214440EF00CCBBCD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B6B1E08A214442A200CCBBCD /* fastlane in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1541,6 +1515,50 @@
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-PennMobileTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7E3DAC1375891E6F6B136AD1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimulatorStatusMagic.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		97A05C0AB208F1FB21DD8B01 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AutomatedScreenshotUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1769,17 +1787,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B6B1E06C214440C600CCBBCD /* Sources */ = {
+		F230FB0A225809E900760499 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6B1E07A214440EF00CCBBCD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */,
+				F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1796,15 +1809,10 @@
 			target = 2166405F1EBADADA00746B8E /* PennMobile */;
 			targetProxy = B6B1E0672144408B00CCBBCD /* PBXContainerItemProxy */;
 		};
-		B6B1E076214440C600CCBBCD /* PBXTargetDependency */ = {
+		F230FB14225809E900760499 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2166405F1EBADADA00746B8E /* PennMobile */;
-			targetProxy = B6B1E075214440C600CCBBCD /* PBXContainerItemProxy */;
-		};
-		B6B1E084214440EF00CCBBCD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2166405F1EBADADA00746B8E /* PennMobile */;
-			targetProxy = B6B1E083214440EF00CCBBCD /* PBXContainerItemProxy */;
+			targetProxy = F230FB13225809E900760499 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2064,93 +2072,48 @@
 			};
 			name = Release;
 		};
-		B6B1E078214440C600CCBBCD /* Debug */ = {
+		F230FB16225809E900760499 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B9E5F006BE7D02CAB4C4AD4C /* Pods-AutomatedScreenshotUITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Fastlane/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				INFOPLIST_FILE = AutomatedScreenshotUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.Fastlane;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = land.dominic.AutomatedScreenshotUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PennMobile;
 			};
 			name = Debug;
 		};
-		B6B1E079214440C600CCBBCD /* Release */ = {
+		F230FB17225809E900760499 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50FCFE42CF6B04B45704394B /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Fastlane/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				INFOPLIST_FILE = AutomatedScreenshotUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.Fastlane;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = land.dominic.AutomatedScreenshotUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PennMobile;
-			};
-			name = Release;
-		};
-		B6B1E086214440EF00CCBBCD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = FastlaneUIAutomation/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.FastlaneUIAutomation;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PennMobile;
-			};
-			name = Debug;
-		};
-		B6B1E087214440EF00CCBBCD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = FastlaneUIAutomation/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.FastlaneUIAutomation;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PennMobile;
 			};
@@ -2195,20 +2158,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B6B1E077214440C600CCBBCD /* Build configuration list for PBXNativeTarget "Fastlane" */ = {
+		F230FB15225809E900760499 /* Build configuration list for PBXNativeTarget "AutomatedScreenshotUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B6B1E078214440C600CCBBCD /* Debug */,
-				B6B1E079214440C600CCBBCD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B6B1E085214440EF00CCBBCD /* Build configuration list for PBXNativeTarget "FastlaneUIAutomation" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B6B1E086214440EF00CCBBCD /* Debug */,
-				B6B1E087214440EF00CCBBCD /* Release */,
+				F230FB16225809E900760499 /* Debug */,
+				F230FB17225809E900760499 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
