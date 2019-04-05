@@ -14,7 +14,7 @@ enum FitnessFacilityName: String, Codable {
     case sheerr =      "Sheerr Pool"
     case ringe =       "Ringe"
     case climbing =    "Climbing Wall"
-    case membership =  "Membership"
+    case membership =  "Membership Office"
     case fox =         "Fox Fitness"
     case pottruck =    "Pottruck"
     case rockwell =    "Pottruck Courts"

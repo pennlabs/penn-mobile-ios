@@ -20,6 +20,12 @@
 		211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DFE531F36A02C00CB73E4 /* DiningAPI.swift */; };
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
 		212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212304C62054EDB900958CE0 /* FlingViewController.swift */; };
+		212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B8354222A31B500F835D6 /* HomePostCellItem.swift */; };
+		212B8357222A31C300F835D6 /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B8356222A31C300F835D6 /* HomePostCell.swift */; };
+		212B8359222A331D00F835D6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B8358222A331D00F835D6 /* Post.swift */; };
+		212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B835B222A37D000F835D6 /* HomeFeatureCellItem.swift */; };
+		212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B835D222A37DD00F835D6 /* HomeFeatureCell.swift */; };
+		212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B835F222A37FE00F835D6 /* FeatureAnnouncement.swift */; };
 		2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2130A5052238C2F000DFEEC7 /* PennLoginController.swift */; };
 		2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138E1F72252AFB500E4055A /* GSRLocationCell.swift */; };
 		21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21470EBB223DD34200019C10 /* ScheduleEventCell.swift */; };
@@ -242,6 +248,12 @@
 		211DFE531F36A02C00CB73E4 /* DiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPI.swift; sourceTree = "<group>"; };
 		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
 		212304C62054EDB900958CE0 /* FlingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingViewController.swift; sourceTree = "<group>"; };
+		212B8354222A31B500F835D6 /* HomePostCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCellItem.swift; sourceTree = "<group>"; };
+		212B8356222A31C300F835D6 /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
+		212B8358222A331D00F835D6 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		212B835B222A37D000F835D6 /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
+		212B835D222A37DD00F835D6 /* HomeFeatureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCell.swift; sourceTree = "<group>"; };
+		212B835F222A37FE00F835D6 /* FeatureAnnouncement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureAnnouncement.swift; sourceTree = "<group>"; };
 		2130A5052238C2F000DFEEC7 /* PennLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLoginController.swift; sourceTree = "<group>"; };
 		2138E1F72252AFB500E4055A /* GSRLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationCell.swift; sourceTree = "<group>"; };
 		21470EBB223DD34200019C10 /* ScheduleEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventCell.swift; sourceTree = "<group>"; };
@@ -494,6 +506,26 @@
 			path = "Spring Fling";
 			sourceTree = "<group>";
 		};
+		212B8353222A319200F835D6 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				212B8354222A31B500F835D6 /* HomePostCellItem.swift */,
+				212B8356222A31C300F835D6 /* HomePostCell.swift */,
+				212B8358222A331D00F835D6 /* Post.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		212B835A222A37BD00F835D6 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				212B835B222A37D000F835D6 /* HomeFeatureCellItem.swift */,
+				212B835D222A37DD00F835D6 /* HomeFeatureCell.swift */,
+				212B835F222A37FE00F835D6 /* FeatureAnnouncement.swift */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
 		21508164220D2481002F7EA1 /* News */ = {
 			isa = PBXGroup;
 			children = (
@@ -531,6 +563,8 @@
 			children = (
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
 				210AC14420684F9B0050D837 /* HomeCellProtocols.swift */,
+				212B835A222A37BD00F835D6 /* Feature */,
+				212B8353222A319200F835D6 /* Post */,
 				21B6491E2236F2E200AC5B7F /* Courses */,
 				C13F9E93219284E9000B866A /* Calendar */,
 				21508164220D2481002F7EA1 /* News */,
@@ -1455,6 +1489,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TimelineTableViewCell/TimelineTableViewCell.framework",
+				"${BUILT_PRODUCTS_DIR}/ZoomImageView/ZoomImageView.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1468,6 +1503,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TimelineTableViewCell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZoomImageView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1573,6 +1609,7 @@
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
 				CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
+				212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */,
 				2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */,
 				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
@@ -1595,6 +1632,7 @@
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
+				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
 				97E79E182100E4AA00D3D606 /* FitnessFacilityData.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
@@ -1602,6 +1640,7 @@
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
+				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
 				21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */,
 				97E79E1A2100E51A00D3D606 /* FitnessFacilityName.swift in Sources */,
@@ -1621,11 +1660,13 @@
 				214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
 				B6111DB420184C4A00DC7877 /* AboutViewController.swift in Sources */,
+				212B8357222A31C300F835D6 /* HomePostCell.swift in Sources */,
 				2189C0A12027CE4100771C1F /* GSRBooking.swift in Sources */,
 				2189C08C2027CE2600771C1F /* GSRTimeCell.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
 				21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
+				212B8359222A331D00F835D6 /* Post.swift in Sources */,
 				C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */,
 				B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */,
 				21ABE2AF223D7E2B00199D29 /* Time.swift in Sources */,
@@ -1645,6 +1686,7 @@
 				C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */,
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
+				212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */,
 				216640941EBADC1700746B8E /* DiningCell.swift in Sources */,
 				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,

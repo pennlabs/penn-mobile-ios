@@ -190,3 +190,11 @@ extension HomeViewController: GSRLocationSelectable {
         navigationController?.pushViewController(gc, animated: true)
     }
 }
+
+extension HomeViewController: FeatureNavigatable {
+    func navigateToFeature(feature: Feature) {
+        let vc = ControllerModel.shared.viewController(for: feature)
+        vc.title = feature.rawValue
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
