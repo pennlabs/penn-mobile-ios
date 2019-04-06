@@ -7,6 +7,12 @@
 
 import UIKit
 
+extension UIApplication {
+    public static var isRunningFastlaneTest: Bool {
+        return ProcessInfo().arguments.contains("FASTLANE")
+    }
+}
+
 extension UIView {
 
     @available(iOS 9.0, *)

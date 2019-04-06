@@ -31,6 +31,11 @@ Complete instructions here: [Screenshots - fastlane docs](https://docs.fastlane.
 	* It is also used in `/screenshots/en-US/keyword.strings` and `/screenshots/en-US/title.strings` to define the titles and subtitles to go on the frame.
 	* Additionally, the frame uses `background.png`, although this can be customized and set individually in `Framefile.json`
 	* You can specify the devices in `Snapfile`
+    
+### Conditional Code
+I added a way for us to check if Fastlane is currently taking screenshots. This is needed for things like Laundry preferences -- we want to return real preferences when testing the app and in production -- but NOT when running the Fastlane UI automation. Otherwise, we would have to start up each simulator and select the same user preferences.
+
+You can check for conditional code anytime by calling `UIApplication.isRunningFastlaneTest`. This just checkings for a launch argument ("FASTLANE") I pass in at the beginning of the test.
 
 ### Perfect Status Bar
 Last thing — I also installed PerfectStatusBar. It sets the time to be 9:41 and the battery to be full. The pod is only installed on the UITests target, so it doesn’t affect normal testing.
@@ -39,6 +44,7 @@ Last thing — I also installed PerfectStatusBar. It sets the time to be 9:41 an
 1. Make sure fastlane is up to date (especially if there have been new iOS versions or Xcode versions) with `[sudo] bundle update fastlane`
 2. If you encounter:  _[!] Could not determine installed iOS SDK version. Try running the _xcodebuild_ command manually to ensure it works._
 	* Try running the following: `sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer`
+    3. If some of the screenshots have loading indicators, then you need to give each screen more time :( This makes the test take longer. Just increase the `waitTime` variable at the top of `AutomatedScreenshotUITests.swift`. This variable is in seconds.
 
 Generally — just follow whatever instructions Fastlane gives you, or google them if you’re unclear (they have great docs).
 

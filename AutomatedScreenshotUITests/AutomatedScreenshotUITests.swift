@@ -10,6 +10,8 @@ import XCTest
 import SimulatorStatusMagic
 
 class AutomatedScreenshotUITests: XCTestCase {
+    
+    let waitTime: Double = 10
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -24,6 +26,7 @@ class AutomatedScreenshotUITests: XCTestCase {
         
         // Fastlane Setup
         let app = XCUIApplication()
+        app.launchArguments = ["FASTLANE"]
         setupSnapshot(app)
         app.launch()
         
@@ -46,7 +49,7 @@ class AutomatedScreenshotUITests: XCTestCase {
         // Home
         let app = XCUIApplication()
         app.buttons["CONTINUE AS GUEST"].tap()
-        snapshot("01Home", timeWaitingForIdle: 3)
+        snapshot("01Home", timeWaitingForIdle: waitTime)
         
         // Dining
         let tabBarsQuery = app.tabBars
@@ -55,14 +58,13 @@ class AutomatedScreenshotUITests: XCTestCase {
         
         // GSR
         tabBarsQuery.otherElements["GSR - tab - 3 of 5"].tap()
-        snapshot("03GSR", timeWaitingForIdle: 5)
         // GSR takes a while, run with fast wifi to avoid loading indicators on the screenshots
-        snapshot("03GSR", timeWaitingForIdle: 5)
+        snapshot("03GSR", timeWaitingForIdle: waitTime)
         
         // Laundry
         tabBarsQuery.otherElements["Laundry - tab - 4 of 5"].tap()
         // Laundry takes a while, run with fast wifi to avoid loading indicators on the screenshots
-        snapshot("04Laundry", timeWaitingForIdle: 5)
+        snapshot("04Laundry", timeWaitingForIdle: waitTime)
         
         // More
         tabBarsQuery.otherElements["More - tab - 5 of 5"].tap()
