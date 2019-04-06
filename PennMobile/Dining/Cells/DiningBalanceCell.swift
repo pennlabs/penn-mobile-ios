@@ -1,5 +1,5 @@
 //
-//  DiningBalancesCell.swift
+//  DiningBalanceCell.swift
 //  PennMobile
 //
 //  Created by Marta García Ferreiro on 3/31/19.
@@ -8,14 +8,22 @@
 
 import Foundation
 
-class DiningBalancesCell: UITableViewCell {
+// MARK: - DiningBalanceCell Delegate
+
+protocol DiningBalanceCellDelegate: class {
+    func updateBalance()
+}
+
+class DiningBalanceCell: UITableViewCell {
     
-    static let identifier = "diningBalancesCell"
-    static let cellHeight: CGFloat = 130
+    weak var delegate: DiningBalanceCellDelegate?
     
-    var diningBalances: DiningBalances! {
+    static let identifier = "diningBalanceCell"
+    static let cellHeight: CGFloat = 121
+    
+    var diningBalance: DiningBalance! {
         didSet {
-            setupCell(with: diningBalances)
+            setupCell(with: diningBalance)
         }
     }
     
@@ -28,6 +36,8 @@ class DiningBalancesCell: UITableViewCell {
     fileprivate var visitsLabel: UILabel!
     fileprivate var guestVisitsLabel: UILabel!
     fileprivate var balancesAsOfLabel: UILabel!
+    fileprivate var refreshButton: UIButton!
+    fileprivate var loadingView: UIActivityIndicatorView!
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -41,24 +51,26 @@ class DiningBalancesCell: UITableViewCell {
 }
 
 // MARK: - Setup Cell
-extension DiningBalancesCell {
+extension DiningBalanceCell {
     
-    fileprivate func setupCell(with diningBalances: DiningBalances) {
-        diningDollarsLabel.text = "Dining Dollars: " + diningBalances.diningDollars!
-        visitsLabel.text = "Swipes: " + String (diningBalances.totalVisits!)
-        guestVisitsLabel.text = "Guest Swipes: " + String (diningBalances.guestVisits!)
-        balancesAsOfLabel.text = diningBalances.balancesAsOf!
+    fileprivate func setupCell(with diningBalance: DiningBalance) {
+        diningDollarsLabel.text = "Dining Dollars: " + diningBalance.diningDollars!
+        visitsLabel.text = "Swipes: " + String (diningBalance.visits!)
+        guestVisitsLabel.text = "Guest Swipes: " + String (diningBalance.guestVisits!)
+        balancesAsOfLabel.text = diningBalance.balancesAsOf!
         venueImageView.image = UIImage(named: "1920 Commons")
     }
 }
 
 // MARK: - Initialize and Layout UI Elements
-extension DiningBalancesCell {
+extension DiningBalanceCell {
     
     fileprivate func prepareUI() {
         prepareSafeArea()
         prepareImageView()
         prepareLabels()
+        prepareRefreshButton()
+        prepareLoadingView()
     }
     
     // MARK: Safe Area
@@ -104,7 +116,51 @@ extension DiningBalancesCell {
         
         balancesAsOfLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         balancesAsOfLabel.topAnchor.constraint(equalTo: venueImageView.bottomAnchor, constant: 7).isActive = true
-        balancesAsOfLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -3).isActive = true
+        balancesAsOfLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor).isActive = true
+    }
+    
+    // MARK: Refresh Button
+    fileprivate func prepareRefreshButton() {
+        refreshButton = UIButton()
+        refreshButton.tintColor = UIColor.navigationBlue
+        refreshButton.setImage(UIImage(named: "refresh")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        refreshButton.addTarget(self, action: #selector(refreshButtonTapped(_:)), for: .touchUpInside)
+        refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(refreshButton)
+        
+        refreshButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        refreshButton.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        refreshButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        refreshButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+    }
+    
+    // MARK: Loading Indicator
+    func prepareLoadingView() {
+        loadingView = UIActivityIndicatorView(style: .whiteLarge)
+        loadingView.color = .black
+        loadingView.isHidden = true
+        addSubview(loadingView)
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        loadingView.topAnchor.constraint(equalTo: refreshButton.bottomAnchor).isActive = true
+        loadingView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        loadingView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+    
+    func startLoadingViewAnimation() {
+        self.loadingView.isHidden = false
+        loadingView.startAnimating()
+    }
+    
+    func stopLoadingViewAnimation() {
+        self.loadingView.isHidden = true
+        self.loadingView.stopAnimating()
+    }
+    
+    @objc private func refreshButtonTapped(_ sender: Any) {
+        startLoadingViewAnimation()
+        delegate?.updateBalance()
     }
     
     // MARK: Get UI elements
@@ -163,4 +219,3 @@ extension DiningBalancesCell {
         return label
     }
 }
-

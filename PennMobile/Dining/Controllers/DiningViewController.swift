@@ -68,6 +68,8 @@ extension DiningViewController {
                 
                 self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                
+                //self.updateBalance()
             }
         }
     }
@@ -101,6 +103,17 @@ extension DiningViewController: DiningViewModelDelegate {
             vc.view.addSubview(webView)
             vc.title = venue.name.rawValue
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+}
+
+extension DiningViewController: DiningBalanceCellDelegate {
+    func updateBalance() {
+        CampusExpressNetworkManager.instance.getDiningData { (diningBalances) in
+            DispatchQueue.main.async {
+                self.viewModel.balance = diningBalances
+                self.tableView.reloadData()
+            }
         }
     }
 }

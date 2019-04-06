@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DiningViewModelDelegate {
+protocol DiningViewModelDelegate: DiningBalanceCellDelegate {
     func handleSelection(for venue: DiningVenue)
 }
 
@@ -18,16 +18,17 @@ class DiningViewModel: NSObject {
     let dining = DiningVenue.getVenues(for: .dining)
     let retail = DiningVenue.getVenues(for: .retail)
     
-    let balancesHeader = "Dining Balances"
+    let balancesHeader = "Dining Balance"
     let diningHeader = "Dining Halls"
     let retailHeader = "Retail Dining"
+    
+    var balance: DiningBalance?
     
     var delegate: DiningViewModelDelegate?
     
     internal let headerView = "headerView"
     internal let diningCell = "diningCell"
-    internal let diningBalancesCell = "diningBalancesCell"
-    
+    internal let diningBalanceCell = "diningBalanceCell"
     var shouldShowDiningBalances = true
     
     func getType(forSection section: Int) -> DiningVenueType {
@@ -65,9 +66,15 @@ extension DiningViewModel: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if shouldShowDiningBalances && indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: diningBalancesCell, for: indexPath) as! DiningBalancesCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: diningBalanceCell, for: indexPath) as! DiningBalanceCell
             cell.selectionStyle = .none
-            cell.diningBalances = DiningBalances(hasDiningPlan: true, balancesAsOf: "Current Balances as of March 29, 2019",  planName: "Balanced Eating Naturally", diningDollars: "$97.23", visits: 48, addOnVisits: 0, guestVisits: 0)
+            cell.delegate = self.delegate
+            
+            if let balance = self.balance {
+                cell.diningBalance = balance
+            } else {
+                cell.diningBalance = DiningBalance(hasDiningPlan: true, balancesAsOf: "Current Balances as of ",  planName: "Balanced Eating Naturally", diningDollars: "$0.00", visits: 0, addOnVisits: 0, guestVisits: 0)
+            }
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
@@ -77,7 +84,7 @@ extension DiningViewModel: UITableViewDataSource {
     
     func registerHeadersAndCells(for tableView: UITableView) {
         tableView.register(DiningCell.self, forCellReuseIdentifier: diningCell)
-        tableView.register(DiningBalancesCell.self, forCellReuseIdentifier: diningBalancesCell)
+        tableView.register(DiningBalanceCell.self, forCellReuseIdentifier: diningBalanceCell)
         tableView.register(DiningHeaderView.self, forHeaderFooterViewReuseIdentifier: headerView)
     }
 }
@@ -109,7 +116,7 @@ extension DiningViewModel: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if shouldShowDiningBalances && indexPath.section == 0 {
-            return DiningBalancesCell.cellHeight
+            return DiningBalanceCell.cellHeight
         }
         return DiningCell.cellHeight
     }

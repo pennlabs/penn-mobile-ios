@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DiningBalances: Codable {
+class DiningBalance: Codable {
     var hasDiningPlan: Bool
     var balancesAsOf: String?
     var planName: String?
