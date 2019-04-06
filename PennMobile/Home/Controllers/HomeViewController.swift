@@ -162,7 +162,10 @@ extension HomeViewController {
             DispatchQueue.main.async {
                 if error != nil {
                     let navigationVC = self.navigationController as? HomeNavigationController
-                    navigationVC?.addPermanentStatusBar(text: error == NetworkingError.noInternet ? StatusBar.StatusBarText.noInternet : .apiError)
+                    //navigationVC?.addPermanentStatusBar(text: error == NetworkingError.noInternet ? StatusBar.StatusBarText.noInternet : .apiError)
+                    if error != NetworkingError.noInternet {
+                        navigationVC?.addStatusBar(text: .apiError)
+                    }
                     completion()
                     return
                 }

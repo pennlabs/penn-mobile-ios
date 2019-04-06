@@ -118,13 +118,20 @@ class GSRNetworkManager: NSObject, Requestable {
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             var success = false
             var errorMessage = "Unable to connect to the internet. Please reconnect and try again."
-            if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                let json = JSON(data)
-                success = json["results"].boolValue
-                errorMessage = json["error"].stringValue
-            }
-            if errorMessage.contains("\n") {
-                errorMessage = errorMessage.replacingOccurrences(of: "\n", with: " ")
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                        let json = JSON(data)
+                        success = json["results"].boolValue
+                        errorMessage = json["error"].stringValue
+                    }
+                    if errorMessage.contains("\n") {
+                        errorMessage = errorMessage.replacingOccurrences(of: "\n", with: " ")
+                    }
+                } else {
+                    // Session ID is invalid, so clear it
+                    GSRUser.clearSessionID()
+                }
             }
             callback(success, errorMessage)
             self.bookingRequestOutstanding = false
