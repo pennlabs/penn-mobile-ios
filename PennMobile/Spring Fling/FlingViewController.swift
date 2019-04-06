@@ -57,6 +57,8 @@ final class FlingViewController: GenericViewController, HairlineRemovable, Indic
             self.hideActivity()
             self.checkInWebview.load(for: self.checkInUrl)
         }
+        
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Viewed Fling", result: "Viewed Fling", content: "Fling page")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -257,6 +259,7 @@ extension FlingViewController {
 extension FlingViewController: FlingCellDelegate {
     func handleUrlPressed(url: String, title: String) {
         navigationController?.pushViewController(checkInWebview, animated: true)
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Fling Check-In", result: "Fling Check-In", content: "Fling Check-In")
     }
 }
 
