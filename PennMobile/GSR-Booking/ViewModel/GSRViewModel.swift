@@ -193,7 +193,7 @@ extension GSRViewModel: GSRSelectionDelegate {
             currentSelection.append(timeSlot)
             break
         case .remove:
-            currentSelection.remove(at: currentSelection.index(of: timeSlot)!)
+            currentSelection.remove(at: currentSelection.firstIndex(of: timeSlot)!)
             break
         }
         
@@ -279,6 +279,6 @@ extension GSRViewModel {
 // MARK: - Select Location
 extension GSRViewModel {
     func getLocationIndex(_ location: GSRLocation) -> Int {
-        return locations.index(of: location)!
+        return locations.firstIndex(of: location)!
     }
 }

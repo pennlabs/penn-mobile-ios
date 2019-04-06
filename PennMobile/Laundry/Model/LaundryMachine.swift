@@ -49,8 +49,10 @@ class LaundryMachine: Hashable {
         }
     }
     
-    var hashValue: Int {
-        return "\(roomName)\(isWasher)\(id)".hashValue
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(roomName)
+        hasher.combine(isWasher)
+        hasher.combine(id)
     }
     
     func isUnderNotification() -> Bool {

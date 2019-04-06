@@ -222,7 +222,7 @@ extension FlingViewController {
         guard let items = model.items as? [HomeCellItem] else { return }
         HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
             DispatchQueue.main.async {
-                let row = items.index(where: { (thisItem) -> Bool in
+                let row = items.firstIndex(where: { (thisItem) -> Bool in
                     thisItem.equals(item: item)
                 })!
                 let indexPath = IndexPath(row: row, section: 0)

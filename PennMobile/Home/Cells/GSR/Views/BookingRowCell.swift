@@ -25,7 +25,7 @@ class BookingRowCell: UITableViewCell {
     fileprivate var bookingIncrementLabels: (UILabel?, UILabel?, UILabel?)
     fileprivate let buttonSize: CGFloat = 53
     
-    var bookingOptions: BookingOptions {
+    var bookingOptions: BookingOptions! {
         didSet {
             setupCell(with: bookingOptions)
         }

@@ -48,19 +48,11 @@ class Event: Hashable {
         return lhs.name == rhs.name && lhs.location == rhs.location && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime
     }
     
-    var hashValue: Int {
-        get {
-            var hash = name.hashValue
-            print(name.hashValue)
-            if let location = location {
-                print(location)
-                print(location.hashValue)
-                hash += (3*hash + location.hashValue)
-            }
-            hash += (3*hash + startTime.hashValue)
-            hash += (3*hash + endTime.hashValue)
-            return hash
-        }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(location)
+        hasher.combine(startTime)
+        hasher.combine(endTime)
     }
     
     //returns all conflicting events, including itself
@@ -106,7 +98,7 @@ class Event: Hashable {
             let maxConflictingEvents = event.getMaxConflictingEvents(for: tempEvents)
             if maxConflictingEvents.count > 3 {
                 for i in 3...(maxConflictingEvents.count - 1) {
-                    if let index = tempEvents.index(of: maxConflictingEvents[i]) {
+                    if let index = tempEvents.firstIndex(of: maxConflictingEvents[i]) {
                         tempEvents.remove(at: index)
                     }
                 }

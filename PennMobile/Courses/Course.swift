@@ -49,7 +49,11 @@ class Course: Codable, Hashable {
     
     var description: String {
         let instructorStr = instructors.joined(separator: ", ")
-        var str = "\(term) \(name) \(dept)-\(code)-\(section) \(instructorStr) \(weekdays) \(startDate) - \(endDate) \(startTime) \(endTime)"
+        var str = "\(term) \(name) \(dept)-\(code)-\(section) \(instructorStr) \(weekdays) \(startTime) \(endTime)"
+        if let startDate = startDate, let endDate = endDate {
+            str = " \(str) \(startDate) - \(endDate)"
+        }
+        
         if let building = building, let room = room {
             str = "\(str) \(building) \(room)"
         }
@@ -61,8 +65,11 @@ class Course: Codable, Hashable {
         return str
     }
     
-    var hashValue: Int {
-        return "\(term)\(dept)\(code)\(section)".hashValue
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(term)
+        hasher.combine(dept)
+        hasher.combine(code)
+        hasher.combine(section)
     }
     
     static func == (lhs: Course, rhs: Course) -> Bool {

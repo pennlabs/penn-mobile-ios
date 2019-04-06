@@ -208,7 +208,7 @@ extension HomeViewController {
 
     func reloadItem(_ item: HomeCellItem) {
         guard let allItems = tableViewModel?.items as? [HomeCellItem] else { return }
-        if let row = allItems.index(where: { (thisItem) -> Bool in
+        if let row = allItems.firstIndex(where: { (thisItem) -> Bool in
             thisItem.equals(item: item)
         }) {
             let indexPath = IndexPath(row: row, section: 0)
@@ -218,7 +218,7 @@ extension HomeViewController {
     
     func removeItem(_ item: HomeCellItem) {
         guard let allItems = tableViewModel?.items as? [HomeCellItem] else { return }
-        if let row = allItems.index(where: { (thisItem) -> Bool in
+        if let row = allItems.firstIndex(where: { (thisItem) -> Bool in
             thisItem.equals(item: item)
         }) {
             let indexPath = IndexPath(row: row, section: 0)
