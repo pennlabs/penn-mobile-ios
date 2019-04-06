@@ -14,7 +14,7 @@ protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
 
 final class FlingTableViewModel: ModularTableViewModel {}
 
-final class FlingViewController: GenericViewController, HairlineRemovable {
+final class FlingViewController: GenericViewController, HairlineRemovable, IndicatorEnabled {
     
     fileprivate var performersTableView: ModularTableView!
     fileprivate var scheduleTableView: UITableView!
@@ -49,18 +49,20 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
         mapImageView.isHidden = true
         
         checkInWebview = WebviewController()
-        checkInWebview.load(for: checkInUrl)
         checkInWebview.title = "Spring Fling Check-In"
+        
+        self.showActivity()
+        self.fetchViewModel {
+            // TODO: do something when fetch has completed
+            self.hideActivity()
+            self.checkInWebview.load(for: self.checkInUrl)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let navbar = navigationController?.navigationBar {
             removeHairline(from: navbar)
-        }
-        
-        self.fetchViewModel {
-            // TODO: do something when fetch has completed
         }
     }
     
