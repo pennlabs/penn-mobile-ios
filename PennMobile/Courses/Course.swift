@@ -22,15 +22,15 @@ class Course: Codable, Hashable {
     let building: String?
     let room: String?
     let weekdays: String
-    let startDate: String
-    let endDate: String
+    let startDate: String?
+    let endDate: String?
     let startTime: String
     let endTime: String
     let instructors: [String]
     
     let meetingTimes: [CourseMeetingTime]?
     
-    init(name: String, term: String, dept: String, code: String, section: String, building: String?, room: String?, weekdays: String, startDate: String, endDate: String, startTime: String, endTime: String, instructors: [String], meetingTimes: [CourseMeetingTime]?) {
+    init(name: String, term: String, dept: String, code: String, section: String, building: String?, room: String?, weekdays: String, startDate: String?, endDate: String?, startTime: String, endTime: String, instructors: [String], meetingTimes: [CourseMeetingTime]?) {
         self.name = name
         self.term = term
         self.dept = dept

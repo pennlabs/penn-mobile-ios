@@ -255,8 +255,8 @@ extension PennInTouchNetworkManager {
                     endTime = mainMeeting.endTime
                 }
                 
-                var startDate = ""
-                var endDate = ""
+                var startDate: String? = nil
+                var endDate: String? = nil
                 if let startStr = startDates.first, let endStr = endDates.first {
                     let formatter = DateFormatter()
                     formatter.dateFormat = "MM/dd/yyyy"
