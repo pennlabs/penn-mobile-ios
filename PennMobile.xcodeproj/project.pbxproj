@@ -27,6 +27,8 @@
 		212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B835D222A37DD00F835D6 /* HomeFeatureCell.swift */; };
 		212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B835F222A37FE00F835D6 /* FeatureAnnouncement.swift */; };
 		2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2130A5052238C2F000DFEEC7 /* PennLoginController.swift */; };
+		2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */; };
+		2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55422598AA800D67CA2 /* GSRTabController.swift */; };
 		2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138E1F72252AFB500E4055A /* GSRLocationCell.swift */; };
 		21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21470EBB223DD34200019C10 /* ScheduleEventCell.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
@@ -255,6 +257,8 @@
 		212B835D222A37DD00F835D6 /* HomeFeatureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCell.swift; sourceTree = "<group>"; };
 		212B835F222A37FE00F835D6 /* FeatureAnnouncement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureAnnouncement.swift; sourceTree = "<group>"; };
 		2130A5052238C2F000DFEEC7 /* PennLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLoginController.swift; sourceTree = "<group>"; };
+		2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationsController.swift; sourceTree = "<group>"; };
+		2138D55422598AA800D67CA2 /* GSRTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTabController.swift; sourceTree = "<group>"; };
 		2138E1F72252AFB500E4055A /* GSRLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationCell.swift; sourceTree = "<group>"; };
 		21470EBB223DD34200019C10 /* ScheduleEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventCell.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -904,11 +908,13 @@
 			isa = PBXGroup;
 			children = (
 				2189C0802027CDB800771C1F /* GSRBookable.swift */,
+				2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */,
 				214E254822480818004CB9C4 /* GSRDeletable.swift */,
 				2189C0822027CDB800771C1F /* GSRController.swift */,
 				21A6B6CF22162652003A357D /* GSRReservationsController.swift */,
 				21EF283821F509C0001B05B7 /* GSRWebviewLoginController.swift */,
 				2189C0812027CDB800771C1F /* GSRLoginController.swift */,
+				2138D55422598AA800D67CA2 /* GSRTabController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1488,6 +1494,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TimelineTableViewCell/TimelineTableViewCell.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/ZoomImageView/ZoomImageView.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -1502,6 +1509,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TimelineTableViewCell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZoomImageView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -1578,6 +1586,7 @@
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
 				2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
+				2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */,
 				21B649222236F2FC00AC5B7F /* HomeCoursesCellItem.swift in Sources */,
 				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
@@ -1715,6 +1724,7 @@
 				216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */,
 				210AC1472068515C0050D837 /* WebviewController.swift in Sources */,
 				2189C0872027CDD700771C1F /* GSRNetworkManager.swift in Sources */,
+				2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
 				2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */,

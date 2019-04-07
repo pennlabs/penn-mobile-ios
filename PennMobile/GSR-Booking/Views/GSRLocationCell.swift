@@ -40,9 +40,7 @@ class GSRLocationCell: UITableViewCell {
             }
         }
     }
-    
-    var delegate: ReservationCellDelegate!
-    
+        
     fileprivate var locationLabel: UILabel!
     fileprivate var buildingImage: UIImageView!
     

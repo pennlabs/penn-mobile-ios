@@ -1,0 +1,98 @@
+//
+//  GSRTabController.swift
+//  PennMobile
+//
+//  Created by Josh Doman on 4/6/19.
+//  Copyright © 2019 PennLabs. All rights reserved.
+//
+
+import Foundation
+import XLPagerTabStrip
+
+class GSRTabController: ButtonBarPagerTabStripViewController {
+    
+    fileprivate var ownContainerView: UIScrollView!
+    fileprivate var barView: ButtonBarView!
+    
+    override func viewDidLoad() {
+        settings.style.buttonBarBackgroundColor = .white
+        settings.style.buttonBarItemBackgroundColor = .white
+        settings.style.selectedBarBackgroundColor = UIColor.frenchBlue
+        settings.style.buttonBarMinimumLineSpacing = 0
+        settings.style.buttonBarItemsShouldFillAvailableWidth = true
+        settings.style.buttonBarLeftContentInset = 0
+        settings.style.buttonBarRightContentInset = 0
+        settings.style.selectedBarHeight = 0
+        edgesForExtendedLayout = []
+        
+//        let barView = ButtonBarView(frame: CGRect(x: 0.0, y: (88 + 0.0), width: self.view.bounds.width, height: 50.0), collectionViewLayout: UICollectionViewFlowLayout())
+//        self.barView = barView
+//        let separatorLine = UIView(frame: CGRect(x: 0.0, y: (88 + 50.0), width: self.view.bounds.width, height: 1.0))
+//        separatorLine.backgroundColor = UIColor.warmGrey
+//        let containerView = UIScrollView(frame: CGRect(x: 0, y: (88 + 51.0), width: self.view.bounds.width, height: self.view.bounds.height - (88+50.0) - 66.0))
+//        self.ownContainerView = containerView
+//        self.view.addSubview(barView)
+//        self.view.addSubview(separatorLine)
+//        self.view.addSubview(ownContainerView)
+//        self.buttonBarView = self.barView
+//        self.containerView = containerView
+        
+        let barView = ButtonBarView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        self.barView = barView
+        let separatorLine = UIView()
+        separatorLine.backgroundColor = UIColor.warmGrey
+        let containerView = UIScrollView()
+        self.ownContainerView = containerView
+        self.view.addSubview(barView)
+        self.view.addSubview(separatorLine)
+        self.view.addSubview(ownContainerView)
+        self.buttonBarView = self.barView
+        self.containerView = containerView
+        
+        _ = barView.anchor(self.view.safeAreaLayoutGuide.topAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        _ = separatorLine.anchor(barView.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 1)
+        _ = ownContainerView.anchor(separatorLine.bottomAnchor, left: self.view.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        self.view.backgroundColor = .white
+        self.ownContainerView.isHidden = true
+        
+        super.viewDidLoad()
+        
+        changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
+            guard changeCurrentIndex == true else { return }
+            oldCell?.label.textColor = .black
+            newCell?.label.textColor = UIColor.oceanBlue
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let topSpace:CGFloat?
+        if #available(iOS 11.0, *) {
+            topSpace = self.view.safeAreaInsets.top
+        } else {
+            topSpace = self.topLayoutGuide.length
+        }
+        if let topSpace = topSpace, topSpace > 0 {
+            self.ownContainerView.isHidden = false
+        }
+    }
+    
+    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
+        let child1 = GSRLocationsController()
+        let child2 = GSRReservationsController()
+        return [child1, child2]
+    }
+}
+
+extension GSRLocationsController: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: "Book")
+    }
+}
+
+extension GSRReservationsController: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: "Reservations")
+    }
+}
