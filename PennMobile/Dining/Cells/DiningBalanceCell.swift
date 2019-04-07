@@ -8,18 +8,10 @@
 
 import Foundation
 
-// MARK: - DiningBalanceCell Delegate
-
-protocol DiningBalanceCellDelegate: class {
-    func updateBalance()
-}
-
 class DiningBalanceCell: UITableViewCell {
     
-    weak var delegate: DiningBalanceCellDelegate?
-    
     static let identifier = "diningBalanceCell"
-    static let cellHeight: CGFloat = 121
+    static let cellHeight: CGFloat = 125
     
     var diningBalance: DiningBalance! {
         didSet {
@@ -27,17 +19,13 @@ class DiningBalanceCell: UITableViewCell {
         }
     }
     
+    fileprivate let collectionCellId: String = "diningBalanceCollectionViewCell"
+    
     // MARK: - UI Elements
+    fileprivate var balanceCollectionView: UICollectionView!
+    fileprivate var balancesAsOfLabel: UILabel!
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
-    
-    fileprivate var venueImageView: UIImageView!
-    fileprivate var diningDollarsLabel: UILabel!
-    fileprivate var visitsLabel: UILabel!
-    fileprivate var guestVisitsLabel: UILabel!
-    fileprivate var balancesAsOfLabel: UILabel!
-    fileprivate var refreshButton: UIButton!
-    fileprivate var loadingView: UIActivityIndicatorView!
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -54,11 +42,8 @@ class DiningBalanceCell: UITableViewCell {
 extension DiningBalanceCell {
     
     fileprivate func setupCell(with diningBalance: DiningBalance) {
-        diningDollarsLabel.text = "Dining Dollars: " + diningBalance.diningDollars!
-        visitsLabel.text = "Swipes: " + String (diningBalance.visits!)
-        guestVisitsLabel.text = "Guest Swipes: " + String (diningBalance.guestVisits!)
-        balancesAsOfLabel.text = diningBalance.balancesAsOf!
-        venueImageView.image = UIImage(named: "1920 Commons")
+        balancesAsOfLabel.text = diningBalance.balancesAsOf
+        balanceCollectionView.reloadData()
     }
 }
 
@@ -67,15 +52,47 @@ extension DiningBalanceCell {
     
     fileprivate func prepareUI() {
         prepareSafeArea()
-        prepareImageView()
-        prepareLabels()
-        prepareRefreshButton()
-        prepareLoadingView()
+        prepareCollectionView()
+        prepareBalancesAsOfLabel()
+    }
+    
+    fileprivate func prepareBalancesAsOfLabel() {
+        balancesAsOfLabel = UILabel()
+        balancesAsOfLabel.font = UIFont(name: "Avenir-Medium", size: 10)
+        balancesAsOfLabel.textColor = .secondaryTitleGrey
+        balancesAsOfLabel.textAlignment = .left
+        balancesAsOfLabel.translatesAutoresizingMaskIntoConstraints = false
+        balancesAsOfLabel.shrinkUntilFits()
+        addSubview(balancesAsOfLabel)
+        balancesAsOfLabel.topAnchor.constraint(equalTo: balanceCollectionView.bottomAnchor, constant: 3).isActive = true
+        balancesAsOfLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+    }
+    
+    fileprivate func prepareCollectionView() {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.sectionInset = UIEdgeInsets(top: 3, left: 0, bottom: 3, right: 12)
+        flowLayout.itemSize = CGSize(width: 132, height: 97)
+        
+        balanceCollectionView = UICollectionView(frame: safeArea.frame, collectionViewLayout: flowLayout)
+    balanceCollectionView.register(DiningBalanceCollectionViewCell.self, forCellWithReuseIdentifier: collectionCellId)
+        balanceCollectionView.backgroundColor = .clear
+        balanceCollectionView.delegate = self
+        balanceCollectionView.dataSource = self
+        balanceCollectionView.showsHorizontalScrollIndicator = false
+    
+        balanceCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(balanceCollectionView)
+        balanceCollectionView.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        balanceCollectionView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        balanceCollectionView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        balanceCollectionView.heightAnchor.constraint(equalToConstant: 103).isActive = true
     }
     
     // MARK: Safe Area
     fileprivate func prepareSafeArea() {
-        safeArea = getSafeAreaView()
+        safeArea = UIView()
+        safeArea.translatesAutoresizingMaskIntoConstraints = false
         addSubview(safeArea)
         
         safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue).isActive = true
@@ -83,139 +100,43 @@ extension DiningBalanceCell {
         safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue / 2).isActive = true
         safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue / 2).isActive = true
     }
+}
+
+// MARK: - CollectionView Delegate, Datasource
+
+extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    // MARK: ImageView
-    fileprivate func prepareImageView() {
-        venueImageView = getVenueImageView()
-        addSubview(venueImageView)
-        venueImageView.widthAnchor.constraint(equalToConstant: 130).isActive = true
-        venueImageView.heightAnchor.constraint(equalToConstant: 85).isActive = true
-        venueImageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        venueImageView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 3).isActive = true
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
     }
     
-    // MARK: Labels
-    fileprivate func prepareLabels() {
-        diningDollarsLabel = getDiningDollarsLabel()
-        addSubview(diningDollarsLabel)
-        visitsLabel = getVisitsLabel()
-        addSubview(visitsLabel)
-        guestVisitsLabel = getGuestVisitsLabel()
-        addSubview(guestVisitsLabel)
-        balancesAsOfLabel = getBalancesAsOfLabel()
-        addSubview(balancesAsOfLabel)
-        
-        diningDollarsLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor, constant: safeInsetValue).isActive = true
-        diningDollarsLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 3).isActive = true
-        
-        visitsLabel.leadingAnchor.constraint(equalTo: diningDollarsLabel.leadingAnchor).isActive = true
-        visitsLabel.topAnchor.constraint(equalTo: diningDollarsLabel.bottomAnchor, constant: 2).isActive = true
-        
-        guestVisitsLabel.leadingAnchor.constraint(equalTo: diningDollarsLabel.leadingAnchor).isActive = true
-        guestVisitsLabel.topAnchor.constraint(equalTo: visitsLabel.bottomAnchor, constant: 2).isActive = true
-        
-        balancesAsOfLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        balancesAsOfLabel.topAnchor.constraint(equalTo: venueImageView.bottomAnchor, constant: 7).isActive = true
-        balancesAsOfLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor).isActive = true
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
     
-    // MARK: Refresh Button
-    fileprivate func prepareRefreshButton() {
-        refreshButton = UIButton()
-        refreshButton.tintColor = UIColor.navigationBlue
-        refreshButton.setImage(UIImage(named: "refresh")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        refreshButton.addTarget(self, action: #selector(refreshButtonTapped(_:)), for: .touchUpInside)
-        refreshButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        addSubview(refreshButton)
-        
-        refreshButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        refreshButton.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
-        refreshButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        refreshButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-    }
-    
-    // MARK: Loading Indicator
-    func prepareLoadingView() {
-        loadingView = UIActivityIndicatorView(style: .whiteLarge)
-        loadingView.color = .black
-        loadingView.isHidden = true
-        addSubview(loadingView)
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-        loadingView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        loadingView.topAnchor.constraint(equalTo: refreshButton.bottomAnchor).isActive = true
-        loadingView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        loadingView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-    }
-    
-    func startLoadingViewAnimation() {
-        self.loadingView.isHidden = false
-        loadingView.startAnimating()
-    }
-    
-    func stopLoadingViewAnimation() {
-        self.loadingView.isHidden = true
-        self.loadingView.stopAnimating()
-    }
-    
-    @objc private func refreshButtonTapped(_ sender: Any) {
-        startLoadingViewAnimation()
-        delegate?.updateBalance()
-    }
-    
-    // MARK: Get UI elements
-    fileprivate func getSafeAreaView() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-    
-    fileprivate func getVenueImageView() -> UIImageView {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 5.0
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }
-    
-    fileprivate func getDiningDollarsLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = .primaryTitleGrey
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.shrinkUntilFits()
-        return label
-    }
-    
-    fileprivate func getVisitsLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = .primaryTitleGrey
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.shrinkUntilFits()
-        return label
-    }
-    
-    fileprivate func getGuestVisitsLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .interiorTitleFont
-        label.textColor = .primaryTitleGrey
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.shrinkUntilFits()
-        return label
-    }
-    
-    fileprivate func getBalancesAsOfLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .secondaryInformationFont
-        label.textColor = .secondaryInformationGrey
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.shrinkUntilFits()
-        return label
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellId, for: indexPath as IndexPath) as! DiningBalanceCollectionViewCell
+        cell.layer.cornerRadius = 8
+//        cell.layer.shadowOffset = CGSize(width: 0, height: -2.0)
+//        cell.layer.shadowRadius = 4
+//        cell.layer.shadowOpacity = 1.0
+//        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
+        if (indexPath.item == 0) {
+            cell.type = "Dining Dollars"
+            cell.diningBalance = diningBalance
+            cell.backgroundColor = UIColor.init(red: 106, green: 188, blue: 143)
+        }
+        if (indexPath.item == 1) {
+            cell.type = "Swipes"
+            cell.diningBalance = diningBalance
+            cell.backgroundColor = UIColor.init(red: 106, green: 144, blue: 188)
+        }
+        if (indexPath.item == 2) {
+            cell.type = "Guest Swipes"
+            cell.diningBalance = diningBalance
+            cell.backgroundColor = UIColor.init(red: 106 / 255, green: 144 / 255, blue: 188 / 255, alpha: 0.6)
+        }
+        return cell
     }
 }
+
