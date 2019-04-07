@@ -21,19 +21,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
 
     var currentDay = Date()
 
-    var barButtonTitle: String {
-        get {
-            guard let viewModel = viewModel else { return "Login" }
-            switch viewModel.state {
-            case .loggedIn:
-                return "Logout"
-            case .loggedOut:
-                return "Login"
-            case .readyToSubmit:
-                return "Submit"
-            }
-        }
-    }
+    let barButtonTitle  = "Submit"
 
     fileprivate var viewModel: GSRViewModel!
     
@@ -192,32 +180,38 @@ extension GSRController: GSRBookable {
     }
 
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
-        switch viewModel.state {
-        case .loggedOut:
-            if viewModel.getSelectedLocation().service == "wharton" {
-                presentWebviewLoginController()
-            } else {
-                presentLoginController()
-            }
-            break
-        case .loggedIn:
-            let message = "Are you sure you wish to log out?"
-            let alert = UIAlertController(title: "Confirm Logout",
-                                          message: message,
-                                          preferredStyle: .alert)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alert.addAction(cancelAction)
-            alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
-                DispatchQueue.main.async {
-                    GSRUser.clear()
-                    self.refreshBarButton()
-                }
-            }))
-            present(alert, animated: true)
-            break
-        case .readyToSubmit(let booking):
+//        switch viewModel.state {
+//        case .loggedOut:
+//            if viewModel.getSelectedLocation().service == "wharton" {
+//                presentWebviewLoginController()
+//            } else {
+//                presentLoginController()
+//            }
+//            break
+//        case .loggedIn:
+//            let message = "Are you sure you wish to log out?"
+//            let alert = UIAlertController(title: "Confirm Logout",
+//                                          message: message,
+//                                          preferredStyle: .alert)
+//            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//            alert.addAction(cancelAction)
+//            alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
+//                DispatchQueue.main.async {
+//                    GSRUser.clear()
+//                    self.refreshBarButton()
+//                }
+//            }))
+//            present(alert, animated: true)
+//            break
+//        case .readyToSubmit(let booking):
+//            submitPressed(for: booking)
+//            break
+//        }
+        if let booking = viewModel.getBooking() {
             submitPressed(for: booking)
-            break
+        } else {
+            // Alert. Nothing selected.
+            showAlert(withMsg: "Please select a timeslot to book.", title: "Empty Selection", completion: nil)
         }
     }
 

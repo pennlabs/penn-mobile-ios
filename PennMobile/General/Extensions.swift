@@ -227,6 +227,15 @@ extension Date {
         return Calendar.current.date(from: comp)!
         // return self.add(minutes: -self.minutes)
     }
+    
+    var roundedDownToHalfHour: Date {
+        let roundedDownToHour = self.roundedDownToHour
+        if roundedDownToHour.minutesFrom(date: self) >= 30 {
+            return roundedDownToHour.add(minutes: 30)
+        } else {
+            return roundedDownToHour
+        }
+    }
 
     var roundUpToHourIfNeeded: Date {
         if minutes > 0 {

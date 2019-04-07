@@ -40,7 +40,7 @@ extension GSRLocationsController {
     fileprivate func setupTableView() {
         tableView = UITableView()
         tableView.separatorStyle = .none
-//        tableView.contentInset = self.view.safeAreaInsets
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -79,13 +79,13 @@ extension GSRLocationsController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: - Header
 extension GSRLocationsController {
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: DiningHeaderView.identifier) as! DiningHeaderView
-        view.label.text = "Choose A Location"
-        return view
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return DiningHeaderView.headerHeight
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: DiningHeaderView.identifier) as! DiningHeaderView
+//        view.label.text = "Choose A Location"
+//        return view
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return DiningHeaderView.headerHeight
+//    }
 }

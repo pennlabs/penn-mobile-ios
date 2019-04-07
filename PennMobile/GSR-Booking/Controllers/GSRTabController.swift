@@ -81,7 +81,8 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child1 = GSRLocationsController()
         let child2 = GSRReservationsController()
-        return [child1, child2]
+        let child3 = GSRGroupController()
+        return [child1, child2, child3]
     }
 }
 
@@ -94,5 +95,11 @@ extension GSRLocationsController: IndicatorInfoProvider {
 extension GSRReservationsController: IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "Reservations")
+    }
+}
+
+extension GSRGroupController: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: "Groups")
     }
 }
