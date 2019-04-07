@@ -152,7 +152,7 @@ extension RoomSelectionView {
         
         for room in chosenRooms.reversed() {
             var arr = buildings[room.building]
-            if let index = arr?.index(of: room) {
+            if let index = arr?.firstIndex(of: room) {
                 arr?.remove(at: index)
             }
             arr?.insert(room, at: 0)
@@ -174,10 +174,10 @@ extension RoomSelectionView {
     }
     
     private func getCurrentIndex(for room: LaundryRoom) -> IndexPath? {
-        if let section = currentSort.index(where: { (building) -> Bool in
+        if let section = currentSort.firstIndex(where: { (building) -> Bool in
             return building == room.building
         }), let rooms = currentResults[room.building] {
-            if let row = rooms.index(of: room) {
+            if let row = rooms.firstIndex(of: room) {
                 return IndexPath(row: row, section: section)
             }
         }
@@ -259,7 +259,7 @@ extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let key = currentSort[indexPath.section]
         let room = currentResults[key]![indexPath.row]
-        if let index = chosenRooms.index(of: room) {
+        if let index = chosenRooms.firstIndex(of: room) {
             chosenRooms.remove(at: index)
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
         }

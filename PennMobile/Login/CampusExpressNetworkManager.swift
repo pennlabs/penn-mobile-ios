@@ -16,7 +16,7 @@ class CampusExpressNetworkManager {
 extension CampusExpressNetworkManager: PennAuthRequestable {
     
     private var housingUrl: String {
-        return "https://prod.campusexpress.upenn.edu/housing/"
+        return "https://prod.campusexpress.upenn.edu/housing/view_assignment.jsp"
     }
     
     private var diningUrl: String {

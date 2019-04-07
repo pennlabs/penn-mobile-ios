@@ -28,7 +28,7 @@ class MoreCell: UITableViewCell {
         _ = titleLabel.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 12, leftConstant: 15, bottomConstant: 12, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
-    func setUpView(with page: Page, icon: UIImage) {
+    func setUpView(with page: Feature, icon: UIImage) {
         iconImage.image = icon
         titleLabel.text = page.rawValue
         self.addSubview(iconImage)

@@ -15,9 +15,9 @@ class GSRNetworkManager: NSObject, Requestable {
     
     let availUrl = "https://api.pennlabs.org/studyspaces/availability"
     let locationsUrl = "https://api.pennlabs.org/studyspaces/locations"
-    let bookingUrl = "http://api.pennlabs.org/studyspaces/book"
-    let reservationURL = "http://api.pennlabs.org/studyspaces/reservations"
-    let cancelURL = "http://api.pennlabs.org/studyspaces/cancel"
+    let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
+    let reservationURL = "https://api.pennlabs.org/studyspaces/reservations"
+    let cancelURL = "https://api.pennlabs.org/studyspaces/cancel"
     
     var locations:[Int:String] = [:]
     var bookingRequestOutstanding = false
@@ -52,6 +52,13 @@ class GSRNetworkManager: NSObject, Requestable {
             if let dict = dict {
                 let json = JSON(dict)
                 rooms = Array<GSRRoom>(json: json)
+            }
+            
+            if statusCode == 400 && gsrId == 1 {
+                // If Session ID invalid, clear it and try again without one
+                GSRUser.clearSessionID()
+                self.getAvailability(for: gsrId, dateStr: dateStr, callback: callback)
+                return
             }
             callback(rooms)
         }
@@ -111,13 +118,20 @@ class GSRNetworkManager: NSObject, Requestable {
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             var success = false
             var errorMessage = "Unable to connect to the internet. Please reconnect and try again."
-            if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                let json = JSON(data)
-                success = json["results"].boolValue
-                errorMessage = json["error"].stringValue
-            }
-            if errorMessage.contains("\n") {
-                errorMessage = errorMessage.replacingOccurrences(of: "\n", with: " ")
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                        let json = JSON(data)
+                        success = json["results"].boolValue
+                        errorMessage = json["error"].stringValue
+                    }
+                    if errorMessage.contains("\n") {
+                        errorMessage = errorMessage.replacingOccurrences(of: "\n", with: " ")
+                    }
+                } else {
+                    // Session ID is invalid, so clear it
+                    GSRUser.clearSessionID()
+                }
             }
             callback(success, errorMessage)
             self.bookingRequestOutstanding = false

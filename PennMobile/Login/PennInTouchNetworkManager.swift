@@ -9,13 +9,15 @@
 import Foundation
 import SwiftSoup
 
-class PennInTouchNetworkManager: NSObject {
+class PennInTouchNetworkManager: NSObject, PennAuthRequestable {
     
     static let instance = PennInTouchNetworkManager()
     
     fileprivate let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     fileprivate let degreeURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileAdvisors"
     fileprivate let courseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileSchedule"
+    
+    fileprivate let shibbolethUrl = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do/Shibboleth.sso/SAML2/POST"
 }
 
 // MARK: - Student
@@ -69,6 +71,12 @@ extension PennInTouchNetworkManager {
 
 // MARK: - Courses
 extension PennInTouchNetworkManager {
+    func getCoursesWithAuth(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+        makeAuthRequest(targetUrl: courseURL, shibbolethUrl: shibbolethUrl) { (_, _, _) in
+            self.getCourses(currentTermOnly: currentTermOnly, callback: callback)
+        }
+    }
+    
     func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         let url = URL(string: courseURL)!
         let request = URLRequest(url: url)
@@ -175,20 +183,20 @@ extension PennInTouchNetworkManager {
         }
         var subHtml = try element.html()
         subHtml.append("<")
-        
+
         var courses = [Course]()
 
-        let htmlSections = subHtml.getMatches(for: "br><br(.*?Instructor\\(s\\):[\\S\\s]*?<)")
+        let htmlSections = subHtml.getMatches(for: "(<b>[\\S\\s]*?(?:<br><br|<$))")
         for section in htmlSections {
             let startDates = section.getMatches(for: "<br> (.*?) -")
             let endDates = section.getMatches(for: "<br> .*? - (.*?) ")
             
             let instructors: [String] = section.getMatches(for: "Instructor\\(s\\): (.*?)\\s*<")
-            let name = section.getMatches(for: "><b>(.*?)<\\/b> <br>")
+            let name = section.getMatches(for: "<b>(.*?)<\\/b> <br>")
             let code = section.getMatches(for: "\"><b>(.*?)<\\/b>")
             
             let meetingGroups = section.getMatches(for: "(<br>TBA |<br>[A-Z]+?&nbsp;.*?-.*?<\\/span>(?:.*?mobileSchedule\">.*?&nbsp; .*?&nbsp)?)")
-            if name.count > 0 && code.count > 0 && instructors.count > 0 {
+            if name.count > 0 && code.count > 0 {
                 var meetingTimes = [CourseMeetingTime]()
                 var building: String? = nil
                 var room: String? = nil
@@ -247,8 +255,8 @@ extension PennInTouchNetworkManager {
                     endTime = mainMeeting.endTime
                 }
                 
-                var startDate = ""
-                var endDate = ""
+                var startDate: String? = nil
+                var endDate: String? = nil
                 if let startStr = startDates.first, let endStr = endDates.first {
                     let formatter = DateFormatter()
                     formatter.dateFormat = "MM/dd/yyyy"
@@ -259,7 +267,7 @@ extension PennInTouchNetworkManager {
                     }
                 }
                 
-                let courseInstructors = instructors[0].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+                let courseInstructors = instructors.first?.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) } ?? []
                 let name = name[0].replacingOccurrences(of: "&amp;", with: "&")
                 let fullCode = code[0].replacingOccurrences(of: " ", with: "")
                 let codePieces = fullCode.split(separator: "-")

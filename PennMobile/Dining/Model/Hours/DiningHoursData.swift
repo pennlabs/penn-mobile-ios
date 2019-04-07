@@ -12,29 +12,48 @@ class DiningHoursData {
     
     static let shared = DiningHoursData()
     
+    fileprivate var hasBeenLoaded = false
     fileprivate var hoursDictionary = Dictionary<String, [OpenClose]>()
+    
+    private let accessQueue = DispatchQueue(label: "SynchronizedHoursDictionaryAccess", attributes: .concurrent)
     
     lazy var todayString = {
         return Date.dayOfMonthFormatter.string(from: Date())
     }()
     
     func load(hours: [OpenClose], for venue: DiningVenueName) {
-        hoursDictionary["\(venue.getID()).\(todayString)"] = hours
+        load(hours: hours, on: todayString, for: venue)
     }
     
     func load(hours: [OpenClose], on day: String, for venue: DiningVenueName) {
-        hoursDictionary["\(venue.getID()).\(day)"] = hours
+        self.accessQueue.async(flags: .barrier) { [weak self] in
+            guard let self = self else { return }
+            self.hasBeenLoaded = true
+            self.hoursDictionary["\(venue.getID()).\(day)"] = hours
+        }
     }
     
     func getHours(for venue: DiningVenueName) -> [OpenClose]? {
-        return hoursDictionary["\(venue.getID()).\(todayString)"]
+        return getHours(for: venue, on: todayString)
     }
     
     func getHours(for venue: DiningVenueName, on day: String) -> [OpenClose]? {
-        return hoursDictionary["\(venue.getID()).\(day)"]
+        var hours: [OpenClose]? = nil
+        
+        self.accessQueue.sync {
+            hours = self.hoursDictionary["\(venue.getID()).\(day)"]
+            if self.hasBeenLoaded {
+                hours = hours ?? []
+            }
+        }
+        return hours
     }
     
     func clearHours() {
-        hoursDictionary = Dictionary<String, [OpenClose]>()
+        self.accessQueue.async(flags: .barrier) { [weak self] in
+            guard let self = self else { return }
+            self.hoursDictionary = Dictionary<String, [OpenClose]>()
+            self.hasBeenLoaded = false
+        }
     }
 }

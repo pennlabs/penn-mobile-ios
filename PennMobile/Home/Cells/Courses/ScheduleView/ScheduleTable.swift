@@ -167,100 +167,102 @@ extension ScheduleTable: ScheduleLayoutDelegate {
         let startTime = event.startTime
         let endTime = event.endTime
         
-        return heightForHour * CGFloat(endTime.rawMinutes() - startTime.rawMinutes()) / 60.0
+        return (heightForHour * CGFloat(endTime.rawMinutes() - startTime.rawMinutes()) / 60.0).rounded()
     }
     
     func collectionView(collectionView: UICollectionView, widthForCellAtIndexPath indexPath: IndexPath, width: CGFloat) -> CGFloat {
-        let conflictingEvents = maxConflictingEvents(for: events[indexPath.item])
-        
-        if conflictingEvents.isEmpty { return 0 }
-        
-        var count = conflictingEvents.count
-        let minCellWidth = cellWidth(numberOfConflictingEvents: count, width: width)
-        
-        if indexPath.item == 0 || count == 1 || conflictingEvents[0] == events[indexPath.item] {
-            return minCellWidth
-        }
-        
-        var remainingWidth = width
-        
-        for conflictingEvent in conflictingEvents {
-            let index = events.index { (event) -> Bool in
-                event == conflictingEvent
-            }
-            
-            if let index = index, index < indexPath.item {
-                let width = self.collectionView(collectionView: collectionView, widthForCellAtIndexPath: IndexPath(item: index, section: 1), width: width)
-                
-                remainingWidth -= width
-                count -= 1
-            }
-        }
-        
-        var calculatedWidth = cellWidth(numberOfConflictingEvents: count, width: remainingWidth)
-        
-        if calculatedWidth > minCellWidth {
-            for conflictingEvent in conflictingEvents {
-                let index = events.index { (event) -> Bool in
-                    event == conflictingEvent
-                }
-                
-                if let index = index, index < indexPath.item {
-                    let prevXOffset = self.collectionView(collectionView: collectionView, xOffsetForCellAtIndexPath: IndexPath(item: index, section: 1) ,  width: width)
-                    
-                    if prevXOffset < calculatedWidth && prevXOffset > 0 {
-                        calculatedWidth = prevXOffset
-                    }
-                }
-            }
-        }
-        
-        return calculatedWidth
+//        let conflictingEvents = maxConflictingEvents(for: events[indexPath.item])
+//
+//        if conflictingEvents.isEmpty { return 0 }
+//
+//        var count = conflictingEvents.count
+//        let minCellWidth = cellWidth(numberOfConflictingEvents: count, width: width)
+//
+//        if indexPath.item == 0 || count == 1 || conflictingEvents[0] == events[indexPath.item] {
+//            return minCellWidth
+//        }
+//
+//        var remainingWidth = width
+//
+//        for conflictingEvent in conflictingEvents {
+//            let index = events.index { (event) -> Bool in
+//                event == conflictingEvent
+//            }
+//
+//            if let index = index, index < indexPath.item {
+//                let width = self.collectionView(collectionView: collectionView, widthForCellAtIndexPath: IndexPath(item: index, section: 1), width: width)
+//
+//                remainingWidth -= width
+//                count -= 1
+//            }
+//        }
+//
+//        var calculatedWidth = cellWidth(numberOfConflictingEvents: count, width: remainingWidth)
+//
+//        if calculatedWidth > minCellWidth {
+//            for conflictingEvent in conflictingEvents {
+//                let index = events.index { (event) -> Bool in
+//                    event == conflictingEvent
+//                }
+//
+//                if let index = index, index < indexPath.item {
+//                    let prevXOffset = self.collectionView(collectionView: collectionView, xOffsetForCellAtIndexPath: IndexPath(item: index, section: 1) ,  width: width)
+//
+//                    if prevXOffset < calculatedWidth && prevXOffset > 0 {
+//                        calculatedWidth = prevXOffset
+//                    }
+//                }
+//            }
+//        }
+//
+//        return calculatedWidth.rounded()
+        return width.rounded()
     }
     
     private func cellWidth(numberOfConflictingEvents: Int, width: CGFloat) -> CGFloat {
-        return width/CGFloat(numberOfConflictingEvents)
+        return (width/CGFloat(numberOfConflictingEvents)).rounded()
     }
     
     func collectionView(collectionView: UICollectionView, xOffsetForCellAtIndexPath indexPath: IndexPath, width: CGFloat) -> CGFloat {
-        if indexPath.item == 0 { return 0.0 }
-        
-        let event = events[indexPath.item]
-        
-        let conflictingEvents = maxConflictingEvents(for: event)
-        
-        let numberOfConflicts = conflictingEvents.count
-        if numberOfConflicts == 1 { return 0.0 }
-        
-        var validXOffsets: [CGFloat] = [CGFloat]()
-        
-        let cellWidth = self.collectionView(collectionView: collectionView, widthForCellAtIndexPath: indexPath, width: width)
-        
-        var nextOffset: CGFloat = 0.0
-        while nextOffset < width && nextOffset != width {
-            validXOffsets.append(nextOffset)
-            nextOffset += floor(cellWidth > width/2 ? width - cellWidth : cellWidth)
-        }
-        
-        for conflictingEvent in conflictingEvents {
-            
-            let index = events.index { (event) -> Bool in
-                event == conflictingEvent
-            }
-            
-            if let index = index, index < indexPath.item {
-                
-                let index = IndexPath(item: index, section: 1)
-                
-                let prevXOffset = self.collectionView(collectionView: collectionView, xOffsetForCellAtIndexPath: index, width: width)
-                
-                if let xIndex = validXOffsets.index(of: prevXOffset) {
-                    validXOffsets.remove(at: xIndex)
-                }
-            }
-        }
-        if validXOffsets.count == 0 { return 0 }
-        return validXOffsets.first!
+//        if indexPath.item == 0 { return 0.0 }
+//
+//        let event = events[indexPath.item]
+//
+//        let conflictingEvents = maxConflictingEvents(for: event)
+//
+//        let numberOfConflicts = conflictingEvents.count
+//        if numberOfConflicts == 1 { return 0.0 }
+//
+//        var validXOffsets: [CGFloat] = [CGFloat]()
+//
+//        let cellWidth = self.collectionView(collectionView: collectionView, widthForCellAtIndexPath: indexPath, width: width)
+//
+//        var nextOffset: CGFloat = 0.0
+//        while nextOffset < width && nextOffset != width {
+//            validXOffsets.append(nextOffset)
+//            nextOffset += floor(cellWidth > width/2 ? width - cellWidth : cellWidth)
+//        }
+//
+//        for conflictingEvent in conflictingEvents {
+//
+//            let index = events.index { (event) -> Bool in
+//                event == conflictingEvent
+//            }
+//
+//            if let index = index, index < indexPath.item {
+//
+//                let index = IndexPath(item: index, section: 1)
+//
+//                let prevXOffset = self.collectionView(collectionView: collectionView, xOffsetForCellAtIndexPath: index, width: width)
+//
+//                if let xIndex = validXOffsets.index(of: prevXOffset) {
+//                    validXOffsets.remove(at: xIndex)
+//                }
+//            }
+//        }
+//        if validXOffsets.count == 0 { return 0 }
+//        return validXOffsets.first!.rounded()
+        return 0.0
     }
     
     func collectionView(collectionView: UICollectionView, yOffsetForCellAtIndexPath indexPath: IndexPath, heightForHour: CGFloat) -> CGFloat {
@@ -281,13 +283,13 @@ extension ScheduleTable: ScheduleLayoutDelegate {
             let prevTime = times[index - 1]
             let prevYOffset = getYOffsetForTime(for: index - 1, in: times, heightForHour: heightForHour)
             let diff = time.rawMinutes() - prevTime.rawMinutes()
-            return heightForHour * min(1.5, CGFloat(diff) / 60.0) + prevYOffset
+            return (heightForHour * min(1.5, CGFloat(diff) / 60.0) + prevYOffset).rounded()
         }
     }
     
     //returns all conflicting events, including the event itself, when most conflicting events occur
     private func maxConflictingEvents(for event: Event) -> [Event] {
-        return event.getMaxConflictingEvents(for: events)
+        return [event]//event.getMaxConflictingEvents(for: events)
     }
     
     private func maximumNumberConflictingEvents(for event: Event) -> Int {
