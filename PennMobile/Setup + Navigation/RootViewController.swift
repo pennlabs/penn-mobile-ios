@@ -23,7 +23,7 @@ class RootViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         addChild(current)
         current.view.frame = view.bounds
         view.addSubview(current.view)

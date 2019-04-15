@@ -100,7 +100,7 @@ class ScheduleTable: UIView {
         }
 
         let times = events.getTimes()
-        let collectionViewHeight = getYOffsetForTime(for: times.count - 1, in: times, heightForHour: heightForHour)
+        let collectionViewHeight = getYOffsetForTime(for: times.count - 1, in: times, events: events, heightForHour: heightForHour)
         return topOffset + bottomOffset + collectionViewHeight
     }
     
@@ -166,7 +166,6 @@ extension ScheduleTable: ScheduleLayoutDelegate {
         let event = events[indexPath.item]
         let startTime = event.startTime
         let endTime = event.endTime
-        
         return (heightForHour * CGFloat(endTime.rawMinutes() - startTime.rawMinutes()) / 60.0).rounded()
     }
     
@@ -267,23 +266,33 @@ extension ScheduleTable: ScheduleLayoutDelegate {
     
     func collectionView(collectionView: UICollectionView, yOffsetForCellAtIndexPath indexPath: IndexPath, heightForHour: CGFloat) -> CGFloat {
         if indexPath.section == 0 {
-            return ScheduleTable.getYOffsetForTime(for: indexPath.item, in: times, heightForHour: heightForHour)
+            return ScheduleTable.getYOffsetForTime(for: indexPath.item, in: times, events: events, heightForHour: heightForHour)
         }
         
         let event = events[indexPath.item]
         let index = times.firstIndex(of: event.startTime)!
-        return ScheduleTable.getYOffsetForTime(for: index, in: times, heightForHour: heightForHour)
+        return ScheduleTable.getYOffsetForTime(for: index, in: times, events: events, heightForHour: heightForHour)
     }
     
-    static func getYOffsetForTime(for index: Int, in times: [Time], heightForHour: CGFloat) -> CGFloat {
+    static func getYOffsetForTime(for index: Int, in times: [Time], events: [Event], heightForHour: CGFloat) -> CGFloat {
         let time = times[index]
         if index == 0 {
             return 0.0
         } else {
             let prevTime = times[index - 1]
-            let prevYOffset = getYOffsetForTime(for: index - 1, in: times, heightForHour: heightForHour)
+            var prevTimeIsStartTime = false
+            for event in events {
+                if time == event.endTime && prevTime == event.startTime {
+                    prevTimeIsStartTime = true
+                }
+            }
+            let prevYOffset = getYOffsetForTime(for: index - 1, in: times, events: events, heightForHour: heightForHour)
             let diff = time.rawMinutes() - prevTime.rawMinutes()
-            return (heightForHour * min(1.5, CGFloat(diff) / 60.0) + prevYOffset).rounded()
+            if prevTimeIsStartTime {
+                return (heightForHour * CGFloat(diff) / 60.0 + prevYOffset).rounded()
+            } else {
+                return (heightForHour * min(1.5, CGFloat(diff) / 60.0) + prevYOffset).rounded()
+            }
         }
     }
     
