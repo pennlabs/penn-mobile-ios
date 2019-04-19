@@ -16,13 +16,13 @@ class HomeViewController: GenericViewController {
 
     static let edgeSpacing: CGFloat = 20
     static let cellSpacing: CGFloat = 20
-    
+
     static let refreshInterval: Int = 10
-    
+
     var lastRefresh: Date = Date()
-    
+
     var loadingView: UIActivityIndicatorView!
-    
+
     fileprivate var barButton: UIBarButtonItem!
 
     override func viewDidLoad() {
@@ -30,13 +30,13 @@ class HomeViewController: GenericViewController {
         self.title = "Home"
         view.backgroundColor = .white
         trackScreen = true
-        
+
         prepareLoadingView()
         prepareTableView()
         prepareRefreshControl()
-        
+
         registerForNotifications()
-        
+
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.rightBarButtonItem = nil
     }
@@ -50,16 +50,16 @@ class HomeViewController: GenericViewController {
             self.stopLoadingViewAnimation()
         }
     }
-    
+
     override func setupNavBar() {
         super.setupNavBar()
         self.tabBarController?.title = getTitle()
         self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
     }
-    
+
     fileprivate var titleCacheTimestamp = Date()
     fileprivate var displayTitle: String?
-    
+
     fileprivate func getTitle() -> String? {
         let now = Date()
         if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.displayTitle != nil {
@@ -76,7 +76,7 @@ class HomeViewController: GenericViewController {
             return self.displayTitle
         }
     }
-    
+
     func clearCache() {
         displayTitle = nil
         tableViewModel = nil
@@ -93,6 +93,8 @@ extension HomeViewController {
                 completion?()
             }
         } else {
+            // Reload visibile cell, then get data for each cell, and reload again
+            self.tableView.reloadData()
             self.fetchAllCellData(completion)
         }
     }
@@ -127,7 +129,7 @@ extension HomeViewController {
         tableViewModel.delegate = self
         tableView?.model = tableViewModel
     }
-    
+
     func prepareLoadingView() {
         loadingView = UIActivityIndicatorView(style: .whiteLarge)
         loadingView.color = .black
@@ -137,13 +139,13 @@ extension HomeViewController {
         loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         loadingView.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     func startLoadingViewAnimation() {
         if loadingView != nil && !loadingView.isHidden {
             loadingView.startAnimating()
         }
     }
-    
+
     func stopLoadingViewAnimation() {
         if tableView.isHidden {
             self.tableView.isHidden = false
@@ -160,7 +162,7 @@ extension HomeViewController {
             DispatchQueue.main.async {
                 if error != nil {
                     let navigationVC = self.navigationController as? HomeNavigationController
-                    
+
                     if !secondAttempt {
                         self.fetchViewModel(true, completion)
                     } else {
@@ -206,17 +208,17 @@ extension HomeViewController {
 
     func reloadItem(_ item: HomeCellItem) {
         guard let allItems = tableViewModel?.items as? [HomeCellItem] else { return }
-        if let row = allItems.index(where: { (thisItem) -> Bool in
+        if let row = allItems.firstIndex(where: { (thisItem) -> Bool in
             thisItem.equals(item: item)
         }) {
             let indexPath = IndexPath(row: row, section: 0)
             self.tableView.reloadRows(at: [indexPath], with: .none)
         }
     }
-    
+
     func removeItem(_ item: HomeCellItem) {
         guard let allItems = tableViewModel?.items as? [HomeCellItem] else { return }
-        if let row = allItems.index(where: { (thisItem) -> Bool in
+        if let row = allItems.firstIndex(where: { (thisItem) -> Bool in
             thisItem.equals(item: item)
         }) {
             let indexPath = IndexPath(row: row, section: 0)
@@ -268,13 +270,13 @@ extension HomeViewController {
                 outdatedItems.append(item)
             }
         }
-        
+
         for i in 0..<(outdatedItems.count) {
             if i < preferences.count {
                 outdatedItems[i].room = preferences[i]
             }
         }
-        
+
         self.fetchCellData(for: [HomeItemTypes.instance.laundry])
     }
 }

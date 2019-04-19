@@ -22,15 +22,15 @@ class Course: Codable, Hashable {
     let building: String?
     let room: String?
     let weekdays: String
-    let startDate: String
-    let endDate: String
+    let startDate: String?
+    let endDate: String?
     let startTime: String
     let endTime: String
     let instructors: [String]
     
     let meetingTimes: [CourseMeetingTime]?
     
-    init(name: String, term: String, dept: String, code: String, section: String, building: String?, room: String?, weekdays: String, startDate: String, endDate: String, startTime: String, endTime: String, instructors: [String], meetingTimes: [CourseMeetingTime]?) {
+    init(name: String, term: String, dept: String, code: String, section: String, building: String?, room: String?, weekdays: String, startDate: String?, endDate: String?, startTime: String, endTime: String, instructors: [String], meetingTimes: [CourseMeetingTime]?) {
         self.name = name
         self.term = term
         self.dept = dept
@@ -49,7 +49,11 @@ class Course: Codable, Hashable {
     
     var description: String {
         let instructorStr = instructors.joined(separator: ", ")
-        var str = "\(term) \(name) \(dept)-\(code)-\(section) \(instructorStr) \(weekdays) \(startDate) - \(endDate) \(startTime) \(endTime)"
+        var str = "\(term) \(name) \(dept)-\(code)-\(section) \(instructorStr) \(weekdays) \(startTime) \(endTime)"
+        if let startDate = startDate, let endDate = endDate {
+            str = " \(str) \(startDate) - \(endDate)"
+        }
+        
         if let building = building, let room = room {
             str = "\(str) \(building) \(room)"
         }
@@ -61,8 +65,11 @@ class Course: Codable, Hashable {
         return str
     }
     
-    var hashValue: Int {
-        return "\(term)\(dept)\(code)\(section)".hashValue
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(term)
+        hasher.combine(dept)
+        hasher.combine(code)
+        hasher.combine(section)
     }
     
     static func == (lhs: Course, rhs: Course) -> Bool {

@@ -16,8 +16,8 @@ extension PennAuthRequestable {
         return "https://weblogin.pennkey.upenn.edu/login"
     }
     
-    private var reauthUrl: String {
-        return "https://idp.pennkey.upenn.edu/idp/Authn/ReauthRemoteUser"
+    private var authUrl: String {
+        return "https://idp.pennkey.upenn.edu/idp/Authn"
     }
     
     func makeAuthRequest(targetUrl: String, shibbolethUrl: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
@@ -34,8 +34,8 @@ extension PennAuthRequestable {
                 let urlStr = response.url?.absoluteString {
                 if urlStr == targetUrl {
                     completionHandler(data, response, error)
-                } else if urlStr.contains(self.reauthUrl) {
-                    self.makeRequestWithReauth(shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
+                } else if urlStr.contains(self.authUrl) {
+                    self.makeRequestWithAuth(shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
                 } else {
                     self.makeRequestWithShibboleth(shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
                 }
@@ -47,7 +47,7 @@ extension PennAuthRequestable {
         task.resume()
     }
     
-    private func makeRequestWithReauth(shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+    private func makeRequestWithAuth(shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         guard let passcode = html.getMatches(for: "name=\"passcode\" value=\"(.*?)\"").first,
                 let required = html.getMatches(for: "name=\"required\" value=\"(.*?)\"").first,
                 let appfactor = html.getMatches(for: "name=\"appfactor\" value=\"(.*?)\"").first,

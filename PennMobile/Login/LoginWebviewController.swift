@@ -11,7 +11,7 @@ import WebKit
 
 class LoginWebviewController: PennLoginController, IndicatorEnabled {
     
-    var loginCompletion: ((_ successful: Bool) -> Void)!
+    var loginCompletion: ((_ successful: Bool) -> Void)?
     
     private var coursesToSave: Set<Course>?
     private var coursesPermission: Bool?
@@ -44,7 +44,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                     UserDefaults.standard.clearCookies()
                     HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
                     self.dismiss(animated: true, completion: nil)
-                    self.loginCompletion(false)
+                    self.loginCompletion?(false)
                 }
                 UserDefaults.standard.storeCookies()
             }
@@ -98,7 +98,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                 }
                 self.hideActivity()
                 self.dismiss(animated: true, completion: nil)
-                self.loginCompletion(accountID != nil)
+                self.loginCompletion?(accountID != nil)
                 self.getRemainingCourses()
                 
                 if accountID == nil {
@@ -112,7 +112,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
     
     fileprivate func obtainCoursePermission(_ callback: @escaping (_ granted: Bool) -> Void) {
         self.hideActivity()
-        let title = "\"PennMobile\" Would Like To Access Your Courses"
+        let title = "\"Penn Mobile\" Would Like To Access Your Courses"
         let message = "Access is needed to display your course schedule on the app."
         let alert = UIAlertController(title: title,
                                       message: message,

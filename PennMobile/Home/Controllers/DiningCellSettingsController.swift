@@ -41,7 +41,7 @@ class DiningCellSettingsController: UITableViewController {
         super.viewWillAppear(animated)
 
         for cafe in chosenCafes {
-            if let index = cafes.index(of: cafe) {
+            if let index = cafes.firstIndex(of: cafe) {
                 tableView.selectRow(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .none)
             }
         }
@@ -91,7 +91,7 @@ class DiningCellSettingsController: UITableViewController {
                 cell.accessoryType = .none
             }
 
-            if let index = chosenCafes.index(of: cafe) {
+            if let index = chosenCafes.firstIndex(of: cafe) {
                 chosenCafes.remove(at: index)
             }
         }

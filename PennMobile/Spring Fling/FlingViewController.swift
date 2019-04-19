@@ -7,14 +7,14 @@
 //
 
 import Foundation
-//import SimpleImageViewer
+import ZoomImageView
 import TimelineTableViewCell
 
 protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
 
 final class FlingTableViewModel: ModularTableViewModel {}
 
-final class FlingViewController: GenericViewController, HairlineRemovable {
+final class FlingViewController: GenericViewController, HairlineRemovable, IndicatorEnabled {
     
     fileprivate var performersTableView: ModularTableView!
     fileprivate var scheduleTableView: UITableView!
@@ -27,21 +27,38 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
     fileprivate static var highlightYellow = UIColor(r: 240, g: 180, b: 0)
     
     // For Map Zoom
-    fileprivate var mapImageView: UIImageView!
+    fileprivate var mapImageView: ZoomImageView!
 
     fileprivate var performers = [FlingPerformer]()
+    
+    fileprivate var checkInWebview: WebviewController!
+    fileprivate var checkInUrl = "https://docs.google.com/forms/d/e/1FAIpQLSexkehYfGgyAa7RagaCl8rze4KUKQSX9TbcvvA6iXp34TyHew/viewform"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Spring Fling"
         
+        setupThisNavBar()
         prepareScheduleTableView()
         preparePerformersTableView()
         prepareMapImageView()
-        prepareMapBarButton()
+        prepareCheckInButton()
         
-        scheduleTableView.isHidden = true
         performersTableView.isHidden = false
+        scheduleTableView.isHidden = true
+        mapImageView.isHidden = true
+        
+        checkInWebview = WebviewController()
+        checkInWebview.title = "Spring Fling Check-In"
+        
+        self.showActivity()
+        self.fetchViewModel {
+            // TODO: do something when fetch has completed
+            self.hideActivity()
+            self.checkInWebview.load(for: self.checkInUrl)
+        }
+        
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Viewed Fling", result: "Viewed Fling", content: "Fling page")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,25 +66,24 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
         if let navbar = navigationController?.navigationBar {
             removeHairline(from: navbar)
         }
-        
-        self.fetchViewModel {
-            // TODO: do something when fetch has completed
-        }
     }
     
-    override func setupNavBar() {
+    func setupThisNavBar() {
         //removes hairline from bottom of navbar
         if let navbar = navigationController?.navigationBar {
             removeHairline(from: navbar)
         }
         
         let width = view.frame.width
-        let headerHeight = navigationController?.navigationBar.frame.height ?? 44
         
-        headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: headerHeight))
+        guard let headerFrame = navigationController?.navigationBar.frame else {
+            return
+        }
+        
+        headerToolbar = UIToolbar(frame: CGRect(x: 0, y: 64, width: width, height: headerFrame.height + headerFrame.origin.y))
         headerToolbar.backgroundColor = navigationController?.navigationBar.backgroundColor
         
-        let newsSwitcher = UISegmentedControl(items: ["Performers", "Schedule"])
+        let newsSwitcher = UISegmentedControl(items: ["Performers", "Schedule", "Map"])
         newsSwitcher.center = CGPoint(x: width/2, y: 64 + headerToolbar.frame.size.height/2)
         newsSwitcher.tintColor = UIColor.navRed
         newsSwitcher.selectedSegmentIndex = 0
@@ -79,9 +95,9 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
     }
     
     @objc internal func switchTabMode(_ segment: UISegmentedControl) {
-        let shouldShowPerformers = segment.selectedSegmentIndex == 0
-        performersTableView.isHidden = !shouldShowPerformers
-        scheduleTableView.isHidden = shouldShowPerformers
+        performersTableView.isHidden = segment.selectedSegmentIndex == 0 ? false : true
+        scheduleTableView.isHidden = segment.selectedSegmentIndex == 1 ? false : true
+        mapImageView.isHidden = segment.selectedSegmentIndex == 2 ? false : true
     }
 }
 
@@ -158,7 +174,7 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Saturday, April 14th"
+        return "Saturday, April 13th"
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -210,7 +226,7 @@ extension FlingViewController {
         guard let items = model.items as? [HomeCellItem] else { return }
         HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
             DispatchQueue.main.async {
-                let row = items.index(where: { (thisItem) -> Bool in
+                let row = items.firstIndex(where: { (thisItem) -> Bool in
                     thisItem.equals(item: item)
                 })!
                 let indexPath = IndexPath(row: row, section: 0)
@@ -242,40 +258,33 @@ extension FlingViewController {
 // MARK: - ModularTableViewDelegate
 extension FlingViewController: FlingCellDelegate {
     func handleUrlPressed(url: String, title: String) {
-        let wv = WebviewController()
-        wv.title = title
-        wv.load(for: url)
-        navigationController?.pushViewController(wv, animated: true)
+        navigationController?.pushViewController(checkInWebview, animated: true)
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Fling Check-In", result: "Fling Check-In", content: "Fling Check-In")
+    }
+}
+
+// MARK: - Check In
+extension FlingViewController {
+    fileprivate func prepareCheckInButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Check-In", style: .done, target: self, action: #selector(handleCheckInButtonPressed(_:)))
+    }
+    
+    @objc fileprivate func handleCheckInButtonPressed(_ sender: Any?) {
+        navigationController?.pushViewController(checkInWebview, animated: true)
     }
 }
 
 // MARK: - Map Image
 extension FlingViewController {
-    fileprivate func prepareMapBarButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Map", style: .done, target: self, action: #selector(handleMapButtonPressed(_:)))
-    }
-    
     fileprivate func prepareMapImageView() {
-        let image = UIImage(named: "Fling_Map")
-        mapImageView = UIImageView(image: image)
-        mapImageView.contentMode = .scaleAspectFill
-        mapImageView.isHidden = true
-        
-        let widthToHeightRatio = CGFloat(2800/1884)
-        let width: CGFloat = 4
-        let height: CGFloat = widthToHeightRatio * width
+        mapImageView = ZoomImageView()
+        mapImageView.image = UIImage(named: "Fling_Map")
         
         view.addSubview(mapImageView)
-        _ = mapImageView.anchor(headerToolbar.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: -height, leftConstant: 0, bottomConstant: 0, rightConstant: 30, widthConstant: width, heightConstant: height)
-    }
-    
-    @objc fileprivate func handleMapButtonPressed(_ sender: Any?) {
-//        let configuration = ImageViewerConfiguration { config in
-//            config.imageView = mapImageView
-//        }
-//
-//        let imageViewerController = ImageViewerController(configuration: configuration)
-//        present(imageViewerController, animated: true)
+        
+        mapImageView.anchorToTop(nil, left: view.leftAnchor, bottom: nil, right: view.rightAnchor)
+        mapImageView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
+        mapImageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
     }
 }
 

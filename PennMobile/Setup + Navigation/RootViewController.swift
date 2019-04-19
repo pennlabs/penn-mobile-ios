@@ -23,13 +23,18 @@ class RootViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         addChild(current)
         current.view.frame = view.bounds
         view.addSubview(current.view)
         current.didMove(toParent: self)
         
-        UserDefaults.standard.restoreCookies()        
+        UserDefaults.standard.restoreCookies()
+        
+        if UserDefaults.standard.isNewAppVersion() {
+            UserDefaults.standard.setAppVersion()
+            updateDatabaseIfNeeded()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,18 +46,6 @@ class RootViewController: UIViewController {
                 self.switchToLogout(false)
             } else {
                 ControllerModel.shared.visibleVC().viewWillAppear(animated)
-            }
-        } else if UserDefaults.standard.getAccountID() == nil, let student = Student.getStudent() {
-            // If student is saved locally but not on DB, save on DB and show main screen
-            UserDBManager.shared.saveStudent(student) { (accountID) in
-                DispatchQueue.main.async {
-                    if let accountID = accountID {
-                        UserDefaults.standard.set(accountID: accountID)
-                    }
-                    if self.current is LoginController {
-                        self.switchToMainScreen()
-                    }
-                }
             }
         }
         
@@ -163,5 +156,46 @@ class RootViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Updated database if needed
+extension RootViewController {
+    func updateDatabaseIfNeeded() {
+        if let student = Student.getStudent() {
+            if let accountID = UserDefaults.standard.getAccountID() {
+                if let courses = student.courses {
+                    // Check if any courses have no start, end date. If so, update DB, which can now handle this.
+                    var hasEmptyDate = false
+                    for course in courses {
+                        if course.startDate == "" || course.endDate == "" {
+                            hasEmptyDate = true
+                            break
+                        }
+                    }
+                    
+                    if hasEmptyDate {
+                        UserDBManager.shared.saveCourses(courses, accountID: accountID)
+                    }
+                } else {
+                    // Pop up login controller to re-retrieve data
+                    let lwc = LoginWebviewController()
+                    let nvc = UINavigationController(rootViewController: lwc)
+                    self.current.present(nvc, animated: true, completion: nil)
+                }
+            } else {
+                // If student is saved locally but not on DB, save on DB and switch to main screen
+                UserDBManager.shared.saveStudent(student) { (accountID) in
+                    DispatchQueue.main.async {
+                        if let accountID = accountID {
+                            UserDefaults.standard.set(accountID: accountID)
+                        }
+                        if self.current is LoginController {
+                            self.switchToMainScreen()
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -193,7 +193,7 @@ extension GSRViewModel: GSRSelectionDelegate {
             currentSelection.append(timeSlot)
             break
         case .remove:
-            currentSelection.remove(at: currentSelection.index(of: timeSlot)!)
+            currentSelection.remove(at: currentSelection.firstIndex(of: timeSlot)!)
             break
         }
         
@@ -273,5 +273,12 @@ extension GSRViewModel {
         }
         endTime = timeSlot.endTime
         return GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)
+    }
+}
+
+// MARK: - Select Location
+extension GSRViewModel {
+    func getLocationIndex(_ location: GSRLocation) -> Int {
+        return locations.firstIndex(of: location)!
     }
 }

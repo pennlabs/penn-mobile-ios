@@ -11,3 +11,7 @@ import Foundation
 protocol URLSelectable {
     func handleUrlPressed(url: String, title: String)
 }
+
+protocol FeatureNavigatable {
+    func navigateToFeature(feature: Feature)
+}
