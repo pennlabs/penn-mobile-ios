@@ -74,9 +74,11 @@ extension DiningViewController {
         }
     }
     func updateBalance() {
+        self.viewModel.showActivity = true
         CampusExpressNetworkManager.instance.getDiningData { (diningBalances) in
             DispatchQueue.main.async {
                 self.viewModel.balance = diningBalances
+                self.viewModel.showActivity = false
                 self.tableView.reloadData()
             }
         }

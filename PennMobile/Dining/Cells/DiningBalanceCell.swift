@@ -11,9 +11,9 @@ import Foundation
 class DiningBalanceCell: UITableViewCell {
     
     static let identifier = "diningBalanceCell"
-    static let cellHeight: CGFloat = 125
+    static let cellHeight: CGFloat = 120
     
-    var diningBalance: DiningBalance! {
+    var diningBalance: DiningBalance? {
         didSet {
             setupCell(with: diningBalance)
         }
@@ -40,9 +40,15 @@ class DiningBalanceCell: UITableViewCell {
 
 // MARK: - Setup Cell
 extension DiningBalanceCell {
-    
-    fileprivate func setupCell(with diningBalance: DiningBalance) {
-        balancesAsOfLabel.text = diningBalance.balancesAsOf
+    fileprivate func setupCell(with diningBalance: DiningBalance?) {
+        if diningBalance == nil {
+            balancesAsOfLabel.text = ""
+        } else {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "h:mm a MM/dd/yy"
+            let lastUpdated = "Last updated " + formatter.string(from: diningBalance!.lastUpdated!)
+            balancesAsOfLabel.text = lastUpdated
+        }
         balanceCollectionView.reloadData()
     }
 }
@@ -58,22 +64,23 @@ extension DiningBalanceCell {
     
     fileprivate func prepareBalancesAsOfLabel() {
         balancesAsOfLabel = UILabel()
-        balancesAsOfLabel.font = UIFont(name: "Avenir-Medium", size: 10)
+        balancesAsOfLabel.font = UIFont(name: "Avenir-Medium", size: 12)
         balancesAsOfLabel.textColor = .secondaryTitleGrey
         balancesAsOfLabel.textAlignment = .left
         balancesAsOfLabel.translatesAutoresizingMaskIntoConstraints = false
         balancesAsOfLabel.shrinkUntilFits()
         addSubview(balancesAsOfLabel)
         balancesAsOfLabel.topAnchor.constraint(equalTo: balanceCollectionView.bottomAnchor, constant: 3).isActive = true
-        balancesAsOfLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        balancesAsOfLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 14).isActive = true
     }
     
     fileprivate func prepareCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-        flowLayout.sectionInset = UIEdgeInsets(top: 3, left: 0, bottom: 3, right: 12)
-        flowLayout.itemSize = CGSize(width: 132, height: 97)
-        
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
+        let width = (bounds.width + 6) / 3
+        flowLayout.itemSize = CGSize(width: width, height: 88)
+
         balanceCollectionView = UICollectionView(frame: safeArea.frame, collectionViewLayout: flowLayout)
     balanceCollectionView.register(DiningBalanceCollectionViewCell.self, forCellWithReuseIdentifier: collectionCellId)
         balanceCollectionView.backgroundColor = .clear
@@ -85,8 +92,8 @@ extension DiningBalanceCell {
         addSubview(balanceCollectionView)
         balanceCollectionView.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
         balanceCollectionView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        balanceCollectionView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        balanceCollectionView.heightAnchor.constraint(equalToConstant: 103).isActive = true
+        balanceCollectionView.heightAnchor.constraint(equalToConstant: 95).isActive = true
+        balanceCollectionView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
     }
     
     // MARK: Safe Area
@@ -95,8 +102,8 @@ extension DiningBalanceCell {
         safeArea.translatesAutoresizingMaskIntoConstraints = false
         addSubview(safeArea)
         
-        safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue).isActive = true
-        safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        safeArea.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue / 2).isActive = true
         safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue / 2).isActive = true
     }
@@ -117,24 +124,30 @@ extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellId, for: indexPath as IndexPath) as! DiningBalanceCollectionViewCell
         cell.layer.cornerRadius = 8
-//        cell.layer.shadowOffset = CGSize(width: 0, height: -2.0)
-//        cell.layer.shadowRadius = 4
-//        cell.layer.shadowOpacity = 1.0
-//        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
+        cell.layer.shadowOffset = CGSize(width: 0.5, height: 1.0)
+        cell.layer.shadowRadius = 1
+        cell.layer.shadowColor = UIColor.darkGray.cgColor
+        cell.layer.shadowOpacity = 0.5
+        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: 8).cgPath
+        
         if (indexPath.item == 0) {
             cell.type = "Dining Dollars"
-            cell.diningBalance = diningBalance
+            cell.value = diningBalance?.diningDollars
             cell.backgroundColor = UIColor.init(red: 106, green: 188, blue: 143)
         }
         if (indexPath.item == 1) {
             cell.type = "Swipes"
-            cell.diningBalance = diningBalance
+            if let visits = diningBalance?.visits {
+                cell.value = String(visits)
+            }
             cell.backgroundColor = UIColor.init(red: 106, green: 144, blue: 188)
         }
         if (indexPath.item == 2) {
             cell.type = "Guest Swipes"
-            cell.diningBalance = diningBalance
-            cell.backgroundColor = UIColor.init(red: 106 / 255, green: 144 / 255, blue: 188 / 255, alpha: 0.6)
+            if let guestVisits = diningBalance?.guestVisits {
+                cell.value = String(guestVisits)
+            }
+            cell.backgroundColor = UIColor.init(red: 0xA6, green: 0xBC, blue: 0xD7)
         }
         return cell
     }

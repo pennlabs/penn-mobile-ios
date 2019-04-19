@@ -18,9 +18,10 @@ class DiningBalanceCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-    var diningBalance: DiningBalance! {
+    
+    var value: String? {
         didSet {
-            setupCellData(with: diningBalance)
+            self.setupCellData(with: value)
         }
     }
     
@@ -49,21 +50,18 @@ extension DiningBalanceCollectionViewCell {
     
     fileprivate func setupCell(with type: String) {
         titleLabel.text = type
-    }
-    fileprivate func setupCellData(with balance: DiningBalance) {
-        titleLabel.text = type
         if (type == "Dining Dollars") {
-            dataLabel.text = balance.diningDollars
             icon.image = UIImage(named: "coin")
         }
         if (type == "Swipes") {
-            dataLabel.text = String (balance.totalVisits!)
             icon.image = UIImage(named: "card")
         }
         if (type == "Guest Swipes") {
-            dataLabel.text = String (balance.guestVisits!)
             icon.image = UIImage(named: "friends")
         }
+    }
+    fileprivate func setupCellData(with value: String?) {
+        dataLabel.text = value
     }
 }
 
@@ -81,8 +79,8 @@ extension DiningBalanceCollectionViewCell {
         safeArea = getSafeAreaView()
         addSubview(safeArea)
         
-        safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue).isActive = true
-        safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue / 2).isActive = true
+        safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue / 2).isActive = true
         safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue / 2).isActive = true
         safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue / 2).isActive = true
     }
@@ -91,7 +89,7 @@ extension DiningBalanceCollectionViewCell {
     fileprivate func prepareImageView() {
         icon = getImageView()
         addSubview(icon)
-        icon.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        icon.widthAnchor.constraint(equalToConstant: 21).isActive = true
         icon.heightAnchor.constraint(equalToConstant: 12).isActive = true
         icon.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
         icon.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -3).isActive = true

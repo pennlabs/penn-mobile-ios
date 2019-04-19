@@ -26,6 +26,8 @@ class DiningViewModel: NSObject {
     
     var delegate: DiningViewModelDelegate?
     
+    var showActivity = false
+    
     internal let headerView = "headerView"
     internal let diningCell = "diningCell"
     internal let diningBalanceCell = "diningBalanceCell"
@@ -68,12 +70,7 @@ extension DiningViewModel: UITableViewDataSource {
         if shouldShowDiningBalances && indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: diningBalanceCell, for: indexPath) as! DiningBalanceCell
             cell.selectionStyle = .none
-            
-            if let balance = self.balance {
-                cell.diningBalance = balance
-            } else {
-                cell.diningBalance = DiningBalance(hasDiningPlan: true, balancesAsOf: "",  planName: "", diningDollars: "$0.00", visits: 0, addOnVisits: 0, guestVisits: 0)
-            }
+            cell.diningBalance = balance
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
@@ -94,6 +91,11 @@ extension DiningViewModel: UITableViewDelegate {
         if shouldShowDiningBalances && section == 0 {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
             view.label.text = balancesHeader
+            if showActivity {
+                view.loadingView.startAnimating()
+            } else {
+                view.loadingView.stopAnimating()
+            }
             return view
         }
         else {

@@ -10,7 +10,7 @@ import Foundation
 
 class DiningBalance: Codable {
     var hasDiningPlan: Bool
-    var balancesAsOf: String?
+    var lastUpdated: Date?
     var planName: String?
     var diningDollars: String?
     var visits: Int?
@@ -18,9 +18,9 @@ class DiningBalance: Codable {
     var guestVisits: Int?
     var totalVisits: Int?
     
-    init(hasDiningPlan: Bool, balancesAsOf: String?, planName: String?, diningDollars: String?, visits: Int?, addOnVisits: Int?, guestVisits: Int?) {
+    init(hasDiningPlan: Bool, lastUpdated: Date?, planName: String?, diningDollars: String?, visits: Int?, addOnVisits: Int?, guestVisits: Int?) {
         self.hasDiningPlan = hasDiningPlan
-        self.balancesAsOf = balancesAsOf
+        self.lastUpdated = lastUpdated
         self.planName = planName
         self.diningDollars = diningDollars
         self.visits = visits
