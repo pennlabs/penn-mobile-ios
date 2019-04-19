@@ -182,6 +182,11 @@ extension UserDefaults {
         return prevAppVersion != version
     }
     
+    func getAppVersion() -> String {
+        let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+        return version
+    }
+    
     func setAppVersion() {
         let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
         set(version, forKey: UserDefaultsKeys.appVersion.rawValue)
