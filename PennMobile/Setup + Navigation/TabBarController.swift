@@ -56,6 +56,10 @@ extension TabBarController: UITabBarControllerDelegate {
             return false
         }
         
+        if let navVC = tabBarController.selectedViewController?.navigationController as? HomeNavigationController {
+            navVC.hideBar(animated: false)
+        }
+        
         let fromView = selectedViewController.view
         let toView = viewController.view
         

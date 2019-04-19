@@ -155,14 +155,17 @@ extension HomeViewController {
 
 // MARK: - Networking
 extension HomeViewController {
-    func fetchViewModel(_ completion: @escaping () -> Void) {
+    func fetchViewModel(_ secondAttempt: Bool = false, _ completion: @escaping () -> Void) {
         HomeAPIService.instance.fetchModel { (model, error) in
             DispatchQueue.main.async {
                 if error != nil {
                     let navigationVC = self.navigationController as? HomeNavigationController
-                    navigationVC?.addPermanentStatusBar(text: error == NetworkingError.noInternet ? StatusBar.StatusBarText.noInternet : .apiError)
-                    completion()
-                    return
+                    
+                    if !secondAttempt {
+                        self.fetchViewModel(true, completion)
+                    } else {
+                        navigationVC?.addStatusBar(text: .apiError)
+                    }
                 }
                 guard let model = model else { return }
                 self.setModel(model)
