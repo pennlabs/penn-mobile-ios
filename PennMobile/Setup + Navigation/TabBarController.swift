@@ -13,6 +13,8 @@ final class TabBarController: ESTabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.tabBar.isTranslucent = false
 
         ControllerModel.shared.viewControllers.forEach { (vc) in
             if vc is TabBarShowable {
@@ -98,6 +100,22 @@ extension DiningViewController: TabBarShowable {
 }
 
 extension GSRController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "GSR_Grey")
+        let selectedImage = UIImage(named: "GSR_Blue")
+        return ESTabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension GSRLocationsController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "GSR_Grey")
+        let selectedImage = UIImage(named: "GSR_Blue")
+        return ESTabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension GSRTabController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "GSR_Grey")
         let selectedImage = UIImage(named: "GSR_Blue")
