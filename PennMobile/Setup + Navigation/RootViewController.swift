@@ -23,18 +23,45 @@ class RootViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
+        let now = Date()
+        let components = Calendar.current.dateComponents([.year], from: now)
+        let january = Calendar.current.date(from: components)!
+        let june = january.add(months: 5)
+        let august = january.add(months: 7)
+        
+        if UserDefaults.standard.isNewAppVersion() {
+            UserDefaults.standard.setAppVersion()
+            
+            if UserDefaults.standard.getAccountID() != nil && now < august {
+                // If user is logged in and is not yet August, set last login to now
+                // NOTE: this code will be removed in next app update
+                UserDefaults.standard.setLastLogin()
+            }
+        }
+        
+        if let lastLogin = UserDefaults.standard.getLastLogin() {
+            if january <= now && now <= june {
+                if lastLogin < january {
+                    // Last logged in before current Spring Semester -> Require new log in
+                    clearAccountData()
+                }
+            } else if now >= august {
+                if lastLogin < august {
+                    // Last logged in before current Fall Semester -> Require new log in
+                    clearAccountData()
+                }
+            }
+        } else {
+            clearAccountData()
+        }
+        
         addChild(current)
         current.view.frame = view.bounds
         view.addSubview(current.view)
         current.didMove(toParent: self)
         
         UserDefaults.standard.restoreCookies()
-        
-        if UserDefaults.standard.isNewAppVersion() {
-            UserDefaults.standard.setAppVersion()
-            updateDatabaseIfNeeded()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -103,12 +130,7 @@ class RootViewController: UIViewController {
         animateDismissTransition(to: loginController)
         
         if shouldClearData {
-            HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
-            UserDefaults.standard.clearAccountID()
-            UserDefaults.standard.clearCookies()
-            UserDefaults.standard.clearWhartonFlag()
-            Student.clear()
-            GSRUser.clear()
+            clearAccountData()
         }
         
         // Clear cache so that home title updates with new first name
@@ -116,6 +138,15 @@ class RootViewController: UIViewController {
             return
         }
         homeVC.clearCache()
+    }
+    
+    fileprivate func clearAccountData() {
+        HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
+        UserDefaults.standard.clearAccountID()
+        UserDefaults.standard.clearCookies()
+        UserDefaults.standard.clearWhartonFlag()
+        Student.clear()
+        GSRUser.clear()
     }
     
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {

@@ -212,6 +212,10 @@ extension Date {
     func add(minutes: Int) -> Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
+    
+    func add(months: Int) -> Date {
+        return Calendar.current.date(byAdding: .month, value: months, to: self)!
+    }
 
     func add(seconds: Int) -> Date {
         return Calendar.current.date(byAdding: .second, value: seconds, to: self)!
@@ -228,6 +232,11 @@ extension Date {
         // return self.add(minutes: -self.minutes)
     }
     
+    var month: Int {
+        let values = Calendar.current.dateComponents([Calendar.Component.month], from: self)
+        return values.month!
+    }
+        
     var roundedDownToHalfHour: Date {
         let roundedDownToHour = self.roundedDownToHour
         if roundedDownToHour.minutesFrom(date: self) >= 30 {
@@ -282,6 +291,8 @@ extension Date {
         }
         return dateStrings
     }
+    
+    
 
     var adjustedFor11_59: Date {
         if self.minutes == 59 {

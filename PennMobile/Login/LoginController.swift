@@ -52,6 +52,7 @@ extension LoginController {
     func loginCompletion(_ successful: Bool) {
         if successful {
             // Login Successful
+            UserDefaults.standard.setLastLogin()
             AppDelegate.shared.rootViewController.switchToMainScreen()
         } else if UserDefaults.standard.getStudent() != nil {
             // Successfully retrieved Student profile from PennInTouch but failed to send to DB
