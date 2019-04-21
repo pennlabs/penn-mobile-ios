@@ -167,8 +167,11 @@ extension HomeViewController {
                         self.fetchViewModel(true, completion)
                     } else {
                         navigationVC?.addStatusBar(text: .apiError)
+                        completion()
                     }
+                    return
                 }
+                
                 guard let model = model else { return }
                 self.setModel(model)
                 UIView.transition(with: self.tableView,
