@@ -188,6 +188,7 @@ extension HomeViewController: GSRLocationSelectable {
         gc.startingLocation = location
         gc.title = "Study Room Booking"
         navigationController?.pushViewController(gc, animated: true)
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Tap Home GSR Location", result: "Tap Home GSR Location", content: "View \(location.name)")
     }
 }
 

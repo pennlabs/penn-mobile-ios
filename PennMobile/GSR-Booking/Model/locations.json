@@ -13,21 +13,9 @@
                       "service": "libcal"
                   },
                   {
-                      "lid": 1086,
-                      "gid": 4660,
-                      "name": "VP Ground Floor",
-                      "service": "libcal"
-                  },
-                  {
-                      "lid": 1086,
-                      "gid": 4659,
-                      "name": "VP 3rd Floor",
-                      "service": "libcal"
-                  },
-                  {
-                      "lid": 1086,
-                      "gid": 1891,
-                      "name": "VP 4th Floor",
+                      "lid": 2495,
+                      "gid": 1886,
+                      "name": "Education Commons",
                       "service": "libcal"
                   },
                   {
@@ -43,21 +31,33 @@
                       "service": "libcal"
                   },
                   {
-                      "lid": 2683,
-                      "gid": 1885,
-                      "name": "Biomedical Library",
-                      "service": "libcal"
-                  },
-                  {
-                      "lid": 2495,
-                      "gid": 1886,
-                      "name": "Education Commons",
+                      "lid": 1086,
+                      "gid": 4660,
+                      "name": "VP Ground Floor",
                       "service": "libcal"
                   },
                   {
                       "lid": 1090,
                       "gid": 1909,
                       "name": "Levin Building",
+                      "service": "libcal"
+                  },
+                  {
+                      "lid": 2683,
+                      "gid": 1885,
+                      "name": "Biomedical Library",
+                      "service": "libcal"
+                  },
+                  {
+                      "lid": 1086,
+                      "gid": 4659,
+                      "name": "VP 3rd Floor",
+                      "service": "libcal"
+                  },
+                  {
+                      "lid": 1086,
+                      "gid": 1891,
+                      "name": "VP 4th Floor",
                       "service": "libcal"
                   }
                 ]

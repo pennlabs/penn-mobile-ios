@@ -27,6 +27,12 @@
 		212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B835D222A37DD00F835D6 /* HomeFeatureCell.swift */; };
 		212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B835F222A37FE00F835D6 /* FeatureAnnouncement.swift */; };
 		2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2130A5052238C2F000DFEEC7 /* PennLoginController.swift */; };
+		2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */; };
+		2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55422598AA800D67CA2 /* GSRTabController.swift */; };
+		2138D559225998A300D67CA2 /* GSRGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D558225998A300D67CA2 /* GSRGroupController.swift */; };
+		2138D55B22599D0000D67CA2 /* CreateGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55A22599D0000D67CA2 /* CreateGroupCell.swift */; };
+		2138D55D22599D0F00D67CA2 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55C22599D0F00D67CA2 /* GroupCell.swift */; };
+		2138D55F22599D4700D67CA2 /* GSRGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55E22599D4700D67CA2 /* GSRGroup.swift */; };
 		2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138E1F72252AFB500E4055A /* GSRLocationCell.swift */; };
 		21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21470EBB223DD34200019C10 /* ScheduleEventCell.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
@@ -250,6 +256,12 @@
 		212B835D222A37DD00F835D6 /* HomeFeatureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCell.swift; sourceTree = "<group>"; };
 		212B835F222A37FE00F835D6 /* FeatureAnnouncement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureAnnouncement.swift; sourceTree = "<group>"; };
 		2130A5052238C2F000DFEEC7 /* PennLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLoginController.swift; sourceTree = "<group>"; };
+		2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationsController.swift; sourceTree = "<group>"; };
+		2138D55422598AA800D67CA2 /* GSRTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTabController.swift; sourceTree = "<group>"; };
+		2138D558225998A300D67CA2 /* GSRGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupController.swift; sourceTree = "<group>"; };
+		2138D55A22599D0000D67CA2 /* CreateGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupCell.swift; sourceTree = "<group>"; };
+		2138D55C22599D0F00D67CA2 /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
+		2138D55E22599D4700D67CA2 /* GSRGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroup.swift; sourceTree = "<group>"; };
 		2138E1F72252AFB500E4055A /* GSRLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationCell.swift; sourceTree = "<group>"; };
 		21470EBB223DD34200019C10 /* ScheduleEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventCell.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -866,6 +878,7 @@
 				2189C0972027CE4000771C1F /* GSRVenue.swift */,
 				2189C0952027CE4000771C1F /* locations.json */,
 				2189C09A2027CE4000771C1F /* GSRLocation.swift */,
+				2138D55E22599D4700D67CA2 /* GSRGroup.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -888,6 +901,8 @@
 				2189C0892027CE2600771C1F /* RoomCell.swift */,
 				21A6B6D32216824B003A357D /* ReservationCell.swift */,
 				C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */,
+				2138D55A22599D0000D67CA2 /* CreateGroupCell.swift */,
+				2138D55C22599D0F00D67CA2 /* GroupCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -896,11 +911,14 @@
 			isa = PBXGroup;
 			children = (
 				2189C0802027CDB800771C1F /* GSRBookable.swift */,
+				2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */,
 				214E254822480818004CB9C4 /* GSRDeletable.swift */,
 				2189C0822027CDB800771C1F /* GSRController.swift */,
 				21A6B6CF22162652003A357D /* GSRReservationsController.swift */,
 				21EF283821F509C0001B05B7 /* GSRWebviewLoginController.swift */,
 				2189C0812027CDB800771C1F /* GSRLoginController.swift */,
+				2138D55422598AA800D67CA2 /* GSRTabController.swift */,
+				2138D558225998A300D67CA2 /* GSRGroupController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1356,7 +1374,7 @@
 					2166405F1EBADADA00746B8E = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = VU59R57FGM;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -1370,7 +1388,7 @@
 					216640731EBADADA00746B8E = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = VU59R57FGM;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2166405F1EBADADA00746B8E;
 					};
@@ -1390,10 +1408,9 @@
 			};
 			buildConfigurationList = 2166405B1EBADADA00746B8E /* Build configuration list for PBXProject "PennMobile" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -1463,6 +1480,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TimelineTableViewCell/TimelineTableViewCell.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/ZoomImageView/ZoomImageView.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -1477,6 +1495,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TimelineTableViewCell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZoomImageView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -1597,6 +1616,7 @@
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
 				2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
+				2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */,
 				21B649222236F2FC00AC5B7F /* HomeCoursesCellItem.swift in Sources */,
 				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
@@ -1617,6 +1637,7 @@
 				217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */,
 				21640D5C20105B98002F33CA /* HomeDiningCell.swift in Sources */,
 				21EF283921F509C0001B05B7 /* GSRWebviewLoginController.swift in Sources */,
+				2138D559225998A300D67CA2 /* GSRGroupController.swift in Sources */,
 				217A783D204D97B6004F1227 /* ModularTableViewModel.swift in Sources */,
 				EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */,
 				21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */,
@@ -1647,6 +1668,7 @@
 				21ABE2AA223D7DEA00199D29 /* ScheduleTable.swift in Sources */,
 				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,
 				21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */,
+				2138D55D22599D0F00D67CA2 /* GroupCell.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
@@ -1706,6 +1728,7 @@
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
 				212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */,
 				216640941EBADC1700746B8E /* DiningCell.swift in Sources */,
+				2138D55B22599D0000D67CA2 /* CreateGroupCell.swift in Sources */,
 				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
@@ -1734,6 +1757,7 @@
 				216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */,
 				210AC1472068515C0050D837 /* WebviewController.swift in Sources */,
 				2189C0872027CDD700771C1F /* GSRNetworkManager.swift in Sources */,
+				2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
 				2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */,
@@ -1763,6 +1787,7 @@
 				B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */,
 				CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */,
 				97E79E092100DA1200D3D606 /* BuildingFoodMenuCell.swift in Sources */,
+				2138D55F22599D4700D67CA2 /* GSRGroup.swift in Sources */,
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
 				C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */,
 				21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */,
@@ -1833,6 +1858,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1891,6 +1917,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1959,8 +1986,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1984,8 +2010,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -2002,8 +2027,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pennlabs.PennMobileTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PennMobile.app/PennMobile";
 			};
 			name = Debug;
@@ -2020,8 +2044,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pennlabs.PennMobileTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PennMobile.app/PennMobile";
 			};
 			name = Release;

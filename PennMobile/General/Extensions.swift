@@ -28,7 +28,8 @@ extension UIView {
     }
 
     @available(iOS 9.0, *)
-    func anchor(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
+    func
+        anchor(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
         translatesAutoresizingMaskIntoConstraints = false
 
         var anchors = [NSLayoutConstraint]()
@@ -217,6 +218,10 @@ extension Date {
     func add(minutes: Int) -> Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
+    
+    func add(months: Int) -> Date {
+        return Calendar.current.date(byAdding: .month, value: months, to: self)!
+    }
 
     func add(seconds: Int) -> Date {
         return Calendar.current.date(byAdding: .second, value: seconds, to: self)!
@@ -231,6 +236,20 @@ extension Date {
         let comp: DateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour], from: self)
         return Calendar.current.date(from: comp)!
         // return self.add(minutes: -self.minutes)
+    }
+    
+    var month: Int {
+        let values = Calendar.current.dateComponents([Calendar.Component.month], from: self)
+        return values.month!
+    }
+        
+    var roundedDownToHalfHour: Date {
+        let roundedDownToHour = self.roundedDownToHour
+        if roundedDownToHour.minutesFrom(date: self) >= 30 {
+            return roundedDownToHour.add(minutes: 30)
+        } else {
+            return roundedDownToHour
+        }
     }
 
     var roundUpToHourIfNeeded: Date {
@@ -278,6 +297,8 @@ extension Date {
         }
         return dateStrings
     }
+    
+    
 
     var adjustedFor11_59: Date {
         if self.minutes == 59 {

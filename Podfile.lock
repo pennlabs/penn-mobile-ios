@@ -33,6 +33,7 @@ PODS:
   - SwiftSoup (1.7.4)
   - SwiftyJSON (4.2.0)
   - TimelineTableViewCell (1.2)
+  - XLPagerTabStrip (9.0.0)
   - ZoomImageView (0.6.0)
 
 DEPENDENCIES:
@@ -48,6 +49,7 @@ DEPENDENCIES:
   - SwiftSoup
   - SwiftyJSON
   - TimelineTableViewCell
+  - XLPagerTabStrip (~> 9.0)
   - ZoomImageView
 
 SPEC REPOS:
@@ -69,6 +71,7 @@ SPEC REPOS:
     - SwiftSoup
     - SwiftyJSON
     - TimelineTableViewCell
+    - XLPagerTabStrip
     - ZoomImageView
 
 SPEC CHECKSUMS:
@@ -89,8 +92,9 @@ SPEC CHECKSUMS:
   SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
+  XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5
 
-PODFILE CHECKSUM: 819d65fa76e5661f3b00c37f649a417783c5ae6f
+PODFILE CHECKSUM: 468d76751963630c828d99289c68587cb570bfeb
 
 COCOAPODS: 1.5.3

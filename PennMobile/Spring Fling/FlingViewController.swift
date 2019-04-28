@@ -14,7 +14,7 @@ protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
 
 final class FlingTableViewModel: ModularTableViewModel {}
 
-final class FlingViewController: GenericViewController, HairlineRemovable {
+final class FlingViewController: GenericViewController, HairlineRemovable, IndicatorEnabled {
     
     fileprivate var performersTableView: ModularTableView!
     fileprivate var scheduleTableView: UITableView!
@@ -49,18 +49,22 @@ final class FlingViewController: GenericViewController, HairlineRemovable {
         mapImageView.isHidden = true
         
         checkInWebview = WebviewController()
-        checkInWebview.load(for: checkInUrl)
         checkInWebview.title = "Spring Fling Check-In"
+        
+        self.showActivity()
+        self.fetchViewModel {
+            // TODO: do something when fetch has completed
+            self.hideActivity()
+            self.checkInWebview.load(for: self.checkInUrl)
+        }
+        
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Viewed Fling", result: "Viewed Fling", content: "Fling page")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let navbar = navigationController?.navigationBar {
             removeHairline(from: navbar)
-        }
-        
-        self.fetchViewModel {
-            // TODO: do something when fetch has completed
         }
     }
     
@@ -222,7 +226,7 @@ extension FlingViewController {
         guard let items = model.items as? [HomeCellItem] else { return }
         HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
             DispatchQueue.main.async {
-                let row = items.index(where: { (thisItem) -> Bool in
+                let row = items.firstIndex(where: { (thisItem) -> Bool in
                     thisItem.equals(item: item)
                 })!
                 let indexPath = IndexPath(row: row, section: 0)
@@ -255,6 +259,7 @@ extension FlingViewController {
 extension FlingViewController: FlingCellDelegate {
     func handleUrlPressed(url: String, title: String) {
         navigationController?.pushViewController(checkInWebview, animated: true)
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Fling Check-In", result: "Fling Check-In", content: "Fling Check-In")
     }
 }
 

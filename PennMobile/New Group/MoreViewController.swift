@@ -22,6 +22,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
             student = Student.getStudent()
         }
         setUpTableView()
+        self.tableView.isHidden = true
         
         let isLoggedIn = UserDefaults.standard.getAccountID() != nil
         barButton = UIBarButtonItem(title: isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
@@ -46,6 +47,19 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         barButton.tintColor = UIColor.navigationBlue
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = barButton
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let topSpace:CGFloat?
+        if #available(iOS 11.0, *) {
+            topSpace = self.view.safeAreaInsets.top
+        } else {
+            topSpace = self.topLayoutGuide.length
+        }
+        if let topSpace = topSpace, topSpace > 0 {
+            self.tableView.isHidden = false
+        }
     }
     
     func setUpTableView() {

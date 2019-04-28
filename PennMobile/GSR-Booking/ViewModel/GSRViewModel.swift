@@ -53,6 +53,11 @@ class GSRViewModel: NSObject {
         }
     }
     
+    // MARK: Logged In Flag
+    var isLoggedIn: Bool {
+        return GSRUser.hasSavedUser() || GSRUser.getSessionID() != nil
+    }
+    
     // MARK: Empty 
     var isEmpty: Bool {
         get {
@@ -193,7 +198,7 @@ extension GSRViewModel: GSRSelectionDelegate {
             currentSelection.append(timeSlot)
             break
         case .remove:
-            currentSelection.remove(at: currentSelection.index(of: timeSlot)!)
+            currentSelection.remove(at: currentSelection.firstIndex(of: timeSlot)!)
             break
         }
         
@@ -228,14 +233,20 @@ extension GSRViewModel: GSRRangeSliderDelegate {
     }
     
     func parseData(startDate: Date, endDate: Date) {
-        updateCurrentRooms(startDate: startDate, endDate: endDate)
+        if let minDate = getMinDate(), startDate < minDate {
+            // Start date is by hour but minDate is by half-hour
+            // So start date may be less than the minDate
+            updateCurrentRooms(startDate: minDate, endDate: endDate)
+        } else {
+            updateCurrentRooms(startDate: startDate, endDate: endDate)
+        }
         delegate.refreshDataUI()
     }
     
     // If today, return current time. Otherwise, return earliest available time
     func getMinDate() -> Date? {
         if selectedDate.day == dates[0].day {
-            return Date().roundedDownToHour
+            return Date().roundedDownToHalfHour
         } else {
             return allRooms.getMinMaxDates(day: selectedDate).0
         }
@@ -256,7 +267,7 @@ extension GSRViewModel {
         return selectedDate
     }
     
-    fileprivate func getBooking() -> GSRBooking? {
+    func getBooking() -> GSRBooking? {
         if currentSelection.isEmpty {
             return nil
         }
@@ -279,6 +290,6 @@ extension GSRViewModel {
 // MARK: - Select Location
 extension GSRViewModel {
     func getLocationIndex(_ location: GSRLocation) -> Int {
-        return locations.index(of: location)!
+        return locations.firstIndex(of: location)!
     }
 }

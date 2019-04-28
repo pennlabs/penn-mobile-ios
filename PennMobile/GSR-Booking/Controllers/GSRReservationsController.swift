@@ -25,7 +25,7 @@ class GSRReservationsController: UITableViewController, ShowsAlert, IndicatorEna
         tableView.tableHeaderView = UIView()
         
         self.title = "Your Bookings"
-    self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
 
         let sessionID = GSRUser.getSessionID()
         let email = GSRUser.getUser()?.email
@@ -130,7 +130,9 @@ extension GSRReservationsController {
             return
         }
         
-        self.showActivity()
+        if self.reservations.isEmpty {
+            self.showActivity()
+        }
         GSRNetworkManager.instance.getReservations(sessionID: sessionID, email: email) { (reservations) in
             DispatchQueue.main.async {
                 self.hideActivity()

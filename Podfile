@@ -7,18 +7,19 @@ target 'PennMobile' do
 
     # Pods for PennMobile
 
-    pod 'MBProgressHUD', '~> 0.8'
-    pod 'SwiftyJSON'
-    pod 'ScrollableGraphView'
-    pod 'Firebase', '~> 4.7'
-    pod 'SCLAlertView'
-    pod 'ESTabBarController-swift'
-    pod 'ZoomImageView'
-    pod 'Kingfisher', '~> 5.3'
-    pod 'TimelineTableViewCell'
-    pod 'Fabric', '~> 1.9.0'
-    pod 'Crashlytics', '~> 3.12.0'
-    pod 'SwiftSoup'
+pod 'MBProgressHUD', '~> 0.8'
+pod 'SwiftyJSON'
+pod 'ScrollableGraphView'
+pod 'Firebase', '~> 4.7'
+pod 'SCLAlertView'
+pod 'ESTabBarController-swift'
+pod 'ZoomImageView'
+pod 'Kingfisher', '~> 5.3'
+pod 'TimelineTableViewCell'
+pod 'Fabric', '~> 1.9.0'
+pod 'Crashlytics', '~> 3.12.0'
+pod 'SwiftSoup'
+pod 'XLPagerTabStrip', '~> 9.0'
 
     target 'PennMobileTests' do
         inherit! :search_paths

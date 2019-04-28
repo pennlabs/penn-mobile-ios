@@ -25,6 +25,7 @@ extension UserDefaults {
         case wharton
         case student
         case coursePermission
+        case lastLogin
     }
 }
 
@@ -182,6 +183,11 @@ extension UserDefaults {
         return prevAppVersion != version
     }
     
+    func getAppVersion() -> String {
+        let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+        return version
+    }
+    
     func setAppVersion() {
         let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
         set(version, forKey: UserDefaultsKeys.appVersion.rawValue)
@@ -243,5 +249,17 @@ extension UserDefaults {
     
     func coursePermissionGranted() -> Bool {
         return bool(forKey: UserDefaultsKeys.coursePermission.rawValue)
+    }
+}
+
+// MARK: - Last Login
+extension UserDefaults {
+    func setLastLogin() {
+        set(Date(), forKey: UserDefaultsKeys.lastLogin.rawValue)
+        synchronize()
+    }
+    
+    func getLastLogin() -> Date? {
+        return object(forKey: UserDefaultsKeys.lastLogin.rawValue) as? Date
     }
 }

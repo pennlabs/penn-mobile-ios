@@ -145,13 +145,13 @@ open class RangeSlider: UIControl {
         }
 
         if minValueThumbLayer.isHighlight {
-            if index > rangeValues.index(of: maxValue)! {
+            if index > rangeValues.firstIndex(of: maxValue)! {
                 minValue = maxValue
             } else {
                 minValue = rangeValues[index]
             }
         } else if maxValueThumbLayer.isHighlight {
-            if index < rangeValues.index(of: minValue)! {
+            if index < rangeValues.firstIndex(of: minValue)! {
                 maxValue = minValue
             } else {
                 maxValue = rangeValues[index]
@@ -281,7 +281,7 @@ open class RangeSlider: UIControl {
     }
 
     func position(_ value: Int) -> CGFloat {
-        let index = rangeValues.index(of: value)!
+        let index = rangeValues.firstIndex(of: value)!
         let count = rangeValues.count
         if index == 0 {
             return thumbRadius

@@ -29,11 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        if UserDefaults.standard.isNewAppVersion() {
-            UserDefaults.standard.setAppVersion()
-        }
-        
         UserDBManager.shared.dryRun = true
         UserDBManager.shared.testRun = true
 

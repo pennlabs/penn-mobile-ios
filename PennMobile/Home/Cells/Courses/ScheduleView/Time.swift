@@ -10,7 +10,7 @@ struct Time: Hashable {
     let hour: Int
     let minutes: Int
     let isAm: Bool
-    
+        
     func rawMinutes() -> Int {
         if isAm && hour == 12 {
             return minutes
@@ -22,24 +22,10 @@ struct Time: Hashable {
         return total
     }
     
-    /// Returns a Boolean value indicating whether two values are equal.
-    ///
-    /// Equality is the inverse of inequality. For any values `a` and `b`,
-    /// `a == b` implies that `a != b` is `false`.
-    ///
-    /// - Parameters:
-    ///   - lhs: A value to compare.
-    ///   - rhs: Another value to compare.
-    public static func ==(lhs: Time, rhs: Time) -> Bool {
-        return lhs.hour == rhs.hour && lhs.minutes == rhs.minutes && lhs.isAm == rhs.isAm
-    }
-    
-    var hashValue: Int {
+    var description: String {
         get {
-            var hash = hour.hashValue
-            hash += (55*hash + minutes.hashValue)
-            hash += (55*hash + isAm.hashValue)
-            return hash
+            let am = isAm ? "AM" : "PM"
+            return "\(hour):\(minutes) \(am)"
         }
     }
 }
