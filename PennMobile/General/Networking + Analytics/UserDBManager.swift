@@ -16,7 +16,8 @@ func getDeviceID() -> String {
 
 class UserDBManager: NSObject {
     static let shared = UserDBManager()
-    fileprivate let baseUrl = "https://api.pennlabs.org"
+    //fileprivate let baseUrl = "https://api.pennlabs.org"
+    fileprivate let baseUrl = "http://localhost:5000"
     
     var dryRun: Bool = true
     var testRun: Bool = false
@@ -26,6 +27,9 @@ class UserDBManager: NSObject {
         let request = NSMutableURLRequest(url: url)
         let deviceID = getDeviceID()
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+        if let accountID = UserDefaults.standard.getAccountID() {
+            request.setValue(accountID, forHTTPHeaderField: "X-Account-ID")
+        }
         return request
     }
     
@@ -84,6 +88,20 @@ extension UserDBManager {
     func saveLaundryPreferences(for ids: [Int]) {
         let urlString = "\(baseUrl)/laundry/preferences"
         let params = ["rooms": ids]
+        let request = getAnalyticsPostRequest(url: urlString, params: params)
+        sendRequest(request)
+    }
+}
+
+// MARK: - Dining Balance
+extension UserDBManager {
+    func saveDiningBalance(for balance: DiningBalance) {
+        let urlString = "\(baseUrl)/dining/balance"
+        let params = [
+            "dining_dollars": balance.diningDollars,
+            "swipes": balance.visits,
+            "guest_swipes": balance.guestVisits,
+        ] as [String: Any]
         let request = getAnalyticsPostRequest(url: urlString, params: params)
         sendRequest(request)
     }

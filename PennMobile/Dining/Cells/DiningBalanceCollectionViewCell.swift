@@ -11,7 +11,13 @@ import Foundation
 class DiningBalanceCollectionViewCell: UICollectionViewCell {
     static let identifier = "diningBalanceCollectionViewCell"
     
-    var type: String! {
+    enum CellType {
+        case diningDollars
+        case swipes
+        case guestSwipes
+    }
+    
+    var type: CellType! {
         didSet {
             if let type = type {
                 setupCell(with: type)
@@ -21,7 +27,9 @@ class DiningBalanceCollectionViewCell: UICollectionViewCell {
     
     var value: String? {
         didSet {
-            self.setupCellData(with: value)
+            if let value = value {
+                self.setupCellData(with: value)
+            }
         }
     }
     
@@ -48,15 +56,17 @@ class DiningBalanceCollectionViewCell: UICollectionViewCell {
 // MARK: - Setup Cell
 extension DiningBalanceCollectionViewCell {
     
-    fileprivate func setupCell(with type: String) {
-        titleLabel.text = type
-        if (type == "Dining Dollars") {
+    fileprivate func setupCell(with type: CellType) {
+        if (type == .diningDollars) {
+            titleLabel.text = "Dining Dollars"
             icon.image = UIImage(named: "coin")
         }
-        if (type == "Swipes") {
+        if (type == .swipes) {
+            titleLabel.text = "Swipes"
             icon.image = UIImage(named: "card")
         }
-        if (type == "Guest Swipes") {
+        if (type == .guestSwipes) {
+            titleLabel.text = "Guest Swipes"
             icon.image = UIImage(named: "friends")
         }
     }
@@ -90,7 +100,7 @@ extension DiningBalanceCollectionViewCell {
         icon = getImageView()
         addSubview(icon)
         icon.widthAnchor.constraint(equalToConstant: 21).isActive = true
-        icon.heightAnchor.constraint(equalToConstant: 12).isActive = true
+        icon.heightAnchor.constraint(equalToConstant: 21).isActive = true
         icon.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
         icon.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -3).isActive = true
     }

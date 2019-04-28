@@ -46,7 +46,7 @@ extension DiningBalanceCell {
         } else {
             let formatter = DateFormatter()
             formatter.dateFormat = "h:mm a MM/dd/yy"
-            let lastUpdated = "Last updated " + formatter.string(from: diningBalance!.lastUpdated!)
+            let lastUpdated = "Last updated " + formatter.string(from: diningBalance!.lastUpdated)
             balancesAsOfLabel.text = lastUpdated
         }
         balanceCollectionView.reloadData()
@@ -131,25 +131,32 @@ extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegat
         cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: 8).cgPath
         
         if (indexPath.item == 0) {
-            cell.type = "Dining Dollars"
-            cell.value = diningBalance?.diningDollars
+            cell.type = .diningDollars
+            if let diningDollars = diningBalance?.diningDollars {
+                cell.value = "$" + String(diningDollars)
+            } else {
+                cell.value = nil
+            }
             cell.backgroundColor = UIColor.init(red: 106, green: 188, blue: 143)
         }
         if (indexPath.item == 1) {
-            cell.type = "Swipes"
+            cell.type = .swipes
             if let visits = diningBalance?.visits {
                 cell.value = String(visits)
+            } else {
+                cell.value = nil
             }
             cell.backgroundColor = UIColor.init(red: 106, green: 144, blue: 188)
         }
         if (indexPath.item == 2) {
-            cell.type = "Guest Swipes"
+            cell.type = .guestSwipes
             if let guestVisits = diningBalance?.guestVisits {
                 cell.value = String(guestVisits)
+            } else {
+                cell.value = nil
             }
             cell.backgroundColor = UIColor.init(red: 0xA6, green: 0xBC, blue: 0xD7)
         }
         return cell
     }
 }
-

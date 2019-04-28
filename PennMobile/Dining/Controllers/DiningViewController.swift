@@ -73,13 +73,22 @@ extension DiningViewController {
             }
         }
     }
+    
     func updateBalance() {
+        if let balance = self.viewModel.balance, balance.lastUpdated.minutesFrom(date: Date()) < 10 {
+            return
+        }
+        
         self.viewModel.showActivity = true
-        CampusExpressNetworkManager.instance.getDiningData { (diningBalances) in
+        CampusExpressNetworkManager.instance.getDiningData { (diningBalance) in
             DispatchQueue.main.async {
-                self.viewModel.balance = diningBalances
+                self.viewModel.balance = diningBalance
                 self.viewModel.showActivity = false
                 self.tableView.reloadData()
+                
+                if let diningBalance = diningBalance {
+                    UserDBManager.shared.saveDiningBalance(for: diningBalance)
+                }
             }
         }
     }

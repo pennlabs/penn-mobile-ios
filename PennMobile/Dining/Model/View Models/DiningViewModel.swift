@@ -31,7 +31,12 @@ class DiningViewModel: NSObject {
     internal let headerView = "headerView"
     internal let diningCell = "diningCell"
     internal let diningBalanceCell = "diningBalanceCell"
-    var shouldShowDiningBalances = true
+    
+    var shouldShowDiningBalances: Bool {
+        get {
+            return UserDefaults.standard.hasDiningPlan()
+        }
+    }
     
     func getType(forSection section: Int) -> DiningVenueType {
         let index = shouldShowDiningBalances ? section - 1 : section

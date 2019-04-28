@@ -25,6 +25,7 @@ extension UserDefaults {
         case wharton
         case student
         case coursePermission
+        case hasDiningPlan
     }
 }
 
@@ -202,6 +203,22 @@ extension UserDefaults {
     
     func clearWhartonFlag() {
         removeObject(forKey: UserDefaultsKeys.wharton.rawValue)
+    }
+}
+
+// MARK: - Has Dining Plan
+extension UserDefaults {
+    func set(hasDiningPlan: Bool) {
+        set(hasDiningPlan, forKey: UserDefaultsKeys.hasDiningPlan.rawValue)
+        synchronize()
+    }
+    
+    func hasDiningPlan() -> Bool {
+        return bool(forKey: UserDefaultsKeys.hasDiningPlan.rawValue)
+    }
+    
+    func clearHasDiningPlan() {
+        removeObject(forKey: UserDefaultsKeys.hasDiningPlan.rawValue)
     }
 }
 

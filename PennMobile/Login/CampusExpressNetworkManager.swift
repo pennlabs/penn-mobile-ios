@@ -56,26 +56,25 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
 // MARK: - Dining Dollars Parsing
 extension CampusExpressNetworkManager {
     
-    fileprivate func parseDiningBalances(from html: String) throws -> DiningBalance {
+    fileprivate func parseDiningBalances(from html: String) throws -> DiningBalance? {
         let doc: Document = try SwiftSoup.parse(html)
         guard let element = try doc.getElementsByClass("PAD_subpage").first() else {
             throw NetworkingError.parsingError
         }
-        let plan = try element.select("a")
         let noPlan = try element.getElementsByClass("subTEXT").first()
-        let diningPlan = try plan.text()
         
         if try noPlan?.text() == "You are not currently signed up for a Dining Plan." {
-            return DiningBalance(hasDiningPlan: false, lastUpdated: nil, planName: nil, diningDollars: nil, visits: nil, addOnVisits: nil, guestVisits: nil)
+            UserDefaults.standard.set(hasDiningPlan: false)
+            return nil
         }
-        let lastUpdated = Date()
-        
+        UserDefaults.standard.set(hasDiningPlan: true)
         let subElements = try doc.select("li")
         let visits = Int (try subElements.get(0).text().split(separator: " ")[1])
         let guestVisits = Int (try subElements.get(1).text().split(separator: " ")[2])
         let addOnVisits = Int (try subElements.get(2).text().split(separator: " ")[2])
-        let diningDollars = String (try subElements.get(3).text().split(separator: " ")[2])
-        return DiningBalance(hasDiningPlan: true, lastUpdated: lastUpdated,  planName: diningPlan, diningDollars: diningDollars, visits: visits, addOnVisits: addOnVisits, guestVisits: guestVisits)
+        let diningDollarsStr = String (try subElements.get(3).text().split(separator: " ")[2])
+        let diningDollars = Float(diningDollarsStr.suffix(1))
+        return DiningBalance(diningDollars: diningDollars!, visits: visits! + addOnVisits!, guestVisits: guestVisits!, lastUpdated: Date())
     }
 }
 
