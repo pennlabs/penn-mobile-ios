@@ -120,8 +120,12 @@ class RootViewController: UIViewController {
         let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
         UserDefaults.standard.set(sessionCount+1, forKey:"launchCount")
         UserDefaults.standard.synchronize()
-        if sessionCount == 3 {
-            SKStoreReviewController.requestReview()
+        
+        // This code will ONLY present the review if we're not running Fastlane UI Automation (for screenshots)
+        if !UIApplication.isRunningFastlaneTest {
+            if sessionCount == 3 {
+                SKStoreReviewController.requestReview()
+            }
         }
     }
     

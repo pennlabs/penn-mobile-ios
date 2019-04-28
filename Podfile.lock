@@ -29,6 +29,7 @@ PODS:
   - nanopb/encode (0.3.901)
   - SCLAlertView (0.8)
   - ScrollableGraphView (4.0.6)
+  - SimulatorStatusMagic (2.4.1)
   - SwiftSoup (1.7.4)
   - SwiftyJSON (4.2.0)
   - TimelineTableViewCell (1.2)
@@ -44,6 +45,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.8)
   - SCLAlertView
   - ScrollableGraphView
+  - SimulatorStatusMagic
   - SwiftSoup
   - SwiftyJSON
   - TimelineTableViewCell
@@ -65,6 +67,7 @@ SPEC REPOS:
     - nanopb
     - SCLAlertView
     - ScrollableGraphView
+    - SimulatorStatusMagic
     - SwiftSoup
     - SwiftyJSON
     - TimelineTableViewCell
@@ -85,6 +88,7 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
+  SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
