@@ -53,7 +53,7 @@ class ControllerModel: NSObject {
         vcDictionary = [Feature: UIViewController]()
         vcDictionary[.home] = HomeViewController()
         vcDictionary[.dining] = DiningViewController()
-        vcDictionary[.studyRoomBooking] = GSRController()
+        vcDictionary[.studyRoomBooking] = GSRTabController()
         vcDictionary[.laundry] = LaundryTableViewController()
         vcDictionary[.fitness] = FitnessViewController()
         vcDictionary[.more] = MoreViewController()
@@ -61,7 +61,7 @@ class ControllerModel: NSObject {
         vcDictionary[.news] = NewsViewController()
         vcDictionary[.contacts] = ContactsTableViewController()
         vcDictionary[.about] = AboutViewController()
-        vcDictionary[.fling] = FlingViewController()
+//        vcDictionary[.fling] = FlingViewController()
     }
 
     var viewControllers: [UIViewController] {
@@ -80,12 +80,12 @@ class ControllerModel: NSObject {
     // Features order in MoreViewController:
     var moreOrder: [Feature] {
         get {
-            return [.news, .fling, .fitness, .contacts, .about,]
+            return [.news, .fitness, .contacts, .about,]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            return [#imageLiteral(resourceName: "News"), UIImage(named: "Fling_Colored")!, #imageLiteral(resourceName: "Fitness_Blue"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
+            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Fitness_Blue"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Penn Labs")]
         }
     }
 

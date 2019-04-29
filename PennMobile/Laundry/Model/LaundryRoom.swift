@@ -78,16 +78,26 @@ class LaundryRoom: Codable {
     }
     
     static func getPreferences() -> [LaundryRoom] {
-        if let ids = UserDefaults.standard.getLaundryPreferences() {
+        if UIApplication.isRunningFastlaneTest {
             var halls = [LaundryRoom]()
-            for id in ids {
+            for id in [1, 2, 3] {
                 if let hall = getLaundryHall(for: id) {
                     halls.append(hall)
                 }
             }
             return halls
+        } else {
+            if let ids = UserDefaults.standard.getLaundryPreferences() {
+                var halls = [LaundryRoom]()
+                for id in ids {
+                    if let hall = getLaundryHall(for: id) {
+                        halls.append(hall)
+                    }
+                }
+                return halls
+            }
+            return [LaundryRoom]()
         }
-        return [LaundryRoom]()
     }
     
     func decrementTimeRemaining(by minutes: Int) {

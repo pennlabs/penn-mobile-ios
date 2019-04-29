@@ -29,9 +29,11 @@ PODS:
   - nanopb/encode (0.3.901)
   - SCLAlertView (0.8)
   - ScrollableGraphView (4.0.6)
+  - SimulatorStatusMagic (2.4.1)
   - SwiftSoup (1.7.4)
   - SwiftyJSON (4.2.0)
   - TimelineTableViewCell (1.2)
+  - XLPagerTabStrip (9.0.0)
   - ZoomImageView (0.6.0)
 
 DEPENDENCIES:
@@ -43,9 +45,11 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.8)
   - SCLAlertView
   - ScrollableGraphView
+  - SimulatorStatusMagic
   - SwiftSoup
   - SwiftyJSON
   - TimelineTableViewCell
+  - XLPagerTabStrip (~> 9.0)
   - ZoomImageView
 
 SPEC REPOS:
@@ -63,9 +67,11 @@ SPEC REPOS:
     - nanopb
     - SCLAlertView
     - ScrollableGraphView
+    - SimulatorStatusMagic
     - SwiftSoup
     - SwiftyJSON
     - TimelineTableViewCell
+    - XLPagerTabStrip
     - ZoomImageView
 
 SPEC CHECKSUMS:
@@ -82,11 +88,13 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
+  SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
+  XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5
 
-PODFILE CHECKSUM: 84238a07f35f3246a476251652b11dfceaba13b8
+PODFILE CHECKSUM: b90607527d2eb6352a4390627f5761e3334ed951
 
 COCOAPODS: 1.5.3

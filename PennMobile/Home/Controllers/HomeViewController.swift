@@ -16,13 +16,13 @@ class HomeViewController: GenericViewController {
 
     static let edgeSpacing: CGFloat = 20
     static let cellSpacing: CGFloat = 20
-    
+
     static let refreshInterval: Int = 10
-    
+
     var lastRefresh: Date = Date()
-    
+
     var loadingView: UIActivityIndicatorView!
-    
+
     fileprivate var barButton: UIBarButtonItem!
 
     override func viewDidLoad() {
@@ -30,13 +30,13 @@ class HomeViewController: GenericViewController {
         self.title = "Home"
         view.backgroundColor = .white
         trackScreen = true
-        
+
         prepareLoadingView()
         prepareTableView()
         prepareRefreshControl()
-        
+
         registerForNotifications()
-        
+
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.rightBarButtonItem = nil
     }
@@ -50,16 +50,16 @@ class HomeViewController: GenericViewController {
             self.stopLoadingViewAnimation()
         }
     }
-    
+
     override func setupNavBar() {
         super.setupNavBar()
         self.tabBarController?.title = getTitle()
         self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
     }
-    
+
     fileprivate var titleCacheTimestamp = Date()
     fileprivate var displayTitle: String?
-    
+
     fileprivate func getTitle() -> String? {
         let now = Date()
         if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.displayTitle != nil {
@@ -76,7 +76,7 @@ class HomeViewController: GenericViewController {
             return self.displayTitle
         }
     }
-    
+
     func clearCache() {
         displayTitle = nil
         tableViewModel = nil
@@ -129,7 +129,7 @@ extension HomeViewController {
         tableViewModel.delegate = self
         tableView?.model = tableViewModel
     }
-    
+
     func prepareLoadingView() {
         loadingView = UIActivityIndicatorView(style: .whiteLarge)
         loadingView.color = .black
@@ -139,13 +139,13 @@ extension HomeViewController {
         loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         loadingView.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     func startLoadingViewAnimation() {
         if loadingView != nil && !loadingView.isHidden {
             loadingView.startAnimating()
         }
     }
-    
+
     func stopLoadingViewAnimation() {
         if tableView.isHidden {
             self.tableView.isHidden = false
@@ -157,18 +157,21 @@ extension HomeViewController {
 
 // MARK: - Networking
 extension HomeViewController {
-    func fetchViewModel(_ completion: @escaping () -> Void) {
+    func fetchViewModel(_ secondAttempt: Bool = false, _ completion: @escaping () -> Void) {
         HomeAPIService.instance.fetchModel { (model, error) in
             DispatchQueue.main.async {
                 if error != nil {
                     let navigationVC = self.navigationController as? HomeNavigationController
-                    //navigationVC?.addPermanentStatusBar(text: error == NetworkingError.noInternet ? StatusBar.StatusBarText.noInternet : .apiError)
-                    if error != NetworkingError.noInternet {
+
+                    if !secondAttempt {
+                        self.fetchViewModel(true, completion)
+                    } else {
                         navigationVC?.addStatusBar(text: .apiError)
+                        completion()
                     }
-                    completion()
                     return
                 }
+                
                 guard let model = model else { return }
                 self.setModel(model)
                 UIView.transition(with: self.tableView,
@@ -215,7 +218,7 @@ extension HomeViewController {
             self.tableView.reloadRows(at: [indexPath], with: .none)
         }
     }
-    
+
     func removeItem(_ item: HomeCellItem) {
         guard let allItems = tableViewModel?.items as? [HomeCellItem] else { return }
         if let row = allItems.firstIndex(where: { (thisItem) -> Bool in
@@ -270,13 +273,13 @@ extension HomeViewController {
                 outdatedItems.append(item)
             }
         }
-        
+
         for i in 0..<(outdatedItems.count) {
             if i < preferences.count {
                 outdatedItems[i].room = preferences[i]
             }
         }
-        
+
         self.fetchCellData(for: [HomeItemTypes.instance.laundry])
     }
 }

@@ -2,13 +2,13 @@
 
 # A list of devices you want to take the screenshots from
 devices([
-#   "iPhone 8",
-   "iPhone 8 Plus",
-#   "iPhone SE",
-#   "iPhone XS",
-#   "iPhone XR",
+#  "iPhone 8",
+  "iPhone 8 Plus",
+#  "iPhone SE",
+#  "iPhone Xʀ",
+#  "iPhone Xs",
    "iPhone Xs Max",
-#   "iPad Pro (12.9-inch)",
+   "iPad Pro (12.9-inch) (3rd generation)",
 #   "iPad Pro (9.7-inch)",
 #   "Apple TV 1080p"
 ])
@@ -21,7 +21,7 @@ devices([
 # ])
 
 # The name of the scheme which contains the UI Tests
-scheme("FastlaneUIAutomation")
+scheme("AutomatedScreenshotUITests")
 
 # Where should the resulting screenshots be stored?
 output_directory("./fastlane/screenshots")
