@@ -64,7 +64,8 @@ class MapViewController: UIViewController {
         self.title = "Penn Map"
         
         guard let searchTerm = searchTerm else { return }
-
+        self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
+        
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined:
