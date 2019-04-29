@@ -30,7 +30,8 @@ class GSRViewModel: NSObject {
     fileprivate var dates = GSRDateHandler.generateDates()
     fileprivate let locations = GSRLocationModel.shared.getLocations()
     fileprivate lazy var selectedDate = self.dates[0]
-    fileprivate lazy var selectedLocation = self.locations[0]
+//    fileprivate lazy var selectedLocation = self.locations[0]
+    fileprivate var selectedLocation: GSRLocation
     
     // MARK: Room Data
     fileprivate var allRooms = [GSRRoom]()
@@ -41,6 +42,10 @@ class GSRViewModel: NSObject {
     
     // MARK: Delegate
     var delegate: GSRViewModelDelegate!
+    
+    init(selectedLocation: GSRLocation) {
+        self.selectedLocation = selectedLocation
+    }
     
     // MARK: GSR State
     var state: GSRState {
