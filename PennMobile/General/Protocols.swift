@@ -145,10 +145,4 @@ extension LocationPermissionRequestable {
             return false
         }
     }
-    
-    func requestPermission() {
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-    }
 }

@@ -48,6 +48,12 @@ class MapViewController: UIViewController {
     }
     var annotation: MKAnnotation?
     
+    lazy var locationManager: CLLocationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        return locationManager
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMap()
@@ -63,7 +69,8 @@ class MapViewController: UIViewController {
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined:
-//                requestPermission()
+                // Do nothing, handle in didChangeAuthorization delegate function
+                self.locationManager.requestWhenInUseAuthorization()
                 break
             default:
                 showCoordinates(searchTerm: searchTerm)
@@ -152,9 +159,7 @@ extension MapViewController {
 
 extension MapViewController: LocationPermissionRequestable {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if hasLocationPermission() {
-            print("permission granted")
-        } else if let searchTerm = searchTerm {
+        if let searchTerm = searchTerm {
             self.showCoordinates(searchTerm: searchTerm)
         }
     }
