@@ -59,11 +59,26 @@ class MapViewController: UIViewController {
         
         guard let searchTerm = searchTerm else { return }
         self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
+        
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined:
+//                requestPermission()
+                break
+            default:
+                showCoordinates(searchTerm: searchTerm)
+                break
+            }
+        } else {
+            showCoordinates(searchTerm: searchTerm)
+        }
+    }
+    
+    fileprivate func showCoordinates(searchTerm: String) {
         self.region = MKCoordinateRegion.init(center: PennCoordinate.shared.getDefault(), latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
         self.getCoordinates(for: searchTerm) { (coordinates, title) in
             DispatchQueue.main.async {
                 if let coordinates = coordinates {
-                    self.region = MKCoordinateRegion.init(center: coordinates, latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
                     if let title = title {
                         let thisAnnotation = MKPointAnnotation()
                         thisAnnotation.coordinate = coordinates
@@ -71,6 +86,16 @@ class MapViewController: UIViewController {
                         thisAnnotation.subtitle = title
                         self.annotation = thisAnnotation
                         self.mapView?.addAnnotation(thisAnnotation)
+                    }
+                    
+                    if let annotation = self.annotation, self.hasLocationPermission() {
+                        let userLoc = self.mapView!.userLocation
+                        let newDistance = CLLocation(latitude: userLoc.coordinate.latitude, longitude: userLoc.coordinate.longitude).distance(from: CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude))
+                        let centerCoordinate = CLLocationCoordinate2DMake((userLoc.coordinate.latitude + annotation.coordinate.latitude) / 2.0, (userLoc.coordinate.longitude + annotation.coordinate.longitude) / 2.0)
+                        let largeRegion = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 2 * newDistance, longitudinalMeters: 2 * newDistance)
+                        self.region = self.mapView!.regionThatFits(largeRegion)
+                    } else {
+                        self.region = MKCoordinateRegion.init(center: coordinates, latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
                     }
                 } else {
                     self.region = MKCoordinateRegion.init(center: PennCoordinate.shared.getDefault(), latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
@@ -84,6 +109,7 @@ extension MapViewController {
     
     fileprivate func setupMap() {
         mapView = getMapView()
+        mapView?.showsUserLocation = true
         view.addSubview(mapView!)
         NSLayoutConstraint.activate([
             mapView!.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -121,5 +147,15 @@ extension MapViewController {
             callback(nil, nil)
         }
         task.resume()
+    }
+}
+
+extension MapViewController: LocationPermissionRequestable {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if hasLocationPermission() {
+            print("permission granted")
+        } else if let searchTerm = searchTerm {
+            self.showCoordinates(searchTerm: searchTerm)
+        }
     }
 }

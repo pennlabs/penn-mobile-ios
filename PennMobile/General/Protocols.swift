@@ -7,6 +7,7 @@
 //
 
 import MBProgressHUD
+import CoreLocation
 
 protocol IndicatorEnabled {}
 
@@ -125,4 +126,29 @@ extension ShowsAlert where Self: UIViewController {
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
+
+protocol LocationPermissionRequestable: CLLocationManagerDelegate {}
+
+extension LocationPermissionRequestable {
+    func hasLocationPermission() -> Bool {
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                return false
+            case .authorizedAlways, .authorizedWhenInUse:
+                return true
+            @unknown default:
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+    
+    func requestPermission() {
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+    }
 }
