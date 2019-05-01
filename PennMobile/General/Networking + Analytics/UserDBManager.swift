@@ -16,8 +16,7 @@ func getDeviceID() -> String {
 
 class UserDBManager: NSObject {
     static let shared = UserDBManager()
-    //fileprivate let baseUrl = "https://api.pennlabs.org"
-    fileprivate let baseUrl = "http://localhost:5000"
+    fileprivate let baseUrl = "https://api.pennlabs.org"
     
     var dryRun: Bool = true
     var testRun: Bool = false

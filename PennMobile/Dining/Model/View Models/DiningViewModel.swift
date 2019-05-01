@@ -116,6 +116,7 @@ extension DiningViewModel: UITableViewDelegate {
             }
             
             view.label.text = headerTitle
+            view.loadingView.stopAnimating()
             return view
         }
     }

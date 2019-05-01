@@ -113,3 +113,12 @@ extension Student: Equatable {
                 && lhs.pennkey == rhs.pennkey && lhs.email == rhs.email
     }
 }
+
+extension Student {
+    func isFreshman() {
+        let now = Date()
+        let components = Calendar.current.dateComponents([.year], from: now)
+        let january = Calendar.current.date(from: components)!
+//        let june = january.add()
+    }
+}

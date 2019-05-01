@@ -31,6 +31,11 @@ class DiningViewController: GenericTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchDiningHours()
+        if viewModel.balance == nil {
+            fetchBalanceIfNeeded()
+        } else {
+            updateBalance()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,7 +73,17 @@ extension DiningViewController {
                 
                 self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                
+            }
+        }
+    }
+    
+    func fetchBalanceIfNeeded() {
+        self.viewModel.showActivity = true
+        DiningAPI.instance.fetchDiningBalance { (diningBalance) in
+            DispatchQueue.main.async {
+                self.viewModel.balance = diningBalance
+                self.viewModel.showActivity = false
+                self.tableView.reloadData()
                 self.updateBalance()
             }
         }
