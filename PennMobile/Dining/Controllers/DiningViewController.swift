@@ -7,7 +7,7 @@
 //
 
 class DiningViewController: GenericTableViewController {
-    
+        
     fileprivate var viewModel = DiningViewModel()
     
     fileprivate let venueToPreload: DiningVenueName = .commons
@@ -31,10 +31,13 @@ class DiningViewController: GenericTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchDiningHours()
-        if viewModel.balance == nil {
-            fetchBalanceIfNeeded()
-        } else {
-            updateBalance()
+        
+        if viewModel.shouldShowDiningBalances {
+            if viewModel.balance == nil {
+                fetchBalanceIfNeeded()
+            } else {
+                updateBalance()
+            }
         }
     }
     

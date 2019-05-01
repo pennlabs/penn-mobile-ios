@@ -115,10 +115,32 @@ extension Student: Equatable {
 }
 
 extension Student {
-    func isFreshman() {
+    func isFreshman() -> Bool {
         let now = Date()
         let components = Calendar.current.dateComponents([.year], from: now)
         let january = Calendar.current.date(from: components)!
-//        let june = january.add()
+        let june = january.add(months: 5)
+        
+        let year = components.year!
+        let freshmanYear: Int
+        if january <= now && now < june {
+            freshmanYear = year + 3
+        } else {
+            freshmanYear = year + 4
+        }
+        print(year)
+        print(freshmanYear)
+        
+        if let degrees = degrees {
+            for degree in degrees {
+                // Check if in undergrad
+                if ["WH", "EAS", "COL", "NUR"].contains(degree.schoolCode) {
+                    if degree.expectedGradTerm == "Spring \(freshmanYear)" {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
     }
 }

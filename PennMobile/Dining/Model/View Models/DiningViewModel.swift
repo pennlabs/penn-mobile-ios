@@ -13,6 +13,8 @@ protocol DiningViewModelDelegate {
 }
 
 class DiningViewModel: NSObject {
+    static var ShowDiningPlan = false
+    
     let ordering: [DiningVenueType] = [.dining, .retail]
     
     let dining = DiningVenue.getVenues(for: .dining)
@@ -34,7 +36,7 @@ class DiningViewModel: NSObject {
     
     var shouldShowDiningBalances: Bool {
         get {
-            return UserDefaults.standard.hasDiningPlan()
+            return UserDefaults.standard.hasDiningPlan() || DiningViewModel.ShowDiningPlan
         }
     }
     

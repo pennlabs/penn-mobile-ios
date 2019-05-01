@@ -69,11 +69,19 @@ extension CampusExpressNetworkManager {
         }
         UserDefaults.standard.set(hasDiningPlan: true)
         let subElements = try doc.select("li")
-        let visits = Int (try subElements.get(0).text().split(separator: " ")[1])
-        let guestVisits = Int (try subElements.get(1).text().split(separator: " ")[2])
-        let addOnVisits = Int (try subElements.get(2).text().split(separator: " ")[2])
-        let diningDollarsStr = String (try subElements.get(3).text().split(separator: " ")[2])
-        let diningDollars = Float(diningDollarsStr.suffix(1))
+        
+        let visitsArray = try subElements.get(0).text().split(separator: " ")
+        let guestVisitsArray = try subElements.get(1).text().split(separator: " ")
+        let addOnVisitsArray = try subElements.get(2).text().split(separator: " ")
+        let diningDollarsArray = try subElements.get(3).text().split(separator: " ")
+        if (visitsArray.count < 2 || guestVisitsArray.count < 3 || addOnVisitsArray.count < 3 || diningDollarsArray.count < 3) {
+            throw NetworkingError.parsingError
+        }
+        let visits = Int (visitsArray[1])
+        let guestVisits = Int (guestVisitsArray[2])
+        let addOnVisits = Int (addOnVisitsArray[2])
+        let diningDollarsStr = String (diningDollarsArray[2]).dropFirst()
+        let diningDollars = Float(diningDollarsStr)
         return DiningBalance(diningDollars: diningDollars!, visits: visits! + addOnVisits!, guestVisits: guestVisits!, lastUpdated: Date())
     }
 }
