@@ -34,9 +34,9 @@ class DiningViewController: GenericTableViewController {
         
         if viewModel.shouldShowDiningBalances {
             if viewModel.balance == nil {
-                fetchBalanceIfNeeded()
+                fetchBalance()
             } else {
-                updateBalance()
+                updateBalanceIfNeeded()
             }
         }
     }
@@ -80,23 +80,26 @@ extension DiningViewController {
         }
     }
     
-    func fetchBalanceIfNeeded() {
+    func fetchBalance() {
         self.viewModel.showActivity = true
         DiningAPI.instance.fetchDiningBalance { (diningBalance) in
             DispatchQueue.main.async {
                 self.viewModel.balance = diningBalance
                 self.viewModel.showActivity = false
                 self.tableView.reloadData()
-                self.updateBalance()
+                self.updateBalanceIfNeeded()
             }
         }
     }
     
-    func updateBalance() {
+    func updateBalanceIfNeeded() {
         if let balance = self.viewModel.balance, balance.lastUpdated.minutesFrom(date: Date()) < 10 {
             return
         }
-        
+        updateBalanceFromCampusExpress()
+    }
+    
+    func updateBalanceFromCampusExpress() {
         self.viewModel.showActivity = true
         CampusExpressNetworkManager.instance.getDiningData { (diningBalance) in
             DispatchQueue.main.async {
@@ -121,6 +124,7 @@ extension DiningViewController {
     
     @objc fileprivate func handleRefresh(_ sender: Any) {
         fetchDiningHours()
+        updateBalanceFromCampusExpress()
     }
 }
 

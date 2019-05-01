@@ -128,8 +128,6 @@ extension Student {
         } else {
             freshmanYear = year + 4
         }
-        print(year)
-        print(freshmanYear)
         
         if let degrees = degrees {
             for degree in degrees {
