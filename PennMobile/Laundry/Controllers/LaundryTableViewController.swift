@@ -193,7 +193,7 @@ extension LaundryTableViewController: RoomSelectionVCDelegate {
 // MARK: - Laundry Cell Delegate
 extension LaundryTableViewController: LaundryCellDelegate {
     internal func deleteLaundryCell(for room: LaundryRoom) {
-        if let index = rooms.index(of: room) {
+        if let index = rooms.firstIndex(of: room) {
             rooms.remove(at: index)
             LaundryRoom.setPreferences(for: rooms)
             UserDBManager.shared.saveLaundryPreferences(for: rooms)

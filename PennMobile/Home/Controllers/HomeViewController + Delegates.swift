@@ -181,3 +181,21 @@ extension HomeViewController: ShowsAlert {
         }
     }
 }
+
+extension HomeViewController: GSRLocationSelectable {
+    func handleSelectedLocation(_ location: GSRLocation) {
+        let gc = GSRController()
+        gc.startingLocation = location
+        gc.title = "Study Room Booking"
+        navigationController?.pushViewController(gc, animated: true)
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Tap Home GSR Location", result: "Tap Home GSR Location", content: "View \(location.name)")
+    }
+}
+
+extension HomeViewController: FeatureNavigatable {
+    func navigateToFeature(feature: Feature) {
+        let vc = ControllerModel.shared.viewController(for: feature)
+        vc.title = feature.rawValue
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}

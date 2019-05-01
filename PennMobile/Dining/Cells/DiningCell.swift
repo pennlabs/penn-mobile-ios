@@ -58,7 +58,7 @@ extension DiningCell {
         
         updateTimeLabel(with: venue.times)
         
-        if let times = venue.times, !times.isEmpty {
+        if let times = venue.times {
             if times.isOpen {
                 statusLabel.text = "OPEN"
                 statusLabel.textColor = .informationYellow

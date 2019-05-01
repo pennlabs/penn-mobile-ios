@@ -2,10 +2,10 @@
 # platform :ios, '9.0'
 
 target 'PennMobile' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
+    # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+    use_frameworks!
 
-  # Pods for PennMobile
+    # Pods for PennMobile
 
 pod 'MBProgressHUD', '~> 0.8'
 pod 'SwiftyJSON'
@@ -13,16 +13,23 @@ pod 'ScrollableGraphView'
 pod 'Firebase', '~> 4.7'
 pod 'SCLAlertView'
 pod 'ESTabBarController-swift'
-# pod 'SimpleImageViewer'
+pod 'ZoomImageView'
 pod 'Kingfisher', '~> 5.3'
 pod 'TimelineTableViewCell'
 pod 'Fabric', '~> 1.9.0'
 pod 'Crashlytics', '~> 3.12.0'
 pod 'SwiftSoup'
+pod 'XLPagerTabStrip', '~> 9.0'
 
-  target 'PennMobileTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+    target 'PennMobileTests' do
+        inherit! :search_paths
+        # Pods for testing
+    end
+
+    target 'AutomatedScreenshotUITests' do
+        inherit! :search_paths
+        # Pods for testing
+        pod 'SimulatorStatusMagic'
+    end
 
 end

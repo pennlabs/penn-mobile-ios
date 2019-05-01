@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 protocol TransitionDelegate {
-    func handleTransition(to page: Page)
+    func handleTransition(to feature: Feature)
 }
 
-enum Page: String {
+enum Feature: String {
     case home = "Home"
     case dining = "Dining"
     case studyRoomBooking = "Study Room Booking"
@@ -23,7 +23,7 @@ enum Page: String {
     case news = "News"
     case contacts = "Penn Contacts"
     case about = "About"
-    case fling = "Fling"
+    case fling = "Spring Fling"
     case event = "Event"
 }
 
@@ -31,13 +31,29 @@ class ControllerModel: NSObject {
 
     static var shared = ControllerModel()
 
-    var vcDictionary: [Page: UIViewController]!
-    
+//    let vcDictionary: [Feature: UIViewController] = {
+//        var dict = [Feature: UIViewController]()
+//        dict[.home] = HomeViewController()
+//        dict[.dining] = DiningViewController()
+//        dict[.studyRoomBooking] = GSRController()
+//        dict[.laundry] = LaundryTableViewController()
+//        dict[.fitness] = FitnessViewController()
+//        dict[.more] = MoreViewController()
+//        dict[.map] = MapViewController()
+//        dict[.news] = NewsViewController()
+//        dict[.contacts] = ContactsTableViewController()
+//        dict[.about] = AboutViewController()
+//        dict[.fling] = FlingViewController()
+//        return dict
+//    }()
+
+    var vcDictionary: [Feature: UIViewController]!
+
     func prepare() {
-        vcDictionary = [Page: UIViewController]()
+        vcDictionary = [Feature: UIViewController]()
         vcDictionary[.home] = HomeViewController()
         vcDictionary[.dining] = DiningViewController()
-        vcDictionary[.studyRoomBooking] = GSRController()
+        vcDictionary[.studyRoomBooking] = GSRTabController()
         vcDictionary[.laundry] = LaundryTableViewController()
         vcDictionary[.fitness] = FitnessViewController()
         vcDictionary[.more] = MoreViewController()
@@ -45,24 +61,24 @@ class ControllerModel: NSObject {
         vcDictionary[.news] = NewsViewController()
         vcDictionary[.contacts] = ContactsTableViewController()
         vcDictionary[.about] = AboutViewController()
-        vcDictionary[.fling] = FlingViewController()
+//        vcDictionary[.fling] = FlingViewController()
     }
 
     var viewControllers: [UIViewController] {
-        return orderedPages.map { (title) -> UIViewController in
+        return orderedFeatures.map { (title) -> UIViewController in
             return vcDictionary[title]!
         }
     }
 
-    // pages order in tab bar
-    var orderedPages: [Page] {
+    // Features order in tab bar
+    var orderedFeatures: [Feature] {
         get {
             return [.home, .dining, .studyRoomBooking, .laundry, .more]
         }
     }
 
-    // pages order in MoreViewController:
-    var moreOrder: [Page] {
+    // Features order in MoreViewController:
+    var moreOrder: [Feature] {
         get {
             return [.news, .fitness, .contacts, .about,]
         }
@@ -74,48 +90,48 @@ class ControllerModel: NSObject {
     }
 
     var displayNames: [String] {
-        return orderedPages.map { $0.rawValue }
+        return orderedFeatures.map { $0.rawValue }
     }
 
-    func viewController(for controller: Page) -> UIViewController {
+    func viewController(for controller: Feature) -> UIViewController {
         return vcDictionary[controller]!
     }
 
-    func viewControllers(for pages: [Page]) -> [UIViewController] {
-        return pages.map { viewController(for: $0) }
+    func viewControllers(for features: [Feature]) -> [UIViewController] {
+        return features.map { viewController(for: $0) }
     }
 
     var firstVC: UIViewController {
-        return viewController(for: firstPage)
+        return viewController(for: firstFeature)
     }
 
-    var firstPage: Page {
-        //return UserDefaults.standard.isOnboarded() ? orderedPages[0] : .laundry
-        return orderedPages[0]
+    var firstFeature: Feature {
+        //return UserDefaults.standard.isOnboarded() ? orderedFeatures[0] : .laundry
+        return orderedFeatures[0]
     }
 
     func visibleVCIndex() -> IndexPath {
         for vc in viewControllers {
             if vc.isVisible {
-                return IndexPath(row: viewControllers.index(of: vc)!, section: 0)
+                return IndexPath(row: viewControllers.firstIndex(of: vc)!, section: 0)
             }
         }
         return IndexPath(row: 0, section: 0)
     }
 
-    func visiblePage() -> Page {
-        return orderedPages[visibleVCIndex().row]
+    func visibleFeature() -> Feature {
+        return orderedFeatures[visibleVCIndex().row]
     }
 
     func visibleVC() -> UIViewController {
-        return viewController(for: visiblePage())
+        return viewController(for: visibleFeature())
     }
 
 }
 
 // MARK: - Transitions
 extension ControllerModel {
-    func transition(to page: Page, withAnimation: Bool) {
+    func transition(to feature: Feature, withAnimation: Bool) {
     }
 }
 

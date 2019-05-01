@@ -12,6 +12,7 @@ import UIKit
 class DiningHeaderView: UITableViewHeaderFooterView {
     
     static let headerHeight: CGFloat = 60
+    static let identifier = "diningHeaderView"
     
     var loadingView: UIActivityIndicatorView!
     
