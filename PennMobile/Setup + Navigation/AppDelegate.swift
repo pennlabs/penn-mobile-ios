@@ -103,34 +103,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var backgroundTask: UIBackgroundTaskIdentifier?
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        if DatabaseManager.shared.dryRun { return }
-        
-        DatabaseManager.shared.endSession()
-        backgroundTask = application.beginBackgroundTask {
-            if let bgTask = self.backgroundTask {
-                DispatchQueue.main.async {
-                    application.endBackgroundTask(bgTask)
-                    self.backgroundTask = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
-                }
-            }
-        }
-        
-        DispatchQueue.main.async {
-            if application.backgroundTimeRemaining > 1.0 {
-                DatabaseManager.shared.endSession()
-            }
-            
-            if let bgTask = self.backgroundTask {
-                application.endBackgroundTask(bgTask)
-                self.backgroundTask = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
-            }
-        }
+//        if DatabaseManager.shared.dryRun { return }
+//
+//        DatabaseManager.shared.endSession()
+//        backgroundTask = application.beginBackgroundTask {
+//            if let bgTask = self.backgroundTask {
+//                DispatchQueue.main.async {
+//                    application.endBackgroundTask(bgTask)
+//                    self.backgroundTask = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
+//                }
+//            }
+//        }
+//
+//        DispatchQueue.main.async {
+//            if application.backgroundTimeRemaining > 1.0 {
+//                DatabaseManager.shared.endSession()
+//            }
+//
+//            if let bgTask = self.backgroundTask {
+//                application.endBackgroundTask(bgTask)
+//                self.backgroundTask = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
+//            }
+//        }
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         DatabaseManager.shared.startSession()
         tabBarController?.reloadTabs()
-        rootViewController.viewWillAppear(true)
+        rootViewController.applicationWillEnterForeground()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {

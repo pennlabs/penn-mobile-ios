@@ -62,17 +62,17 @@ class RootViewController: UIViewController {
         current.didMove(toParent: self)
         
         UserDefaults.standard.restoreCookies()
+        
+        self.applicationWillEnterForeground()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+    func applicationWillEnterForeground() {
         if self.current is HomeNavigationController {
             if UserDefaults.standard.getAccountID() == nil {
                 // Switch to logout screen if user is not logged in
                 self.switchToLogout(false)
             } else {
-                ControllerModel.shared.visibleVC().viewWillAppear(animated)
+                ControllerModel.shared.visibleVC().viewWillAppear(true)
             }
         }
         
