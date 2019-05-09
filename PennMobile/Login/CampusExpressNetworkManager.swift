@@ -38,17 +38,19 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
         }
     }
     
-    func getDiningData(callback: @escaping ((_ diningBalances: DiningBalance?) -> Void)) {
+    func getDiningData(callback: @escaping ((_ diningBalances: DiningBalance?, _ error: Error?) -> Void)) {
         makeAuthRequest(targetUrl: diningUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                 do {
                     let diningBalances = try self.parseDiningBalances(from: html as String)
-                    callback(diningBalances)
+                    callback(diningBalances, nil)
                     return
-                } catch {}
-            } else {
-                print("Something went wrong")
+                } catch {
+                    callback(nil, error)
+                    return
+                }
             }
+            callback(nil, error)
         }
     }
 }

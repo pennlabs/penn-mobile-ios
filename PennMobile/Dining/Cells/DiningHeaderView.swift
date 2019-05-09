@@ -9,12 +9,44 @@
 import Foundation
 import UIKit
 
+protocol DiningBalanceRefreshable {
+    func refreshBalance()
+}
+
 class DiningHeaderView: UITableViewHeaderFooterView {
+    
+    enum DiningHeaderViewState {
+        case normal
+        case loading
+        case refresh
+    }
+    
+    var state: DiningHeaderViewState = .normal {
+        didSet {
+            switch state {
+            case .normal:
+                refreshButton.isHidden = true
+                loadingView.isHidden = true
+                loadingView.stopAnimating()
+            case .loading:
+                refreshButton.isHidden = false
+                loadingView.isHidden = false
+                loadingView.startAnimating()
+            case .refresh:
+                refreshButton.isHidden = false
+                loadingView.isHidden = true
+                loadingView.stopAnimating()
+            }
+        }
+    }
+    
+    var delegate: DiningBalanceRefreshable?
     
     static let headerHeight: CGFloat = 60
     static let identifier = "diningHeaderView"
     
-    var loadingView: UIActivityIndicatorView!
+    fileprivate var loadingView: UIActivityIndicatorView!
+    fileprivate var refreshButton: UIButton!
     
     var label: UILabel = {
         let label = UILabel()
@@ -32,7 +64,11 @@ class DiningHeaderView: UITableViewHeaderFooterView {
         addSubview(label)
         _ = label.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 28, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
+        prepareRefreshButton()
         prepareLoadingView()
+        
+        loadingView.isHidden = true
+        refreshButton.isHidden = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,16 +77,37 @@ class DiningHeaderView: UITableViewHeaderFooterView {
 }
 
 extension DiningHeaderView {
+    // MARK: Refresh Button
+    fileprivate func prepareRefreshButton() {
+        refreshButton = UIButton()
+        refreshButton.tintColor = UIColor.navigationBlue
+        refreshButton.setImage(UIImage(named: "refresh")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        refreshButton.addTarget(self, action: #selector(refreshButtonTapped(_:)), for: .touchUpInside)
+        refreshButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(refreshButton)
+        
+        refreshButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -18).isActive = true
+        refreshButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        refreshButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        refreshButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+    }
     
     func prepareLoadingView() {
         loadingView = UIActivityIndicatorView(style: .white)
         loadingView.color = .black
-        loadingView.isHidden = false
         loadingView.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(loadingView)
-        loadingView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -14).isActive = true
-        loadingView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        loadingView.rightAnchor.constraint(equalTo: refreshButton.leftAnchor, constant: -10).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: refreshButton.centerYAnchor).isActive = true
+    }
+    
+    @objc fileprivate func refreshButtonTapped(_ sender: Any) {
+        if state == .refresh, let delegate = delegate {
+            delegate.refreshBalance()
+            state = .loading
+        }
     }
 }
 

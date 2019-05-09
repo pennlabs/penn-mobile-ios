@@ -102,7 +102,7 @@ extension DiningBalanceCollectionViewCell {
         icon.widthAnchor.constraint(equalToConstant: 21).isActive = true
         icon.heightAnchor.constraint(equalToConstant: 21).isActive = true
         icon.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        icon.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -3).isActive = true
+        icon.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 2).isActive = true
     }
     
     // MARK: Labels

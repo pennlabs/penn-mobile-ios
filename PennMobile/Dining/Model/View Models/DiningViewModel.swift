@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DiningViewModelDelegate {
+protocol DiningViewModelDelegate: DiningBalanceRefreshable {
     func handleSelection(for venue: DiningVenue)
 }
 
@@ -98,11 +98,8 @@ extension DiningViewModel: UITableViewDelegate {
         if shouldShowDiningBalances && section == 0 {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
             view.label.text = balancesHeader
-            if showActivity {
-                view.loadingView.startAnimating()
-            } else {
-                view.loadingView.stopAnimating()
-            }
+            view.state = showActivity ? .loading : .refresh
+            view.delegate = self.delegate
             return view
         }
         else {
@@ -118,7 +115,8 @@ extension DiningViewModel: UITableViewDelegate {
             }
             
             view.label.text = headerTitle
-            view.loadingView.stopAnimating()
+            view.state = .normal
+            view.delegate = nil
             return view
         }
     }

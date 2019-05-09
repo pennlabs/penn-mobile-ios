@@ -13,7 +13,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     
     final private let loginURL = "https://weblogin.pennkey.upenn.edu/login"
     open var urlStr: String {
-        return "https://weblogin.pennkey.upenn.edu/login"
+        return "https://weblogin.pennkey.upenn.edu/services/"
     }
     
     open var pennkey: String?
@@ -22,6 +22,8 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     final private var webView: WKWebView!
     
     final fileprivate var secureStore: SecureStore!
+    
+    var shouldAutoNavigate: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -178,8 +180,17 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     func handleSuccessfulNavigation(
         _ webView: WKWebView,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        self.dismiss(animated: true, completion: nil)
-        decisionHandler(.cancel)
+        let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+        cookieStore.getAllCookies { (cookies) in
+            DispatchQueue.main.async {
+                for cookie in cookies {
+                    HTTPCookieStorage.shared.setCookie(cookie)
+                }
+                UserDefaults.standard.storeCookies()
+                decisionHandler(.cancel)
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }
 
