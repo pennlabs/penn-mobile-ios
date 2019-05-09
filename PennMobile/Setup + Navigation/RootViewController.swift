@@ -145,6 +145,7 @@ class RootViewController: UIViewController {
         UserDefaults.standard.clearAccountID()
         UserDefaults.standard.clearCookies()
         UserDefaults.standard.clearWhartonFlag()
+        UserDefaults.standard.clearHasDiningPlan()
         Student.clear()
         GSRUser.clear()
     }

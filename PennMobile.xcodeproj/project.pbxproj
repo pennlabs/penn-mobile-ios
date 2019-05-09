@@ -186,6 +186,8 @@
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
 		C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */; };
 		C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */; };
+		C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11B38E222508A8D009B752A /* DiningBalance.swift */; };
+		C11B38E5225126DD009B752A /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11B38E4225126DD009B752A /* DiningBalanceCell.swift */; };
 		C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */; };
 		C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA30219F90E5000FC573 /* CalendarEvent.swift */; };
 		C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */; };
@@ -193,6 +195,7 @@
 		C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F9E9821928638000B866A /* HomeCalendarCellItem.swift */; };
 		C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C4B4D223EB16F00E443FD /* HomeReservationsCell.swift */; };
 		C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C4B4F223EB18800E443FD /* HomeReservationsCellItem.swift */; };
+		C18D1D62225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18D1D61225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift */; };
 		C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */; };
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
@@ -429,6 +432,8 @@
 		B9E5F006BE7D02CAB4C4AD4C /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
+		C11B38E222508A8D009B752A /* DiningBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalance.swift; sourceTree = "<group>"; };
+		C11B38E4225126DD009B752A /* DiningBalanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
 		C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAPI.swift; sourceTree = "<group>"; };
 		C11DFA30219F90E5000FC573 /* CalendarEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEvent.swift; sourceTree = "<group>"; };
 		C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversityNotificationCell.swift; sourceTree = "<group>"; };
@@ -436,6 +441,7 @@
 		C13F9E9821928638000B866A /* HomeCalendarCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarCellItem.swift; sourceTree = "<group>"; };
 		C15C4B4D223EB16F00E443FD /* HomeReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCell.swift; sourceTree = "<group>"; };
 		C15C4B4F223EB18800E443FD /* HomeReservationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCellItem.swift; sourceTree = "<group>"; };
+		C18D1D61225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalanceCollectionViewCell.swift; sourceTree = "<group>"; };
 		C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReservationsCell.swift; sourceTree = "<group>"; };
 		CEF5C02A7792D4E6978F00EB /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
@@ -694,6 +700,7 @@
 		2166408D1EBADC0100746B8E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C18D1D602257F1C90002C7FB /* Balance */,
 				975BC27C20F07607009F93AB /* Venues */,
 				975BC27E20F07617009F93AB /* Hours */,
 				975BC27D20F07612009F93AB /* Menus */,
@@ -717,6 +724,8 @@
 				216640901EBADC1700746B8E /* DiningCell.swift */,
 				217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */,
 				B6E49F8420E32C78003F4002 /* DiningMenuItemCell.swift */,
+				C11B38E4225126DD009B752A /* DiningBalanceCell.swift */,
+				C18D1D61225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1247,6 +1256,14 @@
 			path = "GSR Reservations";
 			sourceTree = "<group>";
 		};
+		C18D1D602257F1C90002C7FB /* Balance */ = {
+			isa = PBXGroup;
+			children = (
+				C11B38E222508A8D009B752A /* DiningBalance.swift */,
+			);
+			path = Balance;
+			sourceTree = "<group>";
+		};
 		CF1CE9B8205D5BF100C51F46 /* More Tab */ = {
 			isa = PBXGroup;
 			children = (
@@ -1623,6 +1640,7 @@
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */,
+				C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
@@ -1716,6 +1734,7 @@
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
+				C11B38E5225126DD009B752A /* DiningBalanceCell.swift in Sources */,
 				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
@@ -1773,6 +1792,7 @@
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
+				C18D1D62225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				97E79E142100E1FA00D3D606 /* FitnessViewController.swift in Sources */,
 				21B556172224FDC500D80F61 /* RootViewController.swift in Sources */,

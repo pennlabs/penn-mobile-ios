@@ -127,6 +127,7 @@ extension PennAuthRequestable {
     private func makeRequestWithShibboleth(shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         guard let samlResponse = html.getMatches(for: "<input type=\"hidden\" name=\"SAMLResponse\" value=\"(.*?)\"/>").first,
             let relayState = html.getMatches(for: "<input type=\"hidden\" name=\"RelayState\" value=\"(.*?)\"/>").first?.replacingOccurrences(of: "&#x3a;", with: ":") else {
+                HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
                 completionHandler(nil, nil, NetworkingError.authenticationError)
                 return
         }
