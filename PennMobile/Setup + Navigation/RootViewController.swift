@@ -32,28 +32,24 @@ class RootViewController: UIViewController {
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
-            
-            if UserDefaults.standard.getAccountID() != nil && now < august {
-                // If user is logged in and is not yet August, set last login to now
-                // NOTE: this code will be removed in next app update
-                UserDefaults.standard.setLastLogin()
-            }
         }
         
-        if let lastLogin = UserDefaults.standard.getLastLogin() {
-            if january <= now && now <= june {
-                if lastLogin < january {
-                    // Last logged in before current Spring Semester -> Require new log in
-                    clearAccountData()
+        if UserDefaults.standard.getAccountID() != nil {
+            if let lastLogin = UserDefaults.standard.getLastLogin() {
+                if january <= now && now <= june {
+                    if lastLogin < january {
+                        // Last logged in before current Spring Semester -> Require new log in
+                        clearAccountData()
+                    }
+                } else if now >= august {
+                    if lastLogin < august {
+                        // Last logged in before current Fall Semester -> Require new log in
+                        clearAccountData()
+                    }
                 }
-            } else if now >= august {
-                if lastLogin < august {
-                    // Last logged in before current Fall Semester -> Require new log in
-                    clearAccountData()
-                }
+            } else {
+                clearAccountData()
             }
-        } else {
-            clearAccountData()
         }
         
         addChild(current)

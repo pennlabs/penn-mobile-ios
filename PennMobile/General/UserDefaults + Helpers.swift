@@ -261,5 +261,5 @@ extension UserDefaults {
     
     func getLastLogin() -> Date? {
         return object(forKey: UserDefaultsKeys.lastLogin.rawValue) as? Date
-    }
+    }    
 }
