@@ -77,12 +77,16 @@ extension CampusExpressNetworkManager {
         if (visitsArray.count < 2 || guestVisitsArray.count < 3 || addOnVisitsArray.count < 3 || diningDollarsArray.count < 3) {
             throw NetworkingError.parsingError
         }
-        let visits = Int (visitsArray[1])
-        let guestVisits = Int (guestVisitsArray[2])
-        let addOnVisits = Int (addOnVisitsArray[2])
-        let diningDollarsStr = String (diningDollarsArray[2]).dropFirst()
-        let diningDollars = Float(diningDollarsStr)
-        return DiningBalance(diningDollars: diningDollars!, visits: visits! + addOnVisits!, guestVisits: guestVisits!, lastUpdated: Date())
+        
+        let diningDollarsStr = diningDollarsArray[2].dropFirst()
+        guard let visits = Int(visitsArray[1]),
+            let guestVisits = Int(guestVisitsArray[2]),
+            let addOnVisits = Int(addOnVisitsArray[2]),
+            let diningDollars = Float(diningDollarsStr) else {
+                throw NetworkingError.parsingError
+        }
+        
+        return DiningBalance(diningDollars: diningDollars, visits: visits + addOnVisits, guestVisits: guestVisits, lastUpdated: Date())
     }
 }
 
