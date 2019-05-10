@@ -31,3 +31,19 @@ extension HomeTableViewModel {
         return items
     }
 }
+
+// MARK: - UITableViewDelegate + Tracking
+extension HomeTableViewModel {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cell = cell as! HomeCellConformable
+        cell.trackingTime = Date().timeIntervalSince1970
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cell = cell as! HomeCellConformable
+        guard let startTime = cell.trackingTime else { return }
+        let endTime = Date().timeIntervalSince1970
+        let duration = endTime - startTime
+        print(duration)
+    }
+}

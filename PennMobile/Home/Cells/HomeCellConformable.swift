@@ -21,6 +21,7 @@ protocol HomeCellDelegate: ModularTableViewCellDelegate,
 
 protocol HomeCellConformable: ModularTableViewCell where Self: UITableViewCell {
     var cardView: UIView! { get }
+    var trackingTime: TimeInterval? { get set }
 }
 
 // - MARK: Prepare
