@@ -624,6 +624,7 @@
 				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
 				216640F91EBB898700746B8E /* About */,
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
+				21ECADA21F30146B00569883 /* Networking + Analytics */,
 				216640C71EBADC9D00746B8E /* General */,
 				21B653BC2246F31E001A97C5 /* Courses */,
 				21B8BBBB2224F98B00EBC1D0 /* Login */,
@@ -738,7 +739,6 @@
 			isa = PBXGroup;
 			children = (
 				217A7839204D977E004F1227 /* ModularTableView */,
-				21ECADA21F30146B00569883 /* Networking + Analytics */,
 				216640C01EBADC8000746B8E /* Generics */,
 				216640C91EBADCA400746B8E /* Extensions.swift */,
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
@@ -994,7 +994,8 @@
 				21EB4D2F203D330C0029A460 /* UserDBManager.swift */,
 				214C23B11F2FEE150004487C /* Networking.swift */,
 			);
-			path = "Networking + Analytics";
+			name = "Networking + Analytics";
+			path = "General/Networking + Analytics";
 			sourceTree = "<group>";
 		};
 		21F5F8EF20538A54005B143F /* Spring Fling */ = {
