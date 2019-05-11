@@ -7,10 +7,12 @@
 //
 
 class DiningViewController: GenericTableViewController {
-    
+        
     fileprivate var viewModel = DiningViewModel()
     
     fileprivate let venueToPreload: DiningVenueName = .commons
+    
+    fileprivate var isReturningFromRefreshLogin: Bool = false
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,14 @@ class DiningViewController: GenericTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchDiningHours()
+        
+        if viewModel.shouldShowDiningBalances {
+            if viewModel.balance == nil {
+                fetchBalance()
+            } else {
+                updateBalanceIfNeeded()
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -71,17 +81,59 @@ extension DiningViewController {
             }
         }
     }
+    
+    func fetchBalance() {
+        self.viewModel.showActivity = true
+        DiningAPI.instance.fetchDiningBalance { (diningBalance) in
+            DispatchQueue.main.async {
+                self.viewModel.balance = diningBalance
+                self.viewModel.showActivity = false
+                self.tableView.reloadData()
+                self.updateBalanceIfNeeded()
+            }
+        }
+    }
+    
+    func updateBalanceIfNeeded() {
+        if isReturningFromRefreshLogin {
+            // If returning from refresh, continue to fetch balance but set flag to FALSE
+            isReturningFromRefreshLogin = false
+        } else if let balance = self.viewModel.balance, balance.lastUpdated.minutesFrom(date: Date()) < 10 {
+            // Do not fetch balance if the last balance was fetched less than 10 minutes ago or if
+            // balance is being refetched in refreshBalance()
+            return
+        }
+        updateBalanceFromCampusExpress()
+    }
+    
+    func updateBalanceFromCampusExpress(_ completion: ((_ error: Error?) -> Void)? = nil) {
+        self.viewModel.showActivity = true
+        CampusExpressNetworkManager.instance.getDiningData { (diningBalance, error) in
+            DispatchQueue.main.async {
+                self.viewModel.balance = diningBalance ?? self.viewModel.balance
+                self.viewModel.showActivity = false
+                self.tableView.reloadData()
+                
+                if let diningBalance = diningBalance {
+                    UserDBManager.shared.saveDiningBalance(for: diningBalance)
+                }
+                
+                completion?(error)
+            }
+        }
+    }
 }
 
 // MARK: - UIRefreshControl
 extension DiningViewController {
     fileprivate func prepareRefreshControl() {
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
+        refreshControl?.addTarget(self, action: #selector(handleRefreshControl(_:)), for: .valueChanged)
     }
     
-    @objc fileprivate func handleRefresh(_ sender: Any) {
+    @objc fileprivate func handleRefreshControl(_ sender: Any) {
         fetchDiningHours()
+        updateBalanceFromCampusExpress()
     }
 }
 
@@ -105,3 +157,18 @@ extension DiningViewController: DiningViewModelDelegate {
     }
 }
 
+// MARK: - DiningBalanceRefreshable
+extension DiningViewController: DiningBalanceRefreshable {
+    func refreshBalance() {
+        updateBalanceFromCampusExpress { (error) in
+            if let error = error as? NetworkingError, error == NetworkingError.authenticationError {
+                // Failed to get balance because failed to authenticate into Campus Express
+                // Request user to log in again
+                let pennLoginController = PennLoginController()
+                let nvc = UINavigationController(rootViewController: pennLoginController)
+                self.isReturningFromRefreshLogin = true
+                self.present(nvc, animated: true, completion: nil)
+            }
+        }
+    }
+}

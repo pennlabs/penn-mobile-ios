@@ -63,12 +63,14 @@ extension HomeViewController: GSRBookable {
 
 // MARK: - URL Selected
 extension HomeViewController {
-    func handleUrlPressed(url: String, title: String) {
+    func handleUrlPressed(url: String, title: String, item: ModularTableViewItem) {
         let wv = WebviewController()
         wv.load(for: url)
         wv.title = title
         navigationController?.pushViewController(wv, animated: true)
         FirebaseAnalyticsManager.shared.trackEvent(action: .viewHomeNewsArticle, result: .none, content: url)
+        
+        logInteraction(item: item)
     }
 }
 
@@ -193,9 +195,28 @@ extension HomeViewController: GSRLocationSelectable {
 }
 
 extension HomeViewController: FeatureNavigatable {
-    func navigateToFeature(feature: Feature) {
+    func navigateToFeature(feature: Feature, item: ModularTableViewItem) {
         let vc = ControllerModel.shared.viewController(for: feature)
         vc.title = feature.rawValue
         self.navigationController?.pushViewController(vc, animated: true)
+        
+        logInteraction(item: item)
+    }
+}
+
+// MARK: - Interaction Logging
+extension HomeViewController {
+    fileprivate func logInteraction(item: ModularTableViewItem) {
+        let index = self.tableViewModel.items.firstIndex { (thisItem) -> Bool in
+            return thisItem.equals(item: item)
+        }
+        if let index = index {
+            let cellType = type(of: item) as! HomeCellItem.Type
+            var id: String? = nil
+            if let identifiableItem = item as? LoggingIdentifiable {
+                id = identifiableItem.id
+            }
+            FeedAnalyticsManager.shared.trackInteraction(cellType: cellType.jsonKey, index: index, id: id)
+        }
     }
 }

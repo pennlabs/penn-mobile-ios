@@ -38,7 +38,7 @@ final class HomeCoursesCellItem: HomeCellItem {
         return HomeCoursesCell.self
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeCoursesCellItem else { return false }
         return weekday == item.weekday
     }

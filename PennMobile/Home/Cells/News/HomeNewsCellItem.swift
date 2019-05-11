@@ -31,7 +31,7 @@ final class HomeNewsCellItem: HomeCellItem {
         return HomeNewsCell.self
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeNewsCellItem else { return false }
         return article.title == item.article.title
     }
@@ -53,5 +53,14 @@ extension HomeNewsCellItem {
         let article = try NewsArticle(json: json)
         self.init(article: article)
         self.showSubtitle = json["show_subtitle"].boolValue
+    }
+}
+
+// MARK: - Logging ID
+extension HomeNewsCellItem: LoggingIdentifiable {
+    var id: String {
+        get {
+            return article.articleUrl
+        }
     }
 }

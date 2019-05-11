@@ -20,7 +20,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.2.0)
   - "GoogleToolboxForMac/NSData+zlib (2.2.0)":
     - GoogleToolboxForMac/Defines (= 2.2.0)
-  - Kingfisher (5.3.0)
+  - Kingfisher (5.3.1)
   - MBProgressHUD (0.9.2)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -31,7 +31,7 @@ PODS:
   - ScrollableGraphView (4.0.6)
   - SimulatorStatusMagic (2.4.1)
   - SwiftSoup (1.7.4)
-  - SwiftyJSON (4.2.0)
+  - SwiftyJSON (4.3.0)
   - TimelineTableViewCell (1.2)
   - XLPagerTabStrip (9.0.0)
   - ZoomImageView (0.6.0)
@@ -83,14 +83,14 @@ SPEC CHECKSUMS:
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
-  Kingfisher: 4692c783ffb99e9e2e40a6eb3e518c3b96c6fa8c
+  Kingfisher: d9e7e0b209b59b8f9873aa2f37654e81a7beea51
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
-  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5

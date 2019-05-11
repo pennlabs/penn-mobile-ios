@@ -9,29 +9,132 @@
 import Foundation
 
 class FeedAnalyticsManager: NSObject, Requestable {
+    var dryRun: Bool = false
+    
+    fileprivate let eventSeparationMinimum = 1 // 30 minutes must pass for cell to be tracked twice
+    fileprivate let defaultBatchSize = 5 // Send all events if at least 8 cells have been tracked
+    fileprivate let maxWaitTime = 15 // Send all events if it's been more than 15 seconds since last sent
+    
+    fileprivate var lastSent = Date()
     
     static let shared = FeedAnalyticsManager()
     private override init() {}
     
-    fileprivate let baseUrl = "https://api.pennlabs.org"
+    fileprivate let baseUrl = "http://localhost:5000"
     
-    fileprivate var events = [FeedAnalyticsEvent]()
+    fileprivate var mostRecentEvent = Dictionary<FeedAnalyticsEvent, Date>() // Keeps track of the last time a cell was tracked
+    fileprivate var eventsToSend = Set<FeedAnalyticsEvent>()
     
-    var dryRun: Bool = false
-    
-    func track(event: FeedAnalyticsEvent) {
+    func track(cellType: String, index: Int, id: String?, batchSize: Int? = nil) {
         if dryRun { return }
-        events.append(event)
+        let event = FeedAnalyticsEvent(cellType: cellType, id: id, index: index, isInteraction: false, timestamp: Date())
+        
+        var eventAdded = false
+        if let lastSent = mostRecentEvent[event], !eventsToSend.contains(event) {
+            if lastSent.minutesFrom(date: event.timestamp) >= eventSeparationMinimum {
+                eventsToSend.insert(event)
+                eventAdded = true
+            }
+        } else {
+            eventsToSend.insert(event)
+            eventAdded = true
+        }
+        
+        var maxBatchSize = batchSize ?? defaultBatchSize
+        if eventAdded, let batchSize = batchSize {
+            // Count number of non-interactions that have been sent in the last 30 minutes
+            let count = mostRecentEvent.keys.filter { (thisEvent) -> Bool in
+                if thisEvent.isInteraction {
+                    return false
+                } else if let lastSent = mostRecentEvent[thisEvent] {
+                    if lastSent.minutesFrom(date: Date()) >= eventSeparationMinimum {
+                        return false
+                    }
+                }
+                return true
+            }.count
+            // Limit batch size to the number of cells that have not yet been seen
+            maxBatchSize = batchSize - count
+        }
+        
+        if eventsToSend.count >= maxBatchSize || lastSent.minutesFrom(date: Date()) >= maxWaitTime {
+            sendEvents()
+        }
     }
     
     fileprivate func sendEvents() {
         if dryRun { return }
+        // Send the events
+        saveEventsOnDB(eventsToSend)
+        
+        // Set date for last time this cell was tracked, remove events waiting to be sent, update last sent date
+        for event in eventsToSend {
+            mostRecentEvent[event] = event.timestamp
+        }
+        eventsToSend.removeAll()
+        lastSent = Date()
+    }
+    
+    func trackInteraction(cellType: String, index: Int, id: String?) {
+        if dryRun { return }
+        let event = FeedAnalyticsEvent(cellType: cellType, id: id, index: index, isInteraction: true, timestamp: Date())
+        
+        if let lastSent = mostRecentEvent[event], !eventsToSend.contains(event) {
+            if lastSent.minutesFrom(date: event.timestamp) >= eventSeparationMinimum {
+                eventsToSend.insert(event)
+            }
+        } else {
+            eventsToSend.insert(event)
+        }
+        
+        // Send all the events immediately upon an interaction
+        sendEvents()
     }
 }
 
-struct FeedAnalyticsEvent: Codable {
+struct FeedAnalyticsEvent: Codable, Hashable {
     let cellType: String
+    let id: String?
     let index: Int
-    let duration: Float
-    let id: Int?
+    let isInteraction: Bool
+    let timestamp: Date
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(cellType)
+        hasher.combine(id)
+        hasher.combine(isInteraction)
+    }
+    
+    static func == (lhs: FeedAnalyticsEvent, rhs: FeedAnalyticsEvent) -> Bool {
+        return lhs.cellType == rhs.cellType && lhs.id == rhs.id && lhs.isInteraction == rhs.isInteraction
+    }
+}
+
+// MARK: - Networking
+extension FeedAnalyticsManager {
+    fileprivate func saveEventsOnDB(_ events: Set<FeedAnalyticsEvent>) {
+        let sortedEvents = events.sorted { (e1, e2) -> Bool in
+            return e1.timestamp < e2.timestamp
+        }
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+        do {
+            let url = URL(string: "\(baseUrl)/homepage/analytics")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let jsonData = try jsonEncoder.encode(sortedEvents)
+            request.httpBody = jsonData
+            
+            if let jsonStr = String(data: jsonData, encoding: .utf8) {
+                print(jsonStr)
+            }
+            
+            let task = URLSession.shared.dataTask(with: request)
+            task.resume()
+        }
+        catch {
+        }
+    }
 }

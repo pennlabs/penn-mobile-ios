@@ -103,8 +103,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var backgroundTask: UIBackgroundTaskIdentifier?
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-//        if DatabaseManager.shared.dryRun { return }
-//
+        if FeedAnalyticsManager.shared.dryRun { return }
+
 //        DatabaseManager.shared.endSession()
 //        backgroundTask = application.beginBackgroundTask {
 //            if let bgTask = self.backgroundTask {
@@ -128,13 +128,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        DatabaseManager.shared.startSession()
+//        DatabaseManager.shared.startSession()
         tabBarController?.reloadTabs()
         rootViewController.applicationWillEnterForeground()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        DatabaseManager.shared.endSession()
+//        DatabaseManager.shared.endSession()
     }
 }
 

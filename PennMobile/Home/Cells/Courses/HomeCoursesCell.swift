@@ -20,7 +20,7 @@ protocol BuildingMapSelectable {
     func handleBuildingSelected(searchTerm: String)
 }
 
-final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
+final class HomeCoursesCell: UITableViewCell, HomeCellConformable {    
     var cardView: UIView! = UIView()
     
     var delegate: ModularTableViewCellDelegate!

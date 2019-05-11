@@ -122,30 +122,16 @@ extension GSRController: GSRViewModelDelegate {
     func fetchData() {
         let location = viewModel.getSelectedLocation()
         let date = viewModel.getSelectedDate()
-//        if location.service == "wharton" {
-//            let sessionID = UserDefaults.standard.getSessionID()
-//            WhartonGSRNetworkManager.instance.getAvailability(sessionID: sessionID, date: date) { (rooms) in
-//                DispatchQueue.main.async {
-//                    if let rooms = rooms {
-//                        self.viewModel.updateData(with: rooms)
-//                        self.refreshDataUI()
-//                        self.rangeSlider.reload()
-//                        self.refreshBarButton()
-//                    }
-//                }
-//            }
-//        } else {
-            GSRNetworkManager.instance.getAvailability(for: location.lid, date: date) { (rooms) in
-                DispatchQueue.main.async {
-                    if let rooms = rooms {
-                        self.viewModel.updateData(with: rooms)
-                        self.refreshDataUI()
-                        self.rangeSlider.reload()
-                        self.refreshBarButton()
-                    }
+        GSRNetworkManager.instance.getAvailability(for: location.lid, date: date) { (rooms) in
+            DispatchQueue.main.async {
+                if let rooms = rooms {
+                    self.viewModel.updateData(with: rooms)
+                    self.refreshDataUI()
+                    self.rangeSlider.reload()
+                    self.refreshBarButton()
                 }
             }
-//        }
+        }
     }
 
     func refreshDataUI() {

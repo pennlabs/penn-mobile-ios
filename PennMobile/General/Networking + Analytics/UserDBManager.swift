@@ -60,6 +60,20 @@ extension UserDBManager {
     }
 }
 
+// MARK: - Dining Balance
+extension UserDBManager {
+    func saveDiningBalance(for balance: DiningBalance) {
+        let urlString = "\(baseUrl)/dining/balance"
+        let params = [
+            "dining_dollars": balance.diningDollars,
+            "swipes": balance.visits,
+            "guest_swipes": balance.guestVisits,
+        ] as [String: Any]
+        let request = getAnalyticsPostRequest(url: urlString, params: params)
+        sendRequest(request)
+    }
+}
+
 // MARK: - Student Account
 extension UserDBManager {
     func saveStudent(_ student: Student, _ completion: @escaping (_ accountID: String?) -> Void) {

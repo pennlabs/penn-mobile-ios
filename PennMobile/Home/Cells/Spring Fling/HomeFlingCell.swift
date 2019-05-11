@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class HomeFlingCell: UITableViewCell, HomeCellConformable {
+final class HomeFlingCell: UITableViewCell, HomeCellConformable {    
     static var identifier: String = "flingCell"
     
     var delegate: ModularTableViewCellDelegate!
@@ -116,7 +116,7 @@ extension HomeFlingCell {
     
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let website = performer.website, let delegate = delegate as? URLSelectable else { return }
-        delegate.handleUrlPressed(url: website, title: performer.name)
+        delegate.handleUrlPressed(url: website, title: performer.name, item: self.item)
     }
 }
 

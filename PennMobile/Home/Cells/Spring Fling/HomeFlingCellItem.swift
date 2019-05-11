@@ -30,7 +30,7 @@ final class HomeFlingCellItem: HomeCellItem {
         return HomeFlingCell.self
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeFlingCellItem else { return false }
         return performer.name == item.performer.name
     }
