@@ -11,19 +11,22 @@ import Foundation
 class FeedAnalyticsManager: NSObject, Requestable {
     var dryRun: Bool = false
     
-    fileprivate let eventSeparationMinimum = 1 // 30 minutes must pass for cell to be tracked twice
+    fileprivate let eventSeparationMinimum = 30 // 30 minutes must pass for cell to be tracked twice
     fileprivate let defaultBatchSize = 5 // Send all events if at least 8 cells have been tracked
-    fileprivate let maxWaitTime = 15 // Send all events if it's been more than 15 seconds since last sent
-    
-    fileprivate var lastSent = Date()
+    fileprivate let maxWaitTime: TimeInterval = 15 // Send all events if it's been more than 15 seconds since last sent
     
     static let shared = FeedAnalyticsManager()
-    private override init() {}
+    private override init() {
+        super.init()
+        self.resetTimer()
+    }
     
     fileprivate let baseUrl = "http://localhost:5000"
     
     fileprivate var mostRecentEvent = Dictionary<FeedAnalyticsEvent, Date>() // Keeps track of the last time a cell was tracked
     fileprivate var eventsToSend = Set<FeedAnalyticsEvent>()
+    
+    fileprivate var batchTimer: Timer!
     
     func track(cellType: String, index: Int, id: String?, batchSize: Int? = nil) {
         if dryRun { return }
@@ -57,13 +60,16 @@ class FeedAnalyticsManager: NSObject, Requestable {
             maxBatchSize = batchSize - count
         }
         
-        if eventsToSend.count >= maxBatchSize || lastSent.minutesFrom(date: Date()) >= maxWaitTime {
+        if eventsToSend.count >= maxBatchSize {
             sendEvents()
+        } else if !eventsToSend.isEmpty && !batchTimer.isValid {
+            // Reset the timer if there are events to send and the timer is not valid (not currently running)
+            resetTimer()
         }
     }
     
-    fileprivate func sendEvents() {
-        if dryRun { return }
+    @objc func sendEvents() {
+        if dryRun || eventsToSend.isEmpty { return }
         // Send the events
         saveEventsOnDB(eventsToSend)
         
@@ -72,7 +78,7 @@ class FeedAnalyticsManager: NSObject, Requestable {
             mostRecentEvent[event] = event.timestamp
         }
         eventsToSend.removeAll()
-        lastSent = Date()
+        batchTimer.invalidate()
     }
     
     func trackInteraction(cellType: String, index: Int, id: String?) {
@@ -89,6 +95,28 @@ class FeedAnalyticsManager: NSObject, Requestable {
         
         // Send all the events immediately upon an interaction
         sendEvents()
+    }
+    
+    func resetTimer() {
+        batchTimer = Timer.scheduledTimer(timeInterval: maxWaitTime, target: self, selector: #selector(sendEvents), userInfo: nil, repeats: false)
+    }
+    
+    func save() {
+        if !eventsToSend.isEmpty {
+            UserDefaults.standard.saveEventLogs(events: eventsToSend)
+        }
+    }
+    
+    func removeSavedEvents() {
+        UserDefaults.standard.clearEventLogs()
+    }
+    
+    func sendSavedEvents() {
+        if let events = UserDefaults.standard.getUnsentEventLogs() {
+            self.eventsToSend = events
+            sendEvents()
+            UserDefaults.standard.clearEventLogs()
+        }
     }
 }
 

@@ -27,6 +27,7 @@ extension UserDefaults {
         case coursePermission
         case hasDiningPlan
         case lastLogin
+        case unsentLogs
     }
 }
 
@@ -279,4 +280,27 @@ extension UserDefaults {
     func getLastLogin() -> Date? {
         return object(forKey: UserDefaultsKeys.lastLogin.rawValue) as? Date
     }    
+}
+
+// MARK: - Unsent Event Logs
+extension UserDefaults {
+    func saveEventLogs(events: Set<FeedAnalyticsEvent>) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(events) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.unsentLogs.rawValue)
+        }
+        synchronize()
+    }
+    
+    func getUnsentEventLogs() -> Set<FeedAnalyticsEvent>? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.unsentLogs.rawValue) {
+            return try? decoder.decode( Set<FeedAnalyticsEvent>.self, from: decodedData)
+        }
+        return nil
+    }
+    
+    func clearEventLogs() {
+        removeObject(forKey: UserDefaultsKeys.unsentLogs.rawValue)
+    }
 }
