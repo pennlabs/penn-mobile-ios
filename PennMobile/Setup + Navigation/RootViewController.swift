@@ -60,6 +60,9 @@ class RootViewController: UIViewController {
         UserDefaults.standard.restoreCookies()
         
         self.applicationWillEnterForeground()
+        
+        PennCashNetworkManager.instance.getTransactionHistory { _ in
+        }
     }
     
     func applicationWillEnterForeground() {
