@@ -34,19 +34,6 @@ extension PennCashNetworkManager: PennAuthRequestable {
     }
     
     func getTransactionHistory(callback: @escaping TransactionHandler) {
-//        makeAuthRequest(targetUrl: transactionsUrl1, shibbolethUrl: shibbolethUrl) { (data, response, error) in
-//            if let data = data, let html = String(bytes: data, encoding: .utf8) {
-//                print(html)
-//                let skeyMatches = html.getMatches(for: "skey=(.*?)&")
-//                if let skey = skeyMatches.first {
-//                    self.getCSVHelper(skey: skey, callback: callback)
-//                } else {
-//                    print("no skey")
-//                }
-//            } else {
-//                print("went wrong")
-//            }
-//        }
         getCid { (cid) in
             guard let cid = cid else {
                 callback(nil)
@@ -59,12 +46,9 @@ extension PennCashNetworkManager: PennAuthRequestable {
                     return
                 }
                 
-                self.validateSkey(skey: skey, attemptLimit: 10) { (isValidated) in
-                    print(isValidated)
+                self.validateSkey(skey: skey, startTime: Date(), timeLimit: 10) { (isValidated) in
                     if isValidated {
-                        self.getCSV(cid: cid, skey: skey) { (_) in
-                            
-                        }
+                        self.getCSV(cid: cid, skey: skey, callback: callback)
                     } else {
                         callback(nil)
                     }
@@ -100,8 +84,8 @@ extension PennCashNetworkManager: PennAuthRequestable {
         })
     }
     
-    private func validateSkey(skey: String, attemptLimit: Int, _ callback: @escaping (_ isValidated: Bool) -> Void) {
-        if attemptLimit == 0 {
+    private func validateSkey(skey: String, startTime: Date, timeLimit: TimeInterval,  _ callback: @escaping (_ isValidated: Bool) -> Void) {
+        if Date().timeIntervalSince(startTime) > timeLimit {
             callback(false)
             return
         }
@@ -114,39 +98,22 @@ extension PennCashNetworkManager: PennAuthRequestable {
                     callback(true)
                 } else {
                     print("Failed to validate. No '1' message.")
-                    self.validateSkey(skey: skey, attemptLimit: attemptLimit - 1, callback)
+                    self.validateSkey(skey: skey, startTime: startTime, timeLimit: timeLimit, callback)
                 }
             } else {
-                print("Failed to validate. No response.")
-                self.validateSkey(skey: skey, attemptLimit: attemptLimit - 1, callback)
+                callback(false)
             }
         }
     }
     
-    private func getCSV(cid: String, skey: String, _ callback: @escaping TransactionHandler) {
+    private func getCSV(cid: String, skey: String, callback: @escaping TransactionHandler) {
         let tomorrow = Date().tomorrow
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let dateStr = formatter.string(from: tomorrow)
         let csvUrl = "https://www.penncash.com/statementdetail.php?cid=\(cid)&skey=\(skey)&format=csv&startdate=2000-01-01&enddate=\(dateStr)&acct=14"
         makeAuthRequest(targetUrl: csvUrl, shibbolethUrl: shibbolethUrl, { (data, response, error) in
-            if let data = data, let str = String(bytes: data, encoding: .utf8) {
-//                var results = [[String]]()
-                print(str)
-//                let rows = str.components(separatedBy: "\n")
-//                for row in rows {
-//                    let columns = row.components(separatedBy: ";")
-////                    result.append(columns)
-//                    //print(columns)
-//                }
-            } else {
-                print("something went wrong")
-            }
             callback(data)
         })
     }
-}
-
-// MARK: - Transaction Parsing
-extension PennCashNetworkManager {
 }

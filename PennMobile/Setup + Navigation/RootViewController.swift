@@ -61,7 +61,14 @@ class RootViewController: UIViewController {
         
         self.applicationWillEnterForeground()
         
-        PennCashNetworkManager.instance.getTransactionHistory { _ in
+        if UserDefaults.standard.getAccountID() != nil {
+            PennCashNetworkManager.instance.getTransactionHistory { data in
+                if let data = data, let str = String(bytes: data, encoding: .utf8) {
+                    print(str)
+                } else {
+                    print("Something went wrong")
+                }
+            }
         }
     }
     
