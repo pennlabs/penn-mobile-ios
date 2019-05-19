@@ -16,6 +16,9 @@ class RootViewController: UIViewController {
     
     private var lastLoginAttempt: Date?
     
+    // Fetch transactions even if hasDiningPlan() returns FALSE
+    fileprivate let considerIfHaveDiningPlan = false
+    
     init() {
         self.current = SplashViewController()
         super.init(nibName: nil, bundle: nil)
@@ -24,32 +27,13 @@ class RootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let now = Date()
-        let components = Calendar.current.dateComponents([.year], from: now)
-        let january = Calendar.current.date(from: components)!
-        let june = january.add(months: 5)
-        let august = january.add(months: 7)
-        
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
         }
         
-        if UserDefaults.standard.getAccountID() != nil {
-            if let lastLogin = UserDefaults.standard.getLastLogin() {
-                if january <= now && now <= june {
-                    if lastLogin < january {
-                        // Last logged in before current Spring Semester -> Require new log in
-                        clearAccountData()
-                    }
-                } else if now >= august {
-                    if lastLogin < august {
-                        // Last logged in before current Fall Semester -> Require new log in
-                        clearAccountData()
-                    }
-                }
-            } else {
-                clearAccountData()
-            }
+        if UserDefaults.standard.getAccountID() != nil && shouldRequireLogin() {
+            // Logged in and should require login
+            clearAccountData()
         }
         
         addChild(current)
@@ -65,9 +49,13 @@ class RootViewController: UIViewController {
     func applicationWillEnterForeground() {
         if self.current is HomeNavigationController {
             if UserDefaults.standard.getAccountID() == nil {
-                // Switch to logout screen if user is not logged in
+                // Switch to logout screen if user is not logged in, but don't clear data
                 self.switchToLogout(false)
+            } else if shouldRequireLogin() {
+                // Switch to logout screen and clear data
+                self.switchToLogout(true)
             } else {
+                // Refresh current VC
                 ControllerModel.shared.visibleVC().viewWillAppear(true)
             }
         }
@@ -79,7 +67,7 @@ class RootViewController: UIViewController {
                 // Don't try to auto re-login if it's been less than 12 hours since last attempt
                 return
             }
-            self.lastLoginAttempt = now
+            self.lastLoginAttempt = Date()
             // Wait 0.5 seconds so that the home page request is not held up
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 GSRNetworkManager.instance.getSessionIDWithDownFlag { (success, serviceDown) in
@@ -90,6 +78,18 @@ class RootViewController: UIViewController {
                             let nvc = UINavigationController(rootViewController: gwc)
                             self.current.present(nvc, animated: true, completion: nil)
                         }
+                    }
+                }
+            }
+        }
+        
+        // Fetch transaction data at least once a week, starting on Sundays
+        if shouldFetchTransactions() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                PennCashNetworkManager.instance.getTransactionHistory { data in
+                    if let data = data, let str = String(bytes: data, encoding: .utf8) {
+                        UserDBManager.shared.saveTransactionData(csvStr: str)
+                        UserDefaults.standard.setLastTransactionRequest()
                     }
                 }
             }
@@ -146,6 +146,7 @@ class RootViewController: UIViewController {
         UserDefaults.standard.clearCookies()
         UserDefaults.standard.clearWhartonFlag()
         UserDefaults.standard.clearHasDiningPlan()
+        UserDefaults.standard.clearLastTransactionRequest()
         Student.clear()
         GSRUser.clear()
     }
@@ -188,6 +189,61 @@ class RootViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Require Login
+extension RootViewController {
+    func shouldRequireLogin() -> Bool {
+        if UserDefaults.standard.getAccountID() == nil {
+            // User is not logged in
+            return true
+        }
+        
+        guard let lastLogin = UserDefaults.standard.getLastLogin() else {
+            return true
+        }
+        
+        let now = Date()
+        let components = Calendar.current.dateComponents([.year], from: now)
+        let january = Calendar.current.date(from: components)!
+        let june = january.add(months: 5)
+        let august = january.add(months: 7)
+        
+        if january <= now && now <= june {
+            // Last logged in before current Spring Semester -> Require new log in
+            return lastLogin < january
+        } else if now >= august {
+            // Last logged in before current Fall Semester -> Require new log in
+            return lastLogin < august
+        } else {
+            return false
+        }
+    }
+}
+
+// MARK: - Update Transactions
+extension RootViewController {
+    func shouldFetchTransactions() -> Bool {
+        if UserDefaults.standard.getAccountID() == nil || (considerIfHaveDiningPlan && !UserDefaults.standard.hasDiningPlan()) {
+            // User is not logged in or does not have a dining plan
+            return false
+        }
+        
+        guard let lastTransactionRequest = UserDefaults.standard.getLastTransactionRequest() else {
+            // No transactions fetched yet, so return false
+            return true
+        }
+        
+        let now = Date()
+        let diffInDays = Calendar.current.dateComponents([.day], from: lastTransactionRequest, to: now).day
+        if let diff = diffInDays, diff >= 7 {
+            // More than a week since last update
+            return true
+        } else {
+            // Return true if today is Sunday and transactions have not yet been fetched today
+            return now.integerDayOfWeek == 0 && !lastTransactionRequest.isToday
+        }
     }
 }
 

@@ -148,6 +148,7 @@
 		21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F220538A90005B143F /* HomeFlingCell.swift */; };
 		21F5F8F520538AFC005B143F /* FlingPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F420538AFC005B143F /* FlingPerformer.swift */; };
 		21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */; };
+		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
 		72962BFC1E387F41FFD926F0 /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEDDC58154E96C2BF820AD /* Pods_PennMobileTests.framework */; };
 		978693F920EAE1BB00C4A8A1 /* DiningMenuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978693F820EAE1BB00C4A8A1 /* DiningMenuAPI.swift */; };
@@ -388,6 +389,7 @@
 		21F5F8F220538A90005B143F /* HomeFlingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCell.swift; sourceTree = "<group>"; };
 		21F5F8F420538AFC005B143F /* FlingPerformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingPerformer.swift; sourceTree = "<group>"; };
 		21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAnalyticsEngine.swift; sourceTree = "<group>"; };
+		21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
 		2B364FB5448C9559DDEB6B7C /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		4061F45F89502B1CEAE5AF19 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		50FCFE42CF6B04B45704394B /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -990,6 +992,7 @@
 				21B8BBB72223963C00EBC1D0 /* Degree.swift */,
 				21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */,
 				21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */,
+				21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */,
 				21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */,
 			);
 			path = Login;
@@ -1679,6 +1682,7 @@
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
 				217A783B204D97AC004F1227 /* ModularTableView.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
+				21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */,
 				215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */,
 				217A7836204D2E0D004F1227 /* HomeLaundryCellItem.swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,

@@ -72,6 +72,10 @@ extension CampusExpressNetworkManager {
         UserDefaults.standard.set(hasDiningPlan: true)
         let subElements = try doc.select("li")
         
+        if subElements.size() < 4 {
+            throw NetworkingError.parsingError
+        }
+        
         let visitsArray = try subElements.get(0).text().split(separator: " ")
         let guestVisitsArray = try subElements.get(1).text().split(separator: " ")
         let addOnVisitsArray = try subElements.get(2).text().split(separator: " ")
