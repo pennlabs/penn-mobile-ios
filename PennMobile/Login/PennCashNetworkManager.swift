@@ -97,7 +97,6 @@ extension PennCashNetworkManager: PennAuthRequestable {
                 if isValidated {
                     callback(true)
                 } else {
-                    print("Failed to validate. No '1' message.")
                     self.validateSkey(skey: skey, startTime: startTime, timeLimit: timeLimit, callback)
                 }
             } else {
