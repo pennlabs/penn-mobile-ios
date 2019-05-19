@@ -68,7 +68,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
         }
     }
     
-    private func getDiningData() {
+    private func getDiningBalance() {
         if let student = Student.getStudent(), student.isFreshman() {
             DiningViewModel.ShowDiningPlan = true
         }
@@ -80,6 +80,17 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                     UserDefaults.standard.set(hasDiningPlan: true)
                 } else {
                     UserDefaults.standard.set(hasDiningPlan: false)
+                }
+            }
+        }
+    }
+    
+    private func getDiningTransactions(after wait: Double) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
+            PennCashNetworkManager.instance.getTransactionHistory { data in
+                if let data = data, let str = String(bytes: data, encoding: .utf8) {
+                    UserDBManager.shared.saveTransactionData(csvStr: str)
+                    UserDefaults.standard.setLastTransactionRequest()
                 }
             }
         }
@@ -117,7 +128,8 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                 self.dismiss(animated: true, completion: nil)
                 self.loginCompletion?(accountID != nil)
                 self.getRemainingCourses()
-                self.getDiningData()
+                self.getDiningBalance()
+                self.getDiningTransactions(after: 0.5)
                 
                 if accountID == nil {
                     FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed Login")

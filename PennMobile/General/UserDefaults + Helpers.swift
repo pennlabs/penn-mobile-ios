@@ -27,6 +27,7 @@ extension UserDefaults {
         case coursePermission
         case hasDiningPlan
         case lastLogin
+        case lastTransactionRequest
     }
 }
 
@@ -279,4 +280,20 @@ extension UserDefaults {
     func getLastLogin() -> Date? {
         return object(forKey: UserDefaultsKeys.lastLogin.rawValue) as? Date
     }    
+}
+
+// MARK: - Last Transaction Request
+extension UserDefaults {
+    func setLastTransactionRequest() {
+        set(Date(), forKey: UserDefaultsKeys.lastTransactionRequest.rawValue)
+        synchronize()
+    }
+    
+    func getLastTransactionRequest() -> Date? {
+        return object(forKey: UserDefaultsKeys.lastTransactionRequest.rawValue) as? Date
+    }
+    
+    func clearLastTransactionRequest() {
+        removeObject(forKey: UserDefaultsKeys.lastTransactionRequest.rawValue)
+    }
 }
