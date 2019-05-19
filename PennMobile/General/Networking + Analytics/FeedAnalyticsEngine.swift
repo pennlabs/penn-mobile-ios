@@ -21,7 +21,7 @@ class FeedAnalyticsManager: NSObject, Requestable {
         self.resetTimer()
     }
     
-    fileprivate let baseUrl = "http://localhost:5000"
+    fileprivate let analyticsUrl = "http://api.pennlabs.org/feed/analytics"
     
     fileprivate var mostRecentEvent = Dictionary<FeedAnalyticsEvent, Date>() // Keeps track of the last time a cell was tracked
     fileprivate var eventsToSend = Set<FeedAnalyticsEvent>()
@@ -146,18 +146,16 @@ extension FeedAnalyticsManager {
         }
         let jsonEncoder = JSONEncoder()
         jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+        jsonEncoder.dateEncodingStrategy = .formatted(formatter)
         do {
-            let url = URL(string: "\(baseUrl)/homepage/analytics")!
-            var request = URLRequest(url: url)
+            var request = getAnalyticsRequest(url: analyticsUrl) as URLRequest
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             
             let jsonData = try jsonEncoder.encode(sortedEvents)
             request.httpBody = jsonData
-            
-            if let jsonStr = String(data: jsonData, encoding: .utf8) {
-                print(jsonStr)
-            }
             
             let task = URLSession.shared.dataTask(with: request)
             task.resume()

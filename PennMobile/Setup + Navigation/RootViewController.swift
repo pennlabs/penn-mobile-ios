@@ -94,6 +94,9 @@ class RootViewController: UIViewController {
                 }
             }
         }
+        
+        // Send saved unsent events
+        FeedAnalyticsManager.shared.sendSavedEvents()
     }
     
     func showLoginScreen() {

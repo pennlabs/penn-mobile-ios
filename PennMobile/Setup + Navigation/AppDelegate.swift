@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         UserDBManager.shared.dryRun = true
         UserDBManager.shared.testRun = true
+        FeedAnalyticsManager.shared.dryRun = true
 
         FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
         FirebaseApp.configure()
@@ -135,7 +136,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         tabBarController?.reloadTabs()
         rootViewController.applicationWillEnterForeground()
-        FeedAnalyticsManager.shared.sendSavedEvents()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {

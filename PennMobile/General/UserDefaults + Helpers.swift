@@ -319,6 +319,5 @@ extension UserDefaults {
 
     func clearLastTransactionRequest() {
         removeObject(forKey: UserDefaultsKeys.lastTransactionRequest.rawValue)
->>>>>>> development
     }
 }
