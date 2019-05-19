@@ -31,3 +31,16 @@ extension HomeTableViewModel {
         return items
     }
 }
+
+// MARK: - UITableViewDelegate + Tracking
+extension HomeTableViewModel {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let item = items[indexPath.row]
+        let cellType = type(of: item) as! HomeCellItem.Type
+        var id: String? = nil
+        if let identifiableItem = item as? LoggingIdentifiable {
+            id = identifiableItem.id
+        }
+        FeedAnalyticsManager.shared.track(cellType: cellType.jsonKey, index: indexPath.row, id: id, batchSize: items.count)
+    }
+}

@@ -31,7 +31,7 @@ final class HomeFeatureCellItem: HomeCellItem {
         return HomeFeatureCell.self
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeFeatureCellItem else { return false }
         return announcement.title == item.announcement.title
     }

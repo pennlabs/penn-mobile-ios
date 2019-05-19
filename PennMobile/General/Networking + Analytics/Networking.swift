@@ -129,3 +129,37 @@ extension Requestable {
         task.resume()
     }
 }
+
+extension Requestable {
+    internal func getAnalyticsRequest(url: String) -> NSMutableURLRequest {
+        let url = URL(string: url)!
+        let request = NSMutableURLRequest(url: url)
+        let deviceID = getDeviceID()
+        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+        if let accountID = UserDefaults.standard.getAccountID() {
+            request.setValue(accountID, forHTTPHeaderField: "X-Account-ID")
+        }
+        return request
+    }
+    
+    internal func getAnalyticsPostRequest(url: String, params: [String: Any]?) -> NSMutableURLRequest {
+        let request = getAnalyticsRequest(url: url)
+        request.httpMethod = "POST"
+        if let params = params {
+            request.httpBody = getPostString(params: params).data(using: .utf8)
+        }
+        return request
+    }
+    
+    fileprivate func getPostString(params: [String: Any]) -> String {
+        var data = [String]()
+        for(key, value) in params {
+            if let arr = value as? Array<Any> {
+                let str = arr.map { String(describing: $0) }.joined(separator: ",")
+                data.append(key + "=\(str)")
+            }
+            data.append(key + "=\(value)")
+        }
+        return data.map { String($0) }.joined(separator: "&")
+    }
+}

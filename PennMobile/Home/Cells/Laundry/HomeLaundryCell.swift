@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
+final class HomeLaundryCell: UITableViewCell, HomeCellConformable {    
     static var identifier: String = "laundryCell"
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         return 310.0 + HomeViewController.cellSpacing

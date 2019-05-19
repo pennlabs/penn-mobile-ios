@@ -10,6 +10,7 @@ import Foundation
 
 protocol ModularTableViewItem {
     static var associatedCell: ModularTableViewCell.Type { get }
+    func equals(item: ModularTableViewItem) -> Bool
 }
 
 extension ModularTableViewItem {

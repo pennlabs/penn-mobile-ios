@@ -24,7 +24,7 @@ final class HomeCalendarCellItem: HomeCellItem {
         return HomeCalendarCell.self
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeCalendarCellItem else { return false }
         guard let events = events, let itemEvents = item.events else { return false }
         return events == itemEvents

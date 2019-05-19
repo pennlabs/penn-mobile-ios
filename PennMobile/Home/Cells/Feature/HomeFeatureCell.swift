@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class HomeFeatureCell: UITableViewCell, HomeCellConformable {
+final class HomeFeatureCell: UITableViewCell, HomeCellConformable {    
     static var identifier: String = "homeFeatureCell"
     
     var delegate: ModularTableViewCellDelegate!
@@ -108,7 +108,7 @@ extension HomeFeatureCell {
     
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? FeatureNavigatable else { return }
-        delegate.navigateToFeature(feature: announcement.feature)
+        delegate.navigateToFeature(feature: announcement.feature, item: self.item)
     }
 }
 

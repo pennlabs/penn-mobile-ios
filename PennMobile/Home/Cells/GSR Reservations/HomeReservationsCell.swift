@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class HomeReservationsCell: UITableViewCell, HomeCellConformable {
+final class HomeReservationsCell: UITableViewCell, HomeCellConformable {    
     var cardView: UIView! = UIView()
     
     var delegate: ModularTableViewCellDelegate!

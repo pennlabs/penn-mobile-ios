@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
+final class HomeCalendarCell: UITableViewCell, HomeCellConformable {    
     var cardView: UIView! = UIView()
     
     var delegate: ModularTableViewCellDelegate!

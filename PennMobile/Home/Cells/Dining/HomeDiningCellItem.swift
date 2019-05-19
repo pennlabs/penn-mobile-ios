@@ -19,7 +19,7 @@ final class HomeDiningCellItem: HomeCellItem {
         self.venues = venues
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeDiningCellItem else { return false }
         return venues == item.venues
     }

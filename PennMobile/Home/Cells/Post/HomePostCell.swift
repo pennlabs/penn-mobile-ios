@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class HomePostCell: UITableViewCell, HomeCellConformable {
+final class HomePostCell: UITableViewCell, HomeCellConformable {    
     static var identifier: String = "homePostCell"
     
     var delegate: ModularTableViewCellDelegate!
@@ -108,7 +108,7 @@ extension HomePostCell {
     
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? URLSelectable else { return }
-        delegate.handleUrlPressed(url: post.postUrl, title: post.source)
+        delegate.handleUrlPressed(url: post.postUrl, title: post.source, item: self.item)
     }
 }
 

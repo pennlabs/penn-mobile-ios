@@ -19,7 +19,7 @@ final class HomeGSRLocationsCellItem: HomeCellItem {
         self.locations = locations
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeGSRLocationsCellItem else { return false }
         return locations == item.locations
     }

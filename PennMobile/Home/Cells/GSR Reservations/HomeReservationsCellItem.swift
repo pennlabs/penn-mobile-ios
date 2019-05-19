@@ -19,7 +19,7 @@ final class HomeReservationsCellItem: HomeCellItem {
         self.reservations = reservations
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeReservationsCellItem else { return false }
         return reservations.count == item.reservations.count
     }

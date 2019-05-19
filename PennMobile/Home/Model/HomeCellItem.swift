@@ -9,7 +9,10 @@
 import Foundation
 
 protocol HomeCellItem: ModularTableViewItem {
-    func equals(item: HomeCellItem) -> Bool
     static var jsonKey: String { get }
     static func getItem(for json: JSON?) -> HomeCellItem?
+}
+
+protocol LoggingIdentifiable where Self: HomeCellItem {
+    var id: String { get }
 }

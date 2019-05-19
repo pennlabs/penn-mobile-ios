@@ -13,7 +13,7 @@ protocol DiningCellSelectable {
     func handleSettingsTapped(venues: [DiningVenue])
 }
 
-final class HomeDiningCell: UITableViewCell, HomeCellConformable {
+final class HomeDiningCell: UITableViewCell, HomeCellConformable {    
     var delegate: ModularTableViewCellDelegate!
     var item: ModularTableViewItem! {
         didSet {

@@ -30,7 +30,7 @@ final class HomePostCellItem: HomeCellItem {
         return HomePostCell.self
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomePostCellItem else { return false }
         return post.title == item.post.title
     }
