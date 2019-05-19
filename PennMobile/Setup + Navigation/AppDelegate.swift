@@ -109,6 +109,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func sendLogsToServer() {
+        if FeedAnalyticsManager.shared.dryRun { return }
+        
         // Perform the task on a background queue.
         DispatchQueue.global().async {
             // Request the task assertion and save the ID.
