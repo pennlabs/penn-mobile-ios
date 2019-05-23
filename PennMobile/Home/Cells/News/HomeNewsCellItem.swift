@@ -59,8 +59,6 @@ extension HomeNewsCellItem {
 // MARK: - Logging ID
 extension HomeNewsCellItem: LoggingIdentifiable {
     var id: String {
-        get {
-            return article.articleUrl
-        }
+        return article.articleUrl
     }
 }
