@@ -64,7 +64,7 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
             subtitleHeight = 0.0
         }
         
-        let bottomSpacing: CGFloat = item.post.source == nil && item.post.subtitle == nil ? 0 : 12
+        let bottomSpacing: CGFloat = item.post.source == nil && item.post.title == nil ? 0 : 12
         return imageHeight + HomeViewController.cellSpacing + titleHeight + subtitleHeight + sourceHeight + bottomSpacing
     }
     
@@ -129,7 +129,8 @@ extension HomePostCell {
     
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? URLSelectable, let url = post.postUrl else { return }
-        delegate.handleUrlPressed(url: url, title: post.source ?? "View", item: self.item)
+        let title: String = url.getMatches(for: "https:\\/\\/(.*?)([^a-zA-Z.]|$)").first ?? "View"
+        delegate.handleUrlPressed(url: url, title: title, item: self.item)
     }
 }
 
