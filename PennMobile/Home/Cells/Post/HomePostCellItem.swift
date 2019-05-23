@@ -54,4 +54,11 @@ extension HomePostCellItem {
     }
 }
 
+// MARK: - Logging ID
+extension HomePostCellItem: LoggingIdentifiable {
+    var id: String {
+        return String(post.id)
+    }
+}
+
 

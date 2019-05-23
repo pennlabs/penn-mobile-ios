@@ -15,9 +15,9 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
     var item: ModularTableViewItem! {
         didSet {
             guard let item = item as? HomePostCellItem else { return }
-            if item.post.description != nil && descriptionLabel == nil {
+            if item.post.subtitle != nil && descriptionLabel == nil {
                 self.prepareDescriptionLabel()
-            } else if item.post.description == nil && descriptionLabel != nil {
+            } else if item.post.subtitle == nil && descriptionLabel != nil {
                 descriptionLabel.removeFromSuperview()
                 descriptionLabel = nil
             }
@@ -34,34 +34,38 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
     
     static let descriptionFont: UIFont = UIFont(name: "HelveticaNeue", size: 14)!
     
-    private static var titleHeightDictionary = [String: CGFloat]()
-    private static var descriptionHeightDictionary = [String: CGFloat]()
+    private static var titleHeightDictionary = [Int: CGFloat]()
+    private static var subtitleHeightDictionary = [Int: CGFloat]()
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomePostCellItem else { return 0 }
+        let sourceHeight: CGFloat = item.post.source == nil ? 0 : 26
         let imageHeight = getImageHeight()
         let width: CGFloat = UIScreen.main.bounds.width - 2 * 20 - 2 * titleEdgeOffset
         
         let titleHeight: CGFloat
-        if let height = titleHeightDictionary[item.post.title] {
+        if let height = titleHeightDictionary[item.post.id] {
             titleHeight = height
+        } else if let title = item.post.title {
+            let spacing: CGFloat = item.post.source == nil ? 12 : 8
+            titleHeight = title.dynamicHeight(font: titleFont, width: width) + spacing
+            titleHeightDictionary[item.post.id] = titleHeight
         } else {
-            titleHeight = item.post.title.dynamicHeight(font: titleFont, width: width)
-            titleHeightDictionary[item.post.title] = titleHeight
+            titleHeight = 0.0
         }
         
-        let height = imageHeight + HomeViewController.cellSpacing + titleHeight + 48
-        guard let description = item.post.description else {
-            return height
-        }
-        let descriptionHeight: CGFloat
-        if let height = descriptionHeightDictionary[description] {
-            descriptionHeight = height
+        let subtitleHeight: CGFloat
+        if let height = subtitleHeightDictionary[item.post.id] {
+            subtitleHeight = height
+        } else if let subtitle = item.post.subtitle {
+            subtitleHeight = subtitle.dynamicHeight(font: descriptionFont, width: width) + 6
+            subtitleHeightDictionary[item.post.id] = subtitleHeight
         } else {
-            descriptionHeight = description.dynamicHeight(font: descriptionFont, width: width) + 4
-            descriptionHeightDictionary[description] = descriptionHeight
+            subtitleHeight = 0.0
         }
-        return height + descriptionHeight
+        
+        let bottomSpacing: CGFloat = item.post.source == nil && item.post.title == nil ? 0 : 12
+        return imageHeight + HomeViewController.cellSpacing + titleHeight + subtitleHeight + sourceHeight + bottomSpacing
     }
     
     // MARK: UI Elements
@@ -74,6 +78,9 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
     fileprivate var descriptionLabel: UILabel!
     fileprivate var dateLabel: UILabel!
     fileprivate var moreButton: UIButton!
+    
+    fileprivate var titleTopConstraintToImage: NSLayoutConstraint!
+    fileprivate var titleTopConstraintToSource: NSLayoutConstraint!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -93,8 +100,22 @@ extension HomePostCell {
         self.postImageView.image = item.image
         self.sourceLabel.text = post.source
         self.titleLabel.text = post.title
-        self.descriptionLabel?.text = post.description
-        self.dateLabel.text = post.timestamp
+        self.descriptionLabel?.text = post.subtitle
+        self.dateLabel.text = post.timeLabel
+        
+        if item.post.source == nil {
+            titleTopConstraintToSource.isActive = false
+            titleTopConstraintToImage.isActive = true
+        } else {
+            titleTopConstraintToSource.isActive = true
+            titleTopConstraintToImage.isActive = false
+        }
+        
+        if item.post.title == nil && item.post.subtitle == nil {
+            postImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        } else {
+            postImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
     }
 }
 
@@ -107,8 +128,9 @@ extension HomePostCell {
     }
     
     @objc fileprivate func handleTapped(_ sender: Any) {
-        guard let delegate = delegate as? URLSelectable else { return }
-        delegate.handleUrlPressed(url: post.postUrl, title: post.source, item: self.item)
+        guard let delegate = delegate as? URLSelectable, let url = post.postUrl else { return }
+        let title: String = url.getMatches(for: "(http(s?):\\/\\/)?(.*?)(.*?)([^a-zA-Z.]|$)").first ?? "View"
+        delegate.handleUrlPressed(url: url, title: title, item: self.item)
     }
 }
 
@@ -123,10 +145,8 @@ extension HomePostCell {
     
     private func prepareImageView() {
         postImageView = UIImageView()
-        if #available(iOS 11.0, *) {
-            postImageView.layer.cornerRadius = cardView.layer.cornerRadius
-            postImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        }
+        postImageView.layer.cornerRadius = cardView.layer.cornerRadius
+        postImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         postImageView.clipsToBounds = true
         postImageView.contentMode = .scaleAspectFill
         
@@ -164,7 +184,10 @@ extension HomePostCell {
         titleLabel.isUserInteractionEnabled = true
         
         cardView.addSubview(titleLabel)
-        _ = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: HomePostCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomePostCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)
+        titleTopConstraintToSource = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: HomePostCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomePostCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)[0]
+        
+        titleTopConstraintToImage = titleLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 12)
+        titleTopConstraintToImage.isActive = false
     }
     
     fileprivate func prepareDescriptionLabel() {
