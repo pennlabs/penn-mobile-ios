@@ -129,7 +129,7 @@ extension HomePostCell {
     
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? URLSelectable, let url = post.postUrl else { return }
-        let title: String = url.getMatches(for: "https:\\/\\/(.*?)([^a-zA-Z.]|$)").first ?? "View"
+        let title: String = url.getMatches(for: "(http(s?):\\/\\/)?(.*?)(.*?)([^a-zA-Z.]|$)").first ?? "View"
         delegate.handleUrlPressed(url: url, title: title, item: self.item)
     }
 }
