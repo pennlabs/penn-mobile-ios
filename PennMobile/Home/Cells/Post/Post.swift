@@ -16,8 +16,9 @@ class Post {
     let imageUrl: String
     let postUrl: String?
     let id: Int
+    let isTest: Bool
     
-    init(source: String?, title: String?, subtitle: String?, timeLabel: String?, imageUrl: String, postUrl: String?, id: Int) {
+    init(source: String?, title: String?, subtitle: String?, timeLabel: String?, imageUrl: String, postUrl: String?, id: Int, isTest: Bool) {
         self.source = source
         self.title = title
         self.subtitle = subtitle
@@ -25,14 +26,15 @@ class Post {
         self.imageUrl = imageUrl
         self.postUrl = postUrl
         self.id = id
+        self.isTest = isTest
     }
 }
 
 // MARK: - JSON Parsing
 extension Post {
     convenience init(json: JSON) throws {
-        guard let imageUrl = json["image_url"].string, let id = json["post_id"].int else {
-            // All posts must have at least an image and an id
+        guard let imageUrl = json["image_url"].string, let id = json["post_id"].int, let isTest = json["test"].bool else {
+            // All posts must have at least an image, an id, and a test flag
             throw NetworkingError.jsonError
         }
         
@@ -50,6 +52,6 @@ extension Post {
             throw NetworkingError.jsonError
         }
         
-        self.init(source: source, title: title, subtitle: subtitle, timeLabel: timeLabel, imageUrl: imageUrl, postUrl: postUrl, id: id)
+        self.init(source: source, title: title, subtitle: subtitle, timeLabel: timeLabel, imageUrl: imageUrl, postUrl: postUrl, id: id, isTest: isTest)
     }
 }

@@ -257,7 +257,7 @@ extension FlingViewController {
 
 // MARK: - ModularTableViewDelegate
 extension FlingViewController: FlingCellDelegate {
-    func handleUrlPressed(url: String, title: String, item: ModularTableViewItem) {
+    func handleUrlPressed(url: String, title: String, item: ModularTableViewItem, shouldLog: Bool) {
         navigationController?.pushViewController(checkInWebview, animated: true)
         FirebaseAnalyticsManager.shared.trackEvent(action: "Fling Check-In", result: "Fling Check-In", content: "Fling Check-In")
     }

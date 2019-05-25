@@ -9,7 +9,7 @@
 import Foundation
 
 protocol URLSelectable {
-    func handleUrlPressed(url: String, title: String, item: ModularTableViewItem)
+    func handleUrlPressed(url: String, title: String, item: ModularTableViewItem, shouldLog: Bool)
 }
 
 protocol FeatureNavigatable {

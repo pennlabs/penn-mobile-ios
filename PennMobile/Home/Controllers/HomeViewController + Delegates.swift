@@ -63,14 +63,16 @@ extension HomeViewController: GSRBookable {
 
 // MARK: - URL Selected
 extension HomeViewController {
-    func handleUrlPressed(url: String, title: String, item: ModularTableViewItem) {
+    func handleUrlPressed(url: String, title: String, item: ModularTableViewItem, shouldLog: Bool) {
         let wv = WebviewController()
         wv.load(for: url)
         wv.title = title
         navigationController?.pushViewController(wv, animated: true)
         FirebaseAnalyticsManager.shared.trackEvent(action: .viewHomeNewsArticle, result: .none, content: url)
         
-        logInteraction(item: item)
+        if shouldLog {
+            logInteraction(item: item)
+        }
     }
 }
 
