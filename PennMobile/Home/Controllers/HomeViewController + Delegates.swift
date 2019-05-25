@@ -64,6 +64,7 @@ extension HomeViewController: GSRBookable {
 // MARK: - URL Selected
 extension HomeViewController {
     func handleUrlPressed(url: String, title: String, item: ModularTableViewItem, shouldLog: Bool) {
+        self.tabBarController?.title = "Home"
         let wv = WebviewController()
         wv.load(for: url)
         wv.title = title

@@ -116,7 +116,7 @@ extension HomeFlingCell {
     
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let website = performer.website, let delegate = delegate as? URLSelectable else { return }
-        delegate.handleUrlPressed(url: website, title: performer.name, item: self.item)
+        delegate.handleUrlPressed(url: website, title: performer.name, item: self.item, shouldLog: true)
     }
 }
 
