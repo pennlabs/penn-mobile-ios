@@ -61,4 +61,9 @@ extension HomePostCellItem: LoggingIdentifiable {
     }
 }
 
-
+// MARK: - Testable
+extension HomePostCellItem: Testable {
+    var isTest: Bool {
+        return post.isTest
+    }
+}
