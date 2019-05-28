@@ -17,6 +17,6 @@ protocol LoggingIdentifiable where Self: HomeCellItem {
     var id: String { get }
 }
 
-protocol Testable where Self: HomeCellItem {
+protocol FeedTestable where Self: HomeCellItem {
     var isTest: Bool { get }
 }

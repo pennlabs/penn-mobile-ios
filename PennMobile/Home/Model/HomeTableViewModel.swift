@@ -36,16 +36,18 @@ extension HomeTableViewModel {
 extension HomeTableViewModel {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
-        if let testableItem = item as? Testable, testableItem.isTest {
-            // If this item is a test item, do not log it.
-            return
-        }
-        
         let cellType = type(of: item) as! HomeCellItem.Type
         var id: String? = nil
         if let identifiableItem = item as? LoggingIdentifiable {
             id = identifiableItem.id
         }
-        FeedAnalyticsManager.shared.track(cellType: cellType.jsonKey, index: indexPath.row, id: id, batchSize: items.count)
+        
+        let cellTypeStr: String
+        if let testableItem = item as? FeedTestable, testableItem.isTest {
+            cellTypeStr = "\(cellType.jsonKey)-test"
+        } else {
+            cellTypeStr = cellType.jsonKey
+        }
+        FeedAnalyticsManager.shared.track(cellType: cellTypeStr, index: indexPath.row, id: id, batchSize: items.count)
     }
 }

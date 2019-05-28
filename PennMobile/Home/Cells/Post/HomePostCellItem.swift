@@ -62,7 +62,7 @@ extension HomePostCellItem: LoggingIdentifiable {
 }
 
 // MARK: - Testable
-extension HomePostCellItem: Testable {
+extension HomePostCellItem: FeedTestable {
     var isTest: Bool {
         return post.isTest
     }
