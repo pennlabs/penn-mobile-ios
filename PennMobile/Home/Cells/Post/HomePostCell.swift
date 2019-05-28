@@ -209,7 +209,6 @@ extension HomePostCell {
         dateLabel.textAlignment = .right
         
         cardView.addSubview(dateLabel)
-        //        _ = dateLabel.anchor(nil, left: titleLabel.leftAnchor, bottom: cardView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         dateLabel.topAnchor.constraint(equalTo: sourceLabel.topAnchor).isActive = true
         dateLabel.rightAnchor.constraint(equalTo: postImageView.rightAnchor, constant: -HomePostCell.titleEdgeOffset).isActive = true
     }
