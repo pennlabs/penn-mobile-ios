@@ -44,7 +44,7 @@ extension HomeTableViewModel {
         
         let cellTypeStr: String
         if let testableItem = item as? FeedTestable, testableItem.isTest {
-            cellTypeStr = "\(cellType.jsonKey)-test"
+            cellTypeStr = "test-\(cellType.jsonKey)"
         } else {
             cellTypeStr = cellType.jsonKey
         }
