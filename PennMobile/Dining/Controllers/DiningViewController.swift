@@ -108,16 +108,20 @@ extension DiningViewController {
     
     func updateBalanceFromCampusExpress(_ completion: ((_ error: Error?) -> Void)? = nil) {
         self.viewModel.showActivity = true
-        CampusExpressNetworkManager.instance.getDiningData { (diningBalance, error) in
-            DispatchQueue.main.async {
-                self.viewModel.balance = diningBalance ?? self.viewModel.balance
-                self.viewModel.showActivity = false
-                self.tableView.reloadData()
-                
-                if let diningBalance = diningBalance {
-                    UserDBManager.shared.saveDiningBalance(for: diningBalance)
+        CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, error) in
+            if let html = html {
+                UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, balance) in
+                    DispatchQueue.main.async {
+                        if let hasDiningPlan = hasPlan {
+                            UserDefaults.standard.set(hasDiningPlan: hasDiningPlan)
+                        }
+                        self.viewModel.balance = balance ?? self.viewModel.balance
+                        self.viewModel.showActivity = false
+                        self.tableView.reloadData()
+                        completion?(error)
+                    }
                 }
-                
+            } else {
                 completion?(error)
             }
         }

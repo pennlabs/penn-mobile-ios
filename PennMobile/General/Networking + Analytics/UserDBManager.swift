@@ -72,6 +72,28 @@ extension UserDBManager {
         let request = getAnalyticsPostRequest(url: urlString, params: params)
         sendRequest(request)
     }
+    
+    func parseAndSaveDiningBalanceHTML(html: String, _ completion: @escaping (_ hasDiningPlan: Bool?, _ balance: DiningBalance?) -> Void) {
+        let urlString = "\(baseUrl)/dining/balance/v2"
+        let params = ["html": html] as [String: Any]
+        let request = getAnalyticsPostRequest(url: urlString, params: params)
+        sendRequest(request) { (data, resp, err) in
+            if let data = data {
+                let json = JSON(data)
+                if let hasPlan = json["hasPlan"].bool {
+                    var balance: DiningBalance? = nil
+                    if let dollars = json["balance"]["dollars"].float,
+                        let swipes = json["balance"]["swipes"].int,
+                        let guestSwipes = json["balance"]["guest_swipes"].int {
+                        balance = DiningBalance(diningDollars: dollars, visits: swipes, guestVisits: guestSwipes, lastUpdated: Date())
+                    }
+                    completion(hasPlan, balance)
+                    return
+                }
+            }
+            completion(nil, nil)
+        }
+    }
 }
 
 // MARK: - Student Account
