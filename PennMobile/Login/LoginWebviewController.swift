@@ -73,13 +73,11 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
             DiningViewModel.ShowDiningPlan = true
         }
         
-        CampusExpressNetworkManager.instance.getDiningData { (diningBalance, error) in
-            DispatchQueue.main.async {
-                if let diningBalance = diningBalance {
-                    UserDBManager.shared.saveDiningBalance(for: diningBalance)
-                    UserDefaults.standard.set(hasDiningPlan: true)
-                } else {
-                    UserDefaults.standard.set(hasDiningPlan: false)
+        CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, error) in
+            guard let html = html else { return }
+            UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, balance) in
+                if let hasDiningPlan = hasPlan {
+                    UserDefaults.standard.set(hasDiningPlan: hasDiningPlan)
                 }
             }
         }
