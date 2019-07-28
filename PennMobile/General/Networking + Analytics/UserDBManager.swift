@@ -74,22 +74,24 @@ extension UserDBManager {
     }
     
     func parseAndSaveDiningBalanceHTML(html: String, _ completion: @escaping (_ hasDiningPlan: Bool?, _ balance: DiningBalance?) -> Void) {
-        let urlString = "http://localhost:5000/dining/balance/v2"
+        let urlString = "\(baseUrl)/dining/balance/v2"
         let params = ["html": html] as [String: Any]
         let request = getAnalyticsPostRequest(url: urlString, params: params)
         sendRequest(request) { (data, resp, err) in
-            let json = JSON(data)
-            if let hasPlan = json["hasPlan"].bool {
-                var balance: DiningBalance? = nil
-                if let dollars = json["balance"]["dollars"].float,
-                    let swipes = json["balance"]["swipes"].int,
-                    let guestSwipes = json["balance"]["guest_swipes"].int {
-                    balance = DiningBalance(diningDollars: dollars, visits: swipes, guestVisits: guestSwipes, lastUpdated: Date())
+            if let data = data {
+                let json = JSON(data)
+                if let hasPlan = json["hasPlan"].bool {
+                    var balance: DiningBalance? = nil
+                    if let dollars = json["balance"]["dollars"].float,
+                        let swipes = json["balance"]["swipes"].int,
+                        let guestSwipes = json["balance"]["guest_swipes"].int {
+                        balance = DiningBalance(diningDollars: dollars, visits: swipes, guestVisits: guestSwipes, lastUpdated: Date())
+                    }
+                    completion(hasPlan, balance)
+                    return
                 }
-                completion(hasPlan, balance)
-            } else {
-                completion(nil, nil)
             }
+            completion(nil, nil)
         }
     }
 }
