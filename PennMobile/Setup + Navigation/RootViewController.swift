@@ -17,7 +17,7 @@ class RootViewController: UIViewController {
     private var lastLoginAttempt: Date?
     
     // Fetch transactions even if hasDiningPlan() returns FALSE
-    fileprivate let considerIfHaveDiningPlan = false
+    fileprivate let fetchTransactionsForUsersWithoutDiningPlan = true
     
     init() {
         self.current = SplashViewController()
@@ -228,7 +228,7 @@ extension RootViewController {
 // MARK: - Update Transactions
 extension RootViewController {
     func shouldFetchTransactions() -> Bool {
-        if UserDefaults.standard.getAccountID() == nil || (considerIfHaveDiningPlan && !UserDefaults.standard.hasDiningPlan()) {
+        if UserDefaults.standard.getAccountID() == nil || !UserDefaults.standard.hasDiningPlan() {
             // User is not logged in or does not have a dining plan
             return false
         }
