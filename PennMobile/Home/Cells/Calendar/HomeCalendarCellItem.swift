@@ -35,7 +35,9 @@ final class HomeCalendarCellItem: HomeCellItem {
 extension HomeCalendarCellItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
         CalendarAPI.instance.fetchCalendar { events in
-            self.events = events
+            if let top2Events = events?.prefix(2) {
+                self.events = Array(top2Events)
+            }
             completion()
         }
     }
