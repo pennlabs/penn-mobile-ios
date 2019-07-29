@@ -35,7 +35,6 @@ class PennCoordinate {
         case .pret:             return CLLocationCoordinate2D(latitude: 39.952501, longitude: -75.198419)
         case .falk:             return CLLocationCoordinate2D(latitude: 39.953187, longitude: -75.200089)
         case .english:          return CLLocationCoordinate2D(latitude: 39.953995, longitude: -75.193837)
-        case .frontera:         return CLLocationCoordinate2D(latitude: 39.952244, longitude: -75.195222)
         case .gourmetGrocer:    return CLLocationCoordinate2D(latitude: 39.952456, longitude: -75.199393)
         case .hill:             return CLLocationCoordinate2D(latitude: 39.953016, longitude: -75.190738)
         case .houston:          return CLLocationCoordinate2D(latitude: 39.951001, longitude: -75.194038)

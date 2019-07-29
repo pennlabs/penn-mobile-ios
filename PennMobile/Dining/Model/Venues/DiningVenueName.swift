@@ -15,7 +15,6 @@ enum DiningVenueName: String {
     case hill =          "Hill House"
     case english =       "English House"
     case falk =          "Falk Kosher Dining"
-    case frontera =      "Tortas Frontera at the ARCH"
     case gourmetGrocer = "1920 Gourmet Grocer"
     case houston =       "Houston Market"
     case joes =          "Joe's Café"
@@ -32,7 +31,6 @@ enum DiningVenueName: String {
         case falk:              return "Falk Kosher"
         case commons:           return "Commons"
         case english:           return "English"
-        case frontera:          return "Frontera"
         case gourmetGrocer:     return "G. Grocer"
         case houston:           return "Houston"
         case pret:              return "Pret"
@@ -82,8 +80,6 @@ enum DiningVenueName: String {
             return 637
         case .falk:
             return 638
-        case .frontera:
-            return 1058
         case .gourmetGrocer:
             return 1057
         case .houston:

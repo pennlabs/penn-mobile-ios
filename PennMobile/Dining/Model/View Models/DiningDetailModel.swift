@@ -20,7 +20,6 @@ class DiningDetailModel {
         dict[.gourmetGrocer] = "1920-gourmet-grocer"
         dict[.joes] = "joes-cafe"
         dict[.marks] = "marks-cafe"
-        dict[.frontera] = "tortas-frontera-at-the-arch"
         dict[.houston] = "houston-market"
         dict[.starbucks] = "1920-starbucks"
         dict[.nch] = "new-college-house"
