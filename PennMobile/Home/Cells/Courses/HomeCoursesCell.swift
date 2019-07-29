@@ -264,7 +264,7 @@ extension HomeCoursesCell {
         paragraphStyle.lineSpacing = 4
         paragraphStyle.alignment = .center
         
-        let attrString = NSMutableAttributedString(string: "Please give Penn Mobile permisson to access your courses!")
+        let attrString = NSMutableAttributedString(string: "Penn Mobile does not have access to your course schedule.")
         attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         return attrString
     }
