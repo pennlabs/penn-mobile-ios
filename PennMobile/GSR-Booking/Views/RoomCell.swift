@@ -12,6 +12,7 @@ protocol GSRSelectionDelegate {
     func containsTimeSlot(_ timeSlot: GSRTimeSlot) -> Bool
     func validateChoice(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) -> Bool
     func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType)
+    func numberOfLaterSelectedTimeSlots(timeSlot: GSRTimeSlot) -> Int
 }
 
 class RoomCell: UITableViewCell {
@@ -77,13 +78,15 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let timeSlot = room.timeSlots[indexPath.row]
-        return delegate!.validateChoice(for: room, timeSlot: timeSlot, action: SelectionType.add)
+        return true
+//        let timeSlot = room.timeSlots[indexPath.row]
+//        return delegate!.validateChoice(for: room, timeSlot: timeSlot, action: SelectionType.add)
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
-        let timeSlot = room.timeSlots[indexPath.row]
-        return delegate!.validateChoice(for: room, timeSlot: timeSlot, action: SelectionType.remove)
+        return true
+//        let timeSlot = room.timeSlots[indexPath.row]
+//        return delegate!.validateChoice(for: room, timeSlot: timeSlot, action: SelectionType.remove)
     }
     
     // MARK: - Collection View Delegate Methods
@@ -96,6 +99,31 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let timeSlot = room.timeSlots[indexPath.row]
+        if let prev = timeSlot.prev, room.timeSlots.contains(prev) {
+            let prevIndex = IndexPath(row: indexPath.row - 1, section: indexPath.section)
+            if let prevCell = collectionView.cellForItem(at: prevIndex), prevCell.isSelected {
+                var checkIfNextCellSelected = true
+                var nextIndex = indexPath
+                var nextTimeSlot = timeSlot
+                while checkIfNextCellSelected {
+                    if let next = nextTimeSlot.next, room.timeSlots.contains(next) {
+                        nextTimeSlot = next
+                        nextIndex = IndexPath(row: nextIndex.row + 1, section: indexPath.section)
+                        if let nextCell = collectionView.cellForItem(at: nextIndex), nextCell.isSelected {
+                            
+                            collectionView.deselectItem(at: nextIndex, animated: false)
+                            delegate?.handleSelection(for: room, timeSlot: nextTimeSlot, action: SelectionType.remove)
+                            let cell = collectionView.cellForItem(at: nextIndex)
+                            cell?.backgroundColor = .interactionGreen
+                        } else {
+                            checkIfNextCellSelected = false
+                        }
+                    } else {
+                        checkIfNextCellSelected = false
+                    }
+                }
+            }
+        }
         delegate?.handleSelection(for: room, timeSlot: timeSlot, action: SelectionType.remove)
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.backgroundColor = .interactionGreen
