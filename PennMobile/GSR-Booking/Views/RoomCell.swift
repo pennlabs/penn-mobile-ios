@@ -10,9 +10,7 @@ import UIKit
 
 protocol GSRSelectionDelegate {
     func containsTimeSlot(_ timeSlot: GSRTimeSlot) -> Bool
-    func validateChoice(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) -> Bool
     func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType)
-    func numberOfLaterSelectedTimeSlots(timeSlot: GSRTimeSlot) -> Int
 }
 
 class RoomCell: UITableViewCell {
@@ -77,18 +75,6 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         return CGSize(width: size, height: size)
     }
     
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-//        let timeSlot = room.timeSlots[indexPath.row]
-//        return delegate!.validateChoice(for: room, timeSlot: timeSlot, action: SelectionType.add)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
-        return true
-//        let timeSlot = room.timeSlots[indexPath.row]
-//        return delegate!.validateChoice(for: room, timeSlot: timeSlot, action: SelectionType.remove)
-    }
-    
     // MARK: - Collection View Delegate Methods
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let timeSlot = room.timeSlots[indexPath.row]
@@ -109,8 +95,7 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
                     if let next = nextTimeSlot.next, room.timeSlots.contains(next) {
                         nextTimeSlot = next
                         nextIndex = IndexPath(row: nextIndex.row + 1, section: indexPath.section)
-                        if let nextCell = collectionView.cellForItem(at: nextIndex), nextCell.isSelected {
-                            
+                        if delegate.containsTimeSlot(nextTimeSlot) {
                             collectionView.deselectItem(at: nextIndex, animated: false)
                             delegate?.handleSelection(for: room, timeSlot: nextTimeSlot, action: SelectionType.remove)
                             let cell = collectionView.cellForItem(at: nextIndex)
@@ -124,6 +109,7 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
                 }
             }
         }
+
         delegate?.handleSelection(for: room, timeSlot: timeSlot, action: SelectionType.remove)
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.backgroundColor = .interactionGreen

@@ -160,42 +160,6 @@ extension GSRViewModel: GSRSelectionDelegate {
         return currentSelection.contains(timeSlot)
     }
     
-    func validateChoice(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) -> Bool {
-        if !timeSlot.isAvailable {
-            return false
-        }
-        switch action {
-        case .add:
-            return validateAddition(timeSlot)
-        case .remove:
-            return validateRemoval(timeSlot)
-        }
-    }
-    
-    private func validateAddition(_ timeSlot: GSRTimeSlot) -> Bool {
-        if currentSelection.count >= 4 {
-            return false
-        } else if currentSelection.count == 0 {
-            return true
-        }
-        
-        var flag = false
-        for selection in currentSelection {
-            flag = flag || timeSlot == selection.prev || timeSlot == selection.next || timeSlot == selection
-        }
-        return flag
-    }
-    
-    private func validateRemoval(_ timeSlot: GSRTimeSlot) -> Bool {
-        if !currentSelection.contains(timeSlot) {
-            return false
-        } else if let prev = timeSlot.prev, let next = timeSlot.next,
-            currentSelection.contains(prev) && currentSelection.contains(next) {
-            return false
-        }
-        return true
-    }
-    
     private func isValidAddition(timeSlot: GSRTimeSlot) -> Bool {
         if currentSelection.isEmpty {
             return true
@@ -213,32 +177,6 @@ extension GSRViewModel: GSRSelectionDelegate {
         return isSameRoom && isBeforeOrAfter
     }
     
-    private func isValidRemoval(timeSlot: GSRTimeSlot) -> Bool {
-        if let prev = timeSlot.prev, let next = timeSlot.next,
-            currentSelection.contains(prev) && currentSelection.contains(next) {
-            return false
-        }
-        return true
-    }
-    
-    // Removes all later timeslots including itself from selection
-    private func removeLaterTimeSlotsFromSelection(timeSlot: GSRTimeSlot) {
-        if !currentSelection.contains(timeSlot) { return }
-        if let next = timeSlot.next {
-            removeLaterTimeSlotsFromSelection(timeSlot: next)
-        }
-        currentSelection.remove(at: currentSelection.firstIndex(of: timeSlot)!)
-    }
-    
-    func numberOfLaterSelectedTimeSlots(timeSlot: GSRTimeSlot) -> Int {
-        if !currentSelection.contains(timeSlot) { return 0 }
-        var count = 0
-        if let next = timeSlot.next {
-            count = 1 + numberOfLaterSelectedTimeSlots(timeSlot: next)
-        }
-        return count
-    }
-    
     // Returns the number to the right removed if any
     func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) {
         switch action {
@@ -251,17 +189,9 @@ extension GSRViewModel: GSRSelectionDelegate {
             currentSelection.append(timeSlot)
             break
         case .remove:
-//            if !isValidRemoval(timeSlot: timeSlot) {
-//                numRemoved = removeLaterTimeSlotsFromSelection(timeSlot: timeSlot)
-//                print(numRemoved)
-////                delegate.refreshDataUI()
-//            } else {
-//                currentSelection.remove(at: currentSelection.firstIndex(of: timeSlot)!)
-//            }
             currentSelection.remove(at: currentSelection.firstIndex(of: timeSlot)!)
             break
         }
-        print(action, currentSelection.map { $0.startTime} )
         
         if currentSelection.count == 0 || (currentSelection.count == 1 && action == .add) {
             delegate.refreshSelectionUI()
