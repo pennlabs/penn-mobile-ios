@@ -146,9 +146,7 @@ extension DiningViewController {
     
     @objc fileprivate func handleRefreshControl(_ sender: Any) {
         fetchDiningHours()
-        if UserDefaults.standard.isAuthedIn() {
-            updateBalanceFromCampusExpress()
-        }
+        updateBalanceFromCampusExpress()
     }
 }
 
