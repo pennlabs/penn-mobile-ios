@@ -131,6 +131,7 @@ extension DiningViewController {
                     }
                 }
             } else {
+                self.viewModel.showActivity = false
                 completion?(error)
             }
         }
