@@ -160,46 +160,31 @@ extension GSRViewModel: GSRSelectionDelegate {
         return currentSelection.contains(timeSlot)
     }
     
-    func validateChoice(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) -> Bool {
-        if !timeSlot.isAvailable {
-            return false
-        }
-        switch action {
-        case .add:
-            return validateAddition(timeSlot)
-        case .remove:
-            return validateRemoval(timeSlot)
-        }
-    }
-    
-    private func validateAddition(_ timeSlot: GSRTimeSlot) -> Bool {
-        if currentSelection.count >= 4 {
-            return false
-        } else if currentSelection.count == 0 {
+    private func isValidAddition(timeSlot: GSRTimeSlot) -> Bool {
+        if currentSelection.isEmpty {
             return true
         }
         
-        var flag = false
+        let isSameRoom = currentSelection.contains(where: { (otherTimeSlot) -> Bool in
+            otherTimeSlot.roomId == timeSlot.roomId
+        })
+        
+        var isBeforeOrAfter = false
         for selection in currentSelection {
-            flag = flag || timeSlot == selection.prev || timeSlot == selection.next || timeSlot == selection
+            isBeforeOrAfter = isBeforeOrAfter || timeSlot == selection.prev || timeSlot == selection.next || timeSlot == selection
         }
-        return flag
-    }
-    
-    private func validateRemoval(_ timeSlot: GSRTimeSlot) -> Bool {
-        if !currentSelection.contains(timeSlot) {
-            return false
-        } else if let prev = timeSlot.prev, let next = timeSlot.next,
-            currentSelection.contains(prev) && currentSelection.contains(next) {
-            return false
-        }
-        return true
+        
+        return isSameRoom && isBeforeOrAfter
     }
     
     func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) {
         switch action {
         case .add:
             if currentSelection.contains(timeSlot) { break }
+            if !isValidAddition(timeSlot: timeSlot) {
+                currentSelection.removeAll()
+                delegate.refreshDataUI()
+            }
             currentSelection.append(timeSlot)
             break
         case .remove:
