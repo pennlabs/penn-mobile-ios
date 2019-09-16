@@ -177,7 +177,6 @@ extension GSRViewModel: GSRSelectionDelegate {
         return isSameRoom && isBeforeOrAfter
     }
     
-    // Returns the number to the right removed if any
     func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) {
         switch action {
         case .add:
