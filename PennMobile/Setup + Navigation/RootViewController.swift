@@ -85,11 +85,13 @@ class RootViewController: UIViewController {
         
         // Fetch transaction data at least once a week, starting on Sundays
         if shouldFetchTransactions() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                PennCashNetworkManager.instance.getTransactionHistory { data in
-                    if let data = data, let str = String(bytes: data, encoding: .utf8) {
-                        UserDBManager.shared.saveTransactionData(csvStr: str)
-                        UserDefaults.standard.setLastTransactionRequest()
+            if UserDefaults.standard.isAuthedIn() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    PennCashNetworkManager.instance.getTransactionHistory { data in
+                        if let data = data, let str = String(bytes: data, encoding: .utf8) {
+                            UserDBManager.shared.saveTransactionData(csvStr: str)
+                            UserDefaults.standard.setLastTransactionRequest()
+                        }
                     }
                 }
             }

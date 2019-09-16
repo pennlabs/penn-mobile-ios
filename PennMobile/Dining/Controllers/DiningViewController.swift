@@ -95,6 +95,9 @@ extension DiningViewController {
     }
     
     func updateBalanceIfNeeded() {
+        // Do not try to update the balance if the user is not authed into shibboleth
+        if !UserDefaults.standard.isAuthedIn() { return }
+        
         if isReturningFromRefreshLogin {
             // If returning from refresh, continue to fetch balance but set flag to FALSE
             isReturningFromRefreshLogin = false
@@ -109,6 +112,12 @@ extension DiningViewController {
     func updateBalanceFromCampusExpress(_ completion: ((_ error: Error?) -> Void)? = nil) {
         self.viewModel.showActivity = true
         CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, error) in
+            if let networkingError = error as? NetworkingError, networkingError == NetworkingError.authenticationError {
+                UserDefaults.standard.setShibbolethAuth(authedIn: false)
+            } else {
+                UserDefaults.standard.setShibbolethAuth(authedIn: true)
+            }
+            
             if let html = html {
                 UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, balance) in
                     DispatchQueue.main.async {
@@ -137,7 +146,9 @@ extension DiningViewController {
     
     @objc fileprivate func handleRefreshControl(_ sender: Any) {
         fetchDiningHours()
-        updateBalanceFromCampusExpress()
+        if UserDefaults.standard.isAuthedIn() {
+            updateBalanceFromCampusExpress()
+        }
     }
 }
 

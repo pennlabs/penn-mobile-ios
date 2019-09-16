@@ -29,6 +29,7 @@ extension UserDefaults {
         case lastLogin
         case unsentLogs
         case lastTransactionRequest
+        case authedIntoShibboleth
     }
 }
 
@@ -319,5 +320,17 @@ extension UserDefaults {
 
     func clearLastTransactionRequest() {
         removeObject(forKey: UserDefaultsKeys.lastTransactionRequest.rawValue)
+    }
+}
+
+// MARK: - Authed Into Shibboleth
+extension UserDefaults {
+    func setShibbolethAuth(authedIn: Bool) {
+        set(authedIn, forKey: UserDefaultsKeys.authedIntoShibboleth.rawValue)
+        synchronize()
+    }
+    
+    func isAuthedIn() -> Bool {
+        return bool(forKey: UserDefaultsKeys.authedIntoShibboleth.rawValue)
     }
 }
