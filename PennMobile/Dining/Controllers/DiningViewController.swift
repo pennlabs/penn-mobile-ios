@@ -97,9 +97,8 @@ extension DiningViewController {
     }
     
     func updateBalanceIfNeeded() {
-        if let balance = self.viewModel.balance, balance.lastUpdated.minutesFrom(date: Date()) < 10 && !isReturningFromLogin {
-            // Do not fetch balance if the last balance was fetched less than 10 minutes ago or if
-            // balance is being refetched in refreshBalance()
+        if let balance = self.viewModel.balance, balance.lastUpdated.hoursFrom(date: Date()) < 12 && !isReturningFromLogin {
+            // Do not fetch balance if the last balance was fetched less than 12 hours ago or if balance is being refetched in refreshBalance()
             // Fetch the balance, however, if returning from login
             return
         }
