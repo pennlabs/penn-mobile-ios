@@ -6,6 +6,8 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
+import WebKit
+
 class DiningViewController: GenericTableViewController {
         
     fileprivate var viewModel = DiningViewModel()
@@ -167,8 +169,8 @@ extension DiningViewController: DiningViewModelDelegate {
         
         if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
             let vc = UIViewController()
-            let webView = GenericWebview(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-            webView.loadRequest(URLRequest(url: url))
+            let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+            webView.load(URLRequest(url: url))
             vc.view.addSubview(webView)
             vc.title = venue.name.rawValue
             self.navigationController?.pushViewController(vc, animated: true)

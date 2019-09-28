@@ -29,44 +29,10 @@ class DiningDetailModel {
         return dict
     }()
     
-    static var lastUpdated = Date()
-    
-    static var webviewDictionary = [DiningVenueName: UIWebView]()
-    
     static func getUrl(for venue: DiningVenueName) -> String? {
         if let endPoint = serverDictionary[venue] {
             return "\(server)/\(endPoint)"
         }
         return nil
-    }
-    
-    static func getWebview(for venue: DiningVenueName) -> UIWebView? {
-        if !lastUpdated.isToday {
-            webviewDictionary = [DiningVenueName: UIWebView]()
-            lastUpdated = Date()
-            return nil
-        }
-        return DiningDetailModel.webviewDictionary[venue]
-    }
-    
-    static func set(webview: UIWebView, for venue: DiningVenueName) {
-        DiningDetailModel.webviewDictionary[venue] = webview
-    }
-}
-
-// MARK: - Webview Preloading
-extension DiningDetailModel {
-    static func preloadWebview(for venue: DiningVenueName) {
-        /*if getWebview(for: venue) != nil { return }
-        
-        DiningAPI.instance.fetchDetailPageHTML(for: venue) { (html) in
-            if let html = html {
-                DispatchQueue.main.async {
-                    let webview = UIWebView(frame: .zero)
-                    webview.loadHTMLString(html, baseURL: nil)
-                    DiningDetailModel.set(webview: webview, for: venue)
-                }
-            }
-        }*/
     }
 }
