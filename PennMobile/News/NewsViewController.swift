@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import WebKit
 
 class NewsViewController: GenericViewController, HairlineRemovable {
     
     private let urlArray = ["http://thedp.com/", "http://thedp.com/blog/under-the-button/", "http://34st.com/"]
     
-    private var webview: GenericWebview!
+    private var webview: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,11 +21,6 @@ class NewsViewController: GenericViewController, HairlineRemovable {
         
         setupNavBar()
         setupWebview()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        webview.hideActivity()
     }
     
     override func setupNavBar() {
@@ -62,12 +58,12 @@ class NewsViewController: GenericViewController, HairlineRemovable {
         }
         headerHeight += 64
         
-        webview = GenericWebview(frame: CGRect(x: 0, y: headerHeight, width: self.view.bounds.width, height: self.view.bounds.height - headerHeight))
+        webview = WKWebView(frame: CGRect(x: 0, y: headerHeight, width: self.view.bounds.width, height: self.view.bounds.height - headerHeight))
         view.addSubview(webview)
-        webview.loadRequest(URLRequest(url: URL(string: urlArray[0])!))
+        webview.load(URLRequest(url: URL(string: urlArray[0])!))
     }
     
     @objc internal func switchNewsSource(_ segment: UISegmentedControl) {
-        webview.loadRequest(URLRequest(url: URL(string: urlArray[segment.selectedSegmentIndex])!))
+        webview.load(URLRequest(url: URL(string: urlArray[segment.selectedSegmentIndex])!))
     }
 }

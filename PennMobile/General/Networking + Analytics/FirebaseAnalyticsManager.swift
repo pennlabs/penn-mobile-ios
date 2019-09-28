@@ -33,7 +33,7 @@ class FirebaseAnalyticsManager: NSObject {
     }
     
     enum EventAction: String {
-        case viewHomeNewsArticle = "HomeNews"
+        case viewWebsite = "HomeWebsite"
         case attemptBooking = "Booking"
         case laundryTapped = "LaundryTapped"
         case updateDiningPreferences = "UpdateDiningPref"
