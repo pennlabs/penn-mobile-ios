@@ -39,10 +39,9 @@ class PennCoordinate {
         case .hill:             return CLLocationCoordinate2D(latitude: 39.953016, longitude: -75.190738)
         case .houston:          return CLLocationCoordinate2D(latitude: 39.951001, longitude: -75.194038)
         case .joes:             return CLLocationCoordinate2D(latitude: 39.951542, longitude: -75.196524)
-        case .marks:            return CLLocationCoordinate2D(latitude: 39.952736, longitude: -75.194344)
         case .mbaCafe:          return CLLocationCoordinate2D(latitude: 39.953003, longitude: -75.198197)
         case .mcclelland:       return CLLocationCoordinate2D(latitude: 39.950422, longitude: -75.196937)
-        case .nch:              return CLLocationCoordinate2D(latitude: 39.953969, longitude: -75.191060)
+        case .lauder:              return CLLocationCoordinate2D(latitude: 39.953969, longitude: -75.191060)
         case .starbucks:        return CLLocationCoordinate2D(latitude: 39.952343, longitude: -75.199541)
         case .unknown:          return getDefault()
         }

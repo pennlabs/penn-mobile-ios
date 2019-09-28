@@ -20,8 +20,8 @@ enum DiningVenueType: String, Codable {
 
 class DiningVenue: NSObject {
     
-    static let diningNames: [DiningVenueName] = [.commons, .mcclelland, .nch, .hill, .english, .falk]
-    static let retailNames: [DiningVenueName] = [.houston, .gourmetGrocer, .joes, .marks, .starbucks, .pret, .mbaCafe]
+    static let diningNames: [DiningVenueName] = [.commons, .mcclelland, .lauder, .hill, .english, .falk]
+    static let retailNames: [DiningVenueName] = [.houston, .gourmetGrocer, .joes, .starbucks, .pret, .mbaCafe]
     
     var name: DiningVenueName
     
@@ -55,7 +55,7 @@ class DiningVenue: NSObject {
     }
     
     static func getDefaultVenues() -> [DiningVenue] {
-        return [.commons, .nch, .hill].map { DiningVenue(venue: $0) }
+        return [.commons, .lauder, .hill].map { DiningVenue(venue: $0) }
     }
     
     static func getVenues(for type: DiningVenueType) -> [DiningVenue] {
@@ -88,13 +88,15 @@ extension DiningVenue {
     }
     
     func getID() -> Int? {
-        guard let mapping = DiningVenue.idToVenue else { return nil }
-        for (id, name) in mapping {
-            if name == self.name.rawValue {
-                return id
-            }
-        }
-        return nil
+//        guard let mapping = DiningVenue.idToVenue else { return nil }
+//        for (id, name) in mapping {
+//            if name == self.name.rawValue {
+//                return id
+//            }
+//        }
+//        return nil
+        let id = self.name.getID()
+        return id
     }
 }
 

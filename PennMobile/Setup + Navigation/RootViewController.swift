@@ -35,7 +35,7 @@ class RootViewController: UIViewController {
                 UserDefaults.standard.setShibbolethAuth(authedIn: true)
             }
         }
-        
+                
         if UserDefaults.standard.getAccountID() != nil && shouldRequireLogin() {
             // Logged in and should require login
             clearAccountData()
