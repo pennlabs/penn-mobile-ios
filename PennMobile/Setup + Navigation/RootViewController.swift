@@ -29,6 +29,11 @@ class RootViewController: UIViewController {
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
+            if UserDefaults.standard.getAccountID() != nil {
+                // Upon updating the app, assume everyone with an account is authed into Shibboleth
+                // REMOVE IN FUTURE VERSIONS
+                UserDefaults.standard.setShibbolethAuth(authedIn: true)
+            }
         }
         
         if UserDefaults.standard.getAccountID() != nil && shouldRequireLogin() {
@@ -85,11 +90,13 @@ class RootViewController: UIViewController {
         
         // Fetch transaction data at least once a week, starting on Sundays
         if shouldFetchTransactions() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                PennCashNetworkManager.instance.getTransactionHistory { data in
-                    if let data = data, let str = String(bytes: data, encoding: .utf8) {
-                        UserDBManager.shared.saveTransactionData(csvStr: str)
-                        UserDefaults.standard.setLastTransactionRequest()
+            if UserDefaults.standard.isAuthedIn() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    PennCashNetworkManager.instance.getTransactionHistory { data in
+                        if let data = data, let str = String(bytes: data, encoding: .utf8) {
+                            UserDBManager.shared.saveTransactionData(csvStr: str)
+                            UserDefaults.standard.setLastTransactionRequest()
+                        }
                     }
                 }
             }
