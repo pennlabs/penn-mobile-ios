@@ -25,6 +25,7 @@ extension PennAuthRequestable {
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let urlStr = response?.url?.absoluteString, urlStr == targetUrl {
+                UserDefaults.standard.setShibbolethAuth(authedIn: true)
                 completionHandler(data, response, error)
                 return
             }
@@ -33,6 +34,7 @@ extension PennAuthRequestable {
                 let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue),
                 let urlStr = response.url?.absoluteString {
                 if urlStr == targetUrl {
+                    UserDefaults.standard.setShibbolethAuth(authedIn: true)
                     completionHandler(data, response, error)
                 } else if urlStr.contains(self.authUrl) {
                     self.makeRequestWithAuth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
@@ -40,6 +42,7 @@ extension PennAuthRequestable {
                     self.makeRequestWithShibboleth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
                 }
             } else {
+                UserDefaults.standard.setShibbolethAuth(authedIn: false)
                 completionHandler(nil, nil, NetworkingError.authenticationError)
             }
             UserDefaults.standard.storeCookies()
@@ -53,6 +56,7 @@ extension PennAuthRequestable {
                 let appfactor = html.getMatches(for: "name=\"appfactor\" value=\"(.*?)\"").first,
                 let ref = html.getMatches(for: "name=\"ref\" value=\"(.*?)\"").first,
                 let service = html.getMatches(for: "name=\"service\" value=\"(.*?)\"").first else {
+                UserDefaults.standard.setShibbolethAuth(authedIn: false)
                 completionHandler(nil, nil, NetworkingError.authenticationError)
                 return
         }
@@ -81,6 +85,7 @@ extension PennAuthRequestable {
         }
         
         guard pennkey != nil && password != nil && isTwoFactorTrusted else {
+            UserDefaults.standard.setShibbolethAuth(authedIn: false)
             completionHandler(nil, nil, NetworkingError.authenticationError)
             return
         }
@@ -117,6 +122,7 @@ extension PennAuthRequestable {
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                 self.makeRequestWithShibboleth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
             } else {
+                UserDefaults.standard.setShibbolethAuth(authedIn: false)
                 completionHandler(nil, nil, NetworkingError.authenticationError)
             }
             UserDefaults.standard.storeCookies()
@@ -128,6 +134,7 @@ extension PennAuthRequestable {
         guard let samlResponse = html.getMatches(for: "<input type=\"hidden\" name=\"SAMLResponse\" value=\"(.*?)\"/>").first,
             let relayState = html.getMatches(for: "<input type=\"hidden\" name=\"RelayState\" value=\"(.*?)\"/>").first?.replacingOccurrences(of: "&#x3a;", with: ":") else {
                 HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
+                UserDefaults.standard.setShibbolethAuth(authedIn: false)
                 completionHandler(nil, nil, NetworkingError.authenticationError)
                 return
         }
@@ -152,8 +159,10 @@ extension PennAuthRequestable {
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let response = response as? HTTPURLResponse, let urlStr = response.url?.absoluteString, urlStr == targetUrl {
+                UserDefaults.standard.setShibbolethAuth(authedIn: true)
                 completionHandler(data, response, error)
             } else {
+                UserDefaults.standard.setShibbolethAuth(authedIn: false)
                 completionHandler(nil, nil, NetworkingError.authenticationError)
             }
             UserDefaults.standard.storeCookies()

@@ -104,9 +104,8 @@ extension DiningHeaderView {
     }
     
     @objc fileprivate func refreshButtonTapped(_ sender: Any) {
-        if state == .refresh, let delegate = delegate {
+        if let delegate = delegate {
             delegate.refreshBalance()
-            state = .loading
         }
     }
 }

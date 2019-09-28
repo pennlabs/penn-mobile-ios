@@ -12,7 +12,7 @@ class DiningViewController: GenericTableViewController {
     
     fileprivate let venueToPreload: DiningVenueName = .commons
     
-    fileprivate var isReturningFromRefreshLogin: Bool = false
+    fileprivate var isReturningFromLogin: Bool = false
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,29 +95,21 @@ extension DiningViewController {
     }
     
     func updateBalanceIfNeeded() {
-        // Do not try to update the balance if the user is not authed into shibboleth
-        if !UserDefaults.standard.isAuthedIn() { return }
-        
-        if isReturningFromRefreshLogin {
-            // If returning from refresh, continue to fetch balance but set flag to FALSE
-            isReturningFromRefreshLogin = false
-        } else if let balance = self.viewModel.balance, balance.lastUpdated.minutesFrom(date: Date()) < 10 {
+        if let balance = self.viewModel.balance, balance.lastUpdated.minutesFrom(date: Date()) < 10 && !isReturningFromLogin {
             // Do not fetch balance if the last balance was fetched less than 10 minutes ago or if
             // balance is being refetched in refreshBalance()
+            // Fetch the balance, however, if returning from login
             return
         }
         updateBalanceFromCampusExpress()
     }
     
-    func updateBalanceFromCampusExpress(_ completion: ((_ error: Error?) -> Void)? = nil) {
+    func updateBalanceFromCampusExpress() {
+        // Do nothing if network call is being made
+        if self.viewModel.showActivity { return }
+        
         self.viewModel.showActivity = true
         CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, error) in
-            if let networkingError = error as? NetworkingError, networkingError == NetworkingError.authenticationError {
-                UserDefaults.standard.setShibbolethAuth(authedIn: false)
-            } else {
-                UserDefaults.standard.setShibbolethAuth(authedIn: true)
-            }
-            
             if let html = html {
                 UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, balance) in
                     DispatchQueue.main.async {
@@ -126,13 +118,26 @@ extension DiningViewController {
                         }
                         self.viewModel.balance = balance ?? self.viewModel.balance
                         self.viewModel.showActivity = false
+                        self.isReturningFromLogin = false
                         self.tableView.reloadData()
-                        completion?(error)
                     }
                 }
             } else {
-                self.viewModel.showActivity = false
-                completion?(error)
+                DispatchQueue.main.async {
+                    self.viewModel.showActivity = false
+                    self.tableView.reloadData()
+                    
+                    let wasReturningFromLogin = self.isReturningFromLogin
+                    if let error = error as? NetworkingError, error == NetworkingError.authenticationError && !self.isReturningFromLogin {
+                        // Failed to get balance because failed to authenticate into Campus Express
+                        // Request user to log in again
+                        self.showLoginController()
+                    }
+                    
+                    if wasReturningFromLogin {
+                        self.isReturningFromLogin = false
+                    }
+                }
             }
         }
     }
@@ -174,15 +179,16 @@ extension DiningViewController: DiningViewModelDelegate {
 // MARK: - DiningBalanceRefreshable
 extension DiningViewController: DiningBalanceRefreshable {
     func refreshBalance() {
-        updateBalanceFromCampusExpress { (error) in
-            if let error = error as? NetworkingError, error == NetworkingError.authenticationError {
-                // Failed to get balance because failed to authenticate into Campus Express
-                // Request user to log in again
-                let pennLoginController = PennLoginController()
-                let nvc = UINavigationController(rootViewController: pennLoginController)
-                self.isReturningFromRefreshLogin = true
-                self.present(nvc, animated: true, completion: nil)
-            }
-        }
+        updateBalanceFromCampusExpress()
+    }
+}
+
+// MARK: - Show Login Controller
+extension DiningViewController {
+    func showLoginController() {
+        let pennLoginController = PennLoginController()
+        let nvc = UINavigationController(rootViewController: pennLoginController)
+        self.isReturningFromLogin = true
+        self.present(nvc, animated: true, completion: nil)
     }
 }
