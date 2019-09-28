@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import WebKit
+import SafariServices
 
 extension HomeViewController: HomeViewModelDelegate {}
 
@@ -63,12 +65,17 @@ extension HomeViewController: GSRBookable {
 
 // MARK: - URL Selected
 extension HomeViewController {
-    func handleUrlPressed(url: String, title: String) {
-        let wv = WebviewController()
-        wv.load(for: url)
-        wv.title = title
-        navigationController?.pushViewController(wv, animated: true)
-        FirebaseAnalyticsManager.shared.trackEvent(action: .viewHomeNewsArticle, result: .none, content: url)
+    func handleUrlPressed(urlStr: String, title: String, item: ModularTableViewItem, shouldLog: Bool) {
+        self.tabBarController?.title = "Home"
+        if let url = URL(string: urlStr) {
+            let vc = SFSafariViewController(url: url)
+            navigationController?.present(vc, animated: true)
+            FirebaseAnalyticsManager.shared.trackEvent(action: .viewWebsite, result: .none, content: urlStr)
+        }
+        
+        if shouldLog {
+            logInteraction(item: item)
+        }
     }
 }
 
@@ -86,8 +93,8 @@ extension HomeViewController {
         
         if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
             let vc = UIViewController()
-            let webView = GenericWebview(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-            webView.loadRequest(URLRequest(url: url))
+            let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+            webView.load(URLRequest(url: url))
             vc.view.addSubview(webView)
             vc.title = venue.name.rawValue
             self.navigationController?.pushViewController(vc, animated: true)
@@ -193,9 +200,28 @@ extension HomeViewController: GSRLocationSelectable {
 }
 
 extension HomeViewController: FeatureNavigatable {
-    func navigateToFeature(feature: Feature) {
+    func navigateToFeature(feature: Feature, item: ModularTableViewItem) {
         let vc = ControllerModel.shared.viewController(for: feature)
         vc.title = feature.rawValue
         self.navigationController?.pushViewController(vc, animated: true)
+        
+        logInteraction(item: item)
+    }
+}
+
+// MARK: - Interaction Logging
+extension HomeViewController {
+    fileprivate func logInteraction(item: ModularTableViewItem) {
+        let index = self.tableViewModel.items.firstIndex { (thisItem) -> Bool in
+            return thisItem.equals(item: item)
+        }
+        if let index = index {
+            let cellType = type(of: item) as! HomeCellItem.Type
+            var id: String? = nil
+            if let identifiableItem = item as? LoggingIdentifiable {
+                id = identifiableItem.id
+            }
+            FeedAnalyticsManager.shared.trackInteraction(cellType: cellType.jsonKey, index: index, id: id)
+        }
     }
 }

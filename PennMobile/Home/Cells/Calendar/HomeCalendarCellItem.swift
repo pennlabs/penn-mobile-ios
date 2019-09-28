@@ -24,7 +24,7 @@ final class HomeCalendarCellItem: HomeCellItem {
         return HomeCalendarCell.self
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeCalendarCellItem else { return false }
         guard let events = events, let itemEvents = item.events else { return false }
         return events == itemEvents
@@ -35,7 +35,9 @@ final class HomeCalendarCellItem: HomeCellItem {
 extension HomeCalendarCellItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
         CalendarAPI.instance.fetchCalendar { events in
-            self.events = events
+            if let top2Events = events?.prefix(2) {
+                self.events = Array(top2Events)
+            }
             completion()
         }
     }

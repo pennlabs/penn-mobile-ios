@@ -9,35 +9,49 @@
 import Foundation
 
 class Post {
-    let source: String
-    let title: String
-    let description: String?
-    let timestamp: String
+    let source: String?
+    let title: String?
+    let subtitle: String?
+    let timeLabel: String?
     let imageUrl: String
-    let postUrl: String
+    let postUrl: String?
+    let id: Int
+    let isTest: Bool
     
-    init(source: String, title: String, description: String?, timestamp: String, imageUrl: String, postUrl: String) {
+    init(source: String?, title: String?, subtitle: String?, timeLabel: String?, imageUrl: String, postUrl: String?, id: Int, isTest: Bool) {
         self.source = source
         self.title = title
-        self.description = description
-        self.timestamp = timestamp
+        self.subtitle = subtitle
+        self.timeLabel = timeLabel
         self.imageUrl = imageUrl
         self.postUrl = postUrl
+        self.id = id
+        self.isTest = isTest
     }
 }
 
 // MARK: - JSON Parsing
 extension Post {
     convenience init(json: JSON) throws {
-        guard let source = json["source"].string,
-            let title = json["title"].string,
-            let timestamp = json["timestamp"].string,
-            let imageUrl = json["image_url"].string,
-            let postUrl = json["post_url"].string else {
-                throw NetworkingError.jsonError
+        guard let imageUrl = json["image_url"].string, let id = json["post_id"].int, let isTest = json["test"].bool else {
+            // All posts must have at least an image, an id, and a test flag
+            throw NetworkingError.jsonError
         }
         
-        let description = json["description"].string
-        self.init(source: source, title: title, description: description, timestamp: timestamp, imageUrl: imageUrl, postUrl: postUrl)
+        let source = json["source"].string
+        let title = json["title"].string
+        let subtitle = json["subtitle"].string
+        let postUrl = json["post_url"].string
+        let timeLabel = json["time_label"].string
+        
+        if (source == nil && timeLabel != nil) || (title == nil && subtitle == nil && source != nil) || (title == nil && subtitle != nil) {
+            // Rules:
+            //  (1) A time label cannot exist without a source label
+            //  (2) An image cannot be accompanied with only a source label
+            //  (3) A subtitle cannot exist without a title
+            throw NetworkingError.jsonError
+        }
+        
+        self.init(source: source, title: title, subtitle: subtitle, timeLabel: timeLabel, imageUrl: imageUrl, postUrl: postUrl, id: id, isTest: isTest)
     }
 }

@@ -30,7 +30,7 @@ final class HomePostCellItem: HomeCellItem {
         return HomePostCell.self
     }
     
-    func equals(item: HomeCellItem) -> Bool {
+    func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomePostCellItem else { return false }
         return post.title == item.post.title
     }
@@ -54,4 +54,16 @@ extension HomePostCellItem {
     }
 }
 
+// MARK: - Logging ID
+extension HomePostCellItem: LoggingIdentifiable {
+    var id: String {
+        return String(post.id)
+    }
+}
 
+// MARK: - Testable
+extension HomePostCellItem: FeedTestable {
+    var isTest: Bool {
+        return post.isTest
+    }
+}

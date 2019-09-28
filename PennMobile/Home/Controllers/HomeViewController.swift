@@ -179,9 +179,7 @@ extension HomeViewController {
                                   options: .transitionCrossDissolve,
                                   animations: { self.tableView.reloadData() })
                 self.fetchAllCellData {
-                    if let venue = model.venueToPreload() {
-                        DiningDetailModel.preloadWebview(for: venue.name)
-                    }
+                    // Do anything here that needs to be done after all the cells are loaded
                 }
                 completion()
             }

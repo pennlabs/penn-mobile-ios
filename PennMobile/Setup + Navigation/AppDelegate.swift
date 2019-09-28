@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         UserDBManager.shared.dryRun = true
         UserDBManager.shared.testRun = true
+        FeedAnalyticsManager.shared.dryRun = true
 
         FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
         FirebaseApp.configure()
@@ -100,41 +101,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    var backgroundTask: UIBackgroundTaskIdentifier?
+    var backgroundTaskID: UIBackgroundTaskIdentifier?
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        if DatabaseManager.shared.dryRun { return }
+        if FeedAnalyticsManager.shared.dryRun { return }
+        sendLogsToServer()
+    }
+    
+    private func sendLogsToServer() {
+        if FeedAnalyticsManager.shared.dryRun { return }
         
-        DatabaseManager.shared.endSession()
-        backgroundTask = application.beginBackgroundTask {
-            if let bgTask = self.backgroundTask {
-                DispatchQueue.main.async {
-                    application.endBackgroundTask(bgTask)
-                    self.backgroundTask = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
-                }
-            }
-        }
-        
-        DispatchQueue.main.async {
-            if application.backgroundTimeRemaining > 1.0 {
-                DatabaseManager.shared.endSession()
+        // Perform the task on a background queue.
+        DispatchQueue.global().async {
+            // Request the task assertion and save the ID.
+            self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Send Logs Task") {
+                // End the task if time expires.
+                UIApplication.shared.endBackgroundTask(self.backgroundTaskID!)
+                self.backgroundTaskID = UIBackgroundTaskIdentifier.invalid
             }
             
-            if let bgTask = self.backgroundTask {
-                application.endBackgroundTask(bgTask)
-                self.backgroundTask = UIBackgroundTaskIdentifier(rawValue: convertFromUIBackgroundTaskIdentifier(UIBackgroundTaskIdentifier.invalid))
-            }
+            // Save the logs
+            FeedAnalyticsManager.shared.save()
+            
+            // Send the data synchronously.
+            FeedAnalyticsManager.shared.sendEvents()
+            
+            // Remove the logs since they have been sent
+            FeedAnalyticsManager.shared.removeSavedEvents()
+            
+            // End the task assertion.
+            UIApplication.shared.endBackgroundTask(self.backgroundTaskID!)
+            self.backgroundTaskID = UIBackgroundTaskIdentifier.invalid
         }
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        DatabaseManager.shared.startSession()
         tabBarController?.reloadTabs()
-        rootViewController.viewWillAppear(true)
+        rootViewController.applicationWillEnterForeground()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        DatabaseManager.shared.endSession()
     }
 }
 

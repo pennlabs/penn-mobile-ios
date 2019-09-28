@@ -11,15 +11,13 @@ import Foundation
 enum DiningVenueName: String {
     case commons =       "1920 Commons"
     case mcclelland =    "McClelland Express"
-    case nch =           "New College House"
+    case lauder =        "Lauder College House"
     case hill =          "Hill House"
     case english =       "English House"
     case falk =          "Falk Kosher Dining"
-    case frontera =      "Tortas Frontera at the ARCH"
     case gourmetGrocer = "1920 Gourmet Grocer"
     case houston =       "Houston Market"
     case joes =          "Joe's Café"
-    case marks =         "Mark's Café"
     case starbucks =     "1920 Starbucks"
     case pret =          "Pret a Manger Locust Walk"
     case mbaCafe =       "Pret a Manger MBA"
@@ -27,12 +25,11 @@ enum DiningVenueName: String {
     
     static func getShortVenueName(for venueName: DiningVenueName) -> String {
         switch venueName {
-        case nch:               return "NCH Dining"
+        case lauder:               return "Lauder"
         case mcclelland:        return "McClelland"
         case falk:              return "Falk Kosher"
         case commons:           return "Commons"
         case english:           return "English"
-        case frontera:          return "Frontera"
         case gourmetGrocer:     return "G. Grocer"
         case houston:           return "Houston"
         case pret:              return "Pret"
@@ -61,7 +58,7 @@ enum DiningVenueName: String {
     }
     
     static func getType(for venue: DiningVenueName) -> DiningVenueType {
-        if venue == .commons || venue == .english || venue == .falk || venue == .hill || venue == .nch || venue == .mcclelland {
+        if venue == .commons || venue == .english || venue == .falk || venue == .hill || venue == .lauder || venue == .mcclelland {
             return .dining
         } else {
             return .retail
@@ -74,7 +71,7 @@ enum DiningVenueName: String {
             return 593
         case .mcclelland:
             return 747
-        case .nch:
+        case .lauder:
             return 1442
         case .hill:
             return 636
@@ -82,16 +79,12 @@ enum DiningVenueName: String {
             return 637
         case .falk:
             return 638
-        case .frontera:
-            return 1058
         case .gourmetGrocer:
             return 1057
         case .houston:
             return 639
         case .joes:
             return 642
-        case .marks:
-            return 640
         case .starbucks:
             return 1163
         case .pret:
@@ -102,4 +95,18 @@ enum DiningVenueName: String {
             return -1
         }
     }
+    
+    static let idDict: [Int: DiningVenueName] = [
+        593: .commons,
+        747: .mcclelland,
+        1442: .lauder,
+        636: .hill,
+        637: .english,
+        638: .falk,
+        639: .houston,
+        642: .joes,
+        1163: .starbucks,
+        1733: .pret,
+        1732: .mbaCafe,
+    ]
 }

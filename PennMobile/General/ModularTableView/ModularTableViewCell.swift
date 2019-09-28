@@ -11,8 +11,8 @@ import Foundation
 protocol ModularTableViewCellDelegate {}
 
 protocol ModularTableViewCell: class {
+    static var identifier: String { get }
+    static func getCellHeight(for item: ModularTableViewItem) -> CGFloat
     var item: ModularTableViewItem! { get set }
     var delegate: ModularTableViewCellDelegate! { get set }
-    static func getCellHeight(for item: ModularTableViewItem) -> CGFloat
-    static var identifier: String { get }
 }

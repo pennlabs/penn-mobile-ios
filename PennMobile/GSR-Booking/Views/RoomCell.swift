@@ -10,7 +10,6 @@ import UIKit
 
 protocol GSRSelectionDelegate {
     func containsTimeSlot(_ timeSlot: GSRTimeSlot) -> Bool
-    func validateChoice(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) -> Bool
     func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType)
 }
 
@@ -76,16 +75,6 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         return CGSize(width: size, height: size)
     }
     
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let timeSlot = room.timeSlots[indexPath.row]
-        return delegate!.validateChoice(for: room, timeSlot: timeSlot, action: SelectionType.add)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
-        let timeSlot = room.timeSlots[indexPath.row]
-        return delegate!.validateChoice(for: room, timeSlot: timeSlot, action: SelectionType.remove)
-    }
-    
     // MARK: - Collection View Delegate Methods
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let timeSlot = room.timeSlots[indexPath.row]
@@ -94,10 +83,22 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         cell?.backgroundColor = .informationYellow
     }
     
+    // Deselect this time slot and all select ones that follow it
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let timeSlot = room.timeSlots[indexPath.row]
-        delegate?.handleSelection(for: room, timeSlot: timeSlot, action: SelectionType.remove)
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = .interactionGreen
+        var currTimeSlot = room.timeSlots[indexPath.row]
+        var currIndex = indexPath
+        while delegate.containsTimeSlot(currTimeSlot) {
+            collectionView.deselectItem(at: currIndex, animated: false)
+            delegate?.handleSelection(for: room, timeSlot: currTimeSlot, action: SelectionType.remove)
+            let cell = collectionView.cellForItem(at: currIndex)
+            cell?.backgroundColor = .interactionGreen
+            
+            currIndex = IndexPath(row: currIndex.row + 1, section: currIndex.section)
+            if let nextTimeSlot = currTimeSlot.next {
+                currTimeSlot = nextTimeSlot
+            } else {
+                break
+            }
+        }
     }
 }

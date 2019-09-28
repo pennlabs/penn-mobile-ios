@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftSoup
 
 class CampusExpressNetworkManager {
     static let instance = CampusExpressNetworkManager()
@@ -37,12 +38,14 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
         }
     }
     
-    func getDiningData() {
+    func getDiningBalanceHTML(callback: @escaping (_ html: String?, _ error: Error?) -> Void) {
         makeAuthRequest(targetUrl: diningUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                print(html)
+                if let doc = try? SwiftSoup.parse(html as String), let htmlStr = try? doc.body()?.html() {
+                    callback(htmlStr, error)
+                }
             } else {
-                print("Something went wrong")
+                callback(nil, error)
             }
         }
     }

@@ -31,3 +31,23 @@ extension HomeTableViewModel {
         return items
     }
 }
+
+// MARK: - UITableViewDelegate + Tracking
+extension HomeTableViewModel {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let item = items[indexPath.row]
+        let cellType = type(of: item) as! HomeCellItem.Type
+        var id: String? = nil
+        if let identifiableItem = item as? LoggingIdentifiable {
+            id = identifiableItem.id
+        }
+        
+        let cellTypeStr: String
+        if let testableItem = item as? FeedTestable, testableItem.isTest {
+            cellTypeStr = "test-\(cellType.jsonKey)"
+        } else {
+            cellTypeStr = cellType.jsonKey
+        }
+        FeedAnalyticsManager.shared.track(cellType: cellTypeStr, index: indexPath.row, id: id, batchSize: items.count)
+    }
+}

@@ -9,6 +9,7 @@
 import Foundation
 import ZoomImageView
 import TimelineTableViewCell
+import SafariServices
 
 protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
 
@@ -31,7 +32,7 @@ final class FlingViewController: GenericViewController, HairlineRemovable, Indic
 
     fileprivate var performers = [FlingPerformer]()
     
-    fileprivate var checkInWebview: WebviewController!
+    fileprivate var checkInWebview: SFSafariViewController!
     fileprivate var checkInUrl = "https://docs.google.com/forms/d/e/1FAIpQLSexkehYfGgyAa7RagaCl8rze4KUKQSX9TbcvvA6iXp34TyHew/viewform"
     
     override func viewDidLoad() {
@@ -48,14 +49,10 @@ final class FlingViewController: GenericViewController, HairlineRemovable, Indic
         scheduleTableView.isHidden = true
         mapImageView.isHidden = true
         
-        checkInWebview = WebviewController()
-        checkInWebview.title = "Spring Fling Check-In"
-        
         self.showActivity()
         self.fetchViewModel {
             // TODO: do something when fetch has completed
             self.hideActivity()
-            self.checkInWebview.load(for: self.checkInUrl)
         }
         
         FirebaseAnalyticsManager.shared.trackEvent(action: "Viewed Fling", result: "Viewed Fling", content: "Fling page")
@@ -257,8 +254,9 @@ extension FlingViewController {
 
 // MARK: - ModularTableViewDelegate
 extension FlingViewController: FlingCellDelegate {
-    func handleUrlPressed(url: String, title: String) {
-        navigationController?.pushViewController(checkInWebview, animated: true)
+    func handleUrlPressed(urlStr: String, title: String, item: ModularTableViewItem, shouldLog: Bool) {
+        checkInWebview = SFSafariViewController(url: URL(string: checkInUrl)!)
+        navigationController?.present(checkInWebview, animated: true)
         FirebaseAnalyticsManager.shared.trackEvent(action: "Fling Check-In", result: "Fling Check-In", content: "Fling Check-In")
     }
 }
@@ -270,7 +268,8 @@ extension FlingViewController {
     }
     
     @objc fileprivate func handleCheckInButtonPressed(_ sender: Any?) {
-        navigationController?.pushViewController(checkInWebview, animated: true)
+        checkInWebview = SFSafariViewController(url: URL(string: checkInUrl)!)
+        navigationController?.present(checkInWebview, animated: true)
     }
 }
 

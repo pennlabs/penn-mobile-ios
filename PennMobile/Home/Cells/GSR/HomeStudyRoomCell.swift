@@ -12,8 +12,7 @@ import UIKit
 protocol GSRBookingSelectable {
     func handleBookingSelected(_ booking: GSRBooking)
 }
-final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
-    
+final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {    
     static var identifier = "studyRoomCell"
 
     fileprivate static let numberOfBookingCellRows = 2

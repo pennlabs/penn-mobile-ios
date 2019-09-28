@@ -14,41 +14,12 @@ func getDeviceID() -> String {
     return UserDBManager.shared.testRun ? "test" : deviceID
 }
 
-class UserDBManager: NSObject {
+class UserDBManager: NSObject, Requestable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
     var dryRun: Bool = true
     var testRun: Bool = false
-    
-    fileprivate func getAnalyticsRequest(url: String) -> NSMutableURLRequest {
-        let url = URL(string: url)!
-        let request = NSMutableURLRequest(url: url)
-        let deviceID = getDeviceID()
-        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
-        return request
-    }
-    
-    fileprivate func getAnalyticsPostRequest(url: String, params: [String: Any]?) -> NSMutableURLRequest {
-        let request = getAnalyticsRequest(url: url)
-        request.httpMethod = "POST"
-        if let params = params {
-            request.httpBody = getPostString(params: params).data(using: .utf8)
-        }
-        return request
-    }
-    
-    fileprivate func getPostString(params: [String: Any]) -> String {
-        var data = [String]()
-        for(key, value) in params {
-            if let arr = value as? Array<Any> {
-                let str = arr.map { String(describing: $0) }.joined(separator: ",")
-                data.append(key + "=\(str)")
-            }
-            data.append(key + "=\(value)")
-        }
-        return data.map { String($0) }.joined(separator: "&")
-    }
     
     fileprivate func sendRequest(_ request: NSMutableURLRequest) {
         if dryRun && !testRun { return }
@@ -86,6 +57,42 @@ extension UserDBManager {
         let params = ["rooms": ids]
         let request = getAnalyticsPostRequest(url: urlString, params: params)
         sendRequest(request)
+    }
+}
+
+// MARK: - Dining Balance
+extension UserDBManager {
+    func saveDiningBalance(for balance: DiningBalance) {
+        let urlString = "\(baseUrl)/dining/balance"
+        let params = [
+            "dining_dollars": balance.diningDollars,
+            "swipes": balance.visits,
+            "guest_swipes": balance.guestVisits,
+        ] as [String: Any]
+        let request = getAnalyticsPostRequest(url: urlString, params: params)
+        sendRequest(request)
+    }
+    
+    func parseAndSaveDiningBalanceHTML(html: String, _ completion: @escaping (_ hasDiningPlan: Bool?, _ balance: DiningBalance?) -> Void) {
+        let urlString = "\(baseUrl)/dining/balance/v2"
+        let params = ["html": html] as [String: Any]
+        let request = getAnalyticsPostRequest(url: urlString, params: params)
+        sendRequest(request) { (data, resp, err) in
+            if let data = data {
+                let json = JSON(data)
+                if let hasPlan = json["hasPlan"].bool {
+                    var balance: DiningBalance? = nil
+                    if let dollars = json["balance"]["dollars"].float,
+                        let swipes = json["balance"]["swipes"].int,
+                        let guestSwipes = json["balance"]["guest_swipes"].int {
+                        balance = DiningBalance(diningDollars: dollars, visits: swipes, guestVisits: guestSwipes, lastUpdated: Date())
+                    }
+                    completion(hasPlan, balance)
+                    return
+                }
+            }
+            completion(nil, nil)
+        }
     }
 }
 
@@ -158,5 +165,15 @@ extension UserDBManager {
         catch {
             completion?(false)
         }
+    }
+}
+
+// MARK: - Transaction Data
+extension UserDBManager {
+    func saveTransactionData(csvStr: String) {
+        let url = "\(baseUrl)/dining/transactions"
+        let params = ["transactions": csvStr]
+        let request = getAnalyticsPostRequest(url: url, params: params)
+        sendRequest(request)
     }
 }

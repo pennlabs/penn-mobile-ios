@@ -68,6 +68,32 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
         }
     }
     
+    private func getDiningBalance() {
+        if let student = Student.getStudent(), student.isFreshman() {
+            DiningViewModel.ShowDiningPlan = true
+        }
+        
+        CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, error) in
+            guard let html = html else { return }
+            UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, balance) in
+                if let hasDiningPlan = hasPlan {
+                    UserDefaults.standard.set(hasDiningPlan: hasDiningPlan)
+                }
+            }
+        }
+    }
+    
+    private func getDiningTransactions(after wait: Double) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + wait) {
+            PennCashNetworkManager.instance.getTransactionHistory { data in
+                if let data = data, let str = String(bytes: data, encoding: .utf8) {
+                    UserDBManager.shared.saveTransactionData(csvStr: str)
+                    UserDefaults.standard.setLastTransactionRequest()
+                }
+            }
+        }
+    }
+    
     fileprivate func saveStudent(_ student: Student) {
         if let courses = student.courses, !courses.isEmpty, !UserDefaults.standard.coursePermissionGranted() {
             DispatchQueue.main.async {
@@ -100,6 +126,8 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                 self.dismiss(animated: true, completion: nil)
                 self.loginCompletion?(accountID != nil)
                 self.getRemainingCourses()
+                self.getDiningBalance()
+                self.getDiningTransactions(after: 0.5)
                 
                 if accountID == nil {
                     FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed Login")

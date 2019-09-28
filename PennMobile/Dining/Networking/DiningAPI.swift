@@ -15,6 +15,7 @@ class DiningAPI: Requestable {
     
     let diningUrl = "https://api.pennlabs.org/dining/venues"
     let diningPrefs =  "https://api.pennlabs.org/dining/preferences"
+    let diningBalanceUrl = "https://api.pennlabs.org/dining/balance"
 
     func fetchDiningHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
         getRequest(url: diningUrl) { (dictionary, error, statusCode) in
@@ -49,6 +50,34 @@ class DiningAPI: Requestable {
             
             let html = try? String(contentsOf: url, encoding: .ascii)
             completion(html)
+        }
+    }
+}
+
+extension DiningAPI {
+    func fetchDiningBalance(_ completion: @escaping (_ diningBalance: DiningBalance?) -> Void) {
+        getRequest(url: diningBalanceUrl) { (dictionary, error, statusCode) in
+            
+            if statusCode != 200 || dictionary == nil {
+                completion(nil)
+                return
+            }
+            
+            let json = JSON(dictionary!)
+            let balance = json["balance"]
+            if let diningDollars = balance["dining_dollars"].float,
+                let swipes = balance["swipes"].int,
+                let guestSwipes = balance["guest_swipes"].int,
+                let timestamp = balance["timestamp"].string {
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                if let lastUpdated = formatter.date(from: timestamp){
+                    completion(DiningBalance(diningDollars: diningDollars, visits: swipes, guestVisits: guestSwipes, lastUpdated: lastUpdated))
+                    return
+                }
+            }
+            completion(nil)
         }
     }
 }

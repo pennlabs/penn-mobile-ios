@@ -8,30 +8,40 @@
 
 import UIKit
 
-protocol DiningViewModelDelegate {
+protocol DiningViewModelDelegate: DiningBalanceRefreshable {
     func handleSelection(for venue: DiningVenue)
 }
 
 class DiningViewModel: NSObject {
+    static var ShowDiningPlan = false
+    
     let ordering: [DiningVenueType] = [.dining, .retail]
     
     let dining = DiningVenue.getVenues(for: .dining)
     let retail = DiningVenue.getVenues(for: .retail)
     
+    let balancesHeader = "Dining Balance"
     let diningHeader = "Dining Halls"
     let retailHeader = "Retail Dining"
     
+    var balance: DiningBalance?
+    
     var delegate: DiningViewModelDelegate?
+    
+    var showActivity = false
     
     internal let headerView = "headerView"
     internal let diningCell = "diningCell"
-    internal let announcementHeader = "announcementHeader"
+    internal let diningBalanceCell = "diningBalanceCell"
     
-    var shouldShowAnnouncement = false
-    var announcement: String?
+    var shouldShowDiningBalances: Bool {
+        get {
+            return UserDefaults.standard.hasDiningPlan() || DiningViewModel.ShowDiningPlan
+        }
+    }
     
     func getType(forSection section: Int) -> DiningVenueType {
-        let index = shouldShowAnnouncement ? section - 1 : section
+        let index = shouldShowDiningBalances ? section - 1 : section
         return ordering[index]
     }
     
@@ -53,17 +63,23 @@ class DiningViewModel: NSObject {
 // MARK: - UITableViewDataSource
 extension DiningViewModel: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return ordering.count + (shouldShowAnnouncement ? 1 : 0)
+        return ordering.count + (shouldShowDiningBalances ? 1 : 0)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if shouldShowAnnouncement && section == 0 {
-            return 0
+        if shouldShowDiningBalances && section == 0 {
+            return 1
         }
         return getVenues(forSection: section).count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if shouldShowDiningBalances && indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: diningBalanceCell, for: indexPath) as! DiningBalanceCell
+            cell.selectionStyle = .none
+            cell.diningBalance = balance
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell
         cell.venue = getVenue(for: indexPath)
         return cell
@@ -71,19 +87,22 @@ extension DiningViewModel: UITableViewDataSource {
     
     func registerHeadersAndCells(for tableView: UITableView) {
         tableView.register(DiningCell.self, forCellReuseIdentifier: diningCell)
+        tableView.register(DiningBalanceCell.self, forCellReuseIdentifier: diningBalanceCell)
         tableView.register(DiningHeaderView.self, forHeaderFooterViewReuseIdentifier: headerView)
-        tableView.register(AnnouncementHeaderView.self, forHeaderFooterViewReuseIdentifier: announcementHeader)
     }
 }
 
 // MARK: - UITableViewDelegate
 extension DiningViewModel: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if shouldShowAnnouncement && section == 0 {
-            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: announcementHeader) as! AnnouncementHeaderView
-            view.announcement = announcement ?? ""
+        if shouldShowDiningBalances && section == 0 {
+            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
+            view.label.text = balancesHeader
+            view.state = showActivity ? .loading : .refresh
+            view.delegate = self.delegate
             return view
-        } else {
+        }
+        else {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
             
             let headerTitle: String
@@ -96,20 +115,27 @@ extension DiningViewModel: UITableViewDelegate {
             }
             
             view.label.text = headerTitle
+            view.state = .normal
+            view.delegate = nil
             return view
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if shouldShowDiningBalances && indexPath.section == 0 {
+            return DiningBalanceCell.cellHeight
+        }
         return DiningCell.cellHeight
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return (shouldShowAnnouncement && section == 0) ? AnnouncementHeaderView.headerHeight : DiningHeaderView.headerHeight
+        return DiningHeaderView.headerHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let venue = getVenue(for: indexPath)
-        delegate?.handleSelection(for: venue)
+        if shouldShowDiningBalances && indexPath.section > 0 || !shouldShowDiningBalances {
+            let venue = getVenue(for: indexPath)
+            delegate?.handleSelection(for: venue)
+        }
     }
 }
