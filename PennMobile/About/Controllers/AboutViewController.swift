@@ -51,7 +51,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         
         //fill the arrays with the members
         pastMembers += [yagil, laura, adel]
-        currentMembers += [tiff, josh, carin, marta, dom, ben, salib, zhilei, henrique]
+        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei]
         members += [currentMembers, pastMembers]
     }
     
