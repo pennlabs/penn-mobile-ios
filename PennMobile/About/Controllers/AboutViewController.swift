@@ -37,7 +37,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         let carin = Member(name: "Carin Gan", image: UIImage(named: "carin"))
         let salib = Member(name: "Daniel Salib", image: UIImage(named: "salib"))
         let marta = Member(name: "Marta García", image: UIImage(named: "marta"))
-        let grace = Member(name: "Grace Jiang", image: UIImage(named: "grace"))
+//        let grace = Member(name: "Grace Jiang", image: UIImage(named: "grace"))
         let josh = Member(name: "Josh Doman", image: UIImage(named: "josh"))
         let tiff = Member(name: "Tiffany Chang", image: UIImage(named: "tiff"))
         let zhilei = Member(name: "Zhilei Zheng", image: UIImage(named: "zhilei"))
@@ -51,7 +51,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         
         //fill the arrays with the members
         pastMembers += [yagil, laura, adel]
-        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei, henrique]
+        currentMembers += [tiff, josh, carin, marta, dom, ben, salib, zhilei, henrique]
         members += [currentMembers, pastMembers]
     }
     
