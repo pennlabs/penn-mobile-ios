@@ -187,7 +187,7 @@ extension DiningViewController: DiningBalanceRefreshable {
 // MARK: - Show Login Controller
 extension DiningViewController {
     func showLoginController() {
-        let pennLoginController = PennLoginController()
+        let pennLoginController = CampusExpressLoginController()
         let nvc = UINavigationController(rootViewController: pennLoginController)
         self.isReturningFromLogin = true
         self.present(nvc, animated: true, completion: nil)
