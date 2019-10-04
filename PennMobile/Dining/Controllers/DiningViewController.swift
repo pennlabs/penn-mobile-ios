@@ -105,11 +105,12 @@ extension DiningViewController {
         updateBalanceFromCampusExpress()
     }
     
-    func updateBalanceFromCampusExpress() {
+    func updateBalanceFromCampusExpress(requestLoginOnFail: Bool = false) {
         // Do nothing if network call is being made
         if self.viewModel.showActivity { return }
         
         self.viewModel.showActivity = true
+        self.tableView.reloadData()
         CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, error) in
             if let html = html {
                 UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, balance) in
@@ -128,15 +129,17 @@ extension DiningViewController {
                     self.viewModel.showActivity = false
                     self.tableView.reloadData()
                     
-                    let wasReturningFromLogin = self.isReturningFromLogin
-                    if let error = error as? NetworkingError, error == NetworkingError.authenticationError && !self.isReturningFromLogin {
-                        // Failed to get balance because failed to authenticate into Campus Express
-                        // Request user to log in again
-                        self.showLoginController()
-                    }
-                    
-                    if wasReturningFromLogin {
-                        self.isReturningFromLogin = false
+                    if requestLoginOnFail {
+                        let wasReturningFromLogin = self.isReturningFromLogin
+                        if let error = error as? NetworkingError, error == NetworkingError.authenticationError && !self.isReturningFromLogin {
+                            // Failed to get balance because failed to authenticate into Campus Express
+                            // Request user to log in again
+                            self.showLoginController()
+                        }
+                        
+                        if wasReturningFromLogin {
+                            self.isReturningFromLogin = false
+                        }
                     }
                 }
             }
@@ -153,7 +156,7 @@ extension DiningViewController {
     
     @objc fileprivate func handleRefreshControl(_ sender: Any) {
         fetchDiningHours()
-        updateBalanceFromCampusExpress()
+        updateBalanceFromCampusExpress(requestLoginOnFail: true)
     }
 }
 
@@ -180,14 +183,14 @@ extension DiningViewController: DiningViewModelDelegate {
 // MARK: - DiningBalanceRefreshable
 extension DiningViewController: DiningBalanceRefreshable {
     func refreshBalance() {
-        updateBalanceFromCampusExpress()
+        updateBalanceFromCampusExpress(requestLoginOnFail: true)
     }
 }
 
 // MARK: - Show Login Controller
 extension DiningViewController {
     func showLoginController() {
-        let pennLoginController = PennLoginController()
+        let pennLoginController = CampusExpressLoginController()
         let nvc = UINavigationController(rootViewController: pennLoginController)
         self.isReturningFromLogin = true
         self.present(nvc, animated: true, completion: nil)
