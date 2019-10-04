@@ -44,6 +44,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         let laura = Member(name: "Laura Gao", image: UIImage(named: "laura"))
         let yagil = Member(name: "Yagil Burowski", image: UIImage(named: "yagil"))
         let adel = Member(name: "Adel Qalieh", image: UIImage(named: "adel"))
+        let liz = Member(name: "Liz Powell", image: UIImage(named: "liz"))
         let henrique = Member(name: "Henrique Lorente", image: UIImage(named: "henrique"))
         
         var currentMembers = [Member]()
@@ -51,7 +52,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         
         //fill the arrays with the members
         pastMembers += [yagil, laura, adel]
-        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei]
+        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei, liz, henrique]
         members += [currentMembers, pastMembers]
     }
     
