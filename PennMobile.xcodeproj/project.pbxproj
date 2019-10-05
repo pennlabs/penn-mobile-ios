@@ -1499,7 +1499,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -1509,8 +1509,10 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TimelineTableViewCell/TimelineTableViewCell.framework",
+				"${BUILT_PRODUCTS_DIR}/WKZombie/WKZombie.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/ZoomImageView/ZoomImageView.framework",
+				"${BUILT_PRODUCTS_DIR}/hpple/hpple.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1524,13 +1526,15 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TimelineTableViewCell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WKZombie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZoomImageView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hpple.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5C6A5F00FED43335EF7B761B /* [CP] Check Pods Manifest.lock */ = {
@@ -1575,7 +1579,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1584,7 +1588,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		97A05C0AB208F1FB21DD8B01 /* [CP] Check Pods Manifest.lock */ = {
