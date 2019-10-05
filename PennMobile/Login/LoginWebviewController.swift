@@ -8,6 +8,7 @@
 
 import Foundation
 import WebKit
+import WKZombie
 
 class LoginWebviewController: PennLoginController, IndicatorEnabled {
     
@@ -34,7 +35,6 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                         GSRNetworkManager.instance.getSessionID { success in
                             self.saveStudent(student)
                         }
-                        return
                     } else {
                         self.saveStudent(student)
                     }
@@ -47,6 +47,9 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                     self.loginCompletion?(false)
                 }
                 UserDefaults.standard.storeCookies()
+                
+                // Create TOTP App
+//                TOTPFetcher.instance.fetchAndSaveTOTPSecret()
             }
         }
     }
@@ -128,6 +131,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                 self.getRemainingCourses()
                 self.getDiningBalance()
                 self.getDiningTransactions(after: 0.5)
+                TOTPFetcher.instance.fetchAndSaveTOTPSecret()
                 
                 if accountID == nil {
                     FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed Login")
