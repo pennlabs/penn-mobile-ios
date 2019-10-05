@@ -635,7 +635,7 @@
 				21ECADA21F30146B00569883 /* Networking + Analytics */,
 				216640C71EBADC9D00746B8E /* General */,
 				21B653BC2246F31E001A97C5 /* Courses */,
-				21B8BBBB2224F98B00EBC1D0 /* Login */,
+				21B8BBBB2224F98B00EBC1D0 /* Auth */,
 				216640881EBADBA000746B8E /* Setup + Navigation */,
 				B62875E82112591700FB2873 /* Buildings */,
 				97E79E0A2100DBC300D3D606 /* Fitness */,
@@ -755,8 +755,6 @@
 				21879B1D1FB3FF54003CF552 /* Storage.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
 				2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */,
-				2130A5052238C2F000DFEEC7 /* PennLoginController.swift */,
-				21B653B82245EB67001A97C5 /* PennAuthRequestable.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -980,11 +978,13 @@
 			path = Courses;
 			sourceTree = "<group>";
 		};
-		21B8BBBB2224F98B00EBC1D0 /* Login */ = {
+		21B8BBBB2224F98B00EBC1D0 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
 				21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */,
 				21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */,
+				2130A5052238C2F000DFEEC7 /* PennLoginController.swift */,
+				21B653B82245EB67001A97C5 /* PennAuthRequestable.swift */,
 				21B8BBB522231F9F00EBC1D0 /* Student.swift */,
 				21B8BBB72223963C00EBC1D0 /* Degree.swift */,
 				21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */,
@@ -992,7 +992,7 @@
 				21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */,
 				21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */,
 			);
-			path = Login;
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		21ECADA21F30146B00569883 /* Networking + Analytics */ = {
