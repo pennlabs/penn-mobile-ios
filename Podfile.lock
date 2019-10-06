@@ -57,7 +57,7 @@ DEPENDENCIES:
   - ZoomImageView
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Crashlytics
     - ESTabBarController-swift
     - Fabric
@@ -114,4 +114,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4725d3a645f206d5bc53508399b7d20d37c3268c
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.1

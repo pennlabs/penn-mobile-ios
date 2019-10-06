@@ -35,15 +35,24 @@ class TOTPFetcher: NSObject {
                     >>> setAttribute("value", value: password)
                     >>> get(by: .id("loginform"))
                     >>> submit
+                    >>> get(by: .attribute("action", "../../twoFactorUi/app/UiMain.totpAdd"))
+                    >>> setAttribute("id", value: "TOTPForm") //Add an ID because WKZombie can only submit forms with an ID or name
+                    >>> get(by: .id("TOTPForm"))
+                    >>> submit
+                    >>> get(by: .attribute("action", "UiMain.totpAppIntegrate"))
+                    >>> setAttribute("id", value: "TOTPForm2") //This form also needs an ID to be submitted by WKZombie
+                    >>> get(by: .id("TOTPForm2"))
+                    >>> submit
+                    >>> getAll(by: .attribute("style", "white-space: nowrap;")) //There's no easy way to get the code but this returns an array with the code as the first element
                     === self.myOutput
             }
         }
     }
     
-    func myOutput(result: Result<HTMLPage>) {
+    func myOutput(result: Result<[HTMLElement]>) {
         switch result {
         case .success(let value): // handle success
-            print(value)
+            print(value[0].text!) //The first value in the array is the one containing the code
         case .error(let error): // handle error
             print(error)
         }
