@@ -21,7 +21,7 @@ pod 'Crashlytics', '~> 3.12.0'
 pod 'SwiftSoup'
 pod 'XLPagerTabStrip', '~> 9.0'
 pod 'WKZombie', :git => 'https://github.com/pennlabs/WKZombie.git', :commit => 'df118d9ecb1c2a47008fd8c6003e4ecb7aadc7aa'
-
+pod 'OneTimePassword', '~> 3.2'
 
     target 'PennMobileTests' do
         inherit! :search_paths
