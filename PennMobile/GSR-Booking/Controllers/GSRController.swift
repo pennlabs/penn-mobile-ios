@@ -25,6 +25,8 @@ class GSRController: GenericViewController, IndicatorEnabled {
 
     fileprivate var viewModel: GSRViewModel!
     
+    var loadingView: UIActivityIndicatorView!
+
     var startingLocation: GSRLocation!
 
     override func viewDidLoad() {
@@ -68,6 +70,7 @@ extension GSRController {
         prepareRangeSlider()
         prepareTableView()
         prepareEmptyView()
+        prepareLoadingView()
     }
 
     private func preparePickerView() {
@@ -122,13 +125,18 @@ extension GSRController: GSRViewModelDelegate {
     func fetchData() {
         let location = viewModel.getSelectedLocation()
         let date = viewModel.getSelectedDate()
+        
+        self.startLoadingViewAnimation()
+        
         GSRNetworkManager.instance.getAvailability(for: location.lid, date: date) { (rooms) in
+            
             DispatchQueue.main.async {
                 if let rooms = rooms {
                     self.viewModel.updateData(with: rooms)
                     self.refreshDataUI()
                     self.rangeSlider.reload()
                     self.refreshBarButton()
+                    self.stopLoadingViewAnimation()
                 }
             }
         }
@@ -155,6 +163,29 @@ extension GSRController: UIGestureRecognizerDelegate {
     }
 }
 
+// MARK: - Activity Indicator
+extension GSRController {
+    func prepareLoadingView() {
+        loadingView = UIActivityIndicatorView(style: .whiteLarge)
+        loadingView.color = .black
+        loadingView.isHidden = false
+        view.addSubview(loadingView)
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    func startLoadingViewAnimation() {
+        if loadingView != nil && !loadingView.isHidden {
+            loadingView.startAnimating()
+        }
+    }
+
+    func stopLoadingViewAnimation() {
+        self.loadingView.isHidden = true
+        self.loadingView.stopAnimating()
+    }
+}
 // MARK: - Bar Button Refresh + Handler
 extension GSRController: GSRBookable {
     fileprivate func refreshBarButton() {
@@ -164,33 +195,6 @@ extension GSRController: GSRBookable {
     }
 
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
-//        switch viewModel.state {
-//        case .loggedOut:
-//            if viewModel.getSelectedLocation().service == "wharton" {
-//                presentWebviewLoginController()
-//            } else {
-//                presentLoginController()
-//            }
-//            break
-//        case .loggedIn:
-//            let message = "Are you sure you wish to log out?"
-//            let alert = UIAlertController(title: "Confirm Logout",
-//                                          message: message,
-//                                          preferredStyle: .alert)
-//            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//            alert.addAction(cancelAction)
-//            alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
-//                DispatchQueue.main.async {
-//                    GSRUser.clear()
-//                    self.refreshBarButton()
-//                }
-//            }))
-//            present(alert, animated: true)
-//            break
-//        case .readyToSubmit(let booking):
-//            submitPressed(for: booking)
-//            break
-//        }
         if let booking = viewModel.getBooking() {
             submitPressed(for: booking)
         } else {
