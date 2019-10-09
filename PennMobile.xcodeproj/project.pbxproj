@@ -984,8 +984,8 @@
 		21B8BBBB2224F98B00EBC1D0 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				66FDED0C234D5FFD00A86757 /* 2FA */,
 				21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */,
-				21F70D272348F59700CEB203 /* TOTPFetcher.swift */,
 				2130A5052238C2F000DFEEC7 /* PennLoginController.swift */,
 				21B653B82245EB67001A97C5 /* PennAuthRequestable.swift */,
 				21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */,
@@ -1052,6 +1052,14 @@
 				50FCFE42CF6B04B45704394B /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		66FDED0C234D5FFD00A86757 /* 2FA */ = {
+			isa = PBXGroup;
+			children = (
+				21F70D272348F59700CEB203 /* TOTPFetcher.swift */,
+			);
+			path = 2FA;
 			sourceTree = "<group>";
 		};
 		975BC27C20F07607009F93AB /* Venues */ = {
