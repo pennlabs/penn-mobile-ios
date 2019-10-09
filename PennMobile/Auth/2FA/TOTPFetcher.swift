@@ -100,8 +100,13 @@ class TOTPFetcher: NSObject {
         
         func resultAfterLoggedIn(result: Result<[HTMLElement]>) {
             switch result {
-            case .success(let value): // handle success
-                self.completion(value[0].text)
+            case .success(let value):
+                if value.count == 0 {// handle success
+                    self.completion(nil)
+                }
+                else {
+                    self.completion(value[0].text)
+                }
             case .error: // handle error
                 self.completion(nil)
             }
