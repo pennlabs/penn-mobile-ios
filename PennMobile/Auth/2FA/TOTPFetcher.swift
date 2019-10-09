@@ -67,24 +67,43 @@ class TOTPFetcher: NSObject {
                         >>> setAttribute("id", value: "TOTPForm2") //This form also needs an ID to be submitted by WKZombie
                         >>> get(by: .id("TOTPForm2"))
                         >>> submit
-                        >>> getAll(by: .attribute("style", "white-space: nowrap;")) //There's no easy way to get the code but this returns an array with the code as the first element
+//                        === self.result
+//                        >>> getAll(by: .attribute("style", "white-space: nowrap;")) //There's no easy way to get the code but this returns an array with the code as the first element
                         === self.result
                 }
             }
         }
         
-        func result(result: Result<[HTMLElement]>) {
+        func result(result: Result<HTMLPage>) {
             switch result {
-            case .success(let value): // handle success
-                if !value.isEmpty {
-                    self.completion(value[0].text)
-                } else {
-                    self.completion(nil)
-                }
+            case .success(let page): // handle success
+                self.getTokenFromPageAndVerify(page: page)
             case .error: // handle error
                 // Try to get the token again in case the user was already logged in
                 self.getTokenAlreadyLoggedIn()
             }
+        }
+        
+        func getTokenFromPageAndVerify(page: HTMLPage) {
+            let elementResult = page.findElements(.attribute("style", "white-space: nowrap;"))
+            switch elementResult {
+            case .success(let values):
+                if let secret = values.first?.text {
+                    verifySecret(secret: secret, page: page)
+                    // Go to verification page and verify
+                }
+            case .error:
+                print("error!")
+            }
+        }
+        
+        func verifySecret(secret: String, page: HTMLPage) {
+            // Generate 1-time token using secret
+            guard let token = TwoFactorTokenGenerator.instance.generate(secret: secret) else {
+                self.completion(nil)
+                return
+            }
+            print(token)
         }
         
         func getTokenAlreadyLoggedIn() {
@@ -98,18 +117,13 @@ class TOTPFetcher: NSObject {
                 >>> setAttribute("id", value: "TOTPForm2") //This form also needs an ID to be submitted by WKZombie
                 >>> get(by: .id("TOTPForm2"))
                 >>> submit
-                >>> getAll(by: .attribute("style", "white-space: nowrap;")) //There's no easy way to get the code but this returns an array with the code as the first element
                 === self.resultAfterLoggedIn
         }
         
-        func resultAfterLoggedIn(result: Result<[HTMLElement]>) {
+        func resultAfterLoggedIn(result: Result<HTMLPage>) {
             switch result {
-            case .success(let value): // handle success
-                if !value.isEmpty {
-                    self.completion(value[0].text)
-                } else {
-                    self.completion(nil)
-                }
+            case .success(let page): // handle success
+                self.getTokenFromPageAndVerify(page: page)
             case .error: // handle error
                 self.completion(nil)
             }
