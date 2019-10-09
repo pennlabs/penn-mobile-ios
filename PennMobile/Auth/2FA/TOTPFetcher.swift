@@ -76,7 +76,11 @@ class TOTPFetcher: NSObject {
         func result(result: Result<[HTMLElement]>) {
             switch result {
             case .success(let value): // handle success
-                self.completion(value[0].text)
+                if !value.isEmpty {
+                    self.completion(value[0].text)
+                } else {
+                    self.completion(nil)
+                }
             case .error: // handle error
                 // Try to get the token again in case the user was already logged in
                 self.getTokenAlreadyLoggedIn()
@@ -100,12 +104,11 @@ class TOTPFetcher: NSObject {
         
         func resultAfterLoggedIn(result: Result<[HTMLElement]>) {
             switch result {
-            case .success(let value):
-                if value.count == 0 {// handle success
-                    self.completion(nil)
-                }
-                else {
+            case .success(let value): // handle success
+                if !value.isEmpty {
                     self.completion(value[0].text)
+                } else {
+                    self.completion(nil)
                 }
             case .error: // handle error
                 self.completion(nil)
