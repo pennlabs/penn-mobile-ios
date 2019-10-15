@@ -78,9 +78,12 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     // MARK: - Collection View Delegate Methods
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let timeSlot = room.timeSlots[indexPath.row]
-        delegate?.handleSelection(for: room, timeSlot: timeSlot, action: SelectionType.add)
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = .informationYellow
+        //if invalid time slot, then dont even handle selection
+        if timeSlot.isAvailable {
+            delegate?.handleSelection(for: room, timeSlot: timeSlot, action: SelectionType.add)
+            let cell = collectionView.cellForItem(at: indexPath)
+            cell?.backgroundColor = .informationYellow
+        }
     }
     
     // Deselect this time slot and all select ones that follow it
