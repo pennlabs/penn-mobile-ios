@@ -15,9 +15,7 @@ class TwoFactorTokenGenerator: NSObject{
     private override init() {}
     
     func generate(secret: String? = nil) -> String? {
-        if secret == nil {
-            
-        }
+
         let name = "PennMobile"
         let issuer = "PennLabs"
         

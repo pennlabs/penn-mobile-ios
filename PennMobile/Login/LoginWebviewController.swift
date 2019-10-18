@@ -129,7 +129,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
                 self.getDiningBalance()
                 self.getDiningTransactions(after: 0.5)
                 TOTPFetcher.instance.fetchAndSaveTOTPSecret()
-                
+            
                 if accountID == nil {
                     FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed Login")
                 } else {
