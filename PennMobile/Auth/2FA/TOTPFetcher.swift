@@ -24,7 +24,6 @@ class TOTPFetcher: NSObject {
                 let secureStore =
                     SecureStore(secureStoreQueryable: genericPwdQueryable)
                 try? secureStore.setValue(secret, for: "TOTPSecret")
-//                TOTPFetcher.instance.fetchAndSaveTOTPSecret()
             }
             completion?(secret)
         }
