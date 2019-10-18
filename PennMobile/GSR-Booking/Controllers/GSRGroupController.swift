@@ -42,8 +42,9 @@ extension GSRGroupController {
         view.addSubview(tableView)
         _ = tableView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        tableView.register(CreateGroupCell.self, forCellReuseIdentifier: CreateGroupCell.identifier)
         tableView.register(GroupCell.self, forCellReuseIdentifier: GroupCell.identifier)
+        tableView.register(CreateGroupCell.self, forCellReuseIdentifier: CreateGroupCell.identifier)
+
     }
 }
 
