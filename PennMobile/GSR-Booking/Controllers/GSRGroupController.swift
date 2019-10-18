@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 //group gsrs!
 class GSRGroupController: GenericViewController {
     
@@ -16,8 +17,11 @@ class GSRGroupController: GenericViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let member = GSRGroupMember(accountID: "1", first: "Amy", last: "Gutmann", email: "amyg@upenn.edu", enabled: true)
-        self.groups = [GSRGroup(groupID: "1", groupName: "Penn Labs Babies", createdAt: Date(), isActive: true, members: [member, member])]
+        
+        GSRGroupNetworkManager.instance.getGroups { (groups) in
+            self.groups = groups
+        }
+        
         setupUI()
     }
     

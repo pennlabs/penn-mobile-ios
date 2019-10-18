@@ -11,7 +11,7 @@ import Foundation
 struct GSRGroup {
     let id: String
     let name: String
-    let imgURL: String
+    let imgURL: String?
     let color: String
     let owners: [GSRGroupMember]
     let members: [GSRGroupMember]

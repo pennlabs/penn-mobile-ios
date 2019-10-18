@@ -150,7 +150,7 @@
 		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
 		4A2329BA153FC88EC0E0CC31 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */; };
 		72962BFC1E387F41FFD926F0 /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FFEDDC58154E96C2BF820AD /* Pods_PennMobileTests.framework */; };
-		973B4076235A5C3A00F4F234 /* GSRGroupNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973B4075235A5C3A00F4F234 /* GSRGroupNetworking.swift */; };
+		973B4076235A5C3A00F4F234 /* GSRGroupNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973B4075235A5C3A00F4F234 /* GSRGroupNetworkManager.swift */; };
 		978693F920EAE1BB00C4A8A1 /* DiningMenuAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978693F820EAE1BB00C4A8A1 /* DiningMenuAPI.swift */; };
 		978693FB20EAE3B900C4A8A1 /* DiningMenuData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978693FA20EAE3B900C4A8A1 /* DiningMenuData.swift */; };
 		978693FD20EB0ADD00C4A8A1 /* DiningMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978693FC20EB0ADD00C4A8A1 /* DiningMenuModels.swift */; };
@@ -394,7 +394,7 @@
 		50FCFE42CF6B04B45704394B /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7C9792018E06CC18A1BFAF65 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7FFEDDC58154E96C2BF820AD /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		973B4075235A5C3A00F4F234 /* GSRGroupNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworking.swift; sourceTree = "<group>"; };
+		973B4075235A5C3A00F4F234 /* GSRGroupNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworkManager.swift; sourceTree = "<group>"; };
 		978693F820EAE1BB00C4A8A1 /* DiningMenuAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuAPI.swift; sourceTree = "<group>"; };
 		978693FA20EAE3B900C4A8A1 /* DiningMenuData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuData.swift; sourceTree = "<group>"; };
 		978693FC20EB0ADD00C4A8A1 /* DiningMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenuModels.swift; sourceTree = "<group>"; };
@@ -937,7 +937,7 @@
 		2189C0792027CD5300771C1F /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				973B4075235A5C3A00F4F234 /* GSRGroupNetworking.swift */,
+				973B4075235A5C3A00F4F234 /* GSRGroupNetworkManager.swift */,
 				2189C0862027CDD700771C1F /* GSRNetworkManager.swift */,
 			);
 			path = Networking;
@@ -1494,7 +1494,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ESTabBarController-swift/ESTabBarController_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -1525,7 +1525,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5C6A5F00FED43335EF7B761B /* [CP] Check Pods Manifest.lock */ = {
@@ -1570,7 +1570,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1579,7 +1579,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		97A05C0AB208F1FB21DD8B01 /* [CP] Check Pods Manifest.lock */ = {
@@ -1761,7 +1761,7 @@
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */,
-				973B4076235A5C3A00F4F234 /* GSRGroupNetworking.swift in Sources */,
+				973B4076235A5C3A00F4F234 /* GSRGroupNetworkManager.swift in Sources */,
 				97E79E072100DA1200D3D606 /* BuildingImageCell.swift in Sources */,
 				21E1C6FD20256DC6003248EC /* DiningDetailModel.swift in Sources */,
 				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
