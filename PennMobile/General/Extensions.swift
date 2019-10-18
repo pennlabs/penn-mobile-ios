@@ -162,10 +162,7 @@ extension Date {
     
     func hoursFrom(date: Date) -> Int {
         let difference = Calendar.current.dateComponents([.hour], from: self, to: date)
-        if let hours = difference.hour {
-            return hours
-        }
-        return 0
+        return difference.hour ?? 0
     }
 
     //returns date in local time

@@ -44,16 +44,16 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         let laura = Member(name: "Laura Gao", image: UIImage(named: "laura"))
         let yagil = Member(name: "Yagil Burowski", image: UIImage(named: "yagil"))
         let adel = Member(name: "Adel Qalieh", image: UIImage(named: "adel"))
+        let rehaan = Member(name: "Rehaan Furniturewala", image: UIImage(named: "rehaan"))
         let liz = Member(name: "Liz Powell", image: UIImage(named: "liz"))
         let henrique = Member(name: "Henrique Lorente", image: UIImage(named: "henrique"))
-        let lucy = Member(name: "Lucy Yuan", image: UIImage(named: "lucy2"))
-        
+        let lucy = Member(name: "Lucy Yuan", image: UIImage(named: "lucy2"))        
         var currentMembers = [Member]()
         var pastMembers = [Member]()
         
         //fill the arrays with the members
         pastMembers += [yagil, laura, adel]
-        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei, liz, henrique,lucy]
+        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei, rehaan, liz, henrique,lucy]
         members += [currentMembers, pastMembers]
     }
     
