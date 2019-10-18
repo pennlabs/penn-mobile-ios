@@ -83,6 +83,12 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         cell?.backgroundColor = .informationYellow
     }
     
+    //only enable selection for available rooms
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        let timeSlot = room.timeSlots[indexPath.row]
+        return timeSlot.isAvailable
+    }
+    
     // Deselect this time slot and all select ones that follow it
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         var currTimeSlot = room.timeSlots[indexPath.row]

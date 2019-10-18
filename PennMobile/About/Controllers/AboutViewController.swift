@@ -45,13 +45,15 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         let yagil = Member(name: "Yagil Burowski", image: UIImage(named: "yagil"))
         let adel = Member(name: "Adel Qalieh", image: UIImage(named: "adel"))
         let rehaan = Member(name: "Rehaan Furniturewala", image: UIImage(named: "rehaan"))
-        
+        let liz = Member(name: "Liz Powell", image: UIImage(named: "liz"))
+        let henrique = Member(name: "Henrique Lorente", image: UIImage(named: "henrique"))
+        let lucy = Member(name: "Lucy Yuan", image: UIImage(named: "lucy2"))        
         var currentMembers = [Member]()
         var pastMembers = [Member]()
         
         //fill the arrays with the members
         pastMembers += [yagil, laura, adel]
-        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei, rehaan]
+        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei, rehaan, liz, henrique,lucy]
         members += [currentMembers, pastMembers]
     }
     
@@ -219,7 +221,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        collectionView?.heightAnchor.constraint(equalToConstant: 600).isActive = true
+        collectionView?.heightAnchor.constraint(equalToConstant: 700).isActive = true
         
     }
     
