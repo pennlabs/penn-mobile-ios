@@ -73,5 +73,11 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("tap")
+        //dummy segue - need to remove later
+        if (indexPath.row == 0) {
+            let controller = GSRGroupNewIntialController()
+            present(controller, animated: true, completion: nil)
+            
+        }
     }
 }
