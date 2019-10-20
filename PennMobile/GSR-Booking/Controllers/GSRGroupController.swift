@@ -8,7 +8,9 @@
 
 import Foundation
 //group gsrs!
-class GSRGroupController: GenericViewController {
+class GSRGroupController: GenericViewController, NewGroupInitialDelegate {
+    
+    
     
     fileprivate var groups: [GSRGroup]!
     
@@ -76,8 +78,19 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
         //dummy segue - need to remove later
         if (indexPath.row == 0) {
             let controller = GSRGroupNewIntialController()
+            controller.delegate = self
             present(controller, animated: true, completion: nil)
             
         }
+    }
+    
+    
+}
+
+//MARK: NewGroupInitialDelegate
+extension GSRGroupController {
+    func addNewGroup(group: GSRGroup) {
+        groups.append(group)
+        tableView.reloadData()
     }
 }

@@ -18,6 +18,8 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var colorPanel: UIView!
     fileprivate var createButton: UIButton!
     
+    weak var delegate: GSRGroupController!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +63,51 @@ class GSRGroupNewIntialController: UIViewController {
         groupForLabel.topAnchor.constraint(equalTo:nameField.bottomAnchor, constant: 35).isActive = true
         groupForLabel.translatesAutoresizingMaskIntoConstraints = false
         
+    }
+    
+    func prepareSegmentedControl() {
+        let items = ["Friends","Classmates","Club"]
+        barView = UISegmentedControl(items: items)
+        let font = UIFont.systemFont(ofSize: 14,weight: .semibold)
+        barView.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: font] ,for: .normal)
+        barView.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+        barView.layer.borderWidth = 1
+        barView.layer.borderColor = UIColor.init(red: 216, green: 216, blue: 216).cgColor
+        barView.layer.cornerRadius = 6.9
+        barView.layer.masksToBounds = true
         
+        barView.tintColor = UIColor.init(red: 153, green: 153, blue: 153)
+        
+        barView.selectedSegmentIndex = 0
+        
+        view.addSubview(barView)
+        barView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        barView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        barView.topAnchor.constraint(equalTo: groupForLabel.bottomAnchor, constant: 14).isActive = true
+        barView.translatesAutoresizingMaskIntoConstraints = false
+        
+    }
+    
+    func prepareCreateButton() {
+        createButton = UIButton()
+        createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+        createButton.setTitle("Create Group", for: .normal)
+        createButton.setTitleColor(UIColor.white, for: .normal)
+        createButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
+        view.addSubview(createButton)
+        createButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 345.5).isActive = true
+        createButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        createButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15).isActive = true
+        createButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
+        createButton.translatesAutoresizingMaskIntoConstraints = false
+        
+    }
+    
+    @objc func buttonAction(sender:UIButton!) {
+        let group = GSRGroup(groupID: "new", groupName: nameField.text!, createdAt: Date(), isActive: true, members: [GSRGroupMember(accountID: "dummyOwner", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", enabled: true)])
+        delegate.addNewGroup(group: group)
+        dismiss(animated: true, completion:nil)
     }
     
     
@@ -82,11 +128,18 @@ class GSRGroupNewIntialController: UIViewController {
 
 }
 
+
+protocol NewGroupInitialDelegate: GSRGroupController {
+    func addNewGroup(group:GSRGroup)
+}
+
 //Mark: Setup UI
 extension GSRGroupNewIntialController {
     fileprivate func prepareUI() {
         prepareCloseButton()
         prepareNameField()
         prepareGroupForLabel()
+        prepareSegmentedControl()
+        prepareCreateButton()
     }
 }
