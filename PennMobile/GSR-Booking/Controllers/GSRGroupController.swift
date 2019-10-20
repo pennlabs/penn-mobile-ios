@@ -59,17 +59,17 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+        if indexPath.row == groups.count {
             return tableView.dequeueReusableCell(withIdentifier: CreateGroupCell.identifier, for: indexPath)
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: GroupCell.identifier, for: indexPath) as! GroupCell
-            cell.group = groups[indexPath.row - 1]
+            cell.group = groups[indexPath.row]
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
+        if indexPath.row == groups.count {
             return CreateGroupCell.cellHeight
         } else {
             return GroupCell.cellHeight
@@ -77,6 +77,13 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("tap")
+        if indexPath.row == groups.count {
+            //TODO: segue to addGSRGroup
+        } else {
+            let group = groups[indexPath.row]
+            let manageVC = GSRManageGroupController()
+            manageVC.group = group
+            navigationController?.pushViewController(manageVC, animated: true)
+        }
     }
 }
