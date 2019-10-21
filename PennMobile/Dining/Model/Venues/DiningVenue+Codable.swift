@@ -33,20 +33,19 @@ extension DiningVenue {
         }
         self.init(id: id, name: name, venueType: venueType, facilityURL: facilityURL, meals: mealsDict)
     }
+    
+    static var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = TimeZone(abbreviation: "EST")
+        return formatter
+    }
 }
 
 // MARK: - Codable VenueType Enum
 extension DiningVenue.VenueType {
     public init(from decoder: Decoder) throws {
         self = try DiningVenue.VenueType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
-    }
-    
-    func getFullDisplayName() -> String {
-        switch self {
-        case .dining: return "Campus Dining Hall"
-        case .retail: return "Campus Retail Dining"
-        case .unknown: return "Other"
-        }
     }
 }
 
