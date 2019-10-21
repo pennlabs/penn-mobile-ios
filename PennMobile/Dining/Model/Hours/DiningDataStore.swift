@@ -11,7 +11,7 @@ import Foundation
 class DiningDataStore {
     
     static let shared = DiningDataStore()
-    private var document: DiningAPIResponse.Document = .init(venues: [])
+    private var response: DiningAPIResponse = DiningAPIResponse(document: .init(venues: []))
 
     private var todayString: String {
         return Date.dayOfMonthFormatter.string(from: Date())
@@ -19,14 +19,24 @@ class DiningDataStore {
     
     // MARK: - Get Dining Venues (for UI)
     func getVenues() -> [DiningVenue] {
-        return document.venues
+        // TODO: Implement cache fetching behavior
+        return response.document.venues
     }
     
     func getSectionedVenues() -> [DiningVenue.VenueType : [DiningVenue]] {
         var venuesDict = [DiningVenue.VenueType : [DiningVenue]]()
         for type in DiningVenue.VenueType.allCases {
-            venuesDict[type] = document.venues.filter({ $0.venueType == type })
+            venuesDict[type] = response.document.venues.filter({ $0.venueType == type })
         }
         return venuesDict
+    }
+    
+    func store(response: DiningAPIResponse) {
+        self.response = response
+        saveToCache(response)
+    }
+    
+    internal func saveToCache(_ response: DiningAPIResponse) {
+        // TODO: Implement cacheing behavior
     }
 }

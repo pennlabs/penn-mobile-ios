@@ -77,13 +77,19 @@ protocol Requestable {}
 
 extension Requestable {
     internal func getRequest(url: String, callback: @escaping (_ json: NSDictionary?,  _ error: Error?, _ status: Int?) -> ()) {
-        request(method: .get, url: url, params: nil) { (dict, error, status) in
+        request(method: .get, url: url, params: nil) { (data, dict, error, status) in
             callback(dict, error, status)
+        }
+    }
+    
+    internal func getRequestData(url: String, callback: @escaping (_ data: Data?,  _ error: Error?, _ status: Int?) -> ()) {
+        request(method: .get, url: url, params: nil) { (data, dict, error, status) in
+            callback(data, error, status)
         }
     }
 
     
-    internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ json: NSDictionary?, _ error: Error?, _ status: Int?) -> ())? = nil)  {
+    internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ data: Data?, _ json: NSDictionary?, _ error: Error?, _ status: Int?) -> ())? = nil)  {
         guard let url = URL(string: url) else {
             return
         }
@@ -107,21 +113,21 @@ extension Requestable {
             
             if let error = error {
                 // indicates that user is unable to connect to internet
-                callback?(nil, error, nil)
+                callback?(nil, nil, error, nil)
             } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                         if let json = ((try? JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary) as NSDictionary??) {
                             //data recieved and parsed successfully
-                            callback?(json, nil, 200)
+                            callback?(data, json, nil, 200)
                         }
                     } else {
                         //could not serialize json
-                        callback?(nil, nil, 200)
+                        callback?(nil, nil, nil, 200)
                     }
                 } else {
                     //response code is not 200
-                    callback?(nil, nil, httpResponse.statusCode)
+                    callback?(nil, nil, nil, httpResponse.statusCode)
                 }
             }
             

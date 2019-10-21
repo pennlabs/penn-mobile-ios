@@ -18,8 +18,8 @@ class DiningAPI: Requestable {
     let diningBalanceUrl = "https://api.pennlabs.org/dining/balance"
 
     func fetchDiningHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
-        getRequest(url: diningUrl) { (dictionary, error, statusCode) in
-            
+        
+        getRequestData(url: diningUrl) { (data, error, statusCode) in
             if statusCode == nil {
                 completion(false, false)
                 return
@@ -30,24 +30,21 @@ class DiningAPI: Requestable {
                 return
             }
             
-            if dictionary == nil {
-                completion(false, true)
-                return
-            }
+            guard let data = data else { completion(false, true); return }
             
-            let json = JSON(dictionary!)
-            let success = DiningHoursData.shared.loadHoursForAllVenues(for: json)
-            completion(success, false)
+            if let diningAPIResponse = try? JSONDecoder().decode(DiningAPIResponse.self, from: data) {
+                DiningDataStore.shared.store(response: diningAPIResponse)
+                completion(true, false)
+            } else {
+                completion(false, true)
+            }
+            //let success = DiningHoursData.shared.loadHoursForAllVenues(for: json)
         }
     }
     
-    func fetchDetailPageHTML(for venue: DiningVenueName, _ completion: @escaping (_ html: String?) -> Void) {
+    func fetchDetailPageHTML(for venue: DiningVenue, _ completion: @escaping (_ html: String?) -> Void) {
         DispatchQueue.global(qos: .background).async {
-            guard let urlString = DiningDetailModel.getUrl(for: venue),
-                let url = URL(string: urlString) else {
-                return
-            }
-            
+            guard let url = venue.facilityURL else { return }
             let html = try? String(contentsOf: url, encoding: .ascii)
             completion(html)
         }
@@ -83,6 +80,7 @@ extension DiningAPI {
     }
 }
 
+/*
 extension DiningHoursData {
     fileprivate func loadHoursForAllVenues(for json: JSON) -> Bool {
         guard let jsonArray = json["document"]["venue"].array else {
@@ -115,3 +113,4 @@ extension DiningHoursData {
         return true
     }
 }
+*/
