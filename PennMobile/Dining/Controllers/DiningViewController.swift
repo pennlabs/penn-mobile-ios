@@ -71,13 +71,8 @@ extension DiningViewController {
                         self.navigationVC?.addStatusBar(text: .noInternet)
                     }
                     
-                } else {
-                    
-                    //what to do when request is successful
-                    
                 }
                 self.tableView.reloadData()
-                
                 self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }

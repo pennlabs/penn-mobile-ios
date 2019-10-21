@@ -6,7 +6,7 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 
-import Foundation
+//import Foundation
 
 //struct DiningVenueForWeek: Codable {
 //    let dailyMenuURL: String

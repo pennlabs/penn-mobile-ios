@@ -6,7 +6,7 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 
-import Foundation
+/*import Foundation
 
 class DiningDetailModel {
     static private let server = "https://university-of-pennsylvania.cafebonappetit.com/cafe"
@@ -35,3 +35,4 @@ class DiningDetailModel {
         return nil
     }
 }
+ */

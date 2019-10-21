@@ -12,14 +12,25 @@ class DiningHoursData {
     
     static let shared = DiningHoursData()
     
-    fileprivate var hasBeenLoaded = false
-    fileprivate var hoursDictionary = Dictionary<String, [OpenClose]>()
-    
-    private let accessQueue = DispatchQueue(label: "SynchronizedHoursDictionaryAccess", attributes: .concurrent)
+    fileprivate var document: DiningAPIResponse.Document = .init(venues: [])
     
     lazy var todayString = {
         return Date.dayOfMonthFormatter.string(from: Date())
     }()
+    
+    ////////////
+    
+    
+    
+    
+    
+    ////////
+    
+    
+    fileprivate var hasBeenLoaded = false
+    fileprivate var hoursDictionary = Dictionary<String, [OpenClose]>()
+    
+    private let accessQueue = DispatchQueue(label: "SynchronizedHoursDictionaryAccess", attributes: .concurrent)
     
     func load(hours: [OpenClose], for venue: DiningVenueName) {
         load(hours: hours, on: todayString, for: venue)

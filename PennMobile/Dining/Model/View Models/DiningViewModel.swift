@@ -15,7 +15,7 @@ protocol DiningViewModelDelegate: DiningBalanceRefreshable {
 class DiningViewModel: NSObject {
     static var ShowDiningPlan = false
     
-    let ordering: [DiningVenueType] = [.dining, .retail]
+    let ordering: [DiningVenue.VenueType] = [.dining, .retail, .unknown]
     
     let dining = DiningVenue.getVenues(for: .dining)
     let retail = DiningVenue.getVenues(for: .retail)
@@ -40,7 +40,7 @@ class DiningViewModel: NSObject {
         }
     }
     
-    func getType(forSection section: Int) -> DiningVenueType {
+    func getType(forSection section: Int) -> DiningVenue.VenueType {
         let index = shouldShowDiningBalances ? section - 1 : section
         return ordering[index]
     }
@@ -52,6 +52,8 @@ class DiningViewModel: NSObject {
             return dining
         case .retail:
             return retail
+        case .unknown:
+            <#code#>
         }
     }
     
@@ -108,10 +110,8 @@ extension DiningViewModel: UITableViewDelegate {
             let headerTitle: String
             let type = getType(forSection: section)
             switch type {
-            case .dining:
-                headerTitle = diningHeader
-            case .retail:
-                headerTitle = retailHeader
+            case .dining, .retail, .unknown:
+                headerTitle = type.fullDisplayName
             }
             
             view.label.text = headerTitle

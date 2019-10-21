@@ -6,6 +6,7 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
+/*
 struct DiningAPIResponse: Codable {
     let document: Document
     struct Document: Codable {
@@ -359,3 +360,4 @@ extension Array where Element == OpenClose {
         return timesString
     }
 }
+*/
