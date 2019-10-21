@@ -8,9 +8,9 @@
 
 import Foundation
 
-class DiningHoursData {
+class DiningHoursDataDeprecated {
     
-    static let shared = DiningHoursData()
+    static let shared = DiningHoursDataDeprecated()
     
     fileprivate var document: DiningAPIResponse.Document = .init(venues: [])
     

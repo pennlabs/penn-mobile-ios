@@ -24,13 +24,13 @@ extension DiningVenue {
     
     // MARK: - Venue Status
     var mealsToday: MealsForDate? {
-        return self.meals?[DiningVenue.dateFormatter.string(from: Date())]
+        return self.meals[DiningVenue.dateFormatter.string(from: Date())]
     }
     
     var isOpen: Bool {
-        guard let mealsToday = mealsToday else { return }
+        guard let mealsToday = mealsToday else { return false }
         let now = Date()
-        for meal in mealsToday {
+        for meal in mealsToday.meals {
             if meal.isCurrentlyServing {
                 return true
             }
@@ -44,7 +44,7 @@ extension DiningVenue {
     
     // MARK: - Formatted Hours
     var humanFormattedHoursStringForToday: String {
-        guard let meals = mealsToday else { return "" }
+        guard let _ = mealsToday else { return "" }
         return formattedHoursStringFor(Date())
     }
     
@@ -54,7 +54,7 @@ extension DiningVenue {
     }
     
     func formattedHoursStringFor(_ dateString: String) -> String {
-        guard let meals = self.meals?[dateString]?.meals else { return "" }
+        guard let meals = self.meals[dateString]?.meals else { return "" }
         
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -75,7 +75,7 @@ extension DiningVenue {
             }
             let open = formatter.string(from: m.open)
             
-            if open_close.close.minutes == 0 {
+            if m.close.minutes == 0 {
                 formatter.dateFormat = moreThanOneMeal ? "h" : "ha"
             } else {
                 formatter.dateFormat = moreThanOneMeal ? "h:mm" : "h:mma"
@@ -90,16 +90,17 @@ extension DiningVenue {
             timesString += "\(open) - \(close)"
         }
         
-        if self.isEmpty {
+        if meals.isEmpty {
             timesString = ""
         }
         return timesString
     }
 }
 
-extension DiningVenue.MealsForToday.Meal {
+// MARK: - Meal
+extension DiningVenue.MealsForDate.Meal {
     var isCurrentlyServing: Bool {
         let now = Date()
-        return (meal.open <= now && meal.close > now)
+        return (self.open <= now && self.close > now)
     }
 }

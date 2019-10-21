@@ -16,18 +16,14 @@ class DiningViewModel: NSObject {
     static var ShowDiningPlan = false
     
     let ordering: [DiningVenue.VenueType] = [.dining, .retail, .unknown]
-    
-    let dining = DiningVenue.getVenues(for: .dining)
-    let retail = DiningVenue.getVenues(for: .retail)
+    let venues: [DiningVenue.VenueType : [DiningVenue]] = DiningDataStore.shared.getVenuesForToday()
+    var balance: DiningBalance?
     
     let balancesHeader = "Dining Balance"
     let diningHeader = "Dining Halls"
     let retailHeader = "Retail Dining"
     
-    var balance: DiningBalance?
-    
     var delegate: DiningViewModelDelegate?
-    
     var showActivity = false
     
     internal let headerView = "headerView"
@@ -46,19 +42,12 @@ class DiningViewModel: NSObject {
     }
     
     func getVenues(forSection section: Int) -> [DiningVenue] {
-        let type = getType(forSection: section)
-        switch type {
-        case .dining:
-            return dining
-        case .retail:
-            return retail
-        case .unknown:
-            <#code#>
-        }
+        let venueType = getType(forSection: section)
+        return venues[venueType] ?? []
     }
     
     func getVenue(for indexPath: IndexPath) -> DiningVenue {
-        return getVenues(forSection: indexPath.section)[indexPath.item]
+        return getVenues(forSection: indexPath.section)[indexPath.row]
     }
 }
 

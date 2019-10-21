@@ -214,7 +214,8 @@
 		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
 		F23CC0BD235E3F390007317A /* DiningAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */; };
 		F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */; };
-		F23CC0C1235E3F8A0007317A /* DiningVenue+UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C0235E3F8A0007317A /* DiningVenue+UIExtensions.swift */; };
+		F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */; };
+		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -465,7 +466,8 @@
 		F23CC0BA235E3EF10007317A /* DiningVenue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenue.swift; sourceTree = "<group>"; };
 		F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPIResponse.swift; sourceTree = "<group>"; };
 		F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+Codable.swift"; sourceTree = "<group>"; };
-		F23CC0C0235E3F8A0007317A /* DiningVenue+UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+UIExtensions.swift"; sourceTree = "<group>"; };
+		F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+Extensions.swift"; sourceTree = "<group>"; };
+		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
 		F603ADF2F73569E19F01B651 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9E420ECDC3611C9B23940E6 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1040,7 +1042,7 @@
 				216640931EBADC1700746B8E /* DiningVenueOLD.swift */,
 				F23CC0BA235E3EF10007317A /* DiningVenue.swift */,
 				F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */,
-				F23CC0C0235E3F8A0007317A /* DiningVenue+UIExtensions.swift */,
+				F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */,
 				F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */,
 				21EB4D31203D39FF0029A460 /* DiningVenueName.swift */,
 			);
@@ -1061,6 +1063,7 @@
 			children = (
 				21640D652012A1CE002F33CA /* DiningHoursModels.swift */,
 				21640D672012A23E002F33CA /* DiningHoursData.swift */,
+				F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */,
 			);
 			path = Hours;
 			sourceTree = "<group>";
@@ -1273,7 +1276,6 @@
 				DD32825734B0E276214BF12E /* Pods-PennMobileTests.debug.xcconfig */,
 				BAA377EFEB55592DD19A12C6 /* Pods-PennMobileTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -1775,7 +1777,7 @@
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
-				F23CC0C1235E3F8A0007317A /* DiningVenue+UIExtensions.swift in Sources */,
+				F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */,
@@ -1807,6 +1809,7 @@
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
 				C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */,
 				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,
+				F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */,
 				21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */,

@@ -8,8 +8,8 @@
 
 import UIKit
 
-class DiningDetailViewController: UITableViewController {
-    
+class DiningDetailViewController: UITableViewController {}
+/*
     var venue: DiningVenue! {
         didSet {
             fetchDiningMenus()
@@ -50,9 +50,9 @@ class DiningDetailViewController: UITableViewController {
     }
     
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
-        if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
+        /*if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
             UIApplication.shared.open(url, options: [:])
-        }
+        }*/
     }
 }
 
@@ -213,3 +213,4 @@ extension DiningDetailViewController {
     }
 
 }
+*/

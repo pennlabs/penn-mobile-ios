@@ -15,6 +15,7 @@ extension DiningVenue {
         case name = "name"
         case venueType = "venueType"
         case facilityURL = "facilityURL"
+        case imageURL = "imageURL"
         case meals = "dateHours"
     }
     
@@ -23,15 +24,18 @@ extension DiningVenue {
         let id = try container.decode(Int.self, forKey: .id)
         let name = try container.decode(String.self, forKey: .name)
         let venueType = try container.decode(VenueType.self, forKey: .venueType)
-        let facilityURL = try container.decode(URL.self, forKey: .facilityURL)
+        let facilityURL = try container.decodeIfPresent(URL.self, forKey: .facilityURL)
+        let imageURL = try container.decodeIfPresent(URL.self, forKey: .imageURL)
         
         // Create a mapping from date string to MealsForDate for that date
-        let mealsArray = try container.decode(Array<MealsForDate>.self, forKey: .meals)
         var mealsDict: Dictionary<String, MealsForDate> = .init()
-        for m in mealsArray {
-            mealsDict[m.date] = m
+        if let mealsArray = try container.decodeIfPresent(Array<MealsForDate>.self, forKey: .meals) {
+            for m in mealsArray {
+                mealsDict[m.date] = m
+            }
         }
-        self.init(id: id, name: name, venueType: venueType, facilityURL: facilityURL, meals: mealsDict)
+        
+        self.init(id: id, name: name, venueType: venueType, facilityURL: facilityURL, imageURL: imageURL, meals: mealsDict)
     }
     
     static var dateFormatter: DateFormatter {
@@ -73,31 +77,6 @@ extension DiningVenue.MealsForDate {
         let close: String
         let type: String
     }
-}
-
-// MARK: - MealsForDate JSON
-extension DiningVenue.MealsForDate.Meal {
-    // Does one meal overlap with another
-    func overlaps(with meal: DiningVenue.MealsForDate.Meal) -> Bool {
-        return (meal.open >= self.open && meal.open < self.close) ||
-            (self.open >= meal.open && self.open < meal.close)
-    }
-    
-    func overlaps(with meals: [DiningVenue.MealsForDate.Meal]) -> Bool {
-        meals.allSatisfy({ self.overlaps(with: $0) })
-    }
-    
-    var isClosedMeal: Bool {
-        return self.type.lowercased().contains("closed")
-    }
-    
-    // Date format used to decode Meals
-    static var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd:HH:mm:ss"
-        formatter.timeZone = TimeZone(abbreviation: "EST")
-        return formatter
-    }
     
     // Gets called by JSON decoder with an array of CodableMeal objects and a date. Returns nicely formatted Meal objects, with closed Meals filtered out.
     static func decodeMeals(from codableMeals: [DiningVenue.MealsForDate.CodableMeal], on dateString: String) -> [DiningVenue.MealsForDate.Meal] {
@@ -132,6 +111,31 @@ extension DiningVenue.MealsForDate.Meal {
         }
         
         return validMeals
+    }
+}
+
+// MARK: - MealsForDate JSON
+extension DiningVenue.MealsForDate.Meal {
+    // Does one meal overlap with another
+    func overlaps(with meal: DiningVenue.MealsForDate.Meal) -> Bool {
+        return (meal.open >= self.open && meal.open < self.close) ||
+            (self.open >= meal.open && self.open < meal.close)
+    }
+    
+    func overlaps(with meals: [DiningVenue.MealsForDate.Meal]) -> Bool {
+        meals.allSatisfy({ self.overlaps(with: $0) })
+    }
+    
+    var isClosedMeal: Bool {
+        return self.type.lowercased().contains("closed")
+    }
+    
+    // Date format used to decode Meals
+    static var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd:HH:mm:ss"
+        formatter.timeZone = TimeZone(abbreviation: "EST")
+        return formatter
     }
 }
 

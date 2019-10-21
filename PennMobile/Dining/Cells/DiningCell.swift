@@ -47,19 +47,21 @@ class DiningCell: UITableViewCell {
 // MARK: - Setup Cell
 extension DiningCell {
     fileprivate func setupCell(with venue: DiningVenue) {
-        venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
+        venueImageView.kf.setImage(with: venue.facilityURL)
+        //venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
         
         // Use shortened names if on homepage
         if isHomepage {
-            titleLabel.text = DiningVenueName.getShortVenueName(for: venue.name)
+            titleLabel.text = venue.name
+            //titleLabel.text = DiningVenueName.getShortVenueName(for: venue.name)
         } else {
-            titleLabel.text = venue.name.rawValue
+            titleLabel.text = venue.name
         }
         
-        updateTimeLabel(with: venue.times)
+        updateTimeLabel(with: venue)
         
-        if let times = venue.times {
-            if times.isOpen {
+        if venue.hasMealsToday {
+            if venue.isOpen {
                 statusLabel.text = "OPEN"
                 statusLabel.textColor = .informationYellow
                 statusLabel.font = .primaryInformationFont
@@ -75,8 +77,8 @@ extension DiningCell {
         }
     }
     
-    fileprivate func updateTimeLabel(with times: [OpenClose]?) {
-        timesLabel.text = times?.strFormat
+    fileprivate func updateTimeLabel(with venue: DiningVenue) {
+        timesLabel.text = venue.humanFormattedHoursStringForToday
         timesLabel.layoutIfNeeded()
     }
 }

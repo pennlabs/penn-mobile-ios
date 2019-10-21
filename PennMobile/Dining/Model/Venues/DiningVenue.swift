@@ -14,7 +14,8 @@ struct DiningVenue: Codable {
     let name: String
     let venueType: VenueType
     let facilityURL: URL?
-    let meals: [String: MealsForDate]?
+    let imageURL: URL?
+    let meals: [String: MealsForDate]
     
     struct MealsForDate: Codable {
         let date: String
@@ -27,7 +28,7 @@ struct DiningVenue: Codable {
         }
     }
     
-    enum VenueType: String, Codable {
+    enum VenueType: String, Codable, CaseIterable {
         case dining = "residential"
         case retail = "retail"
         case unknown = "unknown"
