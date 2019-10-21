@@ -6,7 +6,7 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 
-import Foundation
+/*import Foundation
 
 enum DiningVenueName: String {
     case commons =       "1920 Commons"
@@ -110,3 +110,4 @@ enum DiningVenueName: String {
         1732: .mbaCafe,
     ]
 }
+*/

@@ -60,7 +60,7 @@
 		216640941EBADC1700746B8E /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640901EBADC1700746B8E /* DiningCell.swift */; };
 		216640951EBADC1700746B8E /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640911EBADC1700746B8E /* DiningViewController.swift */; };
 		216640961EBADC1700746B8E /* DiningDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640921EBADC1700746B8E /* DiningDetailViewController.swift */; };
-		216640971EBADC1700746B8E /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640931EBADC1700746B8E /* DiningVenue.swift */; };
+		216640971EBADC1700746B8E /* DiningVenueOLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640931EBADC1700746B8E /* DiningVenueOLD.swift */; };
 		216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C11EBADC9300746B8E /* GenericControllers.swift */; };
 		216640CC1EBADCA400746B8E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C91EBADCA400746B8E /* Extensions.swift */; };
 		216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640CA1EBADCA400746B8E /* FirebaseAnalyticsManager.swift */; };
@@ -212,6 +212,10 @@
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
 		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
 		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
+		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
+		F23CC0BD235E3F390007317A /* DiningAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */; };
+		F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */; };
+		F23CC0C1235E3F8A0007317A /* DiningVenue+UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C0235E3F8A0007317A /* DiningVenue+UIExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -298,7 +302,7 @@
 		216640901EBADC1700746B8E /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
 		216640911EBADC1700746B8E /* DiningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewController.swift; sourceTree = "<group>"; };
 		216640921EBADC1700746B8E /* DiningDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningDetailViewController.swift; sourceTree = "<group>"; };
-		216640931EBADC1700746B8E /* DiningVenue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningVenue.swift; sourceTree = "<group>"; };
+		216640931EBADC1700746B8E /* DiningVenueOLD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningVenueOLD.swift; sourceTree = "<group>"; };
 		216640C11EBADC9300746B8E /* GenericControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericControllers.swift; sourceTree = "<group>"; };
 		216640C91EBADCA400746B8E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		216640CA1EBADCA400746B8E /* FirebaseAnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsManager.swift; sourceTree = "<group>"; };
@@ -462,6 +466,10 @@
 		F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedScreenshotUITests.swift; sourceTree = "<group>"; };
 		F230FB12225809E900760499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F230FB1922580ACA00760499 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
+		F23CC0BA235E3EF10007317A /* DiningVenue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenue.swift; sourceTree = "<group>"; };
+		F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPIResponse.swift; sourceTree = "<group>"; };
+		F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+Codable.swift"; sourceTree = "<group>"; };
+		F23CC0C0235E3F8A0007317A /* DiningVenue+UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+UIExtensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1046,7 +1054,11 @@
 		975BC27C20F07607009F93AB /* Venues */ = {
 			isa = PBXGroup;
 			children = (
-				216640931EBADC1700746B8E /* DiningVenue.swift */,
+				216640931EBADC1700746B8E /* DiningVenueOLD.swift */,
+				F23CC0BA235E3EF10007317A /* DiningVenue.swift */,
+				F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */,
+				F23CC0C0235E3F8A0007317A /* DiningVenue+UIExtensions.swift */,
+				F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */,
 				21EB4D31203D39FF0029A460 /* DiningVenueName.swift */,
 			);
 			path = Venues;
@@ -1663,6 +1675,7 @@
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
 				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
+				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
 				CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
@@ -1710,6 +1723,7 @@
 				2189C08D2027CE2600771C1F /* RoomCell.swift in Sources */,
 				978693FB20EAE3B900C4A8A1 /* DiningMenuData.swift in Sources */,
 				2150816A220D24C4002F7EA1 /* NewsArticle.swift in Sources */,
+				F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */,
 				EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */,
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
@@ -1717,6 +1731,7 @@
 				2188C6D7223C7E8400F18D90 /* SecureStore.swift in Sources */,
 				217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */,
 				214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */,
+				F23CC0BD235E3F390007317A /* DiningAPIResponse.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
 				B6111DB420184C4A00DC7877 /* AboutViewController.swift in Sources */,
 				212B8357222A31C300F835D6 /* HomePostCell.swift in Sources */,
@@ -1755,6 +1770,7 @@
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
+				F23CC0C1235E3F8A0007317A /* DiningVenue+UIExtensions.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */,
@@ -1782,7 +1798,7 @@
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
 				2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */,
 				21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */,
-				216640971EBADC1700746B8E /* DiningVenue.swift in Sources */,
+				216640971EBADC1700746B8E /* DiningVenueOLD.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
 				C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */,
 				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,

@@ -54,6 +54,7 @@ class DiningAPI: Requestable {
     }
 }
 
+// MARK: - Dining API
 extension DiningAPI {
     func fetchDiningBalance(_ completion: @escaping (_ diningBalance: DiningBalance?) -> Void) {
         getRequest(url: diningBalanceUrl) { (dictionary, error, statusCode) in
