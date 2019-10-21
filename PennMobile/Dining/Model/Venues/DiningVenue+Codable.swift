@@ -8,6 +8,33 @@
 
 import Foundation
 
+// MARK: - Codable Dining Venue
+extension DiningVenue {
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case name = "name"
+        case venueType = "venueType"
+        case facilityURL = "facilityURL"
+        case meals = "dateHours"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try container.decode(Int.self, forKey: .id)
+        let name = try container.decode(String.self, forKey: .name)
+        let venueType = try container.decode(VenueType.self, forKey: .venueType)
+        let facilityURL = try container.decode(URL.self, forKey: .facilityURL)
+        
+        // Create a mapping from date string to MealsForDate for that date
+        let mealsArray = try container.decode(Array<MealsForDate>.self, forKey: .meals)
+        var mealsDict: Dictionary<String, MealsForDate> = .init()
+        for m in mealsArray {
+            mealsDict[m.date] = m
+        }
+        self.init(id: id, name: name, venueType: venueType, facilityURL: facilityURL, meals: mealsDict)
+    }
+}
+
 // MARK: - Codable VenueType Enum
 extension DiningVenue.VenueType {
     public init(from decoder: Decoder) throws {
@@ -26,7 +53,7 @@ extension DiningVenue.VenueType {
 // MARK: - Codable MealsForDate
 extension DiningVenue.MealsForDate {
     // Called by JSONDecoder
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         // Decoded what is given by the API
         let dateString = try container.decode(String.self, forKey: .date)

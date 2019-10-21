@@ -9,13 +9,12 @@
 import Foundation
 
 struct DiningVenue: Codable {
-    let dailyMenuURL: URL
-    let dateHours: [MealsForDate]?
-    let facilityURL: URL
+    
     let id: Int
     let name: String
     let venueType: VenueType
-    let weeklyMenuURL: String
+    let facilityURL: URL?
+    let meals: [String: MealsForDate]?
     
     struct MealsForDate: Codable {
         let date: String
