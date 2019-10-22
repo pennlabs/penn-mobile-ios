@@ -21,6 +21,7 @@ extension DiningVenue {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        // Decode basic values
         let id = try container.decode(Int.self, forKey: .id)
         let name = try container.decode(String.self, forKey: .name)
         let venueType = try container.decode(VenueType.self, forKey: .venueType)

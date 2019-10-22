@@ -207,6 +207,7 @@
 		F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */; };
 		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
 		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
+		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -450,6 +451,7 @@
 		F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+Extensions.swift"; sourceTree = "<group>"; };
 		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
 		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
+		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
 		F603ADF2F73569E19F01B651 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9E420ECDC3611C9B23940E6 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -741,6 +743,7 @@
 			isa = PBXGroup;
 			children = (
 				F23CC0C4235EB30E0007317A /* StorageType.swift */,
+				F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */,
 				F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */,
 				211DFE531F36A02C00CB73E4 /* DiningAPI.swift */,
 			);
@@ -1687,6 +1690,7 @@
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
+				F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */,
 				C11B38E5225126DD009B752A /* DiningBalanceCell.swift in Sources */,
 				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
