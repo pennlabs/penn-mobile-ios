@@ -13,10 +13,6 @@ class DiningDataStore {
     static let shared = DiningDataStore()
     private var response: DiningAPIResponse = DiningAPIResponse(document: .init(venues: []))
     private let dataStore: LocalJSONStore<DiningAPIResponse> = LocalJSONStore(storageType: .cache, filename: "venues.json")
-
-    private var todayString: String {
-        return Date.dayOfMonthFormatter.string(from: Date())
-    }
     
     // MARK: - Get Dining Venues (for UI)
     func getVenues() -> [DiningVenue] {

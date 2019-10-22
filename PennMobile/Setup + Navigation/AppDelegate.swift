@@ -11,7 +11,6 @@ import UserNotifications
 import FirebaseCore
 import FirebaseInstanceID
 import StoreKit
-//import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,9 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        // Get the cache path for debugging purposes
-        print("Cache Path: \(DataStoreType.cache.folder)")
         
         // Override point for customization after application launch.
         UserDBManager.shared.dryRun = true

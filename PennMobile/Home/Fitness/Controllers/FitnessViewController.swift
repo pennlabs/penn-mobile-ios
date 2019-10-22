@@ -46,18 +46,11 @@ extension FitnessViewController {
         FitnessAPI.instance.fetchFitnessHours { (success, error) in
             DispatchQueue.main.async {
                 if !success {
-                    //DiningHoursData.shared.clearHours()
-                    
                     if error {
                         self.navigationVC?.addStatusBar(text: .apiError)
                     } else {
                         self.navigationVC?.addStatusBar(text: .noInternet)
                     }
-                    
-                } else {
-                    
-                    //what to do when request is successful
-                    
                 }
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()

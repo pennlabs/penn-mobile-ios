@@ -303,8 +303,6 @@ extension Date {
         return dateStrings
     }
     
-    
-
     var adjustedFor11_59: Date {
         if self.minutes == 59 {
             return self.add(minutes: 1)
@@ -342,6 +340,10 @@ extension Date {
 
     static var midnightToday: Date {
         return midnightYesterday.tomorrow
+    }
+    
+    static var todayString: String {
+        return Date.dayOfMonthFormatter.string(from: Date())
     }
 }
 

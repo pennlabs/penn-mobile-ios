@@ -26,6 +26,7 @@ class LocalJSONStore<T> where T : Codable {
             let data = try JSONEncoder().encode(object)
             try data.write(to: fileURL)
         } catch let e {
+            // This error happens when we fail to encode our object as JSON. This means we made a mistake in one of our encode(:) implementations. For example, if we try to encode a field whose value is optional and is nil, without using encodeIfPresent().
             print("CACHE ERROR: \(e)")
         }
     }
@@ -39,7 +40,7 @@ class LocalJSONStore<T> where T : Codable {
             let data = try Data(contentsOf: fileURL)
             return try JSONDecoder().decode(T.self, from: data)
         } catch let e {
-            // This error will happen when our Codable representations change. This is okay, the cache will overwrite old structures eventually.
+            // This error will happen when our Codable representations change and we try to read an old format from the cache. This is okay, the cache will overwrite old structures eventually.
             print("CACHE DECODING ERROR (CODABLE may have changed): \(e)")
             return nil
         }

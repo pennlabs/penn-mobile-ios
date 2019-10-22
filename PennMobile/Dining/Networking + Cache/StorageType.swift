@@ -21,7 +21,7 @@ enum DataStoreType {
     }
     
     var folder: URL {
-        let path = NSSearchPathForDirectoriesInDomains(searchPathDirectory, .userDomainMask, true).first!
+        let path = NSSearchPathForDirectoriesInDomains(searchPathDirectory, .userDomainMask, true).first ?? ""
         let subfolder = "org.pennlabs.PennMobile.json_storage"
         return URL(fileURLWithPath: path).appendingPathComponent(subfolder)
     }
