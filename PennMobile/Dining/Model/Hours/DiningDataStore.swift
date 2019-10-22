@@ -12,6 +12,7 @@ class DiningDataStore {
     
     static let shared = DiningDataStore()
     private var response: DiningAPIResponse = DiningAPIResponse(document: .init(venues: []))
+    private let dataStore: LocalJSONStore<DiningAPIResponse> = LocalJSONStore(storageType: .cache, filename: "venues.json")
 
     private var todayString: String {
         return Date.dayOfMonthFormatter.string(from: Date())
@@ -47,5 +48,10 @@ class DiningDataStore {
     
     internal func saveToCache(_ response: DiningAPIResponse) {
         // TODO: Implement cacheing behavior
+        dataStore.save(response)
+        
+        if let storedData = dataStore.storedValue {
+            dump(storedData)
+        }
     }
 }

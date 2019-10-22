@@ -43,12 +43,24 @@ extension DiningVenue {
         // Create a mapping from date string to MealsForDate for that date
         var mealsDict: Dictionary<String, MealsForDate> = .init()
         if let mealsArray = try container.decodeIfPresent(Array<MealsForDate>.self, forKey: .meals) {
+            // Decoding from fresh API values
             for m in mealsArray {
                 mealsDict[m.date] = m
             }
         }
         
         self.init(id: id, name: name, venueType: venueType, facilityURL: facilityURL, imageURL: imageURL, meals: mealsDict)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(venueType, forKey: .venueType)
+        try container.encodeIfPresent(facilityURL, forKey: .facilityURL)
+        try container.encodeIfPresent(imageURL, forKey: .imageURL)
+        try container.encode(meals, forKey: .meals)
     }
     
     static var dateFormatter: DateFormatter {

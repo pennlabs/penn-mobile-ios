@@ -216,6 +216,7 @@
 		F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */; };
 		F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */; };
 		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
+		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -468,6 +469,7 @@
 		F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+Codable.swift"; sourceTree = "<group>"; };
 		F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+Extensions.swift"; sourceTree = "<group>"; };
 		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
+		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		F603ADF2F73569E19F01B651 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9E420ECDC3611C9B23940E6 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -686,8 +688,8 @@
 		216640881EBADBA000746B8E /* Setup + Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				B6665A172071E63800F49A9C /* TabBarController.swift */,
 				216640631EBADADA00746B8E /* AppDelegate.swift */,
+				B6665A172071E63800F49A9C /* TabBarController.swift */,
 				EF389EC521861B8500E29C6A /* HomeNavigationController.swift */,
 				21B556162224FDC500D80F61 /* RootViewController.swift */,
 				21B556182224FDF700D80F61 /* SplashViewController.swift */,
@@ -1045,6 +1047,7 @@
 				F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */,
 				F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */,
 				21EB4D31203D39FF0029A460 /* DiningVenueName.swift */,
+				F23CC0C4235EB30E0007317A /* StorageType.swift */,
 			);
 			path = Venues;
 			sourceTree = "<group>";
@@ -1646,6 +1649,7 @@
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				97E79E1C2100F32E00D3D606 /* FitnessViewModel.swift in Sources */,
 				214E254922480818004CB9C4 /* GSRDeletable.swift in Sources */,
+				F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */,
 				B6665A182071E63800F49A9C /* TabBarController.swift in Sources */,
 				21B649202236F2F300AC5B7F /* HomeCoursesCell.swift in Sources */,
 				21A6B6D222162702003A357D /* GSRReservation.swift in Sources */,

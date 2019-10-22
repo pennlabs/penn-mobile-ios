@@ -28,6 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        // Get the cache path for debugging purposes
+        print("Cache Path: \(StorageType.cache.folder)")
+        
         // Override point for customization after application launch.
         UserDBManager.shared.dryRun = true
         UserDBManager.shared.testRun = true
