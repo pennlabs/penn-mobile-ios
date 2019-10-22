@@ -31,6 +31,15 @@ class DiningDataStore {
         return venuesDict
     }
     
+    func getVenues(with ids: Set<Int>) -> [DiningVenue] {
+        return response.document.venues.filter({ ids.contains($0.id) })
+    }
+    
+    func getVenues(with ids: [Int]) -> [DiningVenue] {
+        return response.document.venues.filter({ ids.contains($0.id) })
+    }
+    
+    // MARK: - Cacheing
     func store(response: DiningAPIResponse) {
         self.response = response
         saveToCache(response)

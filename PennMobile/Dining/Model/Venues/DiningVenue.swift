@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DiningVenue: Codable {
+struct DiningVenue: Codable, Equatable {
     
     let id: Int
     let name: String
@@ -17,11 +17,11 @@ struct DiningVenue: Codable {
     let imageURL: URL?
     let meals: [String: MealsForDate]
     
-    struct MealsForDate: Codable {
+    struct MealsForDate: Codable, Equatable {
         let date: String
         let meals: [Meal]
         
-        struct Meal: Codable {
+        struct Meal: Codable, Equatable {
             let open: Date
             let close: Date
             let type: String

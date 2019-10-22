@@ -6,6 +6,7 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 
+/*
 import Foundation
 
 class DiningHoursDataDeprecated {
@@ -68,3 +69,4 @@ class DiningHoursDataDeprecated {
         }
     }
 }
+*/

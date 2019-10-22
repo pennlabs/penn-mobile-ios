@@ -46,7 +46,7 @@ extension FitnessViewController {
         FitnessAPI.instance.fetchFitnessHours { (success, error) in
             DispatchQueue.main.async {
                 if !success {
-                    DiningHoursData.shared.clearHours()
+                    //DiningHoursData.shared.clearHours()
                     
                     if error {
                         self.navigationVC?.addStatusBar(text: .apiError)

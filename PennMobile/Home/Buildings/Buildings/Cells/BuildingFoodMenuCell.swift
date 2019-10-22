@@ -6,6 +6,7 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 
+/*
 import UIKit
 
 struct DiningMenuItem {
@@ -207,3 +208,4 @@ extension BuildingFoodMenuCell {
         return view
     }
 }
+*/

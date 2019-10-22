@@ -42,7 +42,7 @@ protocol BuildingHoursDisplayable { func getTimeStrings() -> [String] }
 
 protocol BuildingMenusDisplayable {
     func getMeals() -> [DiningMeal]?
-    func getTimes() -> [OpenClose]?
+    //func getTimes() -> [OpenClose]?
 }
 
 protocol BuildingMapDisplayable {

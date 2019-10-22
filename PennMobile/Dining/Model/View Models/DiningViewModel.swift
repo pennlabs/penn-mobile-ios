@@ -16,7 +16,7 @@ class DiningViewModel: NSObject {
     static var ShowDiningPlan = false
     
     let ordering: [DiningVenue.VenueType] = [.dining, .retail, .unknown]
-    let venues: [DiningVenue.VenueType : [DiningVenue]] = DiningDataStore.shared.getVenuesForToday()
+    let venues: [DiningVenue.VenueType : [DiningVenue]] = DiningDataStore.shared.getSectionedVenues()
     var balance: DiningBalance?
     
     let balancesHeader = "Dining Balance"

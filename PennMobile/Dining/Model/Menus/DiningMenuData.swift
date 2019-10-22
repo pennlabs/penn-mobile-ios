@@ -8,6 +8,7 @@
 
 import Foundation
 
+/*
 class DiningMenuData {
     
     static let shared = DiningMenuData()
@@ -27,3 +28,4 @@ class DiningMenuData {
         menus = Dictionary<Int, DiningMenu>()
     }
 }
+*/

@@ -89,14 +89,14 @@ extension HomeViewController {
 // MARK: - Dining Delegate
 extension HomeViewController {
     func handleVenueSelected(_ venue: DiningVenue) {
-        DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name.rawValue)
+        DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name)
         
-        if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
+        if let url = venue.facilityURL {
             let vc = UIViewController()
             let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             webView.load(URLRequest(url: url))
             vc.view.addSubview(webView)
-            vc.title = venue.name.rawValue
+            vc.title = venue.name
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

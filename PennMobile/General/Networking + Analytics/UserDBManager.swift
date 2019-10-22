@@ -36,10 +36,9 @@ class UserDBManager: NSObject, Requestable {
 
 // MARK: - Dining
 extension UserDBManager {
-    func saveDiningPreference(for venues: [DiningVenue]) {
+    func saveDiningPreference(for venueIds: [Int]) {
         let urlString = "\(baseUrl)/dining/preferences"
-        let ids = venues.map { $0.getID() }.filter { $0 != nil}.map { $0! }
-        let params = ["venues": ids]
+        let params = ["venues": venueIds]
         let request = getAnalyticsPostRequest(url: urlString, params: params)
         sendRequest(request)
     }

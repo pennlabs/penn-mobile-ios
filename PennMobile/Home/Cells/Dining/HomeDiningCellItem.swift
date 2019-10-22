@@ -40,9 +40,9 @@ extension HomeDiningCellItem {
         guard let ids = json["venues"].arrayObject as? [Int] else {
             throw NetworkingError.jsonError
         }
-        var venues: [DiningVenue] = ids.map { try? DiningVenue(id: $0) }.filter { $0 != nil}.map { $0! }
+        var venues: [DiningVenue] = DiningDataStore.shared.getVenues(with: ids)
         if venues.isEmpty {
-            venues = DiningVenue.getDefaultVenues()
+            venues = DiningDataStore.shared.getVenues(with: DiningVenue.defaultVenueIds)
         }
         self.init(venues: venues)
     }

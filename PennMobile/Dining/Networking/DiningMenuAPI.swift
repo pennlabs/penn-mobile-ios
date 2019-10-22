@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DiningMenuAPI: Requestable {
+/*class DiningMenuAPI: Requestable {
     
     static let instance = DiningMenuAPI()
     
@@ -44,3 +44,4 @@ extension DiningMenuData {
         return true
     }
 }
+*/
