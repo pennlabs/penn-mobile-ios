@@ -40,11 +40,6 @@ protocol BuildingImageDisplayable { func getImage() -> String }
 
 protocol BuildingHoursDisplayable { func getTimeStrings() -> [String] }
 
-protocol BuildingMenusDisplayable {
-    func getMeals() -> [DiningMeal]?
-    //func getTimes() -> [OpenClose]?
-}
-
 protocol BuildingMapDisplayable {
     func getRegion() -> MKCoordinateRegion
     func getAnnotation() -> MKAnnotation

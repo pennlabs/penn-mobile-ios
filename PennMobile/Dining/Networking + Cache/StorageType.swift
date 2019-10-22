@@ -8,8 +8,8 @@
 
 import Foundation
 
-// MARK: - Storage Types
-enum StorageType {
+// MARK: - Data Store Types
+enum DataStoreType {
     case cache // Can be cleared by system
     case permanant // Never cleared
     
@@ -32,11 +32,12 @@ enum StorageType {
 }
 
 // MARK: - Local JSON Store
+// This class can be used by any Codable struct as a simple cacheing layer. Check out DiningDataStore.swift for an example.
 class LocalJSONStore<T> where T : Codable {
-    let storageType: StorageType
+    let storageType: DataStoreType
     let filename: String
     
-    init(storageType: StorageType, filename: String) {
+    init(storageType: DataStoreType, filename: String) {
         self.storageType = storageType
         self.filename = filename
         ensureFolderExists()

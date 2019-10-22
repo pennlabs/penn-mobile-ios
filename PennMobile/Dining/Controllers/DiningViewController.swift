@@ -11,10 +11,6 @@ import WebKit
 class DiningViewController: GenericTableViewController {
         
     fileprivate var viewModel = DiningViewModel()
-    
-    // TODO: Make it preload the users most-visited dining hall, not just commons
-    fileprivate let venueIdToPreload = 593
-    
     fileprivate var isReturningFromLogin: Bool = false
         
     override func viewDidLoad() {
@@ -161,10 +157,7 @@ extension DiningViewController {
 // MARK: - DiningViewModelDelegate
 extension DiningViewController: DiningViewModelDelegate {
     func handleSelection(for venue: DiningVenue) {
-        //let ddc = DiningDetailViewController()
-        //ddc.venue = venue
-        //navigationController?.pushViewController(ddc, animated: true)
-        
+
         DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name)
         
         if let url = venue.facilityURL {

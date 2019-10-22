@@ -42,6 +42,7 @@ extension HomeDiningCellItem {
         }
         var venues: [DiningVenue] = DiningDataStore.shared.getVenues(with: ids)
         if venues.isEmpty {
+            // If the user has no preferences, use the defaults
             venues = DiningDataStore.shared.getVenues(with: DiningVenue.defaultVenueIds)
         }
         self.init(venues: venues)
