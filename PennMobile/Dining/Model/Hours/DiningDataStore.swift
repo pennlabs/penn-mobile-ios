@@ -20,24 +20,28 @@ class DiningDataStore {
     
     // MARK: - Get Dining Venues (for UI)
     func getVenues() -> [DiningVenue] {
-        // TODO: Implement cache fetching behavior
+        if response.document.venues.isEmpty {
+            if let cachedResponse = dataStore.storedValue {
+                return cachedResponse.document.venues
+            }
+        }
         return response.document.venues
     }
     
     func getSectionedVenues() -> [DiningVenue.VenueType : [DiningVenue]] {
         var venuesDict = [DiningVenue.VenueType : [DiningVenue]]()
         for type in DiningVenue.VenueType.allCases {
-            venuesDict[type] = response.document.venues.filter({ $0.venueType == type })
+            venuesDict[type] = getVenues().filter({ $0.venueType == type })
         }
         return venuesDict
     }
     
     func getVenues(with ids: Set<Int>) -> [DiningVenue] {
-        return response.document.venues.filter({ ids.contains($0.id) })
+        return getVenues().filter({ ids.contains($0.id) })
     }
     
     func getVenues(with ids: [Int]) -> [DiningVenue] {
-        return response.document.venues.filter({ ids.contains($0.id) })
+        return getVenues().filter({ ids.contains($0.id) })
     }
     
     // MARK: - Cacheing
@@ -47,11 +51,6 @@ class DiningDataStore {
     }
     
     internal func saveToCache(_ response: DiningAPIResponse) {
-        // TODO: Implement cacheing behavior
         dataStore.save(response)
-        
-        if let storedData = dataStore.storedValue {
-            dump(storedData)
-        }
     }
 }

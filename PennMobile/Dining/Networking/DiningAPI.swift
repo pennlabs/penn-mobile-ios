@@ -31,14 +31,13 @@ class DiningAPI: Requestable {
             }
             
             guard let data = data else { completion(false, true); return }
-            let testResponse = try! JSONDecoder().decode(DiningAPIResponse.self, from: data)
+            
             if let diningAPIResponse = try? JSONDecoder().decode(DiningAPIResponse.self, from: data) {
                 DiningDataStore.shared.store(response: diningAPIResponse)
                 completion(true, false)
             } else {
                 completion(false, true)
             }
-            //let success = DiningHoursData.shared.loadHoursForAllVenues(for: json)
         }
     }
     
@@ -51,7 +50,7 @@ class DiningAPI: Requestable {
     }
 }
 
-// MARK: - Dining API
+// MARK: - Dining Balance API
 extension DiningAPI {
     func fetchDiningBalance(_ completion: @escaping (_ diningBalance: DiningBalance?) -> Void) {
         getRequest(url: diningBalanceUrl) { (dictionary, error, statusCode) in
@@ -79,38 +78,3 @@ extension DiningAPI {
         }
     }
 }
-
-/*
-extension DiningHoursData {
-    fileprivate func loadHoursForAllVenues(for json: JSON) -> Bool {
-        guard let jsonArray = json["document"]["venue"].array else {
-            return false
-        }
-        
-        for json in jsonArray {
-            //loadHoursForSingleVenue(for: json)
-            
-            let venueName = DiningVenueName.getVenueName(for: json["name"].stringValue)
-            let _ = loadWeeklyHoursForSingleVenue(with: json, for: venueName)
-        }
-        
-        if !Storage.fileExists(DiningVenue.directory, in: .caches) {
-            let mapping = getIdMapping(jsonArray: jsonArray)
-            Storage.store(mapping, to: .caches, as: DiningVenue.directory)
-        }
-        return true
-    }
-    
-    fileprivate func loadWeeklyHoursForSingleVenue(with json: JSON, for venue: DiningVenueName) -> Bool {
-        let decoder = JSONDecoder()
-        do {
-            let decodedHours = try decoder.decode(DiningVenueForWeek.self, from: json.rawData())
-            processDecodedHours(hours: decodedHours, for: venue)
-        } catch {
-            print(error)
-            return false
-        }
-        return true
-    }
-}
-*/

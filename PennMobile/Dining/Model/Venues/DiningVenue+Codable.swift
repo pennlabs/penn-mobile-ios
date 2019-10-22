@@ -32,13 +32,10 @@ extension DiningVenue {
         if facilityURLString != nil {
             facilityURL = URL(string: facilityURLString!)
         }
-        //let imageURLString = try container.decodeIfPresent(String.self, forKey: .imageURL)
-        // TODO: Change this back to real image URLs after the api is fixed
-        let imageURLString = "https://s3.us-east-2.amazonaws.com/labs.api/dining/1920-commons.jpg"
-        imageURL = URL(string: imageURLString)
-        //if imageURLString != nil {
-            //imageURL = URL(string: imageURLString!)
-        //}
+        let imageURLString = try container.decodeIfPresent(String.self, forKey: .imageURL)
+        if imageURLString != nil {
+            imageURL = URL(string: imageURLString!)
+        }
         
         // Create a mapping from date string to MealsForDate for that date
         var mealsDict: Dictionary<String, MealsForDate> = .init()
@@ -54,13 +51,13 @@ extension DiningVenue {
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        
         try container.encode(id, forKey: .id)
         try container.encode(name, forKey: .name)
         try container.encode(venueType, forKey: .venueType)
         try container.encodeIfPresent(facilityURL, forKey: .facilityURL)
         try container.encodeIfPresent(imageURL, forKey: .imageURL)
-        try container.encode(meals, forKey: .meals)
+        let mealsArray = meals.flatMap { (key, value) -> [MealsForDate] in [value] }
+        try container.encode(mealsArray, forKey: .meals)
     }
     
     static var dateFormatter: DateFormatter {
@@ -89,6 +86,12 @@ extension DiningVenue.MealsForDate {
         // Parse the API result into [Meals]
         let meals = DiningVenue.MealsForDate.decodeMeals(from: codableMeals, on: dateString)
         self.init(date: dateString, meals: meals)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(date, forKey: .date)
+        try container.encode(meals, forKey: .meals)
     }
     
     enum CodingKeys: String, CodingKey {
@@ -139,9 +142,27 @@ extension DiningVenue.MealsForDate {
     }
 }
 
-// MARK: - MealsForDate JSON
+// MARK: - Codable Meal
 extension DiningVenue.MealsForDate.Meal {
-    // Does one meal overlap with another
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(DiningVenue.MealsForDate.Meal.timeFormatter.string(from: open), forKey: .open)
+        try container.encode(DiningVenue.MealsForDate.Meal.timeFormatter.string(from: close), forKey: .close)
+        try container.encode(type, forKey: .type)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case open = "open"
+        case close = "close"
+        case type = "type"
+    }
+}
+
+// MARK: - Meal Helper Functions
+extension DiningVenue.MealsForDate.Meal {
+    
+    // Does one meal overlap with another?
     func overlaps(with meal: DiningVenue.MealsForDate.Meal) -> Bool {
         return (meal.open >= self.open && meal.open < self.close) ||
             (self.open >= meal.open && self.open < meal.close)
@@ -159,6 +180,14 @@ extension DiningVenue.MealsForDate.Meal {
     static var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd:HH:mm:ss"
+        formatter.timeZone = TimeZone(abbreviation: "EST")
+        return formatter
+    }
+    
+    // Time formatter used to encode Meals
+    static var timeFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
         formatter.timeZone = TimeZone(abbreviation: "EST")
         return formatter
     }

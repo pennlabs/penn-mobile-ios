@@ -48,16 +48,7 @@ class DiningCell: UITableViewCell {
 extension DiningCell {
     fileprivate func setupCell(with venue: DiningVenue) {
         venueImageView.kf.setImage(with: venue.imageURL)
-        //venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
-        
-        // Use shortened names if on homepage
-        if isHomepage {
-            titleLabel.text = venue.name
-            //titleLabel.text = DiningVenueName.getShortVenueName(for: venue.name)
-        } else {
-            titleLabel.text = venue.name
-        }
-        
+        titleLabel.text = venue.name
         updateTimeLabel(with: venue)
         
         if venue.hasMealsToday {
@@ -150,6 +141,7 @@ extension DiningCell {
     
     fileprivate func getVenueImageView() -> UIImageView {
         let imageView = UIImageView()
+        imageView.backgroundColor = .allbirdsGrey
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 5.0

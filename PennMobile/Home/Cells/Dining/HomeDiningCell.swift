@@ -70,9 +70,7 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
         delegate.handleSettingsTapped(venues: venues)
     }
 
-    @objc fileprivate func transitionButtonTapped() {
-        print("Button Tapped!")
-    }
+    @objc fileprivate func transitionButtonTapped() {}
 }
 
 // MARK: - Setup UI Elements

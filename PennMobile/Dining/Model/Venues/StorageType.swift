@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - Storage Types
 enum StorageType {
     case cache // Can be cleared by system
     case permanant // Never cleared
@@ -30,6 +31,7 @@ enum StorageType {
     }
 }
 
+// MARK: - Local JSON Store
 class LocalJSONStore<T> where T : Codable {
     let storageType: StorageType
     let filename: String
@@ -50,6 +52,7 @@ class LocalJSONStore<T> where T : Codable {
         }
     }
     
+    // MARK: - Loading
     var storedValue: T? {
         guard FileManager.default.fileExists(atPath: fileURL.path) else {
             return nil
@@ -64,8 +67,7 @@ class LocalJSONStore<T> where T : Codable {
         }
     }
     
-    // MARK: - Retrieving
-    
+    // MARK: - Helpers
     private var folder: URL {
         return storageType.folder
     }

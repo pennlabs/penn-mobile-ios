@@ -23,7 +23,7 @@ class DiningCellSettingsController: UITableViewController {
         super.viewDidLoad()
 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DiningVenueSettingsCell")
-        tableView.allowsMultipleSelection = true
+        //tableView.allowsMultipleSelection = true
         navigationItem.title = "Select Favorites"
         self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
@@ -56,11 +56,10 @@ class DiningCellSettingsController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if chosenVenueIds.contains(indexPath.row) {
-            chosenVenueIds.remove(indexPath.row)
+        if chosenVenueIds.contains(allVenues[indexPath.row].id) {
+            chosenVenueIds.remove(allVenues[indexPath.row].id)
         } else {
-            chosenVenueIds.insert(indexPath.row)
+            chosenVenueIds.insert(allVenues[indexPath.row].id)
         }
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
