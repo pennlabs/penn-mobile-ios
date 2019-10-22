@@ -64,15 +64,13 @@ extension DiningViewController {
         DiningAPI.instance.fetchDiningHours { (success, error) in
             DispatchQueue.main.async {
                 if !success {
-                    DiningHoursData.shared.clearHours()
-                    
                     if error {
                         self.navigationVC?.addStatusBar(text: .apiError)
                     } else {
                         self.navigationVC?.addStatusBar(text: .noInternet)
                     }
-                    
                 }
+                self.viewModel.venues = DiningDataStore.shared.getSectionedVenues()
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false

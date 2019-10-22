@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DiningCellSettingsDelegate {
-    func saveSelection(for cafes: [DiningVenue])
+    func saveSelection(for venueIds: [Int])
 }
 
 class DiningCellSettingsController: UITableViewController {
@@ -71,8 +71,7 @@ class DiningCellSettingsController: UITableViewController {
     }
 
     @objc func handleSave() {
-        let chosenVenues = chosenCafes.map {DiningVenue(venue: $0)}
-        delegate?.saveSelection(for: chosenVenues)
+        delegate?.saveSelection(for: Array(chosenVenueIds))
         self.dismiss(animated: true, completion: nil)
         FirebaseAnalyticsManager.shared.trackEvent(action: .updateDiningPreferences, result: .success, content: chosenVenueIds.count)
     }

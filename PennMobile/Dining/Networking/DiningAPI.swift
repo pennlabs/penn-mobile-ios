@@ -31,7 +31,7 @@ class DiningAPI: Requestable {
             }
             
             guard let data = data else { completion(false, true); return }
-            
+            let testResponse = try! JSONDecoder().decode(DiningAPIResponse.self, from: data)
             if let diningAPIResponse = try? JSONDecoder().decode(DiningAPIResponse.self, from: data) {
                 DiningDataStore.shared.store(response: diningAPIResponse)
                 completion(true, false)

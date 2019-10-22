@@ -23,14 +23,6 @@ class MapViewController: UIViewController {
         }
     }
     
-    var venue: DiningVenueName? {
-        didSet {
-            guard let venue = venue else { return }
-            self.region = PennCoordinate.shared.getRegion(for: venue, at: .close)
-            self.annotation = PennCoordinate.shared.getAnnotation(for: venue)
-        }
-    }
-    
     var facility: FitnessFacilityName? {
         didSet {
             guard let facility = facility else { return }

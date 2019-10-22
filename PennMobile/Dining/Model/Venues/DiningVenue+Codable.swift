@@ -15,7 +15,7 @@ extension DiningVenue {
         case name = "name"
         case venueType = "venueType"
         case facilityURL = "facilityURL"
-        case imageURL = "imageURL"
+        case imageURL = "imageUrl"
         case meals = "dateHours"
     }
     
@@ -24,8 +24,21 @@ extension DiningVenue {
         let id = try container.decode(Int.self, forKey: .id)
         let name = try container.decode(String.self, forKey: .name)
         let venueType = try container.decode(VenueType.self, forKey: .venueType)
-        let facilityURL = try container.decodeIfPresent(URL.self, forKey: .facilityURL)
-        let imageURL = try container.decodeIfPresent(URL.self, forKey: .imageURL)
+        
+        // Decode optional URLs
+        var facilityURL: URL? = nil
+        var imageURL: URL? = nil
+        let facilityURLString = try container.decodeIfPresent(String.self, forKey: .facilityURL)
+        if facilityURLString != nil {
+            facilityURL = URL(string: facilityURLString!)
+        }
+        //let imageURLString = try container.decodeIfPresent(String.self, forKey: .imageURL)
+        // TODO: Change this back to real image URLs after the api is fixed
+        let imageURLString = "https://s3.us-east-2.amazonaws.com/labs.api/dining/1920-commons.jpg"
+        imageURL = URL(string: imageURLString)
+        //if imageURLString != nil {
+            //imageURL = URL(string: imageURLString!)
+        //}
         
         // Create a mapping from date string to MealsForDate for that date
         var mealsDict: Dictionary<String, MealsForDate> = .init()

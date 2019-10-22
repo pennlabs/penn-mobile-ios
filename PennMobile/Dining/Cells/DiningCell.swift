@@ -47,7 +47,7 @@ class DiningCell: UITableViewCell {
 // MARK: - Setup Cell
 extension DiningCell {
     fileprivate func setupCell(with venue: DiningVenue) {
-        venueImageView.kf.setImage(with: venue.facilityURL)
+        venueImageView.kf.setImage(with: venue.imageURL)
         //venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
         
         // Use shortened names if on homepage

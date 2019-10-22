@@ -32,7 +32,6 @@ extension DiningVenue {
     
     var isOpen: Bool {
         guard let mealsToday = mealsToday else { return false }
-        let now = Date()
         for meal in mealsToday.meals {
             if meal.isCurrentlyServing {
                 return true
