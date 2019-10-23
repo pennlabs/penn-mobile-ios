@@ -20,9 +20,7 @@ class Member {
         if let website = website {
             self.websiteURL = URL(string: website)
         }
-        let baseImageURL = URL(string: "https://api.pennlabs.org/members/images")
-        self.imageURL = URL(string: image, relativeTo: baseImageURL)
-        dump(self.imageURL)
+        self.imageURL = URL(string: "https://s3.us-east-2.amazonaws.com/penn.mobile/about/" + image)
     }
 }
 
@@ -39,29 +37,29 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     
     private func loadMembers() {
         
-        let dom = Member(name: "Dominic Holmes", image: "dominic", website: "https://dominic.land")
-        let ben = Member(name: "Ben Leimberger", image: "ben")
-        let carin = Member(name: "Carin Gan", image: "carin")
-        let salib = Member(name: "Daniel Salib", image: "salib")
-        let marta = Member(name: "Marta García", image: "marta")
-        let grace = Member(name: "Grace Jiang", image: "grace")
-        let josh = Member(name: "Josh Doman", image: "josh")
-        let tiff = Member(name: "Tiffany Chang", image: "tiff")
-        let zhilei = Member(name: "Zhilei Zheng", image: "zhilei")
-        let laura = Member(name: "Laura Gao", image: "laura")
-        let yagil = Member(name: "Yagil Burowski", image: "yagil")
-        let adel = Member(name: "Adel Qalieh", image: "adel")
-        let rehaan = Member(name: "Rehaan Furniturewala", image: "rehaan")
-        let liz = Member(name: "Liz Powell", image: "liz")
-        let henrique = Member(name: "Henrique Lorente", image: "henrique")
-        let lucy = Member(name: "Lucy Yuan", image: "lucy")
-        let matthew = Member(name: "Matthew Rosca-Halmagean", image: "matthew")
-        let hassan = Member(name: "Hassan Hammoud", image: "hassan")
+        let dom = Member(name: "Dominic Holmes", image: "dominic.jpeg", website: "https://dominic.land")
+        let ben = Member(name: "Ben Leimberger", image: "ben.jpeg")
+        let carin = Member(name: "Carin Gan", image: "carin.jpeg")
+        let salib = Member(name: "Daniel Salib", image: "salib.jpeg")
+        let marta = Member(name: "Marta García", image: "marta.jpg")
+        let grace = Member(name: "Grace Jiang", image: "grace.jpeg")
+        let josh = Member(name: "Josh Doman", image: "josh.jpeg")
+        let tiff = Member(name: "Tiffany Chang", image: "tiff.jpeg")
+        let zhilei = Member(name: "Zhilei Zheng", image: "zhilei.jpeg")
+        let laura = Member(name: "Laura Gao", image: "laura.jpeg")
+        let yagil = Member(name: "Yagil Burowski", image: "yagil.jpeg")
+        let adel = Member(name: "Adel Qalieh", image: "adel.jpeg")
+        let rehaan = Member(name: "Rehaan Furniturewala", image: "rehaan.jpeg")
+        let liz = Member(name: "Liz Powell", image: "liz.jpeg")
+        let henrique = Member(name: "Henrique Lorente", image: "henrique.jpeg")
+        let lucy = Member(name: "Lucy Yuan", image: "lucy.jpeg")
+        let matthew = Member(name: "Matthew Rosca-Halmagean", image: "matthew.jpeg")
+        let hassan = Member(name: "Hassan Hammoud", image: "hassan.jpeg")
         var currentMembers = [Member]()
         var pastMembers = [Member]()
         
         //fill the arrays with the members
-        pastMembers += [adel, marta, grace, tiff, zhilei, yagil, laura, adel, ben]
+        pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil]
         currentMembers += [josh, dom, carin, salib, rehaan, liz, henrique, lucy, matthew, hassan]
         members += [currentMembers, pastMembers]
     }
