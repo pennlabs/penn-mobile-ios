@@ -7,15 +7,22 @@
 //
 
 import UIKit
+import Kingfisher
 
 class Member {
     var name: String
-    var image: UIImage?
+    var imageURL: URL?
+    var websiteURL: URL?
     
     // initialize properties of the class Member
-    init (name: String, image: UIImage?) {
+    init (name: String, image: String, website: String? = nil) {
         self.name = name
-        self.image = image
+        if let website = website {
+            self.websiteURL = URL(string: website)
+        }
+        let baseImageURL = URL(string: "https://api.pennlabs.org/members/images")
+        self.imageURL = URL(string: image, relativeTo: baseImageURL)
+        dump(self.imageURL)
     }
 }
 
@@ -32,28 +39,30 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     
     private func loadMembers() {
         
-        let dom = Member(name: "Dominic Holmes", image: UIImage(named: "dom"))
-        let ben = Member(name: "Ben Leimberger", image: UIImage(named: "ben"))
-        let carin = Member(name: "Carin Gan", image: UIImage(named: "carin"))
-        let salib = Member(name: "Daniel Salib", image: UIImage(named: "salib"))
-        let marta = Member(name: "Marta García", image: UIImage(named: "marta"))
-        let grace = Member(name: "Grace Jiang", image: UIImage(named: "grace"))
-        let josh = Member(name: "Josh Doman", image: UIImage(named: "josh"))
-        let tiff = Member(name: "Tiffany Chang", image: UIImage(named: "tiff"))
-        let zhilei = Member(name: "Zhilei Zheng", image: UIImage(named: "zhilei"))
-        let laura = Member(name: "Laura Gao", image: UIImage(named: "laura"))
-        let yagil = Member(name: "Yagil Burowski", image: UIImage(named: "yagil"))
-        let adel = Member(name: "Adel Qalieh", image: UIImage(named: "adel"))
-        let rehaan = Member(name: "Rehaan Furniturewala", image: UIImage(named: "rehaan"))
-        let liz = Member(name: "Liz Powell", image: UIImage(named: "liz"))
-        let henrique = Member(name: "Henrique Lorente", image: UIImage(named: "henrique"))
-        let lucy = Member(name: "Lucy Yuan", image: UIImage(named: "lucy2"))        
+        let dom = Member(name: "Dominic Holmes", image: "dominic", website: "https://dominic.land")
+        let ben = Member(name: "Ben Leimberger", image: "ben")
+        let carin = Member(name: "Carin Gan", image: "carin")
+        let salib = Member(name: "Daniel Salib", image: "salib")
+        let marta = Member(name: "Marta García", image: "marta")
+        let grace = Member(name: "Grace Jiang", image: "grace")
+        let josh = Member(name: "Josh Doman", image: "josh")
+        let tiff = Member(name: "Tiffany Chang", image: "tiff")
+        let zhilei = Member(name: "Zhilei Zheng", image: "zhilei")
+        let laura = Member(name: "Laura Gao", image: "laura")
+        let yagil = Member(name: "Yagil Burowski", image: "yagil")
+        let adel = Member(name: "Adel Qalieh", image: "adel")
+        let rehaan = Member(name: "Rehaan Furniturewala", image: "rehaan")
+        let liz = Member(name: "Liz Powell", image: "liz")
+        let henrique = Member(name: "Henrique Lorente", image: "henrique")
+        let lucy = Member(name: "Lucy Yuan", image: "lucy")
+        let matthew = Member(name: "Matthew Rosca-Halmagean", image: "matthew")
+        let hassan = Member(name: "Hassan Hammoud", image: "hassan")
         var currentMembers = [Member]()
         var pastMembers = [Member]()
         
         //fill the arrays with the members
-        pastMembers += [yagil, laura, adel]
-        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei, rehaan, liz, henrique,lucy]
+        pastMembers += [adel, marta, grace, tiff, zhilei, yagil, laura, adel, ben]
+        currentMembers += [josh, dom, carin, salib, rehaan, liz, henrique, lucy, matthew, hassan]
         members += [currentMembers, pastMembers]
     }
     
@@ -203,8 +212,17 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         //put the data for the people in the cell
         let member = members[indexPath.section][indexPath.row]
         cell.name.text = member.name
-        cell.profileImage.image = member.image
+        if let imageURL = member.imageURL {
+            cell.profileImage.kf.setImage(with: imageURL)
+        }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let member = members[indexPath.section][indexPath.row]
+        if let url = member.websiteURL {
+            UIApplication.shared.open(url, options: [:])
+        }
     }
     
     func setupCollection() {
@@ -222,7 +240,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        collectionView?.heightAnchor.constraint(equalToConstant: 700).isActive = true
+        collectionView?.heightAnchor.constraint(equalToConstant: 1000).isActive = true
         
     }
     

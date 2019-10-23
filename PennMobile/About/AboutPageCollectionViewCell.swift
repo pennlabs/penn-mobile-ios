@@ -18,6 +18,7 @@ class AboutPageCollectionViewCell: UICollectionViewCell {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.widthAnchor.constraint(equalToConstant: 83).isActive = true
         image.heightAnchor.constraint(equalToConstant: 83).isActive = true
+        image.backgroundColor = .allbirdsGrey
         return image
     }()
     
