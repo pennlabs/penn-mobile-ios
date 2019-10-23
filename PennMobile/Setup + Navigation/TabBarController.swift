@@ -7,9 +7,8 @@
 //
 import Foundation
 import UIKit
-import ESTabBarController_swift
 
-final class TabBarController: ESTabBarController {
+final class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,30 +42,9 @@ final class TabBarController: ESTabBarController {
     }
 }
 
-// MARK: - Transition Animation
+// MARK: - Delegate
 extension TabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if let vc = viewController as? GenericTableViewController {
-            vc.setupNavBar()
-        } else if let vc = viewController as? GenericViewController {
-            vc.setupNavBar()
-        }
-        
-        guard let tabBarController = tabBarController as? ESTabBarController, let selectedViewController = tabBarController.selectedViewController else { return false }
-        
-        if tabBarController.selectedViewController == nil || tabBarController.selectedViewController == viewController {
-            return false
-        }
-        
-        if let navVC = tabBarController.selectedViewController?.navigationController as? HomeNavigationController {
-            navVC.hideBar(animated: false)
-        }
-        
-        let fromView = selectedViewController.view
-        let toView = viewController.view
-        
-        UIView.transition(from: fromView!, to: toView!, duration: 0.0, options: [], completion: nil)
-        
         return true
     }
 }
@@ -79,7 +57,7 @@ extension HomeViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Home_Grey")
         let selectedImage = UIImage(named: "Home_Blue")
-        return ESTabBarItem(title: "Home", image: normalImage, selectedImage: selectedImage)
+        return UITabBarItem(title: "Home", image: normalImage, selectedImage: selectedImage)
     }
 }
 
@@ -87,7 +65,7 @@ extension FlingViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Fling_Grey")
         let selectedImage = UIImage(named: "Fling_Blue")
-        return ESTabBarItem(title: "Fling", image: normalImage, selectedImage: selectedImage)
+        return UITabBarItem(title: "Fling", image: normalImage, selectedImage: selectedImage)
     }
 }
 
@@ -95,7 +73,7 @@ extension DiningViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Dining_Grey")
         let selectedImage = UIImage(named: "Dining_Blue")
-        return ESTabBarItem(title: "Dining", image: normalImage, selectedImage: selectedImage)
+        return UITabBarItem(title: "Dining", image: normalImage, selectedImage: selectedImage)
     }
 }
 
@@ -103,7 +81,7 @@ extension GSRController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "GSR_Grey")
         let selectedImage = UIImage(named: "GSR_Blue")
-        return ESTabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
+        return UITabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
     }
 }
 
@@ -111,7 +89,7 @@ extension GSRLocationsController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "GSR_Grey")
         let selectedImage = UIImage(named: "GSR_Blue")
-        return ESTabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
+        return UITabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
     }
 }
 
@@ -119,7 +97,7 @@ extension GSRTabController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "GSR_Grey")
         let selectedImage = UIImage(named: "GSR_Blue")
-        return ESTabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
+        return UITabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
     }
 }
 
@@ -127,7 +105,7 @@ extension LaundryTableViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Laundry_Grey")
         let selectedImage = UIImage(named: "Laundry_Blue")
-        return ESTabBarItem(title: "Laundry", image: normalImage, selectedImage: selectedImage)
+        return UITabBarItem(title: "Laundry", image: normalImage, selectedImage: selectedImage)
     }
 }
 
@@ -135,7 +113,7 @@ extension FitnessViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Fitness_Grey")
         let selectedImage = UIImage(named: "Fitness_Blue")
-        return ESTabBarItem(title: "Fitness", image: normalImage, selectedImage: selectedImage)
+        return UITabBarItem(title: "Fitness", image: normalImage, selectedImage: selectedImage)
     }
 }
 
@@ -143,7 +121,7 @@ extension MoreViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "More_Grey")
         let selectedImage = UIImage(named: "More_Blue")
-        return ESTabBarItem(title: "More", image: normalImage, selectedImage: selectedImage)
+        return UITabBarItem(title: "More", image: normalImage, selectedImage: selectedImage)
     }
 }
 
