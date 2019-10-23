@@ -77,8 +77,9 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     // MARK: set up logo and informational text
     
     func setupLogo() {
-        let logoImage: UIImage = UIImage(named: "logo")!
+        let logoImage: UIImage = UIImage(named: "logotype") ?? UIImage()
         logo = UIImageView(image: logoImage)
+        logo.contentMode = .scaleAspectFit
         logo.translatesAutoresizingMaskIntoConstraints = false
         logo.widthAnchor.constraint(equalToConstant: 230.0).isActive = true
         logo.heightAnchor.constraint(equalToConstant: 129.0).isActive = true
@@ -191,7 +192,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 83.0, height: 105.0)
+        return CGSize(width: 90.0, height: 105.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
