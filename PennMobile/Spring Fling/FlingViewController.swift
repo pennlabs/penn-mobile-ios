@@ -82,7 +82,7 @@ final class FlingViewController: GenericViewController, HairlineRemovable, Indic
         
         let newsSwitcher = UISegmentedControl(items: ["Performers", "Schedule", "Map"])
         newsSwitcher.center = CGPoint(x: width/2, y: 64 + headerToolbar.frame.size.height/2)
-        newsSwitcher.tintColor = UIColor.navRed
+        newsSwitcher.tintColor = UIColor.navigation
         newsSwitcher.selectedSegmentIndex = 0
         newsSwitcher.isUserInteractionEnabled = true
         newsSwitcher.addTarget(self, action: #selector(switchTabMode(_:)), for: .valueChanged)

@@ -88,15 +88,6 @@ extension UIColor {
             blue: rgb & 0xFF
         )
     }
-
-    // --- Deprecated colors ---
-    static let paleTeal = UIColor(r: 149, g: 207, b: 175)
-    static let coral = UIColor(r: 242, g: 110, b: 103)
-    static let marigold = UIColor(r: 255, g: 193, b: 7)
-    
-    static let buttonBlue = UIColor(r: 14, g: 122, b: 254)
-
-    static let navRed = UIColor(r: 192, g: 57, b:  43)
 }
 
 extension UIFont {
