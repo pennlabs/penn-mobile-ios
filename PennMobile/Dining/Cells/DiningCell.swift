@@ -158,7 +158,7 @@ extension DiningCell {
     fileprivate func getTitleLabel() -> UILabel {
         let label = UILabel()
         label.font = .interiorTitleFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .baseLabsBlue
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()

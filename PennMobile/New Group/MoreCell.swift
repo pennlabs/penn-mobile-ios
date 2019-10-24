@@ -12,7 +12,7 @@ class MoreCell: UITableViewCell {
     
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red:0.45, green:0.45, blue:0.45, alpha:1.0)
+        label.textColor = #colorLiteral(red: 0, green: 1, blue: 0.9420476556, alpha: 1)
         label.font = UIFont(name: "HelveticaNeue-Light", size: 19)
         return label
     }()
