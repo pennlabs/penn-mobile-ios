@@ -60,6 +60,7 @@ class GSRLocationCell: UITableViewCell {
 // MARK: - Prepare UI
 extension GSRLocationCell {
     fileprivate func prepareUI() {
+        backgroundColor = .clear
         prepareBuildingImage()
         prepareLocationLabel()
     }

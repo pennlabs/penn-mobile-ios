@@ -179,7 +179,7 @@ extension HomeReservationsCell {
     
     fileprivate func getDividerLine() -> UIView {
         let view = UIView()
-        view.backgroundColor = .allbirdsGrey
+        view.backgroundColor = .grey5
         view.layer.cornerRadius = 2.0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

@@ -60,7 +60,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .uiBackground
         self.title = "About"
         
         loadMembers()
@@ -93,7 +93,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         
         let str = "Hi, we’re Penn Labs: a team of student software engineers, product designers, and business developers."
         let font = UIFont(name: "AvenirNext-Regular", size: 18)!
-        let boldFont = UIFont(name: "AvenirNext-Bold", size: 18)!
+        let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 18)!
         
         let attributedString = NSMutableAttributedString(string: str, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font) : font]))
         attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(10, 9))
@@ -102,7 +102,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(81, 20))
         
         subtitle.attributedText = attributedString
-        subtitle.textColor = UIColor.darkGray
+        subtitle.textColor = UIColor.labelPrimary
         subtitle.textAlignment = .center
         subtitle.isScrollEnabled = false
         
@@ -117,7 +117,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         descriptionTextView.textContainer.maximumNumberOfLines = 0
         descriptionTextView.text = "Penn Labs empowers others to make connections: connections to resources, connections to people, and connections to the greater Penn community.\n\n Our ultimate goal is improving the Penn community. We aim to do so not only by creating high quality products, but also by giving back to the community with educational resources and technical support."
         descriptionTextView.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        descriptionTextView.textColor = .darkGray
+        descriptionTextView.textColor = .labelPrimary
         descriptionTextView.textAlignment = .center
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
@@ -128,7 +128,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     
     func setupButton() {
         learnMoreButton = UIButton()
-        learnMoreButton.backgroundColor = .spruceHarborBlue
+        learnMoreButton.backgroundColor = .baseBlue
         learnMoreButton.titleLabel?.font =  UIFont(name: "AvenirNext-DemiBold", size: 16)
         learnMoreButton.setTitle("Learn More", for: [])
         learnMoreButton.setTitleColor(UIColor.white, for: [])
@@ -151,7 +151,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         madeWithLoveLabel = UILabel()
         madeWithLoveLabel.font = UIFont(name: "AvenirNext-Medium", size: 18)
         madeWithLoveLabel.text = "Made with \u{1F496} by Penn Labs"
-        madeWithLoveLabel.textColor = .darkGray
+        madeWithLoveLabel.textColor = .labelSecondary
         madeWithLoveLabel.textAlignment = .center
         madeWithLoveLabel.translatesAutoresizingMaskIntoConstraints = false
         madeWithLoveLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -161,7 +161,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         copyrightLabel = UILabel()
         copyrightLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
         copyrightLabel.text = "Penn Labs \u{00A9} 2019"
-        copyrightLabel.textColor = .darkGray
+        copyrightLabel.textColor = .labelTertiary
         copyrightLabel.textAlignment = .center
         copyrightLabel.translatesAutoresizingMaskIntoConstraints = false
         copyrightLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -214,7 +214,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
         collectionView?.delegate = self
         collectionView?.dataSource = self
-        self.collectionView?.backgroundColor = .white
+        self.collectionView?.backgroundColor = .clear
         self.collectionView?.isScrollEnabled = false
         self.collectionView?.register(AboutPageCollectionViewCell.self, forCellWithReuseIdentifier: "AboutPageCell")
         self.collectionView?.register(AboutPageCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "AboutPageSectionHeader")

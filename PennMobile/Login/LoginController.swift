@@ -28,7 +28,7 @@ class LoginController: UIViewController, ShowsAlert {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .uiBackground
         prepareUI()
     }
     
@@ -113,7 +113,7 @@ extension LoginController {
         // Add drop shadow
         loginShadow = CAShapeLayer()
         loginShadow.fillColor = UIColor.white.cgColor
-        loginShadow.shadowColor = UIColor.darkGray.cgColor
+        loginShadow.shadowColor = UIColor.grey1.cgColor
         loginShadow.shadowOffset = CGSize(width: 0.5, height: 1.5)
         loginShadow.shadowOpacity = 0.5
         loginShadow.shadowRadius = 2
@@ -157,7 +157,7 @@ extension LoginController {
         // Add drop shadow
         skipShadow = CAShapeLayer()
         skipShadow.fillColor = UIColor.white.cgColor
-        skipShadow.shadowColor = UIColor.darkGray.cgColor
+        skipShadow.shadowColor = UIColor.grey1.cgColor
         skipShadow.shadowOffset = CGSize(width: 0.5, height: 1)
         skipShadow.shadowOpacity = 0.5
         skipShadow.shadowRadius = 1
@@ -183,7 +183,7 @@ extension LoginController {
         icon.translatesAutoresizingMaskIntoConstraints = false
         
         // Add drop shadow
-        icon.layer.shadowColor = UIColor.darkGray.cgColor
+        icon.layer.shadowColor = UIColor.grey1.cgColor
         icon.layer.shadowOffset = CGSize(width: 1, height: 2)
         icon.layer.shadowOpacity = 0.5
         icon.layer.shadowRadius = 1.0
@@ -199,7 +199,7 @@ extension LoginController {
     fileprivate func prepareTitleLabel() {
         titleLabel = UILabel()
         titleLabel.font = UIFont.avenirMedium?.withSize(25)
-        titleLabel.textColor = UIColor(red: 74, green: 74, blue: 74)
+        titleLabel.textColor = .labelPrimary
         titleLabel.textAlignment = .center
         titleLabel.text = "Penn Mobile"
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -17,9 +17,9 @@ class HomeGSRBookingButton : UIButton {
         didSet {
             self.isEnabled = (booking != nil)
             if isEnabled {
-                incrementLabel.textColor = .interactionGreen
+                incrementLabel.textColor = .baseGreen
             } else {
-                incrementLabel.textColor = .allbirdsGrey
+                incrementLabel.textColor = .grey5
             }
         }
     }
@@ -62,7 +62,7 @@ class HomeGSRBookingButton : UIButton {
     fileprivate func getIncrementLabel() -> UILabel {
         let label = UILabel()
         label.font = .gsrTimeIncrementFont
-        label.textColor = .interactionGreen
+        label.textColor = .baseGreen
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

@@ -28,7 +28,7 @@ class HomeViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Home"
-        view.backgroundColor = .white
+        view.backgroundColor = .uiBackground
         trackScreen = true
 
         prepareLoadingView()

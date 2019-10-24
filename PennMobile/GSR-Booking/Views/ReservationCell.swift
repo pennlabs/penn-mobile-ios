@@ -77,6 +77,7 @@ class ReservationCell: UITableViewCell {
 // MARK: - Prepare UI
 extension ReservationCell {
     fileprivate func prepareUI() {
+        backgroundColor = .clear
         prepareBuildingImage()
         prepareLocationLabel()
         prepareDateLabel()
@@ -123,7 +124,7 @@ extension ReservationCell {
         deleteButton = UIButton(type: .system)
         deleteButton.setTitle("Delete", for: .normal)
         deleteButton.addTarget(self, action: #selector(handleDeletePressed(_:)), for: .touchUpInside)
-        deleteButton.backgroundColor = .redingTerminal
+        deleteButton.backgroundColor = .baseRed
         deleteButton.layer.cornerRadius = 4
         deleteButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 12)
         deleteButton.titleLabel?.textColor = .white

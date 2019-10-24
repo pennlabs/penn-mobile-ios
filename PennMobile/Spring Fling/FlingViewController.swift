@@ -23,9 +23,9 @@ final class FlingViewController: GenericViewController, HairlineRemovable, Indic
     fileprivate var headerToolbar: UIToolbar!
     
     // TEMP COLORS - TO be deleted in favor of General/Extensions
-    fileprivate static var navigationBlue = UIColor(r: 74, g: 144, b: 226)
-    fileprivate static var dataGreen = UIColor(r: 118, g: 191, b: 150)
-    fileprivate static var highlightYellow = UIColor(r: 240, g: 180, b: 0)
+    fileprivate static var navigation = UIColor(r: 74, g: 144, b: 226)
+    fileprivate static var baseGreen = UIColor(r: 118, g: 191, b: 150)
+    fileprivate static var yellowLight = UIColor(r: 240, g: 180, b: 0)
     
     // For Map Zoom
     fileprivate var mapImageView: ZoomImageView!
@@ -134,12 +134,12 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if (startTime != nil && endTime != nil && startTime! < Date() && endTime! > Date()) {
-            cell.timeline.backColor = FlingViewController.highlightYellow
-            cell.bubbleColor = FlingViewController.highlightYellow
-            cell.timelinePoint = TimelinePoint(color: FlingViewController.highlightYellow, filled: true)
+            cell.timeline.backColor = FlingViewController.yellowLight
+            cell.bubbleColor = FlingViewController.yellowLight
+            cell.timelinePoint = TimelinePoint(color: FlingViewController.yellowLight, filled: true)
         } else {
             cell.timeline.backColor = .lightGray
-            cell.bubbleColor = FlingViewController.dataGreen
+            cell.bubbleColor = FlingViewController.baseGreen
             cell.timelinePoint = TimelinePoint(color: .lightGray, filled: true)
         }
         
@@ -150,9 +150,9 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
         
         //cell.lineInfoLabel.text = lineInfo
         /*if indexPath.row != 5 {
-            cell.bubbleColor = FlingViewController.dataGreen
+            cell.bubbleColor = FlingViewController.baseGreen
         } else {
-            cell.bubbleColor = FlingViewController.highlightYellow
+            cell.bubbleColor = FlingViewController.yellowLight
         }
         if let thumbnail = thumbnail {
             cell.thumbnailImageView.image = UIImage(named: thumbnail)
@@ -184,7 +184,7 @@ extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
             view.textLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 24)
             view.textLabel?.textColor = UIColor(r: 63, g: 63, b: 63)
             view.textLabel?.widthAnchor.constraint(equalToConstant: 300)
-            view.contentView.backgroundColor = UIColor.navBarGrey
+            view.contentView.backgroundColor = UIColor.clear
             
             // Add divider line to header view
             let dividerLine = UIView()
@@ -291,7 +291,7 @@ extension FlingViewController {
 extension FlingViewController {
     func prepareScheduleTableView() {
         scheduleTableView = UITableView()
-        scheduleTableView.backgroundColor = .navBarGrey
+        scheduleTableView.backgroundColor = .uiBackground
         scheduleTableView.separatorStyle = .none
         scheduleTableView.allowsSelection = false
         scheduleTableView.showsVerticalScrollIndicator = false

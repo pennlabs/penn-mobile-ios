@@ -126,7 +126,7 @@ extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegat
         cell.layer.cornerRadius = 8
         cell.layer.shadowOffset = CGSize(width: 0.5, height: 1.0)
         cell.layer.shadowRadius = 1
-        cell.layer.shadowColor = UIColor.darkGray.cgColor
+        cell.layer.shadowColor = UIColor.grey1.cgColor
         cell.layer.shadowOpacity = 0.5
         cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: 8).cgPath
         

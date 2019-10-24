@@ -169,7 +169,7 @@ extension HomeCoursesCell {
     // MARK: Refresh Button
     fileprivate func prepareRefreshButton() {
         refreshButton = UIButton()
-        refreshButton.tintColor = UIColor.navigationBlue
+        refreshButton.tintColor = UIColor.navigation
         refreshButton.setImage(UIImage(named: "refresh")?.withRenderingMode(.alwaysTemplate), for: .normal)
         refreshButton.addTarget(self, action: #selector(refreshButtonTapped(_:)), for: .touchUpInside)
         refreshButton.translatesAutoresizingMaskIntoConstraints = false
@@ -246,7 +246,7 @@ extension HomeCoursesCell {
     
     fileprivate func getDividerLine() -> UIView {
         let view = UIView()
-        view.backgroundColor = .allbirdsGrey
+        view.backgroundColor = .grey5
         view.layer.cornerRadius = 2.0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -273,7 +273,7 @@ extension HomeCoursesCell {
         enableCoursesView = UIView()
         enableCoursesView!.isHidden = true
         guard let enableCoursesView = enableCoursesView else { return }
-        enableCoursesView.backgroundColor = .white
+        enableCoursesView.backgroundColor = .uiBackground
         cardView.addSubview(enableCoursesView)
         enableCoursesView.translatesAutoresizingMaskIntoConstraints = false
         enableCoursesView.heightAnchor.constraint(equalToConstant: 150).isActive = true
@@ -289,7 +289,7 @@ extension HomeCoursesCell {
         enableCourseLabel.textAlignment = .center
         enableCourseLabel.numberOfLines = 2
         enableCourseLabel.font = UIFont(name: "HelveticaNeue", size: 19)
-        enableCourseLabel.textColor = UIColor.warmGrey
+        enableCourseLabel.textColor = UIColor.labelSecondary
         enableCourseLabel.attributedText = getEnableCoursesText()
         
         enableCourseLabel.translatesAutoresizingMaskIntoConstraints = false

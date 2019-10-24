@@ -81,7 +81,7 @@ extension BookingRowCell {
             bookingLabels.2!.text = ""
             bookingButtons.2!.isEnabled = false
         }
-        bookingIncrementLabels.2!.textColor = .allbirdsGrey
+        bookingIncrementLabels.2!.textColor = .grey5
         
         bookingIncrementLabels.0!.text = "30'"
         bookingIncrementLabels.1!.text = "60'"
@@ -92,19 +92,19 @@ extension BookingRowCell {
     
     fileprivate func updateButtonsUI() {
         if bookingButtons.0!.isEnabled {
-            bookingIncrementLabels.0!.textColor = .interactionGreen
+            bookingIncrementLabels.0!.textColor = .baseGreen
         } else {
-            bookingIncrementLabels.0!.textColor = .allbirdsGrey
+            bookingIncrementLabels.0!.textColor = .grey5
         }
         if bookingButtons.1!.isEnabled {
-            bookingIncrementLabels.1!.textColor = .interactionGreen
+            bookingIncrementLabels.1!.textColor = .baseGreen
         } else {
-            bookingIncrementLabels.1!.textColor = .allbirdsGrey
+            bookingIncrementLabels.1!.textColor = .grey5
         }
         if bookingButtons.2!.isEnabled {
-            bookingIncrementLabels.2!.textColor = .interactionGreen
+            bookingIncrementLabels.2!.textColor = .baseGreen
         } else {
-            bookingIncrementLabels.2!.textColor = .allbirdsGrey
+            bookingIncrementLabels.2!.textColor = .grey5
         }
     }
 }
@@ -230,7 +230,7 @@ extension BookingRowCell {
     fileprivate func getIncrementLabel() -> UILabel {
         let label = UILabel()
         label.font = .gsrTimeIncrementFont
-        label.textColor = .interactionGreen
+        label.textColor = .baseGreen
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

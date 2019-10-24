@@ -50,9 +50,9 @@ extension BuildingHoursCell {
             hourLabel.text = timeStringsForWeek[day]
             if weekdayArray[day] == Date.currentDayOfWeek {
                 dayLabel.font = .primaryInformationFont
-                dayLabel.textColor = .interactionGreen
+                dayLabel.textColor = .baseGreen
                 hourLabel.font = .primaryInformationFont
-                hourLabel.textColor = .interactionGreen
+                hourLabel.textColor = .baseGreen
             }
             // Shrink label if needed
             hourLabel.layoutIfNeeded()

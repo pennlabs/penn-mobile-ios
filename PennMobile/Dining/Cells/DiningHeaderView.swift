@@ -59,7 +59,7 @@ class DiningHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .uiBackground
         
         addSubview(label)
         _ = label.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 28, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 0)
@@ -80,7 +80,7 @@ extension DiningHeaderView {
     // MARK: Refresh Button
     fileprivate func prepareRefreshButton() {
         refreshButton = UIButton()
-        refreshButton.tintColor = UIColor.navigationBlue
+        refreshButton.tintColor = UIColor.navigation
         refreshButton.setImage(UIImage(named: "refresh")?.withRenderingMode(.alwaysTemplate), for: .normal)
         refreshButton.addTarget(self, action: #selector(refreshButtonTapped(_:)), for: .touchUpInside)
         refreshButton.translatesAutoresizingMaskIntoConstraints = false

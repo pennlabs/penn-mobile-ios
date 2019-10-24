@@ -66,7 +66,7 @@ extension AccountCell {
     
     private func prepareUsername() {
         nameLabel = UILabel()
-        nameLabel.textColor = UIColor.warmGrey
+        nameLabel.textColor = UIColor.labelSecondary
         nameLabel.font = UIFont(name: "HelveticaNeue-Light", size: 19)
         nameLabel.textAlignment = .left
         nameLabel.numberOfLines = 3

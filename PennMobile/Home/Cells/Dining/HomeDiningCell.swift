@@ -244,7 +244,7 @@ extension HomeDiningCell {
 
     fileprivate func getDividerLine() -> UIView {
         let view = UIView()
-        view.backgroundColor = .allbirdsGrey
+        view.backgroundColor = .grey5
         view.layer.cornerRadius = 2.0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -273,7 +273,7 @@ extension HomeDiningCell {
 
     fileprivate func getFooterTransitionButton() -> UIButton {
         let button = UIButton()
-        button.setTitleColor(.navigationBlue, for: .normal)
+        button.setTitleColor(.navigation, for: .normal)
         button.setTitleColor(.labelSecondary, for: .highlighted)
         button.setTitle("See more ❯", for: .normal)
         button.titleLabel?.font = .footerTransitionFont

@@ -148,7 +148,7 @@ extension HomeNewsCell {
     private func prepareSourceLabel() {
         sourceLabel = UILabel()
         sourceLabel.font = UIFont(name: "HelveticaNeue", size: 14)
-        sourceLabel.textColor = UIColor.warmGrey
+        sourceLabel.textColor = UIColor.labelSecondary
         sourceLabel.numberOfLines = 1
         
         cardView.addSubview(sourceLabel)
@@ -171,7 +171,7 @@ extension HomeNewsCell {
     fileprivate func prepareSubtitleLabel() {
         subtitleLabel = UILabel()
         subtitleLabel.font = HomeNewsCell.subtitleFont
-        subtitleLabel.textColor = UIColor.warmGrey
+        subtitleLabel.textColor = UIColor.labelSecondary
         subtitleLabel.numberOfLines = 5
         
         cardView.addSubview(subtitleLabel)
@@ -181,7 +181,7 @@ extension HomeNewsCell {
     private func prepareDateLabel() {
         dateLabel = UILabel()
         dateLabel.font = UIFont(name: "HelveticaNeue", size: 14)
-        dateLabel.textColor = UIColor.warmGrey
+        dateLabel.textColor = UIColor.labelSecondary
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         cardView.addSubview(dateLabel)

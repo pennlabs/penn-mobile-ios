@@ -50,10 +50,10 @@ extension BuildingHeaderCell {
         let status = building.getStatus()
         buildingHoursLabel.text = status.rawValue
         if status == .open {
-            buildingHoursLabel.textColor = .informationYellow
+            buildingHoursLabel.textColor = .baseYellow
             buildingHoursLabel.font = .primaryInformationFont
         } else {
-            buildingHoursLabel.textColor = .secondaryInformationGrey
+            buildingHoursLabel.textColor = .labelSecondary
             buildingHoursLabel.font = .secondaryInformationFont
         }
     }
@@ -107,7 +107,7 @@ extension BuildingHeaderCell {
     fileprivate func getBuildingHoursLabel() -> UILabel{
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = .informationYellow
+        label.textColor = .baseYellow
         label.textAlignment = .right
         return label
     }

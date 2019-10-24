@@ -24,7 +24,7 @@ class AboutPageCollectionViewCell: UICollectionViewCell {
     let name: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.labelSecondary
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
