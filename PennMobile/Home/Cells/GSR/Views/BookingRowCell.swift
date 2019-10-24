@@ -197,7 +197,7 @@ extension BookingRowCell {
     fileprivate func getRowLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -206,7 +206,7 @@ extension BookingRowCell {
     fileprivate func getTimeLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

@@ -16,7 +16,7 @@ class FitnessHeaderView: UITableViewHeaderFooterView {
     var label: UILabel = {
         let label = UILabel()
         label.font = .primaryTitleFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         return label
     }()

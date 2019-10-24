@@ -71,7 +71,7 @@ extension UniversityNotificationCell {
     fileprivate func getDateLabel() -> UILabel {
         let label = UILabel()
         label.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .center
         label.numberOfLines = 1
         label.shrinkUntilFits()
@@ -82,7 +82,7 @@ extension UniversityNotificationCell {
         let label = UILabel()
         label.font = UIFont(name: "AvenirNext-Regular", size: 18)
         label.textAlignment = .center
-        label.textColor = UIColor.primaryTitleGrey
+        label.textColor = UIColor.labelPrimary
         label.numberOfLines = 2
         return label
     }

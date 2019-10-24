@@ -229,7 +229,7 @@ extension HomeCoursesCell {
     fileprivate func getSecondaryLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -238,7 +238,7 @@ extension HomeCoursesCell {
     fileprivate func getPrimaryLabel() -> UILabel {
         let label = UILabel()
         label.font = .primaryTitleFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

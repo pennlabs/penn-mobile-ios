@@ -87,7 +87,7 @@ extension ReservationCell {
     private func prepareLocationLabel() {
         locationLabel = UILabel()
         locationLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
-        locationLabel.textColor = .primaryTitleGrey
+        locationLabel.textColor = .labelPrimary
         locationLabel.textAlignment = .left
         locationLabel.numberOfLines = 1
         
@@ -98,7 +98,7 @@ extension ReservationCell {
     private func prepareDateLabel() {
         dateLabel = UILabel()
         dateLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        dateLabel.textColor = .secondaryTitleGrey
+        dateLabel.textColor = .labelSecondary
         dateLabel.textAlignment = .left
         dateLabel.numberOfLines = 1
         dateLabel.shrinkUntilFits()
@@ -110,7 +110,7 @@ extension ReservationCell {
     private func prepareTimeLabel() {
         timeLabel = UILabel()
         timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        timeLabel.textColor = .secondaryTitleGrey
+        timeLabel.textColor = .labelSecondary
         timeLabel.textAlignment = .left
         timeLabel.numberOfLines = 1
         timeLabel.shrinkUntilFits()

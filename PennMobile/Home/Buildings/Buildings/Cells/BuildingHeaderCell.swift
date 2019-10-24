@@ -91,7 +91,7 @@ extension BuildingHeaderCell {
     fileprivate func getBuildingTitleLabel() -> UILabel {
         let label = UILabel()
         label.font = .primaryTitleFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         return label
     }
@@ -99,7 +99,7 @@ extension BuildingHeaderCell {
     fileprivate func getBuildingDescriptionLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .left
         return label
     }

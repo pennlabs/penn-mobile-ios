@@ -105,8 +105,8 @@ extension UIColor {
 
     // --- New colors for homepage redesign ---
     // Greys
-    static let primaryTitleGrey = UIColor(r: 63, g: 63, b: 63)
-    static let secondaryTitleGrey = UIColor(r: 155, g: 155, b: 155)
+    //static let primaryTitleGrey = UIColor(r: 63, g: 63, b: 63)
+    //static let secondaryTitleGrey = UIColor(r: 155, g: 155, b: 155)
     static let allbirdsGrey = UIColor(r: 234, g: 234, b: 234)
     // Colors
     static let navigationBlue = UIColor(r: 74, g: 144, b: 226)

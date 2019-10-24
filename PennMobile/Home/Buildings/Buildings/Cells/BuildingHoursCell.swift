@@ -109,7 +109,7 @@ extension BuildingHoursCell {
     fileprivate func getDayLabel() -> UILabel{
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = UIColor.primaryTitleGrey
+        label.textColor = UIColor.labelPrimary
         label.textAlignment = .left
         label.text = "Day"
         return label
@@ -118,7 +118,7 @@ extension BuildingHoursCell {
     fileprivate func getHourLabel() -> UILabel{
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = UIColor.primaryTitleGrey
+        label.textColor = UIColor.labelPrimary
         label.textAlignment = .right
         label.text = "Hour"
         label.shrinkUntilFits()

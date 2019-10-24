@@ -39,9 +39,16 @@ extension UIColor {
     static let highlightYellow = UIColor(r: 240, g: 180, b: 0)
     static let spruceHarborBlue = UIColor(r: 41, g: 128, b: 185)*/
     
+    // MARK: - UI Palette
+    static let uiCardBackground = UIColor(named: "uiCardBackground")!
+    static let labelPrimary = UIColor(named: "labelPrimary")!
+    static let labelSecondary = UIColor(named: "labelSecondary")!
+    static let labelTertiary = UIColor(named: "labelTertiary")!
+    static let labelQuaternary = UIColor(named: "labelQuaternary")!
+    
     // MARK: - Primary Palette
     static var baseDarkBlue = UIColor(named: "baseDarkBlue")
-    static var baseLabsBlue = UIColor(named: "baseLabsBlue")
+    static let baseLabsBlue = UIColor(named: "baseLabsBlue")
     
     // MARK: - Neutral Palette
     static var baseGrey = UIColor(named: "baseGrey") // base grey = grey50
