@@ -191,6 +191,7 @@
 		B6E49F8520E32C78003F4002 /* DiningMenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E49F8420E32C78003F4002 /* DiningMenuItemCell.swift */; };
 		B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */; };
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
+		B9C8CAA8235A613D0040C8E5 /* GSRGroupNewIntialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C8CAA7235A613D0040C8E5 /* GSRGroupNewIntialController.swift */; };
 		C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */; };
 		C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */; };
 		C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11B38E222508A8D009B752A /* DiningBalance.swift */; };
@@ -443,6 +444,7 @@
 		B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
 		B8DF0F0A9E5DE235B015D1F0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9C8CAA7235A613D0040C8E5 /* GSRGroupNewIntialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupNewIntialController.swift; sourceTree = "<group>"; };
 		B9E5F006BE7D02CAB4C4AD4C /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
@@ -942,6 +944,7 @@
 				2138D55422598AA800D67CA2 /* GSRTabController.swift */,
 				2138D558225998A300D67CA2 /* GSRGroupController.swift */,
 				9769F45B235A643200E282B5 /* GSRManageGroupController.swift */,
+				B9C8CAA7235A613D0040C8E5 /* GSRGroupNewIntialController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1672,6 +1675,7 @@
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
 				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,
 				21B8BBB02223187D00EBC1D0 /* LoginWebviewController.swift in Sources */,
+				B9C8CAA8235A613D0040C8E5 /* GSRGroupNewIntialController.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */,
