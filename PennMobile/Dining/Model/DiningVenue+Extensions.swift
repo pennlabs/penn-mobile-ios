@@ -12,8 +12,8 @@ import Foundation
 extension DiningVenue.VenueType {
     var fullDisplayName: String {
         switch self {
-        case .dining: return "Campus Dining Hall"
-        case .retail: return "Campus Retail Dining"
+        case .dining: return "Dining Halls"
+        case .retail: return "Retail Dining"
         case .unknown: return "Other"
         }
     }
