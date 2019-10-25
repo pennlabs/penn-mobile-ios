@@ -81,8 +81,8 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
             //TODO: segue to addGSRGroup
         } else {
             let group = groups[indexPath.row]
-            let manageVC = GSRManageGroupController()
-            manageVC.group = group
+            let manageVC = GSRManageGroupController(group: group)
+            
             navigationController?.pushViewController(manageVC, animated: true)
         }
     }

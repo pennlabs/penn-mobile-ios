@@ -8,19 +8,27 @@
 
 import UIKit
 
-class GSRManageGroupController: GenericViewController {
+class GSRManageGroupController: UIViewController {
     
     fileprivate var tableView: UITableView!
     fileprivate var viewModel: GSRGroupViewModel!
     fileprivate var settings = [String:String]() //TODO: change the type
     
-    var group: GSRGroup! //this is set on initialization
+    var group: GSRGroup! //this will be nil until prepareViewModel called (perhaps, make it an optional)
     
+    init(group: GSRGroup) {
+        self.group = group
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
     override func viewDidLoad() {
        super.viewDidLoad()
-       prepareViewModel()
-       prepareUI()
+        prepareUI()
+        prepareViewModel(group: group)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -31,12 +39,13 @@ class GSRManageGroupController: GenericViewController {
 
 //MARK: UI Stuff
 extension GSRManageGroupController {
-    fileprivate func prepareViewModel() {
+    func prepareViewModel(group: GSRGroup) {
+        self.group = group
         viewModel = GSRGroupViewModel(group: group)
         viewModel.delegate = self
     }
     
-    fileprivate func prepareUI() {
+     func prepareUI() {
         prepareNavBar()
         prepareTableView()
     }
