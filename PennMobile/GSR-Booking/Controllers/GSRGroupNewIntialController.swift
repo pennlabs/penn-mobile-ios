@@ -105,7 +105,7 @@ class GSRGroupNewIntialController: UIViewController {
     }
     
     @objc func buttonAction(sender:UIButton!) {
-        let group = GSRGroup(groupID: "new", groupName: nameField.text!, createdAt: Date(), isActive: true, members: [GSRGroupMember(accountID: "dummyOwner", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", enabled: true)])
+        let group = GSRGroup(id: "some id", name: nameField.text!, imgURL: nil, color: "yello", owners: [], members: [], createdAt: Date(), isActive: false, reservations: [])
         delegate.addNewGroup(group: group)
         dismiss(animated: true, completion:nil)
     }

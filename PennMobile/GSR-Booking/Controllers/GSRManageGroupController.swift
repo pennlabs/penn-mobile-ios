@@ -11,7 +11,7 @@ import UIKit
 class GSRManageGroupController: UIViewController {
     
     fileprivate var tableView: UITableView!
-    fileprivate var viewModel: GSRGroupViewModel!
+    fileprivate var viewModel: GSRManageGroupViewModel!
     fileprivate var settings = [String:String]() //TODO: change the type
     
     var group: GSRGroup! //this will be nil until prepareViewModel called (perhaps, make it an optional)
@@ -27,8 +27,9 @@ class GSRManageGroupController: UIViewController {
     
     override func viewDidLoad() {
        super.viewDidLoad()
+        prepareViewModel()
         prepareUI()
-        prepareViewModel(group: group)
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -39,9 +40,8 @@ class GSRManageGroupController: UIViewController {
 
 //MARK: UI Stuff
 extension GSRManageGroupController {
-    func prepareViewModel(group: GSRGroup) {
-        self.group = group
-        viewModel = GSRGroupViewModel(group: group)
+    func prepareViewModel() {
+        viewModel = GSRManageGroupViewModel(group: group)
         viewModel.delegate = self
     }
     
@@ -54,11 +54,12 @@ extension GSRManageGroupController {
         tableView = UITableView(frame: .zero)
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
-        tableView.register(GroupSettingsCell.self, forCellReuseIdentifier: GroupSettingsCell.identifier)
+        tableView.register(GroupMemberCell.self, forCellReuseIdentifier: GroupMemberCell.identifier)
         tableView.tableFooterView = UIView()
-
+        
         view.addSubview(tableView)
         _ = tableView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
     }
     
     private func prepareNavBar() {
@@ -68,7 +69,21 @@ extension GSRManageGroupController {
 }
 
 // MARK: - ViewModelDelegate
-extension GSRManageGroupController: GSRGroupViewModelDelegate {
+extension GSRManageGroupController: GSRManageGroupViewModelDelegate {
     
-    //TODO: this may not be neccessary ... delete if so
 }
+//
+//extension GSRManageGroupController: UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return 10//group.members.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        if let cell = tableView.dequeueReusableCell(withIdentifier: GroupMemberCell.identifier, for: indexPath) as? GroupMemberCell {
+//            return cell
+//        }
+//        return UITableViewCell()
+//    }
+//
+//
+//}

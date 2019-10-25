@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol GSRGroupViewModelDelegate {
+protocol GSRManageGroupViewModelDelegate {
     //TODO: Add stuff here
 }
 
@@ -17,13 +17,13 @@ enum GSRGroupPermissions { //who has access
     case owner
 }
 
-class GSRGroupViewModel: NSObject {
+class GSRManageGroupViewModel: NSObject {
     //store important data used by gsr group views
     fileprivate var group: GSRGroup!
     fileprivate var settings = [String:String]() //todo change type of settings
     
     // MARK: Delegate
-    var delegate: GSRGroupViewModelDelegate!
+    var delegate: GSRManageGroupViewModelDelegate!
      
     // MARK: init
     init(group: GSRGroup) {
@@ -32,7 +32,7 @@ class GSRGroupViewModel: NSObject {
 }
 
 //MARK: UITableViewDataSource
-extension GSRGroupViewModel: UITableViewDataSource {
+extension GSRManageGroupViewModel: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return settings.count
@@ -55,7 +55,7 @@ extension GSRGroupViewModel: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GroupMemberCell.identifier, for: indexPath) as! GroupMemberCell
-//        cell.delegate = self
+        cell.member = group.members[indexPath.row]
         return cell
     }
     
@@ -63,6 +63,6 @@ extension GSRGroupViewModel: UITableViewDataSource {
 }
 
 //MARK: UITableViewDelegate
-extension GSRGroupViewModel: UITableViewDelegate {
+extension GSRManageGroupViewModel: UITableViewDelegate {
     
 }
