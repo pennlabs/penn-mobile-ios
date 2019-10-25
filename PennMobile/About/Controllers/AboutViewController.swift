@@ -7,15 +7,20 @@
 //
 
 import UIKit
+import Kingfisher
 
 class Member {
     var name: String
-    var image: UIImage?
+    var imageURL: URL?
+    var websiteURL: URL?
     
     // initialize properties of the class Member
-    init (name: String, image: UIImage?) {
+    init (name: String, image: String, website: String? = nil) {
         self.name = name
-        self.image = image
+        if let website = website {
+            self.websiteURL = URL(string: website)
+        }
+        self.imageURL = URL(string: "https://s3.us-east-2.amazonaws.com/penn.mobile/about/" + image)
     }
 }
 
@@ -32,28 +37,30 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     
     private func loadMembers() {
         
-        let dom = Member(name: "Dominic Holmes", image: UIImage(named: "dom"))
-        let ben = Member(name: "Ben Leimberger", image: UIImage(named: "ben"))
-        let carin = Member(name: "Carin Gan", image: UIImage(named: "carin"))
-        let salib = Member(name: "Daniel Salib", image: UIImage(named: "salib"))
-        let marta = Member(name: "Marta García", image: UIImage(named: "marta"))
-        let grace = Member(name: "Grace Jiang", image: UIImage(named: "grace"))
-        let josh = Member(name: "Josh Doman", image: UIImage(named: "josh"))
-        let tiff = Member(name: "Tiffany Chang", image: UIImage(named: "tiff"))
-        let zhilei = Member(name: "Zhilei Zheng", image: UIImage(named: "zhilei"))
-        let laura = Member(name: "Laura Gao", image: UIImage(named: "laura"))
-        let yagil = Member(name: "Yagil Burowski", image: UIImage(named: "yagil"))
-        let adel = Member(name: "Adel Qalieh", image: UIImage(named: "adel"))
-        let rehaan = Member(name: "Rehaan Furniturewala", image: UIImage(named: "rehaan"))
-        let liz = Member(name: "Liz Powell", image: UIImage(named: "liz"))
-        let henrique = Member(name: "Henrique Lorente", image: UIImage(named: "henrique"))
-        let lucy = Member(name: "Lucy Yuan", image: UIImage(named: "lucy2"))        
+        let dom = Member(name: "Dominic Holmes", image: "dominic.jpeg", website: "https://dominic.land")
+        let ben = Member(name: "Ben Leimberger", image: "ben.jpeg")
+        let carin = Member(name: "Carin Gan", image: "carin.jpeg")
+        let salib = Member(name: "Daniel Salib", image: "salib.jpeg")
+        let marta = Member(name: "Marta García", image: "marta.jpg")
+        let grace = Member(name: "Grace Jiang", image: "grace.jpeg")
+        let josh = Member(name: "Josh Doman", image: "josh.jpeg")
+        let tiff = Member(name: "Tiffany Chang", image: "tiff.jpeg")
+        let zhilei = Member(name: "Zhilei Zheng", image: "zhilei.jpeg")
+        let laura = Member(name: "Laura Gao", image: "laura.jpeg")
+        let yagil = Member(name: "Yagil Burowski", image: "yagil.jpeg")
+        let adel = Member(name: "Adel Qalieh", image: "adel.jpeg")
+        let rehaan = Member(name: "Rehaan Furniturewala", image: "rehaan.jpeg")
+        let liz = Member(name: "Liz Powell", image: "liz.jpeg")
+        let henrique = Member(name: "Henrique Lorente", image: "henrique.jpeg")
+        let lucy = Member(name: "Lucy Yuan", image: "lucy.jpeg")
+        let matthew = Member(name: "Matthew Rosca-Halmagean", image: "matthew.jpeg")
+        let hassan = Member(name: "Hassan Hammoud", image: "hassan.jpeg")
         var currentMembers = [Member]()
         var pastMembers = [Member]()
         
         //fill the arrays with the members
-        pastMembers += [yagil, laura, adel]
-        currentMembers += [tiff, josh, carin, marta, dom, grace, ben, salib, zhilei, rehaan, liz, henrique,lucy]
+        pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil]
+        currentMembers += [josh, dom, carin, salib, rehaan, liz, henrique, lucy, matthew, hassan]
         members += [currentMembers, pastMembers]
     }
     
@@ -77,8 +84,9 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     // MARK: set up logo and informational text
     
     func setupLogo() {
-        let logoImage: UIImage = UIImage(named: "logo")!
+        let logoImage: UIImage = UIImage(named: "logotype") ?? UIImage()
         logo = UIImageView(image: logoImage)
+        logo.contentMode = .scaleAspectFit
         logo.translatesAutoresizingMaskIntoConstraints = false
         logo.widthAnchor.constraint(equalToConstant: 230.0).isActive = true
         logo.heightAnchor.constraint(equalToConstant: 129.0).isActive = true
@@ -191,7 +199,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 83.0, height: 105.0)
+        return CGSize(width: 90.0, height: 105.0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -202,8 +210,17 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         //put the data for the people in the cell
         let member = members[indexPath.section][indexPath.row]
         cell.name.text = member.name
-        cell.profileImage.image = member.image
+        if let imageURL = member.imageURL {
+            cell.profileImage.kf.setImage(with: imageURL)
+        }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let member = members[indexPath.section][indexPath.row]
+        if let url = member.websiteURL {
+            UIApplication.shared.open(url, options: [:])
+        }
     }
     
     func setupCollection() {
@@ -221,7 +238,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        collectionView?.heightAnchor.constraint(equalToConstant: 700).isActive = true
+        collectionView?.heightAnchor.constraint(equalToConstant: 1000).isActive = true
         
     }
     
