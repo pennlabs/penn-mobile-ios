@@ -41,7 +41,7 @@ class NewsViewController: GenericViewController, HairlineRemovable {
         
         let newsSwitcher = UISegmentedControl(items: ["theDP", "UTB", "34th Street"])
         newsSwitcher.center = CGPoint(x: width/2, y: 64 + headerToolbar.frame.size.height/2)
-        newsSwitcher.tintColor = UIColor.navRed
+        newsSwitcher.tintColor = UIColor.navigation
         newsSwitcher.selectedSegmentIndex = 0
         newsSwitcher.isUserInteractionEnabled = true
         newsSwitcher.addTarget(self, action: #selector(switchNewsSource(_:)), for: .valueChanged)

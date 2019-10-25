@@ -47,10 +47,10 @@ class GSRController: GenericViewController, IndicatorEnabled {
 
     override func setupNavBar() {
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
-        barButton.tintColor = UIColor.navigationBlue
+        barButton.tintColor = UIColor.navigation
 
         bookingsBarButton = UIBarButtonItem(title: "Bookings", style: .done, target: self, action: #selector(handleBookingsBarButtonPressed(_:)))
-        bookingsBarButton.tintColor = UIColor.navigationBlue
+        bookingsBarButton.tintColor = UIColor.navigation
         
         if let tabBarController = tabBarController {
             tabBarController.title = "Study Room Booking"

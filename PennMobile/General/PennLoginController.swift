@@ -27,7 +27,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .uiBackground
         
         let wkDataStore = WKWebsiteDataStore.nonPersistent()
         let sharedCookies: Array<HTTPCookie> = HTTPCookieStorage.shared.cookies ?? []

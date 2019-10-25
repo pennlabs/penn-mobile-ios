@@ -26,7 +26,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         
         let isLoggedIn = UserDefaults.standard.getAccountID() != nil
         barButton = UIBarButtonItem(title: isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
-        barButton.tintColor = UIColor.navigationBlue
+        barButton.tintColor = UIColor.navigation
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,7 +44,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         self.tabBarController?.title = "More"
         let isLoggedIn = UserDefaults.standard.getAccountID() != nil
         barButton = UIBarButtonItem(title: isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
-        barButton.tintColor = UIColor.navigationBlue
+        barButton.tintColor = UIColor.navigation
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = barButton
     }
@@ -65,8 +65,8 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = UIColor.white
-        tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor.uiGroupedBackground
+        tableView.separatorStyle = .singleLine
         tableView.register(AccountCell.self, forCellReuseIdentifier: "account")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
     }
@@ -110,14 +110,14 @@ extension MoreViewController {
         if indexPath.section == 0 {
             if let student = student {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "account") as? AccountCell {
-                    cell.backgroundColor = .white
+                    cell.backgroundColor = .uiGroupedBackgroundSecondary
                     cell.student = student
                     return cell
                 }
             } else {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                     cell.setUpView(with: "Edit your profile")
-                    cell.backgroundColor = .white
+                    cell.backgroundColor = .uiGroupedBackgroundSecondary
                     cell.accessoryType = .disclosureIndicator
                     return cell
                 }
@@ -125,13 +125,13 @@ extension MoreViewController {
         } else if indexPath.section == 1 {//(student == nil ? 0 : 1) {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                 cell.setUpView(with: ControllerModel.shared.moreOrder[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
-                cell.backgroundColor = .white
+                cell.backgroundColor = .uiGroupedBackgroundSecondary
                 cell.accessoryType = .disclosureIndicator
                 return cell
             }
         } else if indexPath.section == 2 {//(student == nil ? 1 : 2) {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
-                cell.backgroundColor = .white
+                cell.backgroundColor = .uiGroupedBackgroundSecondary
                 cell.setUpView(with: pennLinks[indexPath.row].title)
                 cell.accessoryType = .disclosureIndicator
                 return cell

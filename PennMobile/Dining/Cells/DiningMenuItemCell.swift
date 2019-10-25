@@ -84,7 +84,7 @@ extension DiningMenuItemCell {
     fileprivate func getNameLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()

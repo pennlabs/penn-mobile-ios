@@ -24,6 +24,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.allowsSelection = false
+        tableView.backgroundColor = .uiBackground
         
         tableView.tableFooterView = getFooterViewForTable()
                 

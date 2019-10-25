@@ -44,8 +44,8 @@ class SelectionCell: UICollectionViewCell, RoomSelectionViewDelegate {
         item.titleView = titleLabel
         item.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
         item.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
-        item.leftBarButtonItem?.tintColor = UIColor.navRed
-        item.rightBarButtonItem?.tintColor = UIColor.navRed
+        item.leftBarButtonItem?.tintColor = UIColor.navigation
+        item.rightBarButtonItem?.tintColor = UIColor.navigation
         navigationBar.pushItem(item, animated: false)        
     }
     

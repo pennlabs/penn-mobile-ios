@@ -147,7 +147,7 @@ extension HomeFeatureCell {
     private func prepareSourceLabel() {
         sourceLabel = UILabel()
         sourceLabel.font = UIFont(name: "HelveticaNeue", size: 14)
-        sourceLabel.textColor = UIColor.warmGrey
+        sourceLabel.textColor = UIColor.labelSecondary
         sourceLabel.numberOfLines = 1
         
         cardView.addSubview(sourceLabel)
@@ -170,7 +170,7 @@ extension HomeFeatureCell {
     fileprivate func prepareDescriptionLabel() {
         descriptionLabel = UILabel()
         descriptionLabel.font = HomeFeatureCell.descriptionFont
-        descriptionLabel.textColor = UIColor.warmGrey
+        descriptionLabel.textColor = UIColor.labelSecondary
         descriptionLabel.numberOfLines = 5
         
         cardView.addSubview(descriptionLabel)
@@ -180,7 +180,7 @@ extension HomeFeatureCell {
     private func prepareDateLabel() {
         dateLabel = UILabel()
         dateLabel.font = UIFont(name: "HelveticaNeue", size: 14)
-        dateLabel.textColor = UIColor.warmGrey
+        dateLabel.textColor = UIColor.grey1
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         cardView.addSubview(dateLabel)

@@ -84,6 +84,7 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
 // MARK: - Setup UI
 extension GSRLoginController {
     fileprivate func prepareUI() {
+        view.backgroundColor = .uiBackground
         prepareFirstNameField()
         prepareLastNameField()
         prepareEmailField()
@@ -153,7 +154,7 @@ extension GSRLoginController {
         guard let message = message else { return }
         let messageView = UITextView()
         messageView.text = message
-        messageView.textColor = UIColor.lightGray
+        messageView.textColor = UIColor.grey3
         messageView.isScrollEnabled = false
         messageView.isEditable = false
         messageView.isSelectable = false

@@ -22,7 +22,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         let fillColorTop = UIColor(red: 0.161, green: 0.502, blue: 0.725, alpha: 0.8)
         let fillColorBottom = UIColor(red: 0.161, green: 0.502, blue: 0.725, alpha: 0.1)
         
-        let dataLabelColor = UIColor.warmGrey
+        let dataLabelColor = UIColor.labelSecondary
         
         // Line plot
         let dataLinePlot = LinePlot(identifier: "traffic_data")
@@ -80,7 +80,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         dottedLineShapeLayer?.removeFromSuperlayer()
         
         let dottedLineLayer = CAShapeLayer()
-        dottedLineLayer.strokeColor = UIColor.warmGrey.cgColor
+        dottedLineLayer.strokeColor = UIColor.grey1.cgColor
         dottedLineLayer.lineWidth = 1.0
         dottedLineLayer.lineCap = CAShapeLayerLineCap.round
         dottedLineLayer.lineDashPattern = [.init(integerLiteral: 5)]

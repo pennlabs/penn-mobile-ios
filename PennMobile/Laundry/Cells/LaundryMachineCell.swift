@@ -28,7 +28,11 @@ class LaundryMachineCell: UICollectionViewCell {
     
     private let bellView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "bell")
+        if #available(iOS 13.0, *) {
+            iv.image = UIImage(named: "bell")?.withTintColor(.baseYellow)
+        } else {
+            iv.image = UIImage(named: "bell")
+        }
         iv.isHidden = true
         return iv
     }()
@@ -37,7 +41,7 @@ class LaundryMachineCell: UICollectionViewCell {
         let label = UILabel()
         label.text = ""
         label.font = .primaryInformationFont
-        label.textColor = .darkGray
+        label.textColor = .labelSecondary
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .center

@@ -76,16 +76,3 @@ extension GSRLocationsController: UITableViewDataSource, UITableViewDelegate {
         navigationController?.pushViewController(gc, animated: true)
     }
 }
-
-// MARK: - Header
-extension GSRLocationsController {
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: DiningHeaderView.identifier) as! DiningHeaderView
-//        view.label.text = "Choose A Location"
-//        return view
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return DiningHeaderView.headerHeight
-//    }
-}

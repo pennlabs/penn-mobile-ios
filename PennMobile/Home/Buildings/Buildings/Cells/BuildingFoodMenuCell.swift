@@ -108,7 +108,7 @@ extension BuildingFoodMenuCell: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: frame.width, height: BuildingFoodMenuCell.menuHeaderHeight))
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.grey1
         label.font = UIFont.primaryInformationFont
         label.textAlignment = .center
         
