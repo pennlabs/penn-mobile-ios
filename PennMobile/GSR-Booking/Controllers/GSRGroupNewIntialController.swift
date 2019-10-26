@@ -32,6 +32,16 @@ class GSRGroupNewIntialController: UIViewController {
     
     func prepareCloseButton() {
         closeButton = UIButton()
+        view.addSubview(closeButton)
+        
+        closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
+        closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        closeButton.backgroundColor = UIColor(red: 118/255, green: 118/255, blue: 128/255, alpha: 12/100)
+        closeButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        closeButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        closeButton.layer.cornerRadius = 15
+        closeButton.layer.masksToBounds = false
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
         //closeButton.setImage(image: , for: UIControl.State.normal)
     }
     
@@ -206,13 +216,12 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
 //        return CGSize(width: size, height: size)
 //    }
 //
-//    // MARK: - Collection View Delegate Methods
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let timeSlot = room.timeSlots[indexPath.row]
-//        delegate?.handleSelection(for: room, timeSlot: timeSlot, action: SelectionType.add)
-//        let cell = collectionView.cellForItem(at: indexPath)
-//        cell?.backgroundColor = .informationYellow
-//    }
+    // MARK: - Collection View Delegate Methods
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? GSRColorCell
+        cell?.toggleBorder()
+        view.backgroundColor = cell?.colorView.backgroundColor
+    }
 //
 //    //only enable selection for available rooms
 //    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -220,22 +229,9 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
 //        return timeSlot.isAvailable
 //    }
 //
-//    // Deselect this time slot and all select ones that follow it
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        var currTimeSlot = room.timeSlots[indexPath.row]
-//        var currIndex = indexPath
-//        while delegate.containsTimeSlot(currTimeSlot) {
-//            collectionView.deselectItem(at: currIndex, animated: false)
-//            delegate?.handleSelection(for: room, timeSlot: currTimeSlot, action: SelectionType.remove)
-//            let cell = collectionView.cellForItem(at: currIndex)
-//            cell?.backgroundColor = .interactionGreen
-//
-//            currIndex = IndexPath(row: currIndex.row + 1, section: currIndex.section)
-//            if let nextTimeSlot = currTimeSlot.next {
-//                currTimeSlot = nextTimeSlot
-//            } else {
-//                break
-//            }
-//        }
-//    }
+    // Deselect this time slot and all select ones that follow it
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? GSRColorCell
+        cell?.toggleBorder()
+    }
 }

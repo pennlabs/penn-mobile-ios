@@ -11,6 +11,8 @@ import UIKit
 class GSRColorCell: UICollectionViewCell {
     
     static let identifier = "groupColorCell"
+    var colorView: UIView!
+    var borderColor: UIColor = .black
     
 //    var timeSlot: GSRTimeSlot! {
 //        didSet {
@@ -25,16 +27,6 @@ class GSRColorCell: UICollectionViewCell {
             colorView.backgroundColor = color
         }
     }
-
-    private let colorView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        view.widthAnchor.constraint(equalToConstant: 36).isActive = true
-        view.layer.cornerRadius = 18
-        view.layer.masksToBounds = false
-        return view
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,16 +34,22 @@ class GSRColorCell: UICollectionViewCell {
     }
     
     private func setupView() {
+        colorView = UIView()
+        colorView.translatesAutoresizingMaskIntoConstraints = false
+        colorView.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        colorView.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        colorView.layer.cornerRadius = 18
+        colorView.layer.masksToBounds = false
+        colorView.layer.borderWidth = 0
+        colorView.layer.borderColor = borderColor.cgColor
         addSubview(colorView)
         
         colorView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         colorView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        
-//        _ = startLabel.anchor(topAnchor, left: nil, bottom: nil, right: nil, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-//        startLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-//
-//        _ = endLabel.anchor(nil, left: nil, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-//        endLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+    }
+    
+    func toggleBorder() {
+        colorView.layer.borderWidth = isSelected ? 2 : 0
     }
     
     required init?(coder: NSCoder) {
