@@ -15,9 +15,9 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
     fileprivate var barView: ButtonBarView!
     
     override func viewDidLoad() {
-        settings.style.buttonBarBackgroundColor = .white
-        settings.style.buttonBarItemBackgroundColor = .white
-        settings.style.selectedBarBackgroundColor = UIColor.frenchBlue
+        settings.style.buttonBarBackgroundColor = .uiBackground
+        settings.style.buttonBarItemBackgroundColor = .uiBackground
+        settings.style.selectedBarBackgroundColor = .baseLabsBlue
         settings.style.buttonBarMinimumLineSpacing = 0
         settings.style.buttonBarItemsShouldFillAvailableWidth = true
         settings.style.buttonBarLeftContentInset = 0
@@ -28,7 +28,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
 //        let barView = ButtonBarView(frame: CGRect(x: 0.0, y: (88 + 0.0), width: self.view.bounds.width, height: 50.0), collectionViewLayout: UICollectionViewFlowLayout())
 //        self.barView = barView
 //        let separatorLine = UIView(frame: CGRect(x: 0.0, y: (88 + 50.0), width: self.view.bounds.width, height: 1.0))
-//        separatorLine.backgroundColor = UIColor.warmGrey
+//        separatorLine.backgroundColor = UIColor.grey1
 //        let containerView = UIScrollView(frame: CGRect(x: 0, y: (88 + 51.0), width: self.view.bounds.width, height: self.view.bounds.height - (88+50.0) - 66.0))
 //        self.ownContainerView = containerView
 //        self.view.addSubview(barView)
@@ -40,7 +40,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         let barView = ButtonBarView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         self.barView = barView
         let separatorLine = UIView()
-        separatorLine.backgroundColor = UIColor.warmGrey
+        separatorLine.backgroundColor = UIColor.grey1
         let containerView = UIScrollView()
         self.ownContainerView = containerView
         self.view.addSubview(barView)
@@ -53,15 +53,14 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         _ = separatorLine.anchor(barView.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 1)
         _ = ownContainerView.anchor(separatorLine.bottomAnchor, left: self.view.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        self.view.backgroundColor = .white
         self.ownContainerView.isHidden = true
         
         super.viewDidLoad()
         
         changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
-            oldCell?.label.textColor = .black
-            newCell?.label.textColor = UIColor.oceanBlue
+            oldCell?.label.textColor = .labelPrimary
+            newCell?.label.textColor = .baseBlue
         }
     }
     

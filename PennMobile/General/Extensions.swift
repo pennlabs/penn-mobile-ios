@@ -88,38 +88,6 @@ extension UIColor {
             blue: rgb & 0xFF
         )
     }
-
-    // --- Deprecated colors ---
-    static let warmGrey = UIColor(r: 115, g: 115, b: 115)
-    static let whiteGrey = UIColor(r: 248, g: 248, b: 248)
-    static let paleTeal = UIColor(r: 149, g: 207, b: 175)
-    static let coral = UIColor(r: 242, g: 110, b: 103)
-    static let marigold = UIColor(r: 255, g: 193, b: 7)
-    static let oceanBlue = UIColor(r: 73, g: 144, b: 226)
-    static let frenchBlue = UIColor(r: 63, g: 81, b: 181)
-
-    static let buttonBlue = UIColor(r: 14, g: 122, b: 254)
-
-    static let navRed = UIColor(r: 192, g: 57, b:  43)
-    static let navBarGrey = UIColor(r: 247, g: 247, b: 247)
-
-    // --- New colors for homepage redesign ---
-    // Greys
-    static let primaryTitleGrey = UIColor(r: 63, g: 63, b: 63)
-    static let secondaryTitleGrey = UIColor(r: 155, g: 155, b: 155)
-    static let allbirdsGrey = UIColor(r: 234, g: 234, b: 234)
-    // Colors
-    static let navigationBlue = UIColor(r: 74, g: 144, b: 226)
-    static let interactionGreen = UIColor(r: 118, g: 191, b: 150)
-    static let informationYellow = UIColor(r: 255, g: 193, b: 7)
-    static let redingTerminal = UIColor(r: 226, g: 81, b: 82)
-    static let secondaryInformationGrey = UIColor(r: 155, g: 155, b: 155)
-
-    static let dataGreen = UIColor(r: 118, g: 191, b: 150)
-    static let highlightYellow = UIColor(r: 240, g: 180, b: 0)
-
-    static let spruceHarborBlue = UIColor(r: 41, g: 128, b: 185)
-
 }
 
 extension UIFont {
@@ -162,10 +130,7 @@ extension Date {
     
     func hoursFrom(date: Date) -> Int {
         let difference = Calendar.current.dateComponents([.hour], from: self, to: date)
-        if let hours = difference.hour {
-            return hours
-        }
-        return 0
+        return difference.hour ?? 0
     }
 
     //returns date in local time

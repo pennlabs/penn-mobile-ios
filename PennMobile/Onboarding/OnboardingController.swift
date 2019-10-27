@@ -44,8 +44,8 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
     
     lazy var pageControl: UIPageControl = {
         let pc = UIPageControl()
-        pc.pageIndicatorTintColor = UIColor.lightGray
-        pc.currentPageIndicatorTintColor = UIColor.navRed
+        pc.pageIndicatorTintColor = UIColor.grey3
+        pc.currentPageIndicatorTintColor = UIColor.navigation
         pc.numberOfPages = self.pages.count + 1
         return pc
     }()
@@ -53,7 +53,7 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
     lazy var skipButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Skip", for: .normal)
-        button.setTitleColor(UIColor.navRed, for: .normal)
+        button.setTitleColor(UIColor.navigation, for: .normal)
         button.addTarget(self, action: #selector(handleSkip), for: .touchUpInside)
         return button
     }()
@@ -61,7 +61,7 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
     lazy var nextButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Next", for: .normal)
-        button.setTitleColor(UIColor.navRed, for: .normal)
+        button.setTitleColor(UIColor.navigation, for: .normal)
         button.addTarget(self, action: #selector(handleNextPage), for: .touchUpInside)
         return button
     }()

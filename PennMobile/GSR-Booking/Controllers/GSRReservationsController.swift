@@ -84,7 +84,7 @@ extension GSRReservationsController: ReservationCellDelegate, GSRDeletable {
 extension GSRReservationsController {
     func prepareLoginButton() {
         barButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
-        barButton.tintColor = UIColor.navigationBlue
+        barButton.tintColor = UIColor.navigation
         navigationItem.rightBarButtonItem = barButton
     }
     

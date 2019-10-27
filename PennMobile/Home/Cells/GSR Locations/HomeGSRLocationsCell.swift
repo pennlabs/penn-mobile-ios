@@ -161,7 +161,7 @@ extension HomeGSRLocationsCell {
     fileprivate func getSecondaryLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -170,7 +170,7 @@ extension HomeGSRLocationsCell {
     fileprivate func getPrimaryLabel() -> UILabel {
         let label = UILabel()
         label.font = .primaryTitleFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -178,7 +178,7 @@ extension HomeGSRLocationsCell {
     
     fileprivate func getDividerLine() -> UIView {
         let view = UIView()
-        view.backgroundColor = .allbirdsGrey
+        view.backgroundColor = .grey5
         view.layer.cornerRadius = 2.0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

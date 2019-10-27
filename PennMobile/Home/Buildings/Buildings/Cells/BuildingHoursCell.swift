@@ -50,9 +50,9 @@ extension BuildingHoursCell {
             hourLabel.text = timeStringsForWeek[day]
             if weekdayArray[day] == Date.currentDayOfWeek {
                 dayLabel.font = .primaryInformationFont
-                dayLabel.textColor = .interactionGreen
+                dayLabel.textColor = .baseGreen
                 hourLabel.font = .primaryInformationFont
-                hourLabel.textColor = .interactionGreen
+                hourLabel.textColor = .baseGreen
             }
             // Shrink label if needed
             hourLabel.layoutIfNeeded()
@@ -109,7 +109,7 @@ extension BuildingHoursCell {
     fileprivate func getDayLabel() -> UILabel{
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = UIColor.primaryTitleGrey
+        label.textColor = UIColor.labelPrimary
         label.textAlignment = .left
         label.text = "Day"
         return label
@@ -118,7 +118,7 @@ extension BuildingHoursCell {
     fileprivate func getHourLabel() -> UILabel{
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = UIColor.primaryTitleGrey
+        label.textColor = UIColor.labelPrimary
         label.textAlignment = .right
         label.text = "Hour"
         label.shrinkUntilFits()

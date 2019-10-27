@@ -169,7 +169,7 @@ extension HomeFlingCell {
     private func prepareDescriptionLabel() {
         descriptionLabel = UILabel()
         descriptionLabel.font = HomeFlingCell.descriptionFont
-        descriptionLabel.textColor = UIColor.warmGrey
+        descriptionLabel.textColor = UIColor.labelSecondary
         descriptionLabel.numberOfLines = 3
         
         cardView.addSubview(descriptionLabel)
@@ -179,7 +179,7 @@ extension HomeFlingCell {
     private func prepareDateLabel() {
         dateLabel = UILabel()
         dateLabel.font = UIFont(name: "HelveticaNeue", size: 14)
-        dateLabel.textColor = UIColor.warmGrey
+        dateLabel.textColor = UIColor.labelSecondary
         
         cardView.addSubview(dateLabel)
         _ = dateLabel.anchor(nil, left: performerLabel.leftAnchor, bottom: cardView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
@@ -188,7 +188,7 @@ extension HomeFlingCell {
     private func prepareMoreButton() {
         moreButton = UIButton(type: .custom)
         moreButton.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 14)
-        moreButton.setTitleColor(.warmGrey, for: .normal)
+        moreButton.setTitleColor(.labelSecondary, for: .normal)
         moreButton.setTitle("See more Fling ->", for: .normal)
         
         cardView.addSubview(moreButton)

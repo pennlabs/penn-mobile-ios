@@ -14,9 +14,7 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
     
     fileprivate var firstNameField: UITextField!
     fileprivate var lastNameField: UITextField!
-    fileprivate var groupNameField: UITextField!
     fileprivate var emailField: UITextField!
-    fileprivate var phoneNumberField: UITextField!
     
     fileprivate var messageView: UITextView!
 
@@ -45,24 +43,23 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
         }
         
         self.prepareUI()
-        DispatchQueue.main.async {
-            if let user = GSRUser.getUser() {
-                self.firstNameField.text = user.firstName
-                self.lastNameField.text = user.lastName
-                self.emailField.text = user.email
-                self.firstNameField.becomeFirstResponder()
-            } else if let student = Student.getStudent() {
-                self.firstNameField.text = student.first
-                self.lastNameField.text = student.last
-                self.emailField.text = student.email
-                if self.firstNameField.text != nil && self.emailField.text == nil {
-                    self.emailField.becomeFirstResponder()
-                } else {
-                    self.firstNameField.becomeFirstResponder()
-                }
+        
+        if let user = GSRUser.getUser() {
+            self.firstNameField.text = user.firstName
+            self.lastNameField.text = user.lastName
+            self.emailField.text = user.email
+            self.firstNameField.becomeFirstResponder()
+        } else if let student = Student.getStudent() {
+            self.firstNameField.text = student.first
+            self.lastNameField.text = student.last
+            self.emailField.text = student.email
+            if self.firstNameField.text != nil && self.emailField.text == nil {
+                self.emailField.becomeFirstResponder()
             } else {
                 self.firstNameField.becomeFirstResponder()
             }
+        } else {
+            self.firstNameField.becomeFirstResponder()
         }
     }
     
@@ -87,11 +84,10 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
 // MARK: - Setup UI
 extension GSRLoginController {
     fileprivate func prepareUI() {
+        view.backgroundColor = .uiBackground
         prepareFirstNameField()
         prepareLastNameField()
-        // prepareGroupNameField()
         prepareEmailField()
-        // preparePhoneNumberField()
         prepareMessage()
     }
     
@@ -135,25 +131,6 @@ extension GSRLoginController {
         _ = lastNameField.anchor(firstNameField.topAnchor, left: view.centerXAnchor, bottom: nil, right: view.rightAnchor, topConstant: 0, leftConstant: edgeOffset/2, bottomConstant: 0, rightConstant: edgeOffset, widthConstant: 0, heightConstant: 44)
     }
     
-    private func prepareGroupNameField() {
-        if booking == nil {
-            return
-        }
-        
-        groupNameField = UITextField()
-        groupNameField.placeholder = "Group name"
-        groupNameField.font = UIFont.systemFont(ofSize: 14)
-        groupNameField.keyboardType = .alphabet
-        groupNameField.textAlignment = .natural
-        groupNameField.borderStyle = .roundedRect
-        groupNameField.autocorrectionType = .no
-        groupNameField.spellCheckingType = .no
-        groupNameField.autocapitalizationType = .words
-        
-        view.addSubview(groupNameField)
-        _ = groupNameField.anchor(firstNameField.bottomAnchor, left: firstNameField.leftAnchor, bottom: nil, right: lastNameField.rightAnchor, topConstant: spaceBetween, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 44)
-    }
-    
     private func prepareEmailField() {
         emailField = UITextField()
         emailField.placeholder = "Penn email (e.g. amyg@sas.upenn.edu)"
@@ -169,29 +146,15 @@ extension GSRLoginController {
         emailField.tag = 2
         
         view.addSubview(emailField)
-        let topAnchor = groupNameField == nil ? firstNameField.bottomAnchor : groupNameField.bottomAnchor
+        let topAnchor = firstNameField.bottomAnchor
         _ = emailField.anchor(topAnchor, left: firstNameField.leftAnchor, bottom: nil, right: lastNameField.rightAnchor, topConstant: spaceBetween, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 44)
-    }
-    
-    private func preparePhoneNumberField() {
-        phoneNumberField = UITextField()
-        phoneNumberField.placeholder = "Phone number (e.g. 2158985000)"
-        phoneNumberField.font = UIFont.systemFont(ofSize: 14)
-        phoneNumberField.keyboardType = .phonePad
-        phoneNumberField.textAlignment = .natural
-        phoneNumberField.borderStyle = .roundedRect
-        phoneNumberField.autocorrectionType = .no
-        phoneNumberField.spellCheckingType = .no
-        
-        view.addSubview(phoneNumberField)
-        _ = phoneNumberField.anchor(emailField.bottomAnchor, left: emailField.leftAnchor, bottom: nil, right: emailField.rightAnchor, topConstant: spaceBetween, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 44)
     }
     
     private func prepareMessage() {
         guard let message = message else { return }
         let messageView = UITextView()
         messageView.text = message
-        messageView.textColor = UIColor.lightGray
+        messageView.textColor = UIColor.grey3
         messageView.isScrollEnabled = false
         messageView.isEditable = false
         messageView.isSelectable = false

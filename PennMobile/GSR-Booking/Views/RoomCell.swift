@@ -63,9 +63,9 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         let timeSlot = room.timeSlots[indexPath.row]
         cell.timeSlot = timeSlot
         if delegate.containsTimeSlot(timeSlot) {
-            cell.backgroundColor = .informationYellow
+            cell.backgroundColor = .baseYellow
         } else {
-            cell.backgroundColor = timeSlot.isAvailable ? UIColor.interactionGreen : UIColor.secondaryInformationGrey
+            cell.backgroundColor = timeSlot.isAvailable ? UIColor.baseGreen : UIColor.labelSecondary
         }
         return cell
     }
@@ -80,7 +80,7 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         let timeSlot = room.timeSlots[indexPath.row]
         delegate?.handleSelection(for: room, timeSlot: timeSlot, action: SelectionType.add)
         let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = .informationYellow
+        cell?.backgroundColor = .baseYellow
     }
     
     //only enable selection for available rooms
@@ -97,7 +97,7 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
             collectionView.deselectItem(at: currIndex, animated: false)
             delegate?.handleSelection(for: room, timeSlot: currTimeSlot, action: SelectionType.remove)
             let cell = collectionView.cellForItem(at: currIndex)
-            cell?.backgroundColor = .interactionGreen
+            cell?.backgroundColor = .baseGreen
             
             currIndex = IndexPath(row: currIndex.row + 1, section: currIndex.section)
             if let nextTimeSlot = currTimeSlot.next {

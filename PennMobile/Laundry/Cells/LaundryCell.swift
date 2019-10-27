@@ -69,7 +69,7 @@ class LaundryCell: UITableViewCell {
         bg.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         bg.layer.shadowOpacity = 0.25
         bg.layer.shadowRadius = 4.0
-        bg.backgroundColor = UIColor.white
+        bg.backgroundColor = UIColor.uiCardBackground
         
         return bg
     }()
@@ -122,7 +122,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = "Laundry Room"
         label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .left
         return label
     }()
@@ -131,7 +131,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = ""
         label.font = .primaryTitleFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         return label
     }()
@@ -140,7 +140,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = "Washers"
         label.font = .secondaryInformationFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .left
@@ -151,7 +151,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = "Dryers"
         label.font = .secondaryInformationFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .left
@@ -162,7 +162,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = ""
         label.font = .primaryInformationFont
-        label.textColor = .secondaryInformationGrey
+        label.textColor = .labelSecondary
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
@@ -173,7 +173,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = ""
         label.font = .primaryInformationFont
-        label.textColor = .secondaryInformationGrey
+        label.textColor = .labelSecondary
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
@@ -190,7 +190,7 @@ class LaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = "Popular Times"
         label.font = .secondaryInformationFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .left
@@ -202,7 +202,7 @@ class LaundryCell: UITableViewCell {
         let day = Date.currentDayOfWeek
         label.text = day
         label.font = .primaryInformationFont
-        label.textColor = .secondaryInformationGrey
+        label.textColor = .labelSecondary
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .right
@@ -217,7 +217,7 @@ class LaundryCell: UITableViewCell {
     
     fileprivate let dividerLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .allbirdsGrey
+        view.backgroundColor = .grey5
         view.layer.cornerRadius = 2.0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

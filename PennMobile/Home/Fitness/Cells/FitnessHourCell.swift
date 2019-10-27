@@ -59,7 +59,7 @@ extension FitnessHourCell {
         
         // Label will say nothing by default
         statusLabel.text = ""
-        statusLabel.textColor = .secondaryInformationGrey
+        statusLabel.textColor = .labelSecondary
         statusLabel.font = .secondaryInformationFont
         
         if let _ = name.getImageName() { venueImageView.image = UIImage(named: name.getImageName()!) }
@@ -89,11 +89,11 @@ extension FitnessHourCell {
         
         if isOpen {
             statusLabel.text = "OPEN"
-            statusLabel.textColor = .informationYellow
+            statusLabel.textColor = .baseYellow
             statusLabel.font = .primaryInformationFont
         } else {
             statusLabel.text = "CLOSED"
-            statusLabel.textColor = .secondaryInformationGrey
+            statusLabel.textColor = .labelSecondary
             statusLabel.font = .secondaryInformationFont
         }
         
@@ -186,7 +186,7 @@ extension FitnessHourCell {
     fileprivate func getTitleLabel() -> UILabel {
         let label = UILabel()
         label.font = .interiorTitleFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()
@@ -196,7 +196,7 @@ extension FitnessHourCell {
     fileprivate func getTimeLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = .secondaryInformationGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()
@@ -206,7 +206,7 @@ extension FitnessHourCell {
     fileprivate func getStatusLabel() -> UILabel {
         let label = UILabel()
         label.font = .primaryInformationFont
-        label.textColor = .informationYellow
+        label.textColor = .baseYellow
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

@@ -12,7 +12,7 @@ class MoreCell: UITableViewCell {
     
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red:0.45, green:0.45, blue:0.45, alpha:1.0)
+        label.textColor = .labelPrimary
         label.font = UIFont(name: "HelveticaNeue-Light", size: 19)
         return label
     }()
@@ -44,10 +44,6 @@ class MoreCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        let separatorHeight = CGFloat(2)
-        let customSeparator = UIView(frame: CGRect(x: 0, y: frame.size.height + 3 + separatorHeight, width: UIScreen.main.bounds.width, height: separatorHeight))
-        customSeparator.backgroundColor = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)
-        addSubview(customSeparator)
     }
     
     required init?(coder aDecoder: NSCoder) {
