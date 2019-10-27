@@ -14,10 +14,15 @@ class DiningDataStore {
     private var response: DiningAPIResponse = DiningAPIResponse(document: .init(venues: []))
     private let dataStore: LocalJSONStore<DiningAPIResponse> = LocalJSONStore(storageType: .cache, filename: "venues.json")
     
+    private init() {
+        _ = self.getVenues()
+    }
+    
     // MARK: - Get Dining Venues (for UI)
     func getVenues() -> [DiningVenue] {
         if response.document.venues.isEmpty {
             if let cachedResponse = dataStore.storedValue {
+                self.response = cachedResponse
                 return cachedResponse.document.venues
             }
         }
