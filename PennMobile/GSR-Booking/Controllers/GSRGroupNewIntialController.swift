@@ -42,7 +42,9 @@ class GSRGroupNewIntialController: UIViewController {
         closeButton.layer.cornerRadius = 15
         closeButton.layer.masksToBounds = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.setTitle("x", for: UIControl.State.normal)
         //closeButton.setImage(image: , for: UIControl.State.normal)
+        closeButton.addTarget(self, action: #selector(cancelBtnAction), for: .touchUpInside)
     }
     
     
@@ -105,7 +107,7 @@ class GSRGroupNewIntialController: UIViewController {
         createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
         createButton.setTitle("Create Group", for: .normal)
         createButton.setTitleColor(UIColor.white, for: .normal)
-        createButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        createButton.addTarget(self, action: #selector(createGroupBtnAction), for: .touchUpInside)
         
         view.addSubview(createButton)
         createButton.topAnchor.constraint(equalTo: colorCollectionView.bottomAnchor, constant: 45).isActive = true
@@ -151,13 +153,15 @@ class GSRGroupNewIntialController: UIViewController {
         colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    @objc func buttonAction(sender:UIButton!) {
+    @objc func createGroupBtnAction(sender:UIButton!) {
         let group = GSRGroup(groupID: "new", groupName: nameField.text!, createdAt: Date(), isActive: true, members: [GSRGroupMember(accountID: "dummyOwner", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", enabled: true)])
         delegate.addNewGroup(group: group)
         dismiss(animated: true, completion:nil)
     }
     
-    
+    @objc func cancelBtnAction(sender:UIButton!) {
+        dismiss(animated: true, completion:nil)
+    }
     
     
     
