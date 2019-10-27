@@ -56,6 +56,10 @@ extension DiningCell {
                 statusLabel.text = "OPEN"
                 statusLabel.textColor = .informationYellow
                 statusLabel.font = .primaryInformationFont
+            } else if let nextMeal = venue.nextMeal {
+                statusLabel.text = "OPEN IN \(Date().humanReadableDistanceFrom(nextMeal.open))"
+                statusLabel.textColor = .secondaryInformationGrey
+                statusLabel.font = .secondaryInformationFont
             } else {
                 statusLabel.text = "CLOSED"
                 statusLabel.textColor = .secondaryInformationGrey

@@ -164,6 +164,15 @@ extension Date {
         let difference = Calendar.current.dateComponents([.hour], from: self, to: date)
         return difference.hour ?? 0
     }
+    
+    func humanReadableDistanceFrom(_ date: Date) -> String {
+        let minutes = minutesFrom(date: date) % 60
+        let hours = hoursFrom(date: date)
+        var result = ""
+        if hours != 0 { result += "\(hours)H" }
+        if minutes != 0 { result += " \(minutes)M"}
+        return result
+    }
 
     //returns date in local time
     static var currentLocalDate: Date {
