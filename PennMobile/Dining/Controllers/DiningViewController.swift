@@ -40,6 +40,10 @@ class DiningViewController: GenericTableViewController {
                 updateBalanceIfNeeded()
             }
         }
+        if viewModel.venues[.dining]?.isEmpty ?? true {
+            viewModel.refresh()
+            tableView.reloadData()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

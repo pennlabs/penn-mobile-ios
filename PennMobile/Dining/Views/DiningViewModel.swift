@@ -36,6 +36,10 @@ class DiningViewModel: NSObject {
         }
     }
     
+    func refresh() {
+        self.venues = DiningDataStore.shared.getSectionedVenues()
+    }
+    
     func getType(forSection section: Int) -> DiningVenue.VenueType {
         let index = shouldShowDiningBalances ? section - 1 : section
         return ordering[index]
