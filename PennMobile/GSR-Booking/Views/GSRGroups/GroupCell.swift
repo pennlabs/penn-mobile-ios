@@ -34,7 +34,7 @@ class GroupCell: UITableViewCell {
 extension GroupCell {
     fileprivate func setupCell(with group: GSRGroup) {
         let activeText = group.isActive ? "Active" : "Inactive"
-        self.textLabel?.text = "\(group.groupName) \n\(group.members.count) members\n Status: \(activeText)"
+        self.textLabel?.text = "\(group.name) \n\(group.members.count) members\n Status: \(activeText)"
         self.textLabel?.numberOfLines = 3
     }
 }

@@ -27,10 +27,10 @@ class GSRGroupNewIntialController: UIViewController {
                                          UIColor(red: 51, green: 101, blue: 143),
                                          UIColor(red: 131, green: 79, blue: 160)
                                          ]
-    
+
     weak var delegate: GSRGroupController!
-    
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -45,7 +45,7 @@ class GSRGroupNewIntialController: UIViewController {
     func prepareCloseButton() {
         closeButton = UIButton()
         view.addSubview(closeButton)
-        
+
         closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         closeButton.backgroundColor = UIColor(red: 118/255, green: 118/255, blue: 128/255, alpha: 12/100)
@@ -58,8 +58,8 @@ class GSRGroupNewIntialController: UIViewController {
         //closeButton.setImage(image: , for: UIControl.State.normal)
         closeButton.addTarget(self, action: #selector(cancelBtnAction), for: .touchUpInside)
     }
-    
-    
+
+
     func prepareNameField() {
         nameField = UITextField()
         nameField.placeholder = "New Group Name"
@@ -76,9 +76,9 @@ class GSRGroupNewIntialController: UIViewController {
         nameField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
         nameField.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
         nameField.translatesAutoresizingMaskIntoConstraints = false
-        
+
     }
-    
+
     func prepareGroupForLabel() {
         groupForLabel = UILabel()
         groupForLabel.text = "Who is this group for?"
@@ -91,7 +91,7 @@ class GSRGroupNewIntialController: UIViewController {
         groupForLabel.topAnchor.constraint(equalTo:nameField.bottomAnchor, constant: 35).isActive = true
         groupForLabel.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     func prepareSegmentedControl() {
         let items = ["Friends","Classmates","Club"]
         barView = UISegmentedControl(items: items)
@@ -102,25 +102,25 @@ class GSRGroupNewIntialController: UIViewController {
         barView.layer.borderColor = UIColor.init(red: 216, green: 216, blue: 216).cgColor
         barView.layer.cornerRadius = 6.9
         barView.layer.masksToBounds = true
-        
+
         barView.tintColor = UIColor.init(red: 153, green: 153, blue: 153)
-        
+
         barView.selectedSegmentIndex = 0
-        
+
         view.addSubview(barView)
         barView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
         barView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
         barView.topAnchor.constraint(equalTo: groupForLabel.bottomAnchor, constant: 14).isActive = true
         barView.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     func prepareCreateButton() {
         createButton = UIButton()
         createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
         createButton.setTitle("Create Group", for: .normal)
         createButton.setTitleColor(UIColor.white, for: .normal)
         createButton.addTarget(self, action: #selector(createGroupBtnAction), for: .touchUpInside)
-        
+
         view.addSubview(createButton)
         createButton.topAnchor.constraint(equalTo: colorCollectionView.bottomAnchor, constant: 45).isActive = true
         createButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -128,21 +128,21 @@ class GSRGroupNewIntialController: UIViewController {
         createButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
         createButton.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     func prepareColorLabel() {
         colorLabel = UILabel()
         colorLabel.text = "Pick a color:"
         colorLabel.font = UIFont.systemFont(ofSize: 17)
         colorLabel.textColor = UIColor.init(red: 153, green: 153, blue: 153)
         colorLabel.textAlignment = .center
-        
+
         view.addSubview(colorLabel)
         colorLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         colorLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         colorLabel.topAnchor.constraint(equalTo: barView.bottomAnchor, constant: 35).isActive = true
         colorLabel.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     func prepareColorCollection() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -159,28 +159,28 @@ class GSRGroupNewIntialController: UIViewController {
         colorCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
         //collectionView(colorCollectionView, didSelectItemAt: IndexPath(item: 0, section:0))
         view.addSubview(colorCollectionView)
-        
+
         colorCollectionView.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: 20).isActive = true
         colorCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
         colorCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         colorCollectionView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
-    
-    
+
+
     @objc func createGroupBtnAction(sender:UIButton!) {
-        let group = GSRGroup(groupID: "new", groupName: nameField.text!, createdAt: Date(), isActive: true, members: [GSRGroupMember(accountID: "dummyOwner", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", enabled: true)])
+        let group = GSRGroup(id: "new", name: nameField.text!, imgURL: nil, color: "color", owners: [GSRGroupMember(accountID: "dummyOwner", pennKey: "dummyPennKey", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", isBookingEnabled: true, isAdmin: true)], members: [], createdAt: Date(), isActive: true, reservations: [])
         delegate.addNewGroup(group: group)
         dismiss(animated: true, completion:nil)
     }
-    
+
     @objc func cancelBtnAction(sender:UIButton!) {
         dismiss(animated: true, completion:nil)
     }
-    
-    
-    
-    
+
+
+
+
 
     /*
     // MARK: - Navigation
@@ -216,20 +216,20 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 8
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GSRColorCell.identifier, for: indexPath) as! GSRColorCell
         cell.color = colors[indexPath.item % colors.count]
         return cell
     }
-    
+
 //    func collectionView(_ collectionView: UICollectionView,
 //               layout collectionViewLayout: UICollectionViewLayout,
 //               insetForSectionAt section: Int) -> UIEdgeInsets {
 //        return UIEdgeInsets(top: 0, left: 100, bottom: 0, right: 0)
 //    }
-    
+
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 //        let size = RoomCell.cellHeight - 12
 //        return CGSize(width: size, height: size)
