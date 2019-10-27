@@ -36,9 +36,9 @@ class GSRColorCell: UICollectionViewCell {
     private func setupView() {
         colorView = UIView()
         colorView.translatesAutoresizingMaskIntoConstraints = false
-        colorView.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        colorView.widthAnchor.constraint(equalToConstant: 36).isActive = true
-        colorView.layer.cornerRadius = 18
+        colorView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        colorView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        colorView.layer.cornerRadius = 15
         colorView.layer.masksToBounds = false
         colorView.layer.borderWidth = 0
         colorView.layer.borderColor = borderColor.cgColor

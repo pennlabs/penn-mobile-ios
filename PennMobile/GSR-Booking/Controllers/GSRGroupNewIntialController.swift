@@ -18,7 +18,15 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var colorPanel: UIView!
     fileprivate var createButton: UIButton!
     fileprivate var colorCollectionView: UICollectionView!
-    fileprivate var colors: [UIColor] = [.allbirdsGrey, .oceanBlue, .redingTerminal, .dataGreen]
+    fileprivate var colors: [UIColor] = [UIColor(red: 255, green: 255, blue: 255),
+                                         UIColor(red: 32, green: 156, blue: 238),
+                                         UIColor(red: 63, green: 170, blue: 109),
+                                         UIColor(red: 255, green: 207, blue: 89),
+                                         UIColor(red: 250, green: 164, blue: 50),
+                                         UIColor(red: 226, green: 81, blue: 82),
+                                         UIColor(red: 51, green: 101, blue: 143),
+                                         UIColor(red: 131, green: 79, blue: 160)
+                                         ]
     
     weak var delegate: GSRGroupController!
     
@@ -29,7 +37,11 @@ class GSRGroupNewIntialController: UIViewController {
         // Do any additional setup after loading the view.
         prepareUI()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        colorCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
+        collectionView(colorCollectionView, didSelectItemAt: IndexPath(item: 0, section:0))
+
+    }
     func prepareCloseButton() {
         closeButton = UIButton()
         view.addSubview(closeButton)
@@ -135,23 +147,26 @@ class GSRGroupNewIntialController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         colorCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         colorCollectionView.register(GSRColorCell.self, forCellWithReuseIdentifier: GSRColorCell.identifier)
         colorCollectionView.backgroundColor = .clear
         colorCollectionView.showsHorizontalScrollIndicator = false
         colorCollectionView.delegate = self
         colorCollectionView.dataSource = self
+        colorCollectionView.allowsSelection = true;
         colorCollectionView.allowsMultipleSelection = false
-        
+        colorCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
+        //collectionView(colorCollectionView, didSelectItemAt: IndexPath(item: 0, section:0))
         view.addSubview(colorCollectionView)
         
         colorCollectionView.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: 20).isActive = true
-        colorCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15).isActive = true
-        colorCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+        colorCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
+        colorCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         colorCollectionView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
+    
     
     @objc func createGroupBtnAction(sender:UIButton!) {
         let group = GSRGroup(groupID: "new", groupName: nameField.text!, createdAt: Date(), isActive: true, members: [GSRGroupMember(accountID: "dummyOwner", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", enabled: true)])
