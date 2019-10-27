@@ -15,7 +15,7 @@ extension DiningVenue {
         case name = "name"
         case venueType = "venueType"
         case facilityURL = "facilityURL"
-        case imageURL = "imageUrl"
+        case imageURL = "imageURL"
         case meals = "dateHours"
     }
     
