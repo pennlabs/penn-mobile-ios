@@ -64,7 +64,7 @@ class RoomSelectionView: UIView, IndicatorEnabled {
 // Mark: - Setup
 extension RoomSelectionView {
     fileprivate func setUpView() {
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = UIColor.uiBackground
         addSubview(searchBar)
         addSubview(tableView)
         addSubview(emptyView)
@@ -77,11 +77,11 @@ extension RoomSelectionView {
     }
     
     fileprivate func setUpSearchBar() {
-        searchBar.searchBarStyle = UISearchBar.Style.prominent
+        //searchBar.searchBarStyle = UISearchBar.Style.prominent
         searchBar.placeholder = "Search..."
         searchBar.sizeToFit()
-        searchBar.isTranslucent = false
-        searchBar.backgroundImage = UIImage()
+        //searchBar.isTranslucent = false
+        //searchBar.backgroundImage = UIImage()
         searchBar.delegate = self
         searchBar.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         searchBar.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
@@ -231,9 +231,9 @@ extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         if chosenRooms.contains(room) {
             cell.accessoryType = .checkmark
-            cell.textLabel?.textColor = .black
+            cell.textLabel?.textColor = .labelPrimary
         } else {
-            cell.textLabel?.textColor = chosenRooms.count == maxNumRooms ? UIColor.lightGray : UIColor.black
+            cell.textLabel?.textColor = chosenRooms.count == maxNumRooms ? .grey3 : .labelPrimary
         }
         return cell
     }

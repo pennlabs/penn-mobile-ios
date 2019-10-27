@@ -281,7 +281,7 @@ extension HomeStudyRoomCell {
     fileprivate func getSecondaryLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -290,7 +290,7 @@ extension HomeStudyRoomCell {
     fileprivate func getPrimaryLabel() -> UILabel {
         let label = UILabel()
         label.font = .primaryTitleFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -298,7 +298,7 @@ extension HomeStudyRoomCell {
     
     fileprivate func getDividerLine() -> UIView {
         let view = UIView()
-        view.backgroundColor = .allbirdsGrey
+        view.backgroundColor = .grey5
         view.layer.cornerRadius = 2.0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -314,7 +314,7 @@ extension HomeStudyRoomCell {
     fileprivate func getBookingRowLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -323,7 +323,7 @@ extension HomeStudyRoomCell {
     fileprivate func getBookingTimeLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -338,7 +338,7 @@ extension HomeStudyRoomCell {
     fileprivate func getFooterDescriptionLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryTitleFont
-        label.textColor = .secondaryTitleGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -346,8 +346,8 @@ extension HomeStudyRoomCell {
     
     fileprivate func getFooterTransitionButton() -> UIButton {
         let button = UIButton()
-        button.setTitleColor(.navigationBlue, for: .normal)
-        button.setTitleColor(.secondaryTitleGrey, for: .highlighted)
+        button.setTitleColor(.navigation, for: .normal)
+        button.setTitleColor(.labelSecondary, for: .highlighted)
         //button.setTitle("See more ❯", for: .normal)
         button.titleLabel?.font = .footerTransitionFont
         button.addTarget(self, action: #selector(transitionButtonTapped), for: .touchUpInside)

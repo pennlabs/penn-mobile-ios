@@ -82,7 +82,7 @@ class ScheduleLayout: UICollectionViewLayout {
     
     //5. Colors to be used in cells
     private var colors: [UIColor] = {
-        return [UIColor.paleTeal, UIColor.coral, UIColor.oceanBlue, UIColor.marigold, UIColor.spruceHarborBlue] //.shuffle()
+        return [UIColor.blueLight, UIColor.orangeLight, UIColor.purpleLight, UIColor.greenLight, UIColor.yellowLight, UIColor.redLight] //.shuffle()
     }()
     
     override class var layoutAttributesClass: AnyClass {

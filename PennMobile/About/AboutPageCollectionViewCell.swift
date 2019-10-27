@@ -18,15 +18,19 @@ class AboutPageCollectionViewCell: UICollectionViewCell {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.widthAnchor.constraint(equalToConstant: 83).isActive = true
         image.heightAnchor.constraint(equalToConstant: 83).isActive = true
+        image.backgroundColor = .grey4
         return image
     }()
     
     let name: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.labelSecondary
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        label.numberOfLines = 1
         return label
     }()
     
@@ -43,7 +47,7 @@ class AboutPageCollectionViewCell: UICollectionViewCell {
         stackView.spacing = 2
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
-        stackView.widthAnchor.constraint(equalToConstant: 90)
+        stackView.widthAnchor.constraint(equalToConstant: 90).isActive = true
         stackView.heightAnchor.constraint(equalToConstant: 105).isActive = true
     }
     

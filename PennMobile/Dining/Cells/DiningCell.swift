@@ -49,6 +49,8 @@ extension DiningCell {
     fileprivate func setupCell(with venue: DiningVenue) {
         venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
         
+        self.backgroundColor = .clear
+        
         // Use shortened names if on homepage
         if isHomepage {
             titleLabel.text = DiningVenueName.getShortVenueName(for: venue.name)
@@ -61,16 +63,16 @@ extension DiningCell {
         if let times = venue.times {
             if times.isOpen {
                 statusLabel.text = "OPEN"
-                statusLabel.textColor = .informationYellow
+                statusLabel.textColor = .baseYellow
                 statusLabel.font = .primaryInformationFont
             } else {
                 statusLabel.text = "CLOSED"
-                statusLabel.textColor = .secondaryInformationGrey
+                statusLabel.textColor = .labelSecondary
                 statusLabel.font = .secondaryInformationFont
             }
         } else {
             statusLabel.text = ""
-            statusLabel.textColor = .secondaryInformationGrey
+            statusLabel.textColor = .labelSecondary
             statusLabel.font = .secondaryInformationFont
         }
     }
@@ -158,7 +160,7 @@ extension DiningCell {
     fileprivate func getTitleLabel() -> UILabel {
         let label = UILabel()
         label.font = .interiorTitleFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()
@@ -168,7 +170,7 @@ extension DiningCell {
     fileprivate func getTimeLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = .secondaryInformationGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()
@@ -178,7 +180,7 @@ extension DiningCell {
     fileprivate func getStatusLabel() -> UILabel {
         let label = UILabel()
         label.font = .primaryInformationFont
-        label.textColor = .informationYellow
+        label.textColor = .baseYellow
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

@@ -12,13 +12,13 @@ class HeaderViewCell: UITableViewCell {
     
     var headerLabel: UILabel = {
         let headerLabel = UILabel()
-        headerLabel.textColor = UIColor(red:0.45, green:0.45, blue:0.45, alpha:1.0)
+        headerLabel.textColor = .labelSecondary
         headerLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         return headerLabel
     }()
     
     func setUpView(title: String) {
-        self.backgroundColor = UIColor(red:0.96, green:0.97, blue:0.97, alpha:1.0)
+        self.backgroundColor = .uiGroupedBackground
         headerLabel.text = title
         self.addSubview(headerLabel)
         

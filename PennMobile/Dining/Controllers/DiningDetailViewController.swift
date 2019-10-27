@@ -45,7 +45,7 @@ class DiningDetailViewController: UITableViewController {
 
     private func setupNavBar() {
         let barButton = UIBarButtonItem(title: "More", style: .plain, target: self, action: #selector(handleBarButtonPressed(_:)))
-        barButton.tintColor = UIColor.navigationBlue
+        barButton.tintColor = UIColor.navigation
         self.navigationItem.rightBarButtonItem = barButton
     }
     

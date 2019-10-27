@@ -9,17 +9,23 @@
 import Foundation
 
 struct GSRGroup {
-    let groupID: String
-    let groupName: String
+    let id: String
+    let name: String
+    let imgURL: String?
+    let color: String
+    let owners: [GSRGroupMember]
+    let members: [GSRGroupMember]
     let createdAt: Date
     let isActive: Bool
-    let members: [GSRGroupMember]
+    let reservations: [String] //array of reservationID's
 }
 
 struct GSRGroupMember {
     let accountID: String
+    let pennKey: String
     let first: String
     let last: String
     let email: String?
-    let enabled: Bool
+    let isBookingEnabled: Bool
+    let isAdmin: Bool
 }
