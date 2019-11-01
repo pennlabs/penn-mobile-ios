@@ -18,8 +18,7 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var colorPanel: UIView!
     fileprivate var createButton: UIButton!
     fileprivate var colorCollectionView: UICollectionView!
-    fileprivate var colors: [UIColor] = [UIColor(red: 255, green: 255, blue: 255),
-                                         UIColor(red: 32, green: 156, blue: 238),
+    fileprivate var colors: [UIColor] = [UIColor(red: 32, green: 156, blue: 238),
                                          UIColor(red: 63, green: 170, blue: 109),
                                          UIColor(red: 255, green: 207, blue: 89),
                                          UIColor(red: 250, green: 164, blue: 50),
@@ -119,6 +118,9 @@ class GSRGroupNewIntialController: UIViewController {
         createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
         createButton.setTitle("Create Group", for: .normal)
         createButton.setTitleColor(UIColor.white, for: .normal)
+        createButton.layer.cornerRadius = 8
+        createButton.layer.masksToBounds = true
+        createButton.isEnabled = false
         createButton.addTarget(self, action: #selector(createGroupBtnAction), for: .touchUpInside)
 
         view.addSubview(createButton)
@@ -245,7 +247,9 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? GSRColorCell
         cell?.toggleBorder()
-        view.backgroundColor = cell?.colorView.backgroundColor
+        createButton.isEnabled = true
+        createButton.backgroundColor = cell?.colorView.backgroundColor
+        colorLabel.textColor = cell?.colorView.backgroundColor
     }
 //
 //    //only enable selection for available rooms
