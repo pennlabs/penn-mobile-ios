@@ -9,27 +9,28 @@
 import Foundation
 
 //group gsrs!
-class GSRGroupController: GenericViewController, NewGroupInitialDelegate {
+class GSRGroupController: GenericViewController {
 
 
 
-    fileprivate var groups: [GSRGroup]!
+    fileprivate var groups: [GSRGroup] = []
 
     fileprivate var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        GSRGroupNetworkManager.instance.getGroups { (groups) in
-            self.groups = groups
-        }
-
         setupUI()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        GSRGroupNetworkManager.instance.getAllGroups { (groups) in
+            if let groups = groups {
+                self.groups = groups
+            }
+    
+            tableView.reloadData()
+        }
     }
 }
 
@@ -94,9 +95,14 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
 }
 
 //MARK: NewGroupInitialDelegate
-extension GSRGroupController {
-    func addNewGroup(group: GSRGroup) {
-        groups.append(group)
-        tableView.reloadData()
+extension GSRGroupController: NewGroupInitialDelegate{
+    func fetchGroups() {
+        GSRGroupNetworkManager.instance.getAllGroups { (groups) in
+            if let groups = groups {
+                self.groups = groups
+            }
+    
+            tableView.reloadData()
+        }
     }
 }

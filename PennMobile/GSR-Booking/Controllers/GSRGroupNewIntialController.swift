@@ -169,8 +169,14 @@ class GSRGroupNewIntialController: UIViewController {
 
 
     @objc func createGroupBtnAction(sender:UIButton!) {
-        let group = GSRGroup(id: "new", name: nameField.text!, imgURL: nil, color: "color", owners: [GSRGroupMember(accountID: "dummyOwner", pennKey: "dummyPennKey", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", isBookingEnabled: true, isAdmin: true)], members: [], createdAt: Date(), isActive: true, reservations: [])
-        delegate.addNewGroup(group: group)
+        GSRGroupNetworkManager.instance.createGroup(name: nameField.text!, color: "color") { (success, errorMsg) in
+            if success {
+                delegate.fetchGroups()
+                dismiss(animated: true, completion: nil)
+            }
+        }
+        
+//        delegate.addNewGroup(group: group)
         dismiss(animated: true, completion:nil)
     }
 
@@ -196,7 +202,7 @@ class GSRGroupNewIntialController: UIViewController {
 
 
 protocol NewGroupInitialDelegate: GSRGroupController {
-    func addNewGroup(group:GSRGroup)
+    func fetchGroups()
 }
 
 //Mark: Setup UI

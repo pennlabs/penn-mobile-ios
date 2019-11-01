@@ -11,13 +11,13 @@ import Foundation
 struct GSRGroup {
     let id: String
     let name: String
-    let imgURL: String?
+    var imgURL: String?
     let color: String
-    let owners: [GSRGroupMember]
-    let members: [GSRGroupMember]
+    var owners: [GSRGroupMember]?
+    var members: [GSRGroupMember]?
     let createdAt: Date
     let isActive: Bool
-    let reservations: [String] //array of reservationID's
+    let reservations: [String]? //array of reservationID's
 }
 
 struct GSRGroupMember {

@@ -29,6 +29,10 @@ class GSRManageGroupViewModel: NSObject {
     init(group: GSRGroup) {
         self.group = group
     }
+    
+    func setGroup(group: GSRGroup) {
+        self.group = group
+    }
 }
 
 //MARK: UITableViewDataSource
@@ -37,7 +41,13 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
         if section == 0 {
             return settings.count
         } else {
-            return group.members.count
+//            return group.members?.count
+            
+            if let members = group.members {
+                return members.count
+            } else {
+                return 0
+            }
         }
     }
     
@@ -55,7 +65,7 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GroupMemberCell.identifier, for: indexPath) as! GroupMemberCell
-        cell.member = group.members[indexPath.row]
+        cell.member = group.members![indexPath.row]
         return cell
     }
     
