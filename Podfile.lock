@@ -1,4 +1,5 @@
 PODS:
+  - Base32 (1.1.2)
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
   - ESTabBarController-swift (2.6.4)
@@ -28,6 +29,8 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - OneTimePassword (3.2.0):
+    - Base32 (~> 1.1.2)
   - SCLAlertView (0.8)
   - ScrollableGraphView (4.0.6)
   - SimulatorStatusMagic (2.4.1)
@@ -46,6 +49,7 @@ DEPENDENCIES:
   - Firebase (~> 4.7)
   - Kingfisher (~> 5.3)
   - MBProgressHUD (~> 0.8)
+  - OneTimePassword (~> 3.2)
   - SCLAlertView
   - ScrollableGraphView
   - SimulatorStatusMagic
@@ -78,6 +82,9 @@ SPEC REPOS:
     - TimelineTableViewCell
     - XLPagerTabStrip
     - ZoomImageView
+  trunk:
+    - Base32
+    - OneTimePassword
 
 EXTERNAL SOURCES:
   WKZombie:
@@ -90,6 +97,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/pennlabs/WKZombie.git
 
 SPEC CHECKSUMS:
+  Base32: 163c298644d184e89ca4e00a996bad6bf5166390
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   ESTabBarController-swift: 58cca4ab7de980657d99a02181c1ff310983e975
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
@@ -102,6 +110,7 @@ SPEC CHECKSUMS:
   Kingfisher: d9e7e0b209b59b8f9873aa2f37654e81a7beea51
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  OneTimePassword: c00ecc908e67e6c5bfda9d50b0b2e4696d0b066e
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
@@ -112,6 +121,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5
 
-PODFILE CHECKSUM: 4725d3a645f206d5bc53508399b7d20d37c3268c
+PODFILE CHECKSUM: e234232ef75d550468d92894d6cc4276e6255e7c
 
 COCOAPODS: 1.8.1

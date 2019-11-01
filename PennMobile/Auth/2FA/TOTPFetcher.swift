@@ -17,14 +17,13 @@ class TOTPFetcher: NSObject {
     
     func fetchAndSaveTOTPSecret(_ completion: ((_ secret: String?) -> Void)? = nil) {
         let operation = TOTPFetcherOperation { (secret) in
-            
+
             if let secret = secret {
                 let genericPwdQueryable =
                     GenericPasswordQueryable(service: "PennWebLogin")
                 let secureStore =
                     SecureStore(secureStoreQueryable: genericPwdQueryable)
                 try? secureStore.setValue(secret, for: "TOTPSecret")
-                guard let ssecret = try? secureStore.getValue(for: "TOTPSecret") else { return }
             }
             completion?(secret)
         }
@@ -42,11 +41,6 @@ class TOTPFetcher: NSObject {
         }
         
         func run() {
-            let genericPwdQueryable =
-                GenericPasswordQueryable(service: "PennWebLogin")
-            let secureStore =
-                SecureStore(secureStoreQueryable: genericPwdQueryable)
-            guard let password = try? secureStore.getValue(for: "PennKey Password") else { return }
             
             _ = WKZombie.sharedInstance
             WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
@@ -55,41 +49,44 @@ class TOTPFetcher: NSObject {
                     
                     let url = URL(string: self.urlStr)!
                     open(url)
-                        >>> get(by: .id("password"))
-                        >>> setAttribute("value", value: password)
-                        >>> get(by: .id("loginform"))
-                        >>> submit
-                        >>> get(by: .attribute("action", "../../twoFactorUi/app/UiMain.totpAdd"))
-                        >>> setAttribute("id", value: "TOTPForm") //Add an ID because WKZombie can only submit forms with an ID or name
-                        >>> get(by: .id("TOTPForm"))
-                        >>> submit
-                        >>> get(by: .attribute("action", "UiMain.totpAppIntegrate"))
-                        >>> setAttribute("id", value: "TOTPForm2") //This form also needs an ID to be submitted by WKZombie
-                        >>> get(by: .id("TOTPForm2"))
-                        >>> submit
-                        >>> getAll(by: .attribute("style", "white-space: nowrap;")) //There's no easy way to get the code but this returns an array with the code as the first element
-                        === self.result
+                        === self.checkUrl
+
                 }
             }
         }
         
-        func result(result: Result<[HTMLElement]>) {
+        //Check if we need to actually log the user in before getting the TOTP code
+        func checkUrl(result: Result<HTMLPage>) {
             switch result {
-            case .success(let value): // handle success
-                if !value.isEmpty {
-                    self.completion(value[0].text)
-                } else {
+                case .success(let page):
+                    guard let url = page.url else { return }
+                    if url.absoluteString.contains("weblogin") {
+                        //User was not logged in, so log him in first before going to TOTP Page.
+                        let genericPwdQueryable =
+                            GenericPasswordQueryable(service: "PennWebLogin")
+                        let secureStore =
+                            SecureStore(secureStoreQueryable: genericPwdQueryable)
+                        guard let password = try? secureStore.getValue(for: "PennKey Password") else { return }
+                        
+                        inspect()
+                            >>> get(by: .id("password"))
+                            >>> setAttribute("value", value: password)
+                            >>> get(by: .id("loginform"))
+                            >>> submit
+                            === self.goToTOTPPage
+                    }
+                    else {
+                        //User was already logged in, so we just go to the TOTP page
+                        inspect()
+                            === self.goToTOTPPage
+                    }
+                case .error:
                     self.completion(nil)
-                }
-            case .error: // handle error
-                // Try to get the token again in case the user was already logged in
-                self.getTokenAlreadyLoggedIn()
             }
         }
         
-        func getTokenAlreadyLoggedIn() {
-            let url = URL(string: self.urlStr)!
-            open(url)
+        func goToTOTPPage(result: Result<HTMLPage>) {
+            inspect()
                 >>> get(by: .attribute("action", "../../twoFactorUi/app/UiMain.totpAdd"))
                 >>> setAttribute("id", value: "TOTPForm") //Add an ID because WKZombie can only submit forms with an ID or name
                 >>> get(by: .id("TOTPForm"))
@@ -98,18 +95,63 @@ class TOTPFetcher: NSObject {
                 >>> setAttribute("id", value: "TOTPForm2") //This form also needs an ID to be submitted by WKZombie
                 >>> get(by: .id("TOTPForm2"))
                 >>> submit
-                >>> getAll(by: .attribute("style", "white-space: nowrap;")) //There's no easy way to get the code but this returns an array with the code as the first element
                 === self.resultAfterLoggedIn
         }
         
-        func resultAfterLoggedIn(result: Result<[HTMLElement]>) {
-            switch result {
-            case .success(let value): // handle success
-                if !value.isEmpty {
-                    self.completion(value[0].text)
-                } else {
-                    self.completion(nil)
+        func getTokenFromPageAndVerify(page: HTMLPage) {
+            let elementResult = page.findElements(.attribute("style", "white-space: nowrap;"))
+            switch elementResult {
+            case .success(let values):
+                if let secret = values.first?.text {
+                    verifySecret(secret: secret, page: page)
+                    // Go to verification page and verify
                 }
+            case .error: //handle error if TOTP code not found
+                self.completion(nil)
+            }
+        }
+        
+        func verifySecret(secret: String, page: HTMLPage) {
+            // Generate 1-time token using secret
+            guard let token = TwoFactorTokenGenerator.instance.generate(secret: secret) else {
+                self.completion(nil)
+                return
+            }
+            
+            inspect()
+                >>> get(by: .attribute("action", "UiMain.totpSubmitAppIntegrate"))
+                >>> setAttribute("id", value: "TOTPForm")
+                >>> get(by: .id("TOTPForm"))
+                >>> submit
+                >>> get(by: .name("twoFactorCode"))
+                >>> setAttribute("value", value: token)
+                >>> get(by: .attribute("action", "UiMain.totpSubmitAppCode"))
+                >>> setAttribute("id", value: "TOTPForm")
+                >>> get(by: .id("TOTPForm"))
+                >>> submit
+                >>> get(by: .class("error"))
+                === { (result: Result<HTMLElement>) in
+                    switch result{
+                        case .success(let result): // handle success
+                            guard let r = result.text else { return }
+                            if r.contains("Success: activation code is valid.") {
+                                //The code has been successfully verified, so we can save the TOTP code
+                                self.completion(secret)
+                            }
+                            else {
+                                //The TOTP code was not verified so we have an error
+                                self.completion(nil)
+                            }
+                        case .error: // handle error
+                            self.completion(nil)
+                    }
+            }
+        }
+
+        func resultAfterLoggedIn(result: Result<HTMLPage>) {
+            switch result {
+            case .success(let page): // handle success
+                self.getTokenFromPageAndVerify(page: page)
             case .error: // handle error
                 self.completion(nil)
             }
