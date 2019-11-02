@@ -31,11 +31,11 @@ class RoomSelectionViewController: UIViewController, ShowsAlert, Trackable {
         super.viewDidLoad()
         
         navigationItem.title = "\(chosenRooms.count)/\(maxNumHalls) Chosen"
-        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
+        self.navigationController?.navigationBar.tintColor = UIColor.navigation
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
         
-        view.backgroundColor = .white
+        view.backgroundColor = .uiBackground
         
         view.addSubview(selectionView)
         selectionView.anchorToTop(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)

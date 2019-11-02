@@ -14,7 +14,7 @@ class EmptyView: UIView {
         let l = UILabel()
         l.font = UIFont(name: "HelveticaNeue", size: 24)
         l.text = "No results found"
-        l.textColor = UIColor.warmGrey
+        l.textColor = UIColor.labelSecondary
         l.textAlignment = .center
         l.translatesAutoresizingMaskIntoConstraints = false
         return l

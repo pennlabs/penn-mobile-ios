@@ -68,7 +68,7 @@ extension LaundryMachinesView {
     private func getNumMachinesLabel() -> UILabel {
         let label = UILabel()
         label.font = .primaryInformationFont
-        label.textColor = .secondaryInformationGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -77,7 +77,7 @@ extension LaundryMachinesView {
     private func getRoomLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

@@ -32,7 +32,7 @@ extension NoReservationsCell {
         label = UILabel()
         label.text = "No current GSR reservations"
         label.font = .secondaryInformationFont
-        label.textColor = .secondaryInformationGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .center
         label.numberOfLines = 1
         

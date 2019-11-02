@@ -154,7 +154,9 @@ extension DiningViewController {
     
     @objc fileprivate func handleRefreshControl(_ sender: Any) {
         fetchDiningHours()
-        updateBalanceFromCampusExpress(requestLoginOnFail: true)
+        if viewModel.shouldShowDiningBalances {
+            updateBalanceFromCampusExpress(requestLoginOnFail: true)
+        }
     }
 }
 

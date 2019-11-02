@@ -25,7 +25,7 @@ class DiningCellSettingsController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DiningVenueSettingsCell")
         //tableView.allowsMultipleSelection = true
         navigationItem.title = "Select Favorites"
-        self.navigationController?.navigationBar.tintColor = UIColor.navigationBlue
+        self.navigationController?.navigationBar.tintColor = UIColor.navigation
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
     }

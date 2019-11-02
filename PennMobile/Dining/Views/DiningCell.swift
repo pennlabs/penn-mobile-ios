@@ -51,10 +51,26 @@ extension DiningCell {
         titleLabel.text = venue.name
         updateTimeLabel(with: venue)
         
+<<<<<<< HEAD:PennMobile/Dining/Views/DiningCell.swift
         if venue.hasMealsToday {
             if venue.isOpen {
+=======
+        self.backgroundColor = .clear
+        
+        // Use shortened names if on homepage
+        if isHomepage {
+            titleLabel.text = DiningVenueName.getShortVenueName(for: venue.name)
+        } else {
+            titleLabel.text = venue.name.rawValue
+        }
+        
+        updateTimeLabel(with: venue.times)
+        
+        if let times = venue.times {
+            if times.isOpen {
+>>>>>>> development:PennMobile/Dining/Cells/DiningCell.swift
                 statusLabel.text = "OPEN"
-                statusLabel.textColor = .informationYellow
+                statusLabel.textColor = .baseYellow
                 statusLabel.font = .primaryInformationFont
             } else if let nextMeal = venue.nextMeal {
                 statusLabel.text = "OPEN IN \(Date().humanReadableDistanceFrom(nextMeal.open))"
@@ -62,12 +78,17 @@ extension DiningCell {
                 statusLabel.font = .secondaryInformationFont
             } else {
                 statusLabel.text = "CLOSED"
-                statusLabel.textColor = .secondaryInformationGrey
+                statusLabel.textColor = .labelSecondary
                 statusLabel.font = .secondaryInformationFont
             }
         } else {
+<<<<<<< HEAD:PennMobile/Dining/Views/DiningCell.swift
             statusLabel.text = "CLOSED TODAY"
             statusLabel.textColor = .secondaryInformationGrey
+=======
+            statusLabel.text = ""
+            statusLabel.textColor = .labelSecondary
+>>>>>>> development:PennMobile/Dining/Cells/DiningCell.swift
             statusLabel.font = .secondaryInformationFont
         }
     }
@@ -156,7 +177,7 @@ extension DiningCell {
     fileprivate func getTitleLabel() -> UILabel {
         let label = UILabel()
         label.font = .interiorTitleFont
-        label.textColor = .primaryTitleGrey
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()
@@ -166,7 +187,7 @@ extension DiningCell {
     fileprivate func getTimeLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryInformationFont
-        label.textColor = .secondaryInformationGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()
@@ -176,7 +197,7 @@ extension DiningCell {
     fileprivate func getStatusLabel() -> UILabel {
         let label = UILabel()
         label.font = .primaryInformationFont
-        label.textColor = .informationYellow
+        label.textColor = .baseYellow
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
