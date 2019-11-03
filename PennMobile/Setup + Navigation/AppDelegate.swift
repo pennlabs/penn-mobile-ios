@@ -34,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FeedAnalyticsManager.shared.dryRun = true
 
         FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
-        FirebaseApp.configure()
         
+        FirebaseApp.configure()
         ControllerModel.shared.prepare()
         LaundryNotificationCenter.shared.prepare()
         GSRLocationModel.shared.prepare()
