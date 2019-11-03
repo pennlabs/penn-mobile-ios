@@ -29,7 +29,6 @@ class GSRManageGroupController: UIViewController {
        super.viewDidLoad()
         prepareViewModel()
         prepareUI()
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
