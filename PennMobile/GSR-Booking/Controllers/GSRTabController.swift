@@ -62,6 +62,8 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
             oldCell?.label.textColor = .labelPrimary
             newCell?.label.textColor = .baseBlue
         }
+        
+        view.backgroundColor = .uiBackground
     }
     
     override func viewDidLayoutSubviews() {
