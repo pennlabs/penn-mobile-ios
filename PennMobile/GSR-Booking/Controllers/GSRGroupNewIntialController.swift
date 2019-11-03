@@ -18,7 +18,8 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var colorPanel: UIView!
     fileprivate var createButton: UIButton!
     fileprivate var colorCollectionView: UICollectionView!
-    fileprivate var colors: [UIColor] = [UIColor(red: 32, green: 156, blue: 238),
+    fileprivate var colors: [UIColor] = [
+                                         UIColor(red: 32, green: 156, blue: 238),
                                          UIColor(red: 63, green: 170, blue: 109),
                                          UIColor(red: 255, green: 207, blue: 89),
                                          UIColor(red: 250, green: 164, blue: 50),
@@ -163,8 +164,8 @@ class GSRGroupNewIntialController: UIViewController {
         view.addSubview(colorCollectionView)
 
         colorCollectionView.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: 20).isActive = true
-        colorCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
-        colorCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        colorCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30).isActive = true
+        colorCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         colorCollectionView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -222,7 +223,7 @@ extension GSRGroupNewIntialController {
 
 extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return 7
     }
 
     func collectionView(_ collectionView: UICollectionView,
