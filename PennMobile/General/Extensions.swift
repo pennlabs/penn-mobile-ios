@@ -137,8 +137,8 @@ extension Date {
         let minutes = minutesFrom(date: date) % 60
         let hours = hoursFrom(date: date)
         var result = ""
-        if hours != 0 { result += "\(hours)H" }
-        if minutes != 0 { result += " \(minutes)M"}
+        if hours != 0 { result += "\(hours)h" }
+        if minutes != 0 { result += " \(minutes)m"}
         return result
     }
 

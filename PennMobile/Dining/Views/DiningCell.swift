@@ -53,20 +53,20 @@ extension DiningCell {
         
         if venue.hasMealsToday {
             if venue.isOpen {
-                statusLabel.text = "OPEN"
+                statusLabel.text = "Open"
                 statusLabel.textColor = .baseYellow
                 statusLabel.font = .primaryInformationFont
             } else if let nextMeal = venue.nextMeal {
-                statusLabel.text = "OPEN IN \(Date().humanReadableDistanceFrom(nextMeal.open))"
+                statusLabel.text = "Opens in \(Date().humanReadableDistanceFrom(nextMeal.open))"
                 statusLabel.textColor = .labelSecondary
                 statusLabel.font = .secondaryInformationFont
             } else {
-                statusLabel.text = "CLOSED"
+                statusLabel.text = "Closed"
                 statusLabel.textColor = .labelSecondary
                 statusLabel.font = .secondaryInformationFont
             }
         } else {
-            statusLabel.text = "CLOSED TODAY"
+            statusLabel.text = "Closed Today"
             statusLabel.textColor = .labelSecondary
             statusLabel.font = .secondaryInformationFont
         }
