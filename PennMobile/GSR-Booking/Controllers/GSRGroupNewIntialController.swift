@@ -38,7 +38,8 @@ class GSRGroupNewIntialController: UIViewController {
     ]
     
     fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange","Red-ing Terminal", "Baltimore Blue", "Purple"]
-
+    
+    
     weak var delegate: GSRGroupController!
 
 
@@ -87,7 +88,17 @@ class GSRGroupNewIntialController: UIViewController {
         nameField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
         nameField.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
         nameField.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        nameField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if (textField.text != "") {
+            createButton.isUserInteractionEnabled = true;
+        } else {
+            createButton.isUserInteractionEnabled = false;
+        }
     }
 
     func prepareGroupForLabel() {
@@ -141,6 +152,9 @@ class GSRGroupNewIntialController: UIViewController {
         createButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15).isActive = true
         createButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
         createButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        //button unclickable until group name changed and not empty
+        createButton.isUserInteractionEnabled = false;
     }
 
     func prepareColorLabel() {
@@ -198,7 +212,7 @@ class GSRGroupNewIntialController: UIViewController {
         dismiss(animated: true, completion:nil)
     }
 
-
+    
 
 
 
