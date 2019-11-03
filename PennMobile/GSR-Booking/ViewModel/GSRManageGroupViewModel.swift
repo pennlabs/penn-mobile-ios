@@ -12,10 +12,7 @@ protocol GSRManageGroupViewModelDelegate {
     //TODO: Add stuff here
 }
 
-enum GSRGroupPermissions { //who has access
-    case everyone
-    case owner
-}
+
 
 class GSRManageGroupViewModel: NSObject {
     //store important data used by gsr group views
@@ -41,7 +38,6 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
         if section == 0 {
             return settings.count
         } else {
-//            return group.members?.count
             
             if let members = group.members {
                 return members.count
@@ -64,9 +60,17 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: GroupMemberCell.identifier, for: indexPath) as! GroupMemberCell
-        cell.member = group.members![indexPath.row]
-        return cell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: GroupSettingsCell.identifier, for: indexPath) as! GroupSettingsCell
+            cell.settings = group.userSettings
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: GroupMemberCell.identifier, for: indexPath) as! GroupMemberCell
+            if let members = group.members {
+                cell.member = members[indexPath.row]
+            }
+            return cell
+        }
     }
     
     

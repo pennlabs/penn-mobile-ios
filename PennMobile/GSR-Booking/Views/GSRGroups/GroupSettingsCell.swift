@@ -13,9 +13,9 @@ class GroupSettingsCell: UITableViewCell {
     static let cellHeight: CGFloat = 120
     static let identifier = "gsrGroupSettingsCell"
     
-    var setting: GSRGroupSetting! {
+    var settings: GSRGroupIndividualSettings! {
         didSet {
-            setupCell(with: setting)
+            setupCell(with: settings)
         }
     }
     
@@ -31,7 +31,8 @@ class GroupSettingsCell: UITableViewCell {
 
 // MARK: - Setup Cell
 extension GroupSettingsCell {
-    fileprivate func setupCell(with setting: GSRGroupSetting) {
-        self.textLabel?.text = "\(setting.title)"
+    fileprivate func setupCell(with setting: GSRGroupIndividualSettings) {
+        textLabel?.numberOfLines = 2
+        textLabel?.text = "notifications: \(setting.notificationsOn)\nactive: \(setting.pennKeyActive)"
     }
 }

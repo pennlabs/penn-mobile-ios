@@ -11,13 +11,29 @@ import Foundation
 struct GSRGroup {
     let id: String
     let name: String
-    var imgURL: String?
     let color: String
+    let createdAt: Date
+    let userSettings: GSRGroupIndividualSettings
+    
+    var imgURL: String?
     var owners: [GSRGroupMember]?
     var members: [GSRGroupMember]?
-    let createdAt: Date
-    let isActive: Bool
     let reservations: [String]? //array of reservationID's
+    let groupSettings: GSRGroupAccessSettings?
+}
+
+struct GSRGroupIndividualSettings { //specific to a user within a group
+    var pennKeyActive: Bool
+    var notificationsOn: Bool
+}
+struct GSRGroupAccessSettings { //general to all users within a group
+    var booking: GSRGroupAccessPermissions
+    var invitation: GSRGroupAccessPermissions
+}
+
+enum GSRGroupAccessPermissions { //who has access
+    case everyone
+    case owner
 }
 
 struct GSRGroupMember {

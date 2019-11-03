@@ -158,7 +158,6 @@
 		97AA4C6B235CCEDC007F09FE /* GSRManageGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA4C6A235CCEDC007F09FE /* GSRManageGroupViewModel.swift */; };
 		97AA4C6D235CD314007F09FE /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA4C6C235CD314007F09FE /* GroupMemberCell.swift */; };
 		97AA4C6F235CD328007F09FE /* GroupSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA4C6E235CD328007F09FE /* GroupSettingsCell.swift */; };
-		97AA4C71235CD49E007F09FE /* GSRGroupSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA4C70235CD49E007F09FE /* GSRGroupSetting.swift */; };
 		97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFC2100DA1200D3D606 /* BuildingCell.swift */; };
 		97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */; };
 		97E79E052100DA1200D3D606 /* BuildingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */; };
@@ -409,7 +408,6 @@
 		97AA4C6A235CCEDC007F09FE /* GSRManageGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRManageGroupViewModel.swift; sourceTree = "<group>"; };
 		97AA4C6C235CD314007F09FE /* GroupMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
 		97AA4C6E235CD328007F09FE /* GroupSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsCell.swift; sourceTree = "<group>"; };
-		97AA4C70235CD49E007F09FE /* GSRGroupSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupSetting.swift; sourceTree = "<group>"; };
 		97E79DFC2100DA1200D3D606 /* BuildingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingHeaderCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingHeaderCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingSectionHeader.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingSectionHeader.swift; sourceTree = SOURCE_ROOT; };
@@ -904,7 +902,6 @@
 				2189C0952027CE4000771C1F /* locations.json */,
 				2189C09A2027CE4000771C1F /* GSRLocation.swift */,
 				2138D55E22599D4700D67CA2 /* GSRGroup.swift */,
-				97AA4C70235CD49E007F09FE /* GSRGroupSetting.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1797,7 +1794,6 @@
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
-				97AA4C71235CD49E007F09FE /* GSRGroupSetting.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				21EB4D32203D39FF0029A460 /* DiningVenueName.swift in Sources */,

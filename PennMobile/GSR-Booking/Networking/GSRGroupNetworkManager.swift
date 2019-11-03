@@ -11,7 +11,8 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     // MARK: GSR Group Networking - Dummy Data for now
     static let instance = GSRGroupNetworkManager()
     
-    fileprivate static let labs = GSRGroup(id: "1", name: "Penn Labs", imgURL: nil, color: "blue", owners: nil, members: nil, createdAt: Date(), isActive: true, reservations: nil)
+    fileprivate static let userSettings = GSRGroupIndividualSettings(pennKeyActive: true, notificationsOn: false)
+    fileprivate static let labs = GSRGroup(id: "1", name: "Penn Labs", color: "blue", createdAt: Date(), userSettings: nil, imgURL: nil, owners: Date(), members: userSettings, reservations: nil, groupSettings: nil)
     fileprivate static let cis121 = GSRGroup(id: "2", name: "CIS 121 Study Group", imgURL: nil, color: "green", owners: nil, members: nil, createdAt: Date(), isActive: true, reservations: nil)
     fileprivate static let cis160 = GSRGroup(id: "3", name: "CIS 160 Study Group", imgURL: nil, color: "red", owners: nil, members: nil, createdAt: Date(), isActive: true, reservations: nil)
     
