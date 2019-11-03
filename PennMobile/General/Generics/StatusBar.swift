@@ -24,20 +24,20 @@ class StatusBar: UIView {
     public required init?(coder aDecoder: NSCoder) {
         self.status = .noInternet
         super.init(coder: aDecoder)
-        self.backgroundColor = .redingTerminal
+        self.backgroundColor = .baseRed
     }
     
     public override init(frame: CGRect) {
         self.status = .noInternet
         super.init(frame: frame)
-        self.backgroundColor = .redingTerminal
+        self.backgroundColor = .baseRed
     }
     
     public convenience init(text: StatusBarText) {
         self.init(frame: .zero)
         self.status = text
         self.height = self.status == .noInternet ? 50 : 70
-        self.backgroundColor = .redingTerminal
+        self.backgroundColor = .baseRed
         if (text == .noInternet) {
             self.heightAnchor.constraint(equalToConstant: 50).isActive = true
         } else {

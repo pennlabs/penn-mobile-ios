@@ -21,7 +21,7 @@ import UIKit
     private lazy var label: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Light", size: 17)
-        label.textColor = UIColor.whiteGrey
+        label.textColor = UIColor.labelPrimary
         label.textAlignment = .center
         label.numberOfLines = 5
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +31,7 @@ import UIKit
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = UIColor.frenchBlue
+        contentView.backgroundColor = .baseBlue
         
         addSubview(label)
         label.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true

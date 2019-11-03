@@ -40,7 +40,7 @@ class ScheduleTable: UIView {
         let label = UILabel()
         label.numberOfLines = 3
         label.font = UIFont(name: "HelveticaNeue", size: 19)
-        label.textColor = UIColor.warmGrey
+        label.textColor = UIColor.labelSecondary
         return label
     }()
     
@@ -62,7 +62,6 @@ class ScheduleTable: UIView {
     
     private func setupView() {
         backgroundColor = .clear
-        //backgroundColor = UIColor(r: 248, g: 248, b: 248)
         
         addSubview(emptyView)
         
@@ -335,7 +334,7 @@ private class TimeCell: UICollectionViewCell {
     private let label: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue", size: 12)
-        label.textColor = UIColor(r: 115, g: 115, b: 115)
+        label.textColor = .labelSecondary
         label.textAlignment = .right
         return label
     }()

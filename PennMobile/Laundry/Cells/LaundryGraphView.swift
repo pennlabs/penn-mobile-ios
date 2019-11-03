@@ -139,7 +139,7 @@ extension LaundryGraphView {
         let label = UILabel()
         label.text = "Popular Times"
         label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.textColor = .black
+        label.textColor = .labelPrimary
         label.textAlignment = .left
         graphLabel = label
         
@@ -151,7 +151,7 @@ extension LaundryGraphView {
         let label = UILabel()
         label.text = Date.currentDayOfWeek
         label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.textColor = .warmGrey
+        label.textColor = .labelSecondary
         label.textAlignment = .right
         dayLabel = label
         
@@ -170,7 +170,7 @@ extension LaundryGraphView {
         let lineColor = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 1.0)
         let fillColorTop = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 0.8)
         let fillColorBottom = UIColor(red: 0.313, green: 0.847, blue: 0.89, alpha: 0.1)
-        let dataLabelColor = UIColor.warmGrey
+        let dataLabelColor = UIColor.labelSecondary
         
         // Line plot
         let dataLinePlot = LinePlot(identifier: "traffic_data")
@@ -231,7 +231,7 @@ extension LaundryGraphView {
         dottedLine?.removeFromSuperlayer()
         
         let dottedLineLayer = CAShapeLayer()
-        dottedLineLayer.strokeColor = UIColor.warmGrey.cgColor
+        dottedLineLayer.strokeColor = UIColor.grey1.cgColor
         dottedLineLayer.lineWidth = 1.0
         dottedLineLayer.lineCap = CAShapeLayerLineCap.round
         dottedLineLayer.lineDashPattern = [.init(integerLiteral: 5)]

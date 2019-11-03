@@ -14,7 +14,7 @@ class AboutPageCollectionViewHeader: UICollectionReusableView {
         let label = UILabel()
         label.text = "Built By"
         label.font = UIFont(name: "AvenirNext-Medium", size: 26)
-        label.textColor = UIColor.darkGray
+        label.textColor = UIColor.labelPrimary
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

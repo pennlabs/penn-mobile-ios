@@ -167,7 +167,7 @@ extension HomePostCell {
     private func prepareSourceLabel() {
         sourceLabel = UILabel()
         sourceLabel.font = UIFont(name: "HelveticaNeue", size: 14)
-        sourceLabel.textColor = UIColor.warmGrey
+        sourceLabel.textColor = UIColor.labelSecondary
         sourceLabel.numberOfLines = 1
         
         cardView.addSubview(sourceLabel)
@@ -193,7 +193,7 @@ extension HomePostCell {
     fileprivate func prepareDescriptionLabel() {
         descriptionLabel = UILabel()
         descriptionLabel.font = HomePostCell.descriptionFont
-        descriptionLabel.textColor = UIColor.warmGrey
+        descriptionLabel.textColor = UIColor.labelSecondary
         descriptionLabel.numberOfLines = 5
         
         cardView.addSubview(descriptionLabel)
@@ -203,7 +203,7 @@ extension HomePostCell {
     private func prepareDateLabel() {
         dateLabel = UILabel()
         dateLabel.font = UIFont(name: "HelveticaNeue", size: 14)
-        dateLabel.textColor = UIColor.warmGrey
+        dateLabel.textColor = UIColor.labelSecondary
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.numberOfLines = 2
         dateLabel.textAlignment = .right

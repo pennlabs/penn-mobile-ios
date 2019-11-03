@@ -133,11 +133,10 @@ extension DiningVenue.MealsForDate {
                 validMeals.append(newMeal)
             }
         }
-        
-        if !closedMeals.isEmpty {
-            // Filter out any valid meals that overlap with an explicit "Closed" meal
-            validMeals = validMeals.filter({ !$0.overlaps(with: closedMeals) })
-        }
+    
+        // Filter out any valid meals that overlap with an explicit "Closed" meal or contain a forbidden string
+        let forbiddenStrings = ["The Market Caf"]
+        validMeals = validMeals.filter({ !$0.overlaps(with: closedMeals) && !$0.contains(forbiddenStrings) })
         
         return validMeals
     }
@@ -170,7 +169,17 @@ extension DiningVenue.MealsForDate.Meal {
     }
     
     func overlaps(with meals: [DiningVenue.MealsForDate.Meal]) -> Bool {
-        meals.allSatisfy({ self.overlaps(with: $0) })
+        if meals.isEmpty { return false }
+        return meals.allSatisfy({ self.overlaps(with: $0) })
+    }
+    
+    func contains(_ strings: [String]) -> Bool {
+        for each in strings {
+            if self.type.lowercased().contains(each.lowercased()) {
+                return true
+            }
+        }
+        return false
     }
     
     var isClosedMeal: Bool {

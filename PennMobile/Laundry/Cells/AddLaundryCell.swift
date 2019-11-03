@@ -53,7 +53,7 @@ class AddLaundryCell: UITableViewCell {
         let label = UILabel()
         label.text = "0 of 3 rooms selected"
         label.font = .secondaryInformationFont
-        label.textColor = .secondaryInformationGrey
+        label.textColor = .labelSecondary
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
         label.textAlignment = .center

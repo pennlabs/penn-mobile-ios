@@ -66,7 +66,7 @@ extension AccountCell {
     
     private func prepareUsername() {
         nameLabel = UILabel()
-        nameLabel.textColor = UIColor.warmGrey
+        nameLabel.textColor = UIColor.labelSecondary
         nameLabel.font = UIFont(name: "HelveticaNeue-Light", size: 19)
         nameLabel.textAlignment = .left
         nameLabel.numberOfLines = 3
@@ -75,21 +75,4 @@ extension AccountCell {
         _ = nameLabel.anchor(nil, left: accountImageView.rightAnchor, bottom: self.bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 12, widthConstant: 0, heightConstant: 0)
         nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
-    
-//    private func prepareLogoutButton() {
-//        logoutButton = UIButton(type: .system)
-//        logoutButton.setTitle("Logout", for: .normal)
-//        logoutButton.setTitleColor(UIColor.buttonBlue, for: .normal)
-//        logoutButton.addTarget(self, action: #selector(handleLogout(_:)), for: .touchUpInside)
-//        logoutButton.translatesAutoresizingMaskIntoConstraints = false
-//
-//        addSubview(logoutButton)
-//        logoutButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-//        logoutButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
-//        logoutButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
-//    }
-    
-//    @objc fileprivate func handleLogout(_ sender: Any) {
-//        delegate.handleLogout()
-//    }
 }

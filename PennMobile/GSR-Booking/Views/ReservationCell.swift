@@ -77,6 +77,7 @@ class ReservationCell: UITableViewCell {
 // MARK: - Prepare UI
 extension ReservationCell {
     fileprivate func prepareUI() {
+        backgroundColor = .clear
         prepareBuildingImage()
         prepareLocationLabel()
         prepareDateLabel()
@@ -87,7 +88,7 @@ extension ReservationCell {
     private func prepareLocationLabel() {
         locationLabel = UILabel()
         locationLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
-        locationLabel.textColor = .primaryTitleGrey
+        locationLabel.textColor = .labelPrimary
         locationLabel.textAlignment = .left
         locationLabel.numberOfLines = 1
         
@@ -98,7 +99,7 @@ extension ReservationCell {
     private func prepareDateLabel() {
         dateLabel = UILabel()
         dateLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        dateLabel.textColor = .secondaryTitleGrey
+        dateLabel.textColor = .labelSecondary
         dateLabel.textAlignment = .left
         dateLabel.numberOfLines = 1
         dateLabel.shrinkUntilFits()
@@ -110,7 +111,7 @@ extension ReservationCell {
     private func prepareTimeLabel() {
         timeLabel = UILabel()
         timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        timeLabel.textColor = .secondaryTitleGrey
+        timeLabel.textColor = .labelSecondary
         timeLabel.textAlignment = .left
         timeLabel.numberOfLines = 1
         timeLabel.shrinkUntilFits()
@@ -123,7 +124,7 @@ extension ReservationCell {
         deleteButton = UIButton(type: .system)
         deleteButton.setTitle("Delete", for: .normal)
         deleteButton.addTarget(self, action: #selector(handleDeletePressed(_:)), for: .touchUpInside)
-        deleteButton.backgroundColor = .redingTerminal
+        deleteButton.backgroundColor = .baseRed
         deleteButton.layer.cornerRadius = 4
         deleteButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 12)
         deleteButton.titleLabel?.textColor = .white

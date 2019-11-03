@@ -40,6 +40,12 @@ extension DiningVenue {
         return false
     }
     
+    var nextMeal: MealsForDate.Meal? {
+        guard let mealsToday = mealsToday else { return nil }
+        let now = Date()
+        return mealsToday.meals.first(where: { $0.open > now })
+    }
+    
     var hasMealsToday: Bool {
         return mealsToday != nil
     }
