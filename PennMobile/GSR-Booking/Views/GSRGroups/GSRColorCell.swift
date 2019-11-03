@@ -12,7 +12,7 @@ class GSRColorCell: UICollectionViewCell {
     
     static let identifier = "groupColorCell"
     var colorView: UIView!
-    var borderColor: UIColor = .black
+    var borderColor: UIColor = UIColor(red: 218/255, green: 241/255, blue: 228/255, alpha: 1)
     
 //    var timeSlot: GSRTimeSlot! {
 //        didSet {
