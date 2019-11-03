@@ -91,6 +91,10 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
             navigationController?.pushViewController(manageVC, animated: true)
         }
     }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
 
 }
 
