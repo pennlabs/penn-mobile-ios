@@ -82,9 +82,9 @@ extension GroupCell {
         activeLabel.translatesAutoresizingMaskIntoConstraints = false
         activeLabel.leadingAnchor.constraint(equalTo: groupName.leadingAnchor).isActive = true
         activeLabel.topAnchor.constraint(equalTo: groupName.bottomAnchor, constant: 5 ).isActive = true
-        let text = group.isActive ? "PennID Active" : "PennID Inactive"
+        let text = group.userSettings.pennKeyActive ? "PennID Active" : "PennID Inactive"
         activeLabel.text = text
-        activeLabel.textColor = group.isActive ? UIColor(named: "baseGreen") : UIColor(named: "baseRed")
+        activeLabel.textColor = group.userSettings.pennKeyActive ? UIColor(named: "baseGreen") : UIColor(named: "baseRed")
     }
 }
 
