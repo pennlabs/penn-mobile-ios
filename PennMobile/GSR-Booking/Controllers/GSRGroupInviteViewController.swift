@@ -9,7 +9,10 @@
 import UIKit
 
 class GSRGroupInviteViewController: UIViewController {
-
+    
+    fileprivate var dummyLabel: UILabel!
+    fileprivate var doneBtn : UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,4 +30,11 @@ class GSRGroupInviteViewController: UIViewController {
     }
     */
 
+}
+
+//Mark: Setup UI
+extension GSRGroupInviteViewController {
+    fileprivate func prepareUI() {
+        
+    }
 }

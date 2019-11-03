@@ -27,6 +27,17 @@ class GSRGroupNewIntialController: UIViewController {
                                          UIColor(red: 51, green: 101, blue: 143),
                                          UIColor(red: 131, green: 79, blue: 160)
                                          ]
+    fileprivate var borderColors: [UIColor] = [
+        UIColor(red: 1.5 * 32.0/255, green: 1.5 * 156.0/255, blue: 1.5 * 238.0/255, alpha: 1),
+        UIColor(red: 1.5 * 63.0/255, green: 1.5 * 170.0/255, blue: 1.5 * 109.0/255, alpha: 1),
+        UIColor(red: 1.5 * 255.0/255, green: 1.5 * 207.0/255, blue: 1.5 * 89.0/255, alpha: 1),
+        UIColor(red: 1.5 * 250.0/255, green: 1.5 * 164.0/255, blue: 1.5 * 50.0/255, alpha: 1),
+        UIColor(red: 1.5 * 226.0/255, green: 1.5 * 81.0/255, blue: 1.5 * 82.0/255, alpha: 1),
+        UIColor(red: 1.5 * 51.0/255, green: 1.5 * 101.0/255, blue: 1.5 * 143.0/255, alpha: 1),
+        UIColor(red: 1.5 * 131.0/255, green: 1.5 * 79.0/255, blue: 1.5 * 160.0/255, alpha: 1)
+    ]
+    
+    fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange","Red-ing Terminal", "Baltimore Blue", "Purple"]
 
     weak var delegate: GSRGroupController!
 
@@ -39,7 +50,7 @@ class GSRGroupNewIntialController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         colorCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
-        collectionView(colorCollectionView, didSelectItemAt: IndexPath(item: 0, section:0))
+        //collectionView(colorCollectionView, didSelectItemAt: IndexPath(item: 0, section:0))
 
     }
     func prepareCloseButton() {
@@ -230,6 +241,9 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GSRColorCell.identifier, for: indexPath) as! GSRColorCell
         cell.color = colors[indexPath.item % colors.count]
+        cell.borderColor = borderColors[indexPath.item % borderColors.count]//UIColor.lightGray
+        
+        //cell.colorView.layer.borderColor = cell.borderColor.cgColor
         return cell
     }
 
@@ -251,6 +265,8 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
         createButton.isEnabled = true
         createButton.backgroundColor = cell?.colorView.backgroundColor
         colorLabel.textColor = cell?.colorView.backgroundColor
+        colorLabel.text = colorNames[indexPath.item % colorNames.count]
+        colorLabel.font = UIFont.boldSystemFont(ofSize: 17)
     }
 //
 //    //only enable selection for available rooms

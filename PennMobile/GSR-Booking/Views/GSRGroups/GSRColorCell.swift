@@ -12,7 +12,8 @@ class GSRColorCell: UICollectionViewCell {
     
     static let identifier = "groupColorCell"
     var colorView: UIView!
-    var borderColor: UIColor = UIColor(red: 218/255, green: 241/255, blue: 228/255, alpha: 1)
+    
+
     
 //    var timeSlot: GSRTimeSlot! {
 //        didSet {
@@ -25,8 +26,18 @@ class GSRColorCell: UICollectionViewCell {
     var color: UIColor! {
         didSet {
             colorView.backgroundColor = color
+            
+            
+            //colorView.layer.borderColor = borderColor.cgColor
         }
     }
+    
+    var borderColor: UIColor! /*{
+        didSet {
+            colorView.layer.borderColor = borderColor.cgColor;
+        }
+        
+    }*/
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,7 +52,18 @@ class GSRColorCell: UICollectionViewCell {
         colorView.layer.cornerRadius = 15
         colorView.layer.masksToBounds = false
         colorView.layer.borderWidth = 0
-        colorView.layer.borderColor = borderColor.cgColor
+        /*
+        if ((color) != nil) {
+            let components = color.cgColor.components
+            
+            borderColor = UIColor(red: components![0], green: components![1], blue: components![2], alpha:0.8)
+        } else {
+            borderColor = UIColor(red: 32, green: 156, blue: 238, alpha:0.8)
+        }
+        */
+        //borderColor = colorView.backgroundColor?.withAlphaComponent(0.8)
+        
+//        colorView.layer.borderColor = borderColor.cgColor
         addSubview(colorView)
         
         colorView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
@@ -49,7 +71,11 @@ class GSRColorCell: UICollectionViewCell {
     }
     
     func toggleBorder() {
-        colorView.layer.borderWidth = isSelected ? 2 : 0
+        if (isSelected) {
+            colorView.layer.borderColor = borderColor.cgColor
+        }
+        
+        colorView.layer.borderWidth = isSelected ? 4 : 0
     }
     
     required init?(coder: NSCoder) {
