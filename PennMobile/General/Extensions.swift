@@ -134,11 +134,16 @@ extension Date {
     }
     
     func humanReadableDistanceFrom(_ date: Date) -> String {
+        // Opens in 55m
+        // Opens at 6pm
         let minutes = minutesFrom(date: date) % 60
         let hours = hoursFrom(date: date)
         var result = ""
-        if hours != 0 { result += "\(hours)h" }
-        if minutes != 0 { result += " \(minutes)m"}
+        if hours != 0 {
+            result += "at \(date.strFormat())"
+        } else {
+            result += "in \(minutes)m"
+        }
         return result
     }
 
