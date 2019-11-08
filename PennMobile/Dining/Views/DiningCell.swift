@@ -47,6 +47,7 @@ class DiningCell: UITableViewCell {
 // MARK: - Setup Cell
 extension DiningCell {
     fileprivate func setupCell(with venue: DiningVenue) {
+        backgroundColor = .clear
         venueImageView.kf.setImage(with: venue.imageURL)
         titleLabel.text = venue.name
         updateTimeLabel(with: venue)
