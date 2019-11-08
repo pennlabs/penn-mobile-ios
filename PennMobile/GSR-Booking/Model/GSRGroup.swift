@@ -13,7 +13,7 @@ struct GSRGroup {
     let name: String
     let color: String
     let createdAt: Date
-    let userSettings: GSRGroupIndividualSettings
+    let userSettings: GSRGroupIndividualSettings //not optional, beacuse we need to know if pennKey is Active
     
     var imgURL: String?
     var owners: [GSRGroupMember]?
@@ -26,6 +26,7 @@ struct GSRGroupIndividualSettings { //specific to a user within a group
     var pennKeyActive: Bool
     var notificationsOn: Bool
 }
+
 struct GSRGroupAccessSettings { //general to all users within a group
     var booking: GSRGroupAccessPermissions
     var invitation: GSRGroupAccessPermissions

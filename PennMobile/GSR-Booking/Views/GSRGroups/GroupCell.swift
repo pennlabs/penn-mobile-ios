@@ -19,7 +19,7 @@ class GroupCell: UITableViewCell {
     
     var group: GSRGroup! {
         didSet {
-            setupCell(with: group)
+            setupCell()
         }
     }
     
@@ -36,10 +36,7 @@ class GroupCell: UITableViewCell {
 
 // MARK: - Setup Cell
 extension GroupCell {
-    fileprivate func setupCell(with group: GSRGroup) {
-//        let activeText = group.isActive ? "Active" : "Inactive"
-//        self.textLabel?.text = "\(group.name)\n Status: \(activeText)"
-//        self.textLabel?.numberOfLines = 3
+    fileprivate func setupCell() {
         setupUI()
     }
 }

@@ -17,7 +17,6 @@ protocol GSRManageGroupViewModelDelegate {
 class GSRManageGroupViewModel: NSObject {
     //store important data used by gsr group views
     fileprivate var group: GSRGroup!
-    fileprivate var settings = [String:String]() //todo change type of settings
     
     // MARK: Delegate
     var delegate: GSRManageGroupViewModelDelegate!
@@ -36,7 +35,7 @@ class GSRManageGroupViewModel: NSObject {
 extension GSRManageGroupViewModel: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return settings.count
+            return 1 //just the user settings in 1 cell
         } else {
             
             if let members = group.members {

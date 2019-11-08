@@ -60,6 +60,7 @@ extension GSRManageGroupController {
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
         tableView.register(GroupMemberCell.self, forCellReuseIdentifier: GroupMemberCell.identifier)
+        tableView.register(GroupSettingsCell.self, forCellReuseIdentifier: GroupSettingsCell.identifier)
         tableView.tableFooterView = UIView()
         
         view.addSubview(tableView)
@@ -77,18 +78,3 @@ extension GSRManageGroupController {
 extension GSRManageGroupController: GSRManageGroupViewModelDelegate {
     
 }
-//
-//extension GSRManageGroupController: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 10//group.members.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if let cell = tableView.dequeueReusableCell(withIdentifier: GroupMemberCell.identifier, for: indexPath) as? GroupMemberCell {
-//            return cell
-//        }
-//        return UITableViewCell()
-//    }
-//
-//
-//}
