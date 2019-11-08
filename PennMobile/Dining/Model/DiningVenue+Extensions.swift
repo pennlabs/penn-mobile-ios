@@ -67,9 +67,9 @@ extension DiningVenue {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone(abbreviation: "EST")
-        formatter.dateFormat = "h:mma"
-        formatter.amSymbol = "a"
-        formatter.pmSymbol = "p"
+        formatter.dateFormat = "h:mm"
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
         
         var firstMeal = true
         var timesString = ""
@@ -77,9 +77,9 @@ extension DiningVenue {
         
         for m in meals {
             if m.open.minutes == 0 {
-                formatter.dateFormat = moreThanOneMeal ? "h" : "ha"
+                formatter.dateFormat = moreThanOneMeal ? "h" : "h"
             } else {
-                formatter.dateFormat = moreThanOneMeal ? "h:mm" : "h:mma"
+                formatter.dateFormat = moreThanOneMeal ? "h:mm" : "h:mm"
             }
             let open = formatter.string(from: m.open)
             

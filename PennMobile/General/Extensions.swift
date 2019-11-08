@@ -171,8 +171,8 @@ extension Date {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone(abbreviation: "EST")
         formatter.dateFormat = "h:mma"
-        formatter.amSymbol = "a"
-        formatter.pmSymbol = "p"
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
         var timesString = ""
 
         if self.minutes == 0 {
