@@ -9,42 +9,25 @@
 import UIKit
 
 protocol DiningCellSettingsDelegate {
-    func saveSelection(for cafes: [DiningVenue])
+    func saveSelection(for venueIds: [Int])
 }
 
 class DiningCellSettingsController: UITableViewController {
 
     var delegate: DiningCellSettingsDelegate?
 
-    var chosenCafes = [DiningVenueName]()
-
-    let cafes = DiningVenue.diningNames + DiningVenue.retailNames
+    var chosenVenueIds = Set<Int>()
+    let allVenues = DiningDataStore.shared.getVenues()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "settingsCell")
-        tableView.allowsMultipleSelection = true
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DiningVenueSettingsCell")
+        //tableView.allowsMultipleSelection = true
         navigationItem.title = "Select Favorites"
         self.navigationController?.navigationBar.tintColor = UIColor.navigation
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        for cafe in chosenCafes {
-            if let index = cafes.firstIndex(of: cafe) {
-                tableView.selectRow(at: IndexPath(item: index, section: 0), animated: false, scrollPosition: .none)
-            }
-        }
     }
 
     // MARK: - Table view data source
@@ -54,16 +37,16 @@ class DiningCellSettingsController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cafes.count
+        return allVenues.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DiningVenueSettingsCell", for: indexPath)
         cell.selectionStyle = .none
-        cell.textLabel?.text = cafes[indexPath.row].rawValue
+        cell.textLabel?.text = allVenues[indexPath.row].name
 
-        if chosenCafes.contains(cafes[indexPath.row]) {
+        if chosenVenueIds.contains(allVenues[indexPath.row].id) {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
@@ -73,43 +56,24 @@ class DiningCellSettingsController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cafe = cafes[indexPath.row]
-
-        if !chosenCafes.contains(cafe) {
-            if let cell = tableView.cellForRow(at: indexPath) {
-                cell.accessoryType = .checkmark
-            }
-            chosenCafes.append(cafe)
+        if chosenVenueIds.contains(allVenues[indexPath.row].id) {
+            chosenVenueIds.remove(allVenues[indexPath.row].id)
+        } else {
+            chosenVenueIds.insert(allVenues[indexPath.row].id)
         }
-    }
-
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cafe = cafes[indexPath.row]
-
-        if chosenCafes.contains(cafe) {
-            if let cell = tableView.cellForRow(at: indexPath) {
-                cell.accessoryType = .none
-            }
-
-            if let index = chosenCafes.firstIndex(of: cafe) {
-                chosenCafes.remove(at: index)
-            }
-        }
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 
     @objc func handleCancel() {
         self.dismiss(animated: true, completion: nil)
-        FirebaseAnalyticsManager.shared.trackEvent(action: .updateDiningPreferences, result: .cancelled, content: chosenCafes.count)
     }
 
     @objc func handleSave() {
-        let chosenVenues = chosenCafes.map {DiningVenue(venue: $0)}
-        delegate?.saveSelection(for: chosenVenues)
+        delegate?.saveSelection(for: Array(chosenVenueIds))
         self.dismiss(animated: true, completion: nil)
-        FirebaseAnalyticsManager.shared.trackEvent(action: .updateDiningPreferences, result: .success, content: chosenCafes.count)
     }
 
     func setupFromVenues(venues: [DiningVenue]) {
-        chosenCafes = venues.map {$0.name}
+        chosenVenueIds = Set(venues.map { $0.id })
     }
 }

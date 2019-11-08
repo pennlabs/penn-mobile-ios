@@ -21,7 +21,6 @@ class GSRDateHandler {
         cal.timeZone = TimeZone(abbreviation: "EST")!
         
         let startDate = cal.startOfDay(for: Date())
-        dump(startDate)
         let endDate = startDate.dateIn(days: 6)
         
         let dateRange = cal.dateRange(startDate: startDate,

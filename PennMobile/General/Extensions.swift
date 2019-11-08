@@ -132,6 +132,20 @@ extension Date {
         let difference = Calendar.current.dateComponents([.hour], from: self, to: date)
         return difference.hour ?? 0
     }
+    
+    func humanReadableDistanceFrom(_ date: Date) -> String {
+        // Opens in 55m
+        // Opens at 6pm
+        let minutes = minutesFrom(date: date) % 60
+        let hours = hoursFrom(date: date)
+        var result = ""
+        if hours != 0 {
+            result += "at \(date.strFormat())"
+        } else {
+            result += "in \(minutes)m"
+        }
+        return result
+    }
 
     //returns date in local time
     static var currentLocalDate: Date {
@@ -157,8 +171,8 @@ extension Date {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone(abbreviation: "EST")
         formatter.dateFormat = "h:mma"
-        formatter.amSymbol = "a"
-        formatter.pmSymbol = "p"
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
         var timesString = ""
 
         if self.minutes == 0 {
@@ -271,8 +285,6 @@ extension Date {
         return dateStrings
     }
     
-    
-
     var adjustedFor11_59: Date {
         if self.minutes == 59 {
             return self.add(minutes: 1)
@@ -310,6 +322,10 @@ extension Date {
 
     static var midnightToday: Date {
         return midnightYesterday.tomorrow
+    }
+    
+    static var todayString: String {
+        return Date.dayOfMonthFormatter.string(from: Date())
     }
 }
 

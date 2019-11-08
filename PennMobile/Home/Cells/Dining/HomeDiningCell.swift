@@ -70,9 +70,7 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
         delegate.handleSettingsTapped(venues: venues)
     }
 
-    @objc fileprivate func transitionButtonTapped() {
-        print("Button Tapped!")
-    }
+    @objc fileprivate func transitionButtonTapped() {}
 }
 
 // MARK: - Setup UI Elements
@@ -125,7 +123,6 @@ extension HomeDiningCell {
         prepareSafeArea()
         prepareTitleLabels()
         prepareDividerLine()
-        //prepareFooter()
         prepareTableView()
     }
 
@@ -172,23 +169,6 @@ extension HomeDiningCell {
         dividerLine.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
         dividerLine.topAnchor.constraint(equalTo: primaryTitleLabel.bottomAnchor, constant: 14).isActive = true
         dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
-    }
-
-    // MARK: Footer
-    fileprivate func prepareFooter() {
-        footerTransitionButton = getFooterTransitionButton()
-        footerDescriptionLabel = getFooterDescriptionLabel()
-
-        cardView.addSubview(footerTransitionButton)
-        cardView.addSubview(footerDescriptionLabel)
-
-        footerTransitionButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        footerTransitionButton.heightAnchor.constraint(equalToConstant: 26).isActive = true
-        footerTransitionButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 6).isActive = true
-
-        footerDescriptionLabel.trailingAnchor.constraint(equalTo: footerTransitionButton.leadingAnchor,
-                                                        constant: -10).isActive = true
-        footerDescriptionLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor).isActive = true
     }
 
     // Mark: TableView

@@ -47,38 +47,34 @@ class DiningCell: UITableViewCell {
 // MARK: - Setup Cell
 extension DiningCell {
     fileprivate func setupCell(with venue: DiningVenue) {
-        venueImageView.image = UIImage(named: venue.name.rawValue.folding(options: .diacriticInsensitive, locale: .current))
+        backgroundColor = .clear
+        venueImageView.kf.setImage(with: venue.imageURL)
+        titleLabel.text = venue.name
+        updateTimeLabel(with: venue)
         
-        self.backgroundColor = .clear
-        
-        // Use shortened names if on homepage
-        if isHomepage {
-            titleLabel.text = DiningVenueName.getShortVenueName(for: venue.name)
-        } else {
-            titleLabel.text = venue.name.rawValue
-        }
-        
-        updateTimeLabel(with: venue.times)
-        
-        if let times = venue.times {
-            if times.isOpen {
-                statusLabel.text = "OPEN"
+        if venue.hasMealsToday {
+            if venue.isOpen {
+                statusLabel.text = "Open"
                 statusLabel.textColor = .baseYellow
                 statusLabel.font = .primaryInformationFont
+            } else if let nextMeal = venue.nextMeal {
+                statusLabel.text = "Opens \(Date().humanReadableDistanceFrom(nextMeal.open))"
+                statusLabel.textColor = .labelSecondary
+                statusLabel.font = .secondaryInformationFont
             } else {
-                statusLabel.text = "CLOSED"
+                statusLabel.text = "Closed"
                 statusLabel.textColor = .labelSecondary
                 statusLabel.font = .secondaryInformationFont
             }
         } else {
-            statusLabel.text = ""
+            statusLabel.text = "Closed Today"
             statusLabel.textColor = .labelSecondary
             statusLabel.font = .secondaryInformationFont
         }
     }
     
-    fileprivate func updateTimeLabel(with times: [OpenClose]?) {
-        timesLabel.text = times?.strFormat
+    fileprivate func updateTimeLabel(with venue: DiningVenue) {
+        timesLabel.text = venue.humanFormattedHoursStringForToday
         timesLabel.layoutIfNeeded()
     }
 }
@@ -150,6 +146,7 @@ extension DiningCell {
     
     fileprivate func getVenueImageView() -> UIImageView {
         let imageView = UIImageView()
+        imageView.backgroundColor = .grey2
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 5.0

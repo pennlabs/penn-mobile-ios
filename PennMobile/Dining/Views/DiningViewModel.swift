@@ -13,21 +13,17 @@ protocol DiningViewModelDelegate: DiningBalanceRefreshable {
 }
 
 class DiningViewModel: NSObject {
-    static var ShowDiningPlan = false
+    static var showDiningPlan = false
     
-    let ordering: [DiningVenueType] = [.dining, .retail]
-    
-    let dining = DiningVenue.getVenues(for: .dining)
-    let retail = DiningVenue.getVenues(for: .retail)
+    let ordering: [DiningVenue.VenueType] = [.dining, .retail]
+    var venues: [DiningVenue.VenueType : [DiningVenue]] = DiningDataStore.shared.getSectionedVenues()
+    var balance: DiningBalance?
     
     let balancesHeader = "Dining Balance"
     let diningHeader = "Dining Halls"
     let retailHeader = "Retail Dining"
     
-    var balance: DiningBalance?
-    
     var delegate: DiningViewModelDelegate?
-    
     var showActivity = false
     
     internal let headerView = "headerView"
@@ -36,27 +32,26 @@ class DiningViewModel: NSObject {
     
     var shouldShowDiningBalances: Bool {
         get {
-            return UserDefaults.standard.hasDiningPlan() || DiningViewModel.ShowDiningPlan
+            return UserDefaults.standard.hasDiningPlan() || DiningViewModel.showDiningPlan
         }
     }
     
-    func getType(forSection section: Int) -> DiningVenueType {
+    func refresh() {
+        self.venues = DiningDataStore.shared.getSectionedVenues()
+    }
+    
+    func getType(forSection section: Int) -> DiningVenue.VenueType {
         let index = shouldShowDiningBalances ? section - 1 : section
         return ordering[index]
     }
     
     func getVenues(forSection section: Int) -> [DiningVenue] {
-        let type = getType(forSection: section)
-        switch type {
-        case .dining:
-            return dining
-        case .retail:
-            return retail
-        }
+        let venueType = getType(forSection: section)
+        return venues[venueType] ?? []
     }
     
     func getVenue(for indexPath: IndexPath) -> DiningVenue {
-        return getVenues(forSection: indexPath.section)[indexPath.item]
+        return getVenues(forSection: indexPath.section)[indexPath.row]
     }
 }
 
@@ -108,10 +103,8 @@ extension DiningViewModel: UITableViewDelegate {
             let headerTitle: String
             let type = getType(forSection: section)
             switch type {
-            case .dining:
-                headerTitle = diningHeader
-            case .retail:
-                headerTitle = retailHeader
+            case .dining, .retail, .unknown:
+                headerTitle = type.fullDisplayName
             }
             
             view.label.text = headerTitle

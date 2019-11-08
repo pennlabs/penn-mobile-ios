@@ -70,7 +70,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
     
     private func getDiningBalance() {
         if let student = Student.getStudent(), student.isFreshman() {
-            DiningViewModel.ShowDiningPlan = true
+            DiningViewModel.showDiningPlan = true
         }
         
         CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, error) in

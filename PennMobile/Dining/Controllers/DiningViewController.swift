@@ -11,9 +11,6 @@ import WebKit
 class DiningViewController: GenericTableViewController {
         
     fileprivate var viewModel = DiningViewModel()
-    
-    fileprivate let venueToPreload: DiningVenueName = .commons
-    
     fileprivate var isReturningFromLogin: Bool = false
         
     override func viewDidLoad() {
@@ -43,6 +40,14 @@ class DiningViewController: GenericTableViewController {
                 updateBalanceIfNeeded()
             }
         }
+        if viewModel.venues[.dining]?.isEmpty ?? true {
+            viewModel.refresh()
+            tableView.reloadData()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,21 +68,14 @@ extension DiningViewController {
         DiningAPI.instance.fetchDiningHours { (success, error) in
             DispatchQueue.main.async {
                 if !success {
-                    DiningHoursData.shared.clearHours()
-                    
                     if error {
                         self.navigationVC?.addStatusBar(text: .apiError)
                     } else {
                         self.navigationVC?.addStatusBar(text: .noInternet)
                     }
-                    
-                } else {
-                    
-                    //what to do when request is successful
-                    
                 }
+                self.viewModel.venues = DiningDataStore.shared.getSectionedVenues()
                 self.tableView.reloadData()
-                
                 self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
@@ -165,18 +163,15 @@ extension DiningViewController {
 // MARK: - DiningViewModelDelegate
 extension DiningViewController: DiningViewModelDelegate {
     func handleSelection(for venue: DiningVenue) {
-        //let ddc = DiningDetailViewController()
-        //ddc.venue = venue
-        //navigationController?.pushViewController(ddc, animated: true)
+
+        DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name)
         
-        DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name.rawValue)
-        
-        if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
+        if let url = venue.facilityURL {
             let vc = UIViewController()
             let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             webView.load(URLRequest(url: url))
             vc.view.addSubview(webView)
-            vc.title = venue.name.rawValue
+            vc.title = venue.name
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
