@@ -11,7 +11,10 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     // MARK: GSR Group Networking - Dummy Data for now
     static let instance = GSRGroupNetworkManager()
 
-    fileprivate static let userSettings = GSRGroupIndividualSettings(pennKeyActive: true, notificationsOn: false)
+    fileprivate static let pennKeyActiveSetting = GSRGroupIndividualSetting(title: "PennKey Permission", descr: "Anyone in this group can book a study room block using your PennKey.", isEnabled: false)
+    fileprivate static let notificationOnSetting = GSRGroupIndividualSetting(title: "Notifications", descr: "You’ll receive a notification any time a room is booked by this group.", isEnabled: false)
+    
+    fileprivate static let userSettings = GSRGroupIndividualSettings(pennKeyActive: pennKeyActiveSetting, notificationsOn: notificationOnSetting)
     fileprivate static let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
     
     fileprivate static let labs = GSRGroup(id: "1", name: "Penn Labs", color: "blue", createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: nil, members: nil, reservations: nil, groupSettings: groupSettings)
@@ -49,9 +52,8 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
     func createGroup(name: String, color: String, callback: (_ success: Bool, _ errorMsg: String?) -> ()) {
         let dummyUsers = getDummyUsers()
-        let userSettings = GSRGroupIndividualSettings(pennKeyActive: true, notificationsOn: true)
         let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
-        let group = GSRGroup(id: name, name: name, color: color, createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
+        let group = GSRGroup(id: name, name: name, color: color, createdAt: Date(), userSettings: GSRGroupNetworkManager.userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
         groups.append(group)
 
         callback(true, nil)

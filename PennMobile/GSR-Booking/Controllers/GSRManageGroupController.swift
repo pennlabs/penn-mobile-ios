@@ -59,6 +59,7 @@ extension GSRManageGroupController {
         tableView = UITableView(frame: .zero)
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
+        tableView.allowsSelection = false
         tableView.register(GroupMemberCell.self, forCellReuseIdentifier: GroupMemberCell.identifier)
         tableView.register(GroupSettingsCell.self, forCellReuseIdentifier: GroupSettingsCell.identifier)
         tableView.tableFooterView = UIView()

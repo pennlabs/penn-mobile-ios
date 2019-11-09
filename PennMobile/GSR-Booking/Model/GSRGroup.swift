@@ -21,10 +21,15 @@ struct GSRGroup {
     let reservations: [String]? //array of reservationID's
     let groupSettings: GSRGroupAccessSettings?
 }
+struct GSRGroupIndividualSetting {
+    var title: String
+    var descr: String
+    var isEnabled: Bool
+}
 
 struct GSRGroupIndividualSettings { //specific to a user within a group
-    var pennKeyActive: Bool
-    var notificationsOn: Bool
+    var pennKeyActive: GSRGroupIndividualSetting
+    var notificationsOn: GSRGroupIndividualSetting
 }
 
 struct GSRGroupAccessSettings { //general to all users within a group
