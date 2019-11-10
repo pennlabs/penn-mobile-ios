@@ -10,13 +10,17 @@ import Foundation
 class GSRGroupNetworkManager: NSObject, Requestable {
     // MARK: GSR Group Networking - Dummy Data for now
     static let instance = GSRGroupNetworkManager()
+    
+    let userURL = "https://staging.gsr.upenn.club/users/"
+    let groupsURL = "https://staging.gsr.upenn.club/groups/"
+    let membershipURL = "https://staging.gsr.upenn.club/membership/"
 
     fileprivate static let userSettings = GSRGroupIndividualSettings(pennKeyActive: true, notificationsOn: false)
     fileprivate static let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
     
-    fileprivate static let labs = GSRGroup(id: "1", name: "Penn Labs", color: "blue", createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: nil, members: nil, reservations: nil, groupSettings: groupSettings)
-    fileprivate static let cis121 = GSRGroup(id: "2", name: "CIS 121 Study Group", color: "blue", createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: nil, members: nil, reservations: nil, groupSettings: groupSettings)
-    fileprivate static let cis160 = GSRGroup(id: "3", name: "CIS 160 Study Group", color: "blue", createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: nil, members: nil, reservations: nil, groupSettings: groupSettings)
+    fileprivate static let labs = GSRGroup(id: 1, name: "Penn Labs", color: "blue", createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: nil, members: nil, reservations: nil, groupSettings: groupSettings)
+    fileprivate static let cis121 = GSRGroup(id: 2, name: "CIS 121 Study Group", color: "blue", createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: nil, members: nil, reservations: nil, groupSettings: groupSettings)
+    fileprivate static let cis160 = GSRGroup(id: 3, name: "CIS 160 Study Group", color: "blue", createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: nil, members: nil, reservations: nil, groupSettings: groupSettings)
 
     fileprivate var groups: [GSRGroup] = [labs, cis121, cis160]
 
@@ -27,11 +31,31 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         return [daniel, rehaan, lucy]
     }
 
-    func getAllGroups(callback: ([GSRGroup]?) -> ()) {
-        callback(groups)
+    func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
+        // handle missing pennkey later
+        guard let pennkey = Student.getStudent()?.pennkey else { return }
+        
+        let allGroupsURL = "\(userURL)salib/"
+        getRequestData(url: allGroupsURL) { (data, error, status) in
+            print(error)
+            print(status)
+            print()
+            guard let data = data else { return }
+            let user = try? JSONDecoder().decode(GSRGroupUser.self, from: data)
+            
+            guard let guser = user else {
+                print("failed decoding shit")
+                callback(nil)
+                return
+            }
+            
+            print(guser)
+            
+            callback(guser.groups)
+        }
     }
 
-    func getGroup(groupid: String, callback: (GSRGroup?) -> ()) {
+    func getGroup(groupid: Int, callback: (GSRGroup?) -> ()) {
         let group = groups.first { (group) -> Bool in
             return group.id == groupid
         }
@@ -51,7 +75,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         let dummyUsers = getDummyUsers()
         let userSettings = GSRGroupIndividualSettings(pennKeyActive: true, notificationsOn: true)
         let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
-        let group = GSRGroup(id: name, name: name, color: color, createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
+        let group = GSRGroup(id: 1, name: name, color: color, createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
         groups.append(group)
 
         callback(true, nil)

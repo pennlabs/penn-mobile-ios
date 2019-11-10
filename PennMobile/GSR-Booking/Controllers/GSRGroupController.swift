@@ -28,8 +28,8 @@ class GSRGroupController: GenericViewController {
             if let groups = groups {
                 self.groups = groups
             }
-    
-            tableView.reloadData()
+            
+            self.tableView.reloadData()
         }
     }
 }
@@ -105,8 +105,10 @@ extension GSRGroupController: NewGroupInitialDelegate{
             if let groups = groups {
                 self.groups = groups
             }
+            
+            
     
-            tableView.reloadData()
+            self.tableView.reloadData()
         }
     }
 }

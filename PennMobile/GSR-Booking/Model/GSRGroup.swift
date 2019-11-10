@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct GSRGroup {
-    let id: String
+struct GSRGroup: Codable{
+    let id: Int
     let name: String
-    let color: String
-    let createdAt: Date
-    let userSettings: GSRGroupIndividualSettings //not optional, beacuse we need to know if pennKey is Active
+    let color: String?
+    let createdAt: Date?
+    let userSettings: GSRGroupIndividualSettings? //not optional, beacuse we need to know if pennKey is Active
     
     var imgURL: String?
     var owners: [GSRGroupMember]?
@@ -22,22 +22,22 @@ struct GSRGroup {
     let groupSettings: GSRGroupAccessSettings?
 }
 
-struct GSRGroupIndividualSettings { //specific to a user within a group
+struct GSRGroupIndividualSettings: Codable { //specific to a user within a group
     var pennKeyActive: Bool
     var notificationsOn: Bool
 }
 
-struct GSRGroupAccessSettings { //general to all users within a group
+struct GSRGroupAccessSettings: Codable { //general to all users within a group
     var booking: GSRGroupAccessPermissions
     var invitation: GSRGroupAccessPermissions
 }
 
-enum GSRGroupAccessPermissions { //who has access
+enum GSRGroupAccessPermissions: String, Codable { //who has access
     case everyone
     case owner
 }
 
-struct GSRGroupMember {
+struct GSRGroupMember: Codable {
     let accountID: String
     let pennKey: String
     let first: String

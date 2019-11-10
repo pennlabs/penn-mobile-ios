@@ -72,6 +72,14 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == 0 {
+            return nil
+        }
+        
+        return nil
+    }
+    
     
 }
 
