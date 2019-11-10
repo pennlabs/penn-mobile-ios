@@ -63,10 +63,11 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: GroupSettingsCell.identifier, for: indexPath) as! GroupSettingsCell
-            
-            let userSetting = indexPath.row == 0 ? group.userSettings.pennKeyActive : group.userSettings.notificationsOn
-            cell.setupCell(with: userSetting)
-            cell.delegate = self
+            if let userSettings = group.userSettings {
+                let userSetting = indexPath.row == 0 ? userSettings.pennKeyActive : userSettings.notificationsOn
+                cell.setupCell(with: userSetting)
+                cell.delegate = self
+            }
             
             return cell
             

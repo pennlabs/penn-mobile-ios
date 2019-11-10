@@ -77,7 +77,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     func createGroup(name: String, color: String, callback: (_ success: Bool, _ errorMsg: String?) -> ()) {
         let dummyUsers = getDummyUsers()
         let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
-        let group = GSRGroup(id: 1, name: name, color: color, createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
+        let group = GSRGroup(id: 1, name: name, color: color, createdAt: Date(), userSettings: GSRGroupNetworkManager.userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
         groups.append(group)
 
         callback(true, nil)

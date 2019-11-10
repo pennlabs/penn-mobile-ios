@@ -29,7 +29,9 @@ class GSRGroupController: GenericViewController {
                 self.groups = groups
             }
             
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
 }
@@ -107,8 +109,9 @@ extension GSRGroupController: NewGroupInitialDelegate{
             }
             
             
-    
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
 }
