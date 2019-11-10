@@ -14,17 +14,22 @@ struct GSRGroup: Codable{
     let color: String?
     let createdAt: Date?
     let userSettings: GSRGroupIndividualSettings? //not optional, beacuse we need to know if pennKey is Active
-    
+
     var imgURL: String?
     var owners: [GSRGroupMember]?
     var members: [GSRGroupMember]?
     let reservations: [String]? //array of reservationID's
     let groupSettings: GSRGroupAccessSettings?
 }
+struct GSRGroupIndividualSetting: Codable {
+    var title: String
+    var descr: String
+    var isEnabled: Bool
+}
 
 struct GSRGroupIndividualSettings: Codable { //specific to a user within a group
-    var pennKeyActive: Bool
-    var notificationsOn: Bool
+    var pennKeyActive: GSRGroupIndividualSetting
+    var notificationsOn: GSRGroupIndividualSetting
 }
 
 struct GSRGroupAccessSettings: Codable { //general to all users within a group

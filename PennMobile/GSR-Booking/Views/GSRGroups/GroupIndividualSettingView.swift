@@ -13,7 +13,7 @@ class GroupIndividualSettingView: UIView {
     fileprivate var titleLabel: UILabel!
     fileprivate var descriptionLabel: UILabel!
     fileprivate var isEnabledSwitch: UISwitch!
-    
+
     init(title: String, description: String, isEnabled: Bool) {
         super.init(frame: CGRect.zero)
         
@@ -60,7 +60,4 @@ extension GroupIndividualSettingView {
         addSubview(isEnabledSwitch)
         _ = isEnabledSwitch.anchor(titleLabel.topAnchor, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 51, heightConstant: 0)
     }
-    
-    
-    
 }

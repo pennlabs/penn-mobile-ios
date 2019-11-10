@@ -9,26 +9,26 @@
 import Foundation
 
 class GroupCell: UITableViewCell {
-    
+
     static let cellHeight: CGFloat = 120
     static let identifier = "gsrGroupCell"
-    
+
     fileprivate var groupImage: UIImageView!
     fileprivate var groupName: UILabel!
     fileprivate var activeLabel: UILabel!
-    
+
     var group: GSRGroup! {
         didSet {
             setupCell()
         }
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.accessoryType = .disclosureIndicator
 //        setupUI()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -48,7 +48,7 @@ extension GroupCell {
         prepareGroupNameLabel()
         prepareActiveLabel()
     }
-    
+
     fileprivate func prepareGroupImageView() {
         groupImage = UIImageView()
         addSubview(groupImage)
@@ -62,7 +62,7 @@ extension GroupCell {
         groupImage.backgroundColor = UIColor(named: "blueLighter")
         groupImage.contentMode = .scaleAspectFit
     }
-    
+
     fileprivate func prepareGroupNameLabel() {
         groupName = UILabel()
         groupName.text = group.name
@@ -72,18 +72,15 @@ extension GroupCell {
         groupName.leadingAnchor.constraint(equalTo: groupImage.trailingAnchor, constant: 14).isActive = true
         groupName.topAnchor.constraint(equalTo: groupImage.topAnchor, constant: 4).isActive = true
     }
-    
+
     fileprivate func prepareActiveLabel() {
         activeLabel = UILabel()
         addSubview(activeLabel)
         activeLabel.translatesAutoresizingMaskIntoConstraints = false
         activeLabel.leadingAnchor.constraint(equalTo: groupName.leadingAnchor).isActive = true
         activeLabel.topAnchor.constraint(equalTo: groupName.bottomAnchor, constant: 5 ).isActive = true
-        
-        // revise this - doing this to build
-        let text = group.userSettings?.pennKeyActive ?? false ? "PennID Active" : "PennID Inactive"
+        let text = group.userSettings.pennKeyActive.isEnabled ? "PennID Active" : "PennID Inactive"
         activeLabel.text = text
-        activeLabel.textColor = group.userSettings?.pennKeyActive ?? false ? UIColor(named: "baseGreen") : UIColor(named: "baseRed")
+        activeLabel.textColor = group.userSettings.pennKeyActive.isEnabled ? UIColor(named: "baseGreen") : UIColor(named: "baseRed")
     }
 }
-
