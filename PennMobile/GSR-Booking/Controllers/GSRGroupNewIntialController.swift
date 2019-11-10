@@ -27,6 +27,8 @@ class GSRGroupNewIntialController: UIViewController {
                                          UIColor(red: 51, green: 101, blue: 143),
                                          UIColor(red: 131, green: 79, blue: 160)
                                          ]
+    fileprivate var chosenColor: UIColor!
+    fileprivate var nameChanged: Bool!
     fileprivate var borderColors: [UIColor] = [
         UIColor(red: 1.5 * 32.0/255, green: 1.5 * 156.0/255, blue: 1.5 * 238.0/255, alpha: 1),
         UIColor(red: 1.5 * 63.0/255, green: 1.5 * 170.0/255, blue: 1.5 * 109.0/255, alpha: 1),
@@ -94,10 +96,19 @@ class GSRGroupNewIntialController: UIViewController {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        if (textField.text != "") {
+        if (textField.text != "" && textField.text != "New Group Name") {
             createButton.isUserInteractionEnabled = true;
+            if (chosenColor != nil) {
+                createButton.backgroundColor = chosenColor
+            } else {
+                createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+            }
+            nameChanged = true;
+            
         } else {
             createButton.isUserInteractionEnabled = false;
+            createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+            nameChanged = false;
         }
     }
 
@@ -155,6 +166,7 @@ class GSRGroupNewIntialController: UIViewController {
         
         //button unclickable until group name changed and not empty
         createButton.isUserInteractionEnabled = false;
+        nameChanged = false;
     }
 
     func prepareColorLabel() {
@@ -277,7 +289,12 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
         let cell = collectionView.cellForItem(at: indexPath) as? GSRColorCell
         cell?.toggleBorder()
         createButton.isEnabled = true
-        createButton.backgroundColor = cell?.colorView.backgroundColor
+        if (nameChanged) {
+            createButton.backgroundColor = cell?.colorView.backgroundColor
+        } else {
+            createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+        }
+        chosenColor = cell?.colorView.backgroundColor
         colorLabel.textColor = cell?.colorView.backgroundColor
         colorLabel.text = colorNames[indexPath.item % colorNames.count]
         colorLabel.font = UIFont.boldSystemFont(ofSize: 17)
