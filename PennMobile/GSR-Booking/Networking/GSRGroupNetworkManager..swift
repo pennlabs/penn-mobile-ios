@@ -41,7 +41,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
             return
         }
 
-        let allGroupsURL = "\(userURL)salib/"
+        let allGroupsURL = "\(userURL)\(pennkey)/"
         getRequestData(url: allGroupsURL) { (data, error, status) in
             guard let data = data else { return }
             let user = try? JSONDecoder().decode(GSRGroupUser.self, from: data)
@@ -74,14 +74,34 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     }
     //GSRGroup(id: "new", name: nameField.text!, imgURL: nil, color: "color", owners: [GSRGroupMember(accountID: "dummyOwner", pennKey: "dummyPennKey", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", isBookingEnabled: true, isAdmin: true)], members: [], createdAt: Date(), isActive: true, reservations: [])
 
+//    func createGroup(name: String, color: String, callback: (_ success: Bool, _ errorMsg: String?) -> ()) {
+//        let dummyUsers = getDummyUsers()
+//        let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
+//        let group = GSRGroup(id: 1, name: name, color: color, createdAt: Date(), userSettings: GSRGroupNetworkManager.userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
+//        groups.append(group)
+//
+//        callback(true, nil)
+//    }
     func createGroup(name: String, color: String, callback: (_ success: Bool, _ errorMsg: String?) -> ()) {
-        let dummyUsers = getDummyUsers()
-        let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
-        let group = GSRGroup(id: 1, name: name, color: color, createdAt: Date(), userSettings: GSRGroupNetworkManager.userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
-        groups.append(group)
 
+        guard let pennkey = Student.getStudent()?.pennkey else {
+            print("User is not signed in")
+            callback(false, "user is not signed in")
+            return
+        }
+        
+        let params: [NSString: Any] = ["owner": pennkey, "name": name, "color": color]
+        postRequestData(url: groupsURL, params: params) { (data, error, status) in
+            if let error = error {
+                print("postRequest Error: \(error)")
+            } else if let data = data {
+                dump(data)
+            }
+        }
+        
         callback(true, nil)
     }
+    
 
 
 
