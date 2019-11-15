@@ -19,15 +19,15 @@ protocol GSRGroupIndividualSettingDelegate {
 class GSRManageGroupViewModel: NSObject {
     //store important data used by gsr group views
     fileprivate var group: GSRGroup!
-    
+
     // MARK: Delegate
     var delegate: GSRManageGroupViewModelDelegate!
-     
+
     // MARK: init
     init(group: GSRGroup) {
         self.group = group
     }
-    
+
     func setGroup(group: GSRGroup) {
         self.group = group
     }
@@ -39,7 +39,7 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
         if section == 0 {
             return 2
         } else {
-            
+
             if let members = group.members {
                 return members.count
             } else {
@@ -47,11 +47,11 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
             }
         }
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "Settings"
@@ -59,17 +59,18 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
             return "Members"
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: GroupSettingsCell.identifier, for: indexPath) as! GroupSettingsCell
-            
-            let userSetting = ((indexPath.row == 0 ? group.userSettings?.pennKeyActive : group.userSettings?.notificationsOn)) ?? GSRGroupIndividualSetting(title: "bull", descr: "sheet", isEnabled: true)
-            cell.setupCell(with: userSetting)
-            cell.delegate = self
-            
+            if let userSettings = group.userSettings {
+                let userSetting = indexPath.row == 0 ? userSettings.pennKeyActive : userSettings.notificationsOn
+                cell.setupCell(with: userSetting)
+                cell.delegate = self
+            }
+
             return cell
-            
+
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: GroupMemberCell.identifier, for: indexPath) as! GroupMemberCell
             if let members = group.members {
@@ -78,21 +79,21 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
             return cell
         }
     }
-    
+
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 0 {
             return nil
         }
-        
+
         return nil
     }
-    
-    
+
+
 }
 
 //MARK: UITableViewDelegate
 extension GSRManageGroupViewModel: UITableViewDelegate {
-    
+
 }
 
 //MARK: GSRGroupIndividualSettingDelegate
