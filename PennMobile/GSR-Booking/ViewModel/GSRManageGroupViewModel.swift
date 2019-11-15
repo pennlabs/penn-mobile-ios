@@ -64,7 +64,7 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: GroupSettingsCell.identifier, for: indexPath) as! GroupSettingsCell
             
-            let userSetting = indexPath.row == 0 ? group.userSettings.pennKeyActive : group.userSettings.notificationsOn
+            let userSetting = ((indexPath.row == 0 ? group.userSettings?.pennKeyActive : group.userSettings?.notificationsOn)) ?? GSRGroupIndividualSetting(title: "bull", descr: "sheet", isEnabled: true)
             cell.setupCell(with: userSetting)
             cell.delegate = self
             

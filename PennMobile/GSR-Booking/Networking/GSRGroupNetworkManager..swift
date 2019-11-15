@@ -36,18 +36,18 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
     func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
         // handle missing pennkey later
-        guard let pennkey = Student.getStudent()?.pennkey else { return }
+        guard let pennkey = Student.getStudent()?.pennkey else {
+            print("Use is not signed in")
+            return
+        }
 
         let allGroupsURL = "\(userURL)salib/"
         getRequestData(url: allGroupsURL) { (data, error, status) in
-            print(error)
-            print(status)
-            print()
             guard let data = data else { return }
             let user = try? JSONDecoder().decode(GSRGroupUser.self, from: data)
 
             guard let guser = user else {
-                print("failed decoding shit")
+//                print("failed decoding shit")
                 callback(nil)
                 return
             }
@@ -77,7 +77,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     func createGroup(name: String, color: String, callback: (_ success: Bool, _ errorMsg: String?) -> ()) {
         let dummyUsers = getDummyUsers()
         let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
-        let group = GSRGroup(id: 1, name: name, color: color, createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
+        let group = GSRGroup(id: 1, name: name, color: color, createdAt: Date(), userSettings: GSRGroupNetworkManager.userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
         groups.append(group)
 
         callback(true, nil)
