@@ -24,6 +24,8 @@ class DiningViewController: GenericTableViewController {
         viewModel.delegate = self
         viewModel.registerHeadersAndCells(for: tableView)
         
+        viewModel.viewController = self
+        
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
         prepareRefreshControl()

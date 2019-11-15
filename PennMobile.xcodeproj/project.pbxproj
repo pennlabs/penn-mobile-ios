@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13A49B10236F4E0F00DEFCE7 /* DiningDollarsTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A49B0F236F4E0F00DEFCE7 /* DiningDollarsTransactionViewController.swift */; };
+		13A49B12236F541400DEFCE7 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A49B11236F541400DEFCE7 /* TransactionTableViewCell.swift */; };
 		2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */; };
 		2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */; };
 		2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF221F3F762500CEC3F4 /* ContactCell.swift */; };
@@ -236,6 +238,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		13A49B0F236F4E0F00DEFCE7 /* DiningDollarsTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDollarsTransactionViewController.swift; sourceTree = "<group>"; };
+		13A49B11236F541400DEFCE7 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
@@ -719,6 +723,7 @@
 			isa = PBXGroup;
 			children = (
 				216640911EBADC1700746B8E /* DiningViewController.swift */,
+				13A49B0F236F4E0F00DEFCE7 /* DiningDollarsTransactionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1020,6 +1025,7 @@
 				217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */,
 				C11B38E4225126DD009B752A /* DiningBalanceCell.swift */,
 				C18D1D61225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift */,
+				13A49B11236F541400DEFCE7 /* TransactionTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1632,10 +1638,12 @@
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
 				21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */,
 				215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */,
+				13A49B10236F4E0F00DEFCE7 /* DiningDollarsTransactionViewController.swift in Sources */,
 				217A7836204D2E0D004F1227 /* HomeLaundryCellItem.swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
+				13A49B12236F541400DEFCE7 /* TransactionTableViewCell.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				F2F4C92023611EB900816456 /* Colors.swift in Sources */,

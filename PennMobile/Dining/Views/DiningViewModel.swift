@@ -30,6 +30,8 @@ class DiningViewModel: NSObject {
     internal let diningCell = "diningCell"
     internal let diningBalanceCell = "diningBalanceCell"
     
+    var viewController: DiningViewController?
+    
     var shouldShowDiningBalances: Bool {
         get {
             return UserDefaults.standard.hasDiningPlan() || DiningViewModel.showDiningPlan
@@ -73,6 +75,7 @@ extension DiningViewModel: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: diningBalanceCell, for: indexPath) as! DiningBalanceCell
             cell.selectionStyle = .none
             cell.diningBalance = balance
+            cell.viewController = viewController
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell

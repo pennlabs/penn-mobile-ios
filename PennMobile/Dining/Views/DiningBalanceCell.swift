@@ -12,6 +12,7 @@ class DiningBalanceCell: UITableViewCell {
     
     static let identifier = "diningBalanceCell"
     static let cellHeight: CGFloat = 120
+    var viewController: DiningViewController?
     
     var diningBalance: DiningBalance? {
         didSet {
@@ -158,5 +159,11 @@ extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegat
             cell.backgroundColor = UIColor.init(red: 0xA6, green: 0xBC, blue: 0xD7)
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.item  == 0 {
+            self.viewController?.navigationController?.pushViewController(DiningDollarsTransactionViewController(), animated: true)
+        }
     }
 }
