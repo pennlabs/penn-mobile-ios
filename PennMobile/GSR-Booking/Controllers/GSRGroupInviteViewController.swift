@@ -13,6 +13,8 @@ class GSRGroupInviteViewController: UIViewController {
     fileprivate var dummyLabel: UILabel!
     fileprivate var doneBtn : UIButton!
     fileprivate var closeButton: UIButton!
+    fileprivate var inViteUsersLabel: UILabel!
+    fileprivate var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +40,53 @@ class GSRGroupInviteViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(cancelBtnAction), for: .touchUpInside)
     }
     
+    func prepareInViteUsersLabel() {
+        inViteUsersLabel = UILabel()
+        inViteUsersLabel.text = "Invite User"
+        inViteUsersLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        view.addSubview(inViteUsersLabel)
+        inViteUsersLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
+        inViteUsersLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
+        inViteUsersLabel.translatesAutoresizingMaskIntoConstraints = false
+        /*
+        nameField = UITextField()
+        nameField.placeholder = "New Group Name"
+        nameField.textColor = UIColor.init(red: 216, green: 216, blue: 216)
+        nameField.font = UIFont.boldSystemFont(ofSize: 24)
+        //rgb 18 39 75
+        nameField.textColor = UIColor(r: 18/255, g: 39/255, b: 75/255)
+        nameField.keyboardType = .alphabet
+        nameField.textAlignment = .natural
+        nameField.autocorrectionType = .no
+        nameField.spellCheckingType = .no
+        nameField.autocapitalizationType = .none
+        view.addSubview(nameField)
+        nameField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
+        nameField.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
+        nameField.translatesAutoresizingMaskIntoConstraints = false
+        
+        nameField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        */
+    }
+    
     @objc func cancelBtnAction(sender:UIButton!) {
         dismiss(animated: true, completion:nil)
     }
+    
+    func prepareSearchBar() {
+        searchBar = UISearchBar()
+        searchBar.searchTextField.placeholder = "Search by Name or PennKey"
+        searchBar.searchTextField.textColor = UIColor.init(red: 216, green: 216, blue: 216)
+        
+        view.addSubview(searchBar)
+        searchBar.topAnchor.constraint(equalTo: inViteUsersLabel.bottomAnchor, constant: 30).isActive = true
+        searchBar.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+        searchBar.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        
+    }
+ 
+    
     /*
     // MARK: - Navigation
 
@@ -57,5 +103,7 @@ class GSRGroupInviteViewController: UIViewController {
 extension GSRGroupInviteViewController {
     fileprivate func prepareUI() {
         prepareCloseButton()
+        prepareInViteUsersLabel()
+        prepareSearchBar()
     }
 }
