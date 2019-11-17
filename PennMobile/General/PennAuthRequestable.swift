@@ -12,12 +12,12 @@ protocol PennAuthRequestable {}
 
 extension PennAuthRequestable {
     
-    private var loginUrl: String {
-        return "https://weblogin.pennkey.upenn.edu/login"
+    private var baseUrl: String {
+        return "https://weblogin.pennkey.upenn.edu"
     }
     
     private var authUrl: String {
-        return "https://idp.pennkey.upenn.edu/idp/Authn"
+        return "https://weblogin.pennkey.upenn.edu/idp/profile"
     }
     
     func makeAuthRequest(targetUrl: String, shibbolethUrl: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
@@ -51,19 +51,11 @@ extension PennAuthRequestable {
     }
     
     private func makeRequestWithAuth(targetUrl: String, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        guard let passcode = html.getMatches(for: "name=\"passcode\" value=\"(.*?)\"").first,
-                let required = html.getMatches(for: "name=\"required\" value=\"(.*?)\"").first,
-                let appfactor = html.getMatches(for: "name=\"appfactor\" value=\"(.*?)\"").first,
-                let ref = html.getMatches(for: "name=\"ref\" value=\"(.*?)\"").first,
-                let service = html.getMatches(for: "name=\"service\" value=\"(.*?)\"").first else {
-                UserDefaults.standard.setShibbolethAuth(authedIn: false)
-                completionHandler(nil, nil, NetworkingError.authenticationError)
-                return
+        guard let actionUrl = html.getMatches(for: "form action=\"(.*?)\" method=\"POST\" id=\"login-form\"").first else {
+            UserDefaults.standard.setShibbolethAuth(authedIn: false)
+            completionHandler(nil, nil, NetworkingError.authenticationError)
+            return
         }
-        
-        // Check if have two factor trusted browser cookie (may have expired)
-//        let cookies = HTTPCookieStorage.shared.cookies ?? []
-        let isTwoFactorTrusted = true //!cookies.filter { $0.name == "twoFactorTrustedBrowser" }.isEmpty
         
         let genericPwdQueryable =
             GenericPasswordQueryable(service: "PennWebLogin")
@@ -84,30 +76,22 @@ extension PennAuthRequestable {
             pennkey = nil
         }
         
-        guard pennkey != nil && password != nil && isTwoFactorTrusted else {
+        guard pennkey != nil && password != nil else {
             UserDefaults.standard.setShibbolethAuth(authedIn: false)
             completionHandler(nil, nil, NetworkingError.authenticationError)
             return
         }
         
-        let url = URL(string: loginUrl)!
+        let url = URL(string: baseUrl + actionUrl)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
-        var params: [String: String] = [
-            "password": password,
-            "submit1": "Log in",
-            "passcode": passcode,
-            "required": required,
-            "appfactor": appfactor,
-            "ref": ref,
-            "service": service,
-            "login": pennkey,
+        let params: [String: String] = [
+            "j_username": pennkey,
+            "j_password": password,
+            "_eventId_proceed": "",
         ]
         
-        if let reauth = html.getMatches(for: "name=\"reauth\" value=\"(.*?)\"").first {
-            params["reauth"] = reauth
-        }
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         let characterSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
         let parameterArray = params.map { key, value -> String in
@@ -133,7 +117,6 @@ extension PennAuthRequestable {
     private func makeRequestWithShibboleth(targetUrl: String, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         guard let samlResponse = html.getMatches(for: "<input type=\"hidden\" name=\"SAMLResponse\" value=\"(.*?)\"/>").first,
             let relayState = html.getMatches(for: "<input type=\"hidden\" name=\"RelayState\" value=\"(.*?)\"/>").first?.replacingOccurrences(of: "&#x3a;", with: ":") else {
-                HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
                 UserDefaults.standard.setShibbolethAuth(authedIn: false)
                 completionHandler(nil, nil, NetworkingError.authenticationError)
                 return

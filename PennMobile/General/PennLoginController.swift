@@ -105,14 +105,14 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
                 self.handleSuccessfulNavigation(webView, decisionHandler: decisionHandler)
             } else {
                 if url.absoluteString.contains("password") {
-                    print(url.absoluteString)
                     webView.evaluateJavaScript("document.getElementById('pennname').value;") { (result, error) in
-                        print(result)
                         if let pennkey = result as? String {
                             webView.evaluateJavaScript("document.getElementById('password').value;") { (result, error) in
                                 if let password = result as? String {
-                                    self.pennkey = pennkey
-                                    self.password = password
+                                    if(!pennkey.isEmpty && !password.isEmpty) {
+                                        self.pennkey = pennkey
+                                        self.password = password
+                                    }
                                 }
                                 decisionHandler(.allow)
                             }
@@ -146,21 +146,20 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         guard let url = webView.url else {
             return
         }
-        
-        if url.absoluteString == loginURL {
+
+        if url.absoluteString.contains("twostep") {
             guard let pennkey = pennkey, let password = password else { return }
             try? secureStore.setValue(pennkey, for: "PennKey")
             try? secureStore.setValue(password, for: "PennKey Password")
-            trustDevice()
-            return
-        } else if url.absoluteString.contains(loginURL) {
+        } else {
             self.autofillCredentials()
+            self.trustDevice()
         }
     }
     
     func autofillCredentials() {
         guard let pennkey = pennkey else { return }
-        webView.evaluateJavaScript("document.getElementById('pennkey').value = '\(pennkey)'") { (_,_) in
+        webView.evaluateJavaScript("document.getElementById('pennname').value = '\(pennkey)'") { (_,_) in
         }
         guard let password = password else { return }
         webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_,_) in
@@ -168,7 +167,9 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     }
     
     func trustDevice() {
-        webView.evaluateJavaScript("document.getElementById('trustUA').value = 'true'") { (_, _) in
+        webView.evaluateJavaScript("document.getElementById('trustUA').value = 'true'") { (res, err) in
+            self.webView.evaluateJavaScript("document.documentElement.outerHTML.toString()") { (html, error) in
+            }
         }
     }
     
