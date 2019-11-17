@@ -15,6 +15,7 @@ class GSRGroupInviteViewController: UIViewController {
     fileprivate var closeButton: UIButton!
     fileprivate var inViteUsersLabel: UILabel!
     fileprivate var searchBar: UISearchBar!
+    fileprivate var sendInvitesButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,25 +49,6 @@ class GSRGroupInviteViewController: UIViewController {
         inViteUsersLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
         inViteUsersLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
         inViteUsersLabel.translatesAutoresizingMaskIntoConstraints = false
-        /*
-        nameField = UITextField()
-        nameField.placeholder = "New Group Name"
-        nameField.textColor = UIColor.init(red: 216, green: 216, blue: 216)
-        nameField.font = UIFont.boldSystemFont(ofSize: 24)
-        //rgb 18 39 75
-        nameField.textColor = UIColor(r: 18/255, g: 39/255, b: 75/255)
-        nameField.keyboardType = .alphabet
-        nameField.textAlignment = .natural
-        nameField.autocorrectionType = .no
-        nameField.spellCheckingType = .no
-        nameField.autocapitalizationType = .none
-        view.addSubview(nameField)
-        nameField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
-        nameField.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
-        nameField.translatesAutoresizingMaskIntoConstraints = false
-        
-        nameField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        */
     }
     
     @objc func cancelBtnAction(sender:UIButton!) {
@@ -77,13 +59,50 @@ class GSRGroupInviteViewController: UIViewController {
         searchBar = UISearchBar()
         searchBar.searchTextField.placeholder = "Search by Name or PennKey"
         searchBar.searchTextField.textColor = UIColor.init(red: 216, green: 216, blue: 216)
-        
         view.addSubview(searchBar)
         searchBar.topAnchor.constraint(equalTo: inViteUsersLabel.bottomAnchor, constant: 30).isActive = true
         searchBar.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
         searchBar.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
         searchBar.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func prepareSendInvitationButton() {
+        sendInvitesButton = UIButton()
+        sendInvitesButton.backgroundColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:0.5)
+        sendInvitesButton.setTitle("Send Invites", for: .normal)
+        sendInvitesButton.setTitleColor(UIColor.white, for: .normal)
+        sendInvitesButton.titleLabel?.font =  UIFont.boldSystemFont(ofSize: 17)
+        sendInvitesButton.layer.cornerRadius = 8
+        sendInvitesButton.layer.masksToBounds = true
+        sendInvitesButton.isEnabled = false
+        view.addSubview(sendInvitesButton)
+        sendInvitesButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
+        sendInvitesButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
+        sendInvitesButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -14).isActive = true
+        sendInvitesButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        sendInvitesButton.translatesAutoresizingMaskIntoConstraints = false
         
+        /*
+         createButton = UIButton()
+         createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+         createButton.setTitle("Create Group", for: .normal)
+         createButton.setTitleColor(UIColor.white, for: .normal)
+         createButton.layer.cornerRadius = 8
+         createButton.layer.masksToBounds = true
+         createButton.isEnabled = false
+         createButton.addTarget(self, action: #selector(createGroupBtnAction), for: .touchUpInside)
+
+         view.addSubview(createButton)
+         createButton.topAnchor.constraint(equalTo: colorCollectionView.bottomAnchor, constant: 45).isActive = true
+         createButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+         createButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15).isActive = true
+         createButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
+         createButton.translatesAutoresizingMaskIntoConstraints = false
+         
+         //button unclickable until group name changed and not empty
+         createButton.isUserInteractionEnabled = false;
+         nameChanged = false;
+         */
     }
  
     
@@ -105,5 +124,6 @@ extension GSRGroupInviteViewController {
         prepareCloseButton()
         prepareInViteUsersLabel()
         prepareSearchBar()
+        prepareSendInvitationButton()
     }
 }
