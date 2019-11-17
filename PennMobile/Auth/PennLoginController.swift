@@ -29,23 +29,8 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         super.viewDidLoad()
         view.backgroundColor = .uiBackground
         
-        let wkDataStore = WKWebsiteDataStore.nonPersistent()
-        let sharedCookies: Array<HTTPCookie> = HTTPCookieStorage.shared.cookies ?? []
-        let dispatchGroup = DispatchGroup()
-        
-        if sharedCookies.count > 0 {
-            for cookie in sharedCookies {
-                dispatchGroup.enter()
-                wkDataStore.httpCookieStore.setCookie(cookie) {
-                    dispatchGroup.leave()
-                }
-            }
-
-            dispatchGroup.notify(queue: DispatchQueue.main) {
-                self.configureAndLoad(wkDataStore: wkDataStore)
-            }
-        } else {
-            self.configureAndLoad(wkDataStore: wkDataStore)
+        WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
+            self.configureAndLoad(wkDataStore: dataStore)
         }
         
         navigationItem.title = "PennKey Login"
