@@ -19,6 +19,7 @@ class TOTPFetcher: NSObject {
         let operation = TOTPFetcherOperation { (secret) in
 
             if let secret = secret {
+                print(secret)
                 let genericPwdQueryable =
                     GenericPasswordQueryable(service: "PennWebLogin")
                 let secureStore =
@@ -42,10 +43,10 @@ class TOTPFetcher: NSObject {
         
         func run() {
             
-            _ = WKZombie.sharedInstance
             WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
                 DispatchQueue.main.async {
-                    WKZombie.Static.instance = WKZombie(dataStore: dataStore)
+                    let zombie = WKZombie(dataStore: dataStore)
+                    WKZombie.setInstance(zombie: zombie)
                     
                     let url = URL(string: self.urlStr)!
                     open(url)
@@ -66,12 +67,15 @@ class TOTPFetcher: NSObject {
                             GenericPasswordQueryable(service: "PennWebLogin")
                         let secureStore =
                             SecureStore(secureStoreQueryable: genericPwdQueryable)
+                        guard let pennkey = try? secureStore.getValue(for: "PennKey") else { return }
                         guard let password = try? secureStore.getValue(for: "PennKey Password") else { return }
                         
                         inspect()
+                            >>> get(by: .id("pennname"))
+                            >>> setAttribute("value", value: pennkey)
                             >>> get(by: .id("password"))
                             >>> setAttribute("value", value: password)
-                            >>> get(by: .id("loginform"))
+                            >>> get(by: .id("login-form"))
                             >>> submit
                             === self.goToTOTPPage
                     }
@@ -84,7 +88,7 @@ class TOTPFetcher: NSObject {
                     self.completion(nil)
             }
         }
-        
+
         func goToTOTPPage(result: Result<HTMLPage>) {
             inspect()
                 >>> get(by: .attribute("action", "../../twoFactorUi/app/UiMain.totpAdd"))
