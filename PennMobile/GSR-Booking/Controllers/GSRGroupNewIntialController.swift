@@ -212,12 +212,23 @@ class GSRGroupNewIntialController: UIViewController {
         GSRGroupNetworkManager.instance.createGroup(name: nameField.text!, color: "color") { (success, errorMsg) in
             if success {
                 delegate.fetchGroups()
-                dismiss(animated: true, completion: nil)
+                let controller = GSRGroupInviteViewController()
+                self.navigationController?.pushViewController(controller, animated: true)
+                
+                /*r
+                 let controller = GSRGroupNewIntialController()
+                 controller.delegate = self
+                 let navigationVC = UINavigationController(rootViewController: controller)
+                 controller.navigationController?.navigationBar.isHidden = true
+                 
+                 present(navigationVC, animated: true, completion: nil)
+                 */
+                
             }
         }
         
 //        delegate.addNewGroup(group: group)
-        dismiss(animated: true, completion:nil)
+        //dismiss(animated: true, completion:nil)
     }
 
     @objc func cancelBtnAction(sender:UIButton!) {
