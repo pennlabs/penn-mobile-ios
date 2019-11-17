@@ -104,8 +104,10 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
                 // Webview has redirected to desired site.
                 self.handleSuccessfulNavigation(webView, decisionHandler: decisionHandler)
             } else {
-                if url.absoluteString == self.loginURL {
-                    webView.evaluateJavaScript("document.getElementById('pennkey').value;") { (result, error) in
+                if url.absoluteString.contains("password") {
+                    print(url.absoluteString)
+                    webView.evaluateJavaScript("document.getElementById('pennname').value;") { (result, error) in
+                        print(result)
                         if let pennkey = result as? String {
                             webView.evaluateJavaScript("document.getElementById('password').value;") { (result, error) in
                                 if let password = result as? String {
