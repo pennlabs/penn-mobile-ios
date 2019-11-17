@@ -74,7 +74,7 @@ class GSRGroupInviteViewController: UIViewController {
         sendInvitesButton.titleLabel?.font =  UIFont.boldSystemFont(ofSize: 17)
         sendInvitesButton.layer.cornerRadius = 8
         sendInvitesButton.layer.masksToBounds = true
-        sendInvitesButton.isEnabled = false
+        
         view.addSubview(sendInvitesButton)
         sendInvitesButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
         sendInvitesButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
@@ -82,27 +82,8 @@ class GSRGroupInviteViewController: UIViewController {
         sendInvitesButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         sendInvitesButton.translatesAutoresizingMaskIntoConstraints = false
         
-        /*
-         createButton = UIButton()
-         createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
-         createButton.setTitle("Create Group", for: .normal)
-         createButton.setTitleColor(UIColor.white, for: .normal)
-         createButton.layer.cornerRadius = 8
-         createButton.layer.masksToBounds = true
-         createButton.isEnabled = false
-         createButton.addTarget(self, action: #selector(createGroupBtnAction), for: .touchUpInside)
-
-         view.addSubview(createButton)
-         createButton.topAnchor.constraint(equalTo: colorCollectionView.bottomAnchor, constant: 45).isActive = true
-         createButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-         createButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15).isActive = true
-         createButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
-         createButton.translatesAutoresizingMaskIntoConstraints = false
-         
-         //button unclickable until group name changed and not empty
-         createButton.isUserInteractionEnabled = false;
-         nameChanged = false;
-         */
+        sendInvitesButton.isEnabled = false
+        sendInvitesButton.isUserInteractionEnabled = false
     }
  
     
