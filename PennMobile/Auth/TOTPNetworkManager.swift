@@ -25,11 +25,6 @@ extension TOTPNetworkManager: PennAuthRequestable {
     
     func login(_ completion: @escaping () -> Void) {
         makeAuthRequest(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
-            if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                print(html)
-            } else {
-                print("Something went wrong")
-            }
             completion()
         }
     }
