@@ -47,8 +47,7 @@ class DiningViewController: GenericTableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
+        super.viewDidAppear(animated);
     }
     
     override func viewWillDisappear(_ animated: Bool) {
