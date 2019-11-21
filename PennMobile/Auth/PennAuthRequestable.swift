@@ -104,6 +104,7 @@ extension PennAuthRequestable {
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+
                 if(html.contains("two-step-form")){
                     self.makeRequestWithTwoFac(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
                 }
@@ -157,7 +158,7 @@ extension PennAuthRequestable {
         }
         task.resume()
     }
-    
+
     private func makeRequestWithTwoFac(targetUrl: String, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void){
         
         guard let passcode = html.getMatches(for: "name=\"passcode\" value=\"(.*?)\"").first,
