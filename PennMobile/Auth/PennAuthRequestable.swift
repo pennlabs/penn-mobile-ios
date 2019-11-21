@@ -141,6 +141,7 @@ extension PennAuthRequestable {
         request.httpBody = encodedParams.data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            UserDefaults.standard.storeCookies()
             if let response = response as? HTTPURLResponse, let urlStr = response.url?.absoluteString, urlStr == targetUrl {
                 UserDefaults.standard.setShibbolethAuth(authedIn: true)
                 completionHandler(data, response, error)
@@ -148,7 +149,6 @@ extension PennAuthRequestable {
                 UserDefaults.standard.setShibbolethAuth(authedIn: false)
                 completionHandler(nil, nil, NetworkingError.authenticationError)
             }
-            UserDefaults.standard.storeCookies()
         }
         task.resume()
     }
