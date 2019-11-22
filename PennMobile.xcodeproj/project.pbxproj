@@ -159,6 +159,7 @@
 		97AA4C6B235CCEDC007F09FE /* GSRManageGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA4C6A235CCEDC007F09FE /* GSRManageGroupViewModel.swift */; };
 		97AA4C6D235CD314007F09FE /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA4C6C235CD314007F09FE /* GroupMemberCell.swift */; };
 		97AA4C6F235CD328007F09FE /* GroupSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA4C6E235CD328007F09FE /* GroupSettingsCell.swift */; };
+		97C01E3923888AA1007F7C1C /* GroupManageButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C01E3823888AA1007F7C1C /* GroupManageButtonCell.swift */; };
 		97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFC2100DA1200D3D606 /* BuildingCell.swift */; };
 		97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */; };
 		97E79E052100DA1200D3D606 /* BuildingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */; };
@@ -411,6 +412,7 @@
 		97AA4C6A235CCEDC007F09FE /* GSRManageGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRManageGroupViewModel.swift; sourceTree = "<group>"; };
 		97AA4C6C235CD314007F09FE /* GroupMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
 		97AA4C6E235CD328007F09FE /* GroupSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsCell.swift; sourceTree = "<group>"; };
+		97C01E3823888AA1007F7C1C /* GroupManageButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManageButtonCell.swift; sourceTree = "<group>"; };
 		97E79DFC2100DA1200D3D606 /* BuildingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingHeaderCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingHeaderCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingSectionHeader.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingSectionHeader.swift; sourceTree = SOURCE_ROOT; };
@@ -1084,6 +1086,7 @@
 				2138D55C22599D0F00D67CA2 /* GroupCell.swift */,
 				97AA4C6C235CD314007F09FE /* GroupMemberCell.swift */,
 				97AA4C6E235CD328007F09FE /* GroupSettingsCell.swift */,
+				97C01E3823888AA1007F7C1C /* GroupManageButtonCell.swift */,
 				978E88542375FEF4006B3864 /* GroupIndividualSettingView.swift */,
 				EF3090382366617700391BB1 /* GSRColorCell.swift */,
 			);
@@ -1678,6 +1681,7 @@
 				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
+				97C01E3923888AA1007F7C1C /* GroupManageButtonCell.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */,
 				C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */,

@@ -72,16 +72,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
             callback(nil)
         }
     }
-    //GSRGroup(id: "new", name: nameField.text!, imgURL: nil, color: "color", owners: [GSRGroupMember(accountID: "dummyOwner", pennKey: "dummyPennKey", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", isBookingEnabled: true, isAdmin: true)], members: [], createdAt: Date(), isActive: true, reservations: [])
-
-//    func createGroup(name: String, color: String, callback: (_ success: Bool, _ errorMsg: String?) -> ()) {
-//        let dummyUsers = getDummyUsers()
-//        let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
-//        let group = GSRGroup(id: 1, name: name, color: color, createdAt: Date(), userSettings: GSRGroupNetworkManager.userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
-//        groups.append(group)
-//
-//        callback(true, nil)
-//    }
+    
     func createGroup(name: String, color: String, callback: (_ success: Bool, _ errorMsg: String?) -> ()) {
 
         guard let pennkey = Student.getStudent()?.pennkey else {

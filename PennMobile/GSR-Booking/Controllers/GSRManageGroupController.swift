@@ -59,9 +59,11 @@ extension GSRManageGroupController {
         tableView = UITableView(frame: .zero)
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
+        tableView.backgroundColor = UIColor.init(red: 248, green: 248, blue: 248)
         tableView.allowsSelection = false
         tableView.register(GroupMemberCell.self, forCellReuseIdentifier: GroupMemberCell.identifier)
         tableView.register(GroupSettingsCell.self, forCellReuseIdentifier: GroupSettingsCell.identifier)
+        tableView.register(GroupManageButtonCell.self, forCellReuseIdentifier: GroupManageButtonCell.identifier)
         tableView.tableFooterView = UIView()
         
         view.addSubview(tableView)
