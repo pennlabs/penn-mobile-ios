@@ -104,7 +104,13 @@ extension PennAuthRequestable {
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                self.makeRequestWithShibboleth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
+
+                if(html.contains("two-step-form")){
+                    self.makeRequestWithTwoFac(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
+                }
+                else {
+                    self.makeRequestWithShibboleth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
+                }
             } else {
                 UserDefaults.standard.setShibbolethAuth(authedIn: false)
                 completionHandler(nil, nil, NetworkingError.authenticationError)
@@ -149,6 +155,56 @@ extension PennAuthRequestable {
                 UserDefaults.standard.setShibbolethAuth(authedIn: false)
                 completionHandler(nil, nil, NetworkingError.authenticationError)
             }
+        }
+        task.resume()
+    }
+
+    private func makeRequestWithTwoFac(targetUrl: String, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void){
+        
+        guard let passcode = html.getMatches(for: "name=\"passcode\" value=\"(.*?)\"").first,
+        let required = html.getMatches(for: "name=\"required\" value=\"(.*?)\"").first,
+        let appfactor = html.getMatches(for: "name=\"appfactor\" value=\"(.*?)\"").first,
+        let ref = html.getMatches(for: "name=\"ref\" value=\"(.*?)\"").first,
+        let service = html.getMatches(for: "name=\"service\" value=\"(.*?)\"").first,
+        let actionUrl = html.getMatches(for: "form action=\"(.*?)\" id=\"two-step-form\" method=\"post\"").first,
+        let penntoken = TwoFactorTokenGenerator.instance.generate() else {
+            UserDefaults.standard.setShibbolethAuth(authedIn: false)
+            completionHandler(nil, nil, NetworkingError.authenticationError)
+            return
+        }
+        
+        let url = URL(string: baseUrl + actionUrl)!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+         let params: [String: String] = [
+                   "passcode": passcode,
+                   "required": required,
+                   "appfactor": appfactor,
+                   "ref": ref,
+                   "service": service,
+                   "trustUA": "true",
+                   "penntoken": penntoken
+        ]
+        
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        let characterSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
+        let parameterArray = params.map { key, value -> String in
+            let escapedKey = key.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
+            let escapedValue: String = value.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
+            return "\(escapedKey)=\(escapedValue)"
+        }
+        let encodedParams = parameterArray.joined(separator: "&")
+        request.httpBody = encodedParams.data(using: String.Encoding.utf8)
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                self.makeRequestWithShibboleth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
+            } else {
+                UserDefaults.standard.setShibbolethAuth(authedIn: false)
+                completionHandler(nil, nil, NetworkingError.authenticationError)
+            }
+            UserDefaults.standard.storeCookies()
         }
         task.resume()
     }
