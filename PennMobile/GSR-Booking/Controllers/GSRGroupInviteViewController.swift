@@ -16,12 +16,19 @@ class GSRGroupInviteViewController: UIViewController {
     fileprivate var inViteUsersLabel: UILabel!
     fileprivate var searchBar: UISearchBar!
     fileprivate var sendInvitesButton: UIButton!
+    fileprivate var tableView: UITableView!
+    
+    fileprivate var names = [String]()
+    fileprivate var filteredNames = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         prepareUI()
-        // Do any additional setup after loading the view.
+        
+        GSRGroupNetworkManager.instance.getAllUsers { (names) in
+            
+        }
     }
     
     func prepareCloseButton() {
@@ -85,6 +92,12 @@ class GSRGroupInviteViewController: UIViewController {
         sendInvitesButton.isEnabled = false
         sendInvitesButton.isUserInteractionEnabled = false
     }
+    
+    func prepareTableView() {
+        tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
  
     
     /*
@@ -106,5 +119,24 @@ extension GSRGroupInviteViewController {
         prepareInViteUsersLabel()
         prepareSearchBar()
         prepareSendInvitationButton()
+        prepareTableView()
+    }
+}
+
+extension GSRGroupInviteViewController: UITableViewDelegate {
+    
+}
+
+extension GSRGroupInviteViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredNames.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
     }
 }

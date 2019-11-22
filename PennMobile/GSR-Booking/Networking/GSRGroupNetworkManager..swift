@@ -72,6 +72,20 @@ class GSRGroupNetworkManager: NSObject, Requestable {
             callback(nil)
         }
     }
+    
+    func inviteUser(groupid: Int, pennkey: String, callback: @escaping (Bool) -> ()) {
+        let params: [NSString: Any] = ["group": groupid, "username": pennkey]
+        postRequestData(url: membershipURL, params: params) { (data, err, status) in
+            callback(status == 200 && err == nil)
+        }
+    }
+    
+    func inviteUsers(groupid: Int, pennkeys: [String], callback: @escaping (Bool) -> ()) {
+        let params: [NSString: Any] = ["group": groupid, "username": pennkeys]
+        postRequestData(url: membershipURL, params: params) { (data, err, status) in
+            callback(status == 200 && err == nil)
+        }
+    }
     //GSRGroup(id: "new", name: nameField.text!, imgURL: nil, color: "color", owners: [GSRGroupMember(accountID: "dummyOwner", pennKey: "dummyPennKey", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", isBookingEnabled: true, isAdmin: true)], members: [], createdAt: Date(), isActive: true, reservations: [])
 
 //    func createGroup(name: String, color: String, callback: (_ success: Bool, _ errorMsg: String?) -> ()) {
@@ -100,6 +114,14 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
         
         callback(true, nil)
+    }
+    
+    func getAllUsers(callback: @escaping ([String]?) -> ()) {
+        getRequest(url: userURL) { (data, error, status) in
+            print(data)
+            print(error)
+            print(status)
+        }
     }
     
 

@@ -284,17 +284,6 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
         return cell
     }
 
-//    func collectionView(_ collectionView: UICollectionView,
-//               layout collectionViewLayout: UICollectionViewLayout,
-//               insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 0, left: 100, bottom: 0, right: 0)
-//    }
-
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let size = RoomCell.cellHeight - 12
-//        return CGSize(width: size, height: size)
-//    }
-//
     // MARK: - Collection View Delegate Methods
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? GSRColorCell
@@ -310,13 +299,7 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
         colorLabel.text = colorNames[indexPath.item % colorNames.count]
         colorLabel.font = UIFont.boldSystemFont(ofSize: 17)
     }
-//
-//    //only enable selection for available rooms
-//    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-//        let timeSlot = room.timeSlots[indexPath.row]
-//        return timeSlot.isAvailable
-//    }
-//
+
     // Deselect this time slot and all select ones that follow it
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? GSRColorCell
