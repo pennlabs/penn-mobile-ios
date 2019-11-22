@@ -59,7 +59,8 @@ DEPENDENCIES:
   - ZoomImageView
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
+    - Base32
     - Crashlytics
     - Fabric
     - Firebase
@@ -67,9 +68,11 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - GoogleToolboxForMac
+    - hpple
     - Kingfisher
     - MBProgressHUD
     - nanopb
+    - OneTimePassword
     - SCLAlertView
     - ScrollableGraphView
     - SimulatorStatusMagic
@@ -78,10 +81,6 @@ SPEC REPOS:
     - TimelineTableViewCell
     - XLPagerTabStrip
     - ZoomImageView
-  trunk:
-    - Base32
-    - hpple
-    - OneTimePassword
 
 EXTERNAL SOURCES:
   WKZombie:
@@ -119,4 +118,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9273383c1b938af31d9fa7aa4e36bc137905bf5a
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.7.1
