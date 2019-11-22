@@ -19,7 +19,7 @@ class DiningBalanceCell: UITableViewCell {
         }
     }
     
-    var viewController: DiningViewController?
+    var transactionCellDelegate: TransactionCellDelegate?
     
     fileprivate let collectionCellId: String = "diningBalanceCollectionViewCell"
     
@@ -164,7 +164,8 @@ extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item  == 0 {
-            self.viewController?.navigationController?.pushViewController(DiningDollarsTransactionViewController(), animated: true)
+            transactionCellDelegate?.userDidSelect()
+            //self.viewController?.navigationController?.pushViewController(DiningDollarsTransactionViewController(), animated: true)
         }
     }
 }

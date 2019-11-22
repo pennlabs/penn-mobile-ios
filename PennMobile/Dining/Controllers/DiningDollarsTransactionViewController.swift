@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol TransactionCellDelegate: class {
+    func userDidSelect()
+}
+
 class DiningDollarsTransactionViewController: GenericTableViewController, Requestable {
     
     let transactionUrl = "https://api.pennlabs.org/dining/transactions"
