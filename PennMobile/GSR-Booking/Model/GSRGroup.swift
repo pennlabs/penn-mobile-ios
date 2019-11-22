@@ -8,19 +8,41 @@
 
 import Foundation
 
-struct GSRGroup {
-    let id: String
+struct GSRGroup: Codable{
+    let id: Int
     let name: String
+    let color: String?
+    let createdAt: Date?
+    let userSettings: GSRGroupIndividualSettings? //not optional, beacuse we need to know if pennKey is Active
+
     var imgURL: String?
-    let color: String
     var owners: [GSRGroupMember]?
     var members: [GSRGroupMember]?
-    let createdAt: Date
-    let isActive: Bool
     let reservations: [String]? //array of reservationID's
+    let groupSettings: GSRGroupAccessSettings?
+}
+struct GSRGroupIndividualSetting: Codable {
+    var title: String
+    var descr: String
+    var isEnabled: Bool
 }
 
-struct GSRGroupMember {
+struct GSRGroupIndividualSettings: Codable { //specific to a user within a group
+    var pennKeyActive: GSRGroupIndividualSetting
+    var notificationsOn: GSRGroupIndividualSetting
+}
+
+struct GSRGroupAccessSettings: Codable { //general to all users within a group
+    var booking: GSRGroupAccessPermissions
+    var invitation: GSRGroupAccessPermissions
+}
+
+enum GSRGroupAccessPermissions: String, Codable { //who has access
+    case everyone
+    case owner
+}
+
+struct GSRGroupMember: Codable {
     let accountID: String
     let pennKey: String
     let first: String

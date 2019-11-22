@@ -24,13 +24,7 @@ class GSRGroupController: GenericViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        GSRGroupNetworkManager.instance.getAllGroups { (groups) in
-            if let groups = groups {
-                self.groups = groups
-            }
-    
-            tableView.reloadData()
-        }
+        fetchGroups()
     }
 }
 
@@ -95,6 +89,10 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+
 }
 
 //MARK: NewGroupInitialDelegate
@@ -104,8 +102,10 @@ extension GSRGroupController: NewGroupInitialDelegate{
             if let groups = groups {
                 self.groups = groups
             }
-    
-            tableView.reloadData()
+
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
 }
