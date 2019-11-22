@@ -21,6 +21,9 @@ class DiningViewController: GenericTableViewController {
         
         self.screenName = "Dining"
         
+        // todo: remove @Liz
+        viewModel.viewController = self
+        
         viewModel.delegate = self
         viewModel.registerHeadersAndCells(for: tableView)
         
