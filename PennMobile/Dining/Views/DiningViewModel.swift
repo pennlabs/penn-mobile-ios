@@ -23,7 +23,7 @@ class DiningViewModel: NSObject {
     let diningHeader = "Dining Halls"
     let retailHeader = "Retail Dining"
     
-    var transactionCellDelegate: TransactionCellDelegate?
+    weak var transactionCellDelegate: TransactionCellDelegate?
     
     var delegate: DiningViewModelDelegate?
     var showActivity = false
