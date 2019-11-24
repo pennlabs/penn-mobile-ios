@@ -169,10 +169,12 @@ extension UserDBManager {
 
 // MARK: - Transaction Data
 extension UserDBManager {
-    func saveTransactionData(csvStr: String) {
+    func saveTransactionData(csvStr: String, _ callback: (() -> Void)? = nil) {
         let url = "\(baseUrl)/dining/transactions"
         let params = ["transactions": csvStr]
         let request = getAnalyticsPostRequest(url: url, params: params)
-        sendRequest(request)
+        sendRequest(request) { (data, response, err) in
+            callback?()
+        }
     }
 }

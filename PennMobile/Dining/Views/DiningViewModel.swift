@@ -23,6 +23,8 @@ class DiningViewModel: NSObject {
     let diningHeader = "Dining Halls"
     let retailHeader = "Retail Dining"
     
+    weak var transactionCellDelegate: TransactionCellDelegate?
+    
     var delegate: DiningViewModelDelegate?
     var showActivity = false
     
@@ -73,6 +75,7 @@ extension DiningViewModel: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: diningBalanceCell, for: indexPath) as! DiningBalanceCell
             cell.selectionStyle = .none
             cell.diningBalance = balance
+            cell.transactionCellDelegate = transactionCellDelegate
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: diningCell, for: indexPath) as! DiningCell

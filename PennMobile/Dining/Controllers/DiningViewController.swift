@@ -21,6 +21,8 @@ class DiningViewController: GenericTableViewController {
         
         self.screenName = "Dining"
         
+        viewModel.transactionCellDelegate = self
+        
         viewModel.delegate = self
         viewModel.registerHeadersAndCells(for: tableView)
         
@@ -174,6 +176,14 @@ extension DiningViewController: DiningViewModelDelegate {
             vc.title = venue.name
             self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+}
+
+//MARK: - TransactionCellDelegate
+extension DiningViewController: TransactionCellDelegate {
+    func userDidSelect() {
+        let vc = DiningDollarsTransactionViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
