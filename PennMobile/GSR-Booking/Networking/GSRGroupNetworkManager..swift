@@ -47,12 +47,9 @@ class GSRGroupNetworkManager: NSObject, Requestable {
             let user = try? JSONDecoder().decode(GSRGroupUser.self, from: data)
 
             guard let guser = user else {
-//                print("failed decoding shit")
                 callback(nil)
                 return
             }
-
-            print(guser)
 
             callback(guser.groups)
         }
@@ -96,7 +93,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 //
 //        callback(true, nil)
 //    }
-    func createGroup(name: String, color: String, callback: (_ success: Bool, _ errorMsg: String?) -> ()) {
+    func createGroup(name: String, color: String, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> ()) {
 
         guard let pennkey = Student.getStudent()?.pennkey else {
             print("User is not signed in")
@@ -108,19 +105,31 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         postRequestData(url: groupsURL, params: params) { (data, error, status) in
             if let error = error {
                 print("postRequest Error: \(error)")
-            } else if let data = data {
-                dump(data)
+                callback(false, error.localizedDescription)
             }
+            
+            print(status)
+            
+            callback(true, nil)
         }
-        
-        callback(true, nil)
     }
     
-    func getAllUsers(callback: @escaping ([String]?) -> ()) {
-        getRequest(url: userURL) { (data, error, status) in
-            print(data)
-            print(error)
-            print(status)
+    func getAllUsers(callback: @escaping (_ success: Bool, _ results: [GSRInviteSearchResult]?) -> ()) {
+        getRequestData(url: userURL) { (data, error, status) in
+            guard let data = data else {
+                callback(false, nil)
+                return
+            }
+            
+            let decoded = try? JSONDecoder().decode(GSRInviteSearchResults.self, from: data)
+            
+            guard let results = decoded else {
+                callback(false, nil)
+                return
+            }
+            
+            callback(true, results)
+            
         }
     }
     

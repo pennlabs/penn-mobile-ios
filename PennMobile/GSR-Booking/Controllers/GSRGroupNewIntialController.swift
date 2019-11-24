@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol NewGroupInitialDelegate: GSRGroupController {
+    func fetchGroups()
+}
+
 class GSRGroupNewIntialController: UIViewController {
 
     fileprivate var closeButton: UIButton!
@@ -42,7 +46,7 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange","Red-ing Terminal", "Baltimore Blue", "Purple"]
     
     
-    weak var delegate: GSRGroupController!
+    weak var delegate: NewGroupInitialDelegate!
 
 
     override func viewDidLoad() {
@@ -197,7 +201,6 @@ class GSRGroupNewIntialController: UIViewController {
         colorCollectionView.allowsSelection = true;
         colorCollectionView.allowsMultipleSelection = false
         colorCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
-        //collectionView(colorCollectionView, didSelectItemAt: IndexPath(item: 0, section:0))
         view.addSubview(colorCollectionView)
 
         colorCollectionView.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: 20).isActive = true
@@ -211,49 +214,22 @@ class GSRGroupNewIntialController: UIViewController {
     @objc func createGroupBtnAction(sender:UIButton!) {
         GSRGroupNetworkManager.instance.createGroup(name: nameField.text!, color: "color") { (success, errorMsg) in
             if success {
-                delegate.fetchGroups()
-                let controller = GSRGroupInviteViewController()
-                self.navigationController?.pushViewController(controller, animated: true)
                 
-                /*r
-                 let controller = GSRGroupNewIntialController()
-                 controller.delegate = self
-                 let navigationVC = UINavigationController(rootViewController: controller)
-                 controller.navigationController?.navigationBar.isHidden = true
-                 
-                 present(navigationVC, animated: true, completion: nil)
-                 */
+                // This reloads the groups on the GSRGroupController - this should be done after invites / end of the flow
+                // self.delegate.fetchGroups()
                 
+                DispatchQueue.main.async {
+                    let controller = GSRGroupInviteViewController()
+                    self.navigationController?.pushViewController(controller, animated: true)
+                }
             }
         }
-        
-//        delegate.addNewGroup(group: group)
-        //dismiss(animated: true, completion:nil)
     }
 
     @objc func cancelBtnAction(sender:UIButton!) {
+        self.delegate.fetchGroups()
         dismiss(animated: true, completion:nil)
     }
-
-    
-
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-
-
-protocol NewGroupInitialDelegate: GSRGroupController {
-    func fetchGroups()
 }
 
 //Mark: Setup UI
