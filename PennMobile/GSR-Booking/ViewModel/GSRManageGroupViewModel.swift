@@ -43,9 +43,8 @@ class GSRManageGroupViewModel: NSObject {
 extension GSRManageGroupViewModel: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 2
+            return 3
         } else if section == 1 {
-
             if let members = group.members {
                 return members.count
             } else {
@@ -59,11 +58,8 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
-
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Settings"
-        } else if section == 1 {
+        if section == 1 {
             return "Members"
         } else {
             return ""
@@ -72,14 +68,26 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: GroupSettingsCell.identifier, for: indexPath) as! GroupSettingsCell
-            if let userSettings = group.userSettings {
-                let userSetting = indexPath.row == 0 ? userSettings.pennKeyActive : userSettings.notificationsOn
-                cell.setupCell(with: userSetting)
-                cell.delegate = self
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: GroupHeaderCell.identifier, for: indexPath) as! GroupHeaderCell
+                cell.groupTitle = group.name
+                if let members = group.members {
+                    cell.memberCount = members.count
+                }
+                if let imgUrl = group.imgURL {
+                    cell.imageURL = imgUrl
+                }
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: GroupSettingsCell.identifier, for: indexPath) as! GroupSettingsCell
+                if let userSettings = group.userSettings {
+                    let userSetting = indexPath.row == 1 ? userSettings.pennKeyActive : userSettings.notificationsOn
+                    cell.setupCell(with: userSetting)
+                    cell.delegate = self
+                }
+                
+                return cell
             }
-
-            return cell
 
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: GroupMemberCell.identifier, for: indexPath) as! GroupMemberCell
