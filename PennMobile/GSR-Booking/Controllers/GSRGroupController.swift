@@ -11,8 +11,6 @@ import Foundation
 //group gsrs!
 class GSRGroupController: GenericViewController {
 
-
-
     fileprivate var groups: [GSRGroup] = []
 
     fileprivate var tableView: UITableView!

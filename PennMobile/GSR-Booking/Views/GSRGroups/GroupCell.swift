@@ -37,7 +37,18 @@ class GroupCell: UITableViewCell {
 // MARK: - Setup Cell
 extension GroupCell {
     fileprivate func setupCell() {
-        setupUI()
+        // refactor!
+        if (groupImage == nil || groupName == nil || activeLabel == nil) {
+            setupUI()
+        } else {
+            groupImage.backgroundColor = UIColor(named: "blueLighter")
+            groupName.text = group.name
+            if let userSettings = group.userSettings {
+                let text = userSettings.pennKeyActive.isEnabled ? "PennID Active" : "PennID Inactive"
+                activeLabel.text = text
+                activeLabel.textColor = userSettings.pennKeyActive.isEnabled ? UIColor(named: "baseGreen") : UIColor(named: "baseRed")
+            }
+        }
     }
 }
 

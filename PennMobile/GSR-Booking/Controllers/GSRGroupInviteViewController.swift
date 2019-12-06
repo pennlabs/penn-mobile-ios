@@ -16,12 +16,33 @@ class GSRGroupInviteViewController: UIViewController {
     fileprivate var inViteUsersLabel: UILabel!
     fileprivate var searchBar: UISearchBar!
     fileprivate var sendInvitesButton: UIButton!
+    fileprivate var tableView: UITableView!
+    
+    fileprivate var users = GSRInviteSearchResults()
+    fileprivate var filteredUsers = GSRInviteSearchResults()
+    
+    fileprivate var isSearchBarEmpty: Bool {
+      return searchBar.text?.isEmpty ?? true
+    }
+    
+    fileprivate var isFiltering: Bool {
+      return !isSearchBarEmpty
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         prepareUI()
-        // Do any additional setup after loading the view.
+        
+        GSRGroupNetworkManager.instance.getAllUsers { (success, results) in
+            if (success) {
+                self.users = results!
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
     
     func prepareCloseButton() {
@@ -41,9 +62,9 @@ class GSRGroupInviteViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(cancelBtnAction), for: .touchUpInside)
     }
     
-    func prepareInViteUsersLabel() {
+    func prepareInviteUsersLabel() {
         inViteUsersLabel = UILabel()
-        inViteUsersLabel.text = "Invite User"
+        inViteUsersLabel.text = "Invite Users"
         inViteUsersLabel.font = UIFont.boldSystemFont(ofSize: 24)
         view.addSubview(inViteUsersLabel)
         inViteUsersLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
@@ -57,12 +78,13 @@ class GSRGroupInviteViewController: UIViewController {
     
     func prepareSearchBar() {
         searchBar = UISearchBar()
+        searchBar.delegate = self
         searchBar.searchTextField.placeholder = "Search by Name or PennKey"
-        searchBar.searchTextField.textColor = UIColor.init(red: 216, green: 216, blue: 216)
+        searchBar.searchTextField.textColor = .black
         view.addSubview(searchBar)
-        searchBar.topAnchor.constraint(equalTo: inViteUsersLabel.bottomAnchor, constant: 30).isActive = true
-        searchBar.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
-        searchBar.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
+        searchBar.topAnchor.constraint(equalTo: inViteUsersLabel.bottomAnchor, constant: 20).isActive = true
+        searchBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        searchBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         searchBar.translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -76,7 +98,7 @@ class GSRGroupInviteViewController: UIViewController {
         sendInvitesButton.layer.masksToBounds = true
         
         view.addSubview(sendInvitesButton)
-        sendInvitesButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
+        sendInvitesButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         sendInvitesButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
         sendInvitesButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -14).isActive = true
         sendInvitesButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -85,26 +107,74 @@ class GSRGroupInviteViewController: UIViewController {
         sendInvitesButton.isEnabled = false
         sendInvitesButton.isUserInteractionEnabled = false
     }
- 
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func prepareTableView() {
+        tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: sendInvitesButton.topAnchor, constant: -10).isActive = true
     }
-    */
-
 }
 
 //Mark: Setup UI
 extension GSRGroupInviteViewController {
     fileprivate func prepareUI() {
         prepareCloseButton()
-        prepareInViteUsersLabel()
+        prepareInviteUsersLabel()
         prepareSearchBar()
         prepareSendInvitationButton()
+        prepareTableView()
+    }
+}
+
+extension GSRGroupInviteViewController: UITableViewDelegate {
+    
+}
+
+extension GSRGroupInviteViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+            return filteredUsers.count
+        }
+        
+        return users.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        let user: GSRInviteSearchResult
+        if isFiltering {
+          user = filteredUsers[indexPath.row]
+        } else {
+          user = users[indexPath.row]
+        }
+        cell.textLabel?.text = user.username
+        return cell
+    }
+}
+
+extension GSRGroupInviteViewController {
+    func filterContentForSearchText(_ searchText: String) {
+      filteredUsers = users.filter { (user: GSRInviteSearchResult) -> Bool in
+        return user.username.lowercased().contains(searchText.lowercased())
+      }
+      
+      tableView.reloadData()
+    }
+}
+
+extension GSRGroupInviteViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterContentForSearchText(searchText)
     }
 }

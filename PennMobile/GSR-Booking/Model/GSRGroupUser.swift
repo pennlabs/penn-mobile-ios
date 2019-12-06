@@ -17,3 +17,15 @@ struct GSRGroupUser: Codable{
         case groups = "booking_groups"
     }
 }
+
+struct GSRInviteSearchResult: Codable {
+    let username: String
+    let bookingGroups: [GSRGroup]
+
+    enum CodingKeys: String, CodingKey {
+        case username
+        case bookingGroups = "booking_groups"
+    }
+}
+
+typealias GSRInviteSearchResults = [GSRInviteSearchResult]
