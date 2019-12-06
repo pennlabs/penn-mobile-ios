@@ -19,7 +19,7 @@ pod 'Fabric', '~> 1.9.0'
 pod 'Crashlytics', '~> 3.12.0'
 pod 'SwiftSoup'
 pod 'XLPagerTabStrip', '~> 9.0'
-pod 'WKZombie', :git => 'https://github.com/pennlabs/WKZombie.git', :commit => '4b47ad348273e8105cdab0c03e9ee094d37574de'
+pod 'WKZombie', :git => 'https://github.com/pennlabs/WKZombie.git', :commit => '52d1ab049e4dcc6e787122e4a053321e86d74bd9e'
 pod 'OneTimePassword', '~> 3.2'
 
     target 'PennMobileTests' do

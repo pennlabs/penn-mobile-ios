@@ -31,8 +31,6 @@
 		2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */; };
 		2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55422598AA800D67CA2 /* GSRTabController.swift */; };
 		2138D559225998A300D67CA2 /* GSRGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D558225998A300D67CA2 /* GSRGroupController.swift */; };
-		2138D55B22599D0000D67CA2 /* CreateGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55A22599D0000D67CA2 /* CreateGroupCell.swift */; };
-		2138D55D22599D0F00D67CA2 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55C22599D0F00D67CA2 /* GroupCell.swift */; };
 		2138D55F22599D4700D67CA2 /* GSRGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138D55E22599D4700D67CA2 /* GSRGroup.swift */; };
 		2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2138E1F72252AFB500E4055A /* GSRLocationCell.swift */; };
 		21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21470EBB223DD34200019C10 /* ScheduleEventCell.swift */; };
@@ -204,6 +202,14 @@
 		EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC321860B7000E29C6A /* StatusBar.swift */; };
 		EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC521861B8500E29C6A /* HomeNavigationController.swift */; };
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
+		EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */; };
+		EFE2D6F0239B11050020F6BF /* GroupSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E8239B11050020F6BF /* GroupSettingsCell.swift */; };
+		EFE2D6F1239B11050020F6BF /* GroupManageButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E9239B11050020F6BF /* GroupManageButtonCell.swift */; };
+		EFE2D6F2239B11050020F6BF /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6EA239B11050020F6BF /* GroupMemberCell.swift */; };
+		EFE2D6F3239B11050020F6BF /* CreateGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6EB239B11050020F6BF /* CreateGroupCell.swift */; };
+		EFE2D6F4239B11050020F6BF /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6EC239B11050020F6BF /* GroupCell.swift */; };
+		EFE2D6F5239B11050020F6BF /* GroupHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6ED239B11050020F6BF /* GroupHeaderCell.swift */; };
+		EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6EE239B11050020F6BF /* GSRColorCell.swift */; };
 		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
 		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
 		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
@@ -266,8 +272,6 @@
 		2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationsController.swift; sourceTree = "<group>"; };
 		2138D55422598AA800D67CA2 /* GSRTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTabController.swift; sourceTree = "<group>"; };
 		2138D558225998A300D67CA2 /* GSRGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupController.swift; sourceTree = "<group>"; };
-		2138D55A22599D0000D67CA2 /* CreateGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupCell.swift; sourceTree = "<group>"; };
-		2138D55C22599D0F00D67CA2 /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		2138D55E22599D4700D67CA2 /* GSRGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroup.swift; sourceTree = "<group>"; };
 		2138E1F72252AFB500E4055A /* GSRLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationCell.swift; sourceTree = "<group>"; };
 		21470EBB223DD34200019C10 /* ScheduleEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventCell.swift; sourceTree = "<group>"; };
@@ -454,6 +458,14 @@
 		EF389EC321860B7000E29C6A /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		EF389EC521861B8500E29C6A /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
 		EFD6F358220E334100382783 /* DiningCellSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCellSettingsController.swift; sourceTree = "<group>"; };
+		EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupIndividualSettingView.swift; sourceTree = "<group>"; };
+		EFE2D6E8239B11050020F6BF /* GroupSettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSettingsCell.swift; sourceTree = "<group>"; };
+		EFE2D6E9239B11050020F6BF /* GroupManageButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupManageButtonCell.swift; sourceTree = "<group>"; };
+		EFE2D6EA239B11050020F6BF /* GroupMemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
+		EFE2D6EB239B11050020F6BF /* CreateGroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupCell.swift; sourceTree = "<group>"; };
+		EFE2D6EC239B11050020F6BF /* GroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
+		EFE2D6ED239B11050020F6BF /* GroupHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupHeaderCell.swift; sourceTree = "<group>"; };
+		EFE2D6EE239B11050020F6BF /* GSRColorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRColorCell.swift; sourceTree = "<group>"; };
 		F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutomatedScreenshotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedScreenshotUITests.swift; sourceTree = "<group>"; };
 		F230FB12225809E900760499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -896,6 +908,7 @@
 		2189C0772027CD4B00771C1F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EFE2D6E6239B11050020F6BF /* GSRGroups */,
 				2189C08B2027CE2600771C1F /* EmptyView.swift */,
 				2189C08A2027CE2600771C1F /* GSRRangeSlider.swift */,
 				2189C0882027CE2600771C1F /* GSRTimeCell.swift */,
@@ -903,8 +916,6 @@
 				2189C0892027CE2600771C1F /* RoomCell.swift */,
 				21A6B6D32216824B003A357D /* ReservationCell.swift */,
 				C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */,
-				2138D55A22599D0000D67CA2 /* CreateGroupCell.swift */,
-				2138D55C22599D0F00D67CA2 /* GroupCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1240,6 +1251,21 @@
 				219F01F31FB7CCFA006BBC4E /* SAConfettiView.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		EFE2D6E6239B11050020F6BF /* GSRGroups */ = {
+			isa = PBXGroup;
+			children = (
+				EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */,
+				EFE2D6E8239B11050020F6BF /* GroupSettingsCell.swift */,
+				EFE2D6E9239B11050020F6BF /* GroupManageButtonCell.swift */,
+				EFE2D6EA239B11050020F6BF /* GroupMemberCell.swift */,
+				EFE2D6EB239B11050020F6BF /* CreateGroupCell.swift */,
+				EFE2D6EC239B11050020F6BF /* GroupCell.swift */,
+				EFE2D6ED239B11050020F6BF /* GroupHeaderCell.swift */,
+				EFE2D6EE239B11050020F6BF /* GSRColorCell.swift */,
+			);
+			path = GSRGroups;
 			sourceTree = "<group>";
 		};
 		F230FB0F225809E900760499 /* AutomatedScreenshotUITests */ = {
@@ -1609,7 +1635,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFE2D6F0239B11050020F6BF /* GroupSettingsCell.swift in Sources */,
 				B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */,
+				EFE2D6F5239B11050020F6BF /* GroupHeaderCell.swift in Sources */,
 				219F01F41FB7CCFA006BBC4E /* SAConfettiView.swift in Sources */,
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				97E79E1C2100F32E00D3D606 /* FitnessViewModel.swift in Sources */,
@@ -1675,7 +1703,6 @@
 				21ABE2AA223D7DEA00199D29 /* ScheduleTable.swift in Sources */,
 				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,
 				21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */,
-				2138D55D22599D0F00D67CA2 /* GroupCell.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
@@ -1686,6 +1713,7 @@
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
+				EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
 				139139792388929700C6C298 /* TransactionTableViewCell.swift in Sources */,
 				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
@@ -1714,6 +1742,7 @@
 				2189C08C2027CE2600771C1F /* GSRTimeCell.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
 				21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */,
+				EFE2D6F3239B11050020F6BF /* CreateGroupCell.swift in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				212B8359222A331D00F835D6 /* Post.swift in Sources */,
 				C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */,
@@ -1721,6 +1750,7 @@
 				21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */,
 				21ABE2AF223D7E2B00199D29 /* Time.swift in Sources */,
 				21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */,
+				EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */,
 				C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
@@ -1739,10 +1769,10 @@
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
 				212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */,
 				216640941EBADC1700746B8E /* DiningCell.swift in Sources */,
-				2138D55B22599D0000D67CA2 /* CreateGroupCell.swift in Sources */,
 				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
+				EFE2D6F4239B11050020F6BF /* GroupCell.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
 				F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */,
@@ -1762,6 +1792,7 @@
 				21B653B92245EB67001A97C5 /* PennAuthRequestable.swift in Sources */,
 				2189C0842027CDB800771C1F /* GSRLoginController.swift in Sources */,
 				211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */,
+				EFE2D6F2239B11050020F6BF /* GroupMemberCell.swift in Sources */,
 				2189C0A02027CE4100771C1F /* GSRVenue.swift in Sources */,
 				215C605D205C88EA00FE271A /* ImageNetworkingManager.swift in Sources */,
 				2189C0872027CDD700771C1F /* GSRNetworkManager.swift in Sources */,
@@ -1800,6 +1831,7 @@
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
 				21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */,
 				C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */,
+				EFE2D6F1239B11050020F6BF /* GroupManageButtonCell.swift in Sources */,
 				66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */,
 				21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,

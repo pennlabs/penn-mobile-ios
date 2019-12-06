@@ -8,22 +8,23 @@
 
 import Foundation
 
+//group gsrs!
 class GSRGroupController: GenericViewController {
-    
-    fileprivate var groups: [GSRGroup]!
-    
+
+
+
+    fileprivate var groups: [GSRGroup] = []
+
     fileprivate var tableView: UITableView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let member = GSRGroupMember(accountID: "1", first: "Amy", last: "Gutmann", email: "amyg@upenn.edu", enabled: true)
-        self.groups = [GSRGroup(groupID: "1", groupName: "Penn Labs Babies", createdAt: Date(), isActive: true, members: [member, member])]
         setupUI()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        fetchGroups()
     }
 }
 
@@ -32,18 +33,19 @@ extension GSRGroupController {
     fileprivate func setupUI() {
         setupTableView()
     }
-    
+
     fileprivate func setupTableView() {
         tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-        
+
         view.addSubview(tableView)
         _ = tableView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        tableView.register(CreateGroupCell.self, forCellReuseIdentifier: CreateGroupCell.identifier)
+
         tableView.register(GroupCell.self, forCellReuseIdentifier: GroupCell.identifier)
+        tableView.register(CreateGroupCell.self, forCellReuseIdentifier: CreateGroupCell.identifier)
+
     }
 }
 
@@ -52,26 +54,55 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1 + groups.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+        if indexPath.row == groups.count {
             return tableView.dequeueReusableCell(withIdentifier: CreateGroupCell.identifier, for: indexPath)
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: GroupCell.identifier, for: indexPath) as! GroupCell
-            cell.group = groups[indexPath.row - 1]
+            cell.group = groups[indexPath.row]
             return cell
         }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
+        if indexPath.row == groups.count {
             return CreateGroupCell.cellHeight
         } else {
             return GroupCell.cellHeight
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("tap")
+        if indexPath.row == groups.count {
+          let controller = GSRGroupNewIntialController()
+          controller.delegate = self
+          present(controller, animated: true, completion: nil)
+        } else {
+            let group = groups[indexPath.row]
+            let manageVC = GSRManageGroupController(group: group)
+
+            navigationController?.pushViewController(manageVC, animated: true)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+
+}
+
+//MARK: NewGroupInitialDelegate
+extension GSRGroupController: NewGroupInitialDelegate{
+    func fetchGroups() {
+        GSRGroupNetworkManager.instance.getAllGroups { (groups) in
+            if let groups = groups {
+                self.groups = groups
+            }
+
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
 }
