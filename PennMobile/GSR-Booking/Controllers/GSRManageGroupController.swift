@@ -56,7 +56,7 @@ extension GSRManageGroupController {
     }
     
     private func prepareTableView() {
-        tableView = UITableView(frame: .zero)
+        tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
         tableView.backgroundColor = UIColor.init(red: 248, green: 248, blue: 248)

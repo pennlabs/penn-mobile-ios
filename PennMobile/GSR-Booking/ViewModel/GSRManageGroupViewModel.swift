@@ -41,6 +41,14 @@ class GSRManageGroupViewModel: NSObject {
 
 //MARK: UITableViewDataSource
 extension GSRManageGroupViewModel: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 1:
+            return 35
+        default:
+            return 0
+        }
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 3
@@ -62,7 +70,7 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
         if section == 1 {
             return "Members"
         } else {
-            return ""
+            return " " //DO NOT REMOVE, otherwise extra space will appear
         }
     }
 
