@@ -11,9 +11,9 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     // MARK: GSR Group Networking - Dummy Data for now
     static let instance = GSRGroupNetworkManager()
 
-    let userURL = "https://staging.gsr.upenn.club/users/"
-    let groupsURL = "https://staging.gsr.upenn.club/groups/"
-    let membershipURL = "https://staging.gsr.upenn.club/membership/"
+    let userURL = "https://gsr.upenn.club/users/"
+    let groupsURL = "https://gsr.upenn.club/groups/"
+    let membershipURL = "https://gsr.upenn.club/membership/"
 
     fileprivate static let pennKeyActiveSetting = GSRGroupIndividualSetting(title: "PennKey Permission", descr: "Anyone in this group can book a study room block using your PennKey.", isEnabled: false)
     fileprivate static let notificationOnSetting = GSRGroupIndividualSetting(title: "Notifications", descr: "You’ll receive a notification any time a room is booked by this group.", isEnabled: false)
