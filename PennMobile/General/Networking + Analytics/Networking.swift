@@ -88,6 +88,11 @@ extension Requestable {
         }
     }
 
+    internal func postRequestData(url: String, params: [NSString: Any]? = nil, callback: @escaping (_ data: Data?,  _ error: Error?, _ status: Int?) -> ()) {
+        request(method: .post, url: url, params: params) { (data, _, error, status) in
+            callback(data, error, status)
+        }
+    }
     
     internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ data: Data?, _ json: NSDictionary?, _ error: Error?, _ status: Int?) -> ())? = nil)  {
         guard let url = URL(string: url) else {

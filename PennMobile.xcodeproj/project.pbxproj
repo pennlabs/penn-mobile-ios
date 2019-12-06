@@ -210,6 +210,11 @@
 		EFE2D6F4239B11050020F6BF /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6EC239B11050020F6BF /* GroupCell.swift */; };
 		EFE2D6F5239B11050020F6BF /* GroupHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6ED239B11050020F6BF /* GroupHeaderCell.swift */; };
 		EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6EE239B11050020F6BF /* GSRColorCell.swift */; };
+		EFE2D6F8239B120E0020F6BF /* GSRManageGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6F7239B120E0020F6BF /* GSRManageGroupViewModel.swift */; };
+		EFE2D6FB239B12270020F6BF /* GSRGroupNewIntialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6F9239B12260020F6BF /* GSRGroupNewIntialController.swift */; };
+		EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */; };
+		EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */; };
+		EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */; };
 		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
 		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
 		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
@@ -466,6 +471,11 @@
 		EFE2D6EC239B11050020F6BF /* GroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		EFE2D6ED239B11050020F6BF /* GroupHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupHeaderCell.swift; sourceTree = "<group>"; };
 		EFE2D6EE239B11050020F6BF /* GSRColorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRColorCell.swift; sourceTree = "<group>"; };
+		EFE2D6F7239B120E0020F6BF /* GSRManageGroupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRManageGroupViewModel.swift; sourceTree = "<group>"; };
+		EFE2D6F9239B12260020F6BF /* GSRGroupNewIntialController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupNewIntialController.swift; sourceTree = "<group>"; };
+		EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRManageGroupController.swift; sourceTree = "<group>"; };
+		EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworkManager..swift; sourceTree = "<group>"; };
+		EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupUser.swift; sourceTree = "<group>"; };
 		F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutomatedScreenshotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedScreenshotUITests.swift; sourceTree = "<group>"; };
 		F230FB12225809E900760499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -882,6 +892,7 @@
 		2189C0752027CD3A00771C1F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */,
 				2189C0982027CE4000771C1F /* GSRBooking.swift */,
 				21A6B6D122162702003A357D /* GSRReservation.swift */,
 				2189C0932027CE3F00771C1F /* GSRDateHandler.swift */,
@@ -900,6 +911,7 @@
 		2189C0762027CD4400771C1F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				EFE2D6F7239B120E0020F6BF /* GSRManageGroupViewModel.swift */,
 				2189C0902027CE2E00771C1F /* GSRViewModel.swift */,
 			);
 			path = ViewModel;
@@ -923,6 +935,8 @@
 		2189C0782027CD4E00771C1F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EFE2D6F9239B12260020F6BF /* GSRGroupNewIntialController.swift */,
+				EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */,
 				2189C0802027CDB800771C1F /* GSRBookable.swift */,
 				2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */,
 				214E254822480818004CB9C4 /* GSRDeletable.swift */,
@@ -939,6 +953,7 @@
 		2189C0792027CD5300771C1F /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */,
 				2189C0862027CDD700771C1F /* GSRNetworkManager.swift */,
 			);
 			path = Networking;
@@ -1642,7 +1657,9 @@
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				97E79E1C2100F32E00D3D606 /* FitnessViewModel.swift in Sources */,
 				214E254922480818004CB9C4 /* GSRDeletable.swift in Sources */,
+				EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */,
 				F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */,
+				EFE2D6F8239B120E0020F6BF /* GSRManageGroupViewModel.swift in Sources */,
 				B6665A182071E63800F49A9C /* TabBarController.swift in Sources */,
 				21B649202236F2F300AC5B7F /* HomeCoursesCell.swift in Sources */,
 				21A6B6D222162702003A357D /* GSRReservation.swift in Sources */,
@@ -1693,6 +1710,7 @@
 				21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */,
 				215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */,
 				217A7836204D2E0D004F1227 /* HomeLaundryCellItem.swift in Sources */,
+				EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
@@ -1747,6 +1765,7 @@
 				212B8359222A331D00F835D6 /* Post.swift in Sources */,
 				C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */,
 				B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */,
+				EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */,
 				21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */,
 				21ABE2AF223D7E2B00199D29 /* Time.swift in Sources */,
 				21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */,
@@ -1814,6 +1833,7 @@
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
 				C18D1D62225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift in Sources */,
+				EFE2D6FB239B12270020F6BF /* GSRGroupNewIntialController.swift in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				97E79E142100E1FA00D3D606 /* FitnessViewController.swift in Sources */,
 				21B556172224FDC500D80F61 /* RootViewController.swift in Sources */,
