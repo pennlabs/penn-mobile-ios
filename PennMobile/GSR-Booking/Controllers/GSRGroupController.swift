@@ -75,9 +75,12 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == groups.count {
-          let controller = GSRGroupNewIntialController()
-          controller.delegate = self
-          present(controller, animated: true, completion: nil)
+            let controller = GSRGroupNewIntialController()
+            controller.delegate = self
+            let navigationVC = UINavigationController(rootViewController: controller)
+            controller.navigationController?.navigationBar.isHidden = true
+            
+            present(navigationVC, animated: true, completion: nil)
         } else {
             let group = groups[indexPath.row]
             let manageVC = GSRManageGroupController(group: group)

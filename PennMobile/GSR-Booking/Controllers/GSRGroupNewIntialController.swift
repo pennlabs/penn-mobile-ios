@@ -18,7 +18,7 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var colorPanel: UIView!
     fileprivate var createButton: UIButton!
     fileprivate var colorCollectionView: UICollectionView!
-    fileprivate var colors: [UIColor] = [UIColor(red: 255, green: 255, blue: 255),
+    fileprivate var colors: [UIColor] = [
                                          UIColor(red: 32, green: 156, blue: 238),
                                          UIColor(red: 63, green: 170, blue: 109),
                                          UIColor(red: 255, green: 207, blue: 89),
@@ -27,7 +27,21 @@ class GSRGroupNewIntialController: UIViewController {
                                          UIColor(red: 51, green: 101, blue: 143),
                                          UIColor(red: 131, green: 79, blue: 160)
                                          ]
-
+    fileprivate var chosenColor: UIColor!
+    fileprivate var nameChanged: Bool!
+    fileprivate var borderColors: [UIColor] = [
+        UIColor(red: 1.5 * 32.0/255, green: 1.5 * 156.0/255, blue: 1.5 * 238.0/255, alpha: 1),
+        UIColor(red: 1.5 * 63.0/255, green: 1.5 * 170.0/255, blue: 1.5 * 109.0/255, alpha: 1),
+        UIColor(red: 1.5 * 255.0/255, green: 1.5 * 207.0/255, blue: 1.5 * 89.0/255, alpha: 1),
+        UIColor(red: 1.5 * 250.0/255, green: 1.5 * 164.0/255, blue: 1.5 * 50.0/255, alpha: 1),
+        UIColor(red: 1.5 * 226.0/255, green: 1.5 * 81.0/255, blue: 1.5 * 82.0/255, alpha: 1),
+        UIColor(red: 1.5 * 51.0/255, green: 1.5 * 101.0/255, blue: 1.5 * 143.0/255, alpha: 1),
+        UIColor(red: 1.5 * 131.0/255, green: 1.5 * 79.0/255, blue: 1.5 * 160.0/255, alpha: 1)
+    ]
+    
+    fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange","Red-ing Terminal", "Baltimore Blue", "Purple"]
+    
+    
     weak var delegate: GSRGroupController!
 
 
@@ -39,7 +53,7 @@ class GSRGroupNewIntialController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         colorCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
-        collectionView(colorCollectionView, didSelectItemAt: IndexPath(item: 0, section:0))
+        //collectionView(colorCollectionView, didSelectItemAt: IndexPath(item: 0, section:0))
 
     }
     func prepareCloseButton() {
@@ -76,7 +90,26 @@ class GSRGroupNewIntialController: UIViewController {
         nameField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
         nameField.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
         nameField.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        nameField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
+        
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if (textField.text != "" && textField.text != "New Group Name") {
+            createButton.isUserInteractionEnabled = true;
+            if (chosenColor != nil) {
+                createButton.backgroundColor = chosenColor
+            } else {
+                createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+            }
+            nameChanged = true;
+            
+        } else {
+            createButton.isUserInteractionEnabled = false;
+            createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+            nameChanged = false;
+        }
     }
 
     func prepareGroupForLabel() {
@@ -119,6 +152,9 @@ class GSRGroupNewIntialController: UIViewController {
         createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
         createButton.setTitle("Create Group", for: .normal)
         createButton.setTitleColor(UIColor.white, for: .normal)
+        createButton.layer.cornerRadius = 8
+        createButton.layer.masksToBounds = true
+        createButton.isEnabled = false
         createButton.addTarget(self, action: #selector(createGroupBtnAction), for: .touchUpInside)
 
         view.addSubview(createButton)
@@ -127,6 +163,10 @@ class GSRGroupNewIntialController: UIViewController {
         createButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15).isActive = true
         createButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
         createButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        //button unclickable until group name changed and not empty
+        createButton.isUserInteractionEnabled = false;
+        nameChanged = false;
     }
 
     func prepareColorLabel() {
@@ -161,8 +201,8 @@ class GSRGroupNewIntialController: UIViewController {
         view.addSubview(colorCollectionView)
 
         colorCollectionView.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: 20).isActive = true
-        colorCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
-        colorCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        colorCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30).isActive = true
+        colorCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         colorCollectionView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -172,19 +212,30 @@ class GSRGroupNewIntialController: UIViewController {
         GSRGroupNetworkManager.instance.createGroup(name: nameField.text!, color: "color") { (success, errorMsg) in
             if success {
                 delegate.fetchGroups()
-                dismiss(animated: true, completion: nil)
+                let controller = GSRGroupInviteViewController()
+                self.navigationController?.pushViewController(controller, animated: true)
+                
+                /*r
+                 let controller = GSRGroupNewIntialController()
+                 controller.delegate = self
+                 let navigationVC = UINavigationController(rootViewController: controller)
+                 controller.navigationController?.navigationBar.isHidden = true
+                 
+                 present(navigationVC, animated: true, completion: nil)
+                 */
+                
             }
         }
         
 //        delegate.addNewGroup(group: group)
-        dismiss(animated: true, completion:nil)
+        //dismiss(animated: true, completion:nil)
     }
 
     @objc func cancelBtnAction(sender:UIButton!) {
         dismiss(animated: true, completion:nil)
     }
 
-
+    
 
 
 
@@ -220,13 +271,16 @@ extension GSRGroupNewIntialController {
 
 extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return 7
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GSRColorCell.identifier, for: indexPath) as! GSRColorCell
         cell.color = colors[indexPath.item % colors.count]
+        cell.borderColor = borderColors[indexPath.item % borderColors.count]//UIColor.lightGray
+        
+        //cell.colorView.layer.borderColor = cell.borderColor.cgColor
         return cell
     }
 
@@ -245,7 +299,16 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? GSRColorCell
         cell?.toggleBorder()
-        view.backgroundColor = cell?.colorView.backgroundColor
+        createButton.isEnabled = true
+        if (nameChanged) {
+            createButton.backgroundColor = cell?.colorView.backgroundColor
+        } else {
+            createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+        }
+        chosenColor = cell?.colorView.backgroundColor
+        colorLabel.textColor = cell?.colorView.backgroundColor
+        colorLabel.text = colorNames[indexPath.item % colorNames.count]
+        colorLabel.font = UIFont.boldSystemFont(ofSize: 17)
     }
 //
 //    //only enable selection for available rooms

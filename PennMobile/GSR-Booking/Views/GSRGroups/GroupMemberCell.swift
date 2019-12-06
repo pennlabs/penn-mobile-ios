@@ -33,7 +33,9 @@ class GroupMemberCell: UITableViewCell {
 // MARK: - Setup Cell
 extension GroupMemberCell {
     fileprivate func setupCell(with group: GSRGroupMember) {
-        prepareUI()
+        if (nameLabel == nil || pennKeyActiveLabel == nil) {
+            prepareUI()
+        }
         
         nameLabel.text = "\(member.first) \(member.last) (\(member.pennKey))"
         pennKeyActiveLabel.text = member.isBookingEnabled ? "PennID Active" : "PennID Inactive"

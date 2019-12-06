@@ -32,8 +32,12 @@ class GroupSettingsCell: UITableViewCell {
     }
     
     func setupCell(with userSetting: GSRGroupIndividualSetting) {
-        prepareUI()
         self.userSetting = userSetting
+        
+        if (titleLabel == nil || descriptionLabel == nil || isEnabledSwitch == nil) {
+            prepareUI()
+        }
+
         titleLabel.text = userSetting.title
         descriptionLabel.text = userSetting.descr
         isEnabledSwitch.setOn(userSetting.isEnabled, animated: true)
