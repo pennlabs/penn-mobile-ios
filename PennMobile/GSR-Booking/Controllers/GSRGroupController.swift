@@ -77,12 +77,12 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
             controller.delegate = self
             let navigationVC = UINavigationController(rootViewController: controller)
             controller.navigationController?.navigationBar.isHidden = true
-            
+            tableView.deselectRow(at: indexPath, animated: true)
             present(navigationVC, animated: true, completion: nil)
         } else {
             let group = groups[indexPath.row]
             let manageVC = GSRManageGroupController(group: group)
-
+            tableView.deselectRow(at: indexPath, animated: true)
             navigationController?.pushViewController(manageVC, animated: true)
         }
     }

@@ -11,15 +11,24 @@ import UIKit
 class GSRGroupInviteViewController: UIViewController {
     
     fileprivate var dummyLabel: UILabel!
-    fileprivate var doneBtn : UIButton!
     fileprivate var closeButton: UIButton!
     fileprivate var inViteUsersLabel: UILabel!
     fileprivate var searchBar: UISearchBar!
     fileprivate var sendInvitesButton: UIButton!
     fileprivate var tableView: UITableView!
     
+    fileprivate let disabledBtnColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:0.5)
+    fileprivate let enabledBtnColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:1)
+    
     fileprivate var users = GSRInviteSearchResults()
-    fileprivate var filteredUsers = GSRInviteSearchResults()
+    fileprivate var filteredUsers = GSRInviteSearchResults() {
+        didSet {
+            sendInvitesButton.isEnabled = !filteredUsers.isEmpty
+            sendInvitesButton.backgroundColor = sendInvitesButton.isEnabled ? enabledBtnColor : disabledBtnColor
+            print(sendInvitesButton.isEnabled)
+            print(filteredUsers)
+        }
+    }
     
     fileprivate var isSearchBarEmpty: Bool {
       return searchBar.text?.isEmpty ?? true
@@ -104,8 +113,10 @@ class GSRGroupInviteViewController: UIViewController {
         sendInvitesButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         sendInvitesButton.translatesAutoresizingMaskIntoConstraints = false
         
+        sendInvitesButton.addTarget(self, action: #selector(didPressInviteBtn), for: .touchUpInside)
+        
         sendInvitesButton.isEnabled = false
-        sendInvitesButton.isUserInteractionEnabled = false
+//        sendInvitesButton.isUserInteractionEnabled = false
     }
     
     func prepareTableView() {
@@ -161,6 +172,20 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
         cell.textLabel?.text = user.username
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        
+        if cell.accessoryType == UITableViewCell.AccessoryType.checkmark {
+            cell.accessoryType = .none
+            filteredUsers = filteredUsers.filter {$0 != users[indexPath.row]}
+        } else {
+            cell.accessoryType = .checkmark
+            filteredUsers.append(users[indexPath.row])
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension GSRGroupInviteViewController {
@@ -176,5 +201,11 @@ extension GSRGroupInviteViewController {
 extension GSRGroupInviteViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterContentForSearchText(searchText)
+    }
+}
+
+extension GSRGroupInviteViewController {
+    @objc func didPressInviteBtn(sender: UIButton!) {
+        print(filteredUsers)
     }
 }

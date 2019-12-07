@@ -18,13 +18,17 @@ struct GSRGroupUser: Codable{
     }
 }
 
-struct GSRInviteSearchResult: Codable {
+struct GSRInviteSearchResult: Codable, Equatable {
     let username: String
     let bookingGroups: [GSRGroup]
 
     enum CodingKeys: String, CodingKey {
         case username
         case bookingGroups = "booking_groups"
+    }
+    
+    static func == (lhs: GSRInviteSearchResult, rhs: GSRInviteSearchResult) -> Bool {
+        return lhs.username == rhs.username
     }
 }
 
