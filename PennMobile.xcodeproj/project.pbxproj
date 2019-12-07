@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		139139772388923F00C6C298 /* DiningDollarsTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */; };
-		139139792388929700C6C298 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139139782388929700C6C298 /* TransactionTableViewCell.swift */; };
 		2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */; };
 		2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */; };
 		2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF221F3F762500CEC3F4 /* ContactCell.swift */; };
@@ -55,7 +54,6 @@
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
 		216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640781EBADADA00746B8E /* PennMobileTests.swift */; };
-		216640941EBADC1700746B8E /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640901EBADC1700746B8E /* DiningCell.swift */; };
 		216640951EBADC1700746B8E /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640911EBADC1700746B8E /* DiningViewController.swift */; };
 		216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C11EBADC9300746B8E /* GenericControllers.swift */; };
 		216640CC1EBADCA400746B8E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C91EBADCA400746B8E /* Extensions.swift */; };
@@ -73,9 +71,7 @@
 		217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7840204D9802004F1227 /* ModularTableViewItemTypes.swift */; };
 		217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7842204D995C004F1227 /* ModularTableViewCell.swift */; };
 		217A7845204DB800004F1227 /* HomeAsynchronousFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7844204DB800004F1227 /* HomeAsynchronousFetching.swift */; };
-		217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD320139A1800F07C3D /* DiningViewModel.swift */; };
 		217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */; };
-		217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */; };
 		2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */; };
 		2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2180D2342013F65C008C94CF /* HomeAPIService.swift */; };
 		21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21879B1D1FB3FF54003CF552 /* Storage.swift */; };
@@ -147,7 +143,7 @@
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
 		6D3A9CED0A7F5A1793963F7B /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718F76BB2121FDFB84BE4018 /* Pods_AutomatedScreenshotUITests.framework */; };
-		7D3B0862F7B94959E3EDAC71 /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3842B78C41E1D1C01C2AE8 /* Pods_PennMobileTests.framework */; };
+		7D3B0862F7B94959E3EDAC71 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFC2100DA1200D3D606 /* BuildingCell.swift */; };
 		97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */; };
 		97E79E052100DA1200D3D606 /* BuildingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */; };
@@ -179,11 +175,9 @@
 		B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */; };
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
 		B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */; };
-		B9C8CAA8235A613D0040C8E5 /* GSRGroupNewIntialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C8CAA7235A613D0040C8E5 /* GSRGroupNewIntialController.swift */; };
 		C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */; };
 		C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */; };
 		C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11B38E222508A8D009B752A /* DiningBalance.swift */; };
-		C11B38E5225126DD009B752A /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11B38E4225126DD009B752A /* DiningBalanceCell.swift */; };
 		C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */; };
 		C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA30219F90E5000FC573 /* CalendarEvent.swift */; };
 		C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */; };
@@ -191,7 +185,6 @@
 		C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F9E9821928638000B866A /* HomeCalendarCellItem.swift */; };
 		C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C4B4D223EB16F00E443FD /* HomeReservationsCell.swift */; };
 		C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C4B4F223EB18800E443FD /* HomeReservationsCellItem.swift */; };
-		C18D1D62225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18D1D61225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift */; };
 		C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */; };
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
@@ -203,8 +196,12 @@
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
 		EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC321860B7000E29C6A /* StatusBar.swift */; };
 		EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC521861B8500E29C6A /* HomeNavigationController.swift */; };
-		EF87F1EC23762593001679BA /* GSRGroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF87F1EB23762593001679BA /* GSRGroupUser.swift */; };
-		EF9671B723888EED00D1AD91 /* LabsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9671B623888EED00D1AD91 /* LabsButton.swift */; };
+		EF391CC8239B186200FE8214 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC2239B186200FE8214 /* DiningBalanceCell.swift */; };
+		EF391CC9239B186200FE8214 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC3239B186200FE8214 /* TransactionTableViewCell.swift */; };
+		EF391CCA239B186200FE8214 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC4239B186200FE8214 /* DiningHeaderView.swift */; };
+		EF391CCB239B186200FE8214 /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC5239B186200FE8214 /* DiningCell.swift */; };
+		EF391CCC239B186200FE8214 /* DiningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC6239B186200FE8214 /* DiningViewModel.swift */; };
+		EF391CCD239B186200FE8214 /* DiningBalanceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC7239B186200FE8214 /* DiningBalanceCollectionViewCell.swift */; };
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
 		EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */; };
 		EFE2D6F0239B11050020F6BF /* GroupSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E8239B11050020F6BF /* GroupSettingsCell.swift */; };
@@ -257,7 +254,6 @@
 
 /* Begin PBXFileReference section */
 		139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDollarsTransactionViewController.swift; sourceTree = "<group>"; };
-		139139782388929700C6C298 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
@@ -310,7 +306,6 @@
 		216640781EBADADA00746B8E /* PennMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobileTests.swift; sourceTree = "<group>"; };
 		2166407A1EBADADA00746B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
-		216640901EBADC1700746B8E /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
 		216640911EBADC1700746B8E /* DiningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewController.swift; sourceTree = "<group>"; };
 		216640C11EBADC9300746B8E /* GenericControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericControllers.swift; sourceTree = "<group>"; };
 		216640C91EBADCA400746B8E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -330,9 +325,7 @@
 		217A7840204D9802004F1227 /* ModularTableViewItemTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewItemTypes.swift; sourceTree = "<group>"; };
 		217A7842204D995C004F1227 /* ModularTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewCell.swift; sourceTree = "<group>"; };
 		217A7844204DB800004F1227 /* HomeAsynchronousFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAsynchronousFetching.swift; sourceTree = "<group>"; };
-		217C6DD320139A1800F07C3D /* DiningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewModel.swift; sourceTree = "<group>"; };
 		217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
-		217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
 		2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequestable.swift; sourceTree = "<group>"; };
 		2180D2342013F65C008C94CF /* HomeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPIService.swift; sourceTree = "<group>"; };
 		21879B1D1FB3FF54003CF552 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
@@ -442,11 +435,9 @@
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
 		B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteViewController.swift; sourceTree = "<group>"; };
 		B9C8CAA7235A613D0040C8E5 /* GSRGroupNewIntialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupNewIntialController.swift; sourceTree = "<group>"; };
-		BF51638A5AE472B70AA5706E /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
 		C11B38E222508A8D009B752A /* DiningBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalance.swift; sourceTree = "<group>"; };
-		C11B38E4225126DD009B752A /* DiningBalanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
 		C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAPI.swift; sourceTree = "<group>"; };
 		C11DFA30219F90E5000FC573 /* CalendarEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEvent.swift; sourceTree = "<group>"; };
 		C11DFA3421BB5782000FC573 /* UniversityNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversityNotificationCell.swift; sourceTree = "<group>"; };
@@ -454,7 +445,6 @@
 		C13F9E9821928638000B866A /* HomeCalendarCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarCellItem.swift; sourceTree = "<group>"; };
 		C15C4B4D223EB16F00E443FD /* HomeReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCell.swift; sourceTree = "<group>"; };
 		C15C4B4F223EB18800E443FD /* HomeReservationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCellItem.swift; sourceTree = "<group>"; };
-		C18D1D61225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalanceCollectionViewCell.swift; sourceTree = "<group>"; };
 		C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReservationsCell.swift; sourceTree = "<group>"; };
 		CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		CF1CE9BC205D664700C51F46 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
@@ -468,8 +458,12 @@
 		EA4073C46DD1A9414419420C /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF389EC321860B7000E29C6A /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		EF389EC521861B8500E29C6A /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
-		EF87F1EB23762593001679BA /* GSRGroupUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupUser.swift; sourceTree = "<group>"; };
-		EF9671B623888EED00D1AD91 /* LabsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsButton.swift; sourceTree = "<group>"; };
+		EF391CC2239B186200FE8214 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
+		EF391CC3239B186200FE8214 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
+		EF391CC4239B186200FE8214 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
+		EF391CC5239B186200FE8214 /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
+		EF391CC6239B186200FE8214 /* DiningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewModel.swift; sourceTree = "<group>"; };
+		EF391CC7239B186200FE8214 /* DiningBalanceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCollectionViewCell.swift; sourceTree = "<group>"; };
 		EFD6F358220E334100382783 /* DiningCellSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCellSettingsController.swift; sourceTree = "<group>"; };
 		EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupIndividualSettingView.swift; sourceTree = "<group>"; };
 		EFE2D6E8239B11050020F6BF /* GroupSettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSettingsCell.swift; sourceTree = "<group>"; };
@@ -511,7 +505,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D3B0862F7B94959E3EDAC71 /* Pods_PennMobileTests.framework in Frameworks */,
+				7D3B0862F7B94959E3EDAC71 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -645,6 +639,7 @@
 				216640611EBADADA00746B8E /* Products */,
 				F5E2CE9A9024AE8E28992A5E /* Pods */,
 				F48D9E404FF229DDB0BE1F67 /* Frameworks */,
+				EF391CC0239B17EA00FE8214 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -726,8 +721,8 @@
 		2166408B1EBADBF800746B8E /* Dining */ = {
 			isa = PBXGroup;
 			children = (
+				EF391CC1239B186200FE8214 /* Views */,
 				2166408E1EBADC0700746B8E /* Controllers */,
-				975BC27F20F07664009F93AB /* Views */,
 				2166408D1EBADC0100746B8E /* Model */,
 				216640CE1EBADD1B00746B8E /* Networking + Cache */,
 			);
@@ -954,7 +949,6 @@
 				2189C0812027CDB800771C1F /* GSRLoginController.swift */,
 				2138D55422598AA800D67CA2 /* GSRTabController.swift */,
 				2138D558225998A300D67CA2 /* GSRGroupController.swift */,
-				9769F45B235A643200E282B5 /* GSRManageGroupController.swift */,
 				B9C8CAA7235A613D0040C8E5 /* GSRGroupNewIntialController.swift */,
 				B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */,
 			);
@@ -1059,34 +1053,6 @@
 				66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */,
 			);
 			path = Auth;
-			sourceTree = "<group>";
-		};
-		975BC27F20F07664009F93AB /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				217C6DD320139A1800F07C3D /* DiningViewModel.swift */,
-				216640901EBADC1700746B8E /* DiningCell.swift */,
-				217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */,
-				C11B38E4225126DD009B752A /* DiningBalanceCell.swift */,
-				C18D1D61225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift */,
-				139139782388929700C6C298 /* TransactionTableViewCell.swift */,
-			);
-			path = Views;
-			path = "View Models";
-			sourceTree = "<group>";
-		};
-		97AA4C72235CD52F007F09FE /* GSRGroups */ = {
-			isa = PBXGroup;
-			children = (
-				2138D55A22599D0000D67CA2 /* CreateGroupCell.swift */,
-				2138D55C22599D0F00D67CA2 /* GroupCell.swift */,
-				97AA4C6C235CD314007F09FE /* GroupMemberCell.swift */,
-				97AA4C6E235CD328007F09FE /* GroupSettingsCell.swift */,
-				978E88542375FEF4006B3864 /* GroupIndividualSettingView.swift */,
-				EF3090382366617700391BB1 /* GSRColorCell.swift */,
-				EF9671B623888EED00D1AD91 /* LabsButton.swift */,
-			);
-			path = GSRGroups;
 			sourceTree = "<group>";
 		};
 		97E79E0A2100DBC300D3D606 /* Fitness */ = {
@@ -1294,6 +1260,20 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		EF391CC1239B186200FE8214 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EF391CC2239B186200FE8214 /* DiningBalanceCell.swift */,
+				EF391CC3239B186200FE8214 /* TransactionTableViewCell.swift */,
+				EF391CC4239B186200FE8214 /* DiningHeaderView.swift */,
+				EF391CC5239B186200FE8214 /* DiningCell.swift */,
+				EF391CC6239B186200FE8214 /* DiningViewModel.swift */,
+				EF391CC7239B186200FE8214 /* DiningBalanceCollectionViewCell.swift */,
+			);
+			name = Views;
+			path = PennMobile/Dining/Views;
+			sourceTree = SOURCE_ROOT;
+		};
 		EFE2D6E6239B11050020F6BF /* GSRGroups */ = {
 			isa = PBXGroup;
 			children = (
@@ -1324,7 +1304,6 @@
 			children = (
 				718F76BB2121FDFB84BE4018 /* Pods_AutomatedScreenshotUITests.framework */,
 				77611BF43B00344A633A234A /* Pods_PennMobile.framework */,
-				BF3842B78C41E1D1C01C2AE8 /* Pods_PennMobileTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1702,6 +1681,7 @@
 				C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
+				EF391CCA239B186200FE8214 /* DiningHeaderView.swift in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
 				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,
 				21B8BBB02223187D00EBC1D0 /* LoginWebviewController.swift in Sources */,
@@ -1719,6 +1699,8 @@
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
+				EF391CCD239B186200FE8214 /* DiningBalanceCollectionViewCell.swift in Sources */,
+				EF391CC8239B186200FE8214 /* DiningBalanceCell.swift in Sources */,
 				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
@@ -1740,7 +1722,6 @@
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
-				EF9671B723888EED00D1AD91 /* LabsButton.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				F2F4C92023611EB900816456 /* Colors.swift in Sources */,
@@ -1753,6 +1734,7 @@
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
 				97E79E182100E4AA00D3D606 /* FitnessFacilityData.swift in Sources */,
+				EF391CC9239B186200FE8214 /* TransactionTableViewCell.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
@@ -1760,7 +1742,6 @@
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
 				EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
-				139139792388929700C6C298 /* TransactionTableViewCell.swift in Sources */,
 				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
 				21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */,
@@ -1777,7 +1758,6 @@
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
 				21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */,
 				2188C6D7223C7E8400F18D90 /* SecureStore.swift in Sources */,
-				217C6DDB20139AEE00F07C3D /* DiningHeaderView.swift in Sources */,
 				214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */,
 				F23CC0BD235E3F390007317A /* DiningAPIResponse.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
@@ -1802,7 +1782,6 @@
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
 				F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */,
-				C11B38E5225126DD009B752A /* DiningBalanceCell.swift in Sources */,
 				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
@@ -1814,20 +1793,19 @@
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
 				212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */,
-				216640941EBADC1700746B8E /* DiningCell.swift in Sources */,
 				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				EFE2D6F4239B11050020F6BF /* GroupCell.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
+				EF391CCB239B186200FE8214 /* DiningCell.swift in Sources */,
 				F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				97E79E072100DA1200D3D606 /* BuildingImageCell.swift in Sources */,
 				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
 				217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */,
-				217C6DD420139A1800F07C3D /* DiningViewModel.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
 				21A9D942224087980000444D /* CourseMeetingTime.swift in Sources */,
 				139139772388923F00C6C298 /* DiningDollarsTransactionViewController.swift in Sources */,
@@ -1837,6 +1815,7 @@
 				2189C0A82027CE4B00771C1F /* ThumbLayer.swift in Sources */,
 				21B653B92245EB67001A97C5 /* PennAuthRequestable.swift in Sources */,
 				2189C0842027CDB800771C1F /* GSRLoginController.swift in Sources */,
+				EF391CCC239B186200FE8214 /* DiningViewModel.swift in Sources */,
 				211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */,
 				EFE2D6F2239B11050020F6BF /* GroupMemberCell.swift in Sources */,
 				2189C0A02027CE4100771C1F /* GSRVenue.swift in Sources */,
@@ -1859,7 +1838,6 @@
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
-				C18D1D62225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift in Sources */,
 				EFE2D6FB239B12270020F6BF /* GSRGroupNewIntialController.swift in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				97E79E142100E1FA00D3D606 /* FitnessViewController.swift in Sources */,
