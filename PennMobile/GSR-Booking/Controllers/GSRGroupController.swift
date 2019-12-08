@@ -12,8 +12,8 @@ import Foundation
 class GSRGroupController: GenericViewController {
 
     fileprivate var groups: [GSRGroup] = []
-
     fileprivate var tableView: UITableView!
+    fileprivate let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +30,11 @@ class GSRGroupController: GenericViewController {
 extension GSRGroupController {
     fileprivate func setupUI() {
         setupTableView()
+        
+        //Add swipe up to refresh to Table View
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Groups ...", attributes: nil)
+        refreshControl.addTarget(self, action: #selector(fetchGroups), for: .valueChanged)
+        tableView.addSubview(refreshControl)
     }
 
     fileprivate func setupTableView() {
@@ -95,13 +100,14 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
 
 //MARK: NewGroupInitialDelegate
 extension GSRGroupController: NewGroupInitialDelegate{
-    func fetchGroups() {
+    @objc func fetchGroups() {
         GSRGroupNetworkManager.instance.getAllGroups { (groups) in
             if let groups = groups {
                 self.groups = groups
             }
 
             DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
                 self.tableView.reloadData()
             }
         }

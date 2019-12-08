@@ -54,7 +54,7 @@ DEPENDENCIES:
   - SwiftSoup
   - SwiftyJSON
   - TimelineTableViewCell
-  - WKZombie (from `https://github.com/pennlabs/WKZombie.git`, commit `52d1ab049e4dcc6e787122e4a053321e86d74bd9`)
+  - WKZombie (from `https://github.com/pennlabs/WKZombie.git`, commit `536f6e8aa0e8438fe711fff6420908bc67edb056`)
   - XLPagerTabStrip (~> 9.0)
   - ZoomImageView
 
@@ -85,12 +85,12 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   WKZombie:
-    :commit: 52d1ab049e4dcc6e787122e4a053321e86d74bd9
+    :commit: 536f6e8aa0e8438fe711fff6420908bc67edb056
     :git: https://github.com/pennlabs/WKZombie.git
 
 CHECKOUT OPTIONS:
   WKZombie:
-    :commit: 52d1ab049e4dcc6e787122e4a053321e86d74bd9
+    :commit: 536f6e8aa0e8438fe711fff6420908bc67edb056
     :git: https://github.com/pennlabs/WKZombie.git
 
 SPEC CHECKSUMS:
@@ -113,10 +113,10 @@ SPEC CHECKSUMS:
   SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
-  WKZombie: e665c6ba3a4e4c472e554813b5049a4c1cef6251
+  WKZombie: 90713d7efd00b860468b0dcae84e927af493dd8f
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5
 
-PODFILE CHECKSUM: bd1d6bb59d8ae611f02b07c4fca0f0d1006ff687
+PODFILE CHECKSUM: 9323085b23cc9a6a8a32b44dfc066f731756296e
 
 COCOAPODS: 1.8.4
