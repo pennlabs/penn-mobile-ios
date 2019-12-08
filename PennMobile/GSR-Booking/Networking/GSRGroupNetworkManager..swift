@@ -36,12 +36,12 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
     func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
         // handle missing pennkey later
-//        guard let pennkey = Student.getStudent()?.pennkey else {
-//            print("Use is not signed in")
-//            return
-//        }
+        guard let pennkey = Student.getStudent()?.pennkey else {
+            print("Use is not signed in")
+            return
+        }
         
-        let pennkey = "rehaan"
+//        let pennkey = "rehaan"
 
         let allGroupsURL = "\(userURL)\(pennkey)/"
         getRequestData(url: allGroupsURL) { (data, error, status) in

@@ -212,7 +212,7 @@ class GSRGroupNewIntialController: UIViewController {
 
 
     @objc func createGroupBtnAction(sender:UIButton!) {
-        GSRGroupNetworkManager.instance.createGroup(name: nameField.text!, color: "color") { (success, errorMsg) in
+        GSRGroupNetworkManager.instance.createGroup(name: nameField.text!, color: colorLabel.text!) { (success, errorMsg) in
             if success {
                 
                 // This reloads the groups on the GSRGroupController - this should be done after invites / end of the flow
