@@ -96,6 +96,8 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 //        callback(true, nil)
 //    }
     func createGroup(name: String, color: String, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> ()) {
+        
+        print(color)
 
         guard let pennkey = Student.getStudent()?.pennkey else {
             print("User is not signed in")

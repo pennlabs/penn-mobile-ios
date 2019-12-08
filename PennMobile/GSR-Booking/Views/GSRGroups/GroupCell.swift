@@ -41,7 +41,7 @@ extension GroupCell {
         if (groupImage == nil || groupName == nil || activeLabel == nil) {
             setupUI()
         } else {
-            groupImage.backgroundColor = UIColor(named: "blueLighter")
+            groupImage.backgroundColor = group.parseColor() ?? UIColor(named: "blueLighter")
             groupName.text = group.name
             if let userSettings = group.userSettings {
                 let text = userSettings.pennKeyActive.isEnabled ? "PennID Active" : "PennID Inactive"
