@@ -32,9 +32,9 @@ extension GSRGroupController {
         setupTableView()
         
         //Add swipe up to refresh to Table View
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Groups ...", attributes: nil)
+        tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(fetchGroups), for: .valueChanged)
-        tableView.addSubview(refreshControl)
+//        tableView.addSubview(refreshControl)
     }
 
     fileprivate func setupTableView() {
