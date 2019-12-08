@@ -144,7 +144,8 @@
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
 		6D3A9CED0A7F5A1793963F7B /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718F76BB2121FDFB84BE4018 /* Pods_AutomatedScreenshotUITests.framework */; };
-		7D3B0862F7B94959E3EDAC71 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		7D3B0862F7B94959E3EDAC71 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */; };
 		97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFC2100DA1200D3D606 /* BuildingCell.swift */; };
 		97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */; };
 		97E79E052100DA1200D3D606 /* BuildingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */; };
@@ -401,6 +402,7 @@
 		718F76BB2121FDFB84BE4018 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77611BF43B00344A633A234A /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81E7B85BEF491C3BD2846D47 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
+		97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupIconView.swift; sourceTree = "<group>"; };
 		97E79DFC2100DA1200D3D606 /* BuildingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingHeaderCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingHeaderCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingSectionHeader.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingSectionHeader.swift; sourceTree = SOURCE_ROOT; };
@@ -507,7 +509,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D3B0862F7B94959E3EDAC71 /* BuildFile in Frameworks */,
+				7D3B0862F7B94959E3EDAC71 /* (null) in Frameworks */,
 				07BDD5AE4D05C2CAF17F9FB6 /* Pods_PennMobileTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1287,6 +1289,7 @@
 				EFE2D6EC239B11050020F6BF /* GroupCell.swift */,
 				EFE2D6ED239B11050020F6BF /* GroupHeaderCell.swift */,
 				EFE2D6EE239B11050020F6BF /* GSRColorCell.swift */,
+				97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */,
 			);
 			path = GSRGroups;
 			sourceTree = "<group>";
@@ -1725,6 +1728,7 @@
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
+				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				F2F4C92023611EB900816456 /* Colors.swift in Sources */,

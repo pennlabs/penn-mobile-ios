@@ -79,12 +79,13 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: GroupHeaderCell.identifier, for: indexPath) as! GroupHeaderCell
                 cell.groupTitle = group.name
+                let color = group.parseColor() ??  UIColor(named: "blueLighter")
+                cell.groupColor = color
+
                 if let members = group.members {
                     cell.memberCount = members.count
                 }
-                if let imgUrl = group.imgURL {
-                    cell.imageURL = imgUrl
-                }
+
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: GroupSettingsCell.identifier, for: indexPath) as! GroupSettingsCell

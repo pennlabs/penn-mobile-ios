@@ -12,20 +12,21 @@ import Kingfisher
 class GroupHeaderCell: UITableViewCell {
     
     static let identifier = "gsrGroupHeaderCell"
-    fileprivate var imageIcon: UIImageView!
+    fileprivate var groupIcon: GSRGroupIconView!
     fileprivate var titleLabel: UILabel!
     fileprivate var memberCountLabel: UILabel!
     
     fileprivate let inset : CGFloat = 14.0
 
-    var imageURL: String! {
+    var groupColor: UIColor! {
         didSet {
-            imageIcon.image = UIImage(named: "lid-1086")
+            groupIcon.backgroundColor = groupColor
         }
     }
     var groupTitle: String! {
         didSet {
             titleLabel.text = "\(groupTitle!)"
+            groupIcon.name = groupTitle
         }
     }
     var memberCount: Int! {
@@ -48,23 +49,20 @@ class GroupHeaderCell: UITableViewCell {
 // MARK - UI
 extension GroupHeaderCell {
     fileprivate func prepareUI() {
-        prepareImageIcon()
+        prepareGroupIcon()
         prepareTitle()
         prepareMemberCountLabel()
         
         backgroundColor = UIColor.clear
     }
-    fileprivate func prepareImageIcon() {
+    
+    fileprivate func prepareGroupIcon() {
         let height : CGFloat = 63.0
-        imageIcon = UIImageView()
-        imageIcon.layer.cornerRadius = height / 2.0 //half of height
-        imageIcon.layer.masksToBounds = true
-        imageIcon.contentMode = .scaleAspectFill
-        imageIcon.clipsToBounds = true
-        imageIcon.backgroundColor = UIColor.orange
-
-        addSubview(imageIcon)
-        _ = imageIcon.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 26.0, leftConstant: inset, bottomConstant: 26.0, rightConstant: 0, widthConstant: height, heightConstant: height)
+        groupIcon = GSRGroupIconView()
+        groupIcon.layer.cornerRadius = height / 2.0 //half of height
+        groupIcon.layer.masksToBounds = true
+        addSubview(groupIcon)
+        _ = groupIcon.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 26.0, leftConstant: inset, bottomConstant: 26.0, rightConstant: 0, widthConstant: height, heightConstant: height)
     }
     
     fileprivate func prepareTitle() {
@@ -72,7 +70,7 @@ extension GroupHeaderCell {
         titleLabel.font = UIFont.systemFont(ofSize: 24.0, weight: .bold)
         
         addSubview(titleLabel)
-        _ = titleLabel.anchor(nil, left: imageIcon.rightAnchor, bottom: imageIcon.bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 14.0, bottomConstant: 7.5, rightConstant: inset, widthConstant: 0, heightConstant: 30)
+        _ = titleLabel.anchor(nil, left: groupIcon.rightAnchor, bottom: groupIcon.bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 14.0, bottomConstant: 7.5, rightConstant: inset, widthConstant: 0, heightConstant: 30)
     }
     
     
