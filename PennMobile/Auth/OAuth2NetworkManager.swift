@@ -131,18 +131,6 @@ extension OAuth2NetworkManager {
 // MARK: - Retrieve Account
 extension OAuth2NetworkManager {
     func retrieveAccount(accessToken: AccessToken, _ callback: @escaping (_ user: OAuthUser?) -> Void) {
-        if accessToken.expiration < Date() {
-            // Access token has expired. Refresh and try again.
-            self.refreshAccessToken { (accessToken) in
-                if let accessToken = accessToken {
-                    self.retrieveAccount(accessToken: accessToken, callback)
-                } else {
-                    callback(nil)
-                }
-            }
-            return
-        }
-        
         let url = URL(string: "https://platform.pennlabs.org/accounts/introspect/")!
         var request = URLRequest(url: url, accessToken: accessToken)
         request.httpMethod = "POST"
