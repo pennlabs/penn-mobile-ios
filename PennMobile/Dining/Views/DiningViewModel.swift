@@ -13,8 +13,6 @@ protocol DiningViewModelDelegate: DiningBalanceRefreshable {
 }
 
 class DiningViewModel: NSObject {
-    static var showDiningPlan = false
-    
     let ordering: [DiningVenue.VenueType] = [.dining, .retail]
     var venues: [DiningVenue.VenueType : [DiningVenue]] = DiningDataStore.shared.getSectionedVenues()
     var balance: DiningBalance?
@@ -34,7 +32,7 @@ class DiningViewModel: NSObject {
     
     var shouldShowDiningBalances: Bool {
         get {
-            return UserDefaults.standard.hasDiningPlan() || DiningViewModel.showDiningPlan
+            return UserDefaults.standard.hasDiningPlan()
         }
     }
     

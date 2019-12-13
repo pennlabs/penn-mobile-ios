@@ -13,17 +13,21 @@ class Student: Codable {
     var last: String
     var pennkey: String!
     var email: String?
-    let imageUrl: String?
+    var imageUrl: String?
+    var pennid: Int?
     
     var degrees: Set<Degree>?
     var courses: Set<Course>?
     
     fileprivate static var student: Student?
     
-    init(first: String, last: String, imageUrl: String?) {
+    init(first: String, last: String, imageUrl: String? = nil, pennkey: String? = nil, email: String? = nil, pennid: Int? = nil) {
         self.first = first
         self.last = last
         self.imageUrl = imageUrl
+        self.pennkey = pennkey
+        self.email = email
+        self.pennid = pennid
     }
     
     func isInWharton() -> Bool {

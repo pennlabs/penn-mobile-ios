@@ -21,9 +21,12 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     
     final private var webView: WKWebView!
     
-    final fileprivate var secureStore: SecureStore!
+    final internal var secureStore: SecureStore!
     
     var shouldAutoNavigate: Bool = true
+    var shouldLoadCookies: Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +59,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     
     func configureAndLoad(wkDataStore: WKWebsiteDataStore) {
         let webConfiguration = WKWebViewConfiguration()
-        webConfiguration.websiteDataStore = wkDataStore
+        webConfiguration.websiteDataStore = shouldLoadCookies ? wkDataStore : .nonPersistent()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.navigationDelegate = self
         webView.uiDelegate = self
@@ -85,7 +88,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
             })
             
             let hasReferer = request.allHTTPHeaderFields?["Referer"] != nil
-            if url.absoluteString == self.urlStr, hasReferer {
+            if self.isSuccessfulRedirect(url: url.absoluteString, hasReferer: hasReferer) {
                 // Webview has redirected to desired site.
                 self.handleSuccessfulNavigation(webView, decisionHandler: decisionHandler)
             } else {
@@ -118,7 +121,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
             return
         }
         
-        if url.absoluteString == urlStr, response.statusCode == 200 {
+        if self.isSuccessfulRedirect(url: url.absoluteString, hasReferer: true), response.statusCode == 200 {
             self.handleSuccessfulNavigation(webView) { (policy) in
                 decisionHandler(policy == WKNavigationActionPolicy.allow ? WKNavigationResponsePolicy.allow : WKNavigationResponsePolicy.cancel)
             }
@@ -179,6 +182,11 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
                 self.dismiss(animated: true, completion: nil)
             }
         }
+    }
+    
+    // MARK: - Verify Successful Redirect
+    func isSuccessfulRedirect(url: String, hasReferer: Bool) -> Bool {
+        return url == self.urlStr && hasReferer
     }
 }
 
