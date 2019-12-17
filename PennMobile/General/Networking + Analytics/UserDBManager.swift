@@ -178,3 +178,26 @@ extension UserDBManager {
         }
     }
 }
+
+// MARK: - Housing Data
+extension UserDBManager {
+    func saveHousingData(html: String, _ completion: (() -> Void)? = nil) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                completion?()
+                return
+            }
+            
+            let url = URL(string: "http://localhost:5000/housing")!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            let params = ["html": html]
+            request.httpBody = String.getPostString(params: params).data(using: .utf8)
+
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                completion?()
+            }
+            task.resume()
+        }
+    }
+}

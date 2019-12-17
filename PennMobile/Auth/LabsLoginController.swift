@@ -117,6 +117,7 @@ extension LabsLoginController {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     self.getDiningBalance()
                     self.getDiningTransactions()
+                    CampusExpressNetworkManager.instance.updateHousingData()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         self.getCourses()
                     }
