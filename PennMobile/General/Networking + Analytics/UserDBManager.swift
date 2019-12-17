@@ -188,7 +188,7 @@ extension UserDBManager {
                 return
             }
             
-            let url = URL(string: "http://localhost:5000/housing")!
+            let url = URL(string: "\(baseUrl)/housing")!
             var request = URLRequest(url: url, accessToken: token)
             request.httpMethod = "POST"
             let params = ["html": html]
