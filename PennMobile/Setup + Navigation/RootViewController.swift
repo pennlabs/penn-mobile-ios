@@ -29,11 +29,7 @@ class RootViewController: UIViewController {
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
-            if UserDefaults.standard.getAccountID() != nil {
-                // Upon updating the app, assume everyone with an account is authed into Shibboleth
-                // REMOVE IN FUTURE VERSIONS
-                UserDefaults.standard.setShibbolethAuth(authedIn: true)
-            }
+            
         }
                 
         if UserDefaults.standard.getAccountID() != nil && shouldRequireLogin() {

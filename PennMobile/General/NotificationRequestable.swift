@@ -17,7 +17,6 @@ extension NotificationRequestable where Self: UIViewController {
     internal typealias AuthorizedCompletion = (_ granted: Bool) -> Void
     
     func requestNotification (_ completion: AuthorizedCompletion? = nil) {
-        
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
             if settings.authorizationStatus == .notDetermined {
                 DispatchQueue.main.async {
@@ -43,9 +42,8 @@ extension NotificationRequestable where Self: UIViewController {
         UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]){ (granted, error) in
             DispatchQueue.main.async {
                 UIApplication.shared.registerForRemoteNotifications()
+                completion?(granted)
             }
-            
-            completion?(granted)
         }
     }
     
@@ -78,7 +76,7 @@ extension NotificationRequestable where Self: UIViewController {
             self.registerPushNotification(completion)
         }
         alertView.addButton("Decline", action: {  })
-        alertView.showSuccess("Enable Notifications", subTitle: "Get notifications for laundry, and our future updates!")
+        alertView.showSuccess("Enable Notifications", subTitle: "Receive monthly dining plan progress updates, laundry alerts, and information about new features.")
     }
     
 }
