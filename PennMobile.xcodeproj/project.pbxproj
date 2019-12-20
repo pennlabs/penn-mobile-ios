@@ -724,6 +724,7 @@
 			isa = PBXGroup;
 			children = (
 				216640911EBADC1700746B8E /* DiningViewController.swift */,
+				217C6DD320139A1800F07C3D /* DiningViewModel.swift */,
 				139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */,
 			);
 			path = Controllers;
@@ -1033,7 +1034,6 @@
 		975BC27F20F07664009F93AB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				217C6DD320139A1800F07C3D /* DiningViewModel.swift */,
 				216640901EBADC1700746B8E /* DiningCell.swift */,
 				217C6DDA20139AEE00F07C3D /* DiningHeaderView.swift */,
 				C11B38E4225126DD009B752A /* DiningBalanceCell.swift */,
