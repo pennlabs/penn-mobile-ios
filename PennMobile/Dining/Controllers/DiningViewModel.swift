@@ -30,19 +30,12 @@ class DiningViewModel: NSObject {
     internal let diningCell = "diningCell"
     internal let diningBalanceCell = "diningBalanceCell"
     
-    var shouldShowDiningBalances: Bool {
-        get {
-            return UserDefaults.standard.hasDiningPlan()
-        }
-    }
-    
     func refresh() {
         self.venues = DiningDataStore.shared.getSectionedVenues()
     }
     
     func getType(forSection section: Int) -> DiningVenue.VenueType {
-        let index = shouldShowDiningBalances ? section - 1 : section
-        return ordering[index]
+        return ordering[section - 1]
     }
     
     func getVenues(forSection section: Int) -> [DiningVenue] {
@@ -58,18 +51,15 @@ class DiningViewModel: NSObject {
 // MARK: - UITableViewDataSource
 extension DiningViewModel: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return ordering.count + (shouldShowDiningBalances ? 1 : 0)
+        return ordering.count + 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if shouldShowDiningBalances && section == 0 {
-            return 1
-        }
-        return getVenues(forSection: section).count
+        return section == 0 ? 1 : getVenues(forSection: section).count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if shouldShowDiningBalances && indexPath.section == 0 {
+        if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: diningBalanceCell, for: indexPath) as! DiningBalanceCell
             cell.selectionStyle = .none
             cell.diningBalance = balance
@@ -91,14 +81,13 @@ extension DiningViewModel: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension DiningViewModel: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if shouldShowDiningBalances && section == 0 {
+        if section == 0 {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
             view.label.text = balancesHeader
             view.state = showActivity ? .loading : .refresh
             view.delegate = self.delegate
             return view
-        }
-        else {
+        } else {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerView) as! DiningHeaderView
             
             let headerTitle: String
@@ -116,10 +105,7 @@ extension DiningViewModel: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if shouldShowDiningBalances && indexPath.section == 0 {
-            return DiningBalanceCell.cellHeight
-        }
-        return DiningCell.cellHeight
+        return indexPath.section == 0 ? DiningBalanceCell.cellHeight : DiningCell.cellHeight
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -127,7 +113,7 @@ extension DiningViewModel: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if shouldShowDiningBalances && indexPath.section > 0 || !shouldShowDiningBalances {
+        if indexPath.section > 0 {
             let venue = getVenue(for: indexPath)
             delegate?.handleSelection(for: venue)
         }

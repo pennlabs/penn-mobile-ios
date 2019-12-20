@@ -35,13 +35,16 @@ class DiningViewController: GenericTableViewController {
         super.viewWillAppear(animated)
         fetchDiningHours()
         
-        if viewModel.shouldShowDiningBalances {
+        if UserDefaults.standard.hasDiningPlan() {
             if viewModel.balance == nil {
                 fetchBalance()
             } else {
                 updateBalanceIfNeeded()
             }
+        } else {
+            viewModel.balance = DiningBalance(diningDollars: 0, visits: 0, guestVisits: 0, lastUpdated: Date())
         }
+        
         if viewModel.venues[.dining]?.isEmpty ?? true {
             viewModel.refresh()
             tableView.reloadData()
@@ -156,7 +159,7 @@ extension DiningViewController {
     
     @objc fileprivate func handleRefreshControl(_ sender: Any) {
         fetchDiningHours()
-        if viewModel.shouldShowDiningBalances {
+        if UserDefaults.standard.hasDiningPlan() {
             updateBalanceFromCampusExpress(requestLoginOnFail: true)
         }
     }
