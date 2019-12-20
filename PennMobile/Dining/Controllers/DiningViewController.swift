@@ -35,7 +35,6 @@ class DiningViewController: GenericTableViewController {
         super.viewWillAppear(animated)
         fetchDiningHours()
         
-        UserDefaults.standard.set(hasDiningPlan: false)
         if UserDefaults.standard.hasDiningPlan() {
             if viewModel.balance == nil {
                 fetchBalance()
