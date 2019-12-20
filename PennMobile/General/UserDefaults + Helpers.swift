@@ -107,6 +107,10 @@ extension UserDefaults {
     func getDeviceToken() -> String? {
         return string(forKey: UserDefaultsKeys.deviceToken.rawValue)
     }
+    
+    func clearDeviceToken() {
+        removeObject(forKey: UserDefaultsKeys.deviceToken.rawValue)
+    }
 }
 
 // Mark: Laundry Preferences

@@ -26,6 +26,7 @@ extension NotificationRequestable where Self: UIViewController {
             
             if settings.authorizationStatus == .denied {
                 DispatchQueue.main.async {
+                    UserDefaults.standard.clearDeviceToken()
                     self.alertForDecline(completion)
                 }
             }
@@ -38,10 +39,23 @@ extension NotificationRequestable where Self: UIViewController {
         })
     }
     
+    // Refreshes device token if authorization has already been granted
+    func registerPushNotificationsIfAuthorized(_ completion: AuthorizedCompletion? = nil) {
+        UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
+            if settings.authorizationStatus == .authorized {
+                self.registerPushNotification(completion)
+            } else {
+                completion?(false)
+            }
+        })
+    }
+    
     func registerPushNotification(_ completion: AuthorizedCompletion?) {
         UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]){ (granted, error) in
             DispatchQueue.main.async {
-                UIApplication.shared.registerForRemoteNotifications()
+                if granted {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
                 completion?(granted)
             }
         }
@@ -58,7 +72,6 @@ extension NotificationRequestable where Self: UIViewController {
             if UIApplication.shared.canOpenURL(settingsUrl) {
                 UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
                     // Checking for setting is opened or not
-                    print("Setting is opened: \(success)")
                     DispatchQueue.main.async {
                         completion?(success)
                     }

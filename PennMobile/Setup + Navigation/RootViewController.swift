@@ -11,7 +11,7 @@ import UIKit
 import StoreKit
 
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
-class RootViewController: UIViewController {
+class RootViewController: UIViewController, NotificationRequestable {
     private var current: UIViewController
     
     private var lastLoginAttempt: Date?
@@ -100,6 +100,9 @@ class RootViewController: UIViewController {
         
         // Send saved unsent events
         FeedAnalyticsManager.shared.sendSavedEvents()
+        
+        // Refresh push notification device token if authorized
+        registerPushNotificationsIfAuthorized()
     }
     
     func showLoginScreen() {
