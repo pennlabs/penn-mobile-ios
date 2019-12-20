@@ -65,17 +65,17 @@ extension NotificationRequestable where Self: UIViewController {
                 })
             }
         }
-        alertView.addButton("Decline", action: {  })
+        alertView.addButton("Decline", backgroundColor: UIColor(r: 114, g: 115, b: 117), action: {  })
         alertView.showSuccess("Turn On Notifications", subTitle: "Go to Settings -> PennMobile -> Notification -> Turn On Notifications")
     }
     
     func alertForDetermination(_ completion: AuthorizedCompletion?) {
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
         let alertView = SCLAlertView(appearance: appearance)
-        alertView.addButton("Turn On"){
+        alertView.addButton("Turn On") {
             self.registerPushNotification(completion)
         }
-        alertView.addButton("Decline", action: {  })
+        alertView.addButton("Decline", backgroundColor: UIColor(r: 114, g: 115, b: 117), action: {  })
         alertView.showSuccess("Enable Notifications", subTitle: "Receive monthly dining plan progress updates, laundry alerts, and information about new features.")
     }
     
