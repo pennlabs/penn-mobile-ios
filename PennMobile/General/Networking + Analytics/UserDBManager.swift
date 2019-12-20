@@ -224,4 +224,11 @@ extension UserDBManager {
             completion?()
         }
     }
+    
+    func clearPushNotificationDeviceToken(_ completion: (() -> Void)? = nil) {
+        let url = "\(baseUrl)/notifications/register"
+        makePostRequestWithAccessToken(url: url, params: [:]) { (_, _, _) in
+            completion?()
+        }
+    }
 }

@@ -40,17 +40,17 @@ extension NotificationRequestable where Self: UIViewController {
     }
     
     // Refreshes device token if authorization has already been granted
-    func registerPushNotificationsIfAuthorized(_ completion: AuthorizedCompletion? = nil) {
+    func updatePushNotificationToken() {
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
             if settings.authorizationStatus == .authorized {
-                self.registerPushNotification(completion)
-            } else {
-                completion?(false)
+                self.registerPushNotification()
+            } else if settings.authorizationStatus == .denied {
+                UserDBManager.shared.clearPushNotificationDeviceToken()
             }
         })
     }
     
-    func registerPushNotification(_ completion: AuthorizedCompletion?) {
+    func registerPushNotification(_ completion: AuthorizedCompletion? = nil) {
         UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]){ (granted, error) in
             DispatchQueue.main.async {
                 if granted {
