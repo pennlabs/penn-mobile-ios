@@ -15,7 +15,6 @@
 		210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210AC14420684F9B0050D837 /* HomeCellProtocols.swift */; };
 		2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2119D26622529A0600693CDB /* HomeGSRLocationsCellItem.swift */; };
 		2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2119D26822529A2300693CDB /* HomeGSRLocationsCell.swift */; };
-		211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */ = {isa = PBXBuildFile; fileRef = 211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */; };
 		211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */; };
 		211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AE204921030065BC2C /* LaundryMachinesView.swift */; };
 		211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DFE531F36A02C00CB73E4 /* DiningAPI.swift */; };
@@ -252,7 +251,6 @@
 		2119D26622529A0600693CDB /* HomeGSRLocationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRLocationsCellItem.swift; sourceTree = "<group>"; };
 		2119D26822529A2300693CDB /* HomeGSRLocationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRLocationsCell.swift; sourceTree = "<group>"; };
 		211B11A41F2995AD00A22C8A /* PennMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PennMobile.entitlements; sourceTree = "<group>"; };
-		211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AuthKey_6MBD9SUNGE.p8; sourceTree = "<group>"; };
 		211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellConformable.swift; sourceTree = "<group>"; };
 		211DA1AE204921030065BC2C /* LaundryMachinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachinesView.swift; sourceTree = "<group>"; };
 		211DFE531F36A02C00CB73E4 /* DiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPI.swift; sourceTree = "<group>"; };
@@ -675,7 +673,6 @@
 			children = (
 				B6111DB12018497400DC7877 /* GoogleService-Info.plist */,
 				2166406F1EBADADA00746B8E /* Info.plist */,
-				211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */,
 				2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */,
 				216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */,
 				216640F81EBB88FB00746B8E /* PrefixHeader.pch */,
@@ -1435,7 +1432,6 @@
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
 				B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */,
 				2189C09E2027CE4100771C1F /* locations.json in Resources */,
-				211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
