@@ -28,12 +28,12 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
         return "https://prod.campusexpress.upenn.edu/Shibboleth.sso/SAML2/POST"
     }
     
-    func getHousingData() {
+    func updateHousingData() {
         makeAuthRequest(targetUrl: housingUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                print(html)
-            } else {
-                print("Something went wrong")
+                if let doc = try? SwiftSoup.parse(html as String), let htmlStr = try? doc.body()?.html(), let html = htmlStr {
+                    UserDBManager.shared.saveHousingData(html: html)
+                }
             }
         }
     }
