@@ -212,14 +212,7 @@ extension UserDBManager {
     func savePushNotificationDeviceToken(deviceToken: String, _ completion: (() -> Void)? = nil) {
         let url = "\(baseUrl)/notifications/register"
         let params = ["ios_token": deviceToken]
-        makePostRequestWithAccessToken(url: url, params: params) { (data, response, _) in
-            if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                let json = JSON(data)
-                print(json)
-            }
-            if let httpResponse = response as? HTTPURLResponse {
-                print(httpResponse.statusCode)
-            }
+        makePostRequestWithAccessToken(url: url, params: params) { (_, _, _) in
             completion?()
         }
     }
