@@ -14,7 +14,6 @@ extension UserDefaults {
     enum UserDefaultsKeys: String {
         case accountID
         case deviceUUID
-        case deviceToken
         case controllerSettings
         case sessionCount
         case laundryPreferences
@@ -94,22 +93,6 @@ extension UserDefaults {
         } else {
             set(sessionCount: 0)
         }
-    }
-}
-
-// Mark: Permanent Device Token (for push notifications)
-extension UserDefaults {
-    func set(deviceToken: String) {
-        set(deviceToken, forKey: UserDefaultsKeys.deviceToken.rawValue)
-        synchronize()
-    }
-
-    func getDeviceToken() -> String? {
-        return string(forKey: UserDefaultsKeys.deviceToken.rawValue)
-    }
-    
-    func clearDeviceToken() {
-        removeObject(forKey: UserDefaultsKeys.deviceToken.rawValue)
     }
 }
 

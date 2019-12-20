@@ -55,11 +55,7 @@ extension LoginController: NotificationRequestable {
             UserDefaults.standard.setLastLogin()
             AppDelegate.shared.rootViewController.switchToMainScreen()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                if let deviceToken = UserDefaults.standard.getDeviceToken() {
-                    // Send saved device token to the server in case it's not already there
-                    UserDBManager.shared.savePushNotificationDeviceToken(deviceToken: deviceToken)
-                }
+            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
                 self.requestNotification()
             }
         } else {

@@ -57,7 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let token = tokenParts.joined()
         UserDBManager.shared.savePushNotificationDeviceToken(deviceToken: token)
-        UserDefaults.standard.set(deviceToken: token)
     }
     
     func application(_ application: UIApplication,

@@ -26,13 +26,13 @@ extension NotificationRequestable where Self: UIViewController {
             
             if settings.authorizationStatus == .denied {
                 DispatchQueue.main.async {
-                    UserDefaults.standard.clearDeviceToken()
                     self.alertForDecline(completion)
                 }
             }
             
             if settings.authorizationStatus == .authorized {
                 DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
                     completion?(true)
                 }
             }
