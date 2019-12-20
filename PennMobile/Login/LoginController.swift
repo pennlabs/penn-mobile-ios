@@ -48,12 +48,16 @@ class LoginController: UIViewController, ShowsAlert {
 }
 
 // MARK: - Login Completion Handler
-extension LoginController {
+extension LoginController: NotificationRequestable {
     func loginCompletion(_ successful: Bool) {
         if successful {
             // Login Successful
             UserDefaults.standard.setLastLogin()
             AppDelegate.shared.rootViewController.switchToMainScreen()
+            
+            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
+                self.requestNotification()
+            }
         } else {
             // Failed to retrieve Student profile from PennInTouch (possibly down)
             if !self.isFirstAttempt {

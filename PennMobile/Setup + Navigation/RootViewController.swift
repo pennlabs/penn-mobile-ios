@@ -11,7 +11,7 @@ import UIKit
 import StoreKit
 
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
-class RootViewController: UIViewController {
+class RootViewController: UIViewController, NotificationRequestable {
     private var current: UIViewController
     
     private var lastLoginAttempt: Date?
@@ -29,11 +29,7 @@ class RootViewController: UIViewController {
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
-            if UserDefaults.standard.getAccountID() != nil {
-                // Upon updating the app, assume everyone with an account is authed into Shibboleth
-                // REMOVE IN FUTURE VERSIONS
-                UserDefaults.standard.setShibbolethAuth(authedIn: true)
-            }
+            
         }
                 
         if UserDefaults.standard.getAccountID() != nil && shouldRequireLogin() {
@@ -104,6 +100,9 @@ class RootViewController: UIViewController {
         
         // Send saved unsent events
         FeedAnalyticsManager.shared.sendSavedEvents()
+        
+        // Refresh push notification device token if authorized
+        registerPushNotificationsIfAuthorized()
     }
     
     func showLoginScreen() {

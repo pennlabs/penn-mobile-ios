@@ -167,10 +167,7 @@ extension DiningViewController {
 
 // MARK: - DiningViewModelDelegate
 extension DiningViewController: DiningViewModelDelegate {
-    func handleSelection(for venue: DiningVenue) {
-
-        DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name)
-        
+    func handleSelection(for venue: DiningVenue) {        
         if let url = venue.facilityURL {
             let vc = UIViewController()
             let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))

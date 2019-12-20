@@ -53,7 +53,6 @@ extension Trackable where Self: UIViewController {
     func trackScreen(_ name: String?) {
         if let name = name {
             FirebaseAnalyticsManager.shared.trackScreen(name)
-            DatabaseManager.shared.trackVC(name)
         }
     }
 }

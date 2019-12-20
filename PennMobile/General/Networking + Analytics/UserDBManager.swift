@@ -32,6 +32,31 @@ class UserDBManager: NSObject, Requestable {
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: callback)
         task.resume()
     }
+    
+    /**
+      Retrieves an access token and makes an authenticated POST request by adding it as a header to the request.
+      Note: Do NOT use this to make POST requests to non-Labs services. Doing so will compromise the user's access token.
+     
+      - parameter url: A string URL.
+      - parameter params: A dictionary of parameters to attach to the POST request.
+      - parameter callback: A callback containing the data and  response that the request receives.
+    */
+    fileprivate func makePostRequestWithAccessToken(url: String, params: [String: String], callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                callback(nil, nil, nil)
+                return
+            }
+            
+            let url = URL(string: url)!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            request.httpBody = String.getPostString(params: params).data(using: .utf8)
+
+            let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
+            task.resume()
+        }
+    }
 }
 
 // MARK: - Dining
@@ -182,22 +207,21 @@ extension UserDBManager {
 // MARK: - Housing Data
 extension UserDBManager {
     func saveHousingData(html: String, _ completion: (() -> Void)? = nil) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                completion?()
-                return
-            }
-            
-            let url = URL(string: "\(self.baseUrl)/housing")!
-            var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "POST"
-            let params = ["html": html]
-            request.httpBody = String.getPostString(params: params).data(using: .utf8)
+        let url = "\(baseUrl)/housing"
+        let params = ["html": html]
+        makePostRequestWithAccessToken(url: url, params: params) { (_, _, _) in
+            completion?()
+        }
+    }
+}
 
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                completion?()
-            }
-            task.resume()
+// MARK: - Push Notifications
+extension UserDBManager {
+    func savePushNotificationDeviceToken(deviceToken: String, _ completion: (() -> Void)? = nil) {
+        let url = "\(baseUrl)/notifications/register"
+        let params = ["ios_token": deviceToken]
+        makePostRequestWithAccessToken(url: url, params: params) { (_, _, _) in
+            completion?()
         }
     }
 }
