@@ -33,6 +33,14 @@ class UserDBManager: NSObject, Requestable {
         task.resume()
     }
     
+    /**
+      Retrieves an access token and makes an authenticated POST request by adding it as a header to the request.
+      Note: Do NOT use this to make POST requests to non-Labs services. Doing so will compromise the user's access token.
+     
+      - parameter url: A string URL.
+      - parameter params: A dictionary of parameters to attach to the POST request.
+      - parameter callback: A callback containing the data and  response that the request receives.
+    */
     fileprivate func makePostRequestWithAccessToken(url: String, params: [String: String], callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             guard let token = token else {
