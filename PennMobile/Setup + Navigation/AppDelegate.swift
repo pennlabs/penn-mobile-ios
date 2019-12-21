@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         #if DEBUG
-           FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
+           FirebaseConfiguration.shared.setLoggerLevel(.min)
         #endif
         
         FirebaseApp.configure()
