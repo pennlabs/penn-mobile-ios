@@ -221,7 +221,7 @@ extension UserDBManager {
         let url = "\(baseUrl)/notifications/register"
         var params: [String: Any] = ["ios_token": deviceToken]
         #if DEBUG
-            params["debug"] = true
+            params["dev"] = true
         #endif
         makePostRequestWithAccessToken(url: url, params: params) { (_, _, _) in
             completion?()
