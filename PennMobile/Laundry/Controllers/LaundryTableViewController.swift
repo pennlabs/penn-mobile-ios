@@ -185,8 +185,14 @@ extension LaundryTableViewController {
 extension LaundryTableViewController: RoomSelectionVCDelegate {
     func saveSelection(for rooms: [LaundryRoom]) {
         LaundryRoom.setPreferences(for: rooms)
-        self.rooms = rooms
-        self.tableView.reloadData()
+        LaundryAPIService.instance.fetchLaundryData(for: rooms) { (rooms) in
+            DispatchQueue.main.async {
+                if let rooms = rooms {
+                    self.rooms = rooms
+                    self.tableView.reloadData()
+                }
+            }
+        }
         sendUpdateNotification()
     }
 }
