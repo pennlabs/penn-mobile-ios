@@ -22,7 +22,10 @@ final class HomeAPIService: Requestable {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             // Make request without access token if one does not exist
             let url = URL(string: url)!
-            let request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            let deviceID = getDeviceID()
+            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+            
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let error = error, (error as NSError).code == -1009 {
                     completion(nil, NetworkingError.noInternet)
