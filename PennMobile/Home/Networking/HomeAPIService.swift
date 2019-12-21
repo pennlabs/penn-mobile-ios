@@ -23,6 +23,8 @@ final class HomeAPIService: Requestable {
             // Make request without access token if one does not exist
             let url = URL(string: url)!
             var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            
+            // Add device ID to request to access data associated associated with device id (ex: favorite dining halls)
             let deviceID = getDeviceID()
             request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
             
