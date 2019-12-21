@@ -181,9 +181,12 @@ extension MoreViewController {
             }))
             present(alertController, animated: true, completion: nil)
         } else {
-            let lwc = LoginWebviewController()
-            lwc.loginCompletion = loginCompletion(_:)
-            let nvc = UINavigationController(rootViewController: lwc)
+            let llc = LabsLoginController { (success) in
+                DispatchQueue.main.async {
+                    self.loginCompletion(success)
+                }
+            }
+            let nvc = UINavigationController(rootViewController: llc)
             present(nvc, animated: true, completion: nil)
         }
     }

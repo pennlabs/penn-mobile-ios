@@ -156,6 +156,7 @@ class RootViewController: UIViewController, NotificationRequestable {
         UserDefaults.standard.clearWhartonFlag()
         UserDefaults.standard.clearHasDiningPlan()
         UserDefaults.standard.clearLastTransactionRequest()
+        OAuth2NetworkManager.instance.clearRefreshToken()
         Student.clear()
         GSRUser.clear()
     }

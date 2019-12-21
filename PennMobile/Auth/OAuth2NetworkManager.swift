@@ -197,6 +197,15 @@ extension OAuth2NetworkManager {
         
         return refreshToken
     }
+    
+    func clearRefreshToken() {
+        let genericPwdQueryable =
+            GenericPasswordQueryable(service: service)
+        let secureStore =
+            SecureStore(secureStoreQueryable: genericPwdQueryable)
+        
+        try? secureStore.removeValue(for: secureKey)
+    }
 }
 
 // Source: https://stackoverflow.com/questions/26845307/generate-random-alphanumeric-string-in-swift/33860834
