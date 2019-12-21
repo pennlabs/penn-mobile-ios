@@ -77,66 +77,70 @@ class GSRNetworkManager: NSObject, Requestable {
     }
     
     func makeBooking(for booking: GSRBooking, _ callback: @escaping (_ success: Bool, _ failureMessage: String?) -> Void) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        let start = dateFormatter.string(from: booking.start)
-        let end = dateFormatter.string(from: booking.end)
-        
-        let basicParams = [
-            "lid" : String(booking.location.lid),
-            "room" : String(booking.roomId),
-            "start" : start,
-            "end" : end,
-        ]
-        let extraParams: [String: String]
-        if booking.location.service == "wharton" {
-            let sessionID: String = booking.sessionId
-            extraParams = [
-                "sessionid": sessionID
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            let url = URL(string: self.bookingUrl)!
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            request.httpMethod = "POST"
+            
+            let deviceID = getDeviceID()
+            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            let start = dateFormatter.string(from: booking.start)
+            let end = dateFormatter.string(from: booking.end)
+            
+            let basicParams = [
+                "lid" : String(booking.location.lid),
+                "room" : String(booking.roomId),
+                "start" : start,
+                "end" : end,
             ]
-        } else {
-            let user: GSRUser = booking.user
-            extraParams = [
-                "firstname" : user.firstName,
-                "lastname" : user.lastName,
-                "email" : user.email,
-                "phone" : user.phone,
-                "groupname" : booking.groupName,
-                "size" : "2-3"
-            ]
-        }
-        
-        let params = basicParams.merging(extraParams, uniquingKeysWith: { (first, _) in first })
-        
-        guard let url = URL(string: bookingUrl) else { return }
-        let request = NSMutableURLRequest(url: url)
-        request.httpMethod = "POST"
-        let deviceID = getDeviceID()
-        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
-        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
-        self.bookingRequestOutstanding = true
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
-            var success = false
-            var errorMessage = "Unable to connect to the internet. Please reconnect and try again."
-            if let response = response as? HTTPURLResponse {
-                if response.statusCode == 200 {
-                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                        let json = JSON(data)
-                        success = json["results"].boolValue
-                        errorMessage = json["error"].stringValue
-                    }
-                    if errorMessage.contains("\n") {
-                        errorMessage = errorMessage.replacingOccurrences(of: "\n", with: " ")
-                    }
-                } else {
-                    // Session ID is invalid, so clear it
-                    GSRUser.clearSessionID()
-                }
+            let extraParams: [String: String]
+            if booking.location.service == "wharton" {
+                let sessionID: String = booking.sessionId
+                extraParams = [
+                    "sessionid": sessionID
+                ]
+            } else {
+                let user: GSRUser = booking.user
+                extraParams = [
+                    "firstname" : user.firstName,
+                    "lastname" : user.lastName,
+                    "email" : user.email,
+                    "phone" : user.phone,
+                    "groupname" : booking.groupName,
+                    "size" : "2-3"
+                ]
             }
-            callback(success, errorMessage)
-            self.bookingRequestOutstanding = false
-        })
-        task.resume()
+            
+            let params = basicParams.merging(extraParams, uniquingKeysWith: { (first, _) in first })
+            request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
+            
+            self.bookingRequestOutstanding = true
+            let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
+                var success = false
+                var errorMessage = "Unable to connect to the internet. Please reconnect and try again."
+                if let response = response as? HTTPURLResponse {
+                    if response.statusCode == 200 {
+                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                            let json = JSON(data)
+                            success = json["results"].boolValue
+                            errorMessage = json["error"].stringValue
+                        }
+                        if errorMessage.contains("\n") {
+                            errorMessage = errorMessage.replacingOccurrences(of: "\n", with: " ")
+                        }
+                    } else {
+                        // Session ID is invalid, so clear it
+                        GSRUser.clearSessionID()
+                    }
+                }
+                callback(success, errorMessage)
+                self.bookingRequestOutstanding = false
+            })
+            task.resume()
+        }
     }
 }
 
