@@ -11,24 +11,35 @@ import SwiftyJSON
 
 func getDeviceID() -> String {
     let deviceID = UIDevice.current.identifierForVendor!.uuidString
-    return UserDBManager.shared.testRun ? "test" : deviceID
+    #if DEBUG
+       return "test"
+    #else
+        return deviceID
+    #endif
 }
 
 class UserDBManager: NSObject, Requestable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
-    var dryRun: Bool = true
-    var testRun: Bool = false
+    var dryRun: Bool {
+        get {
+            #if DEBUG
+               return true
+            #else
+                return false
+            #endif
+        }
+    }
     
     fileprivate func sendRequest(_ request: NSMutableURLRequest) {
-        if dryRun && !testRun { return }
+        if dryRun { return }
         let task = URLSession.shared.dataTask(with: request as URLRequest)
         task.resume()
     }
     
     fileprivate func sendRequest(_ request: NSMutableURLRequest, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        if dryRun && !testRun { return }
+        if dryRun { return }
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: callback)
         task.resume()
     }

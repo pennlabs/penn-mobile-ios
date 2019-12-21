@@ -27,13 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        // Override point for customization after application launch.
-        UserDBManager.shared.dryRun = true
-        UserDBManager.shared.testRun = true
-        FeedAnalyticsManager.shared.dryRun = true
-
-        FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
+        #if DEBUG
+           FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
+        #endif
         
         FirebaseApp.configure()
         ControllerModel.shared.prepare()
