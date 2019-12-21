@@ -217,12 +217,16 @@ extension String {
 }
 
 extension String {
-    static func getPostString(params: [String: String]) -> String {
+    static func getPostString(params: [String: Any]) -> String {
         let characterSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
         let parameterArray = params.map { key, value -> String in
             let escapedKey = key.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
-            let escapedValue: String = value.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
-            return "\(escapedKey)=\(escapedValue)"
+            if let strValue = value as? String {
+                let escapedValue = strValue.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
+                return "\(escapedKey)=\(escapedValue)"
+            } else {
+                return "\(escapedKey)=\(value)"
+            }
         }
         let encodedParams = parameterArray.joined(separator: "&")
         return encodedParams

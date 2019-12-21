@@ -55,9 +55,11 @@ extension LoginController: NotificationRequestable {
             UserDefaults.standard.setLastLogin()
             AppDelegate.shared.rootViewController.switchToMainScreen()
             
+            #if !targetEnvironment(simulator)
             DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
                 self.requestNotification()
             }
+            #endif
         } else {
             // Failed to retrieve Student profile from PennInTouch (possibly down)
             if !self.isFirstAttempt {

@@ -101,8 +101,10 @@ class RootViewController: UIViewController, NotificationRequestable {
         // Send saved unsent events
         FeedAnalyticsManager.shared.sendSavedEvents()
         
-        // Refresh push notification device token if authorized
-        updatePushNotificationToken()
+        // Refresh push notification device token if authorized and not in simulator
+        #if !targetEnvironment(simulator)
+            updatePushNotificationToken()
+        #endif
     }
     
     func showLoginScreen() {

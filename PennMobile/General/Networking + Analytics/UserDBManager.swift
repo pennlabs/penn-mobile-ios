@@ -41,7 +41,7 @@ class UserDBManager: NSObject, Requestable {
       - parameter params: A dictionary of parameters to attach to the POST request.
       - parameter callback: A callback containing the data and  response that the request receives.
     */
-    fileprivate func makePostRequestWithAccessToken(url: String, params: [String: String], callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
+    fileprivate func makePostRequestWithAccessToken(url: String, params: [String: Any], callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             guard let token = token else {
                 callback(nil, nil, nil)
@@ -219,7 +219,10 @@ extension UserDBManager {
 extension UserDBManager {
     func savePushNotificationDeviceToken(deviceToken: String, _ completion: (() -> Void)? = nil) {
         let url = "\(baseUrl)/notifications/register"
-        let params = ["ios_token": deviceToken]
+        var params: [String: Any] = ["ios_token": deviceToken]
+        #if DEBUG
+            params["debug"] = true
+        #endif
         makePostRequestWithAccessToken(url: url, params: params) { (_, _, _) in
             completion?()
         }
