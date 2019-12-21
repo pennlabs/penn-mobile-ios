@@ -18,21 +18,30 @@ final class HomeAPIService: Requestable {
         if let sessionID = GSRUser.getSessionID() {
             url = "\(url)&sessionid=\(sessionID)"
         }
-        getRequest(url: url) { (dict, error, statusCode) in
-            if error != nil {
-                completion(nil, NetworkingError.noInternet)
-                return
-            }
-            var model: HomeTableViewModel? = HomeTableViewModel()
-            var error: NetworkingError? = NetworkingError.jsonError
-            if let dict = dict {
-                let json = JSON(dict)
-                model = try? HomeTableViewModel(json: json)
-                if model != nil {
-                    error = nil
+        
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            // Make request without access token if one does not exist
+            let url = URL(string: url)!
+            let request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error, (error as NSError).code == -1009 {
+                    completion(nil, NetworkingError.noInternet)
                 }
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+                    completion(nil, NetworkingError.serverError)
+                }
+                var model: HomeTableViewModel? = HomeTableViewModel()
+                var error: NetworkingError? = NetworkingError.jsonError
+                if let data = data {
+                    let json = JSON(data)
+                    model = try? HomeTableViewModel(json: json)
+                    if model != nil {
+                        error = nil
+                    }
+                }
+                completion(model, error)
             }
-            completion(model, error)
+            task.resume()
         }
     }
 }

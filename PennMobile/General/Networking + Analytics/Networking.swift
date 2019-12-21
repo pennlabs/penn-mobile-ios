@@ -22,6 +22,7 @@ public enum Method {
 enum NetworkingError: String, LocalizedError {
     case noInternet
     case parsingError
+    case serverError
     case jsonError = "JSON error"
     case authenticationError = "Unable to authenticate"
     case other
