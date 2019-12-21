@@ -31,9 +31,11 @@ final class HomeAPIService: Requestable {
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let error = error, (error as NSError).code == -1009 {
                     completion(nil, NetworkingError.noInternet)
+                    return
                 }
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
                     completion(nil, NetworkingError.serverError)
+                    return
                 }
                 var model: HomeTableViewModel? = HomeTableViewModel()
                 var error: NetworkingError? = NetworkingError.jsonError
