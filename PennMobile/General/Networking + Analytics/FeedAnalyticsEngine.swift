@@ -9,7 +9,13 @@
 import Foundation
 
 class FeedAnalyticsManager: NSObject, Requestable {
-    var dryRun: Bool = false
+    var dryRun: Bool {
+        #if DEBUG
+           return true
+        #else
+            return false
+        #endif
+    }
     
     fileprivate let eventSeparationMinimum = 30 // 30 minutes must pass for cell to be tracked twice
     fileprivate let defaultBatchSize = 5 // Send all events if at least 8 cells have been tracked
@@ -30,6 +36,7 @@ class FeedAnalyticsManager: NSObject, Requestable {
     
     func track(cellType: String, index: Int, id: String?, batchSize: Int? = nil) {
         if dryRun { return }
+        
         let event = FeedAnalyticsEvent(cellType: cellType, id: id, index: index, isInteraction: false, timestamp: Date())
         
         var eventAdded = false
