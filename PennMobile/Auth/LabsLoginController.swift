@@ -13,7 +13,7 @@ import SwiftyJSON
 class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
         
     override var urlStr: String {
-        return "https://platform.pennlabs.org/accounts/authorize/?response_type=code&client_id=CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN&redirect_uri=https%3A%2F%2Fpennmobile.pennlabs.org%2Fcallback%2F&scope=read+introspection&state="
+        return "https://platform.pennlabs.org/accounts/authorize/?response_type=code&client_id=CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN&redirect_uri=https%3A%2F%2Fpennlabs.org%2Fpennmobile%2Fios%2Fcallback%2F&scope=read+introspection&state="
     }
     
     override var shouldLoadCookies: Bool {
@@ -88,7 +88,7 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
     }
     
     override func isSuccessfulRedirect(url: String, hasReferer: Bool) -> Bool {
-        let targetUrl = "https://pennmobile.pennlabs.org/callback/?code="
+        let targetUrl = "https://pennlabs.org/pennmobile/ios/callback/?code="
         if url.contains(targetUrl) {
             if let code = url.split(separator: "=").last {
                 self.code = String(code)

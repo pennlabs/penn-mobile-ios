@@ -59,7 +59,7 @@ extension OAuth2NetworkManager {
             "code": code,
             "grant_type": "authorization_code",
             "client_id": clientID,
-            "redirect_uri": "https://pennmobile.pennlabs.org/callback/",
+            "redirect_uri": "https://pennlabs.org/pennmobile/ios/callback/",
             "code_verifier": randomStr,
         ]
         
