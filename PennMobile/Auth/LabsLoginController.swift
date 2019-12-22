@@ -114,7 +114,7 @@ extension LabsLoginController {
             } else {
                 FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Successful Login", content: "Successful Login")
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     self.getDiningBalance()
                     self.getDiningTransactions()
                     CampusExpressNetworkManager.instance.updateHousingData()

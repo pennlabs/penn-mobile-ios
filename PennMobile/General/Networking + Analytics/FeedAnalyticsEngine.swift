@@ -11,7 +11,7 @@ import Foundation
 class FeedAnalyticsManager: NSObject, Requestable {
     var dryRun: Bool {
         #if DEBUG
-           return true
+            return true
         #else
             return false
         #endif

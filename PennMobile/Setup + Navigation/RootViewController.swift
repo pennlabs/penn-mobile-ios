@@ -237,7 +237,7 @@ extension RootViewController {
 // MARK: - Update Transactions
 extension RootViewController {
     func shouldFetchTransactions() -> Bool {
-        if UserDefaults.standard.getAccountID() == nil || !UserDefaults.standard.hasDiningPlan() {
+        if !OAuth2NetworkManager.instance.hasRefreshToken() || !UserDefaults.standard.hasDiningPlan() {
             // User is not logged in or does not have a dining plan
             return false
         }
