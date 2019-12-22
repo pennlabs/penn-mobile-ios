@@ -114,16 +114,24 @@ extension OAuth2NetworkManager {
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
-                let json = JSON(data)
-                let expiresIn = json["expires_in"].intValue
-                let expiration = Date().add(seconds: expiresIn)
-                let accessToken = AccessToken(value: json["access_token"].stringValue, expiration: expiration)
-                let refreshToken = json["refresh_token"].stringValue
-                self.saveRefreshToken(token: refreshToken)
-                self.currentAccessToken = accessToken
-                callback(accessToken)
-                return
+            if let httpResponse = response as? HTTPURLResponse, let data = data {
+                if httpResponse.statusCode == 200 {
+                    let json = JSON(data)
+                    let expiresIn = json["expires_in"].intValue
+                    let expiration = Date().add(seconds: expiresIn)
+                    let accessToken = AccessToken(value: json["access_token"].stringValue, expiration: expiration)
+                    let refreshToken = json["refresh_token"].stringValue
+                    self.saveRefreshToken(token: refreshToken)
+                    self.currentAccessToken = accessToken
+                    callback(accessToken)
+                    return
+                } else if httpResponse.statusCode == 400 {
+                    let json = JSON(data)
+                    if json["error"].stringValue == "invalid_grant" {
+                        // Refresh token is invalid. Clear it to force user to log in
+                        self.clearRefreshToken()
+                    }
+                }
             }
             callback(nil)
         }
@@ -147,7 +155,7 @@ extension OAuth2NetworkManager {
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
+            if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
                 let json = JSON(data)
                 if let userData = try? json["user"].rawData() {
                     let decoder = JSONDecoder()
@@ -205,6 +213,10 @@ extension OAuth2NetworkManager {
             SecureStore(secureStoreQueryable: genericPwdQueryable)
         
         try? secureStore.removeValue(for: secureKey)
+    }
+    
+    func hasRefreshToken() -> Bool {
+        return getRefreshToken() != nil
     }
 }
 

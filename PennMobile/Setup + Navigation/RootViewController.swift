@@ -32,7 +32,7 @@ class RootViewController: UIViewController, NotificationRequestable {
             
         }
                 
-        if UserDefaults.standard.getAccountID() != nil && shouldRequireLogin() {
+        if shouldRequireLogin() {
             // Logged in and should require login
             clearAccountData()
         }
@@ -207,7 +207,7 @@ class RootViewController: UIViewController, NotificationRequestable {
 // MARK: - Require Login
 extension RootViewController {
     func shouldRequireLogin() -> Bool {
-        if UserDefaults.standard.getAccountID() == nil {
+        if !OAuth2NetworkManager.instance.hasRefreshToken() {
             // User is not logged in
             return true
         }
