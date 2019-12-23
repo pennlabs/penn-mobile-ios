@@ -27,7 +27,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         tableView.backgroundColor = .uiBackground
         
         tableView.tableFooterView = getFooterViewForTable()
-                
+        
         rooms = LaundryRoom.getPreferences()
         
         registerHeadersAndCells()
