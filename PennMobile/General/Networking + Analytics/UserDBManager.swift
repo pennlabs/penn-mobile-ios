@@ -85,22 +85,10 @@ extension UserDBManager {
 
 // MARK: - Dining Balance
 extension UserDBManager {
-    func saveDiningBalance(for balance: DiningBalance) {
-        let urlString = "\(baseUrl)/dining/balance"
-        let params = [
-            "dining_dollars": balance.diningDollars,
-            "swipes": balance.visits,
-            "guest_swipes": balance.guestVisits,
-        ] as [String: Any]
-        let request = getAnalyticsPostRequest(url: urlString, params: params)
-        sendRequest(request)
-    }
-    
     func parseAndSaveDiningBalanceHTML(html: String, _ completion: @escaping (_ hasDiningPlan: Bool?, _ balance: DiningBalance?) -> Void) {
-        let urlString = "\(baseUrl)/dining/balance/v2"
-        let params = ["html": html] as [String: Any]
-        let request = getAnalyticsPostRequest(url: urlString, params: params)
-        sendRequest(request) { (data, resp, err) in
+        let url = "\(baseUrl)/dining/balance"
+        let params = ["html": html]
+        makePostRequestWithAccessToken(url: url, params: params) { (data, response, error) in
             if let data = data {
                 let json = JSON(data)
                 if let hasPlan = json["hasPlan"].bool {
