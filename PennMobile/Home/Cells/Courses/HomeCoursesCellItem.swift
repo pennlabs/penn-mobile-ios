@@ -67,7 +67,7 @@ final class HomeCoursesCellItem: HomeCellItem {
 // MARK: - Home Page Logic
 extension Set where Element == Course {
     var enrolledIn: Set<Course> {
-        let nowStr = "2020-02-01"
+        let nowStr = "2019-10-01"
         let term = Course.currentTerm
         let coursesWithDate = self.filter { $0.startDate != nil && $0.endDate != nil }.filter { $0.startDate! <= nowStr && nowStr <= $0.endDate! }
         let coursesWithoutDate = self.filter { $0.startDate == nil || $0.endDate == nil }.filter { $0.term == term }

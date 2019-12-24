@@ -119,7 +119,7 @@ extension HomeViewController {
     
     // MARK: Course Refresh
     func handleCourseRefresh() {
-        let message = "Has there been a change to your schedule? If so, would you like Penn Mobile to update your courses?"
+        let message = "Has there been a change to your schedule? Would you like Penn Mobile to update your courses?"
         let alert = UIAlertController(title: "Update Courses",
                                       message: message,
                                       preferredStyle: .alert)
@@ -168,6 +168,12 @@ extension HomeViewController: ShowsAlert {
                 } else {
                     self.handleCourseRefresh(courses)
                 }
+                if let currentCourses = UserDefaults.standard.getCourses() {
+                    let term = Course.currentTerm
+                    let currentCoursesMinusTerm = currentCourses.filter { $0.term != term }
+                    let newCourses = currentCoursesMinusTerm.union(courses)
+                    UserDefaults.standard.saveCourses(newCourses)
+                }
             } else {
                 self.showCourseWebviewController()
             }
@@ -177,8 +183,14 @@ extension HomeViewController: ShowsAlert {
     private func handleCourseRefresh(_ courses: Set<Course>?) {
         DispatchQueue.main.async {
             if let courses = courses, let courseItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.courses]).first as? HomeCoursesCellItem {
-                courseItem.courses = Array(courses).filterByWeekday(for: courseItem.weekday).sorted()
-                self.reloadItem(courseItem)
+                let taughtToday = Array(courses.taughtToday)
+                let taughtTomorrow = Array(courses.taughtTomorrow)
+                if taughtToday.isEmpty && taughtTomorrow.isEmpty {
+                    self.removeItem(courseItem)
+                } else {
+                    courseItem.courses = taughtToday.isEmpty ? taughtTomorrow : taughtToday
+                    self.reloadItem(courseItem)
+                }
                 self.showAlert(withMsg: "Your courses have been updated.", title: "Success!", completion: nil)
             } else {
                 self.showAlert(withMsg: "Unable to access your courses. Please try again later.", title: "Uh oh!", completion: nil)
