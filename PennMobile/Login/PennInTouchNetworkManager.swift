@@ -57,7 +57,7 @@ extension PennInTouchNetworkManager {
                             
                             let courses = try self.parseCourses(from: html, term: selectedTerm)
                             if currentTermOnly {
-                                let currentTerm = self.currentTerm()
+                                let currentTerm = Course.currentTerm
                                 if selectedTerm == currentTerm {
                                     // If first term in list is the current term, return those courses
                                     callback(courses)
@@ -119,24 +119,6 @@ extension PennInTouchNetworkManager {
             callback(courses)
         }
         task.resume()
-    }
-    
-    private func currentTerm() -> String {
-        let now = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy"
-        let year = formatter.string(from: now)
-        formatter.dateFormat = "M"
-        let month = Int(formatter.string(from: now))!
-        let code: String
-        if month <= 5 {
-            code = "A"
-        } else if month >= 8 {
-            code = "C"
-        } else {
-            code = "B"
-        }
-        return "\(year)\(code)"
     }
 }
 

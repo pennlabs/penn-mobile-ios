@@ -210,3 +210,23 @@ extension Array where Element == Course {
         return true
     }
 }
+
+extension Course {
+    static var currentTerm: String {
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        let year = formatter.string(from: now)
+        formatter.dateFormat = "M"
+        let month = Int(formatter.string(from: now))!
+        let code: String
+        if month <= 5 {
+            code = "A"
+        } else if month >= 8 {
+            code = "C"
+        } else {
+            code = "B"
+        }
+        return "\(year)\(code)"
+    }
+}
