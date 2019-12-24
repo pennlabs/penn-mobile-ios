@@ -1,5 +1,5 @@
 //
-//  Student.swift
+//  Account.swift
 //  PennMobile
 //
 //  Created by Josh Doman on 2/24/19.
@@ -15,19 +15,20 @@ class Account: Codable {
     var email: String?
     var imageUrl: String?
     var pennid: Int?
+    var isStudent: Bool
     
     var degrees: Set<Degree>?
     var courses: Set<Course>?
     
-    fileprivate static var student: Account?
+    fileprivate static var account: Account?
     
-    init(first: String, last: String, imageUrl: String? = nil, pennkey: String? = nil, email: String? = nil, pennid: Int? = nil) {
-        self.first = first
-        self.last = last
-        self.imageUrl = imageUrl
-        self.pennkey = pennkey
-        self.email = email
-        self.pennid = pennid
+    init(user: OAuthUser) {
+        self.first = user.firstName
+        self.last = user.lastName
+        self.pennkey = user.username
+        self.email = user.email
+        self.pennid = user.pennid
+        self.isStudent = user.affiliation.contains("student")
     }
     
     func isInWharton() -> Bool {
@@ -79,35 +80,35 @@ class Account: Codable {
         return str
     }
     
-    static func getStudent() -> Account? {
-        if student == nil {
-            student = UserDefaults.standard.getStudent()
+    static func getAccount() -> Account? {
+        if account == nil {
+            account = UserDefaults.standard.getAccount()
         }
-        return student
+        return account
     }
     
-    static func saveStudent(_ thisStudent: Account) {
-        UserDefaults.standard.saveStudent(thisStudent)
-        student = thisStudent
+    static func saveAccount(_ thisAccount: Account) {
+        UserDefaults.standard.saveAccount(thisAccount)
+        account = thisAccount
     }
     
     static func update(firstName: String? = nil, lastName: String? = nil, email: String? = nil) {
-        guard let student = getStudent() else { return }
+        guard let account = getAccount() else { return }
         if let firstName = firstName {
-            student.first = firstName
+            account.first = firstName
         }
         if let lastName = lastName {
-            student.last = lastName
+            account.last = lastName
         }
         if let email = email {
-            student.email = email
+            account.email = email
         }
-        saveStudent(student)
+        saveAccount(account)
     }
     
     static func clear() {
-        UserDefaults.standard.clearStudent()
-        student = nil
+        UserDefaults.standard.clearAccount()
+        account = nil
     }
 }
 

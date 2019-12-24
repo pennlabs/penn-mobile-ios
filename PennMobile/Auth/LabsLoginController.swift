@@ -31,6 +31,12 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
         self.shouldFetchAllInfo = fetchAllInfo
     }
     
+    convenience init(fetchAllInfo: Bool = true) {
+        self.init()
+        self.completion = ({ _ in })
+        self.shouldFetchAllInfo = fetchAllInfo
+    }
+    
     private init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -53,21 +59,26 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
             if let accessToken = accessToken {
                 OAuth2NetworkManager.instance.retrieveAccount(accessToken: accessToken) { (user) in
                     if let user = user, self.shouldFetchAllInfo {
-                        PennInTouchNetworkManager.instance.getDegrees { (degrees) in
-                            print(user)
-                            let student = Account(first: user.firstName, last: user.lastName, pennkey: user.username, email: user.email, pennid: user.pennid)
-                            student.degrees = degrees
-                            if user.email?.contains("wharton") ?? false || degrees?.hasDegreeInWharton() ?? false {
-                                UserDefaults.standard.set(isInWharton: true)
-                                GSRNetworkManager.instance.getSessionID { success in
-                                    self.saveStudent(student) {
+                        let account = Account(user: user)
+                        if account.isStudent {
+                            PennInTouchNetworkManager.instance.getDegrees { (degrees) in
+                                account.degrees = degrees
+                                if account.email?.contains("wharton") ?? false || degrees?.hasDegreeInWharton() ?? false {
+                                    UserDefaults.standard.set(isInWharton: true)
+                                    GSRNetworkManager.instance.getSessionID { success in
+                                        self.saveAccount(account) {
+                                            self.dismiss(successful: true)
+                                        }
+                                    }
+                                } else {
+                                    self.saveAccount(account) {
                                         self.dismiss(successful: true)
                                     }
                                 }
-                            } else {
-                                self.saveStudent(student) {
-                                    self.dismiss(successful: true)
-                                }
+                            }
+                        } else {
+                            self.saveAccount(account) {
+                                self.dismiss(successful: true)
                             }
                         }
                     } else {
@@ -103,9 +114,9 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
 
 // MARK: - Save Student {
 extension LabsLoginController {
-    fileprivate func saveStudent(_ student: Account, _ callback: @escaping () -> Void) {
-        UserDefaults.standard.saveStudent(student)
-        UserDBManager.shared.saveStudent(student) { (accountID) in
+    fileprivate func saveAccount(_ account: Account, _ callback: @escaping () -> Void) {
+        Account.saveAccount(account)
+        UserDBManager.shared.saveAccount(account) { (accountID) in
             if let accountID = accountID {
                 UserDefaults.standard.set(accountID: accountID)
             }
@@ -116,12 +127,14 @@ extension LabsLoginController {
             } else {
                 FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Successful Login", content: "Successful Login")
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.getDiningBalance()
-                    self.getDiningTransactions()
-                    CampusExpressNetworkManager.instance.updateHousingData()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.getCourses()
+                if account.isStudent {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        self.getDiningBalance()
+                        self.getDiningTransactions()
+                        CampusExpressNetworkManager.instance.updateHousingData()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self.getCourses()
+                        }
                     }
                 }
             }
@@ -137,14 +150,13 @@ extension LabsLoginController {
                 // Save courses to DB if permission was granted
                 UserDBManager.shared.saveCourses(courses, accountID: accountID)
                 UserDefaults.standard.saveCourses(courses)
-                print(UserDefaults.standard.getCourses()!)
             }
             UserDefaults.standard.storeCookies()
         }
     }
     
     fileprivate func getDiningBalance() {
-        if let student = Account.getStudent(), student.isFreshman() {
+        if let student = Account.getAccount(), student.isFreshman() {
             UserDefaults.standard.set(hasDiningPlan: true)
         }
         

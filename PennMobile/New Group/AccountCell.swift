@@ -16,10 +16,10 @@ class AccountCell: UITableViewCell {
     
     static let cellHeight: CGFloat = 100
     
-    var student: Account! {
+    var account: Account! {
         didSet {
-            nameLabel.text = "\(student.first) \(student.last)"
-            if let imageUrl = student.imageUrl {
+            nameLabel.text = "\(account.first) \(account.last)"
+            if let imageUrl = account.imageUrl {
                 ImageNetworkingManager.instance.downloadImage(imageUrl: imageUrl) { (image) in
                     self.accountImageView.image = image
                 }

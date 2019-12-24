@@ -128,7 +128,7 @@ extension HomeViewController {
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:{ (UIAlertAction) in
             //self.showCourseWebviewController()
             self.showActivity()
-            PennInTouchNetworkManager.instance.getCoursesWithAuth(currentTermOnly: true, callback: self.handleNetworkCourseRefreshCompletion(_:))
+            PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true, callback: self.handleNetworkCourseRefreshCompletion(_:))
         }))
         present(alert, animated: true)
     }

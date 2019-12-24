@@ -65,7 +65,7 @@ class HomeViewController: GenericViewController {
         if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.displayTitle != nil {
             return self.displayTitle
         } else {
-            let firstName = Account.getStudent()?.first ?? GSRUser.getUser()?.firstName
+            let firstName = Account.getAccount()?.first ?? GSRUser.getUser()?.firstName
             if let firstName = firstName {
                 let intros = ["Welcome", "Howdy", "Hi there", "Hello"]
                 self.displayTitle = "\(intros.random!), \(firstName)!"

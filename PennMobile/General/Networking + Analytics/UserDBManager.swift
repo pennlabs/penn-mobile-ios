@@ -109,7 +109,7 @@ extension UserDBManager {
 
 // MARK: - Student Account
 extension UserDBManager {
-    func saveStudent(_ student: Account, _ completion: @escaping (_ accountID: String?) -> Void) {
+    func saveAccount(_ account: Account, _ completion: @escaping (_ accountID: String?) -> Void) {
         let jsonEncoder = JSONEncoder()
         jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
         do {
@@ -118,7 +118,7 @@ extension UserDBManager {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             
-            let jsonData = try jsonEncoder.encode(student)
+            let jsonData = try jsonEncoder.encode(account)
             request.httpBody = jsonData
             
             let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in

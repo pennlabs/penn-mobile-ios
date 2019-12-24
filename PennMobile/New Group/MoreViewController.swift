@@ -10,7 +10,7 @@ import UIKit
 
 class MoreViewController: GenericTableViewController, ShowsAlert {
     
-    var student: Account?
+    var account: Account?
     
     fileprivate var barButton: UIBarButtonItem!
     
@@ -19,7 +19,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     override func viewDidLoad() {
         super.viewDidLoad()
         if shouldShowProfile {
-            student = Account.getStudent()
+            account = Account.getAccount()
         }
         setUpTableView()
         self.tableView.isHidden = true
@@ -32,9 +32,9 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if shouldShowProfile {
-            let student = Account.getStudent()
-            if self.student != student {
-                self.student = student
+            let account = Account.getAccount()
+            if self.account != account {
+                self.account = account
                 tableView.reloadData()
             }
         }
@@ -108,10 +108,10 @@ extension MoreViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            if let student = student {
+            if let student = account {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "account") as? AccountCell {
                     cell.backgroundColor = .uiGroupedBackgroundSecondary
-                    cell.student = student
+                    cell.account = student
                     return cell
                 }
             } else {
@@ -194,7 +194,7 @@ extension MoreViewController {
     func loginCompletion(_ successful: Bool) {
         if successful {
             if shouldShowProfile {
-                self.student = Account.getStudent()
+                self.account = Account.getAccount()
                 tableView.reloadData()
             }
             

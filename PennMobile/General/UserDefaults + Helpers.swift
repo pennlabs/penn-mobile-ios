@@ -12,6 +12,7 @@ import WebKit
 //Mark: UserDefaultsKeys
 extension UserDefaults {
     enum UserDefaultsKeys: String {
+        case account
         case accountID
         case deviceUUID
         case controllerSettings
@@ -22,7 +23,6 @@ extension UserDefaults {
         case appVersion
         case cookies
         case wharton
-        case student
         case coursePermission
         case hasDiningPlan
         case lastLogin
@@ -144,26 +144,26 @@ extension UserDefaults {
     }
 }
 
-// MARK: - Student
+// MARK: - Account
 extension UserDefaults {
-    func saveStudent(_ student: Account) {
+    func saveAccount(_ account: Account) {
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(student) {
-            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.student.rawValue)
+        if let encoded = try? encoder.encode(account) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.account.rawValue)
         }
         synchronize()
     }
 
-    func getStudent() -> Account? {
+    func getAccount() -> Account? {
         let decoder = JSONDecoder()
-        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.student.rawValue) {
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.account.rawValue) {
             return try? decoder.decode(Account.self, from: decodedData)
         }
         return nil
     }
 
-    func clearStudent() {
-        removeObject(forKey: UserDefaultsKeys.student.rawValue)
+    func clearAccount() {
+        removeObject(forKey: UserDefaultsKeys.account.rawValue)
     }
 }
 
