@@ -16,7 +16,7 @@ class AccountCell: UITableViewCell {
     
     static let cellHeight: CGFloat = 100
     
-    var student: Student! {
+    var student: Account! {
         didSet {
             nameLabel.text = "\(student.first) \(student.last)"
             if let imageUrl = student.imageUrl {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Student: Codable {
+class Account: Codable {
     var first: String
     var last: String
     var pennkey: String!
@@ -19,7 +19,7 @@ class Student: Codable {
     var degrees: Set<Degree>?
     var courses: Set<Course>?
     
-    fileprivate static var student: Student?
+    fileprivate static var student: Account?
     
     init(first: String, last: String, imageUrl: String? = nil, pennkey: String? = nil, email: String? = nil, pennid: Int? = nil) {
         self.first = first
@@ -79,14 +79,14 @@ class Student: Codable {
         return str
     }
     
-    static func getStudent() -> Student? {
+    static func getStudent() -> Account? {
         if student == nil {
             student = UserDefaults.standard.getStudent()
         }
         return student
     }
     
-    static func saveStudent(_ thisStudent: Student) {
+    static func saveStudent(_ thisStudent: Account) {
         UserDefaults.standard.saveStudent(thisStudent)
         student = thisStudent
     }
@@ -111,14 +111,14 @@ class Student: Codable {
     }
 }
 
-extension Student: Equatable {
-    static func == (lhs: Student, rhs: Student) -> Bool {
+extension Account: Equatable {
+    static func == (lhs: Account, rhs: Account) -> Bool {
         return lhs.first == rhs.first && lhs.last == rhs.last && lhs.imageUrl == rhs.imageUrl
                 && lhs.pennkey == rhs.pennkey && lhs.email == rhs.email
     }
 }
 
-extension Student {
+extension Account {
     func isFreshman() -> Bool {
         let now = Date()
         let components = Calendar.current.dateComponents([.year], from: now)

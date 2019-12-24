@@ -53,7 +53,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
     
     private func getRemainingCourses() {
         // Check if student not null and course permission has been granted
-        guard let student = Student.getStudent(), UserDefaults.standard.coursePermissionGranted() else { return }
+        guard let student = Account.getStudent(), UserDefaults.standard.coursePermissionGranted() else { return }
         // Wait 1 second for homepage to be fetched from server
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             PennInTouchNetworkManager.instance.getCourses(currentTermOnly: false) { (courses) in
@@ -69,7 +69,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
     }
     
     private func getDiningBalance() {
-        if let student = Student.getStudent(), student.isFreshman() {
+        if let student = Account.getStudent(), student.isFreshman() {
             UserDefaults.standard.set(hasDiningPlan: true)
         }
         
@@ -94,7 +94,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
         }
     }
     
-    fileprivate func saveStudent(_ student: Student) {
+    fileprivate func saveStudent(_ student: Account) {
         if let courses = student.courses, !courses.isEmpty, !UserDefaults.standard.coursePermissionGranted() {
             DispatchQueue.main.async {
                 self.obtainCoursePermission { (granted) in
@@ -110,7 +110,7 @@ class LoginWebviewController: PennLoginController, IndicatorEnabled {
         }
     }
     
-    fileprivate func saveStudentHelper(_ student: Student) {
+    fileprivate func saveStudentHelper(_ student: Account) {
         UserDefaults.standard.saveStudent(student)
         UserDefaults.standard.set(isInWharton: student.isInWharton())
         UserDBManager.shared.saveStudent(student) { (accountID) in

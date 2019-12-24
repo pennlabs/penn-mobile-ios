@@ -29,6 +29,7 @@ extension UserDefaults {
         case unsentLogs
         case lastTransactionRequest
         case authedIntoShibboleth
+        case courses
     }
 }
 
@@ -145,7 +146,7 @@ extension UserDefaults {
 
 // MARK: - Student
 extension UserDefaults {
-    func saveStudent(_ student: Student) {
+    func saveStudent(_ student: Account) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(student) {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.student.rawValue)
@@ -153,16 +154,39 @@ extension UserDefaults {
         synchronize()
     }
 
-    func getStudent() -> Student? {
+    func getStudent() -> Account? {
         let decoder = JSONDecoder()
         if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.student.rawValue) {
-            return try? decoder.decode(Student.self, from: decodedData)
+            return try? decoder.decode(Account.self, from: decodedData)
         }
         return nil
     }
 
     func clearStudent() {
         removeObject(forKey: UserDefaultsKeys.student.rawValue)
+    }
+}
+
+// MARK: - Courses
+extension UserDefaults {
+    func saveCourses(_ courses: Set<Course>) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(courses) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.courses.rawValue)
+        }
+        synchronize()
+    }
+
+    func getCourses() -> Set<Course>? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.courses.rawValue) {
+            return try? decoder.decode(Set<Course>.self, from: decodedData)
+        }
+        return nil
+    }
+
+    func clearCourses() {
+        removeObject(forKey: UserDefaultsKeys.courses.rawValue)
     }
 }
 

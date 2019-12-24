@@ -158,8 +158,9 @@ class RootViewController: UIViewController, NotificationRequestable {
         UserDefaults.standard.clearWhartonFlag()
         UserDefaults.standard.clearHasDiningPlan()
         UserDefaults.standard.clearLastTransactionRequest()
+        UserDefaults.standard.clearCourses()
         OAuth2NetworkManager.instance.clearRefreshToken()
-        Student.clear()
+        Account.clear()
         GSRUser.clear()
     }
     
@@ -262,7 +263,7 @@ extension RootViewController {
 // MARK: - Updated database if needed
 extension RootViewController {
     func updateDatabaseIfNeeded() {
-        if let student = Student.getStudent() {
+        if let student = Account.getStudent() {
             if let accountID = UserDefaults.standard.getAccountID() {
                 if let courses = student.courses {
                     // Check if any courses have no start, end date. If so, update DB, which can now handle this.

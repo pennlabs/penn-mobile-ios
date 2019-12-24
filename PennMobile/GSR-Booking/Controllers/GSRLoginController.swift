@@ -49,7 +49,7 @@ class GSRLoginController: UIViewController, IndicatorEnabled, ShowsAlert {
             self.lastNameField.text = user.lastName
             self.emailField.text = user.email
             self.firstNameField.becomeFirstResponder()
-        } else if let student = Student.getStudent() {
+        } else if let student = Account.getStudent() {
             self.firstNameField.text = student.first
             self.lastNameField.text = student.last
             self.emailField.text = student.email

@@ -109,7 +109,7 @@ extension UserDBManager {
 
 // MARK: - Student Account
 extension UserDBManager {
-    func saveStudent(_ student: Student, _ completion: @escaping (_ accountID: String?) -> Void) {
+    func saveStudent(_ student: Account, _ completion: @escaping (_ accountID: String?) -> Void) {
         let jsonEncoder = JSONEncoder()
         jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
         do {

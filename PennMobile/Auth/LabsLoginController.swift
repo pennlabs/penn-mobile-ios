@@ -54,7 +54,9 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
                 OAuth2NetworkManager.instance.retrieveAccount(accessToken: accessToken) { (user) in
                     if let user = user, self.shouldFetchAllInfo {
                         PennInTouchNetworkManager.instance.getDegrees { (degrees) in
-                            let student = Student(first: user.firstName, last: user.lastName, pennkey: user.username, email: user.email, pennid: user.pennid)
+                            print(user)
+                            let student = Account(first: user.firstName, last: user.lastName, pennkey: user.username, email: user.email, pennid: user.pennid)
+                            student.degrees = degrees
                             if user.email?.contains("wharton") ?? false || degrees?.hasDegreeInWharton() ?? false {
                                 UserDefaults.standard.set(isInWharton: true)
                                 GSRNetworkManager.instance.getSessionID { success in
@@ -101,7 +103,7 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
 
 // MARK: - Save Student {
 extension LabsLoginController {
-    fileprivate func saveStudent(_ student: Student, _ callback: @escaping () -> Void) {
+    fileprivate func saveStudent(_ student: Account, _ callback: @escaping () -> Void) {
         UserDefaults.standard.saveStudent(student)
         UserDBManager.shared.saveStudent(student) { (accountID) in
             if let accountID = accountID {
@@ -134,13 +136,15 @@ extension LabsLoginController {
             if let courses = courses, let accountID = UserDefaults.standard.getAccountID() {
                 // Save courses to DB if permission was granted
                 UserDBManager.shared.saveCourses(courses, accountID: accountID)
+                UserDefaults.standard.saveCourses(courses)
+                print(UserDefaults.standard.getCourses()!)
             }
             UserDefaults.standard.storeCookies()
         }
     }
     
     fileprivate func getDiningBalance() {
-        if let student = Student.getStudent(), student.isFreshman() {
+        if let student = Account.getStudent(), student.isFreshman() {
             UserDefaults.standard.set(hasDiningPlan: true)
         }
         

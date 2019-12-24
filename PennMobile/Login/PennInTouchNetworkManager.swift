@@ -22,7 +22,7 @@ class PennInTouchNetworkManager: NSObject, PennAuthRequestable {
 
 // MARK: - Student
 extension PennInTouchNetworkManager {
-    func getStudent(callback: @escaping (_ student: Student?) -> Void) {
+    func getStudent(callback: @escaping (_ student: Account?) -> Void) {
         let url = URL(string: baseURL)!
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -342,7 +342,7 @@ extension PennInTouchNetworkManager {
 
 // MARK: - Basic Student Profile Parsing
 extension PennInTouchNetworkManager {
-    fileprivate func parseStudent(from html: String) throws -> Student {
+    fileprivate func parseStudent(from html: String) throws -> Account {
         let namePattern = "white-space:nowrap; overflow:hidden; width: .*>\\s*(.*?)\\s*<\\/div>"
         let fullName: String! = html.getMatches(for: namePattern).first
         
@@ -368,6 +368,6 @@ extension PennInTouchNetworkManager {
         
         firstName = firstName.removingRegexMatches(pattern: " .$", replaceWith: "")
         
-        return Student(first: firstName, last: lastName, imageUrl: photoUrl)
+        return Account(first: firstName, last: lastName, imageUrl: photoUrl)
     }
 }

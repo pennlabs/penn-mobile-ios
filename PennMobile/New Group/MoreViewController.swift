@@ -10,7 +10,7 @@ import UIKit
 
 class MoreViewController: GenericTableViewController, ShowsAlert {
     
-    var student: Student?
+    var student: Account?
     
     fileprivate var barButton: UIBarButtonItem!
     
@@ -19,7 +19,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     override func viewDidLoad() {
         super.viewDidLoad()
         if shouldShowProfile {
-            student = Student.getStudent()
+            student = Account.getStudent()
         }
         setUpTableView()
         self.tableView.isHidden = true
@@ -32,7 +32,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if shouldShowProfile {
-            let student = Student.getStudent()
+            let student = Account.getStudent()
             if self.student != student {
                 self.student = student
                 tableView.reloadData()
@@ -194,7 +194,7 @@ extension MoreViewController {
     func loginCompletion(_ successful: Bool) {
         if successful {
             if shouldShowProfile {
-                self.student = Student.getStudent()
+                self.student = Account.getStudent()
                 tableView.reloadData()
             }
             
