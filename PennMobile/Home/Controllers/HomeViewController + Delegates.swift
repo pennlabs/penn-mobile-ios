@@ -183,12 +183,12 @@ extension HomeViewController: ShowsAlert {
     private func handleCourseRefresh(_ courses: Set<Course>?) {
         DispatchQueue.main.async {
             if let courses = courses, let courseItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.courses]).first as? HomeCoursesCellItem {
-                let taughtToday = Array(courses.taughtToday)
-                let taughtTomorrow = Array(courses.taughtTomorrow)
+                let taughtToday = courses.taughtToday
+                let taughtTomorrow = courses.taughtTomorrow
                 if taughtToday.isEmpty && taughtTomorrow.isEmpty {
                     self.removeItem(courseItem)
                 } else {
-                    courseItem.courses = taughtToday.isEmpty ? taughtTomorrow : taughtToday
+                    courseItem.courses = courseItem.weekday == "Today" ? Array(taughtToday) : Array(taughtTomorrow)
                     self.reloadItem(courseItem)
                 }
                 self.showAlert(withMsg: "Your courses have been updated.", title: "Success!", completion: nil)
