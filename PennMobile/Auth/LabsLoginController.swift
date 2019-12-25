@@ -9,15 +9,41 @@
 import Foundation
 import WebKit
 import SwiftyJSON
+import CryptoKit
+import CommonCrypto
 
 class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
         
     override var urlStr: String {
-        return "https://platform.pennlabs.org/accounts/authorize/?response_type=code&client_id=CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN&redirect_uri=https%3A%2F%2Fpennlabs.org%2Fpennmobile%2Fios%2Fcallback%2F&scope=read+introspection&state="
+        return "https://platform.pennlabs.org/accounts/authorize/?response_type=code&client_id=CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN&redirect_uri=https%3A%2F%2Fpennlabs.org%2Fpennmobile%2Fios%2Fcallback%2F&code_challenge_method=S256&code_challenge=\(codeChallenge)scope=read+introspection&state="
     }
     
     override var shouldLoadCookies: Bool {
         return false
+    }
+    
+    private let codeVerifier = String.randomString(length: 64)
+    
+    private var codeChallenge: String {
+        let inputData = Data(codeVerifier.utf8)
+        if #available(iOS 13, *) {
+            let hashed = SHA256.hash(data: inputData)
+            let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
+            return hashString
+        } else {
+            // CryptoKit not available before iOS 13
+            // https://www.agnosticdev.com/content/how-use-commoncrypto-apis-swift-5
+            var digest = [UInt8](repeating: 0, count:Int(CC_SHA256_DIGEST_LENGTH))
+            _ = inputData.withUnsafeBytes {
+               CC_SHA256($0.baseAddress, UInt32(inputData.count), &digest)
+            }
+    
+            var sha256String = ""
+            for byte in digest {
+               sha256String += String(format:"%02x", UInt8(byte))
+            }
+            return sha256String
+        }
     }
     
     private var code: String?
@@ -55,7 +81,7 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
         
         decisionHandler(.cancel)
         self.showActivity()
-        OAuth2NetworkManager.instance.initiateAuthentication(code: code) { (accessToken) in
+        OAuth2NetworkManager.instance.initiateAuthentication(code: code, codeVerifier: codeVerifier) { (accessToken) in
             if let accessToken = accessToken {
                 OAuth2NetworkManager.instance.retrieveAccount(accessToken: accessToken) { (user) in
                     if let user = user, self.shouldFetchAllInfo {
