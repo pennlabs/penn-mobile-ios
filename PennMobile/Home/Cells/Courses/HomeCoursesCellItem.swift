@@ -75,10 +75,35 @@ extension Set where Element == Course {
     }
     
     var taughtToday: Set<Course> {
-        self.enrolledIn.filter { $0.isTaughtToday }
+        let courses = self.enrolledIn.filter { $0.isTaughtToday }.map { $0.getCourseWithCorrectTime(days: 0) }.flatMap { $0 }
+        return Set(courses)
     }
     
     var taughtTomorrow: Set<Course> {
-        self.enrolledIn.filter { $0.isTaughtTomorrow }
+        let courses = self.enrolledIn.filter { $0.isTaughtTomorrow }.map { $0.getCourseWithCorrectTime(days: 1) }.flatMap { $0 }
+        return Set(courses)
+    }
+}
+
+extension Course {
+    func getCourseWithCorrectTime(days: Int) -> [Course] {
+        var courses = [Course]()
+        let weekday = Course.weekdayAbbreviations[(Date().integerDayOfWeek + days) % 7]
+        if let times = self.meetingTimes {
+            for time in times {
+                if time.weekday.contains(weekday) {
+                    courses.append(self.copy(startTime: time.startTime, endTime: time.endTime))
+                }
+            }
+        }
+        if courses.isEmpty {
+            return [self]
+        } else {
+            return courses
+        }
+    }
+    
+    func copy(startTime: String, endTime: String) -> Course {
+        return Course(name: self.name, term: self.term, dept: self.dept, code: self.code, section: self.section, building: self.building, room: self.room, weekdays: self.weekdays, startDate: self.startDate, endDate: self.endDate, startTime: startTime, endTime: endTime, instructors: self.instructors, meetingTimes: nil)
     }
 }

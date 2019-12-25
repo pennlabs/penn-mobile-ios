@@ -24,8 +24,8 @@ class Course: Codable, Hashable {
     let weekdays: String
     let startDate: String?
     let endDate: String?
-    let startTime: String
-    let endTime: String
+    var startTime: String
+    var endTime: String
     let instructors: [String]
     
     let meetingTimes: [CourseMeetingTime]?
@@ -112,7 +112,12 @@ extension Course {
     
     func isTaughtInNDays(days: Int) -> Bool {
         let weekday = Date().integerDayOfWeek
-        return weekdays.contains(Course.weekdayAbbreviations[(weekday + days) % 7])
+        if let times = meetingTimes {
+            let weekday = Course.weekdayAbbreviations[(weekday + days) % 7]
+            return times.contains { $0.weekday.contains(weekday) }
+        } else {
+            return weekdays.contains(Course.weekdayAbbreviations[(weekday + days) % 7])
+        }
     }
     
     func hasSameMeetingTime(as course: Course) -> Bool {

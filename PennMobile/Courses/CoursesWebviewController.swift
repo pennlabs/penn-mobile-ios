@@ -28,7 +28,7 @@ class CoursesWebviewController: PennLoginController, IndicatorEnabled {
                     self.saveCoursesAndDismiss(courses)
                 } else {
                     // If unsuccessful, try one more time.
-                    PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true, callback: { (courses) in
+                    PennInTouchNetworkManager.instance.getCourses(currentTermOnly: self.currentTermOnly, callback: { (courses) in
                         DispatchQueue.main.async {
                             decisionHandler(.cancel)
                             self.hideActivity()
@@ -42,7 +42,6 @@ class CoursesWebviewController: PennLoginController, IndicatorEnabled {
     
     private func saveCoursesAndDismiss(_ courses: Set<Course>?) {
         if let courses = courses, let accountID = UserDefaults.standard.getAccountID() {
-            UserDBManager.shared.saveCourses(courses, accountID: accountID)
             UserDBManager.shared.saveCourses(courses, accountID: accountID) { (_) in
                 DispatchQueue.main.async {
                     self.dismiss(animated: true, completion: {
