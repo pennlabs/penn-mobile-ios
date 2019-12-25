@@ -24,8 +24,8 @@ class Course: Codable, Hashable {
     let weekdays: String
     let startDate: String?
     let endDate: String?
-    var startTime: String
-    var endTime: String
+    let startTime: String
+    let endTime: String
     let instructors: [String]
     
     let meetingTimes: [CourseMeetingTime]?
