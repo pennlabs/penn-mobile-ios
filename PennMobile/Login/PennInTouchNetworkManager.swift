@@ -30,7 +30,6 @@ extension PennInTouchNetworkManager {
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
                         if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                            print(html)
                             let degrees = try? self.parseDegrees(from: html)
                             callback(degrees)
                             return
