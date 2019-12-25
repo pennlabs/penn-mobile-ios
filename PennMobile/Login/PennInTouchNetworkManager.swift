@@ -47,39 +47,41 @@ extension PennInTouchNetworkManager {
 extension PennInTouchNetworkManager {    
     func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
         makeAuthRequest(targetUrl: courseURL, shibbolethUrl: shibbolethUrl) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                        do {
-                            let terms = try self.parseTerms(from: html)
-                            let selectedTerm = try self.parseSelectedTerm(from: html)
-                            
-                            let courses = try self.parseCourses(from: html, term: selectedTerm)
-                            if currentTermOnly {
-                                let currentTerm = self.currentTerm()
-                                if selectedTerm == currentTerm {
-                                    // If first term in list is the current term, return those courses
-                                    callback(courses)
-                                } else {
-                                    // Otherwise, we need to do another request but for just the current term
-                                    let remainingTerms = [currentTerm]
-                                    self.getCoursesHelper(terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
+            self.makeAuthRequest(targetUrl: self.courseURL, shibbolethUrl: self.shibbolethUrl) { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
+                            do {
+                                let terms = try self.parseTerms(from: html)
+                                let selectedTerm = try self.parseSelectedTerm(from: html)
+                                
+                                let courses = try self.parseCourses(from: html, term: selectedTerm)
+                                if currentTermOnly {
+                                    let currentTerm = Course.currentTerm
+                                    if selectedTerm == currentTerm {
+                                        // If first term in list is the current term, return those courses
                                         callback(courses)
+                                    } else {
+                                        // Otherwise, we need to do another request but for just the current term
+                                        let remainingTerms = [currentTerm]
+                                        self.getCoursesHelper(terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
+                                            callback(courses)
+                                        })
+                                    }
+                                } else {
+                                    let remainingTerms = terms.filter { $0 != selectedTerm }
+                                    self.getCoursesHelper(terms: remainingTerms, courses: courses, callback: { (allCourses) in
+                                        callback(allCourses)
                                     })
                                 }
-                            } else {
-                                let remainingTerms = terms.filter { $0 != selectedTerm }
-                                self.getCoursesHelper(terms: remainingTerms, courses: courses, callback: { (allCourses) in
-                                    callback(allCourses)
-                                })
+                                return
+                            } catch {
                             }
-                            return
-                        } catch {
                         }
                     }
                 }
+                callback(nil)
             }
-            callback(nil)
         }
     }
     
@@ -118,24 +120,6 @@ extension PennInTouchNetworkManager {
             callback(courses)
         }
         task.resume()
-    }
-    
-    private func currentTerm() -> String {
-        let now = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy"
-        let year = formatter.string(from: now)
-        formatter.dateFormat = "M"
-        let month = Int(formatter.string(from: now))!
-        let code: String
-        if month <= 5 {
-            code = "A"
-        } else if month >= 8 {
-            code = "C"
-        } else {
-            code = "B"
-        }
-        return "\(year)\(code)"
     }
 }
 

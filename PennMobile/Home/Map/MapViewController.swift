@@ -64,6 +64,9 @@ class MapViewController: UIViewController {
                 // Do nothing, handle in didChangeAuthorization delegate function
                 self.locationManager.requestWhenInUseAuthorization()
                 break
+            case .denied:
+                self.locationManager.requestWhenInUseAuthorization()
+                break
             default:
                 showCoordinates(searchTerm: searchTerm)
                 break

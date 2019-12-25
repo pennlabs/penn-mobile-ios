@@ -141,41 +141,42 @@ extension UserDBManager {
     }
     
     func saveCourses(_ courses: Set<Course>, accountID: String, _ completion: ((_ success: Bool) -> Void)? = nil) {
-        let jsonEncoder = JSONEncoder()
-        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
-        do {
-            let url = URL(string: "\(baseUrl)/account/courses")!
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let coursesObj = CoursesJSON(accountID: accountID, courses: courses)
-            let jsonData = try jsonEncoder.encode(coursesObj)
-            request.httpBody = jsonData
-            
-            let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
-                var success = false
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
-                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                            let json = JSON(data)
-                            success = json["success"].boolValue
-                        }
-                    } else {
-                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                            let json = JSON(data)
-                            let error = json["error"].stringValue
-                            print(error)
-                        }
-                    }
-                }
-                completion?(success)
-            })
-            task.resume()
-        }
-        catch {
-            completion?(false)
-        }
+        completion?(true)
+//        let jsonEncoder = JSONEncoder()
+//        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+//        do {
+//            let url = URL(string: "\(baseUrl)/account/courses")!
+//            var request = URLRequest(url: url)
+//            request.httpMethod = "POST"
+//            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//            let coursesObj = CoursesJSON(accountID: accountID, courses: courses)
+//            let jsonData = try jsonEncoder.encode(coursesObj)
+//            request.httpBody = jsonData
+//
+//            let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+//                var success = false
+//                if let httpResponse = response as? HTTPURLResponse {
+//                    if httpResponse.statusCode == 200 {
+//                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+//                            let json = JSON(data)
+//                            success = json["success"].boolValue
+//                        }
+//                    } else {
+//                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+//                            let json = JSON(data)
+//                            let error = json["error"].stringValue
+//                            print(error)
+//                        }
+//                    }
+//                }
+//                completion?(success)
+//            })
+//            task.resume()
+//        }
+//        catch {
+//            completion?(false)
+//        }
     }
 }
 
