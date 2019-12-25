@@ -19,7 +19,7 @@ final class HomeAPIService: Requestable {
             url = "\(url)&sessionid=\(sessionID)"
         }
         if let courses = UserDefaults.standard.getCourses(), !courses.enrolledIn.isEmpty {
-            if !courses.taughtToday.isEmpty {
+            if courses.taughtToday.hasUpcomingCourse {
                 url = "\(url)&hasCourses=today"
             } else if !courses.taughtTomorrow.isEmpty {
                 url = "\(url)&hasCourses=tomorrow"

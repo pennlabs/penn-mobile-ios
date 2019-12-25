@@ -36,7 +36,7 @@ final class HomeCoursesCellItem: HomeCellItem {
         } else if let courses = UserDefaults.standard.getCourses() {
             // Courses not provided by server. Use courses saved on device.
             let coursesToday = courses.taughtToday
-            if !coursesToday.isEmpty {
+            if coursesToday.hasUpcomingCourse {
                 let weekday = "Today"
                 return HomeCoursesCellItem(weekday: weekday, courses: Array(coursesToday))
             } else {
@@ -67,7 +67,9 @@ final class HomeCoursesCellItem: HomeCellItem {
 // MARK: - Home Page Logic
 extension Set where Element == Course {
     var enrolledIn: Set<Course> {
-        let nowStr = "2019-10-01"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let nowStr = formatter.string(from: Date())
         let term = Course.currentTerm
         let coursesWithDate = self.filter { $0.startDate != nil && $0.endDate != nil }.filter { $0.startDate! <= nowStr && nowStr <= $0.endDate! }
         let coursesWithoutDate = self.filter { $0.startDate == nil || $0.endDate == nil }.filter { $0.term == term }
@@ -82,6 +84,20 @@ extension Set where Element == Course {
     var taughtTomorrow: Set<Course> {
         let courses = self.enrolledIn.filter { $0.isTaughtTomorrow }.map { $0.getCourseWithCorrectTime(days: 1) }.flatMap { $0 }
         return Set(courses)
+    }
+    
+    var hasUpcomingCourse: Bool {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+        let now = formatter.date(from: formatter.string(from: Date()))!
+        for course in self {
+            if let end = formatter.date(from: course.endTime), now < end {
+                return true
+            }
+        }
+        return false
     }
 }
 
