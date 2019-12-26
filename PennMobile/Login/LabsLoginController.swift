@@ -31,7 +31,7 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
             let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
             return hashString
         } else {
-            // CryptoKit not available before iOS 13
+            // CryptoKit not available until iOS 13
             // https://www.agnosticdev.com/content/how-use-commoncrypto-apis-swift-5
             var digest = [UInt8](repeating: 0, count:Int(CC_SHA256_DIGEST_LENGTH))
             _ = inputData.withUnsafeBytes {

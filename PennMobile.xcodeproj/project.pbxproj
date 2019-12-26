@@ -974,6 +974,7 @@
 		21B8BBBB2224F98B00EBC1D0 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				21737FD623A1DEE7002DCD07 /* LabsLoginController.swift */,
 				21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */,
 				21B8BBB522231F9F00EBC1D0 /* Account.swift */,
 				21B8BBB72223963C00EBC1D0 /* Degree.swift */,
@@ -1012,7 +1013,6 @@
 			isa = PBXGroup;
 			children = (
 				2130A5052238C2F000DFEEC7 /* PennLoginController.swift */,
-				21737FD623A1DEE7002DCD07 /* LabsLoginController.swift */,
 				21737FD823A31205002DCD07 /* OAuth2NetworkManager.swift */,
 				21B653B82245EB67001A97C5 /* PennAuthRequestable.swift */,
 				66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */,
