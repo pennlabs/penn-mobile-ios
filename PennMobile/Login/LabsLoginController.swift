@@ -75,7 +75,7 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
         guard let code = code else {
             // Something went wrong, code not fetched
             decisionHandler(.cancel)
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(successful: false)
             return
         }
         
