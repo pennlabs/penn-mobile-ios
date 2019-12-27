@@ -209,7 +209,7 @@ extension LabsLoginController {
     fileprivate func getAndSaveLaundryPreferences() {
         UserDBManager.shared.getLaundryPreferences { rooms in
             if let rooms = rooms {
-                UserDefaults.standard.set(preferences: rooms)
+                UserDefaults.standard.setLaundryPreferences(to: rooms)
             }
         }
     }

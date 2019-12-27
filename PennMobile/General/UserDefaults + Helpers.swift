@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-//Mark: UserDefaultsKeys
+//MARK: UserDefaultsKeys
 extension UserDefaults {
     enum UserDefaultsKeys: String, CaseIterable {
         case account
@@ -31,6 +31,8 @@ extension UserDefaults {
         case authedIntoShibboleth
         case courses
         case housing
+        case privacyPreferences
+        case notificationPreferences
     }
     
     func clearAll() {
@@ -56,7 +58,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: Permanent DeviceUUID
+// MARK: Permanent DeviceUUID
 extension UserDefaults {
     func set(deviceUUID: String) {
         set(deviceUUID, forKey: UserDefaultsKeys.deviceUUID.rawValue)
@@ -73,7 +75,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: VC Controller Settings (order of VCs)
+// MARK: VC Controller Settings (order of VCs)
 extension UserDefaults {
     func set(vcDisplayNames: [String]) {
         set(vcDisplayNames, forKey: UserDefaultsKeys.controllerSettings.rawValue)
@@ -104,10 +106,10 @@ extension UserDefaults {
     }
 }
 
-// Mark: Laundry Preferences
+// MARK: Laundry Preferences
 extension UserDefaults {
-    func set(preferences: [Int]) {
-        set(preferences, forKey: UserDefaultsKeys.laundryPreferences.rawValue)
+    func setLaundryPreferences(to ids: [Int]) {
+        set(ids, forKey: UserDefaultsKeys.laundryPreferences.rawValue)
         synchronize()
     }
 
@@ -116,7 +118,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: Onboarding Status
+// MARK: Onboarding Status
 extension UserDefaults {
     func setIsOnboarded(value: Bool) {
         set(value, forKey: UserDefaultsKeys.isOnboarded.rawValue)
@@ -128,7 +130,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: - GSR User
+// MARK: GSR User
 extension UserDefaults {
     func setGSRUser(value: GSRUser) {
         let encoder = JSONEncoder()
@@ -151,7 +153,7 @@ extension UserDefaults {
     }
 }
 
-// MARK: - Account
+// MARK: Account
 extension UserDefaults {
     func saveAccount(_ account: Account) {
         let encoder = JSONEncoder()
@@ -387,5 +389,49 @@ extension UserDefaults {
         } else {
             return filteredResults.contains { !$0.offCampus }
         }
+    }
+}
+
+// MARK: - Privacy Settings
+extension UserDefaults {
+    func savePrivacyPreferences(to preferences: Set<PrivacyPreference>) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(preferences) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.privacyPreferences.rawValue)
+        }
+    }
+
+    func getPrivacyPreferences() -> Set<PrivacyPreference>? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.privacyPreferences.rawValue) {
+            return try? decoder.decode(Set<PrivacyPreference>.self, from: decodedData)
+        }
+        return nil
+    }
+
+    func clearPrivacyPreferences() {
+        removeObject(forKey: UserDefaultsKeys.privacyPreferences.rawValue)
+    }
+}
+
+// MARK: - Notification Settings
+extension UserDefaults {
+    func saveNotificationPreferences(to preferences: Set<NotificationPreference>) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(preferences) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.notificationPreferences.rawValue)
+        }
+    }
+
+    func getNotificationPreferences() -> Set<NotificationPreference>? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.notificationPreferences.rawValue) {
+            return try? decoder.decode(Set<NotificationPreference>.self, from: decodedData)
+        }
+        return nil
+    }
+
+    func clearNotificationPreferences() {
+        removeObject(forKey: UserDefaultsKeys.notificationPreferences.rawValue)
     }
 }
