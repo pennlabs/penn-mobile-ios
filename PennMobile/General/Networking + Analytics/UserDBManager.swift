@@ -22,16 +22,6 @@ class UserDBManager: NSObject, Requestable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
-    fileprivate func sendRequest(_ request: NSMutableURLRequest) {
-        let task = URLSession.shared.dataTask(with: request as URLRequest)
-        task.resume()
-    }
-    
-    fileprivate func sendRequest(_ request: NSMutableURLRequest, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: callback)
-        task.resume()
-    }
-    
     /**
       Retrieves an access token and makes an authenticated POST request by adding it as a header to the request.
       Note: Do NOT use this to make POST requests to non-Labs services. Doing so will compromise the user's access token.
@@ -61,10 +51,21 @@ class UserDBManager: NSObject, Requestable {
 // MARK: - Dining
 extension UserDBManager {
     func saveDiningPreference(for venueIds: [Int]) {
-        let urlString = "\(baseUrl)/dining/preferences"
+        let url = "\(baseUrl)/dining/preferences"
         let params = ["venues": venueIds]
-        let request = getAnalyticsPostRequest(url: urlString, params: params)
-        sendRequest(request)
+
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            let url = URL(string: url)!
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.httpBody = String.getPostString(params: params).data(using: .utf8)
+            
+            let deviceID = getDeviceID()
+            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+
+            let task = URLSession.shared.dataTask(with: request)
+            task.resume()
+        }
     }
 }
 
@@ -76,10 +77,41 @@ extension UserDBManager {
     }
     
     func saveLaundryPreferences(for ids: [Int]) {
-        let urlString = "\(baseUrl)/laundry/preferences"
+        let url = "\(baseUrl)/laundry/preferences"
         let params = ["rooms": ids]
-        let request = getAnalyticsPostRequest(url: urlString, params: params)
-        sendRequest(request)
+
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            let url = URL(string: url)!
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.httpBody = String.getPostString(params: params).data(using: .utf8)
+            
+            let deviceID = getDeviceID()
+            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+
+            let task = URLSession.shared.dataTask(with: request)
+            task.resume()
+        }
+    }
+    
+    func getLaundryPreferences(_ callback: @escaping (_ rooms: [Int]?) -> Void) {
+        let url = "\(baseUrl)/laundry/preferences"
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            let url = URL(string: url)!
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            
+            let deviceID = getDeviceID()
+            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
+                    callback(rooms.compactMap { $0 as? Int })
+                    return
+                }
+                callback(nil)
+            }
+            task.resume()
+        }
     }
 }
 
@@ -109,7 +141,7 @@ extension UserDBManager {
 
 // MARK: - Student Account
 extension UserDBManager {
-    func saveStudent(_ student: Student, _ completion: @escaping (_ accountID: String?) -> Void) {
+    func saveAccount(_ account: Account, _ completion: @escaping (_ accountID: String?) -> Void) {
         let jsonEncoder = JSONEncoder()
         jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
         do {
@@ -118,7 +150,7 @@ extension UserDBManager {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             
-            let jsonData = try jsonEncoder.encode(student)
+            let jsonData = try jsonEncoder.encode(account)
             request.httpBody = jsonData
             
             let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
@@ -141,41 +173,42 @@ extension UserDBManager {
     }
     
     func saveCourses(_ courses: Set<Course>, accountID: String, _ completion: ((_ success: Bool) -> Void)? = nil) {
-        let jsonEncoder = JSONEncoder()
-        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
-        do {
-            let url = URL(string: "\(baseUrl)/account/courses")!
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let coursesObj = CoursesJSON(accountID: accountID, courses: courses)
-            let jsonData = try jsonEncoder.encode(coursesObj)
-            request.httpBody = jsonData
-            
-            let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
-                var success = false
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
-                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                            let json = JSON(data)
-                            success = json["success"].boolValue
-                        }
-                    } else {
-                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                            let json = JSON(data)
-                            let error = json["error"].stringValue
-                            print(error)
-                        }
-                    }
-                }
-                completion?(success)
-            })
-            task.resume()
-        }
-        catch {
-            completion?(false)
-        }
+        completion?(true)
+//        let jsonEncoder = JSONEncoder()
+//        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+//        do {
+//            let url = URL(string: "\(baseUrl)/account/courses")!
+//            var request = URLRequest(url: url)
+//            request.httpMethod = "POST"
+//            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//            let coursesObj = CoursesJSON(accountID: accountID, courses: courses)
+//            let jsonData = try jsonEncoder.encode(coursesObj)
+//            request.httpBody = jsonData
+//
+//            let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+//                var success = false
+//                if let httpResponse = response as? HTTPURLResponse {
+//                    if httpResponse.statusCode == 200 {
+//                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+//                            let json = JSON(data)
+//                            success = json["success"].boolValue
+//                        }
+//                    } else {
+//                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+//                            let json = JSON(data)
+//                            let error = json["error"].stringValue
+//                            print(error)
+//                        }
+//                    }
+//                }
+//                completion?(success)
+//            })
+//            task.resume()
+//        }
+//        catch {
+//            completion?(false)
+//        }
     }
 }
 
@@ -192,11 +225,20 @@ extension UserDBManager {
 
 // MARK: - Housing Data
 extension UserDBManager {
-    func saveHousingData(html: String, _ completion: (() -> Void)? = nil) {
+    func saveHousingData(html: String, _ completion: (( _ result: HousingResult?) -> Void)? = nil) {
         let url = "\(baseUrl)/housing"
         let params = ["html": html]
-        makePostRequestWithAccessToken(url: url, params: params) { (_, _, _) in
-            completion?()
+        makePostRequestWithAccessToken(url: url, params: params) { (data, response, _) in
+            if let data = data, let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                if let result = try? decoder.decode(HousingResult.self, from: data) {
+                    UserDefaults.standard.saveHousingResult(result)
+                    completion?(result)
+                    return
+                }
+            }
+            completion?(nil)
         }
     }
 }

@@ -49,18 +49,17 @@ extension OAuth2NetworkManager {
     /// Input: One-time code from login
     /// Output: Temporary access token
     /// Saves refresh token in keychain for future use
-    func initiateAuthentication(code: String, _ callback: @escaping (_ accessToken: AccessToken?) -> Void) {
+    func initiateAuthentication(code: String, codeVerifier: String, _ callback: @escaping (_ accessToken: AccessToken?) -> Void) {
         let url = URL(string: "https://platform.pennlabs.org/accounts/token/")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
-        let randomStr = String.randomString(length: 64)
         let params = [
             "code": code,
             "grant_type": "authorization_code",
             "client_id": clientID,
             "redirect_uri": "https://pennlabs.org/pennmobile/ios/callback/",
-            "code_verifier": randomStr,
+            "code_verifier": codeVerifier,
         ]
         
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -236,6 +235,9 @@ extension String {
             if let strValue = value as? String {
                 let escapedValue = strValue.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
                 return "\(escapedKey)=\(escapedValue)"
+            } else if let arr = value as? Array<Any> {
+                let str = arr.map { String(describing: $0).addingPercentEncoding(withAllowedCharacters: characterSet) ?? "" }.joined(separator: ",")
+                return "\(escapedKey)=\(str)"
             } else {
                 return "\(escapedKey)=\(value)"
             }

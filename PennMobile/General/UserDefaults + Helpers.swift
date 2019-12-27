@@ -11,7 +11,8 @@ import WebKit
 
 //Mark: UserDefaultsKeys
 extension UserDefaults {
-    enum UserDefaultsKeys: String {
+    enum UserDefaultsKeys: String, CaseIterable {
+        case account
         case accountID
         case deviceUUID
         case controllerSettings
@@ -22,13 +23,20 @@ extension UserDefaults {
         case appVersion
         case cookies
         case wharton
-        case student
         case coursePermission
         case hasDiningPlan
         case lastLogin
         case unsentLogs
         case lastTransactionRequest
         case authedIntoShibboleth
+        case courses
+        case housing
+    }
+    
+    func clearAll() {
+        for key in UserDefaultsKeys.allCases {
+            removeObject(forKey: key.rawValue)
+        }
     }
 }
 
@@ -143,26 +151,49 @@ extension UserDefaults {
     }
 }
 
-// MARK: - Student
+// MARK: - Account
 extension UserDefaults {
-    func saveStudent(_ student: Student) {
+    func saveAccount(_ account: Account) {
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(student) {
-            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.student.rawValue)
+        if let encoded = try? encoder.encode(account) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.account.rawValue)
         }
         synchronize()
     }
 
-    func getStudent() -> Student? {
+    func getAccount() -> Account? {
         let decoder = JSONDecoder()
-        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.student.rawValue) {
-            return try? decoder.decode(Student.self, from: decodedData)
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.account.rawValue) {
+            return try? decoder.decode(Account.self, from: decodedData)
         }
         return nil
     }
 
-    func clearStudent() {
-        removeObject(forKey: UserDefaultsKeys.student.rawValue)
+    func clearAccount() {
+        removeObject(forKey: UserDefaultsKeys.account.rawValue)
+    }
+}
+
+// MARK: - Courses
+extension UserDefaults {
+    func saveCourses(_ courses: Set<Course>) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(courses) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.courses.rawValue)
+        }
+        synchronize()
+    }
+
+    func getCourses() -> Set<Course>? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.courses.rawValue) {
+            return try? decoder.decode(Set<Course>.self, from: decodedData)
+        }
+        return nil
+    }
+
+    func clearCourses() {
+        removeObject(forKey: UserDefaultsKeys.courses.rawValue)
     }
 }
 
@@ -319,5 +350,42 @@ extension UserDefaults {
     
     func isAuthedIn() -> Bool {
         return bool(forKey: UserDefaultsKeys.authedIntoShibboleth.rawValue)
+    }
+}
+
+// MARK: - Housing
+extension UserDefaults {
+    func saveHousingResult(_ result: HousingResult) {
+        let currentResults = getHousingResults() ?? Array<HousingResult>()
+        var newResults = currentResults.filter { $0.start != result.start }
+        newResults.append(result)
+        
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(newResults) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.housing.rawValue)
+        }
+        synchronize()
+    }
+    
+    func getHousingResults() -> Array<HousingResult>? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.housing.rawValue) {
+            return try? decoder.decode(Array<HousingResult>.self, from: decodedData)
+        }
+        return nil
+    }
+    
+    func isOnCampus() -> Bool? {
+        guard let results = getHousingResults() else {
+            return nil
+        }
+        let now = Date()
+        let start = now.month <= 5 ? now.year - 1 : now.year
+        let filteredResults = results.filter { $0.start == start }
+        if filteredResults.isEmpty {
+            return nil
+        } else {
+            return filteredResults.contains { !$0.offCampus }
+        }
     }
 }

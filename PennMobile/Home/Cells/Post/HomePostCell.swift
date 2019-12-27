@@ -86,6 +86,10 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
         prepareUI()
+        
+        let tapGestureRecognizer = getTapGestureRecognizer()
+        cardView.addGestureRecognizer(tapGestureRecognizer)
+        cardView.isUserInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -150,10 +154,6 @@ extension HomePostCell {
         postImageView.clipsToBounds = true
         postImageView.contentMode = .scaleAspectFill
         
-        let tapGestureRecognizer = getTapGestureRecognizer()
-        postImageView.addGestureRecognizer(tapGestureRecognizer)
-        postImageView.isUserInteractionEnabled = true
-        
         cardView.addSubview(postImageView)
         let height = HomePostCell.getImageHeight()
         _ = postImageView.anchor(cardView.topAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: height)
@@ -179,10 +179,6 @@ extension HomePostCell {
         titleLabel.font = HomePostCell.titleFont
         titleLabel.numberOfLines = 8
         
-        let tapGestureRecognizer = getTapGestureRecognizer()
-        titleLabel.addGestureRecognizer(tapGestureRecognizer)
-        titleLabel.isUserInteractionEnabled = true
-        
         cardView.addSubview(titleLabel)
         titleTopConstraintToSource = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: HomePostCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomePostCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)[0]
         
@@ -194,7 +190,7 @@ extension HomePostCell {
         descriptionLabel = UILabel()
         descriptionLabel.font = HomePostCell.descriptionFont
         descriptionLabel.textColor = UIColor.labelSecondary
-        descriptionLabel.numberOfLines = 5
+        descriptionLabel.numberOfLines = 8
         
         cardView.addSubview(descriptionLabel)
         _ = descriptionLabel.anchor(titleLabel.bottomAnchor, left: titleLabel.leftAnchor, bottom: nil, right: titleLabel.rightAnchor, topConstant: 6, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)

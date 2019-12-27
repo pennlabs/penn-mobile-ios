@@ -9,15 +9,41 @@
 import Foundation
 import WebKit
 import SwiftyJSON
+import CryptoKit
+import CommonCrypto
 
 class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
         
     override var urlStr: String {
-        return "https://platform.pennlabs.org/accounts/authorize/?response_type=code&client_id=CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN&redirect_uri=https%3A%2F%2Fpennlabs.org%2Fpennmobile%2Fios%2Fcallback%2F&scope=read+introspection&state="
+        return "https://platform.pennlabs.org/accounts/authorize/?response_type=code&client_id=CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN&redirect_uri=https%3A%2F%2Fpennlabs.org%2Fpennmobile%2Fios%2Fcallback%2F&code_challenge_method=S256&code_challenge=\(codeChallenge)scope=read+introspection&state="
     }
     
     override var shouldLoadCookies: Bool {
         return false
+    }
+    
+    private let codeVerifier = String.randomString(length: 64)
+    
+    private var codeChallenge: String {
+        let inputData = Data(codeVerifier.utf8)
+        if #available(iOS 13, *) {
+            let hashed = SHA256.hash(data: inputData)
+            let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
+            return hashString
+        } else {
+            // CryptoKit not available until iOS 13
+            // https://www.agnosticdev.com/content/how-use-commoncrypto-apis-swift-5
+            var digest = [UInt8](repeating: 0, count:Int(CC_SHA256_DIGEST_LENGTH))
+            _ = inputData.withUnsafeBytes {
+               CC_SHA256($0.baseAddress, UInt32(inputData.count), &digest)
+            }
+    
+            var sha256String = ""
+            for byte in digest {
+               sha256String += String(format:"%02x", UInt8(byte))
+            }
+            return sha256String
+        }
     }
     
     private var code: String?
@@ -28,6 +54,12 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
     convenience init(fetchAllInfo: Bool = true, completion: @escaping (_ success: Bool) -> Void) {
         self.init()
         self.completion = completion
+        self.shouldFetchAllInfo = fetchAllInfo
+    }
+    
+    convenience init(fetchAllInfo: Bool = true) {
+        self.init()
+        self.completion = ({ _ in })
         self.shouldFetchAllInfo = fetchAllInfo
     }
     
@@ -43,29 +75,36 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
         guard let code = code else {
             // Something went wrong, code not fetched
             decisionHandler(.cancel)
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(successful: false)
             return
         }
         
         decisionHandler(.cancel)
         self.showActivity()
-        OAuth2NetworkManager.instance.initiateAuthentication(code: code) { (accessToken) in
+        OAuth2NetworkManager.instance.initiateAuthentication(code: code, codeVerifier: codeVerifier) { (accessToken) in
             if let accessToken = accessToken {
                 OAuth2NetworkManager.instance.retrieveAccount(accessToken: accessToken) { (user) in
                     if let user = user, self.shouldFetchAllInfo {
-                        PennInTouchNetworkManager.instance.getDegrees { (degrees) in
-                            let student = Student(first: user.firstName, last: user.lastName, pennkey: user.username, email: user.email, pennid: user.pennid)
-                            if user.email?.contains("wharton") ?? false || degrees?.hasDegreeInWharton() ?? false {
-                                UserDefaults.standard.set(isInWharton: true)
-                                GSRNetworkManager.instance.getSessionID { success in
-                                    self.saveStudent(student) {
+                        let account = Account(user: user)
+                        if account.isStudent {
+                            PennInTouchNetworkManager.instance.getDegrees { (degrees) in
+                                account.degrees = degrees
+                                if account.email?.contains("wharton") ?? false || degrees?.hasDegreeInWharton() ?? false {
+                                    UserDefaults.standard.set(isInWharton: true)
+                                    GSRNetworkManager.instance.getSessionID { success in
+                                        self.saveAccount(account) {
+                                            self.dismiss(successful: true)
+                                        }
+                                    }
+                                } else {
+                                    self.saveAccount(account) {
                                         self.dismiss(successful: true)
                                     }
                                 }
-                            } else {
-                                self.saveStudent(student) {
-                                    self.dismiss(successful: true)
-                                }
+                            }
+                        } else {
+                            self.saveAccount(account) {
+                                self.dismiss(successful: true)
                             }
                         }
                     } else {
@@ -101,9 +140,9 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
 
 // MARK: - Save Student {
 extension LabsLoginController {
-    fileprivate func saveStudent(_ student: Student, _ callback: @escaping () -> Void) {
-        UserDefaults.standard.saveStudent(student)
-        UserDBManager.shared.saveStudent(student) { (accountID) in
+    fileprivate func saveAccount(_ account: Account, _ callback: @escaping () -> Void) {
+        Account.saveAccount(account)
+        UserDBManager.shared.saveAccount(account) { (accountID) in
             if let accountID = accountID {
                 UserDefaults.standard.set(accountID: accountID)
             }
@@ -114,12 +153,15 @@ extension LabsLoginController {
             } else {
                 FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Successful Login", content: "Successful Login")
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.getDiningBalance()
-                    self.getDiningTransactions()
-                    CampusExpressNetworkManager.instance.updateHousingData()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.getCourses()
+                if account.isStudent {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        self.getDiningBalance()
+                        self.getDiningTransactions()
+                        self.getAndSaveLaundryPreferences()
+                        CampusExpressNetworkManager.instance.updateHousingData()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self.getCourses()
+                        }
                     }
                 }
             }
@@ -134,13 +176,14 @@ extension LabsLoginController {
             if let courses = courses, let accountID = UserDefaults.standard.getAccountID() {
                 // Save courses to DB if permission was granted
                 UserDBManager.shared.saveCourses(courses, accountID: accountID)
+                UserDefaults.standard.saveCourses(courses)
             }
             UserDefaults.standard.storeCookies()
         }
     }
     
     fileprivate func getDiningBalance() {
-        if let student = Student.getStudent(), student.isFreshman() {
+        if let student = Account.getAccount(), student.isFreshman() {
             UserDefaults.standard.set(hasDiningPlan: true)
         }
         
@@ -159,6 +202,14 @@ extension LabsLoginController {
             if let data = data, let str = String(bytes: data, encoding: .utf8) {
                 UserDBManager.shared.saveTransactionData(csvStr: str)
                 UserDefaults.standard.setLastTransactionRequest()
+            }
+        }
+    }
+    
+    fileprivate func getAndSaveLaundryPreferences() {
+        UserDBManager.shared.getLaundryPreferences { rooms in
+            if let rooms = rooms {
+                UserDefaults.standard.set(preferences: rooms)
             }
         }
     }

@@ -29,9 +29,12 @@ class RootViewController: UIViewController, NotificationRequestable {
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
-            
+            // Save laundry rooms with account ID (available starting in 6.1)
+            if let rooms = UserDefaults.standard.getLaundryPreferences() {
+                UserDBManager.shared.saveLaundryPreferences(for: rooms)
+            }
         }
-                
+                        
         if shouldRequireLogin() {
             // Logged in and should require login
             clearAccountData()
@@ -153,13 +156,9 @@ class RootViewController: UIViewController, NotificationRequestable {
     
     fileprivate func clearAccountData() {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
-        UserDefaults.standard.clearAccountID()
-        UserDefaults.standard.clearCookies()
-        UserDefaults.standard.clearWhartonFlag()
-        UserDefaults.standard.clearHasDiningPlan()
-        UserDefaults.standard.clearLastTransactionRequest()
+        UserDefaults.standard.clearAll()
         OAuth2NetworkManager.instance.clearRefreshToken()
-        Student.clear()
+        Account.clear()
         GSRUser.clear()
     }
     
@@ -255,47 +254,6 @@ extension RootViewController {
         } else {
             // Return true if today is Sunday and transactions have not yet been fetched today
             return now.integerDayOfWeek == 0 && !lastTransactionRequest.isToday
-        }
-    }
-}
-
-// MARK: - Updated database if needed
-extension RootViewController {
-    func updateDatabaseIfNeeded() {
-        if let student = Student.getStudent() {
-            if let accountID = UserDefaults.standard.getAccountID() {
-                if let courses = student.courses {
-                    // Check if any courses have no start, end date. If so, update DB, which can now handle this.
-                    var hasEmptyDate = false
-                    for course in courses {
-                        if course.startDate == "" || course.endDate == "" {
-                            hasEmptyDate = true
-                            break
-                        }
-                    }
-                    
-                    if hasEmptyDate {
-                        UserDBManager.shared.saveCourses(courses, accountID: accountID)
-                    }
-                } else {
-                    // Pop up login controller to re-retrieve data
-                    let lwc = LoginWebviewController()
-                    let nvc = UINavigationController(rootViewController: lwc)
-                    self.current.present(nvc, animated: true, completion: nil)
-                }
-            } else {
-                // If student is saved locally but not on DB, save on DB and switch to main screen
-                UserDBManager.shared.saveStudent(student) { (accountID) in
-                    DispatchQueue.main.async {
-                        if let accountID = accountID {
-                            UserDefaults.standard.set(accountID: accountID)
-                        }
-                        if self.current is LoginController {
-                            self.switchToMainScreen()
-                        }
-                    }
-                }
-            }
         }
     }
 }

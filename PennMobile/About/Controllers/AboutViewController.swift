@@ -166,9 +166,10 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     }
     
     func setupCopyrightLabel() {
+        let now = Date()
         copyrightLabel = UILabel()
         copyrightLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        copyrightLabel.text = "Penn Labs \u{00A9} 2019"
+        copyrightLabel.text = "Penn Labs \u{00A9} \(now.year)"
         copyrightLabel.textColor = .labelTertiary
         copyrightLabel.textAlignment = .center
         copyrightLabel.translatesAutoresizingMaskIntoConstraints = false

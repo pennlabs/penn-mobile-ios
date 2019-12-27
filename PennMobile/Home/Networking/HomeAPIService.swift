@@ -18,6 +18,13 @@ final class HomeAPIService: Requestable {
         if let sessionID = GSRUser.getSessionID() {
             url = "\(url)&sessionid=\(sessionID)"
         }
+        if let courses = UserDefaults.standard.getCourses(), !courses.enrolledIn.isEmpty {
+            if courses.taughtToday.hasUpcomingCourse {
+                url = "\(url)&hasCourses=today"
+            } else if !courses.taughtTomorrow.isEmpty {
+                url = "\(url)&hasCourses=tomorrow"
+            }
+        }
         
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             // Make request without access token if one does not exist

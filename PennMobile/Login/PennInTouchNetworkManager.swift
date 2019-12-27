@@ -1,5 +1,5 @@
 //
-//  StudentNetworkManager.swift
+//  PennInTouchNetworkManager.swift
 //  PennMobile
 //
 //  Created by Josh Doman on 2/24/19.
@@ -20,102 +20,69 @@ class PennInTouchNetworkManager: NSObject, PennAuthRequestable {
     fileprivate let shibbolethUrl = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do/Shibboleth.sso/SAML2/POST"
 }
 
-// MARK: - Student
+// MARK: - Degrees
 extension PennInTouchNetworkManager {
-    func getStudent(callback: @escaping (_ student: Student?) -> Void) {
-        let url = URL(string: baseURL)!
-        let request = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                        if let student = try? self.parseStudent(from: html) {
-                            self.getCourses(currentTermOnly: true, callback: { (courses) in
-                                student.courses = courses
-                                self.getDegrees(callback: { (degrees) in
-                                    student.degrees = degrees
-                                    callback(student)
-                                })
-                            })
+    func getDegrees(callback: @escaping ((_ degrees: Set<Degree>?) -> Void)) {
+        makeAuthRequest(targetUrl: degreeURL, shibbolethUrl: shibbolethUrl) { (data, response, error) in
+            let url = URL(string: self.degreeURL)!
+            let request = URLRequest(url: url)
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
+                            let degrees = try? self.parseDegrees(from: html)
+                            callback(degrees)
                             return
                         }
                     }
                 }
+                callback(nil)
             }
-            callback(nil)
+            task.resume()
         }
-        task.resume()
-    }
-}
-
-// MARK: - Degrees
-extension PennInTouchNetworkManager {
-    func getDegrees(callback: @escaping ((_ degrees: Set<Degree>?) -> Void)) {
-        let url = URL(string: degreeURL)!
-        let request = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                        let degrees = try? self.parseDegrees(from: html)
-                        callback(degrees)
-                        return
-                    }
-                }
-            }
-            callback(nil)
-        }
-        task.resume()
     }
 }
 
 // MARK: - Courses
-extension PennInTouchNetworkManager {
-    func getCoursesWithAuth(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
-        makeAuthRequest(targetUrl: courseURL, shibbolethUrl: shibbolethUrl) { (_, _, _) in
-            self.getCourses(currentTermOnly: currentTermOnly, callback: callback)
-        }
-    }
-    
+extension PennInTouchNetworkManager {    
     func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
-        let url = URL(string: courseURL)!
-        let request = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                        do {
-                            let terms = try self.parseTerms(from: html)
-                            let selectedTerm = try self.parseSelectedTerm(from: html)
-                            
-                            let courses = try self.parseCourses(from: html, term: selectedTerm)
-                            if currentTermOnly {
-                                let currentTerm = self.currentTerm()
-                                if selectedTerm == currentTerm {
-                                    // If first term in list is the current term, return those courses
-                                    callback(courses)
-                                } else {
-                                    // Otherwise, we need to do another request but for just the current term
-                                    let remainingTerms = [currentTerm]
-                                    self.getCoursesHelper(terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
+        makeAuthRequest(targetUrl: courseURL, shibbolethUrl: shibbolethUrl) { (data, response, error) in
+            self.makeAuthRequest(targetUrl: self.courseURL, shibbolethUrl: self.shibbolethUrl) { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
+                            do {
+                                let terms = try self.parseTerms(from: html)
+                                let selectedTerm = try self.parseSelectedTerm(from: html)
+                                
+                                let courses = try self.parseCourses(from: html, term: selectedTerm)
+                                if currentTermOnly {
+                                    let currentTerm = Course.currentTerm
+                                    if selectedTerm == currentTerm {
+                                        // If first term in list is the current term, return those courses
                                         callback(courses)
+                                    } else {
+                                        // Otherwise, we need to do another request but for just the current term
+                                        let remainingTerms = [currentTerm]
+                                        self.getCoursesHelper(terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
+                                            callback(courses)
+                                        })
+                                    }
+                                } else {
+                                    let remainingTerms = terms.filter { $0 != selectedTerm }
+                                    self.getCoursesHelper(terms: remainingTerms, courses: courses, callback: { (allCourses) in
+                                        callback(allCourses)
                                     })
                                 }
-                            } else {
-                                let remainingTerms = terms.filter { $0 != selectedTerm }
-                                self.getCoursesHelper(terms: remainingTerms, courses: courses, callback: { (allCourses) in
-                                    callback(allCourses)
-                                })
+                                return
+                            } catch {
                             }
-                            return
-                        } catch {
                         }
                     }
                 }
+                callback(nil)
             }
-            callback(nil)
         }
-        task.resume()
     }
     
     // Returns a set of courses for the provided terms unioned with the courses initially provided
@@ -153,24 +120,6 @@ extension PennInTouchNetworkManager {
             callback(courses)
         }
         task.resume()
-    }
-    
-    private func currentTerm() -> String {
-        let now = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy"
-        let year = formatter.string(from: now)
-        formatter.dateFormat = "M"
-        let month = Int(formatter.string(from: now))!
-        let code: String
-        if month <= 5 {
-            code = "A"
-        } else if month >= 8 {
-            code = "C"
-        } else {
-            code = "B"
-        }
-        return "\(year)\(code)"
     }
 }
 
@@ -342,32 +291,32 @@ extension PennInTouchNetworkManager {
 
 // MARK: - Basic Student Profile Parsing
 extension PennInTouchNetworkManager {
-    fileprivate func parseStudent(from html: String) throws -> Student {
-        let namePattern = "white-space:nowrap; overflow:hidden; width: .*>\\s*(.*?)\\s*<\\/div>"
-        let fullName: String! = html.getMatches(for: namePattern).first
-        
-        let photoPattern = "alt=\"User photo\" src=\"(.*?)\""
-        let encodedPhotoUrl = html.getMatches(for: photoPattern).first
-        let photoUrl: String! = encodedPhotoUrl?.replacingOccurrences(of: "&amp;", with: "&")
-        
-        guard fullName != nil else {
-            throw NetworkingError.parsingError
-        }
-        
-        let substrings = fullName.split(separator: ",")
-        var firstName: String
-        let lastName: String
-        if substrings.count < 2 {
-            firstName = fullName
-            lastName = fullName
-        } else {
-            firstName = String(substrings[1])
-            lastName = String(substrings[0])
-            firstName.removeFirst()
-        }
-        
-        firstName = firstName.removingRegexMatches(pattern: " .$", replaceWith: "")
-        
-        return Student(first: firstName, last: lastName, imageUrl: photoUrl)
-    }
+//    fileprivate func parseStudent(from html: String) throws -> Account {
+//        let namePattern = "white-space:nowrap; overflow:hidden; width: .*>\\s*(.*?)\\s*<\\/div>"
+//        let fullName: String! = html.getMatches(for: namePattern).first
+//
+//        let photoPattern = "alt=\"User photo\" src=\"(.*?)\""
+//        let encodedPhotoUrl = html.getMatches(for: photoPattern).first
+//        let photoUrl: String! = encodedPhotoUrl?.replacingOccurrences(of: "&amp;", with: "&")
+//
+//        guard fullName != nil else {
+//            throw NetworkingError.parsingError
+//        }
+//
+//        let substrings = fullName.split(separator: ",")
+//        var firstName: String
+//        let lastName: String
+//        if substrings.count < 2 {
+//            firstName = fullName
+//            lastName = fullName
+//        } else {
+//            firstName = String(substrings[1])
+//            lastName = String(substrings[0])
+//            firstName.removeFirst()
+//        }
+//
+//        firstName = firstName.removingRegexMatches(pattern: " .$", replaceWith: "")
+//
+//        return Account(first: firstName, last: lastName, imageUrl: photoUrl)
+//    }
 }

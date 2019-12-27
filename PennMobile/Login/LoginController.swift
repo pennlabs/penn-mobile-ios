@@ -61,7 +61,7 @@ extension LoginController: NotificationRequestable {
             }
             #endif
         } else {
-            // Failed to retrieve Student profile from PennInTouch (possibly down)
+            // Failed to retrieve Account from Platform (possibly down)
             if !self.isFirstAttempt {
                 AppDelegate.shared.rootViewController.switchToMainScreen()
             } else {
