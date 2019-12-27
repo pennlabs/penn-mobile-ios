@@ -16,7 +16,7 @@ struct NotificationPreference: Codable, Hashable {
 
 enum NotificationOption: String, Codable, CaseIterable {
     case pennMobileUpdateAnnouncement
-    case upcomingStudyRoomBooking
+    case upcomingStudyRoomReminder
     case laundryMachineCycleComplete
     case collegeHouseAnnouncement
     case universityEventAnnouncement
@@ -24,4 +24,8 @@ enum NotificationOption: String, Codable, CaseIterable {
     case dailyMenuNotificationBreakfast
     case dailyMenuNotificationLunch
     case dailyMenuNotificationDinner
+    
+    static let enabledOptions: [NotificationOption] = [
+        .upcomingStudyRoomReminder, .laundryMachineCycleComplete, .universityEventAnnouncement
+    ]
 }
