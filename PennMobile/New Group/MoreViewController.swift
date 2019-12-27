@@ -69,6 +69,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         tableView.separatorStyle = .singleLine
         tableView.register(AccountCell.self, forCellReuseIdentifier: "account")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
+        tableView.tableFooterView = UIView()
     }
     
     fileprivate struct PennLink {
