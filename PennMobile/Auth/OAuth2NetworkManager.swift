@@ -235,6 +235,9 @@ extension String {
             if let strValue = value as? String {
                 let escapedValue = strValue.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
                 return "\(escapedKey)=\(escapedValue)"
+            } else if let arr = value as? Array<Any> {
+                let str = arr.map { String(describing: $0).addingPercentEncoding(withAllowedCharacters: characterSet) ?? "" }.joined(separator: ",")
+                return "\(escapedKey)=\(str)"
             } else {
                 return "\(escapedKey)=\(value)"
             }

@@ -22,16 +22,6 @@ class UserDBManager: NSObject, Requestable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
-    fileprivate func sendRequest(_ request: NSMutableURLRequest) {
-        let task = URLSession.shared.dataTask(with: request as URLRequest)
-        task.resume()
-    }
-    
-    fileprivate func sendRequest(_ request: NSMutableURLRequest, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: callback)
-        task.resume()
-    }
-    
     /**
       Retrieves an access token and makes an authenticated POST request by adding it as a header to the request.
       Note: Do NOT use this to make POST requests to non-Labs services. Doing so will compromise the user's access token.
@@ -61,10 +51,21 @@ class UserDBManager: NSObject, Requestable {
 // MARK: - Dining
 extension UserDBManager {
     func saveDiningPreference(for venueIds: [Int]) {
-        let urlString = "\(baseUrl)/dining/preferences"
+        let url = "\(baseUrl)/dining/preferences"
         let params = ["venues": venueIds]
-        let request = getAnalyticsPostRequest(url: urlString, params: params)
-        sendRequest(request)
+
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            let url = URL(string: url)!
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.httpBody = String.getPostString(params: params).data(using: .utf8)
+            
+            let deviceID = getDeviceID()
+            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+
+            let task = URLSession.shared.dataTask(with: request)
+            task.resume()
+        }
     }
 }
 
@@ -76,10 +77,21 @@ extension UserDBManager {
     }
     
     func saveLaundryPreferences(for ids: [Int]) {
-        let urlString = "\(baseUrl)/laundry/preferences"
+        let url = "\(baseUrl)/laundry/preferences"
         let params = ["rooms": ids]
-        let request = getAnalyticsPostRequest(url: urlString, params: params)
-        sendRequest(request)
+
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            let url = URL(string: url)!
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.httpBody = String.getPostString(params: params).data(using: .utf8)
+            
+            let deviceID = getDeviceID()
+            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+
+            let task = URLSession.shared.dataTask(with: request)
+            task.resume()
+        }
     }
 }
 
