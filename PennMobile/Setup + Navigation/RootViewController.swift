@@ -29,7 +29,10 @@ class RootViewController: UIViewController, NotificationRequestable {
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
-            
+            // Save laundry rooms with account ID (available starting in 6.1)
+            if let rooms = UserDefaults.standard.getLaundryPreferences() {
+                UserDBManager.shared.saveLaundryPreferences(for: rooms)
+            }
         }
                 
         if shouldRequireLogin() {
