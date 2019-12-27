@@ -11,7 +11,7 @@ import WebKit
 
 //Mark: UserDefaultsKeys
 extension UserDefaults {
-    enum UserDefaultsKeys: String {
+    enum UserDefaultsKeys: String, CaseIterable {
         case account
         case accountID
         case deviceUUID
@@ -30,6 +30,13 @@ extension UserDefaults {
         case lastTransactionRequest
         case authedIntoShibboleth
         case courses
+        case housing
+    }
+    
+    func clearAll() {
+        for key in UserDefaultsKeys.allCases {
+            removeObject(forKey: key.rawValue)
+        }
     }
 }
 
@@ -343,5 +350,42 @@ extension UserDefaults {
     
     func isAuthedIn() -> Bool {
         return bool(forKey: UserDefaultsKeys.authedIntoShibboleth.rawValue)
+    }
+}
+
+// MARK: - Housing
+extension UserDefaults {
+    func saveHousingResult(_ result: HousingResult) {
+        let currentResults = getHousingResults() ?? Array<HousingResult>()
+        var newResults = currentResults.filter { $0.start != result.start }
+        newResults.append(result)
+        
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(newResults) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.housing.rawValue)
+        }
+        synchronize()
+    }
+    
+    func getHousingResults() -> Array<HousingResult>? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.housing.rawValue) {
+            return try? decoder.decode(Array<HousingResult>.self, from: decodedData)
+        }
+        return nil
+    }
+    
+    func isOnCampus() -> Bool? {
+        guard let results = getHousingResults() else {
+            return nil
+        }
+        let now = Date()
+        let start = now.month <= 5 ? now.year - 1 : now.year
+        let filteredResults = results.filter { $0.start == start }
+        if filteredResults.isEmpty {
+            return nil
+        } else {
+            return filteredResults.contains { !$0.offCampus }
+        }
     }
 }

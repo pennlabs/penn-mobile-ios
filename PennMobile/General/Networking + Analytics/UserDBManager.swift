@@ -205,11 +205,20 @@ extension UserDBManager {
 
 // MARK: - Housing Data
 extension UserDBManager {
-    func saveHousingData(html: String, _ completion: (() -> Void)? = nil) {
+    func saveHousingData(html: String, _ completion: (( _ result: HousingResult?) -> Void)? = nil) {
         let url = "\(baseUrl)/housing"
         let params = ["html": html]
-        makePostRequestWithAccessToken(url: url, params: params) { (_, _, _) in
-            completion?()
+        makePostRequestWithAccessToken(url: url, params: params) { (data, response, _) in
+            if let data = data, let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                if let result = try? decoder.decode(HousingResult.self, from: data) {
+                    UserDefaults.standard.saveHousingResult(result)
+                    completion?(result)
+                    return
+                }
+            }
+            completion?(nil)
         }
     }
 }

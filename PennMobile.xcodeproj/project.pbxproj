@@ -133,6 +133,7 @@
 		21B8BBB622231F9F00EBC1D0 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB522231F9F00EBC1D0 /* Account.swift */; };
 		21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB72223963C00EBC1D0 /* Degree.swift */; };
 		21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */; };
+		21D5E06723B68F3100B331CC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E06623B68F3100B331CC /* Model.swift */; };
 		21E6A109224BDFEB00DC457A /* HomeViewController + Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */; };
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
@@ -374,6 +375,7 @@
 		21B8BBB522231F9F00EBC1D0 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		21B8BBB72223963C00EBC1D0 /* Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Degree.swift; sourceTree = "<group>"; };
 		21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		21D5E06623B68F3100B331CC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + Delegates.swift"; sourceTree = "<group>"; };
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
@@ -631,7 +633,6 @@
 			isa = PBXGroup;
 			children = (
 				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
-				216640F91EBB898700746B8E /* About */,
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
 				21ECADA21F30146B00569883 /* Networking + Analytics */,
 				216640C71EBADC9D00746B8E /* General */,
@@ -646,10 +647,12 @@
 				2166408B1EBADBF800746B8E /* Dining */,
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
+				21D5E06523B68F0E00B331CC /* Housing */,
 				212304C52054ED9900958CE0 /* Spring Fling */,
 				216640EE1EBB867600746B8E /* Contacts */,
 				216640D31EBB80FD00746B8E /* News */,
 				CF1CE9B8205D5BF100C51F46 /* More Tab */,
+				216640F91EBB898700746B8E /* About */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
 			);
 			path = PennMobile;
@@ -984,6 +987,14 @@
 				21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		21D5E06523B68F0E00B331CC /* Housing */ = {
+			isa = PBXGroup;
+			children = (
+				21D5E06623B68F3100B331CC /* Model.swift */,
+			);
+			path = Housing;
 			sourceTree = "<group>";
 		};
 		21ECADA21F30146B00569883 /* Networking + Analytics */ = {
@@ -1644,6 +1655,7 @@
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
 				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
+				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
 				CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */,

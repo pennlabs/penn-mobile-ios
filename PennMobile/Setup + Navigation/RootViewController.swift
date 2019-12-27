@@ -156,12 +156,7 @@ class RootViewController: UIViewController, NotificationRequestable {
     
     fileprivate func clearAccountData() {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
-        UserDefaults.standard.clearAccountID()
-        UserDefaults.standard.clearCookies()
-        UserDefaults.standard.clearWhartonFlag()
-        UserDefaults.standard.clearHasDiningPlan()
-        UserDefaults.standard.clearLastTransactionRequest()
-        UserDefaults.standard.clearCourses()
+        UserDefaults.standard.clearAll()
         OAuth2NetworkManager.instance.clearRefreshToken()
         Account.clear()
         GSRUser.clear()
