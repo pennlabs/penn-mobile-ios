@@ -25,27 +25,13 @@ enum Feature: String {
     case about = "About"
     case fling = "Spring Fling"
     case event = "Event"
+    case privacy = "Privacy"
+    case notifications = "Notifications"
 }
 
 class ControllerModel: NSObject {
 
     static var shared = ControllerModel()
-
-//    let vcDictionary: [Feature: UIViewController] = {
-//        var dict = [Feature: UIViewController]()
-//        dict[.home] = HomeViewController()
-//        dict[.dining] = DiningViewController()
-//        dict[.studyRoomBooking] = GSRController()
-//        dict[.laundry] = LaundryTableViewController()
-//        dict[.fitness] = FitnessViewController()
-//        dict[.more] = MoreViewController()
-//        dict[.map] = MapViewController()
-//        dict[.news] = NewsViewController()
-//        dict[.contacts] = ContactsTableViewController()
-//        dict[.about] = AboutViewController()
-//        dict[.fling] = FlingViewController()
-//        return dict
-//    }()
 
     var vcDictionary: [Feature: UIViewController]!
 
@@ -61,6 +47,9 @@ class ControllerModel: NSObject {
         vcDictionary[.news] = NewsViewController()
         vcDictionary[.contacts] = ContactsTableViewController()
         vcDictionary[.about] = AboutViewController()
+        vcDictionary[.notifications] = AboutViewController()
+        vcDictionary[.privacy] = AboutViewController()
+        
 //        vcDictionary[.fling] = FlingViewController()
     }
 
