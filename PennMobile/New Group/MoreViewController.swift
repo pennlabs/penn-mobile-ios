@@ -67,7 +67,6 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         tableView.dataSource = self
         tableView.backgroundColor = UIColor.uiGroupedBackground
         tableView.separatorStyle = .singleLine
-        tableView.register(AccountCell.self, forCellReuseIdentifier: "account")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
         tableView.tableFooterView = UIView()
     }
@@ -89,20 +88,17 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
 
 extension MoreViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3//student == nil ? 2 : 3
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rows = [3, ControllerModel.shared.moreOrder.count, pennLinks.count]
-//        let index = student == nil ? section + 1 : section
-//        return rows[index]
         return rows[section]
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = HeaderViewCell()
         let titles = ["ACCOUNT", "FEATURES", "LINKS"]
-//        let index = student == nil ? section + 1 : section
         headerView.setUpView(title: titles[section])
         return headerView
     }
@@ -110,19 +106,11 @@ extension MoreViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                if let student = account {
-                    if let cell = tableView.dequeueReusableCell(withIdentifier: "account") as? AccountCell {
-                        cell.backgroundColor = .uiGroupedBackgroundSecondary
-                        cell.account = student
-                        return cell
-                    }
-                } else {
-                    if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
-                        cell.setUpView(with: "Edit your profile")
-                        cell.backgroundColor = .uiGroupedBackgroundSecondary
-                        cell.accessoryType = .disclosureIndicator
-                        return cell
-                    }
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
+                    cell.setUpView(with: "Edit your profile")
+                    cell.backgroundColor = .uiGroupedBackgroundSecondary
+                    cell.accessoryType = .disclosureIndicator
+                    return cell
                 }
             } else {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
