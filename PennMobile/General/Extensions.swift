@@ -229,6 +229,11 @@ extension Date {
         let values = Calendar.current.dateComponents([Calendar.Component.month], from: self)
         return values.month!
     }
+    
+    var year: Int {
+        let values = Calendar.current.dateComponents([Calendar.Component.year], from: self)
+        return values.year!
+    }
         
     var roundedDownToHalfHour: Date {
         let roundedDownToHour = self.roundedDownToHour
