@@ -48,7 +48,7 @@ class ControllerModel: NSObject {
         vcDictionary[.contacts] = ContactsTableViewController()
         vcDictionary[.about] = AboutViewController()
         vcDictionary[.notifications] = AboutViewController()
-        vcDictionary[.privacy] = AboutViewController()
+        vcDictionary[.privacy] = PrivacyViewController()
         
 //        vcDictionary[.fling] = FlingViewController()
     }
