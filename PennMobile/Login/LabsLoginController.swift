@@ -157,6 +157,7 @@ extension LabsLoginController {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                         self.getDiningBalance()
                         self.getDiningTransactions()
+                        self.getAndSaveLaundryPreferences()
                         CampusExpressNetworkManager.instance.updateHousingData()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             self.getCourses()
@@ -201,6 +202,14 @@ extension LabsLoginController {
             if let data = data, let str = String(bytes: data, encoding: .utf8) {
                 UserDBManager.shared.saveTransactionData(csvStr: str)
                 UserDefaults.standard.setLastTransactionRequest()
+            }
+        }
+    }
+    
+    fileprivate func getAndSaveLaundryPreferences() {
+        UserDBManager.shared.getLaundryPreferences { rooms in
+            if let rooms = rooms {
+                UserDefaults.standard.set(preferences: rooms)
             }
         }
     }

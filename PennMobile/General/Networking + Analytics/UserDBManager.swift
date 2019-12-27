@@ -93,6 +93,26 @@ extension UserDBManager {
             task.resume()
         }
     }
+    
+    func getLaundryPreferences(_ callback: @escaping (_ rooms: [Int]?) -> Void) {
+        let url = "\(baseUrl)/laundry/preferences"
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            let url = URL(string: url)!
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            
+            let deviceID = getDeviceID()
+            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
+                    callback(rooms.compactMap { $0 as? Int })
+                    return
+                }
+                callback(nil)
+            }
+            task.resume()
+        }
+    }
 }
 
 // MARK: - Dining Balance
