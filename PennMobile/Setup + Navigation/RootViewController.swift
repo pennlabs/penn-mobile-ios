@@ -34,7 +34,7 @@ class RootViewController: UIViewController, NotificationRequestable {
                 UserDBManager.shared.saveLaundryPreferences(for: rooms)
             }
         }
-                
+                        
         if shouldRequireLogin() {
             // Logged in and should require login
             clearAccountData()
