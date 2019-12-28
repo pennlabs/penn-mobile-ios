@@ -203,9 +203,10 @@
 		EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC321860B7000E29C6A /* StatusBar.swift */; };
 		EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC521861B8500E29C6A /* HomeNavigationController.swift */; };
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
-		F212BE7F23B6ACF100ED46A1 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE7E23B6ACF100ED46A1 /* PrivacyViewController.swift */; };
+		F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */; };
 		F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */; };
 		F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */; };
+		F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */; };
 		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
 		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
 		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
@@ -453,9 +454,10 @@
 		EF389EC321860B7000E29C6A /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		EF389EC521861B8500E29C6A /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
 		EFD6F358220E334100382783 /* DiningCellSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCellSettingsController.swift; sourceTree = "<group>"; };
-		F212BE7E23B6ACF100ED46A1 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
+		F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPreference.swift; sourceTree = "<group>"; };
 		F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreference.swift; sourceTree = "<group>"; };
+		F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewCell.swift; sourceTree = "<group>"; };
 		F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutomatedScreenshotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedScreenshotUITests.swift; sourceTree = "<group>"; };
 		F230FB12225809E900760499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1268,7 +1270,8 @@
 		F212BE7D23B6ACC800ED46A1 /* Privacy */ = {
 			isa = PBXGroup;
 			children = (
-				F212BE7E23B6ACF100ED46A1 /* PrivacyViewController.swift */,
+				F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */,
+				F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */,
 				F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */,
 			);
 			name = Privacy;
@@ -1708,7 +1711,7 @@
 				21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */,
 				2138D55D22599D0F00D67CA2 /* GroupCell.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
-				F212BE7F23B6ACF100ED46A1 /* PrivacyViewController.swift in Sources */,
+				F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
@@ -1805,6 +1808,7 @@
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
 				C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */,
 				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,
+				F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */,
 				66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */,
 				F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,

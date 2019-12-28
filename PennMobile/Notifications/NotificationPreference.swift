@@ -12,6 +12,11 @@ struct NotificationPreference: Codable, Hashable {
     // Default to permission not being given
     var decision: Bool = false
     let option: NotificationOption
+    
+    // Options to be actually shown to the user
+    static let visibleOptions: [NotificationOption] = [
+        .upcomingStudyRoomReminder, .laundryMachineCycleComplete, .universityEventAnnouncement
+    ]
 }
 
 enum NotificationOption: String, Codable, CaseIterable {
@@ -24,8 +29,4 @@ enum NotificationOption: String, Codable, CaseIterable {
     case dailyMenuNotificationBreakfast
     case dailyMenuNotificationLunch
     case dailyMenuNotificationDinner
-    
-    static let enabledOptions: [NotificationOption] = [
-        .upcomingStudyRoomReminder, .laundryMachineCycleComplete, .universityEventAnnouncement
-    ]
 }

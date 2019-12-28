@@ -394,17 +394,17 @@ extension UserDefaults {
 
 // MARK: - Privacy Settings
 extension UserDefaults {
-    func savePrivacyPreferences(to preferences: Set<PrivacyPreference>) {
+    func save(_ preferences: PrivacyPreferences) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(preferences) {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.privacyPreferences.rawValue)
         }
     }
 
-    func getPrivacyPreferences() -> Set<PrivacyPreference>? {
+    func getPrivacyPreferences() -> PrivacyPreferences? {
         let decoder = JSONDecoder()
         if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.privacyPreferences.rawValue) {
-            return try? decoder.decode(Set<PrivacyPreference>.self, from: decodedData)
+            return try? decoder.decode(PrivacyPreferences.self, from: decodedData)
         }
         return nil
     }
