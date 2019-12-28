@@ -416,22 +416,22 @@ extension UserDefaults {
 
 // MARK: - Notification Settings
 extension UserDefaults {
-    func saveNotificationPreferences(to preferences: Set<NotificationPreference>) {
+    func save(_ preferences: NotificationPreferences) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(preferences) {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.notificationPreferences.rawValue)
         }
     }
 
-    func getNotificationPreferences() -> Set<NotificationPreference>? {
+    func getNotificationPreferences() -> NotificationPreferences? {
         let decoder = JSONDecoder()
         if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.notificationPreferences.rawValue) {
-            return try? decoder.decode(Set<NotificationPreference>.self, from: decodedData)
+            return try? decoder.decode(NotificationPreferences.self, from: decodedData)
         }
         return nil
     }
 
     func clearNotificationPreferences() {
-        removeObject(forKey: UserDefaultsKeys.notificationPreferences.rawValue)
+        removeObject(forKey: UserDefaultsKeys.privacyPreferences.rawValue)
     }
 }

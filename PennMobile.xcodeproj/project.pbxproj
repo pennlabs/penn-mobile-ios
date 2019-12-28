@@ -207,6 +207,8 @@
 		F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */; };
 		F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */; };
 		F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */; };
+		F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */; };
+		F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */; };
 		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
 		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
 		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
@@ -458,6 +460,8 @@
 		F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPreference.swift; sourceTree = "<group>"; };
 		F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreference.swift; sourceTree = "<group>"; };
 		F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewCell.swift; sourceTree = "<group>"; };
+		F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
+		F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewCell.swift; sourceTree = "<group>"; };
 		F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutomatedScreenshotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedScreenshotUITests.swift; sourceTree = "<group>"; };
 		F230FB12225809E900760499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1282,6 +1286,8 @@
 			isa = PBXGroup;
 			children = (
 				F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */,
+				F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */,
+				F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1722,6 +1728,7 @@
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
+				F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
 				139139792388929700C6C298 /* TransactionTableViewCell.swift in Sources */,
 				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
@@ -1803,6 +1810,7 @@
 				2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
+				F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */,
 				2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */,
 				21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
