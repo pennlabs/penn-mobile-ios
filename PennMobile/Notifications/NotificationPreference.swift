@@ -10,7 +10,7 @@ import Foundation
 
 typealias NotificationPreferences = Dictionary<NotificationOption, Bool>
 
-enum NotificationOption: String, Codable, CaseIterable {
+enum NotificationOption: String, Codable {
     case pennMobileUpdateAnnouncement
     case upcomingStudyRoomReminder
     case laundryMachineCycleComplete

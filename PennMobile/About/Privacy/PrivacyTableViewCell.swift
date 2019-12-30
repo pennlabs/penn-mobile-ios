@@ -75,7 +75,5 @@ extension PrivacyTableViewCell {
         label.numberOfLines = 0
         label.minimumScaleFactor = 0.7
         label.adjustsFontSizeToFitWidth = true
-        
-        label.text = " "
     }
 }

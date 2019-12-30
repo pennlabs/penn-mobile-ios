@@ -10,7 +10,7 @@ import Foundation
 
 typealias PrivacyPreferences = Dictionary<PrivacyOption, Bool>
 
-enum PrivacyOption: String, Codable, CaseIterable {
+enum PrivacyOption: String, Codable {
     case anonymizedCourseEnrollment
     case anonymizedDiningTransactions
     case collegeHouse
