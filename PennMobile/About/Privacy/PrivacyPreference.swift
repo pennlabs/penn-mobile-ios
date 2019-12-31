@@ -63,4 +63,14 @@ enum PrivacyOption: String {
         case .academicIdentity: return true
         }
     }
+    
+    // A key used by UserDefaults to tell if we've asked for this before
+    var didRequestKey: String {
+        return "didRequest-" + self.rawValue
+    }
+    
+    // A key used by UserDefaults to tell if we've shared data for this option before
+    var didShareKey: String {
+        return "didShare-" + self.rawValue
+    }
 }

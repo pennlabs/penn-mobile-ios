@@ -102,6 +102,13 @@ class RootViewController: UIViewController, NotificationRequestable {
             }
         }
         
+        // Request access to a user's anonymized course data, if they haven't provided it or declined
+        
+        
+        if UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) {
+            
+        }
+        
         // Send saved unsent events
         FeedAnalyticsManager.shared.sendSavedEvents()
         
@@ -257,5 +264,53 @@ extension RootViewController {
             // Return true if today is Sunday and transactions have not yet been fetched today
             return now.integerDayOfWeek == 0 && !lastTransactionRequest.isToday
         }
+    }
+}
+
+// MARK: - Anon. Course Data
+extension RootViewController {
+    func shouldRequestCoursePermission() -> Bool {
+        guard !UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) else {
+            // We already have permission, no need to ask.
+            return false
+        }
+        
+        guard OAuth2NetworkManager.instance.hasRefreshToken() && UserDefaults.standard.coursePermissionGranted() else {
+            // User is not logged in or does not have courses on-device. Do not request.
+            return false
+        }
+        
+        if let lastRequest = UserDefaults.standard.getDidAskFor(.anonymizedCourseSchedule) {
+            let now = Date()
+            let diffInDays = Calendar.current.dateComponents([.day], from: lastRequest, to: now).day
+            if let diff = diffInDays, diff >= 364 {
+                // More than a year since last request. Time to ask again.
+                return true
+            } else {
+                // Less than a year since last request
+                return false
+            }
+        } else {
+            // Have not yet asked. Request away!
+            return true
+        }
+    }
+    
+    func shouldShareCourses() -> Bool {
+        guard UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) && OAuth2NetworkManager.instance.hasRefreshToken() && UserDefaults.standard.coursePermissionGranted() else {
+            // We don't have permission, or the user is not logged in, or the user has no courses
+            return false
+        }
+        
+        // We should collect data, but make sure we haven't in the last week
+        if let lastShareDate = UserDefaults.standard.getDidShareDataFor(.anonymizedCourseSchedule) {
+            let now = Date()
+            if let diffInDays = Calendar.current.dateComponents([.day], from: lastShareDate, to: now).day {
+                return diffInDays >= 7
+            }
+        }
+        
+        // We may have never uploaded courses. Do so now.
+        return true
     }
 }

@@ -395,6 +395,7 @@ extension UserDefaults {
 // MARK: - Privacy Settings
 extension UserDefaults {
     
+    // MARK: Get and Save Preferences
     // Set values for each privacy option
     func set(_ privacyOption: PrivacyOption, to newValue: Bool) {
         var prefs = getAllPrivacyPreferences()
@@ -427,6 +428,28 @@ extension UserDefaults {
 
     private func clearPrivacyPreferences() {
         removeObject(forKey: UserDefaultsKeys.privacyPreferences.rawValue)
+    }
+    
+    // MARK: Last Permission Request Date
+    // Set values representing whether or not permission was requested for a given privacy option
+    // This is not synced to the server, so we ask a user again if they ever delete the app or get a new phone
+    func setDidAskFor(_ privacyOption: PrivacyOption) {
+        UserDefaults.standard.set(Date(), forKey: privacyOption.didRequestKey)
+    }
+    
+    // Get the last date we asked for this option, or nil if we've never asked (on this installation)
+    func getDidAskFor(_ privacyOption: PrivacyOption) -> Date? {
+        UserDefaults.standard.value(forKey: privacyOption.didRequestKey) as? Date
+    }
+    
+    // MARK: Last Data Sharing Date
+    // Set the last date we shared data corresponding to this option (ex: when did we last upload courses)
+    func setDidShareDataFor(_ privacyOption: PrivacyOption) {
+        UserDefaults.standard.set(Date(), forKey: privacyOption.didShareKey)
+    }
+    // Get the last date we shared data for this option
+    func getDidShareDataFor(_ privacyOption: PrivacyOption) -> Date? {
+        UserDefaults.standard.value(forKey: privacyOption.didShareKey) as? Date
     }
 }
 
