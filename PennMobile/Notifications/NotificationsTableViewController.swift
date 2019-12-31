@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol NotificationViewControllerChangedPreference: class {
     func allowChange() -> Bool
