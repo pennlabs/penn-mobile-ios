@@ -10,6 +10,23 @@ import Foundation
 
 typealias NotificationPreferences = Dictionary<String, Bool>
 
+/*
+ Notification preferences are stored in UserDefaults as a String:Bool mapping, where
+ String is the unique key of the notification option (NotificationOption.rawValue) and
+ Bool is whether or not the option is enabled.
+ 
+ TO SET NOTIFICATION PREFS: use the
+ UserDefaults.standard.setNotificationOption() method.
+ 
+ After setting notification options, you should attempt to send the changes to
+ the server. Do this with UserDBManager.shared.saveUserNotificationSettings()
+ 
+ TO FETCH NOTIFICATION OPTIONS: use UserDBManager.shared.syncUserSettings() to pull
+ settings from the database. Then use
+ UserDefaults.standard.getPreference(forOption) to get individual preferences values
+ for each option.
+*/
+
 enum NotificationOption: String, Codable {
     case pennMobileUpdateAnnouncement
     case upcomingStudyRoomReminder
