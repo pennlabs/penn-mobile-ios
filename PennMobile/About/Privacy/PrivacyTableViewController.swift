@@ -28,6 +28,11 @@ class PrivacyViewController: GenericTableViewController, ShowsAlert, IndicatorEn
         
         tableView.allowsSelection = false
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
 }
 
 // MARK: - Did Change Preference
@@ -78,7 +83,7 @@ extension PrivacyViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: PrivacyTableViewCell.identifier) as! PrivacyTableViewCell
         
         let option = displayedPrefs[indexPath.section]
-        let currentValue = UserDefaults.standard.getPreference(for: option)
+        let currentValue = Account.isLoggedIn ? UserDefaults.standard.getPreference(for: option) : false
         
         cell.setup(with: option, isEnabled: currentValue)
         cell.changePreferenceDelegate = self

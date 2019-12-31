@@ -33,6 +33,8 @@ class PrivacyTableViewCell: UITableViewCell {
         self.privacyOption = option
         self.label.text = option.cellTitle
         self.optionSwitch.setOn(isEnabled, animated: false)
+        // Disable option switch if the user is not logged in
+        self.optionSwitch.isEnabled = Account.isLoggedIn
     }
 }
 

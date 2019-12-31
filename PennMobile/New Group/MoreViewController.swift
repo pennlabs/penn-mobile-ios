@@ -35,9 +35,9 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
             let account = Account.getAccount()
             if self.account != account {
                 self.account = account
-                tableView.reloadData()
             }
         }
+        tableView.reloadData()
     }
     
     override func setupNavBar() {
@@ -68,6 +68,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         tableView.backgroundColor = UIColor.uiGroupedBackground
         tableView.separatorStyle = .singleLine
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
+        tableView.register(MoreCell.self, forCellReuseIdentifier: "more-with-icon")
         tableView.tableFooterView = UIView()
     }
     
@@ -92,7 +93,7 @@ extension MoreViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let rows = [(UserDefaults.standard.getAccountID() != nil) ? 3 : 1, ControllerModel.shared.moreOrder.count, pennLinks.count]
+        let rows = [Account.isLoggedIn ? 3 : 1, ControllerModel.shared.moreOrder.count, pennLinks.count]
         return rows[section]
     }
     
@@ -120,14 +121,14 @@ extension MoreViewController {
                     return cell
                 }
             }
-        } else if indexPath.section == 1 {//(student == nil ? 0 : 1) {
+        } else if indexPath.section == 1 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                 cell.setUpView(with: ControllerModel.shared.moreOrder[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
                 cell.backgroundColor = .uiGroupedBackgroundSecondary
                 cell.accessoryType = .disclosureIndicator
                 return cell
             }
-        } else if indexPath.section == 2 {//(student == nil ? 1 : 2) {
+        } else if indexPath.section == 2 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                 cell.backgroundColor = .uiGroupedBackgroundSecondary
                 cell.setUpView(with: pennLinks[indexPath.row].title)
@@ -198,8 +199,9 @@ extension MoreViewController {
         if successful {
             if shouldShowProfile {
                 self.account = Account.getAccount()
-                tableView.reloadData()
             }
+            
+            tableView.reloadData()
             
             // Clear cache so that home title updates with new first name
             guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
