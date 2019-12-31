@@ -110,10 +110,6 @@ class Account: Codable {
         UserDefaults.standard.clearAccount()
         account = nil
     }
-    
-    static var isLoggedIn: Bool {
-        OAuth2NetworkManager.instance.hasRefreshToken()
-    }
 }
 
 extension Account: Equatable {
@@ -149,5 +145,12 @@ extension Account {
             }
         }
         return false
+    }
+}
+
+// MARK: - Logged In
+extension Account {
+    static var isLoggedIn: Bool {
+        OAuth2NetworkManager.instance.hasRefreshToken()
     }
 }
