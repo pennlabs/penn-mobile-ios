@@ -122,7 +122,7 @@ extension MoreViewController {
                 }
             }
         } else if indexPath.section == 1 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "more-with-icon") as? MoreCell {
                 cell.setUpView(with: ControllerModel.shared.moreOrder[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
                 cell.backgroundColor = .uiGroupedBackgroundSecondary
                 cell.accessoryType = .disclosureIndicator
