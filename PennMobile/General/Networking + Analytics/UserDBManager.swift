@@ -260,7 +260,6 @@ extension UserDBManager {
             }
             let url = URL(string: urlRoute)!
             let request = URLRequest(url: url, accessToken: token)
-
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if error == nil, let data = data, let settings = try? JSONDecoder().decode(CodableUserSettings.self, from: data) {
                     callback(settings.privacy_settings, settings.notification_settings)
@@ -268,11 +267,54 @@ extension UserDBManager {
                     callback(nil, nil)
                 }
             }
+            task.resume()
         }
     }
     
-    func saveNotificationPreferences(_ callback: @escaping (_ completed: Bool?) -> Void) {
-        
+    func saveUserNotificationSettings(_ callback: @escaping (_ success: Bool?) -> Void) {
+        let urlRoute = "\(baseUrl)/notifications/settings"
+        let params = UserDefaults.standard.getAllNotificationPreferences()
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                // User has not logged into Platform
+                return
+            }
+            let url = URL(string: urlRoute)!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            request.httpBody = String.getPostString(params: params).data(using: .utf8)
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if error == nil {
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func saveUserPrivacySettings(_ callback: @escaping (_ success: Bool?) -> Void) {
+        let urlRoute = "\(baseUrl)/privacy/settings"
+        let params = UserDefaults.standard.getAllPrivacyPreferences()
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                // User has not logged into Platform
+                return
+            }
+            let url = URL(string: urlRoute)!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            request.httpBody = String.getPostString(params: params).data(using: .utf8)
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if error == nil {
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
+            task.resume()
+        }
     }
 }
 

@@ -12,7 +12,7 @@ protocol NotificationViewControllerChangedPreference: class {
     func changed(option: NotificationOption, toValue: Bool)
 }
 
-class NotificationViewController: GenericTableViewController, ShowsAlert {
+class NotificationViewController: GenericTableViewController, ShowsAlert, IndicatorEnabled {
     
     let displayedPrefs = NotificationOption.visibleOptions
     
@@ -33,8 +33,26 @@ class NotificationViewController: GenericTableViewController, ShowsAlert {
 // MARK: - Did Change Preference
 extension NotificationViewController: NotificationViewControllerChangedPreference {
     func changed(option: NotificationOption, toValue: Bool) {
+        // Save change to local storage (user defaults)
         UserDefaults.standard.set(option, to: toValue)
-        showAlert(withMsg: " ", title: "\(option.cellTitle ?? "") \(toValue ? "enabled" : "disabled")", completion: nil)
+        
+        // Upload change to the Penn Mobile server. If this fails, reverse the change.
+        self.showActivity()
+        UserDBManager.shared.saveUserNotificationSettings { (success) in
+            DispatchQueue.main.async {
+                self.hideActivity()
+                if success ?? false {
+                    self.showAlert(withMsg: "\(option.cellTitle ?? "") \(toValue ? "enabled" : "disabled")", title: "Preference Saved", completion: nil)
+                } else {
+                    // Couldn't save change to the server
+                    self.showAlert(withMsg: "Could not save notification preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
+                        // Reverse the change, if we couldn't connect to the server
+                        UserDefaults.standard.set(option, to: !toValue)
+                        self.tableView.reloadData()
+                    })
+                }
+            }
+        }
     }
 }
 

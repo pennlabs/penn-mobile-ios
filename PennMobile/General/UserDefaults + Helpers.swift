@@ -409,7 +409,7 @@ extension UserDefaults {
     }
     
     // Fetch preferences from disk
-    private func getAllPrivacyPreferences() -> PrivacyPreferences {
+    func getAllPrivacyPreferences() -> PrivacyPreferences {
         let decoder = JSONDecoder()
         if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.privacyPreferences.rawValue) {
             return (try? decoder.decode(PrivacyPreferences.self, from: decodedData)) ?? .init()
@@ -446,7 +446,7 @@ extension UserDefaults {
     }
     
     // Fetch preferences from disk
-    private func getAllNotificationPreferences() -> NotificationPreferences {
+    func getAllNotificationPreferences() -> NotificationPreferences {
         let decoder = JSONDecoder()
         if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.notificationPreferences.rawValue) {
             return (try? decoder.decode(NotificationPreferences.self, from: decodedData)) ?? .init()
