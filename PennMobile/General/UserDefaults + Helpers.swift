@@ -439,10 +439,10 @@ extension UserDefaults {
         saveAll(notificationPreferences: prefs)
     }
     
-    // Get values for each notification option (default to false if no preference exists)
+    // Get values for each notification option (default to true if no preference exists)
     func getPreference(for option: NotificationOption) -> Bool {
         let prefs = getAllNotificationPreferences()
-        return prefs[option.rawValue] ?? false
+        return prefs[option.rawValue] ?? true
     }
     
     // Fetch preferences from disk
