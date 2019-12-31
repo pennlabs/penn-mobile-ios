@@ -151,6 +151,11 @@ class RootViewController: UIViewController, NotificationRequestable {
         homeVC.clearCache()
     }
     
+    func logout() {
+        clearAccountData()
+        switchToLogout()
+    }
+    
     fileprivate func clearAccountData() {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         UserDefaults.standard.clearAll()
