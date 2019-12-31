@@ -119,6 +119,9 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
     
     func dismiss(successful: Bool) {
         DispatchQueue.main.async {
+            if successful {
+                UserDefaults.standard.setLastLogin()
+            }
             UserDefaults.standard.storeCookies()
             self.hideActivity()
             super.dismiss(animated: false, completion: nil)

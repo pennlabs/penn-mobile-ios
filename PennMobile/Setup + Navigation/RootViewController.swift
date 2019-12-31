@@ -52,12 +52,13 @@ class RootViewController: UIViewController, NotificationRequestable {
     
     func applicationWillEnterForeground() {
         if self.current is HomeNavigationController {
-            if UserDefaults.standard.getAccountID() == nil {
-                // Switch to logout screen if user is not logged in, but don't clear data
-                self.switchToLogout(false)
-            } else if shouldRequireLogin() {
-                // Switch to logout screen and clear data
-                self.switchToLogout(true)
+            if Account.isLoggedIn && shouldRequireLogin() {
+                // If user is logged in but login is required, clear user data and switch to logout
+                clearAccountData()
+                self.switchToLogout()
+            } else if !Account.isLoggedIn {
+                // If user is not logged in, switch to logout but don't clear user data
+                self.switchToLogout()
             } else {
                 // Refresh current VC
                 ControllerModel.shared.visibleVC().viewWillAppear(true)
@@ -139,13 +140,9 @@ class RootViewController: UIViewController, NotificationRequestable {
         }
     }
     
-    func switchToLogout(_ shouldClearData: Bool = true) {
+    func switchToLogout() {
         let loginController = LoginController()
         animateDismissTransition(to: loginController)
-        
-        if shouldClearData {
-            clearAccountData()
-        }
         
         // Clear cache so that home title updates with new first name
         guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
