@@ -24,8 +24,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         setUpTableView()
         self.tableView.isHidden = true
         
-        let isLoggedIn = UserDefaults.standard.getAccountID() != nil
-        barButton = UIBarButtonItem(title: isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
+        barButton = UIBarButtonItem(title: Account.isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
         barButton.tintColor = UIColor.navigation
     }
     
@@ -42,8 +41,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     
     override func setupNavBar() {
         self.tabBarController?.title = "More"
-        let isLoggedIn = UserDefaults.standard.getAccountID() != nil
-        barButton = UIBarButtonItem(title: isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
+        barButton = UIBarButtonItem(title: Account.isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
         barButton.tintColor = UIColor.navigation
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = barButton
@@ -174,8 +172,7 @@ extension MoreViewController {
 // MARK: - Login/Logout
 extension MoreViewController {
     @objc fileprivate func handleLoginLogout(_ sender: Any) {
-        let isLoggedIn = UserDefaults.standard.getAccountID() != nil
-        if isLoggedIn {
+        if Account.isLoggedIn {
             let alertController = UIAlertController(title: "Are you sure?", message: "Please confirm that you wish to logout.", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
@@ -202,6 +199,7 @@ extension MoreViewController {
             }
             
             tableView.reloadData()
+            tabBarController?.navigationItem.rightBarButtonItem?.title = "Logout"
             
             // Clear cache so that home title updates with new first name
             guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {

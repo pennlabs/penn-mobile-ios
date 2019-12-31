@@ -52,7 +52,6 @@ extension LoginController: NotificationRequestable {
     func loginCompletion(_ successful: Bool) {
         if successful {
             // Login Successful
-            UserDefaults.standard.setLastLogin()
             AppDelegate.shared.rootViewController.switchToMainScreen()
             
             #if !targetEnvironment(simulator)
