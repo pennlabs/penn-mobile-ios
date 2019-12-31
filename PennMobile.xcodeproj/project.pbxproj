@@ -134,6 +134,8 @@
 		21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB72223963C00EBC1D0 /* Degree.swift */; };
 		21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */; };
 		21D5E06723B68F3100B331CC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E06623B68F3100B331CC /* Model.swift */; };
+		21D5E06A23BB08EB00B331CC /* UpdateVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E06923BB08EB00B331CC /* UpdateVersionCell.swift */; };
+		21D5E06C23BB08F900B331CC /* UpdateVersionCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E06B23BB08F900B331CC /* UpdateVersionCellItem.swift */; };
 		21E6A109224BDFEB00DC457A /* HomeViewController + Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */; };
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
@@ -376,6 +378,8 @@
 		21B8BBB72223963C00EBC1D0 /* Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Degree.swift; sourceTree = "<group>"; };
 		21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		21D5E06623B68F3100B331CC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		21D5E06923BB08EB00B331CC /* UpdateVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateVersionCell.swift; sourceTree = "<group>"; };
+		21D5E06B23BB08F900B331CC /* UpdateVersionCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateVersionCellItem.swift; sourceTree = "<group>"; };
 		21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + Delegates.swift"; sourceTree = "<group>"; };
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
@@ -590,6 +594,7 @@
 				C15C4B4C223EB13700E443FD /* GSR Reservations */,
 				217A784C204DDF19004F1227 /* GSR */,
 				2119D265225299D300693CDB /* GSR Locations */,
+				21D5E06823BB08B700B331CC /* Update Version */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -995,6 +1000,15 @@
 				21D5E06623B68F3100B331CC /* Model.swift */,
 			);
 			path = Housing;
+			sourceTree = "<group>";
+		};
+		21D5E06823BB08B700B331CC /* Update Version */ = {
+			isa = PBXGroup;
+			children = (
+				21D5E06923BB08EB00B331CC /* UpdateVersionCell.swift */,
+				21D5E06B23BB08F900B331CC /* UpdateVersionCellItem.swift */,
+			);
+			path = "Update Version";
 			sourceTree = "<group>";
 		};
 		21ECADA21F30146B00569883 /* Networking + Analytics */ = {
@@ -1636,6 +1650,7 @@
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */,
 				C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */,
+				21D5E06C23BB08F900B331CC /* UpdateVersionCellItem.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
@@ -1747,6 +1762,7 @@
 				212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */,
 				216640941EBADC1700746B8E /* DiningCell.swift in Sources */,
 				2138D55B22599D0000D67CA2 /* CreateGroupCell.swift in Sources */,
+				21D5E06A23BB08EB00B331CC /* UpdateVersionCell.swift in Sources */,
 				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
@@ -2000,7 +2016,7 @@
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2027,7 +2043,7 @@
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
