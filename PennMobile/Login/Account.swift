@@ -147,3 +147,10 @@ extension Account {
         return false
     }
 }
+
+// MARK: - Logged In
+extension Account {
+    static var isLoggedIn: Bool {
+        OAuth2NetworkManager.instance.hasRefreshToken()
+    }
+}
