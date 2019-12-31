@@ -43,11 +43,12 @@ extension PrivacyViewController: PrivacyViewControllerChangedPreference {
         
         // Upload change to the Penn Mobile server. If this fails, reverse the change.
         self.showActivity()
+        let deadline = DispatchTime.now() + 1
         UserDBManager.shared.saveUserPrivacySettings { (success) in
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: deadline) {
                 self.hideActivity()
                 if success {
-                    self.showAlert(withMsg: "\(option.cellTitle) \(toValue ? "enabled" : "disabled")", title: "Preference Saved", completion: nil)
+//                    self.showAlert(withMsg: "\(option.cellTitle) \(toValue ? "enabled" : "disabled")", title: "Preference Saved", completion: nil)
                 } else {
                     // Couldn't save change to the server
                     self.showAlert(withMsg: "Could not save privacy preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
