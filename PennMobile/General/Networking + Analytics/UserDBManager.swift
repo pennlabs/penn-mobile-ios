@@ -246,11 +246,12 @@ extension UserDBManager {
 // MARK: - Privacy and Notification Settings
 extension UserDBManager {
     func fetchUserSettings(_ callback: @escaping (_ privacyPreferences: PrivacyPreferences?, _ notificationPreferences: NotificationPreferences?) -> Void) {
+        
         let urlRoute = "\(baseUrl)/account/settings"
         
         struct CodableUserSettings: Codable {
-            let notification_settings: NotificationPreferences?
-            let privacy_settings: PrivacyPreferences?
+            let notifications: NotificationPreferences
+            let privacy: PrivacyPreferences
         }
         
         OAuth2NetworkManager.instance.getAccessToken { (token) in
@@ -262,7 +263,7 @@ extension UserDBManager {
             let request = URLRequest(url: url, accessToken: token)
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if error == nil, let data = data, let settings = try? JSONDecoder().decode(CodableUserSettings.self, from: data) {
-                    callback(settings.privacy_settings, settings.notification_settings)
+                    callback(settings.privacy, settings.notifications)
                 } else {
                     callback(nil, nil)
                 }
@@ -274,46 +275,35 @@ extension UserDBManager {
     func saveUserNotificationSettings(_ callback: @escaping (_ success: Bool?) -> Void) {
         let urlRoute = "\(baseUrl)/notifications/settings"
         let params = UserDefaults.standard.getAllNotificationPreferences()
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                // User has not logged into Platform
-                return
-            }
-            let url = URL(string: urlRoute)!
-            var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "POST"
-            request.httpBody = String.getPostString(params: params).data(using: .utf8)
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if error == nil {
-                    callback(true)
-                } else {
-                    callback(false)
-                }
-            }
-            task.resume()
-        }
+        saveUserSettingsDictionary(route: urlRoute, params: params, callback)
     }
     
     func saveUserPrivacySettings(_ callback: @escaping (_ success: Bool?) -> Void) {
         let urlRoute = "\(baseUrl)/privacy/settings"
         let params = UserDefaults.standard.getAllPrivacyPreferences()
+        saveUserSettingsDictionary(route: urlRoute, params: params, callback)
+    }
+    
+    private func saveUserSettingsDictionary(route: String, params: Dictionary<String, Bool>, _ callback: @escaping (_ success: Bool?) -> Void) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                // User has not logged into Platform
-                return
-            }
-            let url = URL(string: urlRoute)!
-            var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "POST"
-            request.httpBody = String.getPostString(params: params).data(using: .utf8)
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if error == nil {
-                    callback(true)
-                } else {
-                    callback(false)
+            if let token = token, let payload = try? JSONEncoder().encode(params) {
+                let url = URL(string: route)!
+                var request = URLRequest(url: url, accessToken: token)
+                request.httpMethod = "POST"
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = payload
+                let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    if error == nil {
+                        callback(true)
+                    } else {
+                        callback(false)
+                    }
                 }
+                task.resume()
+            } else {
+                // User not logged into platform, or the payload encoding failed
+                callback(false)
             }
-            task.resume()
         }
     }
 }
