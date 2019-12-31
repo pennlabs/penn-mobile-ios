@@ -217,6 +217,7 @@
 		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
 		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
 		F27AA01423BBE34000276C4F /* PrivacyPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01323BBE34000276C4F /* PrivacyPermissionView.swift */; };
+		F27AA01623BBE8ED00276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01523BBE8ED00276C4F /* PrivacyPermissionDelegate.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
@@ -457,6 +458,7 @@
 		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
 		F27AA01323BBE34000276C4F /* PrivacyPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionView.swift; sourceTree = "<group>"; };
+		F27AA01523BBE8ED00276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F6D0A45AA732F9EE552969B2 /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7818FD062B7FC4D6B1F5997 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1244,6 +1246,7 @@
 				F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */,
 				F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */,
 				F27AA01323BBE34000276C4F /* PrivacyPermissionView.swift */,
+				F27AA01523BBE8ED00276C4F /* PrivacyPermissionDelegate.swift */,
 			);
 			name = Privacy;
 			path = About/Privacy;
@@ -1668,6 +1671,7 @@
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
 				F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */,
+				F27AA01623BBE8ED00276C4F /* PrivacyPermissionDelegate.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				97E79E072100DA1200D3D606 /* BuildingImageCell.swift in Sources */,
