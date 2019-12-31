@@ -23,6 +23,7 @@ class MoreCell: UITableViewCell {
     }()
     
     func setUpView(with title: String) {
+        iconImage.image = nil
         titleLabel.text = title
         self.addSubview(titleLabel)
         _ = titleLabel.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 12, leftConstant: 15, bottomConstant: 12, rightConstant: 0, widthConstant: 0, heightConstant: 0)

@@ -399,7 +399,7 @@ extension UserDefaults {
     func set(_ privacyOption: PrivacyOption, to newValue: Bool) {
         var prefs = getAllPrivacyPreferences()
         prefs[privacyOption.rawValue] = newValue
-        save(privacyPreferences: prefs)
+        saveAll(privacyPreferences: prefs)
     }
     
     // Get values for each privacy option (default to false if no preference exists)
@@ -417,8 +417,8 @@ extension UserDefaults {
         return .init()
     }
     
-    // Save preferences to disk
-    private func save(privacyPreferences: PrivacyPreferences) {
+    // Save all privacy preferences to disk
+    func saveAll(privacyPreferences: PrivacyPreferences) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(privacyPreferences) {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.privacyPreferences.rawValue)
@@ -436,7 +436,7 @@ extension UserDefaults {
     func set(_ notificationOption: NotificationOption, to newValue: Bool) {
         var prefs = getAllNotificationPreferences()
         prefs[notificationOption.rawValue] = newValue
-        save(notificationPreferences: prefs)
+        saveAll(notificationPreferences: prefs)
     }
     
     // Get values for each notification option (default to false if no preference exists)
@@ -454,8 +454,8 @@ extension UserDefaults {
         return .init()
     }
     
-    // Save preferences to disk
-    private func save(notificationPreferences: NotificationPreferences) {
+    // Save all notification preferences to disk
+    func saveAll(notificationPreferences: NotificationPreferences) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(notificationPreferences) {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.notificationPreferences.rawValue)

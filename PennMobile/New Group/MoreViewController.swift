@@ -92,7 +92,7 @@ extension MoreViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let rows = [3, ControllerModel.shared.moreOrder.count, pennLinks.count]
+        let rows = [(UserDefaults.standard.getAccountID() != nil) ? 3 : 1, ControllerModel.shared.moreOrder.count, pennLinks.count]
         return rows[section]
     }
     
