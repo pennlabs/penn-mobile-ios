@@ -91,6 +91,7 @@ extension MoreViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Notification and privacy tabs aren't shown for users that aren't logged in
         let rows = [Account.isLoggedIn ? 3 : 1, ControllerModel.shared.moreOrder.count, pennLinks.count]
         return rows[section]
     }

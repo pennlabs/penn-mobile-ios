@@ -26,32 +26,32 @@ typealias PrivacyPreferences = Dictionary<String, Bool>
 */
 
 enum PrivacyOption: String {
-    case anonymizedCourseEnrollment
-    case anonymizedDiningTransactions
+    case anonymizedCourseSchedule
+    case diningBalanceAndHistory
     case collegeHouse
     case academicIdentity
     
     // Options to be actually shown to the user
     static let visibleOptions: [PrivacyOption] = [
-        .anonymizedCourseEnrollment, .anonymizedDiningTransactions, .collegeHouse, .academicIdentity
+        .anonymizedCourseSchedule, .diningBalanceAndHistory, .collegeHouse, .academicIdentity
     ]
     
     var cellTitle: String {
         switch self {
-        case .anonymizedCourseEnrollment: return "Share anonymized course enrollments"
-        case .anonymizedDiningTransactions: return "Share anonymized dining transactions"
-        case .collegeHouse: return "Share college house"
-        case .academicIdentity: return "Share academic identity"
+        case .anonymizedCourseSchedule: return "Anonymized course schedule"
+        case .diningBalanceAndHistory: return "Dining balance & transaction history"
+        case .collegeHouse: return "College house"
+        case .academicIdentity: return "Academic identity"
         }
     }
     
     var cellFooterDescription: String {
         switch self {
-        case .anonymizedCourseEnrollment: return "Course data is used by other Penn Labs products to provide course recommendations. Your data is anonymized before entering our dataset."
-        case .anonymizedDiningTransactions:
-            return "Dining transaction data is used to provide you with your dining dollars and swipes balances. We also use it to power our prediction algorithms, for example to predict how many days of dining dollars you have remaining. Disabling this setting will disable all dining transaction features."
-        case .collegeHouse: return "College house information is used to recommend laundry rooms and dining halls. College houses may also post announcements or target events through Penn Mobile."
-        case .academicIdentity: return "Your schools, graduation year, majors, and minors are used to present you with more relevant events. For example, the 2022 Class Board may wish to alert only '22 users about an event."
+        case .anonymizedCourseSchedule: return "Other Penn Labs products aggregate past schedules to provide course recommendations to students. Your data is anonymized before entering our dataset."
+        case .diningBalanceAndHistory:
+            return "Dining balance data is used to provide you with your dining dollar and swipe balance. We track changes over time, which we use to provide monthly summaries and to predict how many you swipes you will have left over. Disabling this setting will disable all dining balance features."
+        case .collegeHouse: return "College house information is used to recommend laundry rooms and dining halls. College houses may also post announcements and upcoming events on Penn Mobile."
+        case .academicIdentity: return "Your school and graduation year is used to present you with more relevant events on the homepage. For example, the 2022 Class Board may wish to alert all '22 users about an upcoming giveaway."
         }
     }
 }

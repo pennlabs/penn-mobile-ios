@@ -12,9 +12,9 @@ class NotificationTableViewCell: UITableViewCell {
     
     static let identifier = "notificationCell"
     
-    weak var changePreferenceDelegate: NotificationViewControllerChangedPreference? = nil
+    weak var delegate: NotificationViewControllerChangedPreference!
     
-    fileprivate var notificationOption: NotificationOption?
+    fileprivate var option: NotificationOption!
     fileprivate var label: UILabel!
     fileprivate var optionSwitch: UISwitch!
     
@@ -30,11 +30,9 @@ class NotificationTableViewCell: UITableViewCell {
     }
     
     func setup(with option: NotificationOption, isEnabled: Bool) {
-        self.notificationOption = option
+        self.option = option
         self.label.text = option.cellTitle
         self.optionSwitch.setOn(isEnabled, animated: false)
-        // Disable option switch if the user is not logged in
-        self.optionSwitch.isEnabled = Account.isLoggedIn
     }
 }
 
@@ -42,8 +40,11 @@ class NotificationTableViewCell: UITableViewCell {
 extension NotificationTableViewCell {
     
     @objc func didToggle(_ sender: UISwitch) {
-        guard let option = notificationOption else { return }
-        self.changePreferenceDelegate?.changed(option: option, toValue: sender.isOn)
+        if delegate.allowChange() {
+            delegate.changed(option: option, toValue: sender.isOn)
+        } else {
+            delegate.requestChange(option: option, toValue: sender.isOn)
+        }
     }
     
     fileprivate func prepareUI() {

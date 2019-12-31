@@ -30,6 +30,7 @@ typealias NotificationPreferences = Dictionary<String, Bool>
 enum NotificationOption: String, Codable {
     case pennMobileUpdateAnnouncement
     case upcomingStudyRoomReminder
+    case diningBalanceSummary
     case laundryMachineCycleComplete
     case collegeHouseAnnouncement
     case universityEventAnnouncement
@@ -40,12 +41,13 @@ enum NotificationOption: String, Codable {
     
     // Options to be actually shown to the user
     static let visibleOptions: [NotificationOption] = [
-        .upcomingStudyRoomReminder, .laundryMachineCycleComplete, .universityEventAnnouncement, .pennMobileUpdateAnnouncement
+        .upcomingStudyRoomReminder, .diningBalanceSummary, .universityEventAnnouncement, .pennMobileUpdateAnnouncement
     ]
     
     var cellTitle: String? {
         switch self {
         case .upcomingStudyRoomReminder: return "GSR booking notifications"
+        case .diningBalanceSummary: return "Dining balance notifications"
         case .laundryMachineCycleComplete: return "Laundry notifications"
         case .universityEventAnnouncement: return "University notifications"
         case .pennMobileUpdateAnnouncement: return "App update notifications"
@@ -58,6 +60,8 @@ enum NotificationOption: String, Codable {
         case .upcomingStudyRoomReminder: return "Notifications about your upcoming GSR bookings, sent 10 minutes from the start of booking. Includes the room and duration. Long press the notification to cancel your booking."
         case .laundryMachineCycleComplete:
             return "Notifications about laundry cycles. Tap on a laundry machine with time remaining to set the notification."
+        case .diningBalanceSummary:
+            return "Receive monthly updates containing a summary of the past month's dining dollar and swipe use."
         case .universityEventAnnouncement: return "Notifications about significant university events."
         case .pennMobileUpdateAnnouncement: return "Get notified about major updates to Penn Mobile."
         default: return nil
