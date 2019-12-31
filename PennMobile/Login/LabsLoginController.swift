@@ -158,6 +158,7 @@ extension LabsLoginController {
                 
                 if account.isStudent {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        self.getAndSaveNotificationAndPrivacyPreferences()
                         self.getDiningBalance()
                         self.getDiningTransactions()
                         self.getAndSaveLaundryPreferences()
@@ -212,9 +213,13 @@ extension LabsLoginController {
     fileprivate func getAndSaveLaundryPreferences() {
         UserDBManager.shared.getLaundryPreferences { rooms in
             if let rooms = rooms {
-                UserDefaults.standard.set(preferences: rooms)
+                UserDefaults.standard.setLaundryPreferences(to: rooms)
             }
         }
+    }
+    
+    fileprivate func getAndSaveNotificationAndPrivacyPreferences() {
+        UserDBManager.shared.syncUserSettings { (success) in }
     }
     
     fileprivate func obtainCoursePermission(_ callback: @escaping (_ granted: Bool) -> Void) {

@@ -243,6 +243,83 @@ extension UserDBManager {
     }
 }
 
+// MARK: - Privacy and Notification Settings
+extension UserDBManager {
+    func syncUserSettings(_ callback: @escaping (_ success: Bool) -> Void) {
+        self.fetchUserSettings { (success, privacySettings, notificationSettings) in
+            if success {
+                if let privacySettings = privacySettings {
+                    UserDefaults.standard.saveAll(privacyPreferences: privacySettings)
+                }
+                if let notificationSettings = notificationSettings {
+                    UserDefaults.standard.saveAll(notificationPreferences: notificationSettings)
+                }
+            }
+            callback(success)
+        }
+    }
+    
+    func fetchUserSettings(_ callback: @escaping (_ success: Bool, _ privacyPreferences: PrivacyPreferences?, _ notificationPreferences: NotificationPreferences?) -> Void) {
+        
+        let urlRoute = "\(baseUrl)/account/settings"
+        
+        struct CodableUserSettings: Codable {
+            let notifications: NotificationPreferences
+            let privacy: PrivacyPreferences
+        }
+        
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            if let token = token {
+                let url = URL(string: urlRoute)!
+                let request = URLRequest(url: url, accessToken: token)
+                let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    if error == nil, let data = data, let settings = try? JSONDecoder().decode(CodableUserSettings.self, from: data) {
+                        callback(true, settings.privacy, settings.notifications)
+                    } else {
+                        callback(false, nil, nil)
+                    }
+                }
+                task.resume()
+            } else {
+                callback(false, nil, nil)
+            }
+        }
+    }
+    
+    func saveUserNotificationSettings(_ callback: @escaping (_ success: Bool) -> Void) {
+        let urlRoute = "\(baseUrl)/notifications/settings"
+        let params = UserDefaults.standard.getAllNotificationPreferences()
+        saveUserSettingsDictionary(route: urlRoute, params: params, callback)
+    }
+    
+    func saveUserPrivacySettings(_ callback: @escaping (_ success: Bool) -> Void) {
+        let urlRoute = "\(baseUrl)/privacy/settings"
+        let params = UserDefaults.standard.getAllPrivacyPreferences()
+        saveUserSettingsDictionary(route: urlRoute, params: params, callback)
+    }
+    
+    private func saveUserSettingsDictionary(route: String, params: Dictionary<String, Bool>, _ callback: @escaping (_ success: Bool) -> Void) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token, let payload = try? JSONEncoder().encode(params) else {
+                callback(false)
+                return
+            }
+            
+            let url = URL(string: route)!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = payload
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    callback(httpResponse.statusCode == 200)
+                }
+            }
+            task.resume()
+        }
+    }
+}
+
 // MARK: - Push Notifications
 extension UserDBManager {
     func savePushNotificationDeviceToken(deviceToken: String, _ completion: (() -> Void)? = nil) {

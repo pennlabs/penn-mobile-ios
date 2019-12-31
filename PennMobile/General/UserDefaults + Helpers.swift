@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-//Mark: UserDefaultsKeys
+//MARK: UserDefaultsKeys
 extension UserDefaults {
     enum UserDefaultsKeys: String, CaseIterable {
         case account
@@ -31,6 +31,8 @@ extension UserDefaults {
         case authedIntoShibboleth
         case courses
         case housing
+        case privacyPreferences
+        case notificationPreferences
     }
     
     func clearAll() {
@@ -56,7 +58,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: Permanent DeviceUUID
+// MARK: Permanent DeviceUUID
 extension UserDefaults {
     func set(deviceUUID: String) {
         set(deviceUUID, forKey: UserDefaultsKeys.deviceUUID.rawValue)
@@ -73,7 +75,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: VC Controller Settings (order of VCs)
+// MARK: VC Controller Settings (order of VCs)
 extension UserDefaults {
     func set(vcDisplayNames: [String]) {
         set(vcDisplayNames, forKey: UserDefaultsKeys.controllerSettings.rawValue)
@@ -104,10 +106,10 @@ extension UserDefaults {
     }
 }
 
-// Mark: Laundry Preferences
+// MARK: Laundry Preferences
 extension UserDefaults {
-    func set(preferences: [Int]) {
-        set(preferences, forKey: UserDefaultsKeys.laundryPreferences.rawValue)
+    func setLaundryPreferences(to ids: [Int]) {
+        set(ids, forKey: UserDefaultsKeys.laundryPreferences.rawValue)
         synchronize()
     }
 
@@ -116,7 +118,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: Onboarding Status
+// MARK: Onboarding Status
 extension UserDefaults {
     func setIsOnboarded(value: Bool) {
         set(value, forKey: UserDefaultsKeys.isOnboarded.rawValue)
@@ -128,7 +130,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: - GSR User
+// MARK: GSR User
 extension UserDefaults {
     func setGSRUser(value: GSRUser) {
         let encoder = JSONEncoder()
@@ -151,7 +153,7 @@ extension UserDefaults {
     }
 }
 
-// MARK: - Account
+// MARK: Account
 extension UserDefaults {
     func saveAccount(_ account: Account) {
         let encoder = JSONEncoder()
@@ -387,5 +389,80 @@ extension UserDefaults {
         } else {
             return filteredResults.contains { !$0.offCampus }
         }
+    }
+}
+
+// MARK: - Privacy Settings
+extension UserDefaults {
+    
+    // Set values for each privacy option
+    func set(_ privacyOption: PrivacyOption, to newValue: Bool) {
+        var prefs = getAllPrivacyPreferences()
+        prefs[privacyOption.rawValue] = newValue
+        saveAll(privacyPreferences: prefs)
+    }
+    
+    // Get values for each privacy option (default to false if no preference exists)
+    func getPreference(for option: PrivacyOption) -> Bool {
+        let prefs = getAllPrivacyPreferences()
+        return prefs[option.rawValue] ?? option.defaultValue
+    }
+    
+    // Fetch preferences from disk
+    func getAllPrivacyPreferences() -> PrivacyPreferences {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.privacyPreferences.rawValue) {
+            return (try? decoder.decode(PrivacyPreferences.self, from: decodedData)) ?? .init()
+        }
+        return .init()
+    }
+    
+    // Save all privacy preferences to disk
+    func saveAll(privacyPreferences: PrivacyPreferences) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(privacyPreferences) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.privacyPreferences.rawValue)
+        }
+    }
+
+    private func clearPrivacyPreferences() {
+        removeObject(forKey: UserDefaultsKeys.privacyPreferences.rawValue)
+    }
+}
+
+// MARK: - Notification Settings
+extension UserDefaults {
+    // Set values for each notification option
+    func set(_ notificationOption: NotificationOption, to newValue: Bool) {
+        var prefs = getAllNotificationPreferences()
+        prefs[notificationOption.rawValue] = newValue
+        saveAll(notificationPreferences: prefs)
+    }
+    
+    // Get values for each notification option (default to true if no preference exists)
+    func getPreference(for option: NotificationOption) -> Bool {
+        let prefs = getAllNotificationPreferences()
+        return prefs[option.rawValue] ?? option.defaultValue
+    }
+    
+    // Fetch preferences from disk
+    func getAllNotificationPreferences() -> NotificationPreferences {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.notificationPreferences.rawValue) {
+            return (try? decoder.decode(NotificationPreferences.self, from: decodedData)) ?? .init()
+        }
+        return .init()
+    }
+    
+    // Save all notification preferences to disk
+    func saveAll(notificationPreferences: NotificationPreferences) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(notificationPreferences) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.notificationPreferences.rawValue)
+        }
+    }
+
+    private func clearNotificationPreferences() {
+        removeObject(forKey: UserDefaultsKeys.notificationPreferences.rawValue)
     }
 }
