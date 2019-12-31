@@ -46,7 +46,7 @@ extension PrivacyViewController: PrivacyViewControllerChangedPreference {
         UserDBManager.shared.saveUserPrivacySettings { (success) in
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
                 self.hideActivity()
-                if success ?? false {
+                if success {
                     self.showAlert(withMsg: "\(option.cellTitle) \(toValue ? "enabled" : "disabled")", title: "Preference Saved", completion: nil)
                 } else {
                     // Couldn't save change to the server

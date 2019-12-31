@@ -286,38 +286,36 @@ extension UserDBManager {
         }
     }
     
-    func saveUserNotificationSettings(_ callback: @escaping (_ success: Bool?) -> Void) {
+    func saveUserNotificationSettings(_ callback: @escaping (_ success: Bool) -> Void) {
         let urlRoute = "\(baseUrl)/notifications/settings"
         let params = UserDefaults.standard.getAllNotificationPreferences()
         saveUserSettingsDictionary(route: urlRoute, params: params, callback)
     }
     
-    func saveUserPrivacySettings(_ callback: @escaping (_ success: Bool?) -> Void) {
+    func saveUserPrivacySettings(_ callback: @escaping (_ success: Bool) -> Void) {
         let urlRoute = "\(baseUrl)/privacy/settings"
         let params = UserDefaults.standard.getAllPrivacyPreferences()
         saveUserSettingsDictionary(route: urlRoute, params: params, callback)
     }
     
-    private func saveUserSettingsDictionary(route: String, params: Dictionary<String, Bool>, _ callback: @escaping (_ success: Bool?) -> Void) {
+    private func saveUserSettingsDictionary(route: String, params: Dictionary<String, Bool>, _ callback: @escaping (_ success: Bool) -> Void) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
-            if let token = token, let payload = try? JSONEncoder().encode(params) {
-                let url = URL(string: route)!
-                var request = URLRequest(url: url, accessToken: token)
-                request.httpMethod = "POST"
-                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.httpBody = payload
-                let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    if error == nil {
-                        callback(true)
-                    } else {
-                        callback(false)
-                    }
-                }
-                task.resume()
-            } else {
-                // User not logged into platform, or the payload encoding failed
+            guard let token = token, let payload = try? JSONEncoder().encode(params) else {
                 callback(false)
+                return
             }
+            
+            let url = URL(string: route)!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = payload
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    callback(httpResponse.statusCode == 200)
+                }
+            }
+            task.resume()
         }
     }
 }
