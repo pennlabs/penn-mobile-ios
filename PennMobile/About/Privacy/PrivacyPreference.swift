@@ -54,4 +54,13 @@ enum PrivacyOption: String {
         case .academicIdentity: return "Your school and graduation year is used to present you with more relevant events on the homepage. For example, the 2022 Class Board may wish to alert all '22 users about an upcoming giveaway."
         }
     }
+    
+    var defaultValue: Bool {
+        switch self {
+        case .anonymizedCourseSchedule: return false
+        case .diningBalanceAndHistory: return true
+        case .collegeHouse: return false
+        case .academicIdentity: return true
+        }
+    }
 }

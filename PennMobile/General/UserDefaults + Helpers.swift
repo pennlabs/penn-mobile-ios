@@ -405,7 +405,7 @@ extension UserDefaults {
     // Get values for each privacy option (default to false if no preference exists)
     func getPreference(for option: PrivacyOption) -> Bool {
         let prefs = getAllPrivacyPreferences()
-        return prefs[option.rawValue] ?? false
+        return prefs[option.rawValue] ?? option.defaultValue
     }
     
     // Fetch preferences from disk
