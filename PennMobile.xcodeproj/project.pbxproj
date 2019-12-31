@@ -216,7 +216,7 @@
 		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
 		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
 		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
-		F27AA01423BBE34000276C4F /* PrivacyPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01323BBE34000276C4F /* PrivacyPermissionView.swift */; };
+		F27AA01423BBE34000276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01323BBE34000276C4F /* PermissionView.swift */; };
 		F27AA01623BBE8ED00276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01523BBE8ED00276C4F /* PrivacyPermissionDelegate.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
@@ -457,7 +457,7 @@
 		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
 		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
-		F27AA01323BBE34000276C4F /* PrivacyPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionView.swift; sourceTree = "<group>"; };
+		F27AA01323BBE34000276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01523BBE8ED00276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F6D0A45AA732F9EE552969B2 /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1245,7 +1245,7 @@
 				F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */,
 				F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */,
 				F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */,
-				F27AA01323BBE34000276C4F /* PrivacyPermissionView.swift */,
+				F27AA01323BBE34000276C4F /* PermissionView.swift */,
 				F27AA01523BBE8ED00276C4F /* PrivacyPermissionDelegate.swift */,
 			);
 			name = Privacy;
@@ -1699,7 +1699,7 @@
 				21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
 				C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */,
-				F27AA01423BBE34000276C4F /* PrivacyPermissionView.swift in Sources */,
+				F27AA01423BBE34000276C4F /* PermissionView.swift in Sources */,
 				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,
 				F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */,
 				66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */,

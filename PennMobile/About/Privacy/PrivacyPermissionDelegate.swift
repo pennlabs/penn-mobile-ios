@@ -14,7 +14,7 @@ class PrivacyPermissionDelegate: ObservableObject {
     var objectWillChange = PassthroughSubject<PrivacyPermissionDelegate, Never>()
     var objectDidChange = PassthroughSubject<PrivacyPermissionDelegate, Never>()
     
-    var userDecision: PrivacyPermissionView.Choice? {
+    var userDecision: PermissionView.Choice? {
         willSet {
             objectWillChange.send(self)
         }
