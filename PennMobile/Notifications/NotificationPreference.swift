@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias NotificationPreferences = Dictionary<NotificationOption, Bool>
+typealias NotificationPreferences = Dictionary<String, Bool>
 
 enum NotificationOption: String, Codable {
     case pennMobileUpdateAnnouncement

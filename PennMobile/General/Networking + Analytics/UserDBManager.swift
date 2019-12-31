@@ -243,6 +243,39 @@ extension UserDBManager {
     }
 }
 
+// MARK: - Privacy and Notification Settings
+extension UserDBManager {
+    func fetchUserSettings(_ callback: @escaping (_ privacyPreferences: PrivacyPreferences?, _ notificationPreferences: NotificationPreferences?) -> Void) {
+        let urlRoute = "\(baseUrl)/account/settings"
+        
+        struct CodableUserSettings: Codable {
+            let notification_settings: NotificationPreferences?
+            let privacy_settings: PrivacyPreferences?
+        }
+        
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                // User has not logged into Platform
+                return
+            }
+            let url = URL(string: urlRoute)!
+            let request = URLRequest(url: url, accessToken: token)
+
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if error == nil, let data = data, let settings = try? JSONDecoder().decode(CodableUserSettings.self, from: data) {
+                    callback(settings.privacy_settings, settings.notification_settings)
+                } else {
+                    callback(nil, nil)
+                }
+            }
+        }
+    }
+    
+    func saveNotificationPreferences(_ callback: @escaping (_ completed: Bool?) -> Void) {
+        
+    }
+}
+
 // MARK: - Push Notifications
 extension UserDBManager {
     func savePushNotificationDeviceToken(deviceToken: String, _ completion: (() -> Void)? = nil) {

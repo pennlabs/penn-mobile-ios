@@ -394,44 +394,75 @@ extension UserDefaults {
 
 // MARK: - Privacy Settings
 extension UserDefaults {
-    func save(_ preferences: PrivacyPreferences) {
+    
+    // Set values for each privacy option
+    func set(_ privacyOption: PrivacyOption, to newValue: Bool) {
+        var prefs = getAllPrivacyPreferences()
+        prefs[privacyOption.rawValue] = newValue
+        save(privacyPreferences: prefs)
+    }
+    
+    // Get values for each privacy option (default to false if no preference exists)
+    func getPreference(for option: PrivacyOption) -> Bool {
+        let prefs = getAllPrivacyPreferences()
+        return prefs[option.rawValue] ?? false
+    }
+    
+    // Fetch preferences from disk
+    private func getAllPrivacyPreferences() -> PrivacyPreferences {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.privacyPreferences.rawValue) {
+            return (try? decoder.decode(PrivacyPreferences.self, from: decodedData)) ?? .init()
+        }
+        return .init()
+    }
+    
+    // Save preferences to disk
+    private func save(privacyPreferences: PrivacyPreferences) {
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(preferences) {
+        if let encoded = try? encoder.encode(privacyPreferences) {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.privacyPreferences.rawValue)
         }
     }
 
-    func getPrivacyPreferences() -> PrivacyPreferences? {
-        let decoder = JSONDecoder()
-        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.privacyPreferences.rawValue) {
-            return try? decoder.decode(PrivacyPreferences.self, from: decodedData)
-        }
-        return nil
-    }
-
-    func clearPrivacyPreferences() {
+    private func clearPrivacyPreferences() {
         removeObject(forKey: UserDefaultsKeys.privacyPreferences.rawValue)
     }
 }
 
 // MARK: - Notification Settings
 extension UserDefaults {
-    func save(_ preferences: NotificationPreferences) {
+    // Set values for each notification option
+    func set(_ notificationOption: NotificationOption, to newValue: Bool) {
+        var prefs = getAllNotificationPreferences()
+        prefs[notificationOption.rawValue] = newValue
+        save(notificationPreferences: prefs)
+    }
+    
+    // Get values for each notification option (default to false if no preference exists)
+    func getPreference(for option: NotificationOption) -> Bool {
+        let prefs = getAllNotificationPreferences()
+        return prefs[option.rawValue] ?? false
+    }
+    
+    // Fetch preferences from disk
+    private func getAllNotificationPreferences() -> NotificationPreferences {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.notificationPreferences.rawValue) {
+            return (try? decoder.decode(NotificationPreferences.self, from: decodedData)) ?? .init()
+        }
+        return .init()
+    }
+    
+    // Save preferences to disk
+    private func save(notificationPreferences: NotificationPreferences) {
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(preferences) {
+        if let encoded = try? encoder.encode(notificationPreferences) {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.notificationPreferences.rawValue)
         }
     }
 
-    func getNotificationPreferences() -> NotificationPreferences? {
-        let decoder = JSONDecoder()
-        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.notificationPreferences.rawValue) {
-            return try? decoder.decode(NotificationPreferences.self, from: decodedData)
-        }
-        return nil
-    }
-
-    func clearNotificationPreferences() {
-        removeObject(forKey: UserDefaultsKeys.privacyPreferences.rawValue)
+    private func clearNotificationPreferences() {
+        removeObject(forKey: UserDefaultsKeys.notificationPreferences.rawValue)
     }
 }

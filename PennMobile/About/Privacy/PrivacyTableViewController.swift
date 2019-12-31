@@ -14,7 +14,6 @@ protocol PrivacyViewControllerChangedPreference: class {
 
 class PrivacyViewController: GenericTableViewController, ShowsAlert {
     
-    var userPrefs = UserDefaults.standard.getPrivacyPreferences()
     let displayedPrefs = PrivacyOption.visibleOptions
     
     override func viewDidLoad() {
@@ -34,10 +33,7 @@ class PrivacyViewController: GenericTableViewController, ShowsAlert {
 // MARK: - Did Change Preference
 extension PrivacyViewController: PrivacyViewControllerChangedPreference {
     func changed(option: PrivacyOption, toValue: Bool) {
-        var prefs = userPrefs ?? PrivacyPreferences()
-        prefs[option] = toValue
-        UserDefaults.standard.save(prefs)
-        self.userPrefs = UserDefaults.standard.getPrivacyPreferences()
+        UserDefaults.standard.set(option, to: toValue)
         showAlert(withMsg: " ", title: "\(option.cellTitle) \(toValue ? "enabled" : "disabled")", completion: nil)
     }
 }
@@ -64,7 +60,7 @@ extension PrivacyViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: PrivacyTableViewCell.identifier) as! PrivacyTableViewCell
         
         let option = displayedPrefs[indexPath.section]
-        let currentValue = userPrefs?[option] ?? false
+        let currentValue = UserDefaults.standard.getPreference(for: option)
         
         cell.setup(with: option, isEnabled: currentValue)
         cell.changePreferenceDelegate = self

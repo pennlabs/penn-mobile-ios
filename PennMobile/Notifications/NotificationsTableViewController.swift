@@ -14,7 +14,6 @@ protocol NotificationViewControllerChangedPreference: class {
 
 class NotificationViewController: GenericTableViewController, ShowsAlert {
     
-    var userPrefs = UserDefaults.standard.getNotificationPreferences()
     let displayedPrefs = NotificationOption.visibleOptions
     
     override func viewDidLoad() {
@@ -34,10 +33,7 @@ class NotificationViewController: GenericTableViewController, ShowsAlert {
 // MARK: - Did Change Preference
 extension NotificationViewController: NotificationViewControllerChangedPreference {
     func changed(option: NotificationOption, toValue: Bool) {
-        var prefs = userPrefs ?? NotificationPreferences()
-        prefs[option] = toValue
-        UserDefaults.standard.save(prefs)
-        self.userPrefs = UserDefaults.standard.getNotificationPreferences()
+        UserDefaults.standard.set(option, to: toValue)
         showAlert(withMsg: " ", title: "\(option.cellTitle ?? "") \(toValue ? "enabled" : "disabled")", completion: nil)
     }
 }
@@ -64,7 +60,7 @@ extension NotificationViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: NotificationTableViewCell.identifier) as! NotificationTableViewCell
         
         let option = displayedPrefs[indexPath.section]
-        let currentValue = userPrefs?[option] ?? false
+        let currentValue = UserDefaults.standard.getPreference(for: option)
         
         cell.setup(with: option, isEnabled: currentValue)
         cell.changePreferenceDelegate = self
