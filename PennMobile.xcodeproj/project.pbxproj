@@ -770,7 +770,6 @@
 				2188C6D6223C7E8300F18D90 /* SecureStore.swift */,
 				21879B1D1FB3FF54003CF552 /* Storage.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
-				2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1285,6 +1284,7 @@
 		F212BE8223B6C88A00ED46A1 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */,
 				F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */,
 				F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */,
 				F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */,
