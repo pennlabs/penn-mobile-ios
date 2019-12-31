@@ -44,7 +44,7 @@ extension PrivacyViewController: PrivacyViewControllerChangedPreference {
         // Upload change to the Penn Mobile server. If this fails, reverse the change.
         self.showActivity()
         UserDBManager.shared.saveUserPrivacySettings { (success) in
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
                 self.hideActivity()
                 if success ?? false {
                     self.showAlert(withMsg: "\(option.cellTitle) \(toValue ? "enabled" : "disabled")", title: "Preference Saved", completion: nil)
