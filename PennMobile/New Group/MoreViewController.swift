@@ -174,7 +174,7 @@ extension MoreViewController {
             alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
                 DispatchQueue.main.async {
-                    AppDelegate.shared.rootViewController.switchToLogout()
+                    AppDelegate.shared.rootViewController.logout()
                 }
             }))
             present(alertController, animated: true, completion: nil)
