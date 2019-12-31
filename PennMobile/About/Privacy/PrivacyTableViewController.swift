@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol PrivacyViewControllerChangedPreference: class {
     func changed(option: PrivacyOption, toValue: Bool)
@@ -15,6 +16,8 @@ protocol PrivacyViewControllerChangedPreference: class {
 class PrivacyViewController: GenericTableViewController, ShowsAlert, IndicatorEnabled {
     
     let displayedPrefs = PrivacyOption.visibleOptions
+    
+    var cancellable: Any? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +35,26 @@ class PrivacyViewController: GenericTableViewController, ShowsAlert, IndicatorEn
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
+        
+        if #available(iOS 13, *) {
+            let delegate = PrivacyPermissionDelegate()
+            let vc = UIHostingController(rootView: PrivacyPermissionView(delegate: delegate))
+            present(vc, animated: true)
+
+            self.cancellable = delegate.objectDidChange.sink { (delegate) in
+                if let decision = delegate.userDecision {
+                    switch decision {
+                    case .affirmative: print("CONSENT GIVEN")
+                    case .negative: print("NO CONSENT GIVEN")
+                    case .moreInfo: print("INFO REQUESTED")
+                    case .close: print("CLOSE VIEW")
+                    }
+                    //vc.dismiss(animated: true, completion: nil)
+                }
+            }
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }
 

@@ -7,9 +7,16 @@
 //
 
 import SwiftUI
+import Combine
 
 @available(iOS 13, *)
 struct PrivacyPermissionView: View {
+    
+    enum Choice {
+        case affirmative, negative, close, moreInfo
+    }
+    
+    @ObservedObject var delegate: PrivacyPermissionDelegate
     
     let privacyString =
     """
@@ -55,15 +62,19 @@ struct PrivacyPermissionView: View {
     }
     
     func moreAboutLabs() {
-        print("More about labs button")
+        delegate.userDecision = .moreInfo
     }
     
     func shareCourses() {
-        print("Share Courses chosen")
+        delegate.userDecision = .affirmative
     }
     
     func doNotShareCourses() {
-        print("Don't Share Courses chosen")
+        delegate.userDecision = .negative
+    }
+    
+    func closeView() {
+        delegate.userDecision = .close
     }
 }
 
@@ -90,6 +101,6 @@ struct FullButton: View {
 @available(iOS 13, *)
 struct PrivacyPermissionView_Previews: PreviewProvider {
     static var previews: some View {
-        PrivacyPermissionView()
+        PrivacyPermissionView(delegate: PrivacyPermissionDelegate())
     }
 }
