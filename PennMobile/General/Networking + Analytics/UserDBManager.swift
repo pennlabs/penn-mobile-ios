@@ -245,7 +245,21 @@ extension UserDBManager {
 
 // MARK: - Privacy and Notification Settings
 extension UserDBManager {
-    func fetchUserSettings(_ callback: @escaping (_ privacyPreferences: PrivacyPreferences?, _ notificationPreferences: NotificationPreferences?) -> Void) {
+    func syncUserSettings(_ callback: @escaping (_ success: Bool) -> Void) {
+        self.fetchUserSettings { (success, privacySettings, notificationSettings) in
+            if success {
+                if let privacySettings = privacySettings {
+                    UserDefaults.standard.saveAll(privacyPreferences: privacySettings)
+                }
+                if let notificationSettings = notificationSettings {
+                    UserDefaults.standard.saveAll(notificationPreferences: notificationSettings)
+                }
+            }
+            callback(success)
+        }
+    }
+    
+    func fetchUserSettings(_ callback: @escaping (_ success: Bool, _ privacyPreferences: PrivacyPreferences?, _ notificationPreferences: NotificationPreferences?) -> Void) {
         
         let urlRoute = "\(baseUrl)/account/settings"
         
@@ -255,20 +269,20 @@ extension UserDBManager {
         }
         
         OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                // User has not logged into Platform
-                return
-            }
-            let url = URL(string: urlRoute)!
-            let request = URLRequest(url: url, accessToken: token)
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if error == nil, let data = data, let settings = try? JSONDecoder().decode(CodableUserSettings.self, from: data) {
-                    callback(settings.privacy, settings.notifications)
-                } else {
-                    callback(nil, nil)
+            if let token = token {
+                let url = URL(string: urlRoute)!
+                let request = URLRequest(url: url, accessToken: token)
+                let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    if error == nil, let data = data, let settings = try? JSONDecoder().decode(CodableUserSettings.self, from: data) {
+                        callback(true, settings.privacy, settings.notifications)
+                    } else {
+                        callback(false, nil, nil)
+                    }
                 }
+                task.resume()
+            } else {
+                callback(false, nil, nil)
             }
-            task.resume()
         }
     }
     

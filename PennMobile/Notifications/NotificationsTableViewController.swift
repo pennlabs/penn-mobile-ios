@@ -27,11 +27,6 @@ class NotificationViewController: GenericTableViewController, ShowsAlert, Indica
         tableView.delegate = self
         
         tableView.allowsSelection = false
-        
-        UserDBManager.shared.fetchUserSettings { (priv, notif) in
-            dump(priv)
-            dump(notif)
-        }
     }
 }
 

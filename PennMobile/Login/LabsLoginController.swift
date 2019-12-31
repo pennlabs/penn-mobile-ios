@@ -216,14 +216,7 @@ extension LabsLoginController {
     }
     
     fileprivate func getAndSaveNotificationAndPrivacyPreferences() {
-        UserDBManager.shared.fetchUserSettings { privacy, notification in
-            if let privacyPrefs = privacy {
-                UserDefaults.standard.saveAll(privacyPreferences: privacyPrefs)
-            }
-            if let notifPrefs = notification {
-                UserDefaults.standard.saveAll(notificationPreferences: notifPrefs)
-            }
-        }
+        UserDBManager.shared.syncUserSettings { (success) in }
     }
     
     fileprivate func obtainCoursePermission(_ callback: @escaping (_ granted: Bool) -> Void) {
