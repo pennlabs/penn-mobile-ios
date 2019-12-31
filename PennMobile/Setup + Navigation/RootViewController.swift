@@ -102,10 +102,11 @@ class RootViewController: UIViewController, NotificationRequestable {
             }
         }
         
-        // Request access to a user's anonymized course data, if they haven't provided it or declined
-        
-        
-        if UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) {
+        if shouldShareCourses() {
+            // Share user's courses
+            
+        } else if shouldRequestCoursePermission() {
+            // Request permission, then share courses if granted
             
         }
         

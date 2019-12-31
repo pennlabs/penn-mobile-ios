@@ -313,6 +313,8 @@ extension UserDBManager {
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let httpResponse = response as? HTTPURLResponse {
                     callback(httpResponse.statusCode == 200)
+                } else {
+                    callback(false)
                 }
             }
             task.resume()
@@ -337,6 +339,44 @@ extension UserDBManager {
         let url = "\(baseUrl)/notifications/register"
         makePostRequestWithAccessToken(url: url, params: [:]) { (_, _, _) in
             completion?()
+        }
+    }
+}
+
+// MARK: - Anonymized Courses
+extension UserDBManager {
+    func saveCourses(_ courses: Set<Course>, _ callback: @escaping (_ success: Bool) -> Void) {
+        guard UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) else {
+            // We don't have permission! Do not upload anon courses.
+            callback(false)
+            return
+        }
+        let route = "\(baseUrl)/account/courses"
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        
+        // TODO: Make this uuid string saved somewhere.
+        let codableCourses = CoursesJSON(id: UUID().uuidString, courses: courses)
+        
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token, let payload = try? encoder.encode(codableCourses) else {
+                callback(false)
+                return
+            }
+            
+            let url = URL(string: route)!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = payload
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    callback(httpResponse.statusCode == 200)
+                } else {
+                    callback(false)
+                }
+            }
+            task.resume()
         }
     }
 }
