@@ -67,4 +67,11 @@ enum NotificationOption: String, Codable {
         default: return nil
         }
     }
+    
+    var defaultValue: Bool {
+        switch self {
+        case .diningBalanceSummary: return UserDefaults.standard.hasDiningPlan()
+        default: return true
+        }
+    }
 }

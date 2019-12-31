@@ -57,10 +57,9 @@ enum PrivacyOption: String {
     
     var defaultValue: Bool {
         switch self {
-        case .anonymizedCourseSchedule: return false
-        case .diningBalanceAndHistory: return true
-        case .collegeHouse: return false
-        case .academicIdentity: return true
+        case .diningBalanceAndHistory: return UserDefaults.standard.hasDiningPlan()
+        case .academicIdentity: return Account.getAccount()?.isStudent ?? false
+        default: return false
         }
     }
 }
