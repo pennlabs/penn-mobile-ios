@@ -9,7 +9,7 @@
 import Foundation
 
 struct CoursesJSON: Codable {
-    let accountID: String
+    let id: String
     let courses: Set<Course>
 }
 
