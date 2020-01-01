@@ -64,11 +64,19 @@ extension CoursePrivacyController {
     fileprivate func fetchAndSaveCourses() {
         showActivity()
         PennInTouchNetworkManager.instance.getCourses { (courses) in
-            // TODO: Save courses anonymously on DB
-            DispatchQueue.main.async {
-                print(courses)
-                self.hideActivity()
-                self.dismiss(animated: true, completion: nil)
+            if let courses = courses {
+                UserDBManager.shared.saveCoursesAnonymously(courses) { (success) in
+                    DispatchQueue.main.async {
+                        print(courses)
+                        self.hideActivity()
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.hideActivity()
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
         }
     }

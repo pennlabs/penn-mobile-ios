@@ -232,6 +232,31 @@ extension UserDBManager {
 //            completion?(false)
 //        }
     }
+    
+    func saveCoursesAnonymously(_ courses: Set<Course>, _ completion: ((_ success: Bool) -> Void)? = nil) {
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+        do {
+            var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/account/courses", for: .anonymizedCourseSchedule)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            let jsonData = try jsonEncoder.encode(courses)
+            request.httpBody = jsonData
+
+            let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    completion?(httpResponse.statusCode == 200)
+                } else {
+                    completion?(false)
+                }
+            })
+            task.resume()
+        }
+        catch {
+            completion?(false)
+        }
+    }
 }
 
 // MARK: - Transaction Data
