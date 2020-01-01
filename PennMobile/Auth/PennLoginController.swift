@@ -9,6 +9,20 @@
 import Foundation
 import WebKit
 
+protocol KeychainFetchable {}
+
+extension KeychainFetchable {
+    func getPassword() -> String? {
+        let genericPwdQueryable = GenericPasswordQueryable(service: "PennWebLogin")
+        let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)
+        do {
+            return try secureStore.getValue(for: "PennKey Password")
+        } catch {
+            return nil
+        }
+    }
+}
+
 class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     final private let loginURL = "https://weblogin.pennkey.upenn.edu/login"

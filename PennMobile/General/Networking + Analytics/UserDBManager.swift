@@ -18,7 +18,7 @@ func getDeviceID() -> String {
     #endif
 }
 
-class UserDBManager: NSObject, Requestable {
+class UserDBManager: NSObject, Requestable, KeychainFetchable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
@@ -45,6 +45,15 @@ class UserDBManager: NSObject, Requestable {
             let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
             task.resume()
         }
+    }
+    
+    fileprivate func getAnonymousPrivacyRequest(url: String, for privacyOption: PrivacyOption) -> URLRequest {
+        let url = URL(string: url)!
+        let request = URLRequest(url: url)
+        guard let password = getPassword(), let deviceKey = UserDefaults.standard.get else {
+            return request
+        }
+        return request
     }
 }
 

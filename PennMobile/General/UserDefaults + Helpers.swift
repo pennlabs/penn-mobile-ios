@@ -458,7 +458,18 @@ extension UserDefaults {
     
     // MARK: Privacy Option UUID
     // Each privacy option has its own UUID, which is sent to the server along with any anonymous data to allow us to track that data over time, as well as delete it if requested by the user.
-    // TODO: Save privacy option UUID
+    func getPrivacyUUID(for privacyOption: PrivacyOption) -> String? {
+        if let privateKey = privacyOption.privateIDKey {
+            if let uuid = UserDefaults.standard.string(forKey: privateKey) {
+                return uuid
+            } else {
+                let uuid = String.randomString(length: 32)
+                UserDefaults.standard.set(uuid, forKey: privateKey)
+                return uuid
+            }
+        }
+        return nil
+    }
 }
 
 // MARK: - Notification Settings
