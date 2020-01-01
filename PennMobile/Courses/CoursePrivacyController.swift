@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 @available(iOS 13, *)
-class CoursePrivacyController: UIViewController {
+class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
     
     private var cancellable: Any?
     
@@ -19,7 +19,9 @@ class CoursePrivacyController: UIViewController {
         
         let prompt = """
         Help us improve our course recommendation algorithms by sharing  anonymized course enrollments with Penn Labs. You can change your decision later.
+
         No course enrollments are ever associated with your name, PennKey, or email.
+
         This allows Penn Labs to recommend courses to other students based on what you’ve taken, improving student life for everyone at Penn. That’s what we do 💖
         """
         
@@ -27,10 +29,10 @@ class CoursePrivacyController: UIViewController {
         self.cancellable = delegate.objectDidChange.sink { (delegate) in
             if let decision = delegate.userDecision {
                 switch decision {
-                case .affirmative: print("CONSENT GIVEN")
+                case .affirmative: self.fetchAndSaveCourses()
                 case .negative: print("NO CONSENT GIVEN")
-                case .moreInfo: print("INFO REQUESTED")
-                case .close: print("CLOSE VIEW")
+                case .moreInfo: self.open(scheme: "https://pennlabs.org")
+                case .close: self.dismiss(animated: true, completion: nil)
                 }
                 //vc.dismiss(animated: true, completion: nil)
             }
@@ -51,5 +53,20 @@ class CoursePrivacyController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Networking
+@available(iOS 13, *)
+extension CoursePrivacyController {
+    fileprivate func fetchAndSaveCourses() {
+        showActivity()
+        PennInTouchNetworkManager.instance.getCourses { (courses) in
+            DispatchQueue.main.async {
+                print(courses)
+                self.hideActivity()
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }
