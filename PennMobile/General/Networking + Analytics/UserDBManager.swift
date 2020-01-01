@@ -18,7 +18,7 @@ func getDeviceID() -> String {
     #endif
 }
 
-class UserDBManager: NSObject, Requestable, KeychainFetchable, SHA256Hashable {
+class UserDBManager: NSObject, Requestable, KeychainAccessible, SHA256Hashable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
@@ -49,20 +49,20 @@ class UserDBManager: NSObject, Requestable, KeychainFetchable, SHA256Hashable {
     
     /**
       Returns a URLRequest configured for making anonymous requests.
-      The server matches either the password hash or the private UUID in the DB to find the anonymous account ID, updating the identifiers if the password of device changes.
+      The server matches either the pennkey-password hash or the private UUID in the DB to find the anonymous account ID, updating the identifiers if the password of device changes.
      
       - parameter url: A string URL.
       - parameter privacyOption: A PrivacyOption
      
-      - returns: URLRequest containing the data type, a SHA256 hash of the password, and the privacy option UUID in the headers
+      - returns: URLRequest containing the data type, a SHA256 hash of the pennkey-password, and the privacy option UUID in the headers
     */
     fileprivate func getAnonymousPrivacyRequest(url: String, for privacyOption: PrivacyOption) -> URLRequest {
         let url = URL(string: url)!
         var request = URLRequest(url: url)
-        guard let password = getPassword(), let privateUUID = privacyOption.privateUUID else {
+        guard let pennkey = getPennKey(), let password = getPassword(), let privateUUID = privacyOption.privateUUID else {
             return request
         }
-        let passwordHash = hash(string: password)
+        let passwordHash = hash(string: pennkey + "-" + password)
         request.setValue(passwordHash, forHTTPHeaderField: "X-Password-Hash")
         request.setValue(privateUUID, forHTTPHeaderField: "X-Device-Key")
         request.setValue(privacyOption.rawValue, forHTTPHeaderField: "X-Data-Type")

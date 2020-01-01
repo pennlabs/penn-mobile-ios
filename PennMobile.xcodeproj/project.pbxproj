@@ -135,6 +135,7 @@
 		21D5E06723B68F3100B331CC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E06623B68F3100B331CC /* Model.swift */; };
 		21D5E07223BBFC5700B331CC /* CoursesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */; };
 		21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */; };
+		21D5E07623BD45F400B331CC /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E07523BD45F400B331CC /* KeychainAccessible.swift */; };
 		21E6A109224BDFEB00DC457A /* HomeViewController + Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */; };
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
@@ -369,6 +370,7 @@
 		21D5E06623B68F3100B331CC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesNetworkManager.swift; sourceTree = "<group>"; };
 		21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursePrivacyController.swift; sourceTree = "<group>"; };
+		21D5E07523BD45F400B331CC /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + Delegates.swift"; sourceTree = "<group>"; };
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
@@ -717,6 +719,7 @@
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
 				2188C6D6223C7E8300F18D90 /* SecureStore.swift */,
 				21879B1D1FB3FF54003CF552 /* Storage.swift */,
+				21D5E07523BD45F400B331CC /* KeychainAccessible.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
 			);
 			path = General;
@@ -1565,6 +1568,7 @@
 				212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */,
 				2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */,
 				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
+				21D5E07623BD45F400B331CC /* KeychainAccessible.swift in Sources */,
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
