@@ -15,7 +15,7 @@ class RootViewController: UIViewController, NotificationRequestable {
     private var current: UIViewController
     
     private var lastLoginAttempt: Date?
-    
+        
     // Fetch transactions even if hasDiningPlan() returns FALSE
     fileprivate let fetchTransactionsForUsersWithoutDiningPlan = true
     
@@ -108,6 +108,13 @@ class RootViewController: UIViewController, NotificationRequestable {
         } else if shouldRequestCoursePermission() {
             // Request permission, then share courses if granted
             
+        }
+        
+        if #available(iOS 13, *) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let vc = CoursePrivacyController()
+                self.current.present(vc, animated: true)
+            }
         }
         
         // Send saved unsent events
