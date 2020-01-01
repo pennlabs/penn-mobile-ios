@@ -93,12 +93,14 @@ struct FullButton: View {
     }
 }
 
+#if DEBUG
 @available(iOS 13, *)
 struct PermissionView_Previews: PreviewProvider {
     static var previews: some View {
         PermissionView(delegate: PrivacyPermissionDelegate(), title: "Share Courses", privacyString: "privacy string", affirmativeString: "Share Courses with Penn Labs", negativeString: "Don't Share", moreInfoString: "More about Penn Labs")
     }
 }
+#endif
 
 /*
  // Example usage
