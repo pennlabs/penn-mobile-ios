@@ -30,9 +30,11 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
             if let decision = delegate.userDecision {
                 switch decision {
                 case .affirmative: self.fetchAndSaveCourses()
-                case .negative: print("NO CONSENT GIVEN")
+                case .negative:
+                    self.declinePermission()
+                    self.dismiss(animated: true, completion: nil)
                 case .moreInfo: self.open(scheme: "https://pennlabs.org")
-                case .close: self.dismiss(animated: true, completion: nil)
+                case .close: print("CLOSE")
                 }
                 //vc.dismiss(animated: true, completion: nil)
             }
@@ -62,11 +64,17 @@ extension CoursePrivacyController {
     fileprivate func fetchAndSaveCourses() {
         showActivity()
         PennInTouchNetworkManager.instance.getCourses { (courses) in
+            // TODO: Save courses anonymously on DB
             DispatchQueue.main.async {
                 print(courses)
                 self.hideActivity()
                 self.dismiss(animated: true, completion: nil)
             }
         }
+    }
+    
+    fileprivate func declinePermission() {
+        UserDefaults.standard.set(.anonymizedCourseSchedule, to: false)
+        UserDBManager.shared.saveUserPrivacySettings()
     }
 }
