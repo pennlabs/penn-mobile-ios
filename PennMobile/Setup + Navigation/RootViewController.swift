@@ -102,18 +102,16 @@ class RootViewController: UIViewController, NotificationRequestable {
             }
         }
         
-        if shouldShareCourses() {
-            // Share user's courses
-            
-        } else if shouldRequestCoursePermission() {
-            // Request permission, then share courses if granted
-            
-        }
-        
         if #available(iOS 13, *) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                let vc = CoursePrivacyController()
-                self.current.present(vc, animated: true)
+            if shouldShareCourses() {
+                // Share user's courses
+                
+            } else if shouldRequestCoursePermission() {
+                // Request permission, then share courses if granted
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    let vc = CoursePrivacyController()
+                    self.current.present(vc, animated: true)
+                }
             }
         }
         
@@ -283,8 +281,8 @@ extension RootViewController {
             return false
         }
         
-        guard OAuth2NetworkManager.instance.hasRefreshToken() && UserDefaults.standard.coursePermissionGranted() else {
-            // User is not logged in or does not have courses on-device. Do not request.
+        guard let account = Account.getAccount(), account.isStudent else {
+            // User is not logged in and is a student
             return false
         }
         
@@ -305,7 +303,7 @@ extension RootViewController {
     }
     
     func shouldShareCourses() -> Bool {
-        guard UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) && OAuth2NetworkManager.instance.hasRefreshToken() && UserDefaults.standard.coursePermissionGranted() else {
+        guard let account = Account.getAccount(), account.isStudent && UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) else {
             // We don't have permission, or the user is not logged in, or the user has no courses
             return false
         }
