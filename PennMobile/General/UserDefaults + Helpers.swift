@@ -39,6 +39,10 @@ extension UserDefaults {
         for key in UserDefaultsKeys.allCases {
             removeObject(forKey: key.rawValue)
         }
+        for option in PrivacyOption.allCases {
+            removeObject(forKey: option.didRequestKey)
+            removeObject(forKey: option.didShareKey)
+        }
     }
 }
 
@@ -451,6 +455,10 @@ extension UserDefaults {
     func getDidShareDataFor(_ privacyOption: PrivacyOption) -> Date? {
         UserDefaults.standard.value(forKey: privacyOption.didShareKey) as? Date
     }
+    
+    // MARK: Privacy Option UUID
+    // Each privacy option has its own UUID, which is sent to the server along with any anonymous data to allow us to track that data over time, as well as delete it if requested by the user.
+    // TODO: Save privacy option UUID
 }
 
 // MARK: - Notification Settings

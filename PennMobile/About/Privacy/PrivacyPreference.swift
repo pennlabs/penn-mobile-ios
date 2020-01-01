@@ -25,7 +25,7 @@ typealias PrivacyPreferences = Dictionary<String, Bool>
  individual preferences values for each option.
 */
 
-enum PrivacyOption: String {
+enum PrivacyOption: String, CaseIterable {
     case anonymizedCourseSchedule
     case diningBalanceAndHistory
     case collegeHouse
@@ -64,13 +64,25 @@ enum PrivacyOption: String {
         }
     }
     
-    // A key used by UserDefaults to tell if we've asked for this before
+    // MARK: User Defaults Keys
+    // These keys ARE cleared when UserDefaults is wiped.
+    
+    // A key used by UserDefaults to tell if and when we've asked for this privacy option
     var didRequestKey: String {
-        return "didRequest-" + self.rawValue
+        return "didRequest_" + self.rawValue
     }
     
-    // A key used by UserDefaults to tell if we've shared data for this option before
+    // A key used by UserDefaults to tell if and when we've shared data for this option
     var didShareKey: String {
-        return "didShare-" + self.rawValue
+        return "didShare_" + self.rawValue
+    }
+    
+    
+    // This key is NOT cleared when UserDefaults is wiped.
+    // A key used by UserDefaults to store a UUID which points to this user's anonymous data on the server for this option. This should never leave the device
+    var privateIDKey: String? {
+        // TODO: Use keychain + hashing penn password and pennid to get id.
+        guard let accountId = UserDefaults.standard.getAccountID() else { return nil }
+        return "privateID_" + self.rawValue + "_" + accountId
     }
 }
