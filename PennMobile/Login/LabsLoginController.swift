@@ -12,20 +12,11 @@ import SwiftyJSON
 import CryptoKit
 import CommonCrypto
 
-class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
-        
-    override var urlStr: String {
-        return "https://platform.pennlabs.org/accounts/authorize/?response_type=code&client_id=CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN&redirect_uri=https%3A%2F%2Fpennlabs.org%2Fpennmobile%2Fios%2Fcallback%2F&code_challenge_method=S256&code_challenge=\(codeChallenge)scope=read+introspection&state="
-    }
-    
-    override var shouldLoadCookies: Bool {
-        return false
-    }
-    
-    private let codeVerifier = String.randomString(length: 64)
-    
-    private var codeChallenge: String {
-        let inputData = Data(codeVerifier.utf8)
+protocol SHA256Hashable {}
+
+extension SHA256Hashable {
+    func hash(string: String) -> String {
+        let inputData = Data(string.utf8)
         if #available(iOS 13, *) {
             let hashed = SHA256.hash(data: inputData)
             let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
@@ -44,6 +35,23 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable {
             }
             return sha256String
         }
+    }
+}
+
+class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, SHA256Hashable {
+        
+    override var urlStr: String {
+        return "https://platform.pennlabs.org/accounts/authorize/?response_type=code&client_id=CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN&redirect_uri=https%3A%2F%2Fpennlabs.org%2Fpennmobile%2Fios%2Fcallback%2F&code_challenge_method=S256&code_challenge=\(codeChallenge)scope=read+introspection&state="
+    }
+    
+    override var shouldLoadCookies: Bool {
+        return false
+    }
+    
+    private let codeVerifier = String.randomString(length: 64)
+    
+    private var codeChallenge: String {
+        return hash(string: codeVerifier)
     }
     
     private var code: String?

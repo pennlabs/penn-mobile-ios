@@ -18,7 +18,7 @@ func getDeviceID() -> String {
     #endif
 }
 
-class UserDBManager: NSObject, Requestable, KeychainFetchable {
+class UserDBManager: NSObject, Requestable, KeychainFetchable, SHA256Hashable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
@@ -47,12 +47,25 @@ class UserDBManager: NSObject, Requestable, KeychainFetchable {
         }
     }
     
+    /**
+      Returns a URLRequest configured for making anonymous requests.
+      The server matches either the password hash or the private UUID in the DB to find the anonymous account ID, updating the identifiers if the password of device changes.
+     
+      - parameter url: A string URL.
+      - parameter privacyOption: A PrivacyOption
+     
+      - returns: URLRequest containing the data type, a SHA256 hash of the password, and the privacy option UUID in the headers
+    */
     fileprivate func getAnonymousPrivacyRequest(url: String, for privacyOption: PrivacyOption) -> URLRequest {
         let url = URL(string: url)!
-        let request = URLRequest(url: url)
-        guard let password = getPassword(), let deviceKey = UserDefaults.standard.get else {
+        var request = URLRequest(url: url)
+        guard let password = getPassword(), let privateUUID = privacyOption.privateUUID else {
             return request
         }
+        let passwordHash = hash(string: password)
+        request.setValue(passwordHash, forHTTPHeaderField: "X-Password-Hash")
+        request.setValue(privateUUID, forHTTPHeaderField: "X-Device-Key")
+        request.setValue(privacyOption.rawValue, forHTTPHeaderField: "X-Data-Type")
         return request
     }
 }

@@ -84,4 +84,8 @@ enum PrivacyOption: String, CaseIterable {
         guard let accountId = UserDefaults.standard.getAccountID() else { return nil }
         return "privateID_" + self.rawValue + "_" + accountId
     }
+    
+    var privateUUID: String? {
+        UserDefaults.standard.getPrivacyUUID(for: self)
+    }
 }
