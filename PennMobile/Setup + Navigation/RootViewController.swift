@@ -104,8 +104,14 @@ class RootViewController: UIViewController, NotificationRequestable {
         
         if #available(iOS 13, *) {
             if shouldShareCourses() {
-                // Share user's courses
-                
+                // Share user's courses. Do not fetch previous semesters if the current semester has been fetched.
+                let savedCourses = UserDefaults.standard.getCourses()
+                let fetchCurrentTermOnly = savedCourses?.contains { $0.term == Course.currentTerm } ?? false
+                PennInTouchNetworkManager.instance.getCourses(currentTermOnly: fetchCurrentTermOnly) { (courses) in
+                    if let courses = courses {
+                        UserDBManager.shared.saveCoursesAnonymously(courses)
+                    }
+                }
             } else if shouldRequestCoursePermission() {
                 // Request permission, then share courses if granted
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -276,26 +282,20 @@ extension RootViewController {
 // MARK: - Anon. Course Data
 extension RootViewController {
     func shouldRequestCoursePermission() -> Bool {
-        guard !UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) else {
+        if UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) {
             // We already have permission, no need to ask.
             return false
         }
         
         guard let account = Account.getAccount(), account.isStudent else {
-            // User is not logged in and is a student
+            // User is not logged in or user is logged in but not a student, no need to ask
             return false
         }
         
-        if let lastRequest = UserDefaults.standard.getDidAskFor(.anonymizedCourseSchedule) {
-            let now = Date()
-            let diffInDays = Calendar.current.dateComponents([.day], from: lastRequest, to: now).day
-            if let diff = diffInDays, diff >= 364 {
-                // More than a year since last request. Time to ask again.
-                return true
-            } else {
-                // Less than a year since last request
-                return false
-            }
+        if let lastRequest = UserDefaults.standard.getLastDidAskPermission(for: .anonymizedCourseSchedule) {
+            let months = Calendar.current.dateComponents([.month], from: lastRequest, to: Date()).month!
+            // More than a 6 months since last request. Time to ask again.
+            return months >= 6
         } else {
             // Have not yet asked. Request away!
             return true
@@ -303,20 +303,18 @@ extension RootViewController {
     }
     
     func shouldShareCourses() -> Bool {
-        guard let account = Account.getAccount(), account.isStudent && UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) else {
-            // We don't have permission, or the user is not logged in, or the user has no courses
+        guard Account.isLoggedIn && UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) else {
+            // We do not have permission to share courses or the user is not logged in
             return false
         }
         
-        // We should collect data, but make sure we haven't in the last week
-        if let lastShareDate = UserDefaults.standard.getDidShareDataFor(.anonymizedCourseSchedule) {
-            let now = Date()
-            if let diffInDays = Calendar.current.dateComponents([.day], from: lastShareDate, to: now).day {
-                return diffInDays >= 7
-            }
+        if let lastShareDate = UserDefaults.standard.getLastShareDate(for: .anonymizedCourseSchedule) {
+            // Save updated course schedule if it's been more than 1 week since last save
+            let diffInDays = Calendar.current.dateComponents([.day], from: lastShareDate, to: Date()).day!
+            return diffInDays >= 7
+        } else {
+            // Courses have never been shared. Do so now.
+            return true
         }
-        
-        // We may have never uploaded courses. Do so now.
-        return true
     }
 }

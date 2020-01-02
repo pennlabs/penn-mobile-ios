@@ -29,7 +29,9 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
         self.cancellable = delegate.objectDidChange.sink { (delegate) in
             if let decision = delegate.userDecision {
                 switch decision {
-                case .affirmative: self.fetchAndSaveCourses()
+                case .affirmative:
+                    UserDefaults.standard.set(.anonymizedCourseSchedule, to: true)
+                    self.fetchAndSaveCourses()
                 case .negative:
                     self.declinePermission()
                     self.dismiss(animated: true, completion: nil)

@@ -247,7 +247,7 @@ extension UserDBManager {
             let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
-                        UserDefaults.standard.setDataLastSharedDate(for: .anonymizedCourseSchedule)
+                        UserDefaults.standard.setLastShareDate(for: .anonymizedCourseSchedule)
                     }
                     completion?(httpResponse.statusCode == 200)
                 } else {

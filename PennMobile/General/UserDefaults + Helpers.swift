@@ -448,11 +448,11 @@ extension UserDefaults {
     
     // MARK: Last Data Sharing Date
     // Set the last date we shared data corresponding to this option (ex: when did we last upload courses)
-    func setDataLastSharedDate(for privacyOption: PrivacyOption) {
+    func setLastShareDate(for privacyOption: PrivacyOption) {
         UserDefaults.standard.set(Date(), forKey: privacyOption.didShareKey)
     }
     // Get the last date we shared data for this option
-    func getDataLastSharedDate(for privacyOption: PrivacyOption) -> Date? {
+    func getLastShareDate(for privacyOption: PrivacyOption) -> Date? {
         UserDefaults.standard.value(forKey: privacyOption.didShareKey) as? Date
     }
     
