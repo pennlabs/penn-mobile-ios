@@ -109,6 +109,7 @@ class RootViewController: UIViewController, NotificationRequestable {
                 let fetchCurrentTermOnly = savedCourses?.contains { $0.term == Course.currentTerm } ?? false
                 PennInTouchNetworkManager.instance.getCourses(currentTermOnly: fetchCurrentTermOnly) { (courses) in
                     if let courses = courses {
+                        UserDefaults.standard.saveCourses(courses)
                         UserDBManager.shared.saveCoursesAnonymously(courses)
                     }
                 }
