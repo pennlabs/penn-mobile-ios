@@ -445,7 +445,7 @@ extension UserDBManager {
 
 // MARK: - Anonymized Token Registration
 extension UserDBManager {
-    /// Updates the anonymization keys in case either of them changed. The only key that may changes is the pennkey-password.
+    /// Updates the anonymization keys in case either of them changed. The only key that may change is the pennkey-password.
     func updateAnonymizationKeys() {
         for option in PrivacyOption.anonymizedOptions {
             var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/privacy/anonymous/register", for: option)
