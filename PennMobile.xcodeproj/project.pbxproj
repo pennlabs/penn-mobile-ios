@@ -54,7 +54,6 @@
 		21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD6204A5309008DB6E8 /* LaundryMachineCellTappable.swift */; };
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
-		216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640781EBADADA00746B8E /* PennMobileTests.swift */; };
 		216640941EBADC1700746B8E /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640901EBADC1700746B8E /* DiningCell.swift */; };
 		216640951EBADC1700746B8E /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640911EBADC1700746B8E /* DiningViewController.swift */; };
 		216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C11EBADC9300746B8E /* GenericControllers.swift */; };
@@ -135,6 +134,8 @@
 		21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */; };
 		21D5E06723B68F3100B331CC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E06623B68F3100B331CC /* Model.swift */; };
 		21D5E07223BBFC5700B331CC /* CoursesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */; };
+		21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */; };
+		21D5E07623BD45F400B331CC /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E07523BD45F400B331CC /* KeychainAccessible.swift */; };
 		21E6A109224BDFEB00DC457A /* HomeViewController + Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */; };
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
@@ -145,12 +146,11 @@
 		21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */; };
 		21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */; };
 		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
-		49A02050387566332260E012 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3209C580003C3924D06BC3 /* Pods_AutomatedScreenshotUITests.framework */; };
+		44B31BC1D17B8BA4EB22A0B1 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0DE62BEA1FEA32EC7742210 /* Pods_PennMobile.framework */; };
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
-		6FC56A4A3296ABD578205F0B /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D0A45AA732F9EE552969B2 /* Pods_PennMobileTests.framework */; };
-		8E2801896994C68CD496528B /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15B8EEFFA94A3EB9C181572F /* Pods_PennMobile.framework */; };
+		90AEFF99E6A63554902244AE /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6110FC6C46793AC7B0C34B /* Pods_AutomatedScreenshotUITests.framework */; };
 		97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFC2100DA1200D3D606 /* BuildingCell.swift */; };
 		97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */; };
 		97E79E052100DA1200D3D606 /* BuildingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */; };
@@ -219,24 +219,12 @@
 		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
 		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
 		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
+		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
+		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		216640751EBADADA00746B8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 216640581EBADADA00746B8E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2166405F1EBADADA00746B8E;
-			remoteInfo = PennMobile;
-		};
-		B6B1E0672144408B00CCBBCD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 216640581EBADADA00746B8E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2166405F1EBADADA00746B8E;
-			remoteInfo = PennMobile;
-		};
 		F230FB13225809E900760499 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 216640581EBADADA00746B8E /* Project object */;
@@ -249,7 +237,7 @@
 /* Begin PBXFileReference section */
 		139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDollarsTransactionViewController.swift; sourceTree = "<group>"; };
 		139139782388929700C6C298 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
-		15B8EEFFA94A3EB9C181572F /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A6110FC6C46793AC7B0C34B /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
@@ -298,9 +286,6 @@
 		216640631EBADADA00746B8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2166406D1EBADADA00746B8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2166406F1EBADADA00746B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		216640741EBADADA00746B8E /* PennMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PennMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		216640781EBADADA00746B8E /* PennMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobileTests.swift; sourceTree = "<group>"; };
-		2166407A1EBADADA00746B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		216640901EBADC1700746B8E /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
 		216640911EBADC1700746B8E /* DiningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewController.swift; sourceTree = "<group>"; };
@@ -384,6 +369,8 @@
 		21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		21D5E06623B68F3100B331CC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesNetworkManager.swift; sourceTree = "<group>"; };
+		21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursePrivacyController.swift; sourceTree = "<group>"; };
+		21D5E07523BD45F400B331CC /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + Delegates.swift"; sourceTree = "<group>"; };
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
@@ -394,14 +381,12 @@
 		21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusExpressLoginController.swift; sourceTree = "<group>"; };
 		21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAnalyticsEngine.swift; sourceTree = "<group>"; };
 		21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
-		2535E081BB6169E0DF20927A /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
-		55CE3DA4BA295CAB6571AC00 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5D3209C580003C3924D06BC3 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPFetcher.swift; sourceTree = "<group>"; };
 		66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorTokenGenerator.swift; sourceTree = "<group>"; };
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
-		8289A19350D0D931760BBFE7 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
-		93C91A85F3B72B920E9BBB76 /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
+		6BB8043D45B4F9EFE7BAB4F9 /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
+		75BFDB43D3CB249CA1396406 /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
+		7BFDFAE10282F0B8E6770620 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		97E79DFC2100DA1200D3D606 /* BuildingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingHeaderCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingHeaderCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingSectionHeader.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingSectionHeader.swift; sourceTree = SOURCE_ROOT; };
@@ -416,7 +401,7 @@
 		97E79E172100E4AA00D3D606 /* FitnessFacilityData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityData.swift; sourceTree = "<group>"; };
 		97E79E192100E51A00D3D606 /* FitnessFacilityName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityName.swift; sourceTree = "<group>"; };
 		97E79E1B2100F32E00D3D606 /* FitnessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewModel.swift; sourceTree = "<group>"; };
-		B3B6B9298511B0012718C49A /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		AD5304F6FC2861C7D57ABA3D /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLaundryCell.swift; sourceTree = "<group>"; };
 		B6111DB12018497400DC7877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6111DB320184C4A00DC7877 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -431,7 +416,6 @@
 		B658393A1FABD295009486FC /* LaundryAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryAPIService.swift; sourceTree = "<group>"; };
 		B6665A172071E63800F49A9C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B67881D7211CBF2A000DA750 /* MenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableView.swift; sourceTree = "<group>"; };
-		B6B1E0622144408B00CCBBCD /* PennMobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PennMobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B1E089214442A200CCBBCD /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = SOURCE_ROOT; };
 		B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
@@ -458,6 +442,7 @@
 		EF389EC321860B7000E29C6A /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		EF389EC521861B8500E29C6A /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
 		EFD6F358220E334100382783 /* DiningCellSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCellSettingsController.swift; sourceTree = "<group>"; };
+		F0DE62BEA1FEA32EC7742210 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPreference.swift; sourceTree = "<group>"; };
 		F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreference.swift; sourceTree = "<group>"; };
@@ -475,9 +460,9 @@
 		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
 		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
+		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
+		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		F6D0A45AA732F9EE552969B2 /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F7818FD062B7FC4D6B1F5997 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -485,22 +470,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E2801896994C68CD496528B /* Pods_PennMobile.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		216640711EBADADA00746B8E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6FC56A4A3296ABD578205F0B /* Pods_PennMobileTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6B1E05F2144408B00CCBBCD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				44B31BC1D17B8BA4EB22A0B1 /* Pods_PennMobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,23 +478,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49A02050387566332260E012 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */,
+				90AEFF99E6A63554902244AE /* Pods_AutomatedScreenshotUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		18D7F7CC7960FC8AB972A367 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5D3209C580003C3924D06BC3 /* Pods_AutomatedScreenshotUITests.framework */,
-				15B8EEFFA94A3EB9C181572F /* Pods_PennMobile.framework */,
-				F6D0A45AA732F9EE552969B2 /* Pods_PennMobileTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		2119D265225299D300693CDB /* GSR Locations */ = {
 			isa = PBXGroup;
 			children = (
@@ -633,10 +593,9 @@
 				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
 				216640621EBADADA00746B8E /* PennMobile */,
 				2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */,
-				216640771EBADADA00746B8E /* PennMobileTests */,
 				216640611EBADADA00746B8E /* Products */,
 				F5E2CE9A9024AE8E28992A5E /* Pods */,
-				18D7F7CC7960FC8AB972A367 /* Frameworks */,
+				48F8E8FC32C6C262B6EEDA34 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -644,8 +603,6 @@
 			isa = PBXGroup;
 			children = (
 				216640601EBADADA00746B8E /* PennMobile.app */,
-				216640741EBADADA00746B8E /* PennMobileTests.xctest */,
-				B6B1E0622144408B00CCBBCD /* PennMobileUITests.xctest */,
 				F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */,
 			);
 			name = Products;
@@ -680,15 +637,6 @@
 				216640831EBADB7000746B8E /* Supporting_Files */,
 			);
 			path = PennMobile;
-			sourceTree = "<group>";
-		};
-		216640771EBADADA00746B8E /* PennMobileTests */ = {
-			isa = PBXGroup;
-			children = (
-				2166407A1EBADADA00746B8E /* Info.plist */,
-				216640781EBADADA00746B8E /* PennMobileTests.swift */,
-			);
-			path = PennMobileTests;
 			sourceTree = "<group>";
 		};
 		216640831EBADB7000746B8E /* Supporting_Files */ = {
@@ -771,6 +719,7 @@
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
 				2188C6D6223C7E8300F18D90 /* SecureStore.swift */,
 				21879B1D1FB3FF54003CF552 /* Storage.swift */,
+				21D5E07523BD45F400B331CC /* KeychainAccessible.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
 			);
 			path = General;
@@ -994,6 +943,7 @@
 				21A9D941224087980000444D /* CourseMeetingTime.swift */,
 				21B653BD2246F338001A97C5 /* CoursesWebviewController.swift */,
 				21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */,
+				21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */,
 			);
 			path = Courses;
 			sourceTree = "<group>";
@@ -1042,6 +992,15 @@
 				21F5F8F220538A90005B143F /* HomeFlingCell.swift */,
 			);
 			path = "Spring Fling";
+			sourceTree = "<group>";
+		};
+		48F8E8FC32C6C262B6EEDA34 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A6110FC6C46793AC7B0C34B /* Pods_AutomatedScreenshotUITests.framework */,
+				F0DE62BEA1FEA32EC7742210 /* Pods_PennMobile.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		66E8ECA32381CA6C00945BEA /* Auth */ = {
@@ -1277,6 +1236,8 @@
 			isa = PBXGroup;
 			children = (
 				F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */,
+				F27AA01723BC6CEC00276C4F /* PermissionView.swift */,
+				F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */,
 				F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */,
 				F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */,
 			);
@@ -1308,12 +1269,10 @@
 		F5E2CE9A9024AE8E28992A5E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B3B6B9298511B0012718C49A /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
-				8289A19350D0D931760BBFE7 /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
-				2535E081BB6169E0DF20927A /* Pods-PennMobile.debug.xcconfig */,
-				93C91A85F3B72B920E9BBB76 /* Pods-PennMobile.release.xcconfig */,
-				55CE3DA4BA295CAB6571AC00 /* Pods-PennMobileTests.debug.xcconfig */,
-				F7818FD062B7FC4D6B1F5997 /* Pods-PennMobileTests.release.xcconfig */,
+				7BFDFAE10282F0B8E6770620 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
+				AD5304F6FC2861C7D57ABA3D /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
+				75BFDB43D3CB249CA1396406 /* Pods-PennMobile.debug.xcconfig */,
+				6BB8043D45B4F9EFE7BAB4F9 /* Pods-PennMobile.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1325,12 +1284,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2166407D1EBADADA00746B8E /* Build configuration list for PBXNativeTarget "PennMobile" */;
 			buildPhases = (
-				12495D9C24F193F059C031F2 /* [CP] Check Pods Manifest.lock */,
+				3AC2BD9940E1CB331E520331 /* [CP] Check Pods Manifest.lock */,
 				2166405C1EBADADA00746B8E /* Sources */,
 				2166405D1EBADADA00746B8E /* Frameworks */,
 				2166405E1EBADADA00746B8E /* Resources */,
 				EF1CF2F322177EED002D912D /* ShellScript */,
-				5545AE047CBCB5A2D43D1374 /* [CP] Embed Pods Frameworks */,
+				88A2BDAAC8F24C67425FF58A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1341,52 +1300,15 @@
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
 			productType = "com.apple.product-type.application";
 		};
-		216640731EBADADA00746B8E /* PennMobileTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 216640801EBADADA00746B8E /* Build configuration list for PBXNativeTarget "PennMobileTests" */;
-			buildPhases = (
-				4C5508FAF498DFF389909C3F /* [CP] Check Pods Manifest.lock */,
-				216640701EBADADA00746B8E /* Sources */,
-				216640711EBADADA00746B8E /* Frameworks */,
-				216640721EBADADA00746B8E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				216640761EBADADA00746B8E /* PBXTargetDependency */,
-			);
-			name = PennMobileTests;
-			productName = PennMobileTests;
-			productReference = 216640741EBADADA00746B8E /* PennMobileTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		B6B1E0612144408B00CCBBCD /* PennMobileUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B6B1E06B2144408B00CCBBCD /* Build configuration list for PBXNativeTarget "PennMobileUITests" */;
-			buildPhases = (
-				B6B1E05E2144408B00CCBBCD /* Sources */,
-				B6B1E05F2144408B00CCBBCD /* Frameworks */,
-				B6B1E0602144408B00CCBBCD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B6B1E0682144408B00CCBBCD /* PBXTargetDependency */,
-			);
-			name = PennMobileUITests;
-			productName = PennMobileUITests;
-			productReference = B6B1E0622144408B00CCBBCD /* PennMobileUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		F230FB0D225809E900760499 /* AutomatedScreenshotUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F230FB15225809E900760499 /* Build configuration list for PBXNativeTarget "AutomatedScreenshotUITests" */;
 			buildPhases = (
-				8F3DB99C2E0CC23C63E63B19 /* [CP] Check Pods Manifest.lock */,
+				58D4E2BE72AAC0F045419DE9 /* [CP] Check Pods Manifest.lock */,
 				F230FB0A225809E900760499 /* Sources */,
 				F230FB0B225809E900760499 /* Frameworks */,
 				F230FB0C225809E900760499 /* Resources */,
-				ED429B72B7CBFBFC0F12F713 /* [CP] Embed Pods Frameworks */,
+				15ABC618CBB5F4B0ABA6E748 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1422,19 +1344,6 @@
 							};
 						};
 					};
-					216640731EBADADA00746B8E = {
-						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = VU59R57FGM;
-						LastSwiftMigration = 1020;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 2166405F1EBADADA00746B8E;
-					};
-					B6B1E0612144408B00CCBBCD = {
-						CreatedOnToolsVersion = 9.4.1;
-						DevelopmentTeam = VU59R57FGM;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 2166405F1EBADADA00746B8E;
-					};
 					F230FB0D225809E900760499 = {
 						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = VU59R57FGM;
@@ -1457,8 +1366,6 @@
 			projectRoot = "";
 			targets = (
 				2166405F1EBADADA00746B8E /* PennMobile */,
-				216640731EBADADA00746B8E /* PennMobileTests */,
-				B6B1E0612144408B00CCBBCD /* PennMobileUITests */,
 				F230FB0D225809E900760499 /* AutomatedScreenshotUITests */,
 			);
 		};
@@ -1476,20 +1383,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		216640721EBADADA00746B8E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6B1E0602144408B00CCBBCD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F230FB0C225809E900760499 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1500,7 +1393,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		12495D9C24F193F059C031F2 /* [CP] Check Pods Manifest.lock */ = {
+		15ABC618CBB5F4B0ABA6E748 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimulatorStatusMagic.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3AC2BD9940E1CB331E520331 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1522,7 +1433,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4C5508FAF498DFF389909C3F /* [CP] Check Pods Manifest.lock */ = {
+		58D4E2BE72AAC0F045419DE9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1537,14 +1448,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PennMobileTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-AutomatedScreenshotUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5545AE047CBCB5A2D43D1374 /* [CP] Embed Pods Frameworks */ = {
+		88A2BDAAC8F24C67425FF58A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1588,46 +1499,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8F3DB99C2E0CC23C63E63B19 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AutomatedScreenshotUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ED429B72B7CBFBFC0F12F713 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimulatorStatusMagic.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EF1CF2F322177EED002D912D /* ShellScript */ = {
@@ -1697,6 +1568,7 @@
 				212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */,
 				2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */,
 				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
+				21D5E07623BD45F400B331CC /* KeychainAccessible.swift in Sources */,
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
@@ -1714,6 +1586,7 @@
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				F2F4C92023611EB900816456 /* Colors.swift in Sources */,
+				F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
 				21ABE2AA223D7DEA00199D29 /* ScheduleTable.swift in Sources */,
 				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,
@@ -1767,6 +1640,7 @@
 				21ABE2AF223D7E2B00199D29 /* Time.swift in Sources */,
 				21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */,
 				C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */,
+				21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
@@ -1813,6 +1687,7 @@
 				2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
+				F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */,
 				F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */,
 				2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */,
 				21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */,
@@ -1857,21 +1732,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		216640701EBADADA00746B8E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6B1E05E2144408B00CCBBCD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F230FB0A225809E900760499 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1884,16 +1744,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		216640761EBADADA00746B8E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2166405F1EBADADA00746B8E /* PennMobile */;
-			targetProxy = 216640751EBADADA00746B8E /* PBXContainerItemProxy */;
-		};
-		B6B1E0682144408B00CCBBCD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2166405F1EBADADA00746B8E /* PennMobile */;
-			targetProxy = B6B1E0672144408B00CCBBCD /* PBXContainerItemProxy */;
-		};
 		F230FB14225809E900760499 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2166405F1EBADADA00746B8E /* PennMobile */;
@@ -2027,7 +1877,7 @@
 		};
 		2166407E1EBADADA00746B8E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2535E081BB6169E0DF20927A /* Pods-PennMobile.debug.xcconfig */;
+			baseConfigurationReference = 75BFDB43D3CB249CA1396406 /* Pods-PennMobile.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2055,7 +1905,7 @@
 		};
 		2166407F1EBADADA00746B8E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 93C91A85F3B72B920E9BBB76 /* Pods-PennMobile.release.xcconfig */;
+			baseConfigurationReference = 6BB8043D45B4F9EFE7BAB4F9 /* Pods-PennMobile.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -2079,89 +1929,9 @@
 			};
 			name = Release;
 		};
-		216640811EBADADA00746B8E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55CE3DA4BA295CAB6571AC00 /* Pods-PennMobileTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				INFOPLIST_FILE = PennMobileTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pennlabs.PennMobileTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PennMobile.app/PennMobile";
-			};
-			name = Debug;
-		};
-		216640821EBADADA00746B8E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7818FD062B7FC4D6B1F5997 /* Pods-PennMobileTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				INFOPLIST_FILE = PennMobileTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pennlabs.PennMobileTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PennMobile.app/PennMobile";
-			};
-			name = Release;
-		};
-		B6B1E0692144408B00CCBBCD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = PennMobileUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobileUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PennMobile;
-			};
-			name = Debug;
-		};
-		B6B1E06A2144408B00CCBBCD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = PennMobileUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobileUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PennMobile;
-			};
-			name = Release;
-		};
 		F230FB16225809E900760499 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B3B6B9298511B0012718C49A /* Pods-AutomatedScreenshotUITests.debug.xcconfig */;
+			baseConfigurationReference = 7BFDFAE10282F0B8E6770620 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2186,7 +1956,7 @@
 		};
 		F230FB17225809E900760499 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8289A19350D0D931760BBFE7 /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
+			baseConfigurationReference = AD5304F6FC2861C7D57ABA3D /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2225,24 +1995,6 @@
 			buildConfigurations = (
 				2166407E1EBADADA00746B8E /* Debug */,
 				2166407F1EBADADA00746B8E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		216640801EBADADA00746B8E /* Build configuration list for PBXNativeTarget "PennMobileTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				216640811EBADADA00746B8E /* Debug */,
-				216640821EBADADA00746B8E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B6B1E06B2144408B00CCBBCD /* Build configuration list for PBXNativeTarget "PennMobileUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B6B1E0692144408B00CCBBCD /* Debug */,
-				B6B1E06A2144408B00CCBBCD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

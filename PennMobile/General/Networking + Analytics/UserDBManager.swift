@@ -18,7 +18,7 @@ func getDeviceID() -> String {
     #endif
 }
 
-class UserDBManager: NSObject, Requestable {
+class UserDBManager: NSObject, Requestable, KeychainAccessible, SHA256Hashable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
@@ -45,6 +45,27 @@ class UserDBManager: NSObject, Requestable {
             let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
             task.resume()
         }
+    }
+    
+    /**
+      Returns a URLRequest configured for making anonymous requests. The server matches either the pennkey-password hash or the private UUID in the DB to find the anonymous account ID, updating the identifiers if the password of device changes.
+     
+      - parameter url: A string URL.
+      - parameter privacyOption: A PrivacyOption
+     
+      - returns: URLRequest containing the data type, a SHA256 hash of the pennkey-password, and the privacy option UUID in the headers
+    */
+    fileprivate func getAnonymousPrivacyRequest(url: String, for privacyOption: PrivacyOption) -> URLRequest {
+        let url = URL(string: url)!
+        var request = URLRequest(url: url)
+        guard let pennkey = getPennKey(), let password = getPassword(), let privateUUID = privacyOption.privateUUID else {
+            return request
+        }
+        let passwordHash = hash(string: pennkey + "-" + password)
+        request.setValue(passwordHash, forHTTPHeaderField: "X-Password-Hash")
+        request.setValue(privateUUID, forHTTPHeaderField: "X-Device-Key")
+        request.setValue(privacyOption.rawValue, forHTTPHeaderField: "X-Data-Type")
+        return request
     }
 }
 
@@ -210,6 +231,47 @@ extension UserDBManager {
 //            completion?(false)
 //        }
     }
+    
+    func saveCoursesAnonymously(_ courses: Set<Course>, _ completion: ((_ success: Bool) -> Void)? = nil) {
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+        do {
+            var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/account/courses/private/save", for: .anonymizedCourseSchedule)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            let jsonData = try jsonEncoder.encode(courses)
+            request.httpBody = jsonData
+
+            let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        UserDefaults.standard.setLastShareDate(for: .anonymizedCourseSchedule)
+                    }
+                    completion?(httpResponse.statusCode == 200)
+                } else {
+                    completion?(false)
+                }
+            })
+            task.resume()
+        }
+        catch {
+            completion?(false)
+        }
+    }
+    
+    func deleteAnonymousCourses(_ completion: @escaping (_ success: Bool) -> Void) {
+        var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/account/courses/private/delete", for: .anonymizedCourseSchedule)
+        request.httpMethod = "POST"
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                completion(httpResponse.statusCode == 200)
+            } else {
+                completion(false)
+            }
+        })
+        task.resume()
+    }
 }
 
 // MARK: - Transaction Data
@@ -286,22 +348,22 @@ extension UserDBManager {
         }
     }
     
-    func saveUserNotificationSettings(_ callback: @escaping (_ success: Bool) -> Void) {
+    func saveUserNotificationSettings(_ callback: ((_ success: Bool) -> Void)? = nil) {
         let urlRoute = "\(baseUrl)/notifications/settings"
         let params = UserDefaults.standard.getAllNotificationPreferences()
         saveUserSettingsDictionary(route: urlRoute, params: params, callback)
     }
     
-    func saveUserPrivacySettings(_ callback: @escaping (_ success: Bool) -> Void) {
+    func saveUserPrivacySettings(_ callback: ((_ success: Bool) -> Void)? = nil) {
         let urlRoute = "\(baseUrl)/privacy/settings"
         let params = UserDefaults.standard.getAllPrivacyPreferences()
         saveUserSettingsDictionary(route: urlRoute, params: params, callback)
     }
     
-    private func saveUserSettingsDictionary(route: String, params: Dictionary<String, Bool>, _ callback: @escaping (_ success: Bool) -> Void) {
+    private func saveUserSettingsDictionary(route: String, params: Dictionary<String, Bool>, _ callback: ((_ success: Bool) -> Void)?) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             guard let token = token, let payload = try? JSONEncoder().encode(params) else {
-                callback(false)
+                callback?(false)
                 return
             }
             
@@ -312,7 +374,9 @@ extension UserDBManager {
             request.httpBody = payload
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let httpResponse = response as? HTTPURLResponse {
-                    callback(httpResponse.statusCode == 200)
+                    callback?(httpResponse.statusCode == 200)
+                } else {
+                    callback?(false)
                 }
             }
             task.resume()
@@ -337,6 +401,57 @@ extension UserDBManager {
         let url = "\(baseUrl)/notifications/register"
         makePostRequestWithAccessToken(url: url, params: [:]) { (_, _, _) in
             completion?()
+        }
+    }
+}
+
+// MARK: - Anonymized Courses
+extension UserDBManager {
+    func saveCourses(_ courses: Set<Course>, _ callback: @escaping (_ success: Bool) -> Void) {
+        guard UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) else {
+            // We don't have permission! Do not upload anon courses.
+            callback(false)
+            return
+        }
+        let route = "\(baseUrl)/account/courses"
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        
+        // TODO: Make this uuid string saved somewhere.
+        let codableCourses = CoursesJSON(id: UUID().uuidString, courses: courses)
+        
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token, let payload = try? encoder.encode(codableCourses) else {
+                callback(false)
+                return
+            }
+            
+            let url = URL(string: route)!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = payload
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    callback(httpResponse.statusCode == 200)
+                } else {
+                    callback(false)
+                }
+            }
+            task.resume()
+        }
+    }
+}
+
+// MARK: - Anonymized Token Registration
+extension UserDBManager {
+    /// Updates the anonymization keys in case either of them changed. The only key that may change is the pennkey-password.
+    func updateAnonymizationKeys() {
+        for option in PrivacyOption.anonymizedOptions {
+            var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/privacy/anonymous/register", for: option)
+            request.httpMethod = "POST"
+            let task = URLSession.shared.dataTask(with: request)
+            task.resume()
         }
     }
 }

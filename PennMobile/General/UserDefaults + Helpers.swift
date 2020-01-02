@@ -39,6 +39,10 @@ extension UserDefaults {
         for key in UserDefaultsKeys.allCases {
             removeObject(forKey: key.rawValue)
         }
+        for option in PrivacyOption.allCases {
+            removeObject(forKey: option.didRequestKey)
+            removeObject(forKey: option.didShareKey)
+        }
     }
 }
 
@@ -395,6 +399,7 @@ extension UserDefaults {
 // MARK: - Privacy Settings
 extension UserDefaults {
     
+    // MARK: Get and Save Preferences
     // Set values for each privacy option
     func set(_ privacyOption: PrivacyOption, to newValue: Bool) {
         var prefs = getAllPrivacyPreferences()
@@ -427,6 +432,43 @@ extension UserDefaults {
 
     private func clearPrivacyPreferences() {
         removeObject(forKey: UserDefaultsKeys.privacyPreferences.rawValue)
+    }
+    
+    // MARK: Last Permission Request Date
+    // Set values representing whether or not permission was requested for a given privacy option
+    // This is not synced to the server, so we ask a user again if they ever delete the app or get a new phone
+    func setLastDidAskPermission(for privacyOption: PrivacyOption) {
+        UserDefaults.standard.set(Date(), forKey: privacyOption.didRequestKey)
+    }
+    
+    // Get the last date we asked for this option, or nil if we've never asked (on this installation)
+    func getLastDidAskPermission(for privacyOption: PrivacyOption) -> Date? {
+        UserDefaults.standard.value(forKey: privacyOption.didRequestKey) as? Date
+    }
+    
+    // MARK: Last Data Sharing Date
+    // Set the last date we shared data corresponding to this option (ex: when did we last upload courses)
+    func setLastShareDate(for privacyOption: PrivacyOption) {
+        UserDefaults.standard.set(Date(), forKey: privacyOption.didShareKey)
+    }
+    // Get the last date we shared data for this option
+    func getLastShareDate(for privacyOption: PrivacyOption) -> Date? {
+        UserDefaults.standard.value(forKey: privacyOption.didShareKey) as? Date
+    }
+    
+    // MARK: Privacy Option UUID
+    // Each privacy option has its own UUID, which is sent to the server along with any anonymous data to allow us to track that data over time, as well as delete it if requested by the user.
+    func getPrivacyUUID(for privacyOption: PrivacyOption) -> String? {
+        if let privateKey = privacyOption.privateIDKey {
+            if let uuid = UserDefaults.standard.string(forKey: privateKey) {
+                return uuid
+            } else {
+                let uuid = String.randomString(length: 32)
+                UserDefaults.standard.set(uuid, forKey: privateKey)
+                return uuid
+            }
+        }
+        return nil
     }
 }
 

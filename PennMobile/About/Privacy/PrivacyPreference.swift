@@ -25,7 +25,7 @@ typealias PrivacyPreferences = Dictionary<String, Bool>
  individual preferences values for each option.
 */
 
-enum PrivacyOption: String {
+enum PrivacyOption: String, CaseIterable {
     case anonymizedCourseSchedule
     case diningBalanceAndHistory
     case collegeHouse
@@ -34,6 +34,11 @@ enum PrivacyOption: String {
     // Options to be actually shown to the user
     static let visibleOptions: [PrivacyOption] = [
         .anonymizedCourseSchedule, .diningBalanceAndHistory, .collegeHouse, .academicIdentity
+    ]
+    
+    // Options that required the use of anonymized data
+    static let anonymizedOptions: [PrivacyOption] = [
+        .anonymizedCourseSchedule
     ]
     
     var cellTitle: String {
@@ -60,6 +65,78 @@ enum PrivacyOption: String {
         case .diningBalanceAndHistory: return UserDefaults.standard.hasDiningPlan()
         case .academicIdentity: return Account.getAccount()?.isStudent ?? false
         default: return false
+        }
+    }
+    
+    // MARK: User Defaults Keys
+    // These keys ARE cleared when UserDefaults is wiped.
+    
+    // A key used by UserDefaults to tell if and when we've asked for this privacy option
+    var didRequestKey: String {
+        return "didRequest_" + self.rawValue
+    }
+    
+    // A key used by UserDefaults to tell if and when we've shared data for this option
+    var didShareKey: String {
+        return "didShare_" + self.rawValue
+    }
+    
+    
+    // This key is NOT cleared when UserDefaults is wiped.
+    // A key used by UserDefaults to store a UUID which points to this user's anonymous data on the server for this option. This should never leave the device
+    var privateIDKey: String? {
+        // TODO: Use keychain + hashing penn password and pennid to get id.
+        guard let accountId = UserDefaults.standard.getAccountID() else { return nil }
+        return "privateID_" + self.rawValue + "_" + accountId
+    }
+    
+    var privateUUID: String? {
+        UserDefaults.standard.getPrivacyUUID(for: self)
+    }
+}
+
+extension PrivacyOption {
+    func givePermission(_ completion: @escaping (_ success: Bool) -> Void) {
+        UserDefaults.standard.set(self, to: true)
+        UserDBManager.shared.saveUserPrivacySettings { (successSave) in
+            if !successSave {
+                // Unable to save permissions. Reverse change in UserDefaults.
+                UserDefaults.standard.set(self, to: false)
+                completion(false)
+                return
+            }
+            
+            switch self {
+            case .anonymizedCourseSchedule:
+                PennInTouchNetworkManager.instance.getCourses { (courses) in
+                    if let courses = courses {
+                        UserDefaults.standard.setLastShareDate(for: self)
+                        UserDBManager.shared.saveCoursesAnonymously(courses)
+                    }
+                }
+                // Privacy setting successfully saved even if courses not able to be fetched, so return success
+                completion(true)
+            default: completion(true)
+            }
+        }
+    }
+    
+    func removePermission(_ completion: @escaping (_ success: Bool) -> Void) {
+        UserDefaults.standard.set(self, to: false)
+        UserDBManager.shared.saveUserPrivacySettings { (successSave) in
+            if !successSave {
+                // Unable to save permissions. Reverse change in UserDefaults.
+                UserDefaults.standard.set(self, to: true)
+                completion(false)
+                return
+            }
+            
+            switch self {
+            case .anonymizedCourseSchedule:
+                UserDefaults.standard.removeObject(forKey: self.didShareKey)
+                UserDBManager.shared.deleteAnonymousCourses(completion)
+            default: completion(true)
+            }
         }
     }
 }

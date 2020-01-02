@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate {
+class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate, KeychainAccessible {
     
     final private let loginURL = "https://weblogin.pennkey.upenn.edu/login"
     open var urlStr: String {
@@ -20,9 +20,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     private var password: String?
     
     final private var webView: WKWebView!
-    
-    final internal var secureStore: SecureStore!
-    
+        
     var shouldAutoNavigate: Bool = true
     var shouldLoadCookies: Bool {
         return true
@@ -39,22 +37,8 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         navigationItem.title = "PennKey Login"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
-        let genericPwdQueryable =
-            GenericPasswordQueryable(service: "PennWebLogin")
-        secureStore =
-            SecureStore(secureStoreQueryable: genericPwdQueryable)
-        
-        do {
-            pennkey = try secureStore.getValue(for: "PennKey")
-        } catch {
-            pennkey = nil
-        }
-        
-        do {
-            password = try secureStore.getValue(for: "PennKey Password")
-        } catch {
-            password = nil
-        }
+        self.pennkey = getPennKey()
+        self.password = getPassword()
     }
     
     func configureAndLoad(wkDataStore: WKWebsiteDataStore) {
@@ -137,8 +121,11 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
 
         if url.absoluteString.contains("twostep") {
             guard let pennkey = pennkey, let password = password else { return }
-            try? secureStore.setValue(pennkey, for: "PennKey")
-            try? secureStore.setValue(password, for: "PennKey Password")
+            if password != getPassword() {
+                UserDBManager.shared.updateAnonymizationKeys()
+            }
+            savePennKey(pennkey)
+            savePassword(password)
         } else {
             self.autofillCredentials()
             self.trustDevice()
