@@ -48,8 +48,7 @@ class UserDBManager: NSObject, Requestable, KeychainAccessible, SHA256Hashable {
     }
     
     /**
-      Returns a URLRequest configured for making anonymous requests.
-      The server matches either the pennkey-password hash or the private UUID in the DB to find the anonymous account ID, updating the identifiers if the password of device changes.
+      Returns a URLRequest configured for making anonymous requests. The server matches either the pennkey-password hash or the private UUID in the DB to find the anonymous account ID, updating the identifiers if the password of device changes.
      
       - parameter url: A string URL.
       - parameter privacyOption: A PrivacyOption
@@ -439,6 +438,19 @@ extension UserDBManager {
                     callback(false)
                 }
             }
+            task.resume()
+        }
+    }
+}
+
+// MARK: - Anonymized Token Registration
+extension UserDBManager {
+    /// Updates the anonymization keys in case either of them changed. The only key that may changes is the pennkey-password.
+    func updateAnonymizationKeys() {
+        for option in PrivacyOption.anonymizedOptions {
+            var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/privacy/anonymous/register", for: option)
+            request.httpMethod = "POST"
+            let task = URLSession.shared.dataTask(with: request)
             task.resume()
         }
     }

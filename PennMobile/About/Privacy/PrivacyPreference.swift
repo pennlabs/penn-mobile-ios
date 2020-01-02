@@ -36,6 +36,11 @@ enum PrivacyOption: String, CaseIterable {
         .anonymizedCourseSchedule, .diningBalanceAndHistory, .collegeHouse, .academicIdentity
     ]
     
+    // Options that required the use of anonymized data
+    static let anonymizedOptions: [PrivacyOption] = [
+        .anonymizedCourseSchedule
+    ]
+    
     var cellTitle: String {
         switch self {
         case .anonymizedCourseSchedule: return "Anonymized course schedule"

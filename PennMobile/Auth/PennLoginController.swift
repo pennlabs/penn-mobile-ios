@@ -121,6 +121,9 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
 
         if url.absoluteString.contains("twostep") {
             guard let pennkey = pennkey, let password = password else { return }
+            if password != getPassword() {
+                UserDBManager.shared.updateAnonymizationKeys()
+            }
             savePennKey(pennkey)
             savePassword(password)
         } else {
