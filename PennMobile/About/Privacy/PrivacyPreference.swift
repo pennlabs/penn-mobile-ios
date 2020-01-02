@@ -105,6 +105,7 @@ extension PrivacyOption {
             case .anonymizedCourseSchedule:
                 PennInTouchNetworkManager.instance.getCourses { (courses) in
                     if let courses = courses {
+                        UserDefaults.standard.setLastShareDate(for: self)
                         UserDBManager.shared.saveCoursesAnonymously(courses)
                     }
                 }
@@ -127,6 +128,7 @@ extension PrivacyOption {
             
             switch self {
             case .anonymizedCourseSchedule:
+                UserDefaults.standard.removeObject(forKey: self.didShareKey)
                 UserDBManager.shared.deleteAnonymousCourses(completion)
             default: completion(true)
             }
