@@ -30,9 +30,11 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
             if let decision = delegate.userDecision {
                 switch decision {
                 case .affirmative:
+                    UserDefaults.standard.setLastDidAskPermission(for: .anonymizedCourseSchedule)
                     UserDefaults.standard.set(.anonymizedCourseSchedule, to: true)
                     self.fetchAndSaveCourses()
                 case .negative:
+                    UserDefaults.standard.setLastDidAskPermission(for: .anonymizedCourseSchedule)
                     self.declinePermission()
                     self.dismiss(animated: true, completion: nil)
                 case .moreInfo: self.open(scheme: "https://pennlabs.org")
@@ -46,8 +48,6 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
         childView.view.frame = view.bounds
         view.addSubview(childView.view)
         childView.didMove(toParent: self)
-        
-        UserDefaults.standard.setLastDidAskPermission(for: .anonymizedCourseSchedule)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

@@ -43,7 +43,7 @@ extension PrivacyTableViewCell {
     
     @objc func didToggle(_ sender: UISwitch) {
         guard let option = privacyOption else { return }
-        self.changePreferenceDelegate?.changed(option: option, toValue: sender.isOn)
+        self.changePreferenceDelegate?.changed(option: option, givePermission: sender.isOn)
     }
     
     fileprivate func prepareUI() {

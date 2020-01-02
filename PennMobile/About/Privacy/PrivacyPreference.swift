@@ -89,3 +89,47 @@ enum PrivacyOption: String, CaseIterable {
         UserDefaults.standard.getPrivacyUUID(for: self)
     }
 }
+
+extension PrivacyOption {
+    func givePermission(_ completion: @escaping (_ success: Bool) -> Void) {
+        UserDefaults.standard.set(self, to: true)
+        UserDBManager.shared.saveUserPrivacySettings { (successSave) in
+            if !successSave {
+                // Unable to save permissions. Reverse change in UserDefaults.
+                UserDefaults.standard.set(self, to: false)
+                completion(false)
+                return
+            }
+            
+            switch self {
+            case .anonymizedCourseSchedule:
+                PennInTouchNetworkManager.instance.getCourses { (courses) in
+                    if let courses = courses {
+                        UserDBManager.shared.saveCoursesAnonymously(courses)
+                    }
+                }
+                // Privacy setting successfully saved even if courses not able to be fetched, so return success
+                completion(true)
+            default: completion(true)
+            }
+        }
+    }
+    
+    func removePermission(_ completion: @escaping (_ success: Bool) -> Void) {
+        UserDefaults.standard.set(self, to: false)
+        UserDBManager.shared.saveUserPrivacySettings { (successSave) in
+            if !successSave {
+                // Unable to save permissions. Reverse change in UserDefaults.
+                UserDefaults.standard.set(self, to: true)
+                completion(false)
+                return
+            }
+            
+            switch self {
+            case .anonymizedCourseSchedule:
+                UserDBManager.shared.deleteAnonymousCourses(completion)
+            default: completion(true)
+            }
+        }
+    }
+}

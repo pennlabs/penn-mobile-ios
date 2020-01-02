@@ -9,7 +9,7 @@
 import UIKit
 
 protocol PrivacyViewControllerChangedPreference: class {
-    func changed(option: PrivacyOption, toValue: Bool)
+    func changed(option: PrivacyOption, givePermission: Bool)
 }
 
 class PrivacyViewController: GenericTableViewController, ShowsAlert, IndicatorEnabled {
@@ -37,25 +37,29 @@ class PrivacyViewController: GenericTableViewController, ShowsAlert, IndicatorEn
 
 // MARK: - Did Change Preference
 extension PrivacyViewController: PrivacyViewControllerChangedPreference {
-    func changed(option: PrivacyOption, toValue: Bool) {
-        // Save change to local storage (user defaults)
-        UserDefaults.standard.set(option, to: toValue)
-        
-        // Upload change to the Penn Mobile server. If this fails, reverse the change.
+    func changed(option: PrivacyOption, givePermission: Bool) {
         self.showActivity()
         let deadline = DispatchTime.now() + 1
-        UserDBManager.shared.saveUserPrivacySettings { (success) in
-            DispatchQueue.main.asyncAfter(deadline: deadline) {
-                self.hideActivity()
-                if success {
-//                    self.showAlert(withMsg: "\(option.cellTitle) \(toValue ? "enabled" : "disabled")", title: "Preference Saved", completion: nil)
-                } else {
-                    // Couldn't save change to the server
-                    self.showAlert(withMsg: "Could not save privacy preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
-                        // Reverse the change, if we couldn't connect to the server
-                        UserDefaults.standard.set(option, to: !toValue)
-                        self.tableView.reloadData()
-                    })
+        if givePermission {
+            option.givePermission { (success) in
+                DispatchQueue.main.asyncAfter(deadline: deadline) {
+                    self.hideActivity()
+                    if !success {
+                        self.showAlert(withMsg: "Could not save privacy preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
+                            self.tableView.reloadData()
+                        })
+                    }
+                }
+            }
+        } else {
+            option.removePermission { (success) in
+                DispatchQueue.main.asyncAfter(deadline: deadline) {
+                    self.hideActivity()
+                    if !success {
+                        self.showAlert(withMsg: "Could not save privacy preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
+                            self.tableView.reloadData()
+                        })
+                    }
                 }
             }
         }

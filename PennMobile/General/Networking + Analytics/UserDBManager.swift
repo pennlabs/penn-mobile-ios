@@ -260,6 +260,19 @@ extension UserDBManager {
             completion?(false)
         }
     }
+    
+    func deleteAnonymousCourses(_ completion: @escaping (_ success: Bool) -> Void) {
+        var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/account/courses/private/delete", for: .anonymizedCourseSchedule)
+        request.httpMethod = "POST"
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            if let httpResponse = response as? HTTPURLResponse {
+                completion(httpResponse.statusCode == 200)
+            } else {
+                completion(false)
+            }
+        })
+        task.resume()
+    }
 }
 
 // MARK: - Transaction Data
