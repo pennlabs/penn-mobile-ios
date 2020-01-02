@@ -12,7 +12,7 @@ import Combine
 struct PermissionView: View {
     
     enum Choice {
-        case affirmative, negative, close, moreInfo
+        case affirmative, negative, moreInfo
     }
     
     @ObservedObject var delegate: PrivacyPermissionDelegate
@@ -66,10 +66,6 @@ struct PermissionView: View {
     
     func doNotShareCourses() {
         delegate.userDecision = .negative
-    }
-    
-    func closeView() {
-        delegate.userDecision = .close
     }
 }
 

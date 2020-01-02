@@ -34,9 +34,7 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
                     self.declinePermission()
                     self.dismiss(animated: true, completion: nil)
                 case .moreInfo: self.open(scheme: "https://pennlabs.org")
-                case .close: print("CLOSE")
                 }
-                //vc.dismiss(animated: true, completion: nil)
             }
         }
         
@@ -46,6 +44,8 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
         childView.view.frame = view.bounds
         view.addSubview(childView.view)
         childView.didMove(toParent: self)
+        
+        UserDefaults.standard.setLastDidAskPermission(for: .anonymizedCourseSchedule)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
