@@ -237,7 +237,7 @@ extension UserDBManager {
         let jsonEncoder = JSONEncoder()
         jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
         do {
-            var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/account/courses", for: .anonymizedCourseSchedule)
+            var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/account/courses/private/save", for: .anonymizedCourseSchedule)
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 

@@ -61,19 +61,34 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
 // MARK: - Networking
 @available(iOS 13, *)
 extension CoursePrivacyController {
-    fileprivate func fetchAndSaveCourses() {
+    fileprivate func fetchAndSaveCourses(shouldRequestLoginOnFail: Bool = true) {
         showActivity()
         PennInTouchNetworkManager.instance.getCourses { (courses) in
-            if let courses = courses {
-                UserDBManager.shared.saveCoursesAnonymously(courses) { (success) in
-                    DispatchQueue.main.async {
-                        print(courses)
-                        self.hideActivity()
-                        self.dismiss(animated: true, completion: nil)
+            DispatchQueue.main.async {
+                if let courses = courses {
+                    // Save courses anonymously on database
+                    UserDBManager.shared.saveCoursesAnonymously(courses) { (success) in
+                        DispatchQueue.main.async {
+                            UserDefaults.standard.saveCourses(courses)
+                            self.hideActivity()
+                            self.dismiss(animated: true, completion: nil)
+                        }
                     }
-                }
-            } else {
-                DispatchQueue.main.async {
+                } else if shouldRequestLoginOnFail {
+                    // Failed to retrieve courses. Request user to login in case failure was due to authentication.
+                    self.hideActivity()
+                    let llc = LabsLoginController(fetchAllInfo: false) { (success) in
+                        if success {
+                            // Do NOT request login a second time
+                            self.fetchAndSaveCourses(shouldRequestLoginOnFail: false)
+                        } else {
+                            self.hideActivity()
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                    let nvc = UINavigationController(rootViewController: llc)
+                    self.present(nvc, animated: true, completion: nil)
+                } else {
                     self.hideActivity()
                     self.dismiss(animated: true, completion: nil)
                 }
