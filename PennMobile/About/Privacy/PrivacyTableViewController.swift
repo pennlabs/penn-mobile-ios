@@ -42,7 +42,7 @@ extension PrivacyViewController: PrivacyViewControllerChangedPreference {
             // This PrivacyOption requires authentication to give permission.
             if let lastLogin = UserDefaults.standard.getLastLogin(), lastLogin.minutesFrom(date: Date()) <= 10 {
                 // Don't ask user to login if it's been less than 10 minutes since last login
-                changePermission(option: option, givePermission: givePermission)
+                self.changePermission(option: option, givePermission: givePermission)
             } else {
                 let llc = LabsLoginController(fetchAllInfo: false, shouldRetrieveRefreshToken: false) { (success) in
                     if success {
@@ -53,7 +53,7 @@ extension PrivacyViewController: PrivacyViewControllerChangedPreference {
                 self.present(nvc, animated: true, completion: nil)
             }
         } else {
-            changePermission(option: option, givePermission: givePermission)
+            self.changePermission(option: option, givePermission: givePermission)
         }
     }
     
