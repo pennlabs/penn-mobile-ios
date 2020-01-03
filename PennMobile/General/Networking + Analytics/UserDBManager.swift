@@ -303,6 +303,50 @@ extension UserDBManager {
             completion?(nil)
         }
     }
+    
+    func saveMultiyearHousingData(_ completion: (( _ success: Bool) -> Void)? = nil) {
+        guard let housingResults = UserDefaults.standard.getHousingResults() else {
+            completion?(true)
+            return
+        }
+        
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                completion?(false)
+                return
+            }
+            
+            let url = URL(string: "\(self.baseUrl)/housing/all")!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let jsonEncoder = JSONEncoder()
+            jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+            let jsonData = try? jsonEncoder.encode(housingResults)
+            request.httpBody = jsonData
+
+            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                    completion?(true)
+                } else {
+                    completion?(false)
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func deleteHousingData(_ completion: (( _ success: Bool) -> Void)? = nil) {
+        let url = "\(baseUrl)/housing/delete"
+        makePostRequestWithAccessToken(url: url, params: [:]) { (_, response, _) in
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                completion?(true)
+            } else {
+                completion?(false)
+            }
+        }
+    }
 }
 
 // MARK: - Privacy and Notification Settings

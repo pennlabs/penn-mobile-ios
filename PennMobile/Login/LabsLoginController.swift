@@ -166,11 +166,14 @@ extension LabsLoginController {
                 
                 if account.isStudent {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                        self.getAndSaveNotificationAndPrivacyPreferences()
+                        self.getAndSaveNotificationAndPrivacyPreferences {
+                            if UserDefaults.standard.getPreference(for: .collegeHouse) {
+                                CampusExpressNetworkManager.instance.updateHousingData()
+                            }
+                        }
                         self.getDiningBalance()
                         self.getDiningTransactions()
                         self.getAndSaveLaundryPreferences()
-                        CampusExpressNetworkManager.instance.updateHousingData()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             self.getCourses()
                         }
@@ -226,8 +229,10 @@ extension LabsLoginController {
         }
     }
     
-    fileprivate func getAndSaveNotificationAndPrivacyPreferences() {
-        UserDBManager.shared.syncUserSettings { (success) in }
+    fileprivate func getAndSaveNotificationAndPrivacyPreferences(_ completion: @escaping () -> Void) {
+        UserDBManager.shared.syncUserSettings { (success) in
+            completion()
+        }
     }
     
     fileprivate func obtainCoursePermission(_ callback: @escaping (_ granted: Bool) -> Void) {
