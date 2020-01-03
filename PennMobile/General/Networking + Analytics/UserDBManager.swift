@@ -501,3 +501,46 @@ extension UserDBManager {
         }
     }
 }
+
+// MARK: - Academic Degrees
+extension UserDBManager {
+    /// Deletes all academic degree information from server (school, grad year, major)
+    func deleteAcademicInfo(_ completion: (( _ success: Bool) -> Void)? = nil) {
+        let url = "\(baseUrl)/account/degrees/delete"
+        makePostRequestWithAccessToken(url: url, params: [:]) { (_, response, _) in
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                completion?(true)
+            } else {
+                completion?(false)
+            }
+        }
+    }
+    
+    func saveAcademicInfo(_ degrees: Set<Degree>, _ completion: (( _ success: Bool) -> Void)? = nil) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                completion?(false)
+                return
+            }
+            
+            let url = URL(string: "\(self.baseUrl)/account/degrees")!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            let jsonEncoder = JSONEncoder()
+            jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+            let jsonData = try? jsonEncoder.encode(degrees)
+            request.httpBody = jsonData
+
+            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                    completion?(true)
+                } else {
+                    completion?(false)
+                }
+            }
+            task.resume()
+        }
+    }
+}
