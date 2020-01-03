@@ -33,7 +33,7 @@ enum PrivacyOption: String, CaseIterable {
     
     // Options to be actually shown to the user
     static let visibleOptions: [PrivacyOption] = [
-        .anonymizedCourseSchedule, .diningBalanceAndHistory, .collegeHouse, .academicIdentity
+        .anonymizedCourseSchedule, .collegeHouse, .academicIdentity
     ]
     
     // Options that required the use of anonymized data
