@@ -115,10 +115,16 @@ extension PrivacyOption {
                         UserDBManager.shared.saveCoursesAnonymously(courses)
                     }
                 }
-                // Privacy setting successfully saved even if courses not able to be fetched, so return success
-                completion(true)
-            default: completion(true)
+            case .collegeHouse:
+                // Save the current semester and then save previous semesters stored in UserDefaults
+                CampusExpressNetworkManager.instance.updateHousingData { (success) in
+                    UserDBManager.shared.saveMultiyearHousingData()
+                }
+            default: break
             }
+            
+            // Privacy setting successfully saved even if data not able to be fetched, so return success
+            completion(true)
         }
     }
     
@@ -136,6 +142,8 @@ extension PrivacyOption {
             case .anonymizedCourseSchedule:
                 UserDefaults.standard.removeObject(forKey: self.didShareKey)
                 UserDBManager.shared.deleteAnonymousCourses(completion)
+            case .collegeHouse:
+                UserDBManager.shared.deleteHousingData(completion)
             default: completion(true)
             }
         }
