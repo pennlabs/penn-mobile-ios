@@ -287,6 +287,7 @@ extension UserDBManager {
 
 // MARK: - Housing Data
 extension UserDBManager {
+    /// Uploads raw CampusExpress housing html to the server, which parses it and saves the corresponding housing result. This result is returned and stored in UserDefaults.
     func saveHousingData(html: String, _ completion: (( _ result: HousingResult?) -> Void)? = nil) {
         let url = "\(baseUrl)/housing"
         let params = ["html": html]
@@ -304,6 +305,7 @@ extension UserDBManager {
         }
     }
     
+    /// Uploads all housing results stored in UserDefaults to the server
     func saveMultiyearHousingData(_ completion: (( _ success: Bool) -> Void)? = nil) {
         guard let housingResults = UserDefaults.standard.getHousingResults() else {
             completion?(true)

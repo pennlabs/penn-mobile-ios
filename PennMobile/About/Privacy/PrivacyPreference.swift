@@ -116,7 +116,7 @@ extension PrivacyOption {
                     }
                 }
             case .collegeHouse:
-                // Save the current semester and then save previous stored in semesters from UserDefaults
+                // Save the current semester and then save previous semesters stored in UserDefaults
                 CampusExpressNetworkManager.instance.updateHousingData { (success) in
                     UserDBManager.shared.saveMultiyearHousingData()
                 }
