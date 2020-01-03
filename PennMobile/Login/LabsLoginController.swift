@@ -56,13 +56,15 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
     
     private var code: String?
     
+    private var shouldRetrieveRefreshToken = true
     private var shouldFetchAllInfo: Bool!
     private var completion: ((_ success: Bool) -> Void)!
     
-    convenience init(fetchAllInfo: Bool = true, completion: @escaping (_ success: Bool) -> Void) {
+    convenience init(fetchAllInfo: Bool = true, shouldRetrieveRefreshToken: Bool = true, completion: @escaping (_ success: Bool) -> Void) {
         self.init()
         self.completion = completion
         self.shouldFetchAllInfo = fetchAllInfo
+        self.shouldRetrieveRefreshToken = shouldRetrieveRefreshToken
     }
     
     convenience init(fetchAllInfo: Bool = true) {
@@ -80,6 +82,13 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
     }
     
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard shouldRetrieveRefreshToken else {
+            // Refresh token does not to be retrieved. Dismiss controller immediately.
+            decisionHandler(.cancel)
+            self.dismiss(successful: true)
+            return
+        }
+        
         guard let code = code else {
             // Something went wrong, code not fetched
             decisionHandler(.cancel)
@@ -132,7 +141,7 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
             }
             UserDefaults.standard.storeCookies()
             self.hideActivity()
-            super.dismiss(animated: false, completion: nil)
+            super.dismiss(animated: true, completion: nil)
             self.completion(successful)
         }
     }

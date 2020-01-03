@@ -69,9 +69,11 @@ enum PrivacyOption: String, CaseIterable {
         }
     }
     
-    var requireAuth: Bool {
+    var requiresAuth: Bool {
         switch self {
+        case .anonymizedCourseSchedule: return true
         case .academicIdentity: return true
+        case .collegeHouse: return true
         default: return false
         }
     }
