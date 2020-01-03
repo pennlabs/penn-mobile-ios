@@ -133,6 +133,7 @@ extension PrivacyOption {
                 PennInTouchNetworkManager.instance.getDegrees { (degrees) in
                     if let degrees = degrees {
                         UserDBManager.shared.saveAcademicInfo(degrees)
+                        UserDefaults.standard.set(isInWharton: degrees.hasDegreeInWharton())
                     }
                 }
             default: break
