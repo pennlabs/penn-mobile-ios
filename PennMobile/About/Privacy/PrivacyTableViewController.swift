@@ -38,29 +38,47 @@ class PrivacyViewController: GenericTableViewController, ShowsAlert, IndicatorEn
 // MARK: - Did Change Preference
 extension PrivacyViewController: PrivacyViewControllerChangedPreference {
     func changed(option: PrivacyOption, givePermission: Bool) {
+        if givePermission && option.requiresAuth {
+            // This PrivacyOption requires authentication to give permission.
+            if let lastLogin = UserDefaults.standard.getLastLogin(), lastLogin.minutesFrom(date: Date()) <= 10 {
+                // Don't ask user to login if it's been less than 10 minutes since last login
+                self.changePermission(option: option, givePermission: givePermission)
+            } else {
+                let llc = LabsLoginController(fetchAllInfo: false, shouldRetrieveRefreshToken: false) { (success) in
+                    if success {
+                        self.changePermission(option: option, givePermission: givePermission)
+                    }
+                }
+                let nvc = UINavigationController(rootViewController: llc)
+                self.present(nvc, animated: true, completion: nil)
+            }
+        } else {
+            self.changePermission(option: option, givePermission: givePermission)
+        }
+    }
+    
+    private func changePermission(option: PrivacyOption, givePermission: Bool) {
         self.showActivity()
         let deadline = DispatchTime.now() + 1
         if givePermission {
             option.givePermission { (success) in
-                DispatchQueue.main.asyncAfter(deadline: deadline) {
-                    self.hideActivity()
-                    if !success {
-                        self.showAlert(withMsg: "Could not save privacy preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
-                            self.tableView.reloadData()
-                        })
-                    }
-                }
+                self.onChangeCompletion(deadline: deadline, success: success)
             }
         } else {
             option.removePermission { (success) in
-                DispatchQueue.main.asyncAfter(deadline: deadline) {
-                    self.hideActivity()
-                    if !success {
-                        self.showAlert(withMsg: "Could not save privacy preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
-                            self.tableView.reloadData()
-                        })
-                    }
-                }
+                self.onChangeCompletion(deadline: deadline, success: success)
+            }
+        }
+    }
+    
+    /// Hides activity indicator after deadline has passed. If permision change was not successful, show alert.
+    private func onChangeCompletion(deadline: DispatchTime, success: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: deadline) {
+            self.hideActivity()
+            if !success {
+                self.showAlert(withMsg: "Could not save privacy preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
+                    self.tableView.reloadData()
+                })
             }
         }
     }

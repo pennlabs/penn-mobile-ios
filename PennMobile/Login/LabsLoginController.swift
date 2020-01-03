@@ -56,13 +56,15 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
     
     private var code: String?
     
+    private var shouldRetrieveRefreshToken = true
     private var shouldFetchAllInfo: Bool!
     private var completion: ((_ success: Bool) -> Void)!
     
-    convenience init(fetchAllInfo: Bool = true, completion: @escaping (_ success: Bool) -> Void) {
+    convenience init(fetchAllInfo: Bool = true, shouldRetrieveRefreshToken: Bool = true, completion: @escaping (_ success: Bool) -> Void) {
         self.init()
         self.completion = completion
         self.shouldFetchAllInfo = fetchAllInfo
+        self.shouldRetrieveRefreshToken = shouldRetrieveRefreshToken
     }
     
     convenience init(fetchAllInfo: Bool = true) {
@@ -80,6 +82,13 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
     }
     
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard shouldRetrieveRefreshToken else {
+            // Refresh token does not to be retrieved. Dismiss controller immediately.
+            decisionHandler(.cancel)
+            self.dismiss(successful: true)
+            return
+        }
+        
         guard let code = code else {
             // Something went wrong, code not fetched
             decisionHandler(.cancel)
@@ -90,37 +99,46 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
         decisionHandler(.cancel)
         self.showActivity()
         OAuth2NetworkManager.instance.initiateAuthentication(code: code, codeVerifier: codeVerifier) { (accessToken) in
-            if let accessToken = accessToken {
-                OAuth2NetworkManager.instance.retrieveAccount(accessToken: accessToken) { (user) in
-                    if let user = user, self.shouldFetchAllInfo {
-                        let account = Account(user: user)
-                        if account.isStudent {
-                            PennInTouchNetworkManager.instance.getDegrees { (degrees) in
-                                account.degrees = degrees
-                                if account.email?.contains("wharton") ?? false || degrees?.hasDegreeInWharton() ?? false {
-                                    UserDefaults.standard.set(isInWharton: true)
-                                    GSRNetworkManager.instance.getSessionID { success in
-                                        self.saveAccount(account) {
-                                            self.dismiss(successful: true)
-                                        }
-                                    }
-                                } else {
-                                    self.saveAccount(account) {
-                                        self.dismiss(successful: true)
-                                    }
-                                }
+            guard let accessToken = accessToken else {
+                self.dismiss(successful: false)
+                return
+            }
+            guard self.shouldFetchAllInfo else {
+                self.dismiss(successful: true)
+                return
+            }
+            OAuth2NetworkManager.instance.retrieveAccount(accessToken: accessToken) { (user) in
+                guard let user = user else {
+                    self.dismiss(successful: false)
+                    return
+                }
+                let account = Account(user: user)
+                UserDefaults.standard.saveAccount(account)
+                if account.email?.contains("wharton") ?? false {
+                    UserDefaults.standard.set(isInWharton: true)
+                }
+                UserDBManager.shared.syncUserSettings { (success) in
+                    guard success else {
+                        self.dismiss(successful: false)
+                        return
+                    }
+                    if UserDefaults.standard.getPreference(for: .academicIdentity) {
+                        // Has permission to retrieve degrees
+                        PennInTouchNetworkManager.instance.getDegrees { (degrees) in
+                            account.degrees = degrees
+                            if let degrees = degrees {
+                                UserDefaults.standard.set(isInWharton: degrees.hasDegreeInWharton())
                             }
-                        } else {
                             self.saveAccount(account) {
                                 self.dismiss(successful: true)
                             }
                         }
                     } else {
-                        self.dismiss(successful: user != nil)
+                        self.saveAccount(account) {
+                            self.dismiss(successful: true)
+                        }
                     }
                 }
-            } else {
-                self.dismiss(successful: false)
             }
         }
     }
@@ -132,7 +150,7 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
             }
             UserDefaults.standard.storeCookies()
             self.hideActivity()
-            super.dismiss(animated: false, completion: nil)
+            super.dismiss(animated: true, completion: nil)
             self.completion(successful)
         }
     }
@@ -166,10 +184,11 @@ extension LabsLoginController {
                 
                 if account.isStudent {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                        self.getAndSaveNotificationAndPrivacyPreferences {
-                            if UserDefaults.standard.getPreference(for: .collegeHouse) {
-                                CampusExpressNetworkManager.instance.updateHousingData()
-                            }
+                        if UserDefaults.standard.getPreference(for: .collegeHouse) {
+                            CampusExpressNetworkManager.instance.updateHousingData()
+                        }
+                        if UserDefaults.standard.isInWharton() {
+                            GSRNetworkManager.instance.getSessionID()
                         }
                         self.getDiningBalance()
                         self.getDiningTransactions()

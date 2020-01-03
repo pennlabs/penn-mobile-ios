@@ -69,6 +69,15 @@ enum PrivacyOption: String, CaseIterable {
         }
     }
     
+    var requiresAuth: Bool {
+        switch self {
+        case .anonymizedCourseSchedule: return true
+        case .academicIdentity: return true
+        case .collegeHouse: return true
+        default: return false
+        }
+    }
+    
     // MARK: User Defaults Keys
     // These keys ARE cleared when UserDefaults is wiped.
     
@@ -120,6 +129,13 @@ extension PrivacyOption {
                 CampusExpressNetworkManager.instance.updateHousingData { (success) in
                     UserDBManager.shared.saveMultiyearHousingData()
                 }
+            case .academicIdentity:
+                PennInTouchNetworkManager.instance.getDegrees { (degrees) in
+                    if let degrees = degrees {
+                        UserDBManager.shared.saveAcademicInfo(degrees)
+                        UserDefaults.standard.set(isInWharton: degrees.hasDegreeInWharton())
+                    }
+                }
             default: break
             }
             
@@ -144,6 +160,8 @@ extension PrivacyOption {
                 UserDBManager.shared.deleteAnonymousCourses(completion)
             case .collegeHouse:
                 UserDBManager.shared.deleteHousingData(completion)
+            case .academicIdentity:
+                UserDBManager.shared.deleteAcademicInfo(completion)
             default: completion(true)
             }
         }
