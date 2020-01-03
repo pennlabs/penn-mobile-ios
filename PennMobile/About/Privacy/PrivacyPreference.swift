@@ -64,7 +64,7 @@ enum PrivacyOption: String, CaseIterable {
         switch self {
         case .diningBalanceAndHistory: return UserDefaults.standard.hasDiningPlan()
         case .academicIdentity: return Account.getAccount()?.isStudent ?? false
-        case .collegeHouse: return true
+        case .collegeHouse: return Account.getAccount()?.isStudent ?? false
         default: return false
         }
     }
