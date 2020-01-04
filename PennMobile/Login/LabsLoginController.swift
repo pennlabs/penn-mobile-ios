@@ -41,7 +41,7 @@ extension SHA256Hashable {
 class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, SHA256Hashable {
         
     override var urlStr: String {
-        return "https://platform.pennlabs.org/accounts/authorize/?response_type=code&client_id=CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN&redirect_uri=https%3A%2F%2Fpennlabs.org%2Fpennmobile%2Fios%2Fcallback%2F&code_challenge_method=S256&code_challenge=\(codeChallenge)scope=read+introspection&state="
+        return "https://platform.pennlabs.org/accounts/authorize/?response_type=code&client_id=CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN&redirect_uri=https%3A%2F%2Fpennlabs.org%2Fpennmobile%2Fios%2Fcallback%2F&code_challenge_method=S256&code_challenge=\(codeChallenge)&scope=read+introspection&state="
     }
     
     override var shouldLoadCookies: Bool {
