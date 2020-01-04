@@ -32,6 +32,7 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
                 case .affirmative:
                     UserDefaults.standard.setLastDidAskPermission(for: .anonymizedCourseSchedule)
                     UserDefaults.standard.set(.anonymizedCourseSchedule, to: true)
+                    UserDBManager.shared.saveUserPrivacySettings()
                     self.fetchAndSaveCourses()
                 case .negative:
                     UserDefaults.standard.setLastDidAskPermission(for: .anonymizedCourseSchedule)
