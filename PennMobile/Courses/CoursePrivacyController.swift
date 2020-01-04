@@ -18,7 +18,7 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
         super.viewDidLoad()
         
         let prompt = """
-        Help us improve our course recommendation algorithms by sharing  anonymized course enrollments with Penn Labs. You can change your decision later.
+        Help us improve our course recommendation algorithms by sharing anonymized course enrollments with Penn Labs. You can change your decision later.
 
         No course enrollments are ever associated with your name, PennKey, or email.
 
