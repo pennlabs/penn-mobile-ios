@@ -31,7 +31,6 @@ PODS:
     - Base32 (~> 1.1.2)
   - ScrollableGraphView (4.0.6)
   - SimulatorStatusMagic (2.4.1)
-  - SwiftyJSON (5.0.0)
   - TimelineTableViewCell (2.2.0)
   - WKZombie (1.1.1):
     - hpple (= 0.2.0)
@@ -46,7 +45,6 @@ DEPENDENCIES:
   - OneTimePassword (~> 3.2)
   - ScrollableGraphView
   - SimulatorStatusMagic
-  - SwiftyJSON
   - TimelineTableViewCell
   - WKZombie (from `https://github.com/pennlabs/WKZombie.git`, commit `536f6e8aa0e8438fe711fff6420908bc67edb056`)
   - XLPagerTabStrip (~> 9.0)
@@ -68,7 +66,6 @@ SPEC REPOS:
     - OneTimePassword
     - ScrollableGraphView
     - SimulatorStatusMagic
-    - SwiftyJSON
     - TimelineTableViewCell
     - XLPagerTabStrip
     - ZoomImageView
@@ -98,12 +95,11 @@ SPEC CHECKSUMS:
   OneTimePassword: c00ecc908e67e6c5bfda9d50b0b2e4696d0b066e
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
-  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   TimelineTableViewCell: 8835f2f9aad7648670e09c85a615bcd071826b44
   WKZombie: 90713d7efd00b860468b0dcae84e927af493dd8f
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5
 
-PODFILE CHECKSUM: 6ee807762e8c8bb71ead85b197f8557e812aa4a6
+PODFILE CHECKSUM: 615c348fb4cbe2420d360eaa9da0a999c8b9e808
 
 COCOAPODS: 1.8.4

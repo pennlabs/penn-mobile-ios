@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class HomeDiningCellItem: HomeCellItem {
     static var associatedCell: ModularTableViewCell.Type {

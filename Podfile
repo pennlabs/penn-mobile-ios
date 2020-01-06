@@ -8,7 +8,6 @@ target 'PennMobile' do
     # Pods for PennMobile
 
 pod 'MBProgressHUD', '~> 0.8'
-pod 'SwiftyJSON'
 pod 'ScrollableGraphView'
 
 pod 'Fabric', '~> 1.10.2'
