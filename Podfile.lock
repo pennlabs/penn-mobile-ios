@@ -1,8 +1,8 @@
 PODS:
   - Base32 (1.1.2)
-  - Crashlytics (3.12.0):
-    - Fabric (~> 1.9.0)
-  - Fabric (1.9.0)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
   - Firebase (4.13.0):
     - Firebase/Core (= 4.13.0)
   - Firebase/Core (4.13.0):
@@ -35,7 +35,6 @@ PODS:
   - SCLAlertView (0.8)
   - ScrollableGraphView (4.0.6)
   - SimulatorStatusMagic (2.4.1)
-  - SwiftSoup (2.2.2)
   - SwiftyJSON (5.0.0)
   - TimelineTableViewCell (2.2.0)
   - WKZombie (1.1.1):
@@ -44,8 +43,8 @@ PODS:
   - ZoomImageView (0.6.0)
 
 DEPENDENCIES:
-  - Crashlytics (~> 3.12.0)
-  - Fabric (~> 1.9.0)
+  - Crashlytics (~> 3.14.0)
+  - Fabric (~> 1.10.2)
   - Firebase (~> 4.7)
   - Kingfisher (~> 5.3)
   - MBProgressHUD (~> 0.8)
@@ -53,7 +52,6 @@ DEPENDENCIES:
   - SCLAlertView
   - ScrollableGraphView
   - SimulatorStatusMagic
-  - SwiftSoup
   - SwiftyJSON
   - TimelineTableViewCell
   - WKZombie (from `https://github.com/pennlabs/WKZombie.git`, commit `536f6e8aa0e8438fe711fff6420908bc67edb056`)
@@ -78,7 +76,6 @@ SPEC REPOS:
     - SCLAlertView
     - ScrollableGraphView
     - SimulatorStatusMagic
-    - SwiftSoup
     - SwiftyJSON
     - TimelineTableViewCell
     - XLPagerTabStrip
@@ -96,8 +93,8 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Base32: 163c298644d184e89ca4e00a996bad6bf5166390
-  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
-  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
@@ -111,13 +108,12 @@ SPEC CHECKSUMS:
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
-  SwiftSoup: 77147d707df716eb6dbd06c5c24d35ad5ba62ee1
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   TimelineTableViewCell: 8835f2f9aad7648670e09c85a615bcd071826b44
   WKZombie: 90713d7efd00b860468b0dcae84e927af493dd8f
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5
 
-PODFILE CHECKSUM: 54f75fb051d3e17a128e2892bf0a24ef9ef49cf9
+PODFILE CHECKSUM: fd38c8489d1e12767750ee6fe8d75b21e73d7baf
 
 COCOAPODS: 1.8.4

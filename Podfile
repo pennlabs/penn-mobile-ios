@@ -10,14 +10,16 @@ target 'PennMobile' do
 pod 'MBProgressHUD', '~> 0.8'
 pod 'SwiftyJSON'
 pod 'ScrollableGraphView'
+
+pod 'Fabric', '~> 1.10.2'
+pod 'Crashlytics', '~> 3.14.0'
 pod 'Firebase', '~> 4.7'
+
 pod 'SCLAlertView'
 pod 'ZoomImageView'
 pod 'Kingfisher', '~> 5.3'
 pod 'TimelineTableViewCell'
-pod 'Fabric', '~> 1.9.0'
-pod 'Crashlytics', '~> 3.12.0'
-pod 'SwiftSoup'
+
 pod 'XLPagerTabStrip', '~> 9.0'
 pod 'WKZombie', :git => 'https://github.com/pennlabs/WKZombie.git', :commit => '536f6e8aa0e8438fe711fff6420908bc67edb056'
 pod 'OneTimePassword', '~> 3.2'
