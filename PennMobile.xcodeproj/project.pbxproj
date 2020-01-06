@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07B7E74ECA84157FCDFDEFBF /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61F14E015BFC12D6F19D1A2D /* Pods_AutomatedScreenshotUITests.framework */; };
 		139139772388923F00C6C298 /* DiningDollarsTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */; };
 		139139792388929700C6C298 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139139782388929700C6C298 /* TransactionTableViewCell.swift */; };
 		2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */; };
@@ -149,7 +148,7 @@
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
-		7D0A1BD5F65B23F887CBAB73 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CE6E203589A1CAA79761064 /* Pods_PennMobile.framework */; };
+		932924C2B8317FABA593A1A2 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4A1C6161A223D8B37B9AA8 /* Pods_PennMobile.framework */; };
 		97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFC2100DA1200D3D606 /* BuildingCell.swift */; };
 		97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */; };
 		97E79E052100DA1200D3D606 /* BuildingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFE2100DA1200D3D606 /* BuildingSectionHeader.swift */; };
@@ -200,6 +199,7 @@
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
+		E868180250E783063DE9FDA1 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBF3A15BB9805FD5A5270A /* Pods_AutomatedScreenshotUITests.framework */; };
 		EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC321860B7000E29C6A /* StatusBar.swift */; };
 		EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC521861B8500E29C6A /* HomeNavigationController.swift */; };
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
@@ -209,12 +209,12 @@
 		F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */; };
 		F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */; };
 		F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */; };
-		F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE123C3EE3E000AD90F /* SwiftSoup */; };
-		F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE423C3F240000AD90F /* KingfisherSwiftUI */; };
-		F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE623C3F240000AD90F /* Kingfisher */; };
-		F213CCEA23C3F5D5000AD90F /* SCLAlertView in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE923C3F5D5000AD90F /* SCLAlertView */; };
-		F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEC23C3F6A8000AD90F /* SwiftyJSON */; };
-		F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEF23C3F99B000AD90F /* ScrollableGraphView */; };
+		F213CCE223C3EE3E000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE123C3EE3E000AD90F /* SwiftPackageProductDependency */; };
+		F213CCE523C3F240000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE423C3F240000AD90F /* SwiftPackageProductDependency */; };
+		F213CCE723C3F240000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE623C3F240000AD90F /* SwiftPackageProductDependency */; };
+		F213CCEA23C3F5D5000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE923C3F5D5000AD90F /* SwiftPackageProductDependency */; };
+		F213CCED23C3F6A8000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEC23C3F6A8000AD90F /* SwiftPackageProductDependency */; };
+		F213CCF023C3F99B000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEF23C3F99B000AD90F /* SwiftPackageProductDependency */; };
 		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
 		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
 		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
@@ -242,7 +242,7 @@
 /* Begin PBXFileReference section */
 		139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDollarsTransactionViewController.swift; sourceTree = "<group>"; };
 		139139782388929700C6C298 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
-		1CE6E203589A1CAA79761064 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BA495024EAB493645989182 /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		210AC14420684F9B0050D837 /* HomeCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellProtocols.swift; sourceTree = "<group>"; };
@@ -385,10 +385,6 @@
 		21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusExpressLoginController.swift; sourceTree = "<group>"; };
 		21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAnalyticsEngine.swift; sourceTree = "<group>"; };
 		21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
-		2D484C3613568A22A45CEF6D /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		455164A1D8DE0252FAFEC277 /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
-		4818117A08A65EDB84D1D997 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
-		61F14E015BFC12D6F19D1A2D /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPFetcher.swift; sourceTree = "<group>"; };
 		66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorTokenGenerator.swift; sourceTree = "<group>"; };
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
@@ -406,7 +402,8 @@
 		97E79E172100E4AA00D3D606 /* FitnessFacilityData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityData.swift; sourceTree = "<group>"; };
 		97E79E192100E51A00D3D606 /* FitnessFacilityName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityName.swift; sourceTree = "<group>"; };
 		97E79E1B2100F32E00D3D606 /* FitnessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewModel.swift; sourceTree = "<group>"; };
-		AD4EC3639119A687B464EC48 /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
+		A2F126DCBF6D0430638A93DC /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
+		AD4A1C6161A223D8B37B9AA8 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLaundryCell.swift; sourceTree = "<group>"; };
 		B6111DB12018497400DC7877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6111DB320184C4A00DC7877 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -424,6 +421,7 @@
 		B6B1E089214442A200CCBBCD /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = SOURCE_ROOT; };
 		B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
+		BF3AD38882FCB08387AD3064 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
 		C11B38E222508A8D009B752A /* DiningBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalance.swift; sourceTree = "<group>"; };
@@ -437,6 +435,7 @@
 		C15C4B4F223EB18800E443FD /* HomeReservationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCellItem.swift; sourceTree = "<group>"; };
 		C18D1D61225A60A80002C7FB /* DiningBalanceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalanceCollectionViewCell.swift; sourceTree = "<group>"; };
 		C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReservationsCell.swift; sourceTree = "<group>"; };
+		C9ACC27131C730964A69579B /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		CF1CE9BC205D664700C51F46 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewCell.swift; sourceTree = "<group>"; };
@@ -467,6 +466,7 @@
 		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		FCBBF3A15BB9805FD5A5270A /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -474,13 +474,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */,
-				F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */,
-				F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */,
-				F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */,
-				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
-				F213CCEA23C3F5D5000AD90F /* SCLAlertView in Frameworks */,
-				7D0A1BD5F65B23F887CBAB73 /* Pods_PennMobile.framework in Frameworks */,
+				F213CCED23C3F6A8000AD90F /* BuildFile in Frameworks */,
+				F213CCF023C3F99B000AD90F /* BuildFile in Frameworks */,
+				F213CCE723C3F240000AD90F /* BuildFile in Frameworks */,
+				F213CCE523C3F240000AD90F /* BuildFile in Frameworks */,
+				F213CCE223C3EE3E000AD90F /* BuildFile in Frameworks */,
+				F213CCEA23C3F5D5000AD90F /* BuildFile in Frameworks */,
+				932924C2B8317FABA593A1A2 /* Pods_PennMobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,13 +488,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07B7E74ECA84157FCDFDEFBF /* Pods_AutomatedScreenshotUITests.framework in Frameworks */,
+				E868180250E783063DE9FDA1 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02A4D668D9AC5D56BBEF88F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FCBBF3A15BB9805FD5A5270A /* Pods_AutomatedScreenshotUITests.framework */,
+				AD4A1C6161A223D8B37B9AA8 /* Pods_PennMobile.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2119D265225299D300693CDB /* GSR Locations */ = {
 			isa = PBXGroup;
 			children = (
@@ -605,7 +614,7 @@
 				2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */,
 				216640611EBADADA00746B8E /* Products */,
 				F5E2CE9A9024AE8E28992A5E /* Pods */,
-				509F59B6F5B2C0F22D172F98 /* Frameworks */,
+				02A4D668D9AC5D56BBEF88F7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1003,15 +1012,6 @@
 			path = "Spring Fling";
 			sourceTree = "<group>";
 		};
-		509F59B6F5B2C0F22D172F98 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				61F14E015BFC12D6F19D1A2D /* Pods_AutomatedScreenshotUITests.framework */,
-				1CE6E203589A1CAA79761064 /* Pods_PennMobile.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		66E8ECA32381CA6C00945BEA /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -1278,10 +1278,10 @@
 		F5E2CE9A9024AE8E28992A5E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2D484C3613568A22A45CEF6D /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
-				4818117A08A65EDB84D1D997 /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
-				AD4EC3639119A687B464EC48 /* Pods-PennMobile.debug.xcconfig */,
-				455164A1D8DE0252FAFEC277 /* Pods-PennMobile.release.xcconfig */,
+				C9ACC27131C730964A69579B /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
+				BF3AD38882FCB08387AD3064 /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
+				A2F126DCBF6D0430638A93DC /* Pods-PennMobile.debug.xcconfig */,
+				1BA495024EAB493645989182 /* Pods-PennMobile.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1293,12 +1293,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2166407D1EBADADA00746B8E /* Build configuration list for PBXNativeTarget "PennMobile" */;
 			buildPhases = (
-				E36F35F5C20DBEC71FDBB363 /* [CP] Check Pods Manifest.lock */,
+				58BA8384EDFB87F08D7FB4E2 /* [CP] Check Pods Manifest.lock */,
 				2166405C1EBADADA00746B8E /* Sources */,
 				2166405D1EBADADA00746B8E /* Frameworks */,
 				2166405E1EBADADA00746B8E /* Resources */,
 				EF1CF2F322177EED002D912D /* ShellScript */,
-				42BACD21484783193413EFA7 /* [CP] Embed Pods Frameworks */,
+				AF3EEBFC3576C81A12093389 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1306,12 +1306,12 @@
 			);
 			name = PennMobile;
 			packageProductDependencies = (
-				F213CCE123C3EE3E000AD90F /* SwiftSoup */,
-				F213CCE423C3F240000AD90F /* KingfisherSwiftUI */,
-				F213CCE623C3F240000AD90F /* Kingfisher */,
-				F213CCE923C3F5D5000AD90F /* SCLAlertView */,
-				F213CCEC23C3F6A8000AD90F /* SwiftyJSON */,
-				F213CCEF23C3F99B000AD90F /* ScrollableGraphView */,
+				F213CCE123C3EE3E000AD90F /* SwiftPackageProductDependency */,
+				F213CCE423C3F240000AD90F /* SwiftPackageProductDependency */,
+				F213CCE623C3F240000AD90F /* SwiftPackageProductDependency */,
+				F213CCE923C3F5D5000AD90F /* SwiftPackageProductDependency */,
+				F213CCEC23C3F6A8000AD90F /* SwiftPackageProductDependency */,
+				F213CCEF23C3F99B000AD90F /* SwiftPackageProductDependency */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -1321,11 +1321,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F230FB15225809E900760499 /* Build configuration list for PBXNativeTarget "AutomatedScreenshotUITests" */;
 			buildPhases = (
-				B0944EB9274C0DE73B6097D5 /* [CP] Check Pods Manifest.lock */,
+				9A67231009E81F7F5606950B /* [CP] Check Pods Manifest.lock */,
 				F230FB0A225809E900760499 /* Sources */,
 				F230FB0B225809E900760499 /* Frameworks */,
 				F230FB0C225809E900760499 /* Resources */,
-				E269122006C087508426A0AA /* [CP] Embed Pods Frameworks */,
+				A488E054AC1AE1CFEFAFD04E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1379,11 +1379,11 @@
 			);
 			mainGroup = 216640571EBADADA00746B8E;
 			packageReferences = (
-				F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
-				F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
-				F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
+				F213CCE023C3EE3E000AD90F /* RemoteSwiftPackageReference */,
+				F213CCE323C3F240000AD90F /* RemoteSwiftPackageReference */,
+				F213CCE823C3F5D5000AD90F /* RemoteSwiftPackageReference */,
+				F213CCEB23C3F6A8000AD90F /* RemoteSwiftPackageReference */,
+				F213CCEE23C3F99B000AD90F /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
@@ -1417,24 +1417,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		42BACD21484783193413EFA7 /* [CP] Embed Pods Frameworks */ = {
+		58BA8384EDFB87F08D7FB4E2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PennMobile-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B0944EB9274C0DE73B6097D5 /* [CP] Check Pods Manifest.lock */ = {
+		9A67231009E81F7F5606950B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1456,7 +1461,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E269122006C087508426A0AA /* [CP] Embed Pods Frameworks */ = {
+		A488E054AC1AE1CFEFAFD04E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1473,26 +1478,21 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E36F35F5C20DBEC71FDBB363 /* [CP] Check Pods Manifest.lock */ = {
+		AF3EEBFC3576C81A12093389 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PennMobile-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EF1CF2F322177EED002D912D /* ShellScript */ = {
@@ -1871,7 +1871,7 @@
 		};
 		2166407E1EBADADA00746B8E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AD4EC3639119A687B464EC48 /* Pods-PennMobile.debug.xcconfig */;
+			baseConfigurationReference = A2F126DCBF6D0430638A93DC /* Pods-PennMobile.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1902,7 +1902,7 @@
 		};
 		2166407F1EBADADA00746B8E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 455164A1D8DE0252FAFEC277 /* Pods-PennMobile.release.xcconfig */;
+			baseConfigurationReference = 1BA495024EAB493645989182 /* Pods-PennMobile.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1931,7 +1931,7 @@
 		};
 		F230FB16225809E900760499 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D484C3613568A22A45CEF6D /* Pods-AutomatedScreenshotUITests.debug.xcconfig */;
+			baseConfigurationReference = C9ACC27131C730964A69579B /* Pods-AutomatedScreenshotUITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -1960,7 +1960,7 @@
 		};
 		F230FB17225809E900760499 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4818117A08A65EDB84D1D997 /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
+			baseConfigurationReference = BF3AD38882FCB08387AD3064 /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2019,7 +2019,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+		F213CCE023C3EE3E000AD90F /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
 			requirement = {
@@ -2027,7 +2027,7 @@
 				minimumVersion = 2.3.0;
 			};
 		};
-		F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		F213CCE323C3F240000AD90F /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
 			requirement = {
@@ -2035,7 +2035,7 @@
 				minimumVersion = 5.12.0;
 			};
 		};
-		F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */ = {
+		F213CCE823C3F5D5000AD90F /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pennlabs/SCLAlertView-Swift/";
 			requirement = {
@@ -2043,7 +2043,7 @@
 				minimumVersion = 0.8.2;
 			};
 		};
-		F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+		F213CCEB23C3F6A8000AD90F /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
 			requirement = {
@@ -2051,7 +2051,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */ = {
+		F213CCEE23C3F99B000AD90F /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pennlabs/ScrollableGraphView";
 			requirement = {
@@ -2062,34 +2062,34 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
+		F213CCE123C3EE3E000AD90F /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			package = F213CCE023C3EE3E000AD90F /* RemoteSwiftPackageReference */;
 			productName = SwiftSoup;
 		};
-		F213CCE423C3F240000AD90F /* KingfisherSwiftUI */ = {
+		F213CCE423C3F240000AD90F /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = F213CCE323C3F240000AD90F /* RemoteSwiftPackageReference */;
 			productName = KingfisherSwiftUI;
 		};
-		F213CCE623C3F240000AD90F /* Kingfisher */ = {
+		F213CCE623C3F240000AD90F /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = F213CCE323C3F240000AD90F /* RemoteSwiftPackageReference */;
 			productName = Kingfisher;
 		};
-		F213CCE923C3F5D5000AD90F /* SCLAlertView */ = {
+		F213CCE923C3F5D5000AD90F /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */;
+			package = F213CCE823C3F5D5000AD90F /* RemoteSwiftPackageReference */;
 			productName = SCLAlertView;
 		};
-		F213CCEC23C3F6A8000AD90F /* SwiftyJSON */ = {
+		F213CCEC23C3F6A8000AD90F /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			package = F213CCEB23C3F6A8000AD90F /* RemoteSwiftPackageReference */;
 			productName = SwiftyJSON;
 		};
-		F213CCEF23C3F99B000AD90F /* ScrollableGraphView */ = {
+		F213CCEF23C3F99B000AD90F /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */;
+			package = F213CCEE23C3F99B000AD90F /* RemoteSwiftPackageReference */;
 			productName = ScrollableGraphView;
 		};
 /* End XCSwiftPackageProductDependency section */
