@@ -21,9 +21,6 @@ PODS:
   - "GoogleToolboxForMac/NSData+zlib (2.2.2)":
     - GoogleToolboxForMac/Defines (= 2.2.2)
   - hpple (0.2.0)
-  - Kingfisher (5.11.0):
-    - Kingfisher/Core (= 5.11.0)
-  - Kingfisher/Core (5.11.0)
   - MBProgressHUD (0.9.2)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
@@ -32,7 +29,6 @@ PODS:
   - nanopb/encode (0.3.9011)
   - OneTimePassword (3.2.0):
     - Base32 (~> 1.1.2)
-  - SCLAlertView (0.8)
   - ScrollableGraphView (4.0.6)
   - SimulatorStatusMagic (2.4.1)
   - SwiftyJSON (5.0.0)
@@ -46,10 +42,8 @@ DEPENDENCIES:
   - Crashlytics (~> 3.14.0)
   - Fabric (~> 1.10.2)
   - Firebase (~> 4.7)
-  - Kingfisher (~> 5.3)
   - MBProgressHUD (~> 0.8)
   - OneTimePassword (~> 3.2)
-  - SCLAlertView
   - ScrollableGraphView
   - SimulatorStatusMagic
   - SwiftyJSON
@@ -69,11 +63,9 @@ SPEC REPOS:
     - FirebaseInstanceID
     - GoogleToolboxForMac
     - hpple
-    - Kingfisher
     - MBProgressHUD
     - nanopb
     - OneTimePassword
-    - SCLAlertView
     - ScrollableGraphView
     - SimulatorStatusMagic
     - SwiftyJSON
@@ -101,11 +93,9 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   GoogleToolboxForMac: 800648f8b3127618c1b59c7f97684427630c5ea3
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
-  Kingfisher: 4569606189149e19c7d9439f47e885d0679b7a90
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   OneTimePassword: c00ecc908e67e6c5bfda9d50b0b2e4696d0b066e
-  SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
@@ -114,6 +104,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5
 
-PODFILE CHECKSUM: fd38c8489d1e12767750ee6fe8d75b21e73d7baf
+PODFILE CHECKSUM: 6ee807762e8c8bb71ead85b197f8557e812aa4a6
 
 COCOAPODS: 1.8.4
