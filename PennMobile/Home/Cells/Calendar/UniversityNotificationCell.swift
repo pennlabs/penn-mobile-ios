@@ -84,7 +84,7 @@ extension UniversityNotificationCell {
         label.font = UIFont(name: "AvenirNext-Regular", size: 18)
         label.textAlignment = .center
         label.textColor = UIColor.labelPrimary
-        label.numberOfLines = 3
+        label.numberOfLines = 2
         return label
     }
     
