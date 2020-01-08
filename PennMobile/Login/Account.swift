@@ -33,7 +33,6 @@ class Account: Codable {
         self.email = user.email
         self.pennid = user.pennid
         self.affiliations = user.affiliation
-        print(self.isStudent)
     }
     
     func isInWharton() -> Bool {
