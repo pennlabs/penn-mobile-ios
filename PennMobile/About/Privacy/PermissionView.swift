@@ -29,7 +29,8 @@ struct PermissionView: View {
                 .resizable()
                 .frame(minWidth: 45, maxWidth: 70, minHeight: 45, maxHeight: 70)
                 .scaledToFit()
-                .padding(.vertical, 17)
+                .padding(.bottom, 17)
+                .padding(.top, 30)
             
             Text(title)
                 .font(.largeTitle)

@@ -15,7 +15,11 @@ class Account: Codable {
     var email: String?
     var imageUrl: String?
     var pennid: Int?
-    var isStudent: Bool
+    var affiliations: [String]?
+    
+    var isStudent: Bool {
+        return affiliations?.contains("student") ?? true
+    }
     
     var degrees: Set<Degree>?
     var courses: Set<Course>?
@@ -28,7 +32,8 @@ class Account: Codable {
         self.pennkey = user.username
         self.email = user.email
         self.pennid = user.pennid
-        self.isStudent = user.affiliation.contains("student")
+        self.affiliations = user.affiliation
+        print(self.isStudent)
     }
     
     func isInWharton() -> Bool {
