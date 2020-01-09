@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class NewsArticle {
     let source: String

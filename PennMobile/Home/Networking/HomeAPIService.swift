@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class HomeAPIService: Requestable {
     static let instance = HomeAPIService()
