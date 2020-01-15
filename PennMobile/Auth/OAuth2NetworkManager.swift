@@ -15,8 +15,8 @@ struct AccessToken: Codable {
 }
 
 struct OAuthUser: Codable {
-    let firstName: String
-    let lastName: String
+    let firstName: String?
+    let lastName: String?
     let pennid: Int
     let username: String
     let email: String?

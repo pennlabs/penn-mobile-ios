@@ -9,12 +9,12 @@
 import Foundation
 
 class Account: Codable {
-    var first: String
-    var last: String
-    var pennkey: String!
+    var first: String?
+    var last: String?
+    var pennkey: String
+    var pennid: Int
     var email: String?
     var imageUrl: String?
-    var pennid: Int?
     var affiliations: [String]?
     
     var isStudent: Bool {
@@ -40,7 +40,7 @@ class Account: Codable {
     }
     
     func setEmail() {
-        guard let degrees = degrees, let pennkey = pennkey else { return }
+        guard let degrees = degrees else { return }
         var potentialEmail: String? = nil
         for degree in degrees {
             switch degree.schoolCode {
