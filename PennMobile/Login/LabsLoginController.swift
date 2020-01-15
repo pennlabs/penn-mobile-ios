@@ -118,10 +118,6 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
                     UserDefaults.standard.set(isInWharton: true)
                 }
                 UserDBManager.shared.syncUserSettings { (success) in
-                    guard success else {
-                        self.dismiss(successful: false)
-                        return
-                    }
                     if UserDefaults.standard.getPreference(for: .academicIdentity) {
                         // Has permission to retrieve degrees
                         PennInTouchNetworkManager.instance.getDegrees { (degrees) in
