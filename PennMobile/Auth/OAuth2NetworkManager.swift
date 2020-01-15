@@ -20,7 +20,7 @@ struct OAuthUser: Codable {
     let pennid: Int
     let username: String
     let email: String?
-    let affiliation: [String]
+    let affiliation: [String]?
 }
 
 extension URLRequest {
