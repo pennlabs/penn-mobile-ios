@@ -22,6 +22,7 @@ public enum Method {
 enum NetworkingError: String, LocalizedError {
     case noInternet
     case parsingError
+    case serverError
     case jsonError = "JSON error"
     case authenticationError = "Unable to authenticate"
     case other
@@ -162,7 +163,7 @@ extension Requestable {
         return request
     }
     
-    fileprivate func getPostString(params: [String: Any]) -> String {
+    internal func getPostString(params: [String: Any]) -> String {
         var data = [String]()
         for(key, value) in params {
             if let arr = value as? Array<Any> {

@@ -37,9 +37,9 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeCoursesCellItem else { return 0.0 }
         
-        if !UserDefaults.standard.coursePermissionGranted() {
-            return 260
-        }
+//        if !UserDefaults.standard.coursePermissionGranted() {
+//            return 260
+//        }
         
         let events = item.courses.getEvents()
         let scheduleHeight = ScheduleTable.calculateHeightForEvents(for: events)
@@ -97,15 +97,15 @@ extension HomeCoursesCell {
             self.courseScheduleTable.reloadData()
         }
         
-        if UserDefaults.standard.coursePermissionGranted() {
+//        if UserDefaults.standard.coursePermissionGranted() {
             refreshButton.isHidden = false
             enableCoursesView.isHidden = true
             courseScheduleTable.isHidden = false
-        } else {
-            refreshButton.isHidden = true
-            enableCoursesView.isHidden = false
-            courseScheduleTable.isHidden = true
-        }
+//        } else {
+//            refreshButton.isHidden = true
+//            enableCoursesView.isHidden = false
+//            courseScheduleTable.isHidden = true
+//        }
     }
 }
 

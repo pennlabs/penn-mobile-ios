@@ -35,13 +35,16 @@ class DiningViewController: GenericTableViewController {
         super.viewWillAppear(animated)
         fetchDiningHours()
         
-        if viewModel.shouldShowDiningBalances {
+        if UserDefaults.standard.hasDiningPlan() {
             if viewModel.balance == nil {
                 fetchBalance()
             } else {
                 updateBalanceIfNeeded()
             }
+        } else {
+            viewModel.balance = DiningBalance(diningDollars: 0, visits: 0, guestVisits: 0, lastUpdated: Date())
         }
+        
         if viewModel.venues[.dining]?.isEmpty ?? true {
             viewModel.refresh()
             tableView.reloadData()
@@ -156,7 +159,7 @@ extension DiningViewController {
     
     @objc fileprivate func handleRefreshControl(_ sender: Any) {
         fetchDiningHours()
-        if viewModel.shouldShowDiningBalances {
+        if UserDefaults.standard.hasDiningPlan() {
             updateBalanceFromCampusExpress(requestLoginOnFail: true)
         }
     }
@@ -164,10 +167,7 @@ extension DiningViewController {
 
 // MARK: - DiningViewModelDelegate
 extension DiningViewController: DiningViewModelDelegate {
-    func handleSelection(for venue: DiningVenue) {
-
-        DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name)
-        
+    func handleSelection(for venue: DiningVenue) {        
         if let url = venue.facilityURL {
             let vc = UIViewController()
             let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))

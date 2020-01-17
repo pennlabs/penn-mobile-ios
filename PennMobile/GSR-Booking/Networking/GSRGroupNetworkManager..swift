@@ -36,7 +36,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
     func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
         // handle missing pennkey later
-        guard let pennkey = Student.getStudent()?.pennkey else {
+        guard let pennkey = Account.getAccount()?.pennkey else {
             print("Use is not signed in")
             return
         }
@@ -99,7 +99,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         
         print(color)
 
-        guard let pennkey = Student.getStudent()?.pennkey else {
+        guard let pennkey = Account.getAccount()?.pennkey else {
             print("User is not signed in")
             callback(false, "user is not signed in")
             return

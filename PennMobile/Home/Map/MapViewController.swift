@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import SwiftyJSON
 
 class MapViewController: UIViewController {
     
@@ -62,6 +63,9 @@ class MapViewController: UIViewController {
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined:
                 // Do nothing, handle in didChangeAuthorization delegate function
+                self.locationManager.requestWhenInUseAuthorization()
+                break
+            case .denied:
                 self.locationManager.requestWhenInUseAuthorization()
                 break
             default:

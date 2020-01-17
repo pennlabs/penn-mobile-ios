@@ -11,11 +11,11 @@ import UIKit
 import StoreKit
 
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
-class RootViewController: UIViewController {
+class RootViewController: UIViewController, NotificationRequestable {
     private var current: UIViewController
     
     private var lastLoginAttempt: Date?
-    
+        
     // Fetch transactions even if hasDiningPlan() returns FALSE
     fileprivate let fetchTransactionsForUsersWithoutDiningPlan = true
     
@@ -29,14 +29,13 @@ class RootViewController: UIViewController {
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
-            if UserDefaults.standard.getAccountID() != nil {
-                // Upon updating the app, assume everyone with an account is authed into Shibboleth
-                // REMOVE IN FUTURE VERSIONS
-                UserDefaults.standard.setShibbolethAuth(authedIn: true)
+            // Save laundry rooms with account ID (available starting in 6.1)
+            if let rooms = UserDefaults.standard.getLaundryPreferences() {
+                UserDBManager.shared.saveLaundryPreferences(for: rooms)
             }
         }
-                
-        if UserDefaults.standard.getAccountID() != nil && shouldRequireLogin() {
+                        
+        if shouldRequireLogin() {
             // Logged in and should require login
             clearAccountData()
         }
@@ -53,12 +52,13 @@ class RootViewController: UIViewController {
     
     func applicationWillEnterForeground() {
         if self.current is HomeNavigationController {
-            if UserDefaults.standard.getAccountID() == nil {
-                // Switch to logout screen if user is not logged in, but don't clear data
-                self.switchToLogout(false)
-            } else if shouldRequireLogin() {
-                // Switch to logout screen and clear data
-                self.switchToLogout(true)
+            if Account.isLoggedIn && shouldRequireLogin() {
+                // If user is logged in but login is required, clear user data and switch to logout
+                clearAccountData()
+                self.switchToLogout()
+            } else if !Account.isLoggedIn {
+                // If user is not logged in, switch to logout but don't clear user data
+                self.switchToLogout()
             } else {
                 // Refresh current VC
                 ControllerModel.shared.visibleVC().viewWillAppear(true)
@@ -102,8 +102,33 @@ class RootViewController: UIViewController {
             }
         }
         
+        if #available(iOS 13, *) {
+            if shouldShareCourses() {
+                // Share user's courses. Do not fetch previous semesters if the current semester has been fetched.
+                let savedCourses = UserDefaults.standard.getCourses()
+                let fetchCurrentTermOnly = savedCourses?.contains { $0.term == Course.currentTerm } ?? false
+                PennInTouchNetworkManager.instance.getCourses(currentTermOnly: fetchCurrentTermOnly) { (courses) in
+                    if let courses = courses {
+                        UserDefaults.standard.saveCourses(courses)
+                        UserDBManager.shared.saveCoursesAnonymously(courses)
+                    }
+                }
+            } else if shouldRequestCoursePermission() {
+                // Request permission, then share courses if granted
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    let vc = CoursePrivacyController()
+                    self.current.present(vc, animated: true)
+                }
+            }
+        }
+        
         // Send saved unsent events
         FeedAnalyticsManager.shared.sendSavedEvents()
+        
+        // Refresh push notification device token if authorized and not in simulator
+        #if !targetEnvironment(simulator)
+            updatePushNotificationToken()
+        #endif
     }
     
     func showLoginScreen() {
@@ -135,13 +160,9 @@ class RootViewController: UIViewController {
         }
     }
     
-    func switchToLogout(_ shouldClearData: Bool = true) {
+    func switchToLogout() {
         let loginController = LoginController()
         animateDismissTransition(to: loginController)
-        
-        if shouldClearData {
-            clearAccountData()
-        }
         
         // Clear cache so that home title updates with new first name
         guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
@@ -150,14 +171,16 @@ class RootViewController: UIViewController {
         homeVC.clearCache()
     }
     
+    func logout() {
+        clearAccountData()
+        switchToLogout()
+    }
+    
     fileprivate func clearAccountData() {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
-        UserDefaults.standard.clearAccountID()
-        UserDefaults.standard.clearCookies()
-        UserDefaults.standard.clearWhartonFlag()
-        UserDefaults.standard.clearHasDiningPlan()
-        UserDefaults.standard.clearLastTransactionRequest()
-        Student.clear()
+        UserDefaults.standard.clearAll()
+        OAuth2NetworkManager.instance.clearRefreshToken()
+        Account.clear()
         GSRUser.clear()
     }
     
@@ -205,7 +228,7 @@ class RootViewController: UIViewController {
 // MARK: - Require Login
 extension RootViewController {
     func shouldRequireLogin() -> Bool {
-        if UserDefaults.standard.getAccountID() == nil {
+        if !OAuth2NetworkManager.instance.hasRefreshToken() {
             // User is not logged in
             return true
         }
@@ -235,7 +258,7 @@ extension RootViewController {
 // MARK: - Update Transactions
 extension RootViewController {
     func shouldFetchTransactions() -> Bool {
-        if UserDefaults.standard.getAccountID() == nil || !UserDefaults.standard.hasDiningPlan() {
+        if !OAuth2NetworkManager.instance.hasRefreshToken() || !UserDefaults.standard.hasDiningPlan() {
             // User is not logged in or does not have a dining plan
             return false
         }
@@ -257,43 +280,42 @@ extension RootViewController {
     }
 }
 
-// MARK: - Updated database if needed
+// MARK: - Anon. Course Data
 extension RootViewController {
-    func updateDatabaseIfNeeded() {
-        if let student = Student.getStudent() {
-            if let accountID = UserDefaults.standard.getAccountID() {
-                if let courses = student.courses {
-                    // Check if any courses have no start, end date. If so, update DB, which can now handle this.
-                    var hasEmptyDate = false
-                    for course in courses {
-                        if course.startDate == "" || course.endDate == "" {
-                            hasEmptyDate = true
-                            break
-                        }
-                    }
-                    
-                    if hasEmptyDate {
-                        UserDBManager.shared.saveCourses(courses, accountID: accountID)
-                    }
-                } else {
-                    // Pop up login controller to re-retrieve data
-                    let lwc = LoginWebviewController()
-                    let nvc = UINavigationController(rootViewController: lwc)
-                    self.current.present(nvc, animated: true, completion: nil)
-                }
-            } else {
-                // If student is saved locally but not on DB, save on DB and switch to main screen
-                UserDBManager.shared.saveStudent(student) { (accountID) in
-                    DispatchQueue.main.async {
-                        if let accountID = accountID {
-                            UserDefaults.standard.set(accountID: accountID)
-                        }
-                        if self.current is LoginController {
-                            self.switchToMainScreen()
-                        }
-                    }
-                }
-            }
+    func shouldRequestCoursePermission() -> Bool {
+        if UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) {
+            // We already have permission, no need to ask.
+            return false
+        }
+        
+        guard let account = Account.getAccount(), account.isStudent else {
+            // User is not logged in or user is logged in but not a student, no need to ask
+            return false
+        }
+        
+        if let lastRequest = UserDefaults.standard.getLastDidAskPermission(for: .anonymizedCourseSchedule) {
+            let months = Calendar.current.dateComponents([.month], from: lastRequest, to: Date()).month!
+            // More than a 6 months since last request. Time to ask again.
+            return months >= 6
+        } else {
+            // Have not yet asked. Request away!
+            return true
+        }
+    }
+    
+    func shouldShareCourses() -> Bool {
+        guard Account.isLoggedIn && UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) else {
+            // We do not have permission to share courses or the user is not logged in
+            return false
+        }
+        
+        if let lastShareDate = UserDefaults.standard.getLastShareDate(for: .anonymizedCourseSchedule) {
+            // Save updated course schedule if it's been more than 1 week since last save
+            let diffInDays = Calendar.current.dateComponents([.day], from: lastShareDate, to: Date()).day!
+            return diffInDays >= 7
+        } else {
+            // Courses have never been shared. Do so now.
+            return true
         }
     }
 }

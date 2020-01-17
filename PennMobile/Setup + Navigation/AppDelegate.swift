@@ -27,13 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        // Override point for customization after application launch.
-        UserDBManager.shared.dryRun = true
-        UserDBManager.shared.testRun = true
-        FeedAnalyticsManager.shared.dryRun = true
-
-        FirebaseConfiguration.shared.setLoggerLevel(.min) // Comment out before release
+        #if DEBUG
+           FirebaseConfiguration.shared.setLoggerLevel(.min)
+        #endif
         
         FirebaseApp.configure()
         ControllerModel.shared.prepare()
@@ -49,30 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    //Special thanks to Ray Wenderlich
-    func registerForPushNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-            (granted, error) in
-            guard granted else {
-                self.registerOrUpdateUser()
-                return
-            }
-            self.getNotificationSettings()
-        }
-    }
-    
-    func getNotificationSettings() {
-        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            if settings.authorizationStatus != .authorized {
-                self.registerOrUpdateUser()
-                return
-            }
-            DispatchQueue.main.async {
-                UIApplication.shared.registerForRemoteNotifications()
-            }
-        }
-    }
-    
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data -> String in
@@ -80,25 +52,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let token = tokenParts.joined()
-        registerOrUpdateUser(with: token)
+        UserDBManager.shared.savePushNotificationDeviceToken(deviceToken: token)
     }
     
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register: \(error)")
-        registerOrUpdateUser()
-    }
-    
-    private func registerOrUpdateUser(with token: String? = nil) {
-        do {
-            if try DatabaseManager.shared.createUser(with: token) { //returns true if first visit
-                DatabaseManager.shared.startSession()
-            } else if let token = token {
-                try DatabaseManager.shared.updateDeviceToken(with: token)
-            }
-        } catch {
-            print("Caught: \(error)")
-        }
     }
     
     var backgroundTaskID: UIBackgroundTaskIdentifier?
@@ -141,6 +100,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        application.applicationIconBadgeNumber = 0
     }
 }
 

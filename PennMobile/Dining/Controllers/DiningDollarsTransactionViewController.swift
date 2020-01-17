@@ -12,7 +12,7 @@ protocol TransactionCellDelegate: class {
     func userDidSelect()
 }
 
-class DiningDollarsTransactionViewController: GenericTableViewController, Requestable {
+class DiningDollarsTransactionViewController: GenericTableViewController, Requestable, IndicatorEnabled {
     
     let transactionUrl = "https://api.pennlabs.org/dining/transactions"
     var transactionHistory: [Transaction]?
@@ -31,12 +31,14 @@ class DiningDollarsTransactionViewController: GenericTableViewController, Reques
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        showActivity()
         PennCashNetworkManager.instance.getTransactionHistory { data in
             if let data = data, let str = String(bytes: data, encoding: .utf8) {
                 UserDefaults.standard.setLastTransactionRequest()
                 UserDBManager.shared.saveTransactionData(csvStr: str) {
                     self.fetchTransactionData { (results, error) in
                         DispatchQueue.main.async {
+                            self.hideActivity()
                             self.transactionHistory = results
                             self.tableView.reloadData()
                         }
@@ -45,6 +47,7 @@ class DiningDollarsTransactionViewController: GenericTableViewController, Reques
             } else {
                 self.fetchTransactionData { (results, error) in
                     DispatchQueue.main.async {
+                        self.hideActivity()
                         self.transactionHistory = results
                         self.tableView.reloadData()
                     }

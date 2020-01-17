@@ -53,28 +53,36 @@ class DiningAPI: Requestable {
 // MARK: - Dining Balance API
 extension DiningAPI {
     func fetchDiningBalance(_ completion: @escaping (_ diningBalance: DiningBalance?) -> Void) {
-        getRequest(url: diningBalanceUrl) { (dictionary, error, statusCode) in
-            
-            if statusCode != 200 || dictionary == nil {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
                 completion(nil)
                 return
             }
             
-            let json = JSON(dictionary!)
-            let balance = json["balance"]
-            if let diningDollars = balance["dining_dollars"].float,
-                let swipes = balance["swipes"].int,
-                let guestSwipes = balance["guest_swipes"].int,
-                let timestamp = balance["timestamp"].string {
-                
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                if let lastUpdated = formatter.date(from: timestamp){
-                    completion(DiningBalance(diningDollars: diningDollars, visits: swipes, guestVisits: guestSwipes, lastUpdated: lastUpdated))
-                    return
+            let url = URL(string: self.diningBalanceUrl)!
+            let request = URLRequest(url: url, accessToken: token)
+            
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
+                    let json = JSON(data)
+                    let balance = json["balance"]
+                    if let diningDollars = balance["dining_dollars"].float,
+                        let swipes = balance["swipes"].int,
+                        let guestSwipes = balance["guest_swipes"].int,
+                        let timestamp = balance["timestamp"].string {
+
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                        if let lastUpdated = formatter.date(from: timestamp){
+                            let balance = DiningBalance(diningDollars: diningDollars, visits: swipes, guestVisits: guestSwipes, lastUpdated: lastUpdated)
+                            completion(balance)
+                            return
+                        }
+                    }
                 }
+                completion(nil)
             }
-            completion(nil)
+            task.resume()
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  Student.swift
+//  Account.swift
 //  PennMobile
 //
 //  Created by Josh Doman on 2/24/19.
@@ -8,22 +8,31 @@
 
 import Foundation
 
-class Student: Codable {
-    var first: String
-    var last: String
-    var pennkey: String!
+class Account: Codable {
+    var first: String?
+    var last: String?
+    var pennkey: String
+    var pennid: Int
     var email: String?
-    let imageUrl: String?
+    var imageUrl: String?
+    var affiliations: [String]?
+    
+    var isStudent: Bool {
+        return affiliations?.contains("student") ?? true
+    }
     
     var degrees: Set<Degree>?
     var courses: Set<Course>?
     
-    fileprivate static var student: Student?
+    fileprivate static var account: Account?
     
-    init(first: String, last: String, imageUrl: String?) {
-        self.first = first
-        self.last = last
-        self.imageUrl = imageUrl
+    init(user: OAuthUser) {
+        self.first = user.firstName
+        self.last = user.lastName
+        self.pennkey = user.username
+        self.email = user.email
+        self.pennid = user.pennid
+        self.affiliations = user.affiliation
     }
     
     func isInWharton() -> Bool {
@@ -31,7 +40,7 @@ class Student: Codable {
     }
     
     func setEmail() {
-        guard let degrees = degrees, let pennkey = pennkey else { return }
+        guard let degrees = degrees else { return }
         var potentialEmail: String? = nil
         for degree in degrees {
             switch degree.schoolCode {
@@ -75,46 +84,46 @@ class Student: Codable {
         return str
     }
     
-    static func getStudent() -> Student? {
-        if student == nil {
-            student = UserDefaults.standard.getStudent()
+    static func getAccount() -> Account? {
+        if account == nil {
+            account = UserDefaults.standard.getAccount()
         }
-        return student
+        return account
     }
     
-    static func saveStudent(_ thisStudent: Student) {
-        UserDefaults.standard.saveStudent(thisStudent)
-        student = thisStudent
+    static func saveAccount(_ thisAccount: Account) {
+        UserDefaults.standard.saveAccount(thisAccount)
+        account = thisAccount
     }
     
     static func update(firstName: String? = nil, lastName: String? = nil, email: String? = nil) {
-        guard let student = getStudent() else { return }
+        guard let account = getAccount() else { return }
         if let firstName = firstName {
-            student.first = firstName
+            account.first = firstName
         }
         if let lastName = lastName {
-            student.last = lastName
+            account.last = lastName
         }
         if let email = email {
-            student.email = email
+            account.email = email
         }
-        saveStudent(student)
+        saveAccount(account)
     }
     
     static func clear() {
-        UserDefaults.standard.clearStudent()
-        student = nil
+        UserDefaults.standard.clearAccount()
+        account = nil
     }
 }
 
-extension Student: Equatable {
-    static func == (lhs: Student, rhs: Student) -> Bool {
+extension Account: Equatable {
+    static func == (lhs: Account, rhs: Account) -> Bool {
         return lhs.first == rhs.first && lhs.last == rhs.last && lhs.imageUrl == rhs.imageUrl
                 && lhs.pennkey == rhs.pennkey && lhs.email == rhs.email
     }
 }
 
-extension Student {
+extension Account {
     func isFreshman() -> Bool {
         let now = Date()
         let components = Calendar.current.dateComponents([.year], from: now)
@@ -140,5 +149,12 @@ extension Student {
             }
         }
         return false
+    }
+}
+
+// MARK: - Logged In
+extension Account {
+    static var isLoggedIn: Bool {
+        OAuth2NetworkManager.instance.hasRefreshToken()
     }
 }

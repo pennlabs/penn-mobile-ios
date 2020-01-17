@@ -9,12 +9,12 @@
 import Foundation
 import WebKit
 
-//Mark: UserDefaultsKeys
+//MARK: UserDefaultsKeys
 extension UserDefaults {
-    enum UserDefaultsKeys: String {
+    enum UserDefaultsKeys: String, CaseIterable {
+        case account
         case accountID
         case deviceUUID
-        case deviceToken
         case controllerSettings
         case sessionCount
         case laundryPreferences
@@ -23,13 +23,26 @@ extension UserDefaults {
         case appVersion
         case cookies
         case wharton
-        case student
         case coursePermission
         case hasDiningPlan
         case lastLogin
         case unsentLogs
         case lastTransactionRequest
         case authedIntoShibboleth
+        case courses
+        case housing
+        case privacyPreferences
+        case notificationPreferences
+    }
+    
+    func clearAll() {
+        for key in UserDefaultsKeys.allCases {
+            removeObject(forKey: key.rawValue)
+        }
+        for option in PrivacyOption.allCases {
+            removeObject(forKey: option.didRequestKey)
+            removeObject(forKey: option.didShareKey)
+        }
     }
 }
 
@@ -49,7 +62,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: Permanent DeviceUUID
+// MARK: Permanent DeviceUUID
 extension UserDefaults {
     func set(deviceUUID: String) {
         set(deviceUUID, forKey: UserDefaultsKeys.deviceUUID.rawValue)
@@ -66,7 +79,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: VC Controller Settings (order of VCs)
+// MARK: VC Controller Settings (order of VCs)
 extension UserDefaults {
     func set(vcDisplayNames: [String]) {
         set(vcDisplayNames, forKey: UserDefaultsKeys.controllerSettings.rawValue)
@@ -97,22 +110,10 @@ extension UserDefaults {
     }
 }
 
-// Mark: Permanent Device Token (for push notifications)
+// MARK: Laundry Preferences
 extension UserDefaults {
-    func set(deviceToken: String) {
-        set(deviceToken, forKey: UserDefaultsKeys.deviceToken.rawValue)
-        synchronize()
-    }
-
-    func getDeviceToken() -> String? {
-        return string(forKey: UserDefaultsKeys.deviceToken.rawValue)
-    }
-}
-
-// Mark: Laundry Preferences
-extension UserDefaults {
-    func set(preferences: [Int]) {
-        set(preferences, forKey: UserDefaultsKeys.laundryPreferences.rawValue)
+    func setLaundryPreferences(to ids: [Int]) {
+        set(ids, forKey: UserDefaultsKeys.laundryPreferences.rawValue)
         synchronize()
     }
 
@@ -121,7 +122,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: Onboarding Status
+// MARK: Onboarding Status
 extension UserDefaults {
     func setIsOnboarded(value: Bool) {
         set(value, forKey: UserDefaultsKeys.isOnboarded.rawValue)
@@ -133,7 +134,7 @@ extension UserDefaults {
     }
 }
 
-// Mark: - GSR User
+// MARK: GSR User
 extension UserDefaults {
     func setGSRUser(value: GSRUser) {
         let encoder = JSONEncoder()
@@ -156,26 +157,49 @@ extension UserDefaults {
     }
 }
 
-// MARK: - Student
+// MARK: Account
 extension UserDefaults {
-    func saveStudent(_ student: Student) {
+    func saveAccount(_ account: Account) {
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(student) {
-            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.student.rawValue)
+        if let encoded = try? encoder.encode(account) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.account.rawValue)
         }
         synchronize()
     }
 
-    func getStudent() -> Student? {
+    func getAccount() -> Account? {
         let decoder = JSONDecoder()
-        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.student.rawValue) {
-            return try? decoder.decode(Student.self, from: decodedData)
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.account.rawValue) {
+            return try? decoder.decode(Account.self, from: decodedData)
         }
         return nil
     }
 
-    func clearStudent() {
-        removeObject(forKey: UserDefaultsKeys.student.rawValue)
+    func clearAccount() {
+        removeObject(forKey: UserDefaultsKeys.account.rawValue)
+    }
+}
+
+// MARK: - Courses
+extension UserDefaults {
+    func saveCourses(_ courses: Set<Course>) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(courses) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.courses.rawValue)
+        }
+        synchronize()
+    }
+
+    func getCourses() -> Set<Course>? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.courses.rawValue) {
+            return try? decoder.decode(Set<Course>.self, from: decodedData)
+        }
+        return nil
+    }
+
+    func clearCourses() {
+        removeObject(forKey: UserDefaultsKeys.courses.rawValue)
     }
 }
 
@@ -332,5 +356,155 @@ extension UserDefaults {
     
     func isAuthedIn() -> Bool {
         return bool(forKey: UserDefaultsKeys.authedIntoShibboleth.rawValue)
+    }
+}
+
+// MARK: - Housing
+extension UserDefaults {
+    func saveHousingResult(_ result: HousingResult) {
+        let currentResults = getHousingResults() ?? Array<HousingResult>()
+        var newResults = currentResults.filter { $0.start != result.start }
+        newResults.append(result)
+        
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(newResults) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.housing.rawValue)
+        }
+        synchronize()
+    }
+    
+    func getHousingResults() -> Array<HousingResult>? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.housing.rawValue) {
+            return try? decoder.decode(Array<HousingResult>.self, from: decodedData)
+        }
+        return nil
+    }
+    
+    func isOnCampus() -> Bool? {
+        guard let results = getHousingResults() else {
+            return nil
+        }
+        let now = Date()
+        let start = now.month <= 5 ? now.year - 1 : now.year
+        let filteredResults = results.filter { $0.start == start }
+        if filteredResults.isEmpty {
+            return nil
+        } else {
+            return filteredResults.contains { !$0.offCampus }
+        }
+    }
+}
+
+// MARK: - Privacy Settings
+extension UserDefaults {
+    
+    // MARK: Get and Save Preferences
+    // Set values for each privacy option
+    func set(_ privacyOption: PrivacyOption, to newValue: Bool) {
+        var prefs = getAllPrivacyPreferences()
+        prefs[privacyOption.rawValue] = newValue
+        saveAll(privacyPreferences: prefs)
+    }
+    
+    // Get values for each privacy option (default to false if no preference exists)
+    func getPreference(for option: PrivacyOption) -> Bool {
+        let prefs = getAllPrivacyPreferences()
+        return prefs[option.rawValue] ?? option.defaultValue
+    }
+    
+    // Fetch preferences from disk
+    func getAllPrivacyPreferences() -> PrivacyPreferences {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.privacyPreferences.rawValue) {
+            return (try? decoder.decode(PrivacyPreferences.self, from: decodedData)) ?? .init()
+        }
+        return .init()
+    }
+    
+    // Save all privacy preferences to disk
+    func saveAll(privacyPreferences: PrivacyPreferences) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(privacyPreferences) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.privacyPreferences.rawValue)
+        }
+    }
+
+    private func clearPrivacyPreferences() {
+        removeObject(forKey: UserDefaultsKeys.privacyPreferences.rawValue)
+    }
+    
+    // MARK: Last Permission Request Date
+    // Set values representing whether or not permission was requested for a given privacy option
+    // This is not synced to the server, so we ask a user again if they ever delete the app or get a new phone
+    func setLastDidAskPermission(for privacyOption: PrivacyOption) {
+        UserDefaults.standard.set(Date(), forKey: privacyOption.didRequestKey)
+    }
+    
+    // Get the last date we asked for this option, or nil if we've never asked (on this installation)
+    func getLastDidAskPermission(for privacyOption: PrivacyOption) -> Date? {
+        UserDefaults.standard.value(forKey: privacyOption.didRequestKey) as? Date
+    }
+    
+    // MARK: Last Data Sharing Date
+    // Set the last date we shared data corresponding to this option (ex: when did we last upload courses)
+    func setLastShareDate(for privacyOption: PrivacyOption) {
+        UserDefaults.standard.set(Date(), forKey: privacyOption.didShareKey)
+    }
+    // Get the last date we shared data for this option
+    func getLastShareDate(for privacyOption: PrivacyOption) -> Date? {
+        UserDefaults.standard.value(forKey: privacyOption.didShareKey) as? Date
+    }
+    
+    // MARK: Privacy Option UUID
+    // Each privacy option has its own UUID, which is sent to the server along with any anonymous data to allow us to track that data over time, as well as delete it if requested by the user.
+    func getPrivacyUUID(for privacyOption: PrivacyOption) -> String? {
+        if let privateKey = privacyOption.privateIDKey {
+            if let uuid = UserDefaults.standard.string(forKey: privateKey) {
+                return uuid
+            } else {
+                let uuid = String.randomString(length: 32)
+                UserDefaults.standard.set(uuid, forKey: privateKey)
+                return uuid
+            }
+        }
+        return nil
+    }
+}
+
+// MARK: - Notification Settings
+extension UserDefaults {
+    // Set values for each notification option
+    func set(_ notificationOption: NotificationOption, to newValue: Bool) {
+        var prefs = getAllNotificationPreferences()
+        prefs[notificationOption.rawValue] = newValue
+        saveAll(notificationPreferences: prefs)
+    }
+    
+    // Get values for each notification option (default to true if no preference exists)
+    func getPreference(for option: NotificationOption) -> Bool {
+        let prefs = getAllNotificationPreferences()
+        return prefs[option.rawValue] ?? option.defaultValue
+    }
+    
+    // Fetch preferences from disk
+    func getAllNotificationPreferences() -> NotificationPreferences {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.notificationPreferences.rawValue) {
+            return (try? decoder.decode(NotificationPreferences.self, from: decodedData)) ?? .init()
+        }
+        return .init()
+    }
+    
+    // Save all notification preferences to disk
+    func saveAll(notificationPreferences: NotificationPreferences) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(notificationPreferences) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.notificationPreferences.rawValue)
+        }
+    }
+
+    private func clearNotificationPreferences() {
+        removeObject(forKey: UserDefaultsKeys.notificationPreferences.rawValue)
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 struct CoursesJSON: Codable {
-    let accountID: String
+    let id: String
     let courses: Set<Course>
 }
 
@@ -112,7 +112,12 @@ extension Course {
     
     func isTaughtInNDays(days: Int) -> Bool {
         let weekday = Date().integerDayOfWeek
-        return weekdays.contains(Course.weekdayAbbreviations[(weekday + days) % 7])
+        if let times = meetingTimes {
+            let weekday = Course.weekdayAbbreviations[(weekday + days) % 7]
+            return times.contains { $0.weekday.contains(weekday) }
+        } else {
+            return weekdays.contains(Course.weekdayAbbreviations[(weekday + days) % 7])
+        }
     }
     
     func hasSameMeetingTime(as course: Course) -> Bool {
@@ -208,5 +213,25 @@ extension Array where Element == Course {
             }
         }
         return true
+    }
+}
+
+extension Course {
+    static var currentTerm: String {
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        let year = formatter.string(from: now)
+        formatter.dateFormat = "M"
+        let month = Int(formatter.string(from: now))!
+        let code: String
+        if month <= 5 {
+            code = "A"
+        } else if month >= 8 {
+            code = "C"
+        } else {
+            code = "B"
+        }
+        return "\(year)\(code)"
     }
 }

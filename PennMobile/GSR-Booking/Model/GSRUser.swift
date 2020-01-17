@@ -16,14 +16,14 @@ struct GSRUser: Codable {
     
     static func save(user: GSRUser) {
         UserDefaults.standard.setGSRUser(value: user)
-        if let student = Student.getStudent(), student.first != user.firstName {
+        if let account = Account.getAccount(), account.first != user.firstName {
             // Clear cache so that home title updates with new first name
             guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
                 return
             }
             homeVC.clearCache()
         }
-        Student.update(firstName: user.firstName, lastName: user.lastName, email: user.email)
+        Account.update(firstName: user.firstName, lastName: user.lastName, email: user.email)
     }
     
     static func hasSavedUser() -> Bool {

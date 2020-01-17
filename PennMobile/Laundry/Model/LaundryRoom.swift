@@ -69,12 +69,12 @@ class LaundryRoom: Codable {
     }
     
     static func setPreferences(for ids: [Int]) {
-        UserDefaults.standard.set(preferences: ids)
+        UserDefaults.standard.setLaundryPreferences(to: ids)
     }
     
     static func setPreferences(for halls: [LaundryRoom]) {
         let ids = halls.map { $0.id }
-        UserDefaults.standard.set(preferences: ids)
+        LaundryRoom.setPreferences(for: ids)
     }
     
     static func getPreferences() -> [LaundryRoom] {

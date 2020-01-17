@@ -7,25 +7,19 @@ target 'PennMobile' do
 
     # Pods for PennMobile
 
-pod 'MBProgressHUD', '~> 0.8'
-pod 'SwiftyJSON'
-pod 'ScrollableGraphView'
-pod 'Firebase', '~> 4.7'
-pod 'SCLAlertView'
-pod 'ZoomImageView'
-pod 'Kingfisher', '~> 5.3'
-pod 'TimelineTableViewCell'
-pod 'Fabric', '~> 1.9.0'
-pod 'Crashlytics', '~> 3.12.0'
-pod 'SwiftSoup'
-pod 'XLPagerTabStrip', '~> 9.0'
+pod 'MBProgressHUD', '~> 0.8' # old objc library, should be replaced
+
+pod 'Fabric', '~> 1.10.2' # Required by Firebase.
+pod 'Crashlytics', '~> 3.14.0' # Required by Firebase.
+pod 'Firebase', '~> 4.7' # Firebase not yet supported by SPM. May be a while.
+
+pod 'ZoomImageView' # Only used for fling, should be deleted
+pod 'TimelineTableViewCell' # Only used for fling, should be deleted
+pod 'XLPagerTabStrip', '~> 9.0' # Only used for GSR, should be deleted
+
+# WKZombie should be moved to SPM eventually, but something is broken with the current SPM implementation
 pod 'WKZombie', :git => 'https://github.com/pennlabs/WKZombie.git', :commit => '536f6e8aa0e8438fe711fff6420908bc67edb056'
 pod 'OneTimePassword', '~> 3.2'
-
-    target 'PennMobileTests' do
-        inherit! :search_paths
-        # Pods for testing
-    end
 
     target 'AutomatedScreenshotUITests' do
         inherit! :search_paths

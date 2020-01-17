@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 protocol HomeCellItem: ModularTableViewItem {
     static var jsonKey: String { get }

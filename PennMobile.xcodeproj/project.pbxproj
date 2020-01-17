@@ -3,19 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07BDD5AE4D05C2CAF17F9FB6 /* Pods_PennMobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCB42BEF91460C1AC999C5D8 /* Pods_PennMobileTests.framework */; };
 		139139772388923F00C6C298 /* DiningDollarsTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */; };
-		2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */; };
 		2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */; };
 		2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF221F3F762500CEC3F4 /* ContactCell.swift */; };
 		210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210AC14420684F9B0050D837 /* HomeCellProtocols.swift */; };
 		2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2119D26622529A0600693CDB /* HomeGSRLocationsCellItem.swift */; };
 		2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2119D26822529A2300693CDB /* HomeGSRLocationsCell.swift */; };
-		211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */ = {isa = PBXBuildFile; fileRef = 211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */; };
 		211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */; };
 		211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AE204921030065BC2C /* LaundryMachinesView.swift */; };
 		211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DFE531F36A02C00CB73E4 /* DiningAPI.swift */; };
@@ -36,7 +33,6 @@
 		21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21470EBB223DD34200019C10 /* ScheduleEventCell.swift */; };
 		214C23B21F2FEE150004487C /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214C23B11F2FEE150004487C /* Networking.swift */; };
 		214E254922480818004CB9C4 /* GSRDeletable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214E254822480818004CB9C4 /* GSRDeletable.swift */; };
-		214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F768E1F07391000B8841C /* DatabaseManager.swift */; };
 		21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21508165220D2499002F7EA1 /* HomeNewsCellItem.swift */; };
 		21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21508167220D24A1002F7EA1 /* HomeNewsCell.swift */; };
 		2150816A220D24C4002F7EA1 /* NewsArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21508169220D24C4002F7EA1 /* NewsArticle.swift */; };
@@ -54,13 +50,14 @@
 		21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD6204A5309008DB6E8 /* LaundryMachineCellTappable.swift */; };
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
-		216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640781EBADADA00746B8E /* PennMobileTests.swift */; };
 		216640951EBADC1700746B8E /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640911EBADC1700746B8E /* DiningViewController.swift */; };
 		216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C11EBADC9300746B8E /* GenericControllers.swift */; };
 		216640CC1EBADCA400746B8E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C91EBADCA400746B8E /* Extensions.swift */; };
 		216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640CA1EBADCA400746B8E /* FirebaseAnalyticsManager.swift */; };
 		216640F31EBB86A300746B8E /* SupportItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640F01EBB86A300746B8E /* SupportItem.m */; };
 		216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640FD1EBBA5A300746B8E /* NewsViewController.swift */; };
+		21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21737FD623A1DEE7002DCD07 /* LabsLoginController.swift */; };
+		21737FD923A31205002DCD07 /* OAuth2NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21737FD823A31205002DCD07 /* OAuth2NetworkManager.swift */; };
 		217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A782F204D2C72004F1227 /* HomeItemTypes.swift */; };
 		217A7832204D2C7E004F1227 /* HomeCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7831204D2C7E004F1227 /* HomeCellItem.swift */; };
 		217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7833204D2DF5004F1227 /* HomeDiningCellItem.swift */; };
@@ -123,12 +120,15 @@
 		21B653B92245EB67001A97C5 /* PennAuthRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B653B82245EB67001A97C5 /* PennAuthRequestable.swift */; };
 		21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */; };
 		21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B653BD2246F338001A97C5 /* CoursesWebviewController.swift */; };
-		21B8BBB02223187D00EBC1D0 /* LoginWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */; };
 		21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB1222318A600EBC1D0 /* Course.swift */; };
 		21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */; };
-		21B8BBB622231F9F00EBC1D0 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB522231F9F00EBC1D0 /* Student.swift */; };
+		21B8BBB622231F9F00EBC1D0 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB522231F9F00EBC1D0 /* Account.swift */; };
 		21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB72223963C00EBC1D0 /* Degree.swift */; };
 		21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */; };
+		21D5E06723B68F3100B331CC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E06623B68F3100B331CC /* Model.swift */; };
+		21D5E07223BBFC5700B331CC /* CoursesNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */; };
+		21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */; };
+		21D5E07623BD45F400B331CC /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E07523BD45F400B331CC /* KeychainAccessible.swift */; };
 		21E6A109224BDFEB00DC457A /* HomeViewController + Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */; };
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */; };
@@ -139,12 +139,16 @@
 		21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */; };
 		21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */; };
 		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
-		416F5C30C1E3749EBA0E5E1A /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77611BF43B00344A633A234A /* Pods_PennMobile.framework */; };
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
-		6D3A9CED0A7F5A1793963F7B /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718F76BB2121FDFB84BE4018 /* Pods_AutomatedScreenshotUITests.framework */; };
-		7D3B0862F7B94959E3EDAC71 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		932924C2B8317FABA593A1A2 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4A1C6161A223D8B37B9AA8 /* Pods_PennMobile.framework */; };
+		97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806423D26BC700C23488 /* DiningBalanceCell.swift */; };
+		97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */; };
+		97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806623D26BC700C23488 /* DiningHeaderView.swift */; };
+		97AA806C23D26BC700C23488 /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806723D26BC700C23488 /* DiningCell.swift */; };
+		97AA806D23D26BC700C23488 /* DiningBalanceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806823D26BC700C23488 /* DiningBalanceCollectionViewCell.swift */; };
+		97AA807623D26C8E00C23488 /* DiningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA807423D26C8E00C23488 /* DiningViewModel.swift */; };
 		97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */; };
 		97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFC2100DA1200D3D606 /* BuildingCell.swift */; };
 		97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */; };
@@ -191,19 +195,13 @@
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
 		CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */; };
-		CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */; };
 		CF29A1751FB788820067D946 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1651FB7887C0067D946 /* Page.swift */; };
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
+		E868180250E783063DE9FDA1 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBF3A15BB9805FD5A5270A /* Pods_AutomatedScreenshotUITests.framework */; };
 		EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC321860B7000E29C6A /* StatusBar.swift */; };
 		EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC521861B8500E29C6A /* HomeNavigationController.swift */; };
-		EF391CC8239B186200FE8214 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC2239B186200FE8214 /* DiningBalanceCell.swift */; };
-		EF391CC9239B186200FE8214 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC3239B186200FE8214 /* TransactionTableViewCell.swift */; };
-		EF391CCA239B186200FE8214 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC4239B186200FE8214 /* DiningHeaderView.swift */; };
-		EF391CCB239B186200FE8214 /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC5239B186200FE8214 /* DiningCell.swift */; };
-		EF391CCC239B186200FE8214 /* DiningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC6239B186200FE8214 /* DiningViewModel.swift */; };
-		EF391CCD239B186200FE8214 /* DiningBalanceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF391CC7239B186200FE8214 /* DiningBalanceCollectionViewCell.swift */; };
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
 		EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */; };
 		EFE2D6F0239B11050020F6BF /* GroupSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E8239B11050020F6BF /* GroupSettingsCell.swift */; };
@@ -218,6 +216,18 @@
 		EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */; };
 		EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */; };
 		EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */; };
+		F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */; };
+		F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */; };
+		F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */; };
+		F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */; };
+		F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */; };
+		F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */; };
+		F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE123C3EE3E000AD90F /* SwiftSoup */; };
+		F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE423C3F240000AD90F /* KingfisherSwiftUI */; };
+		F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE623C3F240000AD90F /* Kingfisher */; };
+		F213CCEA23C3F5D5000AD90F /* SCLAlertView in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE923C3F5D5000AD90F /* SCLAlertView */; };
+		F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEC23C3F6A8000AD90F /* SwiftyJSON */; };
+		F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEF23C3F99B000AD90F /* ScrollableGraphView */; };
 		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
 		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
 		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
@@ -227,24 +237,12 @@
 		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
 		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
 		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
+		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
+		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		216640751EBADADA00746B8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 216640581EBADADA00746B8E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2166405F1EBADADA00746B8E;
-			remoteInfo = PennMobile;
-		};
-		B6B1E0672144408B00CCBBCD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 216640581EBADADA00746B8E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2166405F1EBADADA00746B8E;
-			remoteInfo = PennMobile;
-		};
 		F230FB13225809E900760499 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 216640581EBADADA00746B8E /* Project object */;
@@ -256,14 +254,13 @@
 
 /* Begin PBXFileReference section */
 		139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDollarsTransactionViewController.swift; sourceTree = "<group>"; };
-		2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		1BA495024EAB493645989182 /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		210AC14420684F9B0050D837 /* HomeCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellProtocols.swift; sourceTree = "<group>"; };
 		2119D26622529A0600693CDB /* HomeGSRLocationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRLocationsCellItem.swift; sourceTree = "<group>"; };
 		2119D26822529A2300693CDB /* HomeGSRLocationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRLocationsCell.swift; sourceTree = "<group>"; };
 		211B11A41F2995AD00A22C8A /* PennMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PennMobile.entitlements; sourceTree = "<group>"; };
-		211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AuthKey_6MBD9SUNGE.p8; sourceTree = "<group>"; };
 		211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellConformable.swift; sourceTree = "<group>"; };
 		211DA1AE204921030065BC2C /* LaundryMachinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachinesView.swift; sourceTree = "<group>"; };
 		211DFE531F36A02C00CB73E4 /* DiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPI.swift; sourceTree = "<group>"; };
@@ -284,7 +281,6 @@
 		21470EBB223DD34200019C10 /* ScheduleEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventCell.swift; sourceTree = "<group>"; };
 		214C23B11F2FEE150004487C /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		214E254822480818004CB9C4 /* GSRDeletable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRDeletable.swift; sourceTree = "<group>"; };
-		214F768E1F07391000B8841C /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		21508165220D2499002F7EA1 /* HomeNewsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCellItem.swift; sourceTree = "<group>"; };
 		21508167220D24A1002F7EA1 /* HomeNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCell.swift; sourceTree = "<group>"; };
 		21508169220D24C4002F7EA1 /* NewsArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticle.swift; sourceTree = "<group>"; };
@@ -304,9 +300,6 @@
 		216640631EBADADA00746B8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2166406D1EBADADA00746B8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2166406F1EBADADA00746B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		216640741EBADADA00746B8E /* PennMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PennMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		216640781EBADADA00746B8E /* PennMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobileTests.swift; sourceTree = "<group>"; };
-		2166407A1EBADADA00746B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		216640911EBADC1700746B8E /* DiningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewController.swift; sourceTree = "<group>"; };
 		216640C11EBADC9300746B8E /* GenericControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericControllers.swift; sourceTree = "<group>"; };
@@ -316,6 +309,8 @@
 		216640F01EBB86A300746B8E /* SupportItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportItem.m; sourceTree = "<group>"; };
 		216640F81EBB88FB00746B8E /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		216640FD1EBBA5A300746B8E /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
+		21737FD623A1DEE7002DCD07 /* LabsLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsLoginController.swift; sourceTree = "<group>"; };
+		21737FD823A31205002DCD07 /* OAuth2NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2NetworkManager.swift; sourceTree = "<group>"; };
 		217A782F204D2C72004F1227 /* HomeItemTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItemTypes.swift; sourceTree = "<group>"; };
 		217A7831204D2C7E004F1227 /* HomeCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellItem.swift; sourceTree = "<group>"; };
 		217A7833204D2DF5004F1227 /* HomeDiningCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDiningCellItem.swift; sourceTree = "<group>"; };
@@ -378,12 +373,15 @@
 		21B653B82245EB67001A97C5 /* PennAuthRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennAuthRequestable.swift; sourceTree = "<group>"; };
 		21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusExpressNetworkManager.swift; sourceTree = "<group>"; };
 		21B653BD2246F338001A97C5 /* CoursesWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesWebviewController.swift; sourceTree = "<group>"; };
-		21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWebviewController.swift; sourceTree = "<group>"; };
 		21B8BBB1222318A600EBC1D0 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
-		21B8BBB522231F9F00EBC1D0 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		21B8BBB522231F9F00EBC1D0 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		21B8BBB72223963C00EBC1D0 /* Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Degree.swift; sourceTree = "<group>"; };
 		21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		21D5E06623B68F3100B331CC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesNetworkManager.swift; sourceTree = "<group>"; };
+		21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursePrivacyController.swift; sourceTree = "<group>"; };
+		21D5E07523BD45F400B331CC /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + Delegates.swift"; sourceTree = "<group>"; };
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
@@ -394,14 +392,15 @@
 		21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusExpressLoginController.swift; sourceTree = "<group>"; };
 		21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAnalyticsEngine.swift; sourceTree = "<group>"; };
 		21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
-		2D6E829247DF6DD1DE74BAB3 /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
-		4A65B8E83284DF764965D33F /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPFetcher.swift; sourceTree = "<group>"; };
 		66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorTokenGenerator.swift; sourceTree = "<group>"; };
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
-		718F76BB2121FDFB84BE4018 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		77611BF43B00344A633A234A /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		81E7B85BEF491C3BD2846D47 /* Pods-PennMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.release.xcconfig"; path = "Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.release.xcconfig"; sourceTree = "<group>"; };
+		97AA806423D26BC700C23488 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
+		97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
+		97AA806623D26BC700C23488 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
+		97AA806723D26BC700C23488 /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
+		97AA806823D26BC700C23488 /* DiningBalanceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCollectionViewCell.swift; sourceTree = "<group>"; };
+		97AA807423D26C8E00C23488 /* DiningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewModel.swift; sourceTree = "<group>"; };
 		97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupIconView.swift; sourceTree = "<group>"; };
 		97E79DFC2100DA1200D3D606 /* BuildingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingHeaderCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingHeaderCell.swift; sourceTree = SOURCE_ROOT; };
@@ -417,7 +416,8 @@
 		97E79E172100E4AA00D3D606 /* FitnessFacilityData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityData.swift; sourceTree = "<group>"; };
 		97E79E192100E51A00D3D606 /* FitnessFacilityName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityName.swift; sourceTree = "<group>"; };
 		97E79E1B2100F32E00D3D606 /* FitnessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewModel.swift; sourceTree = "<group>"; };
-		B4938EF127200B954AEC4C75 /* Pods-PennMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-PennMobileTests/Pods-PennMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A2F126DCBF6D0430638A93DC /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
+		AD4A1C6161A223D8B37B9AA8 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLaundryCell.swift; sourceTree = "<group>"; };
 		B6111DB12018497400DC7877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6111DB320184C4A00DC7877 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -432,13 +432,12 @@
 		B658393A1FABD295009486FC /* LaundryAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryAPIService.swift; sourceTree = "<group>"; };
 		B6665A172071E63800F49A9C /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B67881D7211CBF2A000DA750 /* MenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableView.swift; sourceTree = "<group>"; };
-		B6B1E0622144408B00CCBBCD /* PennMobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PennMobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B1E089214442A200CCBBCD /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = SOURCE_ROOT; };
 		B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
 		B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteViewController.swift; sourceTree = "<group>"; };
 		B9C8CAA7235A613D0040C8E5 /* GSRGroupNewIntialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupNewIntialController.swift; sourceTree = "<group>"; };
-		BCB42BEF91460C1AC999C5D8 /* Pods_PennMobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF3AD38882FCB08387AD3064 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
 		C11B38E222508A8D009B752A /* DiningBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalance.swift; sourceTree = "<group>"; };
@@ -450,24 +449,16 @@
 		C15C4B4D223EB16F00E443FD /* HomeReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCell.swift; sourceTree = "<group>"; };
 		C15C4B4F223EB18800E443FD /* HomeReservationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCellItem.swift; sourceTree = "<group>"; };
 		C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReservationsCell.swift; sourceTree = "<group>"; };
+		C9ACC27131C730964A69579B /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		CF1CE9BC205D664700C51F46 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewCell.swift; sourceTree = "<group>"; };
-		CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		CF29A1651FB7887C0067D946 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
-		D658D8471DC1C8C96619A300 /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
-		EA4073C46DD1A9414419420C /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF389EC321860B7000E29C6A /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		EF389EC521861B8500E29C6A /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
-		EF391CC2239B186200FE8214 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
-		EF391CC3239B186200FE8214 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
-		EF391CC4239B186200FE8214 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
-		EF391CC5239B186200FE8214 /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
-		EF391CC6239B186200FE8214 /* DiningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewModel.swift; sourceTree = "<group>"; };
-		EF391CC7239B186200FE8214 /* DiningBalanceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCollectionViewCell.swift; sourceTree = "<group>"; };
 		EFD6F358220E334100382783 /* DiningCellSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCellSettingsController.swift; sourceTree = "<group>"; };
 		EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupIndividualSettingView.swift; sourceTree = "<group>"; };
 		EFE2D6E8239B11050020F6BF /* GroupSettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSettingsCell.swift; sourceTree = "<group>"; };
@@ -482,6 +473,12 @@
 		EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRManageGroupController.swift; sourceTree = "<group>"; };
 		EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworkManager..swift; sourceTree = "<group>"; };
 		EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupUser.swift; sourceTree = "<group>"; };
+		F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
+		F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPreference.swift; sourceTree = "<group>"; };
+		F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreference.swift; sourceTree = "<group>"; };
+		F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewCell.swift; sourceTree = "<group>"; };
+		F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
+		F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewCell.swift; sourceTree = "<group>"; };
 		F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutomatedScreenshotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedScreenshotUITests.swift; sourceTree = "<group>"; };
 		F230FB12225809E900760499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -493,7 +490,10 @@
 		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
 		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
+		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
+		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		FCBBF3A15BB9805FD5A5270A /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -501,23 +501,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				416F5C30C1E3749EBA0E5E1A /* Pods_PennMobile.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		216640711EBADADA00746B8E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7D3B0862F7B94959E3EDAC71 /* (null) in Frameworks */,
-				07BDD5AE4D05C2CAF17F9FB6 /* Pods_PennMobileTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6B1E05F2144408B00CCBBCD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */,
+				F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */,
+				F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */,
+				F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */,
+				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
+				F213CCEA23C3F5D5000AD90F /* SCLAlertView in Frameworks */,
+				932924C2B8317FABA593A1A2 /* Pods_PennMobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,13 +515,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D3A9CED0A7F5A1793963F7B /* Pods_AutomatedScreenshotUITests.framework in Frameworks */,
+				E868180250E783063DE9FDA1 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02A4D668D9AC5D56BBEF88F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FCBBF3A15BB9805FD5A5270A /* Pods_AutomatedScreenshotUITests.framework */,
+				AD4A1C6161A223D8B37B9AA8 /* Pods_PennMobile.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2119D265225299D300693CDB /* GSR Locations */ = {
 			isa = PBXGroup;
 			children = (
@@ -640,10 +639,10 @@
 				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
 				216640621EBADADA00746B8E /* PennMobile */,
 				2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */,
-				216640771EBADADA00746B8E /* PennMobileTests */,
 				216640611EBADADA00746B8E /* Products */,
 				F5E2CE9A9024AE8E28992A5E /* Pods */,
-				F48D9E404FF229DDB0BE1F67 /* Frameworks */,
+				02A4D668D9AC5D56BBEF88F7 /* Frameworks */,
+				97F96CA923D268FD0025A58C /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -651,8 +650,6 @@
 			isa = PBXGroup;
 			children = (
 				216640601EBADADA00746B8E /* PennMobile.app */,
-				216640741EBADADA00746B8E /* PennMobileTests.xctest */,
-				B6B1E0622144408B00CCBBCD /* PennMobileUITests.xctest */,
 				F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */,
 			);
 			name = Products;
@@ -662,12 +659,13 @@
 			isa = PBXGroup;
 			children = (
 				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
-				216640F91EBB898700746B8E /* About */,
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
 				21ECADA21F30146B00569883 /* Networking + Analytics */,
 				216640C71EBADC9D00746B8E /* General */,
 				21B653BC2246F31E001A97C5 /* Courses */,
 				66E8ECA32381CA6C00945BEA /* Auth */,
+				F212BE8223B6C88A00ED46A1 /* Notifications */,
+				F212BE7D23B6ACC800ED46A1 /* Privacy */,
 				21B8BBBB2224F98B00EBC1D0 /* Login */,
 				216640881EBADBA000746B8E /* Setup + Navigation */,
 				B62875E82112591700FB2873 /* Buildings */,
@@ -677,22 +675,15 @@
 				2166408B1EBADBF800746B8E /* Dining */,
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
+				21D5E06523B68F0E00B331CC /* Housing */,
 				212304C52054ED9900958CE0 /* Spring Fling */,
 				216640EE1EBB867600746B8E /* Contacts */,
 				216640D31EBB80FD00746B8E /* News */,
 				CF1CE9B8205D5BF100C51F46 /* More Tab */,
+				216640F91EBB898700746B8E /* About */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
 			);
 			path = PennMobile;
-			sourceTree = "<group>";
-		};
-		216640771EBADADA00746B8E /* PennMobileTests */ = {
-			isa = PBXGroup;
-			children = (
-				2166407A1EBADADA00746B8E /* Info.plist */,
-				216640781EBADADA00746B8E /* PennMobileTests.swift */,
-			);
-			path = PennMobileTests;
 			sourceTree = "<group>";
 		};
 		216640831EBADB7000746B8E /* Supporting_Files */ = {
@@ -700,11 +691,9 @@
 			children = (
 				B6111DB12018497400DC7877 /* GoogleService-Info.plist */,
 				2166406F1EBADADA00746B8E /* Info.plist */,
-				211B11A71F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 */,
 				2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */,
 				216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */,
 				216640F81EBB88FB00746B8E /* PrefixHeader.pch */,
-				2101C3471F2EEF7B001D2A08 /* SwiftyJSON.swift */,
 			);
 			path = Supporting_Files;
 			sourceTree = "<group>";
@@ -725,7 +714,7 @@
 		2166408B1EBADBF800746B8E /* Dining */ = {
 			isa = PBXGroup;
 			children = (
-				EF391CC1239B186200FE8214 /* Views */,
+				97AA806323D26BC700C23488 /* Views */,
 				2166408E1EBADC0700746B8E /* Controllers */,
 				2166408D1EBADC0100746B8E /* Model */,
 				216640CE1EBADD1B00746B8E /* Networking + Cache */,
@@ -749,6 +738,7 @@
 			isa = PBXGroup;
 			children = (
 				216640911EBADC1700746B8E /* DiningViewController.swift */,
+				97AA807423D26C8E00C23488 /* DiningViewModel.swift */,
 				139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */,
 			);
 			path = Controllers;
@@ -775,8 +765,8 @@
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
 				2188C6D6223C7E8300F18D90 /* SecureStore.swift */,
 				21879B1D1FB3FF54003CF552 /* Storage.swift */,
+				21D5E07523BD45F400B331CC /* KeychainAccessible.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
-				2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1004,6 +994,8 @@
 				21B8BBB1222318A600EBC1D0 /* Course.swift */,
 				21A9D941224087980000444D /* CourseMeetingTime.swift */,
 				21B653BD2246F338001A97C5 /* CoursesWebviewController.swift */,
+				21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */,
+				21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */,
 			);
 			path = Courses;
 			sourceTree = "<group>";
@@ -1011,9 +1003,9 @@
 		21B8BBBB2224F98B00EBC1D0 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				21B8BBAF2223187D00EBC1D0 /* LoginWebviewController.swift */,
+				21737FD623A1DEE7002DCD07 /* LabsLoginController.swift */,
 				21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */,
-				21B8BBB522231F9F00EBC1D0 /* Student.swift */,
+				21B8BBB522231F9F00EBC1D0 /* Account.swift */,
 				21B8BBB72223963C00EBC1D0 /* Degree.swift */,
 				21B8BBB3222318BE00EBC1D0 /* PennInTouchNetworkManager.swift */,
 				21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */,
@@ -1023,13 +1015,20 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		21D5E06523B68F0E00B331CC /* Housing */ = {
+			isa = PBXGroup;
+			children = (
+				21D5E06623B68F3100B331CC /* Model.swift */,
+			);
+			path = Housing;
+			sourceTree = "<group>";
+		};
 		21ECADA21F30146B00569883 /* Networking + Analytics */ = {
 			isa = PBXGroup;
 			children = (
 				217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */,
 				216640CA1EBADCA400746B8E /* FirebaseAnalyticsManager.swift */,
 				215C605C205C88EA00FE271A /* ImageNetworkingManager.swift */,
-				214F768E1F07391000B8841C /* DatabaseManager.swift */,
 				21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */,
 				21EB4D2F203D330C0029A460 /* UserDBManager.swift */,
 				214C23B11F2FEE150004487C /* Networking.swift */,
@@ -1051,12 +1050,25 @@
 			isa = PBXGroup;
 			children = (
 				2130A5052238C2F000DFEEC7 /* PennLoginController.swift */,
+				21737FD823A31205002DCD07 /* OAuth2NetworkManager.swift */,
 				21B653B82245EB67001A97C5 /* PennAuthRequestable.swift */,
 				66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */,
 				66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */,
 				66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		97AA806323D26BC700C23488 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				97AA806423D26BC700C23488 /* DiningBalanceCell.swift */,
+				97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */,
+				97AA806623D26BC700C23488 /* DiningHeaderView.swift */,
+				97AA806723D26BC700C23488 /* DiningCell.swift */,
+				97AA806823D26BC700C23488 /* DiningBalanceCollectionViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		97E79E0A2100DBC300D3D606 /* Fitness */ = {
@@ -1105,6 +1117,13 @@
 				97E79E152100E33100D3D606 /* FitnessAPI.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		97F96CA923D268FD0025A58C /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		B6111DB820184C9B00DC7877 /* Controllers */ = {
@@ -1246,7 +1265,6 @@
 				CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */,
 				CF1CE9BC205D664700C51F46 /* MoreCell.swift */,
 				CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */,
-				CF1CE9C2205D7C3000C51F46 /* AccountCell.swift */,
 			);
 			name = "More Tab";
 			path = "New Group";
@@ -1264,20 +1282,6 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		EF391CC1239B186200FE8214 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				EF391CC2239B186200FE8214 /* DiningBalanceCell.swift */,
-				EF391CC3239B186200FE8214 /* TransactionTableViewCell.swift */,
-				EF391CC4239B186200FE8214 /* DiningHeaderView.swift */,
-				EF391CC5239B186200FE8214 /* DiningCell.swift */,
-				EF391CC6239B186200FE8214 /* DiningViewModel.swift */,
-				EF391CC7239B186200FE8214 /* DiningBalanceCollectionViewCell.swift */,
-			);
-			name = Views;
-			path = PennMobile/Dining/Views;
-			sourceTree = SOURCE_ROOT;
-		};
 		EFE2D6E6239B11050020F6BF /* GSRGroups */ = {
 			isa = PBXGroup;
 			children = (
@@ -1294,6 +1298,30 @@
 			path = GSRGroups;
 			sourceTree = "<group>";
 		};
+		F212BE7D23B6ACC800ED46A1 /* Privacy */ = {
+			isa = PBXGroup;
+			children = (
+				F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */,
+				F27AA01723BC6CEC00276C4F /* PermissionView.swift */,
+				F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */,
+				F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */,
+				F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */,
+			);
+			name = Privacy;
+			path = About/Privacy;
+			sourceTree = "<group>";
+		};
+		F212BE8223B6C88A00ED46A1 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */,
+				F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */,
+				F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */,
+				F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		F230FB0F225809E900760499 /* AutomatedScreenshotUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1304,25 +1332,13 @@
 			path = AutomatedScreenshotUITests;
 			sourceTree = "<group>";
 		};
-		F48D9E404FF229DDB0BE1F67 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				718F76BB2121FDFB84BE4018 /* Pods_AutomatedScreenshotUITests.framework */,
-				77611BF43B00344A633A234A /* Pods_PennMobile.framework */,
-				BCB42BEF91460C1AC999C5D8 /* Pods_PennMobileTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		F5E2CE9A9024AE8E28992A5E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EA4073C46DD1A9414419420C /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
-				4A65B8E83284DF764965D33F /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
-				D658D8471DC1C8C96619A300 /* Pods-PennMobile.debug.xcconfig */,
-				2D6E829247DF6DD1DE74BAB3 /* Pods-PennMobile.release.xcconfig */,
-				B4938EF127200B954AEC4C75 /* Pods-PennMobileTests.debug.xcconfig */,
-				81E7B85BEF491C3BD2846D47 /* Pods-PennMobileTests.release.xcconfig */,
+				C9ACC27131C730964A69579B /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
+				BF3AD38882FCB08387AD3064 /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
+				A2F126DCBF6D0430638A93DC /* Pods-PennMobile.debug.xcconfig */,
+				1BA495024EAB493645989182 /* Pods-PennMobile.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1334,68 +1350,39 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2166407D1EBADADA00746B8E /* Build configuration list for PBXNativeTarget "PennMobile" */;
 			buildPhases = (
-				45DD5C5D2F6BB8E057D09A5D /* [CP] Check Pods Manifest.lock */,
+				58BA8384EDFB87F08D7FB4E2 /* [CP] Check Pods Manifest.lock */,
 				2166405C1EBADADA00746B8E /* Sources */,
 				2166405D1EBADADA00746B8E /* Frameworks */,
 				2166405E1EBADADA00746B8E /* Resources */,
 				EF1CF2F322177EED002D912D /* ShellScript */,
-				ED255B4798F78327FA9B7A95 /* [CP] Embed Pods Frameworks */,
+				AF3EEBFC3576C81A12093389 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = PennMobile;
+			packageProductDependencies = (
+				F213CCE123C3EE3E000AD90F /* SwiftSoup */,
+				F213CCE423C3F240000AD90F /* KingfisherSwiftUI */,
+				F213CCE623C3F240000AD90F /* Kingfisher */,
+				F213CCE923C3F5D5000AD90F /* SCLAlertView */,
+				F213CCEC23C3F6A8000AD90F /* SwiftyJSON */,
+				F213CCEF23C3F99B000AD90F /* ScrollableGraphView */,
+			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
 			productType = "com.apple.product-type.application";
-		};
-		216640731EBADADA00746B8E /* PennMobileTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 216640801EBADADA00746B8E /* Build configuration list for PBXNativeTarget "PennMobileTests" */;
-			buildPhases = (
-				D79396EAEFF157B9308625A0 /* [CP] Check Pods Manifest.lock */,
-				216640701EBADADA00746B8E /* Sources */,
-				216640711EBADADA00746B8E /* Frameworks */,
-				216640721EBADADA00746B8E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				216640761EBADADA00746B8E /* PBXTargetDependency */,
-			);
-			name = PennMobileTests;
-			productName = PennMobileTests;
-			productReference = 216640741EBADADA00746B8E /* PennMobileTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		B6B1E0612144408B00CCBBCD /* PennMobileUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B6B1E06B2144408B00CCBBCD /* Build configuration list for PBXNativeTarget "PennMobileUITests" */;
-			buildPhases = (
-				B6B1E05E2144408B00CCBBCD /* Sources */,
-				B6B1E05F2144408B00CCBBCD /* Frameworks */,
-				B6B1E0602144408B00CCBBCD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B6B1E0682144408B00CCBBCD /* PBXTargetDependency */,
-			);
-			name = PennMobileUITests;
-			productName = PennMobileUITests;
-			productReference = B6B1E0622144408B00CCBBCD /* PennMobileUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		F230FB0D225809E900760499 /* AutomatedScreenshotUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F230FB15225809E900760499 /* Build configuration list for PBXNativeTarget "AutomatedScreenshotUITests" */;
 			buildPhases = (
-				6990986529DD7D79A21955F8 /* [CP] Check Pods Manifest.lock */,
+				9A67231009E81F7F5606950B /* [CP] Check Pods Manifest.lock */,
 				F230FB0A225809E900760499 /* Sources */,
 				F230FB0B225809E900760499 /* Frameworks */,
 				F230FB0C225809E900760499 /* Resources */,
-				25775904958AAFF75E838BBB /* [CP] Embed Pods Frameworks */,
+				A488E054AC1AE1CFEFAFD04E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1431,19 +1418,6 @@
 							};
 						};
 					};
-					216640731EBADADA00746B8E = {
-						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = VU59R57FGM;
-						LastSwiftMigration = 1020;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 2166405F1EBADADA00746B8E;
-					};
-					B6B1E0612144408B00CCBBCD = {
-						CreatedOnToolsVersion = 9.4.1;
-						DevelopmentTeam = VU59R57FGM;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 2166405F1EBADADA00746B8E;
-					};
 					F230FB0D225809E900760499 = {
 						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = VU59R57FGM;
@@ -1461,13 +1435,18 @@
 				Base,
 			);
 			mainGroup = 216640571EBADADA00746B8E;
+			packageReferences = (
+				F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
+				F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
+			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				2166405F1EBADADA00746B8E /* PennMobile */,
-				216640731EBADADA00746B8E /* PennMobileTests */,
-				B6B1E0612144408B00CCBBCD /* PennMobileUITests */,
 				F230FB0D225809E900760499 /* AutomatedScreenshotUITests */,
 			);
 		};
@@ -1481,22 +1460,7 @@
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
 				B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */,
 				2189C09E2027CE4100771C1F /* locations.json in Resources */,
-				211B11A81F299C4A00A22C8A /* AuthKey_6MBD9SUNGE.p8 in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		216640721EBADADA00746B8E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6B1E0602144408B00CCBBCD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1510,25 +1474,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		25775904958AAFF75E838BBB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimulatorStatusMagic.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		45DD5C5D2F6BB8E057D09A5D /* [CP] Check Pods Manifest.lock */ = {
+		58BA8384EDFB87F08D7FB4E2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1550,7 +1496,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6990986529DD7D79A21955F8 /* [CP] Check Pods Manifest.lock */ = {
+		9A67231009E81F7F5606950B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1572,68 +1518,34 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D79396EAEFF157B9308625A0 /* [CP] Check Pods Manifest.lock */ = {
+		A488E054AC1AE1CFEFAFD04E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PennMobileTests-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ED255B4798F78327FA9B7A95 /* [CP] Embed Pods Frameworks */ = {
+		AF3EEBFC3576C81A12093389 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Base32/Base32.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/OneTimePassword/OneTimePassword.framework",
-				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
-				"${BUILT_PRODUCTS_DIR}/ScrollableGraphView/ScrollableGraphView.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftSoup/SwiftSoup.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/TimelineTableViewCell/TimelineTableViewCell.framework",
-				"${BUILT_PRODUCTS_DIR}/WKZombie/WKZombie.framework",
-				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
-				"${BUILT_PRODUCTS_DIR}/ZoomImageView/ZoomImageView.framework",
-				"${BUILT_PRODUCTS_DIR}/hpple/hpple.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Base32.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OneTimePassword.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScrollableGraphView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSoup.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TimelineTableViewCell.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WKZombie.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZoomImageView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hpple.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1687,10 +1599,8 @@
 				C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
-				EF391CCA239B186200FE8214 /* DiningHeaderView.swift in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
 				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,
-				21B8BBB02223187D00EBC1D0 /* LoginWebviewController.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */,
@@ -1705,16 +1615,15 @@
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
-				EF391CCD239B186200FE8214 /* DiningBalanceCollectionViewCell.swift in Sources */,
-				EF391CC8239B186200FE8214 /* DiningBalanceCell.swift in Sources */,
 				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
+				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
-				CF1CE9C3205D7C3100C51F46 /* AccountCell.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
 				212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */,
 				2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */,
 				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
+				21D5E07623BD45F400B331CC /* KeychainAccessible.swift in Sources */,
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
@@ -1722,6 +1631,7 @@
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
 				66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */,
 				21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */,
+				F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */,
 				215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */,
 				217A7836204D2E0D004F1227 /* HomeLaundryCellItem.swift in Sources */,
 				EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */,
@@ -1729,25 +1639,30 @@
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
 				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
+				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				F2F4C92023611EB900816456 /* Colors.swift in Sources */,
+				F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
 				21ABE2AA223D7DEA00199D29 /* ScheduleTable.swift in Sources */,
 				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,
 				21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
+				F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
+				21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */,
 				97E79E182100E4AA00D3D606 /* FitnessFacilityData.swift in Sources */,
-				EF391CC9239B186200FE8214 /* TransactionTableViewCell.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
+				97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */,
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
 				EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */,
+				F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
 				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
@@ -1765,7 +1680,6 @@
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
 				21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */,
 				2188C6D7223C7E8400F18D90 /* SecureStore.swift in Sources */,
-				214F768F1F07391000B8841C /* DatabaseManager.swift in Sources */,
 				F23CC0BD235E3F390007317A /* DiningAPIResponse.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
 				B6111DB420184C4A00DC7877 /* AboutViewController.swift in Sources */,
@@ -1785,9 +1699,11 @@
 				21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */,
 				EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */,
 				C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */,
+				21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
+				97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */,
 				F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */,
 				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
@@ -1795,7 +1711,7 @@
 				217A7845204DB800004F1227 /* HomeAsynchronousFetching.swift in Sources */,
 				C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */,
 				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
-				21B8BBB622231F9F00EBC1D0 /* Student.swift in Sources */,
+				21B8BBB622231F9F00EBC1D0 /* Account.swift in Sources */,
 				C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */,
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
@@ -1803,15 +1719,14 @@
 				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
+				97AA807623D26C8E00C23488 /* DiningViewModel.swift in Sources */,
 				EFE2D6F4239B11050020F6BF /* GroupCell.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
-				EF391CCB239B186200FE8214 /* DiningCell.swift in Sources */,
 				F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				97E79E072100DA1200D3D606 /* BuildingImageCell.swift in Sources */,
-				2101C3481F2EEF7B001D2A08 /* SwiftyJSON.swift in Sources */,
 				217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
 				21A9D942224087980000444D /* CourseMeetingTime.swift in Sources */,
@@ -1820,9 +1735,9 @@
 				219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */,
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				2189C0A82027CE4B00771C1F /* ThumbLayer.swift in Sources */,
+				97AA806D23D26BC700C23488 /* DiningBalanceCollectionViewCell.swift in Sources */,
 				21B653B92245EB67001A97C5 /* PennAuthRequestable.swift in Sources */,
 				2189C0842027CDB800771C1F /* GSRLoginController.swift in Sources */,
-				EF391CCC239B186200FE8214 /* DiningViewModel.swift in Sources */,
 				211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */,
 				EFE2D6F2239B11050020F6BF /* GroupMemberCell.swift in Sources */,
 				2189C0A02027CE4100771C1F /* GSRVenue.swift in Sources */,
@@ -1831,14 +1746,20 @@
 				2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
+				F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */,
+				F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */,
 				2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */,
 				21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
 				C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */,
 				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,
+				F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */,
 				66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */,
+				97AA806C23D26BC700C23488 /* DiningCell.swift in Sources */,
 				F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */,
+				21D5E07223BBFC5700B331CC /* CoursesNetworkManager.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
+				97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */,
 				97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */,
 				21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
@@ -1863,6 +1784,7 @@
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
 				B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */,
 				21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */,
+				21737FD923A31205002DCD07 /* OAuth2NetworkManager.swift in Sources */,
 				C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */,
 				EFE2D6F1239B11050020F6BF /* GroupManageButtonCell.swift in Sources */,
 				66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */,
@@ -1870,21 +1792,6 @@
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
 				216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */,
 				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		216640701EBADADA00746B8E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				216640791EBADADA00746B8E /* PennMobileTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B6B1E05E2144408B00CCBBCD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1900,16 +1807,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		216640761EBADADA00746B8E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2166405F1EBADADA00746B8E /* PennMobile */;
-			targetProxy = 216640751EBADADA00746B8E /* PBXContainerItemProxy */;
-		};
-		B6B1E0682144408B00CCBBCD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2166405F1EBADADA00746B8E /* PennMobile */;
-			targetProxy = B6B1E0672144408B00CCBBCD /* PBXContainerItemProxy */;
-		};
 		F230FB14225809E900760499 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2166405F1EBADADA00746B8E /* PennMobile */;
@@ -2036,28 +1933,32 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		2166407E1EBADADA00746B8E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D658D8471DC1C8C96619A300 /* Pods-PennMobile.debug.xcconfig */;
+			baseConfigurationReference = A2F126DCBF6D0430638A93DC /* Pods-PennMobile.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5220;
+				CURRENT_PROJECT_VERSION = 6221;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 5.2.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 6.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2071,20 +1972,23 @@
 		};
 		2166407F1EBADADA00746B8E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D6E829247DF6DD1DE74BAB3 /* Pods-PennMobile.release.xcconfig */;
+			baseConfigurationReference = 1BA495024EAB493645989182 /* Pods-PennMobile.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5220;
+				CURRENT_PROJECT_VERSION = 6221;
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 5.2.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 6.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2095,89 +1999,9 @@
 			};
 			name = Release;
 		};
-		216640811EBADADA00746B8E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B4938EF127200B954AEC4C75 /* Pods-PennMobileTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				INFOPLIST_FILE = PennMobileTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pennlabs.PennMobileTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PennMobile.app/PennMobile";
-			};
-			name = Debug;
-		};
-		216640821EBADADA00746B8E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 81E7B85BEF491C3BD2846D47 /* Pods-PennMobileTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				INFOPLIST_FILE = PennMobileTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.pennlabs.PennMobileTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PennMobile.app/PennMobile";
-			};
-			name = Release;
-		};
-		B6B1E0692144408B00CCBBCD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = PennMobileUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobileUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PennMobile;
-			};
-			name = Debug;
-		};
-		B6B1E06A2144408B00CCBBCD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = PennMobileUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobileUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PennMobile;
-			};
-			name = Release;
-		};
 		F230FB16225809E900760499 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA4073C46DD1A9414419420C /* Pods-AutomatedScreenshotUITests.debug.xcconfig */;
+			baseConfigurationReference = C9ACC27131C730964A69579B /* Pods-AutomatedScreenshotUITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2188,7 +2012,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AutomatedScreenshotUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = land.dominic.AutomatedScreenshotUITests;
@@ -2202,7 +2030,7 @@
 		};
 		F230FB17225809E900760499 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4A65B8E83284DF764965D33F /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
+			baseConfigurationReference = BF3AD38882FCB08387AD3064 /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2213,7 +2041,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = AutomatedScreenshotUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = land.dominic.AutomatedScreenshotUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2245,24 +2077,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		216640801EBADADA00746B8E /* Build configuration list for PBXNativeTarget "PennMobileTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				216640811EBADADA00746B8E /* Debug */,
-				216640821EBADADA00746B8E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B6B1E06B2144408B00CCBBCD /* Build configuration list for PBXNativeTarget "PennMobileUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B6B1E0692144408B00CCBBCD /* Debug */,
-				B6B1E06A2144408B00CCBBCD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		F230FB15225809E900760499 /* Build configuration list for PBXNativeTarget "AutomatedScreenshotUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2273,6 +2087,82 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
+		F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.12.0;
+			};
+		};
+		F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pennlabs/SCLAlertView-Swift/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.2;
+			};
+		};
+		F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pennlabs/ScrollableGraphView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		F213CCE423C3F240000AD90F /* KingfisherSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = KingfisherSwiftUI;
+		};
+		F213CCE623C3F240000AD90F /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		F213CCE923C3F5D5000AD90F /* SCLAlertView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */;
+			productName = SCLAlertView;
+		};
+		F213CCEC23C3F6A8000AD90F /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		F213CCEF23C3F99B000AD90F /* ScrollableGraphView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */;
+			productName = ScrollableGraphView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 216640581EBADADA00746B8E /* Project object */;
 }
