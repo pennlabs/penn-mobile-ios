@@ -67,6 +67,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         tableView.separatorStyle = .singleLine
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more-with-icon")
+        tableView.register(TwoFactorCell.self, forCellReuseIdentifier: TwoFactorCell.identifier)
         tableView.tableFooterView = UIView()
     }
     
@@ -92,7 +93,7 @@ extension MoreViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Notification and privacy tabs aren't shown for users that aren't logged in
-        let rows = [Account.isLoggedIn ? 3 : 1, ControllerModel.shared.moreOrder.count, pennLinks.count]
+        let rows = [Account.isLoggedIn ? 4 : 2, ControllerModel.shared.moreOrder.count, pennLinks.count]
         return rows[section]
     }
     
@@ -112,9 +113,16 @@ extension MoreViewController {
                     cell.accessoryType = .disclosureIndicator
                     return cell
                 }
+            } else if indexPath.row == 1 {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: TwoFactorCell.identifier) as? TwoFactorCell {
+                    cell.code = TwoFactorTokenGenerator.instance.generate()
+                    cell.backgroundColor = .uiGroupedBackgroundSecondary
+                    cell.delegate = self
+                    return cell
+                }
             } else {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
-                    cell.setUpView(with: indexPath.row == 1 ? "Notifications" : "Privacy")
+                    cell.setUpView(with: indexPath.row == 2 ? "Notifications" : "Privacy")
                     cell.backgroundColor = .uiGroupedBackgroundSecondary
                     cell.accessoryType = .disclosureIndicator
                     return cell
@@ -139,11 +147,11 @@ extension MoreViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return (indexPath.section == 0 && indexPath.row == 1) ? TwoFactorCell.cellHeight : 50
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return (indexPath.section == 0 && indexPath.row == 1) ? TwoFactorCell.cellHeight : 50
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -212,3 +220,47 @@ extension MoreViewController {
         }
     }
 }
+
+// MARK: - TwoFactorCellDelegate
+extension MoreViewController: TwoFactorCellDelegate {
+    func handleRefresh() {
+        tableView.reloadData()
+    }
+    
+    func handleEnableSwitch(enabled: Bool) {
+        if enabled {
+            let twc = TwoFactorWebviewController()
+            twc.completion = { (successful) in
+                if !successful {
+                    let alert = UIAlertController(title: "Server Error", message: "We were unable to retrieve your unique Two-Factor code.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { _ in
+                        alert.dismiss(animated: true, completion: nil)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                
+                self.tableView.reloadData()
+            }
+            let nvc = UINavigationController(rootViewController: twc)
+            self.present(nvc, animated: true, completion: nil)
+        }
+        else {
+            let alert = UIAlertController(title: "Disabling Two-Factor Automation", message: "Are you sure you want to disable Two-Factor Automation? If you do, we will no longer be storing your unique key. To re-enable Two-Factor Automation, you will have to login again.", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+                self.tableView.reloadData()
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Disable", style: .destructive, handler: { _ in
+                alert.dismiss(animated: true, completion: nil)
+                
+                TwoFactorTokenGenerator.instance.clear()
+                self.tableView.reloadData()
+            }))
+            
+            present(alert, animated: true, completion: nil)
+        }
+    }
+}
+

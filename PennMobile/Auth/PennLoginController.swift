@@ -5,7 +5,6 @@
 //  Created by Josh Doman on 3/13/19.
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
-
 import Foundation
 import WebKit
 
@@ -176,4 +175,3 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
         return url == self.urlStr && hasReferer
     }
 }
-
