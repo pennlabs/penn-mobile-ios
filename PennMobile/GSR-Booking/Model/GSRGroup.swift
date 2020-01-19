@@ -22,13 +22,13 @@ struct GSRGroup: Codable{
     let groupSettings: GSRGroupAccessSettings?
     
     static let groupColors: [String : UIColor] = [
-        "Labs Blue" : UIColor(red: 32, green: 156, blue: 238),
-        "College Green" : UIColor(red: 63, green: 170, blue: 109),
-        "Locust Yellow" : UIColor(red: 255, green: 207, blue: 89),
-        "Cheeto Orange": UIColor(red: 250, green: 164, blue: 50),
-        "Red-ing Terminal": UIColor(red: 226, green: 81, blue: 82),
-        "Baltimore Blue": UIColor(red: 51, green: 101, blue: 143),
-        "Purple": UIColor(red: 131, green: 79, blue: 160)
+        "Labs Blue" : UIColor.baseBlue,
+        "College Green" : UIColor.baseGreen,
+        "Locust Yellow" : UIColor.baseYellow,
+        "Cheeto Orange": UIColor.baseOrange,
+        "Red-ing Terminal": UIColor.baseRed,
+        "Baltimore Blue": UIColor.baseBlue,
+        "Purple": UIColor.basePurple
     ]
     
     func parseColor() -> UIColor? {
