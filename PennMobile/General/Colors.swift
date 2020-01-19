@@ -76,17 +76,4 @@ extension UIColor {
     static var yellowLighter = UIColor(named: "yellowLighter")!
     static var yellowDark = UIColor(named: "yellowDark")!
     static var yellowDarker = UIColor(named: "yellowDarker")!
-    
-    //Group GSR Pallete
-//    static let labsBlue = UIColor(red: 32, green: 156, blue: 238)
-//    static let collegeGreen =
-//    static let locustYellow =
-//    static let
-//    "Labs Blue" : UIColor(red: 32, green: 156, blue: 238),
-//    "College Green" : UIColor(red: 63, green: 170, blue: 109),
-//    "Locust Yellow" : UIColor(red: 255, green: 207, blue: 89),
-//    "Cheeto Orange": UIColor(red: 250, green: 164, blue: 50),
-//    "Red-ing Terminal": UIColor(red: 226, green: 81, blue: 82),
-//    "Baltimore Blue": UIColor(red: 51, green: 101, blue: 143),
-//    "Purple": UIColor(red: 131, green: 79, blue: 160)
 }
