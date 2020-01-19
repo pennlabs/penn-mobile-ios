@@ -32,9 +32,13 @@ class TwoFactorCell: UITableViewCell {
             refreshButton.isEnabled = enabled
             
             if code == nil {
-                codeLabel.text = "––––––"
+                if enabled {
+                    codeLabel.text = "Fetching code..."
+                }
+                else {
+                    codeLabel.text = "––––––"
+                }
             }
-            
             enabledSwitch.isOn = enabled
         }
     }
