@@ -23,25 +23,16 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var createButton: UIButton!
     fileprivate var colorCollectionView: UICollectionView!
     fileprivate var colors: [UIColor] = [
-                                         UIColor(red: 32, green: 156, blue: 238),
-                                         UIColor(red: 63, green: 170, blue: 109),
-                                         UIColor(red: 255, green: 207, blue: 89),
-                                         UIColor(red: 250, green: 164, blue: 50),
-                                         UIColor(red: 226, green: 81, blue: 82),
-                                         UIColor(red: 51, green: 101, blue: 143),
-                                         UIColor(red: 131, green: 79, blue: 160)
-                                         ]
+        UIColor.baseBlue,
+        UIColor.baseGreen,
+        UIColor.baseYellow,
+        UIColor.baseOrange,
+        UIColor.baseRed,
+        UIColor.blueDarker
+    ]
+    
     fileprivate var chosenColor: UIColor!
     fileprivate var nameChanged: Bool!
-    fileprivate var borderColors: [UIColor] = [
-        UIColor(red: 1.5 * 32.0/255, green: 1.5 * 156.0/255, blue: 1.5 * 238.0/255, alpha: 1),
-        UIColor(red: 1.5 * 63.0/255, green: 1.5 * 170.0/255, blue: 1.5 * 109.0/255, alpha: 1),
-        UIColor(red: 1.5 * 255.0/255, green: 1.5 * 207.0/255, blue: 1.5 * 89.0/255, alpha: 1),
-        UIColor(red: 1.5 * 250.0/255, green: 1.5 * 164.0/255, blue: 1.5 * 50.0/255, alpha: 1),
-        UIColor(red: 1.5 * 226.0/255, green: 1.5 * 81.0/255, blue: 1.5 * 82.0/255, alpha: 1),
-        UIColor(red: 1.5 * 51.0/255, green: 1.5 * 101.0/255, blue: 1.5 * 143.0/255, alpha: 1),
-        UIColor(red: 1.5 * 131.0/255, green: 1.5 * 79.0/255, blue: 1.5 * 160.0/255, alpha: 1)
-    ]
     
     fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange","Red-ing Terminal", "Baltimore Blue", "Purple"]
     
@@ -212,7 +203,11 @@ class GSRGroupNewIntialController: UIViewController {
 
 
     @objc func createGroupBtnAction(sender:UIButton!) {
-        GSRGroupNetworkManager.instance.createGroup(name: nameField.text!, color: colorLabel.text!) { (success, errorMsg) in
+        //TODO: Consider adding appropriate error messages
+        guard let name = nameField.text else {return}
+        guard let color = colorLabel.text else {return}
+        
+        GSRGroupNetworkManager.instance.createGroup(name: name, color: color) { (success, errorMsg) in
             if success {
                 
                 // This reloads the groups on the GSRGroupController - this should be done after invites / end of the flow
@@ -253,10 +248,9 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GSRColorCell.identifier, for: indexPath) as! GSRColorCell
-        cell.color = colors[indexPath.item % colors.count]
-        cell.borderColor = borderColors[indexPath.item % borderColors.count]//UIColor.lightGray
-        
-        //cell.colorView.layer.borderColor = cell.borderColor.cgColor
+        let color = colors[indexPath.item % colors.count]
+        cell.color = color
+        cell.borderColor = color.borderColor(multiplier: 1.5)
         return cell
     }
 
@@ -280,5 +274,26 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? GSRColorCell
         cell?.toggleBorder()
+    }
+}
+
+extension UIColor {
+    
+    //for getting a lighter variant (using a multiplier)
+    func borderColor(multiplier: CGFloat) -> UIColor {
+        let rgba = self.rgba
+        return UIColor(red: rgba.red * multiplier , green: rgba.green * multiplier, blue: rgba.blue * multiplier, alpha: rgba.alpha)
+    }
+    
+    //https://www.hackingwithswift.com/example-code/uicolor/how-to-read-the-red-green-blue-and-alpha-color-components-from-a-uicolor
+    var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+        //returns rgba colors.
+        return (red, green, blue, alpha)
     }
 }
