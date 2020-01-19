@@ -228,6 +228,8 @@ extension MoreViewController: TwoFactorCellDelegate {
     }
     
     func handleEnableSwitch(enabled: Bool) {
+        UserDefaults.standard.set(enabled, forKey: "TOTPEnabled")
+        tableView.reloadData()
         if enabled {
             let twc = TwoFactorWebviewController()
             twc.completion = { (successful) in

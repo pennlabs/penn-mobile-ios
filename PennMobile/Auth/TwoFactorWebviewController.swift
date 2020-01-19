@@ -22,15 +22,28 @@ class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
     
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         self.showActivity()
+        var completed = false
         TOTPFetcher.instance.fetchAndSaveTOTPSecret { (secret) in
             DispatchQueue.main.async {
                 decisionHandler(.cancel)
                 self.hideActivity()
                 self.dismiss(animated: true, completion: nil)
                 self.completion?(secret != nil)
+                if !completed {
+                    completed = true
+                }
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            if !completed {
+                self.hideActivity()
+                self.dismiss(animated: true, completion: nil)
             }
         }
         UserDefaults.standard.storeCookies()
     }
     
+    override func cancel(_ sender: Any) {
+        
+    }
 }

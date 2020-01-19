@@ -19,7 +19,7 @@ class TwoFactorCell: UITableViewCell {
     static let identifier = "TwoFactorCell"
     
     fileprivate var enabled: Bool {
-        return code != nil
+        return code != nil || UserDefaults.standard.bool(forKey: "TOTPEnabled")
     }
     
     var code: String? = nil {
@@ -31,7 +31,7 @@ class TwoFactorCell: UITableViewCell {
             refreshButton.tintColor = enabled ? .navigation : .grey1
             refreshButton.isEnabled = enabled
             
-            if !enabled {
+            if code == nil {
                 codeLabel.text = "––––––"
             }
             
