@@ -113,6 +113,7 @@ extension MoreViewController {
                     cell.accessoryType = .disclosureIndicator
                     return cell
                 }
+<<<<<<< HEAD
             } else if indexPath.row == 1 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: TwoFactorCell.identifier) as? TwoFactorCell {
                     cell.code = TwoFactorTokenGenerator.instance.generate()
@@ -121,10 +122,20 @@ extension MoreViewController {
                     return cell
                 }
             } else {
+=======
+            } else if indexPath.row <= 2 {
+>>>>>>> development
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                     cell.setUpView(with: indexPath.row == 2 ? "Notifications" : "Privacy")
                     cell.backgroundColor = .uiGroupedBackgroundSecondary
                     cell.accessoryType = .disclosureIndicator
+                    return cell
+                }
+            } else {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: TwoFactorCell.identifier) as? TwoFactorCell {
+                    cell.code = TwoFactorTokenGenerator.instance.generate()
+                    cell.backgroundColor = .uiGroupedBackgroundSecondary
+                    cell.delegate = self
                     return cell
                 }
             }
@@ -147,11 +158,19 @@ extension MoreViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+<<<<<<< HEAD
         return (indexPath.section == 0 && indexPath.row == 1) ? TwoFactorCell.cellHeight : 50
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return (indexPath.section == 0 && indexPath.row == 1) ? TwoFactorCell.cellHeight : 50
+=======
+        return (indexPath.section == 0 && indexPath.row == 3) ? TwoFactorCell.cellHeight : 50
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return (indexPath.section == 0 && indexPath.row == 3) ? TwoFactorCell.cellHeight : 50
+>>>>>>> development
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -163,7 +182,7 @@ extension MoreViewController {
                 targetController.shouldShowCancel = false
                 targetController.message = "This information is used when booking GSRs and when displaying your name on the homepage."
                 navigationController?.pushViewController(targetController, animated: true)
-            } else {
+            } else if indexPath.row <= 2 {
                 let targetController = ControllerModel.shared.viewController(for: indexPath.row == 1 ? .notifications : .privacy)
                 navigationController?.pushViewController(targetController, animated: true)
             }

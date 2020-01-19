@@ -42,8 +42,4 @@ class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
         }
         UserDefaults.standard.storeCookies()
     }
-    
-    override func cancel(_ sender: Any) {
-        
-    }
 }
