@@ -38,6 +38,8 @@ class GSRGroupInviteViewController: UIViewController {
       return !isSearchBarEmpty
     }
     
+    fileprivate var debouncingTimer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -90,6 +92,7 @@ class GSRGroupInviteViewController: UIViewController {
         searchBar.delegate = self
         searchBar.searchTextField.placeholder = "Search by Name or PennKey"
         searchBar.searchTextField.textColor = .black
+        searchBar.searchTextField.autocapitalizationType = .none
         view.addSubview(searchBar)
         searchBar.topAnchor.constraint(equalTo: inViteUsersLabel.bottomAnchor, constant: 20).isActive = true
         searchBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -190,11 +193,22 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
 
 extension GSRGroupInviteViewController {
     func filterContentForSearchText(_ searchText: String) {
-      filteredUsers = users.filter { (user: GSRInviteSearchResult) -> Bool in
-        return user.username.lowercased().contains(searchText.lowercased())
-      }
-      
-      tableView.reloadData()
+//      filteredUsers = users.filter { (user: GSRInviteSearchResult) -> Bool in
+//        return user.username.lowercased().contains(searchText.lowercased())
+//      }
+//
+//      tableView.reloadData()
+        //print(searchText)
+        debouncingTimer?.invalidate()
+        debouncingTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (_) in
+            print("timer")
+            GSRGroupNetworkManager.instance.getSearchResults(searchText: searchText) { (results) in
+                print(results)
+                
+            }
+        })
+            
+        
     }
 }
 
