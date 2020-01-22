@@ -19,7 +19,7 @@ class TwoFactorCell: UITableViewCell {
     static let identifier = "TwoFactorCell"
     
     fileprivate var enabled: Bool {
-        return code != nil
+        return code != nil || UserDefaults.standard.bool(forKey: "TOTPEnabled")
     }
     
     var code: String? = nil {
@@ -31,10 +31,14 @@ class TwoFactorCell: UITableViewCell {
             refreshButton.tintColor = enabled ? .navigation : .grey1
             refreshButton.isEnabled = enabled
             
-            if !enabled {
-                codeLabel.text = "––––––"
+            if code == nil {
+                if enabled {
+                    codeLabel.text = "Fetching code..."
+                }
+                else {
+                    codeLabel.text = "––––––"
+                }
             }
-            
             enabledSwitch.isOn = enabled
         }
     }
@@ -74,7 +78,8 @@ extension TwoFactorCell {
         titleLabel.textColor = UIColor.labelPrimary
         titleLabel.font = UIFont(name: "HelveticaNeue-Light", size: 19)
         titleLabel.textAlignment = .left
-        titleLabel.text = "Two-Factor Code"
+        
+        titleLabel.text = "Two-Factor Automation"
         
         self.addSubview(titleLabel)
         _ = titleLabel.anchor(self.topAnchor, left: self.leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 15, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)

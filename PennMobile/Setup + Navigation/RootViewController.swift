@@ -26,6 +26,11 @@ class RootViewController: UIViewController, NotificationRequestable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /*
+        let code = TwoFactorTokenGenerator.instance.generate()
+        if code == nil && UserDefaults.standard.bool(forKey: "TOTPEnabled") {
+            TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+        }*/
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
