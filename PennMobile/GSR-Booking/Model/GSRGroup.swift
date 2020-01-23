@@ -8,18 +8,63 @@
 
 import Foundation
 
-struct GSRGroup {
-    let groupID: String
-    let groupName: String
-    let createdAt: Date
-    let isActive: Bool
-    let members: [GSRGroupMember]
+struct GSRGroup: Codable{
+    let id: Int
+    let name: String
+    let color: String?
+    let createdAt: Date?
+    let userSettings: GSRGroupIndividualSettings? //not optional, beacuse we need to know if pennKey is Active
+
+    var imgURL: String?
+    var owners: [GSRGroupMember]?
+    var members: [GSRGroupMember]?
+    let reservations: [String]? //array of reservationID's
+    let groupSettings: GSRGroupAccessSettings?
+    
+    static let groupColors: [String : UIColor] = [
+        "Labs Blue" : UIColor.baseBlue,
+        "College Green" : UIColor.baseGreen,
+        "Locust Yellow" : UIColor.baseYellow,
+        "Cheeto Orange": UIColor.baseOrange,
+        "Red-ing Terminal": UIColor.baseRed,
+        "Baltimore Blue": UIColor.baseBlue,
+        "Purple": UIColor.basePurple
+    ]
+    
+    func parseColor() -> UIColor? {
+        guard let color = self.color else { return nil }
+        
+        return GSRGroup.groupColors[color]
+    }
 }
 
-struct GSRGroupMember {
+struct GSRGroupIndividualSetting: Codable {
+    var title: String
+    var descr: String
+    var isEnabled: Bool
+}
+
+struct GSRGroupIndividualSettings: Codable { //specific to a user within a group
+    var pennKeyActive: GSRGroupIndividualSetting
+    var notificationsOn: GSRGroupIndividualSetting
+}
+
+struct GSRGroupAccessSettings: Codable { //general to all users within a group
+    var booking: GSRGroupAccessPermissions
+    var invitation: GSRGroupAccessPermissions
+}
+
+enum GSRGroupAccessPermissions: String, Codable { //who has access
+    case everyone
+    case owner
+}
+
+struct GSRGroupMember: Codable {
     let accountID: String
+    let pennKey: String
     let first: String
     let last: String
     let email: String?
-    let enabled: Bool
+    let isBookingEnabled: Bool
+    let isAdmin: Bool
 }

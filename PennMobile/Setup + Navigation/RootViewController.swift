@@ -26,12 +26,22 @@ class RootViewController: UIViewController, NotificationRequestable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /*
+        let code = TwoFactorTokenGenerator.instance.generate()
+        if code == nil && UserDefaults.standard.bool(forKey: "TOTPEnabled") {
+            TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+        }*/
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
             // Save laundry rooms with account ID (available starting in 6.1)
             if let rooms = UserDefaults.standard.getLaundryPreferences() {
                 UserDBManager.shared.saveLaundryPreferences(for: rooms)
+            }
+            if UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) {
+                // Update course anonymization key if privacy option is TRUE
+                // Pennkey-Password key has been updated to be option-specific
+                UserDBManager.shared.updateAnonymizationKeys()
             }
         }
                         

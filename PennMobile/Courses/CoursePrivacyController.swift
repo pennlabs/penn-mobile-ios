@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 
 @available(iOS 13, *)
 class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {

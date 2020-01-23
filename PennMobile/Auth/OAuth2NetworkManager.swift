@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct AccessToken: Codable {
     let value: String
@@ -14,12 +15,12 @@ struct AccessToken: Codable {
 }
 
 struct OAuthUser: Codable {
-    let firstName: String
-    let lastName: String
+    let firstName: String?
+    let lastName: String?
     let pennid: Int
     let username: String
     let email: String?
-    let affiliation: [String]
+    let affiliation: [String]?
 }
 
 extension URLRequest {
@@ -89,6 +90,7 @@ extension OAuth2NetworkManager {
         if let accessToken = self.currentAccessToken, Date() < accessToken.expiration {
             callback(accessToken)
         } else {
+            self.currentAccessToken = nil
             self.refreshAccessToken(callback)
         }
     }
@@ -113,26 +115,35 @@ extension OAuth2NetworkManager {
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse, let data = data {
-                if httpResponse.statusCode == 200 {
-                    let json = JSON(data)
-                    let expiresIn = json["expires_in"].intValue
-                    let expiration = Date().add(seconds: expiresIn)
-                    let accessToken = AccessToken(value: json["access_token"].stringValue, expiration: expiration)
-                    let refreshToken = json["refresh_token"].stringValue
-                    self.saveRefreshToken(token: refreshToken)
-                    self.currentAccessToken = accessToken
-                    callback(accessToken)
-                    return
-                } else if httpResponse.statusCode == 400 {
-                    let json = JSON(data)
-                    if json["error"].stringValue == "invalid_grant" {
-                        // Refresh token is invalid. Clear it to force user to log in
-                        self.clearRefreshToken()
+            DispatchQueue.global().async {
+                if let httpResponse = response as? HTTPURLResponse, let data = data {
+                    if httpResponse.statusCode == 200 {
+                        let json = JSON(data)
+                        let expiresIn = json["expires_in"].intValue
+                        let expiration = Date().add(seconds: expiresIn)
+                        let accessToken = AccessToken(value: json["access_token"].stringValue, expiration: expiration)
+                        let refreshToken = json["refresh_token"].stringValue
+                        self.saveRefreshToken(token: refreshToken)
+                        self.currentAccessToken = accessToken
+                        callback(accessToken)
+                        return
+                    } else if httpResponse.statusCode == 400 {
+                        let json = JSON(data)
+                        if json["error"].stringValue == "invalid_grant" {
+                            // This refresh token is invalid.
+                            if let accessToken = self.currentAccessToken, refreshToken != self.getRefreshToken() {
+                                // Access token has been refreshed in another network call while we were waiting and current refresh token is not the same one we used
+                                callback(accessToken)
+                                return
+                            }
+                            
+                            // Clear refresh token and force user to log in
+                            self.clearRefreshToken()
+                        }
                     }
                 }
+                callback(nil)
             }
-            callback(nil)
         }
         task.resume()
         

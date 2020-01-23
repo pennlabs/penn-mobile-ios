@@ -48,4 +48,21 @@ class TwoFactorTokenGenerator: NSObject{
         return token.currentPassword
     }
 
+    func isEnabled() -> Bool {
+        let genericPwdQueryable = GenericPasswordQueryable(service: "PennWebLogin")
+        let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)
+        if let _ = try? secureStore.getValue(for: "TOTPSecret") {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    func clear() {
+        let genericPwdQueryable = GenericPasswordQueryable(service: "PennWebLogin")
+        let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)
+        try? secureStore.removeValue(for: "TOTPSecret")
+    }
+
 }
