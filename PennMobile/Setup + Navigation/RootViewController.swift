@@ -38,6 +38,11 @@ class RootViewController: UIViewController, NotificationRequestable {
             if let rooms = UserDefaults.standard.getLaundryPreferences() {
                 UserDBManager.shared.saveLaundryPreferences(for: rooms)
             }
+            if UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) {
+                // Update course anonymization key if privacy option is TRUE
+                // Pennkey-Password key has been updated to be option-specific
+                UserDBManager.shared.updateAnonymizationKeys()
+            }
         }
                         
         if shouldRequireLogin() {
