@@ -231,6 +231,7 @@ extension MoreViewController: TwoFactorCellDelegate {
         UserDefaults.standard.set(enabled, forKey: "TOTPEnabled")
         tableView.reloadData()
         if enabled {
+            FirebaseAnalyticsManager.shared.trackEvent(action: "TOTP", result: "enabled", content: true)
             let twc = TwoFactorWebviewController()
             twc.completion = { (successful) in
                 if !successful {
@@ -247,6 +248,7 @@ extension MoreViewController: TwoFactorCellDelegate {
             self.present(nvc, animated: true, completion: nil)
         }
         else {
+            FirebaseAnalyticsManager.shared.trackEvent(action: "TOTP", result: "disabled", content: false)
             let alert = UIAlertController(title: "Disabling Two-Factor Automation", message: "Are you sure you want to disable Two-Factor Automation? If you do, we will no longer be storing your unique key. To re-enable Two-Factor Automation, you will have to login again.", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
