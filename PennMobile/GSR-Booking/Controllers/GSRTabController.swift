@@ -83,9 +83,8 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         let child1 = GSRLocationsController()
         let child2 = GSRReservationsController()
         let child3 = GSRGroupController()
-        // TODO: - uncomment group controller
 
-        return [child1, child2, /*child3*/]
+        return [child1, child2, child3]
     }
 }
 

@@ -11,9 +11,9 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     // MARK: GSR Group Networking - Dummy Data for now
     static let instance = GSRGroupNetworkManager()
 
-    let userURL = "https://gsr.upenn.club/users/"
-    let groupsURL = "https://gsr.upenn.club/groups/"
-    let membershipURL = "https://gsr.upenn.club/membership/"
+    let userURL = "https://studentlife.pennlabs.org/users/"
+    let groupsURL = "https://studentlife.pennlabs.org/groups/"
+    let membershipURL = "https://studentlife.pennlabs.org/membership/"
 
     fileprivate static let pennKeyActiveSetting = GSRGroupIndividualSetting(title: "PennKey Permission", descr: "Anyone in this group can book a study room block using your PennKey.", isEnabled: false)
     fileprivate static let notificationOnSetting = GSRGroupIndividualSetting(title: "Notifications", descr: "You’ll receive a notification any time a room is booked by this group.", isEnabled: false)
@@ -37,13 +37,12 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
         // handle missing pennkey later
         guard let pennkey = Account.getAccount()?.pennkey else {
-            print("Use is not signed in")
+            print("User is not signed in")
             return
         }
-        
-//        let pennkey = "rehaan"
 
         let allGroupsURL = "\(userURL)\(pennkey)/"
+        
         getRequestData(url: allGroupsURL) { (data, error, status) in
             guard let data = data else { return }
             let user = try? JSONDecoder().decode(GSRGroupUser.self, from: data)
@@ -85,20 +84,9 @@ class GSRGroupNetworkManager: NSObject, Requestable {
             callback(status == 200 && err == nil)
         }
     }
-    //GSRGroup(id: "new", name: nameField.text!, imgURL: nil, color: "color", owners: [GSRGroupMember(accountID: "dummyOwner", pennKey: "dummyPennKey", first: "DummyF", last: "DummyL", email: "yuewei@seas.upenn.edu", isBookingEnabled: true, isAdmin: true)], members: [], createdAt: Date(), isActive: true, reservations: [])
-
-//    func createGroup(name: String, color: String, callback: (_ success: Bool, _ errorMsg: String?) -> ()) {
-//        let dummyUsers = getDummyUsers()
-//        let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
-//        let group = GSRGroup(id: 1, name: name, color: color, createdAt: Date(), userSettings: GSRGroupNetworkManager.userSettings, imgURL: nil, owners: [dummyUsers[0]], members: dummyUsers, reservations: nil, groupSettings: groupSettings)
-//        groups.append(group)
-//
-//        callback(true, nil)
-//    }
+    
     func createGroup(name: String, color: String, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> ()) {
         
-        print(color)
-
         guard let pennkey = Account.getAccount()?.pennkey else {
             print("User is not signed in")
             callback(false, "user is not signed in")
