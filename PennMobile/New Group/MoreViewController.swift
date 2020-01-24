@@ -26,6 +26,8 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         
         barButton = UIBarButtonItem(title: Account.isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
         barButton.tintColor = UIColor.navigation
+        
+        registerObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -267,4 +269,13 @@ extension MoreViewController: TwoFactorCellDelegate {
         }
     }
 }
-
+//MARK: - TOTP Code Observer
+extension MoreViewController {
+    func registerObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleCodeFetched(_:)), name: Notification.Name(rawValue: "TOTPCodeFetched") , object: nil)
+    }
+    
+    @objc func handleCodeFetched(_ sender: Any?) {
+        tableView.reloadData()
+    }
+}

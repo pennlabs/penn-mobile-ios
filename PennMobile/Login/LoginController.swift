@@ -54,6 +54,8 @@ extension LoginController: NotificationRequestable {
             // Login Successful
             AppDelegate.shared.rootViewController.switchToMainScreen()
             
+            AppDelegate.shared.rootViewController.requestTwoFactorPermission()
+            
             #if !targetEnvironment(simulator)
             DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
                 self.requestNotification()

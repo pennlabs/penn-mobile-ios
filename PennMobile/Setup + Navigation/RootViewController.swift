@@ -130,6 +130,7 @@ class RootViewController: UIViewController, NotificationRequestable {
                     self.current.present(vc, animated: true)
                 }
             }
+            
         }
         
         // Send saved unsent events
@@ -326,6 +327,25 @@ extension RootViewController {
         } else {
             // Courses have never been shared. Do so now.
             return true
+        }
+    }
+}
+
+//MARK: - Enabling Two Factor Automation
+extension RootViewController {
+    fileprivate func shouldRequestTwoFactorEnable() -> Bool {
+        let code = TwoFactorTokenGenerator.instance.generate()
+        return code == nil
+    }
+    
+    func requestTwoFactorPermission() {
+        if #available(iOS 13, *) {
+            if shouldRequestTwoFactorEnable() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    let vc = TwoFactorEnableController()
+                    self.current.present(vc, animated: true)
+                }
+            }
         }
     }
 }
