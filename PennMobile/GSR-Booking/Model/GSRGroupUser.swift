@@ -32,4 +32,11 @@ struct GSRInviteSearchResult: Codable, Equatable {
     }
 }
 
+struct GSRInviteSearchResult2: Codable {
+    let first: String?
+    let last: String?
+    let email: String?
+    let pennkey: String
+}
+
 typealias GSRInviteSearchResults = [GSRInviteSearchResult]

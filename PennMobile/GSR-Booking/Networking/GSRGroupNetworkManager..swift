@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class GSRGroupNetworkManager: NSObject, Requestable {
     // MARK: GSR Group Networking - Dummy Data for now
@@ -30,9 +31,11 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     fileprivate func getDummyUsers() -> [GSRGroupMember] {
         let daniel = GSRGroupMember(accountID: "1", pennKey: "dsalib", first: "Daniel", last: "Salib", email: "dsalib@wharton.upenn.edu", isBookingEnabled: false, isAdmin: false)
         let rehaan = GSRGroupMember(accountID: "1", pennKey: "rehaan", first: "Rehaan", last: "Furniturewala", email: "rehaan@wharton.upenn.edu", isBookingEnabled: false, isAdmin: false)
-        let lucy = GSRGroupMember(accountID: "1", pennKey: "dsalib", first: "Lucy", last: "Yuan", email: "yuewei@seas.upenn.edu", isBookingEnabled: false, isAdmin: false)
+        let lucy = GSRGroupMember(accountID: "1", pennKey: "yuewei", first: "Lucy", last: "Yuan", email: "yuewei@seas.upenn.edu", isBookingEnabled: false, isAdmin: false)
         return [daniel, rehaan, lucy]
     }
+
+
 
     func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
         // handle missing pennkey later
@@ -42,7 +45,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
 
         let allGroupsURL = "\(userURL)\(pennkey)/"
-        
+
         getRequestData(url: allGroupsURL) { (data, error, status) in
             guard let data = data else { return }
             let user = try? JSONDecoder().decode(GSRGroupUser.self, from: data)
@@ -71,6 +74,8 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
 
+
+
     func inviteUser(groupid: Int, pennkey: String, callback: @escaping (Bool) -> ()) {
         let params: [NSString: Any] = ["group": groupid, "username": pennkey]
         postRequestData(url: membershipURL, params: params) { (data, err, status) in
@@ -84,9 +89,9 @@ class GSRGroupNetworkManager: NSObject, Requestable {
             callback(status == 200 && err == nil)
         }
     }
-    
+
     func createGroup(name: String, color: String, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> ()) {
-        
+
         guard let pennkey = Account.getAccount()?.pennkey else {
             print("User is not signed in")
             callback(false, "user is not signed in")
@@ -128,4 +133,25 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
 
 
+}
+
+extension GSRGroupNetworkManager {
+
+    func getSearchResults(searchText:String, _ callback: @escaping (_ results: [GSRInviteSearchResult2]?) -> ()) {
+        let urlStr = "http://api.pennlabs.org/studyspaces/user/search?query=\(searchText)"
+        let url = URL(string: urlStr)!
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let data = data {
+                let json = JSON(data)
+                if let resultsData = try? json["results"].rawData() {
+                    let decoder = JSONDecoder()
+                    let results = try? decoder.decode([GSRInviteSearchResult2].self, from: resultsData)
+                    callback(results)
+                    return
+                }
+            }
+            callback(nil)
+        }
+        task.resume()
+    }
 }
