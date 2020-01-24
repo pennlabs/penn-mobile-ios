@@ -46,16 +46,21 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
         let allGroupsURL = "\(userURL)\(pennkey)/"
 
-        getRequestData(url: allGroupsURL) { (data, error, status) in
-            guard let data = data else { return }
-            let user = try? JSONDecoder().decode(GSRGroupUser.self, from: data)
-
-            guard let guser = user else {
+        makeGetRequestWithAccessToken(url: allGroupsURL) { (data, response, error) in
+            if let error = error {
+                print(error)
                 callback(nil)
-                return
+            } else if let data = data {
+                let user = try? JSONDecoder().decode(GSRGroupUser.self, from: data)
+                guard let guser = user else {
+                    callback(nil)
+                    return
+                }
+                print(guser)
+                callback(guser.groups)
+            } else {
+                callback(nil)
             }
-
-            callback(guser.groups)
         }
     }
 
@@ -98,16 +103,13 @@ class GSRGroupNetworkManager: NSObject, Requestable {
             return
         }
 
-        let params: [NSString: Any] = ["owner": pennkey, "name": name, "color": color]
-        postRequestData(url: groupsURL, params: params) { (data, error, status) in
+        let params: [String: Any] = ["owner": pennkey, "name": name, "color": color]
+        makePostRequestWithAccessToken(url: groupsURL, params: params) { (data, status, error) in
             if let error = error {
-                print("postRequest Error: \(error)")
                 callback(false, error.localizedDescription)
+            } else {
+                callback(true, nil)
             }
-
-            print(status)
-
-            callback(true, nil)
         }
     }
 
@@ -153,5 +155,43 @@ extension GSRGroupNetworkManager {
             callback(nil)
         }
         task.resume()
+    }
+}
+
+// MARK: - General Networking Functions
+extension GSRGroupNetworkManager {
+    fileprivate func makeGetRequestWithAccessToken(url: String, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                callback(nil, nil, nil)
+                return
+            }
+            
+            let url = URL(string: url)!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "GET"
+
+            let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
+            task.resume()
+        }
+    }
+    
+    fileprivate func makePostRequestWithAccessToken(url: String, params: [String: Any]?, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                callback(nil, nil, nil)
+                return
+            }
+            
+            let url = URL(string: url)!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            if let params = params {
+                request.httpBody = String.getPostString(params: params).data(using: .utf8)
+            }
+
+            let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
+            task.resume()
+        }
     }
 }
