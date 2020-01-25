@@ -204,7 +204,6 @@ extension GSRGroupInviteViewController {
             print("timer")
             GSRGroupNetworkManager.instance.getSearchResults(searchText: searchText) { (results) in
                 print(results)
-                
             }
         })
             
