@@ -81,5 +81,15 @@ extension GSRManageGroupController {
 
 // MARK: - ViewModelDelegate
 extension GSRManageGroupController: GSRManageGroupViewModelDelegate {
+    func beginBooking() {
+        let bookingController = GSRLocationsController()
+        bookingController.title = "\(self.group.name) Booking"
+        navigationController?.pushViewController(bookingController, animated: true)
+    }
     
+    func inviteToGroup() {
+        let inviteController = GSRGroupInviteViewController()
+        inviteController.title = "Invite to \(self.group.name)"
+        navigationController?.pushViewController(inviteController, animated: true)
+    }
 }

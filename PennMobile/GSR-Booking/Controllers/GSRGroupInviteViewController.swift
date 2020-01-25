@@ -78,8 +78,8 @@ class GSRGroupInviteViewController: UIViewController {
         inViteUsersLabel.text = "Invite Users"
         inViteUsersLabel.font = UIFont.boldSystemFont(ofSize: 24)
         view.addSubview(inViteUsersLabel)
-        inViteUsersLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
-        inViteUsersLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
+        inViteUsersLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 14).isActive = true
+        inViteUsersLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
         inViteUsersLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     

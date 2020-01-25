@@ -9,12 +9,13 @@
 import Foundation
 
 protocol GSRManageGroupViewModelDelegate {
-    //TODO: Add stuff here
+    func beginBooking()
+    func inviteToGroup()
 }
 
 protocol GroupManageButtonDelegate {
     func bookGroup()
-    func shareGroup()
+    func inviteGroup()
     func leaveGroup()
 }
 
@@ -138,11 +139,14 @@ extension GSRManageGroupViewModel: GSRGroupIndividualSettingDelegate {
 
 extension GSRManageGroupViewModel: GroupManageButtonDelegate {
     func bookGroup() {
-        print("Book Group!")
+        delegate.beginBooking()
     }
-    func shareGroup() {
+    
+    func inviteGroup() {
+        delegate.inviteToGroup()
         print("Share Group!")
     }
+    
     func leaveGroup() {
         print("Leave Group!")
     }
