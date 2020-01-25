@@ -79,8 +79,6 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
 
-
-
     func inviteUser(groupid: Int, pennkey: String, callback: @escaping (Bool) -> ()) {
         let params: [NSString: Any] = ["group": groupid, "username": pennkey]
         postRequestData(url: membershipURL, params: params) { (data, err, status) in
@@ -107,13 +105,16 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         makePostRequestWithAccessToken(url: groupsURL, params: params) { (data, status, error) in
             if let error = error {
                 callback(false, error.localizedDescription)
+                print(status)
+                print(error)
             } else {
+                print(status)
                 callback(true, nil)
             }
         }
     }
 
-    func getAllUsers(callback: @escaping (_ success: Bool, _ results: [GSRInviteSearchResult]?) -> ()) {
+    func getAllUsers(callback: @escaping (_ success: Bool, _ results: [GSRInviteSearchResult2]?) -> ()) {
         getRequestData(url: userURL) { (data, error, status) in
             guard let data = data else {
                 callback(false, nil)
@@ -131,17 +132,13 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
         }
     }
-
-
-
-
 }
 
 extension GSRGroupNetworkManager {
 
     func getSearchResults(searchText:String, _ callback: @escaping (_ results: [GSRInviteSearchResult2]?) -> ()) {
         let urlStr = "http://api.pennlabs.org/studyspaces/user/search?query=\(searchText)"
-        let url = URL(string: urlStr)!
+        let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data {
                 let json = JSON(data)

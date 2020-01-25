@@ -23,10 +23,10 @@ class GSRGroupInviteViewController: UIViewController {
     fileprivate var users = GSRInviteSearchResults()
     fileprivate var filteredUsers = GSRInviteSearchResults() {
         didSet {
-            sendInvitesButton.isEnabled = !filteredUsers.isEmpty
-            sendInvitesButton.backgroundColor = sendInvitesButton.isEnabled ? enabledBtnColor : disabledBtnColor
-            print(sendInvitesButton.isEnabled)
-            print(filteredUsers)
+            DispatchQueue.main.async {
+                self.sendInvitesButton.isEnabled = !self.filteredUsers.isEmpty
+                self.sendInvitesButton.backgroundColor = self.sendInvitesButton.isEnabled ? self.enabledBtnColor : self.disabledBtnColor
+            }
         }
     }
     
@@ -46,13 +46,14 @@ class GSRGroupInviteViewController: UIViewController {
         prepareUI()
         
         GSRGroupNetworkManager.instance.getAllUsers { (success, results) in
-            if (success) {
-                self.users = results!
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
+//            if (success) {
+//                self.users = results!
+//
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//            }
+            print(results)
         }
     }
     
@@ -165,14 +166,15 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        let user: GSRInviteSearchResult
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "resultscell")
+        let user: GSRInviteSearchResult2
         if isFiltering {
           user = filteredUsers[indexPath.row]
         } else {
           user = users[indexPath.row]
         }
-        cell.textLabel?.text = user.username
+        cell.detailTextLabel?.text = user.pennkey
+        cell.textLabel?.text = "\(user.first ?? "") \(user.last ?? "")"
         return cell
     }
     
@@ -203,7 +205,13 @@ extension GSRGroupInviteViewController {
         debouncingTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (_) in
             print("timer")
             GSRGroupNetworkManager.instance.getSearchResults(searchText: searchText) { (results) in
-                print(results)
+                if let results = results {
+                    self.users = results
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
             }
         })
             

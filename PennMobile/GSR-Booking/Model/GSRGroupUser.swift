@@ -32,11 +32,15 @@ struct GSRInviteSearchResult: Codable, Equatable {
     }
 }
 
-struct GSRInviteSearchResult2: Codable {
+struct GSRInviteSearchResult2: Codable, Equatable {
     let first: String?
     let last: String?
     let email: String?
     let pennkey: String
+    
+    static func == (lhs: GSRInviteSearchResult2, rhs: GSRInviteSearchResult2) -> Bool {
+        return lhs.pennkey == rhs.pennkey
+    }
 }
 
-typealias GSRInviteSearchResults = [GSRInviteSearchResult]
+typealias GSRInviteSearchResults = [GSRInviteSearchResult2]
