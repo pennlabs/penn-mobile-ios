@@ -108,7 +108,6 @@ class GSRGroupNetworkManager: NSObject, Requestable {
                 print(status)
                 print(error)
             } else {
-                print(status)
                 callback(true, nil)
             }
         }
@@ -163,6 +162,8 @@ extension GSRGroupNetworkManager {
                 callback(nil, nil, nil)
                 return
             }
+            
+            print(token.value)
 
             let url = URL(string: url)!
             var request = URLRequest(url: url, accessToken: token)

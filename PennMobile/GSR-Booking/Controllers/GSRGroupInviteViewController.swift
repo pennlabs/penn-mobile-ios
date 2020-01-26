@@ -206,7 +206,7 @@ extension GSRGroupInviteViewController {
             print("timer")
             GSRGroupNetworkManager.instance.getSearchResults(searchText: searchText) { (results) in
                 if let results = results {
-                    self.users = results
+                    self.filteredUsers = results
                     
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
