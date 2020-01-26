@@ -20,11 +20,11 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
         super.viewDidLoad()
         
         let prompt = """
-        By enabling this feature, you will stay logged in to Penn Mobile. Otherwise, you will be logged out every 2-3 weeks.
+        Enable this feature to remain logged in to Penn Mobile. Otherwise, you may have to log in again every 2-3 weeks. You can change your decision later in the More tab.
         
-        This will add Penn Mobile as a Two-Step PennKey Verification app. You can use it to generate a one-time code to log in to Penn resources.
-
-        Security is of upmost importance to us, and your login credentials will never leave this device.
+        Penn Mobile will become a Two-Step PennKey verification app. You can use it to generate one-time codes to login to Penn resources.
+        
+        The TOTP token we use to generate codes will never leave this device, and will be stored in your iPhone's secure enclave.
         """
         
         let delegate = PrivacyPermissionDelegate()
@@ -44,12 +44,12 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
                 case .negative:
                     UserDefaults.standard.set(false, forKey: "TOTPEnabled")
                     self.dismiss(animated: true, completion: nil)
-                case .moreInfo: self.open(scheme: "https://pennlabs.org")
+                case .moreInfo: self.open(scheme: "https://www.isc.upenn.edu/how-to/two-step-faq")
                 }
             }
         }
         
-        let childView = UIHostingController(rootView: PermissionView(delegate: delegate, title: "Two-Step Verification", privacyString: prompt, affirmativeString: "Enable Two-Step Verification", negativeString: "Don't enable", moreInfoString: "More about Penn Labs"))
+        let childView = UIHostingController(rootView: PermissionView(delegate: delegate, title: "Two-Step Verification", privacyString: prompt, affirmativeString: "Enable Two-Step Verification", negativeString: "Don't enable", moreInfoString: "Learn more"))
         
         addChild(childView)
         childView.view.frame = view.bounds
