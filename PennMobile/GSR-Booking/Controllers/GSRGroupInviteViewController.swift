@@ -20,6 +20,7 @@ class GSRGroupInviteViewController: UIViewController {
     fileprivate let disabledBtnColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:0.5)
     fileprivate let enabledBtnColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:1)
     
+    
     fileprivate var users = GSRInviteSearchResults()
     fileprivate var filteredUsers = GSRInviteSearchResults() {
         didSet {
@@ -29,6 +30,8 @@ class GSRGroupInviteViewController: UIViewController {
             }
         }
     }
+    
+    fileprivate var selectedUsers = GSRInviteSearchResults()
     
     fileprivate var isSearchBarEmpty: Bool {
       return searchBar.text?.isEmpty ?? true
@@ -45,16 +48,7 @@ class GSRGroupInviteViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
         prepareUI()
         
-        GSRGroupNetworkManager.instance.getAllUsers { (success, results) in
-//            if (success) {
-//                self.users = results!
-//
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//            }
-            print(results)
-        }
+        
     }
     
     func prepareCloseButton() {
@@ -162,16 +156,19 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
             return filteredUsers.count
         }
         
-        return users.count
+        return selectedUsers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "resultscell")
         let user: GSRInviteSearchResult2
         if isFiltering {
-          user = filteredUsers[indexPath.row]
+            user = filteredUsers[indexPath.row]
+            cell.accessoryType = selectedUsers.contains(user) ? .checkmark : .none
         } else {
-          user = users[indexPath.row]
+          
+            user = selectedUsers[indexPath.row]
+            cell.accessoryType = .checkmark
         }
         cell.detailTextLabel?.text = user.pennkey
         cell.textLabel?.text = "\(user.first ?? "") \(user.last ?? "")"
@@ -183,10 +180,13 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
         
         if cell.accessoryType == UITableViewCell.AccessoryType.checkmark {
             cell.accessoryType = .none
-            filteredUsers = filteredUsers.filter {$0 != users[indexPath.row]}
+            
+            selectedUsers = selectedUsers.filter {$0 != users[indexPath.row]}
         } else {
             cell.accessoryType = .checkmark
-            filteredUsers.append(users[indexPath.row])
+            
+            selectedUsers.append(filteredUsers[indexPath.row])
+            print(selectedUsers)
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -207,10 +207,10 @@ extension GSRGroupInviteViewController {
             GSRGroupNetworkManager.instance.getSearchResults(searchText: searchText) { (results) in
                 if let results = results {
                     self.filteredUsers = results
-                    
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
                 }
             }
         })

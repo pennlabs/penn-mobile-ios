@@ -6,16 +6,48 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-import SwiftUI
+import UIKit
 
-struct GroupInviteUserCell: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+class GroupInviteUserCell: UITableViewCell {
+    
+    static let cellHeight: CGFloat = 60
+    static let identifier = "resultsCell"
+    
+    fileprivate var checkMarkBtn: UIButton!
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupCell()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
-struct GroupInviteUserCell_Previews: PreviewProvider {
-    static var previews: some View {
-        GroupInviteUserCell()
+// MARK: - Setup Cell
+extension GroupInviteUserCell {
+    fileprivate func setupCell() {
+        
     }
 }
+
+/*
+// MARK: - Setup UI
+extension GroupInviteUserCell {
+    fileprivate func setupUI() {
+        prepareCheckMark()
+    }
+
+    fileprivate func prepareCheckMark() {
+        checkMarkBtn = UIButton()
+        addSubview(checkMarkBtn)
+        checkMarkBtn
+        checkMarkBtn.translatesAutoresizingMaskIntoConstraints = false
+        checkMarkBtn.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        checkMarkBtn.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        checkMarkBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 14).isActive = true
+    }
+   
+}
+ */
