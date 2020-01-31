@@ -229,7 +229,11 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
         tableView.reloadData()
     }
     
-    func enableTwoFactor() {
+    func handleDismiss() {
+        tableView.reloadData()
+    }
+    
+    func handleEnable() {
         UserDefaults.standard.set(true, forKey: "TOTPEnabled")
         tableView.reloadData()
         FirebaseAnalyticsManager.shared.trackEvent(action: "TOTP", result: "enabled", content: true)
@@ -246,7 +250,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
             self.tableView.reloadData()
         }
         let nvc = UINavigationController(rootViewController: twc)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.present(nvc, animated: true, completion: nil)
         }
     }
@@ -258,7 +262,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
                 vc.delegate = self
                 self.present(vc, animated: true)
             } else {
-                let alert = UIAlertController(title: "Two-Step Verification", message: "Enable this feature to remain logged in to Penn Mobile. Otherwise, you may have to log in again every 2-3 weeks. You can change your decision later in the More tab. \n Penn Mobile will become a Two-Step PennKey verification app. You can use it to generate one-time codes to login to Penn resources. \n The TOTP token we use to generate codes will never leave this device, and will be stored in your iPhone's secure enclave.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Two-Step Verification", message: "Enable this feature to remain logged in to Penn Mobile. Otherwise, you may have to log in again every 2-3 weeks. You can change your decision later in the More tab. Penn Mobile will become a Two-Step PennKey verification app. You can use it to generate one-time codes to log in to Penn resources. The TOTP token we use to generate codes will never leave this device. It will be stored in your iPhone's secure enclave.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
                     UserDefaults.standard.set(false, forKey: "TOTPEnabled")
                     self.tableView.reloadData()
@@ -267,7 +271,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
                 
                 alert.addAction(UIAlertAction(title: "Enable", style: .default, handler: { _ in
                     alert.dismiss(animated: true, completion: nil)
-                    self.enableTwoFactor()
+                    self.handleEnable()
                 }))
                 
                 self.present(alert, animated: true, completion: nil)

@@ -332,7 +332,24 @@ extension RootViewController {
 }
 
 //MARK: - Enabling Two Factor Automation
-extension RootViewController {
+extension RootViewController : TwoFactorEnableDelegate {
+    
+    func handleEnable() {
+        askForNotificationPermission()
+    }
+    
+    func handleDismiss() {
+        askForNotificationPermission()
+    }
+    
+    func askForNotificationPermission() {
+        #if !targetEnvironment(simulator)
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
+            self.requestNotification()
+        }
+        #endif
+    }
+    
     fileprivate func shouldRequestTwoFactorEnable() -> Bool {
         let code = TwoFactorTokenGenerator.instance.generate()
         return code == nil
@@ -346,6 +363,8 @@ extension RootViewController {
                     self.current.present(vc, animated: true)
                 }
             }
+        } else {
+            askForNotificationPermission()
         }
     }
 }

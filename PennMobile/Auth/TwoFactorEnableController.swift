@@ -12,7 +12,8 @@ import SwiftUI
 #endif
 
 protocol TwoFactorEnableDelegate {
-    func enableTwoFactor()
+    func handleEnable()
+    func handleDismiss()
 }
 
 @available(iOS 13, *)
@@ -30,7 +31,7 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
         
         Penn Mobile will become a Two-Step PennKey verification app. You can use it to generate one-time codes to log in to Penn resources.
         
-        The TOTP token we use to generate codes will never leave this device, and will be stored in your iPhone's secure enclave.
+        The TOTP token we use to generate codes will never leave this device. It will be stored in your iPhone's secure enclave.
         """
         
         let delegate = PrivacyPermissionDelegate()
@@ -39,7 +40,7 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
                 switch decision {
                 case .affirmative:
                     if let delegate = self.delegate {
-                        delegate.enableTwoFactor()
+                        delegate.handleEnable()
                         self.dismiss(animated: true, completion: nil)
                     }
                     else {
@@ -55,6 +56,9 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
                     }
                 case .negative:
                     UserDefaults.standard.set(false, forKey: "TOTPEnabled")
+                    if let delegate = self.delegate {
+                        delegate.handleDismiss()
+                    }
                     self.dismiss(animated: true, completion: nil)
                 case .moreInfo: self.open(scheme: "https://www.isc.upenn.edu/how-to/two-step-faq")
                 }
