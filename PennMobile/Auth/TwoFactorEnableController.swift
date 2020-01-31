@@ -11,10 +11,16 @@ import Foundation
 import SwiftUI
 #endif
 
+protocol TwoFactorEnableDelegate {
+    func enableTwoFactor()
+}
+
 @available(iOS 13, *)
 class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable {
     
     private var cancellable: Any?
+    
+    public var delegate: TwoFactorEnableDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +38,19 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
             if let decision = delegate.userDecision {
                 switch decision {
                 case .affirmative:
-                    UserDefaults.standard.set(true, forKey: "TOTPEnabled")
-                    TOTPFetcher.instance.fetchAndSaveTOTPSecret()
-                    DispatchQueue.main.async {
-                        self.showActivity()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            self.hideActivity()
-                            self.dismiss(animated: true, completion: nil)
+                    if let delegate = self.delegate {
+                        delegate.enableTwoFactor()
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    else {
+                        UserDefaults.standard.set(true, forKey: "TOTPEnabled")
+                        TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+                        DispatchQueue.main.async {
+                            self.showActivity()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                self.hideActivity()
+                                self.dismiss(animated: true, completion: nil)
+                            }
                         }
                     }
                 case .negative:
