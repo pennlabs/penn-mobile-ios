@@ -14,6 +14,13 @@ import SwiftUI
 protocol TwoFactorEnableDelegate {
     func handleEnable()
     func handleDismiss()
+    func shouldWait() -> Bool
+}
+
+extension TwoFactorEnableDelegate {
+    func shouldWait() -> Bool {
+        return true
+    }
 }
 
 @available(iOS 13, *)
@@ -21,7 +28,9 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
     
     private var cancellable: Any?
     
-    public var delegate: TwoFactorEnableDelegate?
+    public var delegate: TwoFactorEnableDelegate!
+    
+    let shouldRequestLogin = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,26 +48,24 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
             if let decision = delegate.userDecision {
                 switch decision {
                 case .affirmative:
-                    if let delegate = self.delegate {
-                        delegate.handleEnable()
-                        self.dismiss(animated: true, completion: nil)
-                    }
-                    else {
-                        UserDefaults.standard.set(true, forKey: "TOTPEnabled")
-                        TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+                    UserDefaults.standard.set(true, forKey: "TOTPEnabled")
+                    TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+                    if self.delegate.shouldWait() {
                         DispatchQueue.main.async {
                             self.showActivity()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 self.hideActivity()
+                                self.delegate.handleEnable()
                                 self.dismiss(animated: true, completion: nil)
                             }
                         }
+                    } else {
+                        self.delegate.handleEnable()
+                        self.dismiss(animated: true, completion: nil)
                     }
                 case .negative:
                     UserDefaults.standard.set(false, forKey: "TOTPEnabled")
-                    if let delegate = self.delegate {
-                        delegate.handleDismiss()
-                    }
+                    delegate.handleDismiss()
                     self.dismiss(animated: true, completion: nil)
                 case .moreInfo: self.open(scheme: "https://www.isc.upenn.edu/how-to/two-step-faq")
                 }

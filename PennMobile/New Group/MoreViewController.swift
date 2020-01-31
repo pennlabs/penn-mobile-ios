@@ -233,6 +233,10 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
         tableView.reloadData()
     }
     
+    func shouldWait() -> Bool {
+        return false
+    }
+    
     func handleEnable() {
         UserDefaults.standard.set(true, forKey: "TOTPEnabled")
         tableView.reloadData()
