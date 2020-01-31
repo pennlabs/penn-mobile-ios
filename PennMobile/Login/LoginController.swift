@@ -54,8 +54,8 @@ extension LoginController {
             // Login Successful
             AppDelegate.shared.rootViewController.switchToMainScreen()
             
-            AppDelegate.shared.rootViewController.requestTwoFactorPermission()
-    
+            AppDelegate.shared.rootViewController.requestPermissions()
+            
         } else {
             // Failed to retrieve Account from Platform (possibly down)
             if !self.isFirstAttempt {

@@ -355,13 +355,18 @@ extension RootViewController : TwoFactorEnableDelegate {
         return code == nil
     }
     
-    func requestTwoFactorPermission() {
+    ///This requests permission from the user to display notifications and to enable Two-Step verification. If iOS 13 is
+    ///not available, it will only request for notification permission.
+    func requestPermissions() {
         if #available(iOS 13, *) {
             if shouldRequestTwoFactorEnable() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     let vc = TwoFactorEnableController()
                     self.current.present(vc, animated: true)
                 }
+            }
+            else {
+                askForNotificationPermission()
             }
         } else {
             askForNotificationPermission()
