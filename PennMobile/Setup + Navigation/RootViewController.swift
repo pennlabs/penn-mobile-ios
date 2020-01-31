@@ -362,6 +362,7 @@ extension RootViewController : TwoFactorEnableDelegate {
             if shouldRequestTwoFactorEnable() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     let vc = TwoFactorEnableController()
+                    vc.delegate = self
                     self.current.present(vc, animated: true)
                 }
             }
