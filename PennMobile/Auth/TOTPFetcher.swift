@@ -46,6 +46,7 @@ class TOTPFetcher: NSObject {
                     WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
                         DispatchQueue.main.async {
                             let zombie = WKZombie(dataStore: dataStore)
+                            Logger.enabled = false
                             WKZombie.setInstance(zombie: zombie)
 
                             let url = URL(string: self.urlStr)!
