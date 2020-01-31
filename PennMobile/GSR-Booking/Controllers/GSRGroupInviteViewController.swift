@@ -12,7 +12,7 @@ class GSRGroupInviteViewController: UIViewController {
     
     fileprivate var dummyLabel: UILabel!
     fileprivate var closeButton: UIButton!
-    fileprivate var inViteUsersLabel: UILabel!
+    fileprivate var inviteUsersLabel: UILabel!
     fileprivate var searchBar: UISearchBar!
     fileprivate var sendInvitesButton: UIButton!
     fileprivate var tableView: UITableView!
@@ -43,6 +43,7 @@ class GSRGroupInviteViewController: UIViewController {
     
     fileprivate var debouncingTimer: Timer?
     
+    var groupID: Int? //need to store id, so that we can send the invite request
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -69,13 +70,13 @@ class GSRGroupInviteViewController: UIViewController {
     }
     
     func prepareInviteUsersLabel() {
-        inViteUsersLabel = UILabel()
-        inViteUsersLabel.text = "Invite Users"
-        inViteUsersLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        view.addSubview(inViteUsersLabel)
-        inViteUsersLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 14).isActive = true
-        inViteUsersLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
-        inViteUsersLabel.translatesAutoresizingMaskIntoConstraints = false
+        inviteUsersLabel = UILabel()
+        inviteUsersLabel.text = "Invite Users"
+        inviteUsersLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        view.addSubview(inviteUsersLabel)
+        inviteUsersLabel.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 14).isActive = true
+        inviteUsersLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
+        inviteUsersLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
     @objc func cancelBtnAction(sender:UIButton!) {
@@ -89,7 +90,7 @@ class GSRGroupInviteViewController: UIViewController {
         searchBar.searchTextField.textColor = .black
         searchBar.searchTextField.autocapitalizationType = .none
         view.addSubview(searchBar)
-        searchBar.topAnchor.constraint(equalTo: inViteUsersLabel.bottomAnchor, constant: 20).isActive = true
+        searchBar.topAnchor.constraint(equalTo: inviteUsersLabel.bottomAnchor, constant: 20).isActive = true
         searchBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         searchBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -195,12 +196,6 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
 
 extension GSRGroupInviteViewController {
     func filterContentForSearchText(_ searchText: String) {
-//      filteredUsers = users.filter { (user: GSRInviteSearchResult) -> Bool in
-//        return user.username.lowercased().contains(searchText.lowercased())
-//      }
-//
-//      tableView.reloadData()
-        //print(searchText)
         debouncingTimer?.invalidate()
         debouncingTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (_) in
             print("timer")
@@ -227,6 +222,16 @@ extension GSRGroupInviteViewController: UISearchBarDelegate {
 
 extension GSRGroupInviteViewController {
     @objc func didPressInviteBtn(sender: UIButton!) {
-        print(filteredUsers)
+        let pennkeys = selectedUsers.map({$0.pennkey})
+        if let groupID = groupID {
+            GSRGroupNetworkManager.instance.inviteUsers(groupid: groupID, pennkeys: pennkeys, callback: {(error) in
+                if let error = error {
+                    //handle the error
+                } else {
+                    //go back to the main screen
+                    
+                }
+            })
+        }
     }
 }

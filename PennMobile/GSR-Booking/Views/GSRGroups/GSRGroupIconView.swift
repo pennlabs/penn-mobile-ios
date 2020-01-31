@@ -15,7 +15,7 @@ class GSRGroupIconView: UIView {
     var name: String! {
         didSet {
             if let lbl = firstLetterLbl {
-                lbl.text = String(self.name.prefix(1))
+                lbl.text = String(self.name.prefix(1).uppercased())
             }
         }
     }

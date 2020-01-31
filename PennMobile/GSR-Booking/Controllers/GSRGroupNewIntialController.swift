@@ -207,16 +207,14 @@ class GSRGroupNewIntialController: UIViewController {
         guard let name = nameField.text else {return}
         guard let color = colorLabel.text else {return}
         
-        GSRGroupNetworkManager.instance.createGroup(name: name, color: color) { (success, errorMsg) in
+        GSRGroupNetworkManager.instance.createGroup(name: name, color: color) { (success, groupID, errorMsg) in
             if success {
-                
-                // This reloads the groups on the GSRGroupController - this should be done after invites / end of the flow
-                // self.delegate.fetchGroups()
-                
                 DispatchQueue.main.async {
                     let controller = GSRGroupInviteViewController()
+                    controller.groupID = groupID
                     self.navigationController?.pushViewController(controller, animated: true)
                 }
+                self.delegate.fetchGroups()
             }
         }
     }
