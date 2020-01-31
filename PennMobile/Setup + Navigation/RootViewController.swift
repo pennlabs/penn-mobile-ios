@@ -130,6 +130,7 @@ class RootViewController: UIViewController, NotificationRequestable {
                     self.current.present(vc, animated: true)
                 }
             }
+            
         }
         
         // Send saved unsent events
@@ -326,6 +327,50 @@ extension RootViewController {
         } else {
             // Courses have never been shared. Do so now.
             return true
+        }
+    }
+}
+
+//MARK: - Enabling Two Factor Automation
+extension RootViewController : TwoFactorEnableDelegate {
+    
+    func handleEnable() {
+        askForNotificationPermission()
+    }
+    
+    func handleDismiss() {
+        askForNotificationPermission()
+    }
+    
+    func askForNotificationPermission() {
+        #if !targetEnvironment(simulator)
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
+            self.requestNotification()
+        }
+        #endif
+    }
+    
+    fileprivate func shouldRequestTwoFactorEnable() -> Bool {
+        let code = TwoFactorTokenGenerator.instance.generate()
+        return code == nil
+    }
+    
+    ///This requests permission from the user to display notifications and to enable Two-Step verification. If iOS 13 is
+    ///not available, it will only request for notification permission.
+    func requestPermissions() {
+        if #available(iOS 13, *) {
+            if shouldRequestTwoFactorEnable() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    let vc = TwoFactorEnableController()
+                    vc.delegate = self
+                    self.current.present(vc, animated: true)
+                }
+            }
+            else {
+                askForNotificationPermission()
+            }
+        } else {
+            askForNotificationPermission()
         }
     }
 }

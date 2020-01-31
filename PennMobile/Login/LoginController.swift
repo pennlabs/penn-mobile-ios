@@ -48,17 +48,14 @@ class LoginController: UIViewController, ShowsAlert {
 }
 
 // MARK: - Login Completion Handler
-extension LoginController: NotificationRequestable {
+extension LoginController {
     func loginCompletion(_ successful: Bool) {
         if successful {
             // Login Successful
             AppDelegate.shared.rootViewController.switchToMainScreen()
             
-            #if !targetEnvironment(simulator)
-            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
-                self.requestNotification()
-            }
-            #endif
+            AppDelegate.shared.rootViewController.requestPermissions()
+            
         } else {
             // Failed to retrieve Account from Platform (possibly down)
             if !self.isFirstAttempt {

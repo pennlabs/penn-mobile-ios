@@ -141,6 +141,7 @@
 		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
 		665F1FC523D261B100DC023E /* TwoFactorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F1FC423D261B100DC023E /* TwoFactorCell.swift */; };
 		665F1FC723D2628800DC023E /* TwoFactorWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */; };
+		667EC29623DB9C4800B0DF66 /* TwoFactorEnableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */; };
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
@@ -396,6 +397,7 @@
 		21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
 		665F1FC423D261B100DC023E /* TwoFactorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorCell.swift; sourceTree = "<group>"; };
 		665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorWebviewController.swift; sourceTree = "<group>"; };
+		667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorEnableController.swift; sourceTree = "<group>"; };
 		66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPFetcher.swift; sourceTree = "<group>"; };
 		66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorTokenGenerator.swift; sourceTree = "<group>"; };
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
@@ -778,10 +780,10 @@
 		216640CE1EBADD1B00746B8E /* Networking + Cache */ = {
 			isa = PBXGroup;
 			children = (
+				211DFE531F36A02C00CB73E4 /* DiningAPI.swift */,
 				F23CC0C4235EB30E0007317A /* StorageType.swift */,
 				F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */,
 				F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */,
-				211DFE531F36A02C00CB73E4 /* DiningAPI.swift */,
 			);
 			path = "Networking + Cache";
 			sourceTree = "<group>";
@@ -1060,6 +1062,7 @@
 				66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */,
 				66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */,
 				665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */,
+				667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1765,6 +1768,7 @@
 				97AA806C23D26BC700C23488 /* DiningCell.swift in Sources */,
 				F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */,
 				21D5E07223BBFC5700B331CC /* CoursesNetworkManager.swift in Sources */,
+				667EC29623DB9C4800B0DF66 /* TwoFactorEnableController.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */,
 				97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */,

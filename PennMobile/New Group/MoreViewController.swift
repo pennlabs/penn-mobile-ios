@@ -26,6 +26,8 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         
         barButton = UIBarButtonItem(title: Account.isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
         barButton.tintColor = UIColor.navigation
+        
+        registerObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -222,32 +224,67 @@ extension MoreViewController {
 }
 
 // MARK: - TwoFactorCellDelegate
-extension MoreViewController: TwoFactorCellDelegate {
+extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
     func handleRefresh() {
         tableView.reloadData()
     }
     
-    func handleEnableSwitch(enabled: Bool) {
-        UserDefaults.standard.set(enabled, forKey: "TOTPEnabled")
+    func handleDismiss() {
         tableView.reloadData()
-        if enabled {
-            FirebaseAnalyticsManager.shared.trackEvent(action: "TOTP", result: "enabled", content: true)
-            let twc = TwoFactorWebviewController()
-            twc.completion = { (successful) in
-                if !successful {
-                    let alert = UIAlertController(title: "Server Error", message: "We were unable to retrieve your unique Two-Factor code.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { _ in
-                        alert.dismiss(animated: true, completion: nil)
-                    }))
-                    self.present(alert, animated: true, completion: nil)
-                }
-                
-                self.tableView.reloadData()
+    }
+    
+    func shouldWait() -> Bool {
+        return false
+    }
+    
+    func handleEnable() {
+        UserDefaults.standard.set(true, forKey: "TOTPEnabled")
+        tableView.reloadData()
+        FirebaseAnalyticsManager.shared.trackEvent(action: "TOTP", result: "enabled", content: true)
+        let twc = TwoFactorWebviewController()
+        twc.completion = { (successful) in
+            if !successful {
+                let alert = UIAlertController(title: "Server Error", message: "We were unable to retrieve your unique Two-Factor code.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { _ in
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                self.present(alert, animated: true, completion: nil)
             }
-            let nvc = UINavigationController(rootViewController: twc)
+            
+            self.tableView.reloadData()
+        }
+        let nvc = UINavigationController(rootViewController: twc)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.present(nvc, animated: true, completion: nil)
         }
+    }
+    
+    func handleEnableSwitch(enabled: Bool) {
+        if enabled {
+            if #available(iOS 13, *) {
+                let vc = TwoFactorEnableController()
+                vc.delegate = self
+                self.present(vc, animated: true)
+            } else {
+                let alert = UIAlertController(title: "Two-Step Verification", message: "Enable this feature to remain logged in to Penn Mobile. Otherwise, you may have to log in again every 2-3 weeks. You can change your decision later in the More tab. Penn Mobile will become a Two-Step PennKey verification app. You can use it to generate one-time codes to log in to Penn resources. The TOTP token we use to generate codes will never leave this device. It will be stored in your iPhone's secure enclave.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+                    UserDefaults.standard.set(false, forKey: "TOTPEnabled")
+                    self.tableView.reloadData()
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Enable", style: .default, handler: { _ in
+                    alert.dismiss(animated: true, completion: nil)
+                    self.handleEnable()
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+
+        }
         else {
+            UserDefaults.standard.set(false, forKey: "TOTPEnabled")
+            tableView.reloadData()
             FirebaseAnalyticsManager.shared.trackEvent(action: "TOTP", result: "disabled", content: false)
             let alert = UIAlertController(title: "Disabling Two-Factor Automation", message: "Are you sure you want to disable Two-Factor Automation? If you do, we will no longer be storing your unique key. To re-enable Two-Factor Automation, you will have to login again.", preferredStyle: .alert)
             
@@ -262,9 +299,18 @@ extension MoreViewController: TwoFactorCellDelegate {
                 TwoFactorTokenGenerator.instance.clear()
                 self.tableView.reloadData()
             }))
-            
+
             present(alert, animated: true, completion: nil)
         }
     }
 }
-
+//MARK: - TOTP Code Observer
+extension MoreViewController {
+    func registerObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleCodeFetched(_:)), name: Notification.Name(rawValue: "TOTPCodeFetched") , object: nil)
+    }
+    
+    @objc func handleCodeFetched(_ sender: Any?) {
+        tableView.reloadData()
+    }
+}

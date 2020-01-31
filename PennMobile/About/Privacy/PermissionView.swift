@@ -39,6 +39,7 @@ struct PermissionView: View {
             Text(title)
                 .font(.largeTitle)
                 .fontWeight(.bold)
+                .multilineTextAlignment(.center)
             
             Text(privacyString)
                 .padding()

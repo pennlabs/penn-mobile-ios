@@ -31,7 +31,6 @@ class TwoFactorTokenGenerator: NSObject{
 
         guard let secret = secretString, let secretData = MF_Base32Codec.data(fromBase32String: secret),
             !secretData.isEmpty else {
-                print("Invalid secret")
                 return nil
         }
 
