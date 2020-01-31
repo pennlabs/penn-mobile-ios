@@ -28,7 +28,7 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
         let prompt = """
         Enable this feature to remain logged in to Penn Mobile. Otherwise, you may have to log in again every 2-3 weeks. You can change your decision later in the More tab.
         
-        Penn Mobile will become a Two-Step PennKey verification app. You can use it to generate one-time codes to login to Penn resources.
+        Penn Mobile will become a Two-Step PennKey verification app. You can use it to generate one-time codes to log in to Penn resources.
         
         The TOTP token we use to generate codes will never leave this device, and will be stored in your iPhone's secure enclave.
         """
