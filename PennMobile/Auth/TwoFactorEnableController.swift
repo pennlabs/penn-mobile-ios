@@ -65,7 +65,7 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
                     }
                 case .negative:
                     UserDefaults.standard.set(false, forKey: "TOTPEnabled")
-                    delegate.handleDismiss()
+                    self.delegate.handleDismiss()
                     self.dismiss(animated: true, completion: nil)
                 case .moreInfo: self.open(scheme: "https://www.isc.upenn.edu/how-to/two-step-faq")
                 }
