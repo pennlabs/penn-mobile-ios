@@ -39,6 +39,9 @@ class GSRManageGroupController: UIViewController {
             } else if let group = group {
                 self.group = group
                 self.viewModel.setGroup(group)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
     }

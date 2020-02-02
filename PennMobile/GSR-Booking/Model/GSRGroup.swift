@@ -12,8 +12,8 @@ struct GSRGroup: Codable{
     let id: Int
     let name: String
     let color: String
-    var userSettings: GSRGroupIndividualSettings? //this prop is set AFTER via a parse
-    let owner: GSRGroupMember?
+    var userSettings: GSRGroupIndividualSettings? = nil//this prop is set AFTER via a parse
+    let owner: String? //the pennkey
     let members: [GSRGroupMember]?
     
     //not used right now
@@ -42,8 +42,8 @@ struct GSRGroup: Codable{
         guard let members = members else { return }
         for member in members {
             if (member.pennKey == pennkey) {
-                guard let pennKeyActive = member.pennKeyActive,
-                    let notificationsOn = member.notificationsOn else { return }
+                let pennKeyActive = member.pennKeyActive ?? false
+                let notificationsOn = member.notificationsOn ?? false
                 let pennKeyActiveSetting = GSRGroupIndividualSetting(title: "PennKey Permission", descr: "Anyone in this group can book a study room block using your PennKey.", isEnabled: pennKeyActive)
                 let notificationsOnSetting = GSRGroupIndividualSetting(title: "Notifications", descr: "You’ll receive a notification any time a room is booked by this group.", isEnabled: notificationsOn)
                 userSettings = GSRGroupIndividualSettings(pennKeyActive: pennKeyActiveSetting, notificationsOn: notificationsOnSetting)

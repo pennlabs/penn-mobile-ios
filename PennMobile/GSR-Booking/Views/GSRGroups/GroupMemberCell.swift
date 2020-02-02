@@ -38,10 +38,9 @@ extension GroupMemberCell {
         }
         
         nameLabel.text = "\(member.first) \(member.last) (\(member.pennKey))"
-        if let pennKeyActive = member.pennKeyActive {
-            pennKeyActiveLabel.text = pennKeyActive ? "PennID Active" : "PennID Inactive"
-            pennKeyActiveLabel.textColor = pennKeyActive ? UIColor(named: "baseGreen") : UIColor(named: "baseRed")
-        }
+        let pennKeyActive = member.pennKeyActive ?? false
+        pennKeyActiveLabel.text = pennKeyActive ? "PennID Active" : "PennID Inactive"
+        pennKeyActiveLabel.textColor = pennKeyActive ? UIColor(named: "baseGreen") : UIColor(named: "baseRed")
     }
 }
 
