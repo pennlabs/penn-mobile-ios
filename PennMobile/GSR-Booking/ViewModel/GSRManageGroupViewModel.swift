@@ -35,7 +35,7 @@ class GSRManageGroupViewModel: NSObject {
         self.group = group
     }
 
-    func setGroup(group: GSRGroup) {
+    func setGroup(_ group: GSRGroup) {
         self.group = group
     }
 }

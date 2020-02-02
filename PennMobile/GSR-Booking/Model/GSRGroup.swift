@@ -11,16 +11,16 @@ import Foundation
 struct GSRGroup: Codable{
     let id: Int
     let name: String
-    let color: String?
-    let createdAt: Date?
-    let userSettings: GSRGroupIndividualSettings? //not optional, beacuse we need to know if pennKey is Active
-
-    var imgURL: String?
-    var owners: [GSRGroupMember]?
-    var members: [GSRGroupMember]?
+    let color: String
+    var userSettings: GSRGroupIndividualSettings? //this prop is set AFTER via a parse
+    let owner: GSRGroupMember?
+    let members: [GSRGroupMember]?
+    
+    //not used right now
     let reservations: [String]? //array of reservationID's
     let groupSettings: GSRGroupAccessSettings?
-    
+    let createdAt: Date?
+
     static let groupColors: [String : UIColor] = [
         "Labs Blue" : UIColor.baseBlue,
         "College Green" : UIColor.baseGreen,
@@ -32,9 +32,23 @@ struct GSRGroup: Codable{
     ]
     
     func parseColor() -> UIColor? {
-        guard let color = self.color else { return nil }
-        
         return GSRGroup.groupColors[color]
+    }
+    
+    mutating func parseIndividualSettings(for pennkey: String) {
+        //initializes the user settings based on the member data
+        //call this method after initially decoding json data, and BEFORE
+        // displaying groups in ManageGroupVC
+        guard let members = members else { return }
+        for member in members {
+            if (member.pennKey == pennkey) {
+                guard let pennKeyActive = member.pennKeyActive,
+                    let notificationsOn = member.notificationsOn else { return }
+                let pennKeyActiveSetting = GSRGroupIndividualSetting(title: "PennKey Permission", descr: "Anyone in this group can book a study room block using your PennKey.", isEnabled: pennKeyActive)
+                let notificationsOnSetting = GSRGroupIndividualSetting(title: "Notifications", descr: "You’ll receive a notification any time a room is booked by this group.", isEnabled: notificationsOn)
+                userSettings = GSRGroupIndividualSettings(pennKeyActive: pennKeyActiveSetting, notificationsOn: notificationsOnSetting)
+            }
+        }
     }
 }
 
@@ -60,11 +74,21 @@ enum GSRGroupAccessPermissions: String, Codable { //who has access
 }
 
 struct GSRGroupMember: Codable {
-    let accountID: String
     let pennKey: String
     let first: String
     let last: String
-    let email: String?
-    let isBookingEnabled: Bool
-    let isAdmin: Bool
+    
+    //TODO: make the following unoptional later (optional now for testing ONLY)
+    let pennKeyActive: Bool?
+    let notificationsOn: Bool?
+    let isAdmin: Bool?
+    
+    enum CodingKeys: String, CodingKey {
+        case pennKey = "username"
+        case first = "first_name"
+        case last = "last_name"
+        case pennKeyActive
+        case notificationsOn
+        case isAdmin
+    }
 }
