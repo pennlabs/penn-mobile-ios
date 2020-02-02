@@ -23,6 +23,8 @@ final class HomeItemTypes: ModularTableViewItemTypes {
     let reservations: HomeCellItem.Type = HomeReservationsCellItem.self
     let courses: HomeCellItem.Type = HomeCoursesCellItem.self
     let gsrLocations: HomeCellItem.Type = HomeGSRLocationsCellItem.self
+    
+    //let pendingInvites: HomeCellItem.Type = HomePendingInvitesCellItem.self
 }
 
 // MARK: - JSON Parsing
