@@ -49,7 +49,7 @@ DEPENDENCIES:
   - ZoomImageView
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Base32
     - Crashlytics
     - Fabric

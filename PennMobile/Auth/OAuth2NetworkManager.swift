@@ -87,12 +87,16 @@ extension OAuth2NetworkManager {
 // MARK: - Get + Refresh Access Token
 extension OAuth2NetworkManager {
     func getAccessToken(_ callback: @escaping (_ accessToken: AccessToken?) -> Void) {
-        if let accessToken = self.currentAccessToken, Date() < accessToken.expiration {
-            callback(accessToken)
-        } else {
-            self.currentAccessToken = nil
-            self.refreshAccessToken(callback)
-        }
+        // dev token that expires in a year
+        // use until auth is back up
+        let devToken = AccessToken(value: "JblFEnQxlUxLSGAQPWAam70msPPmCN", expiration: Date(timeIntervalSinceNow: 2592000))
+        callback(devToken)
+//        if let accessToken = self.currentAccessToken, Date() < accessToken.expiration {
+//            callback(accessToken)
+//        } else {
+//            self.currentAccessToken = nil
+//            self.refreshAccessToken(callback)
+//        }
     }
     
     fileprivate func refreshAccessToken(_ callback: @escaping (_ accessToken: AccessToken?) -> Void ) {
