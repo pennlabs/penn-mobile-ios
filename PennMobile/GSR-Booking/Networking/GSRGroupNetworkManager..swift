@@ -89,14 +89,16 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
     
-    func inviteUsers(groupid: Int, pennkeys: [String], callback: @escaping (Error?) -> ()) {
-        let params: [String: Any] = ["group": groupid, "username": pennkeys]
-        makePostRequestWithAccessToken(url: membershipURL, params: params) { (data, status, error) in
-            if let error = error {
-                callback(error)
-            } else {
-                callback(nil)
+    func inviteUsers(groupid: Int, pennkeys: [String], callback: @escaping (Bool, Error?) -> ()) {
+        let params: [String: Any] = ["group": groupid, "user": pennkeys.joined(separator: ",")]
+        print(params)
+        makePostRequestWithAccessToken(url: inviteURL, params: params) { (data, status, error) in
+            guard let status = status as? HTTPURLResponse else {
+                callback(false, error)
+                return
             }
+            
+            callback(status.statusCode == 200, error)
         }
     }
     

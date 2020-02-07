@@ -48,8 +48,6 @@ class GSRGroupInviteViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         prepareUI()
-        
-        
     }
     
     func prepareCloseButton() {
@@ -115,7 +113,6 @@ class GSRGroupInviteViewController: UIViewController {
         sendInvitesButton.addTarget(self, action: #selector(didPressInviteBtn), for: .touchUpInside)
         
         sendInvitesButton.isEnabled = false
-//        sendInvitesButton.isUserInteractionEnabled = false
     }
     
     func prepareTableView() {
@@ -163,14 +160,15 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "resultscell")
         let user: GSRInviteSearchResult2
+        
         if isFiltering {
             user = filteredUsers[indexPath.row]
             cell.accessoryType = selectedUsers.contains(user) ? .checkmark : .none
         } else {
-          
             user = selectedUsers[indexPath.row]
             cell.accessoryType = .checkmark
         }
+        
         cell.detailTextLabel?.text = user.pennkey
         cell.textLabel?.text = "\(user.first ?? "") \(user.last ?? "")"
         return cell
@@ -181,8 +179,7 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
         
         if cell.accessoryType == UITableViewCell.AccessoryType.checkmark {
             cell.accessoryType = .none
-            
-            selectedUsers = selectedUsers.filter {$0 != users[indexPath.row]}
+            selectedUsers = selectedUsers.filter {$0 != filteredUsers[indexPath.row]}
         } else {
             cell.accessoryType = .checkmark
             
@@ -198,7 +195,6 @@ extension GSRGroupInviteViewController {
     func filterContentForSearchText(_ searchText: String) {
         debouncingTimer?.invalidate()
         debouncingTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false, block: { (_) in
-            print("timer")
             GSRGroupNetworkManager.instance.getSearchResults(searchText: searchText) { (results) in
                 if let results = results {
                     self.filteredUsers = results
@@ -224,7 +220,7 @@ extension GSRGroupInviteViewController {
     @objc func didPressInviteBtn(sender: UIButton!) {
         let pennkeys = selectedUsers.map({$0.pennkey})
         if let groupID = groupID {
-            GSRGroupNetworkManager.instance.inviteUsers(groupid: groupID, pennkeys: pennkeys, callback: {(error) in
+            GSRGroupNetworkManager.instance.inviteUsers(groupid: groupID, pennkeys: pennkeys, callback: {(success, error) in
                 if let error = error {
                     //handle the error
                 } else {
