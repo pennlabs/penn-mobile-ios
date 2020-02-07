@@ -508,3 +508,22 @@ extension UserDefaults {
         removeObject(forKey: UserDefaultsKeys.notificationPreferences.rawValue)
     }
 }
+// MARK: - Two Factor Enabled flag
+extension UserDefaults {
+    func setTwoFactorEnabled(to newValue: Bool) {
+        UserDefaults.standard.set(newValue, forKey: "TOTPEnabled")
+        setTwoFactorEnabledDate(Date())
+    }
+    
+    func getTwoFactorEnabled() -> Bool {
+        return UserDefaults.standard.bool(forKey: "TOTPEnabled")
+    }
+    
+    func getTwoFactorEnabledDate() -> Date? {
+        return UserDefaults.standard.value(forKey: "TOTPEnabledDate") as? Date
+    }
+    
+    fileprivate func setTwoFactorEnabledDate(_ date: Date) {
+        UserDefaults.standard.set(date, forKey: "TOTPEnabledDate")
+    }
+}

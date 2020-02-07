@@ -238,7 +238,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
     }
     
     func handleEnable() {
-        UserDefaults.standard.set(true, forKey: "TOTPEnabled")
+        UserDefaults.standard.setTwoFactorEnabled(to: true)
         tableView.reloadData()
         FirebaseAnalyticsManager.shared.trackEvent(action: "TOTP", result: "enabled", content: true)
         let twc = TwoFactorWebviewController()
@@ -268,7 +268,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
             } else {
                 let alert = UIAlertController(title: "Two-Step Verification", message: "Enable this feature to remain logged in to Penn Mobile. Otherwise, you may have to log in again every 2-3 weeks. You can change your decision later in the More tab. Penn Mobile will become a Two-Step PennKey verification app. You can use it to generate one-time codes to log in to Penn resources. The TOTP token we use to generate codes will never leave this device. It will be stored in your iPhone's secure enclave.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-                    UserDefaults.standard.set(false, forKey: "TOTPEnabled")
+                    UserDefaults.standard.setTwoFactorEnabled(to: false)
                     self.tableView.reloadData()
                     alert.dismiss(animated: true, completion: nil)
                 }))
@@ -283,7 +283,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
 
         }
         else {
-            UserDefaults.standard.set(false, forKey: "TOTPEnabled")
+            UserDefaults.standard.setTwoFactorEnabled(to: false)
             tableView.reloadData()
             FirebaseAnalyticsManager.shared.trackEvent(action: "TOTP", result: "disabled", content: false)
             let alert = UIAlertController(title: "Disabling Two-Factor Automation", message: "Are you sure you want to disable Two-Factor Automation? If you do, we will no longer be storing your unique key. To re-enable Two-Factor Automation, you will have to login again.", preferredStyle: .alert)

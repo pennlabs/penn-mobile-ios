@@ -373,4 +373,12 @@ extension RootViewController : TwoFactorEnableDelegate {
             askForNotificationPermission()
         }
     }
+    
+    ///Checks whether the user has enabled Two Factor but the code was never fetched. This can happen when the user closes the
+    ///app before it is done fetching the code.
+    func shouldFetchTwoFactorCode() -> Bool {
+        let code = TwoFactorTokenGenerator.instance.generate()
+        let totpEnabled = UserDefaults.standard.getTwoFactorEnabled()
+        return totpEnabled && (code == nil)
+    }
 }

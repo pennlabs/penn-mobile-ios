@@ -48,7 +48,7 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
             if let decision = delegate.userDecision {
                 switch decision {
                 case .affirmative:
-                    UserDefaults.standard.set(true, forKey: "TOTPEnabled")
+                    UserDefaults.standard.setTwoFactorEnabled(to: true)
                     TOTPFetcher.instance.fetchAndSaveTOTPSecret()
                     if self.delegate.shouldWait() {
                         DispatchQueue.main.async {
@@ -64,7 +64,7 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
                         self.dismiss(animated: true, completion: nil)
                     }
                 case .negative:
-                    UserDefaults.standard.set(false, forKey: "TOTPEnabled")
+                    UserDefaults.standard.setTwoFactorEnabled(to: false)
                     self.delegate.handleDismiss()
                     self.dismiss(animated: true, completion: nil)
                 case .moreInfo: self.open(scheme: "https://www.isc.upenn.edu/how-to/two-step-faq")
