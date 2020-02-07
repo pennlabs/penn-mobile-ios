@@ -33,11 +33,15 @@ class GSRManageGroupController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
        super.viewWillAppear(animated)
-        //TODO: potentially update the data again here
-        GSRGroupNetworkManager.instance.getGroup(groupid: group.id) { (group) in
-            if let group = group {
+        GSRGroupNetworkManager.instance.getGroup(groupid: group.id) { (errMessage, group) in
+            if let errMessage = errMessage {
+                print(errMessage)
+            } else if let group = group {
                 self.group = group
-                viewModel.setGroup(group: group)
+                self.viewModel.setGroup(group)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
     }
