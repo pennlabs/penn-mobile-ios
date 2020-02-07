@@ -181,8 +181,6 @@
 		B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */; };
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
 		B9355C0F23D4C8AB00D8DA6B /* GSRInviteSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9355C0E23D4C8AB00D8DA6B /* GSRInviteSearchResult.swift */; };
-		B98CA5FB23E7372A004B3218 /* HomePendingInvitesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98CA5FA23E7372A004B3218 /* HomePendingInvitesCell.swift */; };
-		B98CA5FD23E7373B004B3218 /* HomePendingInvitesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B98CA5FC23E7373B004B3218 /* HomePendingInvitesCellItem.swift */; };
 		B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */; };
 		B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */; };
 		C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */; };
@@ -204,6 +202,8 @@
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
 		E868180250E783063DE9FDA1 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBF3A15BB9805FD5A5270A /* Pods_AutomatedScreenshotUITests.framework */; };
+		EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */; };
+		EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */; };
 		EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC321860B7000E29C6A /* StatusBar.swift */; };
 		EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC521861B8500E29C6A /* HomeNavigationController.swift */; };
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
@@ -440,8 +440,6 @@
 		B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
 		B9355C0E23D4C8AB00D8DA6B /* GSRInviteSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRInviteSearchResult.swift; sourceTree = "<group>"; };
-		B98CA5FA23E7372A004B3218 /* HomePendingInvitesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePendingInvitesCell.swift; sourceTree = "<group>"; };
-		B98CA5FC23E7373B004B3218 /* HomePendingInvitesCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePendingInvitesCellItem.swift; sourceTree = "<group>"; };
 		B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteViewController.swift; sourceTree = "<group>"; };
 		B9C8CAA7235A613D0040C8E5 /* GSRGroupNewIntialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupNewIntialController.swift; sourceTree = "<group>"; };
 		B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInviteUserCell.swift; sourceTree = "<group>"; };
@@ -465,6 +463,8 @@
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
+		EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCellItem.swift; sourceTree = "<group>"; };
+		EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCell.swift; sourceTree = "<group>"; };
 		EF389EC321860B7000E29C6A /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		EF389EC521861B8500E29C6A /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
 		EFD6F358220E334100382783 /* DiningCellSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCellSettingsController.swift; sourceTree = "<group>"; };
@@ -615,7 +615,7 @@
 			children = (
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
 				210AC14420684F9B0050D837 /* HomeCellProtocols.swift */,
-				B98CA5F723E73631004B3218 /* PendingInvites */,
+				B98CA5F723E73631004B3218 /* Group Invites */,
 				212B835A222A37BD00F835D6 /* Feature */,
 				212B8353222A319200F835D6 /* Post */,
 				21B6491E2236F2E200AC5B7F /* Courses */,
@@ -1248,13 +1248,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		B98CA5F723E73631004B3218 /* PendingInvites */ = {
+		B98CA5F723E73631004B3218 /* Group Invites */ = {
 			isa = PBXGroup;
 			children = (
-				B98CA5FA23E7372A004B3218 /* HomePendingInvitesCell.swift */,
-				B98CA5FC23E7373B004B3218 /* HomePendingInvitesCellItem.swift */,
+				EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */,
+				EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */,
 			);
-			path = PendingInvites;
+			path = "Group Invites";
 			sourceTree = "<group>";
 		};
 		C13F9E93219284E9000B866A /* Calendar */ = {
@@ -1671,6 +1671,7 @@
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
+				EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
 				21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */,
@@ -1760,7 +1761,6 @@
 				97AA806D23D26BC700C23488 /* DiningBalanceCollectionViewCell.swift in Sources */,
 				21B653B92245EB67001A97C5 /* PennAuthRequestable.swift in Sources */,
 				2189C0842027CDB800771C1F /* GSRLoginController.swift in Sources */,
-				B98CA5FD23E7373B004B3218 /* HomePendingInvitesCellItem.swift in Sources */,
 				211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */,
 				EFE2D6F2239B11050020F6BF /* GroupMemberCell.swift in Sources */,
 				2189C0A02027CE4100771C1F /* GSRVenue.swift in Sources */,
@@ -1786,6 +1786,7 @@
 				97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */,
 				21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
+				EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */,
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
@@ -1793,7 +1794,6 @@
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				97E79E142100E1FA00D3D606 /* FitnessViewController.swift in Sources */,
 				21B556172224FDC500D80F61 /* RootViewController.swift in Sources */,
-				B98CA5FB23E7372A004B3218 /* HomePendingInvitesCell.swift in Sources */,
 				B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,

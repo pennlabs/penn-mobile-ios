@@ -92,3 +92,23 @@ struct GSRGroupMember: Codable {
         case isAdmin
     }
 }
+
+struct GSRGroupInvite: Codable {
+    let pennkey: String
+    let group: String
+    let type: String
+    let pennkeyAllow: Bool
+    let notifications: Bool
+    let id: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case pennkey = "username"
+        case pennkeyAllow = "pennkey_allow"
+        case notifications
+        case id
+        case type
+        case group
+    }
+}
+
+typealias GSRGroupInvites = [GSRGroupInvite]
