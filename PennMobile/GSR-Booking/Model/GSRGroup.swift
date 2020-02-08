@@ -35,6 +35,10 @@ struct GSRGroup: Codable{
         return GSRGroup.groupColors[color]
     }
     
+    static func parseColor(color: String) -> UIColor? {
+        return GSRGroup.groupColors[color]
+    }
+    
     mutating func parseIndividualSettings(for pennkey: String) {
         //initializes the user settings based on the member data
         //call this method after initially decoding json data, and BEFORE

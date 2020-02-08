@@ -32,7 +32,7 @@ final class HomeGroupInvitesCellItem: HomeCellItem {
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
         // comment out following line once server is updated to show cell
-        //        guard let json = json else { return nil }
+//        guard let json = json else { return nil }
         return HomeGroupInvitesCellItem(invites: GSRGroupInvites())
     }
 }

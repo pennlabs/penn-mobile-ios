@@ -46,6 +46,7 @@ extension GSRGroupIconView {
     
     fileprivate func prepareUI() {
         prepareFirstLetterLbl()
+        prepareConstraints()
     }
     
     fileprivate func prepareFirstLetterLbl() {
@@ -56,6 +57,16 @@ extension GSRGroupIconView {
         firstLetterLbl.textColor = UIColor.white
         firstLetterLbl.textAlignment = .center
         firstLetterLbl.font = UIFont.systemFont(ofSize: 38, weight: .bold)
-        _ = firstLetterLbl.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        firstLetterLbl.translatesAutoresizingMaskIntoConstraints = false
+        firstLetterLbl.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        firstLetterLbl.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+    }
+    
+    fileprivate func prepareConstraints() {
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalToConstant: 70).isActive = true
+        widthAnchor.constraint(equalToConstant: 70).isActive = true
+        layer.cornerRadius = 35
+        layer.masksToBounds = true
     }
 }

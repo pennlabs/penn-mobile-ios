@@ -19,7 +19,8 @@ class GSRGroupInviteCell: UITableViewCell {
         }
     }
     
-    fileprivate var groupLabel: UILabel!
+    fileprivate var groupNameLabel: UILabel!
+    fileprivate var groupIcon: GSRGroupIconView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,38 +34,44 @@ class GSRGroupInviteCell: UITableViewCell {
 
 extension GSRGroupInviteCell {
     fileprivate func setupCell(with invite: GSRGroupInvite) {
-        print(invite.group)
         backgroundColor = .clear
-        groupLabel.text = invite.group
+        groupNameLabel.text = invite.group
+        groupIcon.name = invite.group
+        groupIcon.groupColor = GSRGroup.parseColor(color: "College Green")
     }
 }
 
 extension GSRGroupInviteCell {
     fileprivate func prepareUI() {
         prepareLabels()
-        prepareGroupLogo()
     }
     
     fileprivate func prepareLabels() {
         let padding = UIView.padding
         
-        groupLabel = getGroupLabel()
+        groupNameLabel = getGroupNameLabel()
+        groupIcon = getGroupIcon()
         
-        addSubview(groupLabel)
+        addSubview(groupIcon)
+        addSubview(groupNameLabel)
         
-        _ = groupLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 13, leftConstant: 25)
+        groupIcon.translatesAutoresizingMaskIntoConstraints = false
+        groupIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding).isActive = true
+        groupIcon.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true
+        
+        groupNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        groupNameLabel.leadingAnchor.constraint(equalTo: groupIcon.trailingAnchor, constant: padding).isActive = true
+        groupNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true
     }
     
-    fileprivate func prepareGroupLogo() {
-        
+    fileprivate func getGroupIcon() -> GSRGroupIconView {
+        let icon = GSRGroupIconView()
+        return icon
     }
     
-    fileprivate func getGroupLabel() -> UILabel {
+    fileprivate func getGroupNameLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        label.textAlignment = .center
-        label.textColor = UIColor.labelPrimary
-        label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 24.0, weight: .regular)
         return label
     }
 }

@@ -22,19 +22,11 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var colorPanel: UIView!
     fileprivate var createButton: UIButton!
     fileprivate var colorCollectionView: UICollectionView!
-    fileprivate var colors: [UIColor] = [
-        UIColor.baseBlue,
-        UIColor.baseGreen,
-        UIColor.baseYellow,
-        UIColor.baseOrange,
-        UIColor.baseRed,
-        UIColor.blueDarker
-    ]
     
     fileprivate var chosenColor: UIColor!
     fileprivate var nameChanged: Bool!
     
-    fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange","Red-ing Terminal", "Baltimore Blue", "Purple"]
+    fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange", "Red-ing Terminal", "Baltimore Blue", "Purple"]
     
     
     weak var delegate: NewGroupInitialDelegate!
@@ -246,7 +238,7 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GSRColorCell.identifier, for: indexPath) as! GSRColorCell
-        let color = colors[indexPath.item % colors.count]
+        let color = GSRGroup.parseColor(color: colorNames[indexPath.row]) ?? UIColor.blueLighter
         cell.color = color
         cell.borderColor = color.borderColor(multiplier: 1.5)
         return cell
