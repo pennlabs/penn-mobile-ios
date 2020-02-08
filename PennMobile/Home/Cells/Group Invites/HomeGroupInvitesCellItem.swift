@@ -31,7 +31,8 @@ final class HomeGroupInvitesCellItem: HomeCellItem {
     }
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
-        guard let json = json else { return nil }
+        // comment out following line once server is updated to show cell
+        //        guard let json = json else { return nil }
         return HomeGroupInvitesCellItem(invites: GSRGroupInvites())
     }
 }
@@ -42,7 +43,7 @@ extension HomeGroupInvitesCellItem: HomeAPIRequestable {
             if success {
                 self.invites = invites
             }
-            
+
             completion()
         }
     }

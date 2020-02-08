@@ -162,7 +162,6 @@ class GSRGroupNetworkManager: NSObject, Requestable {
                 return
             }
             
-            print(status.statusCode)
             if error != nil || status.statusCode != 200 {
                 callback(false, invites, error)
                 return
@@ -173,14 +172,14 @@ class GSRGroupNetworkManager: NSObject, Requestable {
                 return
             }
             
-            let decoded = try? JSONDecoder().decode(GSRGroupInvites.self, from: data)
+            let decoded = try! JSONDecoder().decode(GSRGroupInvites.self, from: data)
             
-            guard let results = decoded else {
-                callback(false, invites, error)
-                return
-            }
+//            guard let results = decoded else {
+//                callback(false, invites, error)
+//                return
+//            }
             
-            invites = results
+            invites = decoded
             callback(true, invites, error)
         }
     }

@@ -94,7 +94,7 @@ struct GSRGroupMember: Codable {
 }
 
 struct GSRGroupInvite: Codable {
-    let pennkey: String
+    let user: GSRInviteUser
     let group: String
     let type: String
     let pennkeyAllow: Bool
@@ -102,12 +102,21 @@ struct GSRGroupInvite: Codable {
     let id: Int
     
     enum CodingKeys: String, CodingKey {
-        case pennkey = "username"
+        case user, type, group
         case pennkeyAllow = "pennkey_allow"
-        case notifications
-        case id
-        case type
-        case group
+        case notifications, id
+    }
+}
+
+struct GSRInviteUser: Codable {
+    let pennkey: String
+    let firstName: String
+    let lastName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case pennkey = "username"
+        case firstName = "first_name"
+        case lastName = "last_name"
     }
 }
 

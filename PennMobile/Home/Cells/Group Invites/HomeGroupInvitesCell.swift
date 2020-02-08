@@ -9,7 +9,7 @@
 import Foundation
 
 final class HomeGroupInvitesCell: UITableViewCell, HomeCellConformable {
-    var cardView: UIView!
+    var cardView: UIView! = UIView()
     
     static var identifier: String {
         return "invitesCell"
@@ -71,28 +71,68 @@ extension HomeGroupInvitesCell: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: GSRGroupInviteCell.identifier, for: indexPath) as! GSRGroupInviteCell
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        let invite = invites![indexPath.row]
+        cell.invite = invite
+        return cell
     }
 }
 
 extension HomeGroupInvitesCell {
     fileprivate func prepareUI() {
+        prepareSafeArea()
+        prepareTitleLabels()
+        prepareDividerLine()
+        prepareTableView()
     }
     
     fileprivate func prepareSafeArea() {
+        safeArea = getSafeAreaView()
         
+        cardView.addSubview(safeArea)
+        
+        safeArea.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: safeInsetValue).isActive = true
+        safeArea.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.topAnchor.constraint(equalTo: cardView.topAnchor, constant: safeInsetValue).isActive = true
+        safeArea.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -safeInsetValue).isActive = true
     }
     
     fileprivate func prepareTitleLabels() {
+        secondaryTitleLabel = getSecondaryLabel()
+        primaryTitleLabel = getPrimaryLabel()
         
+        cardView.addSubview(secondaryTitleLabel)
+        cardView.addSubview(primaryTitleLabel)
+        
+        secondaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        secondaryTitleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        
+        primaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        primaryTitleLabel.topAnchor.constraint(equalTo: secondaryTitleLabel.bottomAnchor, constant: 10).isActive = true
     }
     
     fileprivate func prepareDividerLine() {
+        dividerLine = getDividerLine()
         
+        cardView.addSubview(dividerLine)
+        
+        dividerLine.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
+        dividerLine.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        dividerLine.topAnchor.constraint(equalTo: primaryTitleLabel.bottomAnchor, constant: 14).isActive = true
+        dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
     }
     
     fileprivate func prepareTableView() {
+        groupInvitesTableView = getInvitesTableView()
         
+        cardView.addSubview(groupInvitesTableView)
+        
+        groupInvitesTableView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor).isActive = true
+        groupInvitesTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
+                                                    constant: safeInsetValue / 2).isActive = true
+        groupInvitesTableView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor).isActive = true
+        groupInvitesTableView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: safeInsetValue / 2).isActive = true
     }
 }
 

@@ -19,21 +19,23 @@ class GSRGroupInviteCell: UITableViewCell {
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    fileprivate var groupLabel: UILabel!
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        prepareUI()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension GSRGroupInviteCell {
     fileprivate func setupCell(with invite: GSRGroupInvite) {
+        print(invite.group)
         backgroundColor = .clear
+        groupLabel.text = invite.group
     }
 }
 
@@ -44,10 +46,25 @@ extension GSRGroupInviteCell {
     }
     
     fileprivate func prepareLabels() {
+        let padding = UIView.padding
         
+        groupLabel = getGroupLabel()
+        
+        addSubview(groupLabel)
+        
+        _ = groupLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 13, leftConstant: 25)
     }
     
     fileprivate func prepareGroupLogo() {
         
+    }
+    
+    fileprivate func getGroupLabel() -> UILabel {
+        let label = UILabel()
+        label.font = UIFont(name: "AvenirNext-Regular", size: 18)
+        label.textAlignment = .center
+        label.textColor = UIColor.labelPrimary
+        label.numberOfLines = 2
+        return label
     }
 }
