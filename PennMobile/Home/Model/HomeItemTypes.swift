@@ -23,7 +23,7 @@ final class HomeItemTypes: ModularTableViewItemTypes {
     let reservations: HomeCellItem.Type = HomeReservationsCellItem.self
     let courses: HomeCellItem.Type = HomeCoursesCellItem.self
     let gsrLocations: HomeCellItem.Type = HomeGSRLocationsCellItem.self
-    
+    let invites: HomeCellItem.Type =  HomeGroupInvitesCellItem.self
     //let pendingInvites: HomeCellItem.Type = HomePendingInvitesCellItem.self
 }
 
@@ -69,7 +69,8 @@ extension HomeItemTypes {
      * Note: This method should return an empty array when the app is in production
     **/
     func getDefaultItems() -> [HomeCellItem.Type] {
-        let types = [HomeCellItem.Type]()
+        var types = [HomeCellItem.Type]()
+        types.append(invites)
         return types
     }
 }

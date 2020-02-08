@@ -20,15 +20,17 @@ class GroupHeaderCell: UITableViewCell {
 
     var groupColor: UIColor! {
         didSet {
-            groupIcon.backgroundColor = groupColor
+            groupIcon.groupColor = groupColor
         }
     }
+    
     var groupTitle: String! {
         didSet {
             titleLabel.text = "\(groupTitle!)"
             groupIcon.name = groupTitle
         }
     }
+    
     var memberCount: Int! {
         didSet {
             memberCountLabel.text = "\(memberCount!) MEMBERS"

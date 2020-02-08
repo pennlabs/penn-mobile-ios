@@ -11,12 +11,21 @@ import UIKit
 class GSRGroupIconView: UIView {
     //creates a circular icon with color and letter for icon
     
+    static let height : CGFloat = 63.0
+    
     fileprivate var firstLetterLbl: UILabel!
+    
     var name: String! {
         didSet {
             if let lbl = firstLetterLbl {
                 lbl.text = String(self.name.prefix(1).uppercased())
             }
+        }
+    }
+    
+    var groupColor: UIColor! {
+        didSet {
+            backgroundColor = groupColor
         }
     }
     
@@ -40,6 +49,8 @@ extension GSRGroupIconView {
     }
     
     fileprivate func prepareFirstLetterLbl() {
+        layer.cornerRadius = GSRGroupIconView.height / 2
+        layer.masksToBounds = true
         firstLetterLbl = UILabel()
         addSubview(firstLetterLbl)
         firstLetterLbl.textColor = UIColor.white

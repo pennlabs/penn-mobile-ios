@@ -14,7 +14,7 @@ final class HomeGroupInvitesCellItem: HomeCellItem {
         return HomeGroupInvitesCell.self
     }
     
-    var invites: GSRGroupInvites
+    var invites: GSRGroupInvites?
     
     init(invites: GSRGroupInvites) {
         self.invites = invites
@@ -22,7 +22,8 @@ final class HomeGroupInvitesCellItem: HomeCellItem {
     
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeGroupInvitesCellItem else {return false}
-        return invites.count == item.invites.count
+        guard let invites = invites, let itemInvites = item.invites else { return false }
+        return invites.count == itemInvites.count
     }
     
     static var jsonKey: String {
@@ -33,5 +34,16 @@ final class HomeGroupInvitesCellItem: HomeCellItem {
         guard let json = json else { return nil }
         return HomeGroupInvitesCellItem(invites: GSRGroupInvites())
     }
-    
+}
+
+extension HomeGroupInvitesCellItem: HomeAPIRequestable {
+    func fetchData(_ completion: @escaping () -> Void) {
+        GSRGroupNetworkManager.instance.getInvites { (success, invites, error) in
+            if success {
+                self.invites = invites
+            }
+            
+            completion()
+        }
+    }
 }
