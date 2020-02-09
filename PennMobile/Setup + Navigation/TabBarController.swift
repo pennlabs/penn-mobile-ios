@@ -69,7 +69,7 @@ extension FlingViewController: TabBarShowable {
     }
 }
 
-extension DiningViewController: TabBarShowable {
+extension DiningTabController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Dining_Grey")
         let selectedImage = UIImage(named: "Dining_Blue")
