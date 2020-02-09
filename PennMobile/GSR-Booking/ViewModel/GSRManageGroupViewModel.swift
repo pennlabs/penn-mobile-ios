@@ -133,7 +133,11 @@ extension GSRManageGroupViewModel: UITableViewDelegate {
 extension GSRManageGroupViewModel: GSRGroupIndividualSettingDelegate {
     func updateSetting(setting: GSRGroupIndividualSetting) {
         print("Update Setting \(setting.title) to \(setting.isEnabled)")
-        // TODO - call the GSRGroupNetworkManager to change setting
+        GSRGroupNetworkManager.instance.updateIndividualSetting(groupID: group.id, settingType: setting.type, isEnabled: setting.isEnabled, callback: {(success, error) in
+            if let error = error {
+                print(error)
+            }
+        })
     }
 }
 
