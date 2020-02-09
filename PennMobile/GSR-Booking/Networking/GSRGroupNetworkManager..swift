@@ -194,15 +194,28 @@ class GSRGroupNetworkManager: NSObject, Requestable {
                 return
             }
             
-            let decoded = try! JSONDecoder().decode(GSRGroupInvites.self, from: data)
+            let decoded = try? JSONDecoder().decode(GSRGroupInvites.self, from: data)
             
-//            guard let results = decoded else {
-//                callback(false, invites, error)
-//                return
-//            }
+            guard let results = decoded else {
+                callback(false, invites, error)
+                return
+            }
             
-            invites = decoded
+            invites = results
             callback(true, invites, error)
+        }
+    }
+    
+    func respondToInvite(invite: GSRGroupInvite, accept: Bool, callback: @escaping (_ success: Bool) -> ()) {
+        let params = [String: Any]()
+        makePostRequestWithAccessToken(url: "\(membershipURL)\(invite.id)/\(accept ? "accept" : "decline")/", params: params) { (data, status, error) in
+            
+            guard let status = status as? HTTPURLResponse else {
+                callback(false)
+                return
+            }
+            
+            callback(status.statusCode == 200)
         }
     }
 }
@@ -267,17 +280,5 @@ extension GSRGroupNetworkManager {
             let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
             task.resume()
         }
-    }
-}
-
-extension GSRNetworkManager {
-    fileprivate func acceptInvite(invite:GSRGroupInvite) {
-        /*
-        let id = invite.id
-        let urlString = "https://studentlife.pennlabs.org/membership/\(id)/accept/"
-        let url = URL(string: urlString)!
-        var request = URLRequest
-       */
-        
     }
 }

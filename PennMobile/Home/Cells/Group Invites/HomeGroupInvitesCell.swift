@@ -9,7 +9,7 @@
 import Foundation
 
 protocol GSRInviteSelectable {
-    func handleInviteSelected(_ invite: GSRGroupInvite)
+    func handleInviteSelected(_ invite: GSRGroupInvite, _ accept: Bool)
 }
 
 final class HomeGroupInvitesCell: UITableViewCell, HomeCellConformable {
@@ -23,7 +23,7 @@ final class HomeGroupInvitesCell: UITableViewCell, HomeCellConformable {
         guard let item = item as? HomeGroupInvitesCellItem else { return 0.0 }
         
         // cell height = (invites * inviteHeight) + header + footer + cellInset
-        return (CGFloat(item.invites?.count ?? 0) * GSRGroupInviteCell.cellHeight) + (90.0 + 14.0 + 20.0)
+        return (CGFloat(item.invites.count) * GSRGroupInviteCell.cellHeight) + (90.0 + 14.0 + 20.0)
     }
     
     var item: ModularTableViewItem! {
@@ -79,15 +79,11 @@ extension HomeGroupInvitesCell: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GSRGroupInviteCell.identifier, for: indexPath) as! GSRGroupInviteCell
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         let invite = invites![indexPath.row]
         cell.invite = invite
+        cell.delegate = self
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(invites![indexPath.row])
-        guard let delegate = delegate as? GSRInviteSelectable else { return }
-        delegate.handleInviteSelected(invites![indexPath.row])
     }
 }
 
@@ -153,6 +149,20 @@ extension HomeGroupInvitesCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return GSRGroupInviteCell.cellHeight
     }
+}
+
+extension HomeGroupInvitesCell: GSRGroupInviteCellDelegate {
+    func acceptInvite(invite: GSRGroupInvite) {
+        guard let delegate = delegate as? GSRInviteSelectable else { return }
+        delegate.handleInviteSelected(invite, true)
+    }
+    
+    func declineInvite(invite: GSRGroupInvite) {
+        guard let delegate = delegate as? GSRInviteSelectable else { return }
+        delegate.handleInviteSelected(invite, false)
+    }
+    
+    
 }
 
 extension HomeGroupInvitesCell {

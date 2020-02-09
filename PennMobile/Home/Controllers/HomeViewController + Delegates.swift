@@ -241,17 +241,24 @@ extension HomeViewController {
 
 //MARK: - Invite delegate
 extension HomeViewController: GSRInviteSelectable {
-    func handleInviteSelected(_ invite: GSRGroupInvite) {
-        let message = "Invites from \(invite.group)"
-        let alert = UIAlertController(title: "Pending Invites",
-                                      message: message,
-                                      preferredStyle:  .alert)
-        
-        alert.addAction(UIAlertAction(title: "Accept", style: .default, handler:nil))
-        alert.addAction(UIAlertAction(title: "Decline", style: .cancel, handler:nil))
-        present(alert,animated:true)
-        
+    func handleInviteSelected(_ invite: GSRGroupInvite, _ accept: Bool) {
+        GSRGroupNetworkManager.instance.respondToInvite(invite: invite, accept: accept) { (success) in
+            if success {
+                guard let inviteItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.invites]).first as? HomeGroupInvitesCellItem else { return }
+                inviteItem.invites = inviteItem.invites.filter { $0.id != invite.id }
+                DispatchQueue.main.async {
+                    if inviteItem.invites.isEmpty {
+                        self.removeItem(inviteItem)
+                    } else {
+                        self.reloadItem(inviteItem)
+                    }
+                }
+            } else {
+                let message = "An error occured when responding to this invite. Please try again later."
+                let alert = UIAlertController(title: invite.group, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
-    
-    
 }
