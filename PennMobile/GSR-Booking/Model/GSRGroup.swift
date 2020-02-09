@@ -36,6 +36,9 @@ struct GSRGroup: Codable {
         return GSRGroup.groupColors[color]
     }
     
+    static func parseColor(color: String) -> UIColor? {
+        return GSRGroup.groupColors[color]
+    }
     enum CodingKeys: String, CodingKey {
         case id, name, color, owner
         case members = "memberships"
@@ -157,3 +160,32 @@ struct GSRGroupMemberUser: Codable {
         case last = "last_name"
     }
 }
+
+struct GSRGroupInvite: Codable {
+    let user: GSRInviteUser
+    let group: String
+    let type: String
+    let pennkeyAllow: Bool
+    let notifications: Bool
+    let id: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case user, type, group
+        case pennkeyAllow = "pennkey_allow"
+        case notifications, id
+    }
+}
+
+struct GSRInviteUser: Codable {
+    let pennkey: String
+    let firstName: String
+    let lastName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case pennkey = "username"
+        case firstName = "first_name"
+        case lastName = "last_name"
+    }
+}
+
+typealias GSRGroupInvites = [GSRGroupInvite]

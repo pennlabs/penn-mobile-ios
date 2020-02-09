@@ -146,10 +146,47 @@ class GSRGroupNetworkManager: NSObject, Requestable {
             
         }
     }
+    
+    func getInvites(callback: @escaping (_ success: Bool, _ invites: [GSRGroupInvite], _ error: Error?) -> ()) {
+        var invites = GSRGroupInvites()
+        guard let pennkey = Account.getAccount()?.pennkey else {
+            print("User is not signed in")
+            callback(false, invites, nil)
+            return
+        }
+        
+        let url = "\(userURL)\(pennkey)/invites/"
+        
+        makeGetRequestWithAccessToken(url: url) { (data, status, error) in
+            guard let status = status as? HTTPURLResponse else {
+                callback(false, invites, error)
+                return
+            }
+            
+            if error != nil || status.statusCode != 200 {
+                callback(false, invites, error)
+                return
+            }
+            
+            guard let data = data else {
+                callback(false, invites, error)
+                return
+            }
+            
+            let decoded = try! JSONDecoder().decode(GSRGroupInvites.self, from: data)
+            
+//            guard let results = decoded else {
+//                callback(false, invites, error)
+//                return
+//            }
+            
+            invites = decoded
+            callback(true, invites, error)
+        }
+    }
 }
 
 extension GSRGroupNetworkManager {
-    
     func getSearchResults(searchText:String, _ callback: @escaping (_ results: [GSRInviteSearchResult2]?) -> ()) {
         let urlStr = "http://api.pennlabs.org/studyspaces/user/search?query=\(searchText)"
         let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
