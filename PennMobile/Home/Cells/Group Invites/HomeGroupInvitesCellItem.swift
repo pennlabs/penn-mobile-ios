@@ -14,7 +14,7 @@ final class HomeGroupInvitesCellItem: HomeCellItem {
         return HomeGroupInvitesCell.self
     }
     
-    var invites: GSRGroupInvites?
+    var invites: GSRGroupInvites
     
     init(invites: GSRGroupInvites) {
         self.invites = invites
@@ -22,8 +22,7 @@ final class HomeGroupInvitesCellItem: HomeCellItem {
     
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeGroupInvitesCellItem else {return false}
-        guard let invites = invites, let itemInvites = item.invites else { return false }
-        return invites.count == itemInvites.count
+        return invites.count == item.invites.count
     }
     
     static var jsonKey: String {

@@ -17,7 +17,8 @@ protocol HomeCellDelegate: ModularTableViewCellDelegate,
     BuildingMapSelectable,
     CourseRefreshable,
     CourseLoginable,
-    FeatureNavigatable {}
+    FeatureNavigatable,
+    GSRInviteSelectable{}
 
 protocol HomeCellConformable: ModularTableViewCell where Self: UITableViewCell {
     var cardView: UIView! { get }
