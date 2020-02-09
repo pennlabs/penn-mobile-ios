@@ -72,10 +72,13 @@ extension HomeGroupInvitesCell: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GSRGroupInviteCell.identifier, for: indexPath) as! GSRGroupInviteCell
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         let invite = invites![indexPath.row]
         cell.invite = invite
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(invites![indexPath.row])
     }
 }
 
