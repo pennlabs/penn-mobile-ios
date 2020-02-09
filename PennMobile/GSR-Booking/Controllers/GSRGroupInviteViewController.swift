@@ -54,7 +54,7 @@ class GSRGroupInviteViewController: UIViewController {
         closeButton = UIButton()
         view.addSubview(closeButton)
 
-        closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
+        closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
         closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         closeButton.backgroundColor = UIColor(red: 118/255, green: 118/255, blue: 128/255, alpha: 12/100)
         closeButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -62,8 +62,7 @@ class GSRGroupInviteViewController: UIViewController {
         closeButton.layer.cornerRadius = 15
         closeButton.layer.masksToBounds = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.setTitle("x", for: UIControl.State.normal)
-        //closeButton.setImage(image: , for: UIControl.State.normal)
+        closeButton.setTitle("X", for: UIControl.State.normal)
         closeButton.addTarget(self, action: #selector(cancelBtnAction), for: .touchUpInside)
     }
     
@@ -182,11 +181,12 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
             selectedUsers = selectedUsers.filter {$0 != filteredUsers[indexPath.row]}
         } else {
             cell.accessoryType = .checkmark
-            
             selectedUsers.append(filteredUsers[indexPath.row])
-            print(selectedUsers)
+            searchBar.text = ""
         }
         
+        print(selectedUsers)
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

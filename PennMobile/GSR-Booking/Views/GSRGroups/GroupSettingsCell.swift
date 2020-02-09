@@ -40,7 +40,7 @@ class GroupSettingsCell: UITableViewCell {
 
         titleLabel.text = userSetting.title
         descriptionLabel.text = userSetting.descr
-        isEnabledSwitch.setOn(userSetting.isEnabled, animated: true)
+        isEnabledSwitch.setOn(userSetting.isEnabled, animated: false)
     }
     
     @objc fileprivate func switchValueChanged() {
