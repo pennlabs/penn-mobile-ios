@@ -220,7 +220,7 @@ extension GSRGroupInviteViewController {
     @objc func didPressInviteBtn(sender: UIButton!) {
         let pennkeys = selectedUsers.map({$0.pennkey})
         if let groupID = groupID {
-            GSRGroupNetworkManager.instance.inviteUsers(groupid: groupID, pennkeys: pennkeys, callback: {(success, error) in
+            GSRGroupNetworkManager.instance.inviteUsers(groupID: groupID, pennkeys: pennkeys, callback: {(success, error) in
                 if let error = error {
                     //handle the error
                 } else {
