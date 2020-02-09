@@ -7,6 +7,10 @@
 //
 
 import UIKit
+protocol GSRGroupInviteCellDelegate {
+    func acceptInvite(invite: GSRGroupInvite)
+    func declineInvite(invite: GSRGroupInvite)
+}
 
 class GSRGroupInviteCell: UITableViewCell {
     
@@ -19,8 +23,11 @@ class GSRGroupInviteCell: UITableViewCell {
         }
     }
     
+    var delegate: GSRGroupInviteCellDelegate!
     fileprivate var groupNameLabel: UILabel!
     fileprivate var groupIcon: GSRGroupIconView!
+    fileprivate var acceptButton: UIButton!
+    fileprivate var deleteButton: UIButton!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -73,5 +80,30 @@ extension GSRGroupInviteCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24.0, weight: .regular)
         return label
+    }
+    
+    fileprivate func getAcceptButton() -> UIButton {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(acceptInvite), for: .touchUpInside)
+        button.setTitle("Accept", for: .normal)
+        button.backgroundColor = UIColor.baseBlue
+        return button
+    }
+    
+    fileprivate func getDeclineButton() -> UIButton {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(declineInvite), for: .touchUpInside)
+        button.setTitle("Decline", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.baseDarkBlue.cgColor
+        return button
+    }
+    
+    @objc fileprivate func acceptInvite() {
+        delegate.acceptInvite(invite: invite)
+    }
+    
+    @objc fileprivate func declineInvite() {
+        delegate.declineInvite(invite: invite)
     }
 }
