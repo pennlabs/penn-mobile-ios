@@ -16,6 +16,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     let groupsURL = "https://studentlife.pennlabs.org/groups/"
     let membershipURL = "https://studentlife.pennlabs.org/membership/"
     let inviteURL = "https://studentlife.pennlabs.org/membership/invite/"
+    
 //    fileprivate static let pennKeyActiveSetting = GSRGroupIndividualSetting(title: "PennKey Permission", descr: "Anyone in this group can book a study room block using your PennKey.", isEnabled: false)
 //    fileprivate static let notificationOnSetting = GSRGroupIndividualSetting(title: "Notifications", descr: "You’ll receive a notification any time a room is booked by this group.", isEnabled: false)
 //    
@@ -242,5 +243,17 @@ extension GSRGroupNetworkManager {
             let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
             task.resume()
         }
+    }
+}
+
+extension GSRNetworkManager {
+    fileprivate func acceptInvite(invite:GSRGroupInvite) {
+        /*
+        let id = invite.id
+        let urlString = "https://studentlife.pennlabs.org/membership/\(id)/accept/"
+        let url = URL(string: urlString)!
+        var request = URLRequest
+       */
+        
     }
 }

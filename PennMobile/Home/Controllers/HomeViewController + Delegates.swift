@@ -29,6 +29,9 @@ extension HomeViewController: GSRDeletable {
     }
 }
 
+
+
+
 // MARK: - GSR Quick Book Delegate
 extension HomeViewController: GSRBookable {
     func handleBookingSelected(_ booking: GSRBooking) {
@@ -236,6 +239,19 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController {
+//MARK: - Invite delegate
+extension HomeViewController: GSRInviteSelectable {
+    func handleInviteSelected(_ invite: GSRGroupInvite) {
+        let message = "Invites from \(invite.group)"
+        let alert = UIAlertController(title: "Pending Invites",
+                                      message: message,
+                                      preferredStyle:  .alert)
+        
+        alert.addAction(UIAlertAction(title: "Accept", style: .default, handler:nil))
+        alert.addAction(UIAlertAction(title: "Decline", style: .cancel, handler:nil))
+        present(alert,animated:true)
+        
+    }
+    
     
 }

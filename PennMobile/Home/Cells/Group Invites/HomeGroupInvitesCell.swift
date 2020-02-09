@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol GSRInviteSelectable {
+    func handleInviteSelected(_ invite: GSRGroupInvite)
+}
+
 final class HomeGroupInvitesCell: UITableViewCell, HomeCellConformable {
     var cardView: UIView! = UIView()
     
@@ -33,6 +37,8 @@ final class HomeGroupInvitesCell: UITableViewCell, HomeCellConformable {
     
     var delegate: ModularTableViewCellDelegate!
     
+    //var invitesDelegate: HomeViewController
+    
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
     
@@ -45,6 +51,7 @@ final class HomeGroupInvitesCell: UITableViewCell, HomeCellConformable {
     // Mark: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         prepareHomeCell()
         prepareUI()
     }
@@ -79,6 +86,8 @@ extension HomeGroupInvitesCell: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(invites![indexPath.row])
+        guard let delegate = delegate as? GSRInviteSelectable else { return }
+        delegate.handleInviteSelected(invites![indexPath.row])
     }
 }
 
