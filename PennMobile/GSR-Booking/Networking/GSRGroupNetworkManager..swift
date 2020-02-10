@@ -41,12 +41,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     
     
     func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
-//        guard let pennkey = Account.getAccount()?.pennkey else {
-//            print("User is not signed in")
-//            return
-//        }
-        
-        let allGroupsURL = "\(groupsURL)"
+        let allGroupsURL = "\(userURL)me/"
         
         makeGetRequestWithAccessToken(url: allGroupsURL) { (data, response, error) in
             guard let data = data, error == nil  else {
@@ -54,12 +49,12 @@ class GSRGroupNetworkManager: NSObject, Requestable {
                 return
             }
             
-            guard let groups = try? JSONDecoder().decode(GSRGroups.self, from: data) else {
+            guard let user = try? JSONDecoder().decode(GSRGroupUser.self, from: data) else {
                 callback(nil)
                 return
             }
                 
-            callback(groups)
+            callback(user.groups)
         }
     }
     

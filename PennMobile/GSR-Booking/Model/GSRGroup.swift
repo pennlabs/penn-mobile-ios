@@ -12,7 +12,7 @@ struct GSRGroup: Decodable, Comparable {
     let id: Int
     let name: String
     let color: UIColor
-    let owner: String
+    let owner: String?
     let members: [GSRGroupMember]?
     var userSettings: GSRGroupIndividualSettings?
     
@@ -36,6 +36,8 @@ struct GSRGroup: Decodable, Comparable {
     enum CodingKeys: String, CodingKey {
         case id, name, color, owner
         case members = "memberships"
+        case pennkeyAllow = "pennkey_allow"
+        case notifications
     }
     
     fileprivate mutating func parseIndividualSettings(for pennkey: String) {
@@ -59,7 +61,7 @@ struct GSRGroup: Decodable, Comparable {
         let id: Int = try keyedContainer.decode(Int.self, forKey: .id)
         let name: String = try keyedContainer.decode(String.self, forKey: .name)
         let colorString: String = try keyedContainer.decode(String.self, forKey: .color)
-        let owner: String = try keyedContainer.decode(String.self, forKey: .owner)
+        let owner: String? = try keyedContainer.decodeIfPresent(String.self, forKey: .owner)
         
         self.id = id
         self.name = name
@@ -74,8 +76,10 @@ struct GSRGroup: Decodable, Comparable {
             }
             parseIndividualSettings(for: pennkey)
         } else {
-            members = nil
-            userSettings = nil
+            self.members = nil
+            let pennKeyActive = try keyedContainer.decode(Bool.self, forKey: .pennkeyAllow)
+            let notifications = try keyedContainer.decode(Bool.self, forKey: .notifications)
+            self.userSettings = GSRGroupIndividualSettings(pennKeyActive: GSRGroupIndividualSetting(type: .pennkeyActive, isEnabled: pennKeyActive), notificationsOn: GSRGroupIndividualSetting(type: .notificationsOn, isEnabled: notifications))
         }
     }
     

@@ -8,6 +8,16 @@
 
 import Foundation
 
+struct GSRGroupUser: Decodable{
+    let pennkey: String!
+    let groups: [GSRGroup]?
+    
+    enum CodingKeys: String, CodingKey {
+        case pennkey = "username"
+        case groups = "booking_groups"
+    }
+}
+
 struct GSRInviteSearchResult: Codable, Equatable, Comparable {
     
     let first: String?
