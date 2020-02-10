@@ -90,6 +90,7 @@ extension GSRManageGroupController: GSRManageGroupViewModelDelegate {
         let inviteController = GSRGroupInviteViewController()
         inviteController.title = "Invite to Group"
         inviteController.groupID = gid
+        inviteController.groupMembers = group?.members
         present(inviteController, animated: true, completion: nil)
     }
     

@@ -11,7 +11,11 @@ import Foundation
 //group gsrs!
 class GSRGroupController: GenericViewController {
 
-    fileprivate var groups: [GSRGroup] = []
+    fileprivate var groups = [GSRGroup]() {
+        didSet {
+            groups.sort()
+        }
+    }
     fileprivate var tableView: UITableView!
     fileprivate let refreshControl = UIRefreshControl()
 

@@ -41,27 +41,25 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     
     
     func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
-        guard let pennkey = Account.getAccount()?.pennkey else {
-            print("User is not signed in")
-            return
-        }
+//        guard let pennkey = Account.getAccount()?.pennkey else {
+//            print("User is not signed in")
+//            return
+//        }
         
-        let allGroupsURL = "\(userURL)\(pennkey)/"
+        let allGroupsURL = "\(groupsURL)"
         
         makeGetRequestWithAccessToken(url: allGroupsURL) { (data, response, error) in
-            if let error = error {
-                print(error)
+            guard let data = data, error == nil  else {
                 callback(nil)
-            } else if let data = data {
-                let user = try? JSONDecoder().decode(GSRGroupUser.self, from: data)
-                guard let guser = user else {
-                    callback(nil)
-                    return
-                }
-                callback(guser.groups)
-            } else {
-                callback(nil)
+                return
             }
+            
+            guard let groups = try? JSONDecoder().decode(GSRGroups.self, from: data) else {
+                callback(nil)
+                return
+            }
+                
+            callback(groups)
         }
     }
     
@@ -149,7 +147,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
     
-    func getAllUsers(callback: @escaping (_ success: Bool, _ results: [GSRInviteSearchResult2]?) -> ()) {
+    func getAllUsers(callback: @escaping (_ success: Bool, _ results: [GSRInviteSearchResult]?) -> ()) {
         getRequestData(url: userURL) { (data, error, status) in
             guard let data = data else {
                 callback(false, nil)
@@ -221,7 +219,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 }
 
 extension GSRGroupNetworkManager {
-    func getSearchResults(searchText:String, _ callback: @escaping (_ results: [GSRInviteSearchResult2]?) -> ()) {
+    func getSearchResults(searchText:String, _ callback: @escaping (_ results: [GSRInviteSearchResult]?) -> ()) {
         let urlStr = "http://api.pennlabs.org/studyspaces/user/search?query=\(searchText)"
         let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -229,7 +227,7 @@ extension GSRGroupNetworkManager {
                 let json = JSON(data)
                 if let resultsData = try? json["results"].rawData() {
                     let decoder = JSONDecoder()
-                    let results = try? decoder.decode([GSRInviteSearchResult2].self, from: resultsData)
+                    let results = try? decoder.decode([GSRInviteSearchResult].self, from: resultsData)
                     callback(results)
                     return
                 }

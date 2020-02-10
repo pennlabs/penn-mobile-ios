@@ -22,16 +22,21 @@ class GSRGroupInviteViewController: UIViewController {
     
     
     fileprivate var users = GSRInviteSearchResults()
-    fileprivate var filteredUsers = GSRInviteSearchResults() {
+    fileprivate var filteredUsers = GSRInviteSearchResults()
+    
+    var groupMembers: [GSRGroupMember]?
+    
+    fileprivate var selectedUsers = GSRInviteSearchResults() {
         didSet {
+            self.selectedUsers.sort()
+            
             DispatchQueue.main.async {
-                self.sendInvitesButton.isEnabled = !self.filteredUsers.isEmpty
+                self.sendInvitesButton.isEnabled = !self.selectedUsers.isEmpty
                 self.sendInvitesButton.backgroundColor = self.sendInvitesButton.isEnabled ? self.enabledBtnColor : self.disabledBtnColor
             }
         }
     }
-    
-    fileprivate var selectedUsers = GSRInviteSearchResults()
+    fileprivate var loadingView: UIActivityIndicatorView!
     
     fileprivate var isSearchBarEmpty: Bool {
       return searchBar.text?.isEmpty ?? true
@@ -136,6 +141,7 @@ extension GSRGroupInviteViewController {
         prepareSearchBar()
         prepareSendInvitationButton()
         prepareTableView()
+        prepareLoadingView()
     }
 }
 
@@ -158,11 +164,21 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "resultscell")
-        let user: GSRInviteSearchResult2
+        let user: GSRInviteSearchResult
         
         if isFiltering {
             user = filteredUsers[indexPath.row]
             cell.accessoryType = selectedUsers.contains(user) ? .checkmark : .none
+
+            let isMember = groupMembers?.contains(where: { (groupMember) -> Bool in
+                return groupMember.pennKey == user.pennkey
+            }) ?? false
+                
+            // Selection style is used to detect if cell is an existing group member or not - check didSelectRowAt()
+            cell.selectionStyle = isMember ? UITableViewCell.SelectionStyle.none : UITableViewCell.SelectionStyle.default
+            cell.textLabel?.textColor = isMember ? .labelSecondary : .labelPrimary
+            cell.detailTextLabel?.textColor = isMember ? .labelSecondary : .labelPrimary
+            
         } else {
             user = selectedUsers[indexPath.row]
             cell.accessoryType = .checkmark
@@ -176,16 +192,24 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         
+        // if cell for existing group member selected, do nothing
+        guard cell.selectionStyle != UITableViewCell.SelectionStyle.none else { return }
+        
         if cell.accessoryType == UITableViewCell.AccessoryType.checkmark {
             cell.accessoryType = .none
-            selectedUsers = selectedUsers.filter {$0 != filteredUsers[indexPath.row]}
+            
+            if isFiltering {
+                selectedUsers = selectedUsers.filter {$0 != filteredUsers[indexPath.row]}
+            } else {
+                selectedUsers = selectedUsers.filter {$0 != selectedUsers[indexPath.row]}
+            }
         } else {
             cell.accessoryType = .checkmark
             selectedUsers.append(filteredUsers[indexPath.row])
-            searchBar.text = ""
         }
-        
         print(selectedUsers)
+        searchBar.text = ""
+        
         tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -218,16 +242,45 @@ extension GSRGroupInviteViewController: UISearchBarDelegate {
 
 extension GSRGroupInviteViewController {
     @objc func didPressInviteBtn(sender: UIButton!) {
+        startLoadingViewAnimation()
         let pennkeys = selectedUsers.map({$0.pennkey})
         if let groupID = groupID {
             GSRGroupNetworkManager.instance.inviteUsers(groupID: groupID, pennkeys: pennkeys, callback: {(success, error) in
-                if let error = error {
-                    //handle the error
-                } else {
-                    //go back to the main screen
-                    
+                DispatchQueue.main.async {
+                    self.stopLoadingViewAnimation()
+        
+                    if error != nil {
+                        let alert = UIAlertController(title: "Error sending invites", message: "An unexpected error occured. Please try again later.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
             })
         }
+    }
+}
+
+extension GSRGroupInviteViewController {
+    func prepareLoadingView() {
+        loadingView = UIActivityIndicatorView(style: .whiteLarge)
+        loadingView.color = .black
+        loadingView.isHidden = true
+    
+        view.addSubview(loadingView)
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    func startLoadingViewAnimation() {
+        self.loadingView.isHidden = false
+        self.loadingView.startAnimating()
+    }
+
+    func stopLoadingViewAnimation() {
+        self.loadingView.isHidden = true
+        self.loadingView.stopAnimating()
     }
 }

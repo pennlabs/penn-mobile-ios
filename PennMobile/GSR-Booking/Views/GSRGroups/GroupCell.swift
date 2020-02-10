@@ -41,7 +41,7 @@ extension GroupCell {
         if (groupIcon == nil || groupName == nil || activeLabel == nil) {
             setupUI()
         } else {
-            groupIcon.backgroundColor = group.parseColor() ?? UIColor(named: "blueLighter")
+            groupIcon.backgroundColor = group.color
             groupIcon.name = group.name
             groupName.text = group.name
             if let userSettings = group.userSettings {

@@ -44,7 +44,7 @@ extension GSRGroupInviteCell {
         backgroundColor = .clear
         groupNameLabel.text = invite.group
         groupIcon.name = invite.group
-        groupIcon.groupColor = GSRGroup.parseColor(color: "College Green")
+        groupIcon.groupColor = GSRGroup.parseColor(color: invite.color) ?? UIColor.baseLabsBlue
     }
 }
 

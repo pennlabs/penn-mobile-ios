@@ -8,22 +8,20 @@
 
 import Foundation
 
-struct GSRGroup: Codable {
+struct GSRGroup: Decodable, Comparable {
     let id: Int
     let name: String
-    let color: String
-    let owner: String? //the pennkey
+    let color: UIColor
+    let owner: String
     let members: [GSRGroupMember]?
-    var userSettings: GSRGroupIndividualSettings?//this prop is set AFTER via a parse
-    
+    var userSettings: GSRGroupIndividualSettings?
     
     //not used right now
     var reservations: [String]? //array of reservationID's
     var groupSettings: GSRGroupAccessSettings?
-    var createdAt: Date?
     
     static let groupColors: [String : UIColor] = [
-        "Labs Blue" : UIColor.baseBlue,
+        "Labs Blue" : UIColor.baseLabsBlue,
         "College Green" : UIColor.baseGreen,
         "Locust Yellow" : UIColor.baseYellow,
         "Cheeto Orange": UIColor.baseOrange,
@@ -31,10 +29,6 @@ struct GSRGroup: Codable {
         "Baltimore Blue": UIColor.baseBlue,
         "Purple": UIColor.basePurple
     ]
-    
-    func parseColor() -> UIColor? {
-        return GSRGroup.groupColors[color]
-    }
     
     static func parseColor(color: String) -> UIColor? {
         return GSRGroup.groupColors[color]
@@ -53,27 +47,24 @@ struct GSRGroup: Codable {
             if (member.pennKey == pennkey) {
                 let pennKeyActive = member.pennKeyActive
                 let notificationsOn = member.notificationsOn
-                let pennKeyActiveSetting = GSRGroupIndividualSetting(title: "PennKey Permission", type: .pennkeyActive, descr: "Anyone in this group can book a study room block using your PennKey.", isEnabled: pennKeyActive)
-                let notificationsOnSetting = GSRGroupIndividualSetting(title: "Notifications", type: .notificationsOn, descr: "You’ll receive a notification any time a room is booked by this group.", isEnabled: notificationsOn)
+                let pennKeyActiveSetting = GSRGroupIndividualSetting(type: .pennkeyActive, isEnabled: pennKeyActive)
+                let notificationsOnSetting = GSRGroupIndividualSetting(type: .notificationsOn, isEnabled: notificationsOn)
                 userSettings = GSRGroupIndividualSettings(pennKeyActive: pennKeyActiveSetting, notificationsOn: notificationsOnSetting)
             }
         }
     }
+    
     public init(from decoder: Decoder) throws {
         let keyedContainer = try decoder.container(keyedBy: CodingKeys.self)
         let id: Int = try keyedContainer.decode(Int.self, forKey: .id)
         let name: String = try keyedContainer.decode(String.self, forKey: .name)
-        let color: String = try keyedContainer.decode(String.self, forKey: .color)
+        let colorString: String = try keyedContainer.decode(String.self, forKey: .color)
+        let owner: String = try keyedContainer.decode(String.self, forKey: .owner)
         
         self.id = id
         self.name = name
-        self.color = color
-        
-        if let owner: String = try keyedContainer.decodeIfPresent(String.self, forKey: .owner) {
-            self.owner = owner
-        } else {
-            owner = nil
-        }
+        self.color = GSRGroup.parseColor(color: colorString) ?? UIColor.baseBlue
+        self.owner = owner
         
         if let members: [GSRGroupMember] = try keyedContainer.decodeIfPresent([GSRGroupMember].self, forKey: .members) {
             self.members = members
@@ -87,7 +78,17 @@ struct GSRGroup: Codable {
             userSettings = nil
         }
     }
+    
+    static func < (lhs: GSRGroup, rhs: GSRGroup) -> Bool {
+        return lhs.name.lowercased() < rhs.name.lowercased()
+    }
+    
+    static func == (lhs: GSRGroup, rhs: GSRGroup) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
+
+typealias GSRGroups = [GSRGroup]
 
 enum GSRGroupIndividualSettingType: Int, Codable {
     case pennkeyActive
@@ -95,9 +96,23 @@ enum GSRGroupIndividualSettingType: Int, Codable {
 }
 
 struct GSRGroupIndividualSetting: Codable {
-    var title: String
+    var title: String {
+        switch type {
+        case .pennkeyActive:
+            return "PennKey Permission"
+        case .notificationsOn:
+            return "Notifications"
+        }
+    }
     var type: GSRGroupIndividualSettingType
-    var descr: String
+    var descr: String {
+        switch type {
+        case .notificationsOn:
+            return "You’ll receive a notification any time a room is booked by this group."
+        case .pennkeyActive:
+            return "Anyone in this group can book a study room block using your PennKey."
+        }
+    }
     var isEnabled: Bool
 }
 
@@ -168,11 +183,13 @@ struct GSRGroupInvite: Codable {
     let pennkeyAllow: Bool
     let notifications: Bool
     let id: Int
+    let color: String
     
     enum CodingKeys: String, CodingKey {
         case user, type, group
         case pennkeyAllow = "pennkey_allow"
         case notifications, id
+        case color
     }
 }
 

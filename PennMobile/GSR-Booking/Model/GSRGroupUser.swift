@@ -8,39 +8,24 @@
 
 import Foundation
 
-struct GSRGroupUser: Codable{
-    let pennkey: String!
-    let groups: [GSRGroup]?
+struct GSRInviteSearchResult: Codable, Equatable, Comparable {
     
-    enum CodingKeys: String, CodingKey {
-        case pennkey = "username"
-        case groups = "booking_groups"
-    }
-}
-
-struct GSRInviteSearchResult: Codable, Equatable {
-    let username: String
-    let bookingGroups: [GSRGroup]
-
-    enum CodingKeys: String, CodingKey {
-        case username
-        case bookingGroups = "booking_groups"
-    }
-    
-    static func == (lhs: GSRInviteSearchResult, rhs: GSRInviteSearchResult) -> Bool {
-        return lhs.username == rhs.username
-    }
-}
-
-struct GSRInviteSearchResult2: Codable, Equatable {
     let first: String?
     let last: String?
     let email: String?
     let pennkey: String
     
-    static func == (lhs: GSRInviteSearchResult2, rhs: GSRInviteSearchResult2) -> Bool {
+    static func == (lhs: GSRInviteSearchResult, rhs: GSRInviteSearchResult) -> Bool {
         return lhs.pennkey == rhs.pennkey
+    }
+    
+    static func == (lhs: GSRInviteSearchResult, rhs: GSRGroupMember) -> Bool {
+        return lhs.pennkey == rhs.pennKey
+    }
+    
+    static func < (lhs: GSRInviteSearchResult, rhs: GSRInviteSearchResult) -> Bool {
+        return lhs.pennkey < rhs.pennkey
     }
 }
 
-typealias GSRInviteSearchResults = [GSRInviteSearchResult2]
+typealias GSRInviteSearchResults = [GSRInviteSearchResult]
