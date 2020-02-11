@@ -10,7 +10,7 @@ import UIKit
 
 class MoreViewController: GenericTableViewController, ShowsAlert {
     
-    var student: Student?
+    var account: Account?
     
     fileprivate var barButton: UIBarButtonItem!
     
@@ -19,31 +19,29 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     override func viewDidLoad() {
         super.viewDidLoad()
         if shouldShowProfile {
-            student = Student.getStudent()
+            account = Account.getAccount()
         }
         setUpTableView()
         self.tableView.isHidden = true
         
-        let isLoggedIn = UserDefaults.standard.getAccountID() != nil
-        barButton = UIBarButtonItem(title: isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
+        barButton = UIBarButtonItem(title: Account.isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
         barButton.tintColor = UIColor.navigation
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if shouldShowProfile {
-            let student = Student.getStudent()
-            if self.student != student {
-                self.student = student
-                tableView.reloadData()
+            let account = Account.getAccount()
+            if self.account != account {
+                self.account = account
             }
         }
+        tableView.reloadData()
     }
     
     override func setupNavBar() {
         self.tabBarController?.title = "More"
-        let isLoggedIn = UserDefaults.standard.getAccountID() != nil
-        barButton = UIBarButtonItem(title: isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
+        barButton = UIBarButtonItem(title: Account.isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
         barButton.tintColor = UIColor.navigation
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = barButton
@@ -67,8 +65,9 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         tableView.dataSource = self
         tableView.backgroundColor = UIColor.uiGroupedBackground
         tableView.separatorStyle = .singleLine
-        tableView.register(AccountCell.self, forCellReuseIdentifier: "account")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
+        tableView.register(MoreCell.self, forCellReuseIdentifier: "more-with-icon")
+        tableView.tableFooterView = UIView()
     }
     
     fileprivate struct PennLink {
@@ -88,48 +87,47 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
 
 extension MoreViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3//student == nil ? 2 : 3
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let rows = [1, ControllerModel.shared.moreOrder.count, pennLinks.count]
-//        let index = student == nil ? section + 1 : section
-//        return rows[index]
+        // Notification and privacy tabs aren't shown for users that aren't logged in
+        let rows = [Account.isLoggedIn ? 3 : 1, ControllerModel.shared.moreOrder.count, pennLinks.count]
         return rows[section]
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = HeaderViewCell()
         let titles = ["ACCOUNT", "FEATURES", "LINKS"]
-//        let index = student == nil ? section + 1 : section
         headerView.setUpView(title: titles[section])
         return headerView
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            if let student = student {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: "account") as? AccountCell {
-                    cell.backgroundColor = .uiGroupedBackgroundSecondary
-                    cell.student = student
-                    return cell
-                }
-            } else {
+            if indexPath.row == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                     cell.setUpView(with: "Edit your profile")
                     cell.backgroundColor = .uiGroupedBackgroundSecondary
                     cell.accessoryType = .disclosureIndicator
                     return cell
                 }
+            } else {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
+                    cell.setUpView(with: indexPath.row == 1 ? "Notifications" : "Privacy")
+                    cell.backgroundColor = .uiGroupedBackgroundSecondary
+                    cell.accessoryType = .disclosureIndicator
+                    return cell
+                }
             }
-        } else if indexPath.section == 1 {//(student == nil ? 0 : 1) {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
+        } else if indexPath.section == 1 {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "more-with-icon") as? MoreCell {
                 cell.setUpView(with: ControllerModel.shared.moreOrder[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
                 cell.backgroundColor = .uiGroupedBackgroundSecondary
                 cell.accessoryType = .disclosureIndicator
                 return cell
             }
-        } else if indexPath.section == 2 {//(student == nil ? 1 : 2) {
+        } else if indexPath.section == 2 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
                 cell.backgroundColor = .uiGroupedBackgroundSecondary
                 cell.setUpView(with: pennLinks[indexPath.row].title)
@@ -141,25 +139,30 @@ extension MoreViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50//(student != nil && indexPath.section == 0) ? AccountCell.cellHeight : 50
+        return 50
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50//(student != nil && indexPath.section == 0) ? AccountCell.cellHeight : 50
+        return 50
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
-            let targetController = GSRLoginController()
-            targetController.shouldShowSuccessMessage = true
-            targetController.shouldShowCancel = false
-            targetController.message = "This information is used when booking GSRs and when displaying your name on the homepage."
-            navigationController?.pushViewController(targetController, animated: true)
-        } else if indexPath.section == 1 { //}(student == nil ? 0 : 1) {
+            if indexPath.row == 0 {
+                let targetController = GSRLoginController()
+                targetController.shouldShowSuccessMessage = true
+                targetController.shouldShowCancel = false
+                targetController.message = "This information is used when booking GSRs and when displaying your name on the homepage."
+                navigationController?.pushViewController(targetController, animated: true)
+            } else {
+                let targetController = ControllerModel.shared.viewController(for: indexPath.row == 1 ? .notifications : .privacy)
+                navigationController?.pushViewController(targetController, animated: true)
+            }
+        } else if indexPath.section == 1 {
             let targetController = ControllerModel.shared.viewController(for: ControllerModel.shared.moreOrder[indexPath.row])
             navigationController?.pushViewController(targetController, animated: true)
-        } else if indexPath.section == 2 {//(student == nil ? 1 : 2) {
+        } else if indexPath.section == 2 {
             if let url = URL(string: pennLinks[indexPath.row].url) {
                 UIApplication.shared.open(url, options: [:])
             }
@@ -170,20 +173,22 @@ extension MoreViewController {
 // MARK: - Login/Logout
 extension MoreViewController {
     @objc fileprivate func handleLoginLogout(_ sender: Any) {
-        let isLoggedIn = UserDefaults.standard.getAccountID() != nil
-        if isLoggedIn {
+        if Account.isLoggedIn {
             let alertController = UIAlertController(title: "Are you sure?", message: "Please confirm that you wish to logout.", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
                 DispatchQueue.main.async {
-                    AppDelegate.shared.rootViewController.switchToLogout()
+                    AppDelegate.shared.rootViewController.logout()
                 }
             }))
             present(alertController, animated: true, completion: nil)
         } else {
-            let lwc = LoginWebviewController()
-            lwc.loginCompletion = loginCompletion(_:)
-            let nvc = UINavigationController(rootViewController: lwc)
+            let llc = LabsLoginController { (success) in
+                DispatchQueue.main.async {
+                    self.loginCompletion(success)
+                }
+            }
+            let nvc = UINavigationController(rootViewController: llc)
             present(nvc, animated: true, completion: nil)
         }
     }
@@ -191,9 +196,11 @@ extension MoreViewController {
     func loginCompletion(_ successful: Bool) {
         if successful {
             if shouldShowProfile {
-                self.student = Student.getStudent()
-                tableView.reloadData()
+                self.account = Account.getAccount()
             }
+            
+            tableView.reloadData()
+            tabBarController?.navigationItem.rightBarButtonItem?.title = "Logout"
             
             // Clear cache so that home title updates with new first name
             guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {

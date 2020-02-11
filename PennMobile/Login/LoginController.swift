@@ -48,21 +48,22 @@ class LoginController: UIViewController, ShowsAlert {
 }
 
 // MARK: - Login Completion Handler
-extension LoginController {
+extension LoginController: NotificationRequestable {
     func loginCompletion(_ successful: Bool) {
         if successful {
             // Login Successful
-            UserDefaults.standard.setLastLogin()
             AppDelegate.shared.rootViewController.switchToMainScreen()
-        } else if UserDefaults.standard.getStudent() != nil {
-            // Successfully retrieved Student profile from PennInTouch but failed to send to DB
-            AppDelegate.shared.rootViewController.switchToMainScreen()
+            
+            #if !targetEnvironment(simulator)
+            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
+                self.requestNotification()
+            }
+            #endif
         } else {
-            // Failed to retrieve Student profile from PennInTouch (possibly down)
+            // Failed to retrieve Account from Platform (possibly down)
             if !self.isFirstAttempt {
                 AppDelegate.shared.rootViewController.switchToMainScreen()
             } else {
-                self.showAlert(withMsg: "If you are not a student, please select \"Continue as Guest\"", title: "Please Try Again", completion: nil)
                 self.isFirstAttempt = false
             }
             HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
@@ -73,8 +74,9 @@ extension LoginController {
 // MARK: - Login and Skip Button Pressed Handlers {
 extension LoginController {
     @objc fileprivate func handleLogin(_ sender: Any) {
-        let lwc = LoginWebviewController()
-        lwc.loginCompletion = loginCompletion(_:)
+        let lwc = LabsLoginController { (success) in
+            self.loginCompletion(success)
+        }
         let nvc = UINavigationController(rootViewController: lwc)
         present(nvc, animated: true, completion: nil)
     }

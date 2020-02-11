@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class FeatureAnnouncement {
     let source: String

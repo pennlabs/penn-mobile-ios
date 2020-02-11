@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class HomeAPIService: Requestable {
     static let instance = HomeAPIService()
@@ -18,21 +19,44 @@ final class HomeAPIService: Requestable {
         if let sessionID = GSRUser.getSessionID() {
             url = "\(url)&sessionid=\(sessionID)"
         }
-        getRequest(url: url) { (dict, error, statusCode) in
-            if error != nil {
-                completion(nil, NetworkingError.noInternet)
-                return
+        if let courses = UserDefaults.standard.getCourses(), !courses.enrolledIn.isEmpty {
+            if courses.taughtToday.hasUpcomingCourse {
+                url = "\(url)&hasCourses=today"
+            } else if !courses.taughtTomorrow.isEmpty {
+                url = "\(url)&hasCourses=tomorrow"
             }
-            var model: HomeTableViewModel? = HomeTableViewModel()
-            var error: NetworkingError? = NetworkingError.jsonError
-            if let dict = dict {
-                let json = JSON(dict)
-                model = try? HomeTableViewModel(json: json)
-                if model != nil {
-                    error = nil
+        }
+        
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            // Make request without access token if one does not exist
+            let url = URL(string: url)!
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            
+            // Add device ID to request to access data associated associated with device id (ex: favorite dining halls)
+            let deviceID = getDeviceID()
+            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+            
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error, (error as NSError).code == -1009 {
+                    completion(nil, NetworkingError.noInternet)
+                    return
                 }
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+                    completion(nil, NetworkingError.serverError)
+                    return
+                }
+                var model: HomeTableViewModel? = HomeTableViewModel()
+                var error: NetworkingError? = NetworkingError.jsonError
+                if let data = data {
+                    let json = JSON(data)
+                    model = try? HomeTableViewModel(json: json)
+                    if model != nil {
+                        error = nil
+                    }
+                }
+                completion(model, error)
             }
-            completion(model, error)
+            task.resume()
         }
     }
 }
@@ -59,7 +83,7 @@ extension HomeTableViewModel {
         for json in cellsJSON {
             let type = json["type"].stringValue
             let infoJSON = json["info"]
-            if let ItemType = HomeItemTypes.instance.getItemType(for: type), let item = ItemType.getItem(for: infoJSON) {
+             if let ItemType = HomeItemTypes.instance.getItemType(for: type), let item = ItemType.getItem(for: infoJSON) {
                 items.append(item)
             }
         }

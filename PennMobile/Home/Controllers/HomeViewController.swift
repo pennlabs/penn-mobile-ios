@@ -65,7 +65,7 @@ class HomeViewController: GenericViewController {
         if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.displayTitle != nil {
             return self.displayTitle
         } else {
-            let firstName = Student.getStudent()?.first ?? GSRUser.getUser()?.firstName
+            let firstName = Account.getAccount()?.first ?? GSRUser.getUser()?.firstName
             if let firstName = firstName {
                 let intros = ["Welcome", "Howdy", "Hi there", "Hello"]
                 self.displayTitle = "\(intros.random!), \(firstName)!"
@@ -244,17 +244,17 @@ extension HomeViewController {
 }
 
 extension HomeViewController : DiningCellSettingsDelegate {
-    func saveSelection(for cafes: [DiningVenue]) {
+    func saveSelection(for venueIds: [Int]) {
         guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
-        if cafes.count == 0 {
-            diningItem.venues = DiningVenue.getDefaultVenues()
+        if venueIds.count == 0 {
+            diningItem.venues = DiningDataStore.shared.getVenues(with: DiningVenue.defaultVenueIds)
         } else {
-            diningItem.venues = cafes
+            diningItem.venues = DiningDataStore.shared.getVenues(with: venueIds)
         }
 
         reloadItem(diningItem)
         self.fetchCellData(for: [diningItem])
-        UserDBManager.shared.saveDiningPreference(for: cafes)
+        UserDBManager.shared.saveDiningPreference(for: venueIds)
     }
 }
 

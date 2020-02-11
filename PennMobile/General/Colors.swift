@@ -76,5 +76,4 @@ extension UIColor {
     static var yellowLighter = UIColor(named: "yellowLighter")!
     static var yellowDark = UIColor(named: "yellowDark")!
     static var yellowDarker = UIColor(named: "yellowDarker")!
-    
 }

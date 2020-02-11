@@ -11,9 +11,6 @@ import WebKit
 class DiningViewController: GenericTableViewController {
         
     fileprivate var viewModel = DiningViewModel()
-    
-    fileprivate let venueToPreload: DiningVenueName = .commons
-    
     fileprivate var isReturningFromLogin: Bool = false
         
     override func viewDidLoad() {
@@ -23,6 +20,8 @@ class DiningViewController: GenericTableViewController {
         tableView.dataSource = self
         
         self.screenName = "Dining"
+        
+        viewModel.transactionCellDelegate = self
         
         viewModel.delegate = self
         viewModel.registerHeadersAndCells(for: tableView)
@@ -36,13 +35,24 @@ class DiningViewController: GenericTableViewController {
         super.viewWillAppear(animated)
         fetchDiningHours()
         
-        if viewModel.shouldShowDiningBalances {
+        if UserDefaults.standard.hasDiningPlan() {
             if viewModel.balance == nil {
                 fetchBalance()
             } else {
                 updateBalanceIfNeeded()
             }
+        } else {
+            viewModel.balance = DiningBalance(diningDollars: 0, visits: 0, guestVisits: 0, lastUpdated: Date())
         }
+        
+        if viewModel.venues[.dining]?.isEmpty ?? true {
+            viewModel.refresh()
+            tableView.reloadData()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,21 +73,14 @@ extension DiningViewController {
         DiningAPI.instance.fetchDiningHours { (success, error) in
             DispatchQueue.main.async {
                 if !success {
-                    DiningHoursData.shared.clearHours()
-                    
                     if error {
                         self.navigationVC?.addStatusBar(text: .apiError)
                     } else {
                         self.navigationVC?.addStatusBar(text: .noInternet)
                     }
-                    
-                } else {
-                    
-                    //what to do when request is successful
-                    
                 }
+                self.viewModel.venues = DiningDataStore.shared.getSectionedVenues()
                 self.tableView.reloadData()
-                
                 self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
@@ -156,7 +159,7 @@ extension DiningViewController {
     
     @objc fileprivate func handleRefreshControl(_ sender: Any) {
         fetchDiningHours()
-        if viewModel.shouldShowDiningBalances {
+        if UserDefaults.standard.hasDiningPlan() {
             updateBalanceFromCampusExpress(requestLoginOnFail: true)
         }
     }
@@ -164,21 +167,23 @@ extension DiningViewController {
 
 // MARK: - DiningViewModelDelegate
 extension DiningViewController: DiningViewModelDelegate {
-    func handleSelection(for venue: DiningVenue) {
-        //let ddc = DiningDetailViewController()
-        //ddc.venue = venue
-        //navigationController?.pushViewController(ddc, animated: true)
-        
-        DatabaseManager.shared.trackEvent(vcName: "Dining", event: venue.name.rawValue)
-        
-        if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
+    func handleSelection(for venue: DiningVenue) {        
+        if let url = venue.facilityURL {
             let vc = UIViewController()
             let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             webView.load(URLRequest(url: url))
             vc.view.addSubview(webView)
-            vc.title = venue.name.rawValue
+            vc.title = venue.name
             self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+}
+
+//MARK: - TransactionCellDelegate
+extension DiningViewController: TransactionCellDelegate {
+    func userDidSelect() {
+        let vc = DiningDollarsTransactionViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

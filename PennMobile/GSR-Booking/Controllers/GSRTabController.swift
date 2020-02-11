@@ -62,6 +62,8 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
             oldCell?.label.textColor = .labelPrimary
             newCell?.label.textColor = .baseBlue
         }
+        
+        view.backgroundColor = .uiBackground
     }
     
     override func viewDidLayoutSubviews() {
@@ -81,6 +83,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         let child1 = GSRLocationsController()
         let child2 = GSRReservationsController()
         let child3 = GSRGroupController()
+
         return [child1, child2, child3]
     }
 }

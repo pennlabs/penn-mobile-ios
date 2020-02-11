@@ -27,7 +27,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         tableView.backgroundColor = .uiBackground
         
         tableView.tableFooterView = getFooterViewForTable()
-                
+        
         rooms = LaundryRoom.getPreferences()
         
         registerHeadersAndCells()
@@ -187,6 +187,14 @@ extension LaundryTableViewController: RoomSelectionVCDelegate {
         LaundryRoom.setPreferences(for: rooms)
         self.rooms = rooms
         self.tableView.reloadData()
+        LaundryAPIService.instance.fetchLaundryData(for: rooms) { (rooms) in
+            DispatchQueue.main.async {
+                if let rooms = rooms {
+                    self.rooms = rooms
+                    self.tableView.reloadData()
+                }
+            }
+        }
         sendUpdateNotification()
     }
 }

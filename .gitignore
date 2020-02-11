@@ -18,6 +18,7 @@ profile
 DerivedData
 .idea/
 Pods
+Podfile.lock
 PennMobile/Keys.pch
 PennMobile/Supporting_Files/GoogleService-Info.plist
 PennMobile/Supporting_Files/AuthKey_6MBD9SUNGE.p8

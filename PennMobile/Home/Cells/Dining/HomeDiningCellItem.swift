@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class HomeDiningCellItem: HomeCellItem {
     static var associatedCell: ModularTableViewCell.Type {
@@ -14,9 +15,11 @@ final class HomeDiningCellItem: HomeCellItem {
     }
     
     var venues: [DiningVenue]
+    var venueIds: [Int]
     
-    init(venues: [DiningVenue]) {
+    init(venues: [DiningVenue], venueIds: [Int]) {
         self.venues = venues
+        self.venueIds = venueIds
     }
     
     func equals(item: ModularTableViewItem) -> Bool {
@@ -40,11 +43,8 @@ extension HomeDiningCellItem {
         guard let ids = json["venues"].arrayObject as? [Int] else {
             throw NetworkingError.jsonError
         }
-        var venues: [DiningVenue] = ids.map { try? DiningVenue(id: $0) }.filter { $0 != nil}.map { $0! }
-        if venues.isEmpty {
-            venues = DiningVenue.getDefaultVenues()
-        }
-        self.init(venues: venues)
+        let venues: [DiningVenue] = DiningDataStore.shared.getVenues(with: ids)
+        self.init(venues: venues, venueIds: ids)
     }
 }
 
@@ -52,6 +52,9 @@ extension HomeDiningCellItem {
 extension HomeDiningCellItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
         DiningAPI.instance.fetchDiningHours { _,_  in
+            if self.venues.isEmpty {
+                self.venues = DiningDataStore.shared.getVenues(with: self.venueIds)
+            }
             completion()
         }
     }

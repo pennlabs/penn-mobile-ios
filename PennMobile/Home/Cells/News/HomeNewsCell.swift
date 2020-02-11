@@ -80,6 +80,10 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
         prepareUI()
+        
+        let tapGestureRecognizer = getTapGestureRecognizer()
+        cardView.addGestureRecognizer(tapGestureRecognizer)
+        cardView.isUserInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -131,10 +135,6 @@ extension HomeNewsCell {
         articleImageView.clipsToBounds = true
         articleImageView.contentMode = .scaleAspectFill
         
-        let tapGestureRecognizer = getTapGestureRecognizer()
-        articleImageView.addGestureRecognizer(tapGestureRecognizer)
-        articleImageView.isUserInteractionEnabled = true
-        
         cardView.addSubview(articleImageView)
         let height = HomeNewsCell.getImageHeight()
         _ = articleImageView.anchor(cardView.topAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: height)
@@ -159,10 +159,6 @@ extension HomeNewsCell {
         titleLabel = UILabel()
         titleLabel.font = HomeNewsCell.titleFont
         titleLabel.numberOfLines = 8
-        
-        let tapGestureRecognizer = getTapGestureRecognizer()
-        titleLabel.addGestureRecognizer(tapGestureRecognizer)
-        titleLabel.isUserInteractionEnabled = true
         
         cardView.addSubview(titleLabel)
         _ = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: HomeNewsCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomeNewsCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)

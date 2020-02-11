@@ -29,28 +29,6 @@ class PennCoordinate {
         return MKCoordinateRegion.init(center: getDefault(), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
     }
     
-    func getCoordinates(for venue: DiningVenueName) -> CLLocationCoordinate2D {
-        switch venue {
-        case .commons:          return CLLocationCoordinate2D(latitude: 39.952456, longitude: -75.199393)
-        case .pret:             return CLLocationCoordinate2D(latitude: 39.952501, longitude: -75.198419)
-        case .falk:             return CLLocationCoordinate2D(latitude: 39.953187, longitude: -75.200089)
-        case .english:          return CLLocationCoordinate2D(latitude: 39.953995, longitude: -75.193837)
-        case .gourmetGrocer:    return CLLocationCoordinate2D(latitude: 39.952456, longitude: -75.199393)
-        case .hill:             return CLLocationCoordinate2D(latitude: 39.953016, longitude: -75.190738)
-        case .houston:          return CLLocationCoordinate2D(latitude: 39.951001, longitude: -75.194038)
-        case .joes:             return CLLocationCoordinate2D(latitude: 39.951542, longitude: -75.196524)
-        case .mbaCafe:          return CLLocationCoordinate2D(latitude: 39.953003, longitude: -75.198197)
-        case .mcclelland:       return CLLocationCoordinate2D(latitude: 39.950422, longitude: -75.196937)
-        case .lauder:              return CLLocationCoordinate2D(latitude: 39.953969, longitude: -75.191060)
-        case .starbucks:        return CLLocationCoordinate2D(latitude: 39.952343, longitude: -75.199541)
-        case .unknown:          return getDefault()
-        }
-    }
-    
-    func getRegion(for venue: DiningVenueName, at scale: PennCoordinateScale) -> MKCoordinateRegion {
-        return MKCoordinateRegion.init(center: getCoordinates(for: venue), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
-    }
-    
     func getCoordinates(for facility: FitnessFacilityName) -> CLLocationCoordinate2D {
         switch facility {
         case .pottruck:     return CLLocationCoordinate2D(latitude: 39.953562, longitude: -75.197002)
@@ -82,14 +60,6 @@ extension PennCoordinate {
         annotation.coordinate = getCoordinates(for: facility)
         annotation.title = facility.getFacilityName()
         annotation.subtitle = "Penn Recreation"
-        return annotation
-    }
-    
-    func getAnnotation(for venue: DiningVenueName) -> MKAnnotation {
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = getCoordinates(for: venue)
-        annotation.title = DiningVenueName.getVenueName(for: venue)
-        annotation.subtitle = "Penn Dining"
         return annotation
     }
 }

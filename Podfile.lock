@@ -1,7 +1,8 @@
 PODS:
-  - Crashlytics (3.12.0):
-    - Fabric (~> 1.9.0)
-  - Fabric (1.9.0)
+  - Base32 (1.1.2)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
   - Firebase (4.13.0):
     - Firebase/Core (= 4.13.0)
   - Firebase/Core (4.13.0):
@@ -16,42 +17,40 @@ PODS:
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
-  - GoogleToolboxForMac/Defines (2.2.0)
-  - "GoogleToolboxForMac/NSData+zlib (2.2.0)":
-    - GoogleToolboxForMac/Defines (= 2.2.0)
-  - Kingfisher (5.3.1)
+  - GoogleToolboxForMac/Defines (2.2.2)
+  - "GoogleToolboxForMac/NSData+zlib (2.2.2)":
+    - GoogleToolboxForMac/Defines (= 2.2.2)
+  - hpple (0.2.0)
   - MBProgressHUD (0.9.2)
-  - nanopb (0.3.901):
-    - nanopb/decode (= 0.3.901)
-    - nanopb/encode (= 0.3.901)
-  - nanopb/decode (0.3.901)
-  - nanopb/encode (0.3.901)
-  - SCLAlertView (0.8)
-  - ScrollableGraphView (4.0.6)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
+  - OneTimePassword (3.2.0):
+    - Base32 (~> 1.1.2)
   - SimulatorStatusMagic (2.4.1)
-  - SwiftSoup (1.7.4)
-  - SwiftyJSON (4.3.0)
-  - TimelineTableViewCell (1.2)
+  - TimelineTableViewCell (2.2.1)
+  - WKZombie (1.1.1):
+    - hpple (= 0.2.0)
   - XLPagerTabStrip (9.0.0)
   - ZoomImageView (0.6.0)
 
 DEPENDENCIES:
-  - Crashlytics (~> 3.12.0)
-  - Fabric (~> 1.9.0)
+  - Crashlytics (~> 3.14.0)
+  - Fabric (~> 1.10.2)
   - Firebase (~> 4.7)
-  - Kingfisher (~> 5.3)
   - MBProgressHUD (~> 0.8)
-  - SCLAlertView
-  - ScrollableGraphView
+  - OneTimePassword (~> 3.2)
   - SimulatorStatusMagic
-  - SwiftSoup
-  - SwiftyJSON
   - TimelineTableViewCell
+  - WKZombie (from `https://github.com/pennlabs/WKZombie.git`, commit `536f6e8aa0e8438fe711fff6420908bc67edb056`)
   - XLPagerTabStrip (~> 9.0)
   - ZoomImageView
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
+    - Base32
     - Crashlytics
     - Fabric
     - Firebase
@@ -59,38 +58,44 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - GoogleToolboxForMac
-    - Kingfisher
+    - hpple
     - MBProgressHUD
     - nanopb
-    - SCLAlertView
-    - ScrollableGraphView
+    - OneTimePassword
     - SimulatorStatusMagic
-    - SwiftSoup
-    - SwiftyJSON
     - TimelineTableViewCell
     - XLPagerTabStrip
     - ZoomImageView
 
+EXTERNAL SOURCES:
+  WKZombie:
+    :commit: 536f6e8aa0e8438fe711fff6420908bc67edb056
+    :git: https://github.com/pennlabs/WKZombie.git
+
+CHECKOUT OPTIONS:
+  WKZombie:
+    :commit: 536f6e8aa0e8438fe711fff6420908bc67edb056
+    :git: https://github.com/pennlabs/WKZombie.git
+
 SPEC CHECKSUMS:
-  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
-  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+  Base32: 163c298644d184e89ca4e00a996bad6bf5166390
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
-  GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
-  Kingfisher: d9e7e0b209b59b8f9873aa2f37654e81a7beea51
+  GoogleToolboxForMac: 800648f8b3127618c1b59c7f97684427630c5ea3
+  hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
-  SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
-  ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  OneTimePassword: c00ecc908e67e6c5bfda9d50b0b2e4696d0b066e
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
-  SwiftSoup: 92f5b348c131aed8af04f4326db1579ab19fa08c
-  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
-  TimelineTableViewCell: 71a4bc787bfeb5a85083171d18b113a5f5db2be8
+  TimelineTableViewCell: b2721a3c1f17c4a4950ae442f45cd4e8669a2750
+  WKZombie: 90713d7efd00b860468b0dcae84e927af493dd8f
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   ZoomImageView: 2a88d0c10ad30b9a06c8f5660d51623fb32beed5
 
-PODFILE CHECKSUM: 8b853f14d424006144d50eeb8848a4de7fbc9247
+PODFILE CHECKSUM: 023b9b31745f630460d1e208a1f02ce8149916cc
 
 COCOAPODS: 1.8.4

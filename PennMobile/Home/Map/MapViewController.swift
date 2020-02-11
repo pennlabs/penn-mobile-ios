@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import SwiftyJSON
 
 class MapViewController: UIViewController {
     
@@ -20,14 +21,6 @@ class MapViewController: UIViewController {
             guard let building = building else { return }
             self.region = building.getRegion()
             self.annotation = building.getAnnotation()
-        }
-    }
-    
-    var venue: DiningVenueName? {
-        didSet {
-            guard let venue = venue else { return }
-            self.region = PennCoordinate.shared.getRegion(for: venue, at: .close)
-            self.annotation = PennCoordinate.shared.getAnnotation(for: venue)
         }
     }
     
@@ -70,6 +63,9 @@ class MapViewController: UIViewController {
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined:
                 // Do nothing, handle in didChangeAuthorization delegate function
+                self.locationManager.requestWhenInUseAuthorization()
+                break
+            case .denied:
                 self.locationManager.requestWhenInUseAuthorization()
                 break
             default:
