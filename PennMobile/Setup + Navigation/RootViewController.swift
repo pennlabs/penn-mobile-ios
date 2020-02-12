@@ -26,12 +26,22 @@ class RootViewController: UIViewController, NotificationRequestable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /*
+        let code = TwoFactorTokenGenerator.instance.generate()
+        if code == nil && UserDefaults.standard.bool(forKey: "TOTPEnabled") {
+            TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+        }*/
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
             // Save laundry rooms with account ID (available starting in 6.1)
             if let rooms = UserDefaults.standard.getLaundryPreferences() {
                 UserDBManager.shared.saveLaundryPreferences(for: rooms)
+            }
+            if UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) {
+                // Update course anonymization key if privacy option is TRUE
+                // Pennkey-Password key has been updated to be option-specific
+                UserDBManager.shared.updateAnonymizationKeys()
             }
         }
                         
@@ -120,6 +130,7 @@ class RootViewController: UIViewController, NotificationRequestable {
                     self.current.present(vc, animated: true)
                 }
             }
+            
         }
         
         // Send saved unsent events
@@ -316,6 +327,50 @@ extension RootViewController {
         } else {
             // Courses have never been shared. Do so now.
             return true
+        }
+    }
+}
+
+//MARK: - Enabling Two Factor Automation
+extension RootViewController : TwoFactorEnableDelegate {
+    
+    func handleEnable() {
+        askForNotificationPermission()
+    }
+    
+    func handleDismiss() {
+        askForNotificationPermission()
+    }
+    
+    func askForNotificationPermission() {
+        #if !targetEnvironment(simulator)
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
+            self.requestNotification()
+        }
+        #endif
+    }
+    
+    fileprivate func shouldRequestTwoFactorEnable() -> Bool {
+        let code = TwoFactorTokenGenerator.instance.generate()
+        return code == nil
+    }
+    
+    ///This requests permission from the user to display notifications and to enable Two-Step verification. If iOS 13 is
+    ///not available, it will only request for notification permission.
+    func requestPermissions() {
+        if #available(iOS 13, *) {
+            if shouldRequestTwoFactorEnable() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    let vc = TwoFactorEnableController()
+                    vc.delegate = self
+                    self.current.present(vc, animated: true)
+                }
+            }
+            else {
+                askForNotificationPermission()
+            }
+        } else {
+            askForNotificationPermission()
         }
     }
 }

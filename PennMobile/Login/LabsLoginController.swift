@@ -9,7 +9,9 @@
 import Foundation
 import WebKit
 import SwiftyJSON
+#if canImport(CryptoKit)
 import CryptoKit
+#endif
 import CommonCrypto
 
 protocol SHA256Hashable {}
@@ -17,24 +19,32 @@ protocol SHA256Hashable {}
 extension SHA256Hashable {
     func hash(string: String) -> String {
         let inputData = Data(string.utf8)
-        if #available(iOS 13, *) {
-            let hashed = SHA256.hash(data: inputData)
-            let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
-            return hashString
-        } else {
-            // CryptoKit not available until iOS 13
-            // https://www.agnosticdev.com/content/how-use-commoncrypto-apis-swift-5
-            var digest = [UInt8](repeating: 0, count:Int(CC_SHA256_DIGEST_LENGTH))
-            _ = inputData.withUnsafeBytes {
-               CC_SHA256($0.baseAddress, UInt32(inputData.count), &digest)
+        #if canImport(CryptoKit)
+            if #available(iOS 13, *) {
+                let hashed = SHA256.hash(data: inputData)
+                let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
+                return hashString
+            } else {
+                // CryptoKit not available until iOS 13
+                return commonCryptoHash(inputData: inputData)
             }
+        #else
+            return commonCryptoHash(inputData: inputData)
+        #endif
+    }
     
-            var sha256String = ""
-            for byte in digest {
-               sha256String += String(format:"%02x", UInt8(byte))
-            }
-            return sha256String
+    private func commonCryptoHash(inputData: Data) -> String {
+        // https://www.agnosticdev.com/content/how-use-commoncrypto-apis-swift-5
+        var digest = [UInt8](repeating: 0, count:Int(CC_SHA256_DIGEST_LENGTH))
+        _ = inputData.withUnsafeBytes {
+           CC_SHA256($0.baseAddress, UInt32(inputData.count), &digest)
         }
+
+        var sha256String = ""
+        for byte in digest {
+           sha256String += String(format:"%02x", UInt8(byte))
+        }
+        return sha256String
     }
 }
 

@@ -46,6 +46,7 @@ class TOTPFetcher: NSObject {
                     WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
                         DispatchQueue.main.async {
                             let zombie = WKZombie(dataStore: dataStore)
+                            Logger.enabled = false
                             WKZombie.setInstance(zombie: zombie)
 
                             let url = URL(string: self.urlStr)!
@@ -143,6 +144,7 @@ class TOTPFetcher: NSObject {
                             if r.contains("Success: activation code is valid.") {
                                 //The code has been successfully verified, so we can save the TOTP code
                                 self.completion(secret)
+                                NotificationCenter.default.post(name: Notification.Name(rawValue: "TOTPCodeFetched"), object: nil)
                             }
                             else {
                                 //The TOTP code was not verified so we have an error

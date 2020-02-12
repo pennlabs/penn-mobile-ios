@@ -114,9 +114,5 @@ extension GSRGroupController: NewGroupInitialDelegate{
                 self.tableView.reloadData()
             }
         }
-        
-        GSRGroupNetworkManager.instance.getInvites { (success, invites, error) in
-        
-        }
     }
 }
