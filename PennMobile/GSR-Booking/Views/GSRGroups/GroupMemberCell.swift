@@ -49,6 +49,7 @@ extension GroupMemberCell {
     fileprivate func prepareUI() {
         prepareNameLabel()
         preparePennKeyActiveLabel()
+//        backgroundColor = .uiBackgroundSecondary
     }
     
     fileprivate func prepareNameLabel() {

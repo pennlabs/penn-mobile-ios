@@ -33,17 +33,17 @@ class GroupManageButtonCell: UITableViewCell {
 // MARK: - Prepare UI
 extension GroupManageButtonCell {
     func prepareUI() {
-        backgroundColor = UIColor.clear
         prepareBookGroupBtn()
         prepareShareGroupBtn()
         prepareLeaveGroupBtn()
+        backgroundColor = .uiGroupedBackground
     }
     
     fileprivate func prepareBookGroupBtn() {
         bookGroupBtn = UIButton()
         bookGroupBtn.setTitle("Book with Group", for: .normal)
-        bookGroupBtn.backgroundColor = UIColor.white
-        bookGroupBtn.setTitleColor(UIColor.init(red: 93, green: 154, blue: 202), for: .normal)
+        bookGroupBtn.backgroundColor = .uiGroupedBackgroundSecondary
+        bookGroupBtn.setTitleColor(.baseLabsBlue, for: .normal)
         bookGroupBtn.addTarget(self, action: #selector(bookGroupBtnTapped), for: .touchUpInside)
         bookGroupBtn.layer.cornerRadius = 8
         bookGroupBtn.layer.masksToBounds = true
@@ -55,8 +55,8 @@ extension GroupManageButtonCell {
     fileprivate func prepareShareGroupBtn() {
         inviteGroupBtn = UIButton()
         inviteGroupBtn.setTitle("Invite to Group", for: .normal)
-        inviteGroupBtn.backgroundColor = UIColor.white
-        inviteGroupBtn.setTitleColor(UIColor.init(red: 93, green: 154, blue: 202), for: .normal)
+        inviteGroupBtn.backgroundColor = .uiGroupedBackgroundSecondary
+        inviteGroupBtn.setTitleColor(.baseLabsBlue, for: .normal)
         inviteGroupBtn.addTarget(self, action: #selector(shareGroupBtnTapped), for: .touchUpInside)
         inviteGroupBtn.layer.cornerRadius = 8
         inviteGroupBtn.layer.masksToBounds = true
@@ -68,8 +68,8 @@ extension GroupManageButtonCell {
     fileprivate func prepareLeaveGroupBtn() {
         leaveGroupBtn = UIButton()
         leaveGroupBtn.setTitle("Leave Group", for: .normal)
-        leaveGroupBtn.backgroundColor = UIColor.white
-        leaveGroupBtn.setTitleColor(UIColor(named: "baseRed"), for: .normal)
+        leaveGroupBtn.backgroundColor = .uiGroupedBackgroundSecondary
+        leaveGroupBtn.setTitleColor(.baseRed, for: .normal)
         leaveGroupBtn.addTarget(self, action: #selector(leaveGroupBtnTapped), for: .touchUpInside)
         leaveGroupBtn.layer.cornerRadius = 8
         leaveGroupBtn.layer.masksToBounds = true

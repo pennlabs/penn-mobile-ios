@@ -51,7 +51,7 @@ class GSRGroupInviteViewController: UIViewController {
     var groupID: Int? //need to store id, so that we can send the invite request
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = .uiBackground
         prepareUI()
     }
     
@@ -89,7 +89,7 @@ class GSRGroupInviteViewController: UIViewController {
         searchBar = UISearchBar()
         searchBar.delegate = self
         searchBar.searchTextField.placeholder = "Search by Name or PennKey"
-        searchBar.searchTextField.textColor = .black
+        searchBar.searchTextField.textColor = .labelPrimary
         searchBar.searchTextField.autocapitalizationType = .none
         view.addSubview(searchBar)
         searchBar.topAnchor.constraint(equalTo: inviteUsersLabel.bottomAnchor, constant: 20).isActive = true
@@ -100,7 +100,7 @@ class GSRGroupInviteViewController: UIViewController {
     
     func prepareSendInvitationButton() {
         sendInvitesButton = UIButton()
-        sendInvitesButton.backgroundColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:0.5)
+        sendInvitesButton.backgroundColor = UIColor.baseLabsBlue.withAlphaComponent(0.5)
         sendInvitesButton.setTitle("Send Invites", for: .normal)
         sendInvitesButton.setTitleColor(UIColor.white, for: .normal)
         sendInvitesButton.titleLabel?.font =  UIFont.boldSystemFont(ofSize: 17)

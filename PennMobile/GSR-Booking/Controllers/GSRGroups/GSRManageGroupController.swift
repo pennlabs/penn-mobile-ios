@@ -53,14 +53,16 @@ extension GSRManageGroupController {
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
-        tableView.backgroundColor = UIColor.init(red: 248, green: 248, blue: 248)
         tableView.allowsSelection = false
+        tableView.backgroundColor = .uiGroupedBackground
         tableView.separatorStyle = .none
         tableView.register(GroupMemberCell.self, forCellReuseIdentifier: GroupMemberCell.identifier)
         tableView.register(GroupSettingsCell.self, forCellReuseIdentifier: GroupSettingsCell.identifier)
         tableView.register(GroupManageButtonCell.self, forCellReuseIdentifier: GroupManageButtonCell.identifier)
         tableView.register(GroupHeaderCell.self, forCellReuseIdentifier: GroupHeaderCell.identifier)
-        tableView.tableFooterView = UIView()
+        let tableFooter = UIView()
+        tableFooter.backgroundColor = .uiBackground
+        tableView.tableFooterView = tableFooter
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(fetchGroup), for: .valueChanged)
         

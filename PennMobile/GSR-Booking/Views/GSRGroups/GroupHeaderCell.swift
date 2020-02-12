@@ -54,8 +54,7 @@ extension GroupHeaderCell {
         prepareGroupIcon()
         prepareTitle()
         prepareMemberCountLabel()
-        
-        backgroundColor = UIColor.clear
+        backgroundColor = .uiGroupedBackground
     }
     
     fileprivate func prepareGroupIcon() {

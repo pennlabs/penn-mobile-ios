@@ -26,7 +26,7 @@ struct GSRGroup: Decodable, Comparable {
         "Locust Yellow" : UIColor.baseYellow,
         "Cheeto Orange": UIColor.baseOrange,
         "Red-ing Terminal": UIColor.baseRed,
-        "Baltimore Blue": UIColor.baseBlue,
+        "Baltimore Blue": UIColor.baseDarkBlue,
         "Purple": UIColor.basePurple
     ]
     

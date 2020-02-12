@@ -34,7 +34,7 @@ class GSRGroupNewIntialController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = .uiBackground
         // Do any additional setup after loading the view.
         prepareUI()
     }
@@ -64,10 +64,8 @@ class GSRGroupNewIntialController: UIViewController {
     func prepareNameField() {
         nameField = UITextField()
         nameField.placeholder = "New Group Name"
-        nameField.textColor = UIColor.init(red: 216, green: 216, blue: 216)
+        nameField.textColor = .labelSecondary
         nameField.font = UIFont.boldSystemFont(ofSize: 24)
-        //rgb 18 39 75
-        nameField.textColor = UIColor(r: 18/255, g: 39/255, b: 75/255)
         nameField.keyboardType = .alphabet
         nameField.textAlignment = .natural
         nameField.autocorrectionType = .no
@@ -88,14 +86,16 @@ class GSRGroupNewIntialController: UIViewController {
             if (chosenColor != nil) {
                 createButton.backgroundColor = chosenColor
             } else {
-                createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+                createButton.backgroundColor = .grey4
             }
             nameChanged = true;
+            nameField.textColor = .labelPrimary
             
         } else {
             createButton.isUserInteractionEnabled = false;
-            createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+            createButton.backgroundColor = .grey4
             nameChanged = false;
+            nameField.textColor = .labelSecondary
         }
     }
 
@@ -103,7 +103,7 @@ class GSRGroupNewIntialController: UIViewController {
         groupForLabel = UILabel()
         groupForLabel.text = "Who is this group for?"
         groupForLabel.font = UIFont.systemFont(ofSize: 17)
-        groupForLabel.textColor = UIColor.init(red: 153, green: 153, blue: 153)
+        groupForLabel.textColor = .labelSecondary
         groupForLabel.textAlignment = .center
         view.addSubview(groupForLabel)
         groupForLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
@@ -116,10 +116,10 @@ class GSRGroupNewIntialController: UIViewController {
         let items = ["Friends","Classmates","Club"]
         barView = UISegmentedControl(items: items)
         let font = UIFont.systemFont(ofSize: 14,weight: .semibold)
-        barView.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: font] ,for: .normal)
-        barView.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+        barView.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.labelPrimary, NSAttributedString.Key.font: font] ,for: .normal)
+        barView.backgroundColor = .uiBackgroundSecondary
         barView.layer.borderWidth = 1
-        barView.layer.borderColor = UIColor.init(red: 216, green: 216, blue: 216).cgColor
+        barView.layer.borderColor = UIColor.uiBackgroundSecondary.cgColor
         barView.layer.cornerRadius = 6.9
         barView.layer.masksToBounds = true
 
@@ -136,7 +136,7 @@ class GSRGroupNewIntialController: UIViewController {
 
     func prepareCreateButton() {
         createButton = UIButton()
-        createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+        createButton.backgroundColor = .grey4
         createButton.setTitle("Create Group", for: .normal)
         createButton.setTitleColor(UIColor.white, for: .normal)
         createButton.layer.cornerRadius = 8
@@ -160,7 +160,7 @@ class GSRGroupNewIntialController: UIViewController {
         colorLabel = UILabel()
         colorLabel.text = "Pick a color:"
         colorLabel.font = UIFont.systemFont(ofSize: 17)
-        colorLabel.textColor = UIColor.init(red: 153, green: 153, blue: 153)
+        colorLabel.textColor = .labelSecondary
         colorLabel.textAlignment = .center
 
         view.addSubview(colorLabel)
@@ -252,7 +252,7 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
         if (nameChanged) {
             createButton.backgroundColor = cell?.colorView.backgroundColor
         } else {
-            createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
+            createButton.backgroundColor = .grey4
         }
         chosenColor = cell?.colorView.backgroundColor
         colorLabel.textColor = cell?.colorView.backgroundColor
