@@ -33,6 +33,7 @@ extension UserDefaults {
         case housing
         case privacyPreferences
         case notificationPreferences
+        case gsrGroupsEnabled
     }
     
     func clearAll() {
@@ -506,5 +507,18 @@ extension UserDefaults {
 
     private func clearNotificationPreferences() {
         removeObject(forKey: UserDefaultsKeys.notificationPreferences.rawValue)
+    }
+}
+
+// MARK: - GSR Groups Settings
+extension UserDefaults {
+    // Sets whether or not GSR Groups are enabled
+    func set(gsrGroupsEnabled: Bool) {
+        set(gsrGroupsEnabled, forKey: UserDefaultsKeys.gsrGroupsEnabled.rawValue)
+        synchronize()
+    }
+    
+    func gsrGroupsEnabled() -> Bool {
+        return bool(forKey: UserDefaultsKeys.gsrGroupsEnabled.rawValue)
     }
 }

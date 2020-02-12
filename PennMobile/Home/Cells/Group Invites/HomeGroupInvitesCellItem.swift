@@ -31,19 +31,21 @@ final class HomeGroupInvitesCellItem: HomeCellItem {
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
         // comment out following line once server is updated to show cell
-//        guard let json = json else { return nil }
-        return HomeGroupInvitesCellItem(invites: GSRGroupInvites())
+        guard let json = json else { return nil }
+        guard let invites = try? JSONDecoder().decode(GSRGroupInvites.self, from: json.rawData()) else { return nil }
+        return HomeGroupInvitesCellItem(invites: invites)
     }
 }
 
 extension HomeGroupInvitesCellItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
-        GSRGroupNetworkManager.instance.getInvites { (success, invites, error) in
-            if success {
-                self.invites = invites
-            }
-
-            completion()
-        }
+//        GSRGroupNetworkManager.instance.getInvites { (success, invites, error) in
+//            if success {
+//                self.invites = invites
+//            }
+//
+//            completion()
+//        }
+        completion()
     }
 }

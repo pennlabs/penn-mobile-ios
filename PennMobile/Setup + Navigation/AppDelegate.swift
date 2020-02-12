@@ -27,8 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        UserDefaults.standard.set(gsrGroupsEnabled: false)
+        
         #if DEBUG
-           FirebaseConfiguration.shared.setLoggerLevel(.min)
+            FirebaseConfiguration.shared.setLoggerLevel(.min)
+            UserDefaults.standard.set(gsrGroupsEnabled: true)
         #endif
         
         FirebaseApp.configure()
