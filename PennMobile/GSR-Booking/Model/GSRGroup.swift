@@ -25,9 +25,10 @@ struct GSRGroup: Decodable, Comparable {
         "College Green" : UIColor.baseGreen,
         "Locust Yellow" : UIColor.baseYellow,
         "Cheeto Orange": UIColor.baseOrange,
+        "Gritty Orange": UIColor.baseOrange,
         "Red-ing Terminal": UIColor.baseRed,
         "Baltimore Blue": UIColor.baseDarkBlue,
-        "Purple": UIColor.basePurple
+        "Pottruck Purple": UIColor.basePurple
     ]
     
     static func parseColor(color: String) -> UIColor? {

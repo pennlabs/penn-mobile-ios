@@ -87,7 +87,7 @@ extension HomeTableViewModel {
         for json in cellsJSON {
             let type = json["type"].stringValue
             let infoJSON = json["info"]
-             if let ItemType = HomeItemTypes.instance.getItemType(for: type), let item = ItemType.getItem(for: infoJSON) {
+            if let ItemType = HomeItemTypes.instance.getItemType(for: type), let item = ItemType.getItem(for: infoJSON) {
                 items.append(item)
             }
         }

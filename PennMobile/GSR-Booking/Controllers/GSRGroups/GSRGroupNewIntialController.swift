@@ -26,7 +26,7 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var chosenColor: UIColor!
     fileprivate var nameChanged: Bool!
     
-    fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange", "Red-ing Terminal", "Baltimore Blue", "Purple"]
+    fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Gritty Orange", "Red-ing Terminal", "Baltimore Blue", "Potruck Purple"]
     
     
     weak var delegate: NewGroupInitialDelegate!
@@ -49,7 +49,7 @@ class GSRGroupNewIntialController: UIViewController {
 
         closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        closeButton.backgroundColor = UIColor(red: 118/255, green: 118/255, blue: 128/255, alpha: 12/100)
+        closeButton.backgroundColor = UIColor.grey1.withAlphaComponent(0.3)
         closeButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         closeButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         closeButton.layer.cornerRadius = 15
@@ -264,26 +264,5 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? GSRColorCell
         cell?.toggleBorder()
-    }
-}
-
-extension UIColor {
-    
-    //for getting a lighter variant (using a multiplier)
-    func borderColor(multiplier: CGFloat) -> UIColor {
-        let rgba = self.rgba
-        return UIColor(red: rgba.red * multiplier , green: rgba.green * multiplier, blue: rgba.blue * multiplier, alpha: rgba.alpha)
-    }
-    
-    //https://www.hackingwithswift.com/example-code/uicolor/how-to-read-the-red-green-blue-and-alpha-color-components-from-a-uicolor
-    var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-
-        //returns rgba colors.
-        return (red, green, blue, alpha)
     }
 }
