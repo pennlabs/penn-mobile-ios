@@ -34,8 +34,7 @@ struct GSRGroup: Decodable, Comparable {
         return GSRGroup.groupColors[color]
     }
     enum CodingKeys: String, CodingKey {
-        case id, color, owner
-        case name = "group"
+        case id, name, color, owner
         case members = "memberships"
         case pennkeyAllow = "pennkey_allow"
         case notifications
