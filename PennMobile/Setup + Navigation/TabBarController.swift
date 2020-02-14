@@ -69,6 +69,14 @@ extension FlingViewController: TabBarShowable {
     }
 }
 
+extension DiningViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Dining_Grey")
+        let selectedImage = UIImage(named: "Dining_Blue")
+        return UITabBarItem(title: "Dining", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
 extension DiningTabController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Dining_Grey")
@@ -92,6 +100,7 @@ extension GSRLocationsController: TabBarShowable {
         return UITabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
     }
 }
+
 
 extension GSRTabController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
