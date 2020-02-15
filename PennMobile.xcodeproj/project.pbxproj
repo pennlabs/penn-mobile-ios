@@ -242,6 +242,7 @@
 		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
 		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
+		F299616D23F78B1700C67A3B /* GSRNotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616C23F78B1700C67A3B /* GSRNotificationExtension.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
@@ -498,6 +499,7 @@
 		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
 		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
+		F299616C23F78B1700C67A3B /* GSRNotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRNotificationExtension.swift; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		FCBBF3A15BB9805FD5A5270A /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1327,6 +1329,7 @@
 				F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */,
 				F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */,
 				F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */,
+				F299616B23F78AEA00C67A3B /* Rich_Notifications */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1339,6 +1342,14 @@
 				F230FB12225809E900760499 /* Info.plist */,
 			);
 			path = AutomatedScreenshotUITests;
+			sourceTree = "<group>";
+		};
+		F299616B23F78AEA00C67A3B /* Rich_Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				F299616C23F78B1700C67A3B /* GSRNotificationExtension.swift */,
+			);
+			path = Rich_Notifications;
 			sourceTree = "<group>";
 		};
 		F5E2CE9A9024AE8E28992A5E /* Pods */ = {
@@ -1674,6 +1685,7 @@
 				F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
 				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
+				F299616D23F78B1700C67A3B /* GSRNotificationExtension.swift in Sources */,
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
 				21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */,
 				97E79E1A2100E51A00D3D606 /* FitnessFacilityName.swift in Sources */,
