@@ -19,6 +19,6 @@ extension AppDelegate {
         // Categories
         static let newContestCategory = "UPCOMING_GSR"
     }
-
+    
     
 }

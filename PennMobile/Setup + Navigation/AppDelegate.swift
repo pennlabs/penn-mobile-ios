@@ -31,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
            FirebaseConfiguration.shared.setLoggerLevel(.min)
         #endif
         
+        // Register to receive delegate actions from rich notifications
+        UNUserNotificationCenter.current().delegate = self
+        
         FirebaseApp.configure()
         ControllerModel.shared.prepare()
         LaundryNotificationCenter.shared.prepare()
@@ -52,6 +55,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let token = tokenParts.joined()
         UserDBManager.shared.savePushNotificationDeviceToken(deviceToken: token)
+        
+        // Setup rich notification categories
+        let cancelGSRBookingAction = UNNotificationAction(identifier: NotificationIdentifiers.competeAction, title: "Cancel Booking", options: [.foreground])
+        let shareGSRBookingAction = UNNotificationAction(identifier: NotificationIdentifiers.leaderboardsAction, title: "Share", options: [.foreground])
+
+        let upcomingGSRCategory = UNNotificationCategory(identifier: NotificationIdentifiers.newContestCategory, actions: [cancelGSRBookingAction, shareGSRBookingAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "Upcoming GSR", options: [])
+        
+        UNUserNotificationCenter.current().setNotificationCategories([upcomingGSRCategory])
     }
     
     func application(_ application: UIApplication,
