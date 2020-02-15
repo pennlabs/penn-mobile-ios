@@ -48,24 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication,
-                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let tokenParts = deviceToken.map { data -> String in
-            return String(format: "%02.2hhx", data)
-        }
-        
-        let token = tokenParts.joined()
-        UserDBManager.shared.savePushNotificationDeviceToken(deviceToken: token)
-        
-        // Setup rich notification categories
-        let cancelGSRBookingAction = UNNotificationAction(identifier: NotificationIdentifiers.competeAction, title: "Cancel Booking", options: [.foreground])
-        let shareGSRBookingAction = UNNotificationAction(identifier: NotificationIdentifiers.leaderboardsAction, title: "Share", options: [.foreground])
-
-        let upcomingGSRCategory = UNNotificationCategory(identifier: NotificationIdentifiers.newContestCategory, actions: [cancelGSRBookingAction, shareGSRBookingAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "Upcoming GSR", options: [])
-        
-        UNUserNotificationCenter.current().setNotificationCategories([upcomingGSRCategory])
-    }
-    
-    func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register: \(error)")
     }
@@ -119,50 +101,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: OnboardingDelegate {
     func handleFinishedOnboarding() {
-    }
-}
-
-//extension AppDelegate: MessagingDelegate {
-//    func application(received remoteMessage: MessagingRemoteMessage) {
-//        //        print("Received data message: \(remoteMessage.appData)")
-//    }
-//}
-
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    // Receive displayed notifications for iOS 10 devices.
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        // let userInfo = notification.request.content.userInfo
-        
-        // With swizzling disabled you must let Messaging know about the message, for Analytics
-        // Messaging.messaging().appDidReceiveMessage(userInfo)
-        
-        // Print message ID.
-        //        if let messageID = userInfo[gcmMessageIDKey] {
-        //            print("Message ID: \(messageID)")
-        //        }
-        
-        // Print full message.
-        //        print(userInfo)
-        
-        // Change this to your preferred presentation option
-        completionHandler([])
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
-        //        let userInfo = response.notification.request.content.userInfo
-        //        // Print message ID.
-        //        if let messageID = userInfo[gcmMessageIDKey] {
-        //            print("Message ID: \(messageID)")
-        //        }
-        //
-        //        // Print full message.
-        //        print(userInfo)
-        
-        completionHandler()
     }
 }
 
