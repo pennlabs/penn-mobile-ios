@@ -35,8 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ControllerModel.shared.prepare()
         LaundryNotificationCenter.shared.prepare()
         GSRLocationModel.shared.prepare()
-        LaundryAPIService.instance.prepare {
-        }
+        LaundryAPIService.instance.prepare {}
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = RootViewController()

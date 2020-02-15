@@ -243,6 +243,7 @@
 		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
 		F299616D23F78B1700C67A3B /* GSRNotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616C23F78B1700C67A3B /* GSRNotificationExtension.swift */; };
+		F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
@@ -500,6 +501,7 @@
 		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
 		F299616C23F78B1700C67A3B /* GSRNotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRNotificationExtension.swift; sourceTree = "<group>"; };
+		F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+NotificationExtension.swift"; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		FCBBF3A15BB9805FD5A5270A /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -710,6 +712,7 @@
 			isa = PBXGroup;
 			children = (
 				216640631EBADADA00746B8E /* AppDelegate.swift */,
+				F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */,
 				B6665A172071E63800F49A9C /* TabBarController.swift */,
 				EF389EC521861B8500E29C6A /* HomeNavigationController.swift */,
 				21B556162224FDC500D80F61 /* RootViewController.swift */,
@@ -1638,6 +1641,7 @@
 				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
 				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
+				F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
 				212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */,
