@@ -53,10 +53,17 @@ extension DiningCell {
         updateTimeLabel(with: venue)
         
         if venue.hasMealsToday {
-            if venue.isOpen {
-                statusLabel.text = "Open"
-                statusLabel.textColor = .baseYellow
-                statusLabel.font = .primaryInformationFont
+            if let meal = venue.currentMeal {
+                if meal.isLight {
+                    // Label will read: "Serving Light Lunch" or "Serving Light Breakfast"
+                    statusLabel.text = "Open for \(meal.type)"
+                    statusLabel.textColor = .baseYellow
+                    statusLabel.font = .primaryInformationFont
+                } else {
+                    statusLabel.text = "Open"
+                    statusLabel.textColor = .baseYellow
+                    statusLabel.font = .primaryInformationFont
+                }
             } else if let nextMeal = venue.nextMeal {
                 statusLabel.text = "Opens \(Date().humanReadableDistanceFrom(nextMeal.open))"
                 statusLabel.textColor = .labelSecondary
