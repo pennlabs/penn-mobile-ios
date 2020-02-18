@@ -13,7 +13,7 @@ class DiningAPI: Requestable {
     
     static let instance = DiningAPI()
     
-    let diningUrl = "http://localhost:5000/dining/venues"
+    let diningUrl = "https://api.pennlabs.org/dining/venues"
     let diningPrefs =  "https://api.pennlabs.org/dining/preferences"
     let diningBalanceUrl = "https://api.pennlabs.org/dining/balance"
 
