@@ -52,9 +52,7 @@ extension HomeDiningCellItem {
 extension HomeDiningCellItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
         DiningAPI.instance.fetchDiningHours { _,_  in
-            if self.venues.isEmpty {
-                self.venues = DiningDataStore.shared.getVenues(with: self.venueIds)
-            }
+            self.venues = DiningDataStore.shared.getUpdatedHours(for: self.venueIds)
             completion()
         }
     }

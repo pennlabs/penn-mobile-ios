@@ -29,6 +29,19 @@ class DiningDataStore {
         return response.document.venues
     }
     
+    /// Returns the same venues in the same order with updated hours
+    func getUpdatedHours(for venueIDs: [Int]) -> [DiningVenue] {
+        let idSet = Set(venueIDs)
+        let unsortedUpdatedVenues = getVenues().filter { idSet.contains($0.id) }
+        var sortedUpdatedVenues = [DiningVenue]()
+        for venueID in venueIDs {
+            if let updatedVenue = unsortedUpdatedVenues.filter({ $0.id == venueID }).first {
+                sortedUpdatedVenues.append(updatedVenue)
+            }
+        }
+        return sortedUpdatedVenues
+    }
+    
     func getSectionedVenues() -> [DiningVenue.VenueType : [DiningVenue]] {
         var venuesDict = [DiningVenue.VenueType : [DiningVenue]]()
         for type in DiningVenue.VenueType.allCases {
