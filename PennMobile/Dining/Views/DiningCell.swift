@@ -55,8 +55,8 @@ extension DiningCell {
         if venue.hasMealsToday {
             if let meal = venue.currentMeal {
                 if meal.isLight {
-                    // Label will read: "Serving Light Lunch" or "Serving Light Breakfast"
-                    statusLabel.text = "Open for \(meal.type)"
+                    // Label will read: "Light Lunch" or "Light Breakfast"
+                    statusLabel.text = meal.type
                     statusLabel.textColor = .baseYellow
                     statusLabel.font = .primaryInformationFont
                 } else {

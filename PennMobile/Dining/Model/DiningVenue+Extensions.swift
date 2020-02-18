@@ -108,7 +108,7 @@ extension DiningVenue {
 // MARK: - Meal
 extension DiningVenue.MealsForDate.Meal {
     var isCurrentlyServing: Bool {
-        let now = Date().add(minutes: 180)
+        let now = Date()
         return (self.open <= now && self.close > now)
     }
     
