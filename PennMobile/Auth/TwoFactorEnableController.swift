@@ -15,6 +15,7 @@ protocol TwoFactorEnableDelegate {
     func handleEnable()
     func handleDismiss()
     func shouldWait() -> Bool
+    func shouldLogin() -> Bool
 }
 
 extension TwoFactorEnableDelegate {
@@ -23,14 +24,17 @@ extension TwoFactorEnableDelegate {
     }
 }
 
+extension TwoFactorEnableDelegate {
+    func shouldLogin() -> Bool {
+        return true
+    }
+}
 @available(iOS 13, *)
 class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable {
     
     private var cancellable: Any?
     
     public var delegate: TwoFactorEnableDelegate!
-    
-    let shouldRequestLogin = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,13 +53,16 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
                 switch decision {
                 case .affirmative:
                     UserDefaults.standard.setTwoFactorEnabled(to: true)
-                    TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+                    //Fetch code immediately if the user does not have to log in.
+                    if !self.delegate.shouldLogin() {
+                        TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+                    }
                     if self.delegate.shouldWait() {
                         DispatchQueue.main.async {
                             self.showActivity()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                self.hideActivity()
                                 self.delegate.handleEnable()
+                                self.hideActivity()
                                 self.dismiss(animated: true, completion: nil)
                             }
                         }

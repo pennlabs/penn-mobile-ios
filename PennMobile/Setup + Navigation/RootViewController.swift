@@ -26,11 +26,6 @@ class RootViewController: UIViewController, NotificationRequestable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*
-        let code = TwoFactorTokenGenerator.instance.generate()
-        if code == nil && UserDefaults.standard.bool(forKey: "TOTPEnabled") {
-            TOTPFetcher.instance.fetchAndSaveTOTPSecret()
-        }*/
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
@@ -131,6 +126,25 @@ class RootViewController: UIViewController, NotificationRequestable {
                 }
             }
             
+        }
+        
+        //Request to fetch Two Factor Code again if the app failed to fetch it last time
+        if shouldFetchTwoFactorCode() {
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Two-Step Code Not Fetched", message: "We were unable to fetch your Two-Step code last time. Do you want to try again?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
+                    alert.dismiss(animated: true, completion: nil)
+                    UserDefaults.standard.setTwoFactorEnabled(to: false);
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+                    let twc = TwoFactorWebviewController()
+                    UserDefaults.standard.setTwoFactorEnabledAgain(to: true)
+                    self.current.present(twc, animated: true)
+                }))
+                
+                self.current.present(alert, animated: true, completion: nil)
+            }
         }
         
         // Send saved unsent events
@@ -342,6 +356,10 @@ extension RootViewController : TwoFactorEnableDelegate {
         askForNotificationPermission()
     }
     
+    func shouldLogin() -> Bool {
+        return false
+    }
+    
     func askForNotificationPermission() {
         #if !targetEnvironment(simulator)
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
@@ -373,12 +391,24 @@ extension RootViewController : TwoFactorEnableDelegate {
             askForNotificationPermission()
         }
     }
-    
     ///Checks whether the user has enabled Two Factor but the code was never fetched. This can happen when the user closes the
-    ///app before it is done fetching the code.
+    ///app before it is done fetching the code. Don't try to fetch it if Two Factor was enabled more than a week ago. Also, don't try to fetch
+    ///it again if the user already tried again once.
     func shouldFetchTwoFactorCode() -> Bool {
+        if UserDefaults.standard.getTwoFactorEnabledAgain() {
+            UserDefaults.standard.setTwoFactorEnabled(to: false)
+            return false
+        }
+        
         let code = TwoFactorTokenGenerator.instance.generate()
         let totpEnabled = UserDefaults.standard.getTwoFactorEnabled()
-        return totpEnabled && (code == nil)
+        
+        if totpEnabled && (code == nil) {
+            if let date = UserDefaults.standard.getTwoFactorEnabledDate() {
+                let elapsedInDays = Date().timeIntervalSince(date) / (60*60*24)
+                return elapsedInDays <= 7
+            }
+        }
+        return false
     }
 }

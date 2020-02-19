@@ -512,7 +512,11 @@ extension UserDefaults {
 extension UserDefaults {
     func setTwoFactorEnabled(to newValue: Bool) {
         UserDefaults.standard.set(newValue, forKey: "TOTPEnabled")
-        setTwoFactorEnabledDate(Date())
+        if newValue {
+            setTwoFactorEnabledDate(Date())
+        } else {
+            setTwoFactorEnabledAgain(to: false)
+        }
     }
     
     func getTwoFactorEnabled() -> Bool {
@@ -521,6 +525,14 @@ extension UserDefaults {
     
     func getTwoFactorEnabledDate() -> Date? {
         return UserDefaults.standard.value(forKey: "TOTPEnabledDate") as? Date
+    }
+    
+    func getTwoFactorEnabledAgain() -> Bool {
+        return UserDefaults.standard.bool(forKey: "TOTPEnabledAgain")
+    }
+    
+    func setTwoFactorEnabledAgain(to newValue: Bool) {
+        UserDefaults.standard.set(newValue, forKey: "TOTPEnabledAgain")
     }
     
     fileprivate func setTwoFactorEnabledDate(_ date: Date) {
