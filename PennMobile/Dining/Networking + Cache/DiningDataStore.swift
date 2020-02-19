@@ -30,7 +30,7 @@ class DiningDataStore {
     }
     
     /// Returns the same venues in the same order with updated hours
-    func getUpdatedHours(for venueIDs: [Int]) -> [DiningVenue] {
+    func getVenues(for venueIDs: [Int]) -> [DiningVenue] {
         let idSet = Set(venueIDs)
         let unsortedUpdatedVenues = getVenues().filter { idSet.contains($0.id) }
         var sortedUpdatedVenues = [DiningVenue]()
@@ -48,14 +48,6 @@ class DiningDataStore {
             venuesDict[type] = getVenues().filter({ $0.venueType == type })
         }
         return venuesDict
-    }
-    
-    func getVenues(with ids: Set<Int>) -> [DiningVenue] {
-        return getVenues().filter({ ids.contains($0.id) })
-    }
-    
-    func getVenues(with ids: [Int]) -> [DiningVenue] {
-        return getVenues().filter({ ids.contains($0.id) })
     }
     
     // MARK: - Cacheing

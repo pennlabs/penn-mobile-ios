@@ -43,7 +43,7 @@ extension HomeDiningCellItem {
         guard let ids = json["venues"].arrayObject as? [Int] else {
             throw NetworkingError.jsonError
         }
-        let venues: [DiningVenue] = DiningDataStore.shared.getVenues(with: ids)
+        let venues: [DiningVenue] = DiningDataStore.shared.getVenues(for: ids)
         self.init(venues: venues, venueIds: ids)
     }
 }
@@ -52,7 +52,7 @@ extension HomeDiningCellItem {
 extension HomeDiningCellItem: HomeAPIRequestable {
     func fetchData(_ completion: @escaping () -> Void) {
         DiningAPI.instance.fetchDiningHours { _,_  in
-            self.venues = DiningDataStore.shared.getUpdatedHours(for: self.venueIds)
+            self.venues = DiningDataStore.shared.getVenues(for: self.venueIds)
             completion()
         }
     }
