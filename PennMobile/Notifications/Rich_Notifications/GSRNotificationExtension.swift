@@ -21,7 +21,8 @@ class NotificationService: UNNotificationServiceExtension {
              "alert": {
                  "body": "This is the body text, concerning your GSR in WIC RM 123 from 9:30-11am.",
                  "title": "Upcoming GSR",
-                 "subtitle": "WIC Rm 129"
+                 "subtitle": "WIC Rm 129",
+                 "other info, like booking ids": "etc"
              },
              "mutable-content": 1,
              "thread-id": 1,
