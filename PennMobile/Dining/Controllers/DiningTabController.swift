@@ -69,7 +69,13 @@ class DiningTabController: ButtonBarPagerTabStripViewController {
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child1 = DiningViewController()
-        let child2 = DiningStatisticsViewController()
+        let child2: UIViewController!
+        if #available(iOS 13, *) {
+            child2 = DiningStatisticsViewController()
+        } else {
+            // TODO: Implement a controller with a message prompting iOS 13. Also be sure to give it a pagertabstrip extension.
+            child2 = UIViewController()
+        }
 
         return [child1, child2]
     }
@@ -81,6 +87,7 @@ extension DiningViewController: IndicatorInfoProvider {
     }
 }
 
+@available(iOS 13, *)
 extension DiningStatisticsViewController: IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "Statistics")
