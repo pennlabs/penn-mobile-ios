@@ -15,15 +15,22 @@ class TOTPFetcher: NSObject {
     private override init() {}
 
     func fetchAndSaveTOTPSecret(_ completion: ((_ secret: String?) -> Void)? = nil) {
+        if let _ = UserDefaults.standard.getTwoFactorEnabledDate() {
+            UserDefaults.standard.setTwoFactorEnabledDate(nil)
+        } else {
+            UserDefaults.standard.setTwoFactorEnabledDate(Date())
+        }
+
         let operation = TOTPFetcherOperation { (secret) in
 
             if let secret = secret {
-                print(secret)
                 let genericPwdQueryable =
                     GenericPasswordQueryable(service: "PennWebLogin")
                 let secureStore =
                     SecureStore(secureStoreQueryable: genericPwdQueryable)
                 try? secureStore.setValue(secret, for: "TOTPSecret")
+                
+                UserDefaults.standard.setTwoFactorEnabledDate(nil)
             }
             completion?(secret)
         }
@@ -46,7 +53,7 @@ class TOTPFetcher: NSObject {
                     WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
                         DispatchQueue.main.async {
                             let zombie = WKZombie(dataStore: dataStore)
-                            Logger.enabled = false
+                            Logger.enabled = true
                             WKZombie.setInstance(zombie: zombie)
 
                             let url = URL(string: self.urlStr)!

@@ -19,7 +19,7 @@ class TwoFactorCell: UITableViewCell {
     static let identifier = "TwoFactorCell"
     
     fileprivate var enabled: Bool {
-        return code != nil || UserDefaults.standard.getTwoFactorEnabled()
+        return code != nil || UserDefaults.standard.getTwoFactorEnabledDate() != nil
     }
     
     var code: String? = nil {

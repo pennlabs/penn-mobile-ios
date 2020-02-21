@@ -33,6 +33,7 @@ extension UserDefaults {
         case housing
         case privacyPreferences
         case notificationPreferences
+        case totpEnabledDate
     }
     
     func clearAll() {
@@ -510,32 +511,12 @@ extension UserDefaults {
 }
 // MARK: - Two Factor Enabled flag
 extension UserDefaults {
-    func setTwoFactorEnabled(to newValue: Bool) {
-        UserDefaults.standard.set(newValue, forKey: "TOTPEnabled")
-        if newValue {
-            setTwoFactorEnabledDate(Date())
-        } else {
-            setTwoFactorEnabledAgain(to: false)
-        }
-    }
-    
-    func getTwoFactorEnabled() -> Bool {
-        return UserDefaults.standard.bool(forKey: "TOTPEnabled")
-    }
-    
+
     func getTwoFactorEnabledDate() -> Date? {
-        return UserDefaults.standard.value(forKey: "TOTPEnabledDate") as? Date
+        return UserDefaults.standard.value(forKey: UserDefaultsKeys.totpEnabledDate.rawValue) as? Date
     }
     
-    func getTwoFactorEnabledAgain() -> Bool {
-        return UserDefaults.standard.bool(forKey: "TOTPEnabledAgain")
-    }
-    
-    func setTwoFactorEnabledAgain(to newValue: Bool) {
-        UserDefaults.standard.set(newValue, forKey: "TOTPEnabledAgain")
-    }
-    
-    fileprivate func setTwoFactorEnabledDate(_ date: Date) {
-        UserDefaults.standard.set(date, forKey: "TOTPEnabledDate")
+    func setTwoFactorEnabledDate(_ date: Date?) {
+        UserDefaults.standard.set(date, forKey: UserDefaultsKeys.totpEnabledDate.rawValue)
     }
 }

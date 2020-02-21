@@ -134,12 +134,11 @@ class RootViewController: UIViewController, NotificationRequestable {
                 let alert = UIAlertController(title: "Two-Step Code Not Fetched", message: "We were unable to fetch your Two-Step code last time. Do you want to try again?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
                     alert.dismiss(animated: true, completion: nil)
-                    UserDefaults.standard.setTwoFactorEnabled(to: false);
+                    UserDefaults.standard.setTwoFactorEnabledDate(nil);
                 }))
                 
                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
                     let twc = TwoFactorWebviewController()
-                    UserDefaults.standard.setTwoFactorEnabledAgain(to: true)
                     self.current.present(twc, animated: true)
                 }))
                 
@@ -397,18 +396,16 @@ extension RootViewController : TwoFactorEnableDelegate {
      it again if the user already tried again once.
      */
     func shouldFetchTwoFactorCode() -> Bool {
-        if UserDefaults.standard.getTwoFactorEnabledAgain() {
-            UserDefaults.standard.setTwoFactorEnabled(to: false)
-            return false
-        }
-        
-        let code = TwoFactorTokenGenerator.instance.generate()
-        let totpEnabled = UserDefaults.standard.getTwoFactorEnabled()
-        
-        if totpEnabled && (code == nil) {
-            if let date = UserDefaults.standard.getTwoFactorEnabledDate() {
+        if let date = UserDefaults.standard.getTwoFactorEnabledDate() {
+            let code = TwoFactorTokenGenerator.instance.generate()
+            
+            if (code == nil) {
                 let elapsedInDays = Date().timeIntervalSince(date) / (60*60*24)
-                return elapsedInDays <= 7
+                if elapsedInDays <= 7 {
+                    return true
+                } else {
+                    UserDefaults.standard.setTwoFactorEnabledDate(nil)
+                }
             }
         }
         return false

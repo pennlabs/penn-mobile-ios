@@ -52,7 +52,6 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
             if let decision = delegate.userDecision {
                 switch decision {
                 case .affirmative:
-                    UserDefaults.standard.setTwoFactorEnabled(to: true)
                     //Fetch code immediately if the user does not have to log in.
                     if !self.delegate.shouldLogin() {
                         TOTPFetcher.instance.fetchAndSaveTOTPSecret()
@@ -71,7 +70,6 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
                         self.dismiss(animated: true, completion: nil)
                     }
                 case .negative:
-                    UserDefaults.standard.setTwoFactorEnabled(to: false)
                     self.delegate.handleDismiss()
                     self.dismiss(animated: true, completion: nil)
                 case .moreInfo: self.open(scheme: "https://www.isc.upenn.edu/how-to/two-step-faq")
