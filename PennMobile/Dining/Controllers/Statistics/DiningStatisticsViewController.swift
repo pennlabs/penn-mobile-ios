@@ -38,9 +38,17 @@ class DiningStatisticsViewController: UIViewController {
             }
         }
         
+        let balanceHeaders: [DiningHeaderCard] = [
+            DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") }),
+            DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") })
+        ]
+        
         let cards: [DiningStatisticsCard] = [
             DiningStatisticsCard(Text("Hello World")),
-            DiningStatisticsCard(Group{ Text("Hello darkness") })
+            DiningStatisticsCard(Group{ Text("Hello darkness") }),
+            DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") }),
+            DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") }),
+            DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "gamecontroller.fill"), balance: 427.84, specifier: "%.2f") })
         ]
         
         let childView = UIHostingController(rootView: DiningStatisticsView(cards: cards))
@@ -49,5 +57,9 @@ class DiningStatisticsViewController: UIViewController {
         childView.view.frame = view.bounds
         view.addSubview(childView.view)
         childView.didMove(toParent: self)
+    }
+    
+    func createDiningHeaders() -> [DiningHeaderCard] {
+        
     }
 }

@@ -246,6 +246,8 @@
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
 		F2B05E1A24008CD900C267EB /* DiningStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1924008CD900C267EB /* DiningStatisticsView.swift */; };
 		F2B05E1C24009B0B00C267EB /* DiningBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */; };
+		F2B05E2024009C4000C267EB /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1F24009C4000C267EB /* CardView.swift */; };
+		F2B05E222400B6A300C267EB /* DiningStatisticsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E212400B6A200C267EB /* DiningStatisticsResponse.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
@@ -506,6 +508,8 @@
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
 		F2B05E1924008CD900C267EB /* DiningStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningStatisticsView.swift; sourceTree = "<group>"; };
 		F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalanceView.swift; sourceTree = "<group>"; };
+		F2B05E1F24009C4000C267EB /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		F2B05E212400B6A200C267EB /* DiningStatisticsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningStatisticsResponse.swift; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		FF0E05C04C7854E515BFE595 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1345,11 +1349,21 @@
 		F2B05E1D24009B7D00C267EB /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				F2B05E1E24009C3500C267EB /* Card */,
 				1382055723EF7CA2005969AB /* DiningStatisticsViewController.swift */,
+				F2B05E212400B6A200C267EB /* DiningStatisticsResponse.swift */,
 				F2B05E1924008CD900C267EB /* DiningStatisticsView.swift */,
 				F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */,
 			);
 			path = Statistics;
+			sourceTree = "<group>";
+		};
+		F2B05E1E24009C3500C267EB /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				F2B05E1F24009C4000C267EB /* CardView.swift */,
+			);
+			path = Card;
 			sourceTree = "<group>";
 		};
 		F39F45CD2E6687396F84B8E3 /* Frameworks */ = {
@@ -1658,6 +1672,7 @@
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
+				F2B05E222400B6A300C267EB /* DiningStatisticsResponse.swift in Sources */,
 				217A783B204D97AC004F1227 /* ModularTableView.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
 				66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */,
@@ -1687,6 +1702,7 @@
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
 				21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */,
 				97E79E182100E4AA00D3D606 /* FitnessFacilityData.swift in Sources */,
+				F2B05E2024009C4000C267EB /* CardView.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
 				97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */,

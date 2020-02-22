@@ -27,7 +27,7 @@ struct DiningBalanceView: View {
                 HStack {
                     self.image.font(Font.system(size: 24).weight(.bold))
                     Spacer()
-                    Text("\(self.balance, specifier: self.specifier)")
+                    Text(String(self.balance))
                         .font(.system(size: 24, design: .rounded))
                         .fontWeight(.bold)
                 }
@@ -44,6 +44,6 @@ struct DiningBalanceView: View {
 @available(iOS 13.0, *)
 struct DiningBalanceView_Previews: PreviewProvider {
     static var previews: some View {
-        DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "lock"), balance: 123.54)
+        DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f")
     }
 }
