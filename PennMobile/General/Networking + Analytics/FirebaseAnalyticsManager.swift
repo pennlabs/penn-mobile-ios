@@ -37,12 +37,17 @@ class FirebaseAnalyticsManager: NSObject {
         case attemptBooking = "Booking"
         case laundryTapped = "LaundryTapped"
         case updateDiningPreferences = "UpdateDiningPref"
+        case twoStep = "TwoStep"
+        case twoStepRetrieval = "TwoStepRetrieval"
     }
     
     enum EventResult: String {
         case cancelled = "Cancelled"
         case success = "Success"
         case failed = "Failed"
+        case enabled = "Enabled"
+        case disabled = "Disabled"
+        case declined = "Declined"
         case none = ""
     }
 }

@@ -240,7 +240,6 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
     func handleEnable() {
         UserDefaults.standard.set(true, forKey: "TOTPEnabled")
         tableView.reloadData()
-        FirebaseAnalyticsManager.shared.trackEvent(action: "TOTP", result: "enabled", content: true)
         let twc = TwoFactorWebviewController()
         twc.completion = { (successful) in
             if !successful {
@@ -275,6 +274,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
                 
                 alert.addAction(UIAlertAction(title: "Enable", style: .default, handler: { _ in
                     alert.dismiss(animated: true, completion: nil)
+                    FirebaseAnalyticsManager.shared.trackEvent(action: .twoStep, result: .enabled, content: true)
                     self.handleEnable()
                 }))
                 
@@ -285,7 +285,6 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
         else {
             UserDefaults.standard.set(false, forKey: "TOTPEnabled")
             tableView.reloadData()
-            FirebaseAnalyticsManager.shared.trackEvent(action: "TOTP", result: "disabled", content: false)
             let alert = UIAlertController(title: "Disabling Two-Factor Automation", message: "Are you sure you want to disable Two-Factor Automation? If you do, we will no longer be storing your unique key. To re-enable Two-Factor Automation, you will have to login again.", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
@@ -295,7 +294,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate {
             
             alert.addAction(UIAlertAction(title: "Disable", style: .destructive, handler: { _ in
                 alert.dismiss(animated: true, completion: nil)
-                
+                FirebaseAnalyticsManager.shared.trackEvent(action: .twoStep, result: .disabled, content: false)
                 TwoFactorTokenGenerator.instance.clear()
                 self.tableView.reloadData()
             }))

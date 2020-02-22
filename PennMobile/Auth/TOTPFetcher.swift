@@ -26,6 +26,12 @@ class TOTPFetcher: NSObject {
                 try? secureStore.setValue(secret, for: "TOTPSecret")
             }
             completion?(secret)
+            
+            if (secret != nil) {
+                FirebaseAnalyticsManager.shared.trackEvent(action: .twoStepRetrieval, result: .success, content: true)
+            } else {
+                FirebaseAnalyticsManager.shared.trackEvent(action: .twoStepRetrieval, result: .failed, content: false)
+            }
         }
         operation.run()
     }

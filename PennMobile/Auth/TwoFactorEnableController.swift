@@ -63,10 +63,12 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
                         self.delegate.handleEnable()
                         self.dismiss(animated: true, completion: nil)
                     }
+                    FirebaseAnalyticsManager.shared.trackEvent(action: .twoStep, result: .enabled, content: true)
                 case .negative:
                     UserDefaults.standard.set(false, forKey: "TOTPEnabled")
                     self.delegate.handleDismiss()
                     self.dismiss(animated: true, completion: nil)
+                    FirebaseAnalyticsManager.shared.trackEvent(action: .twoStep, result: .declined, content: false)
                 case .moreInfo: self.open(scheme: "https://www.isc.upenn.edu/how-to/two-step-faq")
                 }
             }
