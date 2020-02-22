@@ -38,7 +38,13 @@ class DiningStatisticsViewController: UIViewController {
             }
         }
         
-        let json = try! J
+        let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
+        let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let response = try! decoder.decode(DiningStatisticsAPIResponse.self, from: data)
+        
+        dump(response)
         
         let balanceHeaders: [DiningStatisticsCard] = [
             DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") }),
@@ -66,7 +72,11 @@ class DiningStatisticsViewController: UIViewController {
     }
     
     func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
+        var cards = [DiningStatisticsCard]()
         
+        if let recentTransactions = json.cards.recentTransactions {
+            
+        }
         
         return []
     }

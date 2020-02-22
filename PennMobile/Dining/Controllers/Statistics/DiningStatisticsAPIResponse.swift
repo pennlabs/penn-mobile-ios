@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DiningStatisticsAPIResponse {
+struct DiningStatisticsAPIResponse: Codable {
     
     let swipes: Int
     let diningDollars: Double
@@ -19,7 +19,7 @@ struct DiningStatisticsAPIResponse {
     
     let cards: CardData
     
-    struct CardData {
+    struct CardData: Codable {
         let recentTransactions: RecentTransactionsCardData?
         let frequentLocations: FrequentLocationsCardData?
         
@@ -34,6 +34,13 @@ struct DiningStatisticsAPIResponse {
                 let date: Date
                 let balance: Double
                 let amount: Double
+            }
+            
+            enum CodingKeys: String, CodingKey {
+                case type = "type"
+                case headerTitle = "header-title"
+                case headerBody = "header-body"
+                case data = "data"
             }
         }
         

@@ -2,8 +2,8 @@
   "swipes": 108,
   "dining-dollars": 20,
   "guest-swipes": 5,
-  "start-of-semester": "2020-01-15T00:00:00",
-  "end-of-semester": "2020-05-12T00:00:00",
+  "start-of-semester": "2020-01-15T00:00:00Z",
+  "end-of-semester": "2020-05-12T00:00:00Z",
   "cards": {
       "recent-transactions": {
           "type": "recent-transactions",
@@ -12,31 +12,31 @@
           "data": [
             {
               "location": "Canteen Vending API - Charge",
-              "date": "2020-02-17T23:39:00",
+              "date": "2020-02-17T23:39:00Z",
               "balance": 0,
               "amount": -1.45
             },
             {
               "location": "Canteen Vending API - Charge",
-              "date": "2020-02-17T01:52:00",
+              "date": "2020-02-17T01:52:00Z",
               "balance": 1.45,
               "amount": -2.99
             },
             {
               "location": "Canteen Vending API - Charge",
-              "date": "2020-02-17T01:49:00",
+              "date": "2020-02-17T01:49:00Z",
               "balance": 4.44,
               "amount": -1.49
             },
             {
               "location": "Canteen Vending API - Charge",
-              "date": "2020-02-11T16:32:00",
+              "date": "2020-02-11T16:32:00Z",
               "balance": 5.93,
               "amount": -14.07
             },
             {
               "location": "Canteen Vending API - Charge",
-              "date": "2020-02-10T22:01:00",
+              "date": "2020-02-10T22:01:00Z",
               "balance": 20,
               "amount": -4.06
             }
@@ -58,8 +58,7 @@
               "week": 0.00,
               "month": 29.94,
               "semester": 45.44
-            },
-            ...
+            }
           ]
       }
   }
