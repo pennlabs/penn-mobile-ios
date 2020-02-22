@@ -85,7 +85,12 @@ class DiningStatisticsViewController: UIViewController {
         }
         
         if let recentTransactions = json.cards.recentTransactions {
-            //cards.append()
+            cards.append(
+                DiningStatisticsCard(
+                    CardView {
+                        RecentTransactionsView(config: recentTransactions)
+                    }
+            ))
         }
         
         return cards

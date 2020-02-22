@@ -67,11 +67,22 @@ struct DiningStatisticsAPIResponse: Codable {
     }
 }
 
-struct DiningTransaction: Codable {
+struct DiningTransaction: Codable, Hashable {
     let location: String
     let date: Date
     let balance: Double
     let amount: Double
+    
+    var formattedAmount: String {
+        let amountString = String(amount)
+        return (self.amount > 0 ? "+" : "") + amountString
+    }
+    
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a EEEE, MMM d"
+        return formatter.string(from: self.date)
+    }
 }
 
 struct FrequentLocation: Codable {
