@@ -29,13 +29,6 @@ struct DiningStatisticsAPIResponse: Codable {
             let headerBody: String
             let data: [DiningTransaction]
             
-            struct DiningTransaction: Codable {
-                let location: String
-                let date: Date
-                let balance: Double
-                let amount: Double
-            }
-            
             enum CodingKeys: String, CodingKey {
                 case type = "type"
                 case headerTitle = "header-title"
@@ -49,13 +42,6 @@ struct DiningStatisticsAPIResponse: Codable {
             let headerTitle: String
             let headerBody: String
             let data: [FrequentLocation]
-            
-            struct FrequentLocation: Codable {
-                let location: String
-                let week: Double
-                let month: Double
-                let semester: Double
-            }
             
             enum CodingKeys: String, CodingKey {
                 case type = "type"
@@ -79,4 +65,18 @@ struct DiningStatisticsAPIResponse: Codable {
         case endOfSemester = "end-of-semester"
         case cards = "cards"
     }
+}
+
+struct DiningTransaction: Codable {
+    let location: String
+    let date: Date
+    let balance: Double
+    let amount: Double
+}
+
+struct FrequentLocation: Codable {
+    let location: String
+    let week: Double
+    let month: Double
+    let semester: Double
 }

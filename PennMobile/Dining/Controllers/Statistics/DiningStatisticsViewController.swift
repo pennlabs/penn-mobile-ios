@@ -51,14 +51,15 @@ class DiningStatisticsViewController: UIViewController {
             DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") })
         ]
         
-        let cards: [DiningStatisticsCard] = [
+        /*let cards: [DiningStatisticsCard] = [
             DiningStatisticsCard(Text("Hello World")),
             DiningStatisticsCard(Group{ Text("Hello darkness") }),
             DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") }),
             DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") }),
             DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "gamecontroller.fill"), balance: 427.84, specifier: "%.2f") })
-        ]
+        ]*/
         
+        let cards = createDiningCards(with: response)
         let childView = UIHostingController(rootView: DiningStatisticsView(cards: cards))
         
         addChild(childView)
@@ -74,10 +75,19 @@ class DiningStatisticsViewController: UIViewController {
     func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
         var cards = [DiningStatisticsCard]()
         
-        if let recentTransactions = json.cards.recentTransactions {
-            
+        if let frequentLocations = json.cards.frequentLocations {
+            cards.append(
+                DiningStatisticsCard(
+                    CardView {
+                        FrequentLocationsView(config: frequentLocations)
+                    }
+                ))
         }
         
-        return []
+        if let recentTransactions = json.cards.recentTransactions {
+            //cards.append()
+        }
+        
+        return cards
     }
 }

@@ -45,17 +45,41 @@
       "frequent-locations": {
           "type": "frequent-locations",
           "header-title": "Frequent Locations",
-          "header-body": "Your recent transactions etc",
+          "header-body": "Your dining dollar totals for each location over the last ",
           "data": [
             {
               "location": "Van Pelt Cafe",
-              "week": 0.00,
+              "week": 12.00,
               "month": 29.94,
               "semester": 45.44
             },
             {
               "location": "Prett a Manger",
-              "week": 0.00,
+              "week": 42.00,
+              "month": 29.94,
+              "semester": 45.44
+            },
+            {
+              "location": "Van Pelt Cafe",
+              "week": 5.00,
+              "month": 29.94,
+              "semester": 45.44
+            },
+            {
+              "location": "Prett a Manger",
+              "week": 30.00,
+              "month": 29.94,
+              "semester": 45.44
+            },
+            {
+              "location": "Van Pelt Cafe",
+              "week": 20.00,
+              "month": 29.94,
+              "semester": 45.44
+            },
+            {
+              "location": "Prett a Manger",
+              "week": 10.00,
               "month": 29.94,
               "semester": 45.44
             }
