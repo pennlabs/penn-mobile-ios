@@ -247,7 +247,8 @@
 		F2B05E1A24008CD900C267EB /* DiningStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1924008CD900C267EB /* DiningStatisticsView.swift */; };
 		F2B05E1C24009B0B00C267EB /* DiningBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */; };
 		F2B05E2024009C4000C267EB /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1F24009C4000C267EB /* CardView.swift */; };
-		F2B05E222400B6A300C267EB /* DiningStatisticsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E212400B6A200C267EB /* DiningStatisticsResponse.swift */; };
+		F2B05E222400B6A300C267EB /* DiningStatisticsAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E212400B6A200C267EB /* DiningStatisticsAPIResponse.swift */; };
+		F2B05E242400BA0200C267EB /* example-dining-stats.json in Resources */ = {isa = PBXBuildFile; fileRef = F2B05E232400BA0200C267EB /* example-dining-stats.json */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
@@ -509,7 +510,8 @@
 		F2B05E1924008CD900C267EB /* DiningStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningStatisticsView.swift; sourceTree = "<group>"; };
 		F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalanceView.swift; sourceTree = "<group>"; };
 		F2B05E1F24009C4000C267EB /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		F2B05E212400B6A200C267EB /* DiningStatisticsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningStatisticsResponse.swift; sourceTree = "<group>"; };
+		F2B05E212400B6A200C267EB /* DiningStatisticsAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningStatisticsAPIResponse.swift; sourceTree = "<group>"; };
+		F2B05E232400BA0200C267EB /* example-dining-stats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "example-dining-stats.json"; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		FF0E05C04C7854E515BFE595 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1351,7 +1353,8 @@
 			children = (
 				F2B05E1E24009C3500C267EB /* Card */,
 				1382055723EF7CA2005969AB /* DiningStatisticsViewController.swift */,
-				F2B05E212400B6A200C267EB /* DiningStatisticsResponse.swift */,
+				F2B05E232400BA0200C267EB /* example-dining-stats.json */,
+				F2B05E212400B6A200C267EB /* DiningStatisticsAPIResponse.swift */,
 				F2B05E1924008CD900C267EB /* DiningStatisticsView.swift */,
 				F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */,
 			);
@@ -1503,6 +1506,7 @@
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
 				13715C2623EE1F23005239CD /* GoogleService-Info.plist in Resources */,
 				2189C09E2027CE4100771C1F /* locations.json in Resources */,
+				F2B05E242400BA0200C267EB /* example-dining-stats.json in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1672,7 +1676,7 @@
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
-				F2B05E222400B6A300C267EB /* DiningStatisticsResponse.swift in Sources */,
+				F2B05E222400B6A300C267EB /* DiningStatisticsAPIResponse.swift in Sources */,
 				217A783B204D97AC004F1227 /* ModularTableView.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
 				66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */,

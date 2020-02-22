@@ -38,7 +38,9 @@ class DiningStatisticsViewController: UIViewController {
             }
         }
         
-        let balanceHeaders: [DiningHeaderCard] = [
+        let json = try! J
+        
+        let balanceHeaders: [DiningStatisticsCard] = [
             DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") }),
             DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") })
         ]
@@ -59,7 +61,13 @@ class DiningStatisticsViewController: UIViewController {
         childView.didMove(toParent: self)
     }
     
-    func createDiningHeaders() -> [DiningHeaderCard] {
+    func createDiningHeaders() -> [DiningStatisticsCard] {
+        return []
+    }
+    
+    func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
         
+        
+        return []
     }
 }
