@@ -12,13 +12,13 @@
           "data": [
             {
               "location": "Canteen Vending API - Charge",
-              "date": "2020-02-17T23:39:00Z",
+              "date": "2020-02-17T23:39:00-05:00",
               "balance": 0,
               "amount": -1.45
             },
             {
               "location": "Canteen Vending API - Charge",
-              "date": "2020-02-17T01:52:00Z",
+              "date": "2020-02-17T01:52:00-05:00",
               "balance": 1.45,
               "amount": -2.99
             },

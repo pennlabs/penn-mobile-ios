@@ -42,6 +42,30 @@ struct DiningBalanceView: View {
 }
 
 @available(iOS 13.0, *)
+struct BlankDiningBalanceView: View {
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .fill(Color.gray.opacity(0.0))
+                .shadow(color: Color.black.opacity(0.0), radius: 4, x: 2, y: 2)
+            VStack(alignment: .trailing) {
+                HStack {
+                    Image(systemName:" ").font(Font.system(size: 24).weight(.bold))
+                    Spacer()
+                    Text(" ")
+                        .font(.system(size: 24, design: .rounded))
+                        .fontWeight(.bold)
+                }
+                Text(" ")
+                    .font(.subheadline)
+                    .opacity(0.5)
+            }
+            .padding()
+        }
+    }
+}
+
+@available(iOS 13.0, *)
 struct DiningBalanceView_Previews: PreviewProvider {
     static var previews: some View {
         DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f")

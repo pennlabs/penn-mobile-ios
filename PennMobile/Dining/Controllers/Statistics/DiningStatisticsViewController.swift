@@ -19,49 +19,18 @@ class DiningStatisticsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let delegate = PrivacyPermissionDelegate()
-        self.cancellable = delegate.objectDidChange.sink { (delegate) in
-            if let decision = delegate.userDecision {
-                switch decision {
-                case .affirmative:
-                    UserDefaults.standard.setLastDidAskPermission(for: .anonymizedCourseSchedule)
-                    UserDefaults.standard.set(.anonymizedCourseSchedule, to: true)
-                    UserDBManager.shared.saveUserPrivacySettings()
-                    //self.fetchAndSaveCourses()
-                case .negative:
-                    UserDefaults.standard.setLastDidAskPermission(for: .anonymizedCourseSchedule)
-                    //self.declinePermission()
-                    self.dismiss(animated: true, completion: nil)
-                case .moreInfo:
-                    print("nothing")
-                }
-            }
-        }
-        
         let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
         let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let response = try! decoder.decode(DiningStatisticsAPIResponse.self, from: data)
         
-        dump(response)
-        
-        let balanceHeaders: [DiningStatisticsCard] = [
-            DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") }),
-            DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") })
-        ]
-        
-        /*let cards: [DiningStatisticsCard] = [
-            DiningStatisticsCard(Text("Hello World")),
-            DiningStatisticsCard(Group{ Text("Hello darkness") }),
-            DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") }),
-            DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f") }),
-            DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "gamecontroller.fill"), balance: 427.84, specifier: "%.2f") })
-        ]*/
-        
-        let balanceCards = createDiningHeaders(with: response)
+        // Create all cards
+        let balanceCards = createDiningBalanceHeaders(with: response)
         let statCards = createDiningCards(with: response)
         let cards = balanceCards + statCards
+        
+        // Create a view with the given cards
         let childView = UIHostingController(rootView: DiningStatisticsView(cards: cards))
         
         addChild(childView)
@@ -70,7 +39,7 @@ class DiningStatisticsViewController: UIViewController {
         childView.didMove(toParent: self)
     }
     
-    func createDiningHeaders(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
+    func createDiningBalanceHeaders(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
         var balanceCards = [DiningStatisticsCard]()
         
         if let dollarBalance = json.diningDollars {
@@ -93,16 +62,29 @@ class DiningStatisticsViewController: UIViewController {
         
         if let guestSwipesBalance = json.swipes {
             balanceCards.append(DiningStatisticsCard(
-                DiningBalanceView(description: "Swipes",
+                DiningBalanceView(description: "Guest Swipes",
                                   image: Image(systemName: "creditcard.fill"),
                                   balance: Double(guestSwipesBalance),
                                   specifier: "%.f",
                                   color: .purple)))
         }
         
+        if balanceCards.count % 2 != 0 {
+            balanceCards.append(DiningStatisticsCard(
+                BlankDiningBalanceView()))
+        }
         
-        
-        return balanceCards
+        var stackedBalanceCards = [DiningStatisticsCard]()
+        for i in stride(from: 0, to: balanceCards.count, by: 2) {
+            stackedBalanceCards.append(DiningStatisticsCard(
+                HStack {
+                    balanceCards[i].padding(.trailing, 5)
+                    balanceCards[i + 1].padding(.leading, 5)
+                }
+            ))
+        }
+
+        return stackedBalanceCards
     }
     
     func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {

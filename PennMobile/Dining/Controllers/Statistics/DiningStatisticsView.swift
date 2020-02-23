@@ -20,9 +20,12 @@ struct DiningStatisticsView: View {
     @State var cards: [DiningStatisticsCard]
     
     var body: some View {
-        List {
-            ForEach(0..<cards.count) { index in
-                self.cards[index]
+        ScrollView {
+            VStack {
+                ForEach(0..<cards.count) { index in
+                    self.cards[index].padding([.leading, .trailing, .top])
+                }
+                Spacer().frame(height: 300)
             }
         }
     }
