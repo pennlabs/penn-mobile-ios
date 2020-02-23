@@ -17,7 +17,7 @@ struct DailyAverageView: View {
     init(config: DiningStatisticsAPIResponse.CardData.DailyAverageCardData) {
         self.config = config
         
-        maxSpent = max(config.data.thisWeek.max()?.average ?? 0.0, config.data.lastWeek.max()?.average ?? 0.0)
+        var maxSpent = max(config.data.thisWeek.max()?.average ?? 0.0, config.data.lastWeek.max()?.average ?? 0.0)
         if maxSpent == 0 { maxSpent = 1 }
         
         thisWeekDollarData = config.data.thisWeek.map({CGFloat($0.average / maxSpent)})
@@ -48,19 +48,36 @@ struct DailyAverageView: View {
         return self.data.count <= 7 ? 6 : (self.data.count <= 33 ? 2 : 0)
     }
     
-    private var maxSpent: Double
     private var averageDollar: CGFloat {
         return (self.data.reduce(0, +) / CGFloat(self.data.count))
     }
     
     private var formattedAverage: String {
-        return "12.34"
-        /*let spec = "%.2f"
+        let maxSpent = max(config.data.thisWeek.max()?.average ?? 0.0, config.data.lastWeek.max()?.average ?? 0.0)
+        let spec = "%.2f"
+        return String(format: "$\(spec)", Double(averageDollar) * maxSpent)
+    }
+    
+    private var formattedAverageForDay: String {
+        let maxSpent = max(config.data.thisWeek.max()?.average ?? 0.0, config.data.lastWeek.max()?.average ?? 0.0)
+        let spec = "%.2f"
         if selectedDataPoint == nil {
             return String(format: "$\(spec)", Double(averageDollar) * maxSpent)
         } else {
             return String(format: "$\(spec)", Double(self.data[self.selectedDataPoint!]) * maxSpent)
-        }*/
+        }
+    }
+    
+    private var formattedDay: String {
+        if selectedDataPoint == nil {
+            return "Average"
+        } else {
+            let df = DateFormatter()
+            df.dateFormat = "EEEE M/d"
+            let date = timeFrame == "This Week" ? config.data.thisWeek[selectedDataPoint!].date :
+                config.data.lastWeek[selectedDataPoint!].date
+            return df.string(from: date)
+        }
     }
     
     var body: some View {
@@ -74,7 +91,7 @@ struct DailyAverageView: View {
                 .font(Font.body.weight(.medium))
                 .foregroundColor(.green)
                 
-                Text("Over the last 7 days, you spent an average of 7.49 dining dollars per day.")
+                Text("Over the \(self.timeFrame == "This Week" ? "last 7 days" : "7 days before that"), you spent an average of \(formattedAverage) dining dollars per day.")
                     .fontWeight(.medium)
             }
             
@@ -86,10 +103,10 @@ struct DailyAverageView: View {
                         Spacer()
                             .frame(width: 120.0, height: 110.0)
                         VStack(alignment: .leading) {
-                            Text(self.selectedDataPoint == nil ? "Average" : "Wednesday 12/14") .font(Font.caption.weight(.bold)).foregroundColor(self.selectedDataPoint == nil ? .gray : .yellow)
+                            Text(self.selectedDataPoint == nil ? "Average" : formattedDay) .font(Font.caption.weight(.bold)).foregroundColor(self.selectedDataPoint == nil ? .gray : .yellow)
                                 .offset(x: 0, y: self.axisOffset - 10)
                             HStack(alignment: .firstTextBaseline, spacing: 4) {
-                                Text(formattedAverage)
+                                Text(formattedAverageForDay)
                                     .font(Font.system(.title, design: .rounded).bold())
                                     .offset(x: 0, y: self.axisOffset - 10)
                                 Text("\(self.selectedDataPoint == nil ? "/ day" : "")").font(Font.caption.weight(.bold)).foregroundColor(.gray)
@@ -148,7 +165,7 @@ struct DailyAverageView: View {
             }
             .padding(.top, 5)
         }
-        .frame(height: 296)
+        .frame(height: 264)
         .padding()
     }
 }
