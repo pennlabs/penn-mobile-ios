@@ -22,6 +22,13 @@ struct DiningStatisticsAPIResponse: Codable {
     struct CardData: Codable {
         let recentTransactions: RecentTransactionsCardData?
         let frequentLocations: FrequentLocationsCardData?
+        let dailyAverage: DailyAverageCardData?
+        
+        enum CodingKeys: String, CodingKey {
+            case recentTransactions = "recent-transactions"
+            case frequentLocations = "frequent-locations"
+            case dailyAverage = "daily-average"
+        }
         
         struct RecentTransactionsCardData: Codable {
             let type: String
@@ -51,9 +58,31 @@ struct DiningStatisticsAPIResponse: Codable {
             }
         }
         
-        enum CodingKeys: String, CodingKey {
-            case recentTransactions = "recent-transactions"
-            case frequentLocations = "frequent-locations"
+        struct DailyAverageCardData: Codable {
+            let type: String
+            let headerTitle: String
+            let data: [DailyAverageTuple]
+            
+            enum CodingKeys: String, CodingKey {
+                case type = "type"
+                case headerTitle = "header-title"
+                case data = "data"
+            }
+            
+            struct DailyAverageTuple: Codable {
+                let thisWeek: [DailyAverage]
+                let lastWeek: [DailyAverage]
+                
+                enum CodingKeys: String, CodingKey {
+                    case thisWeek = "this-week"
+                    case lastWeek = "last-week"
+                }
+                
+                struct DailyAverage: Codable {
+                    let date: Date
+                    let average: Double
+                }
+            }
         }
     }
     

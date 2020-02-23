@@ -2,8 +2,8 @@
   "swipes": 108,
   "dining-dollars": 20,
   "guest-swipes": 5,
-  "start-of-semester": "2020-01-15T00:00:00Z",
-  "end-of-semester": "2020-05-12T00:00:00Z",
+  "start-of-semester": "2020-02-23T12:18:00-05:00",
+  "end-of-semester": "2020-02-23T12:18:00-05:00",
   "cards": {
       "recent-transactions": {
           "type": "recent-transactions",
@@ -12,13 +12,13 @@
           "data": [
             {
               "location": "Canteen Vending API - Charge",
-              "date": "2020-02-17T23:39:00-05:00",
+              "date": "2020-02-23T12:18:00-05:00",
               "balance": 0,
               "amount": -1.45
             },
             {
               "location": "Canteen Vending API - Charge",
-              "date": "2020-02-17T01:52:00-05:00",
+              "date": "2020-02-23T12:18:00-05:00",
               "balance": 1.45,
               "amount": -2.99
             },
@@ -84,6 +84,72 @@
               "semester": 45.44
             }
           ]
+      },
+      "daily-average": {
+          "type": "daily-average",
+          "header-title": "Daily Average",
+          "data": {
+              "this-week": [
+                  {
+                    "day": "2020-02-17T01:49:00Z",
+                    "average": 9.94
+                  },
+                  {
+                    "day": "2020-02-17T01:49:00Z",
+                    "average": 9.94
+                  },
+                  {
+                    "day": "2020-02-17T01:49:00Z",
+                    "average": 9.94
+                  },
+                  {
+                    "day": "2020-02-17T01:49:00Z",
+                    "average": 9.94
+                  },
+                  {
+                    "day": "2020-02-17T01:49:00Z",
+                    "average": 9.94
+                  },
+                  {
+                    "day": "2020-02-17T01:49:00Z",
+                    "average": 9.94
+                  },
+                  {
+                    "day": "2020-02-17T01:49:00Z",
+                    "average": 9.94
+                  }
+              ],
+              "last-week": [
+                   {
+                     "day": "2020-02-17T01:49:00Z",
+                     "average": 9.94
+                   },
+                   {
+                     "day": "2020-02-17T01:49:00Z",
+                     "average": 9.94
+                   },
+                   {
+                     "day": "2020-02-17T01:49:00Z",
+                     "average": 9.94
+                   },
+                   {
+                     "day": "2020-02-17T01:49:00Z",
+                     "average": 9.94
+                   },
+                   {
+                     "day": "2020-02-17T01:49:00Z",
+                     "average": 9.94
+                   },
+                   {
+                     "day": "2020-02-17T01:49:00Z",
+                     "average": 9.94
+                   },
+                   {
+                     "day": "2020-02-17T01:49:00Z",
+                     "average": 9.94
+                   }
+               ],
+          }
       }
   }
 }

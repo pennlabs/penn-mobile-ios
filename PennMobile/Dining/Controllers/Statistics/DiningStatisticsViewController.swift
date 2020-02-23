@@ -39,7 +39,7 @@ class DiningStatisticsViewController: UIViewController {
         childView.didMove(toParent: self)
     }
     
-    func createDiningBalanceHeaders(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
+    private func createDiningBalanceHeaders(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
         var balanceCards = [DiningStatisticsCard]()
         
         if let dollarBalance = json.diningDollars {
@@ -87,7 +87,7 @@ class DiningStatisticsViewController: UIViewController {
         return stackedBalanceCards
     }
     
-    func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
+    private func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
         var cards = [DiningStatisticsCard]()
         
         if let frequentLocations = json.cards.frequentLocations {

@@ -27,15 +27,7 @@ struct FrequentLocationsView: View {
     let config: DiningStatisticsAPIResponse.CardData.FrequentLocationsCardData
     @State private var data: [FrequentLocation]
     @State private var portions: [Double]
-    
-        /*= [
-        .init(location: "Houston Market", totals: [29.34, 70.82, 114.53], color: .red),
-        .init(location: "Pret a Manger", totals: [4.32, 22.56, 123.33], color: .yellow),
-        .init(location: "Accenture Cafe", totals: [14.24, 17.89, 21.25], color: .orange),
-        .init(location: "MBA Cafe", totals: [16.42, 16.42, 55.24], color: .green),
-        .init(location: "Starbucks under Commons", totals: [12.67, 15.67, 30.45], color: .blue),
-        .init(location: "Gourmet Grocer", totals: [0.0, 12.24, 12.24], color: .purple)
-    ]*/
+    // TODO: Expand the colors array to handle more than x venues
     @State private var colors: [Color] = [.orange, .yellow, .green, .blue, .pink, .purple, .red]
     @State private var lengthOfTime: Int = 0
     
