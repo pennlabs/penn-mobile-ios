@@ -27,8 +27,7 @@ struct FrequentLocationsView: View {
     let config: DiningStatisticsAPIResponse.CardData.FrequentLocationsCardData
     @State private var data: [FrequentLocation]
     @State private var portions: [Double]
-    // TODO: Expand the colors array to handle more than x venues
-    @State private var colors: [Color] = [.orange, .yellow, .green, .blue, .pink, .purple, .red]
+    @State private var colors: [Color] = [.orange, .yellow, .green, .blue, .pink, .purple, .red, .orange, .yellow, .green, .blue, .pink, .purple, .red, .orange, .yellow, .green, .blue, .pink, .purple, .red]
     @State private var lengthOfTime: Int = 0
     
     static func computeTotal(with data: [FrequentLocation], for lengthOfTime: Int) -> [Double] {
@@ -54,6 +53,11 @@ struct FrequentLocationsView: View {
         }
     }
     
+    private static func formattedSpending(at location: FrequentLocation, in timeLength: Int) -> String {
+        let s = spending(at: location, in: LengthOfTime(rawValue: timeLength) ?? .week)
+        return String(format: "$%.2f", s)
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             Group {
@@ -64,7 +68,7 @@ struct FrequentLocationsView: View {
                 .font(Font.body.weight(.medium))
                 .foregroundColor(.green)
 
-                Text("\(config.headerBody) \(["week", "month", "semester"][lengthOfTime]).")
+                Text("Your dining dollar totals for each location over the last \(["week", "month", "semester"][lengthOfTime]).")
                 .fontWeight(.medium)
                 .lineLimit(nil)
                 .frame(height: 44)
@@ -77,7 +81,6 @@ struct FrequentLocationsView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                 .frame(height: 20)
                 .padding(.bottom)
-                .opacity(0.6)
 
             VStack(alignment: .leading) {
                 ForEach(self.data.indices, id: \.self) { index in
@@ -86,7 +89,7 @@ struct FrequentLocationsView: View {
                             .foregroundColor(self.colors[index])
                         Text(self.data[index].location)
                         Spacer()
-                        Text("$\(FrequentLocationsView.spending(at: self.data[index], in: self.lengthOfTime))")
+                        Text(FrequentLocationsView.formattedSpending(at: self.data[index], in: self.lengthOfTime))
                     }
                 }
             }
@@ -122,13 +125,5 @@ struct FrequentLocationsView: View {
                 }
             }
         }
-    }
-}
-
-@available(iOS 13, *)
-struct FrequentLocationsView_Previews: PreviewProvider {
-    static var previews: some View {
-        Text("Hello")
-        //FrequentLocationsView(config: , data: [])
     }
 }

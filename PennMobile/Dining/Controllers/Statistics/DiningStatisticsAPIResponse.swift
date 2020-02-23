@@ -33,13 +33,11 @@ struct DiningStatisticsAPIResponse: Codable {
         struct RecentTransactionsCardData: Codable {
             let type: String
             let headerTitle: String
-            let headerBody: String
             let data: [DiningTransaction]
             
             enum CodingKeys: String, CodingKey {
                 case type = "type"
                 case headerTitle = "header-title"
-                case headerBody = "header-body"
                 case data = "data"
             }
         }
@@ -47,13 +45,11 @@ struct DiningStatisticsAPIResponse: Codable {
         struct FrequentLocationsCardData: Codable {
             let type: String
             let headerTitle: String
-            let headerBody: String
             let data: [FrequentLocation]
             
             enum CodingKeys: String, CodingKey {
                 case type = "type"
                 case headerTitle = "header-title"
-                case headerBody = "header-body"
                 case data = "data"
             }
         }
@@ -107,7 +103,7 @@ struct DiningTransaction: Codable, Hashable {
     let amount: Double
     
     var formattedAmount: String {
-        let amountString = String(amount)
+        let amountString = String(format: "%.2f", amount)
         return (self.amount > 0 ? "+" : "") + amountString
     }
     

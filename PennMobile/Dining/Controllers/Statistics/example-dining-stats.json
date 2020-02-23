@@ -8,7 +8,6 @@
       "recent-transactions": {
           "type": "recent-transactions",
           "header-title": "Transactions",
-          "header-body": "Your recent dining dollar transactions",
           "data": [
             {
               "location": "Canteen Vending API - Charge",
@@ -45,7 +44,6 @@
       "frequent-locations": {
           "type": "frequent-locations",
           "header-title": "Frequent Locations",
-          "header-body": "Your dining dollar totals for each location over the last ",
           "data": [
             {
               "location": "Van Pelt Cafe",
