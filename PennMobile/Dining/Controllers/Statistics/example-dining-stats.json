@@ -1,6 +1,6 @@
 {
   "swipes": 108,
-  "dining-dollars": 20,
+  "dining-dollars": 1523.45,
   "guest-swipes": 5,
   "start-of-semester": "2020-02-23T12:18:00-05:00",
   "end-of-semester": "2020-02-23T12:18:00-05:00",
@@ -10,31 +10,31 @@
           "header-title": "Transactions",
           "data": [
             {
-              "location": "Canteen Vending API - Charge",
+              "location": "Van Pelt Cafe",
               "date": "2020-02-23T12:18:00-05:00",
               "balance": 0,
               "amount": -1.45
             },
             {
-              "location": "Canteen Vending API - Charge",
+              "location": "Farmer's Market",
               "date": "2020-02-23T12:18:00-05:00",
               "balance": 1.45,
               "amount": -2.99
             },
             {
-              "location": "Canteen Vending API - Charge",
+              "location": "Van Pelt Cafe",
               "date": "2020-02-17T01:49:00Z",
               "balance": 4.44,
               "amount": -1.49
             },
             {
-              "location": "Canteen Vending API - Charge",
+              "location": "Houston Hall",
               "date": "2020-02-11T16:32:00Z",
               "balance": 5.93,
               "amount": -14.07
             },
             {
-              "location": "Canteen Vending API - Charge",
+              "location": "Houston Hall",
               "date": "2020-02-10T22:01:00Z",
               "balance": 20,
               "amount": -4.06

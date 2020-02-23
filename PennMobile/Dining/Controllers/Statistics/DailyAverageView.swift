@@ -84,15 +84,11 @@ struct DailyAverageView: View {
         VStack(alignment: .leading) {
             // Top labels
             Group {
-                HStack {
-                    Image(systemName: "dollarsign.circle.fill")
-                    Text("Dining Dollars")
-                }
-                .font(Font.body.weight(.medium))
-                .foregroundColor(.green)
-                
+                CardHeaderTitleView(color: .green, icon: .dollars, title: "Daily Averages")
                 Text("Over the \(self.timeFrame == "This Week" ? "last 7 days" : "7 days before that"), you spent an average of \(formattedAverage) dining dollars per day.")
                     .fontWeight(.medium)
+                Divider()
+                .padding([.top, .bottom])
             }
             
             // Graph view
@@ -163,9 +159,9 @@ struct DailyAverageView: View {
                     self.axisOffset = (self.selectedDataPoint == nil ? ((0.5 - self.averageDollar) * 110) : ((0.5 - self.data[self.selectedDataPoint!]) * 110))
                 }
             }
-            .padding(.top, 5)
+            .padding(.top)
         }
-        .frame(height: 264)
+        .frame(height: 318)
         .padding()
     }
 }

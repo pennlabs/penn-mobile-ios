@@ -15,7 +15,7 @@ import SwiftUI
 typealias DiningStatisticsCard = AnyView
 
 @available(iOS 13, *)
-struct DiningStatisticsView: View {
+struct DiningInsightsView: View {
     
     @State var cards: [DiningStatisticsCard]
     
@@ -32,8 +32,8 @@ struct DiningStatisticsView: View {
 }
 
 @available(iOS 13, *)
-struct DiningStatisticsView_Previews: PreviewProvider {
+struct DiningInsightsView_Previews: PreviewProvider {
     static var previews: some View {
-        DiningStatisticsView(cards: [DiningStatisticsCard(Text("This is")), DiningStatisticsCard(Text("an array")), DiningStatisticsCard(Image(systemName: "gamecontroller"))])
+        DiningInsightsView(cards: [DiningStatisticsCard(Text("This is")), DiningStatisticsCard(Text("an array")), DiningStatisticsCard(Image(systemName: "gamecontroller"))])
     }
 }

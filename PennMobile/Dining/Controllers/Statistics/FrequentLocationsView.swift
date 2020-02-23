@@ -61,13 +61,7 @@ struct FrequentLocationsView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Group {
-                HStack {
-                    Image(systemName: "dollarsign.circle.fill")
-                    Text(config.headerTitle)
-                }
-                .font(Font.body.weight(.medium))
-                .foregroundColor(.green)
-
+                CardHeaderTitleView(color: .green, icon: .dollars, title: "Frequent Locations")
                 Text("Your dining dollar totals for each location over the last \(["week", "month", "semester"][lengthOfTime]).")
                 .fontWeight(.medium)
                 .lineLimit(nil)

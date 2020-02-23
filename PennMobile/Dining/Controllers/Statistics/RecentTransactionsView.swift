@@ -25,7 +25,7 @@ struct RecentTransactionsView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            //CardHeaderView(color: .green, icon: .dollars, title: "Transactions", subtitle: "Your recent dining dollar transactions.")
+            CardHeaderView(color: .green, icon: .dollars, title: "Transactions", subtitle: "Your recent dining dollar transactions.")
             
             Divider()
                 .padding([.top, .bottom])
@@ -39,5 +39,32 @@ struct RecentTransactionsView: View {
                 }
             }
         }.padding()
+    }
+    
+    struct RecentTransactionsViewRow: View {
+        
+        var transaction: DiningTransaction
+        
+        var body: some View {
+            HStack {
+                Image(systemName: "circle.fill")
+                    .resizable()
+                    .frame(width: 10, height: 10)
+                    .foregroundColor(.orange)
+                VStack(alignment: .leading) {
+                    Text(transaction.location)
+                    Text(transaction.formattedDate)
+                        .font(.caption).foregroundColor(.gray)
+                }
+                Spacer()
+                VStack(alignment: .trailing) {
+                    Text(transaction.formattedAmount)
+                        .fontWeight(.medium)
+                        .foregroundColor(transaction.amount > 0 ? .green : .red)
+                    Text(String(transaction.balance))
+                        .font(.caption).foregroundColor(.gray)
+                }
+            }
+        }
     }
 }

@@ -32,38 +32,17 @@ struct DiningStatisticsAPIResponse: Codable {
         
         struct RecentTransactionsCardData: Codable {
             let type: String
-            let headerTitle: String
             let data: [DiningTransaction]
-            
-            enum CodingKeys: String, CodingKey {
-                case type = "type"
-                case headerTitle = "header-title"
-                case data = "data"
-            }
         }
         
         struct FrequentLocationsCardData: Codable {
             let type: String
-            let headerTitle: String
             let data: [FrequentLocation]
-            
-            enum CodingKeys: String, CodingKey {
-                case type = "type"
-                case headerTitle = "header-title"
-                case data = "data"
-            }
         }
         
         struct DailyAverageCardData: Codable {
             let type: String
-            let headerTitle: String
             let data: DailyAverageTuple
-            
-            enum CodingKeys: String, CodingKey {
-                case type = "type"
-                case headerTitle = "header-title"
-                case data = "data"
-            }
             
             struct DailyAverageTuple: Codable {
                 let thisWeek: [DailyAverage]

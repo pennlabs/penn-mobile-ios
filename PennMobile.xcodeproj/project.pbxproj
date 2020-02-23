@@ -223,8 +223,8 @@
 		EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */; };
 		F203DC1C2400C3FF003350E2 /* FrequentLocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203DC1B2400C3FF003350E2 /* FrequentLocationsView.swift */; };
 		F203DC1E2400DA60003350E2 /* RecentTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203DC1D2400DA60003350E2 /* RecentTransactionsView.swift */; };
-		F203DC202400DBD5003350E2 /* RecentTransactionsViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203DC1F2400DBD5003350E2 /* RecentTransactionsViewRow.swift */; };
 		F203DC222402ED45003350E2 /* DailyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203DC212402ED45003350E2 /* DailyAverageView.swift */; };
+		F203DC2424032555003350E2 /* CardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203DC2324032554003350E2 /* CardHeaderView.swift */; };
 		F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */; };
 		F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */; };
 		F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */; };
@@ -248,7 +248,7 @@
 		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
 		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
-		F2B05E1A24008CD900C267EB /* DiningStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1924008CD900C267EB /* DiningStatisticsView.swift */; };
+		F2B05E1A24008CD900C267EB /* DiningInsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1924008CD900C267EB /* DiningInsightsView.swift */; };
 		F2B05E1C24009B0B00C267EB /* DiningBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */; };
 		F2B05E2024009C4000C267EB /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1F24009C4000C267EB /* CardView.swift */; };
 		F2B05E222400B6A300C267EB /* DiningStatisticsAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E212400B6A200C267EB /* DiningStatisticsAPIResponse.swift */; };
@@ -494,8 +494,8 @@
 		EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupUser.swift; sourceTree = "<group>"; };
 		F203DC1B2400C3FF003350E2 /* FrequentLocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentLocationsView.swift; sourceTree = "<group>"; };
 		F203DC1D2400DA60003350E2 /* RecentTransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTransactionsView.swift; sourceTree = "<group>"; };
-		F203DC1F2400DBD5003350E2 /* RecentTransactionsViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTransactionsViewRow.swift; sourceTree = "<group>"; };
 		F203DC212402ED45003350E2 /* DailyAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageView.swift; sourceTree = "<group>"; };
+		F203DC2324032554003350E2 /* CardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardHeaderView.swift; sourceTree = "<group>"; };
 		F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPreference.swift; sourceTree = "<group>"; };
 		F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreference.swift; sourceTree = "<group>"; };
@@ -515,7 +515,7 @@
 		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
 		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
-		F2B05E1924008CD900C267EB /* DiningStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningStatisticsView.swift; sourceTree = "<group>"; };
+		F2B05E1924008CD900C267EB /* DiningInsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningInsightsView.swift; sourceTree = "<group>"; };
 		F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalanceView.swift; sourceTree = "<group>"; };
 		F2B05E1F24009C4000C267EB /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		F2B05E212400B6A200C267EB /* DiningStatisticsAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningStatisticsAPIResponse.swift; sourceTree = "<group>"; };
@@ -1366,8 +1366,7 @@
 				F203DC1B2400C3FF003350E2 /* FrequentLocationsView.swift */,
 				F203DC212402ED45003350E2 /* DailyAverageView.swift */,
 				F203DC1D2400DA60003350E2 /* RecentTransactionsView.swift */,
-				F203DC1F2400DBD5003350E2 /* RecentTransactionsViewRow.swift */,
-				F2B05E1924008CD900C267EB /* DiningStatisticsView.swift */,
+				F2B05E1924008CD900C267EB /* DiningInsightsView.swift */,
 				F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */,
 			);
 			path = Statistics;
@@ -1377,6 +1376,7 @@
 			isa = PBXGroup;
 			children = (
 				F2B05E1F24009C4000C267EB /* CardView.swift */,
+				F203DC2324032554003350E2 /* CardHeaderView.swift */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -1661,7 +1661,7 @@
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				F203DC1C2400C3FF003350E2 /* FrequentLocationsView.swift in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
-				F2B05E1A24008CD900C267EB /* DiningStatisticsView.swift in Sources */,
+				F2B05E1A24008CD900C267EB /* DiningInsightsView.swift in Sources */,
 				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
@@ -1679,7 +1679,6 @@
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
 				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
-				F203DC202400DBD5003350E2 /* RecentTransactionsViewRow.swift in Sources */,
 				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
@@ -1863,6 +1862,7 @@
 				21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
 				216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */,
+				F203DC2424032555003350E2 /* CardHeaderView.swift in Sources */,
 				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

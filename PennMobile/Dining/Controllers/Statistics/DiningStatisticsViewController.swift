@@ -31,7 +31,7 @@ class DiningStatisticsViewController: UIViewController {
         let cards = balanceCards + statCards
         
         // Create a view with the given cards
-        let childView = UIHostingController(rootView: DiningStatisticsView(cards: cards))
+        let childView = UIHostingController(rootView: DiningInsightsView(cards: cards))
         
         addChild(childView)
         childView.view.frame = view.bounds
@@ -56,7 +56,7 @@ class DiningStatisticsViewController: UIViewController {
                 DiningBalanceView(description: "Swipes",
                                   image: Image(systemName: "creditcard.fill"),
                                   balance: Double(swipesBalance),
-                                  specifier: "%.f",
+                                  specifier: "%g",
                                   color: .blue)))
         }
         
@@ -65,7 +65,7 @@ class DiningStatisticsViewController: UIViewController {
                 DiningBalanceView(description: "Guest Swipes",
                                   image: Image(systemName: "creditcard.fill"),
                                   balance: Double(guestSwipesBalance),
-                                  specifier: "%.f",
+                                  specifier: "%g",
                                   color: .purple)))
         }
         
