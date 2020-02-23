@@ -107,34 +107,35 @@ class RootViewController: UIViewController, NotificationRequestable {
             }
         }
         
-        if #available(iOS 13, *) {
-            if shouldShareCourses() {
-                // Share user's courses. Do not fetch previous semesters if the current semester has been fetched.
-                let savedCourses = UserDefaults.standard.getCourses()
-                let fetchCurrentTermOnly = savedCourses?.contains { $0.term == Course.currentTerm } ?? false
-                PennInTouchNetworkManager.instance.getCourses(currentTermOnly: fetchCurrentTermOnly) { (courses) in
-                    if let courses = courses {
-                        UserDefaults.standard.saveCourses(courses)
-                        UserDBManager.shared.saveCoursesAnonymously(courses)
-                    }
+        if shouldShareCourses() {
+            // Share user's courses. Do not fetch previous semesters if the current semester has been fetched.
+            let savedCourses = UserDefaults.standard.getCourses()
+            let fetchCurrentTermOnly = savedCourses?.contains { $0.term == Course.currentTerm } ?? false
+            PennInTouchNetworkManager.instance.getCourses(currentTermOnly: fetchCurrentTermOnly) { (courses) in
+                if let courses = courses {
+                    UserDefaults.standard.saveCourses(courses)
+                    UserDBManager.shared.saveCoursesAnonymously(courses)
                 }
-            } else if shouldFetchTwoFactorCode() {
-                 //Request to fetch Two Factor Code again if the app failed to fetch it last time
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "Two-Step Code Not Fetched", message: "We were unable to fetch your Two-Step code last time. Do you want to try again?", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
-                        alert.dismiss(animated: true, completion: nil)
-                        UserDefaults.standard.setTwoFactorEnabledDate(nil);
-                    }))
-                    
-                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-                        let twc = TwoFactorWebviewController()
-                        self.current.present(twc, animated: true)
-                    }))
+            }
+        }
+        
+        if shouldRefetchCode() {
+             //Request to fetch Two Factor Code again if the app failed to fetch it last time
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Two-Step Code Not Fetched", message: "We were unable to fetch your Two-Step code last time. Do you want to try again?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
+                    alert.dismiss(animated: true, completion: nil)
+                    UserDefaults.standard.setTwoFactorEnabledDate(nil);
+                }))
                 
-                    self.current.present(alert, animated: true, completion: nil)
-                }
-            } else {
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+                    TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+                }))
+            
+                self.current.present(alert, animated: true, completion: nil)
+            }
+        } else if #available(iOS 13, *) {
+            if shouldRequestCoursePermission() {
                 // Request permission, then share courses if granted
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     let vc = CoursePrivacyController()
@@ -142,6 +143,7 @@ class RootViewController: UIViewController, NotificationRequestable {
                 }
             }
         }
+        
         // Send saved unsent events
         FeedAnalyticsManager.shared.sendSavedEvents()
         
@@ -388,16 +390,16 @@ extension RootViewController : TwoFactorEnableDelegate {
     }
     /**
      Checks whether the user has enabled Two Factor but the code was never fetched. This can happen when the user closes the
-     app before it is done fetching the code. Don't try to fetch it if Two Factor was enabled more than a week ago. Also, don't try to fetch
+     app before it is done fetching the code. Don't try to fetch it if Two Factor was enabled more than 3 days ago. Also, don't try to fetch
      it again if the user already tried again once.
      */
-    func shouldFetchTwoFactorCode() -> Bool {
+    func shouldRefetchCode() -> Bool {
         if let date = UserDefaults.standard.getTwoFactorEnabledDate() {
             let code = TwoFactorTokenGenerator.instance.generate()
             
             if (code == nil) {
                 let elapsedInDays = Date().timeIntervalSince(date) / (60*60*24)
-                if elapsedInDays <= 7 {
+                if elapsedInDays <= 3 {
                     return true
                 } else {
                     UserDefaults.standard.setTwoFactorEnabledDate(nil)
