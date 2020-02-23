@@ -39,11 +39,11 @@ class DiningStatisticsViewController: UIViewController {
         childView.didMove(toParent: self)
     }
     
-    private func createDiningBalanceHeaders(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
-        var balanceCards = [DiningStatisticsCard]()
+    private func createDiningBalanceHeaders(with json: DiningStatisticsAPIResponse) -> [DiningInsightCard] {
+        var balanceCards = [DiningInsightCard]()
         
         if let dollarBalance = json.diningDollars {
-            balanceCards.append(DiningStatisticsCard(
+            balanceCards.append(DiningInsightCard(
                 DiningBalanceView(description: "Dining Dollars",
                                   image: Image(systemName: "dollarsign.circle.fill"),
                                   balance: dollarBalance,
@@ -52,7 +52,7 @@ class DiningStatisticsViewController: UIViewController {
         }
         
         if let swipesBalance = json.swipes {
-            balanceCards.append(DiningStatisticsCard(
+            balanceCards.append(DiningInsightCard(
                 DiningBalanceView(description: "Swipes",
                                   image: Image(systemName: "creditcard.fill"),
                                   balance: Double(swipesBalance),
@@ -61,7 +61,7 @@ class DiningStatisticsViewController: UIViewController {
         }
         
         if let guestSwipesBalance = json.swipes {
-            balanceCards.append(DiningStatisticsCard(
+            balanceCards.append(DiningInsightCard(
                 DiningBalanceView(description: "Guest Swipes",
                                   image: Image(systemName: "creditcard.fill"),
                                   balance: Double(guestSwipesBalance),
@@ -70,13 +70,13 @@ class DiningStatisticsViewController: UIViewController {
         }
         
         if balanceCards.count % 2 != 0 {
-            balanceCards.append(DiningStatisticsCard(
+            balanceCards.append(DiningInsightCard(
                 BlankDiningBalanceView()))
         }
         
-        var stackedBalanceCards = [DiningStatisticsCard]()
+        var stackedBalanceCards = [DiningInsightCard]()
         for i in stride(from: 0, to: balanceCards.count, by: 2) {
-            stackedBalanceCards.append(DiningStatisticsCard(
+            stackedBalanceCards.append(DiningInsightCard(
                 HStack {
                     balanceCards[i].padding(.trailing, 5)
                     balanceCards[i + 1].padding(.leading, 5)
@@ -87,12 +87,12 @@ class DiningStatisticsViewController: UIViewController {
         return stackedBalanceCards
     }
     
-    private func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
-        var cards = [DiningStatisticsCard]()
+    private func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningInsightCard] {
+        var cards = [DiningInsightCard]()
         
         if let config = json.cards.frequentLocations {
             cards.append(
-                DiningStatisticsCard(
+                DiningInsightCard(
                     CardView {
                         FrequentLocationsView(config: config)
                     }
@@ -101,7 +101,7 @@ class DiningStatisticsViewController: UIViewController {
         
         if let config = json.cards.recentTransactions {
             cards.append(
-                DiningStatisticsCard(
+                DiningInsightCard(
                     CardView {
                         RecentTransactionsView(config: config)
                     }
@@ -110,7 +110,7 @@ class DiningStatisticsViewController: UIViewController {
         
         if let config = json.cards.dailyAverage {
             cards.append(
-                DiningStatisticsCard(
+                DiningInsightCard(
                     CardView {
                         DailyAverageView(config: config)
                     }

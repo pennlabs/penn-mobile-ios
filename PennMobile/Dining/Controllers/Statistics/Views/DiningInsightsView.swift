@@ -12,12 +12,12 @@ import SwiftUI
 #endif
 
 @available(iOS 13, *)
-typealias DiningStatisticsCard = AnyView
+typealias DiningInsightCard = AnyView
 
 @available(iOS 13, *)
 struct DiningInsightsView: View {
     
-    @State var cards: [DiningStatisticsCard]
+    @State var cards: [DiningInsightCard]
     
     var body: some View {
         ScrollView {
@@ -34,6 +34,6 @@ struct DiningInsightsView: View {
 @available(iOS 13, *)
 struct DiningInsightsView_Previews: PreviewProvider {
     static var previews: some View {
-        DiningInsightsView(cards: [DiningStatisticsCard(Text("This is")), DiningStatisticsCard(Text("an array")), DiningStatisticsCard(Image(systemName: "gamecontroller"))])
+        DiningInsightsView(cards: [DiningInsightCard(Text("This is")), DiningInsightCard(Text("an array")), DiningInsightCard(Image(systemName: "gamecontroller"))])
     }
 }

@@ -1322,6 +1322,28 @@
 			path = GSRGroups;
 			sourceTree = "<group>";
 		};
+		F203DC2524032B37003350E2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F2B05E1E24009C3500C267EB /* Cards */,
+				F2B05E1924008CD900C267EB /* DiningInsightsView.swift */,
+				F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */,
+				F203DC1B2400C3FF003350E2 /* FrequentLocationsView.swift */,
+				F203DC212402ED45003350E2 /* DailyAverageView.swift */,
+				F203DC1D2400DA60003350E2 /* RecentTransactionsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F203DC2624032B6D003350E2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F2B05E232400BA0200C267EB /* example-dining-stats.json */,
+				F2B05E212400B6A200C267EB /* DiningStatisticsAPIResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		F212BE7D23B6ACC800ED46A1 /* Privacy */ = {
 			isa = PBXGroup;
 			children = (
@@ -1359,26 +1381,20 @@
 		F2B05E1D24009B7D00C267EB /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
-				F2B05E1E24009C3500C267EB /* Card */,
 				1382055723EF7CA2005969AB /* DiningStatisticsViewController.swift */,
-				F2B05E232400BA0200C267EB /* example-dining-stats.json */,
-				F2B05E212400B6A200C267EB /* DiningStatisticsAPIResponse.swift */,
-				F203DC1B2400C3FF003350E2 /* FrequentLocationsView.swift */,
-				F203DC212402ED45003350E2 /* DailyAverageView.swift */,
-				F203DC1D2400DA60003350E2 /* RecentTransactionsView.swift */,
-				F2B05E1924008CD900C267EB /* DiningInsightsView.swift */,
-				F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */,
+				F203DC2524032B37003350E2 /* Views */,
+				F203DC2624032B6D003350E2 /* Model */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
 		};
-		F2B05E1E24009C3500C267EB /* Card */ = {
+		F2B05E1E24009C3500C267EB /* Cards */ = {
 			isa = PBXGroup;
 			children = (
 				F2B05E1F24009C4000C267EB /* CardView.swift */,
 				F203DC2324032554003350E2 /* CardHeaderView.swift */,
 			);
-			path = Card;
+			path = Cards;
 			sourceTree = "<group>";
 		};
 		F39F45CD2E6687396F84B8E3 /* Frameworks */ = {
