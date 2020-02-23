@@ -61,7 +61,7 @@ struct DiningStatisticsAPIResponse: Codable {
         struct DailyAverageCardData: Codable {
             let type: String
             let headerTitle: String
-            let data: [DailyAverageTuple]
+            let data: DailyAverageTuple
             
             enum CodingKeys: String, CodingKey {
                 case type = "type"
