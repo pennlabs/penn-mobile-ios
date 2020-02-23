@@ -14,7 +14,7 @@ import SwiftUI
 @available(iOS 13, *)
 struct DailyAverageView: View {
     
-    init(config: DiningStatisticsAPIResponse.CardData.DailyAverageCardData) {
+    init(config: DiningInsightsAPIResponse.CardData.DailyAverageCardData) {
         self.config = config
         
         var maxSpent = max(config.data.thisWeek.max()?.average ?? 0.0, config.data.lastWeek.max()?.average ?? 0.0)
@@ -28,7 +28,7 @@ struct DailyAverageView: View {
         dayOfWeek = config.data.thisWeek.map({ String(dayFormatter.string(from: $0.date).first ?? Character(" ")) })
     }
     
-    let config: DiningStatisticsAPIResponse.CardData.DailyAverageCardData
+    let config: DiningInsightsAPIResponse.CardData.DailyAverageCardData
     @State private var selectedDataPoint: Int? = nil
     
     private let thisWeekDollarData: [CGFloat]

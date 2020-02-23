@@ -18,13 +18,13 @@ struct FrequentLocationsView: View {
         case week, month, semester
     }
     
-    init(config: DiningStatisticsAPIResponse.CardData.FrequentLocationsCardData) {
+    init(config: DiningInsightsAPIResponse.CardData.FrequentLocationsCardData) {
         self.config = config
         _data = State(initialValue: config.data)
         _portions = State(initialValue: FrequentLocationsView.computeTotal(with: config.data, for: 0))
     }
     
-    let config: DiningStatisticsAPIResponse.CardData.FrequentLocationsCardData
+    let config: DiningInsightsAPIResponse.CardData.FrequentLocationsCardData
     @State private var data: [FrequentLocation]
     @State private var portions: [Double]
     @State private var colors: [Color] = [.orange, .yellow, .green, .blue, .pink, .purple, .red, .orange, .yellow, .green, .blue, .pink, .purple, .red, .orange, .yellow, .green, .blue, .pink, .purple, .red]

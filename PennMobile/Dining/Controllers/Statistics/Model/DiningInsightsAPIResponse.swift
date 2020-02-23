@@ -1,5 +1,5 @@
 //
-//  DiningStatisticsAPIResponse.swift
+//  DiningInsightsAPIResponse.swift
 //  PennMobile
 //
 //  Created by Dominic Holmes on 2/21/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DiningStatisticsAPIResponse: Codable {
+struct DiningInsightsAPIResponse: Codable {
     
     let swipes: Int?
     let diningDollars: Double?
@@ -57,7 +57,7 @@ struct DiningStatisticsAPIResponse: Codable {
                     let date: Date
                     let average: Double
                     
-                    static func < (lhs: DiningStatisticsAPIResponse.CardData.DailyAverageCardData.DailyAverageTuple.DailyAverage, rhs: DiningStatisticsAPIResponse.CardData.DailyAverageCardData.DailyAverageTuple.DailyAverage) -> Bool {
+                    static func < (lhs: DiningInsightsAPIResponse.CardData.DailyAverageCardData.DailyAverageTuple.DailyAverage, rhs: DiningInsightsAPIResponse.CardData.DailyAverageCardData.DailyAverageTuple.DailyAverage) -> Bool {
                         return lhs.average < rhs.average
                     }
                 }
@@ -84,6 +84,10 @@ struct DiningTransaction: Codable, Hashable {
     var formattedAmount: String {
         let amountString = String(format: "%.2f", amount)
         return (self.amount > 0 ? "+" : "") + amountString
+    }
+    
+    var formattedBalance: String {
+        return String(format: "%.2f", balance)
     }
     
     var formattedDate: String {

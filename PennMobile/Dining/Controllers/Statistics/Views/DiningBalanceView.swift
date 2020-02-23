@@ -21,13 +21,18 @@ struct DiningBalanceView: View {
     var specifier: String = "%g"
     var color: Color = .blue
     
+    var formattedBalance: String {
+        let b: Double = balance
+        return String(format: "\(self.specifier)", b)
+    }
+    
     var body: some View {
         CardView {
             VStack(alignment: .trailing) {
                 HStack {
                     self.image.font(Font.system(size: 24).weight(.bold))
                     Spacer()
-                    Text(String(self.balance))
+                    Text(self.formattedBalance)
                         .font(.system(size: 24, design: .rounded))
                         .fontWeight(.bold)
                 }

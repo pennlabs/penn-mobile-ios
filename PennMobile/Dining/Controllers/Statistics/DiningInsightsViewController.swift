@@ -1,5 +1,5 @@
 //
-//  DiningStatisticsViewController.swift
+//  DiningInsightsViewController.swift
 //  PennMobile
 //
 //  Created by Elizabeth Powell on 2/8/20.
@@ -12,7 +12,7 @@ import SwiftUI
 #endif
 
 @available(iOS 13, *)
-class DiningStatisticsViewController: UIViewController {
+class DiningInsightsViewController: UIViewController {
     
     private var cancellable: Any?
     
@@ -23,7 +23,7 @@ class DiningStatisticsViewController: UIViewController {
         let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        let response = try! decoder.decode(DiningStatisticsAPIResponse.self, from: data)
+        let response = try! decoder.decode(DiningInsightsAPIResponse.self, from: data)
         
         // Create all cards
         let balanceCards = createDiningBalanceHeaders(with: response)
@@ -39,7 +39,7 @@ class DiningStatisticsViewController: UIViewController {
         childView.didMove(toParent: self)
     }
     
-    private func createDiningBalanceHeaders(with json: DiningStatisticsAPIResponse) -> [DiningInsightCard] {
+    private func createDiningBalanceHeaders(with json: DiningInsightsAPIResponse) -> [DiningInsightCard] {
         var balanceCards = [DiningInsightCard]()
         
         if let dollarBalance = json.diningDollars {
@@ -60,7 +60,7 @@ class DiningStatisticsViewController: UIViewController {
                                   color: .blue)))
         }
         
-        if let guestSwipesBalance = json.swipes {
+        if let guestSwipesBalance = json.guestSwipes {
             balanceCards.append(DiningInsightCard(
                 DiningBalanceView(description: "Guest Swipes",
                                   image: Image(systemName: "creditcard.fill"),
@@ -87,7 +87,7 @@ class DiningStatisticsViewController: UIViewController {
         return stackedBalanceCards
     }
     
-    private func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningInsightCard] {
+    private func createDiningCards(with json: DiningInsightsAPIResponse) -> [DiningInsightCard] {
         var cards = [DiningInsightCard]()
         
         if let config = json.cards.frequentLocations {

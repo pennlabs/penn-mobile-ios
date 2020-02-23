@@ -1,5 +1,5 @@
 //
-//  DiningStatisticsView.swift
+//  DiningInsightsView.swift
 //  PennMobile
 //
 //  Created by Dominic Holmes on 2/21/20.

@@ -14,12 +14,12 @@ import SwiftUI
 @available(iOS 13, *)
 struct RecentTransactionsView: View {
     
-    init(config: DiningStatisticsAPIResponse.CardData.RecentTransactionsCardData) {
+    init(config: DiningInsightsAPIResponse.CardData.RecentTransactionsCardData) {
         self.config = config
         _data = State(initialValue: config.data)
     }
     
-    let config: DiningStatisticsAPIResponse.CardData.RecentTransactionsCardData
+    let config: DiningInsightsAPIResponse.CardData.RecentTransactionsCardData
     @State var data: [DiningTransaction]
     
     var body: some View {
@@ -61,7 +61,7 @@ struct RecentTransactionsView: View {
                     Text(transaction.formattedAmount)
                         .fontWeight(.medium)
                         .foregroundColor(transaction.amount > 0 ? .green : .red)
-                    Text(String(transaction.balance))
+                    Text(transaction.formattedBalance)
                         .font(.caption).foregroundColor(.gray)
                 }
             }

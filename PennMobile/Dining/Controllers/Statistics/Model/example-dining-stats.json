@@ -7,7 +7,6 @@
   "cards": {
       "recent-transactions": {
           "type": "recent-transactions",
-          "header-title": "Transactions",
           "data": [
             {
               "location": "Van Pelt Cafe",
@@ -34,16 +33,15 @@
               "amount": -14.07
             },
             {
-              "location": "Houston Hall",
+              "location": "Dining Plan - BFF",
               "date": "2020-02-10T22:01:00Z",
-              "balance": 20,
-              "amount": -4.06
+              "balance": 1400,
+              "amount": 1400
             }
           ]
       },
       "frequent-locations": {
           "type": "frequent-locations",
-          "header-title": "Frequent Locations",
           "data": [
             {
               "location": "Van Pelt Cafe",
@@ -85,7 +83,6 @@
       },
       "daily-average": {
           "type": "daily-average",
-          "header-title": "Daily Average",
           "data": {
               "this-week": [
                   {
@@ -146,7 +143,7 @@
                      "date": "2020-02-16T01:49:00-05:00",
                      "average": 23.94
                    }
-               ],
+               ]
           }
       }
   }
