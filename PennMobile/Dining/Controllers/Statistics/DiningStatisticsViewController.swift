@@ -90,20 +90,29 @@ class DiningStatisticsViewController: UIViewController {
     private func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
         var cards = [DiningStatisticsCard]()
         
-        if let frequentLocations = json.cards.frequentLocations {
+        if let config = json.cards.frequentLocations {
             cards.append(
                 DiningStatisticsCard(
                     CardView {
-                        FrequentLocationsView(config: frequentLocations)
+                        FrequentLocationsView(config: config)
                     }
                 ))
         }
         
-        if let recentTransactions = json.cards.recentTransactions {
+        if let config = json.cards.recentTransactions {
             cards.append(
                 DiningStatisticsCard(
                     CardView {
-                        RecentTransactionsView(config: recentTransactions)
+                        RecentTransactionsView(config: config)
+                    }
+            ))
+        }
+        
+        if let config = json.cards.dailyAverage {
+            cards.append(
+                DiningStatisticsCard(
+                    CardView {
+                        DailyAverageView(config: config)
                     }
             ))
         }

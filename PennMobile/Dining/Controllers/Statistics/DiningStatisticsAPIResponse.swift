@@ -78,9 +78,13 @@ struct DiningStatisticsAPIResponse: Codable {
                     case lastWeek = "last-week"
                 }
                 
-                struct DailyAverage: Codable {
+                struct DailyAverage: Codable, Comparable {
                     let date: Date
                     let average: Double
+                    
+                    static func < (lhs: DiningStatisticsAPIResponse.CardData.DailyAverageCardData.DailyAverageTuple.DailyAverage, rhs: DiningStatisticsAPIResponse.CardData.DailyAverageCardData.DailyAverageTuple.DailyAverage) -> Bool {
+                        return lhs.average < rhs.average
+                    }
                 }
             }
         }

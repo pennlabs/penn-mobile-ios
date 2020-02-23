@@ -25,7 +25,7 @@ struct DiningStatisticsView: View {
                 ForEach(0..<cards.count) { index in
                     self.cards[index].padding([.leading, .trailing, .top])
                 }
-                Spacer().frame(height: 300)
+                Spacer().frame(height: 300) // Not sure why we need this extra space, but we do
             }
         }
     }
