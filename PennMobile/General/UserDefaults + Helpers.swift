@@ -33,6 +33,7 @@ extension UserDefaults {
         case housing
         case privacyPreferences
         case notificationPreferences
+        case totpEnabledDate
     }
     
     func clearAll() {
@@ -506,5 +507,16 @@ extension UserDefaults {
 
     private func clearNotificationPreferences() {
         removeObject(forKey: UserDefaultsKeys.notificationPreferences.rawValue)
+    }
+}
+// MARK: - Two Factor Enabled flag
+extension UserDefaults {
+
+    func getTwoFactorEnabledDate() -> Date? {
+        return UserDefaults.standard.value(forKey: UserDefaultsKeys.totpEnabledDate.rawValue) as? Date
+    }
+    
+    func setTwoFactorEnabledDate(_ date: Date?) {
+        UserDefaults.standard.set(date, forKey: UserDefaultsKeys.totpEnabledDate.rawValue)
     }
 }
