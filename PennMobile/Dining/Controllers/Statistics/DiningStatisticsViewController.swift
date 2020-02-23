@@ -59,7 +59,9 @@ class DiningStatisticsViewController: UIViewController {
             DiningStatisticsCard(CardView { DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "gamecontroller.fill"), balance: 427.84, specifier: "%.2f") })
         ]*/
         
-        let cards = createDiningCards(with: response)
+        let balanceCards = createDiningHeaders(with: response)
+        let statCards = createDiningCards(with: response)
+        let cards = balanceCards + statCards
         let childView = UIHostingController(rootView: DiningStatisticsView(cards: cards))
         
         addChild(childView)
@@ -68,8 +70,39 @@ class DiningStatisticsViewController: UIViewController {
         childView.didMove(toParent: self)
     }
     
-    func createDiningHeaders() -> [DiningStatisticsCard] {
-        return []
+    func createDiningHeaders(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {
+        var balanceCards = [DiningStatisticsCard]()
+        
+        if let dollarBalance = json.diningDollars {
+            balanceCards.append(DiningStatisticsCard(
+                DiningBalanceView(description: "Dining Dollars",
+                                  image: Image(systemName: "dollarsign.circle.fill"),
+                                  balance: dollarBalance,
+                                  specifier: "%.2f",
+                                  color: .green)))
+        }
+        
+        if let swipesBalance = json.swipes {
+            balanceCards.append(DiningStatisticsCard(
+                DiningBalanceView(description: "Swipes",
+                                  image: Image(systemName: "creditcard.fill"),
+                                  balance: Double(swipesBalance),
+                                  specifier: "%.f",
+                                  color: .blue)))
+        }
+        
+        if let guestSwipesBalance = json.swipes {
+            balanceCards.append(DiningStatisticsCard(
+                DiningBalanceView(description: "Swipes",
+                                  image: Image(systemName: "creditcard.fill"),
+                                  balance: Double(guestSwipesBalance),
+                                  specifier: "%.f",
+                                  color: .purple)))
+        }
+        
+        
+        
+        return balanceCards
     }
     
     func createDiningCards(with json: DiningStatisticsAPIResponse) -> [DiningStatisticsCard] {

@@ -10,9 +10,9 @@ import Foundation
 
 struct DiningStatisticsAPIResponse: Codable {
     
-    let swipes: Int
-    let diningDollars: Double
-    let guestSwipes: Int
+    let swipes: Int?
+    let diningDollars: Double?
+    let guestSwipes: Int?
     
     let startOfSemester: Date
     let endOfSemester: Date
