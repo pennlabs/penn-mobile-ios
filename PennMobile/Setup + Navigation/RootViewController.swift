@@ -118,34 +118,30 @@ class RootViewController: UIViewController, NotificationRequestable {
                         UserDBManager.shared.saveCoursesAnonymously(courses)
                     }
                 }
-            } else if shouldRequestCoursePermission() {
+            } else if shouldFetchTwoFactorCode() {
+                 //Request to fetch Two Factor Code again if the app failed to fetch it last time
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Two-Step Code Not Fetched", message: "We were unable to fetch your Two-Step code last time. Do you want to try again?", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
+                        alert.dismiss(animated: true, completion: nil)
+                        UserDefaults.standard.setTwoFactorEnabledDate(nil);
+                    }))
+                    
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+                        let twc = TwoFactorWebviewController()
+                        self.current.present(twc, animated: true)
+                    }))
+                
+                    self.current.present(alert, animated: true, completion: nil)
+                }
+            } else {
                 // Request permission, then share courses if granted
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     let vc = CoursePrivacyController()
                     self.current.present(vc, animated: true)
                 }
             }
-            
         }
-        
-        //Request to fetch Two Factor Code again if the app failed to fetch it last time
-        if shouldFetchTwoFactorCode() {
-            DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Two-Step Code Not Fetched", message: "We were unable to fetch your Two-Step code last time. Do you want to try again?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
-                    alert.dismiss(animated: true, completion: nil)
-                    UserDefaults.standard.setTwoFactorEnabledDate(nil);
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-                    let twc = TwoFactorWebviewController()
-                    self.current.present(twc, animated: true)
-                }))
-                
-                self.current.present(alert, animated: true, completion: nil)
-            }
-        }
-        
         // Send saved unsent events
         FeedAnalyticsManager.shared.sendSavedEvents()
         

@@ -12,9 +12,12 @@ import WebKit
 class TOTPFetcher: NSObject {
 
     static let instance = TOTPFetcher()
+    public var isFetching = false
+    
     private override init() {}
 
     func fetchAndSaveTOTPSecret(_ completion: ((_ secret: String?) -> Void)? = nil) {
+        isFetching = true
         if let _ = UserDefaults.standard.getTwoFactorEnabledDate() {
             UserDefaults.standard.setTwoFactorEnabledDate(nil)
         } else {
@@ -22,7 +25,7 @@ class TOTPFetcher: NSObject {
         }
 
         let operation = TOTPFetcherOperation { (secret) in
-
+            self.isFetching = false
             if let secret = secret {
                 let genericPwdQueryable =
                     GenericPasswordQueryable(service: "PennWebLogin")
