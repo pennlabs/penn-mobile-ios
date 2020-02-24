@@ -1,35 +1,12 @@
 //
-//  ScheduleNetworkManager.swift
+//  CourseScheduleTableViewModel.swift
 //  PennMobile
 //
 //  Created by CHOI Jongmin on 16/2/2020.
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-import Foundation
-import SwiftyJSON
-
-final class WeeklyScheduleModelManager {
-        
-    static let instance = WeeklyScheduleModelManager()
-    private init() {}
-    
-    func fetchModel(_ completion: @escaping (_ model: WeeklyScheduleTableViewModel?) -> Void) {
-        var model: WeeklyScheduleTableViewModel? = WeeklyScheduleTableViewModel()
-        
-        if let courses = UserDefaults.standard.getCourses() {
-            if courses.isEmpty {
-                
-            }
-            model = try? WeeklyScheduleTableViewModel(courses: courses)
-            completion(model)
-        } else {
-            completion(nil)
-        }
-    }
-}
-
-extension WeeklyScheduleTableViewModel {
+final class CourseScheduleTableViewModel: ModularTableViewModel {
     convenience init(courses: Set<Course>) throws {
         self.init()
         

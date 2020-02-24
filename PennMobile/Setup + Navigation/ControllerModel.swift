@@ -27,7 +27,7 @@ enum Feature: String {
     case event = "Event"
     case privacy = "Privacy"
     case notifications = "Notifications"
-    case weeklySchedule = "Weekly Schedule"
+    case courseSchedule = "Course Schedule"
 }
 
 class ControllerModel: NSObject {
@@ -50,7 +50,7 @@ class ControllerModel: NSObject {
         vcDictionary[.about] = AboutViewController()
         vcDictionary[.notifications] = NotificationViewController()
         vcDictionary[.privacy] = PrivacyViewController()
-        vcDictionary[.weeklySchedule] = WeeklyScheduleViewController()
+        vcDictionary[.courseSchedule] = CourseScheduleViewController()
 //        vcDictionary[.fling] = FlingViewController()
     }
 
@@ -70,7 +70,7 @@ class ControllerModel: NSObject {
     // Features order in MoreViewController:
     var moreOrder: [Feature] {
         get {
-            return [.news, .fitness, .contacts, .weeklySchedule, .about]
+            return [.news, .fitness, .contacts, .courseSchedule, .about]
         }
     }
     var moreIcons: [UIImage] {
