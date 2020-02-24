@@ -98,6 +98,10 @@ extension Course {
         return ["S", "M", "T", "W", "R", "F", "S"]
     }
     
+    static var weekdayFullName: [String] {
+        return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    }
+    
     var isTaughtToday: Bool {
         get {
             return isTaughtInNDays(days: 0)
