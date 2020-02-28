@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: Full API Response
 struct DiningInsightsAPIResponse: Codable {
     
     let swipes: Int?
@@ -20,6 +21,7 @@ struct DiningInsightsAPIResponse: Codable {
     let cards: CardData
     
     struct CardData: Codable {
+        // These cards are defined in extensions of CardData to keep this struct definition small
         let recentTransactions: RecentTransactionsCardData?
         let frequentLocations: FrequentLocationsCardData?
         let dailyAverage: DailyAverageCardData?
@@ -28,40 +30,6 @@ struct DiningInsightsAPIResponse: Codable {
             case recentTransactions = "recent-transactions"
             case frequentLocations = "frequent-locations"
             case dailyAverage = "daily-average"
-        }
-        
-        struct RecentTransactionsCardData: Codable {
-            let type: String
-            let data: [DiningTransaction]
-        }
-        
-        struct FrequentLocationsCardData: Codable {
-            let type: String
-            let data: [FrequentLocation]
-        }
-        
-        struct DailyAverageCardData: Codable {
-            let type: String
-            let data: DailyAverageTuple
-            
-            struct DailyAverageTuple: Codable {
-                let thisWeek: [DailyAverage]
-                let lastWeek: [DailyAverage]
-                
-                enum CodingKeys: String, CodingKey {
-                    case thisWeek = "this-week"
-                    case lastWeek = "last-week"
-                }
-                
-                struct DailyAverage: Codable, Comparable {
-                    let date: Date
-                    let average: Double
-                    
-                    static func < (lhs: DiningInsightsAPIResponse.CardData.DailyAverageCardData.DailyAverageTuple.DailyAverage, rhs: DiningInsightsAPIResponse.CardData.DailyAverageCardData.DailyAverageTuple.DailyAverage) -> Bool {
-                        return lhs.average < rhs.average
-                    }
-                }
-            }
         }
     }
     
@@ -75,6 +43,7 @@ struct DiningInsightsAPIResponse: Codable {
     }
 }
 
+// MARK: Dining Transaction
 struct DiningTransaction: Codable, Hashable {
     let location: String
     let date: Date
@@ -97,9 +66,62 @@ struct DiningTransaction: Codable, Hashable {
     }
 }
 
+// MARK: Frequent Location
 struct FrequentLocation: Codable {
     let location: String
     let week: Double
     let month: Double
     let semester: Double
+}
+
+
+// MARK: Recent Transactions Card
+extension DiningInsightsAPIResponse.CardData {
+    struct RecentTransactionsCardData: Codable {
+        let type: String
+        let data: [DiningTransaction]
+    }
+}
+
+// MARK: Frequent Locations Card
+extension DiningInsightsAPIResponse.CardData {
+    struct FrequentLocationsCardData: Codable {
+        let type: String
+        let data: [FrequentLocation]
+    }
+}
+
+// MARK: Predictions Graph Card
+extension DiningInsightsAPIResponse.CardData {
+    struct PredictionsGraphCardData: Codable {
+        let type: String
+        let data: [FrequentLocation]
+    }
+}
+
+// MARK: Daily Average Card
+extension DiningInsightsAPIResponse.CardData {
+    struct DailyAverageCardData: Codable {
+        let type: String
+        let data: DailyAverageTuple
+        
+        struct DailyAverageTuple: Codable {
+            let thisWeek: [DailyAverage]
+            let lastWeek: [DailyAverage]
+            
+            enum CodingKeys: String, CodingKey {
+                case thisWeek = "this-week"
+                case lastWeek = "last-week"
+            }
+            
+            struct DailyAverage: Codable, Comparable {
+                let date: Date
+                let average: Double
+                
+                static func < (lhs: DiningInsightsAPIResponse.CardData.DailyAverageCardData.DailyAverageTuple.DailyAverage, rhs: DiningInsightsAPIResponse.CardData.DailyAverageCardData.DailyAverageTuple.DailyAverage) -> Bool {
+                    return lhs.average < rhs.average
+                }
+            }
+        }
+    }
 }
