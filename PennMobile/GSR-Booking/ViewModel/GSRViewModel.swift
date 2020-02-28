@@ -183,7 +183,7 @@ extension GSRViewModel: GSRSelectionDelegate {
         switch action {
         case .add:
             if currentSelection.contains(timeSlot) { break }
-            if !isValidAddition(timeSlot: timeSlot) {
+            if !isValidAddition(timeSlot: timeSlot) && group == nil {
                 currentSelection.removeAll()
                 delegate.refreshDataUI()
             }
