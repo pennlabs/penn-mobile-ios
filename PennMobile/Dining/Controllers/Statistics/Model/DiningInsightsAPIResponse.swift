@@ -95,7 +95,7 @@ extension DiningInsightsAPIResponse.CardData {
 extension DiningInsightsAPIResponse.CardData {
     struct PredictionsGraphCardData: Codable {
         let type: String
-        let data: [FrequentLocation]
+        let data: [DiningTransaction]
     }
 }
 

@@ -253,6 +253,9 @@
 		F2B05E2024009C4000C267EB /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1F24009C4000C267EB /* CardView.swift */; };
 		F2B05E222400B6A300C267EB /* DiningInsightsAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E212400B6A200C267EB /* DiningInsightsAPIResponse.swift */; };
 		F2B05E242400BA0200C267EB /* example-dining-stats.json in Resources */ = {isa = PBXBuildFile; fileRef = F2B05E232400BA0200C267EB /* example-dining-stats.json */; };
+		F2C432672409C3F60044CCF5 /* PredictionsGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C432662409C3F60044CCF5 /* PredictionsGraphView.swift */; };
+		F2C4326A2409C5950044CCF5 /* PredictionsGraphView+VariableStepGraphPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C432692409C5950044CCF5 /* PredictionsGraphView+VariableStepGraphPath.swift */; };
+		F2C4326C2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4326B2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
@@ -520,6 +523,9 @@
 		F2B05E1F24009C4000C267EB /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		F2B05E212400B6A200C267EB /* DiningInsightsAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningInsightsAPIResponse.swift; sourceTree = "<group>"; };
 		F2B05E232400BA0200C267EB /* example-dining-stats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "example-dining-stats.json"; sourceTree = "<group>"; };
+		F2C432662409C3F60044CCF5 /* PredictionsGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionsGraphView.swift; sourceTree = "<group>"; };
+		F2C432692409C5950044CCF5 /* PredictionsGraphView+VariableStepGraphPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+VariableStepGraphPath.swift"; sourceTree = "<group>"; };
+		F2C4326B2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+SmoothedData.swift"; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		FF0E05C04C7854E515BFE595 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1327,6 +1333,7 @@
 			children = (
 				F2B05E1E24009C3500C267EB /* Cards */,
 				F2B05E1924008CD900C267EB /* DiningInsightsView.swift */,
+				F2C432682409C5770044CCF5 /* PredictionsGraph */,
 				F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */,
 				F203DC1B2400C3FF003350E2 /* FrequentLocationsView.swift */,
 				F203DC212402ED45003350E2 /* DailyAverageView.swift */,
@@ -1395,6 +1402,16 @@
 				F203DC2324032554003350E2 /* CardHeaderView.swift */,
 			);
 			path = Cards;
+			sourceTree = "<group>";
+		};
+		F2C432682409C5770044CCF5 /* PredictionsGraph */ = {
+			isa = PBXGroup;
+			children = (
+				F2C432662409C3F60044CCF5 /* PredictionsGraphView.swift */,
+				F2C4326B2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift */,
+				F2C432692409C5950044CCF5 /* PredictionsGraphView+VariableStepGraphPath.swift */,
+			);
+			path = PredictionsGraph;
 			sourceTree = "<group>";
 		};
 		F39F45CD2E6687396F84B8E3 /* Frameworks */ = {
@@ -1862,6 +1879,7 @@
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
 				B64830A2213C939200FD2B17 /* FitnessHeaderView.swift in Sources */,
+				F2C432672409C3F60044CCF5 /* PredictionsGraphView.swift in Sources */,
 				C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */,
 				B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */,
 				CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */,
@@ -1877,6 +1895,8 @@
 				66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */,
 				21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
+				F2C4326A2409C5950044CCF5 /* PredictionsGraphView+VariableStepGraphPath.swift in Sources */,
+				F2C4326C2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift in Sources */,
 				216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */,
 				F203DC2424032555003350E2 /* CardHeaderView.swift in Sources */,
 				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,
