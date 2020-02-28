@@ -25,11 +25,13 @@ struct DiningInsightsAPIResponse: Codable {
         let recentTransactions: RecentTransactionsCardData?
         let frequentLocations: FrequentLocationsCardData?
         let dailyAverage: DailyAverageCardData?
+        let predictionsGraph: PredictionsGraphCardData?
         
         enum CodingKeys: String, CodingKey {
             case recentTransactions = "recent-transactions"
             case frequentLocations = "frequent-locations"
             case dailyAverage = "daily-average"
+            case predictionsGraph = "predictions-graph"
         }
     }
     

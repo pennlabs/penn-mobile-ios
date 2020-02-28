@@ -90,6 +90,15 @@ class DiningInsightsViewController: UIViewController {
     private func createDiningCards(with json: DiningInsightsAPIResponse) -> [DiningInsightCard] {
         var cards = [DiningInsightCard]()
         
+        if let config = json.cards.predictionsGraph {
+            cards.append(
+                DiningInsightCard(
+                    CardView {
+                        PredictionsGraphView(config: config)
+                    }
+                ))
+        }
+        
         if let config = json.cards.frequentLocations {
             cards.append(
                 DiningInsightCard(
