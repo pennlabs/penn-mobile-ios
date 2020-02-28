@@ -36,16 +36,3 @@ final class HomeGroupInvitesCellItem: HomeCellItem {
         return HomeGroupInvitesCellItem(invites: invites)
     }
 }
-
-extension HomeGroupInvitesCellItem: HomeAPIRequestable {
-    func fetchData(_ completion: @escaping () -> Void) {
-//        GSRGroupNetworkManager.instance.getInvites { (success, invites, error) in
-//            if success {
-//                self.invites = invites
-//            }
-//
-//            completion()
-//        }
-        completion()
-    }
-}
