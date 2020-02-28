@@ -137,8 +137,18 @@ extension OAuth2NetworkManager {
                                 return
                             }
                             
-                            // Clear refresh token and force user to log in
-                            self.clearRefreshToken()
+                            PlatformNetworkManager.instance.getAccessTokenUsingCredentials { (result) in
+                                switch result {
+                                case .success(let accessToken):
+                                    callback(accessToken)
+                                case .failure(let error):
+                                    print(error)
+                                    // Clear refresh token and force user to log in
+                                    self.clearRefreshToken()
+                                    callback(nil)
+                                }
+                            }
+                            return
                         }
                     }
                 }
