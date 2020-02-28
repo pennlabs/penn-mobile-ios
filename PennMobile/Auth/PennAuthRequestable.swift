@@ -20,11 +20,18 @@ extension PennAuthRequestable {
         return "https://weblogin.pennkey.upenn.edu/idp/profile"
     }
     
+    /// This works if the url request returns to the exact same url after authentication.
     func makeAuthRequest(targetUrl: String, shibbolethUrl: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        let url = URL(string: targetUrl)!
+        makeAuthRequest(startUrl: targetUrl, targetUrl: targetUrl, requireExactMatch: true, shibbolethUrl: shibbolethUrl, completionHandler)
+    }
+    
+    /// Require exact match: if TRUE, request only successful if final url is the target url
+    ///                 if FALSE, request successful if final url contains the target url
+    func makeAuthRequest(startUrl: String, targetUrl: String, requireExactMatch: Bool, shibbolethUrl: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        let url = URL(string: startUrl)!
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let urlStr = response?.url?.absoluteString, urlStr == targetUrl {
+            if let urlStr = response?.url?.absoluteString, (requireExactMatch && urlStr == targetUrl) || (!requireExactMatch && urlStr.contains(targetUrl)) {
                 UserDefaults.standard.setShibbolethAuth(authedIn: true)
                 completionHandler(data, response, error)
                 return
@@ -33,13 +40,13 @@ extension PennAuthRequestable {
             if let response = response as? HTTPURLResponse,
                 let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue),
                 let urlStr = response.url?.absoluteString {
-                if urlStr == targetUrl {
+                if (requireExactMatch && urlStr == targetUrl) || (!requireExactMatch && urlStr.contains(targetUrl)) {
                     UserDefaults.standard.setShibbolethAuth(authedIn: true)
                     completionHandler(data, response, error)
                 } else if urlStr.contains(self.authUrl) {
-                    self.makeRequestWithAuth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
+                    self.makeRequestWithAuth(targetUrl: targetUrl, requireExactMatch: requireExactMatch, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
                 } else {
-                    self.makeRequestWithShibboleth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
+                    self.makeRequestWithShibboleth(targetUrl: targetUrl, requireExactMatch: requireExactMatch, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
                 }
             } else {
                 UserDefaults.standard.setShibbolethAuth(authedIn: false)
@@ -50,7 +57,7 @@ extension PennAuthRequestable {
         task.resume()
     }
     
-    private func makeRequestWithAuth(targetUrl: String, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+    private func makeRequestWithAuth(targetUrl: String, requireExactMatch: Bool, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         guard let actionUrl = html.getMatches(for: "form action=\"(.*?)\" method=\"POST\" id=\"login-form\"").first else {
             UserDefaults.standard.setShibbolethAuth(authedIn: false)
             completionHandler(nil, nil, NetworkingError.authenticationError)
@@ -106,10 +113,10 @@ extension PennAuthRequestable {
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
 
                 if(html.contains("two-step-form")){
-                    self.makeRequestWithTwoFac(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
+                    self.makeRequestWithTwoFac(targetUrl: targetUrl, requireExactMatch: requireExactMatch, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
                 }
                 else {
-                    self.makeRequestWithShibboleth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
+                    self.makeRequestWithShibboleth(targetUrl: targetUrl, requireExactMatch: requireExactMatch, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
                 }
             } else {
                 UserDefaults.standard.setShibbolethAuth(authedIn: false)
@@ -120,7 +127,7 @@ extension PennAuthRequestable {
         task.resume()
     }
     
-    private func makeRequestWithShibboleth(targetUrl: String, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+    private func makeRequestWithShibboleth(targetUrl: String, requireExactMatch: Bool, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         guard let samlResponse = html.getMatches(for: "<input type=\"hidden\" name=\"SAMLResponse\" value=\"(.*?)\"/>").first,
             let relayState = html.getMatches(for: "<input type=\"hidden\" name=\"RelayState\" value=\"(.*?)\"/>").first?.replacingOccurrences(of: "&#x3a;", with: ":") else {
                 UserDefaults.standard.setShibbolethAuth(authedIn: false)
@@ -148,7 +155,7 @@ extension PennAuthRequestable {
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             UserDefaults.standard.storeCookies()
-            if let response = response as? HTTPURLResponse, let urlStr = response.url?.absoluteString, urlStr == targetUrl {
+            if let response = response as? HTTPURLResponse, let urlStr = response.url?.absoluteString, (requireExactMatch && urlStr == targetUrl) || (!requireExactMatch && urlStr.contains(targetUrl)) {
                 UserDefaults.standard.setShibbolethAuth(authedIn: true)
                 completionHandler(data, response, error)
             } else {
@@ -159,7 +166,7 @@ extension PennAuthRequestable {
         task.resume()
     }
 
-    private func makeRequestWithTwoFac(targetUrl: String, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void){
+    private func makeRequestWithTwoFac(targetUrl: String, requireExactMatch: Bool, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void){
         
         guard let passcode = html.getMatches(for: "name=\"passcode\" value=\"(.*?)\"").first,
         let required = html.getMatches(for: "name=\"required\" value=\"(.*?)\"").first,
@@ -199,7 +206,7 @@ extension PennAuthRequestable {
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                self.makeRequestWithShibboleth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
+                self.makeRequestWithShibboleth(targetUrl: targetUrl, requireExactMatch: requireExactMatch, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
             } else {
                 UserDefaults.standard.setShibbolethAuth(authedIn: false)
                 completionHandler(nil, nil, NetworkingError.authenticationError)

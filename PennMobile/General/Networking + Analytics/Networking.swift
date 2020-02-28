@@ -25,6 +25,7 @@ enum NetworkingError: String, LocalizedError {
     case serverError
     case jsonError = "JSON error"
     case authenticationError = "Unable to authenticate"
+    case platformAuthError
     case other
     var localizedDescription: String { return NSLocalizedString(self.rawValue, comment: "") }
 }

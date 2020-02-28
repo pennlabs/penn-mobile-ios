@@ -142,6 +142,7 @@
 		665F1FC523D261B100DC023E /* TwoFactorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F1FC423D261B100DC023E /* TwoFactorCell.swift */; };
 		665F1FC723D2628800DC023E /* TwoFactorWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */; };
 		667EC29623DB9C4800B0DF66 /* TwoFactorEnableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */; };
+		667EC2982402F3E000B0DF66 /* PlatformNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667EC2972402F3E000B0DF66 /* PlatformNetworkManager.swift */; };
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
@@ -398,6 +399,7 @@
 		665F1FC423D261B100DC023E /* TwoFactorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorCell.swift; sourceTree = "<group>"; };
 		665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorWebviewController.swift; sourceTree = "<group>"; };
 		667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorEnableController.swift; sourceTree = "<group>"; };
+		667EC2972402F3E000B0DF66 /* PlatformNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformNetworkManager.swift; sourceTree = "<group>"; };
 		66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPFetcher.swift; sourceTree = "<group>"; };
 		66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorTokenGenerator.swift; sourceTree = "<group>"; };
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
@@ -1063,6 +1065,7 @@
 				66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */,
 				665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */,
 				667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */,
+				667EC2972402F3E000B0DF66 /* PlatformNetworkManager.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1712,6 +1715,7 @@
 				21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
+				667EC2982402F3E000B0DF66 /* PlatformNetworkManager.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
 				97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */,
 				F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */,

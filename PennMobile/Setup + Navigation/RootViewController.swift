@@ -144,6 +144,7 @@ class RootViewController: UIViewController, NotificationRequestable {
             }
         }
         
+        PlatformNetworkManager.instance.makeRequest()
         // Send saved unsent events
         FeedAnalyticsManager.shared.sendSavedEvents()
         
