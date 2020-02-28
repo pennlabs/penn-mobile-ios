@@ -18,10 +18,12 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var emptyView: EmptyView!
     fileprivate var barButton: UIBarButtonItem!
     fileprivate var bookingsBarButton: UIBarButtonItem!
-
+    
+    var group: GSRGroup?
+    
+    var barButtonTitle = "Submit"
+    
     var currentDay = Date()
-
-    let barButtonTitle  = "Submit"
 
     fileprivate var viewModel: GSRViewModel!
     
@@ -46,6 +48,10 @@ class GSRController: GenericViewController, IndicatorEnabled {
     }
 
     override func setupNavBar() {
+        if group != nil {
+            barButtonTitle = "Review"
+        }
+        
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
         barButton.tintColor = UIColor.navigation
 
@@ -117,6 +123,7 @@ extension GSRController {
     fileprivate func prepareViewModel() {
         viewModel = GSRViewModel(selectedLocation: startingLocation)
         viewModel.delegate = self
+        viewModel.group = group
     }
 }
 
@@ -190,7 +197,6 @@ extension GSRController {
 extension GSRController: GSRBookable {
     fileprivate func refreshBarButton() {
         self.barButton.tintColor = .clear
-        barButton.title = barButtonTitle
         self.barButton.tintColor = nil
     }
 
@@ -223,6 +229,11 @@ extension GSRController: GSRBookable {
     }
 
     private func submitPressed(for booking: GSRBooking) {
+        if let booking = booking as? GSRGroupBooking {
+            handleGroupBooking(booking)
+            return
+        }
+        
         if GSRNetworkManager.instance.bookingRequestOutstanding {
             return
         }
@@ -263,6 +274,12 @@ extension GSRController: GSRBookable {
                 presentLoginController(with: booking)
             }
         }
+    }
+}
+
+extension GSRController {
+    private func handleGroupBooking(_ booking: GSRGroupBooking) {
+        print("Booking with \(booking.groupName)")
     }
 }
 

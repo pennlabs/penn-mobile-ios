@@ -84,6 +84,7 @@ extension GSRManageGroupController: GSRManageGroupViewModelDelegate {
         guard let groupName = group?.name else { return }
         let bookingController = GSRLocationsController()
         bookingController.title = "\(groupName) Booking"
+        bookingController.group = group
         navigationController?.pushViewController(bookingController, animated: true)
     }
     

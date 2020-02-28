@@ -69,6 +69,8 @@ class GSRViewModel: NSObject {
             return currentRooms.isEmpty
         }
     }
+    
+    var group: GSRGroup?
 }
 
 // MARK: - UIPickerViewDelegate, UIPickerViewDataSource
@@ -273,6 +275,11 @@ extension GSRViewModel {
             timeSlot = timeSlot.next!
         }
         endTime = timeSlot.endTime
+        
+        if let group = group {
+            return GSRGroupBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime, gsrGroup: group)
+        }
+        
         return GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)
     }
 }
