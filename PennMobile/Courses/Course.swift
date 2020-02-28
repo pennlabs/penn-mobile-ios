@@ -116,11 +116,15 @@ extension Course {
     
     func isTaughtInNDays(days: Int) -> Bool {
         let weekday = Date().integerDayOfWeek
+        return isTaughtOnWeekday(weekday: (weekday + days) % 7)
+    }
+    
+    func isTaughtOnWeekday(weekday: Int) -> Bool {
         if let times = meetingTimes {
-            let weekday = Course.weekdayAbbreviations[(weekday + days) % 7]
+            let weekday = Course.weekdayAbbreviations[weekday]
             return times.contains { $0.weekday.contains(weekday) }
         } else {
-            return weekdays.contains(Course.weekdayAbbreviations[(weekday + days) % 7])
+            return weekdays.contains(Course.weekdayAbbreviations[weekday])
         }
     }
     
