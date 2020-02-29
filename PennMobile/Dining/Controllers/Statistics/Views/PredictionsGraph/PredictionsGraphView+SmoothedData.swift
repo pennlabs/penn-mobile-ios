@@ -30,6 +30,9 @@ extension PredictionsGraphView {
     
     static func getPredictionLineSlope(from trans: [DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.DiningBalance], startOfSemester sos: Date, endOfSemester eos: Date, predictedZeroDate zpd: Date) -> Double {
         
+        // TODO: Fix this, the logic is slightly wrong
+        // TODO: Add actual OUT date to the UI
+        
         guard sos < eos else { return 0.0 }
         guard let last = trans.last else { return 0.0 }
         
