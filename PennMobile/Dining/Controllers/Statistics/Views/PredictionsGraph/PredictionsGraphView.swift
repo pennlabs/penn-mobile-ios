@@ -34,6 +34,7 @@ struct PredictionsGraphView: View {
         self.config = config
         _data = State(initialValue: PredictionsGraphView.getSmoothedData(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester))
         _axisLabelsYX = State(initialValue: PredictionsGraphView.getAxisLabelsYX(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester))
+        _balanceType = State(initialValue: (config.type.contains("swipes") ? .swipes : .dollars))
     }
     
     struct YXDataPoint {
@@ -44,20 +45,26 @@ struct PredictionsGraphView: View {
     let config: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData
     @State var data: [PredictionsGraphView.YXDataPoint]
     @State var axisLabelsYX: ([String], [String])
+    @State var balanceType: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.BalanceType
     
     var body: some View {
         VStack(alignment: .leading) {
-            CardHeaderView(color: .blue, icon: .predictions, title: "Swipes Predictions", subtitle: "Log into Penn Mobile often to get more accurate predictions.")
-                .frame(height: 60)
+            Group {
+                CardHeaderTitleView(color: balanceType == .swipes ? .blue : .green, icon: .predictions, title: "\(balanceType == .swipes ? "Swipes" : "Dining Dollars") Predictions")
+                Text("Log into Penn Mobile often to get more accurate predictions.")
+                .fontWeight(.medium)
+                .lineLimit(nil)
+                .frame(height: 44)
+            }
             Divider()
                 .padding([.top, .bottom])
-            VariableStepLineGraphView(data: self.data, lastPointPosition: self.data.last?.x ?? 0, xAxisLabels: axisLabelsYX.1, yAxisLabels: axisLabelsYX.0)
+            VariableStepLineGraphView(data: self.data, lastPointPosition: self.data.last?.x ?? 0, xAxisLabels: axisLabelsYX.1, yAxisLabels: axisLabelsYX.0, lineColor: balanceType == .swipes ? .blue : .green)
             Divider()
             .padding([.top, .bottom])
             
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Out of Swipes")
+                    Text("Out of \(balanceType == .swipes ? "Swipes" : "Dollars")")
                         .font(.caption)
                     Text("Dec. 15th")
                         .font(Font.system(size: 21, weight: .bold, design: .rounded))

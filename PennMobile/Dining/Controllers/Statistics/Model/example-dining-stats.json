@@ -5,76 +5,105 @@
   "start-of-semester": "2020-02-23T12:18:00-05:00",
   "end-of-semester": "2020-02-23T12:18:00-05:00",
   "cards": {
-      "predictions-graph": {
-          "type": "predictions-graph",
+      "predictions-graph-dollars": {
+          "type": "predictions-graph-dollars",
           "start-of-semester": "2020-01-13T12:18:00-05:00",
           "end-of-semester": "2020-04-20T12:18:00-05:00",
           "data": [
             {
-              "location": "Van Pelt Cafe",
               "date": "2020-01-14T12:18:00-05:00",
-              "balance": 1400,
-              "amount": -1.45
+              "balance": 1400
             },
             {
-              "location": "Farmer's Market",
               "date": "2020-02-14T12:18:00-05:00",
-              "balance": 1300,
-              "amount": -2.99
+              "balance": 1300
             },
             {
-              "location": "Van Pelt Cafe",
               "date": "2020-02-17T01:49:00Z",
-              "balance": 1243,
-              "amount": -1.49
+              "balance": 1243
             },
             {
-              "location": "Houston Hall",
               "date": "2020-02-20T16:32:00Z",
-              "balance": 1233,
-              "amount": -14.07
+              "balance": 1233
             },
             {
-              "location": "Dining Plan - BFF",
               "date": "2020-02-21T22:01:00Z",
-              "balance": 1200,
-              "amount": 1400
+              "balance": 1200
             },
             {
-              "location": "Van Pelt Cafe",
               "date": "2020-02-22T12:18:00-05:00",
-              "balance": 1198,
-              "amount": -1.45
+              "balance": 1198
             },
             {
-              "location": "Farmer's Market",
               "date": "2020-02-23T12:18:00-05:00",
-              "balance": 1160,
-              "amount": -2.99
+              "balance": 1160
             },
             {
-              "location": "Van Pelt Cafe",
               "date": "2020-02-24T01:49:00Z",
-              "balance": 1134,
-              "amount": -1.49
+              "balance": 1134
             },
             {
-              "location": "Houston Hall",
               "date": "2020-02-25T16:32:00Z",
-              "balance": 1122,
-              "amount": -14.07
+              "balance": 1122
             },
             {
-              "location": "Dining Plan - BFF",
               "date": "2020-02-27T22:01:00Z",
-              "balance": 1111,
-              "amount": 1400
+              "balance": 1111
             },
             {
-              "location": "Van Pelt Cafe",
               "date": "2020-02-28T12:18:00-05:00",
-              "balance": 1110,
-              "amount": -1.45
+              "balance": 1110
+            }
+          ]
+      },
+      "predictions-graph-swipes": {
+          "type": "predictions-graph-swipes",
+          "start-of-semester": "2020-01-13T12:18:00-05:00",
+          "end-of-semester": "2020-04-20T12:18:00-05:00",
+          "data": [
+            {
+              "date": "2020-01-14T12:18:00-05:00",
+              "balance": 140
+            },
+            {
+              "date": "2020-02-14T12:18:00-05:00",
+              "balance": 138
+            },
+            {
+              "date": "2020-02-17T01:49:00Z",
+              "balance": 130
+            },
+            {
+              "date": "2020-02-20T16:32:00Z",
+              "balance": 127
+            },
+            {
+              "date": "2020-02-21T22:01:00Z",
+              "balance": 122
+            },
+            {
+              "date": "2020-02-22T12:18:00-05:00",
+              "balance": 120
+            },
+            {
+              "date": "2020-02-23T12:18:00-05:00",
+              "balance": 100
+            },
+            {
+              "date": "2020-02-24T01:49:00Z",
+              "balance": 99
+            },
+            {
+              "date": "2020-02-25T16:32:00Z",
+              "balance": 97
+            },
+            {
+              "date": "2020-02-27T22:01:00Z",
+              "balance": 90
+            },
+            {
+              "date": "2020-02-28T12:18:00-05:00",
+              "balance": 62
             }
           ]
       },

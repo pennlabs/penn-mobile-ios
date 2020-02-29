@@ -18,7 +18,7 @@ extension PredictionsGraphView {
     static let yAxisLabelCount = 5
     
     // Compute axis labels
-    static func getAxisLabelsYX(from trans: [DiningTransaction], startOfSemester sos: Date, endOfSemester eos: Date) -> ([String], [String]) {
+    static func getAxisLabelsYX(from trans: [DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.DiningBalance], startOfSemester sos: Date, endOfSemester eos: Date) -> ([String], [String]) {
         
         var xLabels: [String] = []
         var yLabels: [String] = []

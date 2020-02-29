@@ -25,13 +25,15 @@ struct DiningInsightsAPIResponse: Codable {
         let recentTransactions: RecentTransactionsCardData?
         let frequentLocations: FrequentLocationsCardData?
         let dailyAverage: DailyAverageCardData?
-        let predictionsGraph: PredictionsGraphCardData?
+        let predictionsGraphSwipes: PredictionsGraphCardData?
+        let predictionsGraphDollars: PredictionsGraphCardData?
         
         enum CodingKeys: String, CodingKey {
             case recentTransactions = "recent-transactions"
             case frequentLocations = "frequent-locations"
             case dailyAverage = "daily-average"
-            case predictionsGraph = "predictions-graph"
+            case predictionsGraphSwipes = "predictions-graph-swipes"
+            case predictionsGraphDollars = "predictions-graph-dollars"
         }
     }
     
@@ -97,7 +99,7 @@ extension DiningInsightsAPIResponse.CardData {
 extension DiningInsightsAPIResponse.CardData {
     struct PredictionsGraphCardData: Codable {
         let type: String
-        let data: [DiningTransaction]
+        let data: [DiningBalance]
         let startOfSemester: Date
         let endOfSemester: Date
         
@@ -106,6 +108,16 @@ extension DiningInsightsAPIResponse.CardData {
             case data = "data"
             case startOfSemester = "start-of-semester"
             case endOfSemester = "end-of-semester"
+        }
+        
+        struct DiningBalance: Codable {
+            let date: Date
+            let balance: Double
+        }
+        
+        enum BalanceType: String {
+            case dollars
+            case swipes
         }
     }
 }

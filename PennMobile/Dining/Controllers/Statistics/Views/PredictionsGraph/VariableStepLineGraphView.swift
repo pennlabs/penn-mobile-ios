@@ -23,6 +23,7 @@ struct VariableStepLineGraphView: View {
     @State var lastPointPosition: CGFloat = 0.0
     @State var xAxisLabels: [String]
     @State var yAxisLabels: [String]
+    var lineColor: Color
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -47,7 +48,7 @@ struct VariableStepLineGraphView: View {
                         VariableStepGraphPath(data: self.data).trim(from: 0, to: self.trimEnd).stroke(
                             style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round)
                         )
-                            .foregroundColor(.blue)
+                            .foregroundColor(self.lineColor)
                             .frame(height: self.graphHeight)
                             .animation(.default)
                             .onAppear {

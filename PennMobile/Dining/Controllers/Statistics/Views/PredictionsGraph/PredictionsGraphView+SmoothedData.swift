@@ -15,7 +15,7 @@ import SwiftUI
 extension PredictionsGraphView {
 
     // Compute graph data
-    static func getSmoothedData(from trans: [DiningTransaction], startOfSemester sos: Date, endOfSemester eos: Date) -> [YXDataPoint] {
+    static func getSmoothedData(from trans: [DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.DiningBalance], startOfSemester sos: Date, endOfSemester eos: Date) -> [YXDataPoint] {
         
         guard sos < eos else { return [] }
         
