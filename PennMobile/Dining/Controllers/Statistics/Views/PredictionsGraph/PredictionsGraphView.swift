@@ -35,6 +35,7 @@ struct PredictionsGraphView: View {
         _data = State(initialValue: PredictionsGraphView.getSmoothedData(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester))
         _axisLabelsYX = State(initialValue: PredictionsGraphView.getAxisLabelsYX(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester))
         _balanceType = State(initialValue: (config.type.contains("swipes") ? .swipes : .dollars))
+        _predictionSlope = State(initialValue: PredictionsGraphView.getPredictionLineSlope(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester, predictedZeroDate: config.predictedZeroDate))
     }
     
     struct YXDataPoint {
@@ -46,6 +47,7 @@ struct PredictionsGraphView: View {
     @State var data: [PredictionsGraphView.YXDataPoint]
     @State var axisLabelsYX: ([String], [String])
     @State var balanceType: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.BalanceType
+    @State var predictionSlope: Double
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -58,7 +60,7 @@ struct PredictionsGraphView: View {
             }
             Divider()
                 .padding([.top, .bottom])
-            VariableStepLineGraphView(data: self.data, lastPointPosition: self.data.last?.x ?? 0, xAxisLabels: axisLabelsYX.1, yAxisLabels: axisLabelsYX.0, lineColor: balanceType == .swipes ? .blue : .green)
+            VariableStepLineGraphView(data: self.data, lastPointPosition: self.data.last?.x ?? 0, xAxisLabels: axisLabelsYX.1, yAxisLabels: axisLabelsYX.0, lineColor: balanceType == .swipes ? .blue : .green, predictionSlope: self.predictionSlope)
             Divider()
             .padding([.top, .bottom])
             

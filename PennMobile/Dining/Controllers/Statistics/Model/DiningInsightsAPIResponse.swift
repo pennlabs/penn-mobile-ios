@@ -102,12 +102,14 @@ extension DiningInsightsAPIResponse.CardData {
         let data: [DiningBalance]
         let startOfSemester: Date
         let endOfSemester: Date
+        let predictedZeroDate: Date
         
         enum CodingKeys: String, CodingKey {
             case type = "type"
             case data = "data"
             case startOfSemester = "start-of-semester"
             case endOfSemester = "end-of-semester"
+            case predictedZeroDate = "predicted-zero-date"
         }
         
         struct DiningBalance: Codable {

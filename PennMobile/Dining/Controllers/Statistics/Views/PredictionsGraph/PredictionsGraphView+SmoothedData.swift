@@ -27,4 +27,43 @@ extension PredictionsGraphView {
         }
         return yxPoints
     }
+    
+    static func getPredictionLineSlope(from trans: [DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.DiningBalance], startOfSemester sos: Date, endOfSemester eos: Date, predictedZeroDate zpd: Date) -> Double {
+        
+        guard sos < eos else { return 0.0 }
+        guard let last = trans.last else { return 0.0 }
+        
+        let maxBalance = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0
+        
+        let fullSemester = sos.distance(to: eos)
+        let remainingSemester = last.date.distance(to: eos)
+        let zeroDistance = sos.distance(to: zpd)
+        
+        let percentageSemesterElapsed = ((fullSemester - remainingSemester) / fullSemester)
+        let percentageBalanceSpent = (last.balance / maxBalance)
+        
+        let fullBalancePercentageSpent = 1.0
+        let fullElapsedTime = ((fullSemester - zeroDistance) / fullSemester)
+        
+        let slope = (fullBalancePercentageSpent - percentageBalanceSpent) / (fullElapsedTime - percentageSemesterElapsed)
+        
+        return slope
+        
+        //(0.66 done, 0.3 spent)
+        //(1.33 done,    1.0 spent)
+        
+        // rise == balance
+        // run == time
+        
+        // 0.3 - 1.0 = -0.7
+        // 1.33 - 0.66 = 0.66
+        // -1.06
+        
+        // slope is rise over run
+        // -balance as a percentage of total
+        // over
+        // -date as a percentage
+        
+        // 0.66
+    }
 }

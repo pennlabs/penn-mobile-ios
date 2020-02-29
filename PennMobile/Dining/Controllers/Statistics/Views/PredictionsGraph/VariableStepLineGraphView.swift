@@ -24,6 +24,8 @@ struct VariableStepLineGraphView: View {
     @State var xAxisLabels: [String]
     @State var yAxisLabels: [String]
     var lineColor: Color
+    // Should be a negative double, between 0 and -1.
+    var predictionSlope: Double
     
     var body: some View {
         VStack(alignment: .leading) {
