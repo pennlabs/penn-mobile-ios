@@ -254,8 +254,12 @@
 		F2B05E222400B6A300C267EB /* DiningInsightsAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E212400B6A200C267EB /* DiningInsightsAPIResponse.swift */; };
 		F2B05E242400BA0200C267EB /* example-dining-stats.json in Resources */ = {isa = PBXBuildFile; fileRef = F2B05E232400BA0200C267EB /* example-dining-stats.json */; };
 		F2C432672409C3F60044CCF5 /* PredictionsGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C432662409C3F60044CCF5 /* PredictionsGraphView.swift */; };
-		F2C4326A2409C5950044CCF5 /* PredictionsGraphView+VariableStepGraphPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C432692409C5950044CCF5 /* PredictionsGraphView+VariableStepGraphPath.swift */; };
+		F2C4326A2409C5950044CCF5 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C432692409C5950044CCF5 /* VariableStepLineGraphView+VariableStepGraphPath.swift */; };
 		F2C4326C2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4326B2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift */; };
+		F2C4326E2409D6170044CCF5 /* VariableStepLineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4326D2409D6170044CCF5 /* VariableStepLineGraphView.swift */; };
+		F2C432702409D66F0044CCF5 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4326F2409D66F0044CCF5 /* VariableStepLineGraphView+PredictionSlopePath.swift */; };
+		F2C432722409D6800044CCF5 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C432712409D6800044CCF5 /* VariableStepLineGraphView+GraphEndpointPath.swift */; };
+		F2C43274240AF5EA0044CCF5 /* PredictionsGraphView+AxisLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C43273240AF5EA0044CCF5 /* PredictionsGraphView+AxisLabels.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
@@ -524,8 +528,12 @@
 		F2B05E212400B6A200C267EB /* DiningInsightsAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningInsightsAPIResponse.swift; sourceTree = "<group>"; };
 		F2B05E232400BA0200C267EB /* example-dining-stats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "example-dining-stats.json"; sourceTree = "<group>"; };
 		F2C432662409C3F60044CCF5 /* PredictionsGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionsGraphView.swift; sourceTree = "<group>"; };
-		F2C432692409C5950044CCF5 /* PredictionsGraphView+VariableStepGraphPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+VariableStepGraphPath.swift"; sourceTree = "<group>"; };
+		F2C432692409C5950044CCF5 /* VariableStepLineGraphView+VariableStepGraphPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+VariableStepGraphPath.swift"; sourceTree = "<group>"; };
 		F2C4326B2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+SmoothedData.swift"; sourceTree = "<group>"; };
+		F2C4326D2409D6170044CCF5 /* VariableStepLineGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableStepLineGraphView.swift; sourceTree = "<group>"; };
+		F2C4326F2409D66F0044CCF5 /* VariableStepLineGraphView+PredictionSlopePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+PredictionSlopePath.swift"; sourceTree = "<group>"; };
+		F2C432712409D6800044CCF5 /* VariableStepLineGraphView+GraphEndpointPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+GraphEndpointPath.swift"; sourceTree = "<group>"; };
+		F2C43273240AF5EA0044CCF5 /* PredictionsGraphView+AxisLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+AxisLabels.swift"; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		FF0E05C04C7854E515BFE595 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1409,7 +1417,11 @@
 			children = (
 				F2C432662409C3F60044CCF5 /* PredictionsGraphView.swift */,
 				F2C4326B2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift */,
-				F2C432692409C5950044CCF5 /* PredictionsGraphView+VariableStepGraphPath.swift */,
+				F2C43273240AF5EA0044CCF5 /* PredictionsGraphView+AxisLabels.swift */,
+				F2C4326D2409D6170044CCF5 /* VariableStepLineGraphView.swift */,
+				F2C432692409C5950044CCF5 /* VariableStepLineGraphView+VariableStepGraphPath.swift */,
+				F2C432712409D6800044CCF5 /* VariableStepLineGraphView+GraphEndpointPath.swift */,
+				F2C4326F2409D66F0044CCF5 /* VariableStepLineGraphView+PredictionSlopePath.swift */,
 			);
 			path = PredictionsGraph;
 			sourceTree = "<group>";
@@ -1685,6 +1697,7 @@
 				2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */,
 				21B649222236F2FC00AC5B7F /* HomeCoursesCellItem.swift in Sources */,
 				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
+				F2C43274240AF5EA0044CCF5 /* PredictionsGraphView+AxisLabels.swift in Sources */,
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
@@ -1774,6 +1787,7 @@
 				2189C08D2027CE2600771C1F /* RoomCell.swift in Sources */,
 				2150816A220D24C4002F7EA1 /* NewsArticle.swift in Sources */,
 				F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */,
+				F2C4326E2409D6170044CCF5 /* VariableStepLineGraphView.swift in Sources */,
 				EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */,
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				665F1FC723D2628800DC023E /* TwoFactorWebviewController.swift in Sources */,
@@ -1788,6 +1802,7 @@
 				2189C08C2027CE2600771C1F /* GSRTimeCell.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
 				21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */,
+				F2C432722409D6800044CCF5 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */,
 				EFE2D6F3239B11050020F6BF /* CreateGroupCell.swift in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				212B8359222A331D00F835D6 /* Post.swift in Sources */,
@@ -1895,8 +1910,9 @@
 				66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */,
 				21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
-				F2C4326A2409C5950044CCF5 /* PredictionsGraphView+VariableStepGraphPath.swift in Sources */,
+				F2C4326A2409C5950044CCF5 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */,
 				F2C4326C2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift in Sources */,
+				F2C432702409D66F0044CCF5 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */,
 				216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */,
 				F203DC2424032555003350E2 /* CardHeaderView.swift in Sources */,
 				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,

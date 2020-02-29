@@ -13,11 +13,11 @@ import SwiftUI
 
 @available(iOS 13, *)
 extension PredictionsGraphView {
+
     // Compute graph data
-    static func getSmoothedData(from: [DiningTransaction]) -> [YXDataPoint] {
-        let trans = from
-        let sos = Date().addingTimeInterval(86400 * -4)
-        let eos = Date().addingTimeInterval(86400 * 120)
+    static func getSmoothedData(from trans: [DiningTransaction], startOfSemester sos: Date, endOfSemester eos: Date) -> [YXDataPoint] {
+        
+        guard sos < eos else { return [] }
         
         let totalLength = eos.distance(to: sos)
         let maxDollarValue = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0

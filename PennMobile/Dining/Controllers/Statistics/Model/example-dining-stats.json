@@ -7,10 +7,12 @@
   "cards": {
       "predictions-graph": {
           "type": "predictions-graph",
+          "start-of-semester": "2020-01-13T12:18:00-05:00",
+          "end-of-semester": "2020-04-20T12:18:00-05:00",
           "data": [
             {
               "location": "Van Pelt Cafe",
-              "date": "2020-02-12T12:18:00-05:00",
+              "date": "2020-01-14T12:18:00-05:00",
               "balance": 1400,
               "amount": -1.45
             },

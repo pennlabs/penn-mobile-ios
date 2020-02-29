@@ -98,6 +98,15 @@ extension DiningInsightsAPIResponse.CardData {
     struct PredictionsGraphCardData: Codable {
         let type: String
         let data: [DiningTransaction]
+        let startOfSemester: Date
+        let endOfSemester: Date
+        
+        enum CodingKeys: String, CodingKey {
+            case type = "type"
+            case data = "data"
+            case startOfSemester = "start-of-semester"
+            case endOfSemester = "end-of-semester"
+        }
     }
 }
 
