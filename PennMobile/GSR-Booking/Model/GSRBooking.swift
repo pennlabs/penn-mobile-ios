@@ -53,3 +53,5 @@ class GSRGroupBooking: GSRBooking {
         self.groupName = gsrGroup.name
     }
 }
+
+typealias GSRGroupBookings = [GSRGroupBooking]

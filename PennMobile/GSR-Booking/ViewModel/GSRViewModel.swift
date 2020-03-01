@@ -282,6 +282,14 @@ extension GSRViewModel {
         
         return GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)
     }
+    
+    func getGroupBooking -> GSRGroupBookings? {
+        if currentSelection.isEmpty {
+            return nil
+        }
+        
+        
+    }
 }
 
 // MARK: - Select Location

@@ -280,6 +280,8 @@ extension GSRController: GSRBookable {
 extension GSRController {
     private func handleGroupBooking(_ booking: GSRGroupBooking) {
         let confirmController = GSRGroupConfirmBookingController()
+        confirmController.group = booking.gsrGroup
+        confirmController.booking = booking
         present(confirmController, animated: true, completion: nil)
     }
 }
