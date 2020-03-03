@@ -98,9 +98,10 @@ extension HomeCoursesCell {
         }
         
 //        if UserDefaults.standard.coursePermissionGranted() {
-            refreshButton.isHidden = false
+            refreshButton.isHidden = !item.isOnHomeScreen
             enableCoursesView.isHidden = true
             courseScheduleTable.isHidden = false
+            secondaryTitleLabel.isHidden = !item.isOnHomeScreen
 //        } else {
 //            refreshButton.isHidden = true
 //            enableCoursesView.isHidden = false
