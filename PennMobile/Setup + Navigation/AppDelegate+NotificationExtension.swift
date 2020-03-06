@@ -50,15 +50,24 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         let userInfo = response.notification.request.content.userInfo
 
-        if let aps = userInfo["aps"] as? [String: AnyObject] {
+        // GSR Notification
+        if response.notification.request.content.categoryIdentifier == NotificationIdentifiers.upcomingGSRCategory,
+            let gsrReservation = userInfo["reservation"] as? [String:String] {
             if response.actionIdentifier == NotificationIdentifiers.cancelGSRAction {
-                // TODO: cancel the gsr
-                dump(aps)
+                print("cancel the gsr")
+                dump(gsrReservation)
             } else if response.actionIdentifier == NotificationIdentifiers.shareGSRAction {
-                // TODO: share the gsr
-                dump(aps)
+                // Share the GSR Booking with the iOS share sheet
+                let text = "Penn Mobile GSR Booking \(gsrReservation["room_name"]!)"
+                let textToShare = [text]
+                let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+                activityViewController.popoverPresentationController?.sourceView = self.rootViewController.view
+                // exclude some activity types from the list (optional)
+                activityViewController.excludedActivityTypes = [ .airDrop ]
+                self.rootViewController.present(activityViewController, animated: true, completion: nil)
             }
         }
+        
         completionHandler()
     }
 }

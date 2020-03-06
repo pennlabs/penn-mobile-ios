@@ -225,12 +225,12 @@
 		F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8523B6DA8D00ED46A1 /* PrivacyTableViewCell.swift */; };
 		F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */; };
 		F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */; };
-		F213CCE223C3EE3E000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE123C3EE3E000AD90F /* SwiftPackageProductDependency */; };
-		F213CCE523C3F240000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE423C3F240000AD90F /* SwiftPackageProductDependency */; };
-		F213CCE723C3F240000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE623C3F240000AD90F /* SwiftPackageProductDependency */; };
-		F213CCEA23C3F5D5000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE923C3F5D5000AD90F /* SwiftPackageProductDependency */; };
-		F213CCED23C3F6A8000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEC23C3F6A8000AD90F /* SwiftPackageProductDependency */; };
-		F213CCF023C3F99B000AD90F /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEF23C3F99B000AD90F /* SwiftPackageProductDependency */; };
+		F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE123C3EE3E000AD90F /* SwiftSoup */; };
+		F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE423C3F240000AD90F /* KingfisherSwiftUI */; };
+		F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE623C3F240000AD90F /* Kingfisher */; };
+		F213CCEA23C3F5D5000AD90F /* SCLAlertView in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE923C3F5D5000AD90F /* SCLAlertView */; };
+		F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEC23C3F6A8000AD90F /* SwiftyJSON */; };
+		F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEF23C3F99B000AD90F /* ScrollableGraphView */; };
 		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
 		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
 		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
@@ -240,6 +240,9 @@
 		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
 		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
 		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
+		F2568A692411F20E00561295 /* GSRNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A682411F20E00561295 /* GSRNotificationService.swift */; };
+		F2568A6D2411F20E00561295 /* GSRNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F2568A662411F20E00561295 /* GSRNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F2568A732411F26500561295 /* GSRNotificationService+ImageCacheing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A722411F26500561295 /* GSRNotificationService+ImageCacheing.swift */; };
 		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
 		F299616D23F78B1700C67A3B /* GSRNotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616C23F78B1700C67A3B /* GSRNotificationExtension.swift */; };
@@ -255,7 +258,28 @@
 			remoteGlobalIDString = 2166405F1EBADADA00746B8E;
 			remoteInfo = PennMobile;
 		};
+		F2568A6B2411F20E00561295 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 216640581EBADADA00746B8E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F2568A652411F20E00561295;
+			remoteInfo = GSRNotificationServiceExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F2568A6E2411F20E00561295 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F2568A6D2411F20E00561295 /* GSRNotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089EEFC0AECA3184A829CCAC /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
@@ -499,6 +523,10 @@
 		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
 		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
+		F2568A662411F20E00561295 /* GSRNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GSRNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2568A682411F20E00561295 /* GSRNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRNotificationService.swift; sourceTree = "<group>"; };
+		F2568A6A2411F20E00561295 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2568A722411F26500561295 /* GSRNotificationService+ImageCacheing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GSRNotificationService+ImageCacheing.swift"; sourceTree = "<group>"; };
 		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
 		F299616C23F78B1700C67A3B /* GSRNotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRNotificationExtension.swift; sourceTree = "<group>"; };
@@ -511,12 +539,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F213CCED23C3F6A8000AD90F /* BuildFile in Frameworks */,
-				F213CCF023C3F99B000AD90F /* BuildFile in Frameworks */,
-				F213CCE723C3F240000AD90F /* BuildFile in Frameworks */,
-				F213CCE523C3F240000AD90F /* BuildFile in Frameworks */,
-				F213CCE223C3EE3E000AD90F /* BuildFile in Frameworks */,
-				F213CCEA23C3F5D5000AD90F /* BuildFile in Frameworks */,
+				F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */,
+				F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */,
+				F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */,
+				F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */,
+				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
+				F213CCEA23C3F5D5000AD90F /* SCLAlertView in Frameworks */,
 				0CF46933B88AB831A45A8CA4 /* Pods_PennMobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,6 +554,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C94FC6D923996DBC8679AE9D /* Pods_AutomatedScreenshotUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2568A632411F20E00561295 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +675,7 @@
 				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
 				216640621EBADADA00746B8E /* PennMobile */,
 				2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */,
+				F2568A672411F20E00561295 /* GSRNotificationServiceExtension */,
 				216640611EBADADA00746B8E /* Products */,
 				F5E2CE9A9024AE8E28992A5E /* Pods */,
 				97F96CA923D268FD0025A58C /* Recovered References */,
@@ -652,6 +688,7 @@
 			children = (
 				216640601EBADADA00746B8E /* PennMobile.app */,
 				F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */,
+				F2568A662411F20E00561295 /* GSRNotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1347,6 +1384,16 @@
 			path = AutomatedScreenshotUITests;
 			sourceTree = "<group>";
 		};
+		F2568A672411F20E00561295 /* GSRNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				F2568A682411F20E00561295 /* GSRNotificationService.swift */,
+				F2568A722411F26500561295 /* GSRNotificationService+ImageCacheing.swift */,
+				F2568A6A2411F20E00561295 /* Info.plist */,
+			);
+			path = GSRNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
 		F299616B23F78AEA00C67A3B /* Rich_Notifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -1379,19 +1426,21 @@
 				2166405E1EBADADA00746B8E /* Resources */,
 				EF1CF2F322177EED002D912D /* ShellScript */,
 				9DB7E4DAFF5C989C31D047BF /* [CP] Embed Pods Frameworks */,
+				F2568A6E2411F20E00561295 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F2568A6C2411F20E00561295 /* PBXTargetDependency */,
 			);
 			name = PennMobile;
 			packageProductDependencies = (
-				F213CCE123C3EE3E000AD90F /* SwiftPackageProductDependency */,
-				F213CCE423C3F240000AD90F /* SwiftPackageProductDependency */,
-				F213CCE623C3F240000AD90F /* SwiftPackageProductDependency */,
-				F213CCE923C3F5D5000AD90F /* SwiftPackageProductDependency */,
-				F213CCEC23C3F6A8000AD90F /* SwiftPackageProductDependency */,
-				F213CCEF23C3F99B000AD90F /* SwiftPackageProductDependency */,
+				F213CCE123C3EE3E000AD90F /* SwiftSoup */,
+				F213CCE423C3F240000AD90F /* KingfisherSwiftUI */,
+				F213CCE623C3F240000AD90F /* Kingfisher */,
+				F213CCE923C3F5D5000AD90F /* SCLAlertView */,
+				F213CCEC23C3F6A8000AD90F /* SwiftyJSON */,
+				F213CCEF23C3F99B000AD90F /* ScrollableGraphView */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -1417,13 +1466,30 @@
 			productReference = F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		F2568A652411F20E00561295 /* GSRNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2568A712411F20E00561295 /* Build configuration list for PBXNativeTarget "GSRNotificationServiceExtension" */;
+			buildPhases = (
+				F2568A622411F20E00561295 /* Sources */,
+				F2568A632411F20E00561295 /* Frameworks */,
+				F2568A642411F20E00561295 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GSRNotificationServiceExtension;
+			productName = GSRNotificationServiceExtension;
+			productReference = F2568A662411F20E00561295 /* GSRNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		216640581EBADADA00746B8E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
@@ -1447,6 +1513,9 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2166405F1EBADADA00746B8E;
 					};
+					F2568A652411F20E00561295 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
 				};
 			};
 			buildConfigurationList = 2166405B1EBADADA00746B8E /* Build configuration list for PBXProject "PennMobile" */;
@@ -1459,11 +1528,11 @@
 			);
 			mainGroup = 216640571EBADADA00746B8E;
 			packageReferences = (
-				F213CCE023C3EE3E000AD90F /* RemoteSwiftPackageReference */,
-				F213CCE323C3F240000AD90F /* RemoteSwiftPackageReference */,
-				F213CCE823C3F5D5000AD90F /* RemoteSwiftPackageReference */,
-				F213CCEB23C3F6A8000AD90F /* RemoteSwiftPackageReference */,
-				F213CCEE23C3F99B000AD90F /* RemoteSwiftPackageReference */,
+				F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
+				F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
@@ -1471,6 +1540,7 @@
 			targets = (
 				2166405F1EBADADA00746B8E /* PennMobile */,
 				F230FB0D225809E900760499 /* AutomatedScreenshotUITests */,
+				F2568A652411F20E00561295 /* GSRNotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1488,6 +1558,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F230FB0C225809E900760499 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2568A642411F20E00561295 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1832,6 +1909,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F2568A622411F20E00561295 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2568A692411F20E00561295 /* GSRNotificationService.swift in Sources */,
+				F2568A732411F26500561295 /* GSRNotificationService+ImageCacheing.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1839,6 +1925,11 @@
 			isa = PBXTargetDependency;
 			target = 2166405F1EBADADA00746B8E /* PennMobile */;
 			targetProxy = F230FB13225809E900760499 /* PBXContainerItemProxy */;
+		};
+		F2568A6C2411F20E00561295 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F2568A652411F20E00561295 /* GSRNotificationServiceExtension */;
+			targetProxy = F2568A6B2411F20E00561295 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1971,6 +2062,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 089EEFC0AECA3184A829CCAC /* Pods-PennMobile.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
@@ -2062,6 +2154,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 671C7BD3201784F84EF6615A /* Pods-PennMobile.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
@@ -2204,6 +2297,59 @@
 			};
 			name = Release;
 		};
+		F2568A6F2411F20E00561295 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VU59R57FGM;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = GSRNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile.GSRNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F2568A702411F20E00561295 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VU59R57FGM;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = GSRNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile.GSRNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2234,10 +2380,19 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		F2568A712411F20E00561295 /* Build configuration list for PBXNativeTarget "GSRNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2568A6F2411F20E00561295 /* Debug */,
+				F2568A702411F20E00561295 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F213CCE023C3EE3E000AD90F /* RemoteSwiftPackageReference */ = {
+		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
 			requirement = {
@@ -2245,7 +2400,7 @@
 				minimumVersion = 2.3.0;
 			};
 		};
-		F213CCE323C3F240000AD90F /* RemoteSwiftPackageReference */ = {
+		F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
 			requirement = {
@@ -2253,7 +2408,7 @@
 				minimumVersion = 5.12.0;
 			};
 		};
-		F213CCE823C3F5D5000AD90F /* RemoteSwiftPackageReference */ = {
+		F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pennlabs/SCLAlertView-Swift/";
 			requirement = {
@@ -2261,7 +2416,7 @@
 				minimumVersion = 0.8.2;
 			};
 		};
-		F213CCEB23C3F6A8000AD90F /* RemoteSwiftPackageReference */ = {
+		F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
 			requirement = {
@@ -2269,7 +2424,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		F213CCEE23C3F99B000AD90F /* RemoteSwiftPackageReference */ = {
+		F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pennlabs/ScrollableGraphView";
 			requirement = {
@@ -2280,34 +2435,34 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F213CCE123C3EE3E000AD90F /* SwiftPackageProductDependency */ = {
+		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCE023C3EE3E000AD90F /* RemoteSwiftPackageReference */;
+			package = F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
 		};
-		F213CCE423C3F240000AD90F /* SwiftPackageProductDependency */ = {
+		F213CCE423C3F240000AD90F /* KingfisherSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCE323C3F240000AD90F /* RemoteSwiftPackageReference */;
+			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = KingfisherSwiftUI;
 		};
-		F213CCE623C3F240000AD90F /* SwiftPackageProductDependency */ = {
+		F213CCE623C3F240000AD90F /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCE323C3F240000AD90F /* RemoteSwiftPackageReference */;
+			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		F213CCE923C3F5D5000AD90F /* SwiftPackageProductDependency */ = {
+		F213CCE923C3F5D5000AD90F /* SCLAlertView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCE823C3F5D5000AD90F /* RemoteSwiftPackageReference */;
+			package = F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */;
 			productName = SCLAlertView;
 		};
-		F213CCEC23C3F6A8000AD90F /* SwiftPackageProductDependency */ = {
+		F213CCEC23C3F6A8000AD90F /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCEB23C3F6A8000AD90F /* RemoteSwiftPackageReference */;
+			package = F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
 		};
-		F213CCEF23C3F99B000AD90F /* SwiftPackageProductDependency */ = {
+		F213CCEF23C3F99B000AD90F /* ScrollableGraphView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F213CCEE23C3F99B000AD90F /* RemoteSwiftPackageReference */;
+			package = F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */;
 			productName = ScrollableGraphView;
 		};
 /* End XCSwiftPackageProductDependency section */

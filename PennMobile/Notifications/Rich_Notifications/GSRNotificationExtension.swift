@@ -9,6 +9,7 @@
 import UIKit
 import UserNotifications
 
+/*
 class NotificationService: UNNotificationServiceExtension {
     
     // IMPORTANT: To take advantage of this extension, set the 'mutable-content' flag to '1'
@@ -28,7 +29,7 @@ class NotificationService: UNNotificationServiceExtension {
              "thread-id": 1,
              "category": "UPCOMING_GSR"
          },
-         "media-url": "https://snworksceo.imgix.net/dpn/20c5f2b4-9f36-4c47-985b-5b9673f86d77.sized-1000x1000.jpg?w=1000",
+         "media-url": "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-1086-gid-1889.jpg",
          "sound": "default"
      }
      */
@@ -38,12 +39,18 @@ class NotificationService: UNNotificationServiceExtension {
     var bestAttemptContent: UNMutableNotificationContent?
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
+        
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
+        dump(bestAttemptContent)
         if let mutableContent = self.bestAttemptContent, let urlString = mutableContent.userInfo["media-url"] as? String, let url = URL(string: urlString) {
             
+            dump(urlString)
+            dump(mutableContent.userInfo)
+            
             downloadImage(from: url) { (image) in
+                print("DOWNLOADED IMAGE")
                 guard let image = image, let mediaAttachment = UNNotificationAttachment.create(identifier: "photo", image: image, options: [:]) else {
                     contentHandler(mutableContent); return
                 }
@@ -56,6 +63,7 @@ class NotificationService: UNNotificationServiceExtension {
     override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
+        print("SERVICE EXTENSION EXPIRING")
         if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
             contentHandler(bestAttemptContent)
         }
@@ -107,3 +115,4 @@ extension UNNotificationAttachment {
     }
 }
 
+*/
