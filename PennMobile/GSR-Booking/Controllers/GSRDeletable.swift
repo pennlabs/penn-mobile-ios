@@ -11,11 +11,12 @@ import Foundation
 protocol GSRDeletable: IndicatorEnabled, ShowsAlert {}
 
 extension GSRDeletable where Self: UIViewController {
-    func deleteReservation(_ reservation: GSRReservation, _ callback: @escaping (_ success: Bool) -> Void) {
+    
+    func deleteReservation(_ bookingId: String, _ callback: @escaping (_ success: Bool) -> Void) {
         confirmDelete {
             self.showActivity()
             let sessionID = GSRUser.getSessionID()
-            GSRNetworkManager.instance.deleteReservation(reservation: reservation, sessionID: sessionID) { (success, errorMsg) in
+            GSRNetworkManager.instance.deleteReservation(bookingID: bookingId, sessionID: sessionID) { (success, errorMsg) in
                 DispatchQueue.main.async {
                     self.hideActivity()
                     if success {
@@ -27,6 +28,10 @@ extension GSRDeletable where Self: UIViewController {
                 }
             }
         }
+    }
+    
+    func deleteReservation(_ reservation: GSRReservation, _ callback: @escaping (_ success: Bool) -> Void) {
+        deleteReservation(reservation.bookingID, callback)
     }
     
     func confirmDelete(_ callback: @escaping () -> Void) {

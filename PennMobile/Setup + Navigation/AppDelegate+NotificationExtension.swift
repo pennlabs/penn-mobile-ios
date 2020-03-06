@@ -53,9 +53,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // GSR Notification
         if response.notification.request.content.categoryIdentifier == NotificationIdentifiers.upcomingGSRCategory,
             let gsrReservation = userInfo["reservation"] as? [String:String] {
-            if response.actionIdentifier == NotificationIdentifiers.cancelGSRAction {
-                print("cancel the gsr")
-                dump(gsrReservation)
+            if response.actionIdentifier == NotificationIdentifiers.cancelGSRAction, let bookingId = gsrReservation["booking_id"] {
+                // This makes the rootVC go to home screen
+                rootViewController.showMainScreen()
+                // We use HomeVC's "delete res" method
+                guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
+                homeVC.deleteReservation(bookingId)
             } else if response.actionIdentifier == NotificationIdentifiers.shareGSRAction {
                 // Share the GSR Booking with the iOS share sheet
                 let text = "Penn Mobile GSR Booking \(gsrReservation["room_name"]!)"
