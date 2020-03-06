@@ -28,45 +28,17 @@ extension PredictionsGraphView {
         return yxPoints
     }
     
-    static func getPredictionLineSlope(from trans: [DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.DiningBalance], startOfSemester sos: Date, endOfSemester eos: Date, predictedZeroDate zpd: Date) -> Double {
-        
-        // TODO: Fix this, the logic is slightly wrong
-        // TODO: Add actual OUT date to the UI
-        
-        guard sos < eos else { return 0.0 }
-        guard let last = trans.last else { return 0.0 }
-        
-        let maxBalance = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0
-        
+    static func getPredictionZeroPoint(from trans: [DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.DiningBalance], startOfSemester sos: Date, endOfSemester eos: Date, predictedZeroDate zpd: Date) -> PredictionsGraphView.YXDataPoint {
+
+        guard sos < eos else { return .init(y: 0.0, x: 0.0) }
+
         let fullSemester = sos.distance(to: eos)
-        let remainingSemester = last.date.distance(to: eos)
-        let zeroDistance = sos.distance(to: zpd)
+        let fullZeroDistance = sos.distance(to: zpd)
         
-        let percentageSemesterElapsed = ((fullSemester - remainingSemester) / fullSemester)
-        let percentageBalanceSpent = (last.balance / maxBalance)
+        // x value, may be > 1 if the zero date is past end of semester
+        let x = (fullZeroDistance / fullSemester)
         
-        let fullBalancePercentageSpent = 1.0
-        let fullElapsedTime = ((fullSemester - zeroDistance) / fullSemester)
-        
-        let slope = (fullBalancePercentageSpent - percentageBalanceSpent) / (fullElapsedTime - percentageSemesterElapsed)
-        
-        return slope
-        
-        //(0.66 done, 0.3 spent)
-        //(1.33 done,    1.0 spent)
-        
-        // rise == balance
-        // run == time
-        
-        // 0.3 - 1.0 = -0.7
-        // 1.33 - 0.66 = 0.66
-        // -1.06
-        
-        // slope is rise over run
-        // -balance as a percentage of total
-        // over
-        // -date as a percentage
-        
-        // 0.66
+        // y value is always zero
+        return .init(y: 0.0, x: CGFloat(x))
     }
 }

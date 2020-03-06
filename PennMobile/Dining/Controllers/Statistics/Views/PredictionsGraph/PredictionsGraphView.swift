@@ -35,7 +35,7 @@ struct PredictionsGraphView: View {
         _data = State(initialValue: PredictionsGraphView.getSmoothedData(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester))
         _axisLabelsYX = State(initialValue: PredictionsGraphView.getAxisLabelsYX(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester))
         _balanceType = State(initialValue: (config.type.contains("swipes") ? .swipes : .dollars))
-        _predictionSlope = State(initialValue: PredictionsGraphView.getPredictionLineSlope(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester, predictedZeroDate: config.predictedZeroDate))
+        _predictedZeroPoint = State(initialValue: PredictionsGraphView.getPredictionZeroPoint(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester, predictedZeroDate: config.predictedZeroDate))
     }
     
     struct YXDataPoint {
@@ -44,10 +44,16 @@ struct PredictionsGraphView: View {
     }
     
     let config: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData
-    @State var data: [PredictionsGraphView.YXDataPoint]
+    @State var data: [YXDataPoint]
     @State var axisLabelsYX: ([String], [String])
     @State var balanceType: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.BalanceType
-    @State var predictionSlope: Double
+    @State var predictedZeroPoint: YXDataPoint
+    
+    var formattedZeroDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM. d"
+        return formatter.string(from: self.config.predictedZeroDate)
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -60,7 +66,7 @@ struct PredictionsGraphView: View {
             }
             Divider()
                 .padding([.top, .bottom])
-            VariableStepLineGraphView(data: self.data, lastPointPosition: self.data.last?.x ?? 0, xAxisLabels: axisLabelsYX.1, yAxisLabels: axisLabelsYX.0, lineColor: balanceType == .swipes ? .blue : .green, predictionSlope: self.predictionSlope)
+            VariableStepLineGraphView(data: self.data, lastPointPosition: self.data.last?.x ?? 0, xAxisLabels: axisLabelsYX.1, yAxisLabels: axisLabelsYX.0, lineColor: balanceType == .swipes ? .blue : .green, predictedZeroPoint: self.predictedZeroPoint)
             Divider()
             .padding([.top, .bottom])
             
@@ -68,13 +74,13 @@ struct PredictionsGraphView: View {
                 VStack(alignment: .leading) {
                     Text("Out of \(balanceType == .swipes ? "Swipes" : "Dollars")")
                         .font(.caption)
-                    Text("Dec. 15th")
+                    Text("\(self.formattedZeroDate)")
                         .font(Font.system(size: 21, weight: .bold, design: .rounded))
                     Spacer()
                 }
                 .padding(.trailing)
                 VStack {
-                    Text("Based on your current balance and past behavior, we project you have this many days of balance remaining.")
+                    Text("Based on your current balance and past behavior, we project you'll run out on this date.")
                     .font(.caption)
                     .foregroundColor(.gray)
                     Spacer()

@@ -85,7 +85,7 @@ struct DailyAverageView: View {
             // Top labels
             Group {
                 CardHeaderTitleView(color: .green, icon: .dollars, title: "Daily Averages")
-                Text("Over the \(self.timeFrame == "This Week" ? "last 7 days" : "7 days before that"), you spent an average of \(formattedAverage) dining dollars per day.")
+                Text("Over the \(self.timeFrame == "This Week" ? "last 7 days" : "7 days before that"), you spent an average of \(formattedAverage) per day.")
                     .fontWeight(.medium)
                 Divider()
                 .padding([.top, .bottom])

@@ -61,7 +61,7 @@
           "type": "predictions-graph-swipes",
           "start-of-semester": "2020-01-13T12:18:00-05:00",
           "end-of-semester": "2020-04-20T12:18:00-05:00",
-          "predicted-zero-date": "2020-04-28T12:18:00-05:00",
+          "predicted-zero-date": "2020-04-20T12:18:00-05:00",
           "data": [
             {
               "date": "2020-01-14T12:18:00-05:00",
@@ -105,7 +105,7 @@
             },
             {
               "date": "2020-02-28T12:18:00-05:00",
-              "balance": 62
+              "balance": 88
             }
           ]
       },

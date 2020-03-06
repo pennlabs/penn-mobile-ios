@@ -16,28 +16,27 @@ extension VariableStepLineGraphView {
     
     struct PredictionSlopePath: Shape, Animatable {
         // This should be the last data point before prediction line begins
-        @State var data: PredictionsGraphView.YXDataPoint
+        @State var lastDataPoint: PredictionsGraphView.YXDataPoint
         
-        // Calculated on a "per-day" basis. Should only take negative transactions into account.
-        // Slope is defined in terms of the max dollar change (full balance to 0) over the max time frame
-        @State var predictionSlope: CGFloat
+        // Calculated day balance will reach 0, computed by the server. X may exceed 1.0 if the zero date is past the end of the semester
+        @State var predictionZeroPoint: PredictionsGraphView.YXDataPoint
         
         var animatableData: PredictionsGraphView.YXDataPoint {
-            get { return data }
-            set { data = newValue }
+            get { return lastDataPoint }
+            set { lastDataPoint = newValue }
         }
         
         func path(in rect: CGRect) -> Path {
             var path = Path()
             
             path.move(to: CGPoint(
-                x: data.x * rect.maxX,
-                y: rect.maxY - (rect.maxY * data.y)
+                x: lastDataPoint.x * rect.maxX,
+                y: rect.maxY - (rect.maxY * lastDataPoint.y)
             ))
             
             path.addLine(to: CGPoint(
-                x: rect.maxX,
-                y: rect.maxY - (rect.maxY * predictionSlope)
+                x: predictionZeroPoint.x * rect.maxX,
+                y: rect.maxY - (rect.maxY * predictionZeroPoint.y)
             ))
             
             return path

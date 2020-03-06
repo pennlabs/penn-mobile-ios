@@ -24,8 +24,7 @@ struct VariableStepLineGraphView: View {
     @State var xAxisLabels: [String]
     @State var yAxisLabels: [String]
     var lineColor: Color
-    // Should be a negative double, between 0 and -1.
-    var predictionSlope: Double
+    var predictedZeroPoint: PredictionsGraphView.YXDataPoint
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -44,7 +43,6 @@ struct VariableStepLineGraphView: View {
                 .frame(width: 40, height: self.graphHeight)
                 
                 GeometryReader { geometry in
-                    
                     ZStack {
                         
                         VariableStepGraphPath(data: self.data).trim(from: 0, to: self.trimEnd).stroke(
@@ -58,7 +56,7 @@ struct VariableStepLineGraphView: View {
                         }
                         
                         
-                        PredictionSlopePath(data: self.data.last!, predictionSlope: -0.2).stroke(
+                        PredictionSlopePath(lastDataPoint: self.data.last!, predictionZeroPoint: self.predictedZeroPoint).stroke(
                             style: StrokeStyle(lineWidth: 2.0, lineCap: .round, lineJoin: .round, dash: [5], dashPhase: 5)
                         )
                             .foregroundColor(.gray)
@@ -69,7 +67,7 @@ struct VariableStepLineGraphView: View {
                         }
                         .clipped()
                         
-                        Group {
+                        /*Group {
                             Group {
                                 HStack(alignment: .center) {
                                     Spacer()
@@ -87,7 +85,7 @@ struct VariableStepLineGraphView: View {
                             )
                                 .foregroundColor(.white)
                                 .frame(height: self.graphHeight)
-                        }
+                        }*/
                         
                         Group {
                             Group {
@@ -110,7 +108,10 @@ struct VariableStepLineGraphView: View {
                         }
                     }
                 }
-                .frame(height: graphHeight)
+                .frame(height: self.graphHeight)
+                
+                Spacer()
+                    .frame(width: 16)
             }
             // X-Axis labels
             HStack {
