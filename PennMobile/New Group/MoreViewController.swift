@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MoreViewController: GenericTableViewController, ShowsAlert {
+class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccessible {
     
     var account: Account?
     
@@ -95,7 +95,7 @@ extension MoreViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Notification and privacy tabs aren't shown for users that aren't logged in
-        let rows = [Account.isLoggedIn ? 4 : 2, ControllerModel.shared.moreOrder.count, pennLinks.count]
+        let rows = [Account.isLoggedIn ? 5 : 3, ControllerModel.shared.moreOrder.count, pennLinks.count]
         return rows[section]
     }
     
@@ -115,9 +115,16 @@ extension MoreViewController {
                     cell.accessoryType = .disclosureIndicator
                     return cell
                 }
-            } else if indexPath.row <= 2 {
+            } else if indexPath.row == 1 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
-                    cell.setUpView(with: indexPath.row == 1 ? "Notifications" : "Privacy")
+                    cell.setUpView(with: "PAC Code")
+                    cell.backgroundColor = .uiGroupedBackgroundSecondary
+                    cell.accessoryType = .disclosureIndicator
+                    return cell
+                }
+            } else if indexPath.row <= 3 {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
+                    cell.setUpView(with: indexPath.row == 2 ? "Notifications" : "Privacy")
                     cell.backgroundColor = .uiGroupedBackgroundSecondary
                     cell.accessoryType = .disclosureIndicator
                     return cell
@@ -149,11 +156,11 @@ extension MoreViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (indexPath.section == 0 && indexPath.row == 3) ? TwoFactorCell.cellHeight : 50
+        return (indexPath.section == 0 && indexPath.row == 4) ? TwoFactorCell.cellHeight : 50
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (indexPath.section == 0 && indexPath.row == 3) ? TwoFactorCell.cellHeight : 50
+        return (indexPath.section == 0 && indexPath.row == 4) ? TwoFactorCell.cellHeight : 50
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -165,8 +172,11 @@ extension MoreViewController {
                 targetController.shouldShowCancel = false
                 targetController.message = "This information is used when booking GSRs and when displaying your name on the homepage."
                 navigationController?.pushViewController(targetController, animated: true)
-            } else if indexPath.row <= 2 {
-                let targetController = ControllerModel.shared.viewController(for: indexPath.row == 1 ? .notifications : .privacy)
+            } else if indexPath.row == 1 {
+                let targetController = ControllerModel.shared.viewController(for: .pacCode)
+                navigationController?.pushViewController(targetController, animated: true)
+            } else if indexPath.row <= 3 {
+                let targetController = ControllerModel.shared.viewController(for: indexPath.row == 2 ? .notifications : .privacy)
                 navigationController?.pushViewController(targetController, animated: true)
             }
         } else if indexPath.section == 1 {
@@ -177,7 +187,7 @@ extension MoreViewController {
                 UIApplication.shared.open(url, options: [:])
             }
         }
-    }    
+    }
 }
 
 // MARK: - Login/Logout
@@ -189,6 +199,9 @@ extension MoreViewController {
             alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
                 DispatchQueue.main.async {
                     AppDelegate.shared.rootViewController.logout()
+                    
+                    //If the user intentionally logs out, remove their PAC Code
+                    self.removePacCode()
                 }
             }))
             present(alertController, animated: true, completion: nil)

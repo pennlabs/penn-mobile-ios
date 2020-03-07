@@ -199,6 +199,7 @@ extension LabsLoginController {
                         self.getDiningBalance()
                         self.getDiningTransactions()
                         self.getAndSaveLaundryPreferences()
+                        self.getPacCode()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             self.getCourses()
                         }
@@ -250,6 +251,14 @@ extension LabsLoginController {
         UserDBManager.shared.getLaundryPreferences { rooms in
             if let rooms = rooms {
                 UserDefaults.standard.setLaundryPreferences(to: rooms)
+            }
+        }
+    }
+    
+    fileprivate func getPacCode() {
+        PacCodeNetworkManager.instance.getPacCode { pacCode in
+            if let pacCode = pacCode {
+                self.savePacCode(pacCode)
             }
         }
     }
