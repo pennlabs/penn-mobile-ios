@@ -59,9 +59,28 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 // We use HomeVC's "delete res" method
                 guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
                 homeVC.deleteReservation(bookingId)
-            } else if response.actionIdentifier == NotificationIdentifiers.shareGSRAction {
+            } else if response.actionIdentifier == NotificationIdentifiers.shareGSRAction, let roomName = gsrReservation["room_name"], let startDateString = gsrReservation["start"], let endDateString = gsrReservation["end"] {
                 // Share the GSR Booking with the iOS share sheet
-                let text = "Penn Mobile GSR Booking \(gsrReservation["room_name"]!)"
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                
+                print(startDateString)
+                print(endDateString)
+
+                var text = "Upcoming GSR booking in \(roomName) "
+                if let startDate = dateFormatter.date(from: startDateString), let endDate = dateFormatter.date(from: endDateString) {
+                    if startDate.isToday {
+                        text += "today "
+                    } else {
+                        dateFormatter.dateFormat = "EEEE"
+                        text += "\(dateFormatter.string(from: startDate)) "
+                    }
+                    dateFormatter.dateFormat = "h:mm a"
+                    text += "from \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
+                }
+                text += "."
+                
                 let textToShare = [text]
                 let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
                 activityViewController.popoverPresentationController?.sourceView = self.rootViewController.view

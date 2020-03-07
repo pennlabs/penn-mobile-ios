@@ -240,12 +240,11 @@
 		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
 		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
 		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
-		F2568A692411F20E00561295 /* GSRNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A682411F20E00561295 /* GSRNotificationService.swift */; };
-		F2568A6D2411F20E00561295 /* GSRNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F2568A662411F20E00561295 /* GSRNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		F2568A732411F26500561295 /* GSRNotificationService+ImageCacheing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A722411F26500561295 /* GSRNotificationService+ImageCacheing.swift */; };
+		F2568A692411F20E00561295 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A682411F20E00561295 /* NotificationService.swift */; };
+		F2568A6D2411F20E00561295 /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F2568A662411F20E00561295 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F2568A732411F26500561295 /* NotificationService+ImageCacheing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */; };
 		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
-		F299616D23F78B1700C67A3B /* GSRNotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616C23F78B1700C67A3B /* GSRNotificationExtension.swift */; };
 		F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
@@ -274,7 +273,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				F2568A6D2411F20E00561295 /* GSRNotificationServiceExtension.appex in Embed App Extensions */,
+				F2568A6D2411F20E00561295 /* NotificationServiceExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,13 +522,12 @@
 		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
 		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
-		F2568A662411F20E00561295 /* GSRNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GSRNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2568A682411F20E00561295 /* GSRNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRNotificationService.swift; sourceTree = "<group>"; };
+		F2568A662411F20E00561295 /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2568A682411F20E00561295 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		F2568A6A2411F20E00561295 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2568A722411F26500561295 /* GSRNotificationService+ImageCacheing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GSRNotificationService+ImageCacheing.swift"; sourceTree = "<group>"; };
+		F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService+ImageCacheing.swift"; sourceTree = "<group>"; };
 		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
-		F299616C23F78B1700C67A3B /* GSRNotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRNotificationExtension.swift; sourceTree = "<group>"; };
 		F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+NotificationExtension.swift"; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -675,7 +673,7 @@
 				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
 				216640621EBADADA00746B8E /* PennMobile */,
 				2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */,
-				F2568A672411F20E00561295 /* GSRNotificationServiceExtension */,
+				F2568A672411F20E00561295 /* NotificationServiceExtension */,
 				216640611EBADADA00746B8E /* Products */,
 				F5E2CE9A9024AE8E28992A5E /* Pods */,
 				97F96CA923D268FD0025A58C /* Recovered References */,
@@ -688,7 +686,7 @@
 			children = (
 				216640601EBADADA00746B8E /* PennMobile.app */,
 				F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */,
-				F2568A662411F20E00561295 /* GSRNotificationServiceExtension.appex */,
+				F2568A662411F20E00561295 /* NotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1369,7 +1367,6 @@
 				F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */,
 				F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */,
 				F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */,
-				F299616B23F78AEA00C67A3B /* Rich_Notifications */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1384,22 +1381,14 @@
 			path = AutomatedScreenshotUITests;
 			sourceTree = "<group>";
 		};
-		F2568A672411F20E00561295 /* GSRNotificationServiceExtension */ = {
+		F2568A672411F20E00561295 /* NotificationServiceExtension */ = {
 			isa = PBXGroup;
 			children = (
-				F2568A682411F20E00561295 /* GSRNotificationService.swift */,
-				F2568A722411F26500561295 /* GSRNotificationService+ImageCacheing.swift */,
+				F2568A682411F20E00561295 /* NotificationService.swift */,
+				F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */,
 				F2568A6A2411F20E00561295 /* Info.plist */,
 			);
-			path = GSRNotificationServiceExtension;
-			sourceTree = "<group>";
-		};
-		F299616B23F78AEA00C67A3B /* Rich_Notifications */ = {
-			isa = PBXGroup;
-			children = (
-				F299616C23F78B1700C67A3B /* GSRNotificationExtension.swift */,
-			);
-			path = Rich_Notifications;
+			path = NotificationServiceExtension;
 			sourceTree = "<group>";
 		};
 		F5E2CE9A9024AE8E28992A5E /* Pods */ = {
@@ -1466,9 +1455,9 @@
 			productReference = F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		F2568A652411F20E00561295 /* GSRNotificationServiceExtension */ = {
+		F2568A652411F20E00561295 /* NotificationServiceExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F2568A712411F20E00561295 /* Build configuration list for PBXNativeTarget "GSRNotificationServiceExtension" */;
+			buildConfigurationList = F2568A712411F20E00561295 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */;
 			buildPhases = (
 				F2568A622411F20E00561295 /* Sources */,
 				F2568A632411F20E00561295 /* Frameworks */,
@@ -1478,9 +1467,9 @@
 			);
 			dependencies = (
 			);
-			name = GSRNotificationServiceExtension;
+			name = NotificationServiceExtension;
 			productName = GSRNotificationServiceExtension;
-			productReference = F2568A662411F20E00561295 /* GSRNotificationServiceExtension.appex */;
+			productReference = F2568A662411F20E00561295 /* NotificationServiceExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -1540,7 +1529,7 @@
 			targets = (
 				2166405F1EBADADA00746B8E /* PennMobile */,
 				F230FB0D225809E900760499 /* AutomatedScreenshotUITests */,
-				F2568A652411F20E00561295 /* GSRNotificationServiceExtension */,
+				F2568A652411F20E00561295 /* NotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1766,7 +1755,6 @@
 				F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
 				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
-				F299616D23F78B1700C67A3B /* GSRNotificationExtension.swift in Sources */,
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
 				21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */,
 				97E79E1A2100E51A00D3D606 /* FitnessFacilityName.swift in Sources */,
@@ -1913,8 +1901,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2568A692411F20E00561295 /* GSRNotificationService.swift in Sources */,
-				F2568A732411F26500561295 /* GSRNotificationService+ImageCacheing.swift in Sources */,
+				F2568A692411F20E00561295 /* NotificationService.swift in Sources */,
+				F2568A732411F26500561295 /* NotificationService+ImageCacheing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1928,7 +1916,7 @@
 		};
 		F2568A6C2411F20E00561295 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F2568A652411F20E00561295 /* GSRNotificationServiceExtension */;
+			target = F2568A652411F20E00561295 /* NotificationServiceExtension */;
 			targetProxy = F2568A6B2411F20E00561295 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2307,7 +2295,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = GSRNotificationServiceExtension/Info.plist;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2316,7 +2304,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile.GSRNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2334,7 +2322,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = GSRNotificationServiceExtension/Info.plist;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2342,7 +2330,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile.GSRNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2380,7 +2368,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F2568A712411F20E00561295 /* Build configuration list for PBXNativeTarget "GSRNotificationServiceExtension" */ = {
+		F2568A712411F20E00561295 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2568A6F2411F20E00561295 /* Debug */,
