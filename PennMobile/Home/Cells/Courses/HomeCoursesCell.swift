@@ -239,7 +239,7 @@ extension HomeCoursesCell {
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: attributedString.length))
         
         loginButton.setAttributedTitle(attributedString, for: .normal)
-        loginButton.titleLabel?.font = UIFont.avenirMedium?.withSize(15)
+        loginButton.titleLabel?.font = UIFont.avenirMedium.withSize(15)
         loginButton.addTarget(self, action: #selector(handleLoggingIn(_:)), for: .touchUpInside)
         
         enableCoursesView!.addSubview(loginButton)

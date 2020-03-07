@@ -100,19 +100,19 @@ extension UIColor {
 }
 
 extension UIFont {
-    static let avenirMedium = UIFont(name: "Avenir-Medium", size: 20)
+    static let avenirMedium = UIFont.systemFont(ofSize: 21, weight: .regular)
     static let primaryTitleFont = UIFont.systemFont(ofSize: 21, weight: .semibold)
     static let secondaryTitleFont = UIFont.systemFont(ofSize: 11, weight: .medium)
 
     static let interiorTitleFont = UIFont.systemFont(ofSize: 17, weight: .medium)
 
-    static let primaryInformationFont = UIFont(name: "AvenirNext-DemiBold", size: 14)
-    static let secondaryInformationFont = UIFont(name: "AvenirNext-Regular", size: 14)
+    static let primaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
+    static let secondaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .regular)
 
-    static let footerDescriptionFont = UIFont(name: "AvenirNext-Regular", size: 10)
-    static let footerTransitionFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
+    static let footerDescriptionFont = UIFont.systemFont(ofSize: 10, weight: .regular)
+    static let footerTransitionFont = UIFont.systemFont(ofSize: 10, weight: .semibold)
 
-    static let gsrTimeIncrementFont = UIFont(name: "AvenirNext-DemiBold", size: 20)
+    static let gsrTimeIncrementFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
 }
 
 extension UIBarButtonItem {

@@ -29,7 +29,7 @@ final class HomeFeatureCell: UITableViewCell, HomeCellConformable {
     
     // MARK: Cell Height
     
-    static let titleFont: UIFont = UIFont.primaryInformationFont!.withSize(18)
+    static let titleFont: UIFont = UIFont.primaryInformationFont.withSize(18)
     static let titleEdgeOffset: CGFloat = 16
     
     static let descriptionFont: UIFont = UIFont(name: "HelveticaNeue", size: 14)!
