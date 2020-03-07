@@ -50,7 +50,6 @@ class ControllerModel: NSObject {
         vcDictionary[.about] = AboutViewController()
         vcDictionary[.notifications] = NotificationViewController()
         vcDictionary[.privacy] = PrivacyViewController()
-        vcDictionary[.courseSchedule] = CourseScheduleViewController()
 //        vcDictionary[.fling] = FlingViewController()
     }
 

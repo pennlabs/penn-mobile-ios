@@ -12,7 +12,7 @@ import Kingfisher
 class GSRLocationCell: UITableViewCell {
     
     static let identifier = "locationCell"
-    static let cellHeight: CGFloat = 100
+    static let cellHeight: CGFloat = 98
     
     var isHomePageCell: Bool = false {
         didSet {

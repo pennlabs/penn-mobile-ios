@@ -16,7 +16,7 @@ protocol ReservationCellDelegate {
 class ReservationCell: UITableViewCell {
     
     static let identifier = "reservationCell"
-    static let cellHeight: CGFloat = 127
+    static let cellHeight: CGFloat = 98
     
     var isHomePageCell: Bool = false {
         didSet {
@@ -62,6 +62,7 @@ class ReservationCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.prepareUI()
+        self.accessoryType = .disclosureIndicator
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -77,58 +78,55 @@ extension ReservationCell {
         prepareLocationLabel()
         prepareDateLabel()
         prepareTimeLabel()
-        prepareDeleteButton()
     }
     
     private func prepareLocationLabel() {
         locationLabel = UILabel()
-        locationLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
+        locationLabel.font = .systemFont(ofSize: 17, weight: .medium)
         locationLabel.textColor = .labelPrimary
         locationLabel.textAlignment = .left
         locationLabel.numberOfLines = 1
         
         addSubview(locationLabel)
-        _ = locationLabel.anchor(topAnchor, left: buildingImage.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 14, leftConstant: 25, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
+        
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
+        locationLabel.centerYAnchor.constraint(equalTo: buildingImage.centerYAnchor).isActive = true
+        locationLabel.leftAnchor.constraint(equalTo: buildingImage.rightAnchor, constant: 14).isActive = true
+        locationLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 10).isActive = true
     }
     
     private func prepareDateLabel() {
         dateLabel = UILabel()
-        dateLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        dateLabel.font = .systemFont(ofSize: 14)
         dateLabel.textColor = .labelSecondary
         dateLabel.textAlignment = .left
         dateLabel.numberOfLines = 1
         dateLabel.shrinkUntilFits()
         
         addSubview(dateLabel)
-        _ = dateLabel.anchor(locationLabel.bottomAnchor, left: buildingImage.rightAnchor, bottom: nil, right: nil, topConstant: 3, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = dateLabel.anchor(nil, left: buildingImage.rightAnchor,
+                             bottom: locationLabel.topAnchor, right: nil,
+                             topConstant: 0, leftConstant: 14,
+                             bottomConstant: 4, rightConstant: 0,
+                             widthConstant: 0, heightConstant: 0)
     }
     
     private func prepareTimeLabel() {
         timeLabel = UILabel()
-        timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        timeLabel.font = .systemFont(ofSize: 14)
         timeLabel.textColor = .labelSecondary
         timeLabel.textAlignment = .left
         timeLabel.numberOfLines = 1
         timeLabel.shrinkUntilFits()
         
         addSubview(timeLabel)
-        _ = timeLabel.anchor(dateLabel.bottomAnchor, left: buildingImage.rightAnchor, bottom: nil, right: nil, topConstant: 3, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = timeLabel.anchor(locationLabel.bottomAnchor, left: buildingImage.rightAnchor,
+                             bottom: nil, right: nil,
+                             topConstant: 4, leftConstant: 14,
+                             bottomConstant: 0, rightConstant: 0,
+                             widthConstant: 0, heightConstant: 0)
     }
-    
-    private func prepareDeleteButton() {
-        deleteButton = UIButton(type: .system)
-        deleteButton.setTitle("Delete", for: .normal)
-        deleteButton.addTarget(self, action: #selector(handleDeletePressed(_:)), for: .touchUpInside)
-        deleteButton.backgroundColor = .baseRed
-        deleteButton.layer.cornerRadius = 4
-        deleteButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        deleteButton.titleLabel?.textColor = .white
-        deleteButton.tintColor = .white
-        deleteButton.titleLabel?.textAlignment = .center
-        
-        addSubview(deleteButton)
-        _ = deleteButton.anchor(timeLabel.bottomAnchor, left: buildingImage.rightAnchor, bottom: bottomAnchor, right: nil, topConstant: 5, leftConstant: 25, bottomConstant: 14, rightConstant: 0, widthConstant: 90, heightConstant: 24)    }
-    
+
     @objc func handleDeletePressed(_ sender: Any) {
         self.delegate.deleteReservation(reservation)
     }
@@ -138,9 +136,9 @@ extension ReservationCell {
         buildingImage.translatesAutoresizingMaskIntoConstraints = false
         buildingImage.contentMode = .scaleAspectFill
         buildingImage.clipsToBounds = true
-        buildingImage.layer.cornerRadius = 8.0
+        buildingImage.layer.cornerRadius = 7.0
         addSubview(buildingImage)
-        buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 20, widthConstant: 139, heightConstant: 87)[1]
+        buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 12, leftConstant: 14, bottomConstant: 12, widthConstant: 116, heightConstant: 74)[1]
     }
     
 }
