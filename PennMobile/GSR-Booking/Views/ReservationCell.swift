@@ -6,7 +6,6 @@
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 protocol ReservationCellDelegate {
@@ -106,9 +105,8 @@ extension ReservationCell {
         addSubview(dateLabel)
         _ = dateLabel.anchor(nil, left: buildingImage.rightAnchor,
                              bottom: locationLabel.topAnchor, right: nil,
-                             topConstant: 0, leftConstant: 14,
-                             bottomConstant: 4, rightConstant: 0,
-                             widthConstant: 0, heightConstant: 0)
+                             leftConstant: 14,
+                             bottomConstant: 4)
     }
     
     private func prepareTimeLabel() {
@@ -122,9 +120,7 @@ extension ReservationCell {
         addSubview(timeLabel)
         _ = timeLabel.anchor(locationLabel.bottomAnchor, left: buildingImage.rightAnchor,
                              bottom: nil, right: nil,
-                             topConstant: 4, leftConstant: 14,
-                             bottomConstant: 0, rightConstant: 0,
-                             widthConstant: 0, heightConstant: 0)
+                             topConstant: 4, leftConstant: 14)
     }
 
     @objc func handleDeletePressed(_ sender: Any) {

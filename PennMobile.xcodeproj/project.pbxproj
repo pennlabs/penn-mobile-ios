@@ -243,6 +243,7 @@
 		F2568A692411F20E00561295 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A682411F20E00561295 /* NotificationService.swift */; };
 		F2568A6D2411F20E00561295 /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F2568A662411F20E00561295 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F2568A732411F26500561295 /* NotificationService+ImageCacheing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */; };
+		F2568A762413534F00561295 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F2568A752413534F00561295 /* SnapKit */; };
 		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
 		F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */; };
@@ -538,6 +539,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */,
+				F2568A762413534F00561295 /* SnapKit in Frameworks */,
 				F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */,
 				F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */,
 				F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */,
@@ -1430,6 +1432,7 @@
 				F213CCE923C3F5D5000AD90F /* SCLAlertView */,
 				F213CCEC23C3F6A8000AD90F /* SwiftyJSON */,
 				F213CCEF23C3F99B000AD90F /* ScrollableGraphView */,
+				F2568A752413534F00561295 /* SnapKit */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -1522,6 +1525,7 @@
 				F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
 				F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
+				F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
@@ -2420,6 +2424,14 @@
 				minimumVersion = 4.1.0;
 			};
 		};
+		F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2452,6 +2464,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */;
 			productName = ScrollableGraphView;
+		};
+		F2568A752413534F00561295 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
