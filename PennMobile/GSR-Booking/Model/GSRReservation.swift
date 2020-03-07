@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum GSRService: String, Codable {
+enum GSRService: String {
     case wharton
     case libcal
 }
 
-struct GSRReservation: Codable {
+struct GSRReservation {
     let roomName: String
     let gid: Int
     let lid: Int
