@@ -208,22 +208,31 @@ extension GSRNetworkManager {
 
 // MARK: - Delete Reservation
 extension GSRNetworkManager {
+    
     func deleteReservation(reservation: GSRReservation, sessionID: String?, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> Void) {
+        
+        if reservation.service == .wharton {
+            guard let _ = sessionID else {
+                callback(false, "Please log in and try again.")
+                return
+            }
+        }
+        deleteReservation(bookingID: reservation.bookingID, sessionID: sessionID, callback: callback)
+    }
+    
+    func deleteReservation(bookingID: String, sessionID: String?, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> Void) {
         let url = URL(string: cancelURL)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let deviceID = getDeviceID()
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         
-        var params = ["booking_id": reservation.bookingID]
+        var params = ["booking_id": bookingID]
         
-        if reservation.service == .wharton {
-            guard let sessionID = sessionID else {
-                callback(false, "Please log in and try again.")
-                return
-            }
+        if let sessionID = sessionID {
             params["sessionid"] = sessionID
         }
+        
         request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             

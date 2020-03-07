@@ -6,8 +6,8 @@
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import Kingfisher
 
 class GSRLocationCell: UITableViewCell {
     
@@ -29,14 +29,8 @@ class GSRLocationCell: UITableViewCell {
     var location: GSRLocation! {
         didSet {
             locationLabel.text = location.name
-            
-            if (location.lid == 1086 && location.gid != 1889){
-                let imageName = "lid-\(location.lid)"
-                buildingImage.image = UIImage(named: imageName)
-            }
-            else if let gid = location.gid {
-                let imageName = "lid-\(location.lid)-gid-\(gid)"
-                buildingImage.image = UIImage(named: imageName)
+            if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(location.lid)-gid-\(location.gid ?? location.lid).jpg") {
+                buildingImage.kf.setImage(with: url)
             }
         }
     }

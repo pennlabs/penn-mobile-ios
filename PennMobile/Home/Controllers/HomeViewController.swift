@@ -81,6 +81,18 @@ class HomeViewController: GenericViewController {
         displayTitle = nil
         tableViewModel = nil
     }
+    
+    func clearCacheAndReload(animated: Bool) {
+        if animated {
+            self.startLoadingViewAnimation()
+        }
+        clearCache()
+        refreshTableView {
+            if animated {
+                self.stopLoadingViewAnimation()
+            }
+        }
+    }
 }
 
 // MARK: - Home Page Networking
