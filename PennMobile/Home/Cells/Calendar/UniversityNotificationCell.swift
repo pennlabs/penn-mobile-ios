@@ -12,7 +12,7 @@ import EventKit
 class UniversityNotificationCell: UITableViewCell {
     
     static let identifier = "universityNotificationCell"
-    static let cellHeight: CGFloat = 107
+    static let cellHeight: CGFloat = 98
     
     var calendarEvent: CalendarEvent! {
         didSet {
@@ -56,31 +56,54 @@ extension UniversityNotificationCell {
         eventLabel = getEventLabel()
         dateLabel = getDateLabel()
         pennCrest = getPennCrest()
+        let centeredView = UIView()
         
-        addSubview(eventLabel)
-        addSubview(dateLabel)
+        addSubview(centeredView)
+        centeredView.addSubview(eventLabel)
+        centeredView.addSubview(dateLabel)
         addSubview(pennCrest)
         
-        _ = eventLabel.anchor(topAnchor, left: pennCrest.rightAnchor, bottom: nil, right: rightAnchor, topConstant: pad, leftConstant: pad, rightConstant: pad)
-        _ = dateLabel.anchor(eventLabel.bottomAnchor, left: pennCrest.rightAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 7, leftConstant: pad, bottomConstant: 22, rightConstant: pad)
-        _ = pennCrest.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 13, leftConstant: 25, widthConstant: 83, heightConstant: 83)
         
+        pennCrest.snp.makeConstraints { (make) in
+            make.leading.equalTo(self).offset(pad)
+            make.centerY.equalTo(self)
+            make.height.equalTo(74)
+            make.width.equalTo(116)
+        }
+        
+        centeredView.snp.makeConstraints { (make) in
+            make.leading.equalTo(pennCrest.snp.trailing).offset(pad)
+            make.trailing.equalTo(self).offset(-pad)
+            make.centerY.equalTo(pennCrest)
+        }
+        
+        eventLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(centeredView)
+            make.trailing.equalTo(centeredView)
+            make.top.equalTo(centeredView)
+        }
+        
+        dateLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(centeredView)
+            make.trailing.equalTo(centeredView)
+            make.bottom.equalTo(centeredView)
+            make.top.equalTo(eventLabel.snp.bottom).offset(3)
+        }
     }
     
     fileprivate func getDateLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        label.font = .primaryInformationFont
         label.textColor = .labelSecondary
-        label.textAlignment = .center
-        label.numberOfLines = 1
-        label.shrinkUntilFits()
+        label.textAlignment = .natural
+        label.numberOfLines = 2
         return label
     }
     
     fileprivate func getEventLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        label.textAlignment = .center
+        label.font = .interiorTitleFont
+        label.textAlignment = .natural
         label.textColor = UIColor.labelPrimary
         label.numberOfLines = 2
         return label
@@ -88,10 +111,10 @@ extension UniversityNotificationCell {
     
     fileprivate func getPennCrest() -> UIImageView {
         let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.widthAnchor.constraint(equalToConstant: 83).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 83).isActive = true
         image.image = UIImage(named: "upenn")
+        image.contentMode = .scaleAspectFit
+        image.backgroundColor = .grey5
+        image.layer.cornerRadius = 7
         return image
     }
 }
