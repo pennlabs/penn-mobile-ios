@@ -12,11 +12,11 @@ protocol GSRDeletable: IndicatorEnabled, ShowsAlert {}
 
 extension GSRDeletable where Self: UIViewController {
     
-    func deleteReservation(_ bookingId: String, _ callback: @escaping (_ success: Bool) -> Void) {
+    func deleteReservation(_ bookingID: String, _ callback: @escaping (_ success: Bool) -> Void) {
         confirmDelete {
             self.showActivity()
             let sessionID = GSRUser.getSessionID()
-            GSRNetworkManager.instance.deleteReservation(bookingID: bookingId, sessionID: sessionID) { (success, errorMsg) in
+            GSRNetworkManager.instance.deleteReservation(bookingID: bookingID, sessionID: sessionID) { (success, errorMsg) in
                 DispatchQueue.main.async {
                     self.hideActivity()
                     if success {
