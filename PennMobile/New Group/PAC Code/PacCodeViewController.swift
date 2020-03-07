@@ -104,8 +104,6 @@ extension PacCodeViewController : LocalAuthentication {
         if let pacCode = getPacCode() {
             self.pacCode = pacCode
         } else {
-            PacCodeNetworkManager.instance.getPacCode(callback: savePacCode(_:))
-
             self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
         }
         
@@ -149,6 +147,4 @@ extension PacCodeViewController {
             }
         }
     }
-//    fileprivate func fetch
-    
 }
