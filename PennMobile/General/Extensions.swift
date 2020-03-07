@@ -13,6 +13,18 @@ extension UIApplication {
     }
 }
 
+class Padding {
+    static let pad: CGFloat = 14.0
+}
+
+extension UIView {
+    var pad: CGFloat { return Padding.pad }
+}
+
+extension UIViewController {
+    var pad: CGFloat { return Padding.pad }
+}
+
 extension UIView {
 
     @available(iOS 9.0, *)
@@ -62,9 +74,6 @@ extension UIView {
 
         return anchors
     }
-
-    // Value to be used for element padding app-wide
-    static let padding: CGFloat = 14.0
 }
 
 extension UIColor {
@@ -92,10 +101,10 @@ extension UIColor {
 
 extension UIFont {
     static let avenirMedium = UIFont(name: "Avenir-Medium", size: 20)
-    static let primaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 24)
-    static let secondaryTitleFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
+    static let primaryTitleFont = UIFont.systemFont(ofSize: 21, weight: .semibold)
+    static let secondaryTitleFont = UIFont.systemFont(ofSize: 11, weight: .regular)
 
-    static let interiorTitleFont = UIFont(name: "AvenirNext-Regular", size: 20)
+    static let interiorTitleFont = UIFont.systemFont(ofSize: 17, weight: .medium)
 
     static let primaryInformationFont = UIFont(name: "AvenirNext-DemiBold", size: 14)
     static let secondaryInformationFont = UIFont(name: "AvenirNext-Regular", size: 14)
@@ -109,7 +118,7 @@ extension UIFont {
 extension UIBarButtonItem {
     static func itemWith(colorfulImage: UIImage?, color: UIColor, target: AnyObject, action: Selector) -> UIBarButtonItem {
         let button = UIButton(type: .custom)
-        button.setImage(colorfulImage?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
+    button.setImage(colorfulImage?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate), for: .normal)
         button.tintColor = color
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         button.addTarget(target, action: action, for: .touchUpInside)

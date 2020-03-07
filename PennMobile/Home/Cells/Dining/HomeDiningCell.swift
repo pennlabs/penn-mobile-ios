@@ -46,9 +46,6 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     fileprivate var dividerLine: UIView!
     fileprivate var venueTableView: UITableView!
 
-    fileprivate var footerDescriptionLabel: UILabel!
-    fileprivate var footerTransitionButton: UIButton!
-
     // Mark: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -81,8 +78,6 @@ extension HomeDiningCell {
 
         secondaryTitleLabel.text = "DINING HALLS"
         primaryTitleLabel.text = "Favorites"
-
-        // footerDescriptionLabel.text = "Showing your most-visited halls."
     }
 }
 
@@ -240,25 +235,5 @@ extension HomeDiningCell {
         tableView.register(DiningCell.self, forCellReuseIdentifier: DiningCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
-    }
-
-    fileprivate func getFooterDescriptionLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .secondaryTitleFont
-        label.textColor = .labelSecondary
-        label.textAlignment = .right
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-
-    fileprivate func getFooterTransitionButton() -> UIButton {
-        let button = UIButton()
-        button.setTitleColor(.navigation, for: .normal)
-        button.setTitleColor(.labelSecondary, for: .highlighted)
-        button.setTitle("See more ❯", for: .normal)
-        button.titleLabel?.font = .footerTransitionFont
-        button.addTarget(self, action: #selector(transitionButtonTapped), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }
 }

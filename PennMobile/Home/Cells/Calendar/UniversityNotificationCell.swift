@@ -53,8 +53,6 @@ extension UniversityNotificationCell {
     }
     
     fileprivate func prepareLabels() {
-        let padding = UIView.padding
-        
         eventLabel = getEventLabel()
         dateLabel = getDateLabel()
         pennCrest = getPennCrest()
@@ -63,8 +61,8 @@ extension UniversityNotificationCell {
         addSubview(dateLabel)
         addSubview(pennCrest)
         
-        _ = eventLabel.anchor(topAnchor, left: pennCrest.rightAnchor, bottom: nil, right: rightAnchor, topConstant: padding, leftConstant: padding, rightConstant: padding)
-        _ = dateLabel.anchor(eventLabel.bottomAnchor, left: pennCrest.rightAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 7, leftConstant: padding, bottomConstant: 22, rightConstant: padding)
+        _ = eventLabel.anchor(topAnchor, left: pennCrest.rightAnchor, bottom: nil, right: rightAnchor, topConstant: pad, leftConstant: pad, rightConstant: pad)
+        _ = dateLabel.anchor(eventLabel.bottomAnchor, left: pennCrest.rightAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 7, leftConstant: pad, bottomConstant: 22, rightConstant: pad)
         _ = pennCrest.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 13, leftConstant: 25, widthConstant: 83, heightConstant: 83)
         
     }

@@ -244,6 +244,8 @@
 		F2568A6D2411F20E00561295 /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F2568A662411F20E00561295 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F2568A732411F26500561295 /* NotificationService+ImageCacheing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */; };
 		F2568A762413534F00561295 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F2568A752413534F00561295 /* SnapKit */; };
+		F2568A7824135B6500561295 /* HomeCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A7724135B6500561295 /* HomeCellHeader.swift */; };
+		F2568A7A2413637D00561295 /* HomeCellSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A792413637D00561295 /* HomeCellSafeArea.swift */; };
 		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
 		F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */; };
@@ -527,6 +529,8 @@
 		F2568A682411F20E00561295 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		F2568A6A2411F20E00561295 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService+ImageCacheing.swift"; sourceTree = "<group>"; };
+		F2568A7724135B6500561295 /* HomeCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellHeader.swift; sourceTree = "<group>"; };
+		F2568A792413637D00561295 /* HomeCellSafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellSafeArea.swift; sourceTree = "<group>"; };
 		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
 		F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+NotificationExtension.swift"; sourceTree = "<group>"; };
@@ -641,6 +645,8 @@
 		21640D4620104354002F33CA /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F2568A7724135B6500561295 /* HomeCellHeader.swift */,
+				F2568A792413637D00561295 /* HomeCellSafeArea.swift */,
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
 				210AC14420684F9B0050D837 /* HomeCellProtocols.swift */,
 				212B835A222A37BD00F835D6 /* Feature */,
@@ -1706,6 +1712,7 @@
 				EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */,
 				21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */,
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
+				F2568A7A2413637D00561295 /* HomeCellSafeArea.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
 				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
@@ -1731,6 +1738,7 @@
 				EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
+				F2568A7824135B6500561295 /* HomeCellHeader.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
 				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
@@ -1988,7 +1996,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2041,7 +2049,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
