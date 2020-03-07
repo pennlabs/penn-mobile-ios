@@ -44,12 +44,12 @@ class HomeCellHeader: UIView {
         
         secondaryTitleLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(self)
-            make.top.equalTo(self).offset(-3 + pad/2)
+            make.top.equalTo(self).offset(3)
         }
         
         primaryTitleLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(self)
-            make.top.equalTo(secondaryTitleLabel.snp.bottom).offset(2)
+            make.top.equalTo(secondaryTitleLabel.snp.bottom).offset(4)
         }
     }
 
