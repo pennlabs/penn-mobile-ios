@@ -64,20 +64,26 @@ extension GSRLocationCell {
         buildingImage.translatesAutoresizingMaskIntoConstraints = false
         buildingImage.contentMode = .scaleAspectFill
         buildingImage.clipsToBounds = true
-        buildingImage.layer.cornerRadius = 8.0
+        buildingImage.layer.cornerRadius = 7.0
         addSubview(buildingImage)
-        buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 8, leftConstant: 25, bottomConstant: 8, widthConstant: 139, heightConstant: 0)[1]
+        buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil,
+            topConstant: 12, leftConstant: 14,
+            bottomConstant: 12, widthConstant: 116,
+            heightConstant: 74)[1]
     }
     
     private func prepareLocationLabel() {
         locationLabel = UILabel()
-        locationLabel.font = UIFont.interiorTitleFont
-        locationLabel.textColor = UIColor.labelPrimary
+        locationLabel.font = .systemFont(ofSize: 17, weight: .medium)
+        locationLabel.textColor = .labelPrimary
         locationLabel.textAlignment = .left
-        locationLabel.numberOfLines = 2
+        locationLabel.numberOfLines = 1
         
         addSubview(locationLabel)
-        _ = locationLabel.anchor(nil, left: buildingImage.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 25, widthConstant: 0, heightConstant: 0)
+        
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
         locationLabel.centerYAnchor.constraint(equalTo: buildingImage.centerYAnchor).isActive = true
+        locationLabel.leftAnchor.constraint(equalTo: buildingImage.rightAnchor, constant: 14).isActive = true
+        locationLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 10).isActive = true
     }
 }

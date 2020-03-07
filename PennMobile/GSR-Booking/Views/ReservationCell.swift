@@ -134,7 +134,11 @@ extension ReservationCell {
         buildingImage.clipsToBounds = true
         buildingImage.layer.cornerRadius = 7.0
         addSubview(buildingImage)
-        buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 12, leftConstant: 14, bottomConstant: 12, widthConstant: 116, heightConstant: 74)[1]
+        buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor,
+                                                           bottom: bottomAnchor, right: nil,
+                                                           topConstant: 12, leftConstant: 14,
+                                                           bottomConstant: 12, widthConstant: 116,
+                                                           heightConstant: 74)[1]
     }
     
 }
