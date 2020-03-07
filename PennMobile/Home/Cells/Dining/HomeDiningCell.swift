@@ -130,7 +130,7 @@ extension HomeDiningCell {
         header.addSubview(settingsButton)
         settingsButton.snp.makeConstraints { (make) in
             make.size.equalTo(21)
-            make.top.equalTo(header)
+            make.centerY.equalTo(header)
             make.trailing.equalTo(header)
         }
     }
