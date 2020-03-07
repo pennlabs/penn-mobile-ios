@@ -102,7 +102,7 @@ extension UIColor {
 extension UIFont {
     static let avenirMedium = UIFont(name: "Avenir-Medium", size: 20)
     static let primaryTitleFont = UIFont.systemFont(ofSize: 21, weight: .semibold)
-    static let secondaryTitleFont = UIFont.systemFont(ofSize: 11, weight: .regular)
+    static let secondaryTitleFont = UIFont.systemFont(ofSize: 11, weight: .medium)
 
     static let interiorTitleFont = UIFont.systemFont(ofSize: 17, weight: .medium)
 

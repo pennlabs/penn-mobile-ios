@@ -28,6 +28,7 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     var cardView: UIView! = UIView()
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
     fileprivate var header: HomeCellHeader = HomeCellHeader()
+    
     fileprivate var washerView: LaundryMachinesView!
     fileprivate var dryerView: LaundryMachinesView!
     
