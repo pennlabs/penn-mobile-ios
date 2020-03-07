@@ -68,7 +68,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 print(startDateString)
                 print(endDateString)
 
-                var text = "Upcoming GSR booking in \(roomName) "
+                var text = "Upcoming GSR in \(roomName) "
                 if let startDate = dateFormatter.date(from: startDateString), let endDate = dateFormatter.date(from: endDateString) {
                     if startDate.isToday {
                         text += "today "
@@ -79,7 +79,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     dateFormatter.dateFormat = "h:mm a"
                     text += "from \(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
                 }
-                text += "."
+                let randomEmojis = ["💖", "🔥", "🤠", "💙", "💚", "💛", "💜", "🥰", "🦑", "🥴", "🤩", "😎", "🤓", "😍"]
+                text += ". Booked by Penn Mobile \(randomEmojis.random ?? "💖")"
                 
                 let textToShare = [text]
                 let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
