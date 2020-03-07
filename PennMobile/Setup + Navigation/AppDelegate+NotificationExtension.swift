@@ -54,14 +54,20 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if response.notification.request.content.categoryIdentifier == NotificationIdentifiers.upcomingGSRCategory,
             let gsrReservation = userInfo["reservation"] as? [String:String] {
             if response.actionIdentifier == NotificationIdentifiers.cancelGSRAction, let bookingID = gsrReservation["booking_id"] {
+                
+                FirebaseAnalyticsManager.shared.trackEvent(action: "GSR Delete From Notification", result: "User Deleted GSR From Notification", content: "User Deleted GSR From Notification")
+                
                 // This makes the rootVC go to home screen
                 rootViewController.showMainScreen()
                 // We use HomeVC's "delete res" method
                 guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
                 homeVC.deleteReservation(bookingID)
-            } else if response.actionIdentifier == NotificationIdentifiers.shareGSRAction, let roomName = gsrReservation["room_name"], let startDateString = gsrReservation["start"], let endDateString = gsrReservation["end"] {
-                // Share the GSR Booking with the iOS share sheet
                 
+            } else if response.actionIdentifier == NotificationIdentifiers.shareGSRAction, let roomName = gsrReservation["room_name"], let startDateString = gsrReservation["start"], let endDateString = gsrReservation["end"] {
+                
+                FirebaseAnalyticsManager.shared.trackEvent(action: "GSR Share From Notification", result: "User Shared GSR From Notification", content: "User Shared GSR From Notification")
+                
+                // Share the GSR Booking with the iOS share sheet
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
                 
