@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PacCodeViewController : UIViewController, KeychainAccessible, ShowsAlert, IndicatorEnabled {
+class PacCodeViewController : UIViewController, ShowsAlert, IndicatorEnabled {
     
     var pacCode : String?
         
@@ -70,7 +70,7 @@ class PacCodeViewController : UIViewController, KeychainAccessible, ShowsAlert, 
         pacCodeInfoLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
     }
     
-    func refreshPacCode() {
+    func updatePACCode() {
         if let pacCode = pacCode {
             var counter = 0
             for pacCodeDigit in pacCode {
@@ -86,28 +86,36 @@ class PacCodeViewController : UIViewController, KeychainAccessible, ShowsAlert, 
 }
 
 // MARK: - Local Authentication
-extension PacCodeViewController : LocalAuthentication {
+extension PacCodeViewController : KeychainAccessible, LocallyAuthenticatable {
         
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        handleAuthentication(cancelText: "Go Back", reasonText: "Authenticate to see your PAC Code")
+        requestAuthentication(cancelText: "Go Back", reasonText: "Authenticate to see your PAC Code")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         pacCode = nil
-        refreshPacCode()
+        updatePACCode()
     }
     
     func handleAuthenticationSuccess() {
         if let pacCode = getPacCode() {
             self.pacCode = pacCode
         } else {
-            self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
+            if Account.isLoggedIn {
+                self.showActivity()
+                
+                // Handle the case in which the user is logged in but hasn't yet fetched their PAC Codes
+                // Acts as though the user pressed the refresh button
+                PacCodeNetworkManager.instance.getPacCode { result in self.handleNetworkPacCodeRefreshCompletion(result) }
+            } else {
+                self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
+            }
         }
         
-        refreshPacCode()
+        updatePACCode()
     }
     
     func handleAuthenticationFailure() {
@@ -126,7 +134,7 @@ extension PacCodeViewController {
         
         let refreshPacCode = UIAlertAction(title: "Yes", style: .default, handler: { (UIAlertAction) in
             self.showActivity()
-            PacCodeNetworkManager.instance.getPacCode(callback: self.handleNetworkPacCodeRefreshCompletion(_:))
+            PacCodeNetworkManager.instance.getPacCode { result in self.handleNetworkPacCodeRefreshCompletion(result) }
         })
         
         alert.addAction(refreshPacCode)
@@ -135,16 +143,52 @@ extension PacCodeViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    fileprivate func handleNetworkPacCodeRefreshCompletion(_ pacCode: String?) {
+    fileprivate func handleNetworkPacCodeRefreshCompletion(_ result: Result<String, NetworkingError>) {
         DispatchQueue.main.async {
             self.hideActivity()
-            if let pacCode = pacCode {
+            
+            switch result {
+            case .success(let pacCode):
                 self.savePacCode(pacCode)
                 self.pacCode = pacCode
-                self.showAlert(withMsg: "Your PAC Code has been updated.", title: "Success!", completion: self.refreshPacCode)
-            } else {
-                self.showAlert(withMsg: "Unable to access your courses. Please try again later.", title: "Uh oh!", completion: nil)
+                self.showAlert(withMsg: "Your PAC Code has been updated.", title: "Success!", completion: self.updatePACCode)
+                
+            case .failure(.noInternet):
+                self.showAlert(withMsg: "You appear to be offline.\nPlease try again later.", title: "Network Error", completion: { self.navigationController?.popViewController(animated: true) })
+                
+            case .failure(.parsingError):
+                self.showAlert(withMsg: "Penn's PAC Code servers are currently not updating.We hope this will be fixed shortly", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) })
+                
+            case .failure(.authenticationError):
+                self.showAlert(withMsg: "Unable to access your PAC Code.\nPlease login again.", title: "Login Error", completion: { self.handleAuthenticationError() })
+                
+            default:
+                self.showAlert(withMsg: "Something went wrong.\nPlease try again later.", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) } )
             }
         }
     }
+    
+    fileprivate func handleAuthenticationError() {
+        
+        let llc = LabsLoginController { (success) in
+            DispatchQueue.main.async {
+                print("success")
+                self.loginCompletion(success)
+            }
+        }
+        
+        let nvc = UINavigationController(rootViewController: llc)
+        
+        present(nvc, animated: true, completion: nil)
+    }
+    
+    fileprivate func loginCompletion(_ successful: Bool) {
+        if successful {
+            self.showActivity()
+            PacCodeNetworkManager.instance.getPacCode { result in self.handleNetworkPacCodeRefreshCompletion(result) }
+        } else {
+            showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) } )
+        }
+    }
+
 }

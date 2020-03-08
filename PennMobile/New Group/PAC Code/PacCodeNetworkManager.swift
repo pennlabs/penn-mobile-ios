@@ -23,21 +23,24 @@ extension PacCodeNetworkManager: PennAuthRequestable {
         return "https://penncard.apps.upenn.edu/penncard/jsp/fast2.do/Shibboleth.sso/SAML2/POST"
     }
     
-    func getPacCode(callback: @escaping ((_ code: String?) -> Void)) {
+    func getPacCode(callback: @escaping (_ result: Result<String, NetworkingError>) -> Void ) {
         makeAuthRequest(targetUrl: pacURL, shibbolethUrl: shibbolethUrl) { (data, response, error) in
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                        do {
-                            let pacCode = try self.findPacCode(from: html)
-                            return callback(pacCode)
-                        } catch {
-                            return callback(nil)
-                        }
-                    }
+            
+            guard let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
+                if let error = error as? NetworkingError {
+                    callback(.failure(error))
+                } else {
+                    callback(.failure(.other))
                 }
-            } else {
-                return callback(nil)
+                return
+            }
+            
+            do {
+                let pacCode = try self.findPacCode(from: html as String)
+                return callback(.success(pacCode))
+            } catch {
+                print("parsing error")
+                return callback(.failure(.parsingError))
             }
         }
     }
@@ -62,8 +65,16 @@ extension PacCodeNetworkManager: PennAuthRequestable {
             throw NetworkingError.parsingError
         }
         
-        // PAC Code is stored in the 5th index of the array
-        return identity[5]
+        
+        if (identity.count == 6) {
+            
+            // PAC Code is stored in the 5th index of the array
+            return identity[5]
+        } else {
+            throw NetworkingError.parsingError
+        }
+        
+        
     }
     
     

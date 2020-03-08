@@ -147,14 +147,14 @@ extension LocationPermissionRequestable {
     }
 }
 
-protocol LocalAuthentication {
+protocol LocallyAuthenticatable {
     func handleAuthenticationSuccess()
     func handleAuthenticationFailure()
 }
 
-extension LocalAuthentication {
+extension LocallyAuthenticatable {
     
-    func handleAuthentication(cancelText : String, reasonText: String) {
+    func requestAuthentication(cancelText : String, reasonText: String) {
         let context = LAContext()
         context.localizedCancelTitle = cancelText
 

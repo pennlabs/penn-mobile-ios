@@ -256,9 +256,12 @@ extension LabsLoginController {
     }
     
     fileprivate func getPacCode() {
-        PacCodeNetworkManager.instance.getPacCode { pacCode in
-            if let pacCode = pacCode {
+        PacCodeNetworkManager.instance.getPacCode { result in
+            switch result {
+            case .success(let pacCode):
                 self.savePacCode(pacCode)
+            case .failure(_):
+                return
             }
         }
     }

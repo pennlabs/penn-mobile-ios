@@ -43,7 +43,8 @@ extension PennAuthRequestable {
                 }
             } else {
                 UserDefaults.standard.setShibbolethAuth(authedIn: false)
-                completionHandler(nil, nil, NetworkingError.authenticationError)
+//                completionHandler(nil, nil, NetworkingError.authenticationError)
+                completionHandler(nil, nil, NetworkingError.noInternet)
             }
             UserDefaults.standard.storeCookies()
         }
