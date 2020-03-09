@@ -39,7 +39,6 @@ extension PacCodeNetworkManager: PennAuthRequestable {
                 let pacCode = try self.findPacCode(from: html as String)
                 return callback(.success(pacCode))
             } catch {
-                print("parsing error")
                 return callback(.failure(.parsingError))
             }
         }
@@ -66,9 +65,8 @@ extension PacCodeNetworkManager: PennAuthRequestable {
         }
         
         
+        // PAC Code is stored in the 5th index of the array
         if (identity.count == 6) {
-            
-            // PAC Code is stored in the 5th index of the array
             return identity[5]
         } else {
             throw NetworkingError.parsingError

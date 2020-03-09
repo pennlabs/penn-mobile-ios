@@ -24,6 +24,12 @@ extension PennAuthRequestable {
         let url = URL(string: targetUrl)!
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            
+            if let error = error, (error as NSError).code == -1009 {
+                completionHandler(nil, nil, NetworkingError.noInternet)
+                return
+            }
+            
             if let urlStr = response?.url?.absoluteString, urlStr == targetUrl {
                 UserDefaults.standard.setShibbolethAuth(authedIn: true)
                 completionHandler(data, response, error)
@@ -43,8 +49,7 @@ extension PennAuthRequestable {
                 }
             } else {
                 UserDefaults.standard.setShibbolethAuth(authedIn: false)
-//                completionHandler(nil, nil, NetworkingError.authenticationError)
-                completionHandler(nil, nil, NetworkingError.noInternet)
+                completionHandler(nil, nil, NetworkingError.other)
             }
             UserDefaults.standard.storeCookies()
         }
