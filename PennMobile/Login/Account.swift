@@ -64,7 +64,7 @@ class Account: Codable {
     }
     
     var description: String {
-        var str = "\(first) \(last)"
+        var str = "\(first ?? "") \(last ?? "")"
         if let imageUrl = imageUrl {
             str = "\(str)\n\(imageUrl)"
         }

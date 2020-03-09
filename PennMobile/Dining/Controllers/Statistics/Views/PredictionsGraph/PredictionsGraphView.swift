@@ -72,6 +72,7 @@ struct PredictionsGraphView: View {
             
             HStack {
                 VStack(alignment: .leading) {
+                    // "Leftover" Dollars
                     Text("Out of \(balanceType == .swipes ? "Swipes" : "Dollars")")
                         .font(.caption)
                     Text("\(self.formattedZeroDate)")

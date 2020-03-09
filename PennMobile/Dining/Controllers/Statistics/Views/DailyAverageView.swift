@@ -17,11 +17,13 @@ struct DailyAverageView: View {
     init(config: DiningInsightsAPIResponse.CardData.DailyAverageCardData) {
         self.config = config
         
-        var maxSpent = max(config.data.thisWeek.max()?.average ?? 0.0, config.data.lastWeek.max()?.average ?? 0.0)
+        self.maxSpent = max((config.data.thisWeek.min()?.average ?? 0.0) * -1, (config.data.lastWeek.min()?.average ?? 0.0) * -1)
         if maxSpent == 0 { maxSpent = 1 }
         
-        thisWeekDollarData = config.data.thisWeek.map({CGFloat($0.average / maxSpent)})
-        lastWeekDollarData = config.data.lastWeek.map({CGFloat($0.average / maxSpent)})
+        // Make a local copy of maxSpent (for init/compiler reasons)
+        let maxSpent = self.maxSpent
+        self.thisWeekDollarData = config.data.thisWeek.map({CGFloat(($0.average * -1) / maxSpent)})
+        self.lastWeekDollarData = config.data.lastWeek.map({CGFloat(($0.average * -1) / maxSpent)})
         
         let dayFormatter = DateFormatter()
         dayFormatter.dateFormat = "E"
@@ -31,6 +33,7 @@ struct DailyAverageView: View {
     let config: DiningInsightsAPIResponse.CardData.DailyAverageCardData
     @State private var selectedDataPoint: Int? = nil
     
+    private var maxSpent: Double
     private let thisWeekDollarData: [CGFloat]
     private let lastWeekDollarData: [CGFloat]
     
@@ -53,13 +56,11 @@ struct DailyAverageView: View {
     }
     
     private var formattedAverage: String {
-        let maxSpent = max(config.data.thisWeek.max()?.average ?? 0.0, config.data.lastWeek.max()?.average ?? 0.0)
         let spec = "%.2f"
         return String(format: "$\(spec)", Double(averageDollar) * maxSpent)
     }
     
     private var formattedAverageForDay: String {
-        let maxSpent = max(config.data.thisWeek.max()?.average ?? 0.0, config.data.lastWeek.max()?.average ?? 0.0)
         let spec = "%.2f"
         if selectedDataPoint == nil {
             return String(format: "$\(spec)", Double(averageDollar) * maxSpent)
