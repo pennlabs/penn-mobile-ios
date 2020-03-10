@@ -262,6 +262,7 @@ extension HomeViewController : DiningCellSettingsDelegate {
             diningItem.venues = DiningDataStore.shared.getVenues(for: DiningVenue.defaultVenueIds)
         } else {
             diningItem.venues = DiningDataStore.shared.getVenues(for: venueIds)
+            diningItem.venueIds = venueIds
         }
 
         reloadItem(diningItem)

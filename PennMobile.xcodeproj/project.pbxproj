@@ -195,6 +195,8 @@
 		C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C4B4D223EB16F00E443FD /* HomeReservationsCell.swift */; };
 		C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C4B4F223EB18800E443FD /* HomeReservationsCellItem.swift */; };
 		C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */; };
+		C847C91F241700E000D3138F /* CourseScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847C91D241700E000D3138F /* CourseScheduleViewController.swift */; };
+		C847C920241700E000D3138F /* CourseScheduleTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847C91E241700E000D3138F /* CourseScheduleTableViewModel.swift */; };
 		C94FC6D923996DBC8679AE9D /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A2002DC69818BFD2427F92 /* Pods_AutomatedScreenshotUITests.framework */; };
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
@@ -482,6 +484,8 @@
 		C15C4B4D223EB16F00E443FD /* HomeReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCell.swift; sourceTree = "<group>"; };
 		C15C4B4F223EB18800E443FD /* HomeReservationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCellItem.swift; sourceTree = "<group>"; };
 		C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReservationsCell.swift; sourceTree = "<group>"; };
+		C847C91D241700E000D3138F /* CourseScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseScheduleViewController.swift; sourceTree = "<group>"; };
+		C847C91E241700E000D3138F /* CourseScheduleTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseScheduleTableViewModel.swift; sourceTree = "<group>"; };
 		CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		CF1CE9BC205D664700C51F46 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewCell.swift; sourceTree = "<group>"; };
@@ -1033,6 +1037,8 @@
 				21B653BD2246F338001A97C5 /* CoursesWebviewController.swift */,
 				21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */,
 				21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */,
+				C847C91E241700E000D3138F /* CourseScheduleTableViewModel.swift */,
+				C847C91D241700E000D3138F /* CourseScheduleViewController.swift */,
 			);
 			path = Courses;
 			sourceTree = "<group>";
@@ -1664,6 +1670,7 @@
 			files = (
 				EFE2D6F0239B11050020F6BF /* GroupSettingsCell.swift in Sources */,
 				B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */,
+				C847C91F241700E000D3138F /* CourseScheduleViewController.swift in Sources */,
 				EFE2D6F5239B11050020F6BF /* GroupHeaderCell.swift in Sources */,
 				219F01F41FB7CCFA006BBC4E /* SAConfettiView.swift in Sources */,
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
@@ -1728,6 +1735,7 @@
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
+				C847C920241700E000D3138F /* CourseScheduleTableViewModel.swift in Sources */,
 				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
