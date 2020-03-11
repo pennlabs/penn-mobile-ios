@@ -283,12 +283,13 @@ extension GSRViewModel {
         return GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)
     }
     
-    func getGroupBooking -> GSRGroupBookings? {
+    // TODO: - Logic for generating group bookings
+    func getGroupBooking() -> GSRGroupBookings? {
         if currentSelection.isEmpty {
             return nil
         }
         
-        
+        return nil
     }
 }
 
