@@ -147,9 +147,11 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
         }
     }
     
+    var handleCancel: (() -> Void)? = nil
+    
     @objc fileprivate func cancel(_ sender: Any) {
         _ = self.resignFirstResponder()
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: self.handleCancel)
     }
     
     // MARK: - Decide Policy Upon Completed Navigation
