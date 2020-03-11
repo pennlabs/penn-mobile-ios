@@ -33,6 +33,9 @@ extension HomeViewController: GSRDeletable {
     }
 }
 
+
+
+
 // MARK: - GSR Quick Book Delegate
 extension HomeViewController: GSRBookable {
     func handleBookingSelected(_ booking: GSRBooking) {
@@ -236,6 +239,30 @@ extension HomeViewController {
                 id = identifiableItem.id
             }
             FeedAnalyticsManager.shared.trackInteraction(cellType: cellType.jsonKey, index: index, id: id)
+        }
+    }
+}
+
+//MARK: - Invite delegate
+extension HomeViewController: GSRInviteSelectable {
+    func handleInviteSelected(_ invite: GSRGroupInvite, _ accept: Bool) {
+        GSRGroupNetworkManager.instance.respondToInvite(invite: invite, accept: accept) { (success) in
+            if success {
+                guard let inviteItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.invites]).first as? HomeGroupInvitesCellItem else { return }
+                inviteItem.invites = inviteItem.invites.filter { $0.id != invite.id }
+                DispatchQueue.main.async {
+                    if inviteItem.invites.isEmpty {
+                        self.removeItem(inviteItem)
+                    } else {
+                        self.reloadItem(inviteItem)
+                    }
+                }
+            } else {
+                let message = "An error occured when responding to this invite. Please try again later."
+                let alert = UIAlertController(title: invite.group, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }

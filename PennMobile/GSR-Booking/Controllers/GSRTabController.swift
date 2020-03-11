@@ -82,10 +82,14 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child1 = GSRLocationsController()
         let child2 = GSRReservationsController()
-        let child3 = GSRGroupController()
-        // TODO: - uncomment group controller
-
-        return [child1, child2, /*child3*/]
+        
+        if UserDefaults.standard.gsrGroupsEnabled() {
+            let child3 = GSRGroupController()
+            return [child1, child2, child3]
+        }
+        
+        return [child1, child2]
+        
     }
 }
 
