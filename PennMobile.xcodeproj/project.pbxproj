@@ -49,8 +49,6 @@
 		21640D6220114A29002F33CA /* ControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D6120114A28002F33CA /* ControllerModel.swift */; };
 		21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD2204A296D008DB6E8 /* LaundryGraphView.swift */; };
 		21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD6204A5309008DB6E8 /* LaundryMachineCellTappable.swift */; };
-		21650B1A2415D5560024C48D /* CourseScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21650B182415D5550024C48D /* CourseScheduleViewController.swift */; };
-		21650B1B2415D5560024C48D /* CourseScheduleTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21650B192415D5550024C48D /* CourseScheduleTableViewModel.swift */; };
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */; };
 		216640951EBADC1700746B8E /* DiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640911EBADC1700746B8E /* DiningViewController.swift */; };
@@ -330,8 +328,6 @@
 		21640D6120114A28002F33CA /* ControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerModel.swift; sourceTree = "<group>"; };
 		21640FD2204A296D008DB6E8 /* LaundryGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryGraphView.swift; sourceTree = "<group>"; };
 		21640FD6204A5309008DB6E8 /* LaundryMachineCellTappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachineCellTappable.swift; sourceTree = "<group>"; };
-		21650B182415D5550024C48D /* CourseScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseScheduleViewController.swift; sourceTree = "<group>"; };
-		21650B192415D5550024C48D /* CourseScheduleTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseScheduleTableViewModel.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		216640631EBADADA00746B8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2166406D1EBADADA00746B8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -1043,8 +1039,6 @@
 				21B8BBB1222318A600EBC1D0 /* Course.swift */,
 				21A9D941224087980000444D /* CourseMeetingTime.swift */,
 				21B653BD2246F338001A97C5 /* CoursesWebviewController.swift */,
-				21650B192415D5550024C48D /* CourseScheduleTableViewModel.swift */,
-				21650B182415D5550024C48D /* CourseScheduleViewController.swift */,
 				21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */,
 				21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */,
 				C8C96F0F241407000069D56A /* CourseScheduleTableViewModel.swift */,
