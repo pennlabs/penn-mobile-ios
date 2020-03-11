@@ -260,8 +260,10 @@ extension HomeViewController : DiningCellSettingsDelegate {
         guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
         if venueIds.count == 0 {
             diningItem.venues = DiningDataStore.shared.getVenues(for: DiningVenue.defaultVenueIds)
+            diningItem.venueIds = DiningVenue.defaultVenueIds
         } else {
             diningItem.venues = DiningDataStore.shared.getVenues(for: venueIds)
+            diningItem.venueIds = venueIds
         }
 
         reloadItem(diningItem)
