@@ -14,11 +14,11 @@ extension HomeViewController: HomeViewModelDelegate {}
 
 // MARK: - Reservation Delegate
 extension HomeViewController: GSRDeletable {
-    func deleteReservation(_ reservation: GSRReservation) {
-        deleteReservation(reservation) { (successful) in
+    func deleteReservation(_ bookingID: String) {
+        deleteReservation(bookingID) { (successful) in
             if successful {
                 guard let reservationItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.reservations]).first as? HomeReservationsCellItem else { return }
-                reservationItem.reservations = reservationItem.reservations.filter { $0.bookingID != reservation.bookingID }
+                reservationItem.reservations = reservationItem.reservations.filter { $0.bookingID != bookingID }
                 if reservationItem.reservations.isEmpty {
                     self.removeItem(reservationItem)
                 } else {
@@ -26,6 +26,10 @@ extension HomeViewController: GSRDeletable {
                 }
             }
         }
+    }
+    
+    func deleteReservation(_ reservation: GSRReservation) {
+        deleteReservation(reservation.bookingID)
     }
 }
 

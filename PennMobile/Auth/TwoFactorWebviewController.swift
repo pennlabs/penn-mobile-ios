@@ -8,6 +8,10 @@
 import Foundation
 import WebKit
 
+protocol TwoFactorWebviewDelegate {
+    func handleDismiss()
+}
+
 class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
     
     override var shouldLoadCookies: Bool {
@@ -15,6 +19,8 @@ class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
     }
     
     var completion : ((_ successful: Bool) -> Void)? = nil
+    
+    var delegate : TwoFactorEnableDelegate?
     
     override var urlStr: String {
         return "https://twostep.apps.upenn.edu/twoFactor/twoFactorUi/app/UiMain.index"
@@ -40,6 +46,9 @@ class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
                 self.hideActivity()
                 self.dismiss(animated: true, completion: nil)
                 completed = true
+                if let delegate = self.delegate {
+                    delegate.handleDismiss()
+                }
             }
         }
         UserDefaults.standard.storeCookies()

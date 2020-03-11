@@ -81,6 +81,18 @@ class HomeViewController: GenericViewController {
         displayTitle = nil
         tableViewModel = nil
     }
+    
+    func clearCacheAndReload(animated: Bool) {
+        if animated {
+            self.startLoadingViewAnimation()
+        }
+        clearCache()
+        refreshTableView {
+            if animated {
+                self.stopLoadingViewAnimation()
+            }
+        }
+    }
 }
 
 // MARK: - Home Page Networking
@@ -247,9 +259,11 @@ extension HomeViewController : DiningCellSettingsDelegate {
     func saveSelection(for venueIds: [Int]) {
         guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
         if venueIds.count == 0 {
-            diningItem.venues = DiningDataStore.shared.getVenues(with: DiningVenue.defaultVenueIds)
+            diningItem.venues = DiningDataStore.shared.getVenues(for: DiningVenue.defaultVenueIds)
+            diningItem.venueIds = DiningVenue.defaultVenueIds
         } else {
-            diningItem.venues = DiningDataStore.shared.getVenues(with: venueIds)
+            diningItem.venues = DiningDataStore.shared.getVenues(for: venueIds)
+            diningItem.venueIds = venueIds
         }
 
         reloadItem(diningItem)

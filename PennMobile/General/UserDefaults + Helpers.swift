@@ -34,6 +34,7 @@ extension UserDefaults {
         case privacyPreferences
         case notificationPreferences
         case gsrGroupsEnabled
+        case totpEnabledDate
     }
     
     func clearAll() {
@@ -509,7 +510,6 @@ extension UserDefaults {
         removeObject(forKey: UserDefaultsKeys.notificationPreferences.rawValue)
     }
 }
-
 // MARK: - GSR Groups Settings
 extension UserDefaults {
     // Sets whether or not GSR Groups are enabled
@@ -520,5 +520,17 @@ extension UserDefaults {
     
     func gsrGroupsEnabled() -> Bool {
         return bool(forKey: UserDefaultsKeys.gsrGroupsEnabled.rawValue)
+    }
+}
+
+// MARK: - Two Factor Enabled flag
+extension UserDefaults {
+
+    func getTwoFactorEnabledDate() -> Date? {
+        return UserDefaults.standard.value(forKey: UserDefaultsKeys.totpEnabledDate.rawValue) as? Date
+    }
+    
+    func setTwoFactorEnabledDate(_ date: Date?) {
+        UserDefaults.standard.set(date, forKey: UserDefaultsKeys.totpEnabledDate.rawValue)
     }
 }

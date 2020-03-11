@@ -19,7 +19,7 @@ class TwoFactorCell: UITableViewCell {
     static let identifier = "TwoFactorCell"
     
     fileprivate var enabled: Bool {
-        return code != nil || UserDefaults.standard.bool(forKey: "TOTPEnabled")
+        return code != nil || TOTPFetcher.instance.isFetching
     }
     
     var code: String? = nil {

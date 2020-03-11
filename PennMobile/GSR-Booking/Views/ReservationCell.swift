@@ -43,13 +43,8 @@ class ReservationCell: UITableViewCell {
             let endStr = formatter.string(from: reservation.endDate)
             timeLabel.text = "\(startStr) - \(endStr)"
             
-            if (reservation.lid == 1086 && reservation.gid != 1889){
-                let imageName = "lid-\(reservation.lid)"
-                buildingImage.image = UIImage(named: imageName)
-            }
-            else {
-                let imageName = "lid-\(reservation.lid)-gid-\(reservation.gid)"
-                buildingImage.image = UIImage(named: imageName)
+            if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(reservation.lid)-gid-\(reservation.gid).jpg") {
+                buildingImage.kf.setImage(with: url)
             }
         }
     }

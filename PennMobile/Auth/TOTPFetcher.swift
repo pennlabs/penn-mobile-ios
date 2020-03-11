@@ -12,20 +12,36 @@ import WebKit
 class TOTPFetcher: NSObject {
 
     static let instance = TOTPFetcher()
+    public var isFetching = false
+    
     private override init() {}
 
     func fetchAndSaveTOTPSecret(_ completion: ((_ secret: String?) -> Void)? = nil) {
-        let operation = TOTPFetcherOperation { (secret) in
+        isFetching = true
+        if let _ = UserDefaults.standard.getTwoFactorEnabledDate() {
+            UserDefaults.standard.setTwoFactorEnabledDate(nil)
+        } else {
+            UserDefaults.standard.setTwoFactorEnabledDate(Date())
+        }
 
+        let operation = TOTPFetcherOperation { (secret) in
+            self.isFetching = false
             if let secret = secret {
-                print(secret)
                 let genericPwdQueryable =
                     GenericPasswordQueryable(service: "PennWebLogin")
                 let secureStore =
                     SecureStore(secureStoreQueryable: genericPwdQueryable)
                 try? secureStore.setValue(secret, for: "TOTPSecret")
+                
+                UserDefaults.standard.setTwoFactorEnabledDate(nil)
             }
             completion?(secret)
+            
+            if (secret != nil) {
+                FirebaseAnalyticsManager.shared.trackEvent(action: .twoStepRetrieval, result: .success, content: true)
+            } else {
+                FirebaseAnalyticsManager.shared.trackEvent(action: .twoStepRetrieval, result: .failed, content: false)
+            }
         }
         operation.run()
     }
@@ -46,7 +62,7 @@ class TOTPFetcher: NSObject {
                     WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
                         DispatchQueue.main.async {
                             let zombie = WKZombie(dataStore: dataStore)
-                            Logger.enabled = false
+                            Logger.enabled = true
                             WKZombie.setInstance(zombie: zombie)
 
                             let url = URL(string: self.urlStr)!
