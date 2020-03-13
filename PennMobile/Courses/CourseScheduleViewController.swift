@@ -9,7 +9,7 @@ import UIKit
 
 protocol CourseScheduleCellDelegate: ModularTableViewCellDelegate, BuildingMapSelectable {}
 
-class CourseScheduleViewController: GenericViewController, IndicatorEnabled, ShowsAlert {
+class CourseScheduleViewController: GenericViewController, IndicatorEnabled, ShowsAlertForError {
 
     fileprivate var courseScheduleTableView: ModularTableView!
     fileprivate var model: CourseScheduleTableViewModel!
@@ -62,7 +62,6 @@ extension CourseScheduleViewController {
         })
     }
 
-    // TODO: Need review: ad-hoc method to overcome conflict of UIAlertController and UIRefreshController
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.courseScheduleTableView.isHidden = true
@@ -108,23 +107,10 @@ extension CourseScheduleViewController {
 extension CourseScheduleViewController {
 
     func handleNetworkCourseRefreshResult(_ result: Result<Set<Course>, NetworkingError>) {
-        self.courseScheduleTableView.refreshControl?.endRefreshing()
-        switch result {
-        case .success(let courses):
-            self.showAlert(withMsg: "Your courses have been refreshed.", title: "Refresh Complete!", completion: { self.handleNetworkCourseRefreshCompletion(courses) })
-
-        case .failure(.noInternet):
-            self.showAlert(withMsg: "You appear to be offline.\nPlease try again later.", title: "Network Error", completion: { self.navigationController?.popViewController(animated: true) } )
-
-        case .failure(.parsingError):
-            self.showAlert(withMsg: "Penn's course servers are currently not updating. We hope this will be fixed shortly", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) })
-
-        case .failure(.authenticationError):
-            self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: { self.handleAuthentication() })
-
-        default:
-            self.showAlert(withMsg: "Something went wrong.\nPlease try again later.", title: "Uh oh!", completion: { self.courseScheduleTableView.refreshControl?.endRefreshing(); self.navigationController?.popViewController(animated: true) } )
-        }
+        
+        let popVC : () -> Void = { self.navigationController?.popViewController(animated: true) }
+        
+        showAlertForError(result: result, title: "courses", success: self.handleNetworkCourseRefreshCompletion(_:), noInternet: popVC, parsingError: popVC, authenticationError: self.handleAuthentication)
     }
 
     private func handleNetworkCourseRefreshCompletion(_ courses: Set<Course>) {

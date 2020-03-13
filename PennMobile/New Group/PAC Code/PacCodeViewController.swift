@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PacCodeViewController : UIViewController, ShowsAlert, IndicatorEnabled {
+class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEnabled {
     
     var pacCode : String?
         
@@ -188,24 +188,15 @@ extension PacCodeViewController {
     }
     
     fileprivate func handleNetworkPacCodeResult(_ result: Result<String, NetworkingError>) {
-        switch result {
-        case .success(let pacCode):
-            self.savePacCode(pacCode)
-            self.pacCode = pacCode
-            self.showAlert(withMsg: "Your PAC Code has been refreshed.", title: "Refresh Complete!", completion: self.updatePACCode)
-            
-        case .failure(.noInternet):
-            self.showAlert(withMsg: "You appear to be offline.\nPlease try again later.", title: "Network Error", completion: { self.navigationController?.popViewController(animated: true) })
-            
-        case .failure(.parsingError):
-            self.showAlert(withMsg: "Penn's PAC Code servers are currently not updating. We hope this will be fixed shortly", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) })
-            
-        case .failure(.authenticationError):
-            self.showAlert(withMsg: "Unable to access your PAC Code.\nPlease login again.", title: "Login Error", completion: { self.handleAuthenticationError() })
-            
-        default:
-            self.showAlert(withMsg: "Something went wrong.\nPlease try again later.", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) } )
-        }
+        
+        let popVC : () -> Void = { self.navigationController?.popViewController(animated: true) }
+        
+        showAlertForError(result: result, title: "PAC Code", success: self.handleNetworkPacCodeRefreshCompletion(_:), noInternet: popVC, parsingError: popVC, authenticationError: self.handleAuthenticationError)
+    }
+    
+    fileprivate func handleNetworkPacCodeRefreshCompletion(_ pacCode: String) {
+        self.savePacCode(pacCode)
+        self.pacCode = pacCode
     }
     
     fileprivate func handleAuthenticationError() {
