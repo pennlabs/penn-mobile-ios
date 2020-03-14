@@ -44,14 +44,12 @@ class GSRBooking {
     }
 }
 
-class GSRGroupBooking: GSRBooking {
-    var gsrGroup: GSRGroup!
+class GSRGroupBooking {
+    var group: GSRGroup!
+    var bookings: [GSRBooking]!
     
-    init(location: GSRLocation, roomId: Int, start: Date, end: Date, gsrGroup: GSRGroup) {
-        super.init(location: location, roomId: roomId, start: start, end: end)
-        self.gsrGroup = gsrGroup
-        self.groupName = gsrGroup.name
+    init(group: GSRGroup, bookings: [GSRBooking]) {
+        self.group = group
+        self.bookings = bookings
     }
 }
-
-typealias GSRGroupBookings = [GSRGroupBooking]

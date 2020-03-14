@@ -104,6 +104,9 @@ extension UIFont {
     static let footerTransitionFont = UIFont(name: "AvenirNext-DemiBold", size: 10)
 
     static let gsrTimeIncrementFont = UIFont(name: "AvenirNext-DemiBold", size: 20)
+    
+    static let gsrCellTitleFont = UIFont(name: "SFProText-Bold", size: 17)
+    static let gsrCellSubtitleFont = UIFont(name: "SFProText-Regular", size: 17)
 }
 
 extension UIBarButtonItem {

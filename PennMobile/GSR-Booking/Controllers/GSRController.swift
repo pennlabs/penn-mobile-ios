@@ -201,7 +201,9 @@ extension GSRController: GSRBookable {
     }
 
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
-        if let booking = viewModel.getBooking() {
+        if let groupBooking = viewModel.getGroupBooking() {
+            handleGroupBooking(groupBooking)
+        } else if let booking = viewModel.getBooking() {
             submitPressed(for: booking)
         } else {
             // Alert. Nothing selected.
@@ -229,11 +231,6 @@ extension GSRController: GSRBookable {
     }
 
     private func submitPressed(for booking: GSRBooking) {
-        if let booking = booking as? GSRGroupBooking {
-            handleGroupBooking(booking)
-            return
-        }
-        
         if GSRNetworkManager.instance.bookingRequestOutstanding {
             return
         }
@@ -278,10 +275,9 @@ extension GSRController: GSRBookable {
 }
 
 extension GSRController {
-    private func handleGroupBooking(_ booking: GSRGroupBooking) {
+    private func handleGroupBooking(_ groupBooking: GSRGroupBooking) {
         let confirmController = GSRGroupConfirmBookingController()
-        confirmController.group = booking.gsrGroup
-        confirmController.booking = booking
+        confirmController.groupBooking = groupBooking
         present(confirmController, animated: true, completion: nil)
     }
 }

@@ -276,17 +276,31 @@ extension GSRViewModel {
         }
         endTime = timeSlot.endTime
         
-        if let group = group {
-            return GSRGroupBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime, gsrGroup: group)
-        }
-        
         return GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)
     }
     
-    // TODO: - Logic for generating group bookings
-    func getGroupBooking() -> GSRGroupBookings? {
-        if currentSelection.isEmpty {
-            return nil
+    func getGroupBooking() -> GSRGroupBooking? {
+        
+        if let group = group {
+            if currentSelection.isEmpty {
+                return nil
+            }
+            let roomId = currentSelection[0].roomId
+            let startTime: Date
+            let endTime: Date
+            var timeSlot = currentSelection[0]
+            while timeSlot.prev != nil && currentSelection.contains(timeSlot.prev!) {
+                timeSlot = timeSlot.prev!
+            }
+            startTime = timeSlot.startTime
+            while timeSlot.next != nil && currentSelection.contains(timeSlot.next!) {
+                timeSlot = timeSlot.next!
+            }
+            endTime = timeSlot.endTime
+            
+            #warning("for now, just use the first booking and ignore the rest")
+            let bookings = [GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)]
+            return GSRGroupBooking(group: group, bookings: bookings)
         }
         
         return nil

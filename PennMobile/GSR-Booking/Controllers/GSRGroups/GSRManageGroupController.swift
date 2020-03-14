@@ -36,15 +36,18 @@ class GSRManageGroupController: UIViewController {
     }
 }
 
-//MARK: UI Stuff
+// MARK: - ViewModel
 extension GSRManageGroupController {
     func prepareViewModel() {
         guard let group = group else { return }
         viewModel = GSRManageGroupViewModel(group: group)
         viewModel.delegate = self
     }
-    
-     func prepareUI() {
+}
+
+// MARK: - UI Stuff
+extension GSRManageGroupController {
+    func prepareUI() {
         prepareNavBar()
         prepareTableView()
     }
