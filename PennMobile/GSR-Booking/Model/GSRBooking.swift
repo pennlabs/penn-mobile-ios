@@ -42,6 +42,20 @@ class GSRBooking {
     func getRoomName() -> String {
         if name != nil { return name! } else { return location.name }
     }
+    
+    func getSplitTimeRanges(interval: TimeInterval) -> [ClosedRange<Date>] {
+        ///Splits the booking into (e.g. 30 minute) intervals, and returns the array of date ranges
+        var ranges = [ClosedRange<Date>]()
+        var tempStart = start
+        var tempEnd = tempStart.addingTimeInterval(interval)
+        while (tempEnd <= end) {
+            let range = tempStart...tempEnd
+            ranges.append(range)
+            tempStart = tempEnd
+            tempEnd = tempStart.addingTimeInterval(interval)
+        }
+        return ranges
+    }
 }
 
 class GSRGroupBooking {

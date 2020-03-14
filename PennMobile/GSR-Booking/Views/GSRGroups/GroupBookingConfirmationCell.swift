@@ -18,20 +18,30 @@ class GroupBookingConfirmationCell: UITableViewCell {
     fileprivate var buildingImageView: UIImageView!
     fileprivate var timeSlotsTableView: UITableView!
     
-    var booking: GSRBooking! {
-        didSet {
-            locationLabel.text = "\(booking.location.name)"
-            dateLabel.text = booking.start.dayOfWeek
-            if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(booking.location.lid)-gid-\(booking.location.gid ?? booking.location.lid).jpg") {
-                buildingImageView.kf.setImage(with: url)
-            }
-        }
-    }
+    fileprivate var timeSlots: [String]!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareUI()
     }
+    
+    func setupCell(with booking: GSRBooking) {
+        locationLabel.text = "\(booking.location.name)"
+        dateLabel.text = booking.start.dayOfWeek
+        if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(booking.location.lid)-gid-\(booking.location.gid ?? booking.location.lid).jpg") {
+            buildingImageView.kf.setImage(with: url)
+        }
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .none
+        
+        //convert ranges to times
+        let timeRanges = booking.getSplitTimeRanges(interval: TimeInterval(60 * 30))
+        timeSlots = timeRanges.map({
+            return "\(formatter.string(from: $0.lowerBound)) - \(formatter.string(from: $0.upperBound))"
+        })
+    }
+    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -53,7 +63,7 @@ extension GroupBookingConfirmationCell {
         headerView = UIView()
         addSubview(headerView)
 
-        _ = headerView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 17.5, leftConstant: 15, bottomConstant: 17.5, rightConstant: 15.0, widthConstant: 0, heightConstant: 52.0)
+        _ = headerView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 17.5, leftConstant: 15, bottomConstant: 17.5, rightConstant: 15.0, widthConstant: 0, heightConstant: 52.0)
         
         prepareBuildingImageView()
         prepareLocationLabel()
@@ -89,13 +99,38 @@ extension GroupBookingConfirmationCell {
     
     fileprivate func prepareTimeSlotsTableView() {
         timeSlotsTableView = UITableView()
+        timeSlotsTableView.dataSource = self
+        timeSlotsTableView.delegate = self
         timeSlotsTableView.allowsSelection = false
         timeSlotsTableView.isScrollEnabled = false
+        timeSlotsTableView.register(GroupBookingTimeSlotCell.self, forCellReuseIdentifier: GroupBookingTimeSlotCell.identifier)
         
         addSubview(timeSlotsTableView)
         
-        _ = timeSlotsTableView.anchor(headerView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 15, widthConstant: 0, heightConstant: 0)
+        #warning("don't set a fixed height in the future, but i'm doing it for now, cos otherwise tableview doesn't show")
+        _ = timeSlotsTableView.anchor(headerView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 15, widthConstant: 0, heightConstant: 300)
+    }
+}
+
+// MARK: - TimeSlotsTableView DataSource
+extension GroupBookingConfirmationCell: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return GroupBookingTimeSlotCell.cellHeight
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return timeSlots.count
     }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: GroupBookingTimeSlotCell.identifier) as! GroupBookingTimeSlotCell
+        cell.timeSlot = timeSlots[indexPath.row]
+        return cell
+    }
+    
+    
+}
+// MARK: - TimeSlotsTableView Delegate
+extension GroupBookingConfirmationCell: UITableViewDelegate {
     
 }

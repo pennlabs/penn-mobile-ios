@@ -107,6 +107,9 @@ extension UIFont {
     
     static let gsrCellTitleFont = UIFont(name: "SFProText-Bold", size: 17)
     static let gsrCellSubtitleFont = UIFont(name: "SFProText-Regular", size: 17)
+    static let gsrCellTextFont = UIFont(name: "SFProRounded-Regular", size: 17)
+    static let gsrCellSubtextFont = UIFont(name: "SFProText-Medium", size: 14)
+    
 }
 
 extension UIBarButtonItem {

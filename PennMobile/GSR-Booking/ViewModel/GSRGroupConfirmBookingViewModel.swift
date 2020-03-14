@@ -17,13 +17,14 @@ class GSRGroupConfirmBookingViewModel: NSObject {
 
 // MARK: - UITableViewDataSource
 extension GSRGroupConfirmBookingViewModel: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groupBooking.bookings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GroupBookingConfirmationCell.identifier) as! GroupBookingConfirmationCell
-        cell.booking = groupBooking.bookings[indexPath.row]
+        cell.setupCell(with: groupBooking.bookings[indexPath.row])
         return cell
     }
     

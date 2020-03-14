@@ -10,18 +10,26 @@ import UIKit
 
 class GroupBookingTimeSlotCell: UITableViewCell {
 
-    //pennkey, timestart, timeend, bookedSuccessfully
+    static let identifier = "gsrGroupBookingTimeSlotCell"
+    static let cellHeight: CGFloat = 52.0
+    
     fileprivate var timeSlotLabel: UILabel!
     fileprivate var pennkeyLabel: UILabel!
     fileprivate var bookingStatusIcon: UIImageView!
-    fileprivate var pennkey: String! {
+    
+    var timeSlot: String! {
+        didSet {
+            timeSlotLabel.text = timeSlot
+        }
+    }
+    var pennkey: String! {
         didSet {
             pennkeyLabel.text = pennkey
         }
     }
-    fileprivate var bookingStatus: Bool! {
+    var bookingStatusSuccess: Bool! {
         didSet {
-//            bookingStatusIcon.image =
+            bookingStatusIcon.backgroundColor = bookingStatusSuccess ? UIColor.green : UIColor.red
         }
     }
         
@@ -33,16 +41,42 @@ class GroupBookingTimeSlotCell: UITableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-    func setupCell(start: Date, end: Date) {
-        
-    }
-    
 }
 
 // MARK: - Prepare UI
 extension GroupBookingTimeSlotCell {
     fileprivate func prepareUI() {
+        prepareBookingStatusIcon()
+        prepareTimeSlotLabel()
+        preparePennkeyLabel()
+    }
+    
+    fileprivate func prepareBookingStatusIcon() {
+        bookingStatusIcon = UIImageView()
+        bookingStatusIcon.layer.cornerRadius = 10
+        bookingStatusIcon.layer.masksToBounds = true
+        bookingStatusIcon.layer.borderWidth = 1.5
+        bookingStatusIcon.layer.borderColor = UIColor.grey3.cgColor
+        addSubview(bookingStatusIcon)
         
+        _ = bookingStatusIcon.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 12, widthConstant: 20, heightConstant: 20)
+        bookingStatusIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+    
+    fileprivate func prepareTimeSlotLabel() {
+        timeSlotLabel = UILabel()
+        timeSlotLabel.font = UIFont.gsrCellTextFont
+        addSubview(timeSlotLabel)
+        
+        _ = timeSlotLabel.anchor(nil, left: leftAnchor, bottom: nil, right: bookingStatusIcon.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 20)
+        timeSlotLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+    
+    fileprivate func preparePennkeyLabel() {
+        pennkeyLabel = UILabel()
+        pennkeyLabel.font = UIFont.gsrCellSubtextFont
+        addSubview(pennkeyLabel)
+        
+        _ = pennkeyLabel.anchor(timeSlotLabel.bottomAnchor, left: timeSlotLabel.leftAnchor, bottom: bottomAnchor, right: timeSlotLabel.rightAnchor, topConstant: 0, leftConstant: 2, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 }

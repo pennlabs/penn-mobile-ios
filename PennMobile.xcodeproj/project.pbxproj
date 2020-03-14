@@ -149,6 +149,8 @@
 		973D8C84241D3C9C00792214 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 973D8C83241D3C7100792214 /* SFProText-Bold.ttf */; };
 		973D8C86241D3D2E00792214 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 973D8C85241D3D2E00792214 /* SFProText-Regular.ttf */; };
 		973D8C88241D472600792214 /* GroupBookingTimeSlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973D8C87241D472600792214 /* GroupBookingTimeSlotCell.swift */; };
+		973D8C8A241D7D8100792214 /* SF-Pro-Rounded-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 973D8C89241D7D8100792214 /* SF-Pro-Rounded-Regular.otf */; };
+		973D8C8C241D7DF700792214 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 973D8C8B241D7DEC00792214 /* SF-Pro-Text-Medium.otf */; };
 		97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806423D26BC700C23488 /* DiningBalanceCell.swift */; };
 		97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */; };
 		97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806623D26BC700C23488 /* DiningHeaderView.swift */; };
@@ -447,6 +449,8 @@
 		973D8C83241D3C7100792214 /* SFProText-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Bold.ttf"; sourceTree = "<group>"; };
 		973D8C85241D3D2E00792214 /* SFProText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.ttf"; sourceTree = "<group>"; };
 		973D8C87241D472600792214 /* GroupBookingTimeSlotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupBookingTimeSlotCell.swift; sourceTree = "<group>"; };
+		973D8C89241D7D8100792214 /* SF-Pro-Rounded-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Regular.otf"; sourceTree = "<group>"; };
+		973D8C8B241D7DEC00792214 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
 		97AA806423D26BC700C23488 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
 		97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		97AA806623D26BC700C23488 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
@@ -1130,6 +1134,8 @@
 			isa = PBXGroup;
 			children = (
 				973D8C83241D3C7100792214 /* SFProText-Bold.ttf */,
+				973D8C89241D7D8100792214 /* SF-Pro-Rounded-Regular.otf */,
+				973D8C8B241D7DEC00792214 /* SF-Pro-Text-Medium.otf */,
 				973D8C85241D3D2E00792214 /* SFProText-Regular.ttf */,
 			);
 			path = Fonts;
@@ -1611,8 +1617,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
+				973D8C8A241D7D8100792214 /* SF-Pro-Rounded-Regular.otf in Resources */,
 				973D8C86241D3D2E00792214 /* SFProText-Regular.ttf in Resources */,
 				B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */,
+				973D8C8C241D7DF700792214 /* SF-Pro-Text-Medium.otf in Resources */,
 				973D8C84241D3C9C00792214 /* SFProText-Bold.ttf in Resources */,
 				2189C09E2027CE4100771C1F /* locations.json in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,

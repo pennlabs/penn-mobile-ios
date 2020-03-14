@@ -95,6 +95,8 @@ extension GSRGroupConfirmBookingController {
         bookingsTableView.separatorStyle = .none
         bookingsTableView.register(GroupBookingConfirmationCell.self, forCellReuseIdentifier:   GroupBookingConfirmationCell.identifier)
         bookingsTableView.allowsSelection = false
+        bookingsTableView.rowHeight = UITableView.automaticDimension
+        bookingsTableView.estimatedRowHeight = 300.0
         bookingsTableView.backgroundColor = UIColor.clear
         view.addSubview(bookingsTableView)
         
