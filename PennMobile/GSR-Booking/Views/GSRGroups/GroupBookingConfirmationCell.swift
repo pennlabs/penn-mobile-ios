@@ -16,10 +16,11 @@ class GroupBookingConfirmationCell: UITableViewCell {
     fileprivate var locationLabel: UILabel!
     fileprivate var dateLabel: UILabel!
     fileprivate var buildingImageView: UIImageView!
+    fileprivate var timeSlotsTableView: UITableView!
     
     var booking: GSRBooking! {
         didSet {
-            locationLabel.text = booking.location.name
+            locationLabel.text = "\(booking.location.name)"
             dateLabel.text = booking.start.dayOfWeek
             if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(booking.location.lid)-gid-\(booking.location.gid ?? booking.location.lid).jpg") {
                 buildingImageView.kf.setImage(with: url)
@@ -40,15 +41,19 @@ class GroupBookingConfirmationCell: UITableViewCell {
 // MARK: - Prepare UI
 extension GroupBookingConfirmationCell {
     fileprivate func prepareUI() {
-        prepareHeaderView()
+        backgroundColor = UIColor.white
+        layer.cornerRadius = 10
+        layer.masksToBounds = true
         
+        prepareHeaderView()
+        prepareTimeSlotsTableView()
     }
     
     fileprivate func prepareHeaderView() {
         headerView = UIView()
         addSubview(headerView)
 
-        _ = headerView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 17.5, leftConstant: 15, bottomConstant: 0, rightConstant: 15.0, widthConstant: 0, heightConstant: 52.0)
+        _ = headerView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 17.5, leftConstant: 15, bottomConstant: 17.5, rightConstant: 15.0, widthConstant: 0, heightConstant: 52.0)
         
         prepareBuildingImageView()
         prepareLocationLabel()
@@ -58,6 +63,8 @@ extension GroupBookingConfirmationCell {
     fileprivate func prepareBuildingImageView() {
         buildingImageView = UIImageView()
         buildingImageView.clipsToBounds = true
+        buildingImageView.layer.cornerRadius = 9
+        buildingImageView.layer.masksToBounds = true
         headerView.addSubview(buildingImageView)
         
         _ = buildingImageView.anchor(headerView.topAnchor, left: headerView.leftAnchor, bottom: headerView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 73.0, heightConstant: 0)
@@ -79,5 +86,16 @@ extension GroupBookingConfirmationCell {
         
         _ = dateLabel.anchor(locationLabel.bottomAnchor, left: locationLabel.leftAnchor, bottom: headerView.bottomAnchor, right: headerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
+    
+    fileprivate func prepareTimeSlotsTableView() {
+        timeSlotsTableView = UITableView()
+        timeSlotsTableView.allowsSelection = false
+        timeSlotsTableView.isScrollEnabled = false
+        
+        addSubview(timeSlotsTableView)
+        
+        _ = timeSlotsTableView.anchor(headerView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 15, widthConstant: 0, heightConstant: 0)
+    }
+    
     
 }

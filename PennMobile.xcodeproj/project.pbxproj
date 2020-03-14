@@ -146,6 +146,9 @@
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
+		973D8C84241D3C9C00792214 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 973D8C83241D3C7100792214 /* SFProText-Bold.ttf */; };
+		973D8C86241D3D2E00792214 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 973D8C85241D3D2E00792214 /* SFProText-Regular.ttf */; };
+		973D8C88241D472600792214 /* GroupBookingTimeSlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973D8C87241D472600792214 /* GroupBookingTimeSlotCell.swift */; };
 		97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806423D26BC700C23488 /* DiningBalanceCell.swift */; };
 		97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */; };
 		97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806623D26BC700C23488 /* DiningHeaderView.swift */; };
@@ -441,6 +444,9 @@
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
 		671C7BD3201784F84EF6615A /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		8F015D2E5A2FE2D0575898AA /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
+		973D8C83241D3C7100792214 /* SFProText-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Bold.ttf"; sourceTree = "<group>"; };
+		973D8C85241D3D2E00792214 /* SFProText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.ttf"; sourceTree = "<group>"; };
+		973D8C87241D472600792214 /* GroupBookingTimeSlotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupBookingTimeSlotCell.swift; sourceTree = "<group>"; };
 		97AA806423D26BC700C23488 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
 		97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		97AA806623D26BC700C23488 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
@@ -747,6 +753,7 @@
 		216640831EBADB7000746B8E /* Supporting_Files */ = {
 			isa = PBXGroup;
 			children = (
+				973D8C82241D3C6800792214 /* Fonts */,
 				B6111DB12018497400DC7877 /* GoogleService-Info.plist */,
 				2166406F1EBADADA00746B8E /* Info.plist */,
 				2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */,
@@ -1119,6 +1126,15 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		973D8C82241D3C6800792214 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				973D8C83241D3C7100792214 /* SFProText-Bold.ttf */,
+				973D8C85241D3D2E00792214 /* SFProText-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		97AA806323D26BC700C23488 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1398,6 +1414,7 @@
 				EFE2D6EE239B11050020F6BF /* GSRColorCell.swift */,
 				97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */,
 				B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */,
+				973D8C87241D472600792214 /* GroupBookingTimeSlotCell.swift */,
 			);
 			path = GSRGroups;
 			sourceTree = "<group>";
@@ -1594,7 +1611,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
+				973D8C86241D3D2E00792214 /* SFProText-Regular.ttf in Resources */,
 				B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */,
+				973D8C84241D3C9C00792214 /* SFProText-Bold.ttf in Resources */,
 				2189C09E2027CE4100771C1F /* locations.json in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
@@ -1740,6 +1759,7 @@
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */,
+				973D8C88241D472600792214 /* GroupBookingTimeSlotCell.swift in Sources */,
 				C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,

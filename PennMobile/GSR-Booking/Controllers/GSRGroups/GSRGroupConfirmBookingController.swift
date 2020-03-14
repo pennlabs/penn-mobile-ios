@@ -35,7 +35,7 @@ extension GSRGroupConfirmBookingController {
 // MARK: - Prepare UI
 extension GSRGroupConfirmBookingController {
     func prepareUI() {
-        view.backgroundColor = UIColor.uiBackground
+        view.backgroundColor = UIColor.uiGSRBackground
         
         prepareTitleLabel()
         prepareGroupLabel()
@@ -95,6 +95,7 @@ extension GSRGroupConfirmBookingController {
         bookingsTableView.separatorStyle = .none
         bookingsTableView.register(GroupBookingConfirmationCell.self, forCellReuseIdentifier:   GroupBookingConfirmationCell.identifier)
         bookingsTableView.allowsSelection = false
+        bookingsTableView.backgroundColor = UIColor.clear
         view.addSubview(bookingsTableView)
         
         _ = bookingsTableView.anchor(groupLabel.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 30.0, leftConstant: 14.0, bottomConstant: 100.0, rightConstant: 14.0, widthConstant: 0.0, heightConstant: 0.0)

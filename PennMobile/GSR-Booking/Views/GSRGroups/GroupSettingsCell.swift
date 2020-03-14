@@ -61,7 +61,6 @@ extension GroupSettingsCell {
         prepareDescriptionLabel()
         prepareIsEnabledSwitch()
         titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -100).isActive = true
-//        backgroundColor = .uiBackgroundSecondary
     }
     
     fileprivate func prepareHolderView() {

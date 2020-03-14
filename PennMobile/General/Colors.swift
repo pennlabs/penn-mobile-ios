@@ -19,6 +19,7 @@ extension UIColor {
     static let uiCardBackground = UIColor(named: "uiCardBackground")!
     static let uiGroupedBackground = UIColor(named: "uiGroupedBackground")!
     static let uiGroupedBackgroundSecondary = UIColor(named: "uiGroupedBackgroundSecondary")!
+    static let uiGSRBackground = UIColor(named: "uiGSRBackground")!
     static let uiBackground = UIColor(named: "uiBackground")!
     static let uiBackgroundSecondary = UIColor(named: "uiBackgroundSecondary")!
     static let labelPrimary = UIColor(named: "labelPrimary")!
