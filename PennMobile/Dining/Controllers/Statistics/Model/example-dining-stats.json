@@ -11,13 +11,25 @@
             "header-body": "Your recent dining dollar transactions",
             "data": [
                 {
-                    "location": "Starbucks2Sequoia",
+                    "location": "Houston Market",
+                    "date": "2020-03-05T12:54:00-04:56",
+                    "balance": 164.5,
+                    "amount": -10.72
+                },
+                {
+                    "location": "Your Meal Plan Deduction",
+                    "date": "2020-03-03T10:48:00-04:56",
+                    "balance": 175.22,
+                    "amount": 5.0
+                },
+                {
+                    "location": "Starbucks Commons",
                     "date": "2020-03-02T20:15:00-04:56",
                     "balance": 170.22,
                     "amount": -7.95
                 },
                 {
-                    "location": "Houston Kiosk6",
+                    "location": "Houston Kiosk",
                     "date": "2020-03-02T16:48:00-04:56",
                     "balance": 182.21,
                     "amount": -8.54
@@ -27,18 +39,6 @@
                     "date": "2020-03-02T16:48:00-04:56",
                     "balance": 178.17,
                     "amount": -4.04
-                },
-                {
-                    "location": "U Penn Canteen Vending API",
-                    "date": "2020-03-02T16:39:00-04:56",
-                    "balance": 190.75,
-                    "amount": -1.09
-                },
-                {
-                    "location": "JoesCafe2Sequoia",
-                    "date": "2020-03-02T13:00:00-04:56",
-                    "balance": 191.84,
-                    "amount": -3.75
                 }
             ]
         },
@@ -46,6 +46,10 @@
             "type": "daily-average",
             "data": {
                 "this-week": [
+                    {
+                        "date": "2020-03-10T00:00:00-04:56",
+                        "average": 0
+                    },
                     {
                         "date": "2020-03-09T00:00:00-04:56",
                         "average": 0
@@ -64,18 +68,18 @@
                     },
                     {
                         "date": "2020-03-05T00:00:00-04:56",
-                        "average": 0
+                        "average": -10.72
                     },
                     {
                         "date": "2020-03-04T00:00:00-04:56",
                         "average": 0
-                    },
-                    {
-                        "date": "2020-03-03T00:00:00-04:56",
-                        "average": 0
                     }
                 ],
                 "last-week": [
+                    {
+                        "date": "2020-03-03T00:00:00-04:56",
+                        "average": 0
+                    },
                     {
                         "date": "2020-03-02T00:00:00-04:56",
                         "average": -5.07
@@ -99,10 +103,6 @@
                     {
                         "date": "2020-02-26T00:00:00-04:56",
                         "average": -7.78
-                    },
-                    {
-                        "date": "2020-02-25T00:00:00-04:56",
-                        "average": -7.05
                     }
                 ]
             }
@@ -111,7 +111,6 @@
             "type": "predictions-graph-dollars",
             "start-of-semester": "2020-01-15T00:00:00-04:56",
             "end-of-semester": "2020-05-12T00:00:00-04:56",
-            "predicted-zero-date": "2020-04-09T00:00:00-04:56",
             "data": [
                 {
                     "date": "2020-01-15T13:00:00+00:00",
@@ -300,135 +299,138 @@
                 {
                     "date": "2020-03-02T20:15:00+00:00",
                     "balance": 170.22
+                },
+                {
+                    "date": "2020-03-05T12:54:00+00:00",
+                    "balance": 164.5
                 }
-            ]
+            ],
+            "predicted-zero-date": "2020-04-08T00:00:00-04:56"
         },
         "predictions-graph-swipes": {
             "type": "predictions-graph-swipes",
             "start-of-semester": "2020-01-15T00:00:00-04:56",
             "end-of-semester": "2020-05-12T00:00:00-04:56",
-            "predicted-zero-date": "2020-06-13T00:00:00-04:56",
             "data": [
                 {
-                    "date": "2020-03-04T14:50:15+00:00",
-                    "balance": 82
-                },
-                {
-                    "date": "2020-03-03T17:06:55+00:00",
-                    "balance": 83
-                },
-                {
-                    "date": "2020-03-02T20:16:04+00:00",
-                    "balance": 84
-                },
-                {
-                    "date": "2020-02-28T17:11:19+00:00",
-                    "balance": 86
-                },
-                {
-                    "date": "2020-02-27T22:48:10+00:00",
-                    "balance": 86
-                },
-                {
-                    "date": "2020-02-24T15:05:38+00:00",
-                    "balance": 91
-                },
-                {
-                    "date": "2020-02-23T10:43:44+00:00",
-                    "balance": 92
-                },
-                {
-                    "date": "2020-02-21T16:57:23+00:00",
-                    "balance": 93
-                },
-                {
-                    "date": "2020-02-19T21:06:36+00:00",
-                    "balance": 96
-                },
-                {
-                    "date": "2020-02-17T14:42:07+00:00",
-                    "balance": 98
-                },
-                {
-                    "date": "2020-02-08T13:27:31+00:00",
-                    "balance": 104
-                },
-                {
-                    "date": "2020-02-08T12:55:24+00:00",
-                    "balance": 104
-                },
-                {
-                    "date": "2020-02-07T10:50:14+00:00",
-                    "balance": 105
-                },
-                {
-                    "date": "2020-02-06T17:31:57+00:00",
-                    "balance": 106
-                },
-                {
-                    "date": "2020-02-04T15:01:44+00:00",
-                    "balance": 109
-                },
-                {
-                    "date": "2020-02-02T19:41:33+00:00",
-                    "balance": 112
-                },
-                {
-                    "date": "2020-01-28T17:26:09+00:00",
-                    "balance": 115
-                },
-                {
-                    "date": "2020-01-26T17:44:04+00:00",
-                    "balance": 119
-                },
-                {
-                    "date": "2020-01-22T11:16:52+00:00",
-                    "balance": 123
+                    "date": "2020-01-18T13:54:47+00:00",
+                    "balance": 128
                 },
                 {
                     "date": "2020-01-21T19:38:19+00:00",
                     "balance": 124
                 },
                 {
-                    "date": "2020-01-18T13:54:47+00:00",
-                    "balance": 128
-                }
-            ],
-            "balance-at-semester-end": 55.0
-        },
-        "frequent-locations": {
-            "type": "predictions-graph-swipes",
-            "start_of_semester": "2020-01-15T00:00:00-04:56",
-            "end-of-semester": "2020-05-12T00:00:00-04:56",
-            "data": [
-                {
-                    "location": "0100HoustonMarket - Charge",
-                    "week": 0,
-                    "month": 48.47,
-                    "semester": 99.13
+                    "date": "2020-01-22T11:16:52+00:00",
+                    "balance": 123
                 },
                 {
-                    "location": "0154Starbucks - Charge",
-                    "week": 0,
-                    "month": 38.6,
+                    "date": "2020-01-26T17:44:04+00:00",
+                    "balance": 119
+                },
+                {
+                    "date": "2020-01-28T17:26:09+00:00",
+                    "balance": 115
+                },
+                {
+                    "date": "2020-02-02T19:41:33+00:00",
+                    "balance": 112
+                },
+                {
+                    "date": "2020-02-04T15:01:44+00:00",
+                    "balance": 109
+                },
+                {
+                    "date": "2020-02-06T17:31:57+00:00",
+                    "balance": 106
+                },
+                {
+                    "date": "2020-02-07T10:50:14+00:00",
+                    "balance": 105
+                },
+                {
+                    "date": "2020-02-08T12:55:24+00:00",
+                    "balance": 104
+                },
+                {
+                    "date": "2020-02-08T13:27:31+00:00",
+                    "balance": 104
+                },
+                {
+                    "date": "2020-02-17T14:42:07+00:00",
+                    "balance": 98
+                },
+                {
+                    "date": "2020-02-19T21:06:36+00:00",
+                    "balance": 96
+                },
+                {
+                    "date": "2020-02-21T16:57:23+00:00",
+                    "balance": 93
+                },
+                {
+                    "date": "2020-02-23T10:43:44+00:00",
+                    "balance": 92
+                },
+                {
+                    "date": "2020-02-24T15:05:38+00:00",
+                    "balance": 91
+                },
+                {
+                    "date": "2020-02-27T22:48:10+00:00",
+                    "balance": 86
+                },
+                {
+                    "date": "2020-02-28T17:11:19+00:00",
+                    "balance": 86
+                },
+                {
+                    "date": "2020-03-02T20:16:04+00:00",
+                    "balance": 84
+                },
+                {
+                    "date": "2020-03-03T17:06:55+00:00",
+                    "balance": 83
+                },
+                {
+                    "date": "2020-03-04T14:50:15+00:00",
+                    "balance": 82
+                }
+            ],
+            "predicted-zero-date": "2020-08-10T00:00:00-04:56",
+            "balance-at-semester-end": 53.0
+        },
+        "frequent-locations": {
+            "type": "frequent-locations",
+            "data": [
+                {
+                    "location": "Houston Market",
+                    "week": 10.72,
+                    "month": 48.47,
+                    "semester": 109.85
+                },
+                {
+                    "location": "Starbucks Commons",
+                    "week": 7.95,
+                    "month": 38.7,
                     "semester": 60.6
                 },
                 {
-                    "location": "0156Pret - Charge",
+                    "location": "Pret",
                     "week": 0,
                     "month": 6.99,
                     "semester": 43.82
                 },
                 {
-                    "location": "0888JoesCafe - Charge",
-                    "week": 0,
-                    "month": 25.25,
+                    "location": "Joe's Cafe",
+                    "week": 3.75,
+                    "month": 32.79,
                     "semester": 25.25
                 },
                 {
-                    "location": "Starbucks2Sequoia",
-                    "week": 7.95,
-                    "month": 10.4,
+                    "location": "Starbucks Commons",
+                    "week": 0,
+                    "month": 0,
                     "semester": 18.35
                 }
             ]
