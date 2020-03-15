@@ -11,6 +11,7 @@ import UIKit
 class GroupBookingConfirmationCell: UITableViewCell {
 
     static let identifier = "gsrGroupBookingConfirmationCell"
+    static let cellSpacing: CGFloat = 22.0
     fileprivate var cardView: UIView!
     fileprivate var headerView: UIView!
     fileprivate var locationLabel: UILabel!
@@ -27,12 +28,14 @@ class GroupBookingConfirmationCell: UITableViewCell {
     }
     
     func setupCell(with booking: GSRBooking) {
-        locationLabel.text = "\(booking.location.name)"
-        dateLabel.text = booking.start.dayOfWeek
+        locationLabel.text = "\(booking.name ?? booking.location.name)"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd"
+        dateLabel.text = "\(booking.start.dayOfWeek), \(formatter.string(from: booking.start))"
         if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(booking.location.lid)-gid-\(booking.location.gid ?? booking.location.lid).jpg") {
             buildingImageView.kf.setImage(with: url)
         }
-        let formatter = DateFormatter()
+//        let formatter = DateFormatter()
         formatter.timeStyle = .short
         formatter.dateStyle = .none
         
@@ -68,7 +71,7 @@ extension GroupBookingConfirmationCell {
         cardView.layer.masksToBounds = true
         addSubview(cardView)
         
-        _ = cardView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: GSRGroupConfirmBookingController.cellSpacing, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = cardView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 14.0, bottomConstant: GroupBookingConfirmationCell.cellSpacing, rightConstant: 14.0, widthConstant: 0, heightConstant: 0)
         
         prepareHeaderView()
         prepareTimeSlotsTableView()
@@ -132,7 +135,7 @@ extension GroupBookingConfirmationCell {
         //height is header_height + header_top + #time_slots * time_slot_height + cell_spacing
         #warning("Should not be calculating split time ranges EVERY Time, and should not use a constant value. change!")
         let numTimeSlots = booking.getSplitTimeRanges(interval: 60 * 30).count
-        return 52.0 + 17.5 + CGFloat(numTimeSlots) * GroupBookingTimeSlotCell.cellHeight + GSRGroupConfirmBookingController.cellSpacing
+        return 52.0 + 17.5 + CGFloat(numTimeSlots) * GroupBookingTimeSlotCell.cellHeight + GroupBookingConfirmationCell.cellSpacing
         
     }
 }

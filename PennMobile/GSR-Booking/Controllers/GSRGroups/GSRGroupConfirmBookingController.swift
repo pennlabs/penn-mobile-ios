@@ -12,7 +12,6 @@ class GSRGroupConfirmBookingController: UIViewController {
     
     var groupBooking: GSRGroupBooking?
     fileprivate var viewModel: GSRGroupConfirmBookingViewModel!
-    static let cellSpacing: CGFloat = 22.0
 
     fileprivate var titleLabel: UILabel!
     fileprivate var groupLabel: UILabel!
@@ -24,6 +23,8 @@ class GSRGroupConfirmBookingController: UIViewController {
         super.viewDidLoad()
         prepareViewModel()
         prepareUI()
+        
+        self.title = "Confirm Booking"
     }
 }
 // MARK: - Prepare View Model
@@ -69,8 +70,8 @@ extension GSRGroupConfirmBookingController {
         view.addSubview(groupLabel)
         groupLabel.translatesAutoresizingMaskIntoConstraints = false
         groupLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
-        groupLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        groupLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor).isActive = true
+        groupLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 14).isActive = true
+        groupLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -14).isActive = true
         groupLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
     }
     
@@ -113,7 +114,7 @@ extension GSRGroupConfirmBookingController {
         bookingsTableView.backgroundColor = UIColor.clear
         view.addSubview(bookingsTableView)
         
-        _ = bookingsTableView.anchor(groupLabel.bottomAnchor, left: view.leftAnchor, bottom: submitBtn.topAnchor, right: view.rightAnchor, topConstant: 30.0, leftConstant: 14.0, bottomConstant: 21.5, rightConstant: 14.0, widthConstant: 0.0, heightConstant: 0.0)
+        _ = bookingsTableView.anchor(groupLabel.bottomAnchor, left: view.leftAnchor, bottom: submitBtn.topAnchor, right: view.rightAnchor, topConstant: 14.0, leftConstant: 0.0, bottomConstant: 8, rightConstant: 0.0, widthConstant: 0.0, heightConstant: 0.0)
     }
 }
 

@@ -9,6 +9,7 @@
 import Foundation
 
 public class GSRTimeSlot: NSObject, Comparable {
+    var roomName: String?
     let roomId: Int
     let isAvailable: Bool
     let startTime: Date
@@ -22,6 +23,14 @@ public class GSRTimeSlot: NSObject, Comparable {
         self.isAvailable = isAvailable
         self.startTime = startTime
         self.endTime = endTime
+    }
+    
+    init(roomId: Int, isAvailable: Bool, startTime: Date, endTime: Date, roomName: String) {
+        self.roomId = roomId
+        self.isAvailable = isAvailable
+        self.startTime = startTime
+        self.endTime = endTime
+        self.roomName = roomName
     }
     
     static func == (lhs: GSRTimeSlot, rhs: GSRTimeSlot) -> Bool {

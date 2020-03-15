@@ -185,6 +185,8 @@ extension GSRViewModel: GSRSelectionDelegate {
     }
     
     func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) {
+        timeSlot.roomName = room.name
+        
         switch action {
         case .add:
             if currentSelection.contains(timeSlot) { break }
@@ -288,8 +290,6 @@ extension GSRViewModel {
     func getGroupBookings() -> GSRGroupBooking? {
         guard let group = group, !currentSelection.isEmpty else { return nil }
         
-        
-        // var bookings = [GSRBooking]
         let selected = currentSelection.sorted()
         
         var slots = [selected[0]]
@@ -297,14 +297,14 @@ extension GSRViewModel {
         
         for i in 1...(selected.count - 1) {
             if (slots.last!.roomId == selected[i].roomId && selected[i].startTime == slots.last!.endTime) {
-                slots[slots.count - 1] = GSRTimeSlot(roomId: selected[i].roomId, isAvailable: selected[i].isAvailable, startTime: slots.last!.startTime, endTime: selected[i].endTime)
+                slots[slots.count - 1] = GSRTimeSlot(roomId: selected[i].roomId, isAvailable: selected[i].isAvailable, startTime: slots.last!.startTime, endTime: selected[i].endTime, roomName: selected[i].roomName!)
             } else {
                 slots.append(selected[i])
             }
         }
         
         for slot in slots {
-            bookings.append(GSRBooking(location: selectedLocation, roomId: slot.roomId, start: slot.startTime, end: slot.endTime, name: group.name))
+            bookings.append(GSRBooking(location: selectedLocation, roomId: slot.roomId, start: slot.startTime, end: slot.endTime, name: slot.roomName))
         }
         
         return GSRGroupBooking(group: group, bookings: bookings)

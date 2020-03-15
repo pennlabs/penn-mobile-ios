@@ -32,7 +32,7 @@ class GroupSubmitBookingButton: UIButton {
 // MARK: - Prepare UI
 extension GroupSubmitBookingButton {
     fileprivate func prepareUI() {
-        backgroundColor = UIColor.blueLight
+        backgroundColor = UIColor.baseLabsBlue
         layer.cornerRadius = 8
         layer.masksToBounds = true
         

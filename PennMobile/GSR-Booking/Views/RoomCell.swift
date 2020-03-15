@@ -60,6 +60,7 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GSRTimeCell.identifier, for: indexPath) as! GSRTimeCell
+        
         let timeSlot = room.timeSlots[indexPath.row]
         cell.timeSlot = timeSlot
         if delegate.containsTimeSlot(timeSlot) {

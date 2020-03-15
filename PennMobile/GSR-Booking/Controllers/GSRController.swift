@@ -63,7 +63,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
             tabBarController.navigationItem.leftBarButtonItem = bookingsBarButton
             tabBarController.navigationItem.rightBarButtonItem = barButton
         } else {
-            self.title = "Tap to book"
+            self.title = "Select Times"
             self.navigationItem.rightBarButtonItem = barButton
         }
     }
@@ -278,7 +278,7 @@ extension GSRController {
     private func handleGroupBooking(_ groupBooking: GSRGroupBooking) {
         let confirmController = GSRGroupConfirmBookingController()
         confirmController.groupBooking = groupBooking
-        present(confirmController, animated: true, completion: nil)
+        self.present(confirmController, animated: true, completion: nil)
     }
 }
 
