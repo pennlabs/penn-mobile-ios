@@ -54,6 +54,7 @@
 		<string>SFProText-Regular.ttf</string>
 		<string>SFProText-Bold.ttf</string>
 		<string>SF-Pro-Rounded-Regular.otf</string>
+		<string>SF-Pro-Text-Semibold.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

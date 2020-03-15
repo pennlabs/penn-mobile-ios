@@ -18,6 +18,10 @@ class GSRGroupConfirmBookingViewModel: NSObject {
 // MARK: - UITableViewDataSource
 extension GSRGroupConfirmBookingViewModel: UITableViewDataSource {
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return GroupBookingConfirmationCell.getCellHeight(for: groupBooking.bookings[indexPath.row])
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groupBooking.bookings.count
     }

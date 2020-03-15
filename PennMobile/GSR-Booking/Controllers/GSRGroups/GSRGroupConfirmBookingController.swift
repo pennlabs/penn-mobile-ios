@@ -12,11 +12,13 @@ class GSRGroupConfirmBookingController: UIViewController {
     
     var groupBooking: GSRGroupBooking?
     fileprivate var viewModel: GSRGroupConfirmBookingViewModel!
-    
+    static let cellSpacing: CGFloat = 22.0
+
     fileprivate var titleLabel: UILabel!
     fileprivate var groupLabel: UILabel!
     fileprivate var closeButton: UIButton!
     fileprivate var bookingsTableView: UITableView!
+    fileprivate var submitBtn: GroupSubmitBookingButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +28,7 @@ class GSRGroupConfirmBookingController: UIViewController {
 }
 // MARK: - Prepare View Model
 extension GSRGroupConfirmBookingController {
-    func prepareViewModel() {
+    fileprivate func prepareViewModel() {
         guard let groupBooking = groupBooking else { return }
         viewModel = GSRGroupConfirmBookingViewModel(groupBooking: groupBooking)
     }
@@ -34,16 +36,17 @@ extension GSRGroupConfirmBookingController {
 
 // MARK: - Prepare UI
 extension GSRGroupConfirmBookingController {
-    func prepareUI() {
+    fileprivate func prepareUI() {
         view.backgroundColor = UIColor.uiGSRBackground
         
         prepareTitleLabel()
         prepareGroupLabel()
         prepareCloseButton()
+        prepareSubmitBtn()
         prepareBookingsTableView()
     }
     
-    func prepareTitleLabel() {
+    fileprivate func prepareTitleLabel() {
         titleLabel = UILabel()
         titleLabel.text = "Confirm Booking"
         titleLabel.font = .boldSystemFont(ofSize: 28)
@@ -57,7 +60,7 @@ extension GSRGroupConfirmBookingController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func prepareGroupLabel() {
+    fileprivate func prepareGroupLabel() {
         groupLabel = UILabel()
         if let group = groupBooking?.group {
             groupLabel.attributedText = NSMutableAttributedString().weightedColored("Booking as ", weight: .light, color: .grey1, size: 18).weightedColored(group.name, weight: .bold, color: group.color, size: 18)
@@ -71,7 +74,7 @@ extension GSRGroupConfirmBookingController {
         groupLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
     }
     
-    func prepareCloseButton() {
+    fileprivate func prepareCloseButton() {
         closeButton = UIButton()
         view.addSubview(closeButton)
 
@@ -88,7 +91,17 @@ extension GSRGroupConfirmBookingController {
         closeButton.addTarget(self, action: #selector(cancelBtnAction), for: .touchUpInside)
     }
     
-    func prepareBookingsTableView() {
+    fileprivate func prepareSubmitBtn() {
+        submitBtn = GroupSubmitBookingButton()
+        if let groupBooking = groupBooking {
+            submitBtn.groupName = groupBooking.group.name
+        }
+        view.addSubview(submitBtn)
+        
+        _ = submitBtn.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 14, bottomConstant: 34, rightConstant: 14, widthConstant: 0, heightConstant: 50)
+    }
+    
+    fileprivate func prepareBookingsTableView() {
         bookingsTableView = UITableView()
         bookingsTableView.delegate = viewModel
         bookingsTableView.dataSource = viewModel
@@ -100,8 +113,10 @@ extension GSRGroupConfirmBookingController {
         bookingsTableView.backgroundColor = UIColor.clear
         view.addSubview(bookingsTableView)
         
-        _ = bookingsTableView.anchor(groupLabel.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 30.0, leftConstant: 14.0, bottomConstant: 100.0, rightConstant: 14.0, widthConstant: 0.0, heightConstant: 0.0)
+        _ = bookingsTableView.anchor(groupLabel.bottomAnchor, left: view.leftAnchor, bottom: submitBtn.topAnchor, right: view.rightAnchor, topConstant: 30.0, leftConstant: 14.0, bottomConstant: 21.5, rightConstant: 14.0, widthConstant: 0.0, heightConstant: 0.0)
     }
+    
+    
 }
 
 // MARK: - Handle Cancel

@@ -11,12 +11,13 @@ import UIKit
 class GroupBookingConfirmationCell: UITableViewCell {
 
     static let identifier = "gsrGroupBookingConfirmationCell"
-    
+    fileprivate var cardView: UIView!
     fileprivate var headerView: UIView!
     fileprivate var locationLabel: UILabel!
     fileprivate var dateLabel: UILabel!
     fileprivate var buildingImageView: UIImageView!
     fileprivate var timeSlotsTableView: UITableView!
+    
     
     fileprivate var timeSlots: [String]!
     
@@ -51,9 +52,23 @@ class GroupBookingConfirmationCell: UITableViewCell {
 // MARK: - Prepare UI
 extension GroupBookingConfirmationCell {
     fileprivate func prepareUI() {
-        backgroundColor = UIColor.white
+        backgroundColor = UIColor.clear
         layer.cornerRadius = 10
         layer.masksToBounds = true
+        
+        prepareCardView()
+        
+    }
+    
+    fileprivate func prepareCardView() {
+        //the point of the card view is to incorporate the cell_spacing
+        cardView = UIView()
+        cardView.backgroundColor = UIColor.white
+        cardView.layer.cornerRadius = 10
+        cardView.layer.masksToBounds = true
+        addSubview(cardView)
+        
+        _ = cardView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: GSRGroupConfirmBookingController.cellSpacing, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         prepareHeaderView()
         prepareTimeSlotsTableView()
@@ -61,9 +76,9 @@ extension GroupBookingConfirmationCell {
     
     fileprivate func prepareHeaderView() {
         headerView = UIView()
-        addSubview(headerView)
+        cardView.addSubview(headerView)
 
-        _ = headerView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 17.5, leftConstant: 15, bottomConstant: 17.5, rightConstant: 15.0, widthConstant: 0, heightConstant: 52.0)
+        _ = headerView.anchor(cardView.topAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 17.5, leftConstant: 15, bottomConstant: 0, rightConstant: 15.0, widthConstant: 0, heightConstant: 52.0)
         
         prepareBuildingImageView()
         prepareLocationLabel()
@@ -105,10 +120,20 @@ extension GroupBookingConfirmationCell {
         timeSlotsTableView.isScrollEnabled = false
         timeSlotsTableView.register(GroupBookingTimeSlotCell.self, forCellReuseIdentifier: GroupBookingTimeSlotCell.identifier)
         
-        addSubview(timeSlotsTableView)
+        cardView.addSubview(timeSlotsTableView)
         
-        #warning("don't set a fixed height in the future, but i'm doing it for now, cos otherwise tableview doesn't show")
-        _ = timeSlotsTableView.anchor(headerView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 15, widthConstant: 0, heightConstant: 300)
+        _ = timeSlotsTableView.anchor(headerView.bottomAnchor, left: cardView.leftAnchor, bottom: cardView.bottomAnchor, right: cardView.rightAnchor, topConstant: 0, leftConstant: 15, bottomConstant: 0, rightConstant: 15, widthConstant: 0, heightConstant: 0)
+    }
+}
+
+// MARK: - Cell Height
+extension GroupBookingConfirmationCell {
+    static func getCellHeight(for booking: GSRBooking) -> CGFloat {
+        //height is header_height + header_top + #time_slots * time_slot_height + cell_spacing
+        #warning("Should not be calculating split time ranges EVERY Time, and should not use a constant value. change!")
+        let numTimeSlots = booking.getSplitTimeRanges(interval: 60 * 30).count
+        return 52.0 + 17.5 + CGFloat(numTimeSlots) * GroupBookingTimeSlotCell.cellHeight + GSRGroupConfirmBookingController.cellSpacing
+        
     }
 }
 
@@ -128,7 +153,9 @@ extension GroupBookingConfirmationCell: UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView() //hide last separator line
+    }
 }
 // MARK: - TimeSlotsTableView Delegate
 extension GroupBookingConfirmationCell: UITableViewDelegate {

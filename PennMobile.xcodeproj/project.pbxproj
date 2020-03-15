@@ -151,6 +151,8 @@
 		973D8C88241D472600792214 /* GroupBookingTimeSlotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973D8C87241D472600792214 /* GroupBookingTimeSlotCell.swift */; };
 		973D8C8A241D7D8100792214 /* SF-Pro-Rounded-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 973D8C89241D7D8100792214 /* SF-Pro-Rounded-Regular.otf */; };
 		973D8C8C241D7DF700792214 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 973D8C8B241D7DEC00792214 /* SF-Pro-Text-Medium.otf */; };
+		973D8C8E241DEE1C00792214 /* GroupSubmitBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973D8C8D241DEE1C00792214 /* GroupSubmitBookingButton.swift */; };
+		973D8C90241DEF7F00792214 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 973D8C8F241DEF7F00792214 /* SF-Pro-Text-Semibold.otf */; };
 		97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806423D26BC700C23488 /* DiningBalanceCell.swift */; };
 		97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */; };
 		97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806623D26BC700C23488 /* DiningHeaderView.swift */; };
@@ -451,6 +453,8 @@
 		973D8C87241D472600792214 /* GroupBookingTimeSlotCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupBookingTimeSlotCell.swift; sourceTree = "<group>"; };
 		973D8C89241D7D8100792214 /* SF-Pro-Rounded-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Regular.otf"; sourceTree = "<group>"; };
 		973D8C8B241D7DEC00792214 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
+		973D8C8D241DEE1C00792214 /* GroupSubmitBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSubmitBookingButton.swift; sourceTree = "<group>"; };
+		973D8C8F241DEF7F00792214 /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		97AA806423D26BC700C23488 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
 		97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		97AA806623D26BC700C23488 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
@@ -1135,6 +1139,7 @@
 			children = (
 				973D8C83241D3C7100792214 /* SFProText-Bold.ttf */,
 				973D8C89241D7D8100792214 /* SF-Pro-Rounded-Regular.otf */,
+				973D8C8F241DEF7F00792214 /* SF-Pro-Text-Semibold.otf */,
 				973D8C8B241D7DEC00792214 /* SF-Pro-Text-Medium.otf */,
 				973D8C85241D3D2E00792214 /* SFProText-Regular.ttf */,
 			);
@@ -1411,6 +1416,7 @@
 			children = (
 				EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */,
 				EFE2D6E8239B11050020F6BF /* GroupSettingsCell.swift */,
+				973D8C8D241DEE1C00792214 /* GroupSubmitBookingButton.swift */,
 				97D17532241C7473001F973C /* GroupBookingConfirmationCell.swift */,
 				EFE2D6E9239B11050020F6BF /* GroupManageButtonCell.swift */,
 				EFE2D6EA239B11050020F6BF /* GroupMemberCell.swift */,
@@ -1622,6 +1628,7 @@
 				B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */,
 				973D8C8C241D7DF700792214 /* SF-Pro-Text-Medium.otf in Resources */,
 				973D8C84241D3C9C00792214 /* SFProText-Bold.ttf in Resources */,
+				973D8C90241DEF7F00792214 /* SF-Pro-Text-Semibold.otf in Resources */,
 				2189C09E2027CE4100771C1F /* locations.json in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
@@ -1790,6 +1797,7 @@
 				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
 				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
 				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
+				973D8C8E241DEE1C00792214 /* GroupSubmitBookingButton.swift in Sources */,
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
 				F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
