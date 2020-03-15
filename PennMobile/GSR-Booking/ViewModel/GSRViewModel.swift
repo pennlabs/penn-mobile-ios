@@ -176,14 +176,19 @@ extension GSRViewModel: GSRSelectionDelegate {
             isBeforeOrAfter = isBeforeOrAfter || timeSlot == selection.prev || timeSlot == selection.next || timeSlot == selection
         }
         
-        return isSameRoom && isBeforeOrAfter
+        var isSameTime = false
+        for selection in currentSelection {
+            isSameTime = isSameTime || timeSlot.startTime == selection.startTime
+        }
+        
+        return !isSameTime && ((isSameRoom && isBeforeOrAfter) || (!isSameRoom && group != nil))
     }
     
     func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) {
         switch action {
         case .add:
             if currentSelection.contains(timeSlot) { break }
-            if !isValidAddition(timeSlot: timeSlot) && group == nil {
+            if !isValidAddition(timeSlot: timeSlot) {
                 currentSelection.removeAll()
                 delegate.refreshDataUI()
             }
@@ -285,21 +290,27 @@ extension GSRViewModel {
             if currentSelection.isEmpty {
                 return nil
             }
-            let roomId = currentSelection[0].roomId
-            let startTime: Date
-            let endTime: Date
-            var timeSlot = currentSelection[0]
-            while timeSlot.prev != nil && currentSelection.contains(timeSlot.prev!) {
-                timeSlot = timeSlot.prev!
+            //roomsDict holds exactly 1 timeslot for each unique roomid in currentSelection
+            var roomsDict = [Int: GSRTimeSlot]()
+            for selection in currentSelection {
+                //its ok to overwrite, b/c we just need 1 timeslot per roomid
+                roomsDict[selection.roomId] = selection
             }
-            startTime = timeSlot.startTime
-            while timeSlot.next != nil && currentSelection.contains(timeSlot.next!) {
-                timeSlot = timeSlot.next!
-            }
-            endTime = timeSlot.endTime
             
-            #warning("for now, just use the first booking and ignore the rest")
-            let bookings = [GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)]
+            //for each roomid, assemble a GSRBooking obj
+            var bookings = [GSRBooking]()
+            for (roomId, timeSlot) in roomsDict {
+                var currentTimeSlot = timeSlot
+                while currentTimeSlot.prev != nil && currentSelection.contains(currentTimeSlot.prev!) {
+                    currentTimeSlot = currentTimeSlot.prev!
+                }
+                let startTime = currentTimeSlot.startTime
+                while currentTimeSlot.next != nil && currentSelection.contains(currentTimeSlot.next!) {
+                    currentTimeSlot = currentTimeSlot.next!
+                }
+                let endTime = currentTimeSlot.endTime
+                bookings.append(GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime))
+            }
             return GSRGroupBooking(group: group, bookings: bookings)
         }
         
