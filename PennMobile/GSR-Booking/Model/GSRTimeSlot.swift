@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class GSRTimeSlot: NSObject {
+public class GSRTimeSlot: NSObject, Comparable {
     let roomId: Int
     let isAvailable: Bool
     let startTime: Date
@@ -24,8 +24,16 @@ public class GSRTimeSlot: NSObject {
         self.endTime = endTime
     }
     
-    static func ==(lhs: GSRTimeSlot, rhs: GSRTimeSlot) -> Bool {
+    static func == (lhs: GSRTimeSlot, rhs: GSRTimeSlot) -> Bool {
         return lhs.roomId == rhs.roomId && lhs.isAvailable == rhs.isAvailable && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime
+    }
+    
+    public static func < (lhs: GSRTimeSlot, rhs: GSRTimeSlot) -> Bool {
+        if lhs.roomId == rhs.roomId {
+            return lhs.startTime < rhs.startTime
+        }
+        
+        return lhs.roomId < rhs.roomId
     }
     
     func getLocalTimeString() -> String {
@@ -36,6 +44,8 @@ public class GSRTimeSlot: NSObject {
         let dateStringEnd = formatter.string(from: self.endTime)
         return "\(dateStringStart) -> \(dateStringEnd)"
     }
+    
+    
 
 }
 

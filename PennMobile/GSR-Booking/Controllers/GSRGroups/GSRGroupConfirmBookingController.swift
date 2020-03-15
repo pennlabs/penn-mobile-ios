@@ -50,7 +50,7 @@ extension GSRGroupConfirmBookingController {
         titleLabel = UILabel()
         titleLabel.text = "Confirm Booking"
         titleLabel.font = .boldSystemFont(ofSize: 28)
-        titleLabel.textColor = .baseDarkBlue
+        titleLabel.textColor = .baseLabsBlue
         
         view.addSubview(titleLabel)
         titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 32).isActive = true
@@ -115,8 +115,6 @@ extension GSRGroupConfirmBookingController {
         
         _ = bookingsTableView.anchor(groupLabel.bottomAnchor, left: view.leftAnchor, bottom: submitBtn.topAnchor, right: view.rightAnchor, topConstant: 30.0, leftConstant: 14.0, bottomConstant: 21.5, rightConstant: 14.0, widthConstant: 0.0, heightConstant: 0.0)
     }
-    
-    
 }
 
 // MARK: - Handle Cancel

@@ -58,9 +58,11 @@ class GSRBooking {
     }
 }
 
+typealias GSRBookings = [GSRBooking]
+
 class GSRGroupBooking {
     var group: GSRGroup!
-    var bookings: [GSRBooking]!
+    var bookings: GSRBookings!
     
     init(group: GSRGroup, bookings: [GSRBooking]) {
         self.group = group

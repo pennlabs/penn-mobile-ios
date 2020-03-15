@@ -201,8 +201,8 @@ extension GSRController: GSRBookable {
     }
 
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
-        if let groupBooking = viewModel.getGroupBooking() {
-            handleGroupBooking(groupBooking)
+        if group != nil, let booking = viewModel.getGroupBookings() {
+            handleGroupBooking(booking)
         } else if let booking = viewModel.getBooking() {
             submitPressed(for: booking)
         } else {

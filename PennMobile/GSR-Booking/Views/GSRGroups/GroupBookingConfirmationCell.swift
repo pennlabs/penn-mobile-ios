@@ -157,6 +157,7 @@ extension GroupBookingConfirmationCell: UITableViewDataSource {
         return UIView() //hide last separator line
     }
 }
+
 // MARK: - TimeSlotsTableView Delegate
 extension GroupBookingConfirmationCell: UITableViewDelegate {
     
