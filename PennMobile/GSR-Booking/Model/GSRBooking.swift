@@ -43,3 +43,15 @@ class GSRBooking {
         if name != nil { return name! } else { return location.name }
     }
 }
+
+class GSRGroupBooking: GSRBooking {
+    var gsrGroup: GSRGroup!
+    
+    init(location: GSRLocation, roomId: Int, start: Date, end: Date, gsrGroup: GSRGroup) {
+        super.init(location: location, roomId: roomId, start: start, end: end)
+        self.gsrGroup = gsrGroup
+        self.groupName = gsrGroup.name
+    }
+}
+
+typealias GSRGroupBookings = [GSRGroupBooking]

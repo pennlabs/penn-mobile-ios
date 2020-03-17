@@ -40,7 +40,7 @@ class GroupSettingsCell: UITableViewCell {
 
         titleLabel.text = userSetting.title
         descriptionLabel.text = userSetting.descr
-        isEnabledSwitch.setOn(userSetting.isEnabled, animated: true)
+        isEnabledSwitch.setOn(userSetting.isEnabled, animated: false)
     }
     
     @objc fileprivate func switchValueChanged() {
@@ -62,6 +62,7 @@ extension GroupSettingsCell {
         prepareDescriptionLabel()
         prepareIsEnabledSwitch()
         titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -100).isActive = true
+//        backgroundColor = .uiBackgroundSecondary
     }
     
     fileprivate func prepareHolderView() {

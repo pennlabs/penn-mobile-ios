@@ -11,7 +11,11 @@ import Foundation
 //group gsrs!
 class GSRGroupController: GenericViewController {
 
-    fileprivate var groups: [GSRGroup] = []
+    fileprivate var groups = [GSRGroup]() {
+        didSet {
+            groups.sort()
+        }
+    }
     fileprivate var tableView: UITableView!
     fileprivate let refreshControl = UIRefreshControl()
 
@@ -34,7 +38,6 @@ extension GSRGroupController {
         //Add swipe up to refresh to Table View
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(fetchGroups), for: .valueChanged)
-//        tableView.addSubview(refreshControl)
     }
 
     fileprivate func setupTableView() {

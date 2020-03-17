@@ -8,6 +8,7 @@
 
 import MBProgressHUD
 import CoreLocation
+import LocalAuthentication
 
 protocol IndicatorEnabled {}
 
@@ -142,6 +143,44 @@ extension LocationPermissionRequestable {
             }
         } else {
             return false
+        }
+    }
+}
+
+protocol LocallyAuthenticatable {
+    func handleAuthenticationSuccess()
+    func handleAuthenticationFailure()
+}
+
+extension LocallyAuthenticatable {
+    
+    func requestAuthentication(cancelText : String, reasonText: String) {
+        let context = LAContext()
+        context.localizedCancelTitle = cancelText
+
+        // Check if we have the needed hardware support.
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonText ) { success, error in
+
+                if success {
+                    // Move to the main thread because the user may request UI changes.
+                    DispatchQueue.main.async {
+                        self.handleAuthenticationSuccess()
+                    }
+
+                } else {
+                    // Failed to authenticate with FaceID/passcode
+                    DispatchQueue.main.async {
+                        self.handleAuthenticationFailure()
+                    }
+                }
+            }
+        } else {
+            // Can't evaluate policy
+            DispatchQueue.main.async {
+                self.handleAuthenticationFailure()
+            }
         }
     }
 }

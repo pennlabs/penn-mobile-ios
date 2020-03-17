@@ -61,7 +61,7 @@ class UserDBManager: NSObject, Requestable, KeychainAccessible, SHA256Hashable {
         guard let pennkey = getPennKey(), let password = getPassword(), let privateUUID = privacyOption.privateUUID else {
             return request
         }
-        let passwordHash = hash(string: pennkey + "-" + password + "-" + privacyOption.rawValue)
+        let passwordHash = hash(string: pennkey + "-" + password + "-" + privacyOption.rawValue, encoding: .hex)
         request.setValue(passwordHash, forHTTPHeaderField: "X-Password-Hash")
         request.setValue(privateUUID, forHTTPHeaderField: "X-Device-Key")
         request.setValue(privacyOption.rawValue, forHTTPHeaderField: "X-Data-Type")

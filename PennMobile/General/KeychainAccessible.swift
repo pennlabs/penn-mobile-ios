@@ -19,6 +19,10 @@ extension KeychainAccessible {
         "PennKey Password"
     }
     
+    private var pacCodeKeychainKey: String {
+        "PAC Code"
+    }
+    
     func getPennKey() -> String? {
         let secureStore = getWebLoginSecureStore()
         do {
@@ -37,6 +41,15 @@ extension KeychainAccessible {
         }
     }
 
+    func getPacCode() -> String? {
+        let secureStore = getWebLoginSecureStore()
+        do {
+            return try secureStore.getValue(for: pacCodeKeychainKey)
+        } catch {
+            return nil
+        }
+    }
+
     func savePennKey(_ pennkey: String) {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.setValue(pennkey, for: pennkeyKeychainKey)
@@ -45,6 +58,16 @@ extension KeychainAccessible {
     func savePassword(_ password: String) {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.setValue(password, for: passwordKeychainKey)
+    }
+    
+    func savePacCode(_ pacCode: String) {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.setValue(pacCode, for: pacCodeKeychainKey)
+    }
+    
+    func removePacCode() {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.removeValue(for: pacCodeKeychainKey)
     }
     
     private func getWebLoginSecureStore() -> SecureStore {
