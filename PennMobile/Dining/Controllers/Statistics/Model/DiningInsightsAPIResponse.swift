@@ -103,6 +103,7 @@ extension DiningInsightsAPIResponse.CardData {
         let startOfSemester: Date
         let endOfSemester: Date
         let predictedZeroDate: Date
+        let semesterEndBalance: Double?
         
         enum CodingKeys: String, CodingKey {
             case type = "type"
@@ -110,6 +111,7 @@ extension DiningInsightsAPIResponse.CardData {
             case startOfSemester = "start-of-semester"
             case endOfSemester = "end-of-semester"
             case predictedZeroDate = "predicted-zero-date"
+            case semesterEndBalance = "balance-at-semester-end"
         }
         
         struct DiningBalance: Codable {

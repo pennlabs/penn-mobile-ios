@@ -55,6 +55,26 @@ struct PredictionsGraphView: View {
         return formatter.string(from: self.config.predictedZeroDate)
     }
     
+    var displayZeroDate: Bool {
+        if config.predictedZeroDate > config.endOfSemester && config.semesterEndBalance != nil {
+            return false
+        }
+        return true
+    }
+    
+    var formattedBalance: String {
+        let b: Double = config.semesterEndBalance ?? 0
+        return String(format: balanceType == .swipes ? "%g" : "%.2f", b)
+    }
+    
+    var helpText: String {
+        if displayZeroDate {
+            return "Based on your current balance and past behavior, we project you'll run out on this date."
+        } else {
+            return "Based on your past behavior, we project you'll end the semester with \(balanceType == .swipes ? "swipes" : "dollars") to spare."
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             Group {
@@ -72,16 +92,16 @@ struct PredictionsGraphView: View {
             
             HStack {
                 VStack(alignment: .leading) {
-                    // "Leftover" Dollars
-                    Text("Out of \(balanceType == .swipes ? "Swipes" : "Dollars")")
+                    // "Leftover" Dollars, wasted dollars
+                    Text(displayZeroDate ? ("Out of \(balanceType == .swipes ? "Swipes" : "Dollars")") : "Extra Balance")
                         .font(.caption)
-                    Text("\(self.formattedZeroDate)")
+                    Text(displayZeroDate ? "\(self.formattedZeroDate)" : "\(formattedBalance)\(balanceType == .swipes ? " Swipes" : " Dollars")")
                         .font(Font.system(size: 21, weight: .bold, design: .rounded))
                     Spacer()
                 }
                 .padding(.trailing)
                 VStack {
-                    Text("Based on your current balance and past behavior, we project you'll run out on this date.")
+                    Text(helpText)
                     .font(.caption)
                     .foregroundColor(.gray)
                     Spacer()
