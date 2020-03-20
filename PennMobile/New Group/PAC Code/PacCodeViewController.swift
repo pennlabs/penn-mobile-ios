@@ -14,13 +14,14 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
         
     lazy var quadDigitLabel = [digitLabel, digitLabel, digitLabel, digitLabel]
     
-    let pacCodeHStack = UIStackView()
+    let pacCodeTitleLabel = UILabel()
     let pacCodeSecurityInfoLabel = UILabel()
+    let pacCodeHStack = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .uiBackground
         
         self.title = "PAC Code"
         
@@ -78,7 +79,6 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
     }
     
     func setupPacCodeTitleLabel() {
-        let pacCodeTitleLabel = UILabel()
         pacCodeTitleLabel.textColor = .labelPrimary
         pacCodeTitleLabel.font = UIFont.systemFont(ofSize: 35)
         pacCodeTitleLabel.text = "PAC Code"
@@ -89,14 +89,14 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
         pacCodeTitleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
     }
     
-//    This is only in place as a placeholder for an icon if deemed necessary
+    // TODO: Request graphic for
     func setupPlaceHolderIcon() {
         if #available(iOS 13.0, *) {
             let placeHolderIcon = UIImageView(image: UIImage(systemName: "circle.grid.3x3.fill"))
             view.addSubview(placeHolderIcon)
             
             placeHolderIcon.translatesAutoresizingMaskIntoConstraints = false
-            placeHolderIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
+            placeHolderIcon.bottomAnchor.constraint(equalTo: pacCodeTitleLabel.topAnchor, constant: -20).isActive = true
             placeHolderIcon.tintColor = .grey1
             placeHolderIcon.widthAnchor.constraint(equalToConstant: 100).isActive = true
             placeHolderIcon.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -191,7 +191,7 @@ extension PacCodeViewController {
         
         let popVC : () -> Void = { self.navigationController?.popViewController(animated: true) }
         
-        showAlertForError(result: result, title: "PAC Code", success: self.handleNetworkPacCodeRefreshCompletion(_:), noInternet: popVC, parsingError: popVC, authenticationError: self.handleAuthenticationError)
+        showRefreshAlertForError(result: result, title: "PAC Code", success: self.handleNetworkPacCodeRefreshCompletion(_:), noInternet: popVC, parsingError: popVC, authenticationError: self.handleAuthenticationError)
     }
     
     fileprivate func handleNetworkPacCodeRefreshCompletion(_ pacCode: String) {
