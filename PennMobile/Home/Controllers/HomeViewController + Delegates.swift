@@ -164,10 +164,10 @@ extension HomeViewController: ShowsAlert {
         self.present(nvc, animated: true, completion: nil)
     }
     
-    fileprivate func handleNetworkCourseRefreshCompletion(_ courses: Set<Course>?) {
+    fileprivate func handleNetworkCourseRefreshCompletion(_ result: Result<Set<Course>, NetworkingError>) {
         DispatchQueue.main.async {
             self.hideActivity()
-            if let courses = courses {
+            if let courses = try? result.get() {
                 if let accountID = UserDefaults.standard.getAccountID() {
                     UserDBManager.shared.saveCourses(courses, accountID: accountID, { (success) in
                         self.handleCourseRefresh(courses)

@@ -227,8 +227,8 @@ extension LabsLoginController {
 // MARK: - Retrieve Other Account Information
 extension LabsLoginController {
     fileprivate func getCourses() {
-        PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true) { (courses) in
-            if let courses = courses, let accountID = UserDefaults.standard.getAccountID() {
+        PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true) { (result) in
+            if let courses = try? result.get(), let accountID = UserDefaults.standard.getAccountID() {
                 // Save courses to DB if permission was granted
                 UserDBManager.shared.saveCourses(courses, accountID: accountID)
                 UserDefaults.standard.saveCourses(courses)

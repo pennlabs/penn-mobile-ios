@@ -121,6 +121,37 @@ extension ShowsAlert where Self: UIViewController {
     }
 }
 
+protocol ShowsAlertForError : ShowsAlert {
+    func showRefreshAlertForError<T>(result: Result<T, NetworkingError>, title: String, success: @escaping (T) -> Void, noInternet: (() -> Void)?, parsingError: (() -> Void)?, serverError: (() -> Void)?, jsonError: (() -> Void)?, authenticationError: (() -> Void)?, other: (() -> Void)?)
+}
+
+extension ShowsAlertForError {
+    func showRefreshAlertForError<T>(result: Result<T, NetworkingError>, title: String, success: @escaping (T) -> Void, noInternet: (() -> Void)? = nil, parsingError: (() -> Void)? = nil, serverError: (() -> Void)? = nil, jsonError: (() -> Void)? = nil, authenticationError: (() -> Void)? = nil, other: (() -> Void)? = nil) {
+        switch result {
+        case .success(let content):
+            self.showAlert(withMsg: "Your \(title) has been refreshed.", title: "Refresh Complete!", completion: { success(content) })
+
+        case .failure(.noInternet):
+            self.showAlert(withMsg: "You appear to be offline.\nPlease try again later.", title: "Network Error", completion: noInternet)
+
+        case .failure(.parsingError):
+            self.showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: parsingError)
+            
+        case .failure(.serverError):
+            self.showAlert(withMsg: "Penn's \(title) servers are currently not updating. We hope this will be fixed shortly.", title: "Uh oh!", completion: serverError)
+            
+        case .failure(.jsonError):
+            self.showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: jsonError)
+
+        case .failure(.authenticationError):
+            self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
+            
+        case .failure(.other):
+        self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
+        }
+    }
+}
+
 
 
 // Helper function inserted by Swift 4.2 migrator.
