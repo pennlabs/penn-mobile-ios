@@ -192,6 +192,14 @@ extension Date {
         timesString += open
         return timesString
     }
+    
+    func isoFormattedStr() -> String {
+        ///for group gsr booking requests
+        let formatter = ISO8601DateFormatter()
+        #warning("following line only works for ios11+")
+        formatter.formatOptions.insert(.withFractionalSeconds)
+        return formatter.string(from: self)
+    }
 
     var localTime: Date {
         return self.convert(to: "GMT")

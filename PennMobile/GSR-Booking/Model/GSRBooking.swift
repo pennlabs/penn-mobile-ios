@@ -69,3 +69,29 @@ class GSRGroupBooking {
         self.bookings = bookings
     }
 }
+
+
+class GSRBookingSlotResponse: Codable {
+    var start: String!
+    var end: String!
+    var booked: Bool!
+    var pennkey: String?
+}
+class GSRBookingResponse: Codable {
+    var lid: String!
+    var roomid: String!
+    var bookings: [GSRBookingSlotResponse]!
+}
+
+class GSRGroupBookingResponse: Codable {
+    var partialSuccess: Bool!
+    var completeSuccess: Bool!
+    var error: String?
+    var rooms: [GSRBookingResponse]!
+    
+    enum CodingKeys: String, CodingKey {
+        case partialSuccess = "partial_success"
+        case completeSuccess = "complete_success"
+        case error, rooms
+    }
+}

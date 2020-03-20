@@ -39,3 +39,11 @@ extension GSRGroupConfirmBookingViewModel: UITableViewDelegate {
     
 }
 
+// MARK: - Networking
+extension GSRGroupConfirmBookingViewModel {
+    func submitBooking() {
+        GSRGroupNetworkManager.instance.submitBooking(booking: groupBooking, completion: { (groupBookingResponse, error)  in
+            print(groupBookingResponse)
+        })
+    }
+}

@@ -94,6 +94,7 @@ extension GSRGroupConfirmBookingController {
     
     fileprivate func prepareSubmitBtn() {
         submitBtn = GroupSubmitBookingButton()
+        submitBtn.addTarget(self, action: #selector(didTapSubmitBtn), for: .touchUpInside)
         if let groupBooking = groupBooking {
             submitBtn.groupName = groupBooking.group.name
         }
@@ -118,8 +119,12 @@ extension GSRGroupConfirmBookingController {
     }
 }
 
-// MARK: - Handle Cancel
+// MARK: - Handle Button Events
 extension GSRGroupConfirmBookingController {
+    @objc func didTapSubmitBtn() {
+        viewModel.submitBooking()
+    }
+    
     @objc func cancelBtnAction() {
         self.dismiss(animated: true, completion: nil)
     }

@@ -241,7 +241,8 @@ extension String {
 }
 
 extension String {
-    static func getPostString(params: [String: Any]) -> String {
+    static func getPostString(
+        params: [String: Any]) -> String {
         let characterSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
         let parameterArray = params.map { key, value -> String in
             let escapedKey = key.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""

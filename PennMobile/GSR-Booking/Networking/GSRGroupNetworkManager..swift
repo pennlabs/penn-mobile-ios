@@ -9,36 +9,13 @@ import Foundation
 import SwiftyJSON
 
 class GSRGroupNetworkManager: NSObject, Requestable {
-    // MARK: GSR Group Networking - Dummy Data for now
+    // MARK: Group Networking
     static let instance = GSRGroupNetworkManager()
     
     let userURL = "https://studentlife.pennlabs.org/users/"
     let groupsURL = "https://studentlife.pennlabs.org/groups/"
     let membershipURL = "https://studentlife.pennlabs.org/membership/"
     let inviteURL = "https://studentlife.pennlabs.org/membership/invite/"
-
-    
-//    fileprivate static let pennKeyActiveSetting = GSRGroupIndividualSetting(title: "PennKey Permission", descr: "Anyone in this group can book a study room block using your PennKey.", isEnabled: false)
-//    fileprivate static let notificationOnSetting = GSRGroupIndividualSetting(title: "Notifications", descr: "You’ll receive a notification any time a room is booked by this group.", isEnabled: false)
-//    
-//    fileprivate static let userSettings = GSRGroupIndividualSettings(pennKeyActive: pennKeyActiveSetting, notificationsOn: notificationOnSetting)
-//    fileprivate static let groupSettings = GSRGroupAccessSettings(booking: .everyone, invitation: .everyone)
-//
-//    fileprivate static let labs = GSRGroup(id: 1, name: "Penn Labs", color: "Cheeto Orange", createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: nil, members: nil, reservations: nil, groupSettings: groupSettings)
-//    fileprivate static let cis121 = GSRGroup(id: 2, name: "CIS 121 Study Group", color: "blue", createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: nil, members: nil, reservations: nil, groupSettings: groupSettings)
-//    fileprivate static let cis160 = GSRGroup(id: 3, name: "CIS 160 Study Group", color: "blue", createdAt: Date(), userSettings: userSettings, imgURL: nil, owners: nil, members: nil, reservations: nil, groupSettings: groupSettings)
-//
-//    fileprivate var groups: [GSRGroup] = [labs, cis121, cis160]
-//
-//    fileprivate func getDummyUsers() -> [GSRGroupMember] {
-//        let daniel = GSRGroupMember(accountID: "1", pennKey: "dsalib", first: "Daniel", last: "Salib", email: "dsalib@wharton.upenn.edu", isBookingEnabled: false, isAdmin: false)
-//        let rehaan = GSRGroupMember(accountID: "1", pennKey: "rehaan", first: "Rehaan", last: "Furniturewala", email: "rehaan@wharton.upenn.edu", isBookingEnabled: false, isAdmin: false)
-//        let lucy = GSRGroupMember(accountID: "1", pennKey: "yuewei", first: "Lucy", last: "Yuan", email: "yuewei@seas.upenn.edu", isBookingEnabled: false, isAdmin: false)
-//        return [daniel, rehaan, lucy]
-//    }
-
-    
-    
     
     func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
         let allGroupsURL = "\(userURL)me/"
@@ -75,17 +52,6 @@ class GSRGroupNetworkManager: NSObject, Requestable {
             } else {
                 callback("data is nil", nil)
             }
-        }
-    }
-    
-    func inviteUsers(groupID: Int, pennkeys: [String], callback: @escaping (Bool, Error?) -> ()) {
-        let params: [String: Any] = ["group": groupID, "user": pennkeys.joined(separator: ",")]
-        makePostRequestWithAccessToken(url: inviteURL, params: params) { (data, status, error) in
-            guard let status = status as? HTTPURLResponse else {
-                callback(false, error)
-                return
-            }
-            callback(status.statusCode == 200, error)
         }
     }
     
@@ -142,22 +108,18 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
     
-    func getAllUsers(callback: @escaping (_ success: Bool, _ results: [GSRInviteSearchResult]?) -> ()) {
-        getRequestData(url: userURL) { (data, error, status) in
-            guard let data = data else {
-                callback(false, nil)
+}
+
+// MARK: - Invites Networking
+extension GSRGroupNetworkManager {
+    func inviteUsers(groupID: Int, pennkeys: [String], callback: @escaping (Bool, Error?) -> ()) {
+        let params: [String: Any] = ["group": groupID, "user": pennkeys.joined(separator: ",")]
+        makePostRequestWithAccessToken(url: inviteURL, params: params) { (data, status, error) in
+            guard let status = status as? HTTPURLResponse else {
+                callback(false, error)
                 return
             }
-            
-            let decoded = try? JSONDecoder().decode(GSRInviteSearchResults.self, from: data)
-            
-            guard let results = decoded else {
-                callback(false, nil)
-                return
-            }
-            
-            callback(true, results)
-            
+            callback(status.statusCode == 200, error)
         }
     }
     
@@ -230,6 +192,26 @@ extension GSRGroupNetworkManager {
             callback(nil)
         }
         task.resume()
+    }
+}
+
+// MARK: - Booking Networking
+extension GSRGroupNetworkManager {
+    func submitBooking(booking: GSRGroupBooking, completion: @escaping (_ groupBookingResponse: GSRGroupBookingResponse?, _ error: Error?) -> Void) {
+        let url = "\(groupsURL)/\(booking.group.id)/book-room/"
+        #warning("Currently only sends the first booking")
+        guard let firstBooking = booking.bookings.first else { return }
+        let params: [String: Any] = ["room": firstBooking.roomId, "start": firstBooking.start.isoFormattedStr(), "end": firstBooking.end.isoFormattedStr(), "lid": firstBooking.location.lid]
+        makePostRequestWithAccessToken(url: url, params: params) { (data, response, error) in
+            if let error = error {
+                completion(nil, error)
+            } else if let data = data,
+                let groupBookingResponse = try? JSONDecoder().decode(GSRGroupBookingResponse.self, from: data) {
+                completion(groupBookingResponse, nil)
+            } else {
+                completion(nil, nil)
+            }
+        }
     }
 }
 

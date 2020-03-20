@@ -35,7 +35,7 @@ class GroupBookingConfirmationCell: UITableViewCell {
         if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(booking.location.lid)-gid-\(booking.location.gid ?? booking.location.lid).jpg") {
             buildingImageView.kf.setImage(with: url)
         }
-//        let formatter = DateFormatter()
+
         formatter.timeStyle = .short
         formatter.dateStyle = .none
         
