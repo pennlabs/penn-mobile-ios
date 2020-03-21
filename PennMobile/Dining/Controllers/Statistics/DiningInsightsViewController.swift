@@ -25,6 +25,9 @@ class DiningInsightsViewController: UIViewController {
         decoder.dateDecodingStrategy = .iso8601
         let response = try! decoder.decode(DiningInsightsAPIResponse.self, from: data)
         
+        // DiningAPI.instance.fetchDiningStats { (success, error, result) in
+        //     .... if it fails, use the diningstore (cache), otherwise use the returned result
+        
         // Create all cards
         let balanceCards = createDiningBalanceHeaders(with: response)
         let statCards = createDiningCards(with: response)

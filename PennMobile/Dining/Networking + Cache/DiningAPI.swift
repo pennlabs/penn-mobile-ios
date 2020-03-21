@@ -41,6 +41,10 @@ class DiningAPI: Requestable {
         }
     }
     
+    func fetchDiningStatistics(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
+        // still update the data store inside here, but also return the data through the closure
+    }
+    
     func fetchDetailPageHTML(for venue: DiningVenue, _ completion: @escaping (_ html: String?) -> Void) {
         DispatchQueue.global(qos: .background).async {
             guard let url = venue.facilityURL else { return }
