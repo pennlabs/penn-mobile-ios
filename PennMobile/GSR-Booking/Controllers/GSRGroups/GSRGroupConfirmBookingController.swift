@@ -27,14 +27,26 @@ class GSRGroupConfirmBookingController: UIViewController {
         self.title = "Confirm Booking"
     }
 }
-// MARK: - Prepare View Model
+// MARK: - Prepare ViewModel
 extension GSRGroupConfirmBookingController {
     fileprivate func prepareViewModel() {
         guard let groupBooking = groupBooking else { return }
         viewModel = GSRGroupConfirmBookingViewModel(groupBooking: groupBooking)
+        viewModel.delegate = self
     }
 }
 
+// MARK: - Prepare ViewModel Delegate
+extension GSRGroupConfirmBookingController: GSRGroupConfirmBookingViewModelDelegate {
+    func reloadData() {
+        bookingsTableView.reloadData()
+        bookingsTableView.visibleCells.forEach { (cell) in
+            if let cell = cell as? GroupBookingConfirmationCell {
+                cell.reloadData()
+            }
+        }
+    }
+}
 // MARK: - Prepare UI
 extension GSRGroupConfirmBookingController {
     fileprivate func prepareUI() {

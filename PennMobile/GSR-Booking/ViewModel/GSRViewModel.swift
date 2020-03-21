@@ -292,19 +292,21 @@ extension GSRViewModel {
         let selected = currentSelection.sorted()
         
         var slots = [selected[0]] //an array that contains a slot for each GSRBooking
-        var bookings = GSRBookings()
+        var bookings = GSRGroupRoomBookings()
         
-        for i in 1...(selected.count - 1) {
+        var i = 1
+        while (i < selected.count) {
             if (slots.last!.roomId == selected[i].roomId && selected[i].startTime == slots.last!.endTime) {
                 //if this slot is part of the same booking as the last slot, then extend the endTime to include this slot
                 slots[slots.count - 1] = GSRTimeSlot(roomId: selected[i].roomId, isAvailable: selected[i].isAvailable, startTime: slots.last!.startTime, endTime: selected[i].endTime, roomName: selected[i].roomName!)
             } else {
                 slots.append(selected[i])
             }
+            i += 1
         }
         
         for slot in slots {
-            bookings.append(GSRBooking(location: selectedLocation, roomId: slot.roomId, start: slot.startTime, end: slot.endTime, name: slot.roomName))
+            bookings.append(GSRGroupRoomBooking(roomid: slot.roomId, roomName: slot.roomName, location: selectedLocation, start: slot.startTime, end: slot.endTime))
         }
         
         return GSRGroupBooking(group: group, bookings: bookings)

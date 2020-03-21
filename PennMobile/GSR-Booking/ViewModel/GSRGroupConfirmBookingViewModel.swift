@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol GSRGroupConfirmBookingViewModelDelegate {
+    func reloadData()
+}
 class GSRGroupConfirmBookingViewModel: NSObject {
     fileprivate var groupBooking: GSRGroupBooking!
+    var delegate: GSRGroupConfirmBookingViewModelDelegate?
+    
     init(groupBooking: GSRGroupBooking) {
         self.groupBooking = groupBooking
     }
@@ -34,16 +39,39 @@ extension GSRGroupConfirmBookingViewModel: UITableViewDataSource {
     
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - Handle Group Booking
 extension GSRGroupConfirmBookingViewModel: UITableViewDelegate {
-    
+    fileprivate func handleGroupBookingResponse(_ groupBookingResponse: GSRGroupBookingResponse) {
+        ///Update groupBooking with data from groupBookingResponse
+        DispatchQueue.main.async {
+            var updatedRoomBookings = GSRGroupRoomBookings()
+            for room in groupBookingResponse.rooms {
+                guard let roomid = Int(room.roomid) else { continue }
+                guard let oldRoom = (self.groupBooking.bookings.filter { (roomBooking) -> Bool in
+                    roomBooking.roomid == roomid
+                }).first else {continue}
+                guard let start = room.bookings.first?.start else { continue }
+                guard let end = room.bookings.last?.end else { continue }
+                #warning("IN THE FUTURE, return an int from the server for room id")
+                let updatedRoomBooking = GSRGroupRoomBooking(roomid: roomid, roomName: oldRoom.roomName, location: oldRoom.location, start: start, end: end, bookingSlots: room.bookings)
+                updatedRoomBookings.append(updatedRoomBooking)
+            }
+            self.groupBooking.bookings = updatedRoomBookings
+            self.delegate?.reloadData()
+        }
+    }
 }
+
 
 // MARK: - Networking
 extension GSRGroupConfirmBookingViewModel {
     func submitBooking() {
         GSRGroupNetworkManager.instance.submitBooking(booking: groupBooking, completion: { (groupBookingResponse, error)  in
-            print(groupBookingResponse)
+            if let error = error {
+                print("error: \(error)")
+            } else if let groupBookingResponse = groupBookingResponse {
+                self.handleGroupBookingResponse(groupBookingResponse)
+            }
         })
     }
 }

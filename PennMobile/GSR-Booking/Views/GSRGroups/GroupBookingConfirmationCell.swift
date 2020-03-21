@@ -20,32 +20,28 @@ class GroupBookingConfirmationCell: UITableViewCell {
     fileprivate var timeSlotsTableView: UITableView!
     
     
-    fileprivate var timeSlots: [String]!
+    fileprivate var timeSlots: [GSRGroupBookingSlot]!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareUI()
     }
     
-    func setupCell(with booking: GSRBooking) {
-        locationLabel.text = "\(booking.name ?? booking.location.name)"
+    func setupCell(with booking: GSRGroupRoomBooking) {
+        locationLabel.text = "\(booking.roomName ?? booking.location.name)"
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd"
         dateLabel.text = "\(booking.start.dayOfWeek), \(formatter.string(from: booking.start))"
         if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(booking.location.lid)-gid-\(booking.location.gid ?? booking.location.lid).jpg") {
             buildingImageView.kf.setImage(with: url)
         }
-
-        formatter.timeStyle = .short
-        formatter.dateStyle = .none
         
-        //convert ranges to times
-        let timeRanges = booking.getSplitTimeRanges(interval: TimeInterval(60 * 30))
-        timeSlots = timeRanges.map({
-            return "\(formatter.string(from: $0.lowerBound)) - \(formatter.string(from: $0.upperBound))"
-        })
+        self.timeSlots = booking.bookingSlots
     }
     
+    func reloadData() {
+        timeSlotsTableView.reloadData()
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -131,11 +127,9 @@ extension GroupBookingConfirmationCell {
 
 // MARK: - Cell Height
 extension GroupBookingConfirmationCell {
-    static func getCellHeight(for booking: GSRBooking) -> CGFloat {
+    static func getCellHeight(for booking: GSRGroupRoomBooking) -> CGFloat {
         //height is header_height + header_top + #time_slots * time_slot_height + cell_spacing
-        #warning("Should not be calculating split time ranges EVERY Time, and should not use a constant value. change!")
-        let numTimeSlots = booking.getSplitTimeRanges(interval: 60 * 30).count
-        return 52.0 + 17.5 + CGFloat(numTimeSlots) * GroupBookingTimeSlotCell.cellHeight + GroupBookingConfirmationCell.cellSpacing
+        return 52.0 + 17.5 + CGFloat(booking.bookingSlots.count) * GroupBookingTimeSlotCell.cellHeight + GroupBookingConfirmationCell.cellSpacing
         
     }
 }

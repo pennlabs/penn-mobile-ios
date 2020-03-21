@@ -17,22 +17,17 @@ class GroupBookingTimeSlotCell: UITableViewCell {
     fileprivate var pennkeyLabel: UILabel!
     fileprivate var bookingStatusIcon: UIImageView!
     
-    var timeSlot: String! {
+    var timeSlot: GSRGroupBookingSlot! {
         didSet {
-            timeSlotLabel.text = timeSlot
+            timeSlotLabel.text = timeSlot.strRange()
+            if let pennkey = timeSlot.pennkey {
+                pennkeyLabel.text = pennkey
+            }
+            if let booked = timeSlot.booked {
+                bookingStatusIcon.backgroundColor = booked ? UIColor.green : UIColor.red
+            }
         }
     }
-    var pennkey: String! {
-        didSet {
-            pennkeyLabel.text = pennkey
-        }
-    }
-    var bookingStatusSuccess: Bool! {
-        didSet {
-            bookingStatusIcon.backgroundColor = bookingStatusSuccess ? UIColor.green : UIColor.red
-        }
-    }
-        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareUI()
