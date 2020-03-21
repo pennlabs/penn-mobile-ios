@@ -19,6 +19,18 @@ class GroupManageButtonCell: UITableViewCell {
     fileprivate var leaveGroupBtn: UIButton!
     
     var delegate: GroupManageButtonDelegate?
+    var isAdmin: Bool! {
+        didSet {
+            bookGroupBtn.isEnabled = isAdmin
+            bookGroupBtn.backgroundColor = UIColor.uiGroupedBackgroundSecondary.withAlphaComponent(isAdmin ? 1.0 : 0.5)
+            bookGroupBtn.setTitleColor(UIColor.baseLabsBlue.withAlphaComponent(isAdmin ? 1.0 : 0.5), for: .normal)
+        
+            inviteGroupBtn.isEnabled = isAdmin
+            inviteGroupBtn.backgroundColor = UIColor.uiGroupedBackgroundSecondary.withAlphaComponent(isAdmin ? 1.0 : 0.5)
+            inviteGroupBtn.setTitleColor(UIColor.baseLabsBlue.withAlphaComponent(isAdmin ? 1.0 : 0.5), for: .normal)
+
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -42,11 +54,12 @@ extension GroupManageButtonCell {
     fileprivate func prepareBookGroupBtn() {
         bookGroupBtn = UIButton()
         bookGroupBtn.setTitle("Book with Group", for: .normal)
-        bookGroupBtn.backgroundColor = .uiGroupedBackgroundSecondary
+        bookGroupBtn.backgroundColor = UIColor.uiGroupedBackgroundSecondary
         bookGroupBtn.setTitleColor(.baseLabsBlue, for: .normal)
         bookGroupBtn.addTarget(self, action: #selector(bookGroupBtnTapped), for: .touchUpInside)
         bookGroupBtn.layer.cornerRadius = 8
         bookGroupBtn.layer.masksToBounds = true
+        
         
         addSubview(bookGroupBtn)
         _ = bookGroupBtn.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: buttonInset, leftConstant: buttonInset, bottomConstant: 0, rightConstant: buttonInset, widthConstant: 0, heightConstant: 50)
@@ -55,7 +68,7 @@ extension GroupManageButtonCell {
     fileprivate func prepareShareGroupBtn() {
         inviteGroupBtn = UIButton()
         inviteGroupBtn.setTitle("Invite to Group", for: .normal)
-        inviteGroupBtn.backgroundColor = .uiGroupedBackgroundSecondary
+        inviteGroupBtn.backgroundColor = UIColor.uiGroupedBackgroundSecondary
         inviteGroupBtn.setTitleColor(.baseLabsBlue, for: .normal)
         inviteGroupBtn.addTarget(self, action: #selector(shareGroupBtnTapped), for: .touchUpInside)
         inviteGroupBtn.layer.cornerRadius = 8

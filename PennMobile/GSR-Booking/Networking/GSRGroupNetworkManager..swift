@@ -202,8 +202,11 @@ extension GSRGroupNetworkManager {
         #warning("Currently only sends the first booking")
         guard let firstBooking = booking.bookings.first else { return }
         let params: [String: Any] = ["room": firstBooking.roomid, "start": firstBooking.start.isoFormattedStr(), "end": firstBooking.end.isoFormattedStr(), "lid": firstBooking.location.lid]
+        print(url)
+        print(params)
         makePostRequestWithAccessToken(url: url, params: params) { (data, response, error) in
             if let error = error {
+                print(error)
                 completion(nil, error)
             } else if let data = data,
                 let groupBookingResponse = try? JSONDecoder().decode(GSRGroupBookingResponse.self, from: data) {
@@ -224,7 +227,7 @@ extension GSRGroupNetworkManager {
                 return
             }
             
-            print(token.value) //DELETE THIS LATER
+            print(token.value)
             
             let url = URL(string: url)!
             var request = URLRequest(url: url, accessToken: token)

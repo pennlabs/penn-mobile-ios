@@ -59,7 +59,8 @@ class GSRBooking {
 }
 
 typealias GSRGroupRoomBookings = [GSRGroupRoomBooking]
-class GSRGroupBooking {
+
+struct GSRGroupBooking {
     var group: GSRGroup!
     var bookings: GSRGroupRoomBookings!
     
@@ -108,8 +109,8 @@ struct GSRGroupRoomBooking {
             tempEnd = tempStart.addingTimeInterval(interval)
         }
     }
-    
 }
+
 struct GSRGroupBookingSlot: Decodable {
     var start: Date
     var end: Date
@@ -155,7 +156,8 @@ struct GSRGroupBookingSlot: Decodable {
         self.booked = booked
     }
 }
-class GSRGroupRoomBookingResponse: Decodable {
+
+struct GSRGroupRoomBookingResponse: Decodable {
     var lid: String!
     var roomid: String!
     var bookings: [GSRGroupBookingSlot]!
@@ -166,7 +168,7 @@ class GSRGroupRoomBookingResponse: Decodable {
     }
 }
 
-class GSRGroupBookingResponse: Decodable {
+struct GSRGroupBookingResponse: Decodable {
     var partialSuccess: Bool!
     var completeSuccess: Bool!
     var error: String?

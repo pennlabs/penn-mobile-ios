@@ -27,6 +27,7 @@ protocol GSRGroupIndividualSettingDelegate {
 class GSRManageGroupViewModel: NSObject {
     //store important data used by gsr group views
     fileprivate var group: GSRGroup!
+    fileprivate var currentUser: GSRGroupMember!
 
     // MARK: Delegate
     var delegate: GSRManageGroupViewModelDelegate!
@@ -38,6 +39,9 @@ class GSRManageGroupViewModel: NSObject {
 
     func setGroup(_ group: GSRGroup) {
         self.group = group
+        guard let pennkey = Account.getAccount()?.pennkey else { return }
+        
+        currentUser = group.members?.first(where: {$0.pennKey == pennkey})
     }
 }
 
@@ -66,8 +70,13 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        if group.members != nil {
+            return 3
+        }
+        
+        return 2
     }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1 {
             return "Members"
@@ -108,6 +117,7 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: GroupManageButtonCell.identifier) as! GroupManageButtonCell
             cell.delegate = self
+            cell.isAdmin = currentUser?.isAdmin
             return cell
         }
     }
