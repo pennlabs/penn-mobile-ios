@@ -30,17 +30,21 @@ class DiningInsightsViewController: GenericViewController {
         
         // Attempt to fetch dining insights
         DiningAPI.instance.fetchDiningInsights { (result) in
-            DispatchQueue.main.async {
-                do {
-                    self.diningInsights = try result.get()
-                }
-                catch {
-                    // TODO: catch error type and display correct message
-                    self.navigationVC?.addStatusBar(text: .apiError)
-                    self.diningInsights = DiningAPI.instance.getCachedDiningInsights()
-                }
-                self.updateHostingView()
+            switch result {
+            case .success(let diningInsights):
+                self.diningInsights = diningInsights
+            case .failure(.authenticationError):
+                //TODO: handle authenticationError
+                print("reauthentication?")
+            case .failure(.noInternet):
+                DispatchQueue.main.async { self.navigationVC?.addStatusBar(text: .noInternet) }
+            default:
+                DispatchQueue.main.async { self.navigationVC?.addStatusBar(text: .apiError) }
             }
+            
+            self.diningInsights = DiningAPI.instance.getCachedDiningInsights()
+            
+            self.updateHostingView()
         }
         
 //        let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
