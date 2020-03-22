@@ -15,25 +15,30 @@ import SwiftUI
 class DiningInsightsViewController: UIViewController {
     
     private var cancellable: Any?
-    private var diningInsights: DiningInsightsAPIResponse!
+    private var diningInsights: DiningInsightsAPIResponse? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         DiningAPI.instance.fetchDiningInsights { (result) in
-            if let diningInsights = try? result.get() {
-                self.diningInsights = diningInsights
-                DiningDataStore.shared.saveInsightToCache(diningInsights)
-            } else {
-                // Need to retrieve from cache
-            }
+            self.diningInsights = (try? result.get()) ?? DiningDataStore.shared.getInsights()
+//            if let diningInsights = try? result.get() {
+//                self.diningInsights = diningInsights
+//                DiningDataStore.shared.saveToCache(diningInsights)
+//            } else {
+//                DiningDataStore.shared.getInsights()
+//            }
         }
         
-        let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
-        let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        diningInsights = try! decoder.decode(DiningInsightsAPIResponse.self, from: data)
+//        let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
+//        let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
+//        let decoder = JSONDecoder()
+//        decoder.dateDecodingStrategy = .iso8601
+//        diningInsights = try! decoder.decode(DiningInsightsAPIResponse.self, from: data)
+        
+        
+        // TODO: Handle failure in a better way...
+        guard let diningInsights = diningInsights else { return }
         
         // Create all cards
         let balanceCards = createDiningBalanceHeaders(with: diningInsights)

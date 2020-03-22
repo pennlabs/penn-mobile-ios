@@ -63,7 +63,7 @@ class DiningAPI: Requestable {
                 }
                 
                 if let diningInsightsAPIResponse = try? JSONDecoder().decode(DiningInsightsAPIResponse.self, from: data) {
-                    DiningDataStore.shared.storeInsights(insightsResponse: diningInsightsAPIResponse)
+                    DiningDataStore.shared.saveToCache(insights: diningInsightsAPIResponse)
                     completion(.success(diningInsightsAPIResponse))
                 } else {
                     completion(.failure(.parsingError))
@@ -71,6 +71,10 @@ class DiningAPI: Requestable {
             }
             task.resume()
         }
+    }
+    
+    func getCachedDiningInsights() -> DiningInsightsAPIResponse? {
+        return DiningDataStore.shared.getInsights()
     }
     
     func fetchDetailPageHTML(for venue: DiningVenue, _ completion: @escaping (_ html: String?) -> Void) {

@@ -12,11 +12,10 @@ class DiningDataStore {
     
     static let shared = DiningDataStore()
     
+    // TODO: remove the "response" part of this and transition the dining API response code to use Result types etc
     private var response: DiningAPIResponse = DiningAPIResponse(document: .init(venues: []))
     private let dataStore: LocalJSONStore<DiningAPIResponse> = LocalJSONStore(storageType: .cache, filename: "venues.json")
     
-    // Need to decide on initialization
-    private var insightsResponse: DiningInsightsAPIResponse? = nil
     private let insightsDataStore: LocalJSONStore<DiningInsightsAPIResponse> = LocalJSONStore(storageType: .cache, filename: "insights.json")
     
     private init() {
@@ -50,12 +49,7 @@ class DiningDataStore {
         return getVenues().filter({ ids.contains($0.id) })
     }
     
-    // Need to return the cache, but need to decide on initialization
-    func getInsights() -> DiningInsightsAPIResponse? {
-        return nil
-    }
-    
-    // MARK: - Cacheing
+    // MARK: - Venues Cacheing
     func store(response: DiningAPIResponse) {
         self.response = response
         saveToCache(response)
@@ -65,12 +59,12 @@ class DiningDataStore {
         dataStore.save(response)
     }
     
-    func storeInsights(insightsResponse: DiningInsightsAPIResponse) {
-        self.insightsResponse = insightsResponse
-        saveInsightToCache(insightsResponse)
+    // MARK: - Insights Get and Cacheing
+    func getInsights() -> DiningInsightsAPIResponse? {
+        return insightsDataStore.storedValue
     }
     
-    internal func saveInsightToCache(_ insightResponse: DiningInsightsAPIResponse) {
-        insightsDataStore.save(insightResponse)
+    func saveToCache(insights: DiningInsightsAPIResponse) {
+        insightsDataStore.save(insights)
     }
 }
