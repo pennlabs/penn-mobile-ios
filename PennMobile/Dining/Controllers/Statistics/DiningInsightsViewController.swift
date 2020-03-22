@@ -33,9 +33,6 @@ class DiningInsightsViewController: GenericViewController {
             switch result {
             case .success(let diningInsights):
                 self.diningInsights = diningInsights
-            case .failure(.authenticationError):
-                //TODO: handle authenticationError
-                print("reauthentication?")
             case .failure(.noInternet):
                 DispatchQueue.main.async { self.navigationVC?.addStatusBar(text: .noInternet) }
             default:
@@ -44,7 +41,9 @@ class DiningInsightsViewController: GenericViewController {
             
             self.diningInsights = DiningAPI.instance.getCachedDiningInsights()
             
-            self.updateHostingView()
+            DispatchQueue.main.async {
+                self.updateHostingView()
+            }
         }
         
 //        let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
