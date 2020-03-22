@@ -16,18 +16,23 @@ class DiningInsightsViewController: UIViewController {
     
     private var cancellable: Any?
     private var diningInsights: DiningInsightsAPIResponse? = nil
+    private var hostingView: UIHostingController<DiningInsightsView>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Create a view to host the SwiftUI code
+        hostingView = UIHostingController(rootView: DiningInsightsView(cards: []))
+        addChild(hostingView)
+        hostingView.view.frame = view.bounds
+        view.addSubview(hostingView.view)
+        hostingView.didMove(toParent: self)
+        
+        
+        // Attempt to fetch dining insights
         DiningAPI.instance.fetchDiningInsights { (result) in
             self.diningInsights = (try? result.get()) ?? DiningDataStore.shared.getInsights()
-//            if let diningInsights = try? result.get() {
-//                self.diningInsights = diningInsights
-//                DiningDataStore.shared.saveToCache(diningInsights)
-//            } else {
-//                DiningDataStore.shared.getInsights()
-//            }
+            self.updateHostingView()
         }
         
 //        let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
@@ -35,9 +40,9 @@ class DiningInsightsViewController: UIViewController {
 //        let decoder = JSONDecoder()
 //        decoder.dateDecodingStrategy = .iso8601
 //        diningInsights = try! decoder.decode(DiningInsightsAPIResponse.self, from: data)
-        
-        
-        // TODO: Handle failure in a better way...
+    }
+    
+    private func updateHostingView() {
         guard let diningInsights = diningInsights else { return }
         
         // Create all cards
@@ -45,13 +50,8 @@ class DiningInsightsViewController: UIViewController {
         let statCards = createDiningCards(with: diningInsights)
         let cards = balanceCards + statCards
         
-        // Create a view with the given cards
-        let childView = UIHostingController(rootView: DiningInsightsView(cards: cards))
-        
-        addChild(childView)
-        childView.view.frame = view.bounds
-        view.addSubview(childView.view)
-        childView.didMove(toParent: self)
+        // Update the hosting view
+        hostingView.rootView = DiningInsightsView(cards: cards)
     }
     
     private func createDiningBalanceHeaders(with json: DiningInsightsAPIResponse) -> [DiningInsightCard] {
