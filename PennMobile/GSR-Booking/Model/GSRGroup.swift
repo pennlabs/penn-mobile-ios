@@ -12,7 +12,7 @@ struct GSRGroup: Decodable, Comparable {
     let id: Int
     let name: String
     let color: UIColor
-    let owner: String?
+    let owner: GSRGroupMember!
     let members: [GSRGroupMember]?
     var userSettings: GSRGroupIndividualSettings?
     
@@ -67,10 +67,10 @@ struct GSRGroup: Decodable, Comparable {
         self.id = id
         self.name = name
         self.color = GSRGroup.parseColor(color: colorString) ?? UIColor.baseBlue
-        self.owner = owner
         
         if let members: [GSRGroupMember] = try keyedContainer.decodeIfPresent([GSRGroupMember].self, forKey: .members) {
             self.members = members
+            self.owner = members.first(where: {$0.pennKey == owner })
             guard let pennkey = Account.getAccount()?.pennkey else { //this feels wrong :(
                 print("user not signed in")
                 return
@@ -78,6 +78,7 @@ struct GSRGroup: Decodable, Comparable {
             parseIndividualSettings(for: pennkey)
         } else {
             self.members = nil
+            self.owner = nil
             let pennKeyActive = try keyedContainer.decode(Bool.self, forKey: .pennkeyAllow)
             let notifications = try keyedContainer.decode(Bool.self, forKey: .notifications)
             self.userSettings = GSRGroupIndividualSettings(pennKeyActive: GSRGroupIndividualSetting(type: .pennkeyActive, isEnabled: pennKeyActive), notificationsOn: GSRGroupIndividualSetting(type: .notificationsOn, isEnabled: notifications))

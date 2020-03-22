@@ -56,7 +56,6 @@ extension GSRManageGroupController {
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
-        tableView.allowsSelection = false
         tableView.backgroundColor = .uiGroupedBackground
         tableView.separatorStyle = .none
         tableView.register(GroupMemberCell.self, forCellReuseIdentifier: GroupMemberCell.identifier)
@@ -98,6 +97,24 @@ extension GSRManageGroupController: GSRManageGroupViewModelDelegate {
         inviteController.groupID = gid
         inviteController.groupMembers = group?.members
         present(inviteController, animated: true, completion: nil)
+    }
+    
+    func handleSelectMember(member: GSRGroupMember) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let kickAction = UIAlertAction(title: "Kick from Group", style: .destructive) { (_) in
+            print("kick handler")
+        }
+
+        let adminAction = UIAlertAction(title: member.isAdmin ? "Remove as Admin" : "Make Admin", style: .destructive) { (_) in
+            print("admin handler")
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        actionSheet.addAction(adminAction)
+        actionSheet.addAction(kickAction)
+        actionSheet.addAction(cancelAction)
+        present(actionSheet, animated: true, completion: nil)
     }
     
     @objc func fetchGroup() {

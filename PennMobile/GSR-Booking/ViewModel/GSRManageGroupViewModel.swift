@@ -11,6 +11,8 @@ import Foundation
 protocol GSRManageGroupViewModelDelegate {
     func beginBooking()
     func inviteToGroup()
+//    func kickFromGroup(member: GSRGroupMember)
+    func handleSelectMember(member: GSRGroupMember)
     func fetchGroup()
 }
 
@@ -91,6 +93,7 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: GroupHeaderCell.identifier, for: indexPath) as! GroupHeaderCell
                 cell.groupTitle = group.name
                 cell.groupColor = group.color
+                cell.selectionStyle = UITableViewCell.SelectionStyle.none
 
                 if let members = group.members {
                     cell.memberCount = members.count
@@ -113,21 +116,35 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
             if let members = group.members {
                 cell.member = members[indexPath.row]
             }
+            
+            cell.selectionStyle = UITableViewCell.SelectionStyle.gray
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: GroupManageButtonCell.identifier) as! GroupManageButtonCell
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.delegate = self
             cell.isAdmin = currentUser?.isAdmin
             return cell
         }
     }
 
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.section == 0 {
-            return nil
+//    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+//        if indexPath.section == 0 {
+//            return nil
+//        }
+//
+//        return nil
+//    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            if currentUser.isAdmin {
+                delegate.handleSelectMember(member: group.members![indexPath.row])
+            }
+            
+            tableView.deselectRow(at: indexPath, animated: true)
         }
-
-        return nil
     }
     
 
