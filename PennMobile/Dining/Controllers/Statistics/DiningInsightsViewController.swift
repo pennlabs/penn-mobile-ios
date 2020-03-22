@@ -12,7 +12,7 @@ import SwiftUI
 #endif
 
 @available(iOS 13, *)
-class DiningInsightsViewController: UIViewController {
+class DiningInsightsViewController: GenericViewController {
     
     private var cancellable: Any?
     private var diningInsights: DiningInsightsAPIResponse? = nil
@@ -28,11 +28,19 @@ class DiningInsightsViewController: UIViewController {
         view.addSubview(hostingView.view)
         hostingView.didMove(toParent: self)
         
-        
         // Attempt to fetch dining insights
         DiningAPI.instance.fetchDiningInsights { (result) in
-            self.diningInsights = (try? result.get()) ?? DiningDataStore.shared.getInsights()
-            self.updateHostingView()
+            DispatchQueue.main.async {
+                do {
+                    self.diningInsights = try result.get()
+                }
+                catch {
+                    // TODO: catch error type and display correct message
+                    self.navigationVC?.addStatusBar(text: .apiError)
+                    self.diningInsights = DiningAPI.instance.getCachedDiningInsights()
+                }
+                self.updateHostingView()
+            }
         }
         
 //        let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
