@@ -16,6 +16,7 @@ class DiningAPI: Requestable {
     let diningUrl = "https://api.pennlabs.org/dining/venues"
     let diningPrefs =  "https://api.pennlabs.org/dining/preferences"
     let diningBalanceUrl = "https://api.pennlabs.org/dining/balance"
+    let diningInsightsUrl = "https://api.pennlabs.org/dining/insight" // This end point is incomplete
 
     func fetchDiningHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
         
@@ -40,9 +41,36 @@ class DiningAPI: Requestable {
             }
         }
     }
-    
-    func fetchDiningStatistics(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
-        // still update the data store inside here, but also return the data through the closure
+
+    func fetchDiningInsights(_ completion: @escaping (_ result: Result<DiningInsightsAPIResponse, NetworkingError>) -> Void ) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                completion(.failure(.other))
+                return
+            }
+            
+            let url = URL(string: self.diningInsightsUrl)!
+            let request = URLRequest(url: url, accessToken: token)
+            
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                guard let data = data else {
+                    if let error = error as? NetworkingError {
+                        completion(.failure(error))
+                    } else {
+                        completion(.failure(.other))
+                    }
+                    return
+                }
+                
+                if let diningInsightsAPIResponse = try? JSONDecoder().decode(DiningInsightsAPIResponse.self, from: data) {
+                    DiningDataStore.shared.storeInsights(insightsResponse: diningInsightsAPIResponse)
+                    completion(.success(diningInsightsAPIResponse))
+                } else {
+                    completion(.failure(.parsingError))
+                }
+            }
+            task.resume()
+        }
     }
     
     func fetchDetailPageHTML(for venue: DiningVenue, _ completion: @escaping (_ html: String?) -> Void) {

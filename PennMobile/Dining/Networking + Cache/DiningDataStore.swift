@@ -11,8 +11,13 @@ import Foundation
 class DiningDataStore {
     
     static let shared = DiningDataStore()
+    
     private var response: DiningAPIResponse = DiningAPIResponse(document: .init(venues: []))
     private let dataStore: LocalJSONStore<DiningAPIResponse> = LocalJSONStore(storageType: .cache, filename: "venues.json")
+    
+    // Need to decide on initialization
+    private var insightsResponse: DiningInsightsAPIResponse? = nil
+    private let insightsDataStore: LocalJSONStore<DiningInsightsAPIResponse> = LocalJSONStore(storageType: .cache, filename: "insights.json")
     
     private init() {
         _ = self.getVenues()
@@ -45,6 +50,11 @@ class DiningDataStore {
         return getVenues().filter({ ids.contains($0.id) })
     }
     
+    // Need to return the cache, but need to decide on initialization
+    func getInsights() -> DiningInsightsAPIResponse? {
+        return nil
+    }
+    
     // MARK: - Cacheing
     func store(response: DiningAPIResponse) {
         self.response = response
@@ -53,5 +63,14 @@ class DiningDataStore {
     
     internal func saveToCache(_ response: DiningAPIResponse) {
         dataStore.save(response)
+    }
+    
+    func storeInsights(insightsResponse: DiningInsightsAPIResponse) {
+        self.insightsResponse = insightsResponse
+        saveInsightToCache(insightsResponse)
+    }
+    
+    internal func saveInsightToCache(_ insightResponse: DiningInsightsAPIResponse) {
+        insightsDataStore.save(insightResponse)
     }
 }

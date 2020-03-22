@@ -15,22 +15,29 @@ import SwiftUI
 class DiningInsightsViewController: UIViewController {
     
     private var cancellable: Any?
+    private var diningInsights: DiningInsightsAPIResponse!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DiningAPI.instance.fetchDiningInsights { (result) in
+            if let diningInsights = try? result.get() {
+                self.diningInsights = diningInsights
+                DiningDataStore.shared.saveInsightToCache(diningInsights)
+            } else {
+                // Need to retrieve from cache
+            }
+        }
         
         let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
         let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        let response = try! decoder.decode(DiningInsightsAPIResponse.self, from: data)
-        
-        // DiningAPI.instance.fetchDiningStats { (success, error, result) in
-        //     .... if it fails, use the diningstore (cache), otherwise use the returned result
+        diningInsights = try! decoder.decode(DiningInsightsAPIResponse.self, from: data)
         
         // Create all cards
-        let balanceCards = createDiningBalanceHeaders(with: response)
-        let statCards = createDiningCards(with: response)
+        let balanceCards = createDiningBalanceHeaders(with: diningInsights)
+        let statCards = createDiningCards(with: diningInsights)
         let cards = balanceCards + statCards
         
         // Create a view with the given cards
