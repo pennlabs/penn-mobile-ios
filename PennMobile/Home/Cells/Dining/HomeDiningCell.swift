@@ -24,7 +24,7 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
 
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeDiningCellItem else { return 0.0 }
-        return (CGFloat(item.venues.count) * DiningCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 5)
+        return (CGFloat(item.venues.count) * DiningCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 3)
     }
 
     static var identifier: String = "diningCell"
