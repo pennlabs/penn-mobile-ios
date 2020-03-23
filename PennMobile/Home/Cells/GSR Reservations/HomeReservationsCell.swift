@@ -29,7 +29,7 @@ final class HomeReservationsCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeReservationsCellItem else { return 0.0 }
-        return (CGFloat(item.reservations.count) * ReservationCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 5)
+        return (CGFloat(item.reservations.count) * ReservationCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 3)
     }
     
     // Mark: - Init

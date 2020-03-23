@@ -59,7 +59,7 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
             subtitleHeight = item.article.subtitle.dynamicHeight(font: subtitleFont, width: width) + 4
             subtitleHeightDictionary[item.article.subtitle] = subtitleHeight
         }
-        let height = imageHeight + titleHeight + subtitleHeight + (4 * Padding.pad)
+        let height = imageHeight + titleHeight + subtitleHeight + (5 * Padding.pad)
         return height
     }
     

@@ -26,7 +26,7 @@ final class HomeGSRLocationsCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeGSRLocationsCellItem else { return 0.0 }
-        return (CGFloat(item.locations.count) * GSRLocationCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 5)
+        return (CGFloat(item.locations.count) * GSRLocationCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 3)
     }
     
     var locations: [GSRLocation]!
