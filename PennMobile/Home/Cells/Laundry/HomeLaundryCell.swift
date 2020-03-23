@@ -12,7 +12,7 @@ import UIKit
 final class HomeLaundryCell: UITableViewCell, HomeCellConformable {    
     static var identifier: String = "laundryCell"
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
-        return HomeCellHeader.height + (Padding.pad * 4) + (LaundryMachinesView.height * 2) + (HomeViewController.cellSpacing * 2)
+        return HomeCellHeader.height + (Padding.pad * 5) + (LaundryMachinesView.height * 2) + (HomeViewController.cellSpacing * 2)
     }
     
     var delegate: ModularTableViewCellDelegate!
@@ -101,7 +101,7 @@ extension HomeLaundryCell {
         cardView.addSubview(dryerView)
         
         washerView.snp.makeConstraints { (make) in
-            make.top.equalTo(header.snp.bottom).offset(pad * 1.5)
+            make.top.equalTo(header.snp.bottom).offset(pad * 2)
             make.leading.equalTo(cardView)
             make.trailing.equalTo(cardView)
             make.height.equalTo(LaundryMachinesView.height)
