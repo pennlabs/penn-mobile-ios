@@ -167,7 +167,6 @@ extension HomeDiningCell {
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         tableView.register(DiningCell.self, forCellReuseIdentifier: DiningCell.identifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }
 }
