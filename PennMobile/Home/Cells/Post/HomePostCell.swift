@@ -65,7 +65,7 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
         }
         
         let bottomSpacing: CGFloat = item.post.source == nil && item.post.title == nil ? 0 : 12
-        return imageHeight + HomeViewController.cellSpacing + titleHeight + subtitleHeight + sourceHeight + bottomSpacing
+        return imageHeight + titleHeight + subtitleHeight + sourceHeight + bottomSpacing
     }
     
     // MARK: UI Elements

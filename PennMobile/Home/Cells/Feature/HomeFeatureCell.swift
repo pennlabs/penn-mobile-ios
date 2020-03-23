@@ -50,7 +50,7 @@ final class HomeFeatureCell: UITableViewCell, HomeCellConformable {
             titleHeightDictionary[item.announcement.title] = titleHeight
         }
         
-        let height = imageHeight + HomeViewController.cellSpacing + titleHeight + 48
+        let height = imageHeight + titleHeight + 48
         guard let description = item.announcement.description else {
             return height
         }

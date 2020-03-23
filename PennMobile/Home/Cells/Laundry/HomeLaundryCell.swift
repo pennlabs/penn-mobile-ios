@@ -12,7 +12,7 @@ import UIKit
 final class HomeLaundryCell: UITableViewCell, HomeCellConformable {    
     static var identifier: String = "laundryCell"
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
-        return HomeCellHeader.height + (Padding.pad * 5) + (LaundryMachinesView.height * 2) + (HomeViewController.cellSpacing * 2)
+        return HomeCellHeader.height + (Padding.pad * 5) + (LaundryMachinesView.height * 2)
     }
     
     var delegate: ModularTableViewCellDelegate!

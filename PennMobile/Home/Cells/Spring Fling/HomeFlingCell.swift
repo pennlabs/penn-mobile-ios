@@ -51,7 +51,7 @@
 //            descriptionHeight = item.performer.description.dynamicHeight(font: descriptionFont, width: width)
 //            descriptionHeightDictionary[item.performer.description] = descriptionHeight
 //        }
-//        let height = imageHeight + HomeViewController.cellSpacing + nameHeight + descriptionHeight + 60
+//        let height = imageHeight + nameHeight + descriptionHeight + 60
 //        return height
 //    }
 //    
