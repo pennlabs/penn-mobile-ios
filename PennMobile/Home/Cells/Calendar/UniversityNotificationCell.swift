@@ -12,7 +12,7 @@ import EventKit
 class UniversityNotificationCell: UITableViewCell {
     
     static let identifier = "universityNotificationCell"
-    static let cellHeight: CGFloat = 98
+    static let cellHeight: CGFloat = 84
     
     var calendarEvent: CalendarEvent! {
         didSet {
@@ -20,11 +20,10 @@ class UniversityNotificationCell: UITableViewCell {
         }
     }
     
-    // MARK: Declare UI Elements
+    // MARK: UI Elements
     fileprivate var eventLabel: UILabel!
     fileprivate var dateLabel: UILabel!
     fileprivate var pennCrest: UIImageView!
-    fileprivate var addToCalendarButton: UIButton!
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -67,8 +66,8 @@ extension UniversityNotificationCell {
         pennCrest.snp.makeConstraints { (make) in
             make.leading.equalTo(self).offset(pad)
             make.centerY.equalTo(self)
-            make.height.equalTo(74)
-            make.width.equalTo(116)
+            make.height.equalTo(54)
+            make.width.equalTo(46)
         }
         
         centeredView.snp.makeConstraints { (make) in
@@ -95,7 +94,7 @@ extension UniversityNotificationCell {
         let label = UILabel()
         label.font = .primaryInformationFont
         label.textColor = .labelSecondary
-        label.textAlignment = .natural
+        label.textAlignment = .left
         label.numberOfLines = 2
         return label
     }
@@ -103,8 +102,8 @@ extension UniversityNotificationCell {
     fileprivate func getEventLabel() -> UILabel {
         let label = UILabel()
         label.font = .interiorTitleFont
-        label.textAlignment = .natural
-        label.textColor = UIColor.labelPrimary
+        label.textAlignment = .left
+        label.textColor = .labelPrimary
         label.numberOfLines = 2
         return label
     }
@@ -113,8 +112,8 @@ extension UniversityNotificationCell {
         let image = UIImageView()
         image.image = UIImage(named: "upenn")
         image.contentMode = .scaleAspectFit
-        image.backgroundColor = .grey5
-        image.layer.cornerRadius = 7
+        image.backgroundColor = .clear
+        image.layer.cornerRadius = 5
         return image
     }
 }
