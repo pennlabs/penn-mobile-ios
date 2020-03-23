@@ -11,7 +11,7 @@ import UIKit
 class FitnessHourCell: UITableViewCell {
     
     static let identifier = "fitnessHourCell"
-    static let cellHeight: CGFloat = 86
+    static let cellHeight: CGFloat = 110
     
     var schedule: FitnessSchedule! {
         didSet {

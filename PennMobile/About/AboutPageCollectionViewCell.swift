@@ -19,12 +19,13 @@ class AboutPageCollectionViewCell: UICollectionViewCell {
         image.widthAnchor.constraint(equalToConstant: 83).isActive = true
         image.heightAnchor.constraint(equalToConstant: 83).isActive = true
         image.backgroundColor = .grey4
+        image.contentMode = .scaleAspectFill
         return image
     }()
     
     let name: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        label.font = .secondaryTitleFont
         label.textColor = UIColor.labelSecondary
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
