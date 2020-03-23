@@ -63,7 +63,6 @@ extension HomeReservationsCell: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReservationCell.identifier, for: indexPath) as! ReservationCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.isHomePageCell = true
         let reservation = reservations![indexPath.row]
         cell.reservation = reservation
         cell.delegate = self

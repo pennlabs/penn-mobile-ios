@@ -55,8 +55,6 @@ extension GSRGroupInviteCell {
     }
     
     fileprivate func prepareLabels() {
-        let padding = UIView.padding
-        
         groupNameLabel = getGroupNameLabel()
         groupIcon = getGroupIcon()
         
@@ -64,17 +62,16 @@ extension GSRGroupInviteCell {
         addSubview(groupNameLabel)
         
         groupIcon.translatesAutoresizingMaskIntoConstraints = false
-        groupIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding).isActive = true
-        groupIcon.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true
+        groupIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: pad).isActive = true
+        groupIcon.topAnchor.constraint(equalTo: topAnchor, constant: pad).isActive = true
         
         groupNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        groupNameLabel.leadingAnchor.constraint(equalTo: groupIcon.trailingAnchor, constant: padding).isActive = true
-        groupNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding).isActive = true
-        groupNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true
+        groupNameLabel.leadingAnchor.constraint(equalTo: groupIcon.trailingAnchor, constant: pad).isActive = true
+        groupNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -pad).isActive = true
+        groupNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: pad).isActive = true
     }
     
     fileprivate func prepareButtons() {
-        let padding = UIView.padding
         acceptButton = getAcceptButton()
         declineButton = getDeclineButton()
         
@@ -87,7 +84,7 @@ extension GSRGroupInviteCell {
         acceptButton.topAnchor.constraint(equalTo: groupNameLabel.bottomAnchor, constant: 10).isActive = true
         acceptButton.widthAnchor.constraint(equalTo: declineButton.widthAnchor).isActive = true
         
-        declineButton.leadingAnchor.constraint(equalTo: acceptButton.trailingAnchor, constant: padding).isActive = true
+        declineButton.leadingAnchor.constraint(equalTo: acceptButton.trailingAnchor, constant: pad).isActive = true
         declineButton.trailingAnchor.constraint(equalTo: groupNameLabel.trailingAnchor, constant: -50).isActive = true
         declineButton.topAnchor.constraint(equalTo: acceptButton.topAnchor).isActive = true
     }
