@@ -17,17 +17,7 @@ class ReservationCell: UITableViewCell {
     static let identifier = "reservationCell"
     static let cellHeight: CGFloat = 110
     
-    var isHomePageCell: Bool = false {
-        didSet {
-            if isHomePageCell {
-                if buildingImageLeftConstraint != nil {
-                    buildingImage.removeConstraint(buildingImageLeftConstraint)
-                    buildingImageLeftConstraint = buildingImage.leftAnchor.constraint(equalTo: leftAnchor)
-                    buildingImageLeftConstraint.isActive = true
-                }
-            }
-        }
-    }
+    var isHomePageCell: Bool = false
     
     var reservation: GSRReservation! {
         didSet {
@@ -43,18 +33,20 @@ class ReservationCell: UITableViewCell {
             timeLabel.text = "\(startStr) - \(endStr)"
             
             if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(reservation.lid)-gid-\(reservation.gid).jpg") {
-                buildingImage.kf.setImage(with: url)
+                buildingImageView.kf.setImage(with: url)
             }
         }
     }
     
     var delegate: ReservationCellDelegate!
     
+    // MARK: - UI Elements
+    fileprivate var safeArea: UIView!
     fileprivate var locationLabel: UILabel!
     fileprivate var dateLabel: UILabel!
     fileprivate var timeLabel: UILabel!
     fileprivate var deleteButton: UIButton!
-    fileprivate var buildingImage: UIImageView!
+    fileprivate var buildingImageView: UIImageView!
     
     fileprivate var buildingImageLeftConstraint: NSLayoutConstraint!
     
@@ -73,72 +65,91 @@ class ReservationCell: UITableViewCell {
 extension ReservationCell {
     fileprivate func prepareUI() {
         backgroundColor = .clear
-        prepareBuildingImage()
-        prepareLocationLabel()
-        prepareDateLabel()
-        prepareTimeLabel()
+        
+        prepareSafeArea()
+        prepareImageView()
+        prepareLabels()
     }
     
-    private func prepareLocationLabel() {
-        locationLabel = UILabel()
-        locationLabel.font = .systemFont(ofSize: 17, weight: .medium)
-        locationLabel.textColor = .labelPrimary
-        locationLabel.textAlignment = .left
-        locationLabel.numberOfLines = 1
+    // MARK: Safe Area
+    fileprivate func prepareSafeArea() {
+        safeArea = UIView()
+        addSubview(safeArea)
         
+        safeArea.snp.makeConstraints { (make) in
+            make.leading.equalTo(self).offset(pad)
+            make.trailing.equalTo(self).offset(-pad * 2)
+            make.top.equalTo(self).offset(pad)
+            make.bottom.equalTo(self).offset(-pad)
+        }
+    }
+    
+    // MARK: ImageView
+    fileprivate func prepareImageView() {
+        buildingImageView = getBuildingImageView()
+        addSubview(buildingImageView)
+        
+        buildingImageView.snp.makeConstraints { (make) in
+            make.width.equalTo(134)
+            make.height.equalTo(86)
+            make.leading.equalTo(safeArea)
+            make.centerY.equalTo(safeArea)
+        }
+    }
+    
+    // MARK: Labels
+    fileprivate func prepareLabels() {
+        locationLabel = getLocationLabel()
         addSubview(locationLabel)
-        
-        locationLabel.translatesAutoresizingMaskIntoConstraints = false
-        locationLabel.centerYAnchor.constraint(equalTo: buildingImage.centerYAnchor).isActive = true
-        locationLabel.leftAnchor.constraint(equalTo: buildingImage.rightAnchor, constant: 14).isActive = true
-        locationLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 10).isActive = true
-    }
-    
-    private func prepareDateLabel() {
-        dateLabel = UILabel()
-        dateLabel.font = .systemFont(ofSize: 14)
-        dateLabel.textColor = .labelSecondary
-        dateLabel.textAlignment = .left
-        dateLabel.numberOfLines = 1
-        dateLabel.shrinkUntilFits()
-        
-        addSubview(dateLabel)
-        _ = dateLabel.anchor(nil, left: buildingImage.rightAnchor,
-                             bottom: locationLabel.topAnchor, right: nil,
-                             leftConstant: 14,
-                             bottomConstant: 4)
-    }
-    
-    private func prepareTimeLabel() {
-        timeLabel = UILabel()
-        timeLabel.font = .systemFont(ofSize: 14)
-        timeLabel.textColor = .labelSecondary
-        timeLabel.textAlignment = .left
-        timeLabel.numberOfLines = 1
-        timeLabel.shrinkUntilFits()
-        
+        timeLabel = getTimeOrDateLabel()
         addSubview(timeLabel)
-        _ = timeLabel.anchor(locationLabel.bottomAnchor, left: buildingImage.rightAnchor,
-                             bottom: nil, right: nil,
-                             topConstant: 4, leftConstant: 14)
-    }
-
-    @objc func handleDeletePressed(_ sender: Any) {
-        self.delegate.deleteReservation(reservation)
+        dateLabel = getTimeOrDateLabel()
+        addSubview(dateLabel)
+        
+        locationLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(buildingImageView)
+            make.leading.equalTo(buildingImageView.snp.trailing).offset(pad)
+            make.trailing.equalTo(safeArea)
+        }
+        
+        timeLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(locationLabel.snp.leading)
+            make.bottom.equalTo(locationLabel.snp.top).offset(-3)
+        }
+        
+        dateLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(locationLabel.snp.leading)
+            make.top.equalTo(locationLabel.snp.bottom).offset(3)
+            make.trailing.equalTo(safeArea)
+        }
     }
     
-    func prepareBuildingImage() {
-        buildingImage = UIImageView()
-        buildingImage.translatesAutoresizingMaskIntoConstraints = false
-        buildingImage.contentMode = .scaleAspectFill
-        buildingImage.clipsToBounds = true
-        buildingImage.layer.cornerRadius = 7.0
-        addSubview(buildingImage)
-        buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor,
-                                                           bottom: bottomAnchor, right: nil,
-                                                           topConstant: 12, leftConstant: 14,
-                                                           bottomConstant: 12, widthConstant: 134,
-                                                           heightConstant: 86)[1]
+    fileprivate func getBuildingImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .grey2
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 5.0
+        return imageView
+    }
+    
+    fileprivate func getLocationLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .interiorTitleFont
+        label.textColor = .labelPrimary
+        label.textAlignment = .left
+        label.shrinkUntilFits()
+        return label
+    }
+    
+    fileprivate func getTimeOrDateLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryInformationFont
+        label.textColor = .labelSecondary
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.shrinkUntilFits()
+        return label
     }
     
 }

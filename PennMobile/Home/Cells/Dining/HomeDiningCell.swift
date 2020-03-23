@@ -24,7 +24,7 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
 
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeDiningCellItem else { return 0.0 }
-        return (CGFloat(item.venues.count) * DiningCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 4)
+        return (CGFloat(item.venues.count) * DiningCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 5)
     }
 
     static var identifier: String = "diningCell"
@@ -68,7 +68,7 @@ extension HomeDiningCell {
         venues = item.venues
         venueTableView.reloadData()
 
-        header.secondaryTitleLabel.text = "DINING HALLS"
+        header.secondaryTitleLabel.text = "DINING VENUES"
         header.primaryTitleLabel.text = "Favorites"
     }
 }
@@ -144,7 +144,7 @@ extension HomeDiningCell {
             make.leading.equalTo(cardView)
             make.top.equalTo(header.snp.bottom).offset(pad)
             make.trailing.equalTo(cardView)
-            make.bottom.equalTo(cardView).offset(-pad/2)
+            make.bottom.equalTo(cardView).offset(-pad)
         }
     }
 }
