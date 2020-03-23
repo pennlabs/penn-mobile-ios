@@ -11,7 +11,7 @@ import SnapKit
 class DiningCell: UITableViewCell {
     
     static let identifier = "diningVenueCell"
-    static let cellHeight: CGFloat = 98
+    static let cellHeight: CGFloat = 110
     
     var venue: DiningVenue! {
         didSet {
@@ -103,7 +103,7 @@ extension DiningCell {
         
         safeArea.snp.makeConstraints { (make) in
             make.leading.equalTo(self).offset(pad)
-            make.trailing.equalTo(self).offset(-pad)
+            make.trailing.equalTo(self).offset(-pad * 2)
             make.top.equalTo(self).offset(pad)
             make.bottom.equalTo(self).offset(-pad)
         }
@@ -115,8 +115,8 @@ extension DiningCell {
         addSubview(venueImageView)
         
         venueImageView.snp.makeConstraints { (make) in
-            make.width.equalTo(116)
-            make.height.equalTo(74)
+            make.width.equalTo(134)
+            make.height.equalTo(86)
             make.leading.equalTo(safeArea)
             make.centerY.equalTo(safeArea)
         }

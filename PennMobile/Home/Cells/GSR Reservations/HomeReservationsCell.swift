@@ -56,8 +56,8 @@ extension HomeReservationsCell {
     fileprivate func setupCell(with item: HomeReservationsCellItem) {
         reservations = item.reservations
         reservationTableView.reloadData()
-        secondaryTitleLabel.text = "GSR RESERVATIONS"
-        primaryTitleLabel.text = "Upcoming Reservations"
+        secondaryTitleLabel.text = "GROUP STUDY ROOMS"
+        primaryTitleLabel.text = "Reservations"
     }
 }
 
@@ -136,7 +136,7 @@ extension HomeReservationsCell {
         cardView.addSubview(reservationTableView)
         
         reservationTableView.leftAnchor.constraint(equalTo: safeArea.leftAnchor).isActive = true
-        reservationTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor).isActive = true
+        reservationTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor, constant: pad).isActive = true
         reservationTableView.rightAnchor.constraint(equalTo: cardView.rightAnchor).isActive = true
         reservationTableView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor).isActive = true
     }

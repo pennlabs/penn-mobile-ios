@@ -15,7 +15,7 @@ protocol ReservationCellDelegate {
 class ReservationCell: UITableViewCell {
     
     static let identifier = "reservationCell"
-    static let cellHeight: CGFloat = 98
+    static let cellHeight: CGFloat = 110
     
     var isHomePageCell: Bool = false {
         didSet {
@@ -137,8 +137,8 @@ extension ReservationCell {
         buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor,
                                                            bottom: bottomAnchor, right: nil,
                                                            topConstant: 12, leftConstant: 14,
-                                                           bottomConstant: 12, widthConstant: 116,
-                                                           heightConstant: 74)[1]
+                                                           bottomConstant: 12, widthConstant: 134,
+                                                           heightConstant: 86)[1]
     }
     
 }
