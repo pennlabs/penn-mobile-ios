@@ -38,6 +38,10 @@ class ReservationCell: UITableViewCell {
     
     var delegate: ReservationCellDelegate!
     
+    @objc func handleDeletePressed(_ sender: Any) {
+        self.delegate.deleteReservation(reservation)
+    }
+    
     // MARK: - UI Elements
     fileprivate var safeArea: UIView!
     fileprivate var locationLabel: UILabel!
@@ -60,10 +64,10 @@ class ReservationCell: UITableViewCell {
 extension ReservationCell {
     fileprivate func prepareUI() {
         backgroundColor = .clear
-        accessoryType = .disclosureIndicator
+        accessoryType = .none
         prepareSafeArea()
         prepareImageView()
-        prepareLabels()
+        prepareLabelsAndButton()
     }
     
     // MARK: Safe Area
@@ -93,29 +97,39 @@ extension ReservationCell {
     }
     
     // MARK: Labels
-    fileprivate func prepareLabels() {
+    fileprivate func prepareLabelsAndButton() {
         locationLabel = getLocationLabel()
         addSubview(locationLabel)
         timeLabel = getTimeOrDateLabel()
         addSubview(timeLabel)
         dateLabel = getTimeOrDateLabel()
         addSubview(dateLabel)
+        deleteButton = getDeleteButton()
+        addSubview(deleteButton)
         
         locationLabel.snp.makeConstraints { (make) in
-            make.centerY.equalTo(buildingImageView)
+            make.top.equalTo(buildingImageView.snp.top).offset(-2)
             make.leading.equalTo(buildingImageView.snp.trailing).offset(pad)
             make.trailing.equalTo(safeArea)
-        }
-        
-        timeLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(locationLabel.snp.leading)
-            make.bottom.equalTo(locationLabel.snp.top).offset(-3)
         }
         
         dateLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(locationLabel.snp.leading)
             make.top.equalTo(locationLabel.snp.bottom).offset(3)
             make.trailing.equalTo(safeArea)
+        }
+        
+        timeLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(locationLabel.snp.leading)
+            make.top.equalTo(dateLabel.snp.bottom).offset(3)
+            make.trailing.equalTo(safeArea)
+        }
+        
+        deleteButton.snp.makeConstraints { (make) in
+            make.width.equalTo(94)
+            make.height.equalTo(24)
+            make.leading.equalTo(locationLabel.snp.leading)
+            make.bottom.equalTo(buildingImageView.snp.bottom)
         }
     }
     
@@ -147,4 +161,16 @@ extension ReservationCell {
         return label
     }
     
+    private func getDeleteButton() -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle("Delete", for: .normal)
+        button.addTarget(self, action: #selector(handleDeletePressed(_:)), for: .touchUpInside)
+        button.backgroundColor = .baseRed
+        button.layer.cornerRadius = 4
+        button.titleLabel?.font = .secondaryTitleFont
+        button.titleLabel?.textColor = .white
+        button.tintColor = .white
+        button.titleLabel?.textAlignment = .center
+        return button
+    }
 }
