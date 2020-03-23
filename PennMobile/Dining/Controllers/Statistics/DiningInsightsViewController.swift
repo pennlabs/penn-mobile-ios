@@ -34,12 +34,14 @@ class DiningInsightsViewController: GenericViewController {
             case .success(let diningInsights):
                 self.diningInsights = diningInsights
             case .failure(.noInternet):
+                // No internet, use cached value
+                self.diningInsights = DiningAPI.instance.getCachedDiningInsights()
                 DispatchQueue.main.async { self.navigationVC?.addStatusBar(text: .noInternet) }
             default:
+                // API error, use cached value
+                self.diningInsights = DiningAPI.instance.getCachedDiningInsights()
                 DispatchQueue.main.async { self.navigationVC?.addStatusBar(text: .apiError) }
             }
-            
-            self.diningInsights = DiningAPI.instance.getCachedDiningInsights()
             
             DispatchQueue.main.async {
                 self.updateHostingView()
