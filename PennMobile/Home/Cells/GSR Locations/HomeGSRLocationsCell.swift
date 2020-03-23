@@ -75,7 +75,6 @@ extension HomeGSRLocationsCell: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GSRLocationCell.identifier, for: indexPath) as! GSRLocationCell
         cell.location = locations[indexPath.row]
-        cell.isHomePageCell = true
         return cell
     }
     

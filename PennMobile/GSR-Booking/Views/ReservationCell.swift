@@ -17,8 +17,6 @@ class ReservationCell: UITableViewCell {
     static let identifier = "reservationCell"
     static let cellHeight: CGFloat = 110
     
-    var isHomePageCell: Bool = false
-    
     var reservation: GSRReservation! {
         didSet {
             locationLabel.text = String(reservation.roomName.split(separator: ":").first ?? "")
@@ -48,12 +46,9 @@ class ReservationCell: UITableViewCell {
     fileprivate var deleteButton: UIButton!
     fileprivate var buildingImageView: UIImageView!
     
-    fileprivate var buildingImageLeftConstraint: NSLayoutConstraint!
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.prepareUI()
-        self.accessoryType = .disclosureIndicator
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,7 +60,7 @@ class ReservationCell: UITableViewCell {
 extension ReservationCell {
     fileprivate func prepareUI() {
         backgroundColor = .clear
-        
+        accessoryType = .disclosureIndicator
         prepareSafeArea()
         prepareImageView()
         prepareLabels()

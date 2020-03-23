@@ -27,7 +27,6 @@ class DiningCell: UITableViewCell {
     
     // MARK: - UI Elements
     fileprivate var safeArea: UIView!
-    
     fileprivate var venueImageView: UIImageView!
     fileprivate var titleLabel: UILabel!
     fileprivate var timesLabel: UILabel!
