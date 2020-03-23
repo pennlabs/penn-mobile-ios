@@ -198,12 +198,11 @@ extension GSRGroupNetworkManager {
 // MARK: - Booking Networking
 extension GSRGroupNetworkManager {
     func submitBooking(booking: GSRGroupBooking, completion: @escaping (_ groupBookingResponse: GSRGroupBookingResponse?, _ error: Error?) -> Void) {
-        let url = "\(groupsURL)\(booking.group.id)/book-room/"
-        #warning("Currently only sends the first booking")
-        guard let firstBooking = booking.bookings.first else { return }
-        let params: [String: Any] = ["room": firstBooking.roomid, "start": firstBooking.start.isoFormattedStr(), "end": firstBooking.end.isoFormattedStr(), "lid": firstBooking.location.lid]
-        print(url)
-        print(params)
+        let url = "\(groupsURL)\(booking.group.id)/book-rooms/"
+        let encodedRoomBookings = booking.bookings.map { (roomBooking: GSRGroupRoomBooking) -> [String: Any] in
+            return ["room": roomBooking.roomid, "start": roomBooking.start.isoFormattedStr(), "end": roomBooking.end.isoFormattedStr(), "lid": roomBooking.location.lid]
+        }
+        let params: [String: Any] = ["room_bookings": encodedRoomBookings]
         makePostRequestWithAccessToken(url: url, params: params) { (data, response, error) in
             if let error = error {
                 print(error)

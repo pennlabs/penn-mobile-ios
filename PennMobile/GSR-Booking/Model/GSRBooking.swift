@@ -158,8 +158,8 @@ struct GSRGroupBookingSlot: Decodable {
 }
 
 struct GSRGroupRoomBookingResponse: Decodable {
-    var lid: String!
-    var roomid: String!
+    var lid: Int!
+    var roomid: Int!
     var bookings: [GSRGroupBookingSlot]!
     
     enum CodingKeys: String, CodingKey {

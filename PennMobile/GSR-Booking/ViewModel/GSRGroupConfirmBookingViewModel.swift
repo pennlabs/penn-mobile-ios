@@ -46,14 +46,12 @@ extension GSRGroupConfirmBookingViewModel: UITableViewDelegate {
         DispatchQueue.main.async {
             var updatedRoomBookings = GSRGroupRoomBookings()
             for room in groupBookingResponse.rooms {
-                guard let roomid = Int(room.roomid) else { continue }
                 guard let oldRoom = (self.groupBooking.bookings.filter { (roomBooking) -> Bool in
-                    roomBooking.roomid == roomid
+                    roomBooking.roomid == room.roomid
                 }).first else {continue}
                 guard let start = room.bookings.first?.start else { continue }
                 guard let end = room.bookings.last?.end else { continue }
-                #warning("IN THE FUTURE, return an int from the server for room id")
-                let updatedRoomBooking = GSRGroupRoomBooking(roomid: roomid, roomName: oldRoom.roomName, location: oldRoom.location, start: start, end: end, bookingSlots: room.bookings)
+                let updatedRoomBooking = GSRGroupRoomBooking(roomid: room.roomid, roomName: oldRoom.roomName, location: oldRoom.location, start: start, end: end, bookingSlots: room.bookings)
                 updatedRoomBookings.append(updatedRoomBooking)
             }
             self.groupBooking.bookings = updatedRoomBookings
