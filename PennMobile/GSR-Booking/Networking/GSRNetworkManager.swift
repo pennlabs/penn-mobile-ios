@@ -18,6 +18,7 @@ class GSRNetworkManager: NSObject, Requestable {
     let bookingUrl = "https://api.pennlabs.org/studyspaces/book"
     let reservationURL = "https://api.pennlabs.org/studyspaces/reservations"
     let cancelURL = "https://api.pennlabs.org/studyspaces/cancel"
+    let searchUserURL = "https://api.pennlabs.org/studyspaces/user/search?query="
     
     var locations:[Int:String] = [:]
     var bookingRequestOutstanding = false
@@ -35,6 +36,8 @@ class GSRNetworkManager: NSObject, Requestable {
             }
         }
     }
+    
+    
     
     func getAvailability(for gsrId: Int, date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
         self.getAvailability(for: gsrId, dateStr: date.string) { (rooms) in
@@ -295,6 +298,8 @@ extension GSRRoom {
         self.init(name: name, roomId: roomId, gid: gid, imageUrl: imageUrl, capacity: capacity, timeSlots: times)
     }
 }
+
+
 
 extension GSRTimeSlot {
     convenience init(roomId: Int, json: JSON) throws {

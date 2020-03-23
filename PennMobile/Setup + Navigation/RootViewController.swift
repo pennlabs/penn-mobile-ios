@@ -250,7 +250,7 @@ class RootViewController: UIViewController, NotificationRequestable {
 // MARK: - Require Login
 extension RootViewController {
     func shouldRequireLogin() -> Bool {
-        if !OAuth2NetworkManager.instance.hasRefreshToken() {
+        if !Account.isLoggedIn {
             // User is not logged in
             return true
         }
@@ -280,7 +280,7 @@ extension RootViewController {
 // MARK: - Update Transactions
 extension RootViewController {
     func shouldFetchTransactions() -> Bool {
-        if !OAuth2NetworkManager.instance.hasRefreshToken() || !UserDefaults.standard.hasDiningPlan() {
+        if !Account.isLoggedIn || !UserDefaults.standard.hasDiningPlan() {
             // User is not logged in or does not have a dining plan
             return false
         }
@@ -310,7 +310,7 @@ extension RootViewController {
             return false
         }
         
-        guard let account = Account.getAccount(), account.isStudent else {
+        guard Account.isLoggedIn, let account = Account.getAccount(), account.isStudent else {
             // User is not logged in or user is logged in but not a student, no need to ask
             return false
         }

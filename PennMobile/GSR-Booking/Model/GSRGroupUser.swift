@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GSRGroupUser: Codable{
+struct GSRGroupUser: Decodable{
     let pennkey: String!
     let groups: [GSRGroup]?
     
@@ -18,17 +18,23 @@ struct GSRGroupUser: Codable{
     }
 }
 
-struct GSRInviteSearchResult: Codable, Equatable {
-    let username: String
-    let bookingGroups: [GSRGroup]
-
-    enum CodingKeys: String, CodingKey {
-        case username
-        case bookingGroups = "booking_groups"
-    }
+struct GSRInviteSearchResult: Codable, Equatable, Comparable {
+    
+    let first: String?
+    let last: String?
+    let email: String?
+    let pennkey: String
     
     static func == (lhs: GSRInviteSearchResult, rhs: GSRInviteSearchResult) -> Bool {
-        return lhs.username == rhs.username
+        return lhs.pennkey == rhs.pennkey
+    }
+    
+    static func == (lhs: GSRInviteSearchResult, rhs: GSRGroupMember) -> Bool {
+        return lhs.pennkey == rhs.pennKey
+    }
+    
+    static func < (lhs: GSRInviteSearchResult, rhs: GSRInviteSearchResult) -> Bool {
+        return lhs.pennkey < rhs.pennkey
     }
 }
 

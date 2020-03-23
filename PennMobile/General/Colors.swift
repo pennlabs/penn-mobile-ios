@@ -77,3 +77,23 @@ extension UIColor {
     static let yellowDark = UIColor(named: "yellowDark")!
     static let yellowDarker = UIColor(named: "yellowDarker")!
 }
+
+extension UIColor {
+    
+    //for getting a lighter variant (using a multiplier)
+    func borderColor(multiplier: CGFloat) -> UIColor {
+        let rgba = self.rgba
+        return UIColor(red: rgba.red * multiplier , green: rgba.green * multiplier, blue: rgba.blue * multiplier, alpha: rgba.alpha)
+    }
+    
+    var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+        //returns rgba colors.
+        return (red, green, blue, alpha)
+    }
+}
