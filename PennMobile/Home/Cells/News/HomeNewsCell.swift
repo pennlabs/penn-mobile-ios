@@ -59,7 +59,7 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
             subtitleHeight = item.article.subtitle.dynamicHeight(font: subtitleFont, width: width) + 4
             subtitleHeightDictionary[item.article.subtitle] = subtitleHeight
         }
-        let height = imageHeight + (HomeViewController.cellSpacing * 2) + titleHeight + subtitleHeight + (2.5 * Padding.pad)
+        let height = imageHeight + (HomeViewController.cellSpacing * 2) + titleHeight + subtitleHeight + (4 * Padding.pad)
         return height
     }
     
@@ -142,7 +142,7 @@ extension HomeNewsCell {
     
     private func prepareSourceLabel() {
         sourceLabel = UILabel()
-        sourceLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        sourceLabel.font = .secondaryInformationFont
         sourceLabel.textColor = UIColor.labelSecondary
         sourceLabel.numberOfLines = 1
         
@@ -156,7 +156,7 @@ extension HomeNewsCell {
         titleLabel.numberOfLines = 8
         
         cardView.addSubview(titleLabel)
-        _ = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: pad, bottomConstant: 0, rightConstant: pad, widthConstant: 0, heightConstant: 0)
+        _ = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: pad, leftConstant: pad, bottomConstant: 0, rightConstant: pad, widthConstant: 0, heightConstant: 0)
     }
     
     fileprivate func prepareSubtitleLabel() {
@@ -166,18 +166,17 @@ extension HomeNewsCell {
         subtitleLabel.numberOfLines = 5
         
         cardView.addSubview(subtitleLabel)
-        _ = subtitleLabel.anchor(titleLabel.bottomAnchor, left: titleLabel.leftAnchor, bottom: nil, right: titleLabel.rightAnchor, topConstant: 6, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = subtitleLabel.anchor(titleLabel.bottomAnchor, left: titleLabel.leftAnchor, bottom: nil, right: titleLabel.rightAnchor, topConstant: pad/2, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     private func prepareDateLabel() {
         dateLabel = UILabel()
-        dateLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        dateLabel.font = .secondaryInformationFont
         dateLabel.textColor = UIColor.labelSecondary
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         cardView.addSubview(dateLabel)
-//        _ = dateLabel.anchor(nil, left: titleLabel.leftAnchor, bottom: cardView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        dateLabel.centerYAnchor.constraint(equalTo: sourceLabel.centerYAnchor).isActive = true
+        dateLabel.firstBaselineAnchor.constraint(equalTo: sourceLabel.firstBaselineAnchor).isActive = true
         dateLabel.rightAnchor.constraint(equalTo: articleImageView.rightAnchor, constant: -pad).isActive = true
     }
 }
