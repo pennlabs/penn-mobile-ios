@@ -16,7 +16,7 @@ class DiningAPI: Requestable {
     let diningUrl = "https://api.pennlabs.org/dining/venues"
     let diningPrefs =  "https://api.pennlabs.org/dining/preferences"
     let diningBalanceUrl = "https://api.pennlabs.org/dining/balance"
-    let diningInsightsUrl = "https://api.pennlabs.org/dining/insight" // This end point is incomplete
+    let diningInsightsUrl = "https://studentlife.pennlabs.org/dining" // This end point is incomplete
 
     func fetchDiningHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
         
