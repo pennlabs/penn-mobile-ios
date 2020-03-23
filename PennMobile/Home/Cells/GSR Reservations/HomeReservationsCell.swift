@@ -22,6 +22,7 @@ final class HomeReservationsCell: UITableViewCell, HomeCellConformable {
     
     var reservations: [GSRReservation]?
     
+    // MARK: - UI Elements
     var cardView: UIView! = UIView()
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
     fileprivate var header: HomeCellHeader = HomeCellHeader()
