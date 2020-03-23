@@ -35,7 +35,7 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
         guard let item = item as? HomeCoursesCellItem else { return 0.0 }
         let events = item.courses.getEvents()
         let scheduleHeight = ScheduleTable.calculateHeightForEvents(for: events)
-        return 110 + scheduleHeight
+        return HomeCellHeader.height + (Padding.pad * 3) + scheduleHeight
     }
     
     var cardView: UIView! = UIView()
@@ -65,7 +65,7 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
 extension HomeCoursesCell {
     fileprivate func setupCell(with item: HomeCoursesCellItem) {
         header.primaryTitleLabel.text = "\(item.weekday)'s Schedule"
-        header.secondaryTitleLabel.text = "COURSE SCHEDULE"
+        header.secondaryTitleLabel.text = "COURSES"
         
         if courses != item.courses {
             courses = item.courses
@@ -85,13 +85,6 @@ extension HomeCoursesCell {
         enableCoursesView.isHidden = true
         courseScheduleTable.isHidden = false
         header.secondaryTitleLabel.isHidden = !item.isOnHomeScreen
-        
-//        if UserDefaults.standard.coursePermissionGranted() {
-//        } else {
-//            refreshButton.isHidden = true
-//            enableCoursesView.isHidden = false
-//            courseScheduleTable.isHidden = true
-//        }
     }
 }
 
@@ -121,7 +114,7 @@ extension HomeCoursesCell {
         courseScheduleTable = getScheduleTable()
         cardView.addSubview(courseScheduleTable)
         
-        _ = courseScheduleTable.anchor(header.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = courseScheduleTable.anchor(header.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: pad, leftConstant: 0, bottomConstant: -pad, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     // MARK: Refresh Button

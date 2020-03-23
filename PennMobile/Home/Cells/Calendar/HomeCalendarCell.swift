@@ -51,8 +51,8 @@ extension HomeCalendarCell {
     fileprivate func setupCell(with item: HomeCalendarCellItem) {
         events = item.events
         calendarEventTableView.reloadData()
-        header.secondaryTitleLabel.text = "UNIVERSITY NOTIFICATIONS"
-        header.primaryTitleLabel.text = "University Events"
+        header.secondaryTitleLabel.text = "UNIVERSITY CALENDAR"
+        header.primaryTitleLabel.text = "Upcoming Events"
     }
 }
 

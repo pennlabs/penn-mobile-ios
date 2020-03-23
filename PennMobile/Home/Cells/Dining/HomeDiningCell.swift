@@ -68,7 +68,7 @@ extension HomeDiningCell {
         venues = item.venues
         venueTableView.reloadData()
 
-        header.secondaryTitleLabel.text = "DINING VENUES"
+        header.secondaryTitleLabel.text = "DINING HOURS"
         header.primaryTitleLabel.text = "Favorites"
     }
 }
