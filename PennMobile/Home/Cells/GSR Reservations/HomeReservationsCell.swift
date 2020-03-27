@@ -8,12 +8,10 @@
 
 import UIKit
 
-final class HomeReservationsCell: UITableViewCell, HomeCellConformable {    
-    var cardView: UIView! = UIView()
-    
-    var delegate: ModularTableViewCellDelegate!
+final class HomeReservationsCell: UITableViewCell, HomeCellConformable {
     
     static var identifier: String = "reservationsCell"
+    var delegate: ModularTableViewCellDelegate!
     
     var item: ModularTableViewItem! {
         didSet {
@@ -22,22 +20,18 @@ final class HomeReservationsCell: UITableViewCell, HomeCellConformable {
         }
     }
     
-    static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
-        guard let item = item as? HomeReservationsCellItem else { return 0.0 }
-        return (CGFloat(item.reservations.count) * ReservationCell.cellHeight) + (90.0 + 20.0)// + 20.0 + 7.0)
-    }
-    
     var reservations: [GSRReservation]?
     
-    // Custom UI elements (some should be abstracted)
-    fileprivate let safeInsetValue: CGFloat = 14
-    fileprivate var safeArea: UIView!
-    
-    fileprivate var secondaryTitleLabel: UILabel!
-    fileprivate var primaryTitleLabel: UILabel!
-    
-    fileprivate var dividerLine: UIView!
+    // MARK: - UI Elements
+    var cardView: UIView! = UIView()
+    fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
+    fileprivate var header: HomeCellHeader = HomeCellHeader()
     fileprivate var reservationTableView: UITableView!
+    
+    static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
+        guard let item = item as? HomeReservationsCellItem else { return 0.0 }
+        return (CGFloat(item.reservations.count) * ReservationCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 3)
+    }
     
     // Mark: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -56,8 +50,8 @@ extension HomeReservationsCell {
     fileprivate func setupCell(with item: HomeReservationsCellItem) {
         reservations = item.reservations
         reservationTableView.reloadData()
-        secondaryTitleLabel.text = "GSR RESERVATIONS"
-        primaryTitleLabel.text = "Upcoming Reservations"
+        header.secondaryTitleLabel.text = "GROUP STUDY ROOMS"
+        header.primaryTitleLabel.text = "Reservations"
     }
 }
 
@@ -70,7 +64,6 @@ extension HomeReservationsCell: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReservationCell.identifier, for: indexPath) as! ReservationCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.isHomePageCell = true
         let reservation = reservations![indexPath.row]
         cell.reservation = reservation
         cell.delegate = self
@@ -86,59 +79,32 @@ extension HomeReservationsCell: UITableViewDataSource, UITableViewDelegate {
 extension HomeReservationsCell {
     fileprivate func prepareUI() {
         prepareSafeArea()
-        prepareTitleLabels()
-        prepareDividerLine()
+        prepareHeader()
         prepareTableView()
     }
     
-    private func prepareSafeArea() {
-        safeArea = getSafeAreaView()
-        
+    // MARK: Safe Area and Header
+    fileprivate func prepareSafeArea() {
         cardView.addSubview(safeArea)
-        
-        safeArea.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: safeInsetValue).isActive = true
-        safeArea.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -safeInsetValue).isActive = true
-        safeArea.topAnchor.constraint(equalTo: cardView.topAnchor, constant: safeInsetValue).isActive = true
-        safeArea.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.prepare()
     }
     
-    // MARK: Labels
-    fileprivate func prepareTitleLabels() {
-        secondaryTitleLabel = getSecondaryLabel()
-        primaryTitleLabel = getPrimaryLabel()
-        
-        cardView.addSubview(secondaryTitleLabel)
-        cardView.addSubview(primaryTitleLabel)
-        
-        secondaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        secondaryTitleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
-        
-        primaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        primaryTitleLabel.topAnchor.constraint(equalTo: secondaryTitleLabel.bottomAnchor, constant: 10).isActive = true
-    }
-    
-    // MARK: Divider Line
-    fileprivate func prepareDividerLine() {
-        dividerLine = getDividerLine()
-        
-        cardView.addSubview(dividerLine)
-        
-        dividerLine.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        dividerLine.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        dividerLine.topAnchor.constraint(equalTo: primaryTitleLabel.bottomAnchor, constant: 14).isActive = true
-        dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
+    fileprivate func prepareHeader() {
+        safeArea.addSubview(header)
+        header.prepare()
     }
     
     // MARK: TableView
     fileprivate func prepareTableView() {
         reservationTableView = getReservationTableView()
-        
         cardView.addSubview(reservationTableView)
         
-        reservationTableView.leftAnchor.constraint(equalTo: safeArea.leftAnchor).isActive = true
-        reservationTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor).isActive = true
-        reservationTableView.rightAnchor.constraint(equalTo: cardView.rightAnchor).isActive = true
-        reservationTableView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor).isActive = true
+        reservationTableView.snp.makeConstraints { (make) in
+            make.leading.equalTo(cardView)
+            make.top.equalTo(header.snp.bottom).offset(pad)
+            make.trailing.equalTo(cardView)
+            make.bottom.equalTo(cardView).offset(-pad/2)
+        }
     }
 }
 
@@ -152,39 +118,6 @@ extension HomeReservationsCell: ReservationCellDelegate {
 
 // MARK: - Define UI Elements
 extension HomeReservationsCell {
-    
-    fileprivate func getSafeAreaView() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-    
-    fileprivate func getSecondaryLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .secondaryTitleFont
-        label.textColor = .labelSecondary
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
-    fileprivate func getPrimaryLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .primaryTitleFont
-        label.textColor = .labelPrimary
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
-    fileprivate func getDividerLine() -> UIView {
-        let view = UIView()
-        view.backgroundColor = .grey5
-        view.layer.cornerRadius = 2.0
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-    
     fileprivate func getReservationTableView() -> UITableView {
         let tableView = UITableView()
         tableView.backgroundColor = .clear

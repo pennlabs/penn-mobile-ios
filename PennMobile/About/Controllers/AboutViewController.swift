@@ -101,8 +101,8 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         subtitle.textContainer.maximumNumberOfLines = 0
         
         let str = "Hi, we’re Penn Labs: a team of student software engineers, product designers, and business developers."
-        let font = UIFont(name: "AvenirNext-Regular", size: 18)!
-        let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 18)!
+        let font = UIFont.systemFont(ofSize: 18)
+        let boldFont = UIFont.systemFont(ofSize: 18, weight: .semibold)
         
         let attributedString = NSMutableAttributedString(string: str, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font) : font]))
         attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(10, 9))
@@ -125,7 +125,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         descriptionTextView.isSelectable = false
         descriptionTextView.textContainer.maximumNumberOfLines = 0
         descriptionTextView.text = "Penn Labs empowers others to make connections: connections to resources, connections to people, and connections to the greater Penn community.\n\n Our ultimate goal is improving the Penn community. We aim to do so not only by creating high quality products, but also by giving back to the community with educational resources and technical support."
-        descriptionTextView.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        descriptionTextView.font = .systemFont(ofSize: 14)
         descriptionTextView.textColor = .labelPrimary
         descriptionTextView.textAlignment = .center
         descriptionTextView.isScrollEnabled = false
@@ -138,7 +138,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     func setupButton() {
         learnMoreButton = UIButton()
         learnMoreButton.backgroundColor = .baseBlue
-        learnMoreButton.titleLabel?.font =  UIFont(name: "AvenirNext-DemiBold", size: 16)
+        learnMoreButton.titleLabel?.font =  .systemFont(ofSize: 16, weight: .semibold)
         learnMoreButton.setTitle("Learn More", for: [])
         learnMoreButton.setTitleColor(UIColor.white, for: [])
         
@@ -158,7 +158,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     
     func setUpMadeWithLoveLabel() {
         madeWithLoveLabel = UILabel()
-        madeWithLoveLabel.font = UIFont(name: "AvenirNext-Medium", size: 18)
+        madeWithLoveLabel.font = .systemFont(ofSize: 18, weight: .medium)
         madeWithLoveLabel.text = "Made with \u{1F496} by Penn Labs"
         madeWithLoveLabel.textColor = .labelSecondary
         madeWithLoveLabel.textAlignment = .center
@@ -169,7 +169,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     func setupCopyrightLabel() {
         let now = Date()
         copyrightLabel = UILabel()
-        copyrightLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        copyrightLabel.font = .systemFont(ofSize: 11)
         copyrightLabel.text = "Penn Labs \u{00A9} \(now.year)"
         copyrightLabel.textColor = .labelTertiary
         copyrightLabel.textAlignment = .center

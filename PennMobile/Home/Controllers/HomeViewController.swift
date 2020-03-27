@@ -14,8 +14,8 @@ class HomeViewController: GenericViewController {
     var tableViewModel: HomeTableViewModel!
     var tableView: ModularTableView!
 
-    static let edgeSpacing: CGFloat = 20
-    static let cellSpacing: CGFloat = 20
+    static let edgeSpacing: CGFloat = Padding.pad
+    static let cellSpacing: CGFloat = Padding.pad * 2
 
     static let refreshInterval: Int = 10
 
@@ -67,7 +67,7 @@ class HomeViewController: GenericViewController {
         } else {
             let firstName = Account.getAccount()?.first ?? GSRUser.getUser()?.firstName
             if let firstName = firstName {
-                let intros = ["Welcome", "Howdy", "Hi there", "Hello"]
+                let intros = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"]
                 self.displayTitle = "\(intros.random!), \(firstName)!"
                 titleCacheTimestamp = Date()
             } else {

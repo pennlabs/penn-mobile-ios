@@ -6,7 +6,6 @@
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 protocol ReservationCellDelegate {
@@ -16,19 +15,7 @@ protocol ReservationCellDelegate {
 class ReservationCell: UITableViewCell {
     
     static let identifier = "reservationCell"
-    static let cellHeight: CGFloat = 127
-    
-    var isHomePageCell: Bool = false {
-        didSet {
-            if isHomePageCell {
-                if buildingImageLeftConstraint != nil {
-                    buildingImage.removeConstraint(buildingImageLeftConstraint)
-                    buildingImageLeftConstraint = buildingImage.leftAnchor.constraint(equalTo: leftAnchor)
-                    buildingImageLeftConstraint.isActive = true
-                }
-            }
-        }
-    }
+    static let cellHeight: CGFloat = 110
     
     var reservation: GSRReservation! {
         didSet {
@@ -44,20 +31,24 @@ class ReservationCell: UITableViewCell {
             timeLabel.text = "\(startStr) - \(endStr)"
             
             if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(reservation.lid)-gid-\(reservation.gid).jpg") {
-                buildingImage.kf.setImage(with: url)
+                buildingImageView.kf.setImage(with: url)
             }
         }
     }
     
     var delegate: ReservationCellDelegate!
     
+    @objc func handleDeletePressed(_ sender: Any) {
+        self.delegate.deleteReservation(reservation)
+    }
+    
+    // MARK: - UI Elements
+    fileprivate var safeArea: UIView!
     fileprivate var locationLabel: UILabel!
     fileprivate var dateLabel: UILabel!
     fileprivate var timeLabel: UILabel!
     fileprivate var deleteButton: UIButton!
-    fileprivate var buildingImage: UIImageView!
-    
-    fileprivate var buildingImageLeftConstraint: NSLayoutConstraint!
+    fileprivate var buildingImageView: UIImageView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -73,74 +64,113 @@ class ReservationCell: UITableViewCell {
 extension ReservationCell {
     fileprivate func prepareUI() {
         backgroundColor = .clear
-        prepareBuildingImage()
-        prepareLocationLabel()
-        prepareDateLabel()
-        prepareTimeLabel()
-        prepareDeleteButton()
+        accessoryType = .none
+        prepareSafeArea()
+        prepareImageView()
+        prepareLabelsAndButton()
     }
     
-    private func prepareLocationLabel() {
-        locationLabel = UILabel()
-        locationLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
-        locationLabel.textColor = .labelPrimary
-        locationLabel.textAlignment = .left
-        locationLabel.numberOfLines = 1
+    // MARK: Safe Area
+    fileprivate func prepareSafeArea() {
+        safeArea = UIView()
+        addSubview(safeArea)
         
+        safeArea.snp.makeConstraints { (make) in
+            make.leading.equalTo(self).offset(pad)
+            make.trailing.equalTo(self).offset(-pad * 2)
+            make.top.equalTo(self).offset(pad)
+            make.bottom.equalTo(self).offset(-pad)
+        }
+    }
+    
+    // MARK: ImageView
+    fileprivate func prepareImageView() {
+        buildingImageView = getBuildingImageView()
+        addSubview(buildingImageView)
+        
+        buildingImageView.snp.makeConstraints { (make) in
+            make.width.equalTo(134)
+            make.height.equalTo(86)
+            make.leading.equalTo(safeArea)
+            make.centerY.equalTo(safeArea)
+        }
+    }
+    
+    // MARK: Labels
+    fileprivate func prepareLabelsAndButton() {
+        locationLabel = getLocationLabel()
         addSubview(locationLabel)
-        _ = locationLabel.anchor(topAnchor, left: buildingImage.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 14, leftConstant: 25, bottomConstant: 0, rightConstant: 10, widthConstant: 0, heightConstant: 0)
-    }
-    
-    private func prepareDateLabel() {
-        dateLabel = UILabel()
-        dateLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        dateLabel.textColor = .labelSecondary
-        dateLabel.textAlignment = .left
-        dateLabel.numberOfLines = 1
-        dateLabel.shrinkUntilFits()
-        
-        addSubview(dateLabel)
-        _ = dateLabel.anchor(locationLabel.bottomAnchor, left: buildingImage.rightAnchor, bottom: nil, right: nil, topConstant: 3, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
-    
-    private func prepareTimeLabel() {
-        timeLabel = UILabel()
-        timeLabel.font = UIFont(name: "AvenirNext-Regular", size: 14)
-        timeLabel.textColor = .labelSecondary
-        timeLabel.textAlignment = .left
-        timeLabel.numberOfLines = 1
-        timeLabel.shrinkUntilFits()
-        
+        timeLabel = getTimeOrDateLabel()
         addSubview(timeLabel)
-        _ = timeLabel.anchor(dateLabel.bottomAnchor, left: buildingImage.rightAnchor, bottom: nil, right: nil, topConstant: 3, leftConstant: 25, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
-    
-    private func prepareDeleteButton() {
-        deleteButton = UIButton(type: .system)
-        deleteButton.setTitle("Delete", for: .normal)
-        deleteButton.addTarget(self, action: #selector(handleDeletePressed(_:)), for: .touchUpInside)
-        deleteButton.backgroundColor = .baseRed
-        deleteButton.layer.cornerRadius = 4
-        deleteButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        deleteButton.titleLabel?.textColor = .white
-        deleteButton.tintColor = .white
-        deleteButton.titleLabel?.textAlignment = .center
-        
+        dateLabel = getTimeOrDateLabel()
+        addSubview(dateLabel)
+        deleteButton = getDeleteButton()
         addSubview(deleteButton)
-        _ = deleteButton.anchor(timeLabel.bottomAnchor, left: buildingImage.rightAnchor, bottom: bottomAnchor, right: nil, topConstant: 5, leftConstant: 25, bottomConstant: 14, rightConstant: 0, widthConstant: 90, heightConstant: 24)    }
-    
-    @objc func handleDeletePressed(_ sender: Any) {
-        self.delegate.deleteReservation(reservation)
+        
+        locationLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(buildingImageView.snp.top).offset(-2)
+            make.leading.equalTo(buildingImageView.snp.trailing).offset(pad)
+            make.trailing.equalTo(safeArea)
+        }
+        
+        dateLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(locationLabel.snp.leading)
+            make.top.equalTo(locationLabel.snp.bottom).offset(3)
+            make.trailing.equalTo(safeArea)
+        }
+        
+        timeLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(locationLabel.snp.leading)
+            make.top.equalTo(dateLabel.snp.bottom).offset(3)
+            make.trailing.equalTo(safeArea)
+        }
+        
+        deleteButton.snp.makeConstraints { (make) in
+            make.width.equalTo(94)
+            make.height.equalTo(24)
+            make.leading.equalTo(locationLabel.snp.leading)
+            make.bottom.equalTo(buildingImageView.snp.bottom)
+        }
     }
     
-    func prepareBuildingImage() {
-        buildingImage = UIImageView()
-        buildingImage.translatesAutoresizingMaskIntoConstraints = false
-        buildingImage.contentMode = .scaleAspectFill
-        buildingImage.clipsToBounds = true
-        buildingImage.layer.cornerRadius = 8.0
-        addSubview(buildingImage)
-        buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 20, leftConstant: 25, bottomConstant: 20, widthConstant: 139, heightConstant: 87)[1]
+    fileprivate func getBuildingImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .grey2
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 5.0
+        return imageView
     }
     
+    fileprivate func getLocationLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .interiorTitleFont
+        label.textColor = .labelPrimary
+        label.textAlignment = .left
+        label.shrinkUntilFits()
+        return label
+    }
+    
+    fileprivate func getTimeOrDateLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryInformationFont
+        label.textColor = .labelSecondary
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.shrinkUntilFits()
+        return label
+    }
+    
+    private func getDeleteButton() -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle("Delete", for: .normal)
+        button.addTarget(self, action: #selector(handleDeletePressed(_:)), for: .touchUpInside)
+        button.backgroundColor = .baseRed
+        button.layer.cornerRadius = 4
+        button.titleLabel?.font = .secondaryTitleFont
+        button.titleLabel?.textColor = .white
+        button.tintColor = .white
+        button.titleLabel?.textAlignment = .center
+        return button
+    }
 }

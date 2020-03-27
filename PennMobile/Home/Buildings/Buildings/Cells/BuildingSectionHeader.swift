@@ -14,7 +14,7 @@ class BuildingSectionHeader: UITableViewHeaderFooterView {
     
     var label: UILabel = {
         let label = UILabel()
-        label.font = UIFont.primaryTitleFont?.withSize(18.0)
+        label.font = UIFont.primaryTitleFont.withSize(18.0)
         label.textColor = .labelPrimary
         label.textAlignment = .left
         label.text = ""
