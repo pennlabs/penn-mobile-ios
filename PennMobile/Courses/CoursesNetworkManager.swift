@@ -15,42 +15,46 @@ extension PennInTouchNetworkManager {
         "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileSchedule"
     }
     
-    func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ courses: Set<Course>?) -> Void)) {
+    func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ result: Result<Set<Course>, NetworkingError>) -> Void)) {
         makeAuthRequest(targetUrl: courseURL, shibbolethUrl: shibbolethUrl) { (data, response, error) in
             self.makeAuthRequest(targetUrl: self.courseURL, shibbolethUrl: self.shibbolethUrl) { (data, response, error) in
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
-                        if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
-                            do {
-                                let terms = try self.parseTerms(from: html)
-                                let selectedTerm = try self.parseSelectedTerm(from: html)
-                                
-                                let courses = try self.parseCourses(from: html, term: selectedTerm)
-                                if currentTermOnly {
-                                    let currentTerm = Course.currentTerm
-                                    if selectedTerm == currentTerm {
-                                        // If first term in list is the current term, return those courses
-                                        callback(courses)
-                                    } else {
-                                        // Otherwise, we need to do another request but for just the current term
-                                        let remainingTerms = [currentTerm]
-                                        self.getCoursesHelper(terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
-                                            callback(courses)
-                                        })
-                                    }
-                                } else {
-                                    let remainingTerms = terms.filter { $0 != selectedTerm }
-                                    self.getCoursesHelper(terms: remainingTerms, courses: courses, callback: { (allCourses) in
-                                        callback(allCourses)
-                                    })
-                                }
-                                return
-                            } catch {
-                            }
-                        }
+                
+                guard let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? else {
+                    
+                    if let error = error as? NetworkingError {
+                        callback(.failure(error))
+                    } else {
+                        callback(.failure(.other))
                     }
+                    return
                 }
-                callback(nil)
+                
+                do {
+                    let terms = try self.parseTerms(from: html)
+                    let selectedTerm = try self.parseSelectedTerm(from: html)
+
+                    let courses = try self.parseCourses(from: html, term: selectedTerm)
+                    if currentTermOnly {
+                        let currentTerm = Course.currentTerm
+                        if selectedTerm == currentTerm {
+                            // If first term in list is the current term, return those courses
+                            callback(.success(courses))
+                        } else {
+                            // Otherwise, we need to do another request but for just the current term
+                            let remainingTerms = [currentTerm]
+                            self.getCoursesHelper(terms: remainingTerms, courses: Set<Course>(), callback: { (courses) in
+                                callback(.success(courses))
+                            })
+                        }
+                    } else {
+                        let remainingTerms = terms.filter { $0 != selectedTerm }
+                        self.getCoursesHelper(terms: remainingTerms, courses: courses, callback: { (allCourses) in
+                            callback(.success(allCourses))
+                        })
+                    }
+                } catch {
+                    callback(.failure(.parsingError))
+                }
             }
         }
     }

@@ -8,19 +8,20 @@
 
 import Foundation
 
-class PacCodeViewController : UIViewController, ShowsAlert, IndicatorEnabled {
+class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEnabled {
     
     var pacCode : String?
         
     lazy var quadDigitLabel = [digitLabel, digitLabel, digitLabel, digitLabel]
     
-    let pacCodeHStack = UIStackView()
+    let pacCodeTitleLabel = UILabel()
     let pacCodeSecurityInfoLabel = UILabel()
+    let pacCodeHStack = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .uiBackground
         
         self.title = "PAC Code"
         
@@ -78,7 +79,6 @@ class PacCodeViewController : UIViewController, ShowsAlert, IndicatorEnabled {
     }
     
     func setupPacCodeTitleLabel() {
-        let pacCodeTitleLabel = UILabel()
         pacCodeTitleLabel.textColor = .labelPrimary
         pacCodeTitleLabel.font = UIFont.systemFont(ofSize: 35)
         pacCodeTitleLabel.text = "PAC Code"
@@ -89,14 +89,14 @@ class PacCodeViewController : UIViewController, ShowsAlert, IndicatorEnabled {
         pacCodeTitleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
     }
     
-//    This is only in place as a placeholder for an icon if deemed necessary
+    // TODO: Request graphic for
     func setupPlaceHolderIcon() {
         if #available(iOS 13.0, *) {
             let placeHolderIcon = UIImageView(image: UIImage(systemName: "circle.grid.3x3.fill"))
             view.addSubview(placeHolderIcon)
             
             placeHolderIcon.translatesAutoresizingMaskIntoConstraints = false
-            placeHolderIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
+            placeHolderIcon.bottomAnchor.constraint(equalTo: pacCodeTitleLabel.topAnchor, constant: -20).isActive = true
             placeHolderIcon.tintColor = .grey1
             placeHolderIcon.widthAnchor.constraint(equalToConstant: 100).isActive = true
             placeHolderIcon.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -188,24 +188,15 @@ extension PacCodeViewController {
     }
     
     fileprivate func handleNetworkPacCodeResult(_ result: Result<String, NetworkingError>) {
-        switch result {
-        case .success(let pacCode):
-            self.savePacCode(pacCode)
-            self.pacCode = pacCode
-            self.showAlert(withMsg: "Your PAC Code has been refreshed.", title: "Refresh Complete!", completion: self.updatePACCode)
-            
-        case .failure(.noInternet):
-            self.showAlert(withMsg: "You appear to be offline.\nPlease try again later.", title: "Network Error", completion: { self.navigationController?.popViewController(animated: true) })
-            
-        case .failure(.parsingError):
-            self.showAlert(withMsg: "Penn's PAC Code servers are currently not updating. We hope this will be fixed shortly", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) })
-            
-        case .failure(.authenticationError):
-            self.showAlert(withMsg: "Unable to access your PAC Code.\nPlease login again.", title: "Login Error", completion: { self.handleAuthenticationError() })
-            
-        default:
-            self.showAlert(withMsg: "Something went wrong.\nPlease try again later.", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) } )
-        }
+        
+        let popVC : () -> Void = { self.navigationController?.popViewController(animated: true) }
+        
+        showRefreshAlertForError(result: result, title: "PAC Code", success: self.handleNetworkPacCodeRefreshCompletion(_:), noInternet: popVC, parsingError: popVC, authenticationError: self.handleAuthenticationError)
+    }
+    
+    fileprivate func handleNetworkPacCodeRefreshCompletion(_ pacCode: String) {
+        self.savePacCode(pacCode)
+        self.pacCode = pacCode
     }
     
     fileprivate func handleAuthenticationError() {

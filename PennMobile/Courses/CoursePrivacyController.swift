@@ -68,9 +68,9 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
 extension CoursePrivacyController {
     fileprivate func fetchAndSaveCourses(shouldRequestLoginOnFail: Bool = true) {
         showActivity()
-        PennInTouchNetworkManager.instance.getCourses { (courses) in
+        PennInTouchNetworkManager.instance.getCourses { (result) in
             DispatchQueue.main.async {
-                if let courses = courses {
+                if let courses = try? result.get()  {
                     // Save courses anonymously on database
                     UserDBManager.shared.saveCoursesAnonymously(courses) { (success) in
                         DispatchQueue.main.async {
