@@ -16,7 +16,15 @@ class DiningAPI: Requestable {
     let diningUrl = "https://api.pennlabs.org/dining/venues"
     let diningPrefs =  "https://api.pennlabs.org/dining/preferences"
     let diningBalanceUrl = "https://api.pennlabs.org/dining/balance"
-    let diningInsightsUrl = "https://studentlife.pennlabs.org/dining" // This end point is incomplete
+    let diningInsightsUrl = "https://studentlife.pennlabs.org/dining/"
+    
+    private let venuesDataStore: LocalJSONStore<DiningAPIResponse> = LocalJSONStore(storageType: .cache, filename: "venues.json")
+    
+    private let insightsDataStore: LocalJSONStore<DiningInsightsAPIResponse> = LocalJSONStore(storageType: .cache, filename: "insights.json")
+    
+    private init() {
+        _ = self.getInsights()
+    }
 
     func fetchDiningHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
         
@@ -50,19 +58,22 @@ class DiningAPI: Requestable {
             }
             
             let url = URL(string: self.diningInsightsUrl)!
-            let request = URLRequest(url: url, accessToken: token)
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "GET"
             
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 guard let data = data else {
-                    if let error = error as? NetworkingError {
-                        completion(.failure(error))
-                    } else {
-                        completion(.failure(.other))
-                    }
-                    return
+                   if let error = error as? NetworkingError {
+                       completion(.failure(error))
+                   } else {
+                       completion(.failure(.other))
+                   }
+                   return
                 }
                 
-                if let diningInsightsAPIResponse = try? JSONDecoder().decode(DiningInsightsAPIResponse.self, from: data) {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
+                if let diningInsightsAPIResponse = try? decoder.decode(DiningInsightsAPIResponse.self, from: data) {
                     DiningDataStore.shared.saveToCache(insights: diningInsightsAPIResponse)
                     completion(.success(diningInsightsAPIResponse))
                 } else {
@@ -71,6 +82,9 @@ class DiningAPI: Requestable {
             }
             task.resume()
         }
+        
+        
+        
     }
     
     func getCachedDiningInsights() -> DiningInsightsAPIResponse? {
@@ -121,4 +135,33 @@ extension DiningAPI {
             task.resume()
         }
     }
+}
+
+// Dining Data Storage
+extension DiningAPI {
+    
+    func getVenues() -> [DiningVenue] {
+        return venuesDataStore.storedValue?.document.venues ?? []
+    }
+    
+    func getSectionedVenues() -> [DiningVenue.VenueType : [DiningVenue]] {
+        var venuesDict = [DiningVenue.VenueType : [DiningVenue]]()
+        for type in DiningVenue.VenueType.allCases {
+            venuesDict[type] = getVenues().filter({ $0.venueType == type })
+        }
+        return venuesDict
+    }
+    
+    func getVenues(with ids: Set<Int>) -> [DiningVenue] {
+        return getVenues().filter({ ids.contains($0.id) })
+    }
+    
+    func getInsights() -> DiningInsightsAPIResponse? {
+        return insightsDataStore.storedValue
+    }
+    
+    func saveToCache(insights: DiningInsightsAPIResponse) {
+        insightsDataStore.save(insights)
+    }
+    
 }
