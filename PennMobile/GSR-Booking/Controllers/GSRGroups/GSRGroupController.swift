@@ -62,17 +62,18 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == groups.count {
+        if indexPath.row == 0 {
             return tableView.dequeueReusableCell(withIdentifier: CreateGroupCell.identifier, for: indexPath)
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: GroupCell.identifier, for: indexPath) as! GroupCell
-            cell.group = groups[indexPath.row]
+            
+            cell.group = groups[indexPath.row - 1]
             return cell
         }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == groups.count {
+        if indexPath.row == 0 {
             return CreateGroupCell.cellHeight
         } else {
             return GroupCell.cellHeight
@@ -80,7 +81,7 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == groups.count {
+        if indexPath.row == 1 {
             let controller = GSRGroupNewIntialController()
             controller.delegate = self
             let navigationVC = UINavigationController(rootViewController: controller)
@@ -88,7 +89,7 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
             tableView.deselectRow(at: indexPath, animated: true)
             present(navigationVC, animated: true, completion: nil)
         } else {
-            let group = groups[indexPath.row]
+            let group = groups[indexPath.row - 1]
             let manageVC = GSRManageGroupController(group: group)
             tableView.deselectRow(at: indexPath, animated: true)
             navigationController?.pushViewController(manageVC, animated: true)
