@@ -77,7 +77,7 @@ class ControllerModel: NSObject {
     }
     var moreIcons: [UIImage] {
         get {
-            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Fitness_Blue"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "logo-small"), #imageLiteral(resourceName: "logo-small")]
+            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Fitness"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "logo-small")]
         }
     }
 
