@@ -29,7 +29,7 @@ class CreateGroupCell: UITableViewCell {
         _ = bgView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 8, leftConstant: 15, bottomConstant: 8, rightConstant: 15)
 
         titleLabel = UILabel()
-        titleLabel.text = "Add Group"
+        titleLabel.text = "Create a New Group"
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         titleLabel.textColor = UIColor.white
         bgView.addSubview(titleLabel)
