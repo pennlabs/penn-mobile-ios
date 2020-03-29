@@ -81,7 +81,7 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 1 {
+        if indexPath.row == 0 {
             let controller = GSRGroupNewIntialController()
             controller.delegate = self
             let navigationVC = UINavigationController(rootViewController: controller)
