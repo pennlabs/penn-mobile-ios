@@ -82,6 +82,6 @@ extension GroupMemberCell {
         adminLabel.textColor = UIColor(named: "baseRed")
         _ = adminLabel.anchor(nil, left: nameLabel.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 12, rightConstant: 0, widthConstant: 0, heightConstant: 15)
         adminLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
-        adminLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        adminLabel.font = UIFont.systemFont(ofSize: 15, weight: .light)
     }
 }
