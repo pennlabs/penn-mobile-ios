@@ -24,7 +24,7 @@ class GroupBookingTimeSlotCell: UITableViewCell {
                 pennkeyLabel.text = pennkey
             }
             if let booked = timeSlot.booked {
-                bookingStatusIcon.backgroundColor = booked ? UIColor.green : UIColor.red
+                bookingStatusIcon.backgroundColor = booked ? UIColor.baseGreen : UIColor.baseRed
             }
         }
     }
