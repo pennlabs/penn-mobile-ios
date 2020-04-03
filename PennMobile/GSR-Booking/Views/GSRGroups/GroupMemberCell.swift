@@ -14,6 +14,7 @@ class GroupMemberCell: UITableViewCell {
     
     fileprivate var nameLabel: UILabel!
     fileprivate var pennKeyActiveLabel: UILabel!
+    fileprivate var adminLabel: UILabel!
 
     var member: GSRGroupMember! {
         didSet {
@@ -33,14 +34,17 @@ class GroupMemberCell: UITableViewCell {
 // MARK: - Setup Cell
 extension GroupMemberCell {
     fileprivate func setupCell(with group: GSRGroupMember) {
-        if (nameLabel == nil || pennKeyActiveLabel == nil) {
+        if (nameLabel == nil || pennKeyActiveLabel == nil || adminLabel == nil) {
             prepareUI()
         }
         
         nameLabel.text = "\(member.first) \(member.last) (\(member.pennKey))"
+        
         let pennKeyActive = member.pennKeyActive
         pennKeyActiveLabel.text = pennKeyActive ? "PennID Active" : "PennID Inactive"
         pennKeyActiveLabel.textColor = pennKeyActive ? UIColor(named: "baseGreen") : UIColor(named: "baseRed")
+        
+        
     }
 }
 
@@ -49,6 +53,9 @@ extension GroupMemberCell {
     fileprivate func prepareUI() {
         prepareNameLabel()
         preparePennKeyActiveLabel()
+        if (member.isAdmin) {
+            prepareAdminLabel()
+        }
 //        backgroundColor = .uiBackgroundSecondary
     }
     
@@ -56,7 +63,7 @@ extension GroupMemberCell {
         nameLabel = UILabel()
         addSubview(nameLabel)
         
-        _ = nameLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 12, leftConstant: 15, bottomConstant: 0, rightConstant: 15, widthConstant: 0, heightConstant: 20)
+        _ = nameLabel.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 12, leftConstant: 15, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 20)
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
     }
     
@@ -66,5 +73,15 @@ extension GroupMemberCell {
         
         _ = pennKeyActiveLabel.anchor(nameLabel.bottomAnchor, left: nameLabel.leftAnchor, bottom: bottomAnchor, right: nameLabel.rightAnchor, topConstant: 5, leftConstant: 10, bottomConstant: 12, rightConstant: 0, widthConstant: 0, heightConstant: 15)
         pennKeyActiveLabel.font = UIFont.systemFont(ofSize: 15, weight: .light)
+    }
+    
+    fileprivate func prepareAdminLabel() {
+        adminLabel = UILabel()
+        addSubview(adminLabel)
+        adminLabel.text = "admin"
+        adminLabel.textColor = UIColor(named: "baseRed")
+        _ = adminLabel.anchor(nil, left: nameLabel.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 12, rightConstant: 0, widthConstant: 0, heightConstant: 15)
+        adminLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
+        adminLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
     }
 }
