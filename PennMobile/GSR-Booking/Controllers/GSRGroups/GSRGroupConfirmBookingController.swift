@@ -132,9 +132,18 @@ extension GSRGroupConfirmBookingController {
 }
 
 // MARK: - Handle Button Events
-extension GSRGroupConfirmBookingController {
+extension GSRGroupConfirmBookingController:GSRBookable {
     @objc func didTapSubmitBtn() {
-        viewModel.submitBooking()
+        viewModel.submitBooking(vc:self)
+        
+        
+//        if bookingSucceeded {
+//            //show some succeeded alert
+//        } else {
+//
+//        }
+//        
+        
     }
     
     @objc func cancelBtnAction() {

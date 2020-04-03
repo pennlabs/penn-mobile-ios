@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SCLAlertView
 
 protocol GSRGroupConfirmBookingViewModelDelegate {
     func reloadData()
@@ -63,13 +64,58 @@ extension GSRGroupConfirmBookingViewModel: UITableViewDelegate {
 
 // MARK: - Networking
 extension GSRGroupConfirmBookingViewModel {
-    func submitBooking() {
+    func submitBooking(vc: GSRGroupConfirmBookingController)  {
+        vc.showActivity()
         GSRGroupNetworkManager.instance.submitBooking(booking: groupBooking, completion: { (groupBookingResponse, error)  in
-            if let error = error {
-                print("error: \(error)")
-            } else if let groupBookingResponse = groupBookingResponse {
-                self.handleGroupBookingResponse(groupBookingResponse)
+            
+            DispatchQueue.main.async {
+                vc.hideActivity()
+                let alertView = SCLAlertView()
+                
+                if let error = error {
+                    print("error: \(error)")
+                    alertView.showError("Uh oh!", subTitle: "\(error)")
+
+                } else if let groupBookingResponse = groupBookingResponse {
+                    self.handleGroupBookingResponse(groupBookingResponse)
+                    alertView.showSuccess("Success!", subTitle: "You group \(self.groupBooking.group.name) booked a space in \(self.groupBooking.bookings[0].location.name). You should receive a confirmation email in the next few minutes.")
+                    
+                    guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
+                    homeVC.clearCache()
+                    //vc.dismiss(animated: true, completion: nil)
+                    
+                }
+                
             }
+            
+            
+            
+            
         })
+        
+        
+        
+        
     }
+    
+//    func submitBooking(for booking: groupBooking, _ completion: @escaping (_ success: Bool) -> Void) {
+//        self.showActivity()
+//        GSRNetworkManager.instance.makeBooking(for: booking) { (success, errorMessage) in
+//            DispatchQueue.main.async {
+//                self.hideActivity()
+//                let alertView = SCLAlertView()
+//                var result: FirebaseAnalyticsManager.EventResult = .failed
+//                if success {
+//                    alertView.showSuccess("Success!", subTitle: "You booked a space in \(booking.location.name). You should receive a confirmation email in the next few minutes.")
+//                    result = .success
+//                    guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
+//                    homeVC.clearCache()
+//                } else if let msg = errorMessage {
+//                    alertView.showError("Uh oh!", subTitle: msg)
+//                }
+//                FirebaseAnalyticsManager.shared.trackEvent(action: .attemptBooking, result: result, content: booking.location.name)
+//                completion(success)
+//            }
+//        }
+//    }
 }
