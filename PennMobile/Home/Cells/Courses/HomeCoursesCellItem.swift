@@ -17,10 +17,12 @@ final class HomeCoursesCellItem: HomeCellItem {
     
     let weekday: String
     var courses: [Course]
+    var isOnHomeScreen: Bool
     
-    init(weekday: String, courses: [Course]) {
+    init(weekday: String, courses: [Course], isOnHomeScreen: Bool) {
         self.weekday = weekday
         self.courses = courses.sorted()
+        self.isOnHomeScreen = isOnHomeScreen
     }
     
     static func getItem(for json: JSON?) -> HomeCellItem? {
@@ -30,7 +32,7 @@ final class HomeCoursesCellItem: HomeCellItem {
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             do {
                 let courses = try decoder.decode([Course].self, from: data)
-                return HomeCoursesCellItem(weekday: weekday, courses: courses)
+                return HomeCoursesCellItem(weekday: weekday, courses: courses, isOnHomeScreen: true)
             } catch {
                 return nil
             }
@@ -39,12 +41,12 @@ final class HomeCoursesCellItem: HomeCellItem {
             let coursesToday = courses.taughtToday
             if coursesToday.hasUpcomingCourse {
                 let weekday = "Today"
-                return HomeCoursesCellItem(weekday: weekday, courses: Array(coursesToday))
+                return HomeCoursesCellItem(weekday: weekday, courses: Array(coursesToday), isOnHomeScreen: true)
             } else {
                 let weekday = "Tomorrow"
                 let coursesTomorrow = courses.taughtTomorrow
                 if !coursesTomorrow.isEmpty {
-                    return HomeCoursesCellItem(weekday: weekday, courses: Array(coursesTomorrow))
+                    return HomeCoursesCellItem(weekday: weekday, courses: Array(coursesTomorrow), isOnHomeScreen: true)
                 } else {
                     return nil
                 }

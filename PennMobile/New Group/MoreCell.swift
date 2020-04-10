@@ -19,6 +19,8 @@ class MoreCell: UITableViewCell {
     
     var iconImage: UIImageView = {
         let iv = UIImageView()
+        iv.layer.cornerRadius = 7
+        iv.clipsToBounds = true
         return iv
     }()
     
@@ -34,7 +36,7 @@ class MoreCell: UITableViewCell {
         titleLabel.text = page.rawValue
         self.addSubview(iconImage)
         self.addSubview(titleLabel)
-        _ = iconImage.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: nil, topConstant: 15, leftConstant: 15, bottomConstant: 15, rightConstant: 0, widthConstant: 20, heightConstant: 0)
+        _ = iconImage.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: nil, topConstant: 10, leftConstant: 15, bottomConstant: 10, rightConstant: 0, widthConstant: 30, heightConstant: 0)
         _ = titleLabel.anchor(self.topAnchor, left: iconImage.rightAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 12, leftConstant: 10, bottomConstant: 12, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 

@@ -14,6 +14,8 @@ class GSRLocationsController: GenericViewController {
     
     fileprivate var tableView: UITableView!
     
+    var group: GSRGroup?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locations = GSRLocationModel.shared.getLocations()
@@ -71,6 +73,7 @@ extension GSRLocationsController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let location = locations[indexPath.row]
         let gc = GSRController()
+        gc.group = group
         gc.startingLocation = location
         gc.title = "Tap to book"
         navigationController?.pushViewController(gc, animated: true)

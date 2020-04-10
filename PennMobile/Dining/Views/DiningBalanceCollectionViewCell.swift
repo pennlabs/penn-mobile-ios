@@ -136,7 +136,7 @@ extension DiningBalanceCollectionViewCell {
     
     fileprivate func getTitleLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "Avenir-Medium", size: 12)
+        label.font = .secondaryTitleFont
         label.textColor = .white
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -146,7 +146,7 @@ extension DiningBalanceCollectionViewCell {
     
     fileprivate func getDataLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "Avenir-Heavy", size: 24)
+        label.font = .primaryTitleFont
         label.textColor = .white
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false

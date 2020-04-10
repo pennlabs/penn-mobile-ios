@@ -14,37 +14,47 @@ import CryptoKit
 #endif
 import CommonCrypto
 
+enum SHA256Encoding {
+    case base64
+    case hex
+}
+
 protocol SHA256Hashable {}
 
 extension SHA256Hashable {
-    func hash(string: String) -> String {
+    func hash(string: String, encoding: SHA256Encoding) -> String {
         let inputData = Data(string.utf8)
         #if canImport(CryptoKit)
             if #available(iOS 13, *) {
-                let hashed = SHA256.hash(data: inputData)
-                let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
-                return hashString
+                let digest = SHA256.hash(data: inputData)
+                switch encoding {
+                case .base64:
+                    return Data(Array<UInt8>(digest.makeIterator())).base64EncodedString()
+                case .hex:
+                    return digest.compactMap { String(format: "%02x", $0) }.joined()
+                }
             } else {
                 // CryptoKit not available until iOS 13
-                return commonCryptoHash(inputData: inputData)
+                return commonCryptoHash(inputData: inputData, encoding: encoding)
             }
         #else
-            return commonCryptoHash(inputData: inputData)
+            return commonCryptoHash(inputData: inputData, encoding: encoding)
         #endif
     }
     
-    private func commonCryptoHash(inputData: Data) -> String {
+    private func commonCryptoHash(inputData: Data, encoding: SHA256Encoding) -> String {
         // https://www.agnosticdev.com/content/how-use-commoncrypto-apis-swift-5
         var digest = [UInt8](repeating: 0, count:Int(CC_SHA256_DIGEST_LENGTH))
         _ = inputData.withUnsafeBytes {
            CC_SHA256($0.baseAddress, UInt32(inputData.count), &digest)
         }
-
-        var sha256String = ""
-        for byte in digest {
-           sha256String += String(format:"%02x", UInt8(byte))
+        
+        switch encoding {
+        case .base64:
+            return Data(Array<UInt8>(digest.makeIterator())).base64EncodedString()
+        case .hex:
+            return digest.compactMap { String(format: "%02x", $0) }.joined()
         }
-        return sha256String
     }
 }
 
@@ -61,7 +71,11 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
     private let codeVerifier = String.randomString(length: 64)
     
     private var codeChallenge: String {
-        return hash(string: codeVerifier)
+        var challenge = hash(string: codeVerifier, encoding: .base64)
+        challenge.removeAll(where: { $0 == "=" })
+        challenge = challenge.replacingOccurrences(of: "+", with: "-")
+        challenge = challenge.replacingOccurrences(of: "/", with: "_")
+        return challenge
     }
     
     private var code: String?
@@ -199,6 +213,7 @@ extension LabsLoginController {
                         self.getDiningBalance()
                         self.getDiningTransactions()
                         self.getAndSaveLaundryPreferences()
+                        self.getPacCode()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             self.getCourses()
                         }
@@ -212,8 +227,8 @@ extension LabsLoginController {
 // MARK: - Retrieve Other Account Information
 extension LabsLoginController {
     fileprivate func getCourses() {
-        PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true) { (courses) in
-            if let courses = courses, let accountID = UserDefaults.standard.getAccountID() {
+        PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true) { (result) in
+            if let courses = try? result.get(), let accountID = UserDefaults.standard.getAccountID() {
                 // Save courses to DB if permission was granted
                 UserDBManager.shared.saveCourses(courses, accountID: accountID)
                 UserDefaults.standard.saveCourses(courses)
@@ -250,6 +265,17 @@ extension LabsLoginController {
         UserDBManager.shared.getLaundryPreferences { rooms in
             if let rooms = rooms {
                 UserDefaults.standard.setLaundryPreferences(to: rooms)
+            }
+        }
+    }
+    
+    fileprivate func getPacCode() {
+        PacCodeNetworkManager.instance.getPacCode { result in
+            switch result {
+            case .success(let pacCode):
+                self.savePacCode(pacCode)
+            case .failure(_):
+                return
             }
         }
     }

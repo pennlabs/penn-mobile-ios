@@ -29,7 +29,7 @@ final class HomeFeatureCell: UITableViewCell, HomeCellConformable {
     
     // MARK: Cell Height
     
-    static let titleFont: UIFont = UIFont.primaryInformationFont!.withSize(18)
+    static let titleFont: UIFont = UIFont.primaryInformationFont.withSize(18)
     static let titleEdgeOffset: CGFloat = 16
     
     static let descriptionFont: UIFont = UIFont(name: "HelveticaNeue", size: 14)!
@@ -50,7 +50,7 @@ final class HomeFeatureCell: UITableViewCell, HomeCellConformable {
             titleHeightDictionary[item.announcement.title] = titleHeight
         }
         
-        let height = imageHeight + HomeViewController.cellSpacing + titleHeight + 48
+        let height = imageHeight + titleHeight + 48
         guard let description = item.announcement.description else {
             return height
         }

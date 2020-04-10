@@ -15,6 +15,7 @@ protocol TwoFactorEnableDelegate {
     func handleEnable()
     func handleDismiss()
     func shouldWait() -> Bool
+    func shouldLogin() -> Bool
 }
 
 extension TwoFactorEnableDelegate {
@@ -23,14 +24,17 @@ extension TwoFactorEnableDelegate {
     }
 }
 
+extension TwoFactorEnableDelegate {
+    func shouldLogin() -> Bool {
+        return true
+    }
+}
 @available(iOS 13, *)
 class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable {
     
     private var cancellable: Any?
     
     public var delegate: TwoFactorEnableDelegate!
-    
-    let shouldRequestLogin = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,14 +52,16 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
             if let decision = delegate.userDecision {
                 switch decision {
                 case .affirmative:
-                    UserDefaults.standard.set(true, forKey: "TOTPEnabled")
-                    TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+                    //Fetch code immediately if the user does not have to log in.
+                    if !self.delegate.shouldLogin() {
+                        TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+                    }
                     if self.delegate.shouldWait() {
                         DispatchQueue.main.async {
                             self.showActivity()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                self.hideActivity()
                                 self.delegate.handleEnable()
+                                self.hideActivity()
                                 self.dismiss(animated: true, completion: nil)
                             }
                         }
@@ -65,7 +71,6 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
                     }
                     FirebaseAnalyticsManager.shared.trackEvent(action: .twoStep, result: .enabled, content: true)
                 case .negative:
-                    UserDefaults.standard.set(false, forKey: "TOTPEnabled")
                     self.delegate.handleDismiss()
                     self.dismiss(animated: true, completion: nil)
                     FirebaseAnalyticsManager.shared.trackEvent(action: .twoStep, result: .declined, content: false)

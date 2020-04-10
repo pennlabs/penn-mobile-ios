@@ -42,7 +42,7 @@ class CalendarAPI: Requestable {
                     let event = CalendarEvent(name: name, start: startDate, end: endDate)
                     events.append(event)
                 }
-//                let exampleEvent: CalendarEvent = CalendarEvent(name: "Advance Registration starts!", start: Date() , end: Date())
+                //let exampleEvent: CalendarEvent = CalendarEvent(name: "Advance Registration Begins", start: Date() , end: Date())
                 self.calendarEvents = events
                 completion(events)
             }

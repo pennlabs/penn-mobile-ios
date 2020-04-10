@@ -11,7 +11,7 @@ import UIKit
 class FitnessHourCell: UITableViewCell {
     
     static let identifier = "fitnessHourCell"
-    static let cellHeight: CGFloat = 86
+    static let cellHeight: CGFloat = 110
     
     var schedule: FitnessSchedule! {
         didSet {
@@ -25,16 +25,8 @@ class FitnessHourCell: UITableViewCell {
         }
     }
     
-    var isHomepage: Bool = false {
-        didSet {
-            setupCell(with: schedule)
-        }
-    }
-    
     // MARK: - UI Elements
-    fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
-    
     fileprivate var venueImageView: UIImageView!
     fileprivate var titleLabel: UILabel!
     fileprivate var timesLabel: UILabel!
@@ -56,12 +48,9 @@ extension FitnessHourCell {
     
     fileprivate func setupCell(with name: FitnessFacilityName) {
         titleLabel.text = name.getFacilityName()
-        
-        // Label will say nothing by default
         statusLabel.text = ""
         statusLabel.textColor = .labelSecondary
         statusLabel.font = .secondaryInformationFont
-        
         if let _ = name.getImageName() { venueImageView.image = UIImage(named: name.getImageName()!) }
     }
     
@@ -112,7 +101,6 @@ extension FitnessHourCell {
 extension FitnessHourCell {
     
     fileprivate func prepareUI() {
-        //self.accessoryType = .disclosureIndicator
         self.accessoryType = .none
         prepareSafeArea()
         prepareImageView()
@@ -121,13 +109,15 @@ extension FitnessHourCell {
     
     // MARK: Safe Area
     fileprivate func prepareSafeArea() {
-        safeArea = getSafeAreaView()
+        safeArea = UIView()
         addSubview(safeArea)
         
-        safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue).isActive = true
-        safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue).isActive = true
-        safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue / 2).isActive = true
-        safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue / 2).isActive = true
+        safeArea.snp.makeConstraints { (make) in
+            make.leading.equalTo(self).offset(pad)
+            make.trailing.equalTo(self).offset(-pad * 2)
+            make.top.equalTo(self).offset(pad)
+            make.bottom.equalTo(self).offset(-pad)
+        }
     }
     
     // MARK: ImageView
@@ -135,10 +125,12 @@ extension FitnessHourCell {
         venueImageView = getVenueImageView()
         addSubview(venueImageView)
         
-        venueImageView.widthAnchor.constraint(equalToConstant: 130).isActive = true
-        venueImageView.heightAnchor.constraint(equalToConstant: 72).isActive = true
-        venueImageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        venueImageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor).isActive = true
+        venueImageView.snp.makeConstraints { (make) in
+            make.width.equalTo(134)
+            make.height.equalTo(86)
+            make.leading.equalTo(safeArea)
+            make.centerY.equalTo(safeArea)
+        }
     }
     
     // MARK: Labels
@@ -150,36 +142,34 @@ extension FitnessHourCell {
         timesLabel = getTimeLabel()
         addSubview(timesLabel)
         
-        titleLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor,
-                                            constant: safeInsetValue).isActive = true
+        titleLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(venueImageView)
+            make.leading.equalTo(venueImageView.snp.trailing).offset(pad)
+            make.trailing.equalTo(safeArea)
+        }
         
-        titleLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        statusLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(titleLabel.snp.leading)
+            make.bottom.equalTo(titleLabel.snp.top).offset(-3)
+        }
         
-        statusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 2).isActive = true
-        
-        timesLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        timesLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3).isActive = true
-        timesLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        timesLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(titleLabel.snp.leading)
+            make.top.equalTo(titleLabel.snp.bottom).offset(3)
+            make.trailing.equalTo(safeArea)
+        }
     }
 }
 
 // MARK: - Define UI Elements
 extension FitnessHourCell {
     
-    fileprivate func getSafeAreaView() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-    
     fileprivate func getVenueImageView() -> UIImageView {
         let imageView = UIImageView()
+        imageView.backgroundColor = .grey2
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 5.0
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }
     
@@ -188,7 +178,6 @@ extension FitnessHourCell {
         label.font = .interiorTitleFont
         label.textColor = .labelPrimary
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()
         return label
     }
@@ -202,13 +191,12 @@ extension FitnessHourCell {
         label.shrinkUntilFits()
         return label
     }
-    
+
     fileprivate func getStatusLabel() -> UILabel {
         let label = UILabel()
         label.font = .primaryInformationFont
         label.textColor = .baseYellow
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
 }

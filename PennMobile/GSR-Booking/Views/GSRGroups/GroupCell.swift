@@ -41,7 +41,7 @@ extension GroupCell {
         if (groupIcon == nil || groupName == nil || activeLabel == nil) {
             setupUI()
         } else {
-            groupIcon.backgroundColor = group.parseColor() ?? UIColor(named: "blueLighter")
+            groupIcon.backgroundColor = group.color
             groupIcon.name = group.name
             groupName.text = group.name
             if let userSettings = group.userSettings {
@@ -64,13 +64,8 @@ extension GroupCell {
     fileprivate func prepareGroupIcon() {
         groupIcon = GSRGroupIconView()
         addSubview(groupIcon)
-        groupIcon.translatesAutoresizingMaskIntoConstraints = false
-        groupIcon.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        groupIcon.widthAnchor.constraint(equalToConstant: 70).isActive = true
         groupIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14).isActive = true
         groupIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        groupIcon.layer.cornerRadius = 35
-        groupIcon.layer.masksToBounds = true
     }
 
     fileprivate func prepareGroupNameLabel() {
