@@ -77,8 +77,16 @@ extension GSRGroupConfirmBookingViewModel {
                     alertView.showError("Uh oh!", subTitle: "\(error)")
 
                 } else if let groupBookingResponse = groupBookingResponse {
+                    if let error = groupBookingResponse.error {
+                        print("error: \(error)")
+                        alertView.showError("Uh oh!", subTitle: "\(error)")
+                    }
                     self.handleGroupBookingResponse(groupBookingResponse)
-                    alertView.showSuccess("Success!", subTitle: "You group \(self.groupBooking.group.name) booked a space in \(self.groupBooking.bookings[0].location.name). You should receive a confirmation email in the next few minutes.")
+                    if (groupBookingResponse.completeSuccess) {
+                        alertView.showSuccess("Success!", subTitle: "You group \(self.groupBooking.group.name) booked some space in \(self.groupBooking.bookings[0].location.name). You should receive a confirmation email in the next few minutes.")
+                    }
+                    
+                    
                     
                     guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
                     homeVC.clearCache()
