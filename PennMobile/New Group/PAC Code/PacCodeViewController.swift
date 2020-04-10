@@ -12,8 +12,25 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
     
     var pacCode : String?
         
+    var digitLabel : UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        label.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 30)
+        
+        label.backgroundColor = .grey6
+        label.layer.cornerRadius = 10
+        label.clipsToBounds = true
+        
+        return label
+    }
+    
     lazy var quadDigitLabel = [digitLabel, digitLabel, digitLabel, digitLabel]
     
+    let pacCodeIcon = UIImageView(image: UIImage(named: "PAC_Code")!)
     let pacCodeTitleLabel = UILabel()
     let pacCodeSecurityInfoLabel = UILabel()
     let pacCodeHStack = UIStackView()
@@ -27,39 +44,32 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
         
         self.navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .refresh, target: self, action: #selector(refreshButtonTapped))
         
-        setupPacCodeHStack()
-        setupPacCodeSecurityInfoLabel()
+        setupPacCodeIcon()
         setupPacCodeTitleLabel()
-        setupPlaceHolderIcon()
+        setupPacCodeSecurityInfoLabel()
+        setupPacCodeHStack()
     }
     
-    var digitLabel : UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        label.widthAnchor.constraint(equalToConstant: 70).isActive = true
+    func setupPacCodeIcon() {
+        pacCodeIcon.contentMode = .scaleAspectFill
+        pacCodeIcon.tintColor = .labelPrimary
         
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 30)
-        
-        label.backgroundColor = .grey6
-        
-        return label
+        view.addSubview(pacCodeIcon)
+        pacCodeIcon.translatesAutoresizingMaskIntoConstraints = false
+        pacCodeIcon.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        pacCodeIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 52).isActive = true
+        pacCodeIcon.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
     }
-
-    func setupPacCodeHStack() {
-        pacCodeHStack.axis = .horizontal
-        pacCodeHStack.distribution = .equalCentering
-        pacCodeHStack.spacing = 10.0
+    
+    func setupPacCodeTitleLabel() {
+        pacCodeTitleLabel.textColor = .labelPrimary
+        pacCodeTitleLabel.font = UIFont.systemFont(ofSize: 35)
+        pacCodeTitleLabel.text = "PAC Code"
         
-        for digitLabel in quadDigitLabel {
-            pacCodeHStack.addArrangedSubview(digitLabel)
-        }
-        
-        view.addSubview(pacCodeHStack)
-        pacCodeHStack.translatesAutoresizingMaskIntoConstraints = false
-        pacCodeHStack.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
-        pacCodeHStack.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        view.addSubview(pacCodeTitleLabel)
+        pacCodeTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        pacCodeTitleLabel.topAnchor.constraint(equalTo: pacCodeIcon.bottomAnchor, constant: 10).isActive = true
+        pacCodeTitleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
     }
     
     func setupPacCodeSecurityInfoLabel() {
@@ -73,35 +83,24 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
         
         view.addSubview(pacCodeSecurityInfoLabel)
         pacCodeSecurityInfoLabel.translatesAutoresizingMaskIntoConstraints = false
-        pacCodeSecurityInfoLabel.bottomAnchor.constraint(equalTo: pacCodeHStack.topAnchor, constant: -25).isActive = true
+        pacCodeSecurityInfoLabel.topAnchor.constraint(equalTo: pacCodeTitleLabel.bottomAnchor, constant: 20).isActive = true
         pacCodeSecurityInfoLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.80).isActive = true
         pacCodeSecurityInfoLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
     }
     
-    func setupPacCodeTitleLabel() {
-        pacCodeTitleLabel.textColor = .labelPrimary
-        pacCodeTitleLabel.font = UIFont.systemFont(ofSize: 35)
-        pacCodeTitleLabel.text = "PAC Code"
+    func setupPacCodeHStack() {
+        pacCodeHStack.axis = .horizontal
+        pacCodeHStack.distribution = .equalCentering
+        pacCodeHStack.spacing = 10.0
         
-        view.addSubview(pacCodeTitleLabel)
-        pacCodeTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        pacCodeTitleLabel.bottomAnchor.constraint(equalTo: pacCodeSecurityInfoLabel.topAnchor, constant: -20).isActive = true
-        pacCodeTitleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-    }
-    
-    // TODO: Request graphic for
-    func setupPlaceHolderIcon() {
-        if #available(iOS 13.0, *) {
-            let placeHolderIcon = UIImageView(image: UIImage(systemName: "circle.grid.3x3.fill"))
-            view.addSubview(placeHolderIcon)
-            
-            placeHolderIcon.translatesAutoresizingMaskIntoConstraints = false
-            placeHolderIcon.bottomAnchor.constraint(equalTo: pacCodeTitleLabel.topAnchor, constant: -20).isActive = true
-            placeHolderIcon.tintColor = .grey1
-            placeHolderIcon.widthAnchor.constraint(equalToConstant: 100).isActive = true
-            placeHolderIcon.heightAnchor.constraint(equalToConstant: 100).isActive = true
-            placeHolderIcon.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        for digitLabel in quadDigitLabel {
+            pacCodeHStack.addArrangedSubview(digitLabel)
         }
+        
+        view.addSubview(pacCodeHStack)
+        pacCodeHStack.translatesAutoresizingMaskIntoConstraints = false
+        pacCodeHStack.topAnchor.constraint(equalTo: pacCodeSecurityInfoLabel.bottomAnchor, constant: 25).isActive = true
+        pacCodeHStack.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
     }
     
     func updatePACCode() {
