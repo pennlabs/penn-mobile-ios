@@ -13,7 +13,6 @@ protocol GSRInviteSelectable {
 }
 
 final class HomeGroupInvitesCell: UITableViewCell, HomeCellConformable {
-    var cardView: UIView! = UIView()
     
     static var identifier: String {
         return "invitesCell"
@@ -21,9 +20,7 @@ final class HomeGroupInvitesCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeGroupInvitesCellItem else { return 0.0 }
-        
-        // cell height = (invites * inviteHeight) + header + footer + cellInset
-        return (CGFloat(item.invites.count) * GSRGroupInviteCell.cellHeight) + (90.0 + 14.0 + 20.0)
+        return (CGFloat(item.invites.count) * GSRGroupInviteCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 3)
     }
     
     var item: ModularTableViewItem! {
@@ -34,21 +31,15 @@ final class HomeGroupInvitesCell: UITableViewCell, HomeCellConformable {
     }
     
     var invites: GSRGroupInvites!
-    
     var delegate: ModularTableViewCellDelegate!
     
-    //var invitesDelegate: HomeViewController
-    
-    fileprivate let safeInsetValue: CGFloat = 14
-    fileprivate var safeArea: UIView!
-    
-    fileprivate var secondaryTitleLabel: UILabel!
-    fileprivate var primaryTitleLabel: UILabel!
-    
-    fileprivate var dividerLine: UIView!
+    // MARK: - UI Elements
+    var cardView: UIView! = UIView()
+    fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
+    fileprivate var header: HomeCellHeader = HomeCellHeader()
     fileprivate var groupInvitesTableView: UITableView!
     
-    // Mark: - Init
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -66,8 +57,8 @@ extension HomeGroupInvitesCell {
     fileprivate func setupCell(with item: HomeGroupInvitesCellItem) {
         invites = item.invites
         groupInvitesTableView.reloadData()
-        secondaryTitleLabel.text = "GSR GROUPS"
-        primaryTitleLabel.text = "Pending Invites"
+        header.secondaryTitleLabel.text = "GSR GROUPS"
+        header.primaryTitleLabel.text = "Pending Invites"
     }
 }
 
@@ -84,63 +75,6 @@ extension HomeGroupInvitesCell: UITableViewDataSource {
         cell.invite = invite
         cell.delegate = self
         return cell
-    }
-}
-
-extension HomeGroupInvitesCell {
-    fileprivate func prepareUI() {
-        prepareSafeArea()
-        prepareTitleLabels()
-        prepareDividerLine()
-        prepareTableView()
-    }
-    
-    fileprivate func prepareSafeArea() {
-        safeArea = getSafeAreaView()
-        
-        cardView.addSubview(safeArea)
-        
-        safeArea.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: safeInsetValue).isActive = true
-        safeArea.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -safeInsetValue).isActive = true
-        safeArea.topAnchor.constraint(equalTo: cardView.topAnchor, constant: safeInsetValue).isActive = true
-        safeArea.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -safeInsetValue).isActive = true
-    }
-    
-    fileprivate func prepareTitleLabels() {
-        secondaryTitleLabel = getSecondaryLabel()
-        primaryTitleLabel = getPrimaryLabel()
-        
-        cardView.addSubview(secondaryTitleLabel)
-        cardView.addSubview(primaryTitleLabel)
-        
-        secondaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        secondaryTitleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
-        
-        primaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        primaryTitleLabel.topAnchor.constraint(equalTo: secondaryTitleLabel.bottomAnchor, constant: 10).isActive = true
-    }
-    
-    fileprivate func prepareDividerLine() {
-        dividerLine = getDividerLine()
-        
-        cardView.addSubview(dividerLine)
-        
-        dividerLine.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        dividerLine.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        dividerLine.topAnchor.constraint(equalTo: primaryTitleLabel.bottomAnchor, constant: 14).isActive = true
-        dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
-    }
-    
-    fileprivate func prepareTableView() {
-        groupInvitesTableView = getInvitesTableView()
-        
-        cardView.addSubview(groupInvitesTableView)
-        
-        groupInvitesTableView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor).isActive = true
-        groupInvitesTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
-                                                    constant: safeInsetValue / 2).isActive = true
-        groupInvitesTableView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor).isActive = true
-        groupInvitesTableView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: safeInsetValue / 2).isActive = true
     }
 }
 
@@ -161,44 +95,44 @@ extension HomeGroupInvitesCell: GSRGroupInviteCellDelegate {
         guard let delegate = delegate as? GSRInviteSelectable else { return }
         delegate.handleInviteSelected(invite, false)
     }
-    
-    
 }
 
+// MARK: - Initialize & Layout UI Elements
 extension HomeGroupInvitesCell {
-    
-    fileprivate func getSafeAreaView() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    fileprivate func prepareUI() {
+        prepareSafeArea()
+        prepareHeader()
+        prepareTableView()
     }
     
-    fileprivate func getSecondaryLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .secondaryTitleFont
-        label.textColor = .labelSecondary
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    // MARK: Safe Area and Header
+    fileprivate func prepareSafeArea() {
+        cardView.addSubview(safeArea)
+        safeArea.prepare()
     }
     
-    fileprivate func getPrimaryLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .primaryTitleFont
-        label.textColor = .labelPrimary
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    fileprivate func prepareHeader() {
+        safeArea.addSubview(header)
+        header.prepare()
     }
-    
-    fileprivate func getDividerLine() -> UIView {
-        let view = UIView()
-        view.backgroundColor = .grey5
-        view.layer.cornerRadius = 2.0
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+
+    // MARK: TableView
+    fileprivate func prepareTableView() {
+        
+        groupInvitesTableView = getInvitesTableView()
+        cardView.addSubview(groupInvitesTableView)
+        
+        groupInvitesTableView.snp.makeConstraints { (make) in
+            make.leading.equalTo(cardView)
+            make.top.equalTo(header.snp.bottom).offset(pad)
+            make.trailing.equalTo(cardView)
+            make.bottom.equalTo(cardView).offset(-pad)
+        }
     }
-    
+}
+
+// MARK: - Define UI Elements
+extension HomeGroupInvitesCell {
     fileprivate func getInvitesTableView() -> UITableView {
         let tableView = UITableView()
         tableView.backgroundColor = .clear

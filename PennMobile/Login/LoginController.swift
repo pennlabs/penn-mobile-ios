@@ -134,7 +134,7 @@ extension LoginController {
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: attributedString.length))
         
         loginButton.setAttributedTitle(attributedString, for: .normal)
-        loginButton.titleLabel?.font = UIFont.avenirMedium?.withSize(15)
+        loginButton.titleLabel?.font = UIFont.avenirMedium.withSize(15)
         loginButton.addTarget(self, action: #selector(handleLogin(_:)), for: .touchUpInside)
         
         view.addSubview(loginButton)
@@ -166,7 +166,7 @@ extension LoginController {
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: buttonColor, range: NSRange(location: 0, length: attributedString.length))
         
         skipButton.setAttributedTitle(attributedString, for: .normal)
-        skipButton.titleLabel?.font = UIFont.avenirMedium?.withSize(15)
+        skipButton.titleLabel?.font = UIFont.avenirMedium.withSize(15)
         skipButton.addTarget(self, action: #selector(handleSkip(_:)), for: .touchUpInside)
         
         view.addSubview(skipButton)
@@ -197,7 +197,7 @@ extension LoginController {
     
     fileprivate func prepareTitleLabel() {
         titleLabel = UILabel()
-        titleLabel.font = UIFont.avenirMedium?.withSize(25)
+        titleLabel.font = UIFont.avenirMedium.withSize(25)
         titleLabel.textColor = .labelPrimary
         titleLabel.textAlignment = .center
         titleLabel.text = "Penn Mobile"

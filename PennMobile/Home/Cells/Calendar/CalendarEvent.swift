@@ -21,17 +21,17 @@ final class CalendarEvent {
     
     func getDateString(fullLength: Bool) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = fullLength ? "EEEE, MMM. d" : "E. MMM. d"
+        formatter.dateFormat = "EEEE, MMMM d"
         
         let startString = "\(formatter.string(from: start))"
         let endString = "\(formatter.string(from: end))"
         
         if (startString == endString) {
-            formatter.dateFormat = "EEEE, MMM. d"
+            formatter.dateFormat = "EEEE, MMMM d"
             let date = "\(formatter.string(from: start))"
             return date
         }
-        return startString + " - " + endString
+        return startString + " to " + endString
     }
 }
 

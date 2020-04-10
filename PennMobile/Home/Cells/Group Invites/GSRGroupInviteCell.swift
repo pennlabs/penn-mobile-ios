@@ -55,8 +55,6 @@ extension GSRGroupInviteCell {
     }
     
     fileprivate func prepareLabels() {
-        let padding = UIView.padding
-        
         groupNameLabel = getGroupNameLabel()
         groupIcon = getGroupIcon()
         
@@ -64,32 +62,36 @@ extension GSRGroupInviteCell {
         addSubview(groupNameLabel)
         
         groupIcon.translatesAutoresizingMaskIntoConstraints = false
-        groupIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding).isActive = true
-        groupIcon.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true
+        groupIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: pad).isActive = true
+        groupIcon.topAnchor.constraint(equalTo: topAnchor, constant: pad).isActive = true
         
-        groupNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        groupNameLabel.leadingAnchor.constraint(equalTo: groupIcon.trailingAnchor, constant: padding).isActive = true
-        groupNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding).isActive = true
-        groupNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true
+        groupNameLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(groupIcon.snp.trailing).offset(pad)
+            make.trailing.equalTo(snp.trailing).offset(-pad)
+            make.top.equalTo(snp.top).offset(pad * 1.5)
+        }
     }
     
     fileprivate func prepareButtons() {
-        let padding = UIView.padding
         acceptButton = getAcceptButton()
         declineButton = getDeclineButton()
         
         addSubview(acceptButton)
         addSubview(declineButton)
         
-        acceptButton.translatesAutoresizingMaskIntoConstraints = false
-        declineButton.translatesAutoresizingMaskIntoConstraints = false
-        acceptButton.leadingAnchor.constraint(equalTo: groupNameLabel.leadingAnchor).isActive = true
-        acceptButton.topAnchor.constraint(equalTo: groupNameLabel.bottomAnchor, constant: 10).isActive = true
-        acceptButton.widthAnchor.constraint(equalTo: declineButton.widthAnchor).isActive = true
+        declineButton.snp.makeConstraints { (make) in
+            make.leading.equalTo(groupNameLabel.snp.leading)
+            make.top.equalTo(groupNameLabel.snp.bottom).offset(pad)
+            make.height.equalTo(24)
+            make.width.equalTo(94)
+        }
         
-        declineButton.leadingAnchor.constraint(equalTo: acceptButton.trailingAnchor, constant: padding).isActive = true
-        declineButton.trailingAnchor.constraint(equalTo: groupNameLabel.trailingAnchor, constant: -50).isActive = true
-        declineButton.topAnchor.constraint(equalTo: acceptButton.topAnchor).isActive = true
+        acceptButton.snp.makeConstraints { (make) in
+            make.leading.equalTo(declineButton.snp.trailing).offset(pad)
+            make.top.equalTo(declineButton)
+            make.height.equalTo(24)
+            make.width.equalTo(94)
+        }
     }
     
     fileprivate func getGroupIcon() -> GSRGroupIconView {
@@ -99,33 +101,34 @@ extension GSRGroupInviteCell {
     
     fileprivate func getGroupNameLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24.0, weight: .regular)
+        label.font = .interiorTitleFont
         label.numberOfLines = 1
         return label
     }
-    
-    fileprivate func getAcceptButton() -> UIButton {
+
+    private func getAcceptButton() -> UIButton {
         let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(acceptInvite), for: .touchUpInside)
         button.setTitle("Accept", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = UIColor.baseBlue
+        button.backgroundColor = .baseBlue
         button.layer.cornerRadius = 4
-        button.layer.masksToBounds = true
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.titleLabel?.font = .secondaryTitleFont
+        button.titleLabel?.textColor = .white
+        button.tintColor = .white
+        button.titleLabel?.textAlignment = .center
         return button
     }
     
-    fileprivate func getDeclineButton() -> UIButton {
+    private func getDeclineButton() -> UIButton {
         let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(declineInvite), for: .touchUpInside)
         button.setTitle("Decline", for: .normal)
-        button.setTitleColor(UIColor.labelPrimary, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.labelPrimary.cgColor
+        button.backgroundColor = .labelTertiary
         button.layer.cornerRadius = 4
-        button.layer.masksToBounds = true
+        button.titleLabel?.font = .secondaryTitleFont
+        button.titleLabel?.textColor = .white
+        button.tintColor = .white
+        button.titleLabel?.textAlignment = .center
         return button
     }
     

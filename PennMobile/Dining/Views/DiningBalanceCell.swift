@@ -66,7 +66,7 @@ extension DiningBalanceCell {
     
     fileprivate func prepareBalancesAsOfLabel() {
         balancesAsOfLabel = UILabel()
-        balancesAsOfLabel.font = UIFont(name: "Avenir-Medium", size: 12)
+        balancesAsOfLabel.font = .secondaryTitleFont
         balancesAsOfLabel.textColor = .labelSecondary
         balancesAsOfLabel.textAlignment = .left
         balancesAsOfLabel.translatesAutoresizingMaskIntoConstraints = false

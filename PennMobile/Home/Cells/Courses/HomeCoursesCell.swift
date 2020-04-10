@@ -21,12 +21,9 @@ protocol BuildingMapSelectable {
 }
 
 final class HomeCoursesCell: UITableViewCell, HomeCellConformable {    
-    var cardView: UIView! = UIView()
-    
+
     var delegate: ModularTableViewCellDelegate!
-    
     static var identifier: String = "coursesCell"
-    
     var item: ModularTableViewItem! {
         didSet {
             guard let item = item as? HomeCoursesCellItem else { return }
@@ -36,32 +33,19 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeCoursesCellItem else { return 0.0 }
-        
-//        if !UserDefaults.standard.coursePermissionGranted() {
-//            return 260
-//        }
-        
         let events = item.courses.getEvents()
         let scheduleHeight = ScheduleTable.calculateHeightForEvents(for: events)
-        return 110 + scheduleHeight
+        return HomeCellHeader.height + (Padding.pad * 3) + scheduleHeight
     }
     
+    var cardView: UIView! = UIView()
+    fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
+    fileprivate var header: HomeCellHeader = HomeCellHeader()
+    
     var courses: [Course]!
-    
-    // Custom UI elements (some should be abstracted)
-    fileprivate let safeInsetValue: CGFloat = 14
-    fileprivate var safeArea: UIView!
-    
-    fileprivate var secondaryTitleLabel: UILabel!
-    fileprivate var primaryTitleLabel: UILabel!
-    
-    fileprivate var dividerLine: UIView!
     fileprivate var courseScheduleTable: ScheduleTable!
-    
     fileprivate var refreshButton: UIButton!
-    
     fileprivate var courseTableHeightConstraint: NSLayoutConstraint?
-    
     fileprivate var enableCoursesView: UIView!
     fileprivate var enableCourseLabel: UILabel!
     
@@ -80,8 +64,8 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
 // MARK: - Setup UI Elements
 extension HomeCoursesCell {
     fileprivate func setupCell(with item: HomeCoursesCellItem) {
-        primaryTitleLabel.text = "\(item.weekday)'s Schedule"
-        secondaryTitleLabel.text = "COURSE SCHEDULE"
+        header.primaryTitleLabel.text = "\(item.weekday)'s Schedule"
+        header.secondaryTitleLabel.text = "COURSES"
         
         if courses != item.courses {
             courses = item.courses
@@ -97,16 +81,10 @@ extension HomeCoursesCell {
             self.courseScheduleTable.reloadData()
         }
         
-//        if UserDefaults.standard.coursePermissionGranted() {
-            refreshButton.isHidden = !item.isOnHomeScreen
-            enableCoursesView.isHidden = true
-            courseScheduleTable.isHidden = false
-            secondaryTitleLabel.isHidden = !item.isOnHomeScreen
-//        } else {
-//            refreshButton.isHidden = true
-//            enableCoursesView.isHidden = false
-//            courseScheduleTable.isHidden = true
-//        }
+        refreshButton.isHidden = !item.isOnHomeScreen
+        enableCoursesView.isHidden = true
+        courseScheduleTable.isHidden = false
+        header.secondaryTitleLabel.isHidden = !item.isOnHomeScreen
     }
 }
 
@@ -114,49 +92,21 @@ extension HomeCoursesCell {
 extension HomeCoursesCell {
     fileprivate func prepareUI() {
         prepareSafeArea()
-        prepareTitleLabels()
-        prepareDividerLine()
+        prepareHeader()
         prepareRefreshButton()
         prepareScheduleTable()
         prepareEnableCoursesView()
     }
-    
-    private func prepareSafeArea() {
-        safeArea = getSafeAreaView()
-        
+
+    // MARK: Safe Area and Header
+    fileprivate func prepareSafeArea() {
         cardView.addSubview(safeArea)
-        
-        safeArea.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: safeInsetValue).isActive = true
-        safeArea.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -safeInsetValue).isActive = true
-        safeArea.topAnchor.constraint(equalTo: cardView.topAnchor, constant: safeInsetValue).isActive = true
-        safeArea.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -safeInsetValue).isActive = true
+        safeArea.prepare()
     }
-    
-    // MARK: Labels
-    fileprivate func prepareTitleLabels() {
-        secondaryTitleLabel = getSecondaryLabel()
-        primaryTitleLabel = getPrimaryLabel()
-        
-        cardView.addSubview(secondaryTitleLabel)
-        cardView.addSubview(primaryTitleLabel)
-        
-        secondaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        secondaryTitleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
-        
-        primaryTitleLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        primaryTitleLabel.topAnchor.constraint(equalTo: secondaryTitleLabel.bottomAnchor, constant: 10).isActive = true
-    }
-    
-    // MARK: Divider Line
-    fileprivate func prepareDividerLine() {
-        dividerLine = getDividerLine()
-        
-        cardView.addSubview(dividerLine)
-        
-        dividerLine.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        dividerLine.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        dividerLine.topAnchor.constraint(equalTo: primaryTitleLabel.bottomAnchor, constant: 14).isActive = true
-        dividerLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
+
+    fileprivate func prepareHeader() {
+        safeArea.addSubview(header)
+        header.prepare()
     }
     
     // MARK: Schedule Table
@@ -164,7 +114,7 @@ extension HomeCoursesCell {
         courseScheduleTable = getScheduleTable()
         cardView.addSubview(courseScheduleTable)
         
-        _ = courseScheduleTable.anchor(dividerLine.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = courseScheduleTable.anchor(header.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: pad, leftConstant: 0, bottomConstant: -pad, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     // MARK: Refresh Button
@@ -220,39 +170,6 @@ extension HomeCoursesCell: ScheduleTableDelegate {
 
 // MARK: - Define UI Elements
 extension HomeCoursesCell {
-    
-    fileprivate func getSafeAreaView() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-    
-    fileprivate func getSecondaryLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .secondaryTitleFont
-        label.textColor = .labelSecondary
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
-    fileprivate func getPrimaryLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .primaryTitleFont
-        label.textColor = .labelPrimary
-        label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
-    fileprivate func getDividerLine() -> UIView {
-        let view = UIView()
-        view.backgroundColor = .grey5
-        view.layer.cornerRadius = 2.0
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-    
     fileprivate func getScheduleTable() -> ScheduleTable {
         let scheduleView = ScheduleTable(frame: .zero)
         scheduleView.translatesAutoresizingMaskIntoConstraints = false
@@ -278,7 +195,7 @@ extension HomeCoursesCell {
         cardView.addSubview(enableCoursesView)
         enableCoursesView.translatesAutoresizingMaskIntoConstraints = false
         enableCoursesView.heightAnchor.constraint(equalToConstant: 150).isActive = true
-         _ = enableCoursesView.anchor(dividerLine.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+         _ = enableCoursesView.anchor(header.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         enableCoursesView.clipsToBounds = true
         
         prepareEnableCoursesLabel()
@@ -315,7 +232,7 @@ extension HomeCoursesCell {
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: attributedString.length))
         
         loginButton.setAttributedTitle(attributedString, for: .normal)
-        loginButton.titleLabel?.font = UIFont.avenirMedium?.withSize(15)
+        loginButton.titleLabel?.font = UIFont.avenirMedium.withSize(15)
         loginButton.addTarget(self, action: #selector(handleLoggingIn(_:)), for: .touchUpInside)
         
         enableCoursesView!.addSubview(loginButton)

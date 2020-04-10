@@ -19,6 +19,6 @@ extension ModularTableViewItem {
     }
     
     var cellHeight: CGFloat {
-        return Self.associatedCell.getCellHeight(for: self)
+        return Self.associatedCell.getCellHeight(for: self) + HomeViewController.cellSpacing
     }
 }

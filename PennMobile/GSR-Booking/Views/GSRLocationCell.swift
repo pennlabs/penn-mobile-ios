@@ -12,38 +12,26 @@ import Kingfisher
 class GSRLocationCell: UITableViewCell {
     
     static let identifier = "locationCell"
-    static let cellHeight: CGFloat = 100
-    
-    var isHomePageCell: Bool = false {
-        didSet {
-            if isHomePageCell {
-                if buildingImageLeftConstraint != nil {
-                    buildingImage.removeConstraint(buildingImageLeftConstraint)
-                    buildingImageLeftConstraint = buildingImage.leftAnchor.constraint(equalTo: leftAnchor)
-                    buildingImageLeftConstraint.isActive = true
-                }
-            }
-        }
-    }
+    static let cellHeight: CGFloat = 110
     
     var location: GSRLocation! {
         didSet {
             locationLabel.text = location.name
             if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(location.lid)-gid-\(location.gid ?? location.lid).jpg") {
-                buildingImage.kf.setImage(with: url)
+                buildingImageView.kf.setImage(with: url)
             }
         }
     }
         
+    // MARK: - UI Elements
+    fileprivate var safeArea: UIView!
     fileprivate var locationLabel: UILabel!
-    fileprivate var buildingImage: UIImageView!
-    
-    fileprivate var buildingImageLeftConstraint: NSLayoutConstraint!
+    fileprivate var serviceLabel: UILabel!
+    fileprivate var buildingImageView: UIImageView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.prepareUI()
-        self.accessoryType = .disclosureIndicator
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,29 +43,69 @@ class GSRLocationCell: UITableViewCell {
 extension GSRLocationCell {
     fileprivate func prepareUI() {
         backgroundColor = .clear
-        prepareBuildingImage()
-        prepareLocationLabel()
+        accessoryType = .disclosureIndicator
+        prepareSafeArea()
+        prepareImageView()
+        prepareLabels()
     }
     
-    func prepareBuildingImage() {
-        buildingImage = UIImageView()
-        buildingImage.translatesAutoresizingMaskIntoConstraints = false
-        buildingImage.contentMode = .scaleAspectFill
-        buildingImage.clipsToBounds = true
-        buildingImage.layer.cornerRadius = 8.0
-        addSubview(buildingImage)
-        buildingImageLeftConstraint = buildingImage.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 8, leftConstant: 25, bottomConstant: 8, widthConstant: 139, heightConstant: 0)[1]
-    }
-    
-    private func prepareLocationLabel() {
-        locationLabel = UILabel()
-        locationLabel.font = UIFont.interiorTitleFont
-        locationLabel.textColor = UIColor.labelPrimary
-        locationLabel.textAlignment = .left
-        locationLabel.numberOfLines = 2
+    // MARK: Safe Area
+    fileprivate func prepareSafeArea() {
+        safeArea = UIView()
+        addSubview(safeArea)
         
+        safeArea.snp.makeConstraints { (make) in
+            make.leading.equalTo(self).offset(pad)
+            make.trailing.equalTo(self).offset(-pad * 2)
+            make.top.equalTo(self).offset(pad)
+            make.bottom.equalTo(self).offset(-pad)
+        }
+    }
+    
+    // MARK: ImageView
+    fileprivate func prepareImageView() {
+        buildingImageView = getBuildingImageView()
+        addSubview(buildingImageView)
+        
+        buildingImageView.snp.makeConstraints { (make) in
+            make.width.equalTo(134)
+            make.height.equalTo(86)
+            make.leading.equalTo(safeArea)
+            make.centerY.equalTo(safeArea)
+        }
+    }
+    
+    // MARK: Labels
+    fileprivate func prepareLabels() {
+        locationLabel = getLocationLabel()
         addSubview(locationLabel)
-        _ = locationLabel.anchor(nil, left: buildingImage.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 20, bottomConstant: 0, rightConstant: 25, widthConstant: 0, heightConstant: 0)
-        locationLabel.centerYAnchor.constraint(equalTo: buildingImage.centerYAnchor).isActive = true
+
+        locationLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(buildingImageView)
+            make.leading.equalTo(buildingImageView.snp.trailing).offset(pad)
+            make.trailing.equalTo(safeArea)
+        }
+    }
+}
+
+// MARK: - Define UI Elements
+extension GSRLocationCell {
+    
+    fileprivate func getBuildingImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .grey2
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 5.0
+        return imageView
+    }
+    
+    fileprivate func getLocationLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .interiorTitleFont
+        label.textColor = .labelPrimary
+        label.textAlignment = .left
+        label.shrinkUntilFits()
+        return label
     }
 }

@@ -6,11 +6,12 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 import UIKit
+import SnapKit
 
 class DiningCell: UITableViewCell {
     
     static let identifier = "diningVenueCell"
-    static let cellHeight: CGFloat = 86
+    static let cellHeight: CGFloat = 110
     
     var venue: DiningVenue! {
         didSet {
@@ -25,9 +26,7 @@ class DiningCell: UITableViewCell {
     }
     
     // MARK: - UI Elements
-    fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
-    
     fileprivate var venueImageView: UIImageView!
     fileprivate var titleLabel: UILabel!
     fileprivate var timesLabel: UILabel!
@@ -98,13 +97,15 @@ extension DiningCell {
     
     // MARK: Safe Area
     fileprivate func prepareSafeArea() {
-        safeArea = getSafeAreaView()
+        safeArea = UIView()
         addSubview(safeArea)
         
-        safeArea.leadingAnchor.constraint(equalTo: leadingAnchor, constant: safeInsetValue).isActive = true
-        safeArea.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -safeInsetValue).isActive = true
-        safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue / 2).isActive = true
-        safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue / 2).isActive = true
+        safeArea.snp.makeConstraints { (make) in
+            make.leading.equalTo(self).offset(pad)
+            make.trailing.equalTo(self).offset(-pad * 2)
+            make.top.equalTo(self).offset(pad)
+            make.bottom.equalTo(self).offset(-pad)
+        }
     }
     
     // MARK: ImageView
@@ -112,10 +113,12 @@ extension DiningCell {
         venueImageView = getVenueImageView()
         addSubview(venueImageView)
         
-        venueImageView.widthAnchor.constraint(equalToConstant: 130).isActive = true
-        venueImageView.heightAnchor.constraint(equalToConstant: 72).isActive = true
-        venueImageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        venueImageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor).isActive = true
+        venueImageView.snp.makeConstraints { (make) in
+            make.width.equalTo(134)
+            make.height.equalTo(86)
+            make.leading.equalTo(safeArea)
+            make.centerY.equalTo(safeArea)
+        }
     }
     
     // MARK: Labels
@@ -127,29 +130,27 @@ extension DiningCell {
         timesLabel = getTimeLabel()
         addSubview(timesLabel)
         
-        titleLabel.leadingAnchor.constraint(equalTo: venueImageView.trailingAnchor,
-                                            constant: safeInsetValue).isActive = true
+        titleLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(venueImageView)
+            make.leading.equalTo(venueImageView.snp.trailing).offset(pad)
+            make.trailing.equalTo(safeArea)
+        }
         
-        titleLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+        statusLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(titleLabel.snp.leading)
+            make.bottom.equalTo(titleLabel.snp.top).offset(-3)
+        }
         
-        statusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        statusLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 2).isActive = true
-        
-        timesLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        timesLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 3).isActive = true
-        timesLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
+        timesLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(titleLabel.snp.leading)
+            make.top.equalTo(titleLabel.snp.bottom).offset(3)
+            make.trailing.equalTo(safeArea)
+        }
     }
 }
 
 // MARK: - Define UI Elements
 extension DiningCell {
-    
-    fileprivate func getSafeAreaView() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
     
     fileprivate func getVenueImageView() -> UIImageView {
         let imageView = UIImageView()
@@ -157,7 +158,6 @@ extension DiningCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 5.0
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }
     
@@ -166,7 +166,6 @@ extension DiningCell {
         label.font = .interiorTitleFont
         label.textColor = .labelPrimary
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.shrinkUntilFits()
         return label
     }
@@ -186,7 +185,6 @@ extension DiningCell {
         label.font = .primaryInformationFont
         label.textColor = .baseYellow
         label.textAlignment = .left
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
 }

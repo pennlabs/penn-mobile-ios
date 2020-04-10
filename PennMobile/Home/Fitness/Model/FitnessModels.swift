@@ -32,7 +32,9 @@ struct FitnessSchedule: Codable {
             self.name = try container.decodeIfPresent(FitnessFacilityName.self, forKey: .name) ?? .unknown
         } catch {
             self.name = .unknown
-            print("ERROR: Unknown fitness facility name")
+            if let unknownName = try? container.decodeIfPresent(String.self, forKey: .name) {
+                print("ERROR: Unknown fitness facility name - \(unknownName ?? "")")
+            }
         }
     }
 }

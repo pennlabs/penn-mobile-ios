@@ -15,11 +15,11 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
     var item: ModularTableViewItem! {
         didSet {
             guard let item = item as? HomePostCellItem else { return }
-            if item.post.subtitle != nil && descriptionLabel == nil {
-                self.prepareDescriptionLabel()
-            } else if item.post.subtitle == nil && descriptionLabel != nil {
-                descriptionLabel.removeFromSuperview()
-                descriptionLabel = nil
+            if item.post.subtitle != nil && subtitleLabel == nil {
+                self.prepareSubtitleLabel()
+            } else if item.post.subtitle == nil && subtitleLabel != nil {
+                subtitleLabel.removeFromSuperview()
+                subtitleLabel = nil
             }
             setupCell(with: item)
         }
@@ -29,7 +29,7 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
     
     // MARK: Cell Height
     
-    static let titleFont: UIFont = UIFont.primaryInformationFont!.withSize(18)
+    static let titleFont: UIFont = UIFont.primaryInformationFont.withSize(18)
     static let titleEdgeOffset: CGFloat = 16
     
     static let descriptionFont: UIFont = UIFont(name: "HelveticaNeue", size: 14)!
@@ -64,8 +64,8 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
             subtitleHeight = 0.0
         }
         
-        let bottomSpacing: CGFloat = item.post.source == nil && item.post.title == nil ? 0 : 12
-        return imageHeight + HomeViewController.cellSpacing + titleHeight + subtitleHeight + sourceHeight + bottomSpacing
+        let bottomSpacing: CGFloat = item.post.source == nil && item.post.title == nil ? 0 : Padding.pad
+        return imageHeight + titleHeight + subtitleHeight + sourceHeight + bottomSpacing + (Padding.pad * 2)
     }
     
     // MARK: UI Elements
@@ -75,7 +75,7 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
     fileprivate var postImageView: UIImageView!
     fileprivate var sourceLabel: UILabel!
     fileprivate var titleLabel: UILabel!
-    fileprivate var descriptionLabel: UILabel!
+    fileprivate var subtitleLabel: UILabel!
     fileprivate var dateLabel: UILabel!
     fileprivate var moreButton: UIButton!
     
@@ -104,7 +104,7 @@ extension HomePostCell {
         self.postImageView.image = item.image
         self.sourceLabel.text = post.source
         self.titleLabel.text = post.title
-        self.descriptionLabel?.text = post.subtitle
+        self.subtitleLabel?.text = post.subtitle
         self.dateLabel.text = post.timeLabel
         
         if item.post.source == nil {
@@ -160,52 +160,50 @@ extension HomePostCell {
     }
     
     fileprivate static func getImageHeight() -> CGFloat {
-        let cardWidth = UIScreen.main.bounds.width - 40
-        return 0.5 * cardWidth
+        let cardWidth = UIScreen.main.bounds.width - (2 * HomeViewController.edgeSpacing)
+        return 0.6 * cardWidth
     }
     
     private func prepareSourceLabel() {
         sourceLabel = UILabel()
-        sourceLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        sourceLabel.font = .secondaryInformationFont
         sourceLabel.textColor = UIColor.labelSecondary
         sourceLabel.numberOfLines = 1
         
         cardView.addSubview(sourceLabel)
-        _ = sourceLabel.anchor(postImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 12, leftConstant: HomePostCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomePostCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)
+        _ = sourceLabel.anchor(postImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: pad, leftConstant: pad, bottomConstant: 0, rightConstant: pad, widthConstant: 0, heightConstant: 0)
     }
     
     private func prepareTitleLabel() {
         titleLabel = UILabel()
-        titleLabel.font = HomePostCell.titleFont
+        titleLabel.font = HomeNewsCell.titleFont
         titleLabel.numberOfLines = 8
         
         cardView.addSubview(titleLabel)
-        titleTopConstraintToSource = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: HomePostCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomePostCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)[0]
-        
-        titleTopConstraintToImage = titleLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 12)
+        titleTopConstraintToSource = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: pad, leftConstant: HomePostCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomePostCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)[0]
+
+        titleTopConstraintToImage = titleLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: pad)
         titleTopConstraintToImage.isActive = false
     }
     
-    fileprivate func prepareDescriptionLabel() {
-        descriptionLabel = UILabel()
-        descriptionLabel.font = HomePostCell.descriptionFont
-        descriptionLabel.textColor = UIColor.labelSecondary
-        descriptionLabel.numberOfLines = 8
+    fileprivate func prepareSubtitleLabel() {
+        subtitleLabel = UILabel()
+        subtitleLabel.font = HomeNewsCell.subtitleFont
+        subtitleLabel.textColor = UIColor.labelSecondary
+        subtitleLabel.numberOfLines = 5
         
-        cardView.addSubview(descriptionLabel)
-        _ = descriptionLabel.anchor(titleLabel.bottomAnchor, left: titleLabel.leftAnchor, bottom: nil, right: titleLabel.rightAnchor, topConstant: 6, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        cardView.addSubview(subtitleLabel)
+        _ = subtitleLabel.anchor(titleLabel.bottomAnchor, left: titleLabel.leftAnchor, bottom: nil, right: titleLabel.rightAnchor, topConstant: pad/2, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     private func prepareDateLabel() {
         dateLabel = UILabel()
-        dateLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        dateLabel.font = .secondaryInformationFont
         dateLabel.textColor = UIColor.labelSecondary
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.numberOfLines = 2
-        dateLabel.textAlignment = .right
         
         cardView.addSubview(dateLabel)
-        dateLabel.topAnchor.constraint(equalTo: sourceLabel.topAnchor).isActive = true
+        dateLabel.firstBaselineAnchor.constraint(equalTo: sourceLabel.firstBaselineAnchor).isActive = true
         dateLabel.rightAnchor.constraint(equalTo: postImageView.rightAnchor, constant: -HomePostCell.titleEdgeOffset).isActive = true
     }
 }

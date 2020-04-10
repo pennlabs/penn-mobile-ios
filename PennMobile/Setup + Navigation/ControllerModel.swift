@@ -43,7 +43,6 @@ class ControllerModel: NSObject {
         vcDictionary[.dining] = DiningViewController()
         vcDictionary[.studyRoomBooking] = GSRTabController()
         vcDictionary[.laundry] = LaundryTableViewController()
-        vcDictionary[.fitness] = FitnessViewController()
         vcDictionary[.more] = MoreViewController()
         vcDictionary[.map] = MapViewController()
         vcDictionary[.news] = NewsViewController()
@@ -53,7 +52,8 @@ class ControllerModel: NSObject {
         vcDictionary[.privacy] = PrivacyViewController()
         vcDictionary[.courseSchedule] = CourseScheduleViewController()
         vcDictionary[.pacCode] = PacCodeViewController()
-//        vcDictionary[.fling] = FlingViewController()
+        //vcDictionary[.fitness] = FitnessViewController()
+        //vcDictionary[.fling] = FlingViewController()
     }
 
     var viewControllers: [UIViewController] {
@@ -72,12 +72,12 @@ class ControllerModel: NSObject {
     // Features order in MoreViewController:
     var moreOrder: [Feature] {
         get {
-            return [.news, .fitness, .contacts, .courseSchedule, .about]
+            return [.news, .contacts, .courseSchedule, .about]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Fitness"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "logo-small")]
+            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "logo-small")]
         }
     }
 
