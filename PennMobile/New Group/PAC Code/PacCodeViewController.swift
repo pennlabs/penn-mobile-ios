@@ -30,7 +30,7 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
     
     lazy var quadDigitLabel = [digitLabel, digitLabel, digitLabel, digitLabel]
     
-    let pacCodeIcon = UIImageView(image: UIImage(named: "PAC_Code")!)
+    var pacCodeIcon: UIImageView!
     let pacCodeTitleLabel = UILabel()
     let pacCodeSecurityInfoLabel = UILabel()
     let pacCodeHStack = UIStackView()
@@ -51,6 +51,7 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
     }
     
     func setupPacCodeIcon() {
+        pacCodeIcon = UIImageView(image: UIImage(named: "PAC_Code")!)
         pacCodeIcon.contentMode = .scaleAspectFill
         pacCodeIcon.tintColor = .labelPrimary
         
