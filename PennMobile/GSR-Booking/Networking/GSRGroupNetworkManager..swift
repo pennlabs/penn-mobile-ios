@@ -242,8 +242,6 @@ extension GSRGroupNetworkManager {
                 return
             }
             
-            print(token.value) //DELETE THIS LATER
-            
             let url = URL(string: url)!
             var request = URLRequest(url: url, accessToken: token)
             request.httpMethod = "GET"
