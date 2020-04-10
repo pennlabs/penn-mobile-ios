@@ -80,7 +80,7 @@ extension GroupMemberCell {
         addSubview(adminLabel)
         adminLabel.text = "admin"
         adminLabel.textColor = UIColor(named: "baseRed")
-        _ = adminLabel.anchor(nil, left: nameLabel.rightAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 10, bottomConstant: 12, rightConstant: 0, widthConstant: 0, heightConstant: 15)
+        _ = adminLabel.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 12, rightConstant: 15, widthConstant: 0, heightConstant: 15)
         adminLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
         adminLabel.font = UIFont.systemFont(ofSize: 15, weight: .light)
     }
