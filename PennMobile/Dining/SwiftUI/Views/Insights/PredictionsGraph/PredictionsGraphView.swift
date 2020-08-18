@@ -31,11 +31,15 @@ extension ClosedRange: ClampableRange {}
 struct PredictionsGraphView: View {
     
     init(config: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData) {
+        
         self.config = config
-        _data = State(initialValue: PredictionsGraphView.getSmoothedData(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester))
-        _axisLabelsYX = State(initialValue: PredictionsGraphView.getAxisLabelsYX(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester))
-        _balanceType = State(initialValue: (config.type.contains("swipes") ? .swipes : .dollars))
-        _predictedZeroPoint = State(initialValue: PredictionsGraphView.getPredictionZeroPoint(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester, predictedZeroDate: config.predictedZeroDate))
+        data = PredictionsGraphView.getSmoothedData(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester)
+        
+        axisLabelsYX = PredictionsGraphView.getAxisLabelsYX(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester)
+        
+        balanceType = config.type.contains("swipes") ? .swipes : .dollars
+        
+        predictedZeroPoint = PredictionsGraphView.getPredictionZeroPoint(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester, predictedZeroDate: config.predictedZeroDate)
     }
     
     struct YXDataPoint {
@@ -43,11 +47,11 @@ struct PredictionsGraphView: View {
         var x: CGFloat // Bound between 0 and 1
     }
     
-    let config: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData
-    @State var data: [YXDataPoint]
-    @State var axisLabelsYX: ([String], [String])
-    @State var balanceType: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.BalanceType
-    @State var predictedZeroPoint: YXDataPoint
+    var config: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData
+    var data: [YXDataPoint]
+    var axisLabelsYX: ([String], [String])
+    var balanceType: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.BalanceType
+    var predictedZeroPoint: YXDataPoint
     
     var formattedZeroDate: String {
         let formatter = DateFormatter()

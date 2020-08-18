@@ -15,7 +15,7 @@ import SwiftUI
 struct DiningBalanceView: View {
     let description: String
     let image: Image
-    @State var balance: Double
+    var balance: Double
     
     // By default, remove trailing zeros
     var specifier: String = "%g"

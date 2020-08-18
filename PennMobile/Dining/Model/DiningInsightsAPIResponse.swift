@@ -11,6 +11,8 @@ import Foundation
 // MARK: Full API Response
 struct DiningInsightsAPIResponse: Codable {
     
+    static let directory = "diningInsights.json"
+    
     let swipes: Int?
     let diningDollars: Double?
     let guestSwipes: Int?

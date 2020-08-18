@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct DiningVenue: Codable, Equatable {
+struct DiningVenue: Codable, Equatable, Identifiable {
+    
+    static let directory = "diningVenue.json"
     
     let id: Int
     let name: String

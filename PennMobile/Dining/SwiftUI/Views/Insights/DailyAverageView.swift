@@ -22,12 +22,13 @@ struct DailyAverageView: View {
         
         // Make a local copy of maxSpent (for init/compiler reasons)
         let maxSpent = self.maxSpent
-        self.thisWeekDollarData = config.data.thisWeek.map({CGFloat(($0.average * -1) / maxSpent)})
-        self.lastWeekDollarData = config.data.lastWeek.map({CGFloat(($0.average * -1) / maxSpent)})
+        self.thisWeekDollarData = config.data.thisWeek.map({CGFloat(($0.average * -1) / maxSpent)}).reversed()
+        self.lastWeekDollarData = config.data.lastWeek.map({CGFloat(($0.average * -1) / maxSpent)}).reversed()
         
         let dayFormatter = DateFormatter()
-        dayFormatter.dateFormat = "E"
-        dayOfWeek = config.data.thisWeek.map({ String(dayFormatter.string(from: $0.date).first ?? Character(" ")) })
+        dayFormatter.dateFormat = "EEEEE"
+        
+        dayOfWeek = config.data.thisWeek.map({ dayFormatter.string(from: $0.date) }).reversed()
     }
     
     let config: DiningInsightsAPIResponse.CardData.DailyAverageCardData
@@ -75,8 +76,8 @@ struct DailyAverageView: View {
         } else {
             let df = DateFormatter()
             df.dateFormat = "EEEE M/d"
-            let date = timeFrame == "This Week" ? config.data.thisWeek[selectedDataPoint!].date :
-                config.data.lastWeek[selectedDataPoint!].date
+            let date = timeFrame == "This Week" ? config.data.thisWeek.reversed()[selectedDataPoint!].date :
+                config.data.lastWeek.reversed()[selectedDataPoint!].date
             return df.string(from: date)
         }
     }
@@ -101,13 +102,14 @@ struct DailyAverageView: View {
                             .frame(width: 120.0, height: 110.0)
                         VStack(alignment: .leading) {
                             Text(self.selectedDataPoint == nil ? "Average" : formattedDay) .font(Font.caption.weight(.bold)).foregroundColor(self.selectedDataPoint == nil ? .gray : .yellow)
-                                .offset(x: 0, y: self.axisOffset - 10)
+                                .offset(x: 0, y: self.axisOffset - 13)
+
                             HStack(alignment: .firstTextBaseline, spacing: 4) {
                                 Text(formattedAverageForDay)
                                     .font(Font.system(.title, design: .rounded).bold())
-                                    .offset(x: 0, y: self.axisOffset - 10)
+                                    .offset(x: 0, y: self.axisOffset - 13)
                                 Text("\(self.selectedDataPoint == nil ? "/ day" : "")").font(Font.caption.weight(.bold)).foregroundColor(.gray)
-                                    .offset(x: 0, y: self.axisOffset - 10)
+                                    .offset(x: 0, y: self.axisOffset - 13)
                                 
                             }
                             .padding(.top, 8)
@@ -143,13 +145,12 @@ struct DailyAverageView: View {
                 }
                 GraphPath(data: [0.5, 0.5, 0.5]).stroke(style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                     .foregroundColor(self.selectedDataPoint == nil ? .green : Color.gray.opacity(0.5))
-                    .animation(.default)
-                    .offset(x: 0, y: self.axisOffset - 2)
+                    .offset(x: 0, y: self.axisOffset - 5)
                     .animation(.default)
             }
             
             // Footer
-            Picker("Pick a time frame", selection: self.$timeFrame) {
+            Picker("Pick a time frame", selection: self.$timeFrame.onChange({ _ in self.selectedDataPoint = nil})) {
                 ForEach(self.timeFrames, id: \.self) { time in
                     Text(time)
                 }
@@ -160,6 +161,10 @@ struct DailyAverageView: View {
                     self.axisOffset = (self.selectedDataPoint == nil ? ((0.5 - self.averageDollar) * 110) : ((0.5 - self.data[self.selectedDataPoint!]) * 110))
                 }
             }
+////             Fix for ad-hoc bindinding created
+//            .onChange(of: timeFrame) {
+//                  self.selectedDataPoint = nil
+//            }
             .padding(.top)
         }
         .frame(height: 318)
@@ -192,5 +197,40 @@ struct GraphPath: Shape, Animatable {
         }
         
         return path
+    }
+}
+
+
+@available(iOS 13, *)
+struct DailyAverageView_Previews: PreviewProvider {
+
+    static let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
+    static let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
+    static var decoder : JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }
+
+    static let diningInsights = try! decoder.decode(DiningInsightsAPIResponse.self, from: data)
+
+    static var previews: some View {
+        CardView { DailyAverageView(config: diningInsights.cards.dailyAverage!) }
+
+    }
+}
+
+
+// Ad-hoc solution to onChange effect of State
+// Will be replaced using .onChange modifier for state
+@available(iOS 13, *)
+extension Binding {
+    func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+        return Binding(
+            get: { self.wrappedValue },
+            set: { selection in
+                self.wrappedValue = selection
+                handler(selection)
+        })
     }
 }

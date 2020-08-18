@@ -19,21 +19,25 @@ struct FrequentLocationsView: View {
     }
     
     init(config: DiningInsightsAPIResponse.CardData.FrequentLocationsCardData) {
-        self.config = config
-        _data = State(initialValue: config.data)
+        data = config.data
         _portions = State(initialValue: FrequentLocationsView.computeTotal(with: config.data, for: 0))
     }
     
-    let config: DiningInsightsAPIResponse.CardData.FrequentLocationsCardData
-    @State private var data: [FrequentLocation]
+    private var data: [FrequentLocation]
     @State private var portions: [Double]
+    
     @State private var colors: [Color] = [.orange, .yellow, .green, .blue, .pink, .purple, .red, .orange, .yellow, .green, .blue, .pink, .purple, .red, .orange, .yellow, .green, .blue, .pink, .purple, .red]
     @State private var lengthOfTime: Int = 0
     
     static func computeTotal(with data: [FrequentLocation], for lengthOfTime: Int) -> [Double] {
-        let sum = data.reduce(0.0) { (result, freq) -> Double in
+        var sum = data.reduce(0.0) { (result, freq) -> Double in
             result + spending(at: freq, in: lengthOfTime)
         }
+        
+        if sum == 0 {
+            sum = 1
+        }
+        
         var values = [Double]()
         for freq in data {
             values.append(spending(at: freq, in: lengthOfTime) / sum)
@@ -119,5 +123,22 @@ struct FrequentLocationsView: View {
                 }
             }
         }
+    }
+}
+
+struct FrequentLocationsView_Previews: PreviewProvider {
+    static let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
+    static let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
+    static var decoder : JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }
+
+    static let diningInsights = try! decoder.decode(DiningInsightsAPIResponse.self, from: data)
+
+    static var previews: some View {
+        CardView { FrequentLocationsView(config: diningInsights.cards.frequentLocations!) }
+
     }
 }

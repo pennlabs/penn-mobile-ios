@@ -40,6 +40,26 @@ extension DiningVenue {
         return false
     }
     
+    var currentMeal: MealsForDate.Meal? {
+        return self.mealsToday?.meals.first(where: { $0.isCurrentlyServing }) ?? nil
+    }
+    
+    var currentMealIndex: Int? {
+        return self.mealsToday?.meals.firstIndex(where: { $0.isCurrentlyServing }) ?? nil
+    }
+    
+    var currentMealType: String? {
+        return self.currentMeal?.type ?? nil
+    }
+    
+    var isClosingSoon: Bool {
+        return Date().minutesFrom(date: currentMeal?.close ?? Date()) < 15
+    }
+    
+    var timeLeft: String {
+        return Date().humanReadableDistanceFrom(currentMeal?.close ?? Date())
+    }
+    
     var nextMeal: MealsForDate.Meal? {
         guard let mealsToday = mealsToday else { return nil }
         let now = Date()
@@ -48,6 +68,28 @@ extension DiningVenue {
     
     var hasMealsToday: Bool {
         return mealsToday != nil
+    }
+    
+    var nextOpenedDayOfTheWeek: String {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        let sortedMeals = self.meals.sorted(by: {
+            formatter.date(from: $0.key)! < formatter.date(from: $1.key)!
+        })
+        
+        for meal in sortedMeals {
+            if formatter.date(from: meal.key) ?? Date() > Date() && meal.value.meals.count != 0 {
+                return "until \(formatter.date(from: meal.key)?.dayOfWeek ?? "N/A")"
+            }
+        }
+        
+        return "Indefinitely"
+    }
+    
+    var isMainDiningTimes: Bool {
+        return (currentMealType == "Breakfast" || currentMealType == "Lunch" || currentMealType == "Dinner")
     }
     
     // MARK: - Formatted Hours
@@ -102,6 +144,52 @@ extension DiningVenue {
             timesString = ""
         }
         return timesString
+    }
+    
+    var humanFormattedHoursArrayForToday: [String] {
+        guard let _ = mealsToday else { return [] }
+        return formattedHoursArrayFor(Date())
+    }
+    
+    func formattedHoursArrayFor(_ date: Date) -> [String] {
+        let dateString = DiningVenue.dateFormatter.string(from: date)
+        return formattedHoursArrayFor(dateString)
+    }
+    
+    func formattedHoursArrayFor(_ dateString: String) -> [String] {
+        
+        var formattedHoursArray = [String]()
+        
+        guard let meals = self.meals[dateString]?.meals else { return [] }
+        
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "EST")
+        formatter.dateFormat = "h:mm"
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
+        
+        let moreThanOneMeal = meals.count > 1
+        
+        for m in meals {
+            if m.open.minutes == 0 {
+                formatter.dateFormat = moreThanOneMeal ? "h" : "h"
+            } else {
+                formatter.dateFormat = moreThanOneMeal ? "h:mm" : "h:mm"
+            }
+            let open = formatter.string(from: m.open)
+            
+            if m.close.minutes == 0 {
+                formatter.dateFormat = moreThanOneMeal ? "h" : "ha"
+            } else {
+                formatter.dateFormat = moreThanOneMeal ? "h:mm" : "h:mma"
+            }
+            let close = formatter.string(from: m.close)
+            
+            formattedHoursArray.append("\(open) - \(close)")
+        }
+        
+        return formattedHoursArray
     }
 }
 

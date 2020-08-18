@@ -18,34 +18,23 @@ class DiningAPI: Requestable {
     let diningBalanceUrl = "https://api.pennlabs.org/dining/balance"
     let diningInsightsUrl = "https://studentlife.pennlabs.org/dining/"
     
-    private let venuesDataStore: LocalJSONStore<DiningAPIResponse> = LocalJSONStore(storageType: .cache, filename: "venues.json")
-    
-    private let insightsDataStore: LocalJSONStore<DiningInsightsAPIResponse> = LocalJSONStore(storageType: .cache, filename: "insights.json")
-    
-    private init() {
-        _ = self.getInsights()
-    }
-
-    func fetchDiningHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
-        
+    func fetchDiningHours(_ completion: @escaping (_ result: Result<DiningAPIResponse, NetworkingError>) -> Void) {
         getRequestData(url: diningUrl) { (data, error, statusCode) in
             if statusCode == nil {
-                completion(false, false)
-                return
+                return completion(.failure(.serverError))
             }
             
             if statusCode != 200 {
-                completion(false, true)
-                return
+                return completion(.failure(.noInternet))
             }
             
-            guard let data = data else { completion(false, true); return }
+            guard let data = data else { return completion(.failure(.other)) }
             
             if let diningAPIResponse = try? JSONDecoder().decode(DiningAPIResponse.self, from: data) {
-                DiningDataStore.shared.store(response: diningAPIResponse)
-                completion(true, false)
+                self.saveToCache(diningAPIResponse.document.venues)
+                return completion(.success(diningAPIResponse))
             } else {
-                completion(false, true)
+                return completion(.failure(.parsingError))
             }
         }
     }
@@ -53,7 +42,8 @@ class DiningAPI: Requestable {
     func fetchDiningInsights(_ completion: @escaping (_ result: Result<DiningInsightsAPIResponse, NetworkingError>) -> Void ) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             guard let token = token else {
-                completion(.failure(.other))
+                // TODO: - Add network error handling for OAuth2
+                completion(.failure(.noInternet))
                 return
             }
             
@@ -72,9 +62,9 @@ class DiningAPI: Requestable {
                 }
                 
                 let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
+                
                 if let diningInsightsAPIResponse = try? decoder.decode(DiningInsightsAPIResponse.self, from: data) {
-                    DiningDataStore.shared.saveToCache(insights: diningInsightsAPIResponse)
+                    self.saveToCache(diningInsightsAPIResponse)
                     completion(.success(diningInsightsAPIResponse))
                 } else {
                     completion(.failure(.parsingError))
@@ -83,12 +73,6 @@ class DiningAPI: Requestable {
             task.resume()
         }
         
-        
-        
-    }
-    
-    func getCachedDiningInsights() -> DiningInsightsAPIResponse? {
-        return DiningDataStore.shared.getInsights()
     }
     
     func fetchDetailPageHTML(for venue: DiningVenue, _ completion: @escaping (_ html: String?) -> Void) {
@@ -140,8 +124,13 @@ extension DiningAPI {
 // Dining Data Storage
 extension DiningAPI {
     
+    // MARK: - Get Methods
     func getVenues() -> [DiningVenue] {
-        return venuesDataStore.storedValue?.document.venues ?? []
+        if Storage.fileExists(DiningVenue.directory, in: .caches) {
+            return Storage.retrieve(DiningVenue.directory, from: .caches, as: [DiningVenue].self)
+        } else {
+            return []
+        }
     }
     
     func getSectionedVenues() -> [DiningVenue.VenueType : [DiningVenue]] {
@@ -156,12 +145,25 @@ extension DiningAPI {
         return getVenues().filter({ ids.contains($0.id) })
     }
     
-    func getInsights() -> DiningInsightsAPIResponse? {
-        return insightsDataStore.storedValue
+    func getVenues(with ids: [Int]) -> [DiningVenue] {
+        return getVenues().filter({ ids.contains($0.id) })
     }
     
-    func saveToCache(insights: DiningInsightsAPIResponse) {
-        insightsDataStore.save(insights)
+    func getInsights() -> DiningInsightsAPIResponse? {
+        if Storage.fileExists(DiningInsightsAPIResponse.directory, in: .caches) {
+            return Storage.retrieve(DiningInsightsAPIResponse.directory, from: .caches, as: DiningInsightsAPIResponse.self)
+        } else {
+            return nil
+        }
+    }
+    
+    // MARK: - Cache Methods
+    func saveToCache(_ venues: [DiningVenue]) {
+        Storage.store(venues, to: .caches, as: DiningVenue.directory)
+    }
+    
+    func saveToCache(_ insights: DiningInsightsAPIResponse) {
+        Storage.store(insights, to: .caches, as: DiningInsightsAPIResponse.directory)
     }
     
 }

@@ -15,12 +15,12 @@ import SwiftUI
 struct RecentTransactionsView: View {
     
     init(config: DiningInsightsAPIResponse.CardData.RecentTransactionsCardData) {
-        self.config = config
-        _data = State(initialValue: config.data)
+//        self.config = config
+        data = config.data
     }
     
-    let config: DiningInsightsAPIResponse.CardData.RecentTransactionsCardData
-    @State var data: [DiningTransaction]
+//    let config: DiningInsightsAPIResponse.CardData.RecentTransactionsCardData
+    var data: [DiningTransaction]
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -28,7 +28,7 @@ struct RecentTransactionsView: View {
             CardHeaderView(color: .green, icon: .dollars, title: "Transactions", subtitle: "Your recent dining dollar transactions.")
             
             Divider()
-                .padding([.top, .bottom])
+                .padding(.top)
             
             VStack {
                 ForEach(self.data, id: \.self) { trans in

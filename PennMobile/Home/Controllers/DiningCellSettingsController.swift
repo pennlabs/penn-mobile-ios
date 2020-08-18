@@ -17,7 +17,7 @@ class DiningCellSettingsController: UITableViewController {
     var delegate: DiningCellSettingsDelegate?
 
     var chosenVenueIds = Set<Int>()
-    let allVenues = DiningDataStore.shared.getVenues()
+    let allVenues = DiningAPI.instance.getVenues()
 
     override func viewDidLoad() {
         super.viewDidLoad()

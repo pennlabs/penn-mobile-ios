@@ -70,16 +70,20 @@ class DiningViewController: GenericTableViewController {
 extension DiningViewController {
     fileprivate func fetchDiningHours() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        DiningAPI.instance.fetchDiningHours { (success, error) in
+        DiningAPI.instance.fetchDiningHours { (result) in
             DispatchQueue.main.async {
-                if !success {
-                    if error {
+                do {
+                    try _ = result.get()
+                } catch {
+                    switch result {
+                    case .failure(.serverError):
                         self.navigationVC?.addStatusBar(text: .apiError)
-                    } else {
+                    default:
                         self.navigationVC?.addStatusBar(text: .noInternet)
                     }
                 }
-                self.viewModel.venues = DiningDataStore.shared.getSectionedVenues()
+                
+                self.viewModel.venues = DiningAPI.instance.getSectionedVenues()
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false

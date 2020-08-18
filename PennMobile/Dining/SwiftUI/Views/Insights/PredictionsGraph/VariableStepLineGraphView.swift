@@ -19,10 +19,10 @@ struct VariableStepLineGraphView: View {
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @State private var trimEnd: CGFloat = 0.0
     @GestureState private var dragActive = false
-    @State var data: [PredictionsGraphView.YXDataPoint]
-    @State var lastPointPosition: CGFloat = 0.0
-    @State var xAxisLabels: [String]
-    @State var yAxisLabels: [String]
+    var data: [PredictionsGraphView.YXDataPoint]
+    var lastPointPosition: CGFloat = 0.0
+    var xAxisLabels: [String]
+    var yAxisLabels: [String]
     var lineColor: Color
     var predictedZeroPoint: PredictionsGraphView.YXDataPoint
     
@@ -30,11 +30,12 @@ struct VariableStepLineGraphView: View {
         VStack(alignment: .leading) {
             Spacer()
                 .frame(height: 20)
+            
             HStack {
                 // Y-Axis labels
                 VStack(alignment: .leading) {
                     ForEach(0 ..< yAxisLabels.count) { num in
-                        if num != 0 { Spacer() }
+                        if num != 0 { Spacer().frame(width: 40) }
                         Text(self.yAxisLabels[num])
                             .font(.subheadline)
                             .opacity(0.5)
@@ -67,26 +68,6 @@ struct VariableStepLineGraphView: View {
                         }
                         .clipped()
                         
-                        /*Group {
-                            Group {
-                                HStack(alignment: .center) {
-                                    Spacer()
-                                    Text("Today")
-                                    Image(systemName: "circle.fill")
-                                }
-                                .foregroundColor(.white)
-                                .font(.caption)
-                            }
-                            .frame(width: 140)
-                            .offset(x: -70 + 5.5 + ((self.lastPointPosition - 0.5) * geometry.size.width), y: -6 - geometry.size.height/2)
-                            
-                            GraphEndpointPath(x: self.lastPointPosition).stroke(
-                                style: StrokeStyle(lineWidth: 2.0, lineCap: .round, lineJoin: .round)
-                            )
-                                .foregroundColor(.white)
-                                .frame(height: self.graphHeight)
-                        }*/
-                        
                         Group {
                             Group {
                                 HStack(alignment: .center) {
@@ -111,7 +92,7 @@ struct VariableStepLineGraphView: View {
                 .frame(height: self.graphHeight)
                 
                 Spacer()
-                    .frame(width: 16)
+                    .frame(width: 10)
             }
             // X-Axis labels
             HStack {
