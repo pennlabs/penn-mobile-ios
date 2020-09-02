@@ -9,18 +9,33 @@
 import UIKit
 import Kingfisher
 
-class Member {
-    var name: String
+class Member: Comparable {
+
+    var firstName: String
+    var lastName: String
     var imageURL: URL?
     var websiteURL: URL?
-    
+
     // initialize properties of the class Member
-    init (name: String, image: String, website: String? = nil) {
-        self.name = name
+    init (firstName: String, lastName: String, image: String, website: String? = nil) {
+        self.firstName = firstName
+        self.lastName = lastName
         if let website = website {
             self.websiteURL = URL(string: website)
         }
         self.imageURL = URL(string: "https://s3.us-east-2.amazonaws.com/penn.mobile/about/" + image)
+    }
+
+    static func < (lhs: Member, rhs: Member) -> Bool {
+        ///sort by last name then first
+        if lhs.lastName == rhs.lastName {
+            return lhs.firstName < rhs.firstName
+        }
+        return lhs.lastName < rhs.lastName
+    }
+
+    static func == (lhs: Member, rhs: Member) -> Bool {
+        return lhs.firstName == rhs.firstName && lhs.lastName == rhs.lastName && lhs.imageURL == rhs.imageURL
     }
 }
 
@@ -37,31 +52,37 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     
     private func loadMembers() {
         
-        let dom = Member(name: "Dominic Holmes", image: "dominic.jpeg", website: "https://dominic.land")
-        let ben = Member(name: "Ben Leimberger", image: "ben.jpeg")
-        let carin = Member(name: "Carin Gan", image: "carin.jpeg")
-        let salib = Member(name: "Daniel Salib", image: "salib.jpeg")
-        let marta = Member(name: "Marta García", image: "marta.jpg")
-        let grace = Member(name: "Grace Jiang", image: "grace.jpeg")
-        let josh = Member(name: "Josh Doman", image: "josh.jpeg")
-        let tiff = Member(name: "Tiffany Chang", image: "tiff.jpeg")
-        let zhilei = Member(name: "Zhilei Zheng", image: "zhilei.jpeg")
-        let laura = Member(name: "Laura Gao", image: "laura.jpeg")
-        let yagil = Member(name: "Yagil Burowski", image: "yagil.jpeg")
-        let adel = Member(name: "Adel Qalieh", image: "adel.jpeg")
-        let rehaan = Member(name: "Rehaan Furniturewala", image: "rehaan.jpeg")
-        let liz = Member(name: "Liz Powell", image: "liz.jpeg")
-        let henrique = Member(name: "Henrique Lorente", image: "henrique.jpeg")
-        let lucy = Member(name: "Lucy Yuan", image: "lucy.jpeg")
-        let matthew = Member(name: "Matthew Rosca-Halmagean", image: "matthew.jpeg")
-        let hassan = Member(name: "Hassan Hammoud", image: "hassan.jpeg")
-        let jongmin = Member(name: "Jong Min Choi", image: "jongmin.jpeg")
+        let dom = Member(firstName: "Dominic", lastName: "Holmes", image: "dominic.jpeg", website: "https://dominic.land")
+        let ben = Member(firstName: "Ben", lastName: "Leimberger", image: "ben.jpeg")
+        let carin = Member(firstName: "Carin", lastName: "Gan", image: "carin.jpeg")
+        let salib = Member(firstName: "Daniel", lastName: "Salib", image: "salib.jpeg")
+        let marta = Member(firstName: "Marta", lastName: "García", image: "marta.jpg")
+        let grace = Member(firstName: "Grace", lastName: "Jiang", image: "grace.jpeg")
+        let josh = Member(firstName: "Josh", lastName: "Doman", image: "josh.jpeg")
+        let tiff = Member(firstName: "Tiffany", lastName: "Chang", image: "tiff.jpeg")
+        let zhilei = Member(firstName: "Zhilei", lastName: "Zheng", image: "zhilei.jpeg")
+        let laura = Member(firstName: "Laura", lastName: "Gao", image: "laura.jpeg")
+        let yagil = Member(firstName: "Yagil", lastName: "Burowski", image: "yagil.jpeg")
+        let adel = Member(firstName: "Adel", lastName: "Qalieh", image: "adel.jpeg")
+        let rehaan = Member(firstName: "Rehaan", lastName: "Furniturewala", image: "rehaan.jpeg")
+        let liz = Member(firstName: "Liz", lastName: "Powell", image: "liz.jpeg")
+        let henrique = Member(firstName: "Henrique", lastName: "Lorente", image: "henrique.jpeg")
+        let lucy = Member(firstName: "Lucy", lastName: "Yuan", image: "lucy.jpeg")
+        let matthew = Member(firstName: "Matthew", lastName: "Rosca-Halmagean", image: "matthew.jpeg")
+        let hassan = Member(firstName: "Hassan", lastName: "Hammoud", image: "hassan.jpeg")
+        let jongmin = Member(firstName: "Jong Min", lastName: "Choi", image: "jongmin.jpeg")
+        let adam = Member(firstName: "Adam", lastName: "Strike", image: "adam.jpeg")
+        let justin = Member(firstName: "Justin", lastName: "Lieb", image: "justin.jpeg")
+
         var currentMembers = [Member]()
         var pastMembers = [Member]()
         
-        //fill the arrays with the members
-        pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil]
-        currentMembers += [josh, dom, carin, salib, rehaan, liz, henrique, lucy, matthew, hassan, jongmin]
+        //fill the arrays with members, and sort alphabetically
+        pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil, josh, dom, carin, salib]
+        currentMembers += [rehaan, liz, henrique, lucy, matthew, hassan, jongmin, adam, justin]
+
+        pastMembers.sort(by: {$0 < $1})
+        currentMembers.sort(by: {$0 < $1})
         members += [currentMembers, pastMembers]
     }
     
@@ -211,7 +232,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         }
         //put the data for the people in the cell
         let member = members[indexPath.section][indexPath.row]
-        cell.name.text = member.name
+        cell.name.text = "\(member.firstName) \(member.lastName)"
         if let imageURL = member.imageURL {
             cell.profileImage.kf.setImage(with: imageURL)
         }
