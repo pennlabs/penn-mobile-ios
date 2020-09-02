@@ -79,8 +79,9 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         
         //fill the arrays with members, and sort alphabetically
         pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil, josh, dom, carin, salib]
-        pastMembers.sort(by: {$0 < $1})
         currentMembers += [rehaan, liz, henrique, lucy, matthew, hassan, jongmin, adam]
+
+        pastMembers.sort(by: {$0 < $1})
         currentMembers.sort(by: {$0 < $1})
         members += [currentMembers, pastMembers]
     }
