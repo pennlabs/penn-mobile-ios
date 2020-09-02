@@ -9,11 +9,12 @@
 import UIKit
 import Kingfisher
 
-class Member {
+class Member: Comparable {
+
     var name: String
     var imageURL: URL?
     var websiteURL: URL?
-    
+
     // initialize properties of the class Member
     init (name: String, image: String, website: String? = nil) {
         self.name = name
@@ -21,6 +22,21 @@ class Member {
             self.websiteURL = URL(string: website)
         }
         self.imageURL = URL(string: "https://s3.us-east-2.amazonaws.com/penn.mobile/about/" + image)
+    }
+
+    static func < (lhs: Member, rhs: Member) -> Bool {
+        ///sort by last name then first
+        if let lhsLast = lhs.name.components(separatedBy: " ").last,
+            let rhsLast = rhs.name.components(separatedBy: " ").last {
+            if lhsLast != rhsLast {
+                return lhsLast < rhsLast
+            }
+        }
+        return lhs.name < rhs.name
+    }
+
+    static func == (lhs: Member, rhs: Member) -> Bool {
+        return lhs.name == rhs.name && lhs.imageURL == rhs.imageURL
     }
 }
 
@@ -61,9 +77,11 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         var currentMembers = [Member]()
         var pastMembers = [Member]()
         
-        //fill the arrays with the members
+        //fill the arrays with members, and sort alphabetically
         pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil, josh, dom, carin, salib]
+        pastMembers.sort(by: {$0 < $1})
         currentMembers += [rehaan, liz, henrique, lucy, matthew, hassan, jongmin, adam]
+        currentMembers.sort(by: {$0 < $1})
         members += [currentMembers, pastMembers]
     }
     
