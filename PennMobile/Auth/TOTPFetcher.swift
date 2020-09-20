@@ -184,24 +184,24 @@ class TOTPFetcher: NSObject {
 }
 
 extension WKWebsiteDataStore {
-//    static func createDataStoreWithSavedCookies(_ callback: @escaping (WKWebsiteDataStore) -> Void) {
-//        let wkDataStore = WKWebsiteDataStore.nonPersistent()
-//        let sharedCookies: Array<HTTPCookie> = HTTPCookieStorage.shared.cookies ?? []
-//        let dispatchGroup = DispatchGroup()
-//
-//        if sharedCookies.count > 0 {
-//            for cookie in sharedCookies {
-//                dispatchGroup.enter()
-//                wkDataStore.httpCookieStore.setCookie(cookie) {
-//                    dispatchGroup.leave()
-//                }
-//            }
-//
-//            dispatchGroup.notify(queue: DispatchQueue.main) {
-//                callback(wkDataStore)
-//            }
-//        } else {
-//            callback(wkDataStore)
-//        }
-//    }
+    static func createDataStoreWithSavedCookies(_ callback: @escaping (WKWebsiteDataStore) -> Void) {
+        let wkDataStore = WKWebsiteDataStore.nonPersistent()
+        let sharedCookies: Array<HTTPCookie> = HTTPCookieStorage.shared.cookies ?? []
+        let dispatchGroup = DispatchGroup()
+
+        if sharedCookies.count > 0 {
+            for cookie in sharedCookies {
+                dispatchGroup.enter()
+                wkDataStore.httpCookieStore.setCookie(cookie) {
+                    dispatchGroup.leave()
+                }
+            }
+
+            dispatchGroup.notify(queue: DispatchQueue.main) {
+                callback(wkDataStore)
+            }
+        } else {
+            callback(wkDataStore)
+        }
+    }
 }

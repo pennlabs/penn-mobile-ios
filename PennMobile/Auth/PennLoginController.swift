@@ -29,10 +29,9 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
         super.viewDidLoad()
         view.backgroundColor = .uiBackground
 
-        //TODO: uncomment to reenable wkzombie
-//        WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
-//            self.configureAndLoad(wkDataStore: dataStore)
-//        }
+        WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
+            self.configureAndLoad(wkDataStore: dataStore)
+        }
         
         navigationItem.title = "PennKey Login"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
