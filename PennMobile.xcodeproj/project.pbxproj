@@ -640,6 +640,7 @@
 		21640D4220103C8A002F33CA /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				B9D16BBC2516E6F400659946 /* Polls */,
 				2180D2332013F652008C94CF /* Networking */,
 				21640D4E2010501C002F33CA /* Model */,
 				21640D4620104354002F33CA /* Cells */,
@@ -1318,6 +1319,13 @@
 				EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */,
 			);
 			path = "Group Invites";
+			sourceTree = "<group>";
+		};
+		B9D16BBC2516E6F400659946 /* Polls */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Polls;
 			sourceTree = "<group>";
 		};
 		C13F9E93219284E9000B866A /* Calendar */ = {
