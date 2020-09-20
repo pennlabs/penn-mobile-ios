@@ -129,7 +129,7 @@ class RootViewController: UIViewController, NotificationRequestable {
                 }))
                 
                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-                    TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+                    //TOTPFetcher.instance.fetchAndSaveTOTPSecret()
                 }))
             
                 self.current.present(alert, animated: true, completion: nil)

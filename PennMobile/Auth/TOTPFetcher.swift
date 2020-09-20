@@ -6,7 +6,6 @@
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
 import Foundation
-import WKZombie
 import WebKit
 
 class TOTPFetcher: NSObject {
@@ -23,7 +22,8 @@ class TOTPFetcher: NSObject {
         } else {
             UserDefaults.standard.setTwoFactorEnabledDate(Date())
         }
-
+        
+        /*
         let operation = TOTPFetcherOperation { (secret) in
             self.isFetching = false
             if let secret = secret {
@@ -43,7 +43,7 @@ class TOTPFetcher: NSObject {
                 FirebaseAnalyticsManager.shared.trackEvent(action: .twoStepRetrieval, result: .failed, content: false)
             }
         }
-        operation.run()
+        operation.run()*/
     }
 
     class TOTPFetcherOperation {
@@ -61,13 +61,13 @@ class TOTPFetcher: NSObject {
                 DispatchQueue.main.async {
                     WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
                         DispatchQueue.main.async {
-                            let zombie = WKZombie(dataStore: dataStore)
+                            /*let zombie = WKZombie(dataStore: dataStore)
                             Logger.enabled = true
                             WKZombie.setInstance(zombie: zombie)
 
                             let url = URL(string: self.urlStr)!
                             open(url)
-                                === self.checkUrl
+                                === self.checkUrl*/
 
                         }
                     }
@@ -76,8 +76,8 @@ class TOTPFetcher: NSObject {
         }
 
         //Check if we need to actually log the user in before getting the TOTP code
-        func checkUrl(result: Result<HTMLPage>) {
-            switch result {
+        func checkUrl(/*result: Result<HTMLPage>*/) {
+            /*switch result {
                 case .success(let page):
                     guard let url = page.url else { return }
                     if url.absoluteString.contains("weblogin") {
@@ -89,6 +89,7 @@ class TOTPFetcher: NSObject {
                         guard let pennkey = try? secureStore.getValue(for: "PennKey") else { return }
                         guard let password = try? secureStore.getValue(for: "PennKey Password") else { return }
 
+                        /*
                         inspect()
                             >>> get(by: .id("pennname"))
                             >>> setAttribute("value", value: pennkey)
@@ -96,18 +97,18 @@ class TOTPFetcher: NSObject {
                             >>> setAttribute("value", value: password)
                             >>> get(by: .id("login-form"))
                             >>> submit
-                            === self.goToTOTPPage
+                            === self.goToTOTPPage*/
                     }
                     else {
-                        //User was already logged in, so we just go to the TOTP page
+                        /*//User was already logged in, so we just go to the TOTP page
                         inspect()
-                            === self.goToTOTPPage
+                            === self.goToTOTPPage*/
                     }
                 case .error:
                     self.completion(nil)
-            }
+            }*/
         }
-
+        /*
         func goToTOTPPage(result: Result<HTMLPage>) {
             inspect()
                 >>> get(by: .attribute("action", "../../twoFactorUi/app/UiMain.totpAdd"))
@@ -179,7 +180,7 @@ class TOTPFetcher: NSObject {
             case .error: // handle error
                 self.completion(nil)
             }
-        }
+        }*/
     }
 }
 
