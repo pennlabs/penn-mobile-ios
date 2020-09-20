@@ -28,10 +28,11 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .uiBackground
-        
-        WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
-            self.configureAndLoad(wkDataStore: dataStore)
-        }
+
+        //TODO: uncomment to reenable wkzombie
+//        WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
+//            self.configureAndLoad(wkDataStore: dataStore)
+//        }
         
         navigationItem.title = "PennKey Login"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
