@@ -24,6 +24,7 @@ final class HomeItemTypes: ModularTableViewItemTypes {
     let courses: HomeCellItem.Type = HomeCoursesCellItem.self
     let gsrLocations: HomeCellItem.Type = HomeGSRLocationsCellItem.self
     let invites: HomeCellItem.Type =  HomeGroupInvitesCellItem.self
+    let polls: HomeCellItem.Type = HomePollsCellItem.self
 }
 
 // MARK: - JSON Parsing
@@ -68,7 +69,9 @@ extension HomeItemTypes {
      * Note: This method should return an empty array when the app is in production
     **/
     func getDefaultItems() -> [HomeCellItem.Type] {
-        let types = [HomeCellItem.Type]()
+        //let types = [HomeCellItem.Type]()
+        var types = [HomeCellItem.Type]()
+        types.append(polls)
         return types
     }
 }
