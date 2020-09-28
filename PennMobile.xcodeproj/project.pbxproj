@@ -187,6 +187,7 @@
 		B9D16BBF2516E96500659946 /* HomePollsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D16BBE2516E96500659946 /* HomePollsCell.swift */; };
 		B9D16BC12516E97C00659946 /* HomePollsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D16BC02516E97C00659946 /* HomePollsCellItem.swift */; };
 		B9D16BC42516F00200659946 /* PollQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D16BC32516F00200659946 /* PollQuestion.swift */; };
+		B9ECAC422521519F004C488E /* PollOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ECAC412521519F004C488E /* PollOptionCell.swift */; };
 		B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */; };
 		BD766B7A9F54888FF9CAECC6 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F77CCBB7C32C932B101F62 /* Pods_AutomatedScreenshotUITests.framework */; };
 		C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */; };
@@ -485,6 +486,7 @@
 		B9D16BBE2516E96500659946 /* HomePollsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCell.swift; sourceTree = "<group>"; };
 		B9D16BC02516E97C00659946 /* HomePollsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCellItem.swift; sourceTree = "<group>"; };
 		B9D16BC32516F00200659946 /* PollQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollQuestion.swift; sourceTree = "<group>"; };
+		B9ECAC412521519F004C488E /* PollOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollOptionCell.swift; sourceTree = "<group>"; };
 		B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInviteUserCell.swift; sourceTree = "<group>"; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
@@ -1336,6 +1338,7 @@
 				B9D16BBE2516E96500659946 /* HomePollsCell.swift */,
 				B9D16BC02516E97C00659946 /* HomePollsCellItem.swift */,
 				B9D16BC32516F00200659946 /* PollQuestion.swift */,
+				B9ECAC412521519F004C488E /* PollOptionCell.swift */,
 			);
 			path = Polls;
 			sourceTree = "<group>";
@@ -1835,6 +1838,7 @@
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
 				97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */,
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
+				B9ECAC422521519F004C488E /* PollOptionCell.swift in Sources */,
 				B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
 				B9D16BBF2516E96500659946 /* HomePollsCell.swift in Sources */,

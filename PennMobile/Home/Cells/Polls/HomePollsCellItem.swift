@@ -32,7 +32,17 @@ final class HomePollsCellItem: HomeCellItem {
     static func getItem(for json: JSON?) -> HomeCellItem? {
        // guard let json = json else { return nil }
 //        guard let pollQuestion = try? JSONDecoder().decode(PollQuestion.self, from: json.rawData()) else { return nil }
-        let pollQuestion = PollQuestion(title: "What do you think of the university's response to coronavirus?")
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        let ddl = formatter.date(from:"2020/10/01 11:59")
+        let pollQuestion = PollQuestion(
+            title: "Who is more of a snake?",
+            source: "THE DAILY PENNSYLVANIAN",
+            ddl: ddl,
+            options:["Wharton Students":2,
+                     "M&T Students":2,
+                     "CIS Majors who are trying to transfer into Wharton": 6,
+                     "Armaan going to a Goldman info session": 296])
         return HomePollsCellItem(pollQuestion:pollQuestion)
     }
 }
