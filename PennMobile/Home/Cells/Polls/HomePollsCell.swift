@@ -21,8 +21,9 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     }
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
-//        guard let item = item as? HomePollsCellItem else { return 0.0 }
-        let pollHeight = CGFloat(20.0)
+        guard let item = item as? HomePollsCellItem else { return 0.0 }
+        let numPolls = CGFloat(item.pollQuestion.options?.count ?? 0)
+        let pollHeight = numPolls * PollOptionCell.cellHeight
         return (pollHeight + HomeCellHeader.height + (Padding.pad * 3))
     }
     
@@ -32,7 +33,7 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     var cardView: UIView! = UIView()
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
     fileprivate var header: HomeCellHeader = HomeCellHeader()
-    fileprivate var tableView: UITableView!
+    fileprivate var responsesTableView: UITableView!
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -50,8 +51,8 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
 extension HomePollsCell {
     fileprivate func setupCell(with item: HomePollsCellItem) {
         pollQuestion = item.pollQuestion
-        //tableView.reloadData()
-        header.secondaryTitleLabel.text = "Poll from THE OFFICE OF THE VICE PROVOST"
+        responsesTableView.reloadData()
+        header.secondaryTitleLabel.text = "Poll FROM \(pollQuestion.source ?? "some source")"
         header.primaryTitleLabel.text = item.pollQuestion.title
     }
 }
@@ -63,7 +64,7 @@ extension HomePollsCell {
     fileprivate func prepareUI() {
         prepareSafeArea()
         prepareHeader()
-        //prepareTableView()
+        prepareTableView()
     }
     
     // MARK: Safe Area and Header
@@ -79,8 +80,9 @@ extension HomePollsCell {
 
     // MARK: TableView
     fileprivate func prepareTableView() {
-        cardView.addSubview(tableView)
-        tableView.snp.makeConstraints { (make) in
+        responsesTableView = getTableView()
+        cardView.addSubview(responsesTableView)
+        responsesTableView.snp.makeConstraints { (make) in
             make.leading.equalTo(cardView)
             make.top.equalTo(header.snp.bottom).offset(pad)
             make.trailing.equalTo(cardView)
@@ -89,4 +91,41 @@ extension HomePollsCell {
     }
 }
 
+extension HomePollsCell: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? PollOptionCell {
+            cell.question = Array((pollQuestion.options?.keys)!)[indexPath.row]
+            cell.response = Array((pollQuestion.options?.values)!)[indexPath.row]
+        }
+    }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 110
+    }
+}
+
+
+extension HomePollsCell: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return pollQuestion?.options?.count ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PollOptionCell.identifier, for: indexPath) as! PollOptionCell
+        
+        return cell
+    }
+}
+
+extension HomePollsCell {
+    fileprivate func getTableView() -> UITableView {
+        let tableView = UITableView()
+        tableView.backgroundColor = .clear
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
+        tableView.register(PollOptionCell.self, forCellReuseIdentifier: PollOptionCell.identifier)
+        return tableView
+    }
+}
