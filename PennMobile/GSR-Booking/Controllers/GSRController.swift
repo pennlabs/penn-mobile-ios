@@ -16,6 +16,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var rangeSlider: GSRRangeSlider!
     fileprivate var pickerView: UIPickerView!
     fileprivate var emptyView: EmptyView!
+    fileprivate var closedView: ClosedView!
     fileprivate var barButton: UIBarButtonItem!
     fileprivate var bookingsBarButton: UIBarButtonItem!
     
@@ -38,6 +39,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
         
         let index = viewModel.getLocationIndex(startingLocation)
         self.pickerView.selectRow(index, inComponent: 1, animated: true)
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -77,6 +79,7 @@ extension GSRController {
         prepareTableView()
         prepareEmptyView()
         prepareLoadingView()
+        prepareClosedView()
     }
 
     private func preparePickerView() {
@@ -116,6 +119,14 @@ extension GSRController {
         view.addSubview(emptyView)
         _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
+    
+    private func prepareClosedView() {
+        closedView = ClosedView()
+        closedView.isHidden = true
+
+        view.addSubview(closedView)
+        _ = closedView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+    }
 }
 
 // MARK: - Prepare View Model
@@ -134,7 +145,7 @@ extension GSRController: GSRViewModelDelegate {
         let date = viewModel.getSelectedDate()
         
         self.startLoadingViewAnimation()
-        
+                        
         GSRNetworkManager.instance.getAvailability(for: location.lid, date: date) { (rooms) in
             
             DispatchQueue.main.async {
@@ -146,12 +157,16 @@ extension GSRController: GSRViewModelDelegate {
                     self.stopLoadingViewAnimation()
                 }
             }
+            
         }
+        
+        
     }
 
     func refreshDataUI() {
-        emptyView.isHidden = !viewModel.isEmpty
         tableView.isHidden = viewModel.isEmpty
+        closedView.isHidden = viewModel.existsNonEmptyRoom()
+        emptyView.isHidden = !viewModel.isEmpty || !viewModel.existsNonEmptyRoom()
         self.tableView.reloadData()
     }
 
