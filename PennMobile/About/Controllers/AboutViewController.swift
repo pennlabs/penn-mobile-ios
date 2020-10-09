@@ -73,7 +73,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         let jongmin = Member(firstName: "Jong Min", lastName: "Choi", image: "jongmin.jpeg")
         let adam = Member(firstName: "Adam", lastName: "Strike", image: "adam.jpeg")
         let justin = Member(firstName: "Justin", lastName: "Lieb", image: "justin.jpeg")
-        let daniel = Member(firstName: "Daniel", lastName: "Duan", image: "justin.jpeg")
+        let daniel = Member(firstName: "Daniel", lastName: "Duan", image: "daniel.jpg")
         let raunaq = Member(firstName: "Raunaq", lastName: "Singh", image: "raunaq.jpeg")
 
         var currentMembers = [Member]()
