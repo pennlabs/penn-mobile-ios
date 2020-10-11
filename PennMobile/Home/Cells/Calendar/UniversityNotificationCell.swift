@@ -12,7 +12,7 @@ import EventKit
 class UniversityNotificationCell: UITableViewCell {
     
     static let identifier = "universityNotificationCell"
-    static let cellHeight: CGFloat = 107
+    static let cellHeight: CGFloat = 84
     
     var calendarEvent: CalendarEvent! {
         didSet {
@@ -20,11 +20,10 @@ class UniversityNotificationCell: UITableViewCell {
         }
     }
     
-    // MARK: Declare UI Elements
+    // MARK: UI Elements
     fileprivate var eventLabel: UILabel!
     fileprivate var dateLabel: UILabel!
     fileprivate var pennCrest: UIImageView!
-    fileprivate var addToCalendarButton: UIButton!
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,47 +52,68 @@ extension UniversityNotificationCell {
     }
     
     fileprivate func prepareLabels() {
-        let padding = UIView.padding
-        
         eventLabel = getEventLabel()
         dateLabel = getDateLabel()
         pennCrest = getPennCrest()
+        let centeredView = UIView()
         
-        addSubview(eventLabel)
-        addSubview(dateLabel)
+        addSubview(centeredView)
+        centeredView.addSubview(eventLabel)
+        centeredView.addSubview(dateLabel)
         addSubview(pennCrest)
         
-        _ = eventLabel.anchor(topAnchor, left: pennCrest.rightAnchor, bottom: nil, right: rightAnchor, topConstant: padding, leftConstant: padding, rightConstant: padding)
-        _ = dateLabel.anchor(eventLabel.bottomAnchor, left: pennCrest.rightAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 7, leftConstant: padding, bottomConstant: 22, rightConstant: padding)
-        _ = pennCrest.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 13, leftConstant: 25, widthConstant: 83, heightConstant: 83)
         
+        pennCrest.snp.makeConstraints { (make) in
+            make.leading.equalTo(self).offset(pad)
+            make.centerY.equalTo(self)
+            make.height.equalTo(54)
+            make.width.equalTo(46)
+        }
+        
+        centeredView.snp.makeConstraints { (make) in
+            make.leading.equalTo(pennCrest.snp.trailing).offset(pad)
+            make.trailing.equalTo(self).offset(-pad)
+            make.centerY.equalTo(pennCrest)
+        }
+        
+        eventLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(centeredView)
+            make.trailing.equalTo(centeredView)
+            make.top.equalTo(centeredView)
+        }
+        
+        dateLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(centeredView)
+            make.trailing.equalTo(centeredView)
+            make.bottom.equalTo(centeredView)
+            make.top.equalTo(eventLabel.snp.bottom).offset(3)
+        }
     }
     
     fileprivate func getDateLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        label.font = .primaryInformationFont
         label.textColor = .labelSecondary
-        label.textAlignment = .center
-        label.numberOfLines = 1
-        label.shrinkUntilFits()
+        label.textAlignment = .left
+        label.numberOfLines = 2
         return label
     }
     
     fileprivate func getEventLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        label.textAlignment = .center
-        label.textColor = UIColor.labelPrimary
+        label.font = .interiorTitleFont
+        label.textAlignment = .left
+        label.textColor = .labelPrimary
         label.numberOfLines = 2
         return label
     }
     
     fileprivate func getPennCrest() -> UIImageView {
         let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.widthAnchor.constraint(equalToConstant: 83).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 83).isActive = true
         image.image = UIImage(named: "upenn")
+        image.contentMode = .scaleAspectFit
+        image.backgroundColor = .clear
+        image.layer.cornerRadius = 5
         return image
     }
 }

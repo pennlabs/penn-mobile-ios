@@ -8,6 +8,10 @@
 import Foundation
 import WebKit
 
+protocol TwoFactorWebviewDelegate {
+    func handleDismiss()
+}
+
 class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
     
     override var shouldLoadCookies: Bool {
@@ -15,6 +19,8 @@ class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
     }
     
     var completion : ((_ successful: Bool) -> Void)? = nil
+    
+    var delegate : TwoFactorEnableDelegate?
     
     override var urlStr: String {
         return "https://twostep.apps.upenn.edu/twoFactor/twoFactorUi/app/UiMain.index"
@@ -24,22 +30,26 @@ class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
         self.showActivity()
         var completed = false
         decisionHandler(.cancel)
-        TOTPFetcher.instance.fetchAndSaveTOTPSecret { (secret) in
-            DispatchQueue.main.async {
-                if !completed {
-                    self.hideActivity()
-                    self.dismiss(animated: true, completion: nil)
-                    completed = true
-                }
-                self.completion?(secret != nil)
-            }
-        }
+        //TODO: Uncomment to reenable 2FA
+//        TOTPFetcher.instance.fetchAndSaveTOTPSecret { (secret) in
+//            DispatchQueue.main.async {
+//                if !completed {
+//                    self.hideActivity()
+//                    self.dismiss(animated: true, completion: nil)
+//                    completed = true
+//                }
+//                self.completion?(secret != nil)
+//            }
+//        }
         //Hide the screen after 5 seconds, but continue fetching the code in the background
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             if !completed {
                 self.hideActivity()
                 self.dismiss(animated: true, completion: nil)
                 completed = true
+                if let delegate = self.delegate {
+                    delegate.handleDismiss()
+                }
             }
         }
         UserDefaults.standard.storeCookies()

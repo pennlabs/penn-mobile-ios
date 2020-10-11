@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1382055623EF7B9B005969AB /* DiningTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1382055523EF7B9B005969AB /* DiningTabController.swift */; };
-		1382055823EF7CA2005969AB /* DiningInsightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1382055723EF7CA2005969AB /* DiningInsightsViewController.swift */; };
 		139139772388923F00C6C298 /* DiningDollarsTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */; };
-		1E96A1EBED744C54C983826C /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1252AD63A8C4182FFA24C6 /* Pods_PennMobile.framework */; };
 		2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */; };
 		2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF221F3F762500CEC3F4 /* ContactCell.swift */; };
 		210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210AC14420684F9B0050D837 /* HomeCellProtocols.swift */; };
@@ -142,15 +139,13 @@
 		21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */; };
 		21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */; };
 		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
+		497810AF5B16F0E4FD3D6092 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97A59EEC6E7DA45F57EEB74 /* Pods_PennMobile.framework */; };
 		665F1FC523D261B100DC023E /* TwoFactorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F1FC423D261B100DC023E /* TwoFactorCell.swift */; };
 		665F1FC723D2628800DC023E /* TwoFactorWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */; };
 		667EC29623DB9C4800B0DF66 /* TwoFactorEnableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */; };
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
-		6C62855A24B1CE5900CFB115 /* FadingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C62855924B1CE5900CFB115 /* FadingScrollView.swift */; };
-		6CD5887E24A5D3C500A5BE98 /* mock_menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 6CD5887D24A5D3C500A5BE98 /* mock_menu.json */; };
-		6CE86D4624A5269600155201 /* DiningMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE86D4524A5269600155201 /* DiningMenu.swift */; };
 		97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806423D26BC700C23488 /* DiningBalanceCell.swift */; };
 		97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */; };
 		97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806623D26BC700C23488 /* DiningHeaderView.swift */; };
@@ -172,8 +167,8 @@
 		97E79E182100E4AA00D3D606 /* FitnessFacilityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E172100E4AA00D3D606 /* FitnessFacilityData.swift */; };
 		97E79E1A2100E51A00D3D606 /* FitnessFacilityName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E192100E51A00D3D606 /* FitnessFacilityName.swift */; };
 		97E79E1C2100F32E00D3D606 /* FitnessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E1B2100F32E00D3D606 /* FitnessViewModel.swift */; };
-		9DEF5A2FA0EE4DCDB0B50BE8 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F4C8BB2BB56EFEFC32E6619 /* Pods_AutomatedScreenshotUITests.framework */; };
 		B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */; };
+		B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6111DB12018497400DC7877 /* GoogleService-Info.plist */; };
 		B6111DB420184C4A00DC7877 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6111DB320184C4A00DC7877 /* AboutViewController.swift */; };
 		B62875EB2115302200FB2873 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875EA2115302200FB2873 /* MapViewController.swift */; };
 		B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875EC2115433100FB2873 /* PennCoordinate.swift */; };
@@ -189,6 +184,8 @@
 		B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */; };
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
 		B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */; };
+		B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */; };
+		BD766B7A9F54888FF9CAECC6 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F77CCBB7C32C932B101F62 /* Pods_AutomatedScreenshotUITests.framework */; };
 		C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */; };
 		C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */; };
 		C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11B38E222508A8D009B752A /* DiningBalance.swift */; };
@@ -200,21 +197,10 @@
 		C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C4B4D223EB16F00E443FD /* HomeReservationsCell.swift */; };
 		C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C4B4F223EB18800E443FD /* HomeReservationsCellItem.swift */; };
 		C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */; };
-		C821BDEA248AE60000930476 /* DiningVenueDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C821BDE9248AE60000930476 /* DiningVenueDetailView.swift */; };
-		C82368D4248FC91B003E7AF3 /* DiningInsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82368D3248FC91B003E7AF3 /* DiningInsightsView.swift */; };
-		C82368D6248FCBD7003E7AF3 /* DiningVenueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82368D5248FCBD7003E7AF3 /* DiningVenueView.swift */; };
-		C82368D92492364D003E7AF3 /* AlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82368D82492364D003E7AF3 /* AlertModifier.swift */; };
-		C845186824874BAD00747D5F /* UIKit Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845186724874BAD00747D5F /* UIKit Views.swift */; };
-		C85C2BDF248A35CF003B8DD6 /* sample-dining-venue.json in Resources */ = {isa = PBXBuildFile; fileRef = C85C2BDE248A35CF003B8DD6 /* sample-dining-venue.json */; };
-		C85C2BE1248A95C0003B8DD6 /* DiningVenueRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85C2BE0248A95C0003B8DD6 /* DiningVenueRow.swift */; };
-		C861E2EC24257A1300F4A562 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C861E2EB24257A1300F4A562 /* GoogleService-Info.plist */; };
-		C8B7F7C32488CF710058B489 /* DiningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B7F7C22488CF710058B489 /* DiningView.swift */; };
-		C8B7F7C92488F9750058B489 /* DiningViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B7F7C82488F9750058B489 /* DiningViewHeader.swift */; };
-		C8B7F7CB2488FAC50058B489 /* DiningViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B7F7CA2488FAC50058B489 /* DiningViewControllerSwiftUI.swift */; };
-		C8BA9D96249EB2CD00189D46 /* DiningViewModelSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BA9D95249EB2CD00189D46 /* DiningViewModelSwiftUI.swift */; };
-		C8BA9D9924A1DAEE00189D46 /* DiningVenueDetailMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BA9D9824A1DAEE00189D46 /* DiningVenueDetailMenuView.swift */; };
-		C8BA9D9B24A1DB2600189D46 /* DiningVenueDetailHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BA9D9A24A1DB2600189D46 /* DiningVenueDetailHoursView.swift */; };
-		C8BA9D9D24A1DB4E00189D46 /* DiningVenueDetailLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BA9D9C24A1DB4E00189D46 /* DiningVenueDetailLocationView.swift */; };
+		C8C96F10241407000069D56A /* CourseScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C96F0E241407000069D56A /* CourseScheduleViewController.swift */; };
+		C8C96F11241407000069D56A /* CourseScheduleTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C96F0F241407000069D56A /* CourseScheduleTableViewModel.swift */; };
+		C8C96F15241407420069D56A /* PacCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C96F13241407420069D56A /* PacCodeViewController.swift */; };
+		C8C96F16241407420069D56A /* PacCodeNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C96F14241407420069D56A /* PacCodeNetworkManager.swift */; };
 		CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */; };
 		CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9BC205D664700C51F46 /* MoreCell.swift */; };
 		CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */; };
@@ -222,8 +208,12 @@
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
+		EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */; };
+		EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */; };
+		EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */; };
 		EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC321860B7000E29C6A /* StatusBar.swift */; };
 		EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC521861B8500E29C6A /* HomeNavigationController.swift */; };
+		EF6329A22409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6329A12409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift */; };
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
 		EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */; };
 		EFE2D6F0239B11050020F6BF /* GroupSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E8239B11050020F6BF /* GroupSettingsCell.swift */; };
@@ -238,10 +228,6 @@
 		EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */; };
 		EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */; };
 		EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */; };
-		F203DC1C2400C3FF003350E2 /* FrequentLocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203DC1B2400C3FF003350E2 /* FrequentLocationsView.swift */; };
-		F203DC1E2400DA60003350E2 /* RecentTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203DC1D2400DA60003350E2 /* RecentTransactionsView.swift */; };
-		F203DC222402ED45003350E2 /* DailyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203DC212402ED45003350E2 /* DailyAverageView.swift */; };
-		F203DC2424032555003350E2 /* CardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F203DC2324032554003350E2 /* CardHeaderView.swift */; };
 		F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */; };
 		F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */; };
 		F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */; };
@@ -260,21 +246,18 @@
 		F23CC0BD235E3F390007317A /* DiningAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */; };
 		F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */; };
 		F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */; };
+		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
 		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
 		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
+		F2568A692411F20E00561295 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A682411F20E00561295 /* NotificationService.swift */; };
+		F2568A6D2411F20E00561295 /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F2568A662411F20E00561295 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F2568A732411F26500561295 /* NotificationService+ImageCacheing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */; };
+		F2568A762413534F00561295 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F2568A752413534F00561295 /* SnapKit */; };
+		F2568A7824135B6500561295 /* HomeCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A7724135B6500561295 /* HomeCellHeader.swift */; };
+		F2568A7A2413637D00561295 /* HomeCellSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A792413637D00561295 /* HomeCellSafeArea.swift */; };
 		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
-		F2B05E1C24009B0B00C267EB /* DiningBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */; };
-		F2B05E2024009C4000C267EB /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E1F24009C4000C267EB /* CardView.swift */; };
-		F2B05E222400B6A300C267EB /* DiningInsightsAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B05E212400B6A200C267EB /* DiningInsightsAPIResponse.swift */; };
-		F2B05E242400BA0200C267EB /* example-dining-stats.json in Resources */ = {isa = PBXBuildFile; fileRef = F2B05E232400BA0200C267EB /* example-dining-stats.json */; };
-		F2C432672409C3F60044CCF5 /* PredictionsGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C432662409C3F60044CCF5 /* PredictionsGraphView.swift */; };
-		F2C4326A2409C5950044CCF5 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C432692409C5950044CCF5 /* VariableStepLineGraphView+VariableStepGraphPath.swift */; };
-		F2C4326C2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4326B2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift */; };
-		F2C4326E2409D6170044CCF5 /* VariableStepLineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4326D2409D6170044CCF5 /* VariableStepLineGraphView.swift */; };
-		F2C432702409D66F0044CCF5 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C4326F2409D66F0044CCF5 /* VariableStepLineGraphView+PredictionSlopePath.swift */; };
-		F2C432722409D6800044CCF5 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C432712409D6800044CCF5 /* VariableStepLineGraphView+GraphEndpointPath.swift */; };
-		F2C43274240AF5EA0044CCF5 /* PredictionsGraphView+AxisLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C43273240AF5EA0044CCF5 /* PredictionsGraphView+AxisLabels.swift */; };
+		F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
@@ -286,11 +269,30 @@
 			remoteGlobalIDString = 2166405F1EBADADA00746B8E;
 			remoteInfo = PennMobile;
 		};
+		F2568A6B2411F20E00561295 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 216640581EBADADA00746B8E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F2568A652411F20E00561295;
+			remoteInfo = GSRNotificationServiceExtension;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F2568A6E2411F20E00561295 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F2568A6D2411F20E00561295 /* NotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		1382055523EF7B9B005969AB /* DiningTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningTabController.swift; sourceTree = "<group>"; };
-		1382055723EF7CA2005969AB /* DiningInsightsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningInsightsViewController.swift; sourceTree = "<group>"; };
 		139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDollarsTransactionViewController.swift; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
@@ -429,19 +431,14 @@
 		21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusExpressLoginController.swift; sourceTree = "<group>"; };
 		21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAnalyticsEngine.swift; sourceTree = "<group>"; };
 		21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
-		2F4C8BB2BB56EFEFC32E6619 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51F77CCBB7C32C932B101F62 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		665F1FC423D261B100DC023E /* TwoFactorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorCell.swift; sourceTree = "<group>"; };
 		665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorWebviewController.swift; sourceTree = "<group>"; };
 		667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorEnableController.swift; sourceTree = "<group>"; };
 		66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPFetcher.swift; sourceTree = "<group>"; };
 		66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorTokenGenerator.swift; sourceTree = "<group>"; };
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
-		6B215C68B7390AEA24B6C7F1 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		6C62855924B1CE5900CFB115 /* FadingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadingScrollView.swift; sourceTree = "<group>"; };
-		6CD5887D24A5D3C500A5BE98 /* mock_menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mock_menu.json; sourceTree = "<group>"; };
-		6CE86D4524A5269600155201 /* DiningMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningMenu.swift; sourceTree = "<group>"; };
-		8C76C684400803EA7003BF04 /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
-		8C9FA3D4605D9E146A44D8C8 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
+		739709EEABEDE069054CBDDF /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		97AA806423D26BC700C23488 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
 		97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		97AA806623D26BC700C23488 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
@@ -463,8 +460,8 @@
 		97E79E172100E4AA00D3D606 /* FitnessFacilityData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityData.swift; sourceTree = "<group>"; };
 		97E79E192100E51A00D3D606 /* FitnessFacilityName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityName.swift; sourceTree = "<group>"; };
 		97E79E1B2100F32E00D3D606 /* FitnessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewModel.swift; sourceTree = "<group>"; };
-		9F1252AD63A8C4182FFA24C6 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLaundryCell.swift; sourceTree = "<group>"; };
+		B6111DB12018497400DC7877 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6111DB320184C4A00DC7877 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		B62875EA2115302200FB2873 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B62875EC2115433100FB2873 /* PennCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCoordinate.swift; sourceTree = "<group>"; };
@@ -481,7 +478,7 @@
 		B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
 		B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteViewController.swift; sourceTree = "<group>"; };
-		B9C8CAA7235A613D0040C8E5 /* GSRGroupNewIntialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupNewIntialController.swift; sourceTree = "<group>"; };
+		B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInviteUserCell.swift; sourceTree = "<group>"; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
 		C11B38E222508A8D009B752A /* DiningBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalance.swift; sourceTree = "<group>"; };
@@ -493,22 +490,11 @@
 		C15C4B4D223EB16F00E443FD /* HomeReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCell.swift; sourceTree = "<group>"; };
 		C15C4B4F223EB18800E443FD /* HomeReservationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCellItem.swift; sourceTree = "<group>"; };
 		C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReservationsCell.swift; sourceTree = "<group>"; };
-		C375DF313AB319FDFA0053D3 /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
-		C821BDE9248AE60000930476 /* DiningVenueDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueDetailView.swift; sourceTree = "<group>"; };
-		C82368D3248FC91B003E7AF3 /* DiningInsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningInsightsView.swift; sourceTree = "<group>"; };
-		C82368D5248FCBD7003E7AF3 /* DiningVenueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueView.swift; sourceTree = "<group>"; };
-		C82368D82492364D003E7AF3 /* AlertModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModifier.swift; sourceTree = "<group>"; };
-		C845186724874BAD00747D5F /* UIKit Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit Views.swift"; sourceTree = "<group>"; };
-		C85C2BDE248A35CF003B8DD6 /* sample-dining-venue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sample-dining-venue.json"; sourceTree = "<group>"; };
-		C85C2BE0248A95C0003B8DD6 /* DiningVenueRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueRow.swift; sourceTree = "<group>"; };
-		C861E2EB24257A1300F4A562 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C8B7F7C22488CF710058B489 /* DiningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningView.swift; sourceTree = "<group>"; };
-		C8B7F7C82488F9750058B489 /* DiningViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningViewHeader.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
-		C8B7F7CA2488FAC50058B489 /* DiningViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningViewControllerSwiftUI.swift; sourceTree = "<group>"; };
-		C8BA9D95249EB2CD00189D46 /* DiningViewModelSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewModelSwiftUI.swift; sourceTree = "<group>"; };
-		C8BA9D9824A1DAEE00189D46 /* DiningVenueDetailMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueDetailMenuView.swift; sourceTree = "<group>"; };
-		C8BA9D9A24A1DB2600189D46 /* DiningVenueDetailHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueDetailHoursView.swift; sourceTree = "<group>"; };
-		C8BA9D9C24A1DB4E00189D46 /* DiningVenueDetailLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueDetailLocationView.swift; sourceTree = "<group>"; };
+		C6E0378306BA0A8C1231C08C /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
+		C8C96F0E241407000069D56A /* CourseScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseScheduleViewController.swift; sourceTree = "<group>"; };
+		C8C96F0F241407000069D56A /* CourseScheduleTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseScheduleTableViewModel.swift; sourceTree = "<group>"; };
+		C8C96F13241407420069D56A /* PacCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacCodeViewController.swift; sourceTree = "<group>"; };
+		C8C96F14241407420069D56A /* PacCodeNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacCodeNetworkManager.swift; sourceTree = "<group>"; };
 		CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		CF1CE9BC205D664700C51F46 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewCell.swift; sourceTree = "<group>"; };
@@ -516,8 +502,14 @@
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
+		D65575885F3A7CA6314491C9 /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
+		E97A59EEC6E7DA45F57EEB74 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteCell.swift; sourceTree = "<group>"; };
+		EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCellItem.swift; sourceTree = "<group>"; };
+		EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCell.swift; sourceTree = "<group>"; };
 		EF389EC321860B7000E29C6A /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
 		EF389EC521861B8500E29C6A /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
+		EF6329A12409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupConfirmBookingController.swift; sourceTree = "<group>"; };
 		EFD6F358220E334100382783 /* DiningCellSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCellSettingsController.swift; sourceTree = "<group>"; };
 		EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupIndividualSettingView.swift; sourceTree = "<group>"; };
 		EFE2D6E8239B11050020F6BF /* GroupSettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSettingsCell.swift; sourceTree = "<group>"; };
@@ -532,10 +524,6 @@
 		EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRManageGroupController.swift; sourceTree = "<group>"; };
 		EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworkManager..swift; sourceTree = "<group>"; };
 		EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupUser.swift; sourceTree = "<group>"; };
-		F203DC1B2400C3FF003350E2 /* FrequentLocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentLocationsView.swift; sourceTree = "<group>"; };
-		F203DC1D2400DA60003350E2 /* RecentTransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTransactionsView.swift; sourceTree = "<group>"; };
-		F203DC212402ED45003350E2 /* DailyAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyAverageView.swift; sourceTree = "<group>"; };
-		F203DC2324032554003350E2 /* CardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardHeaderView.swift; sourceTree = "<group>"; };
 		F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPreference.swift; sourceTree = "<group>"; };
 		F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreference.swift; sourceTree = "<group>"; };
@@ -550,22 +538,20 @@
 		F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAPIResponse.swift; sourceTree = "<group>"; };
 		F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+Codable.swift"; sourceTree = "<group>"; };
 		F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+Extensions.swift"; sourceTree = "<group>"; };
+		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
 		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
+		F2568A662411F20E00561295 /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2568A682411F20E00561295 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		F2568A6A2411F20E00561295 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService+ImageCacheing.swift"; sourceTree = "<group>"; };
+		F2568A7724135B6500561295 /* HomeCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellHeader.swift; sourceTree = "<group>"; };
+		F2568A792413637D00561295 /* HomeCellSafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellSafeArea.swift; sourceTree = "<group>"; };
 		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
-		F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalanceView.swift; sourceTree = "<group>"; };
-		F2B05E1F24009C4000C267EB /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		F2B05E212400B6A200C267EB /* DiningInsightsAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningInsightsAPIResponse.swift; sourceTree = "<group>"; };
-		F2B05E232400BA0200C267EB /* example-dining-stats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "example-dining-stats.json"; sourceTree = "<group>"; };
-		F2C432662409C3F60044CCF5 /* PredictionsGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionsGraphView.swift; sourceTree = "<group>"; };
-		F2C432692409C5950044CCF5 /* VariableStepLineGraphView+VariableStepGraphPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+VariableStepGraphPath.swift"; sourceTree = "<group>"; };
-		F2C4326B2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+SmoothedData.swift"; sourceTree = "<group>"; };
-		F2C4326D2409D6170044CCF5 /* VariableStepLineGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableStepLineGraphView.swift; sourceTree = "<group>"; };
-		F2C4326F2409D66F0044CCF5 /* VariableStepLineGraphView+PredictionSlopePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+PredictionSlopePath.swift"; sourceTree = "<group>"; };
-		F2C432712409D6800044CCF5 /* VariableStepLineGraphView+GraphEndpointPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+GraphEndpointPath.swift"; sourceTree = "<group>"; };
-		F2C43273240AF5EA0044CCF5 /* PredictionsGraphView+AxisLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+AxisLabels.swift"; sourceTree = "<group>"; };
+		F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+NotificationExtension.swift"; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		FE1B7088EA979A72E7CB961E /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -574,12 +560,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */,
+				F2568A762413534F00561295 /* SnapKit in Frameworks */,
 				F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */,
 				F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */,
 				F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
 				F213CCEA23C3F5D5000AD90F /* SCLAlertView in Frameworks */,
-				1E96A1EBED744C54C983826C /* Pods_PennMobile.framework in Frameworks */,
+				497810AF5B16F0E4FD3D6092 /* Pods_PennMobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,7 +574,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DEF5A2FA0EE4DCDB0B50BE8 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */,
+				BD766B7A9F54888FF9CAECC6 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2568A632411F20E00561295 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,8 +662,11 @@
 		21640D4620104354002F33CA /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F2568A7724135B6500561295 /* HomeCellHeader.swift */,
+				F2568A792413637D00561295 /* HomeCellSafeArea.swift */,
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
 				210AC14420684F9B0050D837 /* HomeCellProtocols.swift */,
+				B98CA5F723E73631004B3218 /* Group Invites */,
 				212B835A222A37BD00F835D6 /* Feature */,
 				212B8353222A319200F835D6 /* Post */,
 				21B6491E2236F2E200AC5B7F /* Courses */,
@@ -702,10 +699,11 @@
 				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
 				216640621EBADADA00746B8E /* PennMobile */,
 				2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */,
+				F2568A672411F20E00561295 /* NotificationServiceExtension */,
 				216640611EBADADA00746B8E /* Products */,
 				F5E2CE9A9024AE8E28992A5E /* Pods */,
 				97F96CA923D268FD0025A58C /* Recovered References */,
-				774F7402C0F68D0A4AF76D82 /* Frameworks */,
+				611FA49083E5A8FB958B7498 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -714,6 +712,7 @@
 			children = (
 				216640601EBADADA00746B8E /* PennMobile.app */,
 				F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */,
+				F2568A662411F20E00561295 /* NotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -752,7 +751,7 @@
 		216640831EBADB7000746B8E /* Supporting_Files */ = {
 			isa = PBXGroup;
 			children = (
-				C861E2EB24257A1300F4A562 /* GoogleService-Info.plist */,
+				B6111DB12018497400DC7877 /* GoogleService-Info.plist */,
 				2166406F1EBADADA00746B8E /* Info.plist */,
 				2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */,
 				216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */,
@@ -765,6 +764,7 @@
 			isa = PBXGroup;
 			children = (
 				216640631EBADADA00746B8E /* AppDelegate.swift */,
+				F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */,
 				B6665A172071E63800F49A9C /* TabBarController.swift */,
 				EF389EC521861B8500E29C6A /* HomeNavigationController.swift */,
 				21B556162224FDC500D80F61 /* RootViewController.swift */,
@@ -777,7 +777,6 @@
 		2166408B1EBADBF800746B8E /* Dining */ = {
 			isa = PBXGroup;
 			children = (
-				C8B7F7C52488F8FC0058B489 /* SwiftUI */,
 				97AA806323D26BC700C23488 /* Views */,
 				2166408E1EBADC0700746B8E /* Controllers */,
 				2166408D1EBADC0100746B8E /* Model */,
@@ -789,13 +788,11 @@
 		2166408D1EBADC0100746B8E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F2B05E212400B6A200C267EB /* DiningInsightsAPIResponse.swift */,
 				C11B38E222508A8D009B752A /* DiningBalance.swift */,
 				F23CC0BA235E3EF10007317A /* DiningVenue.swift */,
 				F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */,
 				F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */,
 				F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */,
-				6CE86D4524A5269600155201 /* DiningMenu.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -806,7 +803,6 @@
 				216640911EBADC1700746B8E /* DiningViewController.swift */,
 				97AA807423D26C8E00C23488 /* DiningViewModel.swift */,
 				139139762388923E00C6C298 /* DiningDollarsTransactionViewController.swift */,
-				1382055523EF7B9B005969AB /* DiningTabController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -825,7 +821,6 @@
 		216640C71EBADC9D00746B8E /* General */ = {
 			isa = PBXGroup;
 			children = (
-				C82368D724923632003E7AF3 /* SwiftUI Views */,
 				217A7839204D977E004F1227 /* ModularTableView */,
 				216640C01EBADC8000746B8E /* Generics */,
 				216640C91EBADCA400746B8E /* Extensions.swift */,
@@ -835,7 +830,6 @@
 				21879B1D1FB3FF54003CF552 /* Storage.swift */,
 				21D5E07523BD45F400B331CC /* KeychainAccessible.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
-				F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -845,6 +839,8 @@
 			children = (
 				211DFE531F36A02C00CB73E4 /* DiningAPI.swift */,
 				F23CC0C4235EB30E0007317A /* StorageType.swift */,
+				F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */,
+				F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */,
 			);
 			path = "Networking + Cache";
 			sourceTree = "<group>";
@@ -999,8 +995,7 @@
 		2189C0782027CD4E00771C1F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				EFE2D6F9239B12260020F6BF /* GSRGroupNewIntialController.swift */,
-				EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */,
+				EFAE454823F12185005C2286 /* GSRGroups */,
 				2189C0802027CDB800771C1F /* GSRBookable.swift */,
 				2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */,
 				214E254822480818004CB9C4 /* GSRDeletable.swift */,
@@ -1009,9 +1004,6 @@
 				21EF283821F509C0001B05B7 /* GSRWebviewLoginController.swift */,
 				2189C0812027CDB800771C1F /* GSRLoginController.swift */,
 				2138D55422598AA800D67CA2 /* GSRTabController.swift */,
-				2138D558225998A300D67CA2 /* GSRGroupController.swift */,
-				B9C8CAA7235A613D0040C8E5 /* GSRGroupNewIntialController.swift */,
-				B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1063,6 +1055,8 @@
 				21B653BD2246F338001A97C5 /* CoursesWebviewController.swift */,
 				21D5E07123BBFC5700B331CC /* CoursesNetworkManager.swift */,
 				21D5E07323BCFE0300B331CC /* CoursePrivacyController.swift */,
+				C8C96F0F241407000069D56A /* CourseScheduleTableViewModel.swift */,
+				C8C96F0E241407000069D56A /* CourseScheduleViewController.swift */,
 			);
 			path = Courses;
 			sourceTree = "<group>";
@@ -1113,6 +1107,15 @@
 			path = "Spring Fling";
 			sourceTree = "<group>";
 		};
+		611FA49083E5A8FB958B7498 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				51F77CCBB7C32C932B101F62 /* Pods_AutomatedScreenshotUITests.framework */,
+				E97A59EEC6E7DA45F57EEB74 /* Pods_PennMobile.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		66E8ECA32381CA6C00945BEA /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -1126,15 +1129,6 @@
 				667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */,
 			);
 			path = Auth;
-			sourceTree = "<group>";
-		};
-		774F7402C0F68D0A4AF76D82 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				2F4C8BB2BB56EFEFC32E6619 /* Pods_AutomatedScreenshotUITests.framework */,
-				9F1252AD63A8C4182FFA24C6 /* Pods_PennMobile.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		97AA806323D26BC700C23488 /* Views */ = {
@@ -1316,6 +1310,16 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		B98CA5F723E73631004B3218 /* Group Invites */ = {
+			isa = PBXGroup;
+			children = (
+				EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */,
+				EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */,
+				EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */,
+			);
+			path = "Group Invites";
+			sourceTree = "<group>";
+		};
 		C13F9E93219284E9000B866A /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1337,87 +1341,19 @@
 			path = "GSR Reservations";
 			sourceTree = "<group>";
 		};
-		C82368D724923632003E7AF3 /* SwiftUI Views */ = {
+		C8C96F12241407320069D56A /* PAC Code */ = {
 			isa = PBXGroup;
 			children = (
-				C845186724874BAD00747D5F /* UIKit Views.swift */,
-				C82368D82492364D003E7AF3 /* AlertModifier.swift */,
-				6C62855924B1CE5900CFB115 /* FadingScrollView.swift */,
+				C8C96F14241407420069D56A /* PacCodeNetworkManager.swift */,
+				C8C96F13241407420069D56A /* PacCodeViewController.swift */,
 			);
-			path = "SwiftUI Views";
-			sourceTree = "<group>";
-		};
-		C827776A248FA7890052AE37 /* Insights */ = {
-			isa = PBXGroup;
-			children = (
-				C82368D3248FC91B003E7AF3 /* DiningInsightsView.swift */,
-				F2B05E1E24009C3500C267EB /* Cards */,
-				F2C432682409C5770044CCF5 /* PredictionsGraph */,
-				F2B05E1B24009B0B00C267EB /* DiningBalanceView.swift */,
-				F203DC1B2400C3FF003350E2 /* FrequentLocationsView.swift */,
-				F203DC212402ED45003350E2 /* DailyAverageView.swift */,
-				F203DC1D2400DA60003350E2 /* RecentTransactionsView.swift */,
-			);
-			path = Insights;
-			sourceTree = "<group>";
-		};
-		C827776B248FA7910052AE37 /* Venue */ = {
-			isa = PBXGroup;
-			children = (
-				C8BA9D9724A10B7D00189D46 /* Detail View */,
-				C85C2BDE248A35CF003B8DD6 /* sample-dining-venue.json */,
-				C82368D5248FCBD7003E7AF3 /* DiningVenueView.swift */,
-				C85C2BE0248A95C0003B8DD6 /* DiningVenueRow.swift */,
-			);
-			path = Venue;
-			sourceTree = "<group>";
-		};
-		C8B7F7C52488F8FC0058B489 /* SwiftUI */ = {
-			isa = PBXGroup;
-			children = (
-				F2B05E232400BA0200C267EB /* example-dining-stats.json */,
-				1382055723EF7CA2005969AB /* DiningInsightsViewController.swift */,
-				C8B7F7CA2488FAC50058B489 /* DiningViewControllerSwiftUI.swift */,
-				C8B7F7C72488F90D0058B489 /* ViewModels */,
-				C8B7F7C62488F9060058B489 /* Views */,
-			);
-			path = SwiftUI;
-			sourceTree = "<group>";
-		};
-		C8B7F7C62488F9060058B489 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				C8B7F7C22488CF710058B489 /* DiningView.swift */,
-				C8B7F7C82488F9750058B489 /* DiningViewHeader.swift */,
-				C827776B248FA7910052AE37 /* Venue */,
-				C827776A248FA7890052AE37 /* Insights */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		C8B7F7C72488F90D0058B489 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				C8BA9D95249EB2CD00189D46 /* DiningViewModelSwiftUI.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		C8BA9D9724A10B7D00189D46 /* Detail View */ = {
-			isa = PBXGroup;
-			children = (
-				6CD5887D24A5D3C500A5BE98 /* mock_menu.json */,
-				C821BDE9248AE60000930476 /* DiningVenueDetailView.swift */,
-				C8BA9D9824A1DAEE00189D46 /* DiningVenueDetailMenuView.swift */,
-				C8BA9D9A24A1DB2600189D46 /* DiningVenueDetailHoursView.swift */,
-				C8BA9D9C24A1DB4E00189D46 /* DiningVenueDetailLocationView.swift */,
-			);
-			path = "Detail View";
+			path = "PAC Code";
 			sourceTree = "<group>";
 		};
 		CF1CE9B8205D5BF100C51F46 /* More Tab */ = {
 			isa = PBXGroup;
 			children = (
+				C8C96F12241407320069D56A /* PAC Code */,
 				CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */,
 				CF1CE9BC205D664700C51F46 /* MoreCell.swift */,
 				CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */,
@@ -1439,6 +1375,18 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		EFAE454823F12185005C2286 /* GSRGroups */ = {
+			isa = PBXGroup;
+			children = (
+				2138D558225998A300D67CA2 /* GSRGroupController.swift */,
+				B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */,
+				EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */,
+				EFE2D6F9239B12260020F6BF /* GSRGroupNewIntialController.swift */,
+				EF6329A12409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift */,
+			);
+			path = GSRGroups;
+			sourceTree = "<group>";
+		};
 		EFE2D6E6239B11050020F6BF /* GSRGroups */ = {
 			isa = PBXGroup;
 			children = (
@@ -1451,6 +1399,7 @@
 				EFE2D6ED239B11050020F6BF /* GroupHeaderCell.swift */,
 				EFE2D6EE239B11050020F6BF /* GSRColorCell.swift */,
 				97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */,
+				B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */,
 			);
 			path = GSRGroups;
 			sourceTree = "<group>";
@@ -1489,36 +1438,23 @@
 			path = AutomatedScreenshotUITests;
 			sourceTree = "<group>";
 		};
-		F2B05E1E24009C3500C267EB /* Cards */ = {
+		F2568A672411F20E00561295 /* NotificationServiceExtension */ = {
 			isa = PBXGroup;
 			children = (
-				F2B05E1F24009C4000C267EB /* CardView.swift */,
-				F203DC2324032554003350E2 /* CardHeaderView.swift */,
+				F2568A682411F20E00561295 /* NotificationService.swift */,
+				F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */,
+				F2568A6A2411F20E00561295 /* Info.plist */,
 			);
-			path = Cards;
-			sourceTree = "<group>";
-		};
-		F2C432682409C5770044CCF5 /* PredictionsGraph */ = {
-			isa = PBXGroup;
-			children = (
-				F2C432662409C3F60044CCF5 /* PredictionsGraphView.swift */,
-				F2C4326B2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift */,
-				F2C43273240AF5EA0044CCF5 /* PredictionsGraphView+AxisLabels.swift */,
-				F2C4326D2409D6170044CCF5 /* VariableStepLineGraphView.swift */,
-				F2C432692409C5950044CCF5 /* VariableStepLineGraphView+VariableStepGraphPath.swift */,
-				F2C432712409D6800044CCF5 /* VariableStepLineGraphView+GraphEndpointPath.swift */,
-				F2C4326F2409D66F0044CCF5 /* VariableStepLineGraphView+PredictionSlopePath.swift */,
-			);
-			path = PredictionsGraph;
+			path = NotificationServiceExtension;
 			sourceTree = "<group>";
 		};
 		F5E2CE9A9024AE8E28992A5E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6B215C68B7390AEA24B6C7F1 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
-				8C9FA3D4605D9E146A44D8C8 /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
-				8C76C684400803EA7003BF04 /* Pods-PennMobile.debug.xcconfig */,
-				C375DF313AB319FDFA0053D3 /* Pods-PennMobile.release.xcconfig */,
+				FE1B7088EA979A72E7CB961E /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
+				C6E0378306BA0A8C1231C08C /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
+				D65575885F3A7CA6314491C9 /* Pods-PennMobile.debug.xcconfig */,
+				739709EEABEDE069054CBDDF /* Pods-PennMobile.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1530,16 +1466,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2166407D1EBADADA00746B8E /* Build configuration list for PBXNativeTarget "PennMobile" */;
 			buildPhases = (
-				41846557574BAAAC58C4B5D2 /* [CP] Check Pods Manifest.lock */,
+				56644EC2DF3730C9A3264DD4 /* [CP] Check Pods Manifest.lock */,
 				2166405C1EBADADA00746B8E /* Sources */,
 				2166405D1EBADADA00746B8E /* Frameworks */,
 				2166405E1EBADADA00746B8E /* Resources */,
 				EF1CF2F322177EED002D912D /* ShellScript */,
-				789FA378A186A7549EA24A36 /* [CP] Embed Pods Frameworks */,
+				F2568A6E2411F20E00561295 /* Embed App Extensions */,
+				B0766E0DAC6A048C038D5581 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F2568A6C2411F20E00561295 /* PBXTargetDependency */,
 			);
 			name = PennMobile;
 			packageProductDependencies = (
@@ -1549,6 +1487,7 @@
 				F213CCE923C3F5D5000AD90F /* SCLAlertView */,
 				F213CCEC23C3F6A8000AD90F /* SwiftyJSON */,
 				F213CCEF23C3F99B000AD90F /* ScrollableGraphView */,
+				F2568A752413534F00561295 /* SnapKit */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -1558,11 +1497,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F230FB15225809E900760499 /* Build configuration list for PBXNativeTarget "AutomatedScreenshotUITests" */;
 			buildPhases = (
-				84148E7B9B816BA37BC681D6 /* [CP] Check Pods Manifest.lock */,
+				D0382585E52830F081A9E425 /* [CP] Check Pods Manifest.lock */,
 				F230FB0A225809E900760499 /* Sources */,
 				F230FB0B225809E900760499 /* Frameworks */,
 				F230FB0C225809E900760499 /* Resources */,
-				00BEE4B6FE5009B0CCCBE2D5 /* [CP] Embed Pods Frameworks */,
+				7537382208686F2C0939F64E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1574,19 +1513,35 @@
 			productReference = F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		F2568A652411F20E00561295 /* NotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2568A712411F20E00561295 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */;
+			buildPhases = (
+				F2568A622411F20E00561295 /* Sources */,
+				F2568A632411F20E00561295 /* Frameworks */,
+				F2568A642411F20E00561295 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationServiceExtension;
+			productName = GSRNotificationServiceExtension;
+			productReference = F2568A662411F20E00561295 /* NotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		216640581EBADADA00746B8E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
 					2166405F1EBADADA00746B8E = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = VU59R57FGM;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -1603,6 +1558,9 @@
 						DevelopmentTeam = VU59R57FGM;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2166405F1EBADADA00746B8E;
+					};
+					F2568A652411F20E00561295 = {
+						CreatedOnToolsVersion = 11.3.1;
 					};
 				};
 			};
@@ -1621,6 +1579,7 @@
 				F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
 				F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
+				F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
@@ -1628,6 +1587,7 @@
 			targets = (
 				2166405F1EBADADA00746B8E /* PennMobile */,
 				F230FB0D225809E900760499 /* AutomatedScreenshotUITests */,
+				F2568A652411F20E00561295 /* NotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1638,12 +1598,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
+				B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */,
 				2189C09E2027CE4100771C1F /* locations.json in Resources */,
-				C861E2EC24257A1300F4A562 /* GoogleService-Info.plist in Resources */,
-				F2B05E242400BA0200C267EB /* example-dining-stats.json in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
-				6CD5887E24A5D3C500A5BE98 /* mock_menu.json in Resources */,
-				C85C2BDF248A35CF003B8DD6 /* sample-dining-venue.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1654,27 +1611,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		00BEE4B6FE5009B0CCCBE2D5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
+		F2568A642411F20E00561295 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
-		41846557574BAAAC58C4B5D2 /* [CP] Check Pods Manifest.lock */ = {
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		56644EC2DF3730C9A3264DD4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1696,7 +1643,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		789FA378A186A7549EA24A36 /* [CP] Embed Pods Frameworks */ = {
+		7537382208686F2C0939F64E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B0766E0DAC6A048C038D5581 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1713,7 +1677,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		84148E7B9B816BA37BC681D6 /* [CP] Check Pods Manifest.lock */ = {
+		D0382585E52830F081A9E425 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1758,20 +1722,17 @@
 			files = (
 				EFE2D6F0239B11050020F6BF /* GroupSettingsCell.swift in Sources */,
 				B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */,
+				C8C96F10241407000069D56A /* CourseScheduleViewController.swift in Sources */,
 				EFE2D6F5239B11050020F6BF /* GroupHeaderCell.swift in Sources */,
 				219F01F41FB7CCFA006BBC4E /* SAConfettiView.swift in Sources */,
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				97E79E1C2100F32E00D3D606 /* FitnessViewModel.swift in Sources */,
 				214E254922480818004CB9C4 /* GSRDeletable.swift in Sources */,
 				EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */,
-				F203DC1E2400DA60003350E2 /* RecentTransactionsView.swift in Sources */,
 				F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */,
-				C82368D6248FCBD7003E7AF3 /* DiningVenueView.swift in Sources */,
 				EFE2D6F8239B120E0020F6BF /* GSRManageGroupViewModel.swift in Sources */,
 				B6665A182071E63800F49A9C /* TabBarController.swift in Sources */,
 				21B649202236F2F300AC5B7F /* HomeCoursesCell.swift in Sources */,
-				C8B7F7C32488CF710058B489 /* DiningView.swift in Sources */,
-				C8BA9D96249EB2CD00189D46 /* DiningViewModelSwiftUI.swift in Sources */,
 				21A6B6D222162702003A357D /* GSRReservation.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
 				2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */,
@@ -1779,20 +1740,16 @@
 				2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */,
 				21B649222236F2FC00AC5B7F /* HomeCoursesCellItem.swift in Sources */,
 				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
-				F2C43274240AF5EA0044CCF5 /* PredictionsGraphView+AxisLabels.swift in Sources */,
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */,
 				C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */,
-				C845186824874BAD00747D5F /* UIKit Views.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
-				C82368D92492364D003E7AF3 /* AlertModifier.swift in Sources */,
-				F203DC1C2400C3FF003350E2 /* FrequentLocationsView.swift in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
+				EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */,
 				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,
-				C82368D4248FC91B003E7AF3 /* DiningInsightsView.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */,
@@ -1802,15 +1759,16 @@
 				21EF283921F509C0001B05B7 /* GSRWebviewLoginController.swift in Sources */,
 				2138D559225998A300D67CA2 /* GSRGroupController.swift in Sources */,
 				217A783D204D97B6004F1227 /* ModularTableViewModel.swift in Sources */,
-				F2B05E1C24009B0B00C267EB /* DiningBalanceView.swift in Sources */,
 				EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */,
 				21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */,
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
+				F2568A7A2413637D00561295 /* HomeCellSafeArea.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
 				21ABE2AE223D7E2B00199D29 /* Event.swift in Sources */,
 				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
+				F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
 				212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */,
@@ -1820,11 +1778,9 @@
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
-				F2B05E222400B6A300C267EB /* DiningInsightsAPIResponse.swift in Sources */,
 				217A783B204D97AC004F1227 /* ModularTableView.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
 				66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */,
-				6C62855A24B1CE5900CFB115 /* FadingScrollView.swift in Sources */,
 				21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */,
 				F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */,
 				215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */,
@@ -1832,11 +1788,11 @@
 				EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
+				F2568A7824135B6500561295 /* HomeCellHeader.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
+				C8C96F11241407000069D56A /* CourseScheduleTableViewModel.swift in Sources */,
 				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
-				1382055823EF7CA2005969AB /* DiningInsightsViewController.swift in Sources */,
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
-				C8B7F7CB2488FAC50058B489 /* DiningViewControllerSwiftUI.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				F2F4C92023611EB900816456 /* Colors.swift in Sources */,
@@ -1848,16 +1804,18 @@
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
 				F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */,
 				217A7830204D2C72004F1227 /* HomeItemTypes.swift in Sources */,
+				EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
 				21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */,
 				97E79E182100E4AA00D3D606 /* FitnessFacilityData.swift in Sources */,
-				F2B05E2024009C4000C267EB /* CardView.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
 				97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */,
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
+				B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
+				C8C96F15241407420069D56A /* PacCodeViewController.swift in Sources */,
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
 				EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */,
 				F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */,
@@ -1870,11 +1828,9 @@
 				21F5F8F520538AFC005B143F /* FlingPerformer.swift in Sources */,
 				21E6A109224BDFEB00DC457A /* HomeViewController + Delegates.swift in Sources */,
 				217A7832204D2C7E004F1227 /* HomeCellItem.swift in Sources */,
-				C8BA9D9924A1DAEE00189D46 /* DiningVenueDetailMenuView.swift in Sources */,
 				2189C08D2027CE2600771C1F /* RoomCell.swift in Sources */,
 				2150816A220D24C4002F7EA1 /* NewsArticle.swift in Sources */,
 				F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */,
-				F2C4326E2409D6170044CCF5 /* VariableStepLineGraphView.swift in Sources */,
 				EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */,
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				665F1FC723D2628800DC023E /* TwoFactorWebviewController.swift in Sources */,
@@ -1889,11 +1845,9 @@
 				2189C08C2027CE2600771C1F /* GSRTimeCell.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
 				21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */,
-				F2C432722409D6800044CCF5 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */,
 				EFE2D6F3239B11050020F6BF /* CreateGroupCell.swift in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				212B8359222A331D00F835D6 /* Post.swift in Sources */,
-				1382055623EF7B9B005969AB /* DiningTabController.swift in Sources */,
 				C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */,
 				B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */,
 				EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */,
@@ -1901,8 +1855,8 @@
 				21ABE2AF223D7E2B00199D29 /* Time.swift in Sources */,
 				21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */,
 				EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */,
-				C821BDEA248AE60000930476 /* DiningVenueDetailView.swift in Sources */,
 				C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */,
+				EF6329A22409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift in Sources */,
 				21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
@@ -1925,9 +1879,7 @@
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				97AA807623D26C8E00C23488 /* DiningViewModel.swift in Sources */,
 				EFE2D6F4239B11050020F6BF /* GroupCell.swift in Sources */,
-				C8BA9D9B24A1DB2600189D46 /* DiningVenueDetailHoursView.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
-				6CE86D4624A5269600155201 /* DiningMenu.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
 				F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
@@ -1935,7 +1887,6 @@
 				97E79E072100DA1200D3D606 /* BuildingImageCell.swift in Sources */,
 				217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
-				C8BA9D9D24A1DB4E00189D46 /* DiningVenueDetailLocationView.swift in Sources */,
 				21A9D942224087980000444D /* CourseMeetingTime.swift in Sources */,
 				139139772388923F00C6C298 /* DiningDollarsTransactionViewController.swift in Sources */,
 				B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */,
@@ -1963,14 +1914,16 @@
 				F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */,
 				66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */,
 				97AA806C23D26BC700C23488 /* DiningCell.swift in Sources */,
+				F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */,
 				21D5E07223BBFC5700B331CC /* CoursesNetworkManager.swift in Sources */,
 				667EC29623DB9C4800B0DF66 /* TwoFactorEnableController.swift in Sources */,
-				F203DC222402ED45003350E2 /* DailyAverageView.swift in Sources */,
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */,
+				C8C96F16241407420069D56A /* PacCodeNetworkManager.swift in Sources */,
 				97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */,
 				21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
+				EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */,
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
@@ -1984,8 +1937,6 @@
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
 				B64830A2213C939200FD2B17 /* FitnessHeaderView.swift in Sources */,
-				F2C432672409C3F60044CCF5 /* PredictionsGraphView.swift in Sources */,
-				C8B7F7C92488F9750058B489 /* DiningViewHeader.swift in Sources */,
 				C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */,
 				B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */,
 				CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */,
@@ -1999,14 +1950,9 @@
 				C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */,
 				EFE2D6F1239B11050020F6BF /* GroupManageButtonCell.swift in Sources */,
 				66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */,
-				C85C2BE1248A95C0003B8DD6 /* DiningVenueRow.swift in Sources */,
 				21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
-				F2C4326A2409C5950044CCF5 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */,
-				F2C4326C2409C6A60044CCF5 /* PredictionsGraphView+SmoothedData.swift in Sources */,
-				F2C432702409D66F0044CCF5 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */,
 				216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */,
-				F203DC2424032555003350E2 /* CardHeaderView.swift in Sources */,
 				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2020,6 +1966,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F2568A622411F20E00561295 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2568A692411F20E00561295 /* NotificationService.swift in Sources */,
+				F2568A732411F26500561295 /* NotificationService+ImageCacheing.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2027,6 +1982,11 @@
 			isa = PBXTargetDependency;
 			target = 2166405F1EBADADA00746B8E /* PennMobile */;
 			targetProxy = F230FB13225809E900760499 /* PBXContainerItemProxy */;
+		};
+		F2568A6C2411F20E00561295 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F2568A652411F20E00561295 /* NotificationServiceExtension */;
+			targetProxy = F2568A6B2411F20E00561295 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2093,7 +2053,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2146,7 +2106,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -2157,24 +2117,25 @@
 		};
 		2166407E1EBADADA00746B8E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C76C684400803EA7003BF04 /* Pods-PennMobile.debug.xcconfig */;
+			baseConfigurationReference = D65575885F3A7CA6314491C9 /* Pods-PennMobile.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6300;
+				CURRENT_PROJECT_VERSION = 6511;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.3;
+				MARKETING_VERSION = 6.5.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2215,17 +2176,9 @@
 					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",
-					"\"TimelineTableViewCell\"",
-					"-framework",
 					"\"UIKit\"",
 					"-framework",
-					"\"WKZombie\"",
-					"-framework",
 					"\"XLPagerTabStrip\"",
-					"-framework",
-					"\"ZoomImageView\"",
-					"-framework",
-					"\"hpple\"",
 					"-framework",
 					"\"nanopb\"",
 					"-weak_framework",
@@ -2248,23 +2201,24 @@
 		};
 		2166407F1EBADADA00746B8E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C375DF313AB319FDFA0053D3 /* Pods-PennMobile.release.xcconfig */;
+			baseConfigurationReference = 739709EEABEDE069054CBDDF /* Pods-PennMobile.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6300;
+				CURRENT_PROJECT_VERSION = 6511;
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.3;
+				MARKETING_VERSION = 6.5.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2305,17 +2259,9 @@
 					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",
-					"\"TimelineTableViewCell\"",
-					"-framework",
 					"\"UIKit\"",
 					"-framework",
-					"\"WKZombie\"",
-					"-framework",
 					"\"XLPagerTabStrip\"",
-					"-framework",
-					"\"ZoomImageView\"",
-					"-framework",
-					"\"hpple\"",
 					"-framework",
 					"\"nanopb\"",
 					"-weak_framework",
@@ -2337,7 +2283,7 @@
 		};
 		F230FB16225809E900760499 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B215C68B7390AEA24B6C7F1 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */;
+			baseConfigurationReference = FE1B7088EA979A72E7CB961E /* Pods-AutomatedScreenshotUITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2366,7 +2312,7 @@
 		};
 		F230FB17225809E900760499 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C9FA3D4605D9E146A44D8C8 /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
+			baseConfigurationReference = C6E0378306BA0A8C1231C08C /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2389,6 +2335,59 @@
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PennMobile;
+			};
+			name = Release;
+		};
+		F2568A6F2411F20E00561295 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VU59R57FGM;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile.NotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F2568A702411F20E00561295 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VU59R57FGM;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile.NotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -2418,6 +2417,15 @@
 			buildConfigurations = (
 				F230FB16225809E900760499 /* Debug */,
 				F230FB17225809E900760499 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2568A712411F20E00561295 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2568A6F2411F20E00561295 /* Debug */,
+				F2568A702411F20E00561295 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2465,6 +2473,14 @@
 				minimumVersion = 4.1.0;
 			};
 		};
+		F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2497,6 +2513,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */;
 			productName = ScrollableGraphView;
+		};
+		F2568A752413534F00561295 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

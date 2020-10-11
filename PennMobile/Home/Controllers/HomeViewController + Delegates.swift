@@ -14,11 +14,11 @@ extension HomeViewController: HomeViewModelDelegate {}
 
 // MARK: - Reservation Delegate
 extension HomeViewController: GSRDeletable {
-    func deleteReservation(_ reservation: GSRReservation) {
-        deleteReservation(reservation) { (successful) in
+    func deleteReservation(_ bookingID: String) {
+        deleteReservation(bookingID) { (successful) in
             if successful {
                 guard let reservationItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.reservations]).first as? HomeReservationsCellItem else { return }
-                reservationItem.reservations = reservationItem.reservations.filter { $0.bookingID != reservation.bookingID }
+                reservationItem.reservations = reservationItem.reservations.filter { $0.bookingID != bookingID }
                 if reservationItem.reservations.isEmpty {
                     self.removeItem(reservationItem)
                 } else {
@@ -27,7 +27,14 @@ extension HomeViewController: GSRDeletable {
             }
         }
     }
+    
+    func deleteReservation(_ reservation: GSRReservation) {
+        deleteReservation(reservation.bookingID)
+    }
 }
+
+
+
 
 // MARK: - GSR Quick Book Delegate
 extension HomeViewController: GSRBookable {
@@ -157,10 +164,10 @@ extension HomeViewController: ShowsAlert {
         self.present(nvc, animated: true, completion: nil)
     }
     
-    fileprivate func handleNetworkCourseRefreshCompletion(_ courses: Set<Course>?) {
+    fileprivate func handleNetworkCourseRefreshCompletion(_ result: Result<Set<Course>, NetworkingError>) {
         DispatchQueue.main.async {
             self.hideActivity()
-            if let courses = courses {
+            if let courses = try? result.get() {
                 if let accountID = UserDefaults.standard.getAccountID() {
                     UserDBManager.shared.saveCourses(courses, accountID: accountID, { (success) in
                         self.handleCourseRefresh(courses)
@@ -232,6 +239,30 @@ extension HomeViewController {
                 id = identifiableItem.id
             }
             FeedAnalyticsManager.shared.trackInteraction(cellType: cellType.jsonKey, index: index, id: id)
+        }
+    }
+}
+
+//MARK: - Invite delegate
+extension HomeViewController: GSRInviteSelectable {
+    func handleInviteSelected(_ invite: GSRGroupInvite, _ accept: Bool) {
+        GSRGroupNetworkManager.instance.respondToInvite(invite: invite, accept: accept) { (success) in
+            if success {
+                guard let inviteItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.invites]).first as? HomeGroupInvitesCellItem else { return }
+                inviteItem.invites = inviteItem.invites.filter { $0.id != invite.id }
+                DispatchQueue.main.async {
+                    if inviteItem.invites.isEmpty {
+                        self.removeItem(inviteItem)
+                    } else {
+                        self.reloadItem(inviteItem)
+                    }
+                }
+            } else {
+                let message = "An error occured when responding to this invite. Please try again later."
+                let alert = UIAlertController(title: invite.group, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }

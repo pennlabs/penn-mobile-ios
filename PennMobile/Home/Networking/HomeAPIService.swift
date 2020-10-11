@@ -26,6 +26,10 @@ final class HomeAPIService: Requestable {
                 url = "\(url)&hasCourses=tomorrow"
             }
         }
+    
+        url = "\(url)&groupsEnabled=\(UserDefaults.standard.gsrGroupsEnabled())"
+        
+        
         
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             // Make request without access token if one does not exist

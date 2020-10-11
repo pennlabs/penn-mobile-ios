@@ -9,18 +9,33 @@
 import UIKit
 import Kingfisher
 
-class Member {
-    var name: String
+class Member: Comparable {
+
+    var firstName: String
+    var lastName: String
     var imageURL: URL?
     var websiteURL: URL?
-    
+
     // initialize properties of the class Member
-    init (name: String, image: String, website: String? = nil) {
-        self.name = name
+    init (firstName: String, lastName: String, image: String, website: String? = nil) {
+        self.firstName = firstName
+        self.lastName = lastName
         if let website = website {
             self.websiteURL = URL(string: website)
         }
         self.imageURL = URL(string: "https://s3.us-east-2.amazonaws.com/penn.mobile/about/" + image)
+    }
+
+    static func < (lhs: Member, rhs: Member) -> Bool {
+        ///sort by last name then first
+        if lhs.lastName == rhs.lastName {
+            return lhs.firstName < rhs.firstName
+        }
+        return lhs.lastName < rhs.lastName
+    }
+
+    static func == (lhs: Member, rhs: Member) -> Bool {
+        return lhs.firstName == rhs.firstName && lhs.lastName == rhs.lastName && lhs.imageURL == rhs.imageURL
     }
 }
 
@@ -37,30 +52,39 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     
     private func loadMembers() {
         
-        let dom = Member(name: "Dominic Holmes", image: "dominic.jpeg", website: "https://dominic.land")
-        let ben = Member(name: "Ben Leimberger", image: "ben.jpeg")
-        let carin = Member(name: "Carin Gan", image: "carin.jpeg")
-        let salib = Member(name: "Daniel Salib", image: "salib.jpeg")
-        let marta = Member(name: "Marta García", image: "marta.jpg")
-        let grace = Member(name: "Grace Jiang", image: "grace.jpeg")
-        let josh = Member(name: "Josh Doman", image: "josh.jpeg")
-        let tiff = Member(name: "Tiffany Chang", image: "tiff.jpeg")
-        let zhilei = Member(name: "Zhilei Zheng", image: "zhilei.jpeg")
-        let laura = Member(name: "Laura Gao", image: "laura.jpeg")
-        let yagil = Member(name: "Yagil Burowski", image: "yagil.jpeg")
-        let adel = Member(name: "Adel Qalieh", image: "adel.jpeg")
-        let rehaan = Member(name: "Rehaan Furniturewala", image: "rehaan.jpeg")
-        let liz = Member(name: "Liz Powell", image: "liz.jpeg")
-        let henrique = Member(name: "Henrique Lorente", image: "henrique.jpeg")
-        let lucy = Member(name: "Lucy Yuan", image: "lucy.jpeg")
-        let matthew = Member(name: "Matthew Rosca-Halmagean", image: "matthew.jpeg")
-        let hassan = Member(name: "Hassan Hammoud", image: "hassan.jpeg")
+        let dom = Member(firstName: "Dominic", lastName: "Holmes", image: "dominic.jpeg", website: "https://dominic.land")
+        let ben = Member(firstName: "Ben", lastName: "Leimberger", image: "ben.jpeg")
+        let carin = Member(firstName: "Carin", lastName: "Gan", image: "carin.jpeg")
+        let salib = Member(firstName: "Daniel", lastName: "Salib", image: "salib.jpeg")
+        let marta = Member(firstName: "Marta", lastName: "García", image: "marta.jpg")
+        let grace = Member(firstName: "Grace", lastName: "Jiang", image: "grace.jpeg")
+        let josh = Member(firstName: "Josh", lastName: "Doman", image: "josh.jpeg")
+        let tiff = Member(firstName: "Tiffany", lastName: "Chang", image: "tiff.jpeg")
+        let zhilei = Member(firstName: "Zhilei", lastName: "Zheng", image: "zhilei.jpeg")
+        let laura = Member(firstName: "Laura", lastName: "Gao", image: "laura.jpeg")
+        let yagil = Member(firstName: "Yagil", lastName: "Burowski", image: "yagil.jpeg")
+        let adel = Member(firstName: "Adel", lastName: "Qalieh", image: "adel.jpeg")
+        let rehaan = Member(firstName: "Rehaan", lastName: "Furniturewala", image: "rehaan.jpeg")
+        let liz = Member(firstName: "Liz", lastName: "Powell", image: "liz.jpeg")
+        let henrique = Member(firstName: "Henrique", lastName: "Lorente", image: "henrique.jpeg")
+        let lucy = Member(firstName: "Lucy", lastName: "Yuan", image: "lucy.jpeg")
+        let matthew = Member(firstName: "Matthew", lastName: "Rosca-Halmagean", image: "matthew.jpeg")
+        let hassan = Member(firstName: "Hassan", lastName: "Hammoud", image: "hassan.jpeg")
+        let jongmin = Member(firstName: "Jong Min", lastName: "Choi", image: "jongmin.jpeg")
+        let adam = Member(firstName: "Adam", lastName: "Strike", image: "adam.jpeg")
+        let justin = Member(firstName: "Justin", lastName: "Lieb", image: "justin.jpeg")
+        let daniel = Member(firstName: "Daniel", lastName: "Duan", image: "daniel.jpg")
+        let raunaq = Member(firstName: "Raunaq", lastName: "Singh", image: "raunaq.jpeg")
+
         var currentMembers = [Member]()
         var pastMembers = [Member]()
         
-        //fill the arrays with the members
-        pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil]
-        currentMembers += [josh, dom, carin, salib, rehaan, liz, henrique, lucy, matthew, hassan]
+        //fill the arrays with members, and sort alphabetically
+        pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil, josh, dom, carin, salib]
+        currentMembers += [rehaan, liz, henrique, lucy, matthew, hassan, jongmin, adam, justin, raunaq, daniel]
+
+        pastMembers.sort(by: {$0 < $1})
+        currentMembers.sort(by: {$0 < $1})
         members += [currentMembers, pastMembers]
     }
     
@@ -100,8 +124,8 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         subtitle.textContainer.maximumNumberOfLines = 0
         
         let str = "Hi, we’re Penn Labs: a team of student software engineers, product designers, and business developers."
-        let font = UIFont(name: "AvenirNext-Regular", size: 18)!
-        let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 18)!
+        let font = UIFont.systemFont(ofSize: 18)
+        let boldFont = UIFont.systemFont(ofSize: 18, weight: .semibold)
         
         let attributedString = NSMutableAttributedString(string: str, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font) : font]))
         attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(10, 9))
@@ -124,7 +148,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         descriptionTextView.isSelectable = false
         descriptionTextView.textContainer.maximumNumberOfLines = 0
         descriptionTextView.text = "Penn Labs empowers others to make connections: connections to resources, connections to people, and connections to the greater Penn community.\n\n Our ultimate goal is improving the Penn community. We aim to do so not only by creating high quality products, but also by giving back to the community with educational resources and technical support."
-        descriptionTextView.font = UIFont(name: "AvenirNext-Regular", size: 14)
+        descriptionTextView.font = .systemFont(ofSize: 14)
         descriptionTextView.textColor = .labelPrimary
         descriptionTextView.textAlignment = .center
         descriptionTextView.isScrollEnabled = false
@@ -137,7 +161,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     func setupButton() {
         learnMoreButton = UIButton()
         learnMoreButton.backgroundColor = .baseBlue
-        learnMoreButton.titleLabel?.font =  UIFont(name: "AvenirNext-DemiBold", size: 16)
+        learnMoreButton.titleLabel?.font =  .systemFont(ofSize: 16, weight: .semibold)
         learnMoreButton.setTitle("Learn More", for: [])
         learnMoreButton.setTitleColor(UIColor.white, for: [])
         
@@ -157,7 +181,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     
     func setUpMadeWithLoveLabel() {
         madeWithLoveLabel = UILabel()
-        madeWithLoveLabel.font = UIFont(name: "AvenirNext-Medium", size: 18)
+        madeWithLoveLabel.font = .systemFont(ofSize: 18, weight: .medium)
         madeWithLoveLabel.text = "Made with \u{1F496} by Penn Labs"
         madeWithLoveLabel.textColor = .labelSecondary
         madeWithLoveLabel.textAlignment = .center
@@ -168,7 +192,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
     func setupCopyrightLabel() {
         let now = Date()
         copyrightLabel = UILabel()
-        copyrightLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        copyrightLabel.font = .systemFont(ofSize: 11)
         copyrightLabel.text = "Penn Labs \u{00A9} \(now.year)"
         copyrightLabel.textColor = .labelTertiary
         copyrightLabel.textAlignment = .center
@@ -210,7 +234,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         }
         //put the data for the people in the cell
         let member = members[indexPath.section][indexPath.row]
-        cell.name.text = member.name
+        cell.name.text = "\(member.firstName) \(member.lastName)"
         if let imageURL = member.imageURL {
             cell.profileImage.kf.setImage(with: imageURL)
         }

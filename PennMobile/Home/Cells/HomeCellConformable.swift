@@ -17,7 +17,8 @@ protocol HomeCellDelegate: ModularTableViewCellDelegate,
     BuildingMapSelectable,
     CourseRefreshable,
     CourseLoginable,
-    FeatureNavigatable {}
+    FeatureNavigatable,
+    GSRInviteSelectable{}
 
 protocol HomeCellConformable: ModularTableViewCell where Self: UITableViewCell {
     var cardView: UIView! { get }
@@ -33,7 +34,7 @@ extension HomeCellConformable {
 
     fileprivate func prepareCardView() {
         cardView.backgroundColor = .uiCardBackground
-        cardView.layer.cornerRadius = 10.0
+        cardView.layer.cornerRadius = 14.0
         cardView.layer.borderWidth = 1.0
         cardView.layer.borderColor = UIColor.clear.cgColor
 

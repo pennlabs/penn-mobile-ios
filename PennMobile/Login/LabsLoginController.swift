@@ -213,6 +213,7 @@ extension LabsLoginController {
                         self.getDiningBalance()
                         self.getDiningTransactions()
                         self.getAndSaveLaundryPreferences()
+                        self.getPacCode()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             self.getCourses()
                         }
@@ -226,8 +227,8 @@ extension LabsLoginController {
 // MARK: - Retrieve Other Account Information
 extension LabsLoginController {
     fileprivate func getCourses() {
-        PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true) { (courses) in
-            if let courses = courses, let accountID = UserDefaults.standard.getAccountID() {
+        PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true) { (result) in
+            if let courses = try? result.get(), let accountID = UserDefaults.standard.getAccountID() {
                 // Save courses to DB if permission was granted
                 UserDBManager.shared.saveCourses(courses, accountID: accountID)
                 UserDefaults.standard.saveCourses(courses)
@@ -264,6 +265,17 @@ extension LabsLoginController {
         UserDBManager.shared.getLaundryPreferences { rooms in
             if let rooms = rooms {
                 UserDefaults.standard.setLaundryPreferences(to: rooms)
+            }
+        }
+    }
+    
+    fileprivate func getPacCode() {
+        PacCodeNetworkManager.instance.getPacCode { result in
+            switch result {
+            case .success(let pacCode):
+                self.savePacCode(pacCode)
+            case .failure(_):
+                return
             }
         }
     }

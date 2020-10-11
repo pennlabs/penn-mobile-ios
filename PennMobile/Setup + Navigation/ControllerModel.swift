@@ -27,6 +27,8 @@ enum Feature: String {
     case event = "Event"
     case privacy = "Privacy"
     case notifications = "Notifications"
+    case courseSchedule = "Course Schedule"
+    case pacCode = "PAC Code"
 }
 
 class ControllerModel: NSObject {
@@ -49,7 +51,6 @@ class ControllerModel: NSObject {
         }
         vcDictionary[.studyRoomBooking] = GSRTabController()
         vcDictionary[.laundry] = LaundryTableViewController()
-        vcDictionary[.fitness] = FitnessViewController()
         vcDictionary[.more] = MoreViewController()
         vcDictionary[.map] = MapViewController()
         vcDictionary[.news] = NewsViewController()
@@ -57,8 +58,10 @@ class ControllerModel: NSObject {
         vcDictionary[.about] = AboutViewController()
         vcDictionary[.notifications] = NotificationViewController()
         vcDictionary[.privacy] = PrivacyViewController()
-        
-//        vcDictionary[.fling] = FlingViewController()
+        vcDictionary[.courseSchedule] = CourseScheduleViewController()
+        vcDictionary[.pacCode] = PacCodeViewController()
+        //vcDictionary[.fitness] = FitnessViewController()
+        //vcDictionary[.fling] = FlingViewController()
     }
 
     var viewControllers: [UIViewController] {
@@ -77,12 +80,12 @@ class ControllerModel: NSObject {
     // Features order in MoreViewController:
     var moreOrder: [Feature] {
         get {
-            return [.news, .fitness, .contacts, .about,]
+            return [.news, .contacts, .courseSchedule, .about]
         }
     }
     var moreIcons: [UIImage] {
         get {
-            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Fitness_Blue"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "logo-small")]
+            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "logo-small")]
         }
     }
 

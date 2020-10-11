@@ -20,19 +20,21 @@ class CoursesWebviewController: PennLoginController, IndicatorEnabled {
     
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         self.showActivity()
-        PennInTouchNetworkManager.instance.getCourses(currentTermOnly: self.currentTermOnly) { (courses) in
+        PennInTouchNetworkManager.instance.getCourses(currentTermOnly: self.currentTermOnly) { (result) in
             DispatchQueue.main.async {
-                if let courses = courses {
+                if let courses = try? result.get() {
                     decisionHandler(.cancel)
                     self.hideActivity()
                     self.saveCoursesAndDismiss(courses)
                 } else {
                     // If unsuccessful, try one more time.
-                    PennInTouchNetworkManager.instance.getCourses(currentTermOnly: self.currentTermOnly, callback: { (courses) in
+                    PennInTouchNetworkManager.instance.getCourses(currentTermOnly: self.currentTermOnly, callback: { (result) in
                         DispatchQueue.main.async {
-                            decisionHandler(.cancel)
-                            self.hideActivity()
-                            self.saveCoursesAndDismiss(courses)
+                            if let courses = try? result.get() {
+                                decisionHandler(.cancel)
+                                self.hideActivity()
+                                self.saveCoursesAndDismiss(courses)
+                            }
                         }
                     })
                 }

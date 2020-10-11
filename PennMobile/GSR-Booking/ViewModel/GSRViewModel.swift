@@ -69,6 +69,8 @@ class GSRViewModel: NSObject {
             return currentRooms.isEmpty
         }
     }
+    
+    var group: GSRGroup?
 }
 
 // MARK: - UIPickerViewDelegate, UIPickerViewDataSource
@@ -181,7 +183,7 @@ extension GSRViewModel: GSRSelectionDelegate {
         switch action {
         case .add:
             if currentSelection.contains(timeSlot) { break }
-            if !isValidAddition(timeSlot: timeSlot) {
+            if !isValidAddition(timeSlot: timeSlot) && group == nil {
                 currentSelection.removeAll()
                 delegate.refreshDataUI()
             }
@@ -273,7 +275,21 @@ extension GSRViewModel {
             timeSlot = timeSlot.next!
         }
         endTime = timeSlot.endTime
+        
+        if let group = group {
+            return GSRGroupBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime, gsrGroup: group)
+        }
+        
         return GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)
+    }
+    
+    // TODO: - Logic for generating group bookings
+    func getGroupBooking() -> GSRGroupBookings? {
+        if currentSelection.isEmpty {
+            return nil
+        }
+        
+        return nil
     }
 }
 

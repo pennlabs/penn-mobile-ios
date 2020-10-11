@@ -29,10 +29,8 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
     
     // MARK: Cell Height
     
-    static let titleFont: UIFont = UIFont.primaryInformationFont!.withSize(18)
-    static let titleEdgeOffset: CGFloat = 16
-    
-    static let subtitleFont: UIFont = UIFont(name: "HelveticaNeue", size: 14)!//UIFont.primaryInformationFont!.withSize(14)
+    static let titleFont: UIFont = UIFont.interiorTitleFont
+    static let subtitleFont: UIFont = UIFont.secondaryInformationFont
     
     private static var titleHeightDictionary = [String: CGFloat]()
     private static var subtitleHeightDictionary = [String: CGFloat]()
@@ -42,7 +40,7 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeNewsCellItem else { return 0 }
         let imageHeight = getImageHeight()
-        let width: CGFloat = UIScreen.main.bounds.width - 2 * 20 - 2 * titleEdgeOffset
+        let width: CGFloat = UIScreen.main.bounds.width - (2 * HomeViewController.edgeSpacing) - (2 * Padding.pad)
         
         let titleHeight: CGFloat
         if let height = titleHeightDictionary[item.article.title] {
@@ -61,12 +59,11 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
             subtitleHeight = item.article.subtitle.dynamicHeight(font: subtitleFont, width: width) + 4
             subtitleHeightDictionary[item.article.subtitle] = subtitleHeight
         }
-        let height = imageHeight + HomeViewController.cellSpacing + titleHeight + subtitleHeight + 48
+        let height = imageHeight + titleHeight + subtitleHeight + (5 * Padding.pad)
         return height
     }
     
     // MARK: UI Elements
-    
     var cardView: UIView! = UIView()
     
     fileprivate var articleImageView: UIImageView!
@@ -128,10 +125,8 @@ extension HomeNewsCell {
     
     private func prepareImageView() {
         articleImageView = UIImageView()
-        if #available(iOS 11.0, *) {
-            articleImageView.layer.cornerRadius = cardView.layer.cornerRadius
-            articleImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        }
+        articleImageView.layer.cornerRadius = cardView.layer.cornerRadius
+        articleImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         articleImageView.clipsToBounds = true
         articleImageView.contentMode = .scaleAspectFill
         
@@ -141,18 +136,18 @@ extension HomeNewsCell {
     }
     
     fileprivate static func getImageHeight() -> CGFloat {
-        let cardWidth = UIScreen.main.bounds.width - 40
-        return 0.5 * cardWidth
+        let cardWidth = UIScreen.main.bounds.width - (2 * HomeViewController.edgeSpacing)
+        return 0.6 * cardWidth
     }
     
     private func prepareSourceLabel() {
         sourceLabel = UILabel()
-        sourceLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        sourceLabel.font = .secondaryInformationFont
         sourceLabel.textColor = UIColor.labelSecondary
         sourceLabel.numberOfLines = 1
         
         cardView.addSubview(sourceLabel)
-        _ = sourceLabel.anchor(articleImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 12, leftConstant: HomeNewsCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomeNewsCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)
+        _ = sourceLabel.anchor(articleImageView.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: pad, leftConstant: pad, bottomConstant: 0, rightConstant: pad, widthConstant: 0, heightConstant: 0)
     }
     
     private func prepareTitleLabel() {
@@ -161,7 +156,7 @@ extension HomeNewsCell {
         titleLabel.numberOfLines = 8
         
         cardView.addSubview(titleLabel)
-        _ = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: 8, leftConstant: HomeNewsCell.titleEdgeOffset, bottomConstant: 0, rightConstant: HomeNewsCell.titleEdgeOffset, widthConstant: 0, heightConstant: 0)
+        _ = titleLabel.anchor(sourceLabel.bottomAnchor, left: cardView.leftAnchor, bottom: nil, right: cardView.rightAnchor, topConstant: pad, leftConstant: pad, bottomConstant: 0, rightConstant: pad, widthConstant: 0, heightConstant: 0)
     }
     
     fileprivate func prepareSubtitleLabel() {
@@ -171,18 +166,17 @@ extension HomeNewsCell {
         subtitleLabel.numberOfLines = 5
         
         cardView.addSubview(subtitleLabel)
-        _ = subtitleLabel.anchor(titleLabel.bottomAnchor, left: titleLabel.leftAnchor, bottom: nil, right: titleLabel.rightAnchor, topConstant: 6, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = subtitleLabel.anchor(titleLabel.bottomAnchor, left: titleLabel.leftAnchor, bottom: nil, right: titleLabel.rightAnchor, topConstant: pad/2, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     private func prepareDateLabel() {
         dateLabel = UILabel()
-        dateLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        dateLabel.font = .secondaryInformationFont
         dateLabel.textColor = UIColor.labelSecondary
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         cardView.addSubview(dateLabel)
-//        _ = dateLabel.anchor(nil, left: titleLabel.leftAnchor, bottom: cardView.bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        dateLabel.centerYAnchor.constraint(equalTo: sourceLabel.centerYAnchor).isActive = true
-        dateLabel.rightAnchor.constraint(equalTo: articleImageView.rightAnchor, constant: -HomeNewsCell.titleEdgeOffset).isActive = true
+        dateLabel.firstBaselineAnchor.constraint(equalTo: sourceLabel.firstBaselineAnchor).isActive = true
+        dateLabel.rightAnchor.constraint(equalTo: articleImageView.rightAnchor, constant: -pad).isActive = true
     }
 }

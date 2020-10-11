@@ -62,8 +62,11 @@ class DiningHeaderView: UITableViewHeaderFooterView {
         contentView.backgroundColor = .uiBackground
         
         addSubview(label)
-        _ = label.anchor(nil, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 28, bottomConstant: 10, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
+        label.snp.makeConstraints { (make) in
+            make.left.equalTo(self).offset(pad)
+            make.bottom.equalTo(self).offset(-10)
+        }
+
         prepareRefreshButton()
         prepareLoadingView()
         

@@ -14,8 +14,8 @@ class HomeViewController: GenericViewController {
     var tableViewModel: HomeTableViewModel!
     var tableView: ModularTableView!
 
-    static let edgeSpacing: CGFloat = 20
-    static let cellSpacing: CGFloat = 20
+    static let edgeSpacing: CGFloat = Padding.pad
+    static let cellSpacing: CGFloat = Padding.pad * 2
 
     static let refreshInterval: Int = 10
 
@@ -67,7 +67,7 @@ class HomeViewController: GenericViewController {
         } else {
             let firstName = Account.getAccount()?.first ?? GSRUser.getUser()?.firstName
             if let firstName = firstName {
-                let intros = ["Welcome", "Howdy", "Hi there", "Hello"]
+                let intros = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"]
                 self.displayTitle = "\(intros.random!), \(firstName)!"
                 titleCacheTimestamp = Date()
             } else {
@@ -80,6 +80,18 @@ class HomeViewController: GenericViewController {
     func clearCache() {
         displayTitle = nil
         tableViewModel = nil
+    }
+    
+    func clearCacheAndReload(animated: Bool) {
+        if animated {
+            self.startLoadingViewAnimation()
+        }
+        clearCache()
+        refreshTableView {
+            if animated {
+                self.stopLoadingViewAnimation()
+            }
+        }
     }
 }
 
@@ -247,9 +259,17 @@ extension HomeViewController : DiningCellSettingsDelegate {
     func saveSelection(for venueIds: [Int]) {
         guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
         if venueIds.count == 0 {
+<<<<<<< HEAD
             diningItem.venues = DiningAPI.instance.getVenues(with: DiningVenue.defaultVenueIds)
         } else {
             diningItem.venues = DiningAPI.instance.getVenues(with: venueIds)
+=======
+            diningItem.venues = DiningDataStore.shared.getVenues(for: DiningVenue.defaultVenueIds)
+            diningItem.venueIds = DiningVenue.defaultVenueIds
+        } else {
+            diningItem.venues = DiningDataStore.shared.getVenues(for: venueIds)
+            diningItem.venueIds = venueIds
+>>>>>>> development
         }
 
         reloadItem(diningItem)

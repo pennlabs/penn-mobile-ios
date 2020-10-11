@@ -9,12 +9,14 @@
 import Foundation
 
 protocol GSRManageGroupViewModelDelegate {
-    //TODO: Add stuff here
+    func beginBooking()
+    func inviteToGroup()
+    func fetchGroup()
 }
 
 protocol GroupManageButtonDelegate {
     func bookGroup()
-    func shareGroup()
+    func inviteGroup()
     func leaveGroup()
 }
 
@@ -34,7 +36,7 @@ class GSRManageGroupViewModel: NSObject {
         self.group = group
     }
 
-    func setGroup(group: GSRGroup) {
+    func setGroup(_ group: GSRGroup) {
         self.group = group
     }
 }
@@ -79,8 +81,7 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: GroupHeaderCell.identifier, for: indexPath) as! GroupHeaderCell
                 cell.groupTitle = group.name
-                let color = group.parseColor() ??  UIColor(named: "blueLighter")
-                cell.groupColor = color
+                cell.groupColor = group.color
 
                 if let members = group.members {
                     cell.memberCount = members.count
@@ -131,18 +132,25 @@ extension GSRManageGroupViewModel: UITableViewDelegate {
 //MARK: GSRGroupIndividualSettingDelegate
 extension GSRManageGroupViewModel: GSRGroupIndividualSettingDelegate {
     func updateSetting(setting: GSRGroupIndividualSetting) {
-        print("Update Setting \(setting.title) to \(setting.isEnabled)")
-        // TODO - call the GSRGroupNetworkManager to change setting
+        GSRGroupNetworkManager.instance.updateIndividualSetting(groupID: group.id, settingType: setting.type, isEnabled: setting.isEnabled, callback: {(success, error) in
+            if let error = error {
+                print(error)
+            } else {
+                self.delegate.fetchGroup()
+            }
+        })
     }
 }
 
 extension GSRManageGroupViewModel: GroupManageButtonDelegate {
     func bookGroup() {
-        print("Book Group!")
+        delegate.beginBooking()
     }
-    func shareGroup() {
-        print("Share Group!")
+    
+    func inviteGroup() {
+        delegate.inviteToGroup()
     }
+    
     func leaveGroup() {
         print("Leave Group!")
     }

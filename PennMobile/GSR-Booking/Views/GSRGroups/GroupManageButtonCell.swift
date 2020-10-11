@@ -15,7 +15,7 @@ class GroupManageButtonCell: UITableViewCell {
     let buttonInset: CGFloat = 14.0
 
     fileprivate var bookGroupBtn: UIButton!
-    fileprivate var shareGroupBtn: UIButton!
+    fileprivate var inviteGroupBtn: UIButton!
     fileprivate var leaveGroupBtn: UIButton!
     
     var delegate: GroupManageButtonDelegate?
@@ -33,17 +33,17 @@ class GroupManageButtonCell: UITableViewCell {
 // MARK: - Prepare UI
 extension GroupManageButtonCell {
     func prepareUI() {
-        backgroundColor = UIColor.clear
         prepareBookGroupBtn()
         prepareShareGroupBtn()
         prepareLeaveGroupBtn()
+        backgroundColor = .uiGroupedBackground
     }
     
     fileprivate func prepareBookGroupBtn() {
         bookGroupBtn = UIButton()
-        bookGroupBtn.setTitle("Book Group", for: .normal)
-        bookGroupBtn.backgroundColor = UIColor.white
-        bookGroupBtn.setTitleColor(UIColor.init(red: 93, green: 154, blue: 202), for: .normal)
+        bookGroupBtn.setTitle("Book with Group", for: .normal)
+        bookGroupBtn.backgroundColor = .uiGroupedBackgroundSecondary
+        bookGroupBtn.setTitleColor(.baseLabsBlue, for: .normal)
         bookGroupBtn.addTarget(self, action: #selector(bookGroupBtnTapped), for: .touchUpInside)
         bookGroupBtn.layer.cornerRadius = 8
         bookGroupBtn.layer.masksToBounds = true
@@ -53,29 +53,29 @@ extension GroupManageButtonCell {
     }
     
     fileprivate func prepareShareGroupBtn() {
-        shareGroupBtn = UIButton()
-        shareGroupBtn.setTitle("Share Group", for: .normal)
-        shareGroupBtn.backgroundColor = UIColor.white
-        shareGroupBtn.setTitleColor(UIColor.init(red: 93, green: 154, blue: 202), for: .normal)
-        shareGroupBtn.addTarget(self, action: #selector(shareGroupBtnTapped), for: .touchUpInside)
-        shareGroupBtn.layer.cornerRadius = 8
-        shareGroupBtn.layer.masksToBounds = true
+        inviteGroupBtn = UIButton()
+        inviteGroupBtn.setTitle("Invite to Group", for: .normal)
+        inviteGroupBtn.backgroundColor = .uiGroupedBackgroundSecondary
+        inviteGroupBtn.setTitleColor(.baseLabsBlue, for: .normal)
+        inviteGroupBtn.addTarget(self, action: #selector(shareGroupBtnTapped), for: .touchUpInside)
+        inviteGroupBtn.layer.cornerRadius = 8
+        inviteGroupBtn.layer.masksToBounds = true
         
-        addSubview(shareGroupBtn)
-        _ = shareGroupBtn.anchor(bookGroupBtn.bottomAnchor, left: bookGroupBtn.leftAnchor, bottom: nil, right: bookGroupBtn.rightAnchor, topConstant: buttonInset, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        addSubview(inviteGroupBtn)
+        _ = inviteGroupBtn.anchor(bookGroupBtn.bottomAnchor, left: bookGroupBtn.leftAnchor, bottom: nil, right: bookGroupBtn.rightAnchor, topConstant: buttonInset, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
     }
     
     fileprivate func prepareLeaveGroupBtn() {
         leaveGroupBtn = UIButton()
         leaveGroupBtn.setTitle("Leave Group", for: .normal)
-        leaveGroupBtn.backgroundColor = UIColor.white
-        leaveGroupBtn.setTitleColor(UIColor(named: "baseRed"), for: .normal)
+        leaveGroupBtn.backgroundColor = .uiGroupedBackgroundSecondary
+        leaveGroupBtn.setTitleColor(.baseRed, for: .normal)
         leaveGroupBtn.addTarget(self, action: #selector(leaveGroupBtnTapped), for: .touchUpInside)
         leaveGroupBtn.layer.cornerRadius = 8
         leaveGroupBtn.layer.masksToBounds = true
         
         addSubview(leaveGroupBtn)
-        _ = leaveGroupBtn.anchor(shareGroupBtn.bottomAnchor, left: bookGroupBtn.leftAnchor, bottom: bottomAnchor, right: bookGroupBtn.rightAnchor, topConstant: buttonInset, leftConstant: 0, bottomConstant: buttonInset, rightConstant: 0, widthConstant: 0, heightConstant: 50)
+        _ = leaveGroupBtn.anchor(inviteGroupBtn.bottomAnchor, left: bookGroupBtn.leftAnchor, bottom: bottomAnchor, right: bookGroupBtn.rightAnchor, topConstant: buttonInset, leftConstant: 0, bottomConstant: buttonInset, rightConstant: 0, widthConstant: 0, heightConstant: 50)
     }
     
 }
@@ -89,7 +89,7 @@ extension GroupManageButtonCell {
     
     @objc func shareGroupBtnTapped() {
         if let delegate = delegate {
-            delegate.shareGroup()
+            delegate.inviteGroup()
         }
     }
     
