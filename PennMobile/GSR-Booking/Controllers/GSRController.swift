@@ -16,7 +16,7 @@ class GSRController: GenericViewController, IndicatorEnabled {
     fileprivate var rangeSlider: GSRRangeSlider!
     fileprivate var pickerView: UIPickerView!
     fileprivate var emptyView: EmptyView!
-    fileprivate var closedView: ClosedView!
+    fileprivate var closedView: GSRClosedView!
     fileprivate var barButton: UIBarButtonItem!
     fileprivate var bookingsBarButton: UIBarButtonItem!
     
@@ -121,7 +121,7 @@ extension GSRController {
     }
     
     private func prepareClosedView() {
-        closedView = ClosedView()
+        closedView = GSRClosedView()
         closedView.isHidden = true
 
         view.addSubview(closedView)
@@ -149,24 +149,27 @@ extension GSRController: GSRViewModelDelegate {
         GSRNetworkManager.instance.getAvailability(for: location.lid, date: date) { (rooms) in
             
             DispatchQueue.main.async {
-                if let rooms = rooms {
+                if let rooms = rooms {                    
                     self.viewModel.updateData(with: rooms)
+                    self.refreshDataUI()
+                    self.rangeSlider.reload()
+                    self.refreshBarButton()
+                    self.stopLoadingViewAnimation()
+                }else{//no valid response
+                    self.viewModel.updateData(with: [])
                     self.refreshDataUI()
                     self.rangeSlider.reload()
                     self.refreshBarButton()
                     self.stopLoadingViewAnimation()
                 }
             }
-            
         }
-        
-        
     }
 
     func refreshDataUI() {
-        tableView.isHidden = viewModel.isEmpty
-        closedView.isHidden = viewModel.existsNonEmptyRoom()
-        emptyView.isHidden = !viewModel.isEmpty || !viewModel.existsNonEmptyRoom()
+        tableView.isHidden = !viewModel.existsTimeSlot()
+        closedView.isHidden = viewModel.existsTimeSlot()
+        emptyView.isHidden = !viewModel.isEmpty || !viewModel.existsTimeSlot()
         self.tableView.reloadData()
     }
 

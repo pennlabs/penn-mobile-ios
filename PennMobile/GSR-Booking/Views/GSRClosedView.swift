@@ -8,12 +8,12 @@
 
 import UIKit
 
-class ClosedView: UIView {
+class GSRClosedView: UIView {
     
     private let label: UILabel = {
         let l = UILabel()
-        l.font = UIFont(name: "HelveticaNeue", size: 22)
-        l.text = "This GSR is closed until further notice."
+        l.font = UIFont.avenirMedium
+        l.text = "No GSR rooms found."
         l.textColor = UIColor.labelSecondary
         l.textAlignment = .center
         l.numberOfLines = 0
@@ -22,7 +22,7 @@ class ClosedView: UIView {
     }()
     
     private let closedImage: UIImageView = {
-        let imgView = UIImageView(image: UIImage(named: "EmptyStateGSR")!)
+        let imgView = UIImageView(image: UIImage(named: "EmptyStateGSR"))
         imgView.contentMode = .scaleAspectFit
         imgView.translatesAutoresizingMaskIntoConstraints = false
         return imgView
@@ -35,7 +35,7 @@ class ClosedView: UIView {
         
         addSubview(closedImage)
         closedImage.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        closedImage.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -100).isActive = true
+        closedImage.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -60).isActive = true
         closedImage.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
         addSubview(label)
