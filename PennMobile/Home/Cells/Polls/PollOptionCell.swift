@@ -9,28 +9,32 @@
 import UIKit
 import SnapKit
 
+
 class PollOptionCell: UITableViewCell {
     
     static let identifier = "pollOptionCell"
     static let cellHeight: CGFloat = 110
     
-    var question: String! {
+    
+    var question: String! 
+    
+    var responseRate: Double!
+    
+    var answered: Bool!
+    
+    var chosen: Bool! {
         didSet {
             setupCell()
         }
     }
     
-    var response: Int! {
-        didSet {
-            setupCell()
-        }
-    }
+    
     
     
     // MARK: - UI Elements
     fileprivate var safeArea: UIView!
     fileprivate var questionLabel: UILabel!
-
+    fileprivate var percentageShadow: UIView!
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -60,7 +64,9 @@ extension PollOptionCell {
     
     fileprivate func prepareUI() {
         self.accessoryType = .disclosureIndicator
+        preparePercentageShadowView()
         prepareLabels()
+        
     }
     
     // MARK: Safe Area
@@ -76,17 +82,52 @@ extension PollOptionCell {
         }
     }
     
+    //MARK: percentage shadow
+    fileprivate func preparePercentageShadowView() {
+        percentageShadow = UIView()
+        percentageShadow.layer.cornerRadius = 10
+        percentageShadow.layer.masksToBounds = true
+        
+        safeArea.addSubview(percentageShadow)
+        
+        let maxWidth = CGFloat(0.8) * UIScreen.main.bounds.width
+        
+        
+        
+        if self.answered == true {
+            let width = CGFloat(self.responseRate) * maxWidth
+            percentageShadow.backgroundColor = self.chosen ? .blueLighter : .lightGray
+            safeArea.addSubview(percentageShadow)
+            percentageShadow.snp.makeConstraints {(make) in
+                make.leading.equalTo(safeArea).offset(3)
+                make.top.equalTo(safeArea).offset(3)
+                make.width.equalTo(width)
+                make.bottom.equalTo(safeArea).offset(3)
+            }
+        } else {
+            percentageShadow.backgroundColor = .greenLighter
+            safeArea.addSubview(percentageShadow)
+            percentageShadow.snp.makeConstraints {(make) in
+                make.leading.equalTo(safeArea).offset(3)
+                make.top.equalTo(safeArea).offset(3)
+                make.width.equalTo(maxWidth)
+//                make.trailing.equalTo(safeArea).offset(-8)
+                make.bottom.equalTo(safeArea).offset(3)
+            }
+        }
+        
+    }
     
     // MARK: Labels
     fileprivate func prepareLabels() {
         questionLabel = getQuestionLabel()
         
-        addSubview(questionLabel)
+        percentageShadow.addSubview(questionLabel)
         
         questionLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(safeArea).offset(8)
-            make.top.equalTo(safeArea).offset(3)
-            make.trailing.equalTo(safeArea).offset(-8)
+            make.leading.equalTo(percentageShadow).offset(8)
+            make.top.equalTo(percentageShadow).offset(3)
+            make.trailing.equalTo(percentageShadow).offset(-8)
         }
     }
 }

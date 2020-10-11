@@ -95,7 +95,9 @@ extension HomePollsCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? PollOptionCell {
             cell.question = Array((pollQuestion.options?.keys)!)[indexPath.row]
-            cell.response = Array((pollQuestion.options?.values)!)[indexPath.row]
+            cell.responseRate = Array((pollQuestion.options?.values)!)[indexPath.row]
+            cell.answered = pollQuestion.userChosen == -1 ? false : true
+            cell.chosen = pollQuestion.userChosen == indexPath.row ? true : false
         }
     }
 

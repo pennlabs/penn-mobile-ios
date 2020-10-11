@@ -39,10 +39,12 @@ final class HomePollsCellItem: HomeCellItem {
             title: "Who is more of a snake?",
             source: "THE DAILY PENNSYLVANIAN",
             ddl: ddl,
-            options:["Wharton Students":2,
-                     "M&T Students":2,
-                     "CIS Majors who are trying to transfer into Wharton": 6,
-                     "Armaan going to a Goldman info session": 296])
+            options:["Wharton Students":0.1,
+                     "M&T Students":0.1,
+                     "CIS Majors who are trying to transfer into Wharton": 0.2,
+                     "Armaan going to a Goldman info session": 0.6],
+            totalVoteCount: 380
+            )
         return HomePollsCellItem(pollQuestion:pollQuestion)
     }
 }
