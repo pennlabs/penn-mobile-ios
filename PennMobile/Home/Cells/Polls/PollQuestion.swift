@@ -13,12 +13,16 @@ class PollQuestion {
     let title: String?
     let source: String?
     let ddl: Date?
-    let options: [String:Int]?
+    let options: [String:Double]?
+    let totalVoteCount: Int?
+    let userChosen: Int?
 
-    init(title: String?, source: String?, ddl: Date?, options: [String:Int]) {
+    init(title: String?, source: String?, ddl: Date?, options: [String:Double], totalVoteCount: Int) {
         self.title = title
         self.source = source
         self.ddl = ddl
         self.options = options
+        self.totalVoteCount = totalVoteCount
+        self.userChosen = -1
     }
 }
