@@ -66,19 +66,16 @@ class HomeViewController: GenericViewController {
             return self.displayTitle
         } else {
             let firstName = Account.getAccount()?.first ?? GSRUser.getUser()?.firstName
-            if let firstName = firstName {
-                let intros = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"]
-                
-                if firstName != "" {
-                    self.displayTitle = "\(intros.random!), \(firstName)!"
-                } else {
-                    self.displayTitle = "Howdy!"
-                }
-                
+            
+            let intros = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"]
+            
+            if let firstName = firstName, firstName != "" {
+                self.displayTitle = "\(intros.random!), \(firstName)!"
                 titleCacheTimestamp = Date()
             } else {
-                self.displayTitle = "Home"
+                self.displayTitle = "\(intros.random!)"
             }
+            
             return self.displayTitle
         }
     }
