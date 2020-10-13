@@ -259,17 +259,9 @@ extension HomeViewController : DiningCellSettingsDelegate {
     func saveSelection(for venueIds: [Int]) {
         guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
         if venueIds.count == 0 {
-<<<<<<< HEAD
             diningItem.venues = DiningAPI.instance.getVenues(with: DiningVenue.defaultVenueIds)
         } else {
             diningItem.venues = DiningAPI.instance.getVenues(with: venueIds)
-=======
-            diningItem.venues = DiningDataStore.shared.getVenues(for: DiningVenue.defaultVenueIds)
-            diningItem.venueIds = DiningVenue.defaultVenueIds
-        } else {
-            diningItem.venues = DiningDataStore.shared.getVenues(for: venueIds)
-            diningItem.venueIds = venueIds
->>>>>>> development
         }
 
         reloadItem(diningItem)

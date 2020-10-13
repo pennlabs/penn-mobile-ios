@@ -35,7 +35,7 @@ struct AlertModifier: ViewModifier {
                     VStack {
                         Text(self.alertDescription)
                             .frame(width: geo.size.width, height: 70, alignment: .center)
-                            .font(Font(UIFont.primaryInformationFont!))
+                            .font(Font(UIFont.primaryInformationFont))
                                 .foregroundColor(.white)
                             .background(Color.baseRed)
                         

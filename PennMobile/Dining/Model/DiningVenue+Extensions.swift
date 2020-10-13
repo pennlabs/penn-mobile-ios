@@ -30,15 +30,25 @@ extension DiningVenue {
         return self.meals[DiningVenue.dateFormatter.string(from: Date())]
     }
     
-    var currentMeal: DiningVenue.MealsForDate.Meal? {
-        guard let mealsToday = mealsToday else { return nil }
+    var isOpen: Bool {
+        guard let mealsToday = mealsToday else { return false }
         for meal in mealsToday.meals {
             if meal.isCurrentlyServing {
-                return meal
+                return true
             }
         }
-        return nil
+        return false
     }
+    
+//    var currentMeal: DiningVenue.MealsForDate.Meal? {
+//        guard let mealsToday = mealsToday else { return nil }
+//        for meal in mealsToday.meals {
+//            if meal.isCurrentlyServing {
+//                return meal
+//            }
+//        }
+//        return nil
+//    }
     
     var currentMeal: MealsForDate.Meal? {
         return self.mealsToday?.meals.first(where: { $0.isCurrentlyServing }) ?? nil
