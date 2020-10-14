@@ -73,7 +73,7 @@ class HomeViewController: GenericViewController {
                 self.displayTitle = "\(intros.random!), \(firstName)!"
                 titleCacheTimestamp = Date()
             } else {
-                self.displayTitle = "\(intros.random!)"
+                self.displayTitle = "\(intros.random!)!"
             }
             
             return self.displayTitle
