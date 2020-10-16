@@ -149,19 +149,12 @@ extension GSRController: GSRViewModelDelegate {
         GSRNetworkManager.instance.getAvailability(for: location.lid, date: date) { (rooms) in
             
             DispatchQueue.main.async {
-                if let rooms = rooms {                    
-                    self.viewModel.updateData(with: rooms)
-                    self.refreshDataUI()
-                    self.rangeSlider.reload()
-                    self.refreshBarButton()
-                    self.stopLoadingViewAnimation()
-                }else{//no valid response
-                    self.viewModel.updateData(with: [])
-                    self.refreshDataUI()
-                    self.rangeSlider.reload()
-                    self.refreshBarButton()
-                    self.stopLoadingViewAnimation()
-                }
+                let rooms = rooms ?? []
+                self.viewModel.updateData(with: rooms)
+                self.refreshDataUI()
+                self.rangeSlider.reload()
+                self.refreshBarButton()
+                self.stopLoadingViewAnimation()
             }
         }
     }
