@@ -18,7 +18,9 @@ class PollOptionCell: UITableViewCell {
     
     var question: String! 
     
-    var responseRate: Double!
+    var response: Int!
+    
+    var totalResponses: Int!
     
     var answered: Bool!
     
@@ -95,7 +97,7 @@ extension PollOptionCell {
         
         
         if self.answered == true {
-            let width = CGFloat(self.responseRate) * maxWidth
+            let width = CGFloat(self.response / self.totalResponses) * maxWidth
             percentageShadow.backgroundColor = self.chosen ? .blueLighter : .lightGray
             safeArea.addSubview(percentageShadow)
             percentageShadow.snp.makeConstraints {(make) in

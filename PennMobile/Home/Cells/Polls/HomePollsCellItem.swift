@@ -34,15 +34,15 @@ final class HomePollsCellItem: HomeCellItem {
 //        guard let pollQuestion = try? JSONDecoder().decode(PollQuestion.self, from: json.rawData()) else { return nil }
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        let ddl = formatter.date(from:"2020/10/01 11:59")
+        let ddl = formatter.date(from:"2020/10/20 11:59")
         let pollQuestion = PollQuestion(
             title: "Who is more of a snake?",
             source: "THE DAILY PENNSYLVANIAN",
             ddl: ddl,
-            options:["Wharton Students":0.1,
-                     "M&T Students":0.1,
-                     "CIS Majors who are trying to transfer into Wharton": 0.2,
-                     "Armaan going to a Goldman info session": 0.6],
+            options:["Wharton Students":20,
+                     "M&T Students":20,
+                     "CIS Majors who are trying to transfer into Wharton": 40,
+                     "Armaan going to a Goldman info session": 300],
             totalVoteCount: 380
             )
         return HomePollsCellItem(pollQuestion:pollQuestion)

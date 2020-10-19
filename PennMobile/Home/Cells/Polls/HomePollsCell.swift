@@ -34,6 +34,8 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
     fileprivate var header: HomeCellHeader = HomeCellHeader()
     fileprivate var responsesTableView: UITableView!
+    fileprivate var voteCountLabel: UILabel!
+    fileprivate var ddlLabel: UILabel!
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -54,6 +56,26 @@ extension HomePollsCell {
         responsesTableView.reloadData()
         header.secondaryTitleLabel.text = "Poll FROM \(pollQuestion.source ?? "some source")"
         header.primaryTitleLabel.text = item.pollQuestion.title
+        voteCountLabel.text = "\(pollQuestion.totalVoteCount ?? 0) Votes"
+        //ddlLabel.text = "23H 17M"
+        setupDdlLabel(with: pollQuestion.ddl!)
+    }
+    fileprivate func setupDdlLabel(with ddl: Date) {
+        let diffComponents = Calendar.current.dateComponents([.day, .hour, .minute], from: Date(), to: ddl)
+        let d = diffComponents.day
+        let h = diffComponents.hour
+        let mm = diffComponents.minute
+        ddlLabel.text = ""
+        if (d! > 0) {
+            ddlLabel.text = "\(d ?? 0)d"
+        }
+        if (h! > 0) {
+            ddlLabel.text = "\(ddlLabel.text ?? "") \(h ?? 0) h"
+        }
+        if (mm! > 0) {
+            ddlLabel.text = "\(ddlLabel.text ?? "") \(mm ?? 0) m"
+        }
+
     }
 }
 
@@ -64,6 +86,8 @@ extension HomePollsCell {
     fileprivate func prepareUI() {
         prepareSafeArea()
         prepareHeader()
+        prepareVoteCountLabel()
+        prepareDdlLabel()
         prepareTableView()
     }
     
@@ -77,6 +101,31 @@ extension HomePollsCell {
         safeArea.addSubview(header)
         header.prepare()
     }
+    
+    // MARK: Vote Count Label
+    fileprivate func prepareVoteCountLabel() {
+        voteCountLabel = getVoteCountLabel()
+        cardView.addSubview(voteCountLabel)
+        voteCountLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(header.primaryTitleLabel).offset(3)
+            make.top.equalTo(header.primaryTitleLabel.snp.bottom).offset(3)
+        }
+    }
+    
+    // MARK: DDL Label
+    fileprivate func prepareDdlLabel() {
+        ddlLabel = getDdlLabel()
+        cardView.addSubview(ddlLabel)
+        ddlLabel.snp.makeConstraints { (make) in
+            make.trailing.equalTo(safeArea).offset(-3)
+            make.top.equalTo(safeArea)
+        }
+        header.secondaryTitleLabel.snp.makeConstraints { (make) in
+            make.trailing.lessThanOrEqualTo(ddlLabel.snp.leading).offset(-3)
+            make.top.equalTo(safeArea)
+        }
+    }
+    
 
     // MARK: TableView
     fileprivate func prepareTableView() {
@@ -95,7 +144,8 @@ extension HomePollsCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? PollOptionCell {
             cell.question = Array((pollQuestion.options?.keys)!)[indexPath.row]
-            cell.responseRate = Array((pollQuestion.options?.values)!)[indexPath.row]
+            cell.response = Array((pollQuestion.options?.values)!)[indexPath.row]
+            cell.totalResponses = pollQuestion.totalVoteCount
             cell.answered = pollQuestion.userChosen == -1 ? false : true
             cell.chosen = pollQuestion.userChosen == indexPath.row ? true : false
         }
@@ -129,5 +179,21 @@ extension HomePollsCell {
         tableView.isScrollEnabled = false
         tableView.register(PollOptionCell.self, forCellReuseIdentifier: PollOptionCell.identifier)
         return tableView
+    }
+    
+    private func getVoteCountLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryTitleFont
+        label.textColor = .labelSecondary
+        label.textAlignment = .left
+        return label
+    }
+    
+    private func getDdlLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryTitleFont
+        label.textColor = .labelSecondary
+        label.textAlignment = .left
+        return label
     }
 }
