@@ -183,6 +183,7 @@
 		B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67881D7211CBF2A000DA750 /* MenuTableView.swift */; };
 		B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */; };
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
+		B9432323253CFF670013BF92 /* HomePollsCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9432322253CFF670013BF92 /* HomePollsCellFooter.swift */; };
 		B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */; };
 		B9D16BBF2516E96500659946 /* HomePollsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D16BBE2516E96500659946 /* HomePollsCell.swift */; };
 		B9D16BC12516E97C00659946 /* HomePollsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D16BC02516E97C00659946 /* HomePollsCellItem.swift */; };
@@ -481,6 +482,7 @@
 		B6B1E089214442A200CCBBCD /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = SOURCE_ROOT; };
 		B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
+		B9432322253CFF670013BF92 /* HomePollsCellFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCellFooter.swift; sourceTree = "<group>"; };
 		B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteViewController.swift; sourceTree = "<group>"; };
 		B9D16BBE2516E96500659946 /* HomePollsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCell.swift; sourceTree = "<group>"; };
 		B9D16BC02516E97C00659946 /* HomePollsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCellItem.swift; sourceTree = "<group>"; };
@@ -618,9 +620,9 @@
 		212B8353222A319200F835D6 /* Post */ = {
 			isa = PBXGroup;
 			children = (
+				212B8358222A331D00F835D6 /* Post.swift */,
 				212B8354222A31B500F835D6 /* HomePostCellItem.swift */,
 				212B8356222A31C300F835D6 /* HomePostCell.swift */,
-				212B8358222A331D00F835D6 /* Post.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -1336,6 +1338,7 @@
 				B9D16BC02516E97C00659946 /* HomePollsCellItem.swift */,
 				B9D16BC32516F00200659946 /* PollQuestion.swift */,
 				B9ECAC412521519F004C488E /* PollOptionCell.swift */,
+				B9432322253CFF670013BF92 /* HomePollsCellFooter.swift */,
 			);
 			path = Polls;
 			sourceTree = "<group>";
@@ -1868,6 +1871,7 @@
 				2189C08C2027CE2600771C1F /* GSRTimeCell.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
 				21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */,
+				B9432323253CFF670013BF92 /* HomePollsCellFooter.swift in Sources */,
 				EFE2D6F3239B11050020F6BF /* CreateGroupCell.swift in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				212B8359222A331D00F835D6 /* Post.swift in Sources */,
