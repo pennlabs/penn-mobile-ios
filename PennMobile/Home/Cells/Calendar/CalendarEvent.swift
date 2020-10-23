@@ -22,7 +22,8 @@ final class CalendarEvent {
     func getDateString(fullLength: Bool) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, MMMM d"
-        
+        formatter.timeZone = .autoupdatingCurrent
+
         let startString = "\(formatter.string(from: start))"
         let endString = "\(formatter.string(from: end))"
         

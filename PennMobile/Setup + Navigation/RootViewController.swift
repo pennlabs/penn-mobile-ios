@@ -121,19 +121,20 @@ class RootViewController: UIViewController, NotificationRequestable {
         
         if shouldRefetchCode() {
              //Request to fetch Two Factor Code again if the app failed to fetch it last time
-            DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Two-Step Code Not Fetched", message: "We were unable to fetch your Two-Step code last time. Do you want to try again?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
-                    alert.dismiss(animated: true, completion: nil)
-                    UserDefaults.standard.setTwoFactorEnabledDate(nil);
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-                    TOTPFetcher.instance.fetchAndSaveTOTPSecret()
-                }))
-            
-                self.current.present(alert, animated: true, completion: nil)
-            }
+            //TODO: uncomment this next section if you want to reenable wkzombie 2FA
+//            DispatchQueue.main.async {
+//                let alert = UIAlertController(title: "Two-Step Code Not Fetched", message: "We were unable to fetch your Two-Step code last time. Do you want to try again?", preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
+//                    alert.dismiss(animated: true, completion: nil)
+//                    UserDefaults.standard.setTwoFactorEnabledDate(nil);
+//                }))
+//
+//                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+//                    TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+//                }))
+//
+//                self.current.present(alert, animated: true, completion: nil)
+//            }
         } else if #available(iOS 13, *) {
             if shouldRequestCoursePermission() {
                 // Request permission, then share courses if granted

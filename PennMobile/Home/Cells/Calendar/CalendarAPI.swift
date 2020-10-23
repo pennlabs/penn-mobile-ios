@@ -30,19 +30,21 @@ class CalendarAPI: Requestable {
                 var events = [CalendarEvent]()
                 for json in jsonArray {
                     let name = json["name"].stringValue
-                    let start = json["start"].stringValue
-                    let end = json["end"].stringValue
+
+                    //set time to 6 am EST
+                    let start = "\(json["start"].stringValue) 6:00 AM"
+                    let end = "\(json["end"].stringValue) 6:00 AM"
                     
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    dateFormatter.dateFormat = "yyyy-MM-dd h:mm a"
                     dateFormatter.timeZone = TimeZone(abbreviation: "EST")
+
                     let startDate = dateFormatter.date(from: start)!
                     let endDate = dateFormatter.date(from: end)!
                     
                     let event = CalendarEvent(name: name, start: startDate, end: endDate)
                     events.append(event)
                 }
-                //let exampleEvent: CalendarEvent = CalendarEvent(name: "Advance Registration Begins", start: Date() , end: Date())
                 self.calendarEvents = events
                 completion(events)
             }

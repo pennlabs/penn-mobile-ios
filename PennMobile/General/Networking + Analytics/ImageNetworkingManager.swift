@@ -13,19 +13,22 @@ class ImageNetworkingManager {
     private init() {}
     
     func downloadImage(imageUrl: String, _ callback: @escaping (_ image: UIImage?) -> Void) {
-        ImageCache.default.retrieveImage(forKey: imageUrl, options: nil) { (image, cacheType) in
-            if let image = image {
+        ImageCache.default.retrieveImage(forKey: imageUrl) { (result) in
+            if let imageCacheResult = try? result.get(),
+                let image = imageCacheResult.image {
                 callback(image)
             } else {
                 guard let url = URL(string: imageUrl) else { return }
-                ImageDownloader.default.downloadImage(with: url, options: [], progressBlock: nil) {
-                    (image, error, url, data) in
-                    if let image = image {
-                        ImageCache.default.store(image, forKey: imageUrl)
+                ImageDownloader.default.downloadImage(with: url, options: [], progressBlock: nil) { (result) in
+                    if let imageResult = try? result.get() {
+                        ImageCache.default.store(imageResult.image, forKey: imageUrl)
+                        callback(imageResult.image)
+                    } else {
+                        callback(nil)
                     }
-                    callback(image)
                 }
             }
         }
     }
+
 }

@@ -30,7 +30,7 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
     
     lazy var quadDigitLabel = [digitLabel, digitLabel, digitLabel, digitLabel]
     
-    let pacCodeIcon = UIImageView(image: UIImage(named: "PAC_Code")!)
+    var pacCodeIcon: UIImageView!
     let pacCodeTitleLabel = UILabel()
     let pacCodeSecurityInfoLabel = UILabel()
     let pacCodeHStack = UIStackView()
@@ -51,6 +51,7 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
     }
     
     func setupPacCodeIcon() {
+        pacCodeIcon = UIImageView(image: UIImage(named: "PAC_Code")!)
         pacCodeIcon.contentMode = .scaleAspectFill
         pacCodeIcon.tintColor = .labelPrimary
         
@@ -140,16 +141,16 @@ extension PacCodeViewController : KeychainAccessible, LocallyAuthenticatable {
     }
     
     func handleAuthenticationSuccess() {
-        if let pacCode = getPacCode() {
-            self.pacCode = pacCode
-            updatePACCode()
-        } else {
-            if Account.isLoggedIn {
+        if Account.isLoggedIn {
+            if let pacCode = getPacCode() {
+                self.pacCode = pacCode
+                updatePACCode()
+            } else {
                 // Handle the case in which the user is logged in but hasn't yet fetched their PAC Codes
                 handleNetworkPacCodeRefetch()
-            } else {
-                self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
             }
+        } else {
+            self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
         }
     }
     

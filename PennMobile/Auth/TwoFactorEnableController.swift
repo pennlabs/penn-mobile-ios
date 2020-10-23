@@ -54,7 +54,8 @@ class TwoFactorEnableController: UIViewController, IndicatorEnabled, URLOpenable
                 case .affirmative:
                     //Fetch code immediately if the user does not have to log in.
                     if !self.delegate.shouldLogin() {
-                        TOTPFetcher.instance.fetchAndSaveTOTPSecret()
+                        //TODO: Uncomment to reenable 2FA
+//                        TOTPFetcher.instance.fetchAndSaveTOTPSecret()
                     }
                     if self.delegate.shouldWait() {
                         DispatchQueue.main.async {

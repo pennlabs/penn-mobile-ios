@@ -20,7 +20,6 @@ PODS:
   - GoogleToolboxForMac/Defines (2.2.2)
   - "GoogleToolboxForMac/NSData+zlib (2.2.2)":
     - GoogleToolboxForMac/Defines (= 2.2.2)
-  - hpple (0.2.0)
   - MBProgressHUD (0.9.2)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
@@ -30,8 +29,6 @@ PODS:
   - OneTimePassword (3.2.0):
     - Base32 (~> 1.1.2)
   - SimulatorStatusMagic (2.4.1)
-  - WKZombie (1.1.1):
-    - hpple (= 0.2.0)
   - XLPagerTabStrip (9.0.0)
 
 DEPENDENCIES:
@@ -41,7 +38,6 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.8)
   - OneTimePassword (~> 3.2)
   - SimulatorStatusMagic
-  - WKZombie (from `https://github.com/pennlabs/WKZombie.git`, commit `536f6e8aa0e8438fe711fff6420908bc67edb056`)
   - XLPagerTabStrip (~> 9.0)
 
 SPEC REPOS:
@@ -54,40 +50,27 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - GoogleToolboxForMac
-    - hpple
     - MBProgressHUD
     - nanopb
     - OneTimePassword
     - SimulatorStatusMagic
     - XLPagerTabStrip
 
-EXTERNAL SOURCES:
-  WKZombie:
-    :commit: 536f6e8aa0e8438fe711fff6420908bc67edb056
-    :git: https://github.com/pennlabs/WKZombie.git
-
-CHECKOUT OPTIONS:
-  WKZombie:
-    :commit: 536f6e8aa0e8438fe711fff6420908bc67edb056
-    :git: https://github.com/pennlabs/WKZombie.git
-
 SPEC CHECKSUMS:
   Base32: 163c298644d184e89ca4e00a996bad6bf5166390
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   GoogleToolboxForMac: 800648f8b3127618c1b59c7f97684427630c5ea3
-  hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   OneTimePassword: c00ecc908e67e6c5bfda9d50b0b2e4696d0b066e
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
-  WKZombie: 90713d7efd00b860468b0dcae84e927af493dd8f
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: c6849a705a47d99778248fc26440ea9803f12b4d
+PODFILE CHECKSUM: a6ab3acbf2c34edb0a57369bbb5909e8141022f7
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3

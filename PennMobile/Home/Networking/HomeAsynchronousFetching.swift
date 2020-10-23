@@ -53,7 +53,7 @@ final class HomeAsynchronousAPIFetching {
         override func main() {
             super.main()
             item.fetchData {
-                self.completion(self.item as! HomeCellItem)
+                self.completion(self.item as HomeCellItem)
                 self.state = .finished
             }
         }
