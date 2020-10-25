@@ -57,7 +57,6 @@ extension HomePollsCell {
         header.secondaryTitleLabel.text = "Poll FROM \(pollQuestion.source ?? "some source")"
         header.primaryTitleLabel.text = item.pollQuestion.title
         voteCountLabel.text = "\(pollQuestion.totalVoteCount ?? 0) Votes"
-        //ddlLabel.text = "23H 17M"
         setupDdlLabel(with: pollQuestion.ddl!)
     }
     fileprivate func setupDdlLabel(with ddl: Date) {
@@ -146,8 +145,9 @@ extension HomePollsCell: UITableViewDelegate {
             cell.question = Array((pollQuestion.options?.keys)!)[indexPath.row]
             cell.response = Array((pollQuestion.options?.values)!)[indexPath.row]
             cell.totalResponses = pollQuestion.totalVoteCount
-            cell.answered = pollQuestion.userChosen == -1 ? false : true
-            cell.chosen = pollQuestion.userChosen == indexPath.row ? true : false
+            cell.answered = (pollQuestion.userChosen != nil) ? true : false
+            cell.chosen = pollQuestion.userChosen == cell.question ? true : false
+
         }
     }
 

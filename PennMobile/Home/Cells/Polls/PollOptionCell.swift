@@ -56,7 +56,16 @@ extension PollOptionCell {
         backgroundColor = .clear
         self.questionLabel.text = self.question
         
-        
+        //update the constraint of percentage shadow if needed
+        if self.answered == true {
+            let maxWidth = CGFloat(0.8) * UIScreen.main.bounds.width
+            let width = CGFloat(self.response) / CGFloat(self.totalResponses) * maxWidth
+            percentageShadow.backgroundColor = self.chosen ? .blueLighter : .lightGray
+            percentageShadow.snp.updateConstraints {(make) in
+                make.width.equalTo(width)
+            }
+            percentageShadow.layoutIfNeeded()
+        }
     }
     
 }
@@ -94,28 +103,13 @@ extension PollOptionCell {
         
         let maxWidth = CGFloat(0.8) * UIScreen.main.bounds.width
         
-        
-        
-        if self.answered == true {
-            let width = CGFloat(self.response / self.totalResponses) * maxWidth
-            percentageShadow.backgroundColor = self.chosen ? .blueLighter : .lightGray
-            safeArea.addSubview(percentageShadow)
-            percentageShadow.snp.makeConstraints {(make) in
-                make.leading.equalTo(safeArea).offset(3)
-                make.top.equalTo(safeArea).offset(3)
-                make.width.equalTo(width)
-                make.bottom.equalTo(safeArea).offset(3)
-            }
-        } else {
-            percentageShadow.backgroundColor = .greenLighter
-            safeArea.addSubview(percentageShadow)
-            percentageShadow.snp.makeConstraints {(make) in
-                make.leading.equalTo(safeArea).offset(3)
-                make.top.equalTo(safeArea).offset(3)
-                make.width.equalTo(maxWidth)
-//                make.trailing.equalTo(safeArea).offset(-8)
-                make.bottom.equalTo(safeArea).offset(3)
-            }
+        percentageShadow.backgroundColor = .greenLighter
+        safeArea.addSubview(percentageShadow)
+        percentageShadow.snp.makeConstraints {(make) in
+            make.leading.equalTo(safeArea).offset(3)
+            make.top.equalTo(safeArea).offset(3)
+            make.width.equalTo(maxWidth)
+            make.bottom.equalTo(safeArea).offset(3)
         }
         
     }
@@ -124,12 +118,12 @@ extension PollOptionCell {
     fileprivate func prepareLabels() {
         questionLabel = getQuestionLabel()
         
-        percentageShadow.addSubview(questionLabel)
+        safeArea.addSubview(questionLabel)
         
         questionLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(percentageShadow).offset(8)
-            make.top.equalTo(percentageShadow).offset(3)
-            make.trailing.equalTo(percentageShadow).offset(-8)
+            make.leading.equalTo(safeArea).offset(8)
+            make.top.equalTo(safeArea).offset(3)
+            make.trailing.equalTo(safeArea).offset(-8)
         }
     }
 }
