@@ -15,7 +15,7 @@ class PollQuestion {
     let ddl: Date?
     let options: [String:Int]?
     let totalVoteCount: Int?
-    let userChosen: Int?
+    let userChosen: String?
 
     init(title: String?, source: String?, ddl: Date?, options: [String:Int], totalVoteCount: Int) {
         self.title = title
@@ -23,6 +23,6 @@ class PollQuestion {
         self.ddl = ddl
         self.options = options
         self.totalVoteCount = totalVoteCount
-        self.userChosen = -1
+        self.userChosen = "Armaan going to a Goldman info session"
     }
 }
