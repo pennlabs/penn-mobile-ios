@@ -141,16 +141,16 @@ extension PacCodeViewController : KeychainAccessible, LocallyAuthenticatable {
     }
     
     func handleAuthenticationSuccess() {
-        if let pacCode = getPacCode() {
-            self.pacCode = pacCode
-            updatePACCode()
-        } else {
-            if Account.isLoggedIn {
+        if Account.isLoggedIn {
+            if let pacCode = getPacCode() {
+                self.pacCode = pacCode
+                updatePACCode()
+            } else {
                 // Handle the case in which the user is logged in but hasn't yet fetched their PAC Codes
                 handleNetworkPacCodeRefetch()
-            } else {
-                self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
             }
+        } else {
+            self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
         }
     }
     

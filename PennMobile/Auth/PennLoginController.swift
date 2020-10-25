@@ -28,7 +28,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .uiBackground
-        
+
         WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
             self.configureAndLoad(wkDataStore: dataStore)
         }

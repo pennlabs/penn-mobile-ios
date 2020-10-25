@@ -71,6 +71,7 @@ extension HomeGroupInvitesCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GSRGroupInviteCell.identifier, for: indexPath) as! GSRGroupInviteCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        cell.contentView.isUserInteractionEnabled = false
         let invite = invites[indexPath.row]
         cell.invite = invite
         cell.delegate = self
