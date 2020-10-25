@@ -27,6 +27,7 @@ extension ModularTableViewModel: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! ModularTableViewCell
         cell.item = item
         cell.delegate = self.delegate
+        (cell as! UITableViewCell).contentView.isUserInteractionEnabled = false 
         return cell as! UITableViewCell
     }
 }
