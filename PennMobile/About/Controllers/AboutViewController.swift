@@ -80,8 +80,8 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         var pastMembers = [Member]()
         
         //fill the arrays with members, and sort alphabetically
-        pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil, josh, dom, carin, salib]
-        currentMembers += [rehaan, liz, henrique, lucy, matthew, hassan, jongmin, adam, justin, raunaq, daniel]
+        pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil, josh, dom, carin, salib, liz]
+        currentMembers += [rehaan, henrique, lucy, matthew, hassan, jongmin, adam, justin, raunaq, daniel]
 
         pastMembers.sort(by: {$0 < $1})
         currentMembers.sort(by: {$0 < $1})
@@ -263,7 +263,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView?.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        collectionView?.heightAnchor.constraint(equalToConstant: 1000).isActive = true
+        collectionView?.heightAnchor.constraint(equalToConstant: 1175).isActive = true
         
     }
     
