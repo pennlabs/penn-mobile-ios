@@ -32,7 +32,7 @@ class CalendarAPI: Requestable {
                     let name = json["name"].stringValue
 
                     //set time to 6 am EST
-                    let start = "asdf\(json["start"].stringValue) 6:00 AM"
+                    let start = "\(json["start"].stringValue) 6:00 AM"
                     let end = "\(json["end"].stringValue) 6:00 AM"
                     
                     let dateFormatter = DateFormatter()
