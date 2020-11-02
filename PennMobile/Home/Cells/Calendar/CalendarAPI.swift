@@ -39,11 +39,13 @@ class CalendarAPI: Requestable {
                     dateFormatter.dateFormat = "yyyy-MM-dd h:mm a"
                     dateFormatter.timeZone = TimeZone(abbreviation: "EST")
 
-                    let startDate = dateFormatter.date(from: start)!
-                    let endDate = dateFormatter.date(from: end)!
+                    if let startDate = dateFormatter.date(from: start),
+                       let endDate = dateFormatter.date(from: end) {
+                        let event = CalendarEvent(name: name, start: startDate, end: endDate)
+                        events.append(event)
+                    }
                     
-                    let event = CalendarEvent(name: name, start: startDate, end: endDate)
-                    events.append(event)
+
                 }
                 self.calendarEvents = events
                 completion(events)
