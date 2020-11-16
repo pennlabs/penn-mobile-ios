@@ -146,6 +146,7 @@
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
+		76201BDD25621D6D00E911F7 /* PollsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76201BDC25621D6D00E911F7 /* PollsNetworkManager.swift */; };
 		97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806423D26BC700C23488 /* DiningBalanceCell.swift */; };
 		97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */; };
 		97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806623D26BC700C23488 /* DiningHeaderView.swift */; };
@@ -445,6 +446,7 @@
 		66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorTokenGenerator.swift; sourceTree = "<group>"; };
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
 		739709EEABEDE069054CBDDF /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
+		76201BDC25621D6D00E911F7 /* PollsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsNetworkManager.swift; sourceTree = "<group>"; };
 		97AA806423D26BC700C23488 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
 		97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		97AA806623D26BC700C23488 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
@@ -733,29 +735,30 @@
 		216640621EBADADA00746B8E /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
-				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
-				CF29A15F1FB7873A0067D946 /* Onboarding */,
-				21ECADA21F30146B00569883 /* Networking + Analytics */,
-				216640C71EBADC9D00746B8E /* General */,
-				21B653BC2246F31E001A97C5 /* Courses */,
-				66E8ECA32381CA6C00945BEA /* Auth */,
-				F212BE8223B6C88A00ED46A1 /* Notifications */,
-				F212BE7D23B6ACC800ED46A1 /* Privacy */,
-				21B8BBBB2224F98B00EBC1D0 /* Login */,
-				216640881EBADBA000746B8E /* Setup + Navigation */,
-				B62875E82112591700FB2873 /* Buildings */,
-				97E79E0A2100DBC300D3D606 /* Fitness */,
-				B62875E921152FF500FB2873 /* Map */,
-				21640D4220103C8A002F33CA /* Home */,
-				2166408B1EBADBF800746B8E /* Dining */,
-				2189C0732027CD2F00771C1F /* GSR-Booking */,
-				B654BAE81F801F030038B9D5 /* Laundry */,
-				21D5E06523B68F0E00B331CC /* Housing */,
-				212304C52054ED9900958CE0 /* Spring Fling */,
-				216640EE1EBB867600746B8E /* Contacts */,
-				216640D31EBB80FD00746B8E /* News */,
-				CF1CE9B8205D5BF100C51F46 /* More Tab */,
 				216640F91EBB898700746B8E /* About */,
+				66E8ECA32381CA6C00945BEA /* Auth */,
+				B62875E82112591700FB2873 /* Buildings */,
+				216640EE1EBB867600746B8E /* Contacts */,
+				21B653BC2246F31E001A97C5 /* Courses */,
+				2166408B1EBADBF800746B8E /* Dining */,
+				97E79E0A2100DBC300D3D606 /* Fitness */,
+				216640C71EBADC9D00746B8E /* General */,
+				2189C0732027CD2F00771C1F /* GSR-Booking */,
+				21640D4220103C8A002F33CA /* Home */,
+				21D5E06523B68F0E00B331CC /* Housing */,
+				B654BAE81F801F030038B9D5 /* Laundry */,
+				21B8BBBB2224F98B00EBC1D0 /* Login */,
+				B62875E921152FF500FB2873 /* Map */,
+				CF1CE9B8205D5BF100C51F46 /* More Tab */,
+				21ECADA21F30146B00569883 /* Networking + Analytics */,
+				216640D31EBB80FD00746B8E /* News */,
+				F212BE8223B6C88A00ED46A1 /* Notifications */,
+				CF29A15F1FB7873A0067D946 /* Onboarding */,
+				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
+				76201BDB25621D3500E911F7 /* Polls */,
+				F212BE7D23B6ACC800ED46A1 /* Privacy */,
+				216640881EBADBA000746B8E /* Setup + Navigation */,
+				212304C52054ED9900958CE0 /* Spring Fling */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
 			);
 			path = PennMobile;
@@ -1145,6 +1148,31 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		76201BDB25621D3500E911F7 /* Polls */ = {
+			isa = PBXGroup;
+			children = (
+				76201BE5256220A900E911F7 /* Model */,
+				76201BE425621D7700E911F7 /* Networking */,
+			);
+			path = Polls;
+			sourceTree = "<group>";
+		};
+		76201BE425621D7700E911F7 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				76201BDC25621D6D00E911F7 /* PollsNetworkManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		76201BE5256220A900E911F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B9D16BC32516F00200659946 /* PollQuestion.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		97AA806323D26BC700C23488 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1339,7 +1367,6 @@
 			children = (
 				B9D16BBE2516E96500659946 /* HomePollsCell.swift */,
 				B9D16BC02516E97C00659946 /* HomePollsCellItem.swift */,
-				B9D16BC32516F00200659946 /* PollQuestion.swift */,
 				B9ECAC412521519F004C488E /* PollOptionCell.swift */,
 				B9432322253CFF670013BF92 /* HomePollsCellFooter.swift */,
 			);
@@ -1975,6 +2002,7 @@
 				2138D55F22599D4700D67CA2 /* GSRGroup.swift in Sources */,
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
 				B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */,
+				76201BDD25621D6D00E911F7 /* PollsNetworkManager.swift in Sources */,
 				21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */,
 				665F1FC523D261B100DC023E /* TwoFactorCell.swift in Sources */,
 				21737FD923A31205002DCD07 /* OAuth2NetworkManager.swift in Sources */,
