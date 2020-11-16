@@ -58,8 +58,8 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Base32: 163c298644d184e89ca4e00a996bad6bf5166390
-  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
-  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
