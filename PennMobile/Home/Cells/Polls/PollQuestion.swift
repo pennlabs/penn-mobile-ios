@@ -9,20 +9,33 @@
 import Foundation
 import SwiftyJSON
 
-class PollQuestion {
-    let title: String?
-    let source: String?
-    let ddl: Date?
-    let options: [String:Int]?
-    let totalVoteCount: Int?
-    let userChosen: String?
+struct PollDemographicResult: Codable {
+    let demographic: String
+    let votes: Int
+    
+}
 
-    init(title: String?, source: String?, ddl: Date?, options: [String:Int], totalVoteCount: Int) {
-        self.title = title
-        self.source = source
-        self.ddl = ddl
-        self.options = options
-        self.totalVoteCount = totalVoteCount
-        self.userChosen = "Armaan going to a Goldman info session"
+struct PollOption: Codable {
+    let id: Int
+    let optionText: String
+    let votes: Int
+    let votesByYear: [PollDemographicResult]?
+    let votesBySchool: [PollDemographicResult]?
+}
+
+struct PollQuestion: Codable {
+    let title: String
+    let source: String
+    let ddl: Date
+    let options: [PollOption]
+    let totalVoteCount: Int
+    let optionChosenId: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case title = "question"
+        case source = "orgAuthor"
+        case ddl = "expiration"
+        case options, totalVoteCount, optionChosenId
     }
+
 }

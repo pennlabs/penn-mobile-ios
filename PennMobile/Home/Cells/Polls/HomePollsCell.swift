@@ -22,7 +22,7 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomePollsCellItem else { return 0.0 }
-        let numPolls = CGFloat(item.pollQuestion.options?.count ?? 0)
+        let numPolls = CGFloat(item.pollQuestion.options.count)
         let pollHeight = numPolls * PollOptionCell.cellHeight
         return (pollHeight + HomeCellHeader.height + (Padding.pad * 3))
     }
@@ -54,10 +54,10 @@ extension HomePollsCell {
     fileprivate func setupCell(with item: HomePollsCellItem) {
         pollQuestion = item.pollQuestion
         responsesTableView.reloadData()
-        header.secondaryTitleLabel.text = "Poll FROM \(pollQuestion.source ?? "some source")"
+        header.secondaryTitleLabel.text = "Poll FROM \(pollQuestion.source)"
         header.primaryTitleLabel.text = item.pollQuestion.title
-        voteCountLabel.text = "\(pollQuestion.totalVoteCount ?? 0) Votes"
-        setupDdlLabel(with: pollQuestion.ddl!)
+        voteCountLabel.text = "\(pollQuestion.totalVoteCount) Votes"
+        setupDdlLabel(with: pollQuestion.ddl)
     }
     fileprivate func setupDdlLabel(with ddl: Date) {
         let diffComponents = Calendar.current.dateComponents([.day, .hour, .minute], from: Date(), to: ddl)
@@ -142,11 +142,12 @@ extension HomePollsCell {
 extension HomePollsCell: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? PollOptionCell {
-            cell.question = Array((pollQuestion.options?.keys)!)[indexPath.row]
-            cell.response = Array((pollQuestion.options?.values)!)[indexPath.row]
+            let answer = pollQuestion.options[indexPath.row]
+            cell.question = answer.optionText
+            cell.response = answer.votes
             cell.totalResponses = pollQuestion.totalVoteCount
-            cell.answered = (pollQuestion.userChosen != nil) ? true : false
-            cell.chosen = pollQuestion.userChosen == cell.question ? true : false
+            cell.answered = (pollQuestion.optionChosenId != nil)
+            cell.chosen = pollQuestion.optionChosenId == answer.id
 
         }
     }
@@ -159,7 +160,7 @@ extension HomePollsCell: UITableViewDelegate {
 
 extension HomePollsCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pollQuestion?.options?.count ?? 0
+        return pollQuestion?.options.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
