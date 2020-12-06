@@ -121,10 +121,9 @@ extension PollOptionCell {
         safeArea.addSubview(questionLabel)
         
         questionLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(safeArea).offset(15)
+            make.leading.equalTo(safeArea).offset(8)
             make.top.equalTo(safeArea).offset(3)
-            make.trailing.equalTo(safeArea).offset(-15)
-            make.centerY.equalToSuperview()
+            make.trailing.equalTo(safeArea).offset(-8)
         }
     }
 }
