@@ -28,6 +28,7 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     }
     
     var pollQuestion: PollQuestion!
+    var answer: Int?
     
     // MARK: - UI Elements
     var cardView: UIView! = UIView()
@@ -128,7 +129,6 @@ extension HomePollsCell {
 
     // MARK: TableView
     fileprivate func prepareTableView() {
-        // TODO: Check if already answered
         responsesTableView = getTableView()
         cardView.addSubview(responsesTableView)
         responsesTableView.snp.makeConstraints { (make) in
@@ -168,6 +168,9 @@ extension HomePollsCell: UITableViewDelegate {
             cell.answered = true
             cell.totalResponses += 1
         }
+        
+        // Update model
+        pollQuestion.optionChosenId = pollQuestion.options[indexPath.row].id
         
         // TODO: Update UserDefaults to reflect changees
         

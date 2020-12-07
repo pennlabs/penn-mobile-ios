@@ -29,7 +29,7 @@ struct PollQuestion: Codable {
     let ddl: Date
     let options: [PollOption]
     let totalVoteCount: Int
-    let optionChosenId: Int?
+    var optionChosenId: Int?
     
     enum CodingKeys: String, CodingKey {
         case title = "question"

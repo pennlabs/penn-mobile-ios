@@ -28,11 +28,7 @@ class PollOptionCell: UITableViewCell {
         }
     }
     
-    var chosen: Bool! {
-        didSet {
-            setupCell()
-        }
-    }
+    var chosen: Bool!
     
     
     
@@ -41,6 +37,9 @@ class PollOptionCell: UITableViewCell {
     fileprivate var safeArea: UIView!
     fileprivate var questionLabel: UILabel!
     fileprivate var percentageShadow: UIView!
+    
+    fileprivate var percentageLabel: UILabel!
+    fileprivate var voteLabel: UILabel!
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -56,6 +55,7 @@ class PollOptionCell: UITableViewCell {
 
 // MARK: - Setup Cell
 extension PollOptionCell {
+    
     fileprivate func setupCell() {
         backgroundColor = .clear
         self.questionLabel.text = self.question
@@ -63,7 +63,45 @@ extension PollOptionCell {
         
         if self.answered == true {
             let maxWidth = CGFloat(0.8) * UIScreen.main.bounds.width
-            let width = CGFloat(self.response) / CGFloat(self.totalResponses) * maxWidth
+            let frac = CGFloat(self.response) / CGFloat(self.totalResponses)
+            let width = frac * maxWidth
+            
+            // Create percentage label and attach them to safeAreaView
+            percentageLabel = getPercentageLabel()
+            percentageLabel.text = "\((frac * 100).rounded())%"
+            safeArea.addSubview(percentageLabel)
+            
+            // Set constraints to start animation from
+            percentageLabel.snp.makeConstraints { make in
+                make.trailing.equalTo(safeArea.snp.trailing).offset(-100)
+                make.top.equalTo(safeArea).offset(10)
+                
+            }
+            
+            // Same thing for vote label
+            voteLabel = getVotesLabel()
+            voteLabel.text = self.response != nil ? "\(self.response!) Votes" : ""
+            safeArea.addSubview(voteLabel)
+            
+            voteLabel.snp.makeConstraints { make in
+                make.leading.equalTo(percentageLabel)
+                make.top.equalTo(percentageLabel.snp.bottom).offset(5)
+            }
+            
+            // Update safe area quitely!
+            safeArea.layoutIfNeeded()
+            
+            
+            // Update to new constraints to animate to
+            percentageLabel.snp.updateConstraints { make in
+                make.trailing.equalTo(safeArea.snp.trailing)
+            }
+            
+            voteLabel.snp.updateConstraints { make in
+                make.leading.equalTo(percentageLabel)
+            }
+            
+            
             percentageShadow.snp.updateConstraints {(make) in
                 make.width.equalTo(width)
             }
@@ -72,10 +110,14 @@ extension PollOptionCell {
             let anim = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
                 self.percentageShadow.backgroundColor = self.chosen ? .blueLighter : .lightGray
                 self.percentageShadow.superview!.layoutIfNeeded()
+                
+                self.percentageLabel.alpha = 1
+                self.voteLabel.alpha = 1
             }
             
             anim.startAnimation()
-        }
+        
+    }
     }
     
 }
@@ -150,5 +192,25 @@ extension PollOptionCell {
         return label
     }
     
+    fileprivate func getPercentageLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .interiorTitleFont
+        label.textColor = chosen ? .blueDark : .darkGray
+        label.textAlignment = .left
+        label.numberOfLines = 1
+        label.alpha = 0
+        return label
+    }
+    
+    fileprivate func getVotesLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryTitleFont
+        label.textColor = chosen ? .blueDark : .darkGray
+        label.textAlignment = .left
+        label.numberOfLines = 1
+        label.alpha = 0
+        return label
+        
+    }
 }
 
