@@ -60,6 +60,7 @@ extension PollOptionCell {
         backgroundColor = .clear
         self.questionLabel.text = self.question
         
+        
         if self.answered == true {
             let maxWidth = CGFloat(0.8) * UIScreen.main.bounds.width
             let width = CGFloat(self.response) / CGFloat(self.totalResponses) * maxWidth
@@ -67,6 +68,7 @@ extension PollOptionCell {
                 make.width.equalTo(width)
             }
             
+            // Animates new constraints and colors
             let anim = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
                 self.percentageShadow.backgroundColor = self.chosen ? .blueLighter : .lightGray
                 self.percentageShadow.superview!.layoutIfNeeded()

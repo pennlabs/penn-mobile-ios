@@ -128,6 +128,7 @@ extension HomePollsCell {
 
     // MARK: TableView
     fileprivate func prepareTableView() {
+        // TODO: Check if already answered
         responsesTableView = getTableView()
         cardView.addSubview(responsesTableView)
         responsesTableView.snp.makeConstraints { (make) in
@@ -168,6 +169,7 @@ extension HomePollsCell: UITableViewDelegate {
             cell.totalResponses += 1
         }
         
+        // TODO: Update UserDefaults to reflect changees
         
         
     }
