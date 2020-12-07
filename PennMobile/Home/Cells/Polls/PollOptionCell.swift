@@ -91,7 +91,6 @@ extension PollOptionCell {
             // Update safe area quitely!
             safeArea.layoutIfNeeded()
             
-            
             // Update to new constraints to animate to
             percentageLabel.snp.updateConstraints { make in
                 make.trailing.equalTo(safeArea.snp.trailing)
@@ -101,21 +100,22 @@ extension PollOptionCell {
                 make.leading.equalTo(percentageLabel)
             }
             
-            
             percentageShadow.snp.updateConstraints {(make) in
                 make.width.equalTo(width)
             }
             
             // Animates new constraints and colors
-            let anim = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
+            let anim = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut) {
                 self.percentageShadow.backgroundColor = self.chosen ? .blueLighter : .lightGray
                 self.percentageShadow.superview!.layoutIfNeeded()
-                
-                self.percentageLabel.alpha = 1
                 self.voteLabel.alpha = 1
+                self.percentageLabel.alpha = 1
+                
             }
             
             anim.startAnimation()
+            
+            
         
     }
     }
