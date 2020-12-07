@@ -13,7 +13,7 @@ import SnapKit
 class PollOptionCell: UITableViewCell {
     
     static let identifier = "pollOptionCell"
-    static let cellHeight: CGFloat = 110
+    static let cellHeight: CGFloat = 90
     
     
     var question: String! 
@@ -22,7 +22,11 @@ class PollOptionCell: UITableViewCell {
     
     var totalResponses: Int!
     
-    var answered: Bool!
+    var answered: Bool! {
+        didSet {
+            setupCell()
+        }
+    }
     
     var chosen: Bool! {
         didSet {
@@ -56,15 +60,19 @@ extension PollOptionCell {
         backgroundColor = .clear
         self.questionLabel.text = self.question
         
-        //update the constraint of percentage shadow if needed
         if self.answered == true {
             let maxWidth = CGFloat(0.8) * UIScreen.main.bounds.width
             let width = CGFloat(self.response) / CGFloat(self.totalResponses) * maxWidth
-            percentageShadow.backgroundColor = self.chosen ? .blueLighter : .lightGray
             percentageShadow.snp.updateConstraints {(make) in
                 make.width.equalTo(width)
             }
-            percentageShadow.layoutIfNeeded()
+            
+            let anim = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
+                self.percentageShadow.backgroundColor = self.chosen ? .blueLighter : .lightGray
+                self.percentageShadow.superview!.layoutIfNeeded()
+            }
+            
+            anim.startAnimation()
         }
     }
     
@@ -106,10 +114,10 @@ extension PollOptionCell {
         percentageShadow.backgroundColor = .greenLighter
         safeArea.addSubview(percentageShadow)
         percentageShadow.snp.makeConstraints {(make) in
-            make.leading.equalTo(safeArea).offset(3)
-            make.top.equalTo(safeArea).offset(3)
+            make.leading.equalTo(safeArea)
+            make.top.equalTo(safeArea)
             make.width.equalTo(maxWidth)
-            make.bottom.equalTo(safeArea).offset(3)
+            make.bottom.equalTo(safeArea)
         }
         
     }
@@ -122,8 +130,7 @@ extension PollOptionCell {
         
         questionLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(safeArea).offset(15)
-            make.top.equalTo(safeArea).offset(3)
-            make.trailing.equalTo(safeArea).offset(-15)
+            make.trailing.equalTo(safeArea).offset(-20)
             make.centerY.equalToSuperview()
         }
     }
@@ -137,7 +144,7 @@ extension PollOptionCell {
         label.font = .interiorTitleFont
         label.textColor = .labelPrimary
         label.textAlignment = .left
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         return label
     }
     

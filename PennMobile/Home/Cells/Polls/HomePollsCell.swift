@@ -151,9 +151,29 @@ extension HomePollsCell: UITableViewDelegate {
 
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Deselect and prohibit user from selecting another cell
+        tableView.deselectRow(at: indexPath, animated: false)
+        tableView.isUserInteractionEnabled = false
+        
+        // Change selected cell to chosen
+        let chosenCell = (tableView.cellForRow(at: indexPath) as! PollOptionCell)
+        chosenCell.response += 1
+        chosenCell.chosen = true
+        
+        // Update cells to reflect question answered
+        for cell in tableView.visibleCells as! [PollOptionCell] {
+            cell.answered = true
+            cell.totalResponses += 1
+        }
+        
+        
+        
+    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110
+        return 90
     }
 }
 
