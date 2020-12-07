@@ -92,10 +92,11 @@ extension PollOptionCell {
             safeArea.layoutIfNeeded()
             
             // Update to new constraints to animate to
-            percentageLabel.snp.updateConstraints { make in
-                make.trailing.equalTo(safeArea.snp.trailing)
+            percentageLabel.snp.remakeConstraints { make in
+                make.leading.equalTo(questionLabel.snp.trailing)
+                make.trailing.lessThanOrEqualTo(safeArea.snp.trailing)
             }
-            
+
             voteLabel.snp.updateConstraints { make in
                 make.leading.equalTo(percentageLabel)
             }
@@ -174,7 +175,7 @@ extension PollOptionCell {
         
         questionLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(safeArea).offset(15)
-            make.trailing.equalTo(safeArea).offset(-20)
+            make.trailing.equalTo(safeArea).offset(-50)
             make.centerY.equalToSuperview()
         }
     }
