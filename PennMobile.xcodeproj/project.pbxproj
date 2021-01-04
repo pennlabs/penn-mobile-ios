@@ -249,16 +249,30 @@
 		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
 		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
 		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
+		F2562A262551F6D40021C92F /* CourseAlertSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2562A252551F6D40021C92F /* CourseAlertSettingsController.swift */; };
+		F2562A2B255830AB0021C92F /* CourseAlertSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2562A2A255830AB0021C92F /* CourseAlertSettingsCell.swift */; };
+		F2562A302558330D0021C92F /* CourseAlertSettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2562A2F2558330D0021C92F /* CourseAlertSettingsOptions.swift */; };
+		F2562A3525583C5C0021C92F /* ButtonWithImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2562A3425583C5C0021C92F /* ButtonWithImage.swift */; };
+		F2562A3A2558E7B80021C92F /* CourseAlertCreateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2562A392558E7B70021C92F /* CourseAlertCreateCell.swift */; };
 		F2568A692411F20E00561295 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A682411F20E00561295 /* NotificationService.swift */; };
 		F2568A6D2411F20E00561295 /* NotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F2568A662411F20E00561295 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F2568A732411F26500561295 /* NotificationService+ImageCacheing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */; };
 		F2568A762413534F00561295 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F2568A752413534F00561295 /* SnapKit */; };
 		F2568A7824135B6500561295 /* HomeCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A7724135B6500561295 /* HomeCellHeader.swift */; };
 		F2568A7A2413637D00561295 /* HomeCellSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A792413637D00561295 /* HomeCellSafeArea.swift */; };
+		F2770ADB2545E2EB001EA1DD /* CourseAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770ADA2545E2EB001EA1DD /* CourseAlertCell.swift */; };
+		F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770ADF2545E311001EA1DD /* CourseAlert.swift */; };
+		F2770AE52545E384001EA1DD /* CourseAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770AE42545E384001EA1DD /* CourseAlertController.swift */; };
+		F2770AEA2545E39D001EA1DD /* CourseAlertAddController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770AE92545E39D001EA1DD /* CourseAlertAddController.swift */; };
+		F2770AEF2545E3B0001EA1DD /* CourseAlertNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770AEE2545E3B0001EA1DD /* CourseAlertNetworkManager.swift */; };
 		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
 		F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */; };
 		F2B8C40C252C58E600922D08 /* GSRClosedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8C40B252C58E600922D08 /* GSRClosedView.swift */; };
+		F2C7E5F5259EE1CA0043A98A /* CourseAlertSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C7E5F4259EE1CA0043A98A /* CourseAlertSettings.swift */; };
+		F2DD593D259817EC0085CC22 /* SearchResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DD593C259817EC0085CC22 /* SearchResultsCell.swift */; };
+		F2E3FE242595A99500518961 /* CourseSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E3FE232595A99500518961 /* CourseSection.swift */; };
+		F2E3FE2A259722C500518961 /* SearchResultsPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E3FE29259722C500518961 /* SearchResultsPopover.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
@@ -542,16 +556,30 @@
 		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
 		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
 		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
+		F2562A252551F6D40021C92F /* CourseAlertSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertSettingsController.swift; sourceTree = "<group>"; };
+		F2562A2A255830AB0021C92F /* CourseAlertSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertSettingsCell.swift; sourceTree = "<group>"; };
+		F2562A2F2558330D0021C92F /* CourseAlertSettingsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertSettingsOptions.swift; sourceTree = "<group>"; };
+		F2562A3425583C5C0021C92F /* ButtonWithImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithImage.swift; sourceTree = "<group>"; };
+		F2562A392558E7B70021C92F /* CourseAlertCreateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertCreateCell.swift; sourceTree = "<group>"; };
 		F2568A662411F20E00561295 /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2568A682411F20E00561295 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		F2568A6A2411F20E00561295 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService+ImageCacheing.swift"; sourceTree = "<group>"; };
 		F2568A7724135B6500561295 /* HomeCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellHeader.swift; sourceTree = "<group>"; };
 		F2568A792413637D00561295 /* HomeCellSafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellSafeArea.swift; sourceTree = "<group>"; };
+		F2770ADA2545E2EB001EA1DD /* CourseAlertCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertCell.swift; sourceTree = "<group>"; };
+		F2770ADF2545E311001EA1DD /* CourseAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlert.swift; sourceTree = "<group>"; };
+		F2770AE42545E384001EA1DD /* CourseAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertController.swift; sourceTree = "<group>"; };
+		F2770AE92545E39D001EA1DD /* CourseAlertAddController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertAddController.swift; sourceTree = "<group>"; };
+		F2770AEE2545E3B0001EA1DD /* CourseAlertNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertNetworkManager.swift; sourceTree = "<group>"; };
 		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
 		F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+NotificationExtension.swift"; sourceTree = "<group>"; };
 		F2B8C40B252C58E600922D08 /* GSRClosedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRClosedView.swift; sourceTree = "<group>"; };
+		F2C7E5F4259EE1CA0043A98A /* CourseAlertSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertSettings.swift; sourceTree = "<group>"; };
+		F2DD593C259817EC0085CC22 /* SearchResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCell.swift; sourceTree = "<group>"; };
+		F2E3FE232595A99500518961 /* CourseSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSection.swift; sourceTree = "<group>"; };
+		F2E3FE29259722C500518961 /* SearchResultsPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsPopover.swift; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		FE1B7088EA979A72E7CB961E /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -727,6 +755,7 @@
 				21ECADA21F30146B00569883 /* Networking + Analytics */,
 				216640C71EBADC9D00746B8E /* General */,
 				21B653BC2246F31E001A97C5 /* Courses */,
+				F2770AD525438422001EA1DD /* Course Alerts */,
 				66E8ECA32381CA6C00945BEA /* Auth */,
 				F212BE8223B6C88A00ED46A1 /* Notifications */,
 				F212BE7D23B6ACC800ED46A1 /* Privacy */,
@@ -814,6 +843,7 @@
 			children = (
 				212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */,
 				2196D5E21F5263AC002058A0 /* AnnouncementHeaderView.swift */,
+				F2562A3425583C5C0021C92F /* ButtonWithImage.swift */,
 				216640C11EBADC9300746B8E /* GenericControllers.swift */,
 				EF389EC321860B7000E29C6A /* StatusBar.swift */,
 			);
@@ -1451,6 +1481,58 @@
 			path = NotificationServiceExtension;
 			sourceTree = "<group>";
 		};
+		F2770AD525438422001EA1DD /* Course Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				F2770AD9254384CB001EA1DD /* Model */,
+				F2770AD8254384AC001EA1DD /* Views */,
+				F2770AD72543849E001EA1DD /* Controllers */,
+				F2770AD625438489001EA1DD /* Networking */,
+			);
+			path = "Course Alerts";
+			sourceTree = "<group>";
+		};
+		F2770AD625438489001EA1DD /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				F2770AEE2545E3B0001EA1DD /* CourseAlertNetworkManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		F2770AD72543849E001EA1DD /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F2770AE42545E384001EA1DD /* CourseAlertController.swift */,
+				F2770AE92545E39D001EA1DD /* CourseAlertAddController.swift */,
+				F2562A252551F6D40021C92F /* CourseAlertSettingsController.swift */,
+				F2E3FE29259722C500518961 /* SearchResultsPopover.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		F2770AD8254384AC001EA1DD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F2770ADA2545E2EB001EA1DD /* CourseAlertCell.swift */,
+				F2562A2A255830AB0021C92F /* CourseAlertSettingsCell.swift */,
+				F2562A392558E7B70021C92F /* CourseAlertCreateCell.swift */,
+				F2DD593C259817EC0085CC22 /* SearchResultsCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F2770AD9254384CB001EA1DD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F2770ADF2545E311001EA1DD /* CourseAlert.swift */,
+				F2562A2F2558330D0021C92F /* CourseAlertSettingsOptions.swift */,
+				F2C7E5F4259EE1CA0043A98A /* CourseAlertSettings.swift */,
+				F2E3FE232595A99500518961 /* CourseSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		F5E2CE9A9024AE8E28992A5E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1731,6 +1813,7 @@
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				97E79E1C2100F32E00D3D606 /* FitnessViewModel.swift in Sources */,
 				214E254922480818004CB9C4 /* GSRDeletable.swift in Sources */,
+				F2770AEF2545E3B0001EA1DD /* CourseAlertNetworkManager.swift in Sources */,
 				EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */,
 				F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */,
 				EFE2D6F8239B120E0020F6BF /* GSRManageGroupViewModel.swift in Sources */,
@@ -1756,6 +1839,7 @@
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */,
+				F2DD593D259817EC0085CC22 /* SearchResultsCell.swift in Sources */,
 				97E79E052100DA1200D3D606 /* BuildingSectionHeader.swift in Sources */,
 				217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */,
 				21640D5C20105B98002F33CA /* HomeDiningCell.swift in Sources */,
@@ -1786,6 +1870,7 @@
 				66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */,
 				21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */,
 				F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */,
+				F2770AE52545E384001EA1DD /* CourseAlertController.swift in Sources */,
 				215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */,
 				217A7836204D2E0D004F1227 /* HomeLaundryCellItem.swift in Sources */,
 				EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */,
@@ -1798,6 +1883,7 @@
 				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
+				F2562A3A2558E7B80021C92F /* CourseAlertCreateCell.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				F2F4C92023611EB900816456 /* Colors.swift in Sources */,
 				F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */,
@@ -1813,6 +1899,7 @@
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
 				21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */,
 				97E79E182100E4AA00D3D606 /* FitnessFacilityData.swift in Sources */,
+				F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
 				97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */,
@@ -1826,6 +1913,7 @@
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
 				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
+				F2770AEA2545E39D001EA1DD /* CourseAlertAddController.swift in Sources */,
 				21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */,
 				97E79E1A2100E51A00D3D606 /* FitnessFacilityName.swift in Sources */,
 				97E79E082100DA1200D3D606 /* BuildingHoursCell.swift in Sources */,
@@ -1870,8 +1958,10 @@
 				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
+				F2562A262551F6D40021C92F /* CourseAlertSettingsController.swift in Sources */,
 				217A7845204DB800004F1227 /* HomeAsynchronousFetching.swift in Sources */,
 				C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */,
+				F2562A2B255830AB0021C92F /* CourseAlertSettingsCell.swift in Sources */,
 				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
 				21B8BBB622231F9F00EBC1D0 /* Account.swift in Sources */,
 				C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */,
@@ -1888,6 +1978,7 @@
 				F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
+				F2E3FE2A259722C500518961 /* SearchResultsPopover.swift in Sources */,
 				97E79E072100DA1200D3D606 /* BuildingImageCell.swift in Sources */,
 				217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
@@ -1900,6 +1991,7 @@
 				97AA806D23D26BC700C23488 /* DiningBalanceCollectionViewCell.swift in Sources */,
 				21B653B92245EB67001A97C5 /* PennAuthRequestable.swift in Sources */,
 				2189C0842027CDB800771C1F /* GSRLoginController.swift in Sources */,
+				F2C7E5F5259EE1CA0043A98A /* CourseAlertSettings.swift in Sources */,
 				211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */,
 				EFE2D6F2239B11050020F6BF /* GroupMemberCell.swift in Sources */,
 				2189C0A02027CE4100771C1F /* GSRVenue.swift in Sources */,
@@ -1924,12 +2016,15 @@
 				2196D5E31F5263AC002058A0 /* AnnouncementHeaderView.swift in Sources */,
 				97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */,
 				C8C96F16241407420069D56A /* PacCodeNetworkManager.swift in Sources */,
+				F2562A302558330D0021C92F /* CourseAlertSettingsOptions.swift in Sources */,
+				F2770ADB2545E2EB001EA1DD /* CourseAlertCell.swift in Sources */,
 				97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */,
 				21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */,
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
+				F2562A3525583C5C0021C92F /* ButtonWithImage.swift in Sources */,
 				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
 				EFE2D6FB239B12270020F6BF /* GSRGroupNewIntialController.swift in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
@@ -1951,6 +2046,7 @@
 				21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */,
 				665F1FC523D261B100DC023E /* TwoFactorCell.swift in Sources */,
 				21737FD923A31205002DCD07 /* OAuth2NetworkManager.swift in Sources */,
+				F2E3FE242595A99500518961 /* CourseSection.swift in Sources */,
 				C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */,
 				EFE2D6F1239B11050020F6BF /* GroupManageButtonCell.swift in Sources */,
 				66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */,

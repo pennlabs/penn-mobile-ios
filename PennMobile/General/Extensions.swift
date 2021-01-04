@@ -113,6 +113,9 @@ extension UIFont {
     static let footerTransitionFont = UIFont.systemFont(ofSize: 10, weight: .semibold)
 
     static let gsrTimeIncrementFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
+    
+    static let alertSettingsWarningFont = UIFont.systemFont(ofSize: 30, weight: .bold)
+    
 }
 
 extension UIBarButtonItem {

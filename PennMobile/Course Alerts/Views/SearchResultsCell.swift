@@ -1,0 +1,77 @@
+//
+//  SearchResultsCell.swift
+//  PennMobile
+//
+//  Created by Raunaq Singh on 12/26/20.
+//  Copyright © 2020 PennLabs. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+class SearchResultsCell: UITableViewCell {
+
+    static let cellHeight: CGFloat = 60
+    static let identifier = "searchResultsCell"
+    
+    fileprivate var detailLabel: UILabel!
+    fileprivate var courseLabel: UILabel!
+    
+    var section: CourseSection! {
+        didSet {
+            setupCell()
+        }
+    }
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupCell()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
+// MARK: - Setup Cell
+extension SearchResultsCell {
+    fileprivate func setupCell() {
+        if (detailLabel == nil || courseLabel == nil) {
+            setupUI()
+        } else {
+            courseLabel.text = section.section
+            detailLabel.text = section.courseTitle
+        }
+    }
+}
+
+
+// MARK: - Setup UI
+extension SearchResultsCell {
+    fileprivate func setupUI() {
+        prepareCourseLabel()
+        prepareDetailLabel()
+    }
+    
+    fileprivate func prepareCourseLabel() {
+        courseLabel = UILabel()
+        courseLabel.font = UIFont.interiorTitleFont
+        addSubview(courseLabel)
+        courseLabel.translatesAutoresizingMaskIntoConstraints = false
+        courseLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15).isActive = true
+        courseLabel.topAnchor.constraint(equalTo: centerYAnchor, constant: -18).isActive = true
+    }
+    
+    fileprivate func prepareDetailLabel() {
+        detailLabel = UILabel()
+        detailLabel.font = UIFont.secondaryInformationFont
+        detailLabel.textColor = UIColor.grey1
+        addSubview(detailLabel)
+        detailLabel.translatesAutoresizingMaskIntoConstraints = false
+        detailLabel.leadingAnchor.constraint(equalTo: courseLabel.leadingAnchor).isActive = true
+        detailLabel.topAnchor.constraint(equalTo: courseLabel.bottomAnchor, constant: 4).isActive = true
+        detailLabel.widthAnchor.constraint(equalToConstant: 275).isActive = true
+    }
+    
+}
