@@ -11,7 +11,7 @@ import SwiftUI
 import SwiftUI
 #endif
 
-@available(iOS 13.0.0, *)
+@available(iOS 14, *)
 struct DiningView: View {
     
     @State var pickerIndex = 0
@@ -31,20 +31,23 @@ struct DiningView: View {
         return VStack {
             DiningViewHeader()
                 .padding([.leading, .trailing])
-            
-            Picker(selection: self.$pickerIndex, label: Text("Please choose which view you would like to see")) {
-                ForEach(0 ..< self.viewsTitles.count) {
-                    Text(self.viewsTitles[$0])
-                }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding([.leading, .trailing])
-            
-            if (self.pickerIndex == 0) {
-                DiningVenueView().environmentObject(diningVM)
-            } else {
-                DiningInsightsView(pickerIndex: self.$pickerIndex).environmentObject(diningVM)
-            }
+//            #if DEBUG
+//                Picker(selection: self.$pickerIndex, label: Text("Please choose which view you would like to see")) {
+//                    ForEach(0 ..< self.viewsTitles.count) {
+//                        Text(self.viewsTitles[$0])
+//                    }
+//                }
+//                .pickerStyle(SegmentedPickerStyle())
+//                .padding([.leading, .trailing])
+//
+//                if (self.pickerIndex == 0) {
+//                    DiningVenueView().environmentObject(diningVM)
+//                } else {
+//                    DiningInsightsView(pickerIndex: self.$pickerIndex).environmentObject(diningVM)
+//                }
+//            #else
+            DiningVenueView().environmentObject(diningVM)
+//            #endif
             
             Spacer()
         }
@@ -56,7 +59,7 @@ struct DiningView: View {
     }
 }
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct DiningView_Previews: PreviewProvider {
     
     static var previews: some View {

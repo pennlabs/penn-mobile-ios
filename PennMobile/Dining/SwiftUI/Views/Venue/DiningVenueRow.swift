@@ -11,7 +11,7 @@ import SwiftUI
 import KingfisherSwiftUI
 #endif
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct DiningVenueRow: View {
     
     init(for venue: DiningVenue) {
@@ -26,13 +26,13 @@ struct DiningVenueRow: View {
             KFImage(venue.imageURL)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 63.98)
+                .frame(width: 100, height: 65)
                 .background(Color.grey1)
                 .clipShape(RoundedRectangle(cornerRadius: 7))
                 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading) {
                 
-                HStack(spacing: 5) {
+                HStack(alignment: .center, spacing: 5) {
                     Image(systemName: circleImageString)
                         .font(.system(size: 10))
                     
@@ -55,7 +55,7 @@ struct DiningVenueRow: View {
                             Text("\(self.venue.humanFormattedHoursArrayForToday[index])")
                                 .font(.system(size: 14, weight: .light))
                                 .foregroundColor((self.venue.currentMealIndex == index) ? Color.white : Color.grey1)
-                                .padding(5)
+                                .padding(3)
                                 .background((self.venue.currentMealIndex == index) ? (self.venue.isMainDiningTimes ? Color.green : Color.yellow) : Color.grey6)
                                 .clipShape(RoundedRectangle(cornerRadius: 6))
                         }
@@ -114,7 +114,7 @@ struct DiningVenueRow: View {
 }
 
 // MARK: - ViewModifiers
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct StatusColorModifier: ViewModifier {
     var venue: DiningVenue
     
@@ -144,14 +144,37 @@ struct StatusColorModifier: ViewModifier {
     }
 }
 
-@available(iOS 13, *)
-extension View {
-    func statusColorModifier(for venue: DiningVenue) -> some View {
-        self.modifier(StatusColorModifier(venue: venue))
-  }
+@available(iOS 14, *)
+struct DiningTimesModifier: ViewModifier {
+
+    var x: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(.clear)
+                .background(LinearGradient(gradient: .init(colors: [Color(.systemBackground).opacity(0), .grey1]),
+                                    startPoint: .init(x: -(5 + x)/50, y: 0.5), endPoint: .init(x: -x/50, y: 0.5)))
+            .mask(content)
+            .padding(3)
+            .background(LinearGradient(gradient: .init(colors: [Color(.systemBackground).opacity(0), .grey6]),
+                                    startPoint: .init(x: -(10 + x)/50, y: 0.5), endPoint: .init(x: -x/50, y: 0.5)))
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+    }
 }
 
-@available(iOS 13, *)
+extension View {    
+    @available(iOS 14, *)
+    func statusColorModifier(for venue: DiningVenue) -> some View {
+        self.modifier(StatusColorModifier(venue: venue))
+    }
+
+    @available(iOS 14, *)
+    func diningTimeModifier(x: CGFloat) -> some View {
+        self.modifier(DiningTimesModifier(x: x))
+    }
+}
+
+@available(iOS 14, *)
 struct DiningVenueRow_Previews: PreviewProvider {
     static var previews: some View {
         let diningVenues: DiningAPIResponse = Bundle.main.decode("sample-dining-venue.json")
@@ -160,6 +183,11 @@ struct DiningVenueRow_Previews: PreviewProvider {
             List {
                 DiningVenueRow(for: diningVenues.document.venues[0])
                 DiningVenueRow(for: diningVenues.document.venues[1])
+                DiningVenueRow(for: diningVenues.document.venues[2])
+                DiningVenueRow(for: diningVenues.document.venues[3])
+                DiningVenueRow(for: diningVenues.document.venues[4])
+                DiningVenueRow(for: diningVenues.document.venues[5])
+                DiningVenueRow(for: diningVenues.document.venues[6])
                 NavigationLink(destination: Text("dfs")) {
                     DiningVenueRow(for: diningVenues.document.venues[13])
                 }
@@ -167,5 +195,3 @@ struct DiningVenueRow_Previews: PreviewProvider {
         }
     }
 }
-
-

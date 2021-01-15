@@ -17,33 +17,26 @@ struct DiningVenueDetailHoursView: View {
     let venue: DiningVenue
     
     var body: some View {
-        
-//        VStack(alignment: .leading) {
-//            Text("Description")
-//                .font(.system(size: 21, weight: .medium))
-//                .padding(.bottom)
-//
-//            Text(description)
-//                .font(.system(size: 17, weight: .light)).italic()
-//
-//        }
-//
-        HStack {
-            VStack(alignment: .leading) {
-                Text("Usual Weekly Hours")
-                    .font(.system(size: 21, weight: .medium))
-                    .padding(.bottom)
+        VStack(alignment: .leading, spacing: 7) {
+            Text("Hours this week")
+                .font(.system(size: 21, weight: .regular))
 
-                Text(venue.formattedHoursStringFor(Date().dateIn(days: 9)))
-
-    //            ForEach(venue.formattedHoursArrayFor(Date().dateIn(days: 2)), id: \.self) {
-    //                Text($0)
-    //            }
+            ForEach(0..<7) { duration in
+                let date = Date().dateIn(days: duration)
+                let formattedString = venue.formattedHoursStringFor(date)
+                
+                HStack {
+                    Text("\(date.dayOfWeek)" + (duration == 0 ? " (Today)" : ""))
+                        .font(.system(size: 17, weight: .regular))
+                    
+                    Spacer()
+                    
+                    Text(formattedString != "" ? formattedString : "Closed")
+                        .font(.system(size: 17, weight: .thin))
+                }
             }
-//                    .background(Color.red)
-            Spacer()
+            
         }
-        
     }
 }
 
@@ -54,6 +47,6 @@ struct DiningVenueDetailHoursView_Previews: PreviewProvider {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let diningVenues = try! decoder.decode(DiningAPIResponse.self, from: data)
-        return DiningVenueDetailHoursView(for: diningVenues.document.venues[0])
+        return DiningVenueDetailHoursView(for: diningVenues.document.venues[0]).padding()
     }
 }

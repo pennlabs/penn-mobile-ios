@@ -11,7 +11,7 @@ import SwiftUI
 import KingfisherSwiftUI
 #endif
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct DiningVenueDetailView: View {
     
     var venue: DiningVenue
@@ -125,25 +125,23 @@ struct DiningVenueDetailView: View {
                 .padding()
             
             if self.pickerIndex == 0 {
-                Text(loremIpsum)
-//                DiningVenueDetailMenuView()
-//                    .padding(.horizontal)
+                DiningVenueDetailMenuView()
+                    .padding(.horizontal)
+                    
             } else if self.pickerIndex == 1 {
-                Text(loremIpsum)
-//                DiningVenueDetailHoursView(for: venue)
-//                    .padding(.horizontal)
+                DiningVenueDetailHoursView(for: venue)
+                    .padding(.horizontal)
             } else {
                 DiningVenueDetailLocationView(for: venue)
                     .padding(.horizontal)
             }
-            
-            Spacer()
         }
         .navigationBarTitle("")
         .navigationBarHidden(true)
     }
 }
 
+@available(iOS 14.0, *)
 struct DefaultNavigationBar: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -180,7 +178,7 @@ struct DefaultNavigationBar: View {
     }
 }
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct DiningVenueDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let path = Bundle.main.path(forResource: "sample-dining-venue", ofType: "json")

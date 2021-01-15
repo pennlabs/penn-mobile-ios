@@ -10,7 +10,7 @@
 import SwiftUI
 #endif
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 class DiningViewModelSwiftUI: ObservableObject {
     
     static let instance = DiningViewModelSwiftUI()

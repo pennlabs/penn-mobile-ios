@@ -11,7 +11,7 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 extension PredictionsGraphView {
     
     static let xAxisLabelCount = 4

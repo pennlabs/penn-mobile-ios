@@ -10,12 +10,11 @@
 import SwiftUI
 #endif
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct DiningVenueView: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     
     var body: some View {
-        
         List {
             ForEach(diningVM.ordering, id: \.self) { venueType in
                 Section(header: CustomHeader(name: self.diningVM.getHeaderTitle(type: venueType))) {
@@ -25,6 +24,8 @@ struct DiningVenueView: View {
                                 .padding(.top, 6)
                                 .padding(.bottom, 6)
                         }
+                        // Hack to deselect cells after popping navigation view
+                        .id(UUID())
                     }
                 }
             }
@@ -35,7 +36,7 @@ struct DiningVenueView: View {
     }
 }
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct CustomHeader: View {
 
     let name: String
@@ -58,7 +59,7 @@ struct CustomHeader: View {
     }
 }
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct DiningVenueView_Previews: PreviewProvider {
     static var previews: some View {
         DiningVenueView()

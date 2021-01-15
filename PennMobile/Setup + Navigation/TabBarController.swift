@@ -85,7 +85,7 @@ extension DiningTabController: TabBarShowable {
     }
 }
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 extension DiningViewControllerSwiftUI: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Dining_Grey")

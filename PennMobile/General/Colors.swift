@@ -103,7 +103,7 @@ extension UIColor {
 import SwiftUI
 #endif
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 extension Color {
     // MARK: - UI Palette
     static let navigation = Color("navigation")

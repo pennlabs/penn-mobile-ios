@@ -40,7 +40,7 @@ class ControllerModel: NSObject {
     func prepare() {
         vcDictionary = [Feature: UIViewController]()
         vcDictionary[.home] = HomeViewController()
-        if #available(iOS 13, *) {
+        if #available(iOS 14, *) {
             #if DEBUG
             vcDictionary[.dining] = DiningViewControllerSwiftUI()
             #else

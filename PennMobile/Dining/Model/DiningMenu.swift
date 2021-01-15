@@ -16,12 +16,10 @@ struct DiningMenuAPIResponse: Codable {
     }
     
     struct Document: Codable {
-        let location: String
         let dateString: String
         let menuDocument: MenuDocument
         
         enum CodingKeys: String, CodingKey {
-            case location = "location"
             case dateString = "menudate"
             case menuDocument = "tblMenu"
         }
@@ -36,7 +34,8 @@ struct MenuDocument: Codable {
     }
 }
 
-struct DiningMenu: Codable {
+struct DiningMenu: Codable, Hashable {
+
     let mealType: String
     let stations: [DiningStation]
 
@@ -46,7 +45,7 @@ struct DiningMenu: Codable {
     }
 }
 
-struct DiningStation: Codable {
+struct DiningStation: Codable, Hashable {
     let stationDescription: String
     let diningStationItems: [DiningStationItem]
     
@@ -56,58 +55,56 @@ struct DiningStation: Codable {
     }
 }
 
-struct DiningStationItem: Codable {
+struct DiningStationItem: Codable, Hashable {
     
-    struct Attribute: Codable {
-        init() {
-            txtAttribute = []
-        }
-        
-        let txtAttribute: [Description] //?  Description
-        
-        struct Description: Codable {
-            let description: String
-        }
-        
-        enum CodingKeys: String, CodingKey {
-            case txtAttribute
-        }
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            
-            if let data = try? container.decode(Description.self, forKey: .txtAttribute) {
-                self.txtAttribute = [data]
-            } else {
-                let data = try container.decode([Description].self, forKey: .txtAttribute)
-                self.txtAttribute = data
-            }
-        }
-    }
-    
-    let tableAttributes: Attribute
+    let tableAttribute: Attribute
+    let title: String
+    let description: String
 
     enum CodingKeys: String, CodingKey {
-        case tableAttributes = "tblAttributes"
-        case tblFarmToFork
+        case tableAttribute = "tblAttributes"
+        case title = "txtTitle"
+        case description = "txtDescription"
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let data = try? container.decode(Attribute.self, forKey: .tableAttributes) {
-            self.tableAttributes = data
+        if let data = try? container.decode(Attribute.self, forKey: .tableAttribute) {
+            self.tableAttribute = data
         } else {
-            self.tableAttributes = Attribute()
+            self.tableAttribute = Attribute()
         }
         
-        self.tblFarmToFork = try! container.decode(String.self, forKey: .tblFarmToFork)
+//        self.tblFarmToFork = try! container.decode(String.self, forKey: .tblFarmToFork)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.description = try container.decode(String.self, forKey: .description)
     }
+}
 
-    let tblFarmToFork: String
-//    let tblSide: String
-//    let txtDescription: String
-//    let txtNutritionInfo: String
-//    let txtPrice: String
-//    let txtTitle: String
+struct Attribute: Codable, Hashable {
+    init() {
+        attributeDescriptions = []
+    }
+    
+    let attributeDescriptions: [AttributeDescription]
+    
+    enum CodingKeys: String, CodingKey {
+        case attributeDescriptions = "txtAttribute"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        if let data = try? container.decode(AttributeDescription.self, forKey: .attributeDescriptions) {
+            self.attributeDescriptions = [data]
+        } else {
+            let data = try container.decode([AttributeDescription].self, forKey: .attributeDescriptions)
+            self.attributeDescriptions = data
+        }
+    }
+}
+
+struct AttributeDescription: Codable, Hashable {
+    let description: String
 }

@@ -3,6 +3,188 @@
     "venue": [
       {
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/593",
+        "dateHours": [
+          {
+            "date": "2021-01-13",
+            "meal": [
+              {
+                "close": "10:00:00",
+                "open": "00:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-01-14",
+            "meal": [
+              {
+                "close": "10:00:00",
+                "open": "00:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-01-15",
+            "meal": [
+              {
+                "close": "10:00:00",
+                "open": "00:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-01-16",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-01-17",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-01-18",
+            "meal": [
+              {
+                "close": "10:00:00",
+                "open": "00:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-01-19",
+            "meal": [
+              {
+                "close": "10:00:00",
+                "open": "00:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          }
+        ],
         "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/1920-commons/",
         "id": 593,
         "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/1920-commons.jpg",
@@ -14,180 +196,190 @@
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/636",
         "dateHours": [
           {
-            "date": "2020-06-05",
+            "date": "2021-01-13",
             "meal": [
               {
                 "close": "10:00:00",
+                "open": "00:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "10:30:00",
                 "open": "07:30:00",
                 "type": "Breakfast"
               },
-              {
-                "close": "11:00:00",
-                "open": "10:00:00",
-                "type": "Light Breakfast"
-              },
-              {
-                "close": "14:00:00",
-                "open": "11:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "17:00:00",
-                "open": "14:00:00",
-                "type": "Light Lunch"
-              },
-              {
-                "close": "19:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-06",
-            "meal": [
               {
                 "close": "14:00:00",
                 "open": "10:00:00",
                 "type": "Brunch"
               },
               {
-                "close": "19:00:00",
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
                 "open": "17:00:00",
                 "type": "Dinner"
               }
             ]
           },
           {
-            "date": "2020-06-07",
+            "date": "2021-01-14",
             "meal": [
+              {
+                "close": "10:00:00",
+                "open": "00:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
               {
                 "close": "14:00:00",
                 "open": "10:00:00",
                 "type": "Brunch"
               },
               {
-                "close": "21:00:00",
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
                 "open": "17:00:00",
                 "type": "Dinner"
               }
             ]
           },
           {
-            "date": "2020-06-08",
+            "date": "2021-01-15",
             "meal": [
               {
                 "close": "10:00:00",
+                "open": "00:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "10:30:00",
                 "open": "07:30:00",
                 "type": "Breakfast"
               },
               {
-                "close": "11:00:00",
+                "close": "14:00:00",
                 "open": "10:00:00",
-                "type": "Light Breakfast"
+                "type": "Brunch"
               },
               {
-                "close": "14:00:00",
+                "close": "17:00:00",
                 "open": "11:00:00",
                 "type": "Lunch"
               },
               {
-                "close": "17:00:00",
-                "open": "14:00:00",
-                "type": "Light Lunch"
-              },
-              {
-                "close": "21:00:00",
+                "close": "20:00:00",
                 "open": "17:00:00",
                 "type": "Dinner"
               }
             ]
           },
           {
-            "date": "2020-06-09",
+            "date": "2021-01-16",
             "meal": [
               {
                 "close": "10:00:00",
-                "open": "07:30:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "11:00:00",
-                "open": "10:00:00",
-                "type": "Light Breakfast"
+                "open": "00:00:00",
+                "type": "Closed"
               },
               {
                 "close": "14:00:00",
-                "open": "11:00:00",
-                "type": "Lunch"
+                "open": "10:00:00",
+                "type": "Brunch"
               },
               {
-                "close": "17:00:00",
-                "open": "14:00:00",
-                "type": "Light Lunch"
-              },
-              {
-                "close": "21:00:00",
+                "close": "20:00:00",
                 "open": "17:00:00",
                 "type": "Dinner"
               }
             ]
           },
           {
-            "date": "2020-06-10",
+            "date": "2021-01-17",
             "meal": [
               {
                 "close": "10:00:00",
-                "open": "07:30:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "11:00:00",
-                "open": "10:00:00",
-                "type": "Light Breakfast"
+                "open": "00:00:00",
+                "type": "Closed"
               },
               {
                 "close": "14:00:00",
-                "open": "11:00:00",
-                "type": "Lunch"
+                "open": "10:00:00",
+                "type": "Brunch"
               },
               {
-                "close": "17:00:00",
-                "open": "14:00:00",
-                "type": "Light Lunch"
-              },
-              {
-                "close": "21:00:00",
+                "close": "20:00:00",
                 "open": "17:00:00",
                 "type": "Dinner"
               }
             ]
           },
           {
-            "date": "2020-06-11",
+            "date": "2021-01-18",
             "meal": [
               {
                 "close": "10:00:00",
+                "open": "00:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "10:30:00",
                 "open": "07:30:00",
                 "type": "Breakfast"
               },
               {
-                "close": "11:00:00",
+                "close": "14:00:00",
                 "open": "10:00:00",
-                "type": "Light Breakfast"
+                "type": "Brunch"
               },
               {
-                "close": "14:00:00",
+                "close": "17:00:00",
                 "open": "11:00:00",
                 "type": "Lunch"
               },
               {
-                "close": "17:00:00",
-                "open": "14:00:00",
-                "type": "Light Lunch"
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-01-19",
+            "meal": [
+              {
+                "close": "10:00:00",
+                "open": "00:00:00",
+                "type": "Closed"
               },
               {
-                "close": "21:00:00",
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
                 "open": "17:00:00",
                 "type": "Dinner"
               }
@@ -203,138 +395,6 @@
       },
       {
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/637",
-        "dateHours": [
-          {
-            "date": "2020-06-05",
-            "meal": [
-              {
-                "close": "10:00:00",
-                "open": "08:00:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "14:00:00",
-                "open": "11:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-06",
-            "meal": [
-              {
-                "close": "13:00:00",
-                "open": "10:00:00",
-                "type": "Brunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-07",
-            "meal": [
-              {
-                "close": "13:00:00",
-                "open": "10:00:00",
-                "type": "Brunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "10:00:00",
-                "open": "08:00:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "14:00:00",
-                "open": "11:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "10:00:00",
-                "open": "08:00:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "14:00:00",
-                "open": "11:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "10:00:00",
-                "open": "08:00:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "14:00:00",
-                "open": "11:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "10:00:00",
-                "open": "08:00:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "14:00:00",
-                "open": "11:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          }
-        ],
         "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/kings-court-english-house/",
         "id": 637,
         "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/kceh.jpg",
@@ -346,12 +406,57 @@
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/638",
         "dateHours": [
           {
-            "date": "2020-06-05",
+            "date": "2021-01-13",
             "meal": [
               {
-                "close": "14:00:00",
+                "close": "13:00:00",
                 "open": "11:30:00",
                 "type": "Lunch"
+              },
+              {
+                "close": "23:59:00",
+                "open": "13:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "19:30:00",
+                "open": "17:30:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-01-14",
+            "meal": [
+              {
+                "close": "13:00:00",
+                "open": "11:30:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "23:59:00",
+                "open": "13:00:00",
+                "type": "Closed"
+              },
+              {
+                "close": "19:30:00",
+                "open": "17:30:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-01-15",
+            "meal": [
+              {
+                "close": "13:00:00",
+                "open": "11:30:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "23:59:00",
+                "open": "13:00:00",
+                "type": "Closed"
               },
               {
                 "close": "19:45:00",
@@ -361,32 +466,32 @@
             ]
           },
           {
-            "date": "2020-06-06",
+            "date": "2021-01-17",
             "meal": [
               {
-                "close": "13:30:00",
+                "close": "13:00:00",
                 "open": "11:30:00",
                 "type": "Lunch"
+              },
+              {
+                "close": "23:59:00",
+                "open": "13:00:00",
+                "type": "Closed"
               }
             ]
           },
           {
-            "date": "2020-06-07",
+            "date": "2021-01-18",
             "meal": [
               {
-                "close": "21:15:00",
-                "open": "19:15:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "14:00:00",
+                "close": "13:00:00",
                 "open": "11:30:00",
                 "type": "Lunch"
+              },
+              {
+                "close": "23:59:00",
+                "open": "13:00:00",
+                "type": "Closed"
               },
               {
                 "close": "19:30:00",
@@ -396,42 +501,17 @@
             ]
           },
           {
-            "date": "2020-06-09",
+            "date": "2021-01-19",
             "meal": [
               {
-                "close": "14:00:00",
+                "close": "13:00:00",
                 "open": "11:30:00",
                 "type": "Lunch"
               },
               {
-                "close": "19:30:00",
-                "open": "17:30:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "14:00:00",
-                "open": "11:30:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "19:30:00",
-                "open": "17:30:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "14:00:00",
-                "open": "11:30:00",
-                "type": "Lunch"
+                "close": "23:59:00",
+                "open": "13:00:00",
+                "type": "Closed"
               },
               {
                 "close": "19:30:00",
@@ -452,101 +532,21 @@
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/639",
         "dateHours": [
           {
-            "date": "2020-06-05",
+            "date": "2021-01-18",
             "meal": [
               {
-                "close": "17:00:00",
-                "open": "08:00:00",
-                "type": "The Market Caf\u00e9"
-              },
-              {
-                "close": "17:00:00",
-                "open": "11:00:00",
+                "close": "13:00:00",
+                "open": "10:30:00",
                 "type": "Houston Market"
               }
             ]
           },
           {
-            "date": "2020-06-06",
+            "date": "2021-01-19",
             "meal": [
               {
-                "close": "15:00:00",
-                "open": "11:00:00",
-                "type": "Houston Market"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-07",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "12:00:00",
-                "type": "Houston Market"
-              },
-              {
-                "close": "19:00:00",
-                "open": "12:00:00",
-                "type": "The Market Caf\u00e9"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "08:00:00",
-                "type": "The Market Caf\u00e9"
-              },
-              {
-                "close": "19:00:00",
-                "open": "11:00:00",
-                "type": "Houston Market"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "08:00:00",
-                "type": "The Market Caf\u00e9"
-              },
-              {
-                "close": "19:00:00",
-                "open": "11:00:00",
-                "type": "Houston Market"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "08:00:00",
-                "type": "The Market Caf\u00e9"
-              },
-              {
-                "close": "19:00:00",
-                "open": "11:00:00",
-                "type": "Houston Market"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "08:00:00",
-                "type": "The Market Caf\u00e9"
-              },
-              {
-                "close": "19:00:00",
-                "open": "11:00:00",
+                "close": "13:00:00",
+                "open": "10:30:00",
                 "type": "Houston Market"
               }
             ]
@@ -561,58 +561,6 @@
       },
       {
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/641",
-        "dateHours": [
-          {
-            "date": "2020-06-05",
-            "meal": [
-              {
-                "close": "15:30:00",
-                "open": "08:00:00",
-                "type": "Accenture"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "18:00:00",
-                "open": "08:00:00",
-                "type": "Accenture"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "18:00:00",
-                "open": "08:00:00",
-                "type": "Accenture"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "18:00:00",
-                "open": "08:00:00",
-                "type": "Accenture"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "18:00:00",
-                "open": "08:00:00",
-                "type": "Accenture"
-              }
-            ]
-          }
-        ],
         "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/accenture-cafe/",
         "id": 641,
         "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/accenture.png",
@@ -622,58 +570,6 @@
       },
       {
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/642",
-        "dateHours": [
-          {
-            "date": "2020-06-05",
-            "meal": [
-              {
-                "close": "14:00:00",
-                "open": "08:00:00",
-                "type": "Joe"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "17:00:00",
-                "open": "08:00:00",
-                "type": "Joe"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "17:00:00",
-                "open": "08:00:00",
-                "type": "Joe"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "17:00:00",
-                "open": "08:00:00",
-                "type": "Joe"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "17:00:00",
-                "open": "08:00:00",
-                "type": "Joe"
-              }
-            ]
-          }
-        ],
         "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/joes-cafe/",
         "id": 642,
         "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/Penn.JoesCafe-Int5.72W.jpg",
@@ -683,68 +579,6 @@
       },
       {
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1442",
-        "dateHours": [
-          {
-            "date": "2020-06-05",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-07",
-            "meal": [
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "20:00:00",
-                "open": "17:00:00",
-                "type": "Dinner"
-              }
-            ]
-          }
-        ],
         "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/new-college-house/",
         "id": 1442,
         "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/nch.jpg",
@@ -754,138 +588,6 @@
       },
       {
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/747",
-        "dateHours": [
-          {
-            "date": "2020-06-05",
-            "meal": [
-              {
-                "close": "13:00:00",
-                "open": "08:00:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "13:00:00",
-                "open": "10:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "13:00:00",
-                "type": "Closed"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-07",
-            "meal": [
-              {
-                "close": "23:59:00",
-                "open": "20:00:00",
-                "type": "Late Night"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "13:00:00",
-                "open": "08:00:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "13:00:00",
-                "open": "10:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "13:00:00",
-                "type": "Closed"
-              },
-              {
-                "close": "23:59:00",
-                "open": "20:00:00",
-                "type": "Late Night"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "13:00:00",
-                "open": "08:00:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "13:00:00",
-                "open": "10:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "13:00:00",
-                "type": "Closed"
-              },
-              {
-                "close": "23:59:00",
-                "open": "20:00:00",
-                "type": "Late Night"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "13:00:00",
-                "open": "08:00:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "13:00:00",
-                "open": "10:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "13:00:00",
-                "type": "Closed"
-              },
-              {
-                "close": "23:59:00",
-                "open": "20:00:00",
-                "type": "Late Night"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "13:00:00",
-                "open": "08:00:00",
-                "type": "Breakfast"
-              },
-              {
-                "close": "13:00:00",
-                "open": "10:00:00",
-                "type": "Lunch"
-              },
-              {
-                "close": "20:00:00",
-                "open": "13:00:00",
-                "type": "Closed"
-              },
-              {
-                "close": "23:59:00",
-                "open": "20:00:00",
-                "type": "Late Night"
-              }
-            ]
-          }
-        ],
         "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/mcclelland/",
         "id": 747,
         "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/mcclelland.jpg",
@@ -897,71 +599,21 @@
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1057",
         "dateHours": [
           {
-            "date": "2020-06-05",
+            "date": "2021-01-18",
             "meal": [
               {
-                "close": "19:00:00",
-                "open": "11:30:00",
+                "close": "18:00:00",
+                "open": "11:00:00",
                 "type": "Gourmet Grocer"
               }
             ]
           },
           {
-            "date": "2020-06-06",
+            "date": "2021-01-19",
             "meal": [
               {
-                "close": "19:00:00",
-                "open": "11:30:00",
-                "type": "Gourmet Grocer"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-07",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "11:30:00",
-                "type": "Gourmet Grocer"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "11:30:00",
-                "type": "Gourmet Grocer"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "11:30:00",
-                "type": "Gourmet Grocer"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "11:30:00",
-                "type": "Gourmet Grocer"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "19:00:00",
-                "open": "11:30:00",
+                "close": "18:00:00",
+                "open": "11:00:00",
                 "type": "Gourmet Grocer"
               }
             ]
@@ -978,71 +630,21 @@
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1163",
         "dateHours": [
           {
-            "date": "2020-06-05",
+            "date": "2021-01-18",
             "meal": [
               {
-                "close": "21:30:00",
-                "open": "07:30:00",
+                "close": "18:00:00",
+                "open": "09:00:00",
                 "type": "Starbucks"
               }
             ]
           },
           {
-            "date": "2020-06-06",
+            "date": "2021-01-19",
             "meal": [
               {
-                "close": "18:30:00",
-                "open": "11:00:00",
-                "type": "Starbucks"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-07",
-            "meal": [
-              {
-                "close": "23:59:00",
-                "open": "11:00:00",
-                "type": "Starbucks"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "23:59:00",
-                "open": "07:30:00",
-                "type": "Starbucks"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "23:59:00",
-                "open": "07:30:00",
-                "type": "Starbucks"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "23:59:00",
-                "open": "07:30:00",
-                "type": "Starbucks"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "23:59:00",
-                "open": "07:30:00",
+                "close": "18:00:00",
+                "open": "09:00:00",
                 "type": "Starbucks"
               }
             ]
@@ -1057,78 +659,6 @@
       },
       {
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1731",
-        "dateHours": [
-          {
-            "date": "2020-06-05",
-            "meal": [
-              {
-                "close": "12:00:00",
-                "open": "07:30:00",
-                "type": "LCH Retail"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "12:00:00",
-                "open": "07:30:00",
-                "type": "LCH Retail"
-              },
-              {
-                "close": "23:59:00",
-                "open": "20:00:00",
-                "type": "LCH Retail"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "12:00:00",
-                "open": "07:30:00",
-                "type": "LCH Retail"
-              },
-              {
-                "close": "23:59:00",
-                "open": "20:00:00",
-                "type": "LCH Retail"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "12:00:00",
-                "open": "07:30:00",
-                "type": "LCH Retail"
-              },
-              {
-                "close": "23:59:00",
-                "open": "20:00:00",
-                "type": "LCH Retail"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "12:00:00",
-                "open": "07:30:00",
-                "type": "LCH Retail"
-              },
-              {
-                "close": "23:59:00",
-                "open": "20:00:00",
-                "type": "LCH Retail"
-              }
-            ]
-          }
-        ],
         "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/nch-retail/",
         "id": 1731,
         "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/nch.jpg",
@@ -1138,48 +668,6 @@
       },
       {
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1732",
-        "dateHours": [
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "16:00:00",
-                "open": "08:00:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "16:00:00",
-                "open": "08:00:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "16:00:00",
-                "open": "08:00:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "16:00:00",
-                "open": "08:00:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          }
-        ],
         "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/pret-a-manger-upper/",
         "id": 1732,
         "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/MBA+Cafe.jpg",
@@ -1189,78 +677,6 @@
       },
       {
         "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1733",
-        "dateHours": [
-          {
-            "date": "2020-06-05",
-            "meal": [
-              {
-                "close": "16:00:00",
-                "open": "08:00:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-06",
-            "meal": [
-              {
-                "close": "16:00:00",
-                "open": "08:00:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-07",
-            "meal": [
-              {
-                "close": "16:00:00",
-                "open": "08:00:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-08",
-            "meal": [
-              {
-                "close": "21:00:00",
-                "open": "07:30:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-09",
-            "meal": [
-              {
-                "close": "21:00:00",
-                "open": "07:30:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-10",
-            "meal": [
-              {
-                "close": "21:00:00",
-                "open": "07:30:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          },
-          {
-            "date": "2020-06-11",
-            "meal": [
-              {
-                "close": "21:00:00",
-                "open": "07:30:00",
-                "type": "Pret a Manger"
-              }
-            ]
-          }
-        ],
         "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/pret-a-manger-lower/",
         "id": 1733,
         "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/Pret+A+Manger.jpg",

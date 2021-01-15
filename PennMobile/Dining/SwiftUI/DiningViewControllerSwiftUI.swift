@@ -11,7 +11,7 @@ import UIKit
 import SwiftUI
 #endif
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 class DiningViewControllerSwiftUI: GenericViewController {
 
     private var hostingView = UIHostingController(rootView: DiningView())

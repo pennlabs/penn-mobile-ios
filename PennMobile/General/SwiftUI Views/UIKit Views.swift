@@ -10,7 +10,7 @@
 import SwiftUI
 #endif
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct ActivityIndicatorView: UIViewRepresentable  {
 
     @Binding var animating: Bool
@@ -27,7 +27,7 @@ struct ActivityIndicatorView: UIViewRepresentable  {
     }
 }
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct LabsLoginControllerSwiftUI: UIViewControllerRepresentable {
     
     @Binding var isShowing: Bool
@@ -61,7 +61,7 @@ struct LabsLoginControllerSwiftUI: UIViewControllerRepresentable {
     }
 }
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct VisualEffectView: UIViewRepresentable {
     var effect: UIVisualEffect?
     func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView { UIVisualEffectView() }

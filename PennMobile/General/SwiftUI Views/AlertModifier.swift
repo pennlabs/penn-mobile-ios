@@ -11,7 +11,7 @@ import SwiftUI
 #endif
 
 // https://trailingclosure.com/notification-banner-using-swiftui/
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct AlertModifier: ViewModifier {
     
     @Binding var show: Bool
@@ -61,7 +61,7 @@ struct AlertModifier: ViewModifier {
     }
 }
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 extension View {
     func alert(type: NetworkingError, show: Binding<Bool>) -> some View {
         self.modifier(AlertModifier(show: show, type: type))

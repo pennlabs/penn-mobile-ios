@@ -10,7 +10,7 @@
 import SwiftUI
 #endif
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct DiningViewHeader: View {
     
     @ObservedObject var diningVM = DiningViewModelSwiftUI.instance
@@ -53,7 +53,7 @@ struct DiningViewHeader: View {
     }
 }
 
-@available(iOS 13, *)
+@available(iOS 14, *)
 struct DiningViewHeader_Previews: PreviewProvider {
     static var previews: some View {
         DiningViewHeader()
