@@ -431,6 +431,7 @@ extension UserDefaults {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.PCAPreferences.rawValue)
         }
     }
+    
 }
 
 // MARK: - Privacy Settings

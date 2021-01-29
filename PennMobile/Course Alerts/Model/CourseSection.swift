@@ -14,7 +14,7 @@ struct CourseSection: Decodable {
     let status: String
     let activity: String
     let meetingTimes: String
-    let instructors: [String]
+    let instructors: [Instructor]
     let courseTitle: String
     
     enum CodingKeys: String, CodingKey {
@@ -29,7 +29,7 @@ struct CourseSection: Decodable {
                 
         let status: String = try keyedContainer.decode(String.self, forKey: .status)
         let activity: String = try keyedContainer.decode(String.self, forKey: .activity)
-        let instructors: [String] = try keyedContainer.decode([String].self, forKey: .instructors)
+        let instructors: [Instructor] = try keyedContainer.decode([Instructor].self, forKey: .instructors)
         let section: String = try keyedContainer.decode(String.self, forKey: .section)
         let meetingTimes: String = try keyedContainer.decode(String.self, forKey: .meetingTimes)
         let courseTitle: String = try keyedContainer.decode(String.self, forKey: .courseTitle)
@@ -43,4 +43,9 @@ struct CourseSection: Decodable {
         
     }
     
+}
+
+struct Instructor: Decodable {
+    let id: Int
+    let name: String
 }

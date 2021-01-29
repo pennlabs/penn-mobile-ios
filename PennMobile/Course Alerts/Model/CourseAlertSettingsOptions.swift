@@ -22,7 +22,7 @@ enum PCAOption: String, Codable {
         case .alertsThroughPennMobile: return "Send alerts through Penn Mobile"
         case .alertsThroughEmail: return "Send alerts through email"
         case .classCloseAlerts: return "Send notifications when classes close"
-        default: return nil
+        //default: return nil
         }
     }
     
@@ -31,14 +31,14 @@ enum PCAOption: String, Codable {
         case .alertsThroughPennMobile: return "Alert notifications through Penn Mobile are faster than SMS alerts and can help unclutter your text messages."
         case .alertsThroughEmail: return "Alert notifications through Penn Mobile are faster than SMS alerts and can help unclutter your text messages."
         case .classCloseAlerts: return "Alert notifications through Penn Mobile are faster than SMS alerts and can help unclutter your text messages."
-        default: return nil
+        //default: return nil
         }
     }
     
     var defaultValue: Bool {
         switch self {
             case .alertsThroughPennMobile: return false
-            default: return true
+            default: return false
         }
     }
 }

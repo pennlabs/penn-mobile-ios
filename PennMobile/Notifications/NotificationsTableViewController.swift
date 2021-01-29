@@ -36,6 +36,12 @@ class NotificationViewController: GenericTableViewController, ShowsAlert, Indica
         super.viewDidAppear(animated)
         tableView.reloadData()
         
+        CourseAlertNetworkManager.instance.getSettings { (settings) in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        
         #if !targetEnvironment(simulator)
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
             if settings.authorizationStatus == .notDetermined || settings.authorizationStatus == .denied {
@@ -79,13 +85,19 @@ extension NotificationViewController: NotificationViewControllerChangedPreferenc
         // Upload change to the Penn Mobile server. If this fails, reverse the change.
         self.showActivity()
         let deadline = DispatchTime.now() + 1
+        
         UserDBManager.shared.saveUserNotificationSettings { (success) in
             DispatchQueue.main.asyncAfter(deadline: deadline) {
-                self.hideActivity()
                 if success {
-//                    self.showAlert(withMsg: "\(option.cellTitle ?? "") \(toValue ? "enabled" : "disabled")", title: "Preference Saved", completion: nil)
+                    //Push to pca backend if changing pca preference
+                    if option == .pennCourseAlerts {
+                        self.pushPCAPreferenceChange(toValue: toValue)
+                    } else {
+                        self.hideActivity()
+                    }
                 } else {
                     // Couldn't save change to the server
+                    self.hideActivity()
                     self.showAlert(withMsg: "Could not save notification preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
                         // Reverse the change, if we couldn't connect to the server
                         UserDefaults.standard.set(option, to: !toValue)
@@ -95,6 +107,23 @@ extension NotificationViewController: NotificationViewControllerChangedPreferenc
             }
         }
     }
+    
+    func pushPCAPreferenceChange(toValue: Bool) {
+        CourseAlertNetworkManager.instance.updatePushNotifSettings(pushNotif: toValue, callback: {(success, response, error) in
+            DispatchQueue.main.async {
+                self.hideActivity()
+                if success {
+                    UserDefaults.standard.set(.alertsThroughPennMobile, to: toValue)
+                } else if !response.isEmpty {
+                    self.showAlert(withMsg: "Could not save notification preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
+                        UserDefaults.standard.set(.pennCourseAlerts, to: !toValue)
+                        self.tableView.reloadData()
+                    })
+                }
+            }
+        })
+    }
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -116,6 +145,7 @@ extension NotificationViewController {
         
         cell.setup(with: option, isEnabled: currentValue)
         cell.delegate = self
+        cell.contentView.isUserInteractionEnabled = false
         
         return cell
     }

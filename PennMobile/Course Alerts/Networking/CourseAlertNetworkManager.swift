@@ -19,12 +19,12 @@ class CourseAlertNetworkManager: NSObject, Requestable {
     
     static let instance = CourseAlertNetworkManager()
     
-    let settingsURL = "https://penncoursealert.com/api/alert/settings/"
-    let coursesURL = "https://penncoursealert.com/api/alert/courses"
+    let settingsURL = "https://penncoursealert.com/accounts/me/"
+    let coursesURL = "https://penncoursealert.com/api/base/2021A/search/sections/"
     let registrationsURL = "https://penncoursealert.com/api/alert/registrations/"
     
     func getSearchedCourses(searchText:String, _ callback: @escaping (_ results: [CourseSection]?) -> ()) {
-        let urlStr = "\(coursesURL)/?search=\(searchText)"
+        let urlStr = "\(coursesURL)?search=\(searchText)"
         let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data {
@@ -68,6 +68,9 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 callback(nil)
                 return
             }
+            
+            UserDefaults.standard.set(.alertsThroughPennMobile, to: settings.profile.pushNotifications)
+            UserDefaults.standard.set(.pennCourseAlerts, to: settings.profile.pushNotifications)
 
             callback(settings)
         }

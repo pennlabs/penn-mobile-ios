@@ -260,6 +260,7 @@
 		F2568A762413534F00561295 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F2568A752413534F00561295 /* SnapKit */; };
 		F2568A7824135B6500561295 /* HomeCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A7724135B6500561295 /* HomeCellHeader.swift */; };
 		F2568A7A2413637D00561295 /* HomeCellSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2568A792413637D00561295 /* HomeCellSafeArea.swift */; };
+		F25AFDDB25C3E5E900B3AC80 /* ZeroCourseAlertsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25AFDDA25C3E5E900B3AC80 /* ZeroCourseAlertsCell.swift */; };
 		F2770ADB2545E2EB001EA1DD /* CourseAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770ADA2545E2EB001EA1DD /* CourseAlertCell.swift */; };
 		F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770ADF2545E311001EA1DD /* CourseAlert.swift */; };
 		F2770AE52545E384001EA1DD /* CourseAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770AE42545E384001EA1DD /* CourseAlertController.swift */; };
@@ -567,6 +568,7 @@
 		F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService+ImageCacheing.swift"; sourceTree = "<group>"; };
 		F2568A7724135B6500561295 /* HomeCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellHeader.swift; sourceTree = "<group>"; };
 		F2568A792413637D00561295 /* HomeCellSafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellSafeArea.swift; sourceTree = "<group>"; };
+		F25AFDDA25C3E5E900B3AC80 /* ZeroCourseAlertsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroCourseAlertsCell.swift; sourceTree = "<group>"; };
 		F2770ADA2545E2EB001EA1DD /* CourseAlertCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertCell.swift; sourceTree = "<group>"; };
 		F2770ADF2545E311001EA1DD /* CourseAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlert.swift; sourceTree = "<group>"; };
 		F2770AE42545E384001EA1DD /* CourseAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertController.swift; sourceTree = "<group>"; };
@@ -1517,6 +1519,7 @@
 				F2770ADA2545E2EB001EA1DD /* CourseAlertCell.swift */,
 				F2562A2A255830AB0021C92F /* CourseAlertSettingsCell.swift */,
 				F2562A392558E7B70021C92F /* CourseAlertCreateCell.swift */,
+				F25AFDDA25C3E5E900B3AC80 /* ZeroCourseAlertsCell.swift */,
 				F2DD593C259817EC0085CC22 /* SearchResultsCell.swift */,
 			);
 			path = Views;
@@ -1926,6 +1929,7 @@
 				EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */,
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				665F1FC723D2628800DC023E /* TwoFactorWebviewController.swift in Sources */,
+				F25AFDDB25C3E5E900B3AC80 /* ZeroCourseAlertsCell.swift in Sources */,
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
 				21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */,
 				2188C6D7223C7E8400F18D90 /* SecureStore.swift in Sources */,

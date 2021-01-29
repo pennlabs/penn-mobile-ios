@@ -80,6 +80,7 @@ extension CourseAlertSettingsController: CourseAlertSettingsChangedPreference {
     func changed(option: PCAOption, toValue: Bool) {
         
         UserDefaults.standard.set(option, to: toValue)
+        UserDefaults.standard.set(.pennCourseAlerts, to: toValue)
         
         CourseAlertNetworkManager.instance.updatePushNotifSettings(pushNotif: toValue, callback: {(success, response, error) in
             DispatchQueue.main.async {
@@ -88,6 +89,7 @@ extension CourseAlertSettingsController: CourseAlertSettingsChangedPreference {
                 } else if !response.isEmpty {
                     self.showAlert(withMsg: "Could not save preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
                         UserDefaults.standard.set(option, to: !toValue)
+                        UserDefaults.standard.set(.pennCourseAlerts, to: !toValue)
                         self.tableView.reloadData()
                     })
                 }

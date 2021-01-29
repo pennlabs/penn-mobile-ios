@@ -34,7 +34,6 @@ class CourseAlertController: GenericViewController {
     }()
     
     fileprivate var manageSettingsView = UIView()
-    fileprivate var zeroAlertsView = UIView()
     fileprivate var loginView = UIView()
     
     fileprivate var enabled = false {
@@ -57,8 +56,7 @@ class CourseAlertController: GenericViewController {
         super.viewWillAppear(animated)
         
         loginView.isHidden = Account.isLoggedIn
-        manageSettingsView.isHidden = true//Account.isLoggedIn ? UserDefaults.standard.getPreference(for: .alertsThroughPennMobile) : true
-        zeroAlertsView.isHidden = true
+        manageSettingsView.isHidden = true
         tableView.isHidden = true
         alertSettings.isEnabled = Account.isLoggedIn
         
@@ -71,9 +69,12 @@ class CourseAlertController: GenericViewController {
         
         fetchAlerts()
         fetchSettings()
+        
     }
     
 }
+
+// MARK: - Fetch Functions
 
 extension CourseAlertController: FetchPCADataProtocol {
     
@@ -85,7 +86,6 @@ extension CourseAlertController: FetchPCADataProtocol {
                     if(self.tableView != nil){
                         self.refreshControl.endRefreshing()
                         self.tableView.reloadData(with: .automatic)
-                        //UIView.transition(with: self.tableView, duration: 1.0, options: .transitionFlipFromLeft, animations: {self.tableView.reloadData()}, completion: nil)
                     }
                 }
             }
@@ -95,13 +95,14 @@ extension CourseAlertController: FetchPCADataProtocol {
     func fetchSettings() {
         CourseAlertNetworkManager.instance.getSettings { (settings) in
             if let settings = settings {
-                self.enabled = settings.profile.push_notifications
-                UserDefaults.standard.set(.alertsThroughPennMobile, to: settings.profile.push_notifications)
+                self.enabled = settings.profile.pushNotifications
             }
         }
     }
     
 }
+
+// MARK: - UI Functions
 
 extension CourseAlertController {
     
@@ -109,7 +110,6 @@ extension CourseAlertController {
         setupTableView()
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(fetchAlerts), for: .valueChanged)
-        setupZeroAlertsPage()
         setupManageSettingsPage()
         setupLoginPage()
     }
@@ -142,13 +142,13 @@ extension CourseAlertController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-        tableView.isHidden = true
 
         view.addSubview(tableView)
         _ = tableView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
 
         tableView.register(CourseAlertCell.self, forCellReuseIdentifier: CourseAlertCell.identifier)
         tableView.register(CourseAlertCreateCell.self, forCellReuseIdentifier: CourseAlertCreateCell.identifier)
+        tableView.register(ZeroCourseAlertsCell.self, forCellReuseIdentifier: ZeroCourseAlertsCell.identifier)
     }
     
     fileprivate func setupManageSettingsPage() {
@@ -198,61 +198,6 @@ extension CourseAlertController {
         manageSettingsView.isHidden = true
     }
     
-    fileprivate func setupZeroAlertsPage() {
-        
-        zeroAlertsView.backgroundColor = .white
-        view.addSubview(zeroAlertsView)
-        _ = zeroAlertsView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        let noAlertsLabel = UILabel()
-        noAlertsLabel.text = "No Current Penn Course Alerts."
-        noAlertsLabel.font = UIFont.avenirMedium
-        noAlertsLabel.textColor = .lightGray
-        
-        zeroAlertsView.addSubview(noAlertsLabel)
-        
-        noAlertsLabel.translatesAutoresizingMaskIntoConstraints = false
-        noAlertsLabel.centerXAnchor.constraint(equalTo: zeroAlertsView.centerXAnchor).isActive = true
-        noAlertsLabel.centerYAnchor.constraint(equalTo: zeroAlertsView.centerYAnchor, constant: -50).isActive = true
-        
-        let createView = UIView()
-        createView.isUserInteractionEnabled = true
-        
-        createView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.openAddAlertController(_:))))
-        
-        let titleLabel = UILabel()
-        titleLabel.text = "Create Alert"
-        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        titleLabel.textColor = UIColor(named: "baseLabsBlue")
-        createView.addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.centerYAnchor.constraint(equalTo: createView.centerYAnchor).isActive = true
-        titleLabel.centerXAnchor.constraint(equalTo: createView.centerXAnchor, constant: -12).isActive = true
-        
-        let alertSymbol = UIImageView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
-        if #available(iOS 13.0, *) {
-            alertSymbol.image = UIImage(systemName: "bell.fill")
-        } else {
-            alertSymbol.image = UIImage(named: "bell")
-        }
-        alertSymbol.tintColor = .baseLabsBlue
-        
-        createView.addSubview(alertSymbol)
-        alertSymbol.translatesAutoresizingMaskIntoConstraints = false
-        alertSymbol.centerYAnchor.constraint(equalTo: createView.centerYAnchor).isActive = true
-        alertSymbol.centerXAnchor.constraint(equalTo: createView.centerXAnchor, constant: titleLabel.intrinsicContentSize.width/2 + 2).isActive = true
-        
-        zeroAlertsView.addSubview(createView)
-        
-        createView.translatesAutoresizingMaskIntoConstraints = false
-        createView.centerXAnchor.constraint(equalTo: zeroAlertsView.centerXAnchor).isActive = true
-        createView.topAnchor.constraint(equalTo: noAlertsLabel.bottomAnchor, constant: 20).isActive = true
-        createView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        createView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        zeroAlertsView.isHidden = true
-    }
-    
     fileprivate func setupLoginPage() {
         
         loginView.backgroundColor = .white
@@ -275,6 +220,8 @@ extension CourseAlertController {
 
 }
 
+// MARK: - TableView Functions
+
 extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return alerts.count + 1
@@ -282,10 +229,18 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == alerts.count {
+            if (alerts.count == 0) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ZeroCourseAlertsCell.identifier, for: indexPath) as! ZeroCourseAlertsCell
+                cell.selectionStyle = .none
+                cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+                return cell
+            }
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: CourseAlertCreateCell.identifier, for: indexPath) as! CourseAlertCreateCell
             cell.selectionStyle = .none
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
             return cell
+            
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CourseAlertCell.identifier, for: indexPath) as! CourseAlertCell
             cell.selectionStyle = .none
@@ -296,6 +251,9 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == alerts.count {
+            if (alerts.count == 0) {
+                return ZeroCourseAlertsCell.cellHeight
+            }
             return CourseAlertCreateCell.cellHeight
         } else {
             return CourseAlertCell.cellHeight
@@ -394,12 +352,14 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
+// MARK: - Other Util. Functions
+
 extension CourseAlertController {
     
     func updateMainView() {
+        self.startLoadingViewAnimation()
         manageSettingsView.isHidden = enabled
-        zeroAlertsView.isHidden = !alerts.isEmpty
-        tableView.isHidden = !enabled || alerts.isEmpty
+        tableView.isHidden = !enabled
         self.view.bringSubviewToFront(manageSettingsView)
         DispatchQueue.main.async {
             self.stopLoadingViewAnimation()

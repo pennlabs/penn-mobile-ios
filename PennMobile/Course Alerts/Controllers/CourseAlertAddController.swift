@@ -25,12 +25,6 @@ class CourseAlertAddController: GenericViewController {
     fileprivate var navBar: UINavigationBar!
     
     fileprivate var searchResults: SearchResultsPopover!
-    fileprivate var currentSearch = "" {
-        didSet {
-            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(handleSearchQuery), object: nil)
-            self.perform(#selector(handleSearchQuery), with: nil, afterDelay: 0.3)
-        }
-    }
     
     fileprivate var sectionToAlert: CourseSection?
     
@@ -70,7 +64,7 @@ extension CourseAlertAddController: ShowsAlert {
     
     fileprivate func setupSearchBar() {
         searchBar.placeholder = "Course"
-        searchBar.returnKeyType = .done
+        searchBar.returnKeyType = .search
         searchBar.autocapitalizationType = .allCharacters
         searchBar.autocorrectionType = .no
         searchBar.keyboardType = .asciiCapable
@@ -147,7 +141,7 @@ extension CourseAlertAddController: ShowsAlert {
         searchResultsVC?.sourceView = self.searchBar
         searchResultsVC?.sourceRect = self.searchBar.bounds
         
-        searchResults.setHeight()
+        //searchResults.setHeight(results: [])
 
     }
     
@@ -176,7 +170,7 @@ extension CourseAlertAddController: ShowsAlert {
         if let section = sectionToAlert {
             registerAlert(section: section)
         } else {
-            CourseAlertNetworkManager.instance.getSearchedCourses(searchText: currentSearch) { (results) in
+            CourseAlertNetworkManager.instance.getSearchedCourses(searchText: searchBar.text ?? "") { (results) in
                 if let results = results {
                     if (results.count == 1) {
                         self.sectionToAlert = results[0]
@@ -214,8 +208,10 @@ extension CourseAlertAddController: ShowsAlert {
 extension CourseAlertAddController: UIPopoverPresentationControllerDelegate {
     
     @objc func handleSearchQuery() {
-        if currentSearch.count >= 3 {
-            CourseAlertNetworkManager.instance.getSearchedCourses(searchText: currentSearch) { (results) in
+        let searchText = searchBar.text ?? ""
+        print(searchText)
+        if searchText.count >= 3 {
+            CourseAlertNetworkManager.instance.getSearchedCourses(searchText: searchText) { (results) in
                 if let results = results {
                     if (results.count > 0) {
                         DispatchQueue.main.async {
@@ -230,17 +226,18 @@ extension CourseAlertAddController: UIPopoverPresentationControllerDelegate {
                             }
                         }
                     } else {
-                        self.searchResults.updateWithResults(results: [])
                         self.hideResultsPopover()
+                        self.searchResults.updateWithResults(results: [])
                     }
                 } else {
-                    self.searchResults.updateWithResults(results: [])
                     self.hideResultsPopover()
+                    self.searchResults.updateWithResults(results: [])
                 }
             }
         } else {
-            self.searchResults.updateWithResults(results: [])
+            self.showAlert(withMsg: "Please enter at least 3 or more characters.", title: "Invalid Search", completion: nil)
             self.hideResultsPopover()
+            self.searchResults.updateWithResults(results: [])
         }
         
     }
@@ -271,11 +268,14 @@ extension CourseAlertAddController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         sectionToAlert = nil
-        currentSearch = searchText
+        //NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(handleSearchQuery), object: searchBar)
+        //self.perform(#selector(handleSearchQuery), with: searchBar, afterDelay: 0.5)
+        self.hideResultsPopover()
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        handleSearchQuery()
+        //handleSearchQuery()
+        self.hideResultsPopover()
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -283,8 +283,9 @@ extension CourseAlertAddController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.hideResultsPopover()
-        self.searchBar.resignFirstResponder()
+        //self.hideResultsPopover()
+        //self.searchBar.resignFirstResponder()
+        handleSearchQuery()
     }
     
 }
