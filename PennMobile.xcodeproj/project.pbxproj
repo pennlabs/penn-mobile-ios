@@ -146,6 +146,7 @@
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
+		76201BDD25621D6D00E911F7 /* PollsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76201BDC25621D6D00E911F7 /* PollsNetworkManager.swift */; };
 		97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806423D26BC700C23488 /* DiningBalanceCell.swift */; };
 		97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */; };
 		97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806623D26BC700C23488 /* DiningHeaderView.swift */; };
@@ -183,7 +184,12 @@
 		B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67881D7211CBF2A000DA750 /* MenuTableView.swift */; };
 		B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */; };
 		B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */; };
+		B9432323253CFF670013BF92 /* HomePollsCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9432322253CFF670013BF92 /* HomePollsCellFooter.swift */; };
 		B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */; };
+		B9D16BBF2516E96500659946 /* HomePollsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D16BBE2516E96500659946 /* HomePollsCell.swift */; };
+		B9D16BC12516E97C00659946 /* HomePollsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D16BC02516E97C00659946 /* HomePollsCellItem.swift */; };
+		B9D16BC42516F00200659946 /* PollQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D16BC32516F00200659946 /* PollQuestion.swift */; };
+		B9ECAC422521519F004C488E /* PollOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9ECAC412521519F004C488E /* PollOptionCell.swift */; };
 		B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */; };
 		BD766B7A9F54888FF9CAECC6 /* Pods_AutomatedScreenshotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F77CCBB7C32C932B101F62 /* Pods_AutomatedScreenshotUITests.framework */; };
 		C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */; };
@@ -440,6 +446,7 @@
 		66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorTokenGenerator.swift; sourceTree = "<group>"; };
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
 		739709EEABEDE069054CBDDF /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
+		76201BDC25621D6D00E911F7 /* PollsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsNetworkManager.swift; sourceTree = "<group>"; };
 		97AA806423D26BC700C23488 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
 		97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		97AA806623D26BC700C23488 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
@@ -478,7 +485,12 @@
 		B6B1E089214442A200CCBBCD /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = SOURCE_ROOT; };
 		B6FC5B4C2079536C002AF335 /* BookingRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
 		B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
+		B9432322253CFF670013BF92 /* HomePollsCellFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCellFooter.swift; sourceTree = "<group>"; };
 		B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteViewController.swift; sourceTree = "<group>"; };
+		B9D16BBE2516E96500659946 /* HomePollsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCell.swift; sourceTree = "<group>"; };
+		B9D16BC02516E97C00659946 /* HomePollsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCellItem.swift; sourceTree = "<group>"; };
+		B9D16BC32516F00200659946 /* PollQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollQuestion.swift; sourceTree = "<group>"; };
+		B9ECAC412521519F004C488E /* PollOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollOptionCell.swift; sourceTree = "<group>"; };
 		B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInviteUserCell.swift; sourceTree = "<group>"; };
 		C10A59A32183CDD60059130B /* AboutPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C10A59A52183CE120059130B /* AboutPageCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPageCollectionViewHeader.swift; sourceTree = "<group>"; };
@@ -612,9 +624,9 @@
 		212B8353222A319200F835D6 /* Post */ = {
 			isa = PBXGroup;
 			children = (
+				212B8358222A331D00F835D6 /* Post.swift */,
 				212B8354222A31B500F835D6 /* HomePostCellItem.swift */,
 				212B8356222A31C300F835D6 /* HomePostCell.swift */,
-				212B8358222A331D00F835D6 /* Post.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -664,6 +676,7 @@
 		21640D4620104354002F33CA /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				B9D16BBD2516E93B00659946 /* Polls */,
 				F2568A7724135B6500561295 /* HomeCellHeader.swift */,
 				F2568A792413637D00561295 /* HomeCellSafeArea.swift */,
 				211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */,
@@ -722,29 +735,30 @@
 		216640621EBADADA00746B8E /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
-				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
-				CF29A15F1FB7873A0067D946 /* Onboarding */,
-				21ECADA21F30146B00569883 /* Networking + Analytics */,
-				216640C71EBADC9D00746B8E /* General */,
-				21B653BC2246F31E001A97C5 /* Courses */,
-				66E8ECA32381CA6C00945BEA /* Auth */,
-				F212BE8223B6C88A00ED46A1 /* Notifications */,
-				F212BE7D23B6ACC800ED46A1 /* Privacy */,
-				21B8BBBB2224F98B00EBC1D0 /* Login */,
-				216640881EBADBA000746B8E /* Setup + Navigation */,
-				B62875E82112591700FB2873 /* Buildings */,
-				97E79E0A2100DBC300D3D606 /* Fitness */,
-				B62875E921152FF500FB2873 /* Map */,
-				21640D4220103C8A002F33CA /* Home */,
-				2166408B1EBADBF800746B8E /* Dining */,
-				2189C0732027CD2F00771C1F /* GSR-Booking */,
-				B654BAE81F801F030038B9D5 /* Laundry */,
-				21D5E06523B68F0E00B331CC /* Housing */,
-				212304C52054ED9900958CE0 /* Spring Fling */,
-				216640EE1EBB867600746B8E /* Contacts */,
-				216640D31EBB80FD00746B8E /* News */,
-				CF1CE9B8205D5BF100C51F46 /* More Tab */,
 				216640F91EBB898700746B8E /* About */,
+				66E8ECA32381CA6C00945BEA /* Auth */,
+				B62875E82112591700FB2873 /* Buildings */,
+				216640EE1EBB867600746B8E /* Contacts */,
+				21B653BC2246F31E001A97C5 /* Courses */,
+				2166408B1EBADBF800746B8E /* Dining */,
+				97E79E0A2100DBC300D3D606 /* Fitness */,
+				216640C71EBADC9D00746B8E /* General */,
+				2189C0732027CD2F00771C1F /* GSR-Booking */,
+				21640D4220103C8A002F33CA /* Home */,
+				21D5E06523B68F0E00B331CC /* Housing */,
+				B654BAE81F801F030038B9D5 /* Laundry */,
+				21B8BBBB2224F98B00EBC1D0 /* Login */,
+				B62875E921152FF500FB2873 /* Map */,
+				CF1CE9B8205D5BF100C51F46 /* More Tab */,
+				21ECADA21F30146B00569883 /* Networking + Analytics */,
+				216640D31EBB80FD00746B8E /* News */,
+				F212BE8223B6C88A00ED46A1 /* Notifications */,
+				CF29A15F1FB7873A0067D946 /* Onboarding */,
+				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
+				76201BDB25621D3500E911F7 /* Polls */,
+				F212BE7D23B6ACC800ED46A1 /* Privacy */,
+				216640881EBADBA000746B8E /* Setup + Navigation */,
+				212304C52054ED9900958CE0 /* Spring Fling */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
 			);
 			path = PennMobile;
@@ -1134,6 +1148,31 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		76201BDB25621D3500E911F7 /* Polls */ = {
+			isa = PBXGroup;
+			children = (
+				76201BE5256220A900E911F7 /* Model */,
+				76201BE425621D7700E911F7 /* Networking */,
+			);
+			path = Polls;
+			sourceTree = "<group>";
+		};
+		76201BE425621D7700E911F7 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				76201BDC25621D6D00E911F7 /* PollsNetworkManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		76201BE5256220A900E911F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B9D16BC32516F00200659946 /* PollQuestion.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		97AA806323D26BC700C23488 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1321,6 +1360,17 @@
 				EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */,
 			);
 			path = "Group Invites";
+			sourceTree = "<group>";
+		};
+		B9D16BBD2516E93B00659946 /* Polls */ = {
+			isa = PBXGroup;
+			children = (
+				B9D16BBE2516E96500659946 /* HomePollsCell.swift */,
+				B9D16BC02516E97C00659946 /* HomePollsCellItem.swift */,
+				B9ECAC412521519F004C488E /* PollOptionCell.swift */,
+				B9432322253CFF670013BF92 /* HomePollsCellFooter.swift */,
+			);
+			path = Polls;
 			sourceTree = "<group>";
 		};
 		C13F9E93219284E9000B866A /* Calendar */ = {
@@ -1772,6 +1822,7 @@
 				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
 				F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */,
+				B9D16BC42516F00200659946 /* PollQuestion.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
 				212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */,
@@ -1817,8 +1868,10 @@
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
 				97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */,
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
+				B9ECAC422521519F004C488E /* PollOptionCell.swift in Sources */,
 				B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
+				B9D16BBF2516E96500659946 /* HomePollsCell.swift in Sources */,
 				C8C96F15241407420069D56A /* PacCodeViewController.swift in Sources */,
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
 				EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */,
@@ -1849,6 +1902,7 @@
 				2189C08C2027CE2600771C1F /* GSRTimeCell.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
 				21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */,
+				B9432323253CFF670013BF92 /* HomePollsCellFooter.swift in Sources */,
 				EFE2D6F3239B11050020F6BF /* CreateGroupCell.swift in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				212B8359222A331D00F835D6 /* Post.swift in Sources */,
@@ -1948,6 +2002,7 @@
 				2138D55F22599D4700D67CA2 /* GSRGroup.swift in Sources */,
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
 				B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */,
+				76201BDD25621D6D00E911F7 /* PollsNetworkManager.swift in Sources */,
 				21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */,
 				665F1FC523D261B100DC023E /* TwoFactorCell.swift in Sources */,
 				21737FD923A31205002DCD07 /* OAuth2NetworkManager.swift in Sources */,
@@ -1955,6 +2010,7 @@
 				EFE2D6F1239B11050020F6BF /* GroupManageButtonCell.swift in Sources */,
 				66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */,
 				21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */,
+				B9D16BC12516E97C00659946 /* HomePollsCellItem.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
 				216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */,
 				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,
