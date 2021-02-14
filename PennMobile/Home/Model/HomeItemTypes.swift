@@ -69,10 +69,10 @@ extension HomeItemTypes {
      * Note: This method should return an empty array when the app is in production
     **/
     func getDefaultItems() -> [HomeCellItem.Type] {
+
+//        let types = [HomeCellItem.Type]()
         var types = [HomeCellItem.Type]()
-        #if DEBUG
         types.append(polls)
-        #endif
         return types
     }
 }
