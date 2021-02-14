@@ -11,81 +11,68 @@ import SnapKit
 
 class HomePollsCellFooter: UIView {
     
-//    static let height: CGFloat = 63
-//
-//    var secondaryTitleLabel: UILabel!
-//    var primaryTitleLabel: UILabel!
-//    private var dividerLine: UIView!
+    static let height: CGFloat = 30
+    var noteLabel: UILabel!
+    private var dividerLine: UIView!
 //    
-//    // Must be called after being added to a view
-//    func prepare() {
-//        prepareHeader(inside: self.superview ?? UIView())
-//        prepareTitleLabels()
-//        prepareDividerLine()
-//    }
-//    
-//    // MARK: Header
-//    private func prepareHeader(inside safeArea: UIView) {
-//        self.snp.makeConstraints { (make) in
-//            make.leading.equalTo(safeArea)
-//            make.top.equalTo(safeArea)
-//            make.trailing.equalTo(safeArea)
-//            make.height.equalTo(HomeCellHeader.height)
-//        }
-//    }
-//
-//    // MARK: Labels
-//    private func prepareTitleLabels() {
-//        secondaryTitleLabel = getSecondaryLabel()
-//        primaryTitleLabel = getPrimaryLabel()
-//
-//        addSubview(secondaryTitleLabel)
-//        addSubview(primaryTitleLabel)
-//        
-//        secondaryTitleLabel.snp.makeConstraints { (make) in
-//            make.leading.equalTo(self)
-//            make.top.equalTo(self).offset(3)
-//        }
-//        
-//        primaryTitleLabel.snp.makeConstraints { (make) in
-//            make.leading.equalTo(self)
-//            make.top.equalTo(secondaryTitleLabel.snp.bottom).offset(4)
-//        }
-//    }
-//
-//    // MARK: Divider Line
-//    private func prepareDividerLine() {
-//        dividerLine = getDividerLine()
-//        addSubview(dividerLine)
-//        dividerLine.snp.makeConstraints { (make) in
-//            make.leading.equalTo(self)
-//            make.trailing.equalTo(self)
-//            make.bottom.equalTo(self)
-//            make.height.equalTo(2)
-//        }
-//    }
-//    
-//    // MARK: - Lable Definitions
-//    private func getSecondaryLabel() -> UILabel {
-//        let label = UILabel()
-//        label.font = .secondaryTitleFont
-//        label.textColor = .labelSecondary
-//        label.textAlignment = .left
-//        return label
-//    }
-//
-//    private func getPrimaryLabel() -> UILabel {
-//        let label = UILabel()
-//        label.font = .primaryTitleFont
-//        label.textColor = .labelPrimary
-//        label.textAlignment = .left
-//        return label
-//    }
-//
-//    private func getDividerLine() -> UIView {
-//        let view = UIView()
-//        view.backgroundColor = .grey5
-//        view.layer.cornerRadius = 2.0
-//        return view
-//    }
+    // Must be called after being added to a view
+    func prepare() {
+        prepareFooter(inside: self.superview ?? UIView())
+        prepareNoteLabel()
+        prepareDividerLine()
+    }
+    
+    // MARK: Footer
+    private func prepareFooter(inside safeArea: UIView) {
+        self.snp.makeConstraints { (make) in
+            make.leading.equalTo(safeArea)
+            make.bottom.equalTo(safeArea)
+            make.trailing.equalTo(safeArea)
+            make.height.equalTo(HomePollsCellFooter.height)
+        }
+    }
+
+    // MARK: Labels
+    private func prepareNoteLabel() {
+        
+        noteLabel = getNoteLabel()
+
+        addSubview(noteLabel)
+        
+        noteLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(self)
+            make.bottom.equalTo(self).offset(3)
+            make.trailing.equalTo(self)
+        }
+    }
+
+    // MARK: Divider Line
+    private func prepareDividerLine() {
+        dividerLine = getDividerLine()
+        addSubview(dividerLine)
+        dividerLine.snp.makeConstraints { (make) in
+            make.leading.equalTo(self)
+            make.trailing.equalTo(self)
+            make.top.equalTo(self)
+            make.height.equalTo(2)
+        }
+    }
+
+
+    private func getNoteLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .footerDescriptionFont
+        label.textColor = .labelSecondary
+        label.textAlignment = .left
+        label.text = "For multiple choice polls, Penn Mobile anonymously shares your year, major, and answer with the organization running poll."
+        label.numberOfLines = 0
+        return label
+    }
+
+    private func getDividerLine() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .grey5
+        view.layer.cornerRadius = 2.0
+        return view
+    }
 }

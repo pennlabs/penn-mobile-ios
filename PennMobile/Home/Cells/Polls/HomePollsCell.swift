@@ -24,7 +24,7 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
         guard let item = item as? HomePollsCellItem else { return 0.0 }
         let numPolls = CGFloat(item.pollQuestion.options.count)
         let pollHeight = numPolls * PollOptionCell.cellHeight
-        return (pollHeight + HomeCellHeader.height + (Padding.pad * 3))
+        return (pollHeight + HomeCellHeader.height + HomePollsCellFooter.height + (Padding.pad * 3))
     }
     
     var pollQuestion: PollQuestion!
@@ -34,6 +34,7 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     var cardView: UIView! = UIView()
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
     fileprivate var header: HomeCellHeader = HomeCellHeader()
+    fileprivate var footer: HomePollsCellFooter = HomePollsCellFooter()
     fileprivate var responsesTableView: UITableView!
     fileprivate var voteCountLabel: UILabel!
     fileprivate var ddlLabel: UILabel!
@@ -86,6 +87,7 @@ extension HomePollsCell {
     fileprivate func prepareUI() {
         prepareSafeArea()
         prepareHeader()
+        prepareFooter()
         prepareVoteCountLabel()
         prepareDdlLabel()
         prepareTableView()
@@ -100,6 +102,11 @@ extension HomePollsCell {
     fileprivate func prepareHeader() {
         safeArea.addSubview(header)
         header.prepare()
+    }
+    
+    fileprivate func prepareFooter() {
+        safeArea.addSubview(footer)
+        footer.prepare()
     }
     
     // MARK: Vote Count Label
@@ -133,9 +140,9 @@ extension HomePollsCell {
         cardView.addSubview(responsesTableView)
         responsesTableView.snp.makeConstraints { (make) in
             make.leading.equalTo(cardView)
-            make.top.equalTo(header.snp.bottom).offset(pad)
+            make.top.equalTo(header.snp.bottom)
             make.trailing.equalTo(cardView)
-            make.bottom.equalTo(cardView).offset(-pad)
+            make.bottom.equalTo(footer.snp.top).offset(-pad)
         }
     }
 }
