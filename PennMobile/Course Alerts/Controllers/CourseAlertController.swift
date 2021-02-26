@@ -245,6 +245,7 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: CourseAlertCell.identifier, for: indexPath) as! CourseAlertCell
             cell.selectionStyle = .none
             cell.courseAlert = alerts[indexPath.row]
+            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
             return cell
         }
     }
@@ -262,7 +263,7 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == alerts.count {
-            let controller = CourseAlertAddController()
+            let controller = CourseAlertCreateController()
             controller.delegate = self
             let navigationVC = UINavigationController(rootViewController: controller)
             controller.navigationController?.navigationBar.isHidden = true
@@ -371,8 +372,8 @@ extension CourseAlertController {
         self.navigationController?.pushViewController(settingsController, animated: true)
     }
     
-    @objc fileprivate func openAddAlertController(_ sender: UITapGestureRecognizer) {
-        let controller = CourseAlertAddController()
+    @objc fileprivate func openCreateAlertController(_ sender: UITapGestureRecognizer) {
+        let controller = CourseAlertCreateController()
         controller.delegate = self
         let navigationVC = UINavigationController(rootViewController: controller)
         controller.navigationController?.navigationBar.isHidden = true

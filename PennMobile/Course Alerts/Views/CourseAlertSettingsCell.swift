@@ -38,14 +38,6 @@ class CourseAlertSettingsCell: UITableViewCell {
 // MARK: - Prepare UI
 extension CourseAlertSettingsCell {
     
-    @objc func didToggle(_ sender: UISwitch) {
-        if delegate.allowChange() {
-            delegate.changed(option: option, toValue: sender.isOn)
-        } else {
-            delegate.requestChange(option: option, toValue: sender.isOn)
-        }
-    }
-    
     fileprivate func prepareUI() {
         prepareSwitch()
         prepareLabel()
@@ -78,4 +70,17 @@ extension CourseAlertSettingsCell {
         label.minimumScaleFactor = 0.7
         label.adjustsFontSizeToFitWidth = true
     }
+}
+
+// MARK: - Event Handlers
+extension CourseAlertSettingsCell {
+    
+    @objc func didToggle(_ sender: UISwitch) {
+        if delegate.allowChange() {
+            delegate.changed(option: option, toValue: sender.isOn)
+        } else {
+            delegate.requestChange(option: option, toValue: sender.isOn)
+        }
+    }
+
 }

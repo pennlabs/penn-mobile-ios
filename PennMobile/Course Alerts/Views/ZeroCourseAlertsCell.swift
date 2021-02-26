@@ -19,8 +19,6 @@ class ZeroCourseAlertsCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        //backgroundColor = .lightGray
-        
         let noAlertsLabel = UILabel()
         noAlertsLabel.text = "No Current Penn Course Alerts."
         noAlertsLabel.font = UIFont.avenirMedium
@@ -36,7 +34,7 @@ class ZeroCourseAlertsCell: UITableViewCell {
         titleLabel = UILabel()
         titleLabel.text = "Create Alert"
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        titleLabel.textColor = UIColor(named: "baseLabsBlue")
+        titleLabel.textColor = UIColor.baseLabsBlue
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
