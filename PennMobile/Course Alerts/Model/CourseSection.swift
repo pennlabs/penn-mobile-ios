@@ -24,6 +24,25 @@ struct CourseSection: Decodable {
         case courseTitle = "course_title"
     }
     
+    public init(from decoder: Decoder) throws {
+        let keyedContainer = try decoder.container(keyedBy: CodingKeys.self)
+                
+        let status: String = try keyedContainer.decode(String.self, forKey: .status)
+        let activity: String = try keyedContainer.decode(String.self, forKey: .activity)
+        let instructors: [Instructor] = try keyedContainer.decode([Instructor].self, forKey: .instructors)
+        let section: String = try keyedContainer.decode(String.self, forKey: .section)
+        let meetingTimes: String = try keyedContainer.decode(String.self, forKey: .meetingTimes)
+        let courseTitle: String = try keyedContainer.decode(String.self, forKey: .courseTitle)
+        
+        self.status = status
+        self.activity = activity
+        self.instructors = instructors
+        self.section = section
+        self.meetingTimes = meetingTimes
+        self.courseTitle = courseTitle
+        
+    }
+    
 }
 
 struct Instructor: Decodable {

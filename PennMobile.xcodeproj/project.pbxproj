@@ -264,7 +264,7 @@
 		F2770ADB2545E2EB001EA1DD /* CourseAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770ADA2545E2EB001EA1DD /* CourseAlertCell.swift */; };
 		F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770ADF2545E311001EA1DD /* CourseAlert.swift */; };
 		F2770AE52545E384001EA1DD /* CourseAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770AE42545E384001EA1DD /* CourseAlertController.swift */; };
-		F2770AEA2545E39D001EA1DD /* CourseAlertCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770AE92545E39D001EA1DD /* CourseAlertCreateController.swift */; };
+		F2770AEA2545E39D001EA1DD /* CourseAlertAddController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770AE92545E39D001EA1DD /* CourseAlertAddController.swift */; };
 		F2770AEF2545E3B0001EA1DD /* CourseAlertNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2770AEE2545E3B0001EA1DD /* CourseAlertNetworkManager.swift */; };
 		F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01723BC6CEC00276C4F /* PermissionView.swift */; };
 		F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */; };
@@ -572,7 +572,7 @@
 		F2770ADA2545E2EB001EA1DD /* CourseAlertCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertCell.swift; sourceTree = "<group>"; };
 		F2770ADF2545E311001EA1DD /* CourseAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlert.swift; sourceTree = "<group>"; };
 		F2770AE42545E384001EA1DD /* CourseAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertController.swift; sourceTree = "<group>"; };
-		F2770AE92545E39D001EA1DD /* CourseAlertCreateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertCreateController.swift; sourceTree = "<group>"; };
+		F2770AE92545E39D001EA1DD /* CourseAlertAddController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertAddController.swift; sourceTree = "<group>"; };
 		F2770AEE2545E3B0001EA1DD /* CourseAlertNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertNetworkManager.swift; sourceTree = "<group>"; };
 		F27AA01723BC6CEC00276C4F /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		F27AA01923BC6D1400276C4F /* PrivacyPermissionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPermissionDelegate.swift; sourceTree = "<group>"; };
@@ -1506,7 +1506,7 @@
 			isa = PBXGroup;
 			children = (
 				F2770AE42545E384001EA1DD /* CourseAlertController.swift */,
-				F2770AE92545E39D001EA1DD /* CourseAlertCreateController.swift */,
+				F2770AE92545E39D001EA1DD /* CourseAlertAddController.swift */,
 				F2562A252551F6D40021C92F /* CourseAlertSettingsController.swift */,
 				F2E3FE29259722C500518961 /* SearchResultsPopover.swift */,
 			);
@@ -1916,7 +1916,7 @@
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
 				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
-				F2770AEA2545E39D001EA1DD /* CourseAlertCreateController.swift in Sources */,
+				F2770AEA2545E39D001EA1DD /* CourseAlertAddController.swift in Sources */,
 				21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */,
 				97E79E1A2100E51A00D3D606 /* FitnessFacilityName.swift in Sources */,
 				97E79E082100DA1200D3D606 /* BuildingHoursCell.swift in Sources */,
@@ -2231,7 +2231,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6511;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2314,7 +2314,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6511;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

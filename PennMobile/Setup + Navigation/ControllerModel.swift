@@ -74,21 +74,13 @@ class ControllerModel: NSObject {
     // Features order in MoreViewController:
     var moreOrder: [Feature] {
         get {
-            #if DEBUG
-                return [.news, .contacts, .courseSchedule, .courseAlerts, .about]
-            #else
-                return [.news, .contacts, .courseSchedule, .about]
-            #endif
+            return [.news, .contacts, .courseSchedule, .courseAlerts, .about]
         }
     }
     
     var moreIcons: [UIImage] {
         get {
-            #if DEBUG
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "logo-small")]
-            #else
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "logo-small")]
-            #endif
+            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "logo-small")]
         }
     }
 

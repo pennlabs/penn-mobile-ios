@@ -47,7 +47,9 @@ extension CourseAlertCell {
             setupUI()
         } else {
             detailLabel.text = "One-Time Alert"
-            if let alertNotifDate = courseAlert.notificationSentAt {
+            if let notifDate = courseAlert.notificationSentAt {
+                //let alertNotifDate = Date.dayOfMonthFormatter.string(from: notifDate)
+                let alertNotifDate = notifDate
                 detailLabel.text = "One-Time Alert - Last Notified \(alertNotifDate)"
             }
             courseLabel.text = courseAlert.section
@@ -147,7 +149,6 @@ extension CourseAlertCell {
         moreView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         moreView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
         moreView.centerYAnchor.constraint(equalTo: courseLabel.centerYAnchor).isActive = true
-        moreView.isHidden = true
     }
     
 }
