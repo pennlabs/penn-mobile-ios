@@ -5,7 +5,6 @@
 //  Created by Raunaq Singh on 10/25/20.
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
-
 import UIKit
 import Foundation
 
@@ -14,13 +13,13 @@ protocol FetchPCADataProtocol: class {
     func fetchSettings()
 }
 
-class CourseAlertAddController: GenericViewController {
+class CourseAlertCreateController: GenericViewController {
     
     fileprivate var searchBar = UISearchBar()
     fileprivate var alertSwitch: UISwitch!
     fileprivate var addButton: UIButton!
     fileprivate var switchLabel: UILabel!
-    fileprivate var errorLabel: UILabel!
+    fileprivate var headerLabel: UILabel!
     
     fileprivate var navBar: UINavigationBar!
     
@@ -32,18 +31,8 @@ class CourseAlertAddController: GenericViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
-        view.addSubview(navBar)
-        let navItem = UINavigationItem(title: "Add Course Alerts")
-        navItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
-        navBar.setItems([navItem], animated: false)
-        
-        searchBar.delegate = self
-                
         setupUI()
     }
-
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -51,19 +40,30 @@ class CourseAlertAddController: GenericViewController {
     
 }
 
-extension CourseAlertAddController: ShowsAlert {
+// MARK: - Setup UI
+extension CourseAlertCreateController {
     
     fileprivate func setupUI() {
+        setupCustomNavBar()
         setupSearchBar()
+        setupHeaderLabel()
         setupSwitchLabel()
         setupAlertSwitch()
         setupAddButton()
         setupResultsPopover()
-        //setupErrorLabel()
+    }
+    
+    fileprivate func setupCustomNavBar() {
+        navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
+        view.addSubview(navBar)
+        let navItem = UINavigationItem(title: "Create Alert")
+        navItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
+        navBar.setItems([navItem], animated: false)
     }
     
     fileprivate func setupSearchBar() {
-        searchBar.placeholder = "Course"
+        searchBar.delegate = self
+        searchBar.placeholder = "Ex. ECON 001"
         searchBar.returnKeyType = .search
         searchBar.autocapitalizationType = .allCharacters
         searchBar.autocorrectionType = .no
@@ -75,16 +75,32 @@ extension CourseAlertAddController: ShowsAlert {
         view.addSubview(searchBar)
         
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 75).isActive = true
+        searchBar.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 125).isActive = true
         searchBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         searchBar.widthAnchor.constraint(equalToConstant: 300).isActive = true
         searchBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+    
+    fileprivate func setupHeaderLabel() {
+        headerLabel = UILabel()
+        headerLabel.text = "Get Alerted When a Course Opens Up"
+        headerLabel.font = UIFont.avenirMedium
+        headerLabel.textColor = .labelSecondary
+        headerLabel.textAlignment = .center
+        headerLabel.numberOfLines = 0
+        headerLabel.sizeToFit()
         
+        view.addSubview(headerLabel)
+        
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerLabel.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor, constant: -12).isActive = true
+        headerLabel.bottomAnchor.constraint(equalTo: searchBar.topAnchor, constant: -25).isActive = true
+        headerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 
     fileprivate func setupSwitchLabel() {
         switchLabel = UILabel()
-        switchLabel.text = "Alert me until I cancel."
+        switchLabel.text = "Repeat alert until I cancel"
         switchLabel.font = UIFont.interiorTitleFont
         switchLabel.textColor = .labelSecondary
         switchLabel.textAlignment = .center
@@ -94,7 +110,7 @@ extension CourseAlertAddController: ShowsAlert {
         view.addSubview(switchLabel)
         
         switchLabel.translatesAutoresizingMaskIntoConstraints = false
-        switchLabel.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor, constant: -12).isActive = true
+        switchLabel.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor, constant: 0).isActive = true
         switchLabel.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 20).isActive = true
         switchLabel.widthAnchor.constraint(equalToConstant: 220).isActive = true
     }
@@ -102,7 +118,7 @@ extension CourseAlertAddController: ShowsAlert {
     fileprivate func setupAlertSwitch() {
         alertSwitch = UISwitch()
         alertSwitch.setOn(false, animated: false)
-        alertSwitch.onTintColor = .blueLight
+        alertSwitch.onTintColor = .baseLabsBlue
         
         view.addSubview(alertSwitch)
         
@@ -116,14 +132,14 @@ extension CourseAlertAddController: ShowsAlert {
         addButton.setTitle("Alert me", for: .normal)
         addButton.setTitleColor(.white, for: .normal)
         addButton.titleLabel?.font =  UIFont.primaryTitleFont
-        addButton.backgroundColor = .blueLight
+        addButton.backgroundColor = .baseLabsBlue
         addButton.layer.cornerRadius = 8
         addButton.addTarget(self, action: #selector(alertButton), for: .touchUpInside)
         
         view.addSubview(addButton)
         
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        addButton.topAnchor.constraint(equalTo: alertSwitch.bottomAnchor, constant: 40).isActive = true
+        addButton.topAnchor.constraint(equalTo: alertSwitch.bottomAnchor, constant: 25).isActive = true
         addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addButton.widthAnchor.constraint(equalToConstant: 110).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -140,27 +156,12 @@ extension CourseAlertAddController: ShowsAlert {
         searchResultsVC?.delegate = self
         searchResultsVC?.sourceView = self.searchBar
         searchResultsVC?.sourceRect = self.searchBar.bounds
-        
-        //searchResults.setHeight(results: [])
-
     }
     
-    fileprivate func setupErrorLabel() {
-        errorLabel = UILabel()
-        errorLabel.text = "Please select a valid course to create an alert."
-        errorLabel.font = UIFont.interiorTitleFont
-        errorLabel.textColor = .labelSecondary
-        errorLabel.textAlignment = .center
-        errorLabel.numberOfLines = 0
-        errorLabel.sizeToFit()
-        
-        view.addSubview(errorLabel)
-        
-        errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        errorLabel.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor, constant: -12).isActive = true
-        errorLabel.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 20).isActive = true
-        errorLabel.widthAnchor.constraint(equalToConstant: 220).isActive = true
-    }
+}
+
+// MARK: - Event Handlers
+extension CourseAlertCreateController: ShowsAlert, CourseSearchDelegate {
     
     @objc fileprivate func handleCancel() {
         dismiss(animated: true, completion: nil)
@@ -203,9 +204,18 @@ extension CourseAlertAddController: ShowsAlert {
         })
     }
     
+    func selectSection(section: CourseSection) {
+        sectionToAlert = section
+        self.searchBar.text = section.section
+        self.hideResultsPopover()
+        self.searchBar.resignFirstResponder()
+    }
+    
 }
 
-extension CourseAlertAddController: UIPopoverPresentationControllerDelegate {
+
+// MARK: - Popover Functions
+extension CourseAlertCreateController: UIPopoverPresentationControllerDelegate {
     
     @objc func handleSearchQuery() {
         let searchText = searchBar.text ?? ""
@@ -264,17 +274,15 @@ extension CourseAlertAddController: UIPopoverPresentationControllerDelegate {
     
 }
 
-extension CourseAlertAddController: UISearchBarDelegate {
+// MARK: - Search Bar Functions
+extension CourseAlertCreateController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         sectionToAlert = nil
-        //NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(handleSearchQuery), object: searchBar)
-        //self.perform(#selector(handleSearchQuery), with: searchBar, afterDelay: 0.5)
         self.hideResultsPopover()
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        //handleSearchQuery()
         self.hideResultsPopover()
     }
     
@@ -283,20 +291,7 @@ extension CourseAlertAddController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        //self.hideResultsPopover()
-        //self.searchBar.resignFirstResponder()
         handleSearchQuery()
-    }
-    
-}
-
-extension CourseAlertAddController: CourseSearchDelegate {
-    
-    func selectSection(section: CourseSection) {
-        sectionToAlert = section
-        self.searchBar.text = section.section
-        self.hideResultsPopover()
-        self.searchBar.resignFirstResponder()
     }
     
 }

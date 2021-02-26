@@ -5,7 +5,6 @@
 //  Created by Raunaq Singh on 10/25/20
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
-
 import Foundation
 
 class CourseAlertController: GenericViewController {
@@ -75,7 +74,6 @@ class CourseAlertController: GenericViewController {
 }
 
 // MARK: - Fetch Functions
-
 extension CourseAlertController: FetchPCADataProtocol {
     
     @objc func fetchAlerts() {
@@ -103,7 +101,6 @@ extension CourseAlertController: FetchPCADataProtocol {
 }
 
 // MARK: - UI Functions
-
 extension CourseAlertController {
     
     fileprivate func setupUI() {
@@ -221,7 +218,6 @@ extension CourseAlertController {
 }
 
 // MARK: - TableView Functions
-
 extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return alerts.count + 1
@@ -245,6 +241,7 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: CourseAlertCell.identifier, for: indexPath) as! CourseAlertCell
             cell.selectionStyle = .none
             cell.courseAlert = alerts[indexPath.row]
+            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
             return cell
         }
     }
@@ -262,7 +259,7 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == alerts.count {
-            let controller = CourseAlertAddController()
+            let controller = CourseAlertCreateController()
             controller.delegate = self
             let navigationVC = UINavigationController(rootViewController: controller)
             controller.navigationController?.navigationBar.isHidden = true
@@ -353,7 +350,6 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
 }
 
 // MARK: - Other Util. Functions
-
 extension CourseAlertController {
     
     func updateMainView() {
@@ -371,8 +367,8 @@ extension CourseAlertController {
         self.navigationController?.pushViewController(settingsController, animated: true)
     }
     
-    @objc fileprivate func openAddAlertController(_ sender: UITapGestureRecognizer) {
-        let controller = CourseAlertAddController()
+    @objc fileprivate func openCreateAlertController(_ sender: UITapGestureRecognizer) {
+        let controller = CourseAlertCreateController()
         controller.delegate = self
         let navigationVC = UINavigationController(rootViewController: controller)
         controller.navigationController?.navigationBar.isHidden = true
