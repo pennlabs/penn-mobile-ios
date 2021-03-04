@@ -1,22 +1,24 @@
 //
-//  NotificationsTableViewController.swift
+//  CourseAlertSettingsController.swift
 //  PennMobile
 //
-//  Created by Dominic Holmes on 12/27/19.
-//  Copyright © 2019 PennLabs. All rights reserved.
+//  Created by Raunaq Singh on 11/3/20.
+//  Copyright © 2020 PennLabs. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-protocol NotificationViewControllerChangedPreference: class {
+
+protocol CourseAlertSettingsChangedPreference: class {
     func allowChange() -> Bool
-    func changed(option: NotificationOption, toValue: Bool)
-    func requestChange(option: NotificationOption, toValue: Bool)
+    func changed(option: PCAOption, toValue: Bool)
+    func requestChange(option: PCAOption, toValue: Bool)
 }
 
-class NotificationViewController: GenericTableViewController, ShowsAlert, IndicatorEnabled, NotificationRequestable {
+class CourseAlertSettingsController: GenericTableViewController, ShowsAlert, IndicatorEnabled, NotificationRequestable {
     
-    let displayedPrefs = NotificationOption.visibleOptions
+    let displayedSettings = PCAOption.visibleOptions
     
     var notificationsEnabled = true
     
@@ -25,7 +27,7 @@ class NotificationViewController: GenericTableViewController, ShowsAlert, Indica
         
         self.tableView = UITableView(frame: .zero, style: .grouped)
         
-        self.title = "Notifications"
+        self.title = "Settings"
         self.registerHeadersAndCells(for: tableView)
         tableView.dataSource = self
         tableView.delegate = self
@@ -35,12 +37,6 @@ class NotificationViewController: GenericTableViewController, ShowsAlert, Indica
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
-        
-        CourseAlertNetworkManager.instance.getSettings { (settings) in
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
         
         #if !targetEnvironment(simulator)
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
@@ -57,8 +53,10 @@ class NotificationViewController: GenericTableViewController, ShowsAlert, Indica
 }
 
 // MARK: - Did Change Preference
-extension NotificationViewController: NotificationViewControllerChangedPreference {
-    func requestChange(option: NotificationOption, toValue: Bool) {
+
+extension CourseAlertSettingsController: CourseAlertSettingsChangedPreference {
+    func requestChange(option: PCAOption, toValue: Bool) {
+        
         if Account.isLoggedIn {
             requestNotification { (granted) in
                 DispatchQueue.main.async {
@@ -72,65 +70,41 @@ extension NotificationViewController: NotificationViewControllerChangedPreferenc
         } else {
             self.showAlert(withMsg: "You must log in to access this feature.", title: "Login Required", completion: nil)
         }
+        
     }
     
     func allowChange() -> Bool {
-        Account.isLoggedIn && notificationsEnabled
+        return Account.isLoggedIn && notificationsEnabled
     }
     
-    func changed(option: NotificationOption, toValue: Bool) {
-        // Save change to local storage (user defaults)
+    func changed(option: PCAOption, toValue: Bool) {
+        
         UserDefaults.standard.set(option, to: toValue)
+        UserDefaults.standard.set(.pennCourseAlerts, to: toValue)
         
-        // Upload change to the Penn Mobile server. If this fails, reverse the change.
-        self.showActivity()
-        let deadline = DispatchTime.now() + 1
-        
-        UserDBManager.shared.saveUserNotificationSettings { (success) in
-            DispatchQueue.main.asyncAfter(deadline: deadline) {
-                if success {
-                    //Push to pca backend if changing pca preference
-                    if option == .pennCourseAlerts {
-                        self.pushPCAPreferenceChange(toValue: toValue)
-                    } else {
-                        self.hideActivity()
-                    }
-                } else {
-                    // Couldn't save change to the server
-                    self.hideActivity()
-                    self.showAlert(withMsg: "Could not save notification preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
-                        // Reverse the change, if we couldn't connect to the server
-                        UserDefaults.standard.set(option, to: !toValue)
-                        self.tableView.reloadData()
-                    })
-                }
-            }
-        }
-    }
-    
-    func pushPCAPreferenceChange(toValue: Bool) {
         CourseAlertNetworkManager.instance.updatePushNotifSettings(pushNotif: toValue, callback: {(success, response, error) in
             DispatchQueue.main.async {
-                self.hideActivity()
                 if success {
-                    UserDefaults.standard.set(.alertsThroughPennMobile, to: toValue)
+                    self.showAlert(withMsg: "\(option.cellTitle ?? "") \(toValue ? "enabled" : "disabled")", title: "Preference Saved", completion: nil)
                 } else if !response.isEmpty {
-                    self.showAlert(withMsg: "Could not save notification preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
+                    self.showAlert(withMsg: "Could not save preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
+                        UserDefaults.standard.set(option, to: !toValue)
                         UserDefaults.standard.set(.pennCourseAlerts, to: !toValue)
                         self.tableView.reloadData()
                     })
                 }
             }
         })
+        
     }
     
 }
 
 // MARK: - UITableViewDataSource
-extension NotificationViewController {
+extension CourseAlertSettingsController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return displayedPrefs.count
+        return displayedSettings.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,11 +112,10 @@ extension NotificationViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NotificationTableViewCell.identifier) as! NotificationTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CourseAlertSettingsCell.identifier) as! CourseAlertSettingsCell
         
-        let option = displayedPrefs[indexPath.section]
+        let option = displayedSettings[indexPath.section]
         let currentValue: Bool = Account.isLoggedIn && notificationsEnabled ? UserDefaults.standard.getPreference(for: option) : false
-        
         cell.setup(with: option, isEnabled: currentValue)
         cell.delegate = self
         cell.contentView.isUserInteractionEnabled = false
@@ -151,7 +124,7 @@ extension NotificationViewController {
     }
     
     func registerHeadersAndCells(for tableView: UITableView) {
-        tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: NotificationTableViewCell.identifier)
+        tableView.register(CourseAlertSettingsCell.self, forCellReuseIdentifier: CourseAlertSettingsCell.identifier)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -159,6 +132,6 @@ extension NotificationViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return displayedPrefs[section].cellFooterDescription
+        return displayedSettings[section].cellFooterDescription
     }
 }

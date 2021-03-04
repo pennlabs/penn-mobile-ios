@@ -38,14 +38,16 @@ enum NotificationOption: String, Codable {
     case dailyMenuNotificationBreakfast
     case dailyMenuNotificationLunch
     case dailyMenuNotificationDinner
+    case pennCourseAlerts
     
     // Options to be actually shown to the user
     static let visibleOptions: [NotificationOption] = [
-        .upcomingStudyRoomReminder, .diningBalanceSummary, .universityEventAnnouncement, .pennMobileUpdateAnnouncement
+        .upcomingStudyRoomReminder, .diningBalanceSummary, .pennCourseAlerts, .universityEventAnnouncement, .pennMobileUpdateAnnouncement
     ]
     
     var cellTitle: String? {
         switch self {
+        case .pennCourseAlerts: return "Penn Course Alerts"
         case .upcomingStudyRoomReminder: return "GSR booking notifications"
         case .diningBalanceSummary: return "Dining balance notifications"
         case .laundryMachineCycleComplete: return "Laundry notifications"
@@ -57,6 +59,7 @@ enum NotificationOption: String, Codable {
     
     var cellFooterDescription: String? {
         switch self {
+        case .pennCourseAlerts: return "Receive notifications when courses open up."
         case .upcomingStudyRoomReminder: return "Notifications about your upcoming GSR bookings, sent 10 minutes from the start of booking. Includes the room and duration. Long press the notification to cancel your booking."
         case .laundryMachineCycleComplete:
             return "Notifications about laundry cycles. Tap on a laundry machine with time remaining to set the notification."
@@ -70,6 +73,7 @@ enum NotificationOption: String, Codable {
     var defaultValue: Bool {
         switch self {
         case .diningBalanceSummary: return UserDefaults.standard.hasDiningPlan()
+        case .pennCourseAlerts: return UserDefaults.standard.getPreference(for: .alertsThroughPennMobile)
         default: return true
         }
     }
