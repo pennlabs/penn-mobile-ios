@@ -139,7 +139,7 @@
 		21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */; };
 		21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */; };
 		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
-		4300201A25EAFC82008C2533 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4300201925EAFC82008C2533 /* GoogleService-Info.plist */; };
+		43C2798025F4355B0014F0C4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43C2797F25F4355B0014F0C4 /* GoogleService-Info.plist */; };
 		497810AF5B16F0E4FD3D6092 /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97A59EEC6E7DA45F57EEB74 /* Pods_PennMobile.framework */; };
 		665F1FC523D261B100DC023E /* TwoFactorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F1FC423D261B100DC023E /* TwoFactorCell.swift */; };
 		665F1FC723D2628800DC023E /* TwoFactorWebviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */; };
@@ -432,7 +432,7 @@
 		21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusExpressLoginController.swift; sourceTree = "<group>"; };
 		21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAnalyticsEngine.swift; sourceTree = "<group>"; };
 		21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
-		4300201925EAFC82008C2533 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		43C2797F25F4355B0014F0C4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		51F77CCBB7C32C932B101F62 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		665F1FC423D261B100DC023E /* TwoFactorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorCell.swift; sourceTree = "<group>"; };
 		665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorWebviewController.swift; sourceTree = "<group>"; };
@@ -754,7 +754,7 @@
 			isa = PBXGroup;
 			children = (
 				2166406F1EBADADA00746B8E /* Info.plist */,
-				4300201925EAFC82008C2533 /* GoogleService-Info.plist */,
+				43C2797F25F4355B0014F0C4 /* GoogleService-Info.plist */,
 				2166406C1EBADADA00746B8E /* LaunchScreen.storyboard */,
 				216640841EBADB8200746B8E /* PennMobile-Bridging-Header.h */,
 				216640F81EBB88FB00746B8E /* PrefixHeader.pch */,
@@ -1601,7 +1601,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
-				4300201A25EAFC82008C2533 /* GoogleService-Info.plist in Resources */,
+				43C2798025F4355B0014F0C4 /* GoogleService-Info.plist in Resources */,
 				2189C09E2027CE4100771C1F /* locations.json in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
