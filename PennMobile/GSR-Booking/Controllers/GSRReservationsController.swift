@@ -57,6 +57,7 @@ extension GSRReservationsController {
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: ReservationCell.identifier, for: indexPath) as! ReservationCell
+        cell.contentView.isUserInteractionEnabled = false
         cell.reservation = reservations[indexPath.row]
         cell.delegate = self
         cell.selectionStyle = UITableViewCell.SelectionStyle.none;
