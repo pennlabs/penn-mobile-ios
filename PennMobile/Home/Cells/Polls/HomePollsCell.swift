@@ -22,8 +22,8 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomePollsCellItem else { return 0.0 }
-        let numPolls = CGFloat(item.pollQuestion.options.count)
-        let pollHeight = numPolls * PollOptionCell.cellHeight
+        let numOptions = CGFloat((Float(item.pollQuestion?.options.count ?? 0)))
+        let pollHeight = numOptions * PollOptionCell.cellHeight
         return (pollHeight + HomeCellHeader.height + HomePollsCellFooter.height + (Padding.pad * 3))
     }
     
@@ -57,9 +57,9 @@ extension HomePollsCell {
         pollQuestion = item.pollQuestion
         responsesTableView.reloadData()
         header.secondaryTitleLabel.text = "Poll FROM \(pollQuestion.source)"
-        header.primaryTitleLabel.text = item.pollQuestion.title
+        header.primaryTitleLabel.text = item.pollQuestion?.title
         voteCountLabel.text = "\(pollQuestion.totalVoteCount) Votes"
-        setupDdlLabel(with: pollQuestion.ddl)
+        // setupDdlLabel(with: pollQuestion.ddl)
     }
     fileprivate func setupDdlLabel(with ddl: Date) {
         let diffComponents = Calendar.current.dateComponents([.day, .hour, .minute], from: Date(), to: ddl)

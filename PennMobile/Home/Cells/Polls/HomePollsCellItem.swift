@@ -14,35 +14,53 @@ final class HomePollsCellItem: HomeCellItem {
         return HomePollsCell.self
     }
     
-    let pollQuestion: PollQuestion
+//    let pollQuestion: PollQuestion
     
-    init(pollQuestion: PollQuestion) {
-        self.pollQuestion = pollQuestion
+    init() {
     }
     
+    var pollQuestion: PollQuestion?
+    
     func equals(item: ModularTableViewItem) -> Bool {
-        guard let item = item as? HomePollsCellItem else { return false }
-        return pollQuestion.title == item.pollQuestion.title
+        guard let _ = item as? HomePollsCellItem else { return false }
+        return true
     }
     
     static var jsonKey: String {
-        return "poll-question"
+        return "polls"
     }
-    
+   
     static func getItem(for json: JSON?) -> HomeCellItem? {
-       // guard let json = json else { return nil }
-//        guard let pollQuestion = try? JSONDecoder().decode(PollQuestion.self, from: json.rawData()) else { return nil }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        let ddl = formatter.date(from:"2020/10/20 11:59")
-        let pollOption1 = PollOption(id: 1, optionText: "Wharton Students", votes: 20, votesByYear: nil, votesBySchool: nil)
-        let pollOption2 = PollOption(id: 2, optionText: "M&T Students", votes: 20, votesByYear: nil, votesBySchool: nil)
-        let pollOption3 = PollOption(id: 3, optionText: "CIS Majors who are trying to transfer into Wharton", votes: 40, votesByYear: nil, votesBySchool: nil)
-        let pollOption4 = PollOption(id: 4, optionText: "Armaan going to a Goldman info session", votes: 300, votesByYear: nil, votesBySchool: nil)
+        guard let _ = json else { return nil }
+            return HomePollsCellItem()
         
-        let pollQuestion = PollQuestion(title: "Who is more of a snake?", source: "The Daily Pennsylvanian", ddl: ddl!, options: [pollOption1, pollOption2, pollOption3, pollOption4], totalVoteCount: 380, optionChosenId: nil)
-        
-        return HomePollsCellItem(pollQuestion:pollQuestion)
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+//        let ddl = formatter.date(from:"2020/10/20 11:59")
+//        let pollOption1 = PollOption(id: 1, optionText: "Wharton Students", votes: 20, votesByYear: nil, votesBySchool: nil)
+//        let pollOption2 = PollOption(id: 2, optionText: "M&T Students", votes: 20, votesByYear: nil, votesBySchool: nil)
+//        let pollOption3 = PollOption(id: 3, optionText: "CIS Majors who are trying to transfer into Wharton", votes: 40, votesByYear: nil, votesBySchool: nil)
+//        let pollOption4 = PollOption(id: 4, optionText: "Armaan going to a Goldman info session", votes: 300, votesByYear: nil, votesBySchool: nil)
+//
+//        let pollQuestion = PollQuestion(title: "Who is more of a snake?", source: "The Daily Pennsylvanian", ddl: ddl!, options: [pollOption1, pollOption2, pollOption3, pollOption4], totalVoteCount: 380, optionChosenId: nil)
+//
+//        return HomePollsCellItem(pollQuestion:pollQuestion)
     }
 }
 
+extension HomePollsCellItem: HomeAPIRequestable {
+    func fetchData(_ completion: @escaping () -> Void) {
+        
+    //    let formatter = DateFormatter()
+    //    formatter.dateFormat = "yyyy-MM-dd"
+    //
+    //    let dateString = formatter.string(from: Date().roundedDownToHour)
+    //
+        PollsNetworkManager.instance.getActivePolls { (pollQuestions) in
+            if let pollQuestions = pollQuestions {
+                self.pollQuestion = pollQuestions.first
+            }
+            completion()
+        }
+    }
+}
