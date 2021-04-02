@@ -16,26 +16,27 @@ struct DiningVenueDetailHoursView: View {
     
     let venue: DiningVenue
     
-    var body: some View {
-        VStack(alignment: .leading, spacing: 7) {
-            Text("Hours this week")
-                .font(.system(size: 21, weight: .regular))
+    var columns = [
+        GridItem(spacing: 0, alignment: .leading),
+        GridItem(spacing: 0, alignment: .trailing),
+    ]
 
+    var body: some View {
+        // TODO: Add level of busyness using public APIs Penn Dining will provide
+        LazyVGrid(columns: columns, spacing: 0) {
             ForEach(0..<7) { duration in
                 let date = Date().dateIn(days: duration)
                 let formattedString = venue.formattedHoursStringFor(date)
                 
-                HStack {
-                    Text("\(date.dayOfWeek)" + (duration == 0 ? " (Today)" : ""))
+                Text("\(date.dayOfWeek)" + (duration == 0 ? " (Today)" : ""))
                         .font(.system(size: 17, weight: .regular))
                     
-                    Spacer()
                     
-                    Text(formattedString != "" ? formattedString : "Closed")
-                        .font(.system(size: 17, weight: .thin))
-                }
+                Text(formattedString != "" ? formattedString : "Closed")
+                    .font(.system(size: 17, weight: .thin))
+                    .lineLimit(1)
+                    .minimumScaleFactor(1)
             }
-            
         }
     }
 }

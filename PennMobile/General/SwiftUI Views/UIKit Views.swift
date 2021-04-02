@@ -54,6 +54,7 @@ struct LabsLoginControllerSwiftUI: UIViewControllerRepresentable {
         isShowing = false
         
         if successful {
+            print("successful")
             DiningViewModelSwiftUI.instance.refreshInsights()
         } else {
             loginFailure = true

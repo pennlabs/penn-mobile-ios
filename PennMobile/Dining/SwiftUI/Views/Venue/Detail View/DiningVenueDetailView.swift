@@ -52,6 +52,7 @@ struct DiningVenueDetailView: View {
     
     private func getHeightForHeaderImage(_ geometry: GeometryProxy) -> CGFloat {
         let offset = getScrollOffset(geometry)
+        // 44?
         let imageHeight = geometry.size.height
 
         if offset > 0 {
@@ -74,70 +75,73 @@ struct DiningVenueDetailView: View {
     }
     
     var body: some View {
-        ScrollView {
-            GeometryReader { geometry in
-                KFImage(self.venue.imageURL)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: geometry.size.width, height: self.getHeightForHeaderImage(geometry))
-                    .blur(radius: self.mapOffsetWithinZeroAndOne(geometry)*6)
-                    .opacity(1 - Double(self.mapOffsetWithinZeroAndOne(geometry)))
-                    .clipped()
-                    .overlay(
-                        DefaultNavigationBar(height: self.collapsedHeaderImageHeight, width: geometry.size.width, title: self.venue.name)
-                            .opacity(self.getOpacityForNavigationBar(geometry))
-                    )
-                    .offset(x: 0, y: self.getOffsetForHeaderImage(geometry))
-            }
-            .frame(height: headerImageHeight)
-            .zIndex(1)
-            
-            
-            HStack {
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 28, weight: .bold))
-                    Text(venue.name)
-                        .font(.system(size: 28, weight: .bold))
-                        .minimumScaleFactor(0.2)
-                        .lineLimit(1)
+        GeometryReader { screenGeoProxy in
+            ScrollView {
+                GeometryReader { geometry in
+                    KFImage(self.venue.imageURL)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geometry.size.width, height: self.getHeightForHeaderImage(geometry))
+                        .blur(radius: self.mapOffsetWithinZeroAndOne(geometry)*6)
+                        .opacity(1 - Double(self.mapOffsetWithinZeroAndOne(geometry)))
+                        .clipped()
+                        //screenGeoProxy.safeAreaInsets.top
+                        .overlay(
+                            DefaultNavigationBar(height: self.collapsedHeaderImageHeight, width: geometry.size.width, title: self.venue.name)
+                                .opacity(self.getOpacityForNavigationBar(geometry))
+                        )
+                        .offset(x: 0, y: self.getOffsetForHeaderImage(geometry))
                 }
-                .foregroundColor(Color.primary)
+                .frame(height: headerImageHeight)
+                .zIndex(1)
                 
-                Spacer()
                 
-//                    Image(systemName: "heart")
-//                        .font(.system(size: 28, weight: .medium))
-                
-            }.padding(.horizontal)
-            
-            Picker("Section", selection: self.$pickerIndex) {
-                ForEach(0 ..< self.sectionTitle.count) {
-                    Text(self.sectionTitle[$0])
-                }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding([.leading, .trailing])
-            
-            Divider()
-                .padding()
-            
-            if self.pickerIndex == 0 {
-                DiningVenueDetailMenuView()
-                    .padding(.horizontal)
+                HStack {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 28, weight: .bold))
+                        Text(venue.name)
+                            .font(.system(size: 28, weight: .bold))
+                            .minimumScaleFactor(0.2)
+                            .lineLimit(1)
+                    }
+                    .foregroundColor(Color.primary)
                     
-            } else if self.pickerIndex == 1 {
-                DiningVenueDetailHoursView(for: venue)
-                    .padding(.horizontal)
-            } else {
-                DiningVenueDetailLocationView(for: venue)
-                    .padding(.horizontal)
+                    Spacer()
+                    
+    //                    Image(systemName: "heart")
+    //                        .font(.system(size: 28, weight: .medium))
+                    
+                }.padding(.horizontal)
+                
+                Picker("Section", selection: self.$pickerIndex) {
+                    ForEach(0 ..< self.sectionTitle.count) {
+                        Text(self.sectionTitle[$0])
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding([.leading, .trailing])
+                
+                Divider()
+                    .padding()
+                
+                if self.pickerIndex == 0 {
+                    DiningVenueDetailMenuView()
+                        .padding(.horizontal)
+                        
+                } else if self.pickerIndex == 1 {
+                    DiningVenueDetailHoursView(for: venue)
+                        .padding(.horizontal)
+                } else {
+                    DiningVenueDetailLocationView(for: venue)
+                        .padding(.horizontal)
+                }
             }
+            .navigationBarHidden(true)
         }
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
+            
     }
 }
 

@@ -35,6 +35,7 @@ struct DiningVenueDetailLocationView: View {
             Map(coordinateRegion: $region, annotationItems: [venue]) { venue in
                 MapMarker(coordinate: PennCoordinate.shared.getCoordinates(for: venue))
             }
+            // TODO: Figure out how to determine height dynamically to suit iPad Needs
             .frame(height: 232)
             .clipShape(RoundedRectangle(cornerRadius: 17))
             
@@ -44,6 +45,7 @@ struct DiningVenueDetailLocationView: View {
 }
 
 
+// TODO Add description to backend
 let description = """
 “1920 Commons, the largest café on campus, is located on Locust Walk, right across the 38th Street Bridge. Serving lunch, lite lunch, and dinner during the week and brunch and dinner on weekends. Enjoy a bountiful, seasonal salad bar; made-to-order deli; fresh, hot pizzas; comfort cuisine; savory soups; chicken, veggie burgers and beef burgers grilled to perfection; an ever-changing action station; or delectable desserts. It’s all here!”
 """

@@ -29,9 +29,8 @@ class DiningViewModelSwiftUI: ObservableObject {
     
     func refreshVenues() {
         diningVenuesIsLoading = true
-        print("ERROR")
+        
         DiningAPI.instance.fetchDiningHours { (result) in
-            print(result)
             switch result {
             case .success(let diningVenues):
                 DispatchQueue.main.async {
@@ -54,7 +53,7 @@ class DiningViewModelSwiftUI: ObservableObject {
                     self.diningVenuesIsLoading = false
                 }
             default:
-                // Need to figure out what to do
+                // TODO: Need to figure out what to do
                 DispatchQueue.main.async {
                     self.presentAlert = true
                     self.alertType = .other
@@ -75,17 +74,6 @@ class DiningViewModelSwiftUI: ObservableObject {
     
     func getVenue(for indexPath: IndexPath) -> DiningVenue {
         return getVenues(forSection: indexPath.section)[indexPath.row]
-    }
-    
-    func getHeaderTitle(type: DiningVenue.VenueType) -> String {
-        switch type {
-        case .dining:
-            return "Halls"
-        case .retail:
-            return "Retail"
-        case .unknown:
-            return "Unknown"
-        }
     }
     
     // MARK: - Insights

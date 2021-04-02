@@ -11,8 +11,6 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct DiningVenueDetailMenuView: View {
     
-    @State var isModal: Bool = false
-    
     var menus: [DiningMenu] = []
     
     init() {
@@ -25,41 +23,8 @@ struct DiningVenueDetailMenuView: View {
     }
     
     var body: some View {
-        VStack {
-            ForEach(menus, id: \.self) { menu in
-                Section(header: Text(menu.mealType)) {
-                    ForEach(menu.stations, id: \.self) { station in
-                        Button("\(station.stationDescription)") {
-                            self.isModal = true
-                        }.sheet(isPresented: $isModal, content: {
-                            StationItemView(for: station)
-                        })
-                    }
-                }
-            }
-        }
-//        Text("dasf")
-    }
-}
-
-
-struct StationItemView: View {
-    
-    init(for station: DiningStation) {
-        self.station = station
-    }
-    
-    let station: DiningStation
-    
-    var body: some View {
-        List {
-            ForEach(station.diningStationItems, id: \.self) { item in
-                Section(header: Text(item.title)) {
-                    ForEach(item.tableAttribute.attributeDescriptions, id: \.self) { attribute in
-                        Text("\(attribute.description)")
-                    }
-                }
-            }
+        ForEach(menus, id: \.self) { menu in
+            DiningMenuRow(for: menu)
         }
     }
 }
@@ -70,7 +35,13 @@ struct DiningVenueDetailMenuView_Previews: PreviewProvider {
     
     static var previews: some View {
         return NavigationView {
-             DiningVenueDetailMenuView()
-        }.navigationTitle("Dining")
+            ScrollView {
+                VStack {
+                    DiningVenueDetailMenuView()
+                    Spacer()
+                }
+            }.navigationTitle("Dining")
+            .padding()
+        }
     }
 }

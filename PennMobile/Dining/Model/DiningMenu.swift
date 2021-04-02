@@ -37,11 +37,11 @@ struct MenuDocument: Codable {
 struct DiningMenu: Codable, Hashable {
 
     let mealType: String
-    let stations: [DiningStation]
+    let diningStations: [DiningStation]
 
     enum CodingKeys: String, CodingKey {
         case mealType = "txtDayPartDescription"
-        case stations = "tblStation"
+        case diningStations = "tblStation"
     }
 }
 

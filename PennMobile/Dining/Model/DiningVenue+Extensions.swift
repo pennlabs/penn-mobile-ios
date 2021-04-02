@@ -40,16 +40,6 @@ extension DiningVenue {
         return false
     }
     
-//    var currentMeal: DiningVenue.MealsForDate.Meal? {
-//        guard let mealsToday = mealsToday else { return nil }
-//        for meal in mealsToday.meals {
-//            if meal.isCurrentlyServing {
-//                return meal
-//            }
-//        }
-//        return nil
-//    }
-    
     var currentMeal: MealsForDate.Meal? {
         return self.mealsToday?.meals.first(where: { $0.isCurrentlyServing }) ?? nil
     }
@@ -200,6 +190,35 @@ extension DiningVenue {
         }
         
         return formattedHoursArray
+    }
+    
+    var statusString : String {
+        if hasMealsToday {
+            if isOpen {
+                if isClosingSoon {
+                    return "Closes \(timeLeft)"
+                } else {
+                    switch venueType {
+                    case .dining:
+                        return currentMealType!
+                    default:
+                        return "Open"
+                    }
+                    
+                }
+            } else if let nextMeal = nextMeal {
+                switch venueType {
+                case .dining:
+                    return "\(nextMeal.type) \(Date().humanReadableDistanceFrom(nextMeal.open))"
+                default:
+                    return "Opens \(Date().humanReadableDistanceFrom(nextMeal.open))"
+                }
+            } else {
+                return "Closed \(nextOpenedDayOfTheWeek)"
+            }
+        } else {
+            return "Closed \(nextOpenedDayOfTheWeek)"
+        }
     }
 }
 

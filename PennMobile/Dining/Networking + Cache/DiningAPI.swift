@@ -65,6 +65,7 @@ class DiningAPI: Requestable {
                 decoder.dateDecodingStrategy = .iso8601
                 
                 if let diningInsightsAPIResponse = try? decoder.decode(DiningInsightsAPIResponse.self, from: data) {
+                    print(diningInsightsAPIResponse)
                     self.saveToCache(diningInsightsAPIResponse)
                     completion(.success(diningInsightsAPIResponse))
                 } else {

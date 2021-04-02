@@ -6,7 +6,6 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-import SwiftUI
 #if canImport(SwiftUI)
 import SwiftUI
 #endif
@@ -20,7 +19,8 @@ struct DiningView: View {
     
     @State var showBanner:Bool = true
     
-    @ObservedObject var diningVM = DiningViewModelSwiftUI.instance
+    // iOS14, guarantees that DiningViewModel will not be destroyed and exists when body property is ran
+    @StateObject var diningVM = DiningViewModelSwiftUI.instance
     
     var body: some View {
         let presentingAlert = Binding<Bool>(
@@ -31,26 +31,35 @@ struct DiningView: View {
         return VStack {
             DiningViewHeader()
                 .padding([.leading, .trailing])
-//            #if DEBUG
-//                Picker(selection: self.$pickerIndex, label: Text("Please choose which view you would like to see")) {
-//                    ForEach(0 ..< self.viewsTitles.count) {
-//                        Text(self.viewsTitles[$0])
-//                    }
-//                }
-//                .pickerStyle(SegmentedPickerStyle())
-//                .padding([.leading, .trailing])
-//
-//                if (self.pickerIndex == 0) {
-//                    DiningVenueView().environmentObject(diningVM)
-//                } else {
-//                    DiningInsightsView(pickerIndex: self.$pickerIndex).environmentObject(diningVM)
-//                }
-//            #else
-            DiningVenueView().environmentObject(diningVM)
-//            #endif
             
-            Spacer()
+            Picker(selection: self.$pickerIndex, label: Text("Please choose which view you would like to see")) {
+                ForEach(0 ..< self.viewsTitles.count) {
+                    Text(self.viewsTitles[$0])
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding([.leading, .trailing])
+
+            if (self.pickerIndex == 0) {
+                DiningVenueView()
+                    .environmentObject(diningVM)
+            } else {
+//                if UserDefaults.standard.hasDiningPlan() {
+                    DiningInsightsView(pickerIndex: self.$pickerIndex).environmentObject(diningVM)
+//                } else {
+//                    Rectangle()
+//                        .foregroundColor(.white)
+//                        .frame(width:100, height: 100)
+//                        .onTapGesture(perform: {
+//                            alert = true
+//                        })
+//                }
+                
+            }
         }
+        .alert(isPresented: $alert, content: {
+            Alert(title: Text("Error"))
+        })
         .padding(.top)
         .alert(type: diningVM.alertType, show: presentingAlert)
         .onAppear(perform: {

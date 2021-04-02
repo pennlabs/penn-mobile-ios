@@ -20,27 +20,24 @@ struct DiningVenueRow: View {
     
     let venue: DiningVenue
     
+    let scrollViewCoordName = "scrollViewCoordinateSpaceName"
+    let fadeDistance: CGFloat = 10
+    
     var body: some View {
-        HStack(spacing: 17) {
+        HStack(spacing: 13) {
             
             KFImage(venue.imageURL)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 65)
+                .frame(width: 100, height: 63.98)
                 .background(Color.grey1)
                 .clipShape(RoundedRectangle(cornerRadius: 7))
                 
             VStack(alignment: .leading) {
                 
-                HStack(alignment: .center, spacing: 5) {
-                    Image(systemName: circleImageString)
-                        .font(.system(size: 10))
-                    
-                    Text(statusString)
-                        .font(.system(size: 11, weight: .semibold))
-                }
-                .statusColorModifier(for: venue)
-                
+                Label(venue.statusString, systemImage: circleImageString)
+                    .labelStyle(VenueStatusLabelStyle())
+                    .modifier(StatusColorModifier(for: venue))
                 
                 Text(venue.name)
                     .font(.system(size: 17, weight: .medium))
@@ -48,27 +45,51 @@ struct DiningVenueRow: View {
                     .lineLimit(1)
                 
                 Spacer()
-                
-                FadingScrollView(fadeDistance: fadeDistance, .horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(0..<venue.humanFormattedHoursArrayForToday.count) { index in
-                            Text("\(self.venue.humanFormattedHoursArrayForToday[index])")
-                                .font(.system(size: 14, weight: .light))
-                                .foregroundColor((self.venue.currentMealIndex == index) ? Color.white : Color.grey1)
-                                .padding(3)
-                                .background((self.venue.currentMealIndex == index) ? (self.venue.isMainDiningTimes ? Color.green : Color.yellow) : Color.grey6)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
+            
+                GeometryReader { scrollViewGeoProxy in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        ScrollViewReader { value in
+                            HStack(spacing: 8) {
+                                // Enumerating to use indices as ids for ScrollViewReader
+//                                ForEach(0..<10) { index in
+                                ForEach(0..<venue.humanFormattedHoursArrayForToday.count) { index in
+                                    
+                                    let humanFormattedHours = venue.humanFormattedHoursArrayForToday[index]
+//                                    let humanFormattedHours = "Text \(index)"
+                                    let diningTimeWidth = CGFloat(Double(humanFormattedHours.count) * 7.5)
+                                    
+                                    GeometryReader { diningTimeGeoProxy in
+                                        let minX = diningTimeGeoProxy.frame(in: .named(scrollViewCoordName)).minX
+                                        
+                                        Text(humanFormattedHours)
+                                            .font(.system(size: 14, weight: .light))
+                                            .frame(width: diningTimeWidth, height: scrollViewGeoProxy.size.height, alignment: .center)
+//                                            .background(Color.grey6)
+                                            .modifier(DiningTimeModifier(minX: minX, cellWidth: diningTimeWidth, scrollViewWidth: scrollViewGeoProxy.size.width, fadeDistance: fadeDistance))
+
+                                    }
+                                    .id(index)
+                                    .frame(width: diningTimeWidth, height: scrollViewGeoProxy.size.height)
+                                    .offset(x: fadeDistance)
+                                }
+                                
+                                // TODO: decide on how to proceed
+                                // Spacing to prevent ScrollView Reader from jumping
+                                 Spacer(minLength: scrollViewGeoProxy.size.width/2)
+                            }.onAppear(perform: {
+                                // TODO: Scroll to nearest time id index
+                                value.scrollTo(9, anchor: .center)
+                            })
                         }
                     }
+                    .offset(x: -fadeDistance)
+                    .coordinateSpace(name: scrollViewCoordName)
                 }
-                .offset(x: -fadeDistance)
             }
-            .frame(height: 63.98)
         }
     }
     
-    var fadeDistance: CGFloat = 10
-    
+    // TODO maybe move to DiningVenue+Extensions
     var circleImageString: String {
         if venue.hasMealsToday {
             if venue.isOpen {
@@ -82,61 +103,33 @@ struct DiningVenueRow: View {
             return "xmark.circle.fill"
         }
     }
-    
-    var statusString: String {
-        if venue.hasMealsToday {
-            if venue.isOpen {
-                if venue.isClosingSoon {
-                    return "Closes \(venue.timeLeft)"
-                } else {
-                    switch venue.venueType {
-                    case .dining:
-                        return venue.currentMealType!
-                    default:
-                        return "Open"
-                    }
-                    
-                }
-            } else if let nextMeal = venue.nextMeal {
-                switch venue.venueType {
-                case .dining:
-                    return "\(nextMeal.type) \(Date().humanReadableDistanceFrom(nextMeal.open))"
-                default:
-                    return "Opens \(Date().humanReadableDistanceFrom(nextMeal.open))"
-                }
-            } else {
-                return "Closed \(venue.nextOpenedDayOfTheWeek)"
-            }
-        } else {
-            return "Closed \(venue.nextOpenedDayOfTheWeek)"
-        }
-    }
 }
 
 // MARK: - ViewModifiers
 @available(iOS 14, *)
 struct StatusColorModifier: ViewModifier {
-    var venue: DiningVenue
+    
+    init(for venue: DiningVenue) {
+        self.venue = venue
+    }
+    
+    let venue: DiningVenue
     
     func body(content: Content) -> some View {
-        if venue.hasMealsToday {
-            if venue.isOpen {
-                if venue.isClosingSoon {
-                    return content.foregroundColor(Color.red)
-                } else {
-                    switch venue.venueType {
-                    case .dining:
-                        if venue.isMainDiningTimes {
-                            return content.foregroundColor(Color.green)
-                        } else {
-                            return content.foregroundColor(Color.yellow)
-                        }
-                    default:
-                        return content.foregroundColor(Color.green)
-                    }
-                }
+        if venue.hasMealsToday && venue.isOpen {
+            if venue.isClosingSoon {
+                return content.foregroundColor(Color.red)
             } else {
-                return content.foregroundColor(Color.gray)
+                switch venue.venueType {
+                case .dining:
+                    if venue.isMainDiningTimes {
+                        return content.foregroundColor(Color.green)
+                    } else {
+                        return content.foregroundColor(Color.yellow)
+                    }
+                default:
+                    return content.foregroundColor(Color.green)
+                }
             }
         } else {
             return content.foregroundColor(Color.gray)
@@ -144,33 +137,42 @@ struct StatusColorModifier: ViewModifier {
     }
 }
 
+// TODO: Add Text Color and BackgroundColor Variable
 @available(iOS 14, *)
-struct DiningTimesModifier: ViewModifier {
-
-    var x: CGFloat
+struct DiningTimeModifier: ViewModifier {
+    
+    let minX: CGFloat
+    let cellWidth: CGFloat
+    let scrollViewWidth: CGFloat
+    let fadeDistance: CGFloat
 
     func body(content: Content) -> some View {
-        content
+        let rightOverflowAmount = minX + cellWidth + 2 * fadeDistance - scrollViewWidth
+        let textColor = [Color(.systemBackground).opacity(0), .grey1]
+        let cellColor = [Color(.systemBackground).opacity(0), .grey6]
+        
+        let textLeftGradient = LinearGradient(gradient: .init(colors: textColor), startPoint: .init(x: -(fadeDistance/2 + minX)/cellWidth, y: 0.5), endPoint: .init(x: -minX/cellWidth, y: 0.5))
+        let textRightGradient = LinearGradient(gradient: .init(colors: textColor.reversed()), startPoint: .init(x: 1 - rightOverflowAmount/cellWidth, y: 0.5), endPoint: .init(x: 1 - (rightOverflowAmount - fadeDistance/2)/cellWidth, y: 0.5))
+        let cellLeftGradient = LinearGradient(gradient: .init(colors: cellColor), startPoint: .init(x: -(fadeDistance + minX)/cellWidth, y: 0.5), endPoint: .init(x: -minX/cellWidth, y: 0.5))
+        let cellRightGradient = LinearGradient(gradient: .init(colors: cellColor.reversed()), startPoint: .init(x: 1 - rightOverflowAmount/cellWidth, y: 0.5), endPoint: .init(x: 1 - (rightOverflowAmount - fadeDistance)/cellWidth, y: 0.5))
+        
+        return
+            content
             .foregroundColor(.clear)
-                .background(LinearGradient(gradient: .init(colors: [Color(.systemBackground).opacity(0), .grey1]),
-                                    startPoint: .init(x: -(5 + x)/50, y: 0.5), endPoint: .init(x: -x/50, y: 0.5)))
+            .background(rightOverflowAmount > 0 ? textRightGradient : textLeftGradient)
             .mask(content)
-            .padding(3)
-            .background(LinearGradient(gradient: .init(colors: [Color(.systemBackground).opacity(0), .grey6]),
-                                    startPoint: .init(x: -(10 + x)/50, y: 0.5), endPoint: .init(x: -x/50, y: 0.5)))
+            .background(rightOverflowAmount > 0 ? cellRightGradient : cellLeftGradient)
             .clipShape(RoundedRectangle(cornerRadius: 6))
     }
 }
 
-extension View {    
-    @available(iOS 14, *)
-    func statusColorModifier(for venue: DiningVenue) -> some View {
-        self.modifier(StatusColorModifier(venue: venue))
-    }
-
-    @available(iOS 14, *)
-    func diningTimeModifier(x: CGFloat) -> some View {
-        self.modifier(DiningTimesModifier(x: x))
+struct VenueStatusLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(spacing: 4) {
+            configuration.icon.font(.system(size: 9, weight: .semibold))
+            configuration.title.font(.system(size: 11, weight: .semibold))
+            Spacer()
+        }
     }
 }
 
@@ -181,17 +183,12 @@ struct DiningVenueRow_Previews: PreviewProvider {
         
         return NavigationView {
             List {
-                DiningVenueRow(for: diningVenues.document.venues[0])
-                DiningVenueRow(for: diningVenues.document.venues[1])
-                DiningVenueRow(for: diningVenues.document.venues[2])
-                DiningVenueRow(for: diningVenues.document.venues[3])
-                DiningVenueRow(for: diningVenues.document.venues[4])
-                DiningVenueRow(for: diningVenues.document.venues[5])
-                DiningVenueRow(for: diningVenues.document.venues[6])
                 NavigationLink(destination: Text("dfs")) {
-                    DiningVenueRow(for: diningVenues.document.venues[13])
+                    DiningVenueRow(for: diningVenues.document.venues[0])
                 }
             }
         }
     }
 }
+
+
