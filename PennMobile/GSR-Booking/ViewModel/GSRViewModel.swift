@@ -202,6 +202,11 @@ extension GSRViewModel: GSRSelectionDelegate {
     func clearSelection() {
         currentSelection = []
     }
+    
+    func existsTimeSlot() -> Bool {
+        let roomsWithTimeSlots = allRooms.filter { $0.timeSlots.count > 0 }
+        return roomsWithTimeSlots.count > 0
+    }
 }
 
 // MARK: - GSRRangeSliderDelegate
