@@ -433,9 +433,11 @@ extension UserDBManager {
 // MARK: - Push Notifications
 extension UserDBManager {
     func savePushNotificationDeviceToken(deviceToken: String, _ completion: (() -> Void)? = nil) {
-        let url = "\(baseUrl)/notifications/register"
+        var url = "\(baseUrl)/notifications/register"
         var params: [String: Any] = ["ios_token": deviceToken]
         #if DEBUG
+            #warning("Remove this!")
+            url = "localhost:5000/notifications/register"
             params["dev"] = true
         #endif
         makePostRequestWithAccessToken(url: url, params: params) { (_, _, _) in
