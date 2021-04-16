@@ -22,6 +22,7 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
                 subtitleLabel.removeFromSuperview()
                 subtitleLabel = nil
             }
+            print("setting up cell")
             setupCell(with: item)
         }
     }
@@ -78,42 +79,14 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
         prepareUI()
-        fetchData()
         
-        let tapGestureRecognizer = getTapGestureRecognizer()
-        cardView.addGestureRecognizer(tapGestureRecognizer)
+        let tapGestureRecognizer = getTapGestureRecognizer
+        cardView.addGestureRecognizer(tapGestureRecognizer())
         cardView.isUserInteractionEnabled = true
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-// MARK: - DATA Fectching NOTE TO Dan 6
-extension HomeNewsCell {
-    func fetchData() {
-        print("Getting data")
-        
-        let myURL = URL(string: "https://www.thedp.com/article/2020/10/penn-park-farm-food-wellness-collaborative")!
-        let html = try! String(contentsOf: myURL, encoding: .utf8)
-        
-        do {
-            let doc = try SwiftSoup.parseBodyFragment(html)
-            
-            let headerTitle = try doc.title()
-            print("Header title: \(headerTitle)")
-            let something = try doc.select("article").select("p, figure")
-            
-            for e in something {
-                print(e)
-            }
-        } catch Exception.Error(let type, let message) {
-          print("Message: \(message)")
-        } catch {
-          print("error")
-        }
-        
     }
 }
 
@@ -138,8 +111,12 @@ extension HomeNewsCell {
     }
     
     @objc fileprivate func handleTapped(_ sender: Any) {
-        guard let delegate = delegate as? URLSelectable else { return }
-        delegate.handleUrlPressed(urlStr: article.articleUrl, title: article.source, item: self.item, shouldLog: true)
+        guard let delegate = delegate as? ViewControllerNavigatable else { return }
+
+        let newsVC = NativeNewsViewController()
+        newsVC.fetchData(for: article.articleUrl)
+        delegate.navigateToViewController(vc: newsVC)
+        
     }
 }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import StoreKit
+import StoreKit 
 
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
 class RootViewController: UIViewController, NotificationRequestable {

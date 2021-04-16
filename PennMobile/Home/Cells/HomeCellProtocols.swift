@@ -15,3 +15,9 @@ protocol URLSelectable {
 protocol FeatureNavigatable {
     func navigateToFeature(feature: Feature, item: ModularTableViewItem)
 }
+
+protocol ViewControllerNavigatable {
+    func navigateToViewController(vc: UIViewController)
+}
+
+

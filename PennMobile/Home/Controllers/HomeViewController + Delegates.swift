@@ -86,6 +86,13 @@ extension HomeViewController {
     }
 }
 
+// MARK: — News Cell
+extension HomeViewController {
+    func handleNewsPressed() {
+        // let vc = NewsViewController()
+    }
+}
+
 // MARK: - Laundry Delegate
 extension HomeViewController {
     var allowMachineNotifications: Bool {
@@ -264,5 +271,11 @@ extension HomeViewController: GSRInviteSelectable {
                 self.present(alert, animated: true, completion: nil)
             }
         }
+    }
+}
+
+extension HomeViewController: ViewControllerNavigatable {
+    func navigateToViewController(vc: UIViewController) {
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
