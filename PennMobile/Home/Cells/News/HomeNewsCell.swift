@@ -22,7 +22,7 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
                 subtitleLabel.removeFromSuperview()
                 subtitleLabel = nil
             }
-            print("setting up cell")
+//            print("setting up cell")
             setupCell(with: item)
         }
     }

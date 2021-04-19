@@ -21,8 +21,7 @@ class NativeNewsViewController: UIViewController {
     }
     
     func imgViewTemplate(imageURL: String, caption: String) -> UIView {
-        print(imageURL)
-        print(caption)
+
         let imgWithCaptionView = UIView()
         
         let imgView = UIImageView()
@@ -61,14 +60,38 @@ class NativeNewsViewController: UIViewController {
         return imgWithCaptionView
     }
     
-    func titleViewTemplate(for content: String) -> UILabel {
+    func titleViewTemplate(forTitle title: String, forAuthor author: String) -> UIView {
+        
+        let titleAndAuthorView = UIView()
+        
         let titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         titleLabel.textAlignment = .left
         titleLabel.numberOfLines = 0
-        titleLabel.text = content
+        titleLabel.text = title
         
-        return titleLabel
+        let authorLabel = UILabel()
+        authorLabel.font = UIFont.systemFont(ofSize: 13, weight: .light)
+        authorLabel.textAlignment = .left
+        authorLabel.numberOfLines = 0
+        authorLabel.text = author
+        
+        titleAndAuthorView.addSubview(titleLabel)
+        titleAndAuthorView.addSubview(authorLabel)
+        
+        // autolayout constraints for titleLabel
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.leadingAnchor.constraint(equalTo: titleAndAuthorView.leadingAnchor).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: titleAndAuthorView.trailingAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: titleAndAuthorView.topAnchor).isActive = true
+        
+        authorLabel.translatesAutoresizingMaskIntoConstraints = false
+        authorLabel.leadingAnchor.constraint(equalTo: titleAndAuthorView.leadingAnchor).isActive = true
+        authorLabel.trailingAnchor.constraint(equalTo: titleAndAuthorView.trailingAnchor).isActive = true
+        authorLabel.bottomAnchor.constraint(equalTo: titleAndAuthorView.bottomAnchor).isActive = true
+        authorLabel.topAnchor.constraint(equalToSystemSpacingBelow: titleLabel.bottomAnchor, multiplier: 0.5).isActive = true
+        
+        return titleAndAuthorView
     }
     
     var viewContent = [UIView]()
@@ -89,7 +112,7 @@ class NativeNewsViewController: UIViewController {
 
         guard let doc = try? SwiftSoup.parseBodyFragment(html) else { return }
 
-        guard let link = try? doc.select("article").first() else { return } // for optinals
+        guard let link = try? doc.select("article").first() else { return }
         
         guard let children = link?.children() else { return }
         
@@ -99,7 +122,13 @@ class NativeNewsViewController: UIViewController {
                 guard let className = try? element.className() else { return }
                 if className == "article-metadata" {
                     guard let title = try? element.select("h1").first()?.text() else { return }
-                    viewContent.append(titleViewTemplate(for: title!))
+                    guard let authorName = try? element.select("span.byline").first()?.text() else { return }
+                    guard let date = try? element.select("span.dateline").first()?.text() else { return }
+                    
+                    let authorStr = "\(authorName ?? "The Daily Pennsylvania") | \(date ?? "")"
+                    
+                    viewContent.append(titleViewTemplate(forTitle: title!, forAuthor: authorStr))
+
                 }
             case "figure":
                 guard let className = try? element.className() else { return }
