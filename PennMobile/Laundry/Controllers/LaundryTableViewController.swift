@@ -28,11 +28,6 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         
         tableView.tableFooterView = getFooterViewForTable()
         
-        // TEST **
-        _ = PollsNetworkManager.instance.getActivePolls { (polls) in
-            print(polls)
-        }
-        
         
         rooms = LaundryRoom.getPreferences()
         
