@@ -14,134 +14,157 @@ import KingfisherSwiftUI
 @available(iOS 14, *)
 struct DiningVenueDetailView: View {
     
-    var venue: DiningVenue
-    var sectionTitle = ["Menu", "Hours", "Location"]
-    
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State private var pickerIndex = 0
-    
     init(for venue: DiningVenue) {
         self.venue = venue
     }
     
-    private let headerImageHeight: CGFloat = 300
-    private let collapsedHeaderImageHeight: CGFloat = 88
+    private let venue: DiningVenue
+    private let sectionTitle = ["Menu", "Hours", "Location"]
     
-    private func getScrollOffset(_ geometry: GeometryProxy) -> CGFloat {
-        geometry.frame(in: .global).minY
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var diningVM: DiningViewModelSwiftUI
+    @State private var pickerIndex = 0
+
+    @State private var headerImageHeight: CGFloat = 300
+        
+    var body: some View {
+        GeometryReader { fullGeo in
+            ScrollView {
+                image
+                    .zIndex(2)
+                
+                Group {
+                    Picker("Section", selection: self.$pickerIndex) {
+                        ForEach(0 ..< self.sectionTitle.count) {
+                            Text(self.sectionTitle[$0])
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    
+                    Divider()
+                        .padding(.vertical)
+                    
+                    VStack {
+                        if self.pickerIndex == 0 {
+                            DiningVenueDetailMenuView(menus: diningVM.diningMenus[venue.id]?.document.menuDocument.menus ?? [])
+                        } else if self.pickerIndex == 1 {
+                            DiningVenueDetailHoursView(for: venue)
+                        } else {
+                            DiningVenueDetailLocationView(for: venue, screenHeight: fullGeo.size.width)
+                        }
+                        
+                        Spacer()
+                    }.frame(minHeight: fullGeo.size.height - 80)
+                    
+                }.padding(.horizontal)
+
+            }
+            .edgesIgnoringSafeArea(.top)
+            .navigationBarHidden(true)
+            .onAppear(perform: {
+                diningVM.refreshMenu(for: venue.id)
+                headerImageHeight = fullGeo.frame(in: .global).height * 4/9
+            })
+        }
+    }
+    
+    var image : some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .bottomLeading) {
+                KFImage(self.venue.imageURL)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: geometry.size.width, height: getHeightForHeaderImage(geometry))
+                    .offset(x: 0, y: getParallaxOffset(geometry))
+                    .clipped()
+                    .overlay(LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom))
+                
+                VStack(alignment: .leading) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 20, weight: .light))
+                    }
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .background(Circle().opacity(0.8).foregroundColor(.black))
+                    .opacity(getOpacity(geometry))
+                    .position(x: 40, y: 60)
+                    .offset(x: 0, y: getBackButtonYOffset(geometry))
+
+                    Spacer()
+
+                    Text(venue.name)
+                        .padding()
+                        .foregroundColor(.white)
+                        .font(.system(size: 40, weight: .bold))
+                        .minimumScaleFactor(0.2)
+                        .lineLimit(1)
+                        .opacity(getOpacity(geometry))
+                        
+                }
+                
+                DefaultNavigationBar(presentationMode: _presentationMode, height: 88, width: geometry.size.width, title: venue.name)
+                        .offset(x:0, y:getOffsetForNavBar(geometry))
+                        .opacity(getOpacityForNavBar(geometry))
+            }
+            .offset(x: 0, y: getOffsetForHeaderImage(geometry))
+        }
+        .frame(height: headerImageHeight)
+    }
+}
+
+
+// MARK: - Calculations for offsets + opacity
+extension DiningVenueDetailView {
+    
+    private func getBackButtonYOffset(_ geometry: GeometryProxy) -> CGFloat {
+        let offset = getOffset(geometry)
+        
+        return offset < 0 ? -offset : 0
+    }
+    
+    private func getOffset(_ geometry: GeometryProxy) -> CGFloat {
+        return geometry.frame(in: .global).minY
     }
     
     private func getOffsetForHeaderImage(_ geometry: GeometryProxy) -> CGFloat {
-        let offset = getScrollOffset(geometry)
+        let offset = getOffset(geometry)
         
-        let sizeOffScreen = headerImageHeight - collapsedHeaderImageHeight
+        return offset > 0 ? -offset : 0
+    }
+    
+    private func getParallaxOffset(_ geometry: GeometryProxy) -> CGFloat {
+        let offset = getOffset(geometry)
         
-        // if our offset is roughly less than -225 (the amount scrolled / amount off screen)
-        if offset < -sizeOffScreen {
-            return abs(offset) - sizeOffScreen
-        }
-        
-        // Image was pulled down
-        if offset > 0 {
-            print("down")
-            return -offset
-        }
-        
-        return 0
+        return offset < 0 ? -offset/1.3 : 0
     }
     
     private func getHeightForHeaderImage(_ geometry: GeometryProxy) -> CGFloat {
-        let offset = getScrollOffset(geometry)
-        // 44?
-        let imageHeight = geometry.size.height
-
-        if offset > 0 {
-            return imageHeight + offset
-        }
-
-        return imageHeight
-    }
-    
-    private func mapOffsetWithinZeroAndOne(_ geometry: GeometryProxy) -> CGFloat {
-        let offset = geometry.frame(in: .global).maxY
-
-        return min((max(300 - offset,0) / 260), 1)
-    }
-    
-    private func getOpacityForNavigationBar(_ geometry: GeometryProxy) -> Double {
-        let offset = geometry.frame(in: .global).maxY
+        let offset = getOffset(geometry)
         
-        return Double(min((max(74 - offset,0) / 34), 1))
+        return offset > 0 ? headerImageHeight + offset : headerImageHeight
     }
     
-    var body: some View {
-        GeometryReader { screenGeoProxy in
-            ScrollView {
-                GeometryReader { geometry in
-                    KFImage(self.venue.imageURL)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: geometry.size.width, height: self.getHeightForHeaderImage(geometry))
-                        .blur(radius: self.mapOffsetWithinZeroAndOne(geometry)*6)
-                        .opacity(1 - Double(self.mapOffsetWithinZeroAndOne(geometry)))
-                        .clipped()
-                        //screenGeoProxy.safeAreaInsets.top
-                        .overlay(
-                            DefaultNavigationBar(height: self.collapsedHeaderImageHeight, width: geometry.size.width, title: self.venue.name)
-                                .opacity(self.getOpacityForNavigationBar(geometry))
-                        )
-                        .offset(x: 0, y: self.getOffsetForHeaderImage(geometry))
-                }
-                .frame(height: headerImageHeight)
-                .zIndex(1)
-                
-                
-                HStack {
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 28, weight: .bold))
-                        Text(venue.name)
-                            .font(.system(size: 28, weight: .bold))
-                            .minimumScaleFactor(0.2)
-                            .lineLimit(1)
-                    }
-                    .foregroundColor(Color.primary)
-                    
-                    Spacer()
-                    
-    //                    Image(systemName: "heart")
-    //                        .font(.system(size: 28, weight: .medium))
-                    
-                }.padding(.horizontal)
-                
-                Picker("Section", selection: self.$pickerIndex) {
-                    ForEach(0 ..< self.sectionTitle.count) {
-                        Text(self.sectionTitle[$0])
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding([.leading, .trailing])
-                
-                Divider()
-                    .padding()
-                
-                if self.pickerIndex == 0 {
-                    DiningVenueDetailMenuView()
-                        .padding(.horizontal)
-                        
-                } else if self.pickerIndex == 1 {
-                    DiningVenueDetailHoursView(for: venue)
-                        .padding(.horizontal)
-                } else {
-                    DiningVenueDetailLocationView(for: venue)
-                        .padding(.horizontal)
-                }
-            }
-            .navigationBarHidden(true)
+    private func getOpacity(_ geometry: GeometryProxy) -> Double {
+        let offset = getOffset(geometry)
+        
+        return offset > 0 ? Double(1 - offset/headerImageHeight * 4) : 1.0
+    }
+    
+    private func getOffsetForNavBar(_ geometry: GeometryProxy) -> CGFloat {
+        return -getOffset(geometry) - headerImageHeight + 88
+    }
+    
+    private func getOpacityForNavBar(_ geometry: GeometryProxy) -> Double {
+        let offset = getOffset(geometry)
+        
+        if -offset > 0.6 * headerImageHeight {
+            return Double((-offset/headerImageHeight - 0.6) * 8)
         }
-            
+        
+        return 0.0
     }
 }
 
@@ -156,8 +179,6 @@ struct DefaultNavigationBar: View {
    
     var body: some View {
         VStack {
-            Spacer()
-            
             ZStack(alignment: .bottom) {
                 VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
                 
@@ -173,12 +194,8 @@ struct DefaultNavigationBar: View {
                     Text(title)
                     Spacer()
                 }.padding(.bottom)
-                
-                
             }.frame(width: width, height: height)
-                
         }
-
     }
 }
 
@@ -192,15 +209,6 @@ struct DiningVenueDetailView_Previews: PreviewProvider {
         let diningVenues = try! decoder.decode(DiningAPIResponse.self, from: data)
 
         return DiningVenueDetailView(for: diningVenues.document.venues[0])
+            .preferredColorScheme(.dark)
     }
 }
-
-let loremIpsum = """
-Lorem ipsum dolor sit amet consectetur adipiscing elit donec, gravida commodo hac non mattis augue duis vitae inceptos, laoreet taciti at vehicula cum arcu dictum. Cras netus vivamus sociis pulvinar est erat, quisque imperdiet velit a justo maecenas, pretium gravida ut himenaeos nam. Tellus quis libero sociis class nec hendrerit, id proin facilisis praesent bibendum vehicula tristique, fringilla augue vitae primis turpis.
-Sagittis vivamus sem morbi nam mattis phasellus vehicula facilisis suscipit posuere metus, iaculis vestibulum viverra nisl ullamcorper lectus curabitur himenaeos dictumst malesuada tempor, cras maecenas enim est eu turpis hac sociosqu tellus magnis. Sociosqu varius feugiat volutpat justo fames magna malesuada, viverra neque nibh parturient eu nascetur, cursus sollicitudin placerat lobortis nunc imperdiet. Leo lectus euismod morbi placerat pretium aliquet ultricies metus, augue turpis vulputa
-te dictumst mattis egestas laoreet, cubilia habitant magnis lacinia vivamus etiam aenean.
-Sagittis vivamus sem morbi nam mattis phasellus vehicula facilisis suscipit posuere metus, iaculis vestibulum viverra nisl ullamcorper lectus curabitur himenaeos dictumst malesuada tempor, cras maecenas enim est eu turpis hac sociosqu tellus magnis. Sociosqu varius feugiat volutpat justo fames magna malesuada, viverra neque nibh parturient eu nascetur, cursus sollicitudin placerat lobortis nunc imperdiet. Leo lectus euismod morbi placerat pretium aliquet ultricies metus, augue turpis vulputa
-te dictumst mattis egestas laoreet, cubilia habitant magnis lacinia vivamus etiam aenean.
-Sagittis vivamus sem morbi nam mattis phasellus vehicula facilisis suscipit posuere metus, iaculis vestibulum viverra nisl ullamcorper lectus curabitur himenaeos dictumst malesuada tempor, cras maecenas enim est eu turpis hac sociosqu tellus magnis. Sociosqu varius feugiat volutpat justo fames magna malesuada, viverra neque nibh parturient eu nascetur, cursus sollicitudin placerat lobortis nunc imperdiet. Leo lectus euismod morbi placerat pretium aliquet ultricies metus, augue turpis vulputa
-te dictumst mattis egestas laoreet, cubilia habitant magnis lacinia vivamus etiam aenean.
-"""

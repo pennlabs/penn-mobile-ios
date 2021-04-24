@@ -14,6 +14,7 @@ class DiningAPI: Requestable {
     static let instance = DiningAPI()
     
     let diningUrl = "https://api.pennlabs.org/dining/venues"
+    let diningMenuUrl = "https://api.pennlabs.org/dining/daily_menu/"
     let diningPrefs =  "https://api.pennlabs.org/dining/preferences"
     let diningBalanceUrl = "https://api.pennlabs.org/dining/balance"
     let diningInsightsUrl = "https://studentlife.pennlabs.org/dining/"
@@ -21,11 +22,11 @@ class DiningAPI: Requestable {
     func fetchDiningHours(_ completion: @escaping (_ result: Result<DiningAPIResponse, NetworkingError>) -> Void) {
         getRequestData(url: diningUrl) { (data, error, statusCode) in
             if statusCode == nil {
-                return completion(.failure(.serverError))
+                return completion(.failure(.noInternet))
             }
             
             if statusCode != 200 {
-                return completion(.failure(.noInternet))
+                return completion(.failure(.serverError))
             }
             
             guard let data = data else { return completion(.failure(.other)) }
@@ -38,9 +39,32 @@ class DiningAPI: Requestable {
             }
         }
     }
+    
+    func fetchDiningMenu(for id: Int, _ completion: @escaping (_ result: Result<DiningMenuAPIResponse, NetworkingError>) -> Void) {
+        getRequestData(url: diningMenuUrl + "\(id)") { (data, error, statusCode) in
+            if statusCode == nil {
+                return completion(.failure(.noInternet))
+            }
+            
+            if statusCode != 200 {
+                return completion(.failure(.serverError))
+            }
+            
+            guard let data = data else { return completion(.failure(.other)) }
+            
+            if let diningMenuAPIResponse = try? JSONDecoder().decode(DiningMenuAPIResponse.self, from: data) {
+                self.saveToCache(id: id, diningMenuAPIResponse)
+                return completion(.success(diningMenuAPIResponse))
+            } else {
+                return completion(.failure(.parsingError))
+            }
+        }
+    }
+    
 
     func fetchDiningInsights(_ completion: @escaping (_ result: Result<DiningInsightsAPIResponse, NetworkingError>) -> Void ) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
+            print("token:" + token!.value)
             guard let token = token else {
                 // TODO: - Add network error handling for OAuth2
                 completion(.failure(.noInternet))
@@ -65,7 +89,6 @@ class DiningAPI: Requestable {
                 decoder.dateDecodingStrategy = .iso8601
                 
                 if let diningInsightsAPIResponse = try? decoder.decode(DiningInsightsAPIResponse.self, from: data) {
-                    print(diningInsightsAPIResponse)
                     self.saveToCache(diningInsightsAPIResponse)
                     completion(.success(diningInsightsAPIResponse))
                 } else {
@@ -159,6 +182,14 @@ extension DiningAPI {
         }
     }
     
+    func getMenus() -> [Int: DiningMenuAPIResponse] {
+        if Storage.fileExists(DiningMenuAPIResponse.directory, in: .caches) {
+            return Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int:DiningMenuAPIResponse].self)
+        } else {
+            return [:]
+        }
+    }
+    
     // MARK: - Cache Methods
     func saveToCache(_ venues: [DiningVenue]) {
         Storage.store(venues, to: .caches, as: DiningVenue.directory)
@@ -168,4 +199,15 @@ extension DiningAPI {
         Storage.store(insights, to: .caches, as: DiningInsightsAPIResponse.directory)
     }
     
+    func saveToCache(id: Int, _ menu: DiningMenuAPIResponse) {
+        if Storage.fileExists(DiningMenuAPIResponse.directory, in: .caches) {
+            var menus = Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int:DiningMenuAPIResponse].self)
+            
+            menus[id] = menu
+            
+            Storage.store(menus, to: .caches, as: DiningMenuAPIResponse.directory)
+        } else {
+            Storage.store([id: menu], to: .caches, as: DiningMenuAPIResponse.directory)
+        }
+    }
 }

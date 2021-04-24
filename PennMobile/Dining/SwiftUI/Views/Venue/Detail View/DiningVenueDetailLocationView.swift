@@ -14,41 +14,21 @@ struct DiningVenueDetailLocationView: View {
     
     @State private var region: MKCoordinateRegion
     let venue: DiningVenue
+    let mapHeight: CGFloat
     
-    init(for venue: DiningVenue) {
+    init(for venue: DiningVenue, screenHeight: CGFloat) {
         self.venue = venue
+        mapHeight = screenHeight - 20
         _region = .init(initialValue: PennCoordinate.shared.getRegion(for: venue, at: .mid))
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Description")
-                .font(.system(size: 21, weight: .medium))
-            Text(description)
-                .font(.system(size: 17, weight: .light)).italic()
-                .padding(.bottom, 10)
-            
-            Text("Location")
-                .font(.system(size: 21, weight: .medium))
-            
-            // Enclosing venue in array as there are yet to be init methods for single annotation item
-            Map(coordinateRegion: $region, annotationItems: [venue]) { venue in
-                MapMarker(coordinate: PennCoordinate.shared.getCoordinates(for: venue))
-            }
-            // TODO: Figure out how to determine height dynamically to suit iPad Needs
-            .frame(height: 232)
-            .clipShape(RoundedRectangle(cornerRadius: 17))
-            
-            Spacer(minLength: 120)
-        }
+        Map(coordinateRegion: $region, annotationItems: [venue]) { venue in
+            MapMarker(coordinate: PennCoordinate.shared.getCoordinates(for: venue))
+        }.clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+        .frame(height: mapHeight)
     }
 }
-
-
-// TODO Add description to backend
-let description = """
-“1920 Commons, the largest café on campus, is located on Locust Walk, right across the 38th Street Bridge. Serving lunch, lite lunch, and dinner during the week and brunch and dinner on weekends. Enjoy a bountiful, seasonal salad bar; made-to-order deli; fresh, hot pizzas; comfort cuisine; savory soups; chicken, veggie burgers and beef burgers grilled to perfection; an ever-changing action station; or delectable desserts. It’s all here!”
-"""
 
 @available(iOS 14.0, *)
 struct DiningVenueDetailLocationView_Previews: PreviewProvider {
@@ -58,6 +38,6 @@ struct DiningVenueDetailLocationView_Previews: PreviewProvider {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let diningVenues = try! decoder.decode(DiningAPIResponse.self, from: data)
-        return DiningVenueDetailLocationView(for: diningVenues.document.venues[0]).padding(.horizontal, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+        return DiningVenueDetailLocationView(for: diningVenues.document.venues[0], screenHeight: 600).padding(.horizontal, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
     }
 }

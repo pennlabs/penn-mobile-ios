@@ -14,10 +14,11 @@ import SwiftUI
 @available(iOS 14, *)
 class DiningViewControllerSwiftUI: GenericViewController {
 
-    private var hostingView = UIHostingController(rootView: DiningView())
      
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let hostingView = UIHostingController(rootView: DiningView())
         
         view.backgroundColor = .uiBackground
         self.screenName = "Dining SwiftUI"
@@ -25,6 +26,13 @@ class DiningViewControllerSwiftUI: GenericViewController {
         addChild(hostingView)
         view.addSubview(hostingView.view)
         hostingView.didMove(toParent: self)
+        
+        let navBarHeight = (navigationController?.navigationBar.frame.height ?? 0.0)
+        let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        let height = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        
+        print(navBarHeight)
+        print(height)
         
         hostingView.view.translatesAutoresizingMaskIntoConstraints = false
         hostingView.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true

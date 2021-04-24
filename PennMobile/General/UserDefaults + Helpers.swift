@@ -35,6 +35,8 @@ extension UserDefaults {
         case notificationPreferences
         case gsrGroupsEnabled
         case totpEnabledDate
+        case lastDiningHoursRequest
+        case lastMenuRequest
     }
     
     func clearAll() {
@@ -532,5 +534,38 @@ extension UserDefaults {
     
     func setTwoFactorEnabledDate(_ date: Date?) {
         UserDefaults.standard.set(date, forKey: UserDefaultsKeys.totpEnabledDate.rawValue)
+    }
+}
+
+// MARK: - DiningHours
+extension UserDefaults {
+    func setLastDiningHoursRequest() {
+        UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastDiningHoursRequest.rawValue)
+    }
+    
+    func getLastDiningHoursRequest() -> Date? {
+        return UserDefaults.standard.value(forKey: UserDefaultsKeys.lastDiningHoursRequest.rawValue) as? Date
+    }
+}
+
+
+// MARK: - MenuRequest
+extension UserDefaults {
+    func setLastMenuRequest(id: Int) {
+        let dict: [Int: Date]? = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue) as? [Int: Date]
+        
+        if var menuDateDict = dict {
+            menuDateDict[id] = Date()
+            UserDefaults.standard.set(menuDateDict, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
+        } else {
+            let menuDateDictInit = [id: Date()]
+            UserDefaults.standard.set(menuDateDictInit, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
+        }
+    }
+    
+    func getLastMenuRequest(id: Int) -> Date? {
+        let dict = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue)  as? [Int:Date]
+        
+        return dict?[id]
     }
 }

@@ -16,7 +16,7 @@ struct FadingScrollView<Content: View>: View {
 
     init(
         fadeDistance: CGFloat,
-        _ axes: Axis.Set = .vertical,
+        _ axes: Axis.Set = .horizontal,
         showsIndicators: Bool = true,
         @ViewBuilder content: () -> Content
     ) {
@@ -77,7 +77,7 @@ struct FadingScrollView<Content: View>: View {
                         .allowsHitTesting(false)
                 }
             }
-        }
+        }.offset(x: -fadeDistance, y: 0)
     }
 
     private func fadeGradient(for axis: Axis, startPoint: UnitPoint, endPoint: UnitPoint) -> some View {

@@ -9,6 +9,8 @@
 import Foundation
 
 struct DiningMenuAPIResponse: Codable {
+    static let directory = "diningMenus.json"
+    
     let document: Document
     
     enum CodingKeys: String, CodingKey {

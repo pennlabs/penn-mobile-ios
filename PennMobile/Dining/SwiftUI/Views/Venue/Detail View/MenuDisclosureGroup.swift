@@ -12,6 +12,11 @@ struct DiningMenuSectionRow: View {
     @Binding var isExpanded: Bool
     let title: String
     
+    init(isExpanded: Binding<Bool>, title: String) {
+        self.title = title.capitalizeMainWords()
+        self._isExpanded = isExpanded
+    }
+    
     var body: some View {
         HStack {
             Text(title)
@@ -19,7 +24,8 @@ struct DiningMenuSectionRow: View {
             Spacer()
 
             Image(systemName: "chevron.right.circle")
-                .rotationEffect(.degrees(isExpanded ? 90 : 0))
+                .rotationEffect(.degrees(isExpanded ? -90 : 90))
+                .frame(width:28, alignment: .center)
         }
         .contentShape(Rectangle())
         .padding(.bottom)
@@ -65,12 +71,12 @@ struct DiningStationRow: View {
 
     var body: some View {
         DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.stationDescription)
-            // TODO: Add Font Styling
             .font(Font.system(size: 17))
         
         if isExpanded {
             ForEach(diningStation.diningStationItems, id: \.self) { diningStationItem in
                 DiningStationItemRow(for: diningStationItem)
+                    .padding(.leading)
             }
             .transition(.moveAndFade)
         }
@@ -88,7 +94,7 @@ struct DiningStationItemRow: View {
     var body: some View {
         VStack(alignment: .leading){
             HStack(alignment: .center) {
-                Text(diningStationItem.title)
+                Text(diningStationItem.title.capitalizeMainWords())
                     .font(Font.system(size: 17))
                 
                 
@@ -120,22 +126,33 @@ extension AnyTransition {
         let removal = AnyTransition
             .opacity.animation(.easeInOut(duration: 0.1))
             .combined(with: .move(edge: .top)).animation(.easeInOut)
+        
         return .asymmetric(insertion: insertion, removal: removal)
     }
 }
 
 struct MenuDisclosureGroup_Previews: PreviewProvider {
-    let diningVenues: DiningMenuAPIResponse = Bundle.main.decode("mock_menu.json")
-    
     static var previews: some View {
+        let diningVenues: DiningMenuAPIResponse = Bundle.main.decode("mock_menu.json")
+        
         return NavigationView {
             ScrollView {
                 VStack {
-                    DiningVenueDetailMenuView()
+                    DiningVenueDetailMenuView(menus: diningVenues.document.menuDocument.menus)
                     Spacer()
                 }
             }.navigationTitle("Dining")
             .padding()
         }
+    }
+}
+
+extension String {
+    func capitalizeMainWords() -> String {
+        let nonCaptializingSet: Set = [
+            "a", "an", "the", "for", "and", "nor", "but", "or", "yet", "so", "with", "at", "around", "by", "after", "along", "for", "from", "of", "on", "to", "with", "without"
+        ]
+        
+        return self.split(separator: " ").map({nonCaptializingSet.contains(String($0)) ? $0.lowercased() : $0.capitalized}).joined(separator: " ")
     }
 }

@@ -14,24 +14,36 @@ import SwiftUI
 struct DiningVenueView: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     
+    // Hack to deselect cells after popping navigation view
+    // Will be removed once SwiftUI is Fixed
+    @State private var selectedItem: String?
+    @State private var listViewId = UUID()
+        
     var body: some View {
         List {
             ForEach(diningVM.ordering, id: \.self) { venueType in
                 Section(header: CustomHeader(name: venueType.fullDisplayName)) {
                     ForEach(self.diningVM.diningVenues[venueType] ?? []) { venue in
-                        NavigationLink(destination: DiningVenueDetailView(for: venue)) {
+                        NavigationLink(destination: DiningVenueDetailView(for: venue)
+                                        .environmentObject(diningVM), tag: "\(venue.id)", selection: $selectedItem) {
                             DiningVenueRow(for: venue)
+                                .environmentObject(diningVM)
                                 .padding(.vertical, 4)
                         }
-                        // Hack to deselect cells after popping navigation view
-                        .id(UUID())
                     }
                 }
             }
         }
-        .onAppear(perform: {
+        // Hack to deselect items
+        .id(listViewId)
+        .onAppear {
             DiningViewModelSwiftUI.instance.refreshVenues()
-        })
+            DiningViewModelSwiftUI.instance.refreshBalance()
+            if selectedItem != nil {
+                selectedItem = nil
+                listViewId = UUID()
+            }
+        }
     }
 }
 
@@ -57,9 +69,6 @@ struct CustomHeader: View {
 @available(iOS 14, *)
 struct DiningVenueView_Previews: PreviewProvider {
     static var previews: some View {
-        let diningVM = DiningViewModelSwiftUI.instance
-        
-        DiningVenueView()
-            .environmentObject(diningVM)
+        CustomHeader(name: "new")
     }
 }

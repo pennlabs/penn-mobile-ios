@@ -15,27 +15,29 @@ struct DiningVenueDetailHoursView: View {
     }
     
     let venue: DiningVenue
-    
-    var columns = [
-        GridItem(spacing: 0, alignment: .leading),
-        GridItem(spacing: 0, alignment: .trailing),
-    ]
 
     var body: some View {
-        // TODO: Add level of busyness using public APIs Penn Dining will provide
-        LazyVGrid(columns: columns, spacing: 0) {
+        // TODO: Add level of business using public APIs Penn Dining will provide
+        VStack(alignment: .leading, spacing: 7) {
             ForEach(0..<7) { duration in
-                let date = Date().dateIn(days: duration)
-                let formattedString = venue.formattedHoursStringFor(date)
+                let dateInt = (7 - Date().integerDayOfWeek + duration) % 7
+                let date = Date().dateIn(days: dateInt)
                 
-                Text("\(date.dayOfWeek)" + (duration == 0 ? " (Today)" : ""))
-                        .font(.system(size: 17, weight: .regular))
+                Text("\(date.dayOfWeek)")
+                    .font(duration == Date().integerDayOfWeek ? .system(size: 18, weight: .bold): .system(size: 18, weight: .regular))
+                
+                HStack {
+                    ForEach(venue.formattedHoursArrayFor(date), id: \.self) { hours in
+                        Text(hours)
+                            .padding(.vertical, 3)
+                            .padding(.horizontal, 4)
+                            .font(.system(size: 14, weight: .light, design: .default))
+                            .background(Color.grey5)
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                    }
                     
-                    
-                Text(formattedString != "" ? formattedString : "Closed")
-                    .font(.system(size: 17, weight: .thin))
-                    .lineLimit(1)
-                    .minimumScaleFactor(1)
+                    Spacer()
+                }.offset(y: -4)
             }
         }
     }

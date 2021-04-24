@@ -13,8 +13,22 @@ import SwiftUI
 @available(iOS 14, *)
 struct DiningViewHeader: View {
     
-    @ObservedObject var diningVM = DiningViewModelSwiftUI.instance
+    @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     
+    var body: some View {
+        HStack {
+            DiningViewHeaderDate()
+            
+            Spacer()
+            
+            DiningViewHeaderBalance()
+                .environmentObject(diningVM)
+        }
+    }
+}
+
+@available(iOS 14, *)
+struct DiningViewHeaderDate: View {
     var dateString: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d"
@@ -22,33 +36,39 @@ struct DiningViewHeader: View {
     }
     
     var body: some View {
+        VStack(alignment: .leading) {
+            Text(dateString)
+                .font(.system(size: 11, weight: .bold, design: .default))
+                .foregroundColor(.gray)
+            
+            Text("Dining")
+                .font(.system(size: 28, weight: .bold, design: .default))
+        }
+    }
+}
+
+@available(iOS 14, *)
+struct DiningViewHeaderBalance: View {
+    @EnvironmentObject var diningVM: DiningViewModelSwiftUI
+    
+    var body: some View {
+        VStack(alignment: .trailing) {
+            Label("\(diningVM.swipes)", systemImage: "creditcard.fill")
+                .labelStyle(BalanceLabelStyle())
+            
+            Label("\(String(format: "%.2f", diningVM.diningDollars))", systemImage: "dollarsign.circle.fill")
+                .labelStyle(BalanceLabelStyle())
+        }
+    }
+}
+
+struct BalanceLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
         HStack {
-            VStack(alignment: .leading) {
-                Text(dateString)
-                    .font(.system(size: 11, weight: .bold, design: .default))
-                    .foregroundColor(.gray)
-                
-                Text("Dining")
-                    .font(.system(size: 28, weight: .bold, design: .default))
-            }
-            
-            Spacer()
-            
-            VStack(alignment: .trailing) {
-                HStack {
-                    Text("\(diningVM.diningInsights?.swipes ?? 0)")
-                        .font(.system(size: 17, weight: .bold, design: .rounded))
-                        
-                    Image(systemName: "creditcard.fill")
-                }
-                
-                HStack {
-                    Text("\(String(format: "%.2f", diningVM.diningInsights?.diningDollars ?? 0))")
-                        .font(.system(size: 17, weight: .bold, design: .rounded))
-                        
-                    Image(systemName: "dollarsign.circle.fill")
-                }
-            }
+            configuration.title
+                .font(.system(size: 17, weight: .bold, design: .rounded))
+            configuration.icon
+                .frame(width:20, height: 20)
         }
     }
 }
@@ -56,6 +76,6 @@ struct DiningViewHeader: View {
 @available(iOS 14, *)
 struct DiningViewHeader_Previews: PreviewProvider {
     static var previews: some View {
-        DiningViewHeader()
+        DiningViewHeaderBalance()
     }
 }

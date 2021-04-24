@@ -220,6 +220,20 @@ extension DiningVenue {
             return "Closed \(nextOpenedDayOfTheWeek)"
         }
     }
+    
+    var statusImageString: String {
+        if hasMealsToday {
+            if isOpen {
+                return "circle.fill"
+            } else if nextMeal != nil {
+                return "pause.circle.fill"
+            } else {
+                return "xmark.circle.fill"
+            }
+        } else {
+            return "xmark.circle.fill"
+        }
+    }
 }
 
 // MARK: - Meal
