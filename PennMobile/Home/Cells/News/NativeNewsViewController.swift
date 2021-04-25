@@ -13,7 +13,7 @@ class NativeNewsViewController: UIViewController {
     
     func textViewTemplate(for content: String) -> UILabel {
         let textLabel = UILabel()
-        textLabel.font = UIFont.init(name: "NewYork", size: 17)
+        textLabel.font = UIFont.init(name: "NewYork", size: 20)
         textLabel.textAlignment = .left
         textLabel.numberOfLines = 0
         textLabel.text = content
