@@ -84,7 +84,8 @@ class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccess
         PennLink(title: "CampusExpress", url: "https://prod.campusexpress.upenn.edu"),
         PennLink(title: "Canvas", url: "https://canvas.upenn.edu"),
         PennLink(title: "PennInTouch", url: "https://pennintouch.apps.upenn.edu"),
-        PennLink(title: "PennPortal", url: "https://portal.apps.upenn.edu/penn_portal")]
+        PennLink(title: "PennPortal", url: "https://portal.apps.upenn.edu/penn_portal"),
+        PennLink(title: "User Feedback", url: "https://airtable.com/shrS98E3rj5Nw1wy6")]
     
 }
 
