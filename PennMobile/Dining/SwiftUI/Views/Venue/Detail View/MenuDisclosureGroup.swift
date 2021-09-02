@@ -47,16 +47,18 @@ struct DiningMenuRow: View {
     let diningMenu: DiningMenu
 
     var body: some View {
-        DiningMenuSectionRow(isExpanded: $isExpanded, title: diningMenu.mealType)
-            .font(.system(size: 21, weight: .medium))
-        
-        if isExpanded {
-            ForEach(diningMenu.diningStations, id: \.self) { diningStation in
-                DiningStationRow(for: diningStation)
+        VStack {
+            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningMenu.mealType)
+                .font(.system(size: 21, weight: .medium))
+            
+            if isExpanded {
+                ForEach(diningMenu.diningStations, id: \.self) { diningStation in
+                    DiningStationRow(for: diningStation)
+                }
+                .padding(.leading)
+                .transition(.moveAndFade)
             }
-            .padding(.leading)
-            .transition(.moveAndFade)
-        }
+        }.clipped()
     }
 }
 
@@ -70,16 +72,19 @@ struct DiningStationRow: View {
     let diningStation: DiningStation
 
     var body: some View {
-        DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.stationDescription)
-            .font(Font.system(size: 17))
-        
-        if isExpanded {
-            ForEach(diningStation.diningStationItems, id: \.self) { diningStationItem in
-                DiningStationItemRow(for: diningStationItem)
-                    .padding(.leading)
+        VStack {
+            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.stationDescription)
+                .font(Font.system(size: 17))
+            
+            if isExpanded {
+                ForEach(diningStation.diningStationItems, id: \.self) { diningStationItem in
+                    DiningStationItemRow(for: diningStationItem)
+                        .padding(.leading)
+                }
+                .transition(.moveAndFade)
             }
-            .transition(.moveAndFade)
-        }
+        }.clipped()
+        
     }
 }
 

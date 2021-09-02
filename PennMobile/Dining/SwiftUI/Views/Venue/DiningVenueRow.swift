@@ -20,9 +20,6 @@ struct DiningVenueRow: View {
     
     let venue: DiningVenue
     
-    let scrollViewCoordName = "scrollViewCoordinateSpaceName"
-    let fadeDistance: CGFloat = 10
-    
     var body: some View {
         HStack(spacing: 13) {
             KFImage(venue.imageURL)
@@ -32,7 +29,7 @@ struct DiningVenueRow: View {
                 .background(Color.grey1)
                 .clipShape(RoundedRectangle(cornerRadius: 7))
                 
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 3) {
                 Label(venue.statusString, systemImage: venue.statusImageString)
                     .labelStyle(VenueStatusLabelStyle())
                     .modifier(StatusColorModifier(for: venue))
@@ -41,22 +38,32 @@ struct DiningVenueRow: View {
                     .font(.system(size: 17, weight: .medium))
                     .minimumScaleFactor(0.2)
                     .lineLimit(1)
-                
-                Spacer()
-                
-                FadingScrollView(fadeDistance: fadeDistance, showsIndicators: false) {
-                    HStack(spacing: 6) {
-                        ForEach(venue.humanFormattedHoursArrayForToday, id: \.self) { time in
-                            Text(time)
-                                .padding(.vertical, 3)
-                                .padding(.horizontal, 4)
-                                .font(.system(size: 14, weight: .light, design: .default))
-                                .background(Color.grey5)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
+
+                GeometryReader { geo in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        ScrollViewReader { proxy in
+                            HStack(spacing: 6) {
+                                ForEach(Array(venue.humanFormattedHoursArrayForToday.enumerated()), id: \.offset) { (index, time) in
+                                    Text(time)
+                                        .font(.system(size: 14, weight: .light, design: .default))
+                                        .padding(.vertical, 3)
+                                        .padding(.horizontal, 6)
+                                        .foregroundColor(index == venue.currentMealIndex ? Color.white : Color.labelPrimary)
+                                        .background(index == venue.currentMealIndex ? (venue.isClosingSoon ? Color.redLight : Color.greenLight) : Color.grey5)
+                                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                                        .id(index)
+                                        .frame(height: geo.frame(in: .global).height)
+                                }.onAppear {
+                                    withAnimation {
+                                        proxy.scrollTo(venue.currentOrNearestMealIndex)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
+            .frame(height: 64)
         }
     }
 }
@@ -124,6 +131,7 @@ struct DiningVenueRow_Previews: PreviewProvider {
                 }
             }
         }
+        .preferredColorScheme(.light)
     }
 }
 

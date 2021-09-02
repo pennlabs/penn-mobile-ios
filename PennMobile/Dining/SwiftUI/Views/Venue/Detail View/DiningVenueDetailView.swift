@@ -14,8 +14,15 @@ import KingfisherSwiftUI
 @available(iOS 14, *)
 struct DiningVenueDetailView: View {
     
+    let safeFrameHeight: CGFloat
+    let customNavBarHeight: CGFloat
+
     init(for venue: DiningVenue) {
         self.venue = venue
+        
+        let window = UIApplication.shared.windows[0]
+        safeFrameHeight = window.safeAreaLayoutGuide.layoutFrame.minY
+        customNavBarHeight = 44 + safeFrameHeight
     }
     
     private let venue: DiningVenue
@@ -40,9 +47,10 @@ struct DiningVenueDetailView: View {
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
+                    .padding(.top, 5)
                     
                     Divider()
-                        .padding(.vertical)
+                        .padding(.vertical, 5)
                     
                     VStack {
                         if self.pickerIndex == 0 {
@@ -55,7 +63,6 @@ struct DiningVenueDetailView: View {
                         
                         Spacer()
                     }.frame(minHeight: fullGeo.size.height - 80)
-                    
                 }.padding(.horizontal)
 
             }
@@ -78,6 +85,7 @@ struct DiningVenueDetailView: View {
                     .offset(x: 0, y: getParallaxOffset(geometry))
                     .clipped()
                     .overlay(LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom))
+                    .allowsHitTesting(false)
                 
                 VStack(alignment: .leading) {
                     Button(action: {
@@ -90,7 +98,7 @@ struct DiningVenueDetailView: View {
                     .padding(10)
                     .background(Circle().opacity(0.8).foregroundColor(.black))
                     .opacity(getOpacity(geometry))
-                    .position(x: 40, y: 60)
+                    .position(x: 40, y: customNavBarHeight - 20)
                     .offset(x: 0, y: getBackButtonYOffset(geometry))
 
                     Spacer()
@@ -105,7 +113,7 @@ struct DiningVenueDetailView: View {
                         
                 }
                 
-                DefaultNavigationBar(presentationMode: _presentationMode, height: 88, width: geometry.size.width, title: venue.name)
+                DefaultNavigationBar(presentationMode: _presentationMode, height: customNavBarHeight, width: geometry.size.width, title: venue.name)
                         .offset(x:0, y:getOffsetForNavBar(geometry))
                         .opacity(getOpacityForNavBar(geometry))
             }
@@ -154,7 +162,7 @@ extension DiningVenueDetailView {
     }
     
     private func getOffsetForNavBar(_ geometry: GeometryProxy) -> CGFloat {
-        return -getOffset(geometry) - headerImageHeight + 88
+        return -getOffset(geometry) - headerImageHeight + customNavBarHeight
     }
     
     private func getOpacityForNavBar(_ geometry: GeometryProxy) -> Double {
@@ -208,7 +216,20 @@ struct DiningVenueDetailView_Previews: PreviewProvider {
         decoder.dateDecodingStrategy = .iso8601
         let diningVenues = try! decoder.decode(DiningAPIResponse.self, from: data)
 
-        return DiningVenueDetailView(for: diningVenues.document.venues[0])
+        return
+            NavigationView {
+                DiningVenueDetailView(for: diningVenues.document.venues[0])
             .preferredColorScheme(.dark)
+            .environmentObject(DiningViewModelSwiftUI())
+            }
+    }
+}
+
+// Hack to enable swipe from left while disabling navigation title
+// TODO: find a more natural fix in future releases
+extension UINavigationController {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        interactivePopGestureRecognizer?.delegate = nil
     }
 }

@@ -36,13 +36,15 @@ struct DiningViewHeaderDate: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 5) {
             Text(dateString)
-                .font(.system(size: 11, weight: .bold, design: .default))
+                .font(.system(.caption))
+                .fontWeight(.bold)
                 .foregroundColor(.gray)
             
             Text("Dining")
-                .font(.system(size: 28, weight: .bold, design: .default))
+                .font(.system(.title))
+                .fontWeight(.bold)
         }
     }
 }
@@ -52,7 +54,7 @@ struct DiningViewHeaderBalance: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     
     var body: some View {
-        VStack(alignment: .trailing) {
+        VStack(alignment: .trailing, spacing: 5) {
             Label("\(diningVM.swipes)", systemImage: "creditcard.fill")
                 .labelStyle(BalanceLabelStyle())
             
@@ -76,6 +78,15 @@ struct BalanceLabelStyle: LabelStyle {
 @available(iOS 14, *)
 struct DiningViewHeader_Previews: PreviewProvider {
     static var previews: some View {
-        DiningViewHeaderBalance()
+        VStack {
+            Spacer()
+            HStack {
+                DiningViewHeaderDate()
+                    .padding()
+            
+                Spacer()
+            }
+            Spacer()
+        }
     }
 }

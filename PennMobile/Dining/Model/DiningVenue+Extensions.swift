@@ -44,10 +44,6 @@ extension DiningVenue {
         return self.mealsToday?.meals.first(where: { $0.isCurrentlyServing }) ?? nil
     }
     
-    var currentMealIndex: Int? {
-        return self.mealsToday?.meals.firstIndex(where: { $0.isCurrentlyServing }) ?? nil
-    }
-    
     var currentMealType: String? {
         return self.currentMeal?.type ?? nil
     }
@@ -64,6 +60,14 @@ extension DiningVenue {
         guard let mealsToday = mealsToday else { return nil }
         let now = Date()
         return mealsToday.meals.first(where: { $0.open > now })
+    }
+    
+    var currentMealIndex: Int? {
+        return self.mealsToday?.meals.firstIndex(where: { $0.isCurrentlyServing })
+    }
+    
+    var currentOrNearestMealIndex: Int {
+        return self.mealsToday?.meals.firstIndex(where: { $0.isCurrentlyServing }) ?? self.mealsToday?.meals.firstIndex(where: { $0.open > Date() }) ?? 0
     }
     
     var hasMealsToday: Bool {

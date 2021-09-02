@@ -30,6 +30,7 @@ struct ActivityIndicatorView: UIViewRepresentable  {
 @available(iOS 14, *)
 struct LabsLoginControllerSwiftUI: UIViewControllerRepresentable {
     
+    @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @Binding var isShowing: Bool
     @Binding var loginFailure: Bool
     var handleError: () -> Void
@@ -54,7 +55,7 @@ struct LabsLoginControllerSwiftUI: UIViewControllerRepresentable {
         isShowing = false
         
         if successful {
-            DiningViewModelSwiftUI.instance.refreshInsights()
+            diningVM.refreshInsights()
         } else {
             loginFailure = true
         }

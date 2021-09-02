@@ -13,8 +13,6 @@ import SwiftUI
 @available(iOS 14, *)
 class DiningViewModelSwiftUI: ObservableObject {
     
-    static let instance = DiningViewModelSwiftUI()
-    
     @Published var diningVenues: [DiningVenue.VenueType : [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
     @Published var diningInsights = DiningAPI.instance.getInsights()
     @Published var diningMenus = DiningAPI.instance.getMenus()
@@ -39,32 +37,31 @@ class DiningViewModelSwiftUI: ObservableObject {
         let lastRequest = UserDefaults.standard.getLastDiningHoursRequest()
         
         if lastRequest == nil || !lastRequest!.isToday {
-            print("working")
-            UserDefaults.standard.setLastDiningHoursRequest()
-                self.diningVenuesIsLoading = true
+            self.diningVenuesIsLoading = true
+            
+            DiningAPI.instance.fetchDiningHours { result in
+                self.diningVenuesIsLoading = false
                 
-                DiningAPI.instance.fetchDiningHours { (result) in
-                    self.diningVenuesIsLoading = false
-                    
-                    switch result {
-                    case .success(let diningVenues):
-                        var venuesDict = [DiningVenue.VenueType : [DiningVenue]]()
-                        for type in DiningVenue.VenueType.allCases {
-                            venuesDict[type] = diningVenues.document.venues.filter({ $0.venueType == type })
-                        }
-                        self.diningVenues = venuesDict
-                    case .failure(let error):
-                        self.alertType = error
-                        self.diningVenuesIsLoading = false
+                switch result {
+                case .success(let diningVenues):
+                    UserDefaults.standard.setLastDiningHoursRequest()
+                    var venuesDict = [DiningVenue.VenueType : [DiningVenue]]()
+                    for type in DiningVenue.VenueType.allCases {
+                        venuesDict[type] = diningVenues.document.venues.filter({ $0.venueType == type })
                     }
+                    self.diningVenues = venuesDict
+                case .failure(let error):
+                    self.alertType = error
+                    self.diningVenuesIsLoading = false
                 }
+            }
         }
     }
     
     func refreshMenu(for id: Int) {
         let lastRequest = UserDefaults.standard.getLastMenuRequest(id: id)
         if lastRequest == nil || !lastRequest!.isToday {
-            DiningAPI.instance.fetchDiningMenu(for: id) { (result) in
+            DiningAPI.instance.fetchDiningMenu(for: id) { result in
                 switch result {
                 case .success(let diningMenu):
                     withAnimation {

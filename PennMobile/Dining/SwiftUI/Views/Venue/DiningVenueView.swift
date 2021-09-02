@@ -23,11 +23,9 @@ struct DiningVenueView: View {
         List {
             ForEach(diningVM.ordering, id: \.self) { venueType in
                 Section(header: CustomHeader(name: venueType.fullDisplayName)) {
-                    ForEach(self.diningVM.diningVenues[venueType] ?? []) { venue in
-                        NavigationLink(destination: DiningVenueDetailView(for: venue)
-                                        .environmentObject(diningVM), tag: "\(venue.id)", selection: $selectedItem) {
+                    ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
+                        NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM), tag: "\(venue.id)", selection: $selectedItem) {
                             DiningVenueRow(for: venue)
-                                .environmentObject(diningVM)
                                 .padding(.vertical, 4)
                         }
                     }
@@ -37,8 +35,8 @@ struct DiningVenueView: View {
         // Hack to deselect items
         .id(listViewId)
         .onAppear {
-            DiningViewModelSwiftUI.instance.refreshVenues()
-            DiningViewModelSwiftUI.instance.refreshBalance()
+            diningVM.refreshVenues()
+            diningVM.refreshBalance()
             if selectedItem != nil {
                 selectedItem = nil
                 listViewId = UUID()

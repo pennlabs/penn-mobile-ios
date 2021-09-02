@@ -803,16 +803,16 @@
 				21B8BBBB2224F98B00EBC1D0 /* Login */,
 				216640881EBADBA000746B8E /* Setup + Navigation */,
 				B62875E82112591700FB2873 /* Buildings */,
+				21640D4220103C8A002F33CA /* Home */,
 				97E79E0A2100DBC300D3D606 /* Fitness */,
 				B62875E921152FF500FB2873 /* Map */,
-				21640D4220103C8A002F33CA /* Home */,
 				2166408B1EBADBF800746B8E /* Dining */,
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
 				21D5E06523B68F0E00B331CC /* Housing */,
 				212304C52054ED9900958CE0 /* Spring Fling */,
-				216640EE1EBB867600746B8E /* Contacts */,
 				216640D31EBB80FD00746B8E /* News */,
+				216640EE1EBB867600746B8E /* Contacts */,
 				CF1CE9B8205D5BF100C51F46 /* More Tab */,
 				216640F91EBB898700746B8E /* About */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
@@ -1222,21 +1222,13 @@
 		6CAE4357253370E500BD0200 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				6CAE4359253370E500BD0200 /* ViewModels */,
+				6CAE435A253370E500BD0200 /* DiningViewModelSwiftUI.swift */,
 				6CAE435D253370E500BD0200 /* Views */,
 				6CAE435B253370E500BD0200 /* DiningInsightsViewController.swift */,
 				6C88FE9325337476006F4587 /* DiningViewControllerSwiftUI.swift */,
 				6CAE437B253370E500BD0200 /* example-dining-stats.json */,
 			);
 			path = SwiftUI;
-			sourceTree = "<group>";
-		};
-		6CAE4359253370E500BD0200 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				6CAE435A253370E500BD0200 /* DiningViewModelSwiftUI.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		6CAE435D253370E500BD0200 /* Views */ = {

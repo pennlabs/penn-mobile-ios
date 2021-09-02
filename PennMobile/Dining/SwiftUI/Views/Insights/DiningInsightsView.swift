@@ -75,7 +75,7 @@ struct DiningInsightsView: View {
                     .frame(width: geo.size.width)
                 }
                 .onAppear(perform: {
-                    DiningViewModelSwiftUI.instance.refreshInsights()
+                    diningVM.refreshInsights()
                 })
                 .alert(isPresented: .constant(!Account.isLoggedIn)) {
                     Alert(title: Text("Login Error"), message: Text("Please Login to Use this Feature"),
@@ -87,6 +87,7 @@ struct DiningInsightsView: View {
                 }
                 .sheet(isPresented: self.$isPresentingLoginSheet) {
                     LabsLoginControllerSwiftUI(isShowing: self.$isPresentingLoginSheet, loginFailure: self.$loginFailure, handleError: { self.pickerIndex = 0 })
+                        .environmentObject(diningVM)
                 }
                 
                 
