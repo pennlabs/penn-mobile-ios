@@ -79,7 +79,7 @@ class ControllerModel: NSObject {
             #if DEBUG
                 return [.news, .contacts, .courseSchedule, .courseAlerts, .about]
             #else
-                return [.news, .contacts, .courseSchedule, .courseAlerts, .about]
+                return [.news, .contacts, .courseSchedule, .about]
             #endif
         }
     }
