@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PrivacyViewControllerChangedPreference: class {
+protocol PrivacyViewControllerChangedPreference: AnyObject {
     func changed(option: PrivacyOption, givePermission: Bool)
 }
 

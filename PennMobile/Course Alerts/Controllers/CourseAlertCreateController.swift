@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-protocol FetchPCADataProtocol: class {
+protocol FetchPCADataProtocol {
     func fetchAlerts()
     func fetchSettings()
 }
@@ -27,7 +27,7 @@ class CourseAlertCreateController: GenericViewController {
     
     fileprivate var sectionToAlert: CourseSection?
     
-    weak var delegate: FetchPCADataProtocol?
+    var delegate: FetchPCADataProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()

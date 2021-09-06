@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SelectionCellDelegate: class {
+protocol SelectionCellDelegate: AnyObject {
     func handleCancel()
     func saveSelection(for rooms: [LaundryRoom])
 }
@@ -25,7 +25,7 @@ class SelectionCell: UICollectionViewCell, RoomSelectionViewDelegate {
         backgroundColor = .white
         
         navigationBar = NavigationBar(frame: .zero)
-        navigationBar.customHeight = 44 + UIApplication.shared.statusBarFrame.height
+        navigationBar.customHeight = 44 + (window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
         navigationBar.frame.size = navigationBar.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width, height: navigationBar.customHeight))
         
         selectionView = RoomSelectionView(frame: .zero)

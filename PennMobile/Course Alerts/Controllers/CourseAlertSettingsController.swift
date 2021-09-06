@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-protocol CourseAlertSettingsChangedPreference: class {
+protocol CourseAlertSettingsChangedPreference: AnyObject {
     func allowChange() -> Bool
     func changed(option: PCAOption, toValue: Bool)
     func requestChange(option: PCAOption, toValue: Bool)

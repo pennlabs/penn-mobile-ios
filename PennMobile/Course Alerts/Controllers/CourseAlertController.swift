@@ -112,7 +112,7 @@ extension CourseAlertController {
     }
     
     func setupLoadingView() {
-        loadingView = UIActivityIndicatorView(style: .whiteLarge)
+        loadingView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
         loadingView.color = .black
         loadingView.isHidden = false
         view.addSubview(loadingView)

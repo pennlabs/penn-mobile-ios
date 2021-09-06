@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AddLaundryCellDelegate: class {
+protocol AddLaundryCellDelegate: AnyObject {
     func addPressed()
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol CellUpdateDelegate: class {
+protocol CellUpdateDelegate: AnyObject {
     func cellRequiresNewLayout(with height: CGFloat, for cell: String)
 }
 

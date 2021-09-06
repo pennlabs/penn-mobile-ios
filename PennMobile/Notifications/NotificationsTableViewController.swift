@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol NotificationViewControllerChangedPreference: class {
+protocol NotificationViewControllerChangedPreference: AnyObject {
     func allowChange() -> Bool
     func changed(option: NotificationOption, toValue: Bool)
     func requestChange(option: NotificationOption, toValue: Bool)

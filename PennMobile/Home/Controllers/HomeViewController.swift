@@ -146,7 +146,7 @@ extension HomeViewController {
     }
 
     func prepareLoadingView() {
-        loadingView = UIActivityIndicatorView(style: .whiteLarge)
+        loadingView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
         loadingView.color = .black
         loadingView.isHidden = false
         view.addSubview(loadingView)

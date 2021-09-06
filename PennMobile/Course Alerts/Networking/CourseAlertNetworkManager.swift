@@ -85,7 +85,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 return
             }
             
-            guard let data = data else {
+            guard data != nil else {
                 callback(false, "", error)
                 return
             }
@@ -137,7 +137,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 return
             }
             
-            guard let data = data else {
+            guard data != nil else {
                 callback(false, error)
                 return
             }
