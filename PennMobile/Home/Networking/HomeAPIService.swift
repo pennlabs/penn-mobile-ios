@@ -29,8 +29,6 @@ final class HomeAPIService: Requestable {
     
         url = "\(url)&groupsEnabled=\(UserDefaults.standard.gsrGroupsEnabled())"
         
-        
-        
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             // Make request without access token if one does not exist
             let url = URL(string: url)!

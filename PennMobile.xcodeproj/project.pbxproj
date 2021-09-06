@@ -81,14 +81,11 @@
 		2189C08C2027CE2600771C1F /* GSRTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0882027CE2600771C1F /* GSRTimeCell.swift */; };
 		2189C08D2027CE2600771C1F /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0892027CE2600771C1F /* RoomCell.swift */; };
 		2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C08A2027CE2600771C1F /* GSRRangeSlider.swift */; };
-		2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C08B2027CE2600771C1F /* EmptyView.swift */; };
 		2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0902027CE2E00771C1F /* GSRViewModel.swift */; };
 		2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0922027CE3F00771C1F /* GSRTimeSlot.swift */; };
 		2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0932027CE3F00771C1F /* GSRDateHandler.swift */; };
 		2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0942027CE3F00771C1F /* GSRLocationModel.swift */; };
-		2189C09E2027CE4100771C1F /* locations.json in Resources */ = {isa = PBXBuildFile; fileRef = 2189C0952027CE4000771C1F /* locations.json */; };
 		2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0962027CE4000771C1F /* GSRUser.swift */; };
-		2189C0A02027CE4100771C1F /* GSRVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0972027CE4000771C1F /* GSRVenue.swift */; };
 		2189C0A12027CE4100771C1F /* GSRBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0982027CE4000771C1F /* GSRBooking.swift */; };
 		2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C0992027CE4000771C1F /* GSRRoom.swift */; };
 		2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2189C09A2027CE4000771C1F /* GSRLocation.swift */; };
@@ -147,6 +144,9 @@
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
+		6C23AF9526E57903002F60F0 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C23AF9426E57903002F60F0 /* EmptyView.swift */; };
+		6C369A1326E299A900721CA1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6C369A1226E299A900721CA1 /* Alamofire */; };
+		6C369A1526E39BC100721CA1 /* GSRAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C369A1426E39BC100721CA1 /* GSRAPIResponse.swift */; };
 		97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806423D26BC700C23488 /* DiningBalanceCell.swift */; };
 		97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */; };
 		97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806623D26BC700C23488 /* DiningHeaderView.swift */; };
@@ -390,14 +390,11 @@
 		2189C0882027CE2600771C1F /* GSRTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRTimeCell.swift; sourceTree = "<group>"; };
 		2189C0892027CE2600771C1F /* RoomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
 		2189C08A2027CE2600771C1F /* GSRRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRRangeSlider.swift; sourceTree = "<group>"; };
-		2189C08B2027CE2600771C1F /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		2189C0902027CE2E00771C1F /* GSRViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRViewModel.swift; sourceTree = "<group>"; };
 		2189C0922027CE3F00771C1F /* GSRTimeSlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRTimeSlot.swift; sourceTree = "<group>"; };
 		2189C0932027CE3F00771C1F /* GSRDateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRDateHandler.swift; sourceTree = "<group>"; };
 		2189C0942027CE3F00771C1F /* GSRLocationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRLocationModel.swift; sourceTree = "<group>"; };
-		2189C0952027CE4000771C1F /* locations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = locations.json; sourceTree = "<group>"; };
 		2189C0962027CE4000771C1F /* GSRUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRUser.swift; sourceTree = "<group>"; };
-		2189C0972027CE4000771C1F /* GSRVenue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRVenue.swift; sourceTree = "<group>"; };
 		2189C0982027CE4000771C1F /* GSRBooking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRBooking.swift; sourceTree = "<group>"; };
 		2189C0992027CE4000771C1F /* GSRRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRRoom.swift; sourceTree = "<group>"; };
 		2189C09A2027CE4000771C1F /* GSRLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRLocation.swift; sourceTree = "<group>"; };
@@ -455,6 +452,8 @@
 		66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPFetcher.swift; sourceTree = "<group>"; };
 		66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorTokenGenerator.swift; sourceTree = "<group>"; };
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
+		6C23AF9426E57903002F60F0 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		6C369A1426E39BC100721CA1 /* GSRAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRAPIResponse.swift; sourceTree = "<group>"; };
 		6DBD80716B161DAEA6274151 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6F4DC86EE3A48EC9A02145AE /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		97AA806423D26BC700C23488 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
@@ -591,6 +590,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C369A1326E299A900721CA1 /* Alamofire in Frameworks */,
 				F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
 				F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */,
@@ -986,16 +986,15 @@
 		2189C0752027CD3A00771C1F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6C369A1426E39BC100721CA1 /* GSRAPIResponse.swift */,
+				2189C0992027CE4000771C1F /* GSRRoom.swift */,
 				EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */,
 				2189C0982027CE4000771C1F /* GSRBooking.swift */,
 				21A6B6D122162702003A357D /* GSRReservation.swift */,
 				2189C0932027CE3F00771C1F /* GSRDateHandler.swift */,
 				2189C0942027CE3F00771C1F /* GSRLocationModel.swift */,
-				2189C0992027CE4000771C1F /* GSRRoom.swift */,
 				2189C0922027CE3F00771C1F /* GSRTimeSlot.swift */,
 				2189C0962027CE4000771C1F /* GSRUser.swift */,
-				2189C0972027CE4000771C1F /* GSRVenue.swift */,
-				2189C0952027CE4000771C1F /* locations.json */,
 				2189C09A2027CE4000771C1F /* GSRLocation.swift */,
 				2138D55E22599D4700D67CA2 /* GSRGroup.swift */,
 			);
@@ -1015,13 +1014,13 @@
 			isa = PBXGroup;
 			children = (
 				EFE2D6E6239B11050020F6BF /* GSRGroups */,
-				2189C08B2027CE2600771C1F /* EmptyView.swift */,
 				F2B8C40B252C58E600922D08 /* GSRClosedView.swift */,
 				2189C08A2027CE2600771C1F /* GSRRangeSlider.swift */,
 				2189C0882027CE2600771C1F /* GSRTimeCell.swift */,
 				2138E1F72252AFB500E4055A /* GSRLocationCell.swift */,
 				2189C0892027CE2600771C1F /* RoomCell.swift */,
 				21A6B6D32216824B003A357D /* ReservationCell.swift */,
+				6C23AF9426E57903002F60F0 /* EmptyView.swift */,
 				C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */,
 			);
 			path = Views;
@@ -1576,6 +1575,7 @@
 				F213CCEC23C3F6A8000AD90F /* SwiftyJSON */,
 				F213CCEF23C3F99B000AD90F /* ScrollableGraphView */,
 				F2568A752413534F00561295 /* SnapKit */,
+				6C369A1226E299A900721CA1 /* Alamofire */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -1668,6 +1668,7 @@
 				F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
 				F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				6C369A1126E299A900721CA1 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
@@ -1687,7 +1688,6 @@
 			files = (
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
 				B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */,
-				2189C09E2027CE4100771C1F /* locations.json in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1736,12 +1736,13 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimulatorStatusMagic.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1775,12 +1776,23 @@
 			buildActionMask = 12;
 			files = (
 			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Base32/Base32.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/OneTimePassword/OneTimePassword.framework",
+				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Base32.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OneTimePassword.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1860,9 +1872,9 @@
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
 				F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
+				6C369A1526E39BC100721CA1 /* GSRAPIResponse.swift in Sources */,
 				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
 				212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */,
-				2189C08F2027CE2600771C1F /* EmptyView.swift in Sources */,
 				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
 				21D5E07623BD45F400B331CC /* KeychainAccessible.swift in Sources */,
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
@@ -1954,6 +1966,7 @@
 				C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */,
 				EF6329A22409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift in Sources */,
 				21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */,
+				6C23AF9526E57903002F60F0 /* EmptyView.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
@@ -1998,7 +2011,6 @@
 				F2C7E5F5259EE1CA0043A98A /* CourseAlertSettings.swift in Sources */,
 				211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */,
 				EFE2D6F2239B11050020F6BF /* GroupMemberCell.swift in Sources */,
-				2189C0A02027CE4100771C1F /* GSRVenue.swift in Sources */,
 				215C605D205C88EA00FE271A /* ImageNetworkingManager.swift in Sources */,
 				2189C0872027CDD700771C1F /* GSRNetworkManager.swift in Sources */,
 				2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */,
@@ -2239,7 +2251,7 @@
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2323,7 +2335,7 @@
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2544,6 +2556,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6C369A1126E299A900721CA1 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.3;
+			};
+		};
 		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
@@ -2595,6 +2615,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6C369A1226E299A900721CA1 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C369A1126E299A900721CA1 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */;

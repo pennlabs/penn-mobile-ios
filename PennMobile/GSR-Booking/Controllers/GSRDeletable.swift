@@ -12,17 +12,17 @@ protocol GSRDeletable: IndicatorEnabled, ShowsAlert {}
 
 extension GSRDeletable where Self: UIViewController {
     
-    func deleteReservation(_ bookingID: String, _ callback: @escaping (_ success: Bool) -> Void) {
+    func deleteReservation(_ bookingId: String, _ callback: @escaping (_ success: Bool) -> Void) {
         confirmDelete {
             self.showActivity()
-            let sessionID = GSRUser.getSessionID()
-            GSRNetworkManager.instance.deleteReservation(bookingID: bookingID, sessionID: sessionID) { (success, errorMsg) in
+            GSRNetworkManager.instance.deleteReservation(bookingId: bookingId) { result in
                 DispatchQueue.main.async {
                     self.hideActivity()
-                    if success {
+                    switch result {
+                    case .success:
                         callback(true)
-                    } else if let errorMsg = errorMsg {
-                        self.showAlert(withMsg: errorMsg, title: "Uh oh!", completion: nil)
+                    case .failure(let error):
+                        self.showAlert(withMsg: error.rawValue, title: "Uh oh!", completion: nil)
                         callback(false)
                     }
                 }
@@ -31,7 +31,7 @@ extension GSRDeletable where Self: UIViewController {
     }
     
     func deleteReservation(_ reservation: GSRReservation, _ callback: @escaping (_ success: Bool) -> Void) {
-        deleteReservation(reservation.bookingID, callback)
+        deleteReservation(reservation.bookingId, callback)
     }
     
     func confirmDelete(_ callback: @escaping () -> Void) {
