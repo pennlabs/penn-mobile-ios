@@ -32,7 +32,10 @@ final class HomeReservationsCellItem: HomeCellItem {
     static func getItem(for json: JSON?) -> HomeCellItem? {
         guard let json = json else { return nil }
         do {
-            let reservations = try GSRNetworkManager.instance.parseReservationsFromArray(json: json)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let reservations = try decoder.decode([GSRReservation].self, from: json.rawData())
             return HomeReservationsCellItem(reservations: reservations)
         } catch {
             return nil

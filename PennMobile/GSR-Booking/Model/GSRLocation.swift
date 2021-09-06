@@ -8,11 +8,10 @@
 
 import Foundation
 
-struct GSRLocation {
+struct GSRLocation: Codable, Equatable {
     let lid: Int
-    var gid: Int?
+    let gid: Int
     let name: String
-    let service: String
+    let kind: String
+    let imageUrl: String
 }
-
-extension GSRLocation: Equatable {}

@@ -9,8 +9,7 @@
 import UIKit
 
 protocol GSRSelectionDelegate {
-    func containsTimeSlot(_ timeSlot: GSRTimeSlot) -> Bool
-    func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType)
+    func handleSelection(for id: Int)
 }
 
 class RoomCell: UITableViewCell {
@@ -50,23 +49,29 @@ class RoomCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func resetSelection() {
+        collectionView.indexPathsForSelectedItems?.forEach { collectionView.deselectItem(at: $0, animated: true) }
+    }
+    
+    func getSelectTimes() -> [GSRTimeSlot] {
+        (collectionView.indexPathsForSelectedItems ?? []).map( {
+            return room.availability[$0.item]
+        })
+    }
 }
 
 extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return room.timeSlots.count
+        return room.availability.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GSRTimeCell.identifier, for: indexPath) as! GSRTimeCell
-        let timeSlot = room.timeSlots[indexPath.row]
+        let timeSlot = room.availability[indexPath.row]
         cell.timeSlot = timeSlot
-        if delegate.containsTimeSlot(timeSlot) {
-            cell.backgroundColor = .baseYellow
-        } else {
-            cell.backgroundColor = timeSlot.isAvailable ? UIColor.baseGreen : UIColor.labelSecondary
-        }
+        cell.backgroundColor = timeSlot.isAvailable ? UIColor.baseGreen : UIColor.labelSecondary
         return cell
     }
     
@@ -75,35 +80,36 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         return CGSize(width: size, height: size)
     }
     
-    // MARK: - Collection View Delegate Methods
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let timeSlot = room.timeSlots[indexPath.row]
-        delegate?.handleSelection(for: room, timeSlot: timeSlot, action: SelectionType.add)
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = .baseYellow
-    }
-    
     //only enable selection for available rooms
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let timeSlot = room.timeSlots[indexPath.row]
+        let timeSlot = room.availability[indexPath.row]
         return timeSlot.isAvailable
     }
     
     // Deselect this time slot and all select ones that follow it
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        var currTimeSlot = room.timeSlots[indexPath.row]
-        var currIndex = indexPath
-        while delegate.containsTimeSlot(currTimeSlot) {
-            collectionView.deselectItem(at: currIndex, animated: false)
-            delegate?.handleSelection(for: room, timeSlot: currTimeSlot, action: SelectionType.remove)
-            let cell = collectionView.cellForItem(at: currIndex)
-            cell?.backgroundColor = .baseGreen
-            
-            currIndex = IndexPath(row: currIndex.row + 1, section: currIndex.section)
-            if let nextTimeSlot = currTimeSlot.next {
-                currTimeSlot = nextTimeSlot
-            } else {
-                break
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.baseGreen
+        
+        collectionView.indexPathsForSelectedItems?.forEach {
+            if $0.item > indexPath.item {
+                collectionView.deselectItem(at: $0, animated: true)
+                collectionView.reloadItems(at: [$0])
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate.handleSelection(for: room.id)
+        
+        let indexPaths = (collectionView.indexPathsForSelectedItems ?? []).sorted(by: {$0.item < $1.item})
+        
+        for i in 1..<indexPaths.count {
+            if (indexPaths[i].item - indexPaths[i-1].item != 1) {
+                let deselectIndexPath = indexPaths.filter({ $0 != indexPath })
+                deselectIndexPath.forEach({ collectionView.deselectItem(at: $0, animated: true)})
+                collectionView.reloadItems(at: deselectIndexPath)
+                return
             }
         }
     }

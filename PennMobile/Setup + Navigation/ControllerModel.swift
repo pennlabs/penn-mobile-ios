@@ -74,6 +74,8 @@ class ControllerModel: NSObject {
     // Features order in MoreViewController:
     var moreOrder: [Feature] {
         get {
+            //keeping this #if DEBUG in case we want to remove course alerts from production
+            //courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
             #if DEBUG
                 return [.news, .contacts, .courseSchedule, .courseAlerts, .about]
             #else
@@ -83,11 +85,13 @@ class ControllerModel: NSObject {
     }
     
     var moreIcons: [UIImage] {
+        //keeping this #if DEBUG in case we want to remove course alerts from production
+        //courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
         get {
             #if DEBUG
                 return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "logo-small")]
             #else
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "logo-small")]
+                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "logo-small")]
             #endif
         }
     }
