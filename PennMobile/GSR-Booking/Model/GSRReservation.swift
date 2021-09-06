@@ -13,12 +13,11 @@ enum GSRService: String {
     case libcal
 }
 
-struct GSRReservation {
+struct GSRReservation: Codable {
+    let bookingId: String
+    let gsr: GSRLocation
+    let roomId: Int
     let roomName: String
-    let gid: Int
-    let lid: Int
-    let bookingID: String
-    let startDate: Date
-    let endDate: Date
-    let service: GSRService
+    let start: Date
+    let end: Date
 }

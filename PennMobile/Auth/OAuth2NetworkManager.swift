@@ -227,6 +227,10 @@ extension OAuth2NetworkManager {
         try? secureStore.removeValue(for: secureKey)
     }
     
+    func clearCurrentAccessToken() {
+        currentAccessToken = nil
+    }
+    
     func hasRefreshToken() -> Bool {
         return getRefreshToken() != nil
     }

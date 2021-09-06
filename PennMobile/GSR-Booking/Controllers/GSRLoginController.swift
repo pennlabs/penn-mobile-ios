@@ -196,13 +196,7 @@ extension GSRLoginController: GSRBookable {
 
         let user = GSRUser(firstName: firstName, lastName: lastName, email: email, phone: "2158986533")
         if booking != nil {
-            booking.user = user
-            submitBooking(for: booking) { (success) in
-                if success {
-                    GSRUser.save(user: user)
-                }
-                self.dismiss(animated: true, completion: nil)
-            }
+            submitBooking(for: booking)
         } else {
             GSRUser.save(user: user)
             dismiss(animated: true, completion: nil)

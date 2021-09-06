@@ -8,56 +8,13 @@
 
 import Foundation
 
-public class GSRTimeSlot: NSObject {
-    let roomId: Int
-    let isAvailable: Bool
+struct GSRTimeSlot: Codable, Equatable {
     let startTime: Date
     let endTime: Date
+    var isAvailable: Bool = true
     
-    weak var prev: GSRTimeSlot? = nil
-    weak var next: GSRTimeSlot? = nil
-    
-    init(roomId: Int, isAvailable: Bool, startTime: Date, endTime: Date) {
-        self.roomId = roomId
-        self.isAvailable = isAvailable
-        self.startTime = startTime
-        self.endTime = endTime
-    }
-    
-    static func ==(lhs: GSRTimeSlot, rhs: GSRTimeSlot) -> Bool {
-        return lhs.roomId == rhs.roomId && lhs.isAvailable == rhs.isAvailable && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime
-    }
-    
-    func getLocalTimeString() -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "MMM d, h:mm a"
-        let dateStringStart = formatter.string(from: self.startTime)
-        let dateStringEnd = formatter.string(from: self.endTime)
-        return "\(dateStringStart) -> \(dateStringEnd)"
-    }
-
-}
-
-extension Array where Element: GSRTimeSlot {
-    var numberInRow: Int {
-        if count == 0 { return 0 }
-        var num = 1
-        var currTime: GSRTimeSlot = first!
-        while currTime.isAvailable && currTime.next != nil {
-            num += 1
-            currTime = currTime.next!
-        }
-        return num
-    }
-    
-    func firstTimeslot(duration: Int) -> GSRTimeSlot? {
-        let numSlots = duration / 30
-        for slot in self {
-            if [slot].numberInRow >= numSlots {
-                return slot
-            }
-        }
-        return nil
+    enum CodingKeys: CodingKey {
+        case startTime
+        case endTime
     }
 }

@@ -20,19 +20,17 @@ class ReservationCell: UITableViewCell {
     var reservation: GSRReservation! {
         didSet {
             locationLabel.text = String(reservation.roomName.split(separator: ":").first ?? "")
-            
+
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM d, YYYY"
-            dateLabel.text = formatter.string(from: reservation.startDate)
+            dateLabel.text = formatter.string(from: reservation.start)
             
             formatter.dateFormat = "h:mm a"
-            let startStr = formatter.string(from: reservation.startDate)
-            let endStr = formatter.string(from: reservation.endDate)
+            let startStr = formatter.string(from: reservation.start)
+            let endStr = formatter.string(from: reservation.end)
             timeLabel.text = "\(startStr) - \(endStr)"
             
-            if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(reservation.lid)-gid-\(reservation.gid).jpg") {
-                buildingImageView.kf.setImage(with: url)
-            }
+            buildingImageView.kf.setImage(with: URL(string: reservation.gsr.imageUrl))
         }
     }
     
