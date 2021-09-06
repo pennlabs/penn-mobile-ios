@@ -17,9 +17,8 @@ class GSRLocationCell: UITableViewCell {
     var location: GSRLocation! {
         didSet {
             locationLabel.text = location.name
-            if let url = URL(string: "https://s3.us-east-2.amazonaws.com/labs.api/gsr/lid-\(location.lid)-gid-\(location.gid ?? location.lid).jpg") {
-                buildingImageView.kf.setImage(with: url)
-            }
+           
+            buildingImageView.kf.setImage(with: URL(string: location.imageUrl)!)
         }
     }
         

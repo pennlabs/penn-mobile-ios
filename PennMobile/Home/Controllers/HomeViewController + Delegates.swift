@@ -18,7 +18,7 @@ extension HomeViewController: GSRDeletable {
         deleteReservation(bookingID) { (successful) in
             if successful {
                 guard let reservationItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.reservations]).first as? HomeReservationsCellItem else { return }
-                reservationItem.reservations = reservationItem.reservations.filter { $0.bookingID != bookingID }
+                reservationItem.reservations = reservationItem.reservations.filter { $0.bookingId != bookingID }
                 if reservationItem.reservations.isEmpty {
                     self.removeItem(reservationItem)
                 } else {
@@ -29,7 +29,7 @@ extension HomeViewController: GSRDeletable {
     }
     
     func deleteReservation(_ reservation: GSRReservation) {
-        deleteReservation(reservation.bookingID)
+        deleteReservation(reservation.bookingId)
     }
 }
 
@@ -43,7 +43,7 @@ extension HomeViewController: GSRBookable {
     }
     
     private func confirmBookingWanted(_ booking: GSRBooking) {
-        let message = "Booking \(booking.getRoomName()) from \(booking.getLocalTimeString())"
+        let message = "Booking \(booking.roomName) from \(booking.getLocalTimeString())"
         let alert = UIAlertController(title: "Confirm Booking",
                                       message: message,
                                       preferredStyle: .alert)
@@ -56,17 +56,17 @@ extension HomeViewController: GSRBookable {
     }
     
     private func handleBookingRequested(_ booking: GSRBooking) {
-        if GSRUser.hasSavedUser() {
-            booking.user = GSRUser.getUser()
-            submitBooking(for: booking) { (completion) in
-                self.fetchCellData(for: [HomeItemTypes.instance.studyRoomBooking])
-            }
-        } else {
-            let glc = GSRLoginController()
-            glc.booking = booking
-            let nvc = UINavigationController(rootViewController: glc)
-            present(nvc, animated: true, completion: nil)
-        }
+//        if GSRUser.hasSavedUser() {
+//            booking.user = GSRUser.getUser()
+//            submitBooking(for: booking) { (completion) in
+////                self.fetchCellData(for: [HomeItemTypes.instance.studyRoomBooking])
+//            }
+//        } else {
+//            let glc = GSRLoginController()
+//            glc.booking = booking
+//            let nvc = UINavigationController(rootViewController: glc)
+//            present(nvc, animated: true, completion: nil)
+//        }
     }
 }
 
