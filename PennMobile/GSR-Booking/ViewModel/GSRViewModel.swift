@@ -106,7 +106,6 @@ extension GSRViewModel: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RoomCell.identifier, for: indexPath) as! RoomCell
-        print(filteredRooms.count)
         cell.room = filteredRooms[indexPath.section]
         cell.contentView.isUserInteractionEnabled = false
         cell.delegate = self

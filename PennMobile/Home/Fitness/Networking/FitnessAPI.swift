@@ -50,7 +50,6 @@ extension FitnessFacilityData {
             let decodedSchedules = try decoder.decode(FitnessSchedules.self, from: json.rawData())
             self.load(inputSchedules: decodedSchedules)
         } catch {
-            print(error)
             return false
         }
         
