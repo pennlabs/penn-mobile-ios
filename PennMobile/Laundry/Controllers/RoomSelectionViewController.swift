@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol RoomSelectionVCDelegate: class {
+protocol RoomSelectionVCDelegate: AnyObject {
     func saveSelection(for rooms: [LaundryRoom])
 }
 

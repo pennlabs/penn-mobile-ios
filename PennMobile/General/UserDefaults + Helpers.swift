@@ -33,6 +33,7 @@ extension UserDefaults {
         case housing
         case privacyPreferences
         case notificationPreferences
+        case PCAPreferences
         case gsrGroupsEnabled
         case totpEnabledDate
         case lastDiningHoursRequest
@@ -398,6 +399,41 @@ extension UserDefaults {
             return filteredResults.contains { !$0.offCampus }
         }
     }
+}
+
+// MARK: - Penn Course Alert Settings
+extension UserDefaults {
+    
+    // MARK: Get and Save Preferences
+    // Set values for each PCA option
+    func set(_ PCAOption: PCAOption, to newValue: Bool) {
+        var prefs = getAllPCAPreferences()
+        prefs[PCAOption.rawValue] = newValue
+        saveAll(PCAPreferences: prefs)
+    }
+    
+    // Get values for each PCA option (default to false if no preference exists)
+    func getPreference(for option: PCAOption) -> Bool {
+        let prefs = getAllPCAPreferences()
+        return prefs[option.rawValue] ?? false
+    }
+    
+    // Fetch preferences from disk
+    func getAllPCAPreferences() -> PCAPreferences {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.PCAPreferences.rawValue) {
+            return (try? decoder.decode(PCAPreferences.self, from: decodedData)) ?? .init()
+        }
+        return .init()
+    }
+    
+    func saveAll(PCAPreferences: PCAPreferences) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(PCAPreferences) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.PCAPreferences.rawValue)
+        }
+    }
+    
 }
 
 // MARK: - Privacy Settings

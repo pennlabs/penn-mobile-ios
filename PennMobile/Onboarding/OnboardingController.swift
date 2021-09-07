@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol OnboardingDelegate: class {
+protocol OnboardingDelegate: AnyObject {
     func handleFinishedOnboarding()
 }
 

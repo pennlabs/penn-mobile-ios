@@ -13,6 +13,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
     
     fileprivate var ownContainerView: UIScrollView!
     fileprivate var barView: ButtonBarView!
+    fileprivate var separatorLine: UIView!
     
     override func viewDidLoad() {
         settings.style.buttonBarBackgroundColor = .uiBackground
@@ -39,7 +40,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         
         let barView = ButtonBarView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         self.barView = barView
-        let separatorLine = UIView()
+        separatorLine = UIView()
         separatorLine.backgroundColor = UIColor.grey1
         let containerView = UIScrollView()
         self.ownContainerView = containerView
@@ -89,7 +90,6 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         }
         
         return [child1, child2]
-        
     }
 }
 

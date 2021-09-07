@@ -28,6 +28,8 @@ PODS:
   - nanopb/encode (0.3.9011)
   - OneTimePassword (3.2.0):
     - Base32 (~> 1.1.2)
+  - SCLAlertView (0.8)
+  - ScrollableGraphView (4.0.6)
   - SimulatorStatusMagic (2.4.1)
   - XLPagerTabStrip (9.0.0)
 
@@ -37,6 +39,8 @@ DEPENDENCIES:
   - Firebase (~> 4.7)
   - MBProgressHUD (~> 0.8)
   - OneTimePassword (~> 3.2)
+  - SCLAlertView
+  - ScrollableGraphView
   - SimulatorStatusMagic
   - XLPagerTabStrip (~> 9.0)
 
@@ -53,6 +57,8 @@ SPEC REPOS:
     - MBProgressHUD
     - nanopb
     - OneTimePassword
+    - SCLAlertView
+    - ScrollableGraphView
     - SimulatorStatusMagic
     - XLPagerTabStrip
 
@@ -68,9 +74,11 @@ SPEC CHECKSUMS:
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   OneTimePassword: c00ecc908e67e6c5bfda9d50b0b2e4696d0b066e
+  SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
+  ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
   SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: a6ab3acbf2c34edb0a57369bbb5909e8141022f7
+PODFILE CHECKSUM: 5614727a7fd3c150fce595bdb18a15fc6b091712
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.1

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ModularTableViewItemTypes: class {
+protocol ModularTableViewItemTypes: AnyObject {
     func registerCells(for tableView: UITableView)
 }
 

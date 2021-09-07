@@ -70,9 +70,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 // Share the GSR Booking with the iOS share sheet
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                
-                print(startDateString)
-                print(endDateString)
 
                 var text = "Upcoming GSR in \(roomName) "
                 if let startDate = dateFormatter.date(from: startDateString), let endDate = dateFormatter.date(from: endDateString) {

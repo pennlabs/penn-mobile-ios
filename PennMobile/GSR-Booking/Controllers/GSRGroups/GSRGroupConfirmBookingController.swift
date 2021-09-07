@@ -11,7 +11,7 @@ import UIKit
 class GSRGroupConfirmBookingController: UIViewController {
     
     var group: GSRGroup!
-    var booking: GSRGroupBooking!
+//    var booking: GSRGroupBooking!
     
     fileprivate var titleLabel: UILabel!
     fileprivate var groupLabel: UILabel!

@@ -27,24 +27,17 @@ class GSRLocationModel {
         return ""
     }
     
-    private func fetchJSON() throws -> JSON {
-        guard let path = Bundle.main.path(forResource: "locations", ofType: "json") else {
-            throw NetworkingError.jsonError
-        }
-        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-        return JSON(data)
-    }
-    
     func prepare() {
-        guard let json = try? fetchJSON() else { return }
-        let locationsJSONArray = json["locations"].arrayValue
-        for json in locationsJSONArray {
-            let lid = json["lid"].intValue
-            let gid = json["gid"].int
-            let name = json["name"].stringValue
-            let service = json["service"].stringValue
-            let location = GSRLocation(lid: lid, gid: gid, name: name, service: service)
-            locations.append(location)
+        DispatchQueue.main.async {
+            GSRNetworkManager.instance.getLocations { result in
+                switch result {
+                case .success(let locations):
+                    self.locations = locations
+                case .failure:
+                    // TODO handle error
+                    break
+                }
+            }
         }
     }
 }

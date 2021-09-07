@@ -69,7 +69,6 @@ class DiningViewController: GenericTableViewController {
 //Mark: Networking to retrieve today's times
 extension DiningViewController {
     fileprivate func fetchDiningHours() {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         DiningAPI.instance.fetchDiningHours { (result) in
             DispatchQueue.main.async {
                 do {
@@ -86,7 +85,6 @@ extension DiningViewController {
                 self.viewModel.venues = DiningAPI.instance.getSectionedVenues()
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
         }
     }

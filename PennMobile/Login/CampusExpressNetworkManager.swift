@@ -31,7 +31,7 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
     func updateHousingData(_ completion: ((_ success: Bool) -> Void)? = nil) {
         makeAuthRequest(targetUrl: housingUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                if let doc = try? SwiftSoup.parse(html as String), let htmlStr = try? doc.body()?.html(), let html = htmlStr {
+                if let doc = try? SwiftSoup.parse(html as String), let htmlStr = ((try? doc.body()?.html()) as String??), let html = htmlStr {
                     UserDBManager.shared.saveHousingData(html: html) { (result) in
                         completion?(result != nil)
                     }
@@ -45,7 +45,7 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
     func getDiningBalanceHTML(callback: @escaping (_ html: String?, _ error: Error?) -> Void) {
         makeAuthRequest(targetUrl: diningUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                if let doc = try? SwiftSoup.parse(html as String), let htmlStr = try? doc.body()?.html() {
+                if let doc = try? SwiftSoup.parse(html as String), let htmlStr = ((try? doc.body()?.html()) as String??) {
                     callback(htmlStr, error)
                 }
             } else {

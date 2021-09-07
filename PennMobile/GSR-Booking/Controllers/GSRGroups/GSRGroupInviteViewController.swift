@@ -269,7 +269,7 @@ extension GSRGroupInviteViewController {
 
 extension GSRGroupInviteViewController {
     func prepareLoadingView() {
-        loadingView = UIActivityIndicatorView(style: .whiteLarge)
+        loadingView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
         loadingView.color = .black
         loadingView.isHidden = true
     

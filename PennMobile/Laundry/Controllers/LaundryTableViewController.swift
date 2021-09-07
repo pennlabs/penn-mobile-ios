@@ -123,11 +123,13 @@ extension LaundryTableViewController {
         if self.rooms.count > indexPath.section {
             let room = rooms[indexPath.section]
             let cell = tableView.dequeueReusableCell(withIdentifier: laundryCell) as! LaundryCell
+            cell.contentView.isUserInteractionEnabled = false
             cell.room = room
             cell.delegate = self
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: addLaundryCell) as! AddLaundryCell
+            cell.contentView.isUserInteractionEnabled = false
             cell.delegate = self
             cell.numberOfRoomsSelected = self.rooms.count
             return cell

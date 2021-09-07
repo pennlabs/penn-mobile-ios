@@ -17,7 +17,22 @@ class GSRTimeCell: UICollectionViewCell {
         didSet {
             startLabel.text = format(date: timeSlot.startTime)
             endLabel.text = format(date: timeSlot.endTime)
-            backgroundColor = timeSlot.isAvailable ? UIColor.baseGreen : UIColor.labelSecondary
+        }
+    }
+    
+    override var isSelected: Bool{
+        didSet{
+            if !timeSlot.isAvailable {
+                backgroundColor = UIColor.labelSecondary
+            } else {
+                UIView.animate(withDuration: 0.15) {
+                    if self.isSelected {
+                        self.backgroundColor = .baseYellow
+                    } else {
+                        self.backgroundColor = .baseGreen
+                    }
+                }
+            }
         }
     }
     

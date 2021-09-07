@@ -20,8 +20,8 @@ enum GSRState {
 
 protocol GSRViewModelDelegate: ShowsAlert {
     func refreshDataUI()
-    func refreshSelectionUI()
     func fetchData()
+    func resetDataForCell(at indexPath: IndexPath)
 }
 
 class GSRViewModel: NSObject {
@@ -35,10 +35,10 @@ class GSRViewModel: NSObject {
     
     // MARK: Room Data
     fileprivate var allRooms = [GSRRoom]()
-    fileprivate var currentRooms = [GSRRoom]()
+    fileprivate var filteredRooms = [GSRRoom]()
     
     // MARK: Current Selection
-    fileprivate var currentSelection = [GSRTimeSlot]()
+    fileprivate var selectedRoomId: Int? = nil
     
     // MARK: Delegate
     var delegate: GSRViewModelDelegate!
@@ -47,26 +47,10 @@ class GSRViewModel: NSObject {
         self.selectedLocation = selectedLocation
     }
     
-    // MARK: GSR State
-    var state: GSRState {
-        get {
-            if let booking = getBooking() {
-                return .readyToSubmit(booking)
-            } else {
-                return GSRUser.hasSavedUser() || GSRUser.getSessionID() != nil ? .loggedIn : .loggedOut
-            }
-        }
-    }
-    
-    // MARK: Logged In Flag
-    var isLoggedIn: Bool {
-        return GSRUser.hasSavedUser() || GSRUser.getSessionID() != nil
-    }
-    
     // MARK: Empty 
     var isEmpty: Bool {
         get {
-            return currentRooms.isEmpty
+            return filteredRooms.isEmpty
         }
     }
     
@@ -109,7 +93,7 @@ extension GSRViewModel: UIPickerViewDataSource, UIPickerViewDelegate {
 // MARK: - UITableViewDataSource
 extension GSRViewModel: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return currentRooms.count
+        return filteredRooms.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -117,12 +101,13 @@ extension GSRViewModel: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return currentRooms[section].name
+        return filteredRooms[section].roomName
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RoomCell.identifier, for: indexPath) as! RoomCell
-        cell.room = currentRooms[indexPath.section]
+        cell.room = filteredRooms[indexPath.section]
+        cell.contentView.isUserInteractionEnabled = false
         cell.delegate = self
         return cell
     }
@@ -138,17 +123,17 @@ extension GSRViewModel: UITableViewDelegate {
 // MARK: - Reload Data
 extension GSRViewModel {
     func updateData(with rooms: [GSRRoom]) {
-        var rooms = rooms
-        if let gid = selectedLocation.gid {
-            rooms = rooms.filter { $0.gid == gid }
-        }
-        self.allRooms = rooms
-        self.currentRooms = rooms
-        self.currentSelection = []
+        var populatedRooms = rooms
         
-        if let minDate = getMinDate(), let maxDate = getMaxDate() {
-            rooms.forEach { $0.addMissingTimeslots(minDate: max(minDate, Date()), maxDate: maxDate) }
+        let (minDate, maxDate) = rooms.getMinMaxDates()
+        
+        if let minDate = minDate, let maxDate = maxDate {
+            populatedRooms = rooms.map({ return GSRRoom(roomName: $0.roomName, id: $0.id, availability: $0.addMissingTimeslots(minDate: minDate, maxDate: maxDate))})
         }
+        
+        allRooms = populatedRooms
+        filteredRooms = populatedRooms
+        selectedRoomId = nil
     }
         
     func updateDates() {
@@ -158,53 +143,19 @@ extension GSRViewModel {
 
 // MARK: Selection Delegate
 extension GSRViewModel: GSRSelectionDelegate {
-    func containsTimeSlot(_ timeSlot: GSRTimeSlot) -> Bool {
-        return currentSelection.contains(timeSlot)
-    }
     
-    private func isValidAddition(timeSlot: GSRTimeSlot) -> Bool {
-        if currentSelection.isEmpty {
-            return true
+    func handleSelection(for id: Int) {
+        if (selectedRoomId != nil && selectedRoomId != id) {
+            let roomCell = filteredRooms.firstIndex(where: {$0.id == selectedRoomId})!
+            // There is only one row per section (room)
+            delegate.resetDataForCell(at: IndexPath(item: 0, section: roomCell))
         }
         
-        let isSameRoom = currentSelection.contains(where: { (otherTimeSlot) -> Bool in
-            otherTimeSlot.roomId == timeSlot.roomId
-        })
-        
-        var isBeforeOrAfter = false
-        for selection in currentSelection {
-            isBeforeOrAfter = isBeforeOrAfter || timeSlot == selection.prev || timeSlot == selection.next || timeSlot == selection
-        }
-        
-        return isSameRoom && isBeforeOrAfter
-    }
-    
-    func handleSelection(for room: GSRRoom, timeSlot: GSRTimeSlot, action: SelectionType) {
-        switch action {
-        case .add:
-            if currentSelection.contains(timeSlot) { break }
-            if !isValidAddition(timeSlot: timeSlot) && group == nil {
-                currentSelection.removeAll()
-                delegate.refreshDataUI()
-            }
-            currentSelection.append(timeSlot)
-            break
-        case .remove:
-            currentSelection.remove(at: currentSelection.firstIndex(of: timeSlot)!)
-            break
-        }
-        
-        if currentSelection.count == 0 || (currentSelection.count == 1 && action == .add) {
-            delegate.refreshSelectionUI()
-        }
-    }
-    
-    func clearSelection() {
-        currentSelection = []
+        selectedRoomId = id
     }
     
     func existsTimeSlot() -> Bool {
-        let roomsWithTimeSlots = allRooms.filter { $0.timeSlots.count > 0 }
+        let roomsWithTimeSlots = allRooms.filter { $0.availability.count > 0 }
         return roomsWithTimeSlots.count > 0
     }
 }
@@ -218,15 +169,17 @@ extension GSRViewModel: GSRRangeSliderDelegate {
     func updateCurrentRooms(startDate: Date, endDate: Date) {
         var currentRooms = [GSRRoom]()
         for room in allRooms {
-            let timeSlots = room.timeSlots.filter {
+            let timeSlots = room.availability.filter {
                 return $0.startTime >= startDate && $0.endTime <= endDate
             }
+            
+            var filteredRoom = room
+            filteredRoom.availability = timeSlots
             if !timeSlots.isEmpty {
-                let newRoom = GSRRoom(name: room.name, roomId: room.roomId, gid: room.gid, imageUrl: room.imageUrl, capacity: room.capacity, timeSlots: timeSlots)
-                currentRooms.append(newRoom)
+                currentRooms.append(filteredRoom)
             }
         }
-        self.currentRooms = currentRooms.sorted()
+        self.filteredRooms = currentRooms
     }
     
     func parseData(startDate: Date, endDate: Date) {
@@ -245,12 +198,12 @@ extension GSRViewModel: GSRRangeSliderDelegate {
         if selectedDate.day == dates[0].day {
             return Date().roundedDownToHalfHour
         } else {
-            return allRooms.getMinMaxDates(day: selectedDate).0
+            return allRooms.getMinMaxDates().0
         }
     }
     
     func getMaxDate() -> Date? {
-        return allRooms.getMinMaxDates(day: selectedDate).1
+        return allRooms.getMinMaxDates().1
     }
 }
 
@@ -264,34 +217,21 @@ extension GSRViewModel {
         return selectedDate
     }
     
-    func getBooking() -> GSRBooking? {
-        if currentSelection.isEmpty {
-            return nil
-        }
-        let roomId = currentSelection[0].roomId
-        let startTime: Date
-        let endTime: Date
-        var timeSlot = currentSelection[0]
-        while timeSlot.prev != nil && currentSelection.contains(timeSlot.prev!) {
-            timeSlot = timeSlot.prev!
-        }
-        startTime = timeSlot.startTime
-        while timeSlot.next != nil && currentSelection.contains(timeSlot.next!) {
-            timeSlot = timeSlot.next!
-        }
-        endTime = timeSlot.endTime
-        
-        if let group = group {
-            return GSRGroupBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime, gsrGroup: group)
-        }
-        
-        return GSRBooking(location: selectedLocation, roomId: roomId, start: startTime, end: endTime)
+    func getSelectedRoomId() -> Int? {
+        return selectedRoomId
     }
     
-    // TODO: - Logic for generating group bookings
-    func getGroupBooking() -> GSRGroupBookings? {
-        if currentSelection.isEmpty {
-            return nil
+    func getSelectRoomName() -> String? {
+        if let selectedRoomId = getSelectedRoomId() {
+            return filteredRooms.first(where: {$0.id == selectedRoomId})?.roomName
+        }
+        
+        return nil
+    }
+    
+    func getSelectedRoomIdIndexPath() -> IndexPath? {
+        if let selectedRoomId = selectedRoomId, let index = filteredRooms.firstIndex(where: {$0.id == selectedRoomId}) {
+            return IndexPath(item: 0, section: index)
         }
         
         return nil
