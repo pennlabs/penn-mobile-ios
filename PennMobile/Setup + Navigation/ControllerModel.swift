@@ -41,7 +41,11 @@ class ControllerModel: NSObject {
     func prepare() {
         vcDictionary = [Feature: UIViewController]()
         vcDictionary[.home] = HomeViewController()
-        vcDictionary[.dining] = DiningViewController()
+        if #available(iOS 14, *) {
+            vcDictionary[.dining] = DiningViewControllerSwiftUI()
+        } else {
+            vcDictionary[.dining] = DiningViewController()
+        }
         vcDictionary[.studyRoomBooking] = GSRTabController()
         vcDictionary[.laundry] = LaundryTableViewController()
         vcDictionary[.more] = MoreViewController()

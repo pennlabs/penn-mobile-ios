@@ -97,3 +97,74 @@ extension UIColor {
         return (red, green, blue, alpha)
     }
 }
+
+
+#if canImport(SwiftUI)
+import SwiftUI
+#endif
+
+@available(iOS 14, *)
+extension Color {
+    // MARK: - UI Palette
+    static let navigation = Color("navigation")
+    static let uiCardBackground = Color("uiCardBackground")
+    static let uiGroupedBackground = Color("uiGroupedBackground")
+    static let uiGroupedBackgroundSecondary = Color("uiGroupedBackgroundSecondary")
+    static let uiBackground = Color("uiBackground")
+    static let uiBackgroundSecondary = Color("uiBackgroundSecondary")
+    static let labelPrimary = Color("labelPrimary")
+    static let labelSecondary = Color("labelSecondary")
+    static let labelTertiary = Color("labelTertiary")
+    static let labelQuaternary = Color("labelQuaternary")
+    
+    // MARK: - Primary Palette
+    static var baseDarkBlue = Color("baseDarkBlue")
+    static let baseLabsBlue = Color("baseLabsBlue")
+    
+    // MARK: - Neutral Palette
+    static var grey1 = Color("grey1")
+    static var grey2 = Color("grey2")
+    static var grey3 = Color("grey3")
+    static var grey4 = Color("grey4")
+    static var grey5 = Color("grey5")
+    static var grey6 = Color("grey6")
+    
+    // MARK: - Secondary Palette
+    static var baseBlue = Color("baseBlue")
+    static var baseGreen = Color("baseGreen")
+    static var baseOrange = Color("baseOrange")
+    static var basePurple = Color("basePurple")
+    static var baseRed = Color("baseRed")
+    static var baseYellow = Color("baseYellow")
+    
+    // MARK: - Extended Palette
+    static var blueLight = Color("blueLighter")
+    static var blueLighter = Color("blueLighter")
+    static var blueDark = Color("blueDark")
+    static var blueDarker = Color("blueDarker")
+    
+    static var greenLight = Color("greenLighter")
+    static var greenLighter = Color("greenLighter")
+    static var greenDark = Color("greenDark")
+    static var greenDarker = Color("greenDarker")
+
+    static var orangeLight = Color("orangeLighter")
+    static var orangeLighter = Color("orangeLighter")
+    static var orangeDark = Color("orangeDark")
+    static var orangeDarker = Color("orangeDarker")
+
+    static var purpleLight = Color("purpleLighter")
+    static var purpleLighter = Color("purpleLighter")
+    static var purpleDark = Color("purpleDark")
+    static var purpleDarker = Color("purpleDarker")
+    
+    static var redLight = Color("redLight")
+    static var redLighter = Color("redLighter")
+    static var redDark = Color("redDark")
+    static var redDarker = Color("redDarker")
+
+    static var yellowLight = Color("yellowLighter")
+    static var yellowLighter = Color("yellowLighter")
+    static var yellowDark = Color("yellowDark")
+    static var yellowDarker = Color("yellowDarker")
+}

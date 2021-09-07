@@ -69,16 +69,20 @@ class DiningViewController: GenericTableViewController {
 //Mark: Networking to retrieve today's times
 extension DiningViewController {
     fileprivate func fetchDiningHours() {
-        DiningAPI.instance.fetchDiningHours { (success, error) in
+        DiningAPI.instance.fetchDiningHours { (result) in
             DispatchQueue.main.async {
-                if !success {
-                    if error {
+                do {
+                    try _ = result.get()
+                } catch {
+                    switch result {
+                    case .failure(.serverError):
                         self.navigationVC?.addStatusBar(text: .apiError)
-                    } else {
+                    default:
                         self.navigationVC?.addStatusBar(text: .noInternet)
                     }
                 }
-                self.viewModel.venues = DiningDataStore.shared.getSectionedVenues()
+                
+                self.viewModel.venues = DiningAPI.instance.getSectionedVenues()
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
             }
