@@ -10,7 +10,7 @@ import SwiftUI
 
 @available(iOS 14, *)
 struct DiningView: View {
-    @StateObject var diningVM = DiningViewModelSwiftUI()
+    @StateObject var diningVM = DiningViewModelSwiftUI.instance
     
     var body: some View {
         return

@@ -10,6 +10,7 @@ import SwiftUI
 
 @available(iOS 14, *)
 class DiningViewModelSwiftUI: ObservableObject {
+    static let instance = DiningViewModelSwiftUI()
     
     @Published var diningVenues: [DiningVenue.VenueType : [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
     @Published var diningInsights = DiningAPI.instance.getInsights()
