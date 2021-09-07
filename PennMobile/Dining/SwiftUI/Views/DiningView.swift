@@ -6,9 +6,7 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-#if canImport(SwiftUI)
 import SwiftUI
-#endif
 
 @available(iOS 14, *)
 struct DiningView: View {

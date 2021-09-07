@@ -6,10 +6,8 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-#if canImport(SwiftUI)
 import SwiftUI
 import KingfisherSwiftUI
-#endif
 
 @available(iOS 14, *)
 struct DiningVenueRow: View {
@@ -100,6 +98,7 @@ struct StatusColorModifier: ViewModifier {
     }
 }
 
+@available(iOS 14, *)
 struct VenueStatusLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 4) {

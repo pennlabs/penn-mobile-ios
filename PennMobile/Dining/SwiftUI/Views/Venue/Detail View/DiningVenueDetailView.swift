@@ -125,6 +125,7 @@ struct DiningVenueDetailView: View {
 
 
 // MARK: - Calculations for offsets + opacity
+@available(iOS 14, *)
 extension DiningVenueDetailView {
     
     private func getBackButtonYOffset(_ geometry: GeometryProxy) -> CGFloat {
@@ -186,24 +187,30 @@ struct DefaultNavigationBar: View {
     var title: String
    
     var body: some View {
-        VStack {
-            ZStack(alignment: .bottom) {
-                VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+        ZStack(alignment: .bottom) {
+            VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+            
+            VStack {
+                Spacer()
                 
                 HStack {
                     Button("Back") {
                         self.presentationMode.wrappedValue.dismiss()
                     }
+                    .frame(width: 70, height: 44)
+                    .contentShape(Rectangle())
+                    
                     Spacer()
-                }.padding([.leading, .bottom])
-                
-                HStack {
-                    Spacer()
-                    Text(title)
-                    Spacer()
-                }.padding(.bottom)
-            }.frame(width: width, height: height)
+                }
+            }
+            
+            VStack {
+                Spacer()
+                Text(title)
+                    .frame(height: 44)
+            }
         }
+        .frame(width: width, height: height)
     }
 }
 

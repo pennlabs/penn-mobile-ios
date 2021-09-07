@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 14, *)
 struct DiningVenueDetailHoursView: View {
     
     init(for venue: DiningVenue) {
@@ -43,6 +44,7 @@ struct DiningVenueDetailHoursView: View {
     }
 }
 
+@available(iOS 14, *)
 struct DiningVenueDetailHoursView_Previews: PreviewProvider {
     static var previews: some View {
         let path = Bundle.main.path(forResource: "sample-dining-venue", ofType: "json")

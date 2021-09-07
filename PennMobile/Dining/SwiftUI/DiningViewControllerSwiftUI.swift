@@ -6,10 +6,7 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-import UIKit
-#if canImport(SwiftUI)
 import SwiftUI
-#endif
 
 @available(iOS 14, *)
 class DiningViewControllerSwiftUI: GenericViewController {
