@@ -533,6 +533,8 @@ extension Bundle {
         }
         
         return decoded
+    }
+}
 
 extension URL {
     mutating func appendQueryItem(name: String, value: String?) {

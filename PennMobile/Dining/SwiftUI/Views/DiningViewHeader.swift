@@ -64,6 +64,7 @@ struct DiningViewHeaderBalance: View {
     }
 }
 
+@available(iOS 14, *)
 struct BalanceLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack {

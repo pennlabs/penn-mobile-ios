@@ -97,12 +97,6 @@ class PennCoordinate {
     func getRegion(for dining: DiningVenue, at scale: PennCoordinateScale) -> MKCoordinateRegion {
         return MKCoordinateRegion.init(center: getCoordinates(for: dining), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
     }
-    
-    
-    // TODO: Implement a switch statement that matches GSR venue IDs with GPS coords
-    func getCoordinates(for gsr: GSRVenue) -> CLLocationCoordinate2D {
-        return getDefault()
-    }
 }
 
 // MARK: - Placemarks
