@@ -76,6 +76,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         let daniel = Member(firstName: "Daniel", lastName: "Duan", image: "daniel.jpg")
         let raunaq = Member(firstName: "Raunaq", lastName: "Singh", image: "raunaq.jpeg")
         let benK = Member(firstName: "Ben", lastName: "Kaufman", image: "benk.jpg")
+        let sherie = Member(firstName: "Sherie", lastName: "Pan", image: "sherie.jpeg")
         
 
         var currentMembers = [Member]()
@@ -83,7 +84,7 @@ class AboutViewController : UIViewController, UICollectionViewDelegateFlowLayout
         
         //fill the arrays with members, and sort alphabetically
         pastMembers += [marta, grace, ben, tiff, zhilei, laura, adel, yagil, josh, dom, carin, salib, liz]
-        currentMembers += [rehaan, henrique, lucy, matthew, hassan, jongmin, adam, justin, raunaq, daniel, benK]
+        currentMembers += [rehaan, henrique, lucy, matthew, hassan, jongmin, adam, justin, raunaq, daniel, benK, sherie]
 
         pastMembers.sort(by: {$0 < $1})
         currentMembers.sort(by: {$0 < $1})
