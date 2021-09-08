@@ -99,9 +99,7 @@ extension UIColor {
 }
 
 
-#if canImport(SwiftUI)
 import SwiftUI
-#endif
 
 @available(iOS 14, *)
 extension Color {
