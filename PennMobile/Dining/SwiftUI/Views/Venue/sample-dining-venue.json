@@ -1,0 +1,1122 @@
+{
+  "document": {
+    "venue": [
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/593",
+        "dateHours": [
+          {
+            "date": "2021-09-02",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "21:30:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-04",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "09:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-05",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "09:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-06",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "09:00:00",
+                "open": "07:30:00",
+                "type": "Closed"
+              },
+              {
+                "close": "14:00:00",
+                "open": "09:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "21:30:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "21:30:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/1920-commons/",
+        "id": 593,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/1920-commons.jpg",
+        "name": "1920 Commons",
+        "venueType": "residential",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/593"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/636",
+        "dateHours": [
+          {
+            "date": "2021-09-02",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "21:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "19:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-04",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-05",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-06",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "10:00:00",
+                "open": "07:30:00",
+                "type": "Closed"
+              },
+              {
+                "close": "14:00:00",
+                "open": "10:00:00",
+                "type": "Brunch"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "21:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "07:30:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "21:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/hill-house/",
+        "id": 636,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/Hill+House.jpg",
+        "name": "Hill House",
+        "venueType": "residential",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/636"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/637",
+        "dateHours": [
+          {
+            "date": "2021-09-02",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "08:00:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "08:00:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "08:00:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "10:30:00",
+                "open": "08:00:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/kings-court-english-house/",
+        "id": 637,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/kceh.jpg",
+        "name": "English House",
+        "venueType": "residential",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/637"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/638",
+        "dateHours": [
+          {
+            "date": "2021-09-02",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "11:30:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "19:30:00",
+                "open": "17:30:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "11:30:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "20:00:00",
+                "open": "17:30:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-06",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "11:30:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "14:00:00",
+                "open": "11:30:00",
+                "type": "Closed"
+              },
+              {
+                "close": "19:30:00",
+                "open": "17:30:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "11:30:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "19:30:00",
+                "open": "17:30:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "11:30:00",
+                "type": "Lunch"
+              },
+              {
+                "close": "19:30:00",
+                "open": "17:30:00",
+                "type": "Dinner"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/falk-dining-commons/",
+        "id": 638,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/hillel.jpg",
+        "name": "Falk Kosher Dining",
+        "venueType": "residential",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/638"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/639",
+        "dateHours": [
+          {
+            "date": "2021-09-02",
+            "meal": [
+              {
+                "close": "19:00:00",
+                "open": "08:00:00",
+                "type": "The Market Caf\u00e9"
+              },
+              {
+                "close": "19:00:00",
+                "open": "11:00:00",
+                "type": "Houston Market"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "17:00:00",
+                "open": "08:00:00",
+                "type": "The Market Caf\u00e9"
+              },
+              {
+                "close": "17:00:00",
+                "open": "11:00:00",
+                "type": "Houston Market"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "19:00:00",
+                "open": "08:00:00",
+                "type": "The Market Caf\u00e9"
+              },
+              {
+                "close": "19:00:00",
+                "open": "11:00:00",
+                "type": "Houston Market"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "19:00:00",
+                "open": "08:00:00",
+                "type": "The Market Caf\u00e9"
+              },
+              {
+                "close": "19:00:00",
+                "open": "11:00:00",
+                "type": "Houston Market"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/houston-market/",
+        "id": 639,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/houston.jpg",
+        "name": "Houston Market",
+        "venueType": "retail",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/639"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/641",
+        "dateHours": [
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "08:00:00",
+                "type": "Accenture"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "17:00:00",
+                "open": "08:00:00",
+                "type": "Accenture"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "17:00:00",
+                "open": "08:00:00",
+                "type": "Accenture"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/accenture-cafe/",
+        "id": 641,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/accenture.png",
+        "name": "Accenture Caf\u00e9",
+        "venueType": "retail",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/641"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/642",
+        "dateHours": [
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "13:30:00",
+                "open": "08:00:00",
+                "type": "Joe"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "17:00:00",
+                "open": "08:00:00",
+                "type": "Joe"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "17:00:00",
+                "open": "08:00:00",
+                "type": "Joe"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/joes-cafe/",
+        "id": 642,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/Penn.JoesCafe-Int5.72W.jpg",
+        "name": "Joe's Caf\u00e9",
+        "venueType": "retail",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/642"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/747",
+        "dateHours": [
+          {
+            "date": "2021-09-02",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "11:00:00",
+                "type": "Lunch"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/mcclelland/",
+        "id": 747,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/mcclelland.jpg",
+        "name": "McClelland Express",
+        "venueType": "residential",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/747"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1057",
+        "dateHours": [
+          {
+            "date": "2021-09-02",
+            "meal": [
+              {
+                "close": "23:59:00",
+                "open": "11:00:00",
+                "type": "Gourmet Grocer"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "21:00:00",
+                "open": "11:00:00",
+                "type": "Gourmet Grocer"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-04",
+            "meal": [
+              {
+                "close": "18:00:00",
+                "open": "11:00:00",
+                "type": "Gourmet Grocer"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-05",
+            "meal": [
+              {
+                "close": "18:00:00",
+                "open": "11:00:00",
+                "type": "Gourmet Grocer"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-06",
+            "meal": [
+              {
+                "close": "23:59:00",
+                "open": "11:00:00",
+                "type": "Gourmet Grocer"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "23:59:00",
+                "open": "11:00:00",
+                "type": "Gourmet Grocer"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "23:59:00",
+                "open": "11:00:00",
+                "type": "Gourmet Grocer"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/1920-gourmet-grocer/",
+        "id": 1057,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/gourmetgrocer.jpg",
+        "name": "1920 Gourmet Grocer",
+        "venueType": "retail",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/1057"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1163",
+        "dateHours": [
+          {
+            "date": "2021-09-02",
+            "meal": [
+              {
+                "close": "23:59:00",
+                "open": "08:00:00",
+                "type": "Starbucks"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "21:00:00",
+                "open": "08:00:00",
+                "type": "Starbucks"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-04",
+            "meal": [
+              {
+                "close": "21:00:00",
+                "open": "08:00:00",
+                "type": "Starbucks"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-05",
+            "meal": [
+              {
+                "close": "18:00:00",
+                "open": "11:00:00",
+                "type": "Starbucks"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-06",
+            "meal": [
+              {
+                "close": "23:59:00",
+                "open": "11:00:00",
+                "type": "Starbucks"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "23:59:00",
+                "open": "08:00:00",
+                "type": "Starbucks"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "23:59:00",
+                "open": "08:00:00",
+                "type": "Starbucks"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/1920-starbucks/",
+        "id": 1163,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/starbucks.jpg",
+        "name": "1920 Starbucks",
+        "venueType": "retail",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/1163"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1442",
+        "dateHours": [
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/new-college-house/",
+        "id": 1442,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/nch.jpg",
+        "name": "Lauder College House",
+        "venueType": "residential",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/1442"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1731",
+        "dateHours": [
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "23:59:00",
+                "open": "20:30:00",
+                "type": "late night"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "23:59:00",
+                "open": "20:30:00",
+                "type": "late night"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/nch-retail/",
+        "id": 1731,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/nch.jpg",
+        "name": "LCH Retail",
+        "venueType": "retail",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/1731"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1732",
+        "dateHours": [
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "16:00:00",
+                "open": "08:00:00",
+                "type": "Pret a Manger"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "16:00:00",
+                "open": "08:00:00",
+                "type": "Pret a Manger"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/pret-a-manger-upper/",
+        "id": 1732,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/MBA+Cafe.jpg",
+        "name": "Pret a Manger MBA",
+        "venueType": "retail",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/1732"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1733",
+        "dateHours": [
+          {
+            "date": "2021-09-02",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "08:00:00",
+                "type": "Pret a Manger"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "16:00:00",
+                "open": "08:00:00",
+                "type": "Pret a Manger"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-04",
+            "meal": [
+              {
+                "close": "16:00:00",
+                "open": "08:00:00",
+                "type": "Pret a Manger"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-05",
+            "meal": [
+              {
+                "close": "16:00:00",
+                "open": "08:00:00",
+                "type": "Pret a Manger"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-06",
+            "meal": [
+              {
+                "close": "16:00:00",
+                "open": "08:00:00",
+                "type": "Pret a Manger"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "08:00:00",
+                "type": "Pret a Manger"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "08:00:00",
+                "type": "Pret a Manger"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/pret-a-manger-lower/",
+        "id": 1733,
+        "imageURL": "https://s3.us-east-2.amazonaws.com/labs.api/dining/Pret+A+Manger.jpg",
+        "name": "Pret a Manger Locust Walk",
+        "venueType": "retail",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/1733"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1464004",
+        "dateHours": [
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "20:00:00",
+                "open": "17:00:00",
+                "type": "Dinner"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/quaker-kitchen/",
+        "id": 1464004,
+        "imageURL": null,
+        "name": "Quaker Kitchen",
+        "venueType": "retail",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/1464004"
+      },
+      {
+        "dailyMenuURL": "http://www.cafebonappetit.com/feeds/daily/1464009",
+        "dateHours": [
+          {
+            "date": "2021-09-03",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "08:00:00",
+                "type": "Breakfast"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-07",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "08:00:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "23:30:00",
+                "open": "20:30:00",
+                "type": "Late Night"
+              }
+            ]
+          },
+          {
+            "date": "2021-09-08",
+            "meal": [
+              {
+                "close": "14:00:00",
+                "open": "08:00:00",
+                "type": "Breakfast"
+              },
+              {
+                "close": "23:30:00",
+                "open": "20:30:00",
+                "type": "Late Night"
+              }
+            ]
+          }
+        ],
+        "facilityURL": "http://university-of-pennsylvania.cafebonappetit.com/cafe/cafe-west/",
+        "id": 1464009,
+        "imageURL": null,
+        "name": "Cafe West",
+        "venueType": "retail",
+        "weeklyMenuURL": "http://www.cafebonappetit.com/feeds/weekly/1464009"
+      }
+    ]
+  }
+}

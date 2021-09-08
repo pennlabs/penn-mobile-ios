@@ -1,0 +1,1067 @@
+{
+  "Document": {
+    "location": "1920 Commons",
+    "menudate": "1/17/2021",
+    "tblMenu": {
+      "tblDayPart": [
+        {
+          "tblStation": [
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "herb and garlic roasted vegetables",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "roasted root vegetable hash"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegetarian"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      },
+                      {
+                        "description": "Humane"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "lightly seasoned scrambled cage free eggs",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "scrambled eggs"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegetarian"
+                      },
+                      {
+                        "description": "Humane"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "vanilla custard dipped thick cut Texas toast griddle toasted golden brown",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "vanilla French toast"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Made without Gluten-Containing Ingredients"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "broiled pork sausage",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "zesty pork breakfast sausage"
+                }
+              ],
+              "txtStationDescription": "breakfast grill"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "sauteed yellow squash with zucchini, onion, garlic and basil",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "squash medley"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "steamed brown rice saut\u00e9ed with carrot, celery, and onion",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "brown rice pilaf"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      },
+                      {
+                        "description": "Halal"
+                      },
+                      {
+                        "description": "Farm to Fork"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "oven-roasted honey, paprika, garlic, and lime marinated Murray's chicken",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "honey lime chicken"
+                }
+              ],
+              "txtStationDescription": "SimplyOASIS"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Halal"
+                      },
+                      {
+                        "description": "Humane"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "roasted chicken with arugula, tomato, sriracha mayo on ciabatta roll",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "sriracha chicken sandwich"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegan"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "whole wheat tortilla filled with roasted garlic hummus, roasted squash, mushrooms, peppers, onions and arugula",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "roasted vegetable with arugula wrap"
+                }
+              ],
+              "txtStationDescription": "commons' deli"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegan"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "breakfast porridge of simmered oats",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "old-fashioned oatmeal"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegetarian"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      },
+                      {
+                        "description": "Farm to Fork"
+                      },
+                      {
+                        "description": "Humane"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "hard-boiled, cage free eggs sourced from The Common Market",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "boiled eggs"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      },
+                      {
+                        "description": "Humane"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "lean roasted turkey breast, hearty chicken broth, celery, carrot, onion, herbs and finished with steamed rice",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "turkey with rice"
+                }
+              ],
+              "txtStationDescription": "kettles"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "a selection of bread and bagels served with your choice of peanut butter, jelly, butter and cream cheese on the side",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "breads"
+                }
+              ],
+              "txtStationDescription": "breads and bagels"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "house-made pizza dough, topped with house-made pizza sauce and shredded mozzarella cheese",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "classic cheese pizza"
+                },
+                {
+                  "tblAttributes": "",
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "house-made pizza dough, topped with house-made pizza sauce shredded mozzarella cheese and slice pork pepperoni",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "classic pepperoni pizza"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegan"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "al dente pasta, chunky house made sauce pomodoro, chopped basil",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "pasta pomodoro"
+                }
+              ],
+              "txtStationDescription": "pizza & pasta"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "steamed ancient grain, shredded coconut, diced fruit, dried fruit medley, infused agave",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "quinoa brunch bowl"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "seasoned crumbled tofu enhanced with bell peppers",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "breakfast tofu scramble"
+                }
+              ],
+              "txtStationDescription": "very veggie"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Humane"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "savory turkey burger"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Humane"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "angus beef frank"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegan"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "vegan burger patty"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "seasoned fries"
+                }
+              ],
+              "txtStationDescription": "grill"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "arcadian mixed greens with carrot, tomato and cucumber and balsamic vinaigrette",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "mixed green salad"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Farm to Fork"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "chopped romaine with house-made parmesan croutons, Murray's grilled chicken breast, parmesan cheese and house-made caesar dressing",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "grilled chicken caesar salad"
+                }
+              ],
+              "txtStationDescription": "salad bar"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "a variety of fresh hand cut fruit",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "fresh fruit cups"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "a variety of flavored yogurt cups",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "yogurt cups"
+                }
+              ],
+              "txtStationDescription": "fruit and yogurt"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegan"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "smooth garbanzo hummus with sesame tahini, lemon and garlic served with garlic toasted pita triangles",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "hummus with toasted pita"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "artichoke hearts marinated in a basil vinaigrette accented with roasted red peppers",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "herb marinated artichokes"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegetarian"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "feta cheese with extra virgin olive oil and fresh basil",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "herbed feta cheese"
+                }
+              ],
+              "txtStationDescription": "mezze"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "a variety of cereal flavors to choose from with milk served on the side",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "breakfast cereals"
+                }
+              ],
+              "txtStationDescription": "cereal"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "a variety of classic continental breakfast pastries",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "breakfast pastries"
+                }
+              ],
+              "txtStationDescription": "sweets and treats"
+            }
+          ],
+          "txtDayPartDescription": "Brunch"
+        },
+        {
+          "tblStation": [
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "crisp steamed seasonal vegetable",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "steamed broccoli"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "steamed lightly seasoned potatoes, finished with fresh chopped Italian parsley",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "red potatoes"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Humane"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "tender cubes of slow roasted beef eye round braised with garlic, herbs, Spanish onion, and hearty beef stock",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "cubed beef braised onions"
+                }
+              ],
+              "txtStationDescription": "comfort"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "sauteed yellow squash with zucchini, onion, garlic and basil",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "squash medley"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "steamed brown rice saut\u00e9ed with carrot, celery, and onion",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "brown rice pilaf"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      },
+                      {
+                        "description": "Halal"
+                      },
+                      {
+                        "description": "Farm to Fork"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "oven-roasted honey, paprika, garlic, and lime marinated Murray's chicken",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "honey lime chicken"
+                }
+              ],
+              "txtStationDescription": "SimplyOASIS"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Halal"
+                      },
+                      {
+                        "description": "Humane"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "roasted chicken with arugula, tomato, sriracha mayo on ciabatta roll",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "sriracha chicken sandwich"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegan"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "whole wheat tortilla filled with roasted garlic hummus, roasted squash, mushrooms, peppers, onions and arugula",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "roasted vegetable with arugula wrap"
+                }
+              ],
+              "txtStationDescription": "commons' deli"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "corn, lima beans, carrots, diced tomato, chopped spinach, hearty vegetable stock and quinoa",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "mixed vegetable with quinoa"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      },
+                      {
+                        "description": "Humane"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "lean roasted turkey breast, hearty chicken broth, celery, carrot, onion, herbs and finished with steamed rice",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "turkey with rice"
+                }
+              ],
+              "txtStationDescription": "kettles"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "a selection of bread and bagels served with your choice of peanut butter, jelly, butter and cream cheese on the side",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "breads"
+                }
+              ],
+              "txtStationDescription": "breads and bagels"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "house-made pizza dough, topped with house-made pizza sauce and shredded mozzarella cheese",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "classic cheese pizza"
+                },
+                {
+                  "tblAttributes": "",
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "house-made pizza dough, topped with house-made pizza sauce shredded mozzarella cheese and slice pork pepperoni",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "classic pepperoni pizza"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegan"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "al dente pasta, chunky house made sauce pomodoro, chopped basil",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "pasta pomodoro"
+                }
+              ],
+              "txtStationDescription": "pizza & pasta"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      },
+                      {
+                        "description": "Jain"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "snowpeas, edamame, peppers, zucchini and bok choy, flash sauteed with steamed rice noodles finished with agave sweetened soy",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "vegetable stir fry with rice noodles"
+                }
+              ],
+              "txtStationDescription": "very veggie"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Humane"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "savory turkey burger"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Humane"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "angus beef frank"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegan"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "vegan burger patty"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "seasoned fries"
+                }
+              ],
+              "txtStationDescription": "grill"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "arcadian mixed greens with carrot, tomato and cucumber and balsamic vinaigrette",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "mixed green salad"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Farm to Fork"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "chopped romaine with house-made parmesan croutons, Murray's grilled chicken breast, parmesan cheese and house-made caesar dressing",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "grilled chicken caesar salad"
+                }
+              ],
+              "txtStationDescription": "salad bar"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "a variety of fresh hand cut fruit",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "fresh fruit cups"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "a variety of flavored yogurt cups",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "yogurt cups"
+                }
+              ],
+              "txtStationDescription": "fruit and yogurt"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegan"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "smooth garbanzo hummus with sesame tahini, lemon and garlic served with garlic toasted pita triangles",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "hummus with toasted pita"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegan"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "artichoke hearts marinated in a basil vinaigrette accented with roasted red peppers",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "herb marinated artichokes"
+                },
+                {
+                  "tblAttributes": {
+                    "txtAttribute": [
+                      {
+                        "description": "Vegetarian"
+                      },
+                      {
+                        "description": "Made without Gluten-Containing Ingredients"
+                      }
+                    ]
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "feta cheese with extra virgin olive oil and fresh basil",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "herbed feta cheese"
+                }
+              ],
+              "txtStationDescription": "mezze"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "a variety of cereal flavors to choose from with milk served on the side",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "breakfast cereals"
+                }
+              ],
+              "txtStationDescription": "cereal"
+            },
+            {
+              "tblItem": [
+                {
+                  "tblAttributes": {
+                    "txtAttribute": {
+                      "description": "Vegetarian"
+                    }
+                  },
+                  "tblFarmToFork": "",
+                  "tblSide": "",
+                  "txtDescription": "a variety of pies and cakes and house-made desserts",
+                  "txtNutritionInfo": "",
+                  "txtPrice": "",
+                  "txtTitle": "desserts"
+                }
+              ],
+              "txtStationDescription": "sweets and treats"
+            }
+          ],
+          "txtDayPartDescription": "Dinner"
+        }
+      ]
+    }
+  }
+}

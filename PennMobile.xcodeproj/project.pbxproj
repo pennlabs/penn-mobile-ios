@@ -21,7 +21,6 @@
 		212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B8354222A31B500F835D6 /* HomePostCellItem.swift */; };
 		212B8357222A31C300F835D6 /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B8356222A31C300F835D6 /* HomePostCell.swift */; };
 		212B8359222A331D00F835D6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B8358222A331D00F835D6 /* Post.swift */; };
-		212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B835B222A37D000F835D6 /* HomeFeatureCellItem.swift */; };
 		212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B835D222A37DD00F835D6 /* HomeFeatureCell.swift */; };
 		212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B835F222A37FE00F835D6 /* FeatureAnnouncement.swift */; };
 		2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2130A5052238C2F000DFEEC7 /* PennLoginController.swift */; };
@@ -44,7 +43,6 @@
 		21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D532010526B002F33CA /* HomeTableViewModel.swift */; };
 		21640D5C20105B98002F33CA /* HomeDiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5B20105B98002F33CA /* HomeDiningCell.swift */; };
 		21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5D20105BAC002F33CA /* HomeLaundryCell.swift */; };
-		21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5F20105BB4002F33CA /* HomeStudyRoomCell.swift */; };
 		21640D6220114A29002F33CA /* ControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D6120114A28002F33CA /* ControllerModel.swift */; };
 		21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD2204A296D008DB6E8 /* LaundryGraphView.swift */; };
 		21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD6204A5309008DB6E8 /* LaundryMachineCellTappable.swift */; };
@@ -144,9 +142,48 @@
 		66E8ECA52381CAA900945BEA /* TOTPFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */; };
 		66E8ECA72381CB5100945BEA /* TwoFactorTokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */; };
 		66E8ECA92381CD2F00945BEA /* TOTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */; };
-		6C23AF9526E57903002F60F0 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C23AF9426E57903002F60F0 /* EmptyView.swift */; };
-		6C369A1326E299A900721CA1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6C369A1226E299A900721CA1 /* Alamofire */; };
-		6C369A1526E39BC100721CA1 /* GSRAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C369A1426E39BC100721CA1 /* GSRAPIResponse.swift */; };
+		6C23AF9526E57903002F60F0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6C369A1526E39BC100721CA1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */; };
+		6C6035F326E722890025FBC7 /* DiningVenueDetailLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035ED26E722890025FBC7 /* DiningVenueDetailLocationView.swift */; };
+		6C6035F426E722890025FBC7 /* DiningVenueDetailMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035EE26E722890025FBC7 /* DiningVenueDetailMenuView.swift */; };
+		6C6035F526E722890025FBC7 /* MenuDisclosureGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035EF26E722890025FBC7 /* MenuDisclosureGroup.swift */; };
+		6C6035F626E722890025FBC7 /* DiningVenueDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035F026E722890025FBC7 /* DiningVenueDetailView.swift */; };
+		6C6035F726E722890025FBC7 /* DiningVenueDetailHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035F126E722890025FBC7 /* DiningVenueDetailHoursView.swift */; };
+		6C6035F826E722890025FBC7 /* mock_menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 6C6035F226E722890025FBC7 /* mock_menu.json */; };
+		6C6035FA26E722E60025FBC7 /* GSRAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035F926E722E60025FBC7 /* GSRAPIResponse.swift */; };
+		6C6035FC26E723240025FBC7 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035FB26E723240025FBC7 /* EmptyView.swift */; };
+		6C84D9E526293E680039C57F /* UIKit Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C84D9E426293E680039C57F /* UIKit Views.swift */; };
+		6C88FE9425337476006F4587 /* DiningViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C88FE9325337476006F4587 /* DiningViewControllerSwiftUI.swift */; };
+		6CAE4351253370B300BD0200 /* FadingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE434E253370B200BD0200 /* FadingScrollView.swift */; };
+		6CAE4352253370B300BD0200 /* AlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE434F253370B200BD0200 /* AlertModifier.swift */; };
+		6CAE437D253370E500BD0200 /* DiningViewModelSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE435A253370E500BD0200 /* DiningViewModelSwiftUI.swift */; };
+		6CAE4380253370E500BD0200 /* FrequentLocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE435F253370E500BD0200 /* FrequentLocationsView.swift */; };
+		6CAE4381253370E500BD0200 /* RecentTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4360253370E500BD0200 /* RecentTransactionsView.swift */; };
+		6CAE4382253370E500BD0200 /* DiningBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4361253370E500BD0200 /* DiningBalanceView.swift */; };
+		6CAE4383253370E500BD0200 /* DailyAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4362253370E500BD0200 /* DailyAverageView.swift */; };
+		6CAE4384253370E500BD0200 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4364253370E500BD0200 /* CardView.swift */; };
+		6CAE4385253370E600BD0200 /* CardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4365253370E500BD0200 /* CardHeaderView.swift */; };
+		6CAE4386253370E600BD0200 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4367253370E500BD0200 /* VariableStepLineGraphView+GraphEndpointPath.swift */; };
+		6CAE4387253370E600BD0200 /* PredictionsGraphView+SmoothedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4368253370E500BD0200 /* PredictionsGraphView+SmoothedData.swift */; };
+		6CAE4388253370E600BD0200 /* PredictionsGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4369253370E500BD0200 /* PredictionsGraphView.swift */; };
+		6CAE4389253370E600BD0200 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE436A253370E500BD0200 /* VariableStepLineGraphView+PredictionSlopePath.swift */; };
+		6CAE438A253370E600BD0200 /* PredictionsGraphView+AxisLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE436B253370E500BD0200 /* PredictionsGraphView+AxisLabels.swift */; };
+		6CAE438B253370E600BD0200 /* VariableStepLineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE436C253370E500BD0200 /* VariableStepLineGraphView.swift */; };
+		6CAE438C253370E600BD0200 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE436D253370E500BD0200 /* VariableStepLineGraphView+VariableStepGraphPath.swift */; };
+		6CAE438D253370E600BD0200 /* DiningInsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE436E253370E500BD0200 /* DiningInsightsView.swift */; };
+		6CAE438E253370E600BD0200 /* DiningViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE436F253370E500BD0200 /* DiningViewHeader.swift */; };
+		6CAE438F253370E600BD0200 /* DiningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4370253370E500BD0200 /* DiningView.swift */; };
+		6CAE4390253370E600BD0200 /* DiningVenueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4372253370E500BD0200 /* DiningVenueView.swift */; };
+		6CAE4391253370E600BD0200 /* DiningVenueRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE4373253370E500BD0200 /* DiningVenueRow.swift */; };
+		6CAE4392253370E600BD0200 /* sample-dining-venue.json in Resources */ = {isa = PBXBuildFile; fileRef = 6CAE4374253370E500BD0200 /* sample-dining-venue.json */; };
+		6CAE43C62533731000BD0200 /* DiningInsightsAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE43C52533731000BD0200 /* DiningInsightsAPIResponse.swift */; };
+		6CAE43D3253373B900BD0200 /* DiningMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE43D2253373B900BD0200 /* DiningMenu.swift */; };
+		6CAE43D82533740300BD0200 /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE43D72533740300BD0200 /* LocalJSONStore.swift */; };
+		6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */; };
+		6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */; };
+		6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */; };
+		6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */; };
 		97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806423D26BC700C23488 /* DiningBalanceCell.swift */; };
 		97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */; };
 		97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806623D26BC700C23488 /* DiningHeaderView.swift */; };
@@ -237,9 +274,6 @@
 		F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE123C3EE3E000AD90F /* SwiftSoup */; };
 		F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE423C3F240000AD90F /* KingfisherSwiftUI */; };
 		F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE623C3F240000AD90F /* Kingfisher */; };
-		F213CCEA23C3F5D5000AD90F /* SCLAlertView in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE923C3F5D5000AD90F /* SCLAlertView */; };
-		F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEC23C3F6A8000AD90F /* SwiftyJSON */; };
-		F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCEF23C3F99B000AD90F /* ScrollableGraphView */; };
 		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
 		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
 		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
@@ -248,7 +282,6 @@
 		F23CC0C1235E3F8A0007317A /* DiningVenue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */; };
 		F23CC0C3235E6D2B0007317A /* DiningDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */; };
 		F23CC0C5235EB30E0007317A /* StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C4235EB30E0007317A /* StorageType.swift */; };
-		F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */; };
 		F2562A262551F6D40021C92F /* CourseAlertSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2562A252551F6D40021C92F /* CourseAlertSettingsController.swift */; };
 		F2562A2B255830AB0021C92F /* CourseAlertSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2562A2A255830AB0021C92F /* CourseAlertSettingsCell.swift */; };
 		F2562A302558330D0021C92F /* CourseAlertSettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2562A2F2558330D0021C92F /* CourseAlertSettingsOptions.swift */; };
@@ -325,7 +358,6 @@
 		212B8354222A31B500F835D6 /* HomePostCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCellItem.swift; sourceTree = "<group>"; };
 		212B8356222A31C300F835D6 /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
 		212B8358222A331D00F835D6 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
-		212B835B222A37D000F835D6 /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
 		212B835D222A37DD00F835D6 /* HomeFeatureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCell.swift; sourceTree = "<group>"; };
 		212B835F222A37FE00F835D6 /* FeatureAnnouncement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureAnnouncement.swift; sourceTree = "<group>"; };
 		2130A5052238C2F000DFEEC7 /* PennLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLoginController.swift; sourceTree = "<group>"; };
@@ -348,7 +380,6 @@
 		21640D532010526B002F33CA /* HomeTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewModel.swift; sourceTree = "<group>"; };
 		21640D5B20105B98002F33CA /* HomeDiningCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDiningCell.swift; sourceTree = "<group>"; };
 		21640D5D20105BAC002F33CA /* HomeLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLaundryCell.swift; sourceTree = "<group>"; };
-		21640D5F20105BB4002F33CA /* HomeStudyRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStudyRoomCell.swift; sourceTree = "<group>"; };
 		21640D6120114A28002F33CA /* ControllerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerModel.swift; sourceTree = "<group>"; };
 		21640FD2204A296D008DB6E8 /* LaundryGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryGraphView.swift; sourceTree = "<group>"; };
 		21640FD6204A5309008DB6E8 /* LaundryMachineCellTappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachineCellTappable.swift; sourceTree = "<group>"; };
@@ -446,16 +477,51 @@
 		21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAnalyticsEngine.swift; sourceTree = "<group>"; };
 		21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
 		2F8A024230F1E8D7BA9410B4 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		407FC3CFC29C6496A17C99C2 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		665F1FC423D261B100DC023E /* TwoFactorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorCell.swift; sourceTree = "<group>"; };
 		665F1FC623D2628800DC023E /* TwoFactorWebviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorWebviewController.swift; sourceTree = "<group>"; };
 		667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorEnableController.swift; sourceTree = "<group>"; };
 		66E8ECA42381CAA800945BEA /* TOTPFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPFetcher.swift; sourceTree = "<group>"; };
 		66E8ECA62381CB5100945BEA /* TwoFactorTokenGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFactorTokenGenerator.swift; sourceTree = "<group>"; };
 		66E8ECA82381CD2F00945BEA /* TOTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPNetworkManager.swift; sourceTree = "<group>"; };
-		6C23AF9426E57903002F60F0 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
-		6C369A1426E39BC100721CA1 /* GSRAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRAPIResponse.swift; sourceTree = "<group>"; };
-		6DBD80716B161DAEA6274151 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
-		6F4DC86EE3A48EC9A02145AE /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
+		6C6035ED26E722890025FBC7 /* DiningVenueDetailLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningVenueDetailLocationView.swift; sourceTree = "<group>"; };
+		6C6035EE26E722890025FBC7 /* DiningVenueDetailMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningVenueDetailMenuView.swift; sourceTree = "<group>"; };
+		6C6035EF26E722890025FBC7 /* MenuDisclosureGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDisclosureGroup.swift; sourceTree = "<group>"; };
+		6C6035F026E722890025FBC7 /* DiningVenueDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningVenueDetailView.swift; sourceTree = "<group>"; };
+		6C6035F126E722890025FBC7 /* DiningVenueDetailHoursView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningVenueDetailHoursView.swift; sourceTree = "<group>"; };
+		6C6035F226E722890025FBC7 /* mock_menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mock_menu.json; sourceTree = "<group>"; };
+		6C6035F926E722E60025FBC7 /* GSRAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRAPIResponse.swift; sourceTree = "<group>"; };
+		6C6035FB26E723240025FBC7 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		6C84D9E426293E680039C57F /* UIKit Views.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit Views.swift"; sourceTree = "<group>"; };
+		6C88FE9325337476006F4587 /* DiningViewControllerSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewControllerSwiftUI.swift; sourceTree = "<group>"; };
+		6CAE434E253370B200BD0200 /* FadingScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadingScrollView.swift; sourceTree = "<group>"; };
+		6CAE434F253370B200BD0200 /* AlertModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertModifier.swift; sourceTree = "<group>"; };
+		6CAE435A253370E500BD0200 /* DiningViewModelSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewModelSwiftUI.swift; sourceTree = "<group>"; };
+		6CAE435F253370E500BD0200 /* FrequentLocationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequentLocationsView.swift; sourceTree = "<group>"; };
+		6CAE4360253370E500BD0200 /* RecentTransactionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentTransactionsView.swift; sourceTree = "<group>"; };
+		6CAE4361253370E500BD0200 /* DiningBalanceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceView.swift; sourceTree = "<group>"; };
+		6CAE4362253370E500BD0200 /* DailyAverageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyAverageView.swift; sourceTree = "<group>"; };
+		6CAE4364253370E500BD0200 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		6CAE4365253370E500BD0200 /* CardHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardHeaderView.swift; sourceTree = "<group>"; };
+		6CAE4367253370E500BD0200 /* VariableStepLineGraphView+GraphEndpointPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+GraphEndpointPath.swift"; sourceTree = "<group>"; };
+		6CAE4368253370E500BD0200 /* PredictionsGraphView+SmoothedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+SmoothedData.swift"; sourceTree = "<group>"; };
+		6CAE4369253370E500BD0200 /* PredictionsGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictionsGraphView.swift; sourceTree = "<group>"; };
+		6CAE436A253370E500BD0200 /* VariableStepLineGraphView+PredictionSlopePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+PredictionSlopePath.swift"; sourceTree = "<group>"; };
+		6CAE436B253370E500BD0200 /* PredictionsGraphView+AxisLabels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+AxisLabels.swift"; sourceTree = "<group>"; };
+		6CAE436C253370E500BD0200 /* VariableStepLineGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableStepLineGraphView.swift; sourceTree = "<group>"; };
+		6CAE436D253370E500BD0200 /* VariableStepLineGraphView+VariableStepGraphPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+VariableStepGraphPath.swift"; sourceTree = "<group>"; };
+		6CAE436E253370E500BD0200 /* DiningInsightsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningInsightsView.swift; sourceTree = "<group>"; };
+		6CAE436F253370E500BD0200 /* DiningViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewHeader.swift; sourceTree = "<group>"; };
+		6CAE4370253370E500BD0200 /* DiningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningView.swift; sourceTree = "<group>"; };
+		6CAE4372253370E500BD0200 /* DiningVenueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningVenueView.swift; sourceTree = "<group>"; };
+		6CAE4373253370E500BD0200 /* DiningVenueRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningVenueRow.swift; sourceTree = "<group>"; };
+		6CAE4374253370E500BD0200 /* sample-dining-venue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "sample-dining-venue.json"; sourceTree = "<group>"; };
+		6CAE43C52533731000BD0200 /* DiningInsightsAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningInsightsAPIResponse.swift; sourceTree = "<group>"; };
+		6CAE43D2253373B900BD0200 /* DiningMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningMenu.swift; sourceTree = "<group>"; };
+		6CAE43D72533740300BD0200 /* LocalJSONStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
+		6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStudyRoomCell.swift; sourceTree = "<group>"; };
+		6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
+		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		97AA806423D26BC700C23488 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
 		97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		97AA806623D26BC700C23488 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
@@ -556,7 +622,6 @@
 		F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiningVenue+Extensions.swift"; sourceTree = "<group>"; };
 		F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDataStore.swift; sourceTree = "<group>"; };
 		F23CC0C4235EB30E0007317A /* StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageType.swift; sourceTree = "<group>"; };
-		F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
 		F2562A252551F6D40021C92F /* CourseAlertSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertSettingsController.swift; sourceTree = "<group>"; };
 		F2562A2A255830AB0021C92F /* CourseAlertSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertSettingsCell.swift; sourceTree = "<group>"; };
 		F2562A2F2558330D0021C92F /* CourseAlertSettingsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertSettingsOptions.swift; sourceTree = "<group>"; };
@@ -590,14 +655,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C369A1326E299A900721CA1 /* Alamofire in Frameworks */,
-				F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */,
+				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
-				F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */,
+				6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */,
 				F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */,
 				F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */,
+				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
-				F213CCEA23C3F5D5000AD90F /* SCLAlertView in Frameworks */,
 				56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -652,7 +716,7 @@
 		212B835A222A37BD00F835D6 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
-				212B835B222A37D000F835D6 /* HomeFeatureCellItem.swift */,
+				6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */,
 				212B835D222A37DD00F835D6 /* HomeFeatureCell.swift */,
 				212B835F222A37FE00F835D6 /* FeatureAnnouncement.swift */,
 			);
@@ -764,16 +828,16 @@
 				21B8BBBB2224F98B00EBC1D0 /* Login */,
 				216640881EBADBA000746B8E /* Setup + Navigation */,
 				B62875E82112591700FB2873 /* Buildings */,
+				21640D4220103C8A002F33CA /* Home */,
 				97E79E0A2100DBC300D3D606 /* Fitness */,
 				B62875E921152FF500FB2873 /* Map */,
-				21640D4220103C8A002F33CA /* Home */,
 				2166408B1EBADBF800746B8E /* Dining */,
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
 				21D5E06523B68F0E00B331CC /* Housing */,
 				212304C52054ED9900958CE0 /* Spring Fling */,
-				216640EE1EBB867600746B8E /* Contacts */,
 				216640D31EBB80FD00746B8E /* News */,
+				216640EE1EBB867600746B8E /* Contacts */,
 				CF1CE9B8205D5BF100C51F46 /* More Tab */,
 				216640F91EBB898700746B8E /* About */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
@@ -810,6 +874,7 @@
 		2166408B1EBADBF800746B8E /* Dining */ = {
 			isa = PBXGroup;
 			children = (
+				6CAE4357253370E500BD0200 /* SwiftUI */,
 				97AA806323D26BC700C23488 /* Views */,
 				2166408E1EBADC0700746B8E /* Controllers */,
 				2166408D1EBADC0100746B8E /* Model */,
@@ -821,11 +886,13 @@
 		2166408D1EBADC0100746B8E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */,
+				6CAE43C52533731000BD0200 /* DiningInsightsAPIResponse.swift */,
 				C11B38E222508A8D009B752A /* DiningBalance.swift */,
 				F23CC0BA235E3EF10007317A /* DiningVenue.swift */,
 				F23CC0BE235E3F610007317A /* DiningVenue+Codable.swift */,
 				F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */,
-				F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */,
+				6CAE43D2253373B900BD0200 /* DiningMenu.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -855,9 +922,11 @@
 		216640C71EBADC9D00746B8E /* General */ = {
 			isa = PBXGroup;
 			children = (
+				6CAE434D253370B200BD0200 /* SwiftUI Views */,
 				217A7839204D977E004F1227 /* ModularTableView */,
 				216640C01EBADC8000746B8E /* Generics */,
 				216640C91EBADCA400746B8E /* Extensions.swift */,
+				6CAE43D72533740300BD0200 /* LocalJSONStore.swift */,
 				F2F4C91F23611EB900816456 /* Colors.swift */,
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
 				2188C6D6223C7E8300F18D90 /* SecureStore.swift */,
@@ -873,7 +942,6 @@
 			children = (
 				211DFE531F36A02C00CB73E4 /* DiningAPI.swift */,
 				F23CC0C4235EB30E0007317A /* StorageType.swift */,
-				F23CC0C6235ED0C60007317A /* LocalJSONStore.swift */,
 				F23CC0C2235E6D2B0007317A /* DiningDataStore.swift */,
 			);
 			path = "Networking + Cache";
@@ -943,7 +1011,7 @@
 			isa = PBXGroup;
 			children = (
 				217A7837204D2E2B004F1227 /* HomeGSRCellItem.swift */,
-				21640D5F20105BB4002F33CA /* HomeStudyRoomCell.swift */,
+				6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */,
 				B6FE7A01207BE29000F60838 /* HomeGSRBookingButton.swift */,
 				B6FC5B4E20795584002AF335 /* Views */,
 			);
@@ -986,7 +1054,7 @@
 		2189C0752027CD3A00771C1F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6C369A1426E39BC100721CA1 /* GSRAPIResponse.swift */,
+				6C6035F926E722E60025FBC7 /* GSRAPIResponse.swift */,
 				2189C0992027CE4000771C1F /* GSRRoom.swift */,
 				EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */,
 				2189C0982027CE4000771C1F /* GSRBooking.swift */,
@@ -1020,8 +1088,8 @@
 				2138E1F72252AFB500E4055A /* GSRLocationCell.swift */,
 				2189C0892027CE2600771C1F /* RoomCell.swift */,
 				21A6B6D32216824B003A357D /* ReservationCell.swift */,
-				6C23AF9426E57903002F60F0 /* EmptyView.swift */,
 				C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */,
+				6C6035FB26E723240025FBC7 /* EmptyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1154,6 +1222,98 @@
 				667EC29523DB9C4800B0DF66 /* TwoFactorEnableController.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		6C6035EC26E722890025FBC7 /* Detail View */ = {
+			isa = PBXGroup;
+			children = (
+				6C6035ED26E722890025FBC7 /* DiningVenueDetailLocationView.swift */,
+				6C6035EE26E722890025FBC7 /* DiningVenueDetailMenuView.swift */,
+				6C6035EF26E722890025FBC7 /* MenuDisclosureGroup.swift */,
+				6C6035F026E722890025FBC7 /* DiningVenueDetailView.swift */,
+				6C6035F126E722890025FBC7 /* DiningVenueDetailHoursView.swift */,
+				6C6035F226E722890025FBC7 /* mock_menu.json */,
+			);
+			path = "Detail View";
+			sourceTree = "<group>";
+		};
+		6CAE434D253370B200BD0200 /* SwiftUI Views */ = {
+			isa = PBXGroup;
+			children = (
+				6CAE434E253370B200BD0200 /* FadingScrollView.swift */,
+				6CAE434F253370B200BD0200 /* AlertModifier.swift */,
+				6C84D9E426293E680039C57F /* UIKit Views.swift */,
+			);
+			path = "SwiftUI Views";
+			sourceTree = "<group>";
+		};
+		6CAE4357253370E500BD0200 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				6C88FE9325337476006F4587 /* DiningViewControllerSwiftUI.swift */,
+				6CAE435A253370E500BD0200 /* DiningViewModelSwiftUI.swift */,
+				6CAE435D253370E500BD0200 /* Views */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		6CAE435D253370E500BD0200 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6CAE4371253370E500BD0200 /* Venue */,
+				6CAE435E253370E500BD0200 /* Insights */,
+				6CAE436F253370E500BD0200 /* DiningViewHeader.swift */,
+				6CAE4370253370E500BD0200 /* DiningView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6CAE435E253370E500BD0200 /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				6CAE435F253370E500BD0200 /* FrequentLocationsView.swift */,
+				6CAE4360253370E500BD0200 /* RecentTransactionsView.swift */,
+				6CAE4361253370E500BD0200 /* DiningBalanceView.swift */,
+				6CAE4362253370E500BD0200 /* DailyAverageView.swift */,
+				6CAE4363253370E500BD0200 /* Cards */,
+				6CAE4366253370E500BD0200 /* PredictionsGraph */,
+				6CAE436E253370E500BD0200 /* DiningInsightsView.swift */,
+			);
+			path = Insights;
+			sourceTree = "<group>";
+		};
+		6CAE4363253370E500BD0200 /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				6CAE4364253370E500BD0200 /* CardView.swift */,
+				6CAE4365253370E500BD0200 /* CardHeaderView.swift */,
+			);
+			path = Cards;
+			sourceTree = "<group>";
+		};
+		6CAE4366253370E500BD0200 /* PredictionsGraph */ = {
+			isa = PBXGroup;
+			children = (
+				6CAE4367253370E500BD0200 /* VariableStepLineGraphView+GraphEndpointPath.swift */,
+				6CAE4368253370E500BD0200 /* PredictionsGraphView+SmoothedData.swift */,
+				6CAE4369253370E500BD0200 /* PredictionsGraphView.swift */,
+				6CAE436A253370E500BD0200 /* VariableStepLineGraphView+PredictionSlopePath.swift */,
+				6CAE436B253370E500BD0200 /* PredictionsGraphView+AxisLabels.swift */,
+				6CAE436C253370E500BD0200 /* VariableStepLineGraphView.swift */,
+				6CAE436D253370E500BD0200 /* VariableStepLineGraphView+VariableStepGraphPath.swift */,
+			);
+			path = PredictionsGraph;
+			sourceTree = "<group>";
+		};
+		6CAE4371253370E500BD0200 /* Venue */ = {
+			isa = PBXGroup;
+			children = (
+				6CAE4372253370E500BD0200 /* DiningVenueView.swift */,
+				6CAE4373253370E500BD0200 /* DiningVenueRow.swift */,
+				6C6035EC26E722890025FBC7 /* Detail View */,
+				6CAE4374253370E500BD0200 /* sample-dining-venue.json */,
+			);
+			path = Venue;
 			sourceTree = "<group>";
 		};
 		6D2C4E8629C0A2D81734AD99 /* Frameworks */ = {
@@ -1539,9 +1699,9 @@
 			isa = PBXGroup;
 			children = (
 				2F8A024230F1E8D7BA9410B4 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
-				6DBD80716B161DAEA6274151 /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
-				6F4DC86EE3A48EC9A02145AE /* Pods-PennMobile.debug.xcconfig */,
 				059FD41D74734ECD9DE8209C /* Pods-PennMobile.release.xcconfig */,
+				407FC3CFC29C6496A17C99C2 /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
+				72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1557,9 +1717,9 @@
 				2166405C1EBADADA00746B8E /* Sources */,
 				2166405D1EBADADA00746B8E /* Frameworks */,
 				2166405E1EBADADA00746B8E /* Resources */,
-				EF1CF2F322177EED002D912D /* ShellScript */,
 				F2568A6E2411F20E00561295 /* Embed App Extensions */,
 				CAF133B2272BB899064B2A46 /* [CP] Embed Pods Frameworks */,
+				6CE12F9326E82DED00284D9F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1571,11 +1731,10 @@
 				F213CCE123C3EE3E000AD90F /* SwiftSoup */,
 				F213CCE423C3F240000AD90F /* KingfisherSwiftUI */,
 				F213CCE623C3F240000AD90F /* Kingfisher */,
-				F213CCE923C3F5D5000AD90F /* SCLAlertView */,
-				F213CCEC23C3F6A8000AD90F /* SwiftyJSON */,
-				F213CCEF23C3F99B000AD90F /* ScrollableGraphView */,
 				F2568A752413534F00561295 /* SnapKit */,
-				6C369A1226E299A900721CA1 /* Alamofire */,
+				6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */,
+				6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */,
+				6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -1625,12 +1784,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
 					2166405F1EBADADA00746B8E = {
 						CreatedOnToolsVersion = 8.3.2;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1250;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -1644,6 +1803,7 @@
 					F230FB0D225809E900760499 = {
 						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = VU59R57FGM;
+						LastSwiftMigration = 1250;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2166405F1EBADADA00746B8E;
 					};
@@ -1664,11 +1824,9 @@
 			packageReferences = (
 				F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
-				F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
 				F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				6C369A1126E299A900721CA1 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
@@ -1686,7 +1844,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CAE4392253370E600BD0200 /* sample-dining-venue.json in Resources */,
 				2166406E1EBADADA00746B8E /* LaunchScreen.storyboard in Resources */,
+				6C6035F826E722890025FBC7 /* mock_menu.json in Resources */,
 				B6111DB22018497400DC7877 /* GoogleService-Info.plist in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
@@ -1771,6 +1931,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6CE12F9326E82DED00284D9F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${BUILD_DIR%Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\n";
+		};
 		CAF133B2272BB899064B2A46 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -1779,39 +1956,25 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Base32/Base32.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/OneTimePassword/OneTimePassword.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
+				"${BUILT_PRODUCTS_DIR}/ScrollableGraphView/ScrollableGraphView.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Base32.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OneTimePassword.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScrollableGraphView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		EF1CF2F322177EED002D912D /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/PennMobile/Supporting_Files/Info.plist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1823,6 +1986,7 @@
 				EFE2D6F0239B11050020F6BF /* GroupSettingsCell.swift in Sources */,
 				B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */,
 				C8C96F10241407000069D56A /* CourseScheduleViewController.swift in Sources */,
+				6CAE4389253370E600BD0200 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */,
 				EFE2D6F5239B11050020F6BF /* GroupHeaderCell.swift in Sources */,
 				219F01F41FB7CCFA006BBC4E /* SAConfettiView.swift in Sources */,
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
@@ -1839,17 +2003,20 @@
 				2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
 				2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */,
+				6C6035F426E722890025FBC7 /* DiningVenueDetailMenuView.swift in Sources */,
 				21B649222236F2FC00AC5B7F /* HomeCoursesCellItem.swift in Sources */,
 				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
+				6CAE43D3253373B900BD0200 /* DiningMenu.swift in Sources */,
 				CF1CE9C1205D683400C51F46 /* HeaderViewCell.swift in Sources */,
 				C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
 				EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */,
+				6CAE4382253370E500BD0200 /* DiningBalanceView.swift in Sources */,
 				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
@@ -1864,6 +2031,7 @@
 				EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */,
 				21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */,
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
+				6C6035F726E722890025FBC7 /* DiningVenueDetailHoursView.swift in Sources */,
 				F2568A7A2413637D00561295 /* HomeCellSafeArea.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
@@ -1871,10 +2039,12 @@
 				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
 				F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */,
+				6CAE4387253370E600BD0200 /* PredictionsGraphView+SmoothedData.swift in Sources */,
+				6CAE438B253370E600BD0200 /* VariableStepLineGraphView.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
-				6C369A1526E39BC100721CA1 /* GSRAPIResponse.swift in Sources */,
-				21640D6020105BB4002F33CA /* HomeStudyRoomCell.swift in Sources */,
-				212B835C222A37D000F835D6 /* HomeFeatureCellItem.swift in Sources */,
+				6CAE4390253370E600BD0200 /* DiningVenueView.swift in Sources */,
+				6CAE4383253370E500BD0200 /* DailyAverageView.swift in Sources */,
+				6C369A1526E39BC100721CA1 /* (null) in Sources */,
 				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
 				21D5E07623BD45F400B331CC /* KeychainAccessible.swift in Sources */,
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
@@ -1893,17 +2063,23 @@
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				F2B8C40C252C58E600922D08 /* GSRClosedView.swift in Sources */,
 				F2568A7824135B6500561295 /* HomeCellHeader.swift in Sources */,
+				6C6035FC26E723240025FBC7 /* EmptyView.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
 				C8C96F11241407000069D56A /* CourseScheduleTableViewModel.swift in Sources */,
 				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
+				6C6035F326E722890025FBC7 /* DiningVenueDetailLocationView.swift in Sources */,
 				F2562A3A2558E7B80021C92F /* CourseAlertCreateCell.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
+				6C6035F526E722890025FBC7 /* MenuDisclosureGroup.swift in Sources */,
 				F2F4C92023611EB900816456 /* Colors.swift in Sources */,
+				6CAE4380253370E500BD0200 /* FrequentLocationsView.swift in Sources */,
 				F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */,
+				6CAE43C62533731000BD0200 /* DiningInsightsAPIResponse.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
 				21ABE2AA223D7DEA00199D29 /* ScheduleTable.swift in Sources */,
+				6C84D9E526293E680039C57F /* UIKit Views.swift in Sources */,
 				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,
 				21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */,
 				216640951EBADC1700746B8E /* DiningViewController.swift in Sources */,
@@ -1912,17 +2088,21 @@
 				EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
+				6CAE438F253370E600BD0200 /* DiningView.swift in Sources */,
 				21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */,
 				97E79E182100E4AA00D3D606 /* FitnessFacilityData.swift in Sources */,
 				F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
+				6CAE438D253370E600BD0200 /* DiningInsightsView.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
 				97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */,
 				2189C09F2027CE4100771C1F /* GSRUser.swift in Sources */,
 				B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
+				6C6035FA26E722E60025FBC7 /* GSRAPIResponse.swift in Sources */,
 				C8C96F15241407420069D56A /* PacCodeViewController.swift in Sources */,
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
+				6CAE438A253370E600BD0200 /* PredictionsGraphView+AxisLabels.swift in Sources */,
 				EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */,
 				F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
@@ -1932,8 +2112,10 @@
 				21B8BBB2222318A600EBC1D0 /* Course.swift in Sources */,
 				97E79E1A2100E51A00D3D606 /* FitnessFacilityName.swift in Sources */,
 				97E79E082100DA1200D3D606 /* BuildingHoursCell.swift in Sources */,
+				6CAE4352253370B300BD0200 /* AlertModifier.swift in Sources */,
 				21F5F8F520538AFC005B143F /* FlingPerformer.swift in Sources */,
 				21E6A109224BDFEB00DC457A /* HomeViewController + Delegates.swift in Sources */,
+				6CAE4385253370E600BD0200 /* CardHeaderView.swift in Sources */,
 				217A7832204D2C7E004F1227 /* HomeCellItem.swift in Sources */,
 				2189C08D2027CE2600771C1F /* RoomCell.swift in Sources */,
 				2150816A220D24C4002F7EA1 /* NewsArticle.swift in Sources */,
@@ -1945,6 +2127,7 @@
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
 				21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */,
 				2188C6D7223C7E8400F18D90 /* SecureStore.swift in Sources */,
+				6CAE4388253370E600BD0200 /* PredictionsGraphView.swift in Sources */,
 				F23CC0BD235E3F390007317A /* DiningAPIResponse.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
 				B6111DB420184C4A00DC7877 /* AboutViewController.swift in Sources */,
@@ -1959,6 +2142,7 @@
 				C10A59A62183CE120059130B /* AboutPageCollectionViewHeader.swift in Sources */,
 				B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */,
 				EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */,
+				6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */,
 				21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */,
 				21ABE2AF223D7E2B00199D29 /* Time.swift in Sources */,
 				21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */,
@@ -1966,15 +2150,17 @@
 				C10A59A42183CDD60059130B /* AboutPageCollectionViewCell.swift in Sources */,
 				EF6329A22409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift in Sources */,
 				21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */,
-				6C23AF9526E57903002F60F0 /* EmptyView.swift in Sources */,
+				6C23AF9526E57903002F60F0 /* (null) in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
+				6C6035F626E722890025FBC7 /* DiningVenueDetailView.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
+				6CAE4386253370E600BD0200 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */,
 				97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */,
-				F23CC0C7235ED0C60007317A /* LocalJSONStore.swift in Sources */,
 				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
+				6CAE4391253370E600BD0200 /* DiningVenueRow.swift in Sources */,
 				F2562A262551F6D40021C92F /* CourseAlertSettingsController.swift in Sources */,
 				217A7845204DB800004F1227 /* HomeAsynchronousFetching.swift in Sources */,
 				C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */,
@@ -1988,6 +2174,9 @@
 				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
+				6CAE437D253370E500BD0200 /* DiningViewModelSwiftUI.swift in Sources */,
+				6CAE438C253370E600BD0200 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */,
+				6CAE438E253370E600BD0200 /* DiningViewHeader.swift in Sources */,
 				97AA807623D26C8E00C23488 /* DiningViewModel.swift in Sources */,
 				EFE2D6F4239B11050020F6BF /* GroupCell.swift in Sources */,
 				21640D3E200ED954002F33CA /* LaundryMachine.swift in Sources */,
@@ -1999,6 +2188,7 @@
 				97E79E072100DA1200D3D606 /* BuildingImageCell.swift in Sources */,
 				217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */,
 				212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */,
+				6CAE4351253370B300BD0200 /* FadingScrollView.swift in Sources */,
 				21A9D942224087980000444D /* CourseMeetingTime.swift in Sources */,
 				139139772388923F00C6C298 /* DiningDollarsTransactionViewController.swift in Sources */,
 				B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */,
@@ -2015,6 +2205,7 @@
 				2189C0872027CDD700771C1F /* GSRNetworkManager.swift in Sources */,
 				2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
+				6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
 				F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */,
 				F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */,
@@ -2035,11 +2226,14 @@
 				F2562A302558330D0021C92F /* CourseAlertSettingsOptions.swift in Sources */,
 				F2770ADB2545E2EB001EA1DD /* CourseAlertCell.swift in Sources */,
 				97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */,
+				6C88FE9425337476006F4587 /* DiningViewControllerSwiftUI.swift in Sources */,
+				6CAE43D82533740300BD0200 /* LocalJSONStore.swift in Sources */,
 				21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */,
 				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
+				6CAE4381253370E500BD0200 /* RecentTransactionsView.swift in Sources */,
 				F2562A3525583C5C0021C92F /* ButtonWithImage.swift in Sources */,
 				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
 				EFE2D6FB239B12270020F6BF /* GSRGroupNewIntialController.swift in Sources */,
@@ -2050,6 +2244,7 @@
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
+				6CAE4384253370E500BD0200 /* CardView.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
 				B64830A2213C939200FD2B17 /* FitnessHeaderView.swift in Sources */,
 				C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */,
@@ -2123,8 +2318,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CF_BUNDLE_LONG_VERSION_STRING = 6560;
-				CF_BUNDLE_SHORT_VERSION_STRING = 6.5.6;
+				CF_BUNDLE_LONG_VERSION_STRING = 6601;
+				CF_BUNDLE_SHORT_VERSION_STRING = 6.6.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2147,6 +2342,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2171,7 +2367,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2184,8 +2380,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CF_BUNDLE_LONG_VERSION_STRING = 6560;
-				CF_BUNDLE_SHORT_VERSION_STRING = 6.5.6;
+				CF_BUNDLE_LONG_VERSION_STRING = 6601;
+				CF_BUNDLE_SHORT_VERSION_STRING = 6.6.0;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2208,6 +2404,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2226,7 +2423,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -2237,7 +2434,7 @@
 		};
 		2166407E1EBADADA00746B8E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F4DC86EE3A48EC9A02145AE /* Pods-PennMobile.debug.xcconfig */;
+			baseConfigurationReference = 72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2245,7 +2442,7 @@
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6561;
+				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				EXCLUDED_ARCHS = "";
@@ -2256,66 +2453,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.5.6;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"sqlite3\"",
-					"-l\"xml2\"",
-					"-l\"z\"",
-					"-framework",
-					"\"Base32\"",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"Crashlytics\"",
-					"-framework",
-					"\"Fabric\"",
-					"-framework",
-					"\"FirebaseAnalytics\"",
-					"-framework",
-					"\"FirebaseCore\"",
-					"-framework",
-					"\"FirebaseCoreDiagnostics\"",
-					"-framework",
-					"\"FirebaseInstanceID\"",
-					"-framework",
-					"\"FirebaseNanoPB\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"GoogleToolboxForMac\"",
-					"-framework",
-					"\"MBProgressHUD\"",
-					"-framework",
-					"\"OneTimePassword\"",
-					"-framework",
-					"\"Security\"",
-					"-framework",
-					"\"StoreKit\"",
-					"-framework",
-					"\"SystemConfiguration\"",
-					"-framework",
-					"\"UIKit\"",
-					"-framework",
-					"\"XLPagerTabStrip\"",
-					"-framework",
-					"\"nanopb\"",
-					"-weak_framework",
-					CryptoKit,
-					"-weak_framework",
-					Combine,
-					"-weak_framework",
-					SwiftUI,
-				);
+				MARKETING_VERSION = 6.6.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2330,7 +2476,7 @@
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6561;
+				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING";
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
@@ -2340,66 +2486,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.5.6;
+				MARKETING_VERSION = 6.6.0;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"sqlite3\"",
-					"-l\"xml2\"",
-					"-l\"z\"",
-					"-framework",
-					"\"Base32\"",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"Crashlytics\"",
-					"-framework",
-					"\"Fabric\"",
-					"-framework",
-					"\"FirebaseAnalytics\"",
-					"-framework",
-					"\"FirebaseCore\"",
-					"-framework",
-					"\"FirebaseCoreDiagnostics\"",
-					"-framework",
-					"\"FirebaseInstanceID\"",
-					"-framework",
-					"\"FirebaseNanoPB\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"GoogleToolboxForMac\"",
-					"-framework",
-					"\"MBProgressHUD\"",
-					"-framework",
-					"\"OneTimePassword\"",
-					"-framework",
-					"\"Security\"",
-					"-framework",
-					"\"StoreKit\"",
-					"-framework",
-					"\"SystemConfiguration\"",
-					"-framework",
-					"\"UIKit\"",
-					"-framework",
-					"\"XLPagerTabStrip\"",
-					"-framework",
-					"\"nanopb\"",
-					"-weak_framework",
-					CryptoKit,
-					"-weak_framework",
-					Combine,
-					"-weak_framework",
-					SwiftUI,
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -2435,7 +2530,7 @@
 		};
 		F230FB17225809E900760499 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6DBD80716B161DAEA6274151 /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
+			baseConfigurationReference = 407FC3CFC29C6496A17C99C2 /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2556,12 +2651,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6C369A1126E299A900721CA1 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.4.3;
+				minimumVersion = 5.0.1;
+			};
+		};
+		6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.1;
 			};
 		};
 		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
@@ -2580,30 +2683,6 @@
 				minimumVersion = 5.12.0;
 			};
 		};
-		F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pennlabs/SCLAlertView-Swift/";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.8.2;
-			};
-		};
-		F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-		F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pennlabs/ScrollableGraphView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.1.0;
-			};
-		};
 		F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -2615,10 +2694,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6C369A1226E299A900721CA1 /* Alamofire */ = {
+		6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6C369A1126E299A900721CA1 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
+			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2634,21 +2723,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		F213CCE923C3F5D5000AD90F /* SCLAlertView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */;
-			productName = SCLAlertView;
-		};
-		F213CCEC23C3F6A8000AD90F /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		F213CCEF23C3F99B000AD90F /* ScrollableGraphView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */;
-			productName = ScrollableGraphView;
 		};
 		F2568A752413534F00561295 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

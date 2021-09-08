@@ -1,5 +1,7 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+#platform :ios
+
+inhibit_all_warnings!
 
 target 'PennMobile' do
     # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -8,10 +10,8 @@ target 'PennMobile' do
     # Pods for PennMobile
 
 pod 'MBProgressHUD', '~> 0.8' # old objc library, should be replaced
-
-pod 'Fabric', '~> 1.10.2' # Required by Firebase.
-pod 'Crashlytics', '~> 3.14.0' # Required by Firebase.
-pod 'Firebase', '~> 4.7' # Firebase not yet supported by SPM. May be a while.
+pod 'SCLAlertView'
+pod 'ScrollableGraphView'
 
 pod 'XLPagerTabStrip', '~> 9.0' # Only used for GSR, should be deleted
 
@@ -30,7 +30,8 @@ end
 post_install do |pi|
     pi.pods_project.targets.each do |t|
       t.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = "YES"
       end
     end
 end

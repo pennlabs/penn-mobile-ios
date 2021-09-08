@@ -34,7 +34,6 @@ class GSRNetworkManager: NSObject, Requestable {
                     let gsrLocations = try decoder.decode([GSRLocation].self, from: data)
                     completion(.success(gsrLocations))
                 } catch {
-                    print(error)
                     completion(.failure(.parsingError))
                 }
             }
@@ -148,7 +147,6 @@ extension GSRNetworkManager {
                 return
             }
             
-            print(token.value)
             let url = URL(string: self.reservationURL)!
             let request = URLRequest(url: url, accessToken: token)
             
@@ -161,10 +159,8 @@ extension GSRNetworkManager {
                     
                     do {
                         let reservations = try decoder.decode([GSRReservation].self, from: data)
-                        print(reservations)
                         completion(.success(reservations))
                     } catch {
-                        print(error)
                         completion(.failure(.parsingError))
                     }
                 }

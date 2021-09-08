@@ -45,6 +45,58 @@ class PennCoordinate {
     func getRegion(for facility: FitnessFacilityName, at scale: PennCoordinateScale) -> MKCoordinateRegion {
         return MKCoordinateRegion.init(center: getCoordinates(for: facility), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
     }
+    
+    func getCoordinates(for dining: DiningVenue) -> CLLocationCoordinate2D {
+        switch dining.id {
+        case 593:
+            //1920 Commons
+            return CLLocationCoordinate2D(latitude: 39.952275, longitude: -75.199560)
+        case 636:
+            //Hill House
+            return CLLocationCoordinate2D(latitude: 39.953040, longitude: -75.190589)
+        case 637:
+            //English House
+            return CLLocationCoordinate2D(latitude: 39.954242, longitude: -75.194351)
+        case 638:
+            //Falk Kosher Dining
+            return CLLocationCoordinate2D(latitude: 39.953117, longitude: -75.200075)
+        case 639:
+            //Houston Market
+            return CLLocationCoordinate2D(latitude: 39.950920, longitude: -75.193892)
+        case 641:
+            //"Accenture Caf\u00e9"
+            return CLLocationCoordinate2D(latitude: 39.951827, longitude: -75.191315)
+        case 642:
+            //"Joe's Caf\u00e9"
+            return CLLocationCoordinate2D(latitude: 39.951818, longitude: -75.196089)
+        case 1442:
+            //"Lauder College House"
+            return CLLocationCoordinate2D(latitude: 39.953907, longitude: -75.191733)
+        case 747:
+            //"McClelland Express"
+            return CLLocationCoordinate2D(latitude: 39.950378, longitude: -75.197151)
+        case 1057:
+            //"1920 Gourmet Grocer"
+            return CLLocationCoordinate2D(latitude: 39.952115, longitude: -75.199492)
+        case 1163:
+            //"1920 Starbucks"
+            return CLLocationCoordinate2D(latitude: 39.952361, longitude: -75.199466)
+        case 1731:
+            //"LCH Retail"
+            return CLLocationCoordinate2D(latitude: 39.953907, longitude: -75.191733)
+        case 1732:
+            //Pret a Manger MBA
+            return CLLocationCoordinate2D(latitude: 39.952591, longitude: -75.198326)
+        default:
+            // case 1733:
+            // "Pret a Manger Locust Walk",
+            return CLLocationCoordinate2D(latitude: 39.952591, longitude: -75.198326)
+        }
+    }
+    
+    func getRegion(for dining: DiningVenue, at scale: PennCoordinateScale) -> MKCoordinateRegion {
+        return MKCoordinateRegion.init(center: getCoordinates(for: dining), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
+    }
 }
 
 // MARK: - Placemarks

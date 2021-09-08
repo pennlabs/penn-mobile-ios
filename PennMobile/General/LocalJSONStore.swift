@@ -10,6 +10,7 @@ import Foundation
 
 // MARK: - LocalJSONStore
 // This class can be used by any Codable struct as a simple cacheing layer. Check out DiningDataStore.swift for an example.
+// "filename" is just the name of the cache file
 class LocalJSONStore<T> where T : Codable {
     let storageType: DataStoreType
     let filename: String

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol TransactionCellDelegate: class {
+protocol TransactionCellDelegate: AnyObject {
     func userDidSelect()
 }
 

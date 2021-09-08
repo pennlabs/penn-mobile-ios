@@ -6,7 +6,7 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-protocol RoomSelectionViewDelegate: class {
+protocol RoomSelectionViewDelegate: AnyObject {
     func updateSelectedRooms(for rooms: [LaundryRoom])
     func handleFailureToLoadDictionary()
 }

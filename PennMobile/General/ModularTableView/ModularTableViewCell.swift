@@ -10,7 +10,7 @@ import Foundation
 
 protocol ModularTableViewCellDelegate {}
 
-protocol ModularTableViewCell: class {
+protocol ModularTableViewCell: AnyObject {
     static var identifier: String { get }
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat
     var item: ModularTableViewItem! { get set }

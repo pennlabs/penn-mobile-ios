@@ -97,7 +97,7 @@ extension DiningHeaderView {
     }
     
     func prepareLoadingView() {
-        loadingView = UIActivityIndicatorView(style: .white)
+        loadingView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
         loadingView.color = .black
         loadingView.translatesAutoresizingMaskIntoConstraints = false
 

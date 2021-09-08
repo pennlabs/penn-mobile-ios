@@ -20,6 +20,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        screenName = "Laundry"
         tableView.backgroundView = nil
         tableView.separatorStyle = .none
         tableView.dataSource = self

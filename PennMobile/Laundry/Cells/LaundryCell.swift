@@ -11,7 +11,7 @@ import ScrollableGraphView
 
 // MARK: - Laundry Cell Delegate
 
-protocol LaundryCellDelegate: class, LaundryMachineCellTappable {
+protocol LaundryCellDelegate: AnyObject, LaundryMachineCellTappable {
     func deleteLaundryCell(for room: LaundryRoom)
 }
 

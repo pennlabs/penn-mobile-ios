@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ContactCellDelegate: class {
+protocol ContactCellDelegate: AnyObject {
     func call(number: String)
 }
 
