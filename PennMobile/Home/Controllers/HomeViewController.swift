@@ -43,6 +43,8 @@ class HomeViewController: GenericViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+
         if tableViewModel == nil {
             self.startLoadingViewAnimation()
         }
