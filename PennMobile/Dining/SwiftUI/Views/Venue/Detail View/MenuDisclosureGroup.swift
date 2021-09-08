@@ -30,6 +30,7 @@ struct DiningMenuSectionRow: View {
         .contentShape(Rectangle())
         .padding(.bottom)
         .onTapGesture {
+            FirebaseAnalyticsManager.shared.trackEvent(action: "Open Menu", result: title, content: "")
             withAnimation {
                 isExpanded.toggle()
             }
