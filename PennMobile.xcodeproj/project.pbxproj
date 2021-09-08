@@ -662,16 +662,6 @@
 				F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */,
 				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
-=======
-				6C369A1326E299A900721CA1 /* Alamofire in Frameworks */,
-				F213CCED23C3F6A8000AD90F /* SwiftyJSON in Frameworks */,
-				F2568A762413534F00561295 /* SnapKit in Frameworks */,
-				F213CCF023C3F99B000AD90F /* ScrollableGraphView in Frameworks */,
-				F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */,
-				F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */,
-				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
-				F213CCEA23C3F5D5000AD90F /* SCLAlertView in Frameworks */,
->>>>>>> master
 				56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1098,7 +1088,6 @@
 				2138E1F72252AFB500E4055A /* GSRLocationCell.swift */,
 				2189C0892027CE2600771C1F /* RoomCell.swift */,
 				21A6B6D32216824B003A357D /* ReservationCell.swift */,
-				6C23AF9426E57903002F60F0 /* EmptyView.swift */,
 				C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */,
 				6C6035FB26E723240025FBC7 /* EmptyView.swift */,
 			);
@@ -1746,13 +1735,6 @@
 				6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */,
 				6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */,
 				6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */,
-=======
-				F213CCE923C3F5D5000AD90F /* SCLAlertView */,
-				F213CCEC23C3F6A8000AD90F /* SwiftyJSON */,
-				F213CCEF23C3F99B000AD90F /* ScrollableGraphView */,
-				F2568A752413534F00561295 /* SnapKit */,
-				6C369A1226E299A900721CA1 /* Alamofire */,
->>>>>>> master
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -1845,13 +1827,6 @@
 				F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-=======
-				F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
-				F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
-				F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				6C369A1126E299A900721CA1 /* XCRemoteSwiftPackageReference "Alamofire" */,
->>>>>>> master
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
@@ -2514,62 +2489,6 @@
 				MARKETING_VERSION = 6.6.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-=======
-				MARKETING_VERSION = 6.5.6;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"c++\"",
-					"-l\"sqlite3\"",
-					"-l\"xml2\"",
-					"-l\"z\"",
-					"-framework",
-					"\"Base32\"",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"Crashlytics\"",
-					"-framework",
-					"\"Fabric\"",
-					"-framework",
-					"\"FirebaseAnalytics\"",
-					"-framework",
-					"\"FirebaseCore\"",
-					"-framework",
-					"\"FirebaseCoreDiagnostics\"",
-					"-framework",
-					"\"FirebaseInstanceID\"",
-					"-framework",
-					"\"FirebaseNanoPB\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"GoogleToolboxForMac\"",
-					"-framework",
-					"\"MBProgressHUD\"",
-					"-framework",
-					"\"OneTimePassword\"",
-					"-framework",
-					"\"Security\"",
-					"-framework",
-					"\"StoreKit\"",
-					"-framework",
-					"\"SystemConfiguration\"",
-					"-framework",
-					"\"UIKit\"",
-					"-framework",
-					"\"XLPagerTabStrip\"",
-					"-framework",
-					"\"nanopb\"",
-					"-weak_framework",
-					CryptoKit,
-					"-weak_framework",
-					Combine,
-					"-weak_framework",
-					SwiftUI,
-				);
->>>>>>> master
 				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2749,9 +2668,6 @@
 			};
 		};
 		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
-=======
-		F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
->>>>>>> master
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
 			requirement = {
@@ -2760,9 +2676,6 @@
 			};
 		};
 		F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-=======
-		F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */ = {
->>>>>>> master
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
 			requirement = {
@@ -2810,42 +2723,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-=======
-		6C369A1226E299A900721CA1 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6C369A1126E299A900721CA1 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */;
-			productName = SwiftSoup;
-		};
-		F213CCE423C3F240000AD90F /* KingfisherSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = KingfisherSwiftUI;
-		};
-		F213CCE623C3F240000AD90F /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
-		F213CCE923C3F5D5000AD90F /* SCLAlertView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCE823C3F5D5000AD90F /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */;
-			productName = SCLAlertView;
-		};
-		F213CCEC23C3F6A8000AD90F /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCEB23C3F6A8000AD90F /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		F213CCEF23C3F99B000AD90F /* ScrollableGraphView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCEE23C3F99B000AD90F /* XCRemoteSwiftPackageReference "ScrollableGraphView" */;
-			productName = ScrollableGraphView;
->>>>>>> master
 		};
 		F2568A752413534F00561295 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
