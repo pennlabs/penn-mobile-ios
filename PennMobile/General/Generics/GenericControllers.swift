@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc class GenericTableViewController: UITableViewController, Trackable {
+class GenericTableViewController: UITableViewController, Trackable {
     
     var navigationVC: HomeNavigationController?
         
@@ -45,7 +45,14 @@ import UIKit
     }
     
     var screenName: String?
-    var trackScreen: Bool = false
+    
+    var trackScreen: Bool {
+        #if DEBUG
+            return false
+        #else
+            return true
+        #endif
+    }
 }
 
 class GenericViewController: UIViewController, Trackable {
@@ -87,17 +94,13 @@ class GenericViewController: UIViewController, Trackable {
     }
     
     var screenName: String?
-    var trackScreen: Bool = false
-    
-    var isPanEnabled: Bool = true {
-        didSet {
-            //pan(enabled: isPanEnabled)
-        }
+    var trackScreen: Bool {
+        #if DEBUG
+            return false
+        #else
+            return true
+        #endif
     }
-    
-    /*private func pan(enabled: Bool) {
-        revealViewController()?.panGestureRecognizer().isEnabled = enabled
-    }*/
     
     func removeMenuButton() {
         self.navigationItem.leftBarButtonItem = nil
