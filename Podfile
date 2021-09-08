@@ -13,10 +13,6 @@ pod 'MBProgressHUD', '~> 0.8' # old objc library, should be replaced
 pod 'SCLAlertView'
 pod 'ScrollableGraphView'
 
-pod 'Fabric', '~> 1.10.2' # Required by Firebase.
-pod 'Crashlytics', '~> 3.14.0' # Required by Firebase.
-pod 'Firebase', '~> 4.7' # Firebase not yet supported by SPM. May be a while.
-
 pod 'XLPagerTabStrip', '~> 9.0' # Only used for GSR, should be deleted
 
 # WKZombie should be moved to SPM eventually, but something is broken with the current SPM implementation
