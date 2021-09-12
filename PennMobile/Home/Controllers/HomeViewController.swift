@@ -67,7 +67,7 @@ class HomeViewController: GenericViewController {
         if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.displayTitle != nil {
             return self.displayTitle
         } else {
-            let firstName = Account.getAccount()?.first ?? GSRUser.getUser()?.firstName
+            let firstName = Account.getAccount()?.first
             
             let intros = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"]
             
