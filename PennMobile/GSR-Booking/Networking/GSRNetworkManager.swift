@@ -238,37 +238,3 @@ extension GSRNetworkManager {
         task.resume()
     }
 }
-
-// MARK: - Session ID
-extension GSRNetworkManager: PennAuthRequestable {
-    
-    private var serviceDown: String {
-        return "https://servicedown.wharton.upenn.edu/"
-    }
-    
-    private var whartonUrl: String {
-        return "https://apps.wharton.upenn.edu/gsr/"
-    }
-    
-    private var shibbolethUrl: String {
-        return "https://apps.wharton.upenn.edu/django-shib/Shibboleth.sso/SAML2/POST"
-    }
-
-    
-    func getSessionID(_ callback: (((_ success: Bool) -> Void))? = nil) {
-        self.getSessionIDWithDownFlag { (success, _) in
-            callback?(success)
-        }
-    }
-    
-    func getSessionIDWithDownFlag(_ callback: @escaping ((_ success: Bool, _ serviceDown: Bool) -> Void)) {
-        makeAuthRequest(targetUrl: whartonUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
-            if let urlStr = response?.url?.absoluteString, urlStr == self.serviceDown {
-                callback(false, true)
-                return
-            }
-            
-            callback(GSRUser.getSessionID() != nil, false)
-        }
-    }
-}
