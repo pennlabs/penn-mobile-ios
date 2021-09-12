@@ -207,9 +207,6 @@ extension LabsLoginController {
                         if UserDefaults.standard.getPreference(for: .collegeHouse) {
                             CampusExpressNetworkManager.instance.updateHousingData()
                         }
-                        if UserDefaults.standard.isInWharton() {
-                            GSRNetworkManager.instance.getSessionID()
-                        }
                         self.getDiningBalance()
                         self.getDiningTransactions()
                         self.getAndSaveLaundryPreferences()
