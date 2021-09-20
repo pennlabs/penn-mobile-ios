@@ -16,9 +16,6 @@ final class HomeAPIService: Requestable {
     func fetchModel(_ completion: @escaping (_ model: HomeTableViewModel?, _ error: NetworkingError?) -> Void) {
         let version = UserDefaults.standard.getAppVersion()
         var url = "https://api.pennlabs.org/homepage?version=\(version)"
-        if let sessionID = GSRUser.getSessionID() {
-            url = "\(url)&sessionid=\(sessionID)"
-        }
         if let courses = UserDefaults.standard.getCourses(), !courses.enrolledIn.isEmpty {
             if courses.taughtToday.hasUpcomingCourse {
                 url = "\(url)&hasCourses=today"
@@ -28,8 +25,6 @@ final class HomeAPIService: Requestable {
         }
     
         url = "\(url)&groupsEnabled=\(UserDefaults.standard.gsrGroupsEnabled())"
-        
-        
         
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             // Make request without access token if one does not exist

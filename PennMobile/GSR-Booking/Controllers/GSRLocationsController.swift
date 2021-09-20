@@ -19,7 +19,7 @@ class GSRLocationsController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locations = GSRLocationModel.shared.getLocations()
-        setupUI()
+        setupTableView()
     }
     
     override func setupNavBar() {
@@ -35,10 +35,6 @@ class GSRLocationsController: GenericViewController {
 
 // MARK: - Setup UI
 extension GSRLocationsController {
-    fileprivate func setupUI() {
-        setupTableView()
-    }
-    
     fileprivate func setupTableView() {
         tableView = UITableView()
         tableView.separatorStyle = .none
@@ -50,7 +46,6 @@ extension GSRLocationsController {
         _ = tableView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         tableView.register(GSRLocationCell.self, forCellReuseIdentifier: GSRLocationCell.identifier)
-        tableView.register(DiningHeaderView.self, forHeaderFooterViewReuseIdentifier: DiningHeaderView.identifier)
     }
 }
 

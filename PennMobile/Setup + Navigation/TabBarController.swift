@@ -77,6 +77,15 @@ extension DiningViewController: TabBarShowable {
     }
 }
 
+@available(iOS 14, *)
+extension DiningViewControllerSwiftUI: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Dining_Grey")
+        let selectedImage = UIImage(named: "Dining_Blue")
+        return UITabBarItem(title: "Dining", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
 extension GSRController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "GSR_Grey")
@@ -92,6 +101,7 @@ extension GSRLocationsController: TabBarShowable {
         return UITabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
     }
 }
+
 
 extension GSRTabController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {

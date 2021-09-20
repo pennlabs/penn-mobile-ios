@@ -14,7 +14,7 @@ protocol DiningViewModelDelegate: DiningBalanceRefreshable {
 
 class DiningViewModel: NSObject {
     let ordering: [DiningVenue.VenueType] = [.dining, .retail]
-    var venues: [DiningVenue.VenueType : [DiningVenue]] = DiningDataStore.shared.getSectionedVenues()
+    var venues: [DiningVenue.VenueType : [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
     var balance: DiningBalance?
     
     let balancesHeader = "Dining Balance"
@@ -31,7 +31,7 @@ class DiningViewModel: NSObject {
     internal let diningBalanceCell = "diningBalanceCell"
     
     func refresh() {
-        self.venues = DiningDataStore.shared.getSectionedVenues()
+        self.venues = DiningAPI.instance.getSectionedVenues()
     }
     
     func getType(forSection section: Int) -> DiningVenue.VenueType {

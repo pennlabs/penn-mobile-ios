@@ -8,8 +8,7 @@
 
 import UIKit
 import UserNotifications
-import FirebaseCore
-import FirebaseInstanceID
+import Firebase
 import StoreKit
 
 @UIApplicationMain

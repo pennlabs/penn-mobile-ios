@@ -19,7 +19,6 @@ extension UserDefaults {
         case sessionCount
         case laundryPreferences
         case isOnboarded
-        case gsrUSer
         case appVersion
         case cookies
         case wharton
@@ -33,8 +32,11 @@ extension UserDefaults {
         case housing
         case privacyPreferences
         case notificationPreferences
+        case PCAPreferences
         case gsrGroupsEnabled
         case totpEnabledDate
+        case lastDiningHoursRequest
+        case lastMenuRequest
     }
     
     func clearAll() {
@@ -133,29 +135,6 @@ extension UserDefaults {
 
     func isOnboarded() -> Bool {
         return bool(forKey: UserDefaultsKeys.isOnboarded.rawValue)
-    }
-}
-
-// MARK: GSR User
-extension UserDefaults {
-    func setGSRUser(value: GSRUser) {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(value) {
-            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.gsrUSer.rawValue)
-        }
-        synchronize()
-    }
-
-    func getGSRUser() -> GSRUser? {
-        let decoder = JSONDecoder()
-        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.gsrUSer.rawValue) {
-            return try? decoder.decode(GSRUser.self, from: decodedData)
-        }
-        return nil
-    }
-
-    func clearGSRUser() {
-        removeObject(forKey: UserDefaultsKeys.gsrUSer.rawValue)
     }
 }
 
@@ -398,6 +377,41 @@ extension UserDefaults {
     }
 }
 
+// MARK: - Penn Course Alert Settings
+extension UserDefaults {
+    
+    // MARK: Get and Save Preferences
+    // Set values for each PCA option
+    func set(_ PCAOption: PCAOption, to newValue: Bool) {
+        var prefs = getAllPCAPreferences()
+        prefs[PCAOption.rawValue] = newValue
+        saveAll(PCAPreferences: prefs)
+    }
+    
+    // Get values for each PCA option (default to false if no preference exists)
+    func getPreference(for option: PCAOption) -> Bool {
+        let prefs = getAllPCAPreferences()
+        return prefs[option.rawValue] ?? false
+    }
+    
+    // Fetch preferences from disk
+    func getAllPCAPreferences() -> PCAPreferences {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.PCAPreferences.rawValue) {
+            return (try? decoder.decode(PCAPreferences.self, from: decodedData)) ?? .init()
+        }
+        return .init()
+    }
+    
+    func saveAll(PCAPreferences: PCAPreferences) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(PCAPreferences) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.PCAPreferences.rawValue)
+        }
+    }
+    
+}
+
 // MARK: - Privacy Settings
 extension UserDefaults {
     
@@ -532,5 +546,38 @@ extension UserDefaults {
     
     func setTwoFactorEnabledDate(_ date: Date?) {
         UserDefaults.standard.set(date, forKey: UserDefaultsKeys.totpEnabledDate.rawValue)
+    }
+}
+
+// MARK: - DiningHours
+extension UserDefaults {
+    func setLastDiningHoursRequest() {
+        UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastDiningHoursRequest.rawValue)
+    }
+    
+    func getLastDiningHoursRequest() -> Date? {
+        return UserDefaults.standard.value(forKey: UserDefaultsKeys.lastDiningHoursRequest.rawValue) as? Date
+    }
+}
+
+
+// MARK: - MenuRequest
+extension UserDefaults {
+    func setLastMenuRequest(id: Int) {
+        let dict: [Int: Date]? = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue) as? [Int: Date]
+        
+        if var menuDateDict = dict {
+            menuDateDict[id] = Date()
+            UserDefaults.standard.set(menuDateDict, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
+        } else {
+            let menuDateDictInit = [id: Date()]
+            UserDefaults.standard.set(menuDateDictInit, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
+        }
+    }
+    
+    func getLastMenuRequest(id: Int) -> Date? {
+        let dict = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue)  as? [Int:Date]
+        
+        return dict?[id]
     }
 }

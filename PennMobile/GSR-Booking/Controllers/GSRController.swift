@@ -8,17 +8,18 @@
 
 import UIKit
 import WebKit
+import SCLAlertView
 
-class GSRController: GenericViewController, IndicatorEnabled {
+class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
 
     // MARK: UI Elements
     fileprivate var tableView: UITableView!
     fileprivate var rangeSlider: GSRRangeSlider!
     fileprivate var pickerView: UIPickerView!
-    fileprivate var emptyView: EmptyView!
     fileprivate var closedView: GSRClosedView!
     fileprivate var barButton: UIBarButtonItem!
     fileprivate var bookingsBarButton: UIBarButtonItem!
+    fileprivate var limitedAccessLabel: UILabel!
     
     var group: GSRGroup?
     
@@ -27,8 +28,6 @@ class GSRController: GenericViewController, IndicatorEnabled {
     var currentDay = Date()
 
     fileprivate var viewModel: GSRViewModel!
-    
-    var loadingView: UIActivityIndicatorView!
 
     var startingLocation: GSRLocation!
 
@@ -39,7 +38,6 @@ class GSRController: GenericViewController, IndicatorEnabled {
         
         let index = viewModel.getLocationIndex(startingLocation)
         self.pickerView.selectRow(index, inComponent: 1, animated: true)
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -77,9 +75,8 @@ extension GSRController {
         preparePickerView()
         prepareRangeSlider()
         prepareTableView()
-        prepareEmptyView()
-        prepareLoadingView()
         prepareClosedView()
+        prepareLimitedAccessLabel()
     }
 
     private func preparePickerView() {
@@ -111,14 +108,6 @@ extension GSRController {
         view.addSubview(tableView)
         _ = tableView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
-
-    private func prepareEmptyView() {
-        emptyView = EmptyView()
-        emptyView.isHidden = true
-
-        view.addSubview(emptyView)
-        _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-    }
     
     private func prepareClosedView() {
         closedView = GSRClosedView()
@@ -126,6 +115,20 @@ extension GSRController {
 
         view.addSubview(closedView)
         _ = closedView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+    }
+    
+    private func prepareLimitedAccessLabel() {
+        limitedAccessLabel = UILabel()
+        limitedAccessLabel.isHidden = true
+        limitedAccessLabel.numberOfLines = 0
+        limitedAccessLabel.textAlignment = .center
+        
+        view.addSubview(limitedAccessLabel)
+        limitedAccessLabel.translatesAutoresizingMaskIntoConstraints = false
+        limitedAccessLabel.topAnchor.constraint(equalTo: rangeSlider.topAnchor, constant: Padding.pad).isActive = true
+        limitedAccessLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Padding.pad).isActive = true
+        limitedAccessLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Padding.pad).isActive = true
+        limitedAccessLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true
     }
 }
 
@@ -140,21 +143,44 @@ extension GSRController {
 
 // MARK: - ViewModelDelegate + Networking
 extension GSRController: GSRViewModelDelegate {
+    func resetDataForCell(at indexPath: IndexPath) {
+        (tableView.cellForRow(at: indexPath) as? RoomCell)?.resetSelection()
+    }
+    
     func fetchData() {
         let location = viewModel.getSelectedLocation()
         let date = viewModel.getSelectedDate()
+        self.showActivity()
         
-        self.startLoadingViewAnimation()
-                        
-        GSRNetworkManager.instance.getAvailability(for: location.lid, date: date) { (rooms) in
-            
+        GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: date.string) { result in
             DispatchQueue.main.async {
-                let rooms = rooms ?? []
-                self.viewModel.updateData(with: rooms)
-                self.refreshDataUI()
-                self.rangeSlider.reload()
-                self.refreshBarButton()
-                self.stopLoadingViewAnimation()
+                self.limitedAccessLabel.isHidden = true
+                self.tableView.isHidden = false
+                self.hideActivity()
+                switch result {
+                case .success(let rooms):
+                    self.viewModel.updateData(with: rooms)
+                    self.refreshDataUI()
+                    self.rangeSlider.reload()
+                    self.refreshBarButton()
+                case .failure:
+                    if location.gid == 1 {
+                        if !Account.isLoggedIn {
+                            self.limitedAccessLabel.isHidden = false
+                            self.tableView.isHidden = true
+                            self.limitedAccessLabel.text = "You need to log in with a Wharton pennkey to access Wharton GSRs"
+                            return
+                        }
+                        
+                        if Account.isLoggedIn && !UserDefaults.standard.isInWharton() {
+                            self.limitedAccessLabel.isHidden = false
+                            self.tableView.isHidden = true
+                            self.limitedAccessLabel.text = "You need to have a Wharton pennkey to access Wharton GSRs"
+                            return
+                        }
+                    }
+                    self.navigationVC?.addStatusBar(text: .apiError)
+                }
             }
         }
     }
@@ -162,12 +188,7 @@ extension GSRController: GSRViewModelDelegate {
     func refreshDataUI() {
         tableView.isHidden = !viewModel.existsTimeSlot()
         closedView.isHidden = viewModel.existsTimeSlot()
-        emptyView.isHidden = !viewModel.isEmpty || !viewModel.existsTimeSlot()
         self.tableView.reloadData()
-    }
-
-    func refreshSelectionUI() {
-        self.refreshBarButton()
     }
 }
 
@@ -181,29 +202,6 @@ extension GSRController: UIGestureRecognizerDelegate {
     }
 }
 
-// MARK: - Activity Indicator
-extension GSRController {
-    func prepareLoadingView() {
-        loadingView = UIActivityIndicatorView(style: .whiteLarge)
-        loadingView.color = .black
-        loadingView.isHidden = false
-        view.addSubview(loadingView)
-        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    func startLoadingViewAnimation() {
-        if loadingView != nil && !loadingView.isHidden {
-            loadingView.startAnimating()
-        }
-    }
-
-    func stopLoadingViewAnimation() {
-        self.loadingView.isHidden = true
-        self.loadingView.stopAnimating()
-    }
-}
 // MARK: - Bar Button Refresh + Handler
 extension GSRController: GSRBookable {
     fileprivate func refreshBarButton() {
@@ -212,88 +210,84 @@ extension GSRController: GSRBookable {
     }
 
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
-        if let booking = viewModel.getBooking() {
-            submitPressed(for: booking)
+        if let id = viewModel.getSelectedRoomId(), let roomIndexPath = viewModel.getSelectedRoomIdIndexPath() {
+            let gid = viewModel.getSelectedLocation().gid
+            let roomName = viewModel.getSelectRoomName() ?? ""
+            let times = (tableView.cellForRow(at: roomIndexPath) as? RoomCell)?.getSelectTimes() ?? []
+             
+            if times.count == 0 {
+                showAlert(withMsg: "Please select a timeslot to book.", title: "Empty Selection", completion: nil)
+            }
+            
+            let sorted = times.sorted(by: {$0.startTime < $1.startTime})
+            
+            let first = sorted.first!
+            let last = sorted.last!
+            
+            // wharton prevents booking more than 90 minutes
+            if gid == 1 && times.count > 3 {
+                showAlert(withMsg: "You cannot book for more than 90 minutes for Wharton GSRs", title: "Invalid Selection", completion: nil)
+            } else if times.count > 4 {
+                showAlert(withMsg: "You cannot book for more than 120 minutes for Library GSRs", title: "Invalid Selection", completion: nil)
+            } else {
+                if Account.isLoggedIn {
+                    submitBooking(for: GSRBooking(gid: gid, startTime: first.startTime, endTime: last.endTime, id: id, roomName: roomName))
+                } else {
+                    let alertController = UIAlertController(title: "Login Error", message: "Please login to book GSRs", preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: {_ in }))
+                    alertController.addAction(UIAlertAction(title: "Login", style: .default, handler: { _ in
+                        let llc = LabsLoginController { (success) in
+                            DispatchQueue.main.async {
+                                self.submitBooking(for: GSRBooking(gid: gid, startTime: first.startTime, endTime: last.endTime, id: id, roomName: roomName))
+                            }
+                        }
+                        
+                        let nvc = UINavigationController(rootViewController: llc)
+                        
+                        self.present(nvc, animated: true, completion: nil)
+                    }))
+                    
+                    
+                    present(alertController, animated: true, completion: nil)
+                }
+            }
         } else {
-            // Alert. Nothing selected.
             showAlert(withMsg: "Please select a timeslot to book.", title: "Empty Selection", completion: nil)
         }
+    }
+    
+    func getBooking() -> GSRBooking? {
+        if let id = viewModel.getSelectedRoomId(), let roomIndexPath = viewModel.getSelectedRoomIdIndexPath() {
+            let gid = viewModel.getSelectedLocation().gid
+            let roomName = viewModel.getSelectRoomName() ?? ""
+            let times = (tableView.cellForRow(at: roomIndexPath) as? RoomCell)?.getSelectTimes() ?? []
+             
+            if times.count == 0 {
+                return nil
+            }
+            
+            let first = times.first!
+            let last = times.last!
+            
+            // wharton prevents booking more than 90 minutes
+            if gid == 1 && times.count > 3 {
+                showAlert(withMsg: "You cannot book for more than 90 minutes for Wharton GSRs", title: "Invalid Selection", completion: nil)
+                return nil
+            } else if times.count > 4 {
+                showAlert(withMsg: "You cannot book for more than 120 minutes for Library GSRs", title: "Invalid Selection", completion: nil)
+                return nil
+            }
+            
+            return GSRBooking(gid: gid, startTime: first.startTime, endTime: last.endTime, id: id, roomName: roomName)
+        }
+        
+        return nil
     }
 
     @objc fileprivate func handleBookingsBarButtonPressed(_ sender: Any) {
         let grc = GSRReservationsController()
         self.navigationController?.pushViewController(grc, animated: true)
-    }
-    
-    private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {
-        let wv = GSRWebviewLoginController()
-        wv.completion = completion
-        let nvc = UINavigationController(rootViewController: wv)
-        present(nvc, animated: true, completion: nil)
-    }
-
-    private func presentLoginController(with booking: GSRBooking? = nil) {
-        let glc = GSRLoginController()
-        glc.booking = booking
-        let nvc = UINavigationController(rootViewController: glc)
-        present(nvc, animated: true, completion: nil)
-    }
-
-    private func submitPressed(for booking: GSRBooking) {
-        if let booking = booking as? GSRGroupBooking {
-            handleGroupBooking(booking)
-            return
-        }
-        
-        if GSRNetworkManager.instance.bookingRequestOutstanding {
-            return
-        }
-
-        let location = viewModel.getSelectedLocation()
-        if location.service == "wharton" {
-            if let sessionId = GSRUser.getSessionID() {
-                booking.sessionId = sessionId
-                submitBooking(for: booking) { (success) in
-                    if success {
-                        self.fetchData()
-                    } else {
-                        self.viewModel.clearSelection()
-                        self.refreshDataUI()
-                    }
-                }
-            } else {
-                presentWebviewLoginController {
-                    if let sessionId = GSRUser.getSessionID() {
-                        booking.sessionId = sessionId
-                        self.submitBooking(for: booking) { (success) in
-                            self.fetchData()
-                        }
-                    }
-                }
-            }
-        } else {
-            if let user = GSRUser.getUser() {
-                booking.user = user
-                submitBooking(for: booking) { (success) in
-                    if success {
-                        self.fetchData()
-                    } else {
-                        self.presentLoginController(with: booking)
-                    }
-                }
-            } else {
-                presentLoginController(with: booking)
-            }
-        }
-    }
-}
-
-extension GSRController {
-    private func handleGroupBooking(_ booking: GSRGroupBooking) {
-        let confirmController = GSRGroupConfirmBookingController()
-        confirmController.group = booking.gsrGroup
-        confirmController.booking = booking
-        present(confirmController, animated: true, completion: nil)
     }
 }
 

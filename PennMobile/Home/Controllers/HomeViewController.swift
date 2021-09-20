@@ -28,8 +28,8 @@ class HomeViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Home"
+        screenName = "Home"
         view.backgroundColor = .uiBackground
-        trackScreen = true
 
         prepareLoadingView()
         prepareTableView()
@@ -43,6 +43,8 @@ class HomeViewController: GenericViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+
         if tableViewModel == nil {
             self.startLoadingViewAnimation()
         }
@@ -65,7 +67,7 @@ class HomeViewController: GenericViewController {
         if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.displayTitle != nil {
             return self.displayTitle
         } else {
-            let firstName = Account.getAccount()?.first ?? GSRUser.getUser()?.firstName
+            let firstName = Account.getAccount()?.first
             
             let intros = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"]
             
@@ -146,7 +148,7 @@ extension HomeViewController {
     }
 
     func prepareLoadingView() {
-        loadingView = UIActivityIndicatorView(style: .whiteLarge)
+        loadingView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
         loadingView.color = .black
         loadingView.isHidden = false
         view.addSubview(loadingView)
@@ -262,11 +264,9 @@ extension HomeViewController : DiningCellSettingsDelegate {
     func saveSelection(for venueIds: [Int]) {
         guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
         if venueIds.count == 0 {
-            diningItem.venues = DiningDataStore.shared.getVenues(for: DiningVenue.defaultVenueIds)
-            diningItem.venueIds = DiningVenue.defaultVenueIds
+            diningItem.venues = DiningAPI.instance.getVenues(with: DiningVenue.defaultVenueIds)
         } else {
-            diningItem.venues = DiningDataStore.shared.getVenues(for: venueIds)
-            diningItem.venueIds = venueIds
+            diningItem.venues = DiningAPI.instance.getVenues(with: venueIds)
         }
 
         reloadItem(diningItem)

@@ -13,7 +13,9 @@ class FirebaseAnalyticsManager: NSObject {
     static let shared = FirebaseAnalyticsManager()
     private override init() {}
     
-    @objc func trackScreen(_ name: String) {
+    func trackScreen(_ name: String) {
+        Analytics.logEvent(AnalyticsEventScreenView,
+                           parameters: [AnalyticsParameterScreenName: name])
     }
     
     func trackEvent(action: EventAction, result: EventResult, content: Any) {

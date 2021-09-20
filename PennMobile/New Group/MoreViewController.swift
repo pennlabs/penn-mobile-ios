@@ -84,7 +84,8 @@ class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccess
         PennLink(title: "CampusExpress", url: "https://prod.campusexpress.upenn.edu"),
         PennLink(title: "Canvas", url: "https://canvas.upenn.edu"),
         PennLink(title: "PennInTouch", url: "https://pennintouch.apps.upenn.edu"),
-        PennLink(title: "PennPortal", url: "https://portal.apps.upenn.edu/penn_portal")]
+        PennLink(title: "PennPortal", url: "https://portal.apps.upenn.edu/penn_portal"),
+        PennLink(title: "Share Your Feedback", url: "https://airtable.com/shrS98E3rj5Nw1wy6")]
     
 }
 
@@ -167,10 +168,10 @@ extension MoreViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                let targetController = GSRLoginController()
-                targetController.shouldShowSuccessMessage = true
-                targetController.shouldShowCancel = false
-                targetController.message = "This information is used when booking GSRs and when displaying your name on the homepage."
+                let targetController = UIViewController()
+//                targetController.shouldShowSuccessMessage = true
+//                targetController.shouldShowCancel = false
+//                targetController.message = "This information is used when booking GSRs and when displaying your name on the homepage."
                 navigationController?.pushViewController(targetController, animated: true)
             } else if indexPath.row == 1 {
                 let targetController = ControllerModel.shared.viewController(for: .pacCode)

@@ -42,7 +42,6 @@ class FitnessViewController: GenericTableViewController {
 //Mark: Networking to retrieve today's times
 extension FitnessViewController {
     fileprivate func fetchFitnessHours() {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         FitnessAPI.instance.fetchFitnessHours { (success, error) in
             DispatchQueue.main.async {
                 if !success {
@@ -54,7 +53,6 @@ extension FitnessViewController {
                 }
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
             }
         }
     }

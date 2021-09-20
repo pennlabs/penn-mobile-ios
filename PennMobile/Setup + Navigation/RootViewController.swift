@@ -70,29 +70,6 @@ class RootViewController: UIViewController, NotificationRequestable {
             }
         }
         
-        // If student is in Wharton but does not have a session ID, retrieve one if possible
-        if UserDefaults.standard.isInWharton() && GSRUser.getSessionID() == nil {
-            let now = Date()
-            if lastLoginAttempt != nil && lastLoginAttempt!.minutesFrom(date: now) < 720 {
-                // Don't try to auto re-login if it's been less than 12 hours since last attempt
-                return
-            }
-            self.lastLoginAttempt = Date()
-            // Wait 0.5 seconds so that the home page request is not held up
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                GSRNetworkManager.instance.getSessionIDWithDownFlag { (success, serviceDown) in
-                    DispatchQueue.main.async {
-                        if !success && !serviceDown && self.current is HomeNavigationController {
-                            // Only pop up login controller if not successful, service is not down, and not on login screen
-                            let gwc = GSRWebviewLoginController()
-                            let nvc = UINavigationController(rootViewController: gwc)
-                            self.current.present(nvc, animated: true, completion: nil)
-                        }
-                    }
-                }
-            }
-        }
-        
         // Fetch transaction data at least once a week, starting on Sundays
         if shouldFetchTransactions() {
             if UserDefaults.standard.isAuthedIn() {
@@ -203,8 +180,9 @@ class RootViewController: UIViewController, NotificationRequestable {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         UserDefaults.standard.clearAll()
         OAuth2NetworkManager.instance.clearRefreshToken()
+        OAuth2NetworkManager.instance.clearCurrentAccessToken()
         Account.clear()
-        GSRUser.clear()
+        Storage.remove(DiningInsightsAPIResponse.directory, from: .caches)
     }
     
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {

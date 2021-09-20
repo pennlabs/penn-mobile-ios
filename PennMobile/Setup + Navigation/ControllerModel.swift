@@ -29,6 +29,7 @@ enum Feature: String {
     case notifications = "Notifications"
     case courseSchedule = "Course Schedule"
     case pacCode = "PAC Code"
+    case courseAlerts = "Penn Course Alert"
 }
 
 class ControllerModel: NSObject {
@@ -40,7 +41,11 @@ class ControllerModel: NSObject {
     func prepare() {
         vcDictionary = [Feature: UIViewController]()
         vcDictionary[.home] = HomeViewController()
-        vcDictionary[.dining] = DiningViewController()
+        if #available(iOS 14, *) {
+            vcDictionary[.dining] = DiningViewControllerSwiftUI()
+        } else {
+            vcDictionary[.dining] = DiningViewController()
+        }
         vcDictionary[.studyRoomBooking] = GSRTabController()
         vcDictionary[.laundry] = LaundryTableViewController()
         vcDictionary[.more] = MoreViewController()
@@ -52,6 +57,7 @@ class ControllerModel: NSObject {
         vcDictionary[.privacy] = PrivacyViewController()
         vcDictionary[.courseSchedule] = CourseScheduleViewController()
         vcDictionary[.pacCode] = PacCodeViewController()
+        vcDictionary[.courseAlerts] = CourseAlertController()
         //vcDictionary[.fitness] = FitnessViewController()
         //vcDictionary[.fling] = FlingViewController()
     }
@@ -72,12 +78,25 @@ class ControllerModel: NSObject {
     // Features order in MoreViewController:
     var moreOrder: [Feature] {
         get {
-            return [.news, .contacts, .courseSchedule, .about]
+            //keeping this #if DEBUG in case we want to remove course alerts from production
+            //courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
+            #if DEBUG
+                return [.news, .contacts, .courseSchedule, .courseAlerts, .about]
+            #else
+                return [.news, .contacts, .courseSchedule, .about]
+            #endif
         }
     }
+    
     var moreIcons: [UIImage] {
+        //keeping this #if DEBUG in case we want to remove course alerts from production
+        //courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
         get {
-            return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "logo-small")]
+            #if DEBUG
+                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "logo-small")]
+            #else
+                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "logo-small")]
+            #endif
         }
     }
 
