@@ -10,6 +10,9 @@ import Foundation
 import SwiftyJSON
 
 final class HomePostCellItem: HomeCellItem {
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        completion([])
+    }
     
     static var jsonKey: String {
         return "post"

@@ -7,59 +7,41 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 final class HomeNewsCellItem: HomeCellItem {
-    
-    static var jsonKey: String {
-        return "news"
-    }
+    static var jsonKey = "news"
+    static var associatedCell: ModularTableViewCell.Type = HomeNewsCell.self
     
     let article: NewsArticle
-    var image: UIImage?
     var showSubtitle = false
     
-    init(article: NewsArticle) {
+    init(for article: NewsArticle) {
         self.article = article
     }
     
-    static func getItem(for json: JSON?) -> HomeCellItem? {
-        guard let json = json else { return nil }
-        return try? HomeNewsCellItem(json: json)
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        let task = URLSession.shared.dataTask(with: URL(string: "https://studentlife.pennlabs.org/penndata/news/")!) { data, response, error in
+            guard let data = data else { completion([]); return }
+            
+            if let article = try? JSONDecoder().decode(NewsArticle.self, from: data) {
+                completion([HomeNewsCellItem(for: article)])
+            } else {
+                completion([])
+            }
+        }
+        
+        task.resume()
     }
-    
-    static var associatedCell: ModularTableViewCell.Type {
-        return HomeNewsCell.self
-    }
-    
+
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeNewsCellItem else { return false }
         return article.title == item.article.title
     }
 }
 
-// MARK: - HomeAPIRequestable
-extension HomeNewsCellItem: HomeAPIRequestable {
-    func fetchData(_ completion: @escaping () -> Void) {
-        ImageNetworkingManager.instance.downloadImage(imageUrl: article.imageUrl) { (image) in
-            self.image = image
-            completion()
-        }
-    }
-}
-
-// MARK: - JSON Parsing
-extension HomeNewsCellItem {
-    convenience init(json: JSON) throws {
-        let article = try NewsArticle(json: json)
-        self.init(article: article)
-        self.showSubtitle = json["show_subtitle"].boolValue
-    }
-}
-
 // MARK: - Logging ID
 extension HomeNewsCellItem: LoggingIdentifiable {
     var id: String {
-        return article.articleUrl
+        return article.link
     }
 }

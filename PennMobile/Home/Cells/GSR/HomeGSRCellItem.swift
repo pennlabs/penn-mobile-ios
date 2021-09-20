@@ -10,6 +10,10 @@ import Foundation
 import SwiftyJSON
 
 final class HomeGSRCellItem: HomeCellItem {
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        completion([])
+    }
+    
 
     static var associatedCell: ModularTableViewCell.Type {
         return HomeStudyRoomCell.self
