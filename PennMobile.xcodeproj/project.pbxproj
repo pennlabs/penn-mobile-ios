@@ -2408,7 +2408,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = VU59R57FGM;
+				DEVELOPMENT_TEAM = 8988DRMFXA;
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
