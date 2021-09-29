@@ -168,7 +168,7 @@ extension MoreViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                let targetController = UIViewController()
+                let targetController = AccountPageViewController()
 //                targetController.shouldShowSuccessMessage = true
 //                targetController.shouldShowCancel = false
 //                targetController.message = "This information is used when booking GSRs and when displaying your name on the homepage."
