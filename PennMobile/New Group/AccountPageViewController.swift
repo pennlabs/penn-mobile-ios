@@ -11,126 +11,119 @@ import UIKit
 
 class AccountPageViewController: UIViewController, ShowsAlertForError, UITableViewDelegate, UITableViewDataSource {
     var account: Account!
-    var titleLabel = UILabel()
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
-    var descriptionLabel = UILabel()
-    let textList = ["Name", "Username", "Email"]
-    var infoList = ["", "", ""]
-    let nameView = UIView()
-    let usernameView = UIView()
-    let emailView = UIView()
-    var viewList: [UIView] {
-        return [nameView, usernameView, emailView]
-    }
     
+    var profileInfo = [(text: "Name", info: " "), (text: "Username", info: " "), (text: "Email", info: " ")]
+    var educationInfo = [(text: "Graduation Term", info: " "), (text: "School", info: " "), (text: "Major", info: " ")]
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Account"
-        view.backgroundColor = .uiGroupedBackground
-        account = Account.getAccount()
-        
-        
-        if !Account.isLoggedIn {
+        setupView()
+        setupTableView()
+        guard Account.isLoggedIn else {
             self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
             return
         }
-        setupTitleLabel()
-        setupTableView()
-        setupDescriptionLabel()
-        setupInfo()
-        setupCellViews()
+        setupProfileInfo()
+        setupEducationInfo()
     }
     
-    func setupTitleLabel() {
-        titleLabel.text = "PROFILE"
-        titleLabel.textColor = .labelSecondary
-        titleLabel.font = UIFont.systemFont(ofSize: 16)
-        view.addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        titleLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.80).isActive = true
-        titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+    func setupView() {
+        self.title = "Account"
+        view.backgroundColor = .uiGroupedBackground
+        account = Account.getAccount()
     }
-    
     func setupTableView() {
         view.addSubview(tableView)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(ProfilePageTableViewCell.self, forCellReuseIdentifier: ProfilePageTableViewCell.identifier)
+
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.isScrollEnabled = false
-        var frame = CGRect.zero
-        frame.size.height = .leastNormalMagnitude
-        tableView.tableHeaderView = UIView(frame: frame)
-        tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
-        tableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, constant: 1).isActive = true
-        tableView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 140).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
         tableView.delegate = self
         tableView.dataSource = self
     }
     
-    func setupDescriptionLabel() {
-        descriptionLabel.text = "If your information is incorrect, please send an email to contact@pennclubs.com detailing your issue."
-        descriptionLabel.textColor = .labelSecondary
-        descriptionLabel.font = UIFont.systemFont(ofSize: 16)
-        
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.textAlignment = .left
-        
-        view.addSubview(descriptionLabel)
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
-        descriptionLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.80).isActive = true
-        descriptionLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-    }
-    
-    func setupInfo() {
+    func setupProfileInfo() {
         guard let firstName = account.first, let lastName = account.last else {
             return
         }
-        infoList[0] = "\(firstName) \(lastName)"
-        infoList[1] = (account.pennkey)
+        profileInfo[0].info = "\(firstName) \(lastName)"
+        profileInfo[1].info = (account.pennkey)
         guard let email = account.email else {
             return
         }
-        infoList[2] = email
-        
+        profileInfo[2].info = email
     }
     
-    func setupCellViews() {
-        for i in 0..<viewList.count {
-            let cellTitleLabel = UILabel.init(frame: CGRect(x:0,y:0,width:100,height:20))
-            cellTitleLabel.text = textList[i]
-            viewList[i].addSubview(cellTitleLabel)
-            cellTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-            cellTitleLabel.centerYAnchor.constraint(equalTo: viewList[i].centerYAnchor).isActive = true
-            cellTitleLabel.leadingAnchor.constraint(equalTo: viewList[i].leadingAnchor, constant: 20).isActive = true
-            cellTitleLabel.heightAnchor.constraint(equalTo: viewList[i].heightAnchor).isActive = true
-            let infoLabel = UILabel()
-            infoLabel.text = infoList[i]
-            viewList[i].addSubview(infoLabel)
-            infoLabel.translatesAutoresizingMaskIntoConstraints = false
-            infoLabel.centerYAnchor.constraint(equalTo: viewList[i].centerYAnchor).isActive = true
-            infoLabel.trailingAnchor.constraint(equalTo: viewList[i].trailingAnchor, constant: -20).isActive = true
-            infoLabel.heightAnchor.constraint(equalTo: viewList[i].heightAnchor).isActive = true
+    func setupEducationInfo() {
+        guard let degrees = account.degrees else {
+            return
         }
+        var majorsSet = Set<String>()
+        var schoolsSet = Set<String>()
+        for degree in degrees {
+            let majors = degree.majors
+            schoolsSet.insert(degree.schoolName)
+            for major in majors {
+                majorsSet.insert(major.name)
+            }
+            educationInfo[0].info = degree.expectedGradTerm
+        }
+        
+        if schoolsSet.count > 1 {
+            educationInfo[1].text += "s"
+        }
+        
+        if majorsSet.count > 1 {
+            educationInfo[2].text += "s"
+        }
+        educationInfo[1].info = Array(schoolsSet).joined(separator: ", ")
+        educationInfo[2].info = Array(majorsSet).joined(separator: ", ")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return textList.count
+        if (section == 0) {
+            return profileInfo.count
+        } else {
+            return educationInfo.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let whichView = viewList[indexPath.row]
-        cell.addSubview(whichView)
-        whichView.translatesAutoresizingMaskIntoConstraints = false
-        whichView.heightAnchor.constraint(equalTo: cell.heightAnchor, multiplier: 0.5).isActive = true
-        whichView.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
-        whichView.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
-        whichView.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
-        cell.selectionStyle = .none
-        cell.backgroundColor = .uiGroupedBackgroundSecondary
-        return cell
+        if (indexPath.section == 0) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePageTableViewCell.identifier, for: indexPath) as! ProfilePageTableViewCell
+            cell.key = profileInfo[indexPath.row].text
+            cell.info = profileInfo[indexPath.row].info
+            cell.selectionStyle = .none
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePageTableViewCell.identifier, for: indexPath) as! ProfilePageTableViewCell
+            cell.key = educationInfo[indexPath.row].text
+            cell.info = educationInfo[indexPath.row].info
+            cell.selectionStyle = .none
+            return cell
+        }
+        
+        
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        Account.isLoggedIn && account.isStudent ? 2 : 1
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "PROFILE"
+        }
+        return "EDUCATION"
+    }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 0 {
+            return "If your information is incorrect, please send an email to contact@pennlabs.org detailing your issue."
+        }
+        return nil
     }
 }

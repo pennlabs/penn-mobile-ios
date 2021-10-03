@@ -111,7 +111,7 @@ extension MoreViewController {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
-                    cell.setUpView(with: "Edit your profile")
+                    cell.setUpView(with: "View your profile")
                     cell.backgroundColor = .uiGroupedBackgroundSecondary
                     cell.accessoryType = .disclosureIndicator
                     return cell
