@@ -13,17 +13,17 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
     var account: Account!
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
-    var profileInfo = [(text: "Name", info: " "), (text: "Username", info: " "), (text: "Email", info: " ")]
-    var educationInfo = [(text: "Graduation Term", info: " "), (text: "School", info: " "), (text: "Major", info: " ")]
+    var profileInfo: [(text: String, info: String)] = []
+    var educationInfo: [(text: String, info: String)] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
-        setupTableView()
         guard Account.isLoggedIn else {
             self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
             return
         }
+        setupTableView()
         setupProfileInfo()
         setupEducationInfo()
     }
@@ -42,6 +42,7 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
         tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 600
         tableView.delegate = self
@@ -52,12 +53,13 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
         guard let firstName = account.first, let lastName = account.last else {
             return
         }
-        profileInfo[0].info = "\(firstName) \(lastName)"
-        profileInfo[1].info = (account.pennkey)
+        profileInfo.append((text: "Name", info: "\(firstName) \(lastName)"))
+        profileInfo.append((text: "Username", info: account.pennkey))
+        
         guard let email = account.email else {
             return
         }
-        profileInfo[2].info = email
+        profileInfo.append((text: "Email", info: email))
     }
     
     func setupEducationInfo() {
@@ -66,15 +68,18 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
         }
         var majorsSet = Set<String>()
         var schoolsSet = Set<String>()
+        var gradTerm = String()
         for degree in degrees {
             let majors = degree.majors
             schoolsSet.insert(degree.schoolName)
             for major in majors {
                 majorsSet.insert(major.name)
             }
-            educationInfo[0].info = degree.expectedGradTerm
+            gradTerm = degree.expectedGradTerm
         }
-        
+        educationInfo.append((text: "Graduation Term", info: gradTerm))
+        educationInfo.append((text: "School", info: Array(schoolsSet).joined(separator: ", ")))
+        educationInfo.append((text: "Major", info: Array(majorsSet).joined(separator: ", ")))
         if schoolsSet.count > 1 {
             educationInfo[1].text += "s"
         }
@@ -82,8 +87,6 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
         if majorsSet.count > 1 {
             educationInfo[2].text += "s"
         }
-        educationInfo[1].info = Array(schoolsSet).joined(separator: ", ")
-        educationInfo[2].info = Array(majorsSet).joined(separator: ", ")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
