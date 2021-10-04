@@ -36,15 +36,16 @@ class ProfilePageTableViewCell: UITableViewCell {
         backgroundColor = .uiGroupedBackgroundSecondary
         prepareKeyLabel()
         prepareInfoLabel()
-        self.heightAnchor.constraint(equalTo: infoLabel.heightAnchor, constant: 20).isActive = true
     }
     
     fileprivate func prepareKeyLabel() {
         self.contentView.addSubview(keyLabel)
+        keyLabel.numberOfLines = 1
         keyLabel.translatesAutoresizingMaskIntoConstraints = false
-        keyLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        keyLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10.0).isActive = true
+        keyLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10.0).isActive = true
         keyLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20).isActive = true
-        keyLabel.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+        keyLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.35).isActive = true
     }
     
     fileprivate func prepareInfoLabel() {
@@ -52,9 +53,10 @@ class ProfilePageTableViewCell: UITableViewCell {
         infoLabel.textAlignment = .right
         infoLabel.numberOfLines = 0
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        infoLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        infoLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10.0).isActive = true
+        infoLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10.0).isActive = true
         infoLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20.0).isActive = true
-        infoLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.65).isActive = true
+        infoLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.65).isActive = true
     }
     
 }

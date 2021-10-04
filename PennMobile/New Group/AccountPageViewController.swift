@@ -39,8 +39,11 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true
-        tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 600
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -110,7 +113,7 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        Account.isLoggedIn && account.isStudent ? 2 : 1
+        2
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -169,9 +169,6 @@ extension MoreViewController {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 let targetController = AccountPageViewController()
-//                targetController.shouldShowSuccessMessage = true
-//                targetController.shouldShowCancel = false
-//                targetController.message = "This information is used when booking GSRs and when displaying your name on the homepage."
                 navigationController?.pushViewController(targetController, animated: true)
             } else if indexPath.row == 1 {
                 let targetController = ControllerModel.shared.viewController(for: .pacCode)
