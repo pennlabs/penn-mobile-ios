@@ -134,7 +134,6 @@ extension GSRNetworkManager {
     func getReservations(_ completion: @escaping (_ reservations: Result<[GSRReservation], NetworkingError>) -> Void) {
         OAuth2NetworkManager.instance.getAccessToken { token in
             guard let token = token else {
-                print(token)
                 completion(.failure(.authenticationError))
                 return
             }
