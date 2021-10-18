@@ -13,14 +13,12 @@ class GSRNetworkManager: NSObject, Requestable {
     
     static let instance = GSRNetworkManager()
     
-    let availUrl = "https://studentlife.pennlabs.org/availability/"
-    let locationsUrl = "https://studentlife.pennlabs.org/locations/"
-    let bookingUrl = "https://studentlife.pennlabs.org/book/"
-    let reservationURL = "https://studentlife.pennlabs.org/reservations/"
-    let cancelURL = "https://studentlife.pennlabs.org/cancel/"
+    let availUrl = "https://pennmobile.org/api/gsr/availability/"
+    let locationsUrl = "https://pennmobile.org/api/gsr/locations/"
+    let bookingUrl = "https://pennmobile.org/api/gsr/book/"
+    let reservationURL = "https://pennmobile.org/api/gsr/reservations/"
+    let cancelURL = "https://pennmobile.org/api/gsr/cancel/"
 
-    var bookingRequestOutstanding = false
-    
     func getLocations (completion: @escaping (Result<[GSRLocation], NetworkingError>) -> Void) {
         let url = URL(string: self.locationsUrl)!
         
@@ -31,7 +29,10 @@ class GSRNetworkManager: NSObject, Requestable {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 do {
-                    let gsrLocations = try decoder.decode([GSRLocation].self, from: data)
+                    var gsrLocations = try decoder.decode([GSRLocation].self, from: data)
+                    // Manually placing Huntsman as first row.
+                    // TODO: use analytics to decide on orders
+                    gsrLocations.sort(by: {a, b in a.gid < b.gid})
                     completion(.success(gsrLocations))
                 } catch {
                     completion(.failure(.parsingError))
@@ -42,15 +43,17 @@ class GSRNetworkManager: NSObject, Requestable {
         task.resume()
     }
     
-    func getAvailability(lid: Int, gid: Int, startDate: String? = nil, endDate: String? = nil, completion: @escaping (Result<[GSRRoom], NetworkingError>) -> Void) {
+    func getAvailability(lid: String, gid: Int, startDate: String? = nil, endDate: String? = nil, completion: @escaping (Result<[GSRRoom], NetworkingError>) -> Void) {
         OAuth2NetworkManager.instance.getAccessToken { token in
             var url = URL(string: "\(self.availUrl)")!
-            url.appendPathComponent("\(lid)")
+            url.appendPathComponent(lid)
+            url.appendPathComponent("\(gid)")
+//            print(url)
             
             if let startDate = startDate {
                 url.appendQueryItem(name: "start", value: startDate)
             }
-            
+
             if let endDate = endDate {
                 url.appendQueryItem(name: "end", value: endDate)
             }
@@ -63,21 +66,9 @@ class GSRNetworkManager: NSObject, Requestable {
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase
                         decoder.dateDecodingStrategy = .iso8601
-                        let response = try decoder.decode([GSRAvailabilityAPIResponse].self, from: data)
+                        let response = try decoder.decode(GSRAvailabilityAPIResponse.self, from: data)
 
-                        if lid == 1086 {
-                            if let rooms = response.first(where: {$0.gid == gid})?.rooms {
-                                completion(.success(rooms))
-                            } else {
-                                completion(.success([]))
-                            }
-                        } else {
-                            if let rooms = response.first?.rooms {
-                                completion(.success(rooms))
-                            } else {
-                                completion(.failure(.serverError))
-                            }
-                        }
+                        completion(.success(response.rooms))
                     } catch {
                         completion(.failure(.parsingError))
                     }
@@ -143,6 +134,7 @@ extension GSRNetworkManager {
     func getReservations(_ completion: @escaping (_ reservations: Result<[GSRReservation], NetworkingError>) -> Void) {
         OAuth2NetworkManager.instance.getAccessToken { token in
             guard let token = token else {
+                print(token)
                 completion(.failure(.authenticationError))
                 return
             }
