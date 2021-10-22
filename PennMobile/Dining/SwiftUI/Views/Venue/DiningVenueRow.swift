@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import KingfisherSwiftUI
+import Kingfisher
 
 @available(iOS 14, *)
 struct DiningVenueRow: View {

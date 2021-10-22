@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import KingfisherSwiftUI
+import Kingfisher
 import FirebaseAnalytics
 
 @available(iOS 14, *)

@@ -289,20 +289,6 @@ extension GSRController: GSRBookable {
         let grc = GSRReservationsController()
         self.navigationController?.pushViewController(grc, animated: true)
     }
-    
-    private func presentWebviewLoginController(_ completion: (() -> Void)? = nil) {
-        let wv = GSRWebviewLoginController()
-        wv.completion = completion
-        let nvc = UINavigationController(rootViewController: wv)
-        present(nvc, animated: true, completion: nil)
-    }
-
-    private func presentLoginController(with booking: GSRBooking? = nil) {
-        let glc = GSRLoginController()
-        glc.booking = booking
-        let nvc = UINavigationController(rootViewController: glc)
-        present(nvc, animated: true, completion: nil)
-    }
 }
 
 // MARK: - Update For New Day
