@@ -105,6 +105,8 @@ extension UIFont {
     static let secondaryTitleFont = UIFont.systemFont(ofSize: 11, weight: .medium)
 
     static let interiorTitleFont = UIFont.systemFont(ofSize: 17, weight: .medium)
+    
+    static let pollsTitleFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
 
     static let primaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
     static let secondaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .regular)

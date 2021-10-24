@@ -227,6 +227,7 @@
 		B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */; };
 		B9BFCE17270A398F00F46996 /* Base32.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9BFCE16270A398F00F46996 /* Base32.framework */; };
 		B9BFCE19270A398F00F46996 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9BFCE18270A398F00F46996 /* MBProgressHUD.framework */; };
+		B9F37D242725B19B00E4CD5D /* HomePollsCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F37D232725B19B00E4CD5D /* HomePollsCellHeader.swift */; };
 		B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */; };
 		C11B38E322508A8D009B752A /* DiningBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11B38E222508A8D009B752A /* DiningBalance.swift */; };
 		C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11DFA2E219F8A65000FC573 /* CalendarAPI.swift */; };
@@ -569,6 +570,7 @@
 		B9AA4EEE236F3E1B0010D7AC /* GSRGroupInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteViewController.swift; sourceTree = "<group>"; };
 		B9BFCE16270A398F00F46996 /* Base32.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Base32.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9BFCE18270A398F00F46996 /* MBProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MBProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9F37D232725B19B00E4CD5D /* HomePollsCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCellHeader.swift; sourceTree = "<group>"; };
 		B9F8423023DDFD6700814975 /* GroupInviteUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInviteUserCell.swift; sourceTree = "<group>"; };
 		BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C11B38E222508A8D009B752A /* DiningBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalance.swift; sourceTree = "<group>"; };
@@ -1227,6 +1229,7 @@
 				6C41773426F8110A00D61367 /* PollOptionCell.swift */,
 				6C41773626F8110A00D61367 /* HomePollsCellItem.swift */,
 				6C41773826F8110A00D61367 /* HomePollsCell.swift */,
+				B9F37D232725B19B00E4CD5D /* HomePollsCellHeader.swift */,
 			);
 			path = Polls;
 			sourceTree = "<group>";
@@ -2274,6 +2277,7 @@
 				6C41773E26F8110A00D61367 /* HomePollsCellItem.swift in Sources */,
 				6CAE4384253370E500BD0200 /* CardView.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
+				B9F37D242725B19B00E4CD5D /* HomePollsCellHeader.swift in Sources */,
 				B64830A2213C939200FD2B17 /* FitnessHeaderView.swift in Sources */,
 				C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */,
 				B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */,

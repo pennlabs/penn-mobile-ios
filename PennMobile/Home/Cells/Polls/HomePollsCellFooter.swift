@@ -11,7 +11,7 @@ import SnapKit
 
 class HomePollsCellFooter: UIView {
     
-    static let height: CGFloat = 30
+    static let height: CGFloat = 20
     var noteLabel: UILabel!
     private var dividerLine: UIView!
 //    
@@ -64,8 +64,8 @@ class HomePollsCellFooter: UIView {
         label.font = .footerDescriptionFont
         label.textColor = .labelSecondary
         label.textAlignment = .left
-        label.text = "For multiple choice polls, Penn Mobile anonymously shares your year, major, and answer with the organization running poll."
-        label.numberOfLines = 0
+        label.text = "Penn Mobile anonymously shares info with the organization."
+        label.numberOfLines = 1
         return label
     }
 

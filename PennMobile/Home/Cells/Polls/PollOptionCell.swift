@@ -13,10 +13,10 @@ import SnapKit
 class PollOptionCell: UITableViewCell {
     
     static let identifier = "pollOptionCell"
-    static let cellHeight: CGFloat = 90
+    static var cellHeight: CGFloat = 80
     
     
-    var question: String! 
+    var question: String!
     
     var response: Int!
     
@@ -29,8 +29,6 @@ class PollOptionCell: UITableViewCell {
     }
     
     var chosen: Bool!
-    
-    
     
     
     // MARK: - UI Elements
@@ -59,7 +57,6 @@ extension PollOptionCell {
     fileprivate func setupCell() {
         backgroundColor = .clear
         self.questionLabel.text = self.question
-        
         
         if self.answered == true {
             let maxWidth = CGFloat(0.8) * UIScreen.main.bounds.width
@@ -116,8 +113,6 @@ extension PollOptionCell {
             
             anim.startAnimation()
             
-            
-        
     }
     }
     
@@ -186,16 +181,18 @@ extension PollOptionCell {
     
     fileprivate func getQuestionLabel() -> UILabel {
         let label = UILabel()
-        label.font = .interiorTitleFont
+        label.font = .primaryInformationFont
         label.textColor = .labelPrimary
         label.textAlignment = .left
-        label.numberOfLines = 2
+        label.numberOfLines = 0
+        label.sizeToFit()
+        //PollOptionCell.cellHeight = label.frame.height + Padding.pad * 2
         return label
     }
     
     fileprivate func getPercentageLabel() -> UILabel {
         let label = UILabel()
-        label.font = .interiorTitleFont
+        label.font = .primaryInformationFont
         label.textColor = chosen ? .blueDark : .darkGray
         label.textAlignment = .left
         label.numberOfLines = 1
@@ -205,7 +202,7 @@ extension PollOptionCell {
     
     fileprivate func getVotesLabel() -> UILabel {
         let label = UILabel()
-        label.font = .secondaryTitleFont
+        label.font = .primaryInformationFont
         label.textColor = chosen ? .blueDark : .darkGray
         label.textAlignment = .left
         label.numberOfLines = 1

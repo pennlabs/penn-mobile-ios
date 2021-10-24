@@ -20,6 +20,7 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
         }
     }
     
+    
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomePollsCellItem else { return 0.0 }
         let numPolls = CGFloat(item.pollQuestion.options.count)
@@ -33,7 +34,7 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     // MARK: - UI Elements
     var cardView: UIView! = UIView()
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
-    fileprivate var header: HomeCellHeader = HomeCellHeader()
+    fileprivate var header: HomePollsCellHeader = HomePollsCellHeader()
     fileprivate var footer: HomePollsCellFooter = HomePollsCellFooter()
     fileprivate var responsesTableView: UITableView!
     fileprivate var voteCountLabel: UILabel!
@@ -78,6 +79,16 @@ extension HomePollsCell {
         }
 
     }
+//    fileprivate func getPollOptionCellHeight(for text: String) -> CGFloat {
+//        let label = UILabel()
+//        label.text = text
+//        label.font = .primaryInformationFont
+//        label.textColor = .labelPrimary
+//        label.textAlignment = .left
+//        label.numberOfLines = 0
+//        label.sizeToFit()
+//        return label.frame.height
+//    }
 }
 
 
@@ -137,6 +148,7 @@ extension HomePollsCell {
     // MARK: TableView
     fileprivate func prepareTableView() {
         responsesTableView = getTableView()
+        responsesTableView.rowHeight = UITableView.automaticDimension
         cardView.addSubview(responsesTableView)
         responsesTableView.snp.makeConstraints { (make) in
             make.leading.equalTo(cardView)
@@ -185,7 +197,7 @@ extension HomePollsCell: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return PollOptionCell.cellHeight
     }
 }
 
