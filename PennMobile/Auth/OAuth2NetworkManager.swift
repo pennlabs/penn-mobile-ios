@@ -14,15 +14,6 @@ struct AccessToken: Codable {
     let expiration: Date
 }
 
-struct OAuthUser: Codable {
-    let firstName: String?
-    let lastName: String?
-    let pennid: Int
-    let username: String
-    let email: String?
-    let affiliation: [String]?
-}
-
 extension URLRequest {
     // Sets the appropriate header field given an access token
     // NOTE: Should ONLY be used for requests to Labs servers. Otherwise, access token will be compromised.
@@ -154,28 +145,18 @@ extension OAuth2NetworkManager {
 
 // MARK: - Retrieve Account
 extension OAuth2NetworkManager {
-    func retrieveAccount(accessToken: AccessToken, _ callback: @escaping (_ user: OAuthUser?) -> Void) {
-        let url = URL(string: "https://platform.pennlabs.org/accounts/introspect/")!
-        var request = URLRequest(url: url, accessToken: accessToken)
-        request.httpMethod = "POST"
-        
-        let params = [
-            "token": accessToken.value,
-        ]
-        
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
+    func retrieveAccount(accessToken: AccessToken, _ callback: @escaping (_ user: Account?) -> Void) {
+        let url = URL(string: "https://platform.pennlabs.org/accounts/me/")!
+        let request = URLRequest(url: url, accessToken: accessToken)
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
-                let json = JSON(data)
-                if let userData = try? json["user"].rawData() {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let user = try? decoder.decode(OAuthUser.self, from: userData)
-                    callback(user)
-                    return
-                }
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                let user = try? decoder.decode(Account.self, from: data)
+                callback(user)
+                return
             }
             callback(nil)
         }

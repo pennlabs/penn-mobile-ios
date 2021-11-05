@@ -19,10 +19,14 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
         super.viewDidLoad()
         
         setupView()
-        guard Account.isLoggedIn else {
+        
+        guard Account.isLoggedIn && Account.getAccount() != nil else {
+            AppDelegate.shared.rootViewController.clearAccountData()
             self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
             return
         }
+        
+        account = Account.getAccount()
         setupTableView()
         setupProfileInfo()
         setupEducationInfo()
@@ -31,7 +35,7 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
     func setupView() {
         self.title = "Account"
         view.backgroundColor = .uiGroupedBackground
-        account = Account.getAccount()
+        
     }
     func setupTableView() {
         view.addSubview(tableView)
@@ -50,11 +54,11 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
     }
     
     func setupProfileInfo() {
-        guard let firstName = account.first, let lastName = account.last else {
+        guard let firstName = account.firstName, let lastName = account.lastName else {
             return
         }
         profileInfo.append((text: "Name", info: "\(firstName) \(lastName)"))
-        profileInfo.append((text: "Username", info: account.pennkey))
+        profileInfo.append((text: "Username", info: account.username))
         
         guard let email = account.email else {
             return
@@ -63,20 +67,14 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
     }
     
     func setupEducationInfo() {
-        guard let degrees = account.degrees else {
-            return
+        let majorsSet = account.student.major.map({ $0.name })
+        let schoolsSet = account.student.school.map({ $0.name })
+        
+        var gradTerm = ""
+        if let graduationYear = account.student.graduationYear {
+            gradTerm = String(graduationYear)
         }
-        var majorsSet = Set<String>()
-        var schoolsSet = Set<String>()
-        var gradTerm = String()
-        for degree in degrees {
-            let majors = degree.majors
-            schoolsSet.insert(degree.schoolName)
-            for major in majors {
-                majorsSet.insert(major.name)
-            }
-            gradTerm = degree.expectedGradTerm
-        }
+        
         educationInfo.append((text: "Graduation Term", info: gradTerm))
         educationInfo.append((text: "School", info: Array(schoolsSet).joined(separator: ", ")))
         educationInfo.append((text: "Major", info: Array(majorsSet).joined(separator: ", ")))
