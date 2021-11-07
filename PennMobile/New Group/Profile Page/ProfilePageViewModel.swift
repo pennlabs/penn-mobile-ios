@@ -38,20 +38,14 @@ class ProfilePageViewModel: NSObject {
     }
     
     func setupEducationInfo() {
-        guard let degrees = account.degrees else {
-            return
+        let majorsSet = account.student.major.map({ $0.name })
+        let schoolsSet = account.student.school.map({ $0.name })
+        
+        var gradTerm = ""
+        if let graduationYear = account.student.graduationYear {
+            gradTerm = String(graduationYear)
         }
-        var majorsSet = Set<String>()
-        var schoolsSet = Set<String>()
-        var gradTerm = String()
-        for degree in degrees {
-            let majors = degree.majors
-            schoolsSet.insert(degree.schoolName)
-            for major in majors {
-                majorsSet.insert(major.name)
-            }
-            gradTerm = degree.expectedGradTerm
-        }
+        
         educationInfo.append((text: "Graduation Term", info: gradTerm))
         educationInfo.append((text: "School", info: Array(schoolsSet).joined(separator: ", ")))
         educationInfo.append((text: "Major", info: Array(majorsSet).joined(separator: ", ")))
