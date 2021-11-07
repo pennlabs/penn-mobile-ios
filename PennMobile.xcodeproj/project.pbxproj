@@ -152,6 +152,7 @@
 		6C6035FC26E723240025FBC7 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035FB26E723240025FBC7 /* EmptyView.swift */; };
 		6C84D9E526293E680039C57F /* UIKit Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C84D9E426293E680039C57F /* UIKit Views.swift */; };
 		6C88FE9425337476006F4587 /* DiningViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C88FE9325337476006F4587 /* DiningViewControllerSwiftUI.swift */; };
+		6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6CA1ACDA271D2D5000EDB967 /* Kingfisher */; };
 		6CAE4351253370B300BD0200 /* FadingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE434E253370B200BD0200 /* FadingScrollView.swift */; };
 		6CAE4352253370B300BD0200 /* AlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE434F253370B200BD0200 /* AlertModifier.swift */; };
 		6CAE437D253370E500BD0200 /* DiningViewModelSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE435A253370E500BD0200 /* DiningViewModelSwiftUI.swift */; };
@@ -276,8 +277,6 @@
 		F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */; };
 		F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8923B71C8500ED46A1 /* NotificationsTableViewCell.swift */; };
 		F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE123C3EE3E000AD90F /* SwiftSoup */; };
-		F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE423C3F240000AD90F /* KingfisherSwiftUI */; };
-		F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE623C3F240000AD90F /* Kingfisher */; };
 		F230FB11225809E900760499 /* AutomatedScreenshotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB10225809E900760499 /* AutomatedScreenshotUITests.swift */; };
 		F230FB1A22580ACA00760499 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F230FB1922580ACA00760499 /* SnapshotHelper.swift */; };
 		F23CC0BB235E3EF10007317A /* DiningVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23CC0BA235E3EF10007317A /* DiningVenue.swift */; };
@@ -665,9 +664,8 @@
 			files = (
 				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
+				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
 				6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */,
-				F213CCE723C3F240000AD90F /* Kingfisher in Frameworks */,
-				F213CCE523C3F240000AD90F /* KingfisherSwiftUI in Frameworks */,
 				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
 				56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */,
@@ -1749,12 +1747,11 @@
 			name = PennMobile;
 			packageProductDependencies = (
 				F213CCE123C3EE3E000AD90F /* SwiftSoup */,
-				F213CCE423C3F240000AD90F /* KingfisherSwiftUI */,
-				F213CCE623C3F240000AD90F /* Kingfisher */,
 				F2568A752413534F00561295 /* SnapKit */,
 				6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */,
 				6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */,
 				6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */,
+				6CA1ACDA271D2D5000EDB967 /* Kingfisher */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -2342,8 +2339,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CF_BUNDLE_LONG_VERSION_STRING = 6612;
-				CF_BUNDLE_SHORT_VERSION_STRING = 6.6.1;
+				CF_BUNDLE_LONG_VERSION_STRING = 6620;
+				CF_BUNDLE_SHORT_VERSION_STRING = 6.6.2;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2404,8 +2401,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CF_BUNDLE_LONG_VERSION_STRING = 6612;
-				CF_BUNDLE_SHORT_VERSION_STRING = 6.6.1;
+				CF_BUNDLE_LONG_VERSION_STRING = 6620;
+				CF_BUNDLE_SHORT_VERSION_STRING = 6.6.2;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2468,7 +2465,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 8988DRMFXA;
+				DEVELOPMENT_TEAM = VU59R57FGM;
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
@@ -2704,7 +2701,7 @@
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.12.0;
+				minimumVersion = 7.0.0;
 			};
 		};
 		F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
@@ -2723,6 +2720,11 @@
 			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
 		};
+		6CA1ACDA271D2D5000EDB967 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -2737,16 +2739,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
-		};
-		F213CCE423C3F240000AD90F /* KingfisherSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = KingfisherSwiftUI;
-		};
-		F213CCE623C3F240000AD90F /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
 		};
 		F2568A752413534F00561295 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
