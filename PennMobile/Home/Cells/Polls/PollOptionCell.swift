@@ -13,7 +13,6 @@ import SnapKit
 class PollOptionCell: UITableViewCell {
     
     static let identifier = "pollOptionCell"
-    static var cellHeight: CGFloat = 80
     
     
     var question: String!
@@ -155,9 +154,9 @@ extension PollOptionCell {
         safeArea.addSubview(percentageShadow)
         percentageShadow.snp.makeConstraints {(make) in
             make.leading.equalTo(safeArea)
-            make.top.equalTo(safeArea)
+            make.top.equalTo(safeArea).offset(-8)
             make.width.equalTo(maxWidth)
-            make.bottom.equalTo(safeArea)
+            make.bottom.equalTo(safeArea).offset(8)
         }
         
     }

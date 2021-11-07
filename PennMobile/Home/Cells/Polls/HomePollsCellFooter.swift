@@ -11,7 +11,7 @@ import SnapKit
 
 class HomePollsCellFooter: UIView {
     
-    static let height: CGFloat = 20
+    static let height: CGFloat = 16
     var noteLabel: UILabel!
     private var dividerLine: UIView!
 //    
