@@ -1,59 +1,34 @@
 //
-//  AccountPageViewController.swift
+//  ProfilePageViewModel.swift
 //  PennMobile
 //
-//  Created by Andrew Antenberg on 9/26/21.
+//  Created by Andrew Antenberg on 10/10/21.
 //  Copyright © 2021 PennLabs. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class AccountPageViewController: UIViewController, ShowsAlertForError, UITableViewDelegate, UITableViewDataSource {
+protocol ProfilePageViewModelDelegate {
+    func presentImagePicker()
+    func presentTableView(isMajors: Bool)
+    func imageSelected(_ image: UIImage)
+}
+
+class ProfilePageViewModel: NSObject {
     var account: Account!
-    let tableView = UITableView(frame: .zero, style: .insetGrouped)
-    
     var profileInfo: [(text: String, info: String)] = []
     var educationInfo: [(text: String, info: String)] = []
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupView()
-        guard Account.isLoggedIn else {
-            self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
-            return
-        }
-        setupTableView()
+    var delegate: ProfilePageViewModelDelegate!
+    
+    override init() {
+        super.init()
+        account = Account.getAccount()
         setupProfileInfo()
         setupEducationInfo()
     }
     
-    func setupView() {
-        self.title = "Account"
-        view.backgroundColor = .uiGroupedBackground
-        account = Account.getAccount()
-    }
-    func setupTableView() {
-        view.addSubview(tableView)
-        tableView.register(ProfilePageTableViewCell.self, forCellReuseIdentifier: ProfilePageTableViewCell.identifier)
-
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 600
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-    
     func setupProfileInfo() {
-        guard let firstName = account.first, let lastName = account.last else {
-            return
-        }
-        profileInfo.append((text: "Name", info: "\(firstName) \(lastName)"))
         profileInfo.append((text: "Username", info: account.pennkey))
         
         guard let email = account.email else {
@@ -89,9 +64,12 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
         }
     }
     
+}
+
+extension ProfilePageViewModel: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == 0) {
-            return profileInfo.count
+            return 1 + profileInfo.count
         } else {
             return educationInfo.count
         }
@@ -99,20 +77,28 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.section == 0) {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePictureTableViewCell.identifier, for: indexPath) as! ProfilePictureTableViewCell
+                cell.account = account
+                cell.accessoryType = .disclosureIndicator
+                return cell
+            }
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePageTableViewCell.identifier, for: indexPath) as! ProfilePageTableViewCell
-            cell.key = profileInfo[indexPath.row].text
-            cell.info = profileInfo[indexPath.row].info
+            cell.key = profileInfo[indexPath.row-1].text
+            cell.info = profileInfo[indexPath.row-1].info
             cell.selectionStyle = .none
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePageTableViewCell.identifier, for: indexPath) as! ProfilePageTableViewCell
             cell.key = educationInfo[indexPath.row].text
             cell.info = educationInfo[indexPath.row].info
-            cell.selectionStyle = .none
+            if indexPath.row > 0 {
+                cell.accessoryType = .disclosureIndicator
+            } else {
+                cell.selectionStyle = .none
+            }
             return cell
         }
-        
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -131,5 +117,32 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
             return "If your information is incorrect, please send an email to contact@pennlabs.org detailing your issue."
         }
         return nil
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row == 0 && indexPath.section == 0 {
+            delegate.presentImagePicker()
+        }
+        if indexPath.row == 1 && indexPath.section == 1 {
+            delegate.presentTableView(isMajors: false)
+        }
+        if indexPath.row == 2 && indexPath.section == 1 {
+            delegate.presentTableView(isMajors: true)
+        }
+    }
+
+}
+
+extension ProfilePageViewModel: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
+        delegate.imageSelected(image)
+        picker.dismiss(animated: true)
+    }
+    
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }
