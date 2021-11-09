@@ -473,6 +473,18 @@ extension String {
     }
 }
 
+//slicing Penn Events API image source urls
+extension String {
+    //https://stackoverflow.com/questions/31725424/swift-get-string-between-2-strings-in-a-string
+    func slice(from: String, to: String) -> String? {
+        return (range(of: from)?.upperBound).flatMap { substringFrom in
+            (range(of: to, range: substringFrom..<endIndex)?.lowerBound).map { substringTo in
+                String(self[substringFrom..<substringTo])
+            }
+        }
+    }
+}
+
 extension NSMutableAttributedString {
     @discardableResult func bold(_ text: String, size: CGFloat) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: size, weight: .bold)]
