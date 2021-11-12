@@ -1,5 +1,5 @@
 //
-//  EventsViewController.swift
+//  PennEventsViewController.swift
 //  PennMobile
 //
 //  Created by Samantha Su on 10/1/21.
@@ -9,7 +9,7 @@
 import Foundation
 import SwiftSoup
 
-class EventsTableViewController: GenericTableViewController, IndicatorEnabled{
+class PennEventsTableViewController: GenericTableViewController, IndicatorEnabled{
     
     var events: [PennEvents] = []
     let dateKey = "dateKey"
@@ -20,7 +20,6 @@ class EventsTableViewController: GenericTableViewController, IndicatorEnabled{
             if date.isToday{
                 events = Storage.retrieve(PennEvents.directory, from: .documents, as: [PennEvents].self)
                 tableView.reloadData()
-//                print(events)
             } else {
                 fetchEvents()
                 UserDefaults.standard.set(Date(), forKey: dateKey)
@@ -34,7 +33,7 @@ class EventsTableViewController: GenericTableViewController, IndicatorEnabled{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(EventsTableViewCell.self, forCellReuseIdentifier: "EventsTableViewCell")
+        tableView.register(PennEventsTableViewCell.self, forCellReuseIdentifier: "PennEventsTableViewCell")
         tableView.separatorStyle = .none
         self.title = "Events"
         tableView.rowHeight = UITableView.automaticDimension
@@ -43,7 +42,7 @@ class EventsTableViewController: GenericTableViewController, IndicatorEnabled{
 }
 
 // MARK: - Networking to retrieve events
-extension EventsTableViewController{
+extension PennEventsTableViewController{
     fileprivate func fetchEvents(){
         EventsAPI.instance.fetchEvents { (result) in
             DispatchQueue.main.async {
@@ -51,7 +50,6 @@ extension EventsTableViewController{
                 case .success(let events):
                     self.events = events
                     Storage.store(events, to: .documents, as: PennEvents.directory)
-//                    print(events)
                 case .failure(.serverError):
                     self.navigationVC?.addStatusBar(text: .apiError)
                 default:
@@ -65,7 +63,7 @@ extension EventsTableViewController{
 }
 
 // MARK: - TableView Datasource
-extension EventsTableViewController{
+extension PennEventsTableViewController{
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return events.count
     }
@@ -75,23 +73,14 @@ extension EventsTableViewController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "EventsTableViewCell", for: indexPath) as! EventsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PennEventsTableViewCell", for: indexPath) as! PennEventsTableViewCell
         cell.pennEvent = events[indexPath.row]
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 1
-        guard let cell = tableView.cellForRow(at: indexPath) as? EventsTableViewCell else {
-        return
-        }
-
-        // 2
+        guard let cell = tableView.cellForRow(at: indexPath) as? PennEventsTableViewCell else {return}
         cell.isExpanded = !cell.isExpanded
-
-        // 3
         cell.bodyLabel.numberOfLines = cell.isExpanded ? 3: 0
-
-        // 4
         tableView.beginUpdates()
         tableView.endUpdates()
     }

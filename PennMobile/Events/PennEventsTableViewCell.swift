@@ -10,19 +10,19 @@ import UIKit
 import Kingfisher
 import SwiftSoup
 
-class EventsTableViewCell: UITableViewCell {
+class PennEventsTableViewCell: UITableViewCell {
 
     lazy var imageExistsConstraint = eventImageView.widthAnchor.constraint(equalToConstant:120)
     lazy var imageMissingConstraint = eventImageView.widthAnchor.constraint(equalToConstant:0)
     var isExpanded = false
 
-    var pennEvent: PennEvents?{
-        didSet{
+    var pennEvent: PennEvents? {
+        didSet {
             guard let event = pennEvent else {return}
-            if event.media_image == ""{
+            if event.media_image == "" {
                 imageExistsConstraint.isActive = false
                 imageMissingConstraint.isActive = true
-            }else{
+            } else {
                 let imageString = "https://penntoday.upenn.edu" + (event.media_image.slice(from: "<img src=\"", to: "\n") ?? "").trimmingCharacters(in: .whitespaces)
                 eventImageView.kf.setImage(with: URL(string: imageString))
                 imageExistsConstraint.isActive = true
@@ -46,7 +46,6 @@ class EventsTableViewCell: UITableViewCell {
     
     let eventImageView:UIImageView = {
         let img = UIImageView()
-//        img.frame = CGRect(x: 0, y: 0, width: 120, height: 80)
         img.contentMode = .scaleAspectFill // image will never be strecthed vertially or horizontally
         img.translatesAutoresizingMaskIntoConstraints = false // enable autolayout
         img.layer.cornerRadius = 7
@@ -71,10 +70,6 @@ class EventsTableViewCell: UITableViewCell {
         view.font = UIFont(name: "Helvetica", size: 12)
         view.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         view.numberOfLines = 3
-
-        // Line height: 17 pt
-        // (identical to box height)
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
