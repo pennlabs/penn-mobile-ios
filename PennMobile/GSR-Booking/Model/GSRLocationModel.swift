@@ -18,7 +18,7 @@ class GSRLocationModel {
         return locations
     }
     
-    func getLocationName(for lid: Int, gid: Int?) -> String {
+    func getLocationName(for lid: String, gid: Int?) -> String {
         for location in locations {
             if location.lid == lid && location.gid == gid {
                 return location.name

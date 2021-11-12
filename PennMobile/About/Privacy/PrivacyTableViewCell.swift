@@ -35,6 +35,7 @@ class PrivacyTableViewCell: UITableViewCell {
         self.optionSwitch.setOn(isEnabled, animated: false)
         // Disable option switch if the user is not logged in
         self.optionSwitch.isEnabled = Account.isLoggedIn
+        self.contentView.isUserInteractionEnabled = false
     }
 }
 
