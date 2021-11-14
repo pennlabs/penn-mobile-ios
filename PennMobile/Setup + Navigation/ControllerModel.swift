@@ -41,11 +41,11 @@ class ControllerModel: NSObject {
     func prepare() {
         vcDictionary = [Feature: UIViewController]()
         vcDictionary[.home] = HomeViewController()
-        if #available(iOS 14, *) {
-            vcDictionary[.dining] = DiningViewControllerSwiftUI()
-        } else {
+//        if #available(iOS 14, *) {
+//            vcDictionary[.dining] = DiningViewControllerSwiftUI()
+//        } else {
             vcDictionary[.dining] = DiningViewController()
-        }
+//        }
         vcDictionary[.studyRoomBooking] = GSRTabController()
         vcDictionary[.laundry] = LaundryTableViewController()
         vcDictionary[.more] = MoreViewController()
@@ -95,7 +95,7 @@ class ControllerModel: NSObject {
             #if DEBUG
                 return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "logo-small")]
             #else
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "logo-small")]
+                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "logo-small")]
             #endif
         }
     }
