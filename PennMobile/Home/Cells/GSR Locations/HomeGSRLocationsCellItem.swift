@@ -39,10 +39,6 @@ final class HomeGSRLocationsCellItem: HomeCellItem {
         }
     }
     
-    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
-        completion([])
-    }
-    
     let locations: [GSRLocation]
     
     init(locations: [GSRLocation]) {
