@@ -14,6 +14,10 @@ final class HomeLaundryCellItem: HomeCellItem {
         return HomeLaundryCell.self
     }
     
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        completion([])
+    }
+    
     var room: LaundryRoom
     
     init(room: LaundryRoom) {

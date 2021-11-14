@@ -11,13 +11,9 @@ import SwiftyJSON
 
 protocol HomeCellItem: ModularTableViewItem {
     static var jsonKey: String { get }
-    static func getItem(for json: JSON?) -> HomeCellItem?
+    static func getHomeCellItem(_ completion: @escaping((_ item: [HomeCellItem]) -> Void)) 
 }
 
 protocol LoggingIdentifiable where Self: HomeCellItem {
     var id: String { get }
-}
-
-protocol FeedTestable where Self: HomeCellItem {
-    var isTest: Bool { get }
 }

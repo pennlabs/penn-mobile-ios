@@ -10,6 +10,9 @@ import Foundation
 import SwiftyJSON
 
 final class HomePostCellItem: HomeCellItem {
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        completion([])
+    }
     
     static var jsonKey: String {
         return "post"
@@ -59,12 +62,5 @@ extension HomePostCellItem {
 extension HomePostCellItem: LoggingIdentifiable {
     var id: String {
         return String(post.id)
-    }
-}
-
-// MARK: - Testable
-extension HomePostCellItem: FeedTestable {
-    var isTest: Bool {
-        return post.isTest
     }
 }

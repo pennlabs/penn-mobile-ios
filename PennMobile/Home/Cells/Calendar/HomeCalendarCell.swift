@@ -23,7 +23,7 @@ final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeCalendarCellItem else { return 0.0 }
         // cell height = (venues * venueHeight) + header + footer + cellInset
-        return (CGFloat(item.events?.count ?? 0) * UniversityNotificationCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 3)
+        return (CGFloat(item.events.count) * UniversityNotificationCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 3)
     }
     
     var events: [CalendarEvent]?

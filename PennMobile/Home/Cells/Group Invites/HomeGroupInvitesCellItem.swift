@@ -10,29 +10,21 @@ import Foundation
 import SwiftyJSON
 
 final class HomeGroupInvitesCellItem: HomeCellItem {
-    static var associatedCell: ModularTableViewCell.Type {
-        return HomeGroupInvitesCell.self
-    }
+    static var jsonKey = "invites"
+    static var associatedCell: ModularTableViewCell.Type = HomeGroupInvitesCell.self
     
     var invites: GSRGroupInvites
     
-    init(invites: GSRGroupInvites) {
+    init(for invites: GSRGroupInvites) {
         self.invites = invites
+    }
+    
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        completion([])
     }
     
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeGroupInvitesCellItem else {return false}
         return invites.count == item.invites.count
-    }
-    
-    static var jsonKey: String {
-        return "invites"
-    }
-    
-    static func getItem(for json: JSON?) -> HomeCellItem? {
-        // comment out following line once server is updated to show cell
-        guard let json = json else { return nil }
-        guard let invites = try? JSONDecoder().decode(GSRGroupInvites.self, from: json.rawData()) else { return nil }
-        return HomeGroupInvitesCellItem(invites: invites)
     }
 }

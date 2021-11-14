@@ -15,11 +15,21 @@ final class HomeCalendarCellItem: HomeCellItem {
         return "calendar"
     }
     
-    var events: [CalendarEvent]?
-    
-    static func getItem(for json: JSON?) -> HomeCellItem? {
-        return HomeCalendarCellItem()
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        CalendarAPI.instance.fetchCalendar({ events in
+            if let events = events, events.count > 0 {
+                completion([HomeCalendarCellItem(for: events)])
+            } else {
+                completion([])
+            }
+        })
     }
+    
+    init(for events: [CalendarEvent]) {
+        self.events = events
+    }
+    
+    var events: [CalendarEvent]
     
     static var associatedCell: ModularTableViewCell.Type {
         return HomeCalendarCell.self
@@ -27,8 +37,7 @@ final class HomeCalendarCellItem: HomeCellItem {
     
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeCalendarCellItem else { return false }
-        guard let events = events, let itemEvents = item.events else { return false }
-        return events == itemEvents
+        return events == item.events
     }
 }
 

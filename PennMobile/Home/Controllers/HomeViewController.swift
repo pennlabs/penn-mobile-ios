@@ -174,32 +174,16 @@ extension HomeViewController {
 
 // MARK: - Networking
 extension HomeViewController {
-    func fetchViewModel(_ secondAttempt: Bool = false, _ completion: @escaping () -> Void) {
-        HomeAPIService.instance.fetchModel { (model, error) in
-            DispatchQueue.main.async {
-                if error != nil {
-                    let navigationVC = self.navigationController as? HomeNavigationController
+    func fetchViewModel(_ completion: @escaping () -> Void) {
+        HomeAPIService.instance.fetchModel { model in
+            self.setModel(model)
+            
+            UIView.transition(with: self.tableView,
+                              duration: 0.35,
+                              options: .transitionCrossDissolve,
+                              animations: { self.tableView.reloadData() })
 
-                    if !secondAttempt {
-                        self.fetchViewModel(true, completion)
-                    } else {
-                        navigationVC?.addStatusBar(text: .apiError)
-                        completion()
-                    }
-                    return
-                }
-                
-                guard let model = model else { return }
-                self.setModel(model)
-                UIView.transition(with: self.tableView,
-                                  duration: 0.35,
-                                  options: .transitionCrossDissolve,
-                                  animations: { self.tableView.reloadData() })
-                self.fetchAllCellData {
-                    // Do anything here that needs to be done after all the cells are loaded
-                }
-                completion()
-            }
+            completion()
         }
     }
 
