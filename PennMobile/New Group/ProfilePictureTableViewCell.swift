@@ -12,14 +12,15 @@ class ProfilePictureTableViewCell: UITableViewCell {
     
     var account: Account! {
         didSet {
-            guard let firstName = account.first, let lastName = account.last else {
+            guard let firstName = account.firstName, let lastName = account.lastName else {
                 return
             }
             nameLabel.text = "\(firstName) \(lastName)"
             tempLabel.text = "\(firstName.first!)\(lastName.first!)"
-            guard let imageUrl = account.imageUrl else {
+            /*guard let imageUrl = account.imageUrl else {
                 return
-            }
+            }*/
+            let imageUrl = ""
             profilePic.kf.setImage(with: URL(string: imageUrl))
         }
     }

@@ -15,6 +15,7 @@ struct Account: Codable, Hashable {
     var username: String
     var email: String?
     var student: Student
+    // var imageUrl: String?
     
     var groups: [String]
     var emails: [Email]
@@ -55,7 +56,7 @@ struct Major: Codable, Hashable {
 // MARK: - Static Functions
 extension Account {
     static var isLoggedIn: Bool {
-        OAuth2NetworkManager.instance.hasRefreshToken()
+        OAuth2NetworkManager.instance.hasRefreshToken() && getAccount() != nil
     }
     
     static func clear() {

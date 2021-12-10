@@ -14,14 +14,14 @@ protocol InfoTableViewModelDelegate {
 }
 
 class InfoTableViewModel: NSObject {
-    var schools = [AccountSchool]()
-    var majors = [AccountMajor]()
+    var schools = [School]()
+    var majors = [Major]()
     var info = [String]()
     var filteredInfo = [String]()
-    var filteredSchools = [AccountSchool]()
-    var selectedSchools = Set<String>()
-    var filteredMajors = [AccountMajor]()
-    var selectedMajors = Set<String>()
+    var filteredSchools = [School]()
+    var selectedSchools = Set<School>()
+    var filteredMajors = [Major]()
+    var selectedMajors = Set<Major>()
     
     var delegate: InfoTableViewModelDelegate!
     var isMajors = true
@@ -33,6 +33,46 @@ class InfoTableViewModel: NSObject {
 
     }
     
+    func updateAccount() {
+        
+        
+        var account = Account.getAccount()!
+        var student = account.student
+        
+        if (isMajors) {
+            student.major = Array(selectedMajors)
+        } else {
+            student.school = Array(selectedSchools)
+        }
+        
+        account.student = student
+        
+        Account.saveAccount(account)
+        
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(account) {
+            OAuth2NetworkManager.instance.getAccessToken { (token) in
+                guard let token = token else { return }
+                
+                var request = URLRequest(url: URL(string: "https://platform.pennlabs.org/accounts/me")!, accessToken: token)
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = data
+                request.httpMethod = "PATCH"
+                
+                let str = String(decoding: data, as: UTF8.self)
+                print(str)
+                
+                let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, error in
+                    print(response)
+                    print(String(decoding: data!, as: UTF8.self))
+                     
+                })
+                task.resume()
+            }
+        }
+    }
+
+    
     func prepareSchools() {
         DispatchQueue.main.async {
             ProfilePageNetworkManager.instance.getSchools { result in
@@ -40,6 +80,7 @@ class InfoTableViewModel: NSObject {
                 case .success(let schools):
                     self.schools = schools
                     self.filteredSchools = schools
+                    self.selectedSchools = Set(Account.getAccount()!.student.school)
                     self.delegate.reloadTableData()
                 case .failure:
                     break
@@ -55,6 +96,7 @@ class InfoTableViewModel: NSObject {
                 case .success(let majors):
                     self.majors = majors
                     self.filteredMajors = majors
+                    self.selectedMajors = Set(Account.getAccount()!.student.major)
                     self.delegate.reloadTableData()
                 case .failure:
                     break
@@ -78,7 +120,7 @@ extension InfoTableViewModel: UITableViewDelegate, UITableViewDataSource {
         var content = cell.defaultContentConfiguration()
         if isMajors {
             content.text = filteredMajors[indexPath.row].name
-            if selectedMajors.contains(filteredMajors[indexPath.row].name) {
+            if selectedMajors.contains(filteredMajors[indexPath.row]) {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
@@ -86,7 +128,7 @@ extension InfoTableViewModel: UITableViewDelegate, UITableViewDataSource {
         } else {
             
             content.text = filteredSchools[indexPath.row].name
-            if selectedSchools.contains(filteredSchools[indexPath.row].name) {
+            if selectedSchools.contains(filteredSchools[indexPath.row]) {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
@@ -97,25 +139,26 @@ extension InfoTableViewModel: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //TODO: Fix this - it has a lot of repeated code
         if isMajors {
-            if selectedMajors.contains(filteredMajors[indexPath.row].name) {
-                selectedMajors.remove(filteredMajors[indexPath.row].name)
+            if selectedMajors.contains(filteredMajors[indexPath.row]) {
+                selectedMajors.remove(filteredMajors[indexPath.row])
                 tableView.cellForRow(at: indexPath)!.accessoryType = .none
             } else {
-                selectedMajors.insert(filteredMajors[indexPath.row].name)
+                selectedMajors.insert(filteredMajors[indexPath.row])
                 tableView.cellForRow(at: indexPath)!.accessoryType = .checkmark
             }
         } else {
-            if selectedSchools.contains(filteredSchools[indexPath.row].name) {
-                selectedSchools.remove(filteredSchools[indexPath.row].name)
+            if selectedSchools.contains(filteredSchools[indexPath.row]) {
+                selectedSchools.remove(filteredSchools[indexPath.row])
                 tableView.cellForRow(at: indexPath)!.accessoryType = .none
             } else {
-                selectedSchools.insert(filteredSchools[indexPath.row].name)
+                selectedSchools.insert(filteredSchools[indexPath.row])
                 tableView.cellForRow(at: indexPath)!.accessoryType = .checkmark
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        //tableView.reloadData()
         
         
     }
@@ -133,11 +176,11 @@ extension InfoTableViewModel: UITableViewDelegate, UITableViewDataSource {
 extension InfoTableViewModel: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if isMajors {
-            filteredMajors = searchController.searchBar.text == "" ? majors : majors.filter { (item: AccountMajor) -> Bool in
+            filteredMajors = searchController.searchBar.text == "" ? majors : majors.filter { (item: Major) -> Bool in
                 return item.name.range(of: searchController.searchBar.text!, options: .caseInsensitive, range: nil, locale: nil) != nil
             }
         } else {
-            filteredSchools = searchController.searchBar.text == "" ? schools : schools.filter { (item: AccountSchool) -> Bool in
+            filteredSchools = searchController.searchBar.text == "" ? schools : schools.filter { (item: School) -> Bool in
                 return item.name.range(of: searchController.searchBar.text!, options: .caseInsensitive, range: nil, locale: nil) != nil
             }
         }

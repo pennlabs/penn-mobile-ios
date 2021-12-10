@@ -16,20 +16,43 @@ protocol ProfilePageViewModelDelegate {
 }
 
 class ProfilePageViewModel: NSObject {
-    var account: Account!
+    // isLoggedIn() that is run is ProfilePageViewController checks that Account.getAccount != nil
+    var account = Account.getAccount()!
     var profileInfo: [(text: String, info: String)] = []
     var educationInfo: [(text: String, info: String)] = []
     var delegate: ProfilePageViewModelDelegate!
     
     override init() {
         super.init()
-        account = Account.getAccount()
         setupProfileInfo()
         setupEducationInfo()
+        fetchAccount()
+    }
+    
+    func fetchAccount() {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                return
+            }
+            
+            OAuth2NetworkManager.instance.retrieveAccount(accessToken: token, {(account) in
+                if let account = account {
+                    Account.saveAccount(account)
+                    self.account = account
+                    self.setupProfileInfo()
+                    self.setupEducationInfo()
+                    DispatchQueue.main.async {
+                        print("reloaded")
+                        (self.delegate as? ProfilePageViewController)?.tableView.reloadData()
+                    }
+                }
+            })
+        }
     }
     
     func setupProfileInfo() {
-        profileInfo.append((text: "Username", info: account.pennkey))
+        profileInfo = []
+        profileInfo.append((text: "Username", info: account.username))
         
         guard let email = account.email else {
             return
@@ -38,6 +61,7 @@ class ProfilePageViewModel: NSObject {
     }
     
     func setupEducationInfo() {
+        educationInfo = []
         let majorsSet = account.student.major.map({ $0.name })
         let schoolsSet = account.student.school.map({ $0.name })
         
@@ -46,7 +70,7 @@ class ProfilePageViewModel: NSObject {
             gradTerm = String(graduationYear)
         }
         
-        educationInfo.append((text: "Graduation Term", info: gradTerm))
+        educationInfo.append((text: "Graduation Year", info: gradTerm))
         educationInfo.append((text: "School", info: Array(schoolsSet).joined(separator: ", ")))
         educationInfo.append((text: "Major", info: Array(majorsSet).joined(separator: ", ")))
         if schoolsSet.count > 1 {
@@ -74,22 +98,27 @@ extension ProfilePageViewModel: UITableViewDelegate, UITableViewDataSource {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePictureTableViewCell.identifier, for: indexPath) as! ProfilePictureTableViewCell
                 cell.account = account
-                cell.accessoryType = .disclosureIndicator
+//                cell.accessoryType = .disclosureIndicator
+                cell.selectionStyle = .none
                 return cell
             }
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePageTableViewCell.identifier, for: indexPath) as! ProfilePageTableViewCell
             cell.key = profileInfo[indexPath.row-1].text
             cell.info = profileInfo[indexPath.row-1].info
             cell.selectionStyle = .none
+//            cell.accessoryType = .none
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePageTableViewCell.identifier, for: indexPath) as! ProfilePageTableViewCell
             cell.key = educationInfo[indexPath.row].text
             cell.info = educationInfo[indexPath.row].info
             if indexPath.row > 0 {
-                cell.accessoryType = .disclosureIndicator
+//                cell.accessoryType = .disclosureIndicator
+                //cell.selectionStyle = .default
+                cell.selectionStyle = .none
             } else {
                 cell.selectionStyle = .none
+                cell.accessoryType = .none
             }
             return cell
         }
@@ -114,16 +143,16 @@ extension ProfilePageViewModel: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.row == 0 && indexPath.section == 0 {
-            delegate.presentImagePicker()
-        }
-        if indexPath.row == 1 && indexPath.section == 1 {
-            delegate.presentTableView(isMajors: false)
-        }
-        if indexPath.row == 2 && indexPath.section == 1 {
-            delegate.presentTableView(isMajors: true)
-        }
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        if indexPath.row == 0 && indexPath.section == 0 {
+//            delegate.presentImagePicker()
+//        }
+//        if indexPath.row == 1 && indexPath.section == 1 {
+//            delegate.presentTableView(isMajors: false)
+//        }
+//        if indexPath.row == 2 && indexPath.section == 1 {
+//            delegate.presentTableView(isMajors: true)
+//        }
     }
 
 }
@@ -140,3 +169,5 @@ extension ProfilePageViewModel: UIImagePickerControllerDelegate, UINavigationCon
         picker.dismiss(animated: true)
     }
 }
+
+

@@ -25,7 +25,6 @@ class ProfilePageViewController: UIViewController, ShowsAlertForError {
             self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
             return
         }
-        //account.imageUrl = "https://i.imgur.com/i271XGY.jpg"
         setupPickerController()
         setupViewModel()
         setupTableView()

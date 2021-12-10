@@ -17,7 +17,7 @@ class ProfilePageNetworkManager: NSObject, Requestable {
     let majorsURL = "https://platform.pennlabs.org/accounts/majors/"
     
     
-    func getSchools (completion: @escaping (Result<[AccountSchool], NetworkingError>) -> Void) {
+    func getSchools (completion: @escaping (Result<[School], NetworkingError>) -> Void) {
         let url = URL(string: self.schoolsURL)!
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -27,7 +27,7 @@ class ProfilePageNetworkManager: NSObject, Requestable {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 do {
-                    let schools = try decoder.decode([AccountSchool].self, from: data)
+                    let schools = try decoder.decode([School].self, from: data)
                     completion(.success(schools))
                 } catch {
                     completion(.failure(.parsingError))
@@ -37,7 +37,7 @@ class ProfilePageNetworkManager: NSObject, Requestable {
         task.resume()
     }
     
-    func getMajors (completion: @escaping (Result<[AccountMajor], NetworkingError>) -> Void) {
+    func getMajors (completion: @escaping (Result<[Major], NetworkingError>) -> Void) {
         let url = URL(string: self.majorsURL)!
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -47,7 +47,7 @@ class ProfilePageNetworkManager: NSObject, Requestable {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 do {
-                    let majors = try decoder.decode([AccountMajor].self, from: data)
+                    let majors = try decoder.decode([Major].self, from: data)
                     completion(.success(majors))
                 } catch {
                     completion(.failure(.parsingError))

@@ -241,12 +241,11 @@
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
 		E54A2DB527134F86008CCA9A /* ProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A2DB427134F86008CCA9A /* ProfilePageViewModel.swift */; };
-		E54A2DB827135AD4008CCA9A /* AccountSchool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A2DB727135AD4008CCA9A /* AccountSchool.swift */; };
-		E54A2DBA27135B3B008CCA9A /* AccountMajor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A2DB927135B3B008CCA9A /* AccountMajor.swift */; };
 		E54A2DBD27135D03008CCA9A /* ProfilePageNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A2DBC27135D03008CCA9A /* ProfilePageNetworkManager.swift */; };
 		E54A2DBF27139CF7008CCA9A /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A2DBE27139CF7008CCA9A /* InfoTableViewController.swift */; };
 		E54A2DC127149CF5008CCA9A /* InfoTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A2DC027149CF5008CCA9A /* InfoTableViewModel.swift */; };
 		E56593C3270BB3DD00178C0A /* ProfilePictureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56593C2270BB3DD00178C0A /* ProfilePictureTableViewCell.swift */; };
+		E58940C2274ACB1400C3BDCB /* AnalyticsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58940C1274ACB1400C3BDCB /* AnalyticsCardView.swift */; };
 		E594463B2700EAA2002CF1CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E594463A2700EAA1002CF1CA /* GoogleService-Info.plist */; };
 		E594463D2700EB5D002CF1CA /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E594463C2700EB5D002CF1CA /* ProfilePageViewController.swift */; };
 		E5BEF7162704C133009FCDD0 /* ProfilePageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BEF7152704C133009FCDD0 /* ProfilePageTableViewCell.swift */; };
@@ -584,12 +583,11 @@
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
 		CFDEBFEB2794599F175AD811 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E54A2DB427134F86008CCA9A /* ProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewModel.swift; sourceTree = "<group>"; };
-		E54A2DB727135AD4008CCA9A /* AccountSchool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSchool.swift; sourceTree = "<group>"; };
-		E54A2DB927135B3B008CCA9A /* AccountMajor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMajor.swift; sourceTree = "<group>"; };
 		E54A2DBC27135D03008CCA9A /* ProfilePageNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageNetworkManager.swift; sourceTree = "<group>"; };
 		E54A2DBE27139CF7008CCA9A /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		E54A2DC027149CF5008CCA9A /* InfoTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewModel.swift; sourceTree = "<group>"; };
 		E56593C2270BB3DD00178C0A /* ProfilePictureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfilePictureTableViewCell.swift; path = "/Users/andrewantenberg/Desktop/penn-mobile-ios/PennMobile/New Group/ProfilePictureTableViewCell.swift"; sourceTree = "<absolute>"; };
+		E58940C1274ACB1400C3BDCB /* AnalyticsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsCardView.swift; sourceTree = "<group>"; };
 		E594463A2700EAA1002CF1CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E594463C2700EB5D002CF1CA /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
 		E5BEF7152704C133009FCDD0 /* ProfilePageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageTableViewCell.swift; sourceTree = "<group>"; };
@@ -1266,6 +1264,7 @@
 				6CAE435F253370E500BD0200 /* FrequentLocationsView.swift */,
 				6CAE4360253370E500BD0200 /* RecentTransactionsView.swift */,
 				6CAE4361253370E500BD0200 /* DiningBalanceView.swift */,
+				E58940C1274ACB1400C3BDCB /* AnalyticsCardView.swift */,
 				6CAE4362253370E500BD0200 /* DailyAverageView.swift */,
 				6CAE4363253370E500BD0200 /* Cards */,
 				6CAE4366253370E500BD0200 /* PredictionsGraph */,
@@ -1559,7 +1558,6 @@
 			isa = PBXGroup;
 			children = (
 				E54A2DBB27135CF2008CCA9A /* Networking */,
-				E54A2DB627135A81008CCA9A /* Model */,
 				E594463C2700EB5D002CF1CA /* ProfilePageViewController.swift */,
 				E5BEF7152704C133009FCDD0 /* ProfilePageTableViewCell.swift */,
 				E56593C2270BB3DD00178C0A /* ProfilePictureTableViewCell.swift */,
@@ -1568,15 +1566,6 @@
 				E54A2DBE27139CF7008CCA9A /* InfoTableViewController.swift */,
 			);
 			path = "Profile Page";
-			sourceTree = "<group>";
-		};
-		E54A2DB627135A81008CCA9A /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				E54A2DB727135AD4008CCA9A /* AccountSchool.swift */,
-				E54A2DB927135B3B008CCA9A /* AccountMajor.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		E54A2DBB27135CF2008CCA9A /* Networking */ = {
@@ -2152,11 +2141,9 @@
 				2189C0A12027CE4100771C1F /* GSRBooking.swift in Sources */,
 				2189C08C2027CE2600771C1F /* GSRTimeCell.swift in Sources */,
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
-				E54A2DB827135AD4008CCA9A /* AccountSchool.swift in Sources */,
 				21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */,
 				EFE2D6F3239B11050020F6BF /* CreateGroupCell.swift in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
-				E54A2DBA27135B3B008CCA9A /* AccountMajor.swift in Sources */,
 				212B8359222A331D00F835D6 /* Post.swift in Sources */,
 				B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */,
 				EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */,
@@ -2277,6 +2264,7 @@
 				21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */,
 				665F1FC523D261B100DC023E /* TwoFactorCell.swift in Sources */,
 				21737FD923A31205002DCD07 /* OAuth2NetworkManager.swift in Sources */,
+				E58940C2274ACB1400C3BDCB /* AnalyticsCardView.swift in Sources */,
 				F2E3FE242595A99500518961 /* CourseSection.swift in Sources */,
 				C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */,
 				EFE2D6F1239B11050020F6BF /* GroupManageButtonCell.swift in Sources */,
