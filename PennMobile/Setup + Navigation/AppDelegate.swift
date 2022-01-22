@@ -17,14 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var tabBarController: TabBarController!
     
-    static var shared: AppDelegate {
-        return UIApplication.shared.delegate as! AppDelegate
-    }
-    
-    var rootViewController: RootViewController {
-        return window!.rootViewController as! RootViewController
-    }
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UserDefaults.standard.set(gsrGroupsEnabled: false)
         
@@ -57,7 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var backgroundTaskID: UIBackgroundTaskIdentifier?
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        if FeedAnalyticsManager.shared.dryRun { return }
         sendLogsToServer()
     }
     
@@ -103,6 +94,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: OnboardingDelegate {
     func handleFinishedOnboarding() {
+    }
+}
+
+// Global access of rootview to handle navigations
+extension AppDelegate {
+    static var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    var rootViewController: RootViewController {
+        return window!.rootViewController as! RootViewController
     }
 }
 

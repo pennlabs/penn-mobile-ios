@@ -11,80 +11,44 @@ import SwiftyJSON
 
 final class HomeAPIService: Requestable {
     static let instance = HomeAPIService()
-    private init() {}
 
-    func fetchModel(_ completion: @escaping (_ model: HomeTableViewModel?, _ error: NetworkingError?) -> Void) {
-        let version = UserDefaults.standard.getAppVersion()
-        var url = "https://api.pennlabs.org/homepage?version=\(version)"
-        if let courses = UserDefaults.standard.getCourses(), !courses.enrolledIn.isEmpty {
-            if courses.taughtToday.hasUpcomingCourse {
-                url = "\(url)&hasCourses=today"
-            } else if !courses.taughtTomorrow.isEmpty {
-                url = "\(url)&hasCourses=tomorrow"
-            }
-        }
-    
-        url = "\(url)&groupsEnabled=\(UserDefaults.standard.gsrGroupsEnabled())"
+    func fetchModel(_ completion: @escaping ((HomeTableViewModel) -> Void)) {
+        let group = DispatchGroup()
         
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            // Make request without access token if one does not exist
-            let url = URL(string: url)!
-            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+        let model = HomeTableViewModel()
+        
+        // Fetch HomeCellItem for all HomeItemTypes
+        for item in HomeItemTypes.instance.getAllTypes() {
+            group.enter()
+            item.getHomeCellItem { item in
+                item.forEach { i in
+                    model.items.append(i)
+                }
+                
+                group.leave()
+            }
+        }
+        
+        group.enter()
+        var rankingDict: [String: Int] = [:]
+        getRequestData(url: "https://pennmobile.org/api/penndata/order/") { (data, _, _) in
+            guard let data = data else { group.leave(); return }
+            for e in JSON(data).array ?? [JSON]() {
+                if let cell = e["cell"].string, let ranking = e["rank"].int {
+                    rankingDict[cell] = ranking
+                }
+            }
             
-            // Add device ID to request to access data associated associated with device id (ex: favorite dining halls)
-            let deviceID = getDeviceID()
-            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+            group.leave()
+        }
+        
+        // Handle completion of model after it is done
+        group.notify(queue: .main) {
+            if let homeItems = model.items as? [HomeCellItem] {
+                model.items = homeItems.sorted(by: {rankingDict[$0.cellIdentifier] ?? -1 > rankingDict[$1.cellIdentifier] ?? -1})
+            }
             
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let error = error, (error as NSError).code == -1009 {
-                    completion(nil, NetworkingError.noInternet)
-                    return
-                }
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
-                    completion(nil, NetworkingError.serverError)
-                    return
-                }
-                var model: HomeTableViewModel? = HomeTableViewModel()
-                var error: NetworkingError? = NetworkingError.jsonError
-                if let data = data {
-                    let json = JSON(data)
-                    model = try? HomeTableViewModel(json: json)
-                    if model != nil {
-                        error = nil
-                    }
-                }
-                completion(model, error)
-            }
-            task.resume()
-        }
-    }
-}
-
-extension HomeTableViewModel {
-    convenience init(json: JSON) throws {
-        self.init()
-
-        guard let cellsJSON = json["cells"].array else {
-            throw NetworkingError.jsonError
-        }
-
-        self.items = [HomeCellItem]()
-
-        // Initialize default items for development
-        // Note: this should be empty in production
-        for ItemType in HomeItemTypes.instance.getDefaultItems() {
-            if let item = ItemType.getItem(for: nil) {
-                items.append(item)
-            }
-        }
-
-        // Initialize items from JSON
-        for json in cellsJSON {
-            let type = json["type"].stringValue
-            let infoJSON = json["info"]
-            if let ItemType = HomeItemTypes.instance.getItemType(for: type), let item = ItemType.getItem(for: infoJSON) {
-                items.append(item)
-            }
+            completion(model)
         }
     }
 }

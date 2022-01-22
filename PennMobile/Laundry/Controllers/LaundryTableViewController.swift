@@ -6,6 +6,8 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
+import UIKit
+
 class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, ShowsAlert, NotificationRequestable {
     
     internal var rooms = [LaundryRoom]()

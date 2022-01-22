@@ -8,8 +8,24 @@
 
 import Foundation
 import SwiftyJSON
+import UIKit
 
 final class HomePostCellItem: HomeCellItem {
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        let url = URL(string: "https://pennmobile.org/api/portal/posts/")!
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data else { completion([]); return }
+            
+            if let article = try? JSONDecoder().decode(NewsArticle.self, from: data) {
+                completion([HomeNewsCellItem(for: article)])
+            } else {
+                completion([])
+            }
+        }
+        
+        task.resume()
+    }
     
     static var jsonKey: String {
         return "post"
@@ -22,11 +38,6 @@ final class HomePostCellItem: HomeCellItem {
         self.post = post
     }
     
-    static func getItem(for json: JSON?) -> HomeCellItem? {
-        guard let json = json else { return nil }
-        return try? HomePostCellItem(json: json)
-    }
-    
     static var associatedCell: ModularTableViewCell.Type {
         return HomePostCell.self
     }
@@ -37,34 +48,9 @@ final class HomePostCellItem: HomeCellItem {
     }
 }
 
-// MARK: - HomeAPIRequestable
-extension HomePostCellItem: HomeAPIRequestable {
-    func fetchData(_ completion: @escaping () -> Void) {
-        ImageNetworkingManager.instance.downloadImage(imageUrl: post.imageUrl) { (image) in
-            self.image = image
-            completion()
-        }
-    }
-}
-
-// MARK: - JSON Parsing
-extension HomePostCellItem {
-    convenience init(json: JSON) throws {
-        let post = try Post(json: json)
-        self.init(post: post)
-    }
-}
-
 // MARK: - Logging ID
 extension HomePostCellItem: LoggingIdentifiable {
     var id: String {
         return String(post.id)
-    }
-}
-
-// MARK: - Testable
-extension HomePostCellItem: FeedTestable {
-    var isTest: Bool {
-        return post.isTest
     }
 }

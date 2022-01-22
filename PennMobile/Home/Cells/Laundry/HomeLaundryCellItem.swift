@@ -14,6 +14,22 @@ final class HomeLaundryCellItem: HomeCellItem {
         return HomeLaundryCell.self
     }
     
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        UserDBManager.shared.getLaundryPreferences { result in
+            if let ids = result, ids.count > 0 {
+                LaundryAPIService.instance.fetchLaundryData(for: ids) { rooms in
+                    if let rooms = rooms, rooms.count > 0 {
+                        completion([HomeLaundryCellItem(room: rooms[0])])
+                    } else {
+                        completion([])
+                    }
+                }
+            } else {
+                completion([])
+            }
+        }
+    }
+    
     var room: LaundryRoom
     
     init(room: LaundryRoom) {
@@ -48,19 +64,5 @@ extension HomeLaundryCellItem {
             room = LaundryRoom.getDefaultRoom()
         }
         self.init(room: room)
-    }
-}
-
-// MARK: - API Fetching
-extension HomeLaundryCellItem: HomeAPIRequestable {
-    func fetchData(_ completion: @escaping () -> Void) {
-        LaundryNotificationCenter.shared.updateForExpiredNotifications {
-            LaundryAPIService.instance.fetchLaundryData(for: [self.room]) { (rooms) in
-                if let room = rooms?.first {
-                    self.room = room
-                }
-                completion()
-            }
-        }
     }
 }

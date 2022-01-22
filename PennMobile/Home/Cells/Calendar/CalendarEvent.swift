@@ -8,38 +8,11 @@
 
 import Foundation
 
-final class CalendarEvent {
-    let start: Date
-    let name: String
-    let end: Date
+struct CalendarEvent: Codable, Equatable {
+    let event: String
+    let date: String
     
-    init(name: String, start: Date, end: Date) {
-        self.name = name
-        self.start = start
-        self.end = end
-    }
-    
-    func getDateString(fullLength: Bool) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, MMMM d"
-        formatter.timeZone = .autoupdatingCurrent
-
-        let startString = "\(formatter.string(from: start))"
-        let endString = "\(formatter.string(from: end))"
-        
-        if (startString == endString) {
-            formatter.dateFormat = "EEEE, MMMM d"
-            let date = "\(formatter.string(from: start))"
-            return date
-        }
-        return startString + " to " + endString
-    }
-}
-
-extension CalendarEvent: Equatable {
     static func == (lhs: CalendarEvent, rhs: CalendarEvent) -> Bool {
-        return lhs.name == rhs.name
-            && lhs.start == rhs.start
-            && lhs.end == rhs.end
+        return lhs.event == rhs.event
     }
 }

@@ -10,8 +10,33 @@ import Foundation
 import SwiftyJSON
 
 final class HomeGSRLocationsCellItem: HomeCellItem {
-    static var associatedCell: ModularTableViewCell.Type {
-        return HomeGSRLocationsCell.self
+    static var jsonKey = "gsr-locations"
+    static var associatedCell: ModularTableViewCell.Type = HomeGSRLocationsCell.self
+    
+    static func getHomeCellItem(_ completion: @escaping ([HomeCellItem]) -> Void) {
+        OAuth2NetworkManager.instance.getAccessToken { token in
+            if let token = token {
+                
+                let request = URLRequest(url: URL(string: "https://pennmobile.com/api/gsr/recent/")!, accessToken: token)
+                
+                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                    
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
+                    if let data = data, let locations = try? decoder.decode([GSRLocation].self, from: data), locations.count > 0 {
+                        completion([HomeGSRLocationsCellItem(locations: locations)])
+                    } else {
+                        completion([])
+                    }
+                }
+                
+                task.resume()
+            } else {
+                let locationSlice = GSRLocationModel.shared.getLocations().shuffle().prefix(upTo: 3)
+                completion([HomeGSRLocationsCellItem(locations: Array(locationSlice))])
+            }
+        }
     }
     
     let locations: [GSRLocation]
@@ -23,16 +48,5 @@ final class HomeGSRLocationsCellItem: HomeCellItem {
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeGSRLocationsCellItem else { return false }
         return locations == item.locations
-    }
-    
-    static var jsonKey: String {
-        return "gsr-locations"
-    }
-    
-    static func getItem(for json: JSON?) -> HomeCellItem? {
-        guard let lids = json?.arrayObject as? [String] else { return nil }
-        var locations = GSRLocationModel.shared.getLocations().filter { lids.contains( $0.lid ) }
-        locations = locations.filter { $0.lid != "1086" || $0.gid == 1889 }
-        return HomeGSRLocationsCellItem(locations: locations)
     }
 }

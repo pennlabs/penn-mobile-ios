@@ -41,13 +41,7 @@ extension HomeTableViewModel {
         if let identifiableItem = item as? LoggingIdentifiable {
             id = identifiableItem.id
         }
-        
-        let cellTypeStr: String
-        if let testableItem = item as? FeedTestable, testableItem.isTest {
-            cellTypeStr = "test-\(cellType.jsonKey)"
-        } else {
-            cellTypeStr = cellType.jsonKey
-        }
-        FeedAnalyticsManager.shared.track(cellType: cellTypeStr, index: indexPath.row, id: id, batchSize: items.count)
+
+        FeedAnalyticsManager.shared.track(cellType: cellType.jsonKey, index: indexPath.row, id: id, batchSize: items.count)
     }
 }
