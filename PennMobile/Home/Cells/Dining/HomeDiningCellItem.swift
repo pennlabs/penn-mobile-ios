@@ -31,11 +31,16 @@ final class HomeDiningCellItem: HomeCellItem {
     }
 
     static func getHomeCellItem(_ completion: @escaping((_ items: [HomeCellItem]) -> Void)) {
-        DiningAPI.instance.fetchDiningHours { _ in
-            let venues = DiningAPI.instance.getVenues()
-            let instance = HomeDiningCellItem(for: venues)
-            
-            completion([instance])
+        UserDBManager.shared.fetchDiningPreferences { result in
+            if let venues = try? result.get() {
+                if venues.count == 0 {
+                    completion([HomeDiningCellItem(for: DiningAPI.instance.getVenues(with: DiningVenue.defaultVenueIds))])
+                } else {
+                    completion([HomeDiningCellItem(for: venues)])
+                }
+            } else {
+                completion([])
+            }
         }
     }
 }

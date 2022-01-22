@@ -13,11 +13,10 @@ class DiningAPI: Requestable {
     
     static let instance = DiningAPI()
     
-    let diningUrl = "https://api.pennlabs.org/dining/venues"
-    let diningMenuUrl = "https://api.pennlabs.org/dining/daily_menu/"
-    let diningPrefs =  "https://api.pennlabs.org/dining/preferences"
-    let diningBalanceUrl = "https://api.pennlabs.org/dining/balance"
-    let diningInsightsUrl = "https://studentlife.pennlabs.org/dining/"
+    let diningUrl = "https://pennmobile.org/api/dining/venues/"
+    let diningMenuUrl = "https://pennmobile.org/api/dining/daily_menu/"
+    // TODO: Broken API, need to fetch locally
+    let diningInsightsUrl = "https://pennmobile.org/api/dining/"
     
     func fetchDiningHours(_ completion: @escaping (_ result: Result<DiningAPIResponse, NetworkingError>) -> Void) {
         getRequestData(url: diningUrl) { (data, error, statusCode) in
@@ -30,7 +29,7 @@ class DiningAPI: Requestable {
             }
             
             guard let data = data else { return completion(.failure(.other)) }
-            
+
             if let diningAPIResponse = try? JSONDecoder().decode(DiningAPIResponse.self, from: data) {
                 self.saveToCache(diningAPIResponse.document.venues)
                 return completion(.success(diningAPIResponse))
@@ -64,7 +63,6 @@ class DiningAPI: Requestable {
 
     func fetchDiningInsights(_ completion: @escaping (_ result: Result<DiningInsightsAPIResponse, NetworkingError>) -> Void ) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
-            print("token:" + token!.value)
             guard let token = token else {
                 // TODO: - Add network error handling for OAuth2
                 completion(.failure(.noInternet))
@@ -97,7 +95,6 @@ class DiningAPI: Requestable {
             }
             task.resume()
         }
-        
     }
     
     func fetchDetailPageHTML(for venue: DiningVenue, _ completion: @escaping (_ html: String?) -> Void) {
@@ -112,36 +109,8 @@ class DiningAPI: Requestable {
 // MARK: - Dining Balance API
 extension DiningAPI {
     func fetchDiningBalance(_ completion: @escaping (_ diningBalance: DiningBalance?) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                completion(nil)
-                return
-            }
-            
-            let url = URL(string: self.diningBalanceUrl)!
-            let request = URLRequest(url: url, accessToken: token)
-            
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
-                    let json = JSON(data)
-                    let balance = json["balance"]
-                    if let diningDollars = balance["dining_dollars"].float,
-                        let swipes = balance["swipes"].int,
-                        let guestSwipes = balance["guest_swipes"].int,
-                        let timestamp = balance["timestamp"].string {
-
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                        if let lastUpdated = formatter.date(from: timestamp){
-                            let balance = DiningBalance(diningDollars: diningDollars, visits: swipes, guestVisits: guestSwipes, lastUpdated: lastUpdated)
-                            completion(balance)
-                            return
-                        }
-                    }
-                }
-                completion(nil)
-            }
-            task.resume()
+        CampusExpressNetworkManager.instance.getDiningBalanceHTML { htmlStr, error in
+            print(htmlStr)
         }
     }
 }

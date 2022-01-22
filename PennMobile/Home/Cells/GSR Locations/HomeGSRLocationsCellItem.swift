@@ -17,7 +17,7 @@ final class HomeGSRLocationsCellItem: HomeCellItem {
         OAuth2NetworkManager.instance.getAccessToken { token in
             if let token = token {
                 
-                let request = URLRequest(url: URL(string: "https://studentlife.pennlabs.org/penndata/gsrs/")!, accessToken: token)
+                let request = URLRequest(url: URL(string: "https://pennmobile.com/api/gsr/recent/")!, accessToken: token)
                 
                 let task = URLSession.shared.dataTask(with: request) { data, response, error in
                     

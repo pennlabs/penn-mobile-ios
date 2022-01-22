@@ -12,9 +12,9 @@ class LaundryAPIService: Requestable {
     
     static let instance = LaundryAPIService()
     
-    fileprivate let laundryUrl = "https://api.pennlabs.org/laundry/rooms"
-    fileprivate let idsUrl = "https://api.pennlabs.org/laundry/halls/ids"
-    fileprivate let statusURL = "https://api.pennlabs.org/laundry/status"
+    fileprivate let laundryUrl = "https://pennmobile.org/api/laundry/rooms"
+    fileprivate let idsUrl = "https://pennmobile.org/api/laundry/halls/ids"
+    fileprivate let statusURL = "https://pennmobile.org/api/laundry/status"
     
     public var idToRooms: [Int: LaundryRoom]?
     
@@ -61,8 +61,8 @@ class LaundryAPIService: Requestable {
 
 // MARK: - Fetch API
 extension LaundryAPIService {
-    func fetchLaundryData(for rooms: [LaundryRoom], _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
-        let ids: String = rooms.map { $0.id }.map { String($0) }.joined(separator: ",")
+    func fetchLaundryData(for ids: [Int],  _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
+        let ids: String = ids.map { String($0) }.joined(separator: ",")
         let url = "\(laundryUrl)/\(ids)"
         getRequest(url: url) { (dict, error, statusCode) in
             var rooms: [LaundryRoom]?
@@ -77,6 +77,11 @@ extension LaundryAPIService {
             }
             callback(rooms)
         }
+    }
+    
+    func fetchLaundryData(for rooms: [LaundryRoom], _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
+        let ids: [Int] = rooms.map { $0.id }
+        fetchLaundryData(for: ids, callback)
     }
 }
 

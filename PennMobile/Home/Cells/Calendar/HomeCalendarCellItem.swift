@@ -40,16 +40,3 @@ final class HomeCalendarCellItem: HomeCellItem {
         return events == item.events
     }
 }
-
-// MARK: - API Fetching
-extension HomeCalendarCellItem: HomeAPIRequestable {
-    func fetchData(_ completion: @escaping () -> Void) {
-        CalendarAPI.instance.fetchCalendar { events in
-            if let top2Events = events?.prefix(2) {
-                self.events = Array(top2Events)
-            }
-            completion()
-        }
-    }
-}
-
