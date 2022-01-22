@@ -85,7 +85,7 @@ class ControllerModel: NSObject {
             #if DEBUG
             return [.news, .contacts, .courseSchedule, .courseAlerts, .events, .about]
             #else
-                return [.news, .contacts, .courseSchedule, .about]
+            return [.news, .contacts, .courseSchedule, .events, .about]
             #endif
         }
     }
@@ -95,9 +95,9 @@ class ControllerModel: NSObject {
         //courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
         get {
             #if DEBUG
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "logo-small")]
+                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "logo-small")]
             #else
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "logo-small")]
+                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "logo-small")]
             #endif
         }
     }
