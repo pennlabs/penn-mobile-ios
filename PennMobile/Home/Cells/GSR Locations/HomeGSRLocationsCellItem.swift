@@ -33,8 +33,12 @@ final class HomeGSRLocationsCellItem: HomeCellItem {
                 
                 task.resume()
             } else {
-                let locationSlice = GSRLocationModel.shared.getLocations().shuffle().prefix(upTo: 3)
-                completion([HomeGSRLocationsCellItem(locations: Array(locationSlice))])
+                if GSRLocationModel.shared.getLocations().count > 2 {
+                    let locationSlice = GSRLocationModel.shared.getLocations().shuffle().prefix(upTo: 3)
+                    completion([HomeGSRLocationsCellItem(locations: Array(locationSlice))])
+                } else {
+                    completion([])
+                }
             }
         }
     }

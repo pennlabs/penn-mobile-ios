@@ -12,9 +12,24 @@ final class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.tabBar.isTranslucent = false
-
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        tabBar.standardAppearance = appearance
+        
+        // Required to prevent tab bar's appearance from switching between light and dark mode
+        if #available(iOS 15.0, *) {
+            tabBar.scrollEdgeAppearance = appearance
+        }
+        
+        loadTabs()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    func loadTabs() {
         ControllerModel.shared.viewControllers.forEach { (vc) in
             if vc is TabBarShowable {
                 vc.tabBarItem = (vc as! TabBarShowable).getTabBarItem()
@@ -22,23 +37,6 @@ final class TabBarController: UITabBarController {
         }
         self.viewControllers = ControllerModel.shared.viewControllers
         self.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    func reloadTabs() {
-        let controllerModel = ControllerModel.shared
-        if (ControllerModel.isReloadNecessary()) {
-            controllerModel.viewControllers.forEach { (vc) in
-                if vc is TabBarShowable {
-                    vc.tabBarItem = (vc as! TabBarShowable).getTabBarItem()
-                }
-            }
-            self.viewControllers = controllerModel.viewControllers
-            self.delegate = self
-        }
     }
 }
 
