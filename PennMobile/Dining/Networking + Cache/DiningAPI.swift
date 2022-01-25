@@ -109,7 +109,11 @@ class DiningAPI: Requestable {
 // MARK: - Dining Balance API
 extension DiningAPI {
     func fetchDiningBalance(_ completion: @escaping (_ diningBalance: DiningBalance?) -> Void) {
-        CampusExpressNetworkManager.instance.getDiningBalance(completion)
+        if Account.isLoggedIn {
+            CampusExpressNetworkManager.instance.getDiningBalance(completion)
+        } else {
+            completion(DiningBalance(diningDollars: 0, visits: 0, guestVisits: 0, lastUpdated: Date()))
+        }
     }
 }
 
