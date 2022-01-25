@@ -147,23 +147,3 @@ extension ControllerModel {
     func transition(to feature: Feature, withAnimation: Bool) {
     }
 }
-
-extension ControllerModel {
-    fileprivate static func isFlingDate() -> Bool {
-        let beginDateString = "2018-04-13T05:00:00-04:00"
-        let endDateString = "2018-04-15T05:00:00-04:00"
-        // standard iso formatter
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        let startDate = dateFormatter.date(from: beginDateString)!
-        let endDate = dateFormatter.date(from:endDateString)!
-        // comparison
-        let today = Date()
-        return (today > startDate && today < endDate)
-    }
-
-    static func isReloadNecessary() -> Bool {
-        return isFlingDate()
-    }
-}
