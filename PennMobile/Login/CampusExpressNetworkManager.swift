@@ -55,16 +55,14 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
     }
     
     // TODO: - Finish dining balance fix
-    func test() {
+    func getDiningBalance(_ completion: @escaping (_ diningBalance: DiningBalance?) -> Void) {
         makeAuthRequest(targetUrl: diningUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
             if let data = data, let html = String(data: data, encoding: .utf8) {
                 if let doc = try? SwiftSoup.parse(html), let elementsText = try? doc.getElementsByClass("positive-value").text().split(separator: " "), elementsText.count >= 4 {
                     var diningBalance = elementsText[0]
                     diningBalance.removeFirst()
-                    print(diningBalance)
-                    print(elementsText[1])
-                    print(elementsText[2])
-                    print(elementsText[3])
+                    
+                    completion(DiningBalance(diningDollars: Float(diningBalance) ?? 0, visits: Int(elementsText[1]) ?? 0, guestVisits: Int(elementsText[2]) ?? 0, lastUpdated: Date()))
                 }
             } else {
               
