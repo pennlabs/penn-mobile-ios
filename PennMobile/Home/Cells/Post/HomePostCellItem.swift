@@ -22,10 +22,9 @@ final class HomePostCellItem: HomeCellItem {
 
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .iso8601
+                decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
                 
                 if let posts = try? decoder.decode([Post].self, from: data) {
-                    print(posts)
                     completion(posts.map({return HomePostCellItem(post: $0)}))
                 } else {
                     completion([])
