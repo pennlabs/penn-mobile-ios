@@ -34,16 +34,7 @@ class DiningViewController: GenericTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchDiningHours()
-        
-        if UserDefaults.standard.hasDiningPlan() {
-            if viewModel.balance == nil {
-                fetchBalance()
-            } else {
-                updateBalanceIfNeeded()
-            }
-        } else {
-            viewModel.balance = DiningBalance(diningDollars: 0, visits: 0, guestVisits: 0, lastUpdated: Date())
-        }
+        fetchBalance()
         
         if viewModel.venues[.dining]?.isEmpty ?? true {
             viewModel.refresh()
