@@ -54,7 +54,6 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
         }
     }
     
-    // TODO: - Finish dining balance fix
     func getDiningBalance(_ completion: @escaping (_ diningBalance: DiningBalance?) -> Void) {
         makeAuthRequest(targetUrl: diningUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
             if let data = data, let html = String(data: data, encoding: .utf8) {
@@ -63,9 +62,11 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
                     diningBalance.removeFirst()
                     
                     completion(DiningBalance(diningDollars: Float(diningBalance) ?? 0, visits: Int(elementsText[1]) ?? 0, guestVisits: Int(elementsText[2]) ?? 0, lastUpdated: Date()))
+                } else {
+                    completion(DiningBalance(diningDollars: 0, visits: 0, guestVisits: 0, lastUpdated: Date()))
                 }
             } else {
-              
+                completion(DiningBalance(diningDollars: 0, visits: 0, guestVisits: 0, lastUpdated: Date()))
             }
         }
     }
