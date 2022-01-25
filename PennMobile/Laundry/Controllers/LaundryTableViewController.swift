@@ -196,10 +196,10 @@ extension LaundryTableViewController: RoomSelectionVCDelegate {
                 if let rooms = rooms {
                     self.rooms = rooms
                     self.tableView.reloadData()
+                    self.sendUpdateNotification(for: rooms)
                 }
             }
         }
-        sendUpdateNotification()
     }
 }
 
@@ -211,15 +211,15 @@ extension LaundryTableViewController: LaundryCellDelegate {
             LaundryRoom.setPreferences(for: rooms)
             UserDBManager.shared.saveLaundryPreferences(for: rooms)
             tableView.reloadData()
-            sendUpdateNotification()
+            sendUpdateNotification(for: rooms)
         }
     }
 }
 
 // MARK: - Home Page Notification
 extension LaundryTableViewController {
-    fileprivate func sendUpdateNotification() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "LaundryUpdateNotification"), object: nil)
+    fileprivate func sendUpdateNotification(for rooms: [LaundryRoom]) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "LaundryUpdateNotification"), object: rooms)
     }
 }
 

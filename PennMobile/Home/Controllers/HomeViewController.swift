@@ -235,28 +235,40 @@ extension HomeViewController : DiningCellSettingsDelegate {
     }
 }
 
-// MARK: - Laundry Updating
+// MARK: - Notification Updating
 extension HomeViewController {
-    @objc fileprivate func updateLaundryItemForPreferences(_ sender: Any) {
-        var preferences = LaundryRoom.getPreferences()
-        guard let laundryItems = self.tableViewModel.getItems(for: [HomeItemTypes.instance.laundry]) as? [HomeLaundryCellItem] else { return }
-        var outdatedItems = [HomeLaundryCellItem]()
-        for item in laundryItems {
-            if preferences.contains(item.room) {
-                preferences.remove(at: preferences.firstIndex(of: item.room)!)
+    @objc fileprivate func updateLaundryItemForPreferences(_ sender: Notification) {
+        if let laundryRooms = sender.object as? [LaundryRoom] {
+            if laundryRooms.count == 0 {
+                if let laundryItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.laundry]).first {
+                    removeItem(laundryItem)
+                }
             } else {
-                outdatedItems.append(item)
+                if let laundryItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.laundry]).first {
+                    (laundryItem as? HomeLaundryCellItem)?.room = laundryRooms[0]
+                    reloadItem(laundryItem)
+                } else {
+                    tableViewModel.items.append(HomeLaundryCellItem(room: laundryRooms[0]))
+                    self.tableView.reloadData()
+                }
             }
         }
-
-        for i in 0..<(outdatedItems.count) {
-            if i < preferences.count {
-                outdatedItems[i].room = preferences[i]
-            }
-        }
-
-//        self.reloadItem(<#T##HomeCellItem#>)(for: [HomeItemTypes.instance.laundry])
     }
+    
+    // TODO: update GSR reservation cell immediately after a booking is made
+//    @objc fileprivate func addGSRReservation(_ sender: Notification) {
+//        guard let reservation = sender.object as? GSRReservation else { return }
+//
+//        guard let reservationItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.reservations]).first as? HomeReservationsCellItem else {
+//            tableViewModel.items.insert(HomeReservationsCellItem(for: [reservation]), at: 0)
+//            tableView.reloadData()
+//            return
+//        }
+//
+//        reservationItem.reservations.append(reservation)
+//        reservationItem.reservations = reservationItem.reservations.sorted(by: { $0.start < $1.start })
+//        reloadItem(reservationItem)
+//    }
 }
 
 // MARK: - Register for Notifications
