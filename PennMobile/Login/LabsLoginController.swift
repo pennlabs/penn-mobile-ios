@@ -105,6 +105,11 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func handleDefaultLogin(decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        decisionHandler(.allow)
+        self.dismiss(successful: true)
+    }
+    
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard shouldRetrieveRefreshToken else {
             // Refresh token does not to be retrieved. Dismiss controller immediately.

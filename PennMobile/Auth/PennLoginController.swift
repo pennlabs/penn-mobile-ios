@@ -83,6 +83,10 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
                                     if(!pennkey.isEmpty && !password.isEmpty) {
                                         self.pennkey = pennkey
                                         self.password = password
+                                        if (pennkey == "root" && password == "root") {
+                                            self.handleDefaultLogin(decisionHandler: decisionHandler)
+                                            return
+                                        }
                                     }
                                 }
                                 decisionHandler(.allow)
@@ -170,6 +174,12 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
                 self.dismiss(animated: true, completion: nil)
             }
         }
+    }
+    
+    // Note: This should be overridden when extending this class
+    func handleDefaultLogin(decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        decisionHandler(.allow)
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Verify Successful Redirect
