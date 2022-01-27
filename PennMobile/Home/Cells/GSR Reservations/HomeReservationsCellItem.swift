@@ -14,31 +14,33 @@ final class HomeReservationsCellItem: HomeCellItem {
         return HomeReservationsCell.self
     }
     
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        GSRNetworkManager.instance.getReservations { result in
+            switch result {
+            case .success(let reservations):
+                if reservations.count > 0 {
+                    completion([HomeReservationsCellItem(for: reservations)])
+                } else {
+                    completion([])
+                }
+            case .failure:
+                completion([])
+            }
+        }
+    }
+    
     var reservations: [GSRReservation]
     
-    init(reservations: [GSRReservation]) {
+    init(for reservations: [GSRReservation]) {
         self.reservations = reservations
     }
     
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeReservationsCellItem else { return false }
-        return reservations.count == item.reservations.count
+        return reservations == item.reservations
     }
     
     static var jsonKey: String {
         return "reservations"
-    }
-    
-    static func getItem(for json: JSON?) -> HomeCellItem? {
-        guard let json = json else { return nil }
-        do {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let reservations = try decoder.decode([GSRReservation].self, from: json.rawData())
-            return HomeReservationsCellItem(reservations: reservations)
-        } catch {
-            return nil
-        }
     }
 }

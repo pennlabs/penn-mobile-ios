@@ -8,23 +8,41 @@
 
 import Foundation
 import SwiftyJSON
+import UIKit
 
 final class HomePostCellItem: HomeCellItem {
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        OAuth2NetworkManager.instance.getAccessToken { token in
+            guard let token = token else { completion([]); return }
+        
+            let url = URLRequest(url: URL(string: "https://pennmobile.org/api/portal/posts/")!, accessToken: token)
+            
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data else { completion([]); return }
+
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+                
+                if let posts = try? decoder.decode([Post].self, from: data) {
+                    completion(posts.map({return HomePostCellItem(post: $0)}))
+                } else {
+                    completion([])
+                }
+            }
+            
+            task.resume()
+        }
+    }
     
     static var jsonKey: String {
         return "post"
     }
     
     let post: Post
-    var image: UIImage?
     
     init(post: Post) {
         self.post = post
-    }
-    
-    static func getItem(for json: JSON?) -> HomeCellItem? {
-        guard let json = json else { return nil }
-        return try? HomePostCellItem(json: json)
     }
     
     static var associatedCell: ModularTableViewCell.Type {
@@ -37,34 +55,9 @@ final class HomePostCellItem: HomeCellItem {
     }
 }
 
-// MARK: - HomeAPIRequestable
-extension HomePostCellItem: HomeAPIRequestable {
-    func fetchData(_ completion: @escaping () -> Void) {
-        ImageNetworkingManager.instance.downloadImage(imageUrl: post.imageUrl) { (image) in
-            self.image = image
-            completion()
-        }
-    }
-}
-
-// MARK: - JSON Parsing
-extension HomePostCellItem {
-    convenience init(json: JSON) throws {
-        let post = try Post(json: json)
-        self.init(post: post)
-    }
-}
-
 // MARK: - Logging ID
 extension HomePostCellItem: LoggingIdentifiable {
     var id: String {
         return String(post.id)
-    }
-}
-
-// MARK: - Testable
-extension HomePostCellItem: FeedTestable {
-    var isTest: Bool {
-        return post.isTest
     }
 }

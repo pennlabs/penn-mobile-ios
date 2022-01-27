@@ -102,17 +102,15 @@ class HomeViewController: GenericViewController {
 
 // MARK: - Home Page Networking
 extension HomeViewController {
-    fileprivate func refreshTableView(_ completion: (() -> Void)? = nil) {
+    fileprivate func refreshTableView(forceRefresh: Bool = false, _ completion: (() -> Void)? = nil) {
         let now = Date()
-        if tableViewModel == nil || now > lastRefresh.add(minutes: HomeViewController.refreshInterval) {
+        if forceRefresh || tableViewModel == nil || now > lastRefresh.add(minutes: HomeViewController.refreshInterval) {
             fetchViewModel {
                 self.lastRefresh = Date()
                 completion?()
             }
         } else {
-            // Reload visibile cell, then get data for each cell, and reload again
-            self.tableView.reloadData()
-            self.fetchAllCellData(completion)
+            completion?()
         }
     }
 }
@@ -174,53 +172,16 @@ extension HomeViewController {
 
 // MARK: - Networking
 extension HomeViewController {
-    func fetchViewModel(_ secondAttempt: Bool = false, _ completion: @escaping () -> Void) {
-        HomeAPIService.instance.fetchModel { (model, error) in
-            DispatchQueue.main.async {
-                if error != nil {
-                    let navigationVC = self.navigationController as? HomeNavigationController
+    func fetchViewModel(_ completion: @escaping () -> Void) {
+        HomeAPIService.instance.fetchModel { model in
+            self.setModel(model)
+            
+            UIView.transition(with: self.tableView,
+                              duration: 0.35,
+                              options: .transitionCrossDissolve,
+                              animations: { self.tableView.reloadData() })
 
-                    if !secondAttempt {
-                        self.fetchViewModel(true, completion)
-                    } else {
-                        navigationVC?.addStatusBar(text: .apiError)
-                        completion()
-                    }
-                    return
-                }
-                
-                guard let model = model else { return }
-                self.setModel(model)
-                UIView.transition(with: self.tableView,
-                                  duration: 0.35,
-                                  options: .transitionCrossDissolve,
-                                  animations: { self.tableView.reloadData() })
-                self.fetchAllCellData {
-                    // Do anything here that needs to be done after all the cells are loaded
-                }
-                completion()
-            }
-        }
-    }
-
-    func fetchAllCellData(_ completion: (() -> Void)? = nil) {
-        fetchCellData(for: HomeItemTypes.instance.getAllTypes(), completion)
-    }
-
-    func fetchCellData(for itemTypes: [HomeCellItem.Type], _ completion: (() -> Void)? = nil) {
-        let items = tableViewModel.getItems(for: itemTypes)
-        self.fetchCellData(for: items, completion)
-    }
-
-    func fetchCellData(for items: [HomeCellItem], _ completion: (() -> Void)? = nil) {
-        HomeAsynchronousAPIFetching.instance.fetchData(for: items, singleCompletion: { (item) in
-            DispatchQueue.main.async {
-                self.reloadItem(item)
-            }
-        }) {
-            DispatchQueue.main.async {
-                completion?()
-            }
+            completion()
         }
     }
 
@@ -230,7 +191,7 @@ extension HomeViewController {
             thisItem.equals(item: item)
         }) {
             let indexPath = IndexPath(row: row, section: 0)
-            self.tableView.reloadRows(at: [indexPath], with: .none)
+            self.tableView.reloadRows(at: [indexPath], with: .fade)
         }
     }
 
@@ -254,7 +215,7 @@ extension HomeViewController {
     }
 
     @objc fileprivate func handleRefresh(_ sender: Any) {
-        self.refreshTableView {
+        self.refreshTableView(forceRefresh: true) {
             self.tableView.refreshControl?.endRefreshing()
         }
     }
@@ -270,33 +231,44 @@ extension HomeViewController : DiningCellSettingsDelegate {
         }
 
         reloadItem(diningItem)
-        self.fetchCellData(for: [diningItem])
         UserDBManager.shared.saveDiningPreference(for: venueIds)
     }
 }
 
-// MARK: - Laundry Updating
+// MARK: - Notification Updating
 extension HomeViewController {
-    @objc fileprivate func updateLaundryItemForPreferences(_ sender: Any) {
-        var preferences = LaundryRoom.getPreferences()
-        guard let laundryItems = self.tableViewModel.getItems(for: [HomeItemTypes.instance.laundry]) as? [HomeLaundryCellItem] else { return }
-        var outdatedItems = [HomeLaundryCellItem]()
-        for item in laundryItems {
-            if preferences.contains(item.room) {
-                preferences.remove(at: preferences.firstIndex(of: item.room)!)
+    @objc fileprivate func updateLaundryItemForPreferences(_ sender: Notification) {
+        if let laundryRooms = sender.object as? [LaundryRoom] {
+            if laundryRooms.count == 0 {
+                if let laundryItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.laundry]).first {
+                    removeItem(laundryItem)
+                }
             } else {
-                outdatedItems.append(item)
+                if let laundryItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.laundry]).first {
+                    (laundryItem as? HomeLaundryCellItem)?.room = laundryRooms[0]
+                    reloadItem(laundryItem)
+                } else {
+                    tableViewModel.items.append(HomeLaundryCellItem(room: laundryRooms[0]))
+                    self.tableView.reloadData()
+                }
             }
         }
-
-        for i in 0..<(outdatedItems.count) {
-            if i < preferences.count {
-                outdatedItems[i].room = preferences[i]
-            }
-        }
-
-        self.fetchCellData(for: [HomeItemTypes.instance.laundry])
     }
+    
+    // TODO: update GSR reservation cell immediately after a booking is made
+//    @objc fileprivate func addGSRReservation(_ sender: Notification) {
+//        guard let reservation = sender.object as? GSRReservation else { return }
+//
+//        guard let reservationItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.reservations]).first as? HomeReservationsCellItem else {
+//            tableViewModel.items.insert(HomeReservationsCellItem(for: [reservation]), at: 0)
+//            tableView.reloadData()
+//            return
+//        }
+//
+//        reservationItem.reservations.append(reservation)
+//        reservationItem.reservations = reservationItem.reservations.sorted(by: { $0.start < $1.start })
+//        reloadItem(reservationItem)
+//    }
 }
 
 // MARK: - Register for Notifications
