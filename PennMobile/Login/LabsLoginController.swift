@@ -107,6 +107,12 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
     
     override func handleDefaultLogin(decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         decisionHandler(.allow)
+        
+        //Dummy data:
+        let account = Account(first: "Ben", last: "Franklin", pennkey: "benfrank", email: "benfrank@wharton.upenn.edu", pennid: 12345678, affiliations: [])
+        UserDefaults.standard.saveAccount(account)
+//        UserDefaults.standard.saveCourses([Course(name: "Software Design/Engineer", term: "2022A", dept: "CIS", code: "350", section: "001", building: "", room: "", weekdays: "TR", startDate: "", endDate: "", startTime: "3:30 PM", endTime: "5:00 PM", instructors: ["Eric Noel Fouh Mbindi"], meetingTimes: []), Course(name: "Intro To Algorithms", term: "2022A", dept: "CIS", code: "320", section: "001", building: "", room: "", weekdays: "MW", startDate: "", endDate: "", startTime: "3:30 PM", endTime: "5:00 PM", instructors: ["Sanjeev Khanna"], meetingTimes: []), Course(name: "Intro Positive Psyc (SNF Paideia Program Course)", term: "2022A", dept: "PSYC", code: "266", section: "001", building: "", room: "", weekdays: "TR", startDate: "", endDate: "", startTime: "1:45 PM", endTime: "3:15 PM", instructors: ["Caroline Jane Connolly"], meetingTimes: [])])
+        
         self.dismiss(successful: true)
     }
     

@@ -35,6 +35,15 @@ class Account: Codable {
         self.affiliations = user.affiliation
     }
     
+    init(first: String, last: String, pennkey: String, email: String, pennid: Int, affiliations: [String]) {
+        self.first = first
+        self.last = last
+        self.pennkey = pennkey
+        self.email = email
+        self.pennid = pennid
+        self.affiliations = affiliations
+    }
+    
     func isInWharton() -> Bool {
         return email?.contains("wharton") ?? false
     }
