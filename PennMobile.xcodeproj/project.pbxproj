@@ -2441,7 +2441,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = VU59R57FGM;
+				DEVELOPMENT_TEAM = 7MVABYFZQW;
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
@@ -2474,7 +2474,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING";
-				DEVELOPMENT_TEAM = VU59R57FGM;
+				DEVELOPMENT_TEAM = 7MVABYFZQW;
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
