@@ -111,7 +111,9 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
         //Dummy data:
         let account = Account(first: "Ben", last: "Franklin", pennkey: "benfrank", email: "benfrank@wharton.upenn.edu", pennid: 12345678, affiliations: [])
         UserDefaults.standard.saveAccount(account)
-//        UserDefaults.standard.saveCourses([Course(name: "Software Design/Engineer", term: "2022A", dept: "CIS", code: "350", section: "001", building: "", room: "", weekdays: "TR", startDate: "", endDate: "", startTime: "3:30 PM", endTime: "5:00 PM", instructors: ["Eric Noel Fouh Mbindi"], meetingTimes: []), Course(name: "Intro To Algorithms", term: "2022A", dept: "CIS", code: "320", section: "001", building: "", room: "", weekdays: "MW", startDate: "", endDate: "", startTime: "3:30 PM", endTime: "5:00 PM", instructors: ["Sanjeev Khanna"], meetingTimes: []), Course(name: "Intro Positive Psyc (SNF Paideia Program Course)", term: "2022A", dept: "PSYC", code: "266", section: "001", building: "", room: "", weekdays: "TR", startDate: "", endDate: "", startTime: "1:45 PM", endTime: "3:15 PM", instructors: ["Caroline Jane Connolly"], meetingTimes: [])])
+        
+        OAuth2NetworkManager.instance.saveAccessToken(accessToken: AccessToken(value: "root", expiration: Calendar.current.date(byAdding: .year, value: 1, to: Date())!))
+        OAuth2NetworkManager.instance.saveRefreshToken(token: "123456789")
         
         self.dismiss(successful: true)
     }

@@ -97,6 +97,10 @@ extension OAuth2NetworkManager {
         }
     }
     
+    func saveAccessToken(accessToken: AccessToken) {
+        self.currentAccessToken = accessToken
+    }
+    
     fileprivate func refreshAccessToken(_ callback: @escaping (_ accessToken: AccessToken?) -> Void ) {
         guard let refreshToken = self.getRefreshToken() else {
             callback(nil)
@@ -193,7 +197,7 @@ extension OAuth2NetworkManager {
         return "Labs Refresh Token"
     }
     
-    fileprivate func saveRefreshToken(token: String) {
+    func saveRefreshToken(token: String) {
         let genericPwdQueryable =
             GenericPasswordQueryable(service: service)
         let secureStore =
