@@ -65,7 +65,6 @@
 		217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A783E204D97F8004F1227 /* ModularTableViewItem.swift */; };
 		217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7840204D9802004F1227 /* ModularTableViewItemTypes.swift */; };
 		217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217A7842204D995C004F1227 /* ModularTableViewCell.swift */; };
-		217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */; };
 		2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */; };
 		2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2180D2342013F65C008C94CF /* HomeAPIService.swift */; };
 		21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21879B1D1FB3FF54003CF552 /* Storage.swift */; };
@@ -406,7 +405,6 @@
 		217A783E204D97F8004F1227 /* ModularTableViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewItem.swift; sourceTree = "<group>"; };
 		217A7840204D9802004F1227 /* ModularTableViewItemTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewItemTypes.swift; sourceTree = "<group>"; };
 		217A7842204D995C004F1227 /* ModularTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewCell.swift; sourceTree = "<group>"; };
-		217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
 		2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequestable.swift; sourceTree = "<group>"; };
 		2180D2342013F65C008C94CF /* HomeAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPIService.swift; sourceTree = "<group>"; };
 		21879B1D1FB3FF54003CF552 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
@@ -1174,7 +1172,6 @@
 		21ECADA21F30146B00569883 /* Networking + Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				217C6DD820139AC500F07C3D /* AsynchronousOperation.swift */,
 				216640CA1EBADCA400746B8E /* FirebaseAnalyticsManager.swift */,
 				21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */,
 				21EB4D2F203D330C0029A460 /* UserDBManager.swift */,
@@ -2226,7 +2223,6 @@
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */,
 				E594463D2700EB5D002CF1CA /* AccountPageViewController.swift in Sources */,
-				217C6DD920139AC500F07C3D /* AsynchronousOperation.swift in Sources */,
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				6CAE4381253370E500BD0200 /* RecentTransactionsView.swift in Sources */,
 				F2562A3525583C5C0021C92F /* ButtonWithImage.swift in Sources */,
