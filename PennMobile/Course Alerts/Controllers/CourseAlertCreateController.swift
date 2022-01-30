@@ -13,7 +13,7 @@ protocol FetchPCADataProtocol {
     func fetchSettings()
 }
 
-class CourseAlertCreateController: GenericViewController {
+class CourseAlertCreateController: GenericViewController, IndicatorEnabled {
     
     fileprivate var searchBar = UISearchBar()
     fileprivate var alertTypeView: UIView!
@@ -27,7 +27,6 @@ class CourseAlertCreateController: GenericViewController {
     
     fileprivate var searchResults: [CourseSection] = []
     fileprivate var resultsTableView = UITableView()
-    fileprivate var searchActivityIndicator = UIActivityIndicatorView()
     
     fileprivate var mostRecentSearch: String = ""
     
@@ -52,7 +51,6 @@ extension CourseAlertCreateController {
         setupSearchBar()
         setupAlertType()
         setupResultsTableView()
-        setupSearchActivityIndicator()
         setupAlertTypeSeparator()
         setupSearchPromptView()
         setupNoSearchResultsView()
@@ -132,18 +130,6 @@ extension CourseAlertCreateController {
         resultsTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         resultsTableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         resultsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-    }
-    
-    fileprivate func setupSearchActivityIndicator() {
-        searchActivityIndicator.style = .large
-        searchActivityIndicator.color = .lightGray
-        searchActivityIndicator.startAnimating()
-        
-        view.addSubview(searchActivityIndicator)
-        
-        searchActivityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        searchActivityIndicator.centerXAnchor.constraint(equalTo: resultsTableView.centerXAnchor, constant: 0).isActive = true
-        searchActivityIndicator.centerYAnchor.constraint(equalTo: resultsTableView.centerYAnchor, constant: -100).isActive = true
     }
     
     fileprivate func setupAlertTypeSeparator() {
@@ -280,7 +266,7 @@ extension CourseAlertCreateController: UITableViewDelegate, UITableViewDataSourc
 extension CourseAlertCreateController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchActivityIndicator.startAnimating()
+        showActivity()
         
         self.searchResults = []
         self.resultsTableView.reloadData()
@@ -315,7 +301,7 @@ extension CourseAlertCreateController: UISearchBarDelegate {
                 if (searchText == self.mostRecentSearch) {
                     if let results = results {
                         DispatchQueue.main.async {
-                            self.searchActivityIndicator.stopAnimating()
+                            self.hideActivity()
                             self.searchResults = results
                             if (results.isEmpty) {
                                 self.noResultsView.isHidden = false
