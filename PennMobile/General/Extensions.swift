@@ -571,3 +571,12 @@ extension URL {
         self = urlComponents.url!
     }
 }
+
+extension JSONDecoder {
+    convenience init(keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy,
+         dateDecodingStrategy: JSONDecoder.DateDecodingStrategy) {
+        self.init()
+        self.keyDecodingStrategy = keyDecodingStrategy
+        self.dateDecodingStrategy = dateDecodingStrategy
+    }
+}

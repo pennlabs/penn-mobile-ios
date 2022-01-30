@@ -15,16 +15,13 @@ final class HomePostCellItem: HomeCellItem {
         OAuth2NetworkManager.instance.getAccessToken { token in
             guard let token = token else { completion([]); return }
         
-            let url = URLRequest(url: URL(string: "https://pennmobile.org/api/portal/posts/")!, accessToken: token)
+            let url = URLRequest(url: URL(string: "https://pennmobile.org/api/portal/posts/browse/")!, accessToken: token)
             
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let data = data else { completion([]); return }
-
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
                 
-                if let posts = try? decoder.decode([Post].self, from: data) {
+                if let posts = try? JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([Post].self, from: data) {
+                    
                     completion(posts.map({return HomePostCellItem(post: $0)}))
                 } else {
                     completion([])
