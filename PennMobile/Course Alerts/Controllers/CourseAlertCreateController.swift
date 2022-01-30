@@ -161,7 +161,6 @@ extension CourseAlertCreateController {
     
     fileprivate func setupSearchPromptView() {
         searchPromptView = UIView()
-        searchPromptView.backgroundColor = .white
         
         let searchLabel = UILabel()
         searchLabel.text = "Search courses for the current semester."
@@ -190,7 +189,6 @@ extension CourseAlertCreateController {
     
     fileprivate func setupNoSearchResultsView() {
         noResultsView = UIView()
-        noResultsView.backgroundColor = .white
         
         let searchLabel = UILabel()
         searchLabel.text = "No results found."
