@@ -9,7 +9,7 @@
 import Foundation
 
 struct GSRLocation: Codable, Equatable {
-    let lid: Int
+    let lid: String
     let gid: Int
     let name: String
     let kind: String

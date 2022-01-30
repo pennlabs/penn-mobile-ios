@@ -10,11 +10,6 @@ import Foundation
 import SwiftyJSON
 
 final class HomeCoursesCellItem: HomeCellItem {
-    
-    static var jsonKey: String {
-        return "courses"
-    }
-    
     let weekday: String
     var courses: [Course]
     var isOnHomeScreen: Bool
@@ -25,40 +20,32 @@ final class HomeCoursesCellItem: HomeCellItem {
         self.isOnHomeScreen = isOnHomeScreen
     }
     
-    static func getItem(for json: JSON?) -> HomeCellItem? {
-        if let json = json, let weekday = json["weekday"].string, let data: Data = try? json["courses"].rawData() {
-            // Courses provided by server
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let courses = try decoder.decode([Course].self, from: data)
-                return HomeCoursesCellItem(weekday: weekday, courses: courses, isOnHomeScreen: true)
-            } catch {
-                return nil
-            }
-        } else if let courses = UserDefaults.standard.getCourses() {
-            // Courses not provided by server. Use courses saved on device.
-            let coursesToday = courses.taughtToday
-            if coursesToday.hasUpcomingCourse {
-                let weekday = "Today"
-                return HomeCoursesCellItem(weekday: weekday, courses: Array(coursesToday), isOnHomeScreen: true)
-            } else {
-                let weekday = "Tomorrow"
-                let coursesTomorrow = courses.taughtTomorrow
-                if !coursesTomorrow.isEmpty {
-                    return HomeCoursesCellItem(weekday: weekday, courses: Array(coursesTomorrow), isOnHomeScreen: true)
-                } else {
-                    return nil
-                }
-            }
-            
-        } else {
-            return nil
-        }
+    static var jsonKey: String {
+        return "courses"
     }
     
     static var associatedCell: ModularTableViewCell.Type {
         return HomeCoursesCell.self
+    }
+
+    static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
+        if let courses = UserDefaults.standard.getCourses() {
+            let coursesToday = courses.taughtToday
+            if coursesToday.hasUpcomingCourse {
+                let weekday = "Today"
+                return completion([HomeCoursesCellItem(weekday: weekday, courses: Array(coursesToday), isOnHomeScreen: true)])
+            } else {
+                let weekday = "Tomorrow"
+                let coursesTomorrow = courses.taughtTomorrow
+                if !coursesTomorrow.isEmpty {
+                    return completion([HomeCoursesCellItem(weekday: weekday, courses: Array(coursesTomorrow), isOnHomeScreen: true)])
+                } else {
+                    return completion([])
+                }
+            }
+        } else {
+            return completion([])
+        }
     }
     
     func equals(item: ModularTableViewItem) -> Bool {

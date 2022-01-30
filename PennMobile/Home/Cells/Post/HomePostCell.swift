@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Kingfisher
 
 final class HomePostCell: UITableViewCell, HomeCellConformable {    
     static var identifier: String = "homePostCell"
@@ -101,11 +102,13 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
 extension HomePostCell {
     fileprivate func setupCell(with item: HomePostCellItem) {
         self.post = item.post
-        self.postImageView.image = item.image
+        postImageView.kf.setImage(with: URL(string: item.post.imageUrl)!)
         self.sourceLabel.text = post.source
         self.titleLabel.text = post.title
         self.subtitleLabel?.text = post.subtitle
-        self.dateLabel.text = post.timeLabel
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd"
+        self.dateLabel.text = dateFormatter.string(from: post.createdDate) + " - " + dateFormatter.string(from: post.expireDate)
         
         if item.post.source == nil {
             titleTopConstraintToSource.isActive = false
@@ -134,7 +137,7 @@ extension HomePostCell {
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? URLSelectable, let url = post.postUrl else { return }
         let title = url.replacingOccurrences(of: "http://", with: "").replacingOccurrences(of: "https://", with: "").split(separator: "/").first!
-        delegate.handleUrlPressed(urlStr: url, title: String(title), item: self.item, shouldLog: !post.isTest)
+        delegate.handleUrlPressed(urlStr: url, title: String(title), item: self.item, shouldLog: true)
     }
 }
 

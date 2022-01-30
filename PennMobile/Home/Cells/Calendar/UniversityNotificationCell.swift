@@ -40,8 +40,8 @@ class UniversityNotificationCell: UITableViewCell {
 extension UniversityNotificationCell {
     fileprivate func setupCell(with calendarEvent: CalendarEvent) {
         backgroundColor = .clear
-        eventLabel.text = calendarEvent.name
-        dateLabel.text = calendarEvent.getDateString(fullLength: false)
+        eventLabel.text = calendarEvent.event
+        dateLabel.text = calendarEvent.date
     }
 }
 

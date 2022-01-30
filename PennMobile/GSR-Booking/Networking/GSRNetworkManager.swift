@@ -13,14 +13,12 @@ class GSRNetworkManager: NSObject, Requestable {
     
     static let instance = GSRNetworkManager()
     
-    let availUrl = "https://studentlife.pennlabs.org/availability/"
-    let locationsUrl = "https://studentlife.pennlabs.org/locations/"
-    let bookingUrl = "https://studentlife.pennlabs.org/book/"
-    let reservationURL = "https://studentlife.pennlabs.org/reservations/"
-    let cancelURL = "https://studentlife.pennlabs.org/cancel/"
+    let availUrl = "https://pennmobile.org/api/gsr/availability/"
+    let locationsUrl = "https://pennmobile.org/api/gsr/locations/"
+    let bookingUrl = "https://pennmobile.org/api/gsr/book/"
+    let reservationURL = "https://pennmobile.org/api/gsr/reservations/"
+    let cancelURL = "https://pennmobile.org/api/gsr/cancel/"
 
-    var bookingRequestOutstanding = false
-    
     func getLocations (completion: @escaping (Result<[GSRLocation], NetworkingError>) -> Void) {
         let url = URL(string: self.locationsUrl)!
         
@@ -31,7 +29,10 @@ class GSRNetworkManager: NSObject, Requestable {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 do {
-                    let gsrLocations = try decoder.decode([GSRLocation].self, from: data)
+                    var gsrLocations = try decoder.decode([GSRLocation].self, from: data)
+                    // Manually placing Huntsman as first row.
+                    // TODO: use analytics to decide on orders
+                    gsrLocations.sort(by: {a, b in a.gid < b.gid})
                     completion(.success(gsrLocations))
                 } catch {
                     completion(.failure(.parsingError))
@@ -42,15 +43,16 @@ class GSRNetworkManager: NSObject, Requestable {
         task.resume()
     }
     
-    func getAvailability(lid: Int, gid: Int, startDate: String? = nil, endDate: String? = nil, completion: @escaping (Result<[GSRRoom], NetworkingError>) -> Void) {
+    func getAvailability(lid: String, gid: Int, startDate: String? = nil, endDate: String? = nil, completion: @escaping (Result<[GSRRoom], NetworkingError>) -> Void) {
         OAuth2NetworkManager.instance.getAccessToken { token in
             var url = URL(string: "\(self.availUrl)")!
-            url.appendPathComponent("\(lid)")
+            url.appendPathComponent(lid)
+            url.appendPathComponent("\(gid)")
             
             if let startDate = startDate {
                 url.appendQueryItem(name: "start", value: startDate)
             }
-            
+
             if let endDate = endDate {
                 url.appendQueryItem(name: "end", value: endDate)
             }
@@ -63,21 +65,9 @@ class GSRNetworkManager: NSObject, Requestable {
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase
                         decoder.dateDecodingStrategy = .iso8601
-                        let response = try decoder.decode([GSRAvailabilityAPIResponse].self, from: data)
+                        let response = try decoder.decode(GSRAvailabilityAPIResponse.self, from: data)
 
-                        if lid == 1086 {
-                            if let rooms = response.first(where: {$0.gid == gid})?.rooms {
-                                completion(.success(rooms))
-                            } else {
-                                completion(.success([]))
-                            }
-                        } else {
-                            if let rooms = response.first?.rooms {
-                                completion(.success(rooms))
-                            } else {
-                                completion(.failure(.serverError))
-                            }
-                        }
+                        completion(.success(response.rooms))
                     } catch {
                         completion(.failure(.parsingError))
                     }
@@ -197,44 +187,5 @@ extension GSRNetworkManager {
             
             task.resume()
         }
-    }
-    
-    func deleteReservation(bookingID: String, sessionID: String?, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> Void) {
-        let url = URL(string: cancelURL)!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let deviceID = getDeviceID()
-        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
-        
-        var params = ["booking_id": bookingID]
-        
-        if let sessionID = sessionID {
-            params["sessionid"] = sessionID
-        }
-        
-        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
-            
-            if error != nil {
-                callback(false, "Unable to connect to the Internet.")
-            } else if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                        let json = JSON(data)
-                        if let result = json["result"].array?.first {
-                            let success = result["cancelled"].boolValue
-                            let errorMsg = result["error"].string
-                            callback(success, errorMsg)
-                            return
-                        } else if let errorMsg = json["error"].string {
-                            callback(false, errorMsg)
-                            return
-                        }
-                    }
-                }
-                callback(false, "Something went wrong. Please try again.")
-            }
-        })
-        task.resume()
     }
 }
