@@ -30,11 +30,14 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         
         let year = Calendar.current.component(.year, from: Date())
         let month = Calendar.current.component(.month, from: Date())
-        var semester = "C"
+        let semester: String
+        
         if (month < 5) {
             semester = "A"
         } else if (month < 9) {
             semester = "B"
+        } else {
+            semester = "C"
         }
         
         let urlStr = "\(coursesURL)\(year)\(semester)/search/sections/?search=\(searchText)"
@@ -80,7 +83,6 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 return
             }
             
-            UserDefaults.standard.set(.alertsThroughPennMobile, to: settings.profile.pushNotifications)
             UserDefaults.standard.set(.pennCourseAlerts, to: settings.profile.pushNotifications)
 
             callback(settings)
