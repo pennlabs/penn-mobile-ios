@@ -10,7 +10,7 @@ import SwiftyJSON
 
 class LaundryRoom: Codable {
     
-    static let directory = "laundryHallData.json"
+    static let directory = "laundryHallData-v2.json"
     
     enum CodingKeys: String, CodingKey {
         case id = "hall_id"
