@@ -33,7 +33,7 @@ class GroupMemberCell: UITableViewCell {
 // MARK: - Setup Cell
 extension GroupMemberCell {
     fileprivate func setupCell(with group: GSRGroupMember) {
-        if (nameLabel == nil || pennKeyActiveLabel == nil) {
+        if nameLabel == nil || pennKeyActiveLabel == nil {
             prepareUI()
         }
 

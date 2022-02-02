@@ -33,7 +33,7 @@ class GroupSettingsCell: UITableViewCell {
     func setupCell(with userSetting: GSRGroupIndividualSetting) {
         self.userSetting = userSetting
 
-        if (titleLabel == nil || descriptionLabel == nil || isEnabledSwitch == nil) {
+        if titleLabel == nil || descriptionLabel == nil || isEnabledSwitch == nil {
             prepareUI()
         }
 

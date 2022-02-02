@@ -78,9 +78,9 @@ extension GSRViewModel: UIPickerViewDataSource, UIPickerViewDelegate {
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if component == 0 {
-            if (row == 0) {
+            if row == 0 {
                 return "Today"
-            } else if (row == 1) {
+            } else if row == 1 {
                 return "Tomorrow"
             }
             return dates[row].dayOfWeek
@@ -145,7 +145,7 @@ extension GSRViewModel {
 extension GSRViewModel: GSRSelectionDelegate {
 
     func handleSelection(for id: Int) {
-        if (selectedRoomId != nil && selectedRoomId != id) {
+        if selectedRoomId != nil && selectedRoomId != id {
             let roomCell = filteredRooms.firstIndex(where: {$0.id == selectedRoomId})!
             // There is only one row per section (room)
             delegate.resetDataForCell(at: IndexPath(item: 0, section: roomCell))

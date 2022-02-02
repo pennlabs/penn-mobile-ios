@@ -376,7 +376,7 @@ extension RootViewController: TwoFactorEnableDelegate {
         if let date = UserDefaults.standard.getTwoFactorEnabledDate() {
             let code = TwoFactorTokenGenerator.instance.generate()
 
-            if (code == nil) {
+            if code == nil {
                 let elapsedInDays = Date().timeIntervalSince(date) / (60*60*24)
                 if elapsedInDays <= 3 {
                     return true

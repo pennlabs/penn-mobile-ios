@@ -79,7 +79,7 @@ extension DiningDollarsTransactionViewController {
 extension DiningDollarsTransactionViewController {
     func fetchTransactionData(_ completion: @escaping (_ transactions: [Transaction]?, _ error: Bool) -> Void) {
         getRequestData(url: transactionUrl) { (data, error, statusCode) in
-            if (error != nil) {
+            if error != nil {
                 print(error.debugDescription)
             }
 

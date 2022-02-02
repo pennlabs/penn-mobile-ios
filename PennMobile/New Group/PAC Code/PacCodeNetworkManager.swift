@@ -65,7 +65,7 @@ extension PacCodeNetworkManager: PennAuthRequestable {
         }
 
         // PAC Code is stored in the 5th index of the array
-        if (identity.count == 6) {
+        if identity.count == 6 {
             return identity[5]
         } else {
             throw NetworkingError.parsingError

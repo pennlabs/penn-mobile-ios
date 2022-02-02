@@ -61,7 +61,7 @@ class HomeNavigationController: UINavigationController {
         }
         // Hide the bar
         guard bar != nil else { return }
-        if (animated) {
+        if animated {
             UIView.animate(withDuration: 0.4, animations: {
                 self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(-1 * self.bar!.height))
                 }, completion: { (didComplete) in

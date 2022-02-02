@@ -38,7 +38,7 @@ class StatusBar: UIView {
         self.status = text
         self.height = self.status == .noInternet ? 50 : 70
         self.backgroundColor = .baseRed
-        if (text == .noInternet) {
+        if text == .noInternet {
             self.heightAnchor.constraint(equalToConstant: 50).isActive = true
         } else {
             self.heightAnchor.constraint(equalToConstant: 70).isActive = true

@@ -57,15 +57,15 @@ class DiningBalanceCollectionViewCell: UICollectionViewCell {
 extension DiningBalanceCollectionViewCell {
 
     fileprivate func setupCell(with type: CellType) {
-        if (type == .diningDollars) {
+        if type == .diningDollars {
             titleLabel.text = "Dining Dollars"
             icon.image = UIImage(named: "coin")
         }
-        if (type == .swipes) {
+        if type == .swipes {
             titleLabel.text = "Swipes"
             icon.image = UIImage(named: "card")
         }
-        if (type == .guestSwipes) {
+        if type == .guestSwipes {
             titleLabel.text = "Guest Swipes"
             icon.image = UIImage(named: "friends")
         }

@@ -44,7 +44,7 @@ class GSRGroupInviteViewController: UIViewController {
         prepareUI()
 
         GSRGroupNetworkManager.instance.getAllUsers { (success, results) in
-            if (success) {
+            if success {
                 self.users = results!
 
                 DispatchQueue.main.async {

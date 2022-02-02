@@ -77,7 +77,7 @@ extension CourseScheduleViewController {
         if let courses = UserDefaults.standard.getCourses() {
             assignModelAndRefreshTable(courses: courses)
         } else {
-            if (Account.isLoggedIn) {
+            if Account.isLoggedIn {
                 handleCourseRefresh()
             } else {
                 self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true) })

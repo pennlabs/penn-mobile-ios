@@ -88,9 +88,9 @@ class GSRGroupNewIntialController: UIViewController {
     }
 
     @objc func textFieldDidChange(_ textField: UITextField) {
-        if (textField.text != "" && textField.text != "New Group Name") {
+        if textField.text != "" && textField.text != "New Group Name" {
             createButton.isUserInteractionEnabled = true
-            if (chosenColor != nil) {
+            if chosenColor != nil {
                 createButton.backgroundColor = chosenColor
             } else {
                 createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
@@ -255,7 +255,7 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
         let cell = collectionView.cellForItem(at: indexPath) as? GSRColorCell
         cell?.toggleBorder()
         createButton.isEnabled = true
-        if (nameChanged) {
+        if nameChanged {
             createButton.backgroundColor = cell?.colorView.backgroundColor
         } else {
             createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)

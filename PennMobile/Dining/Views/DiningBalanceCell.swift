@@ -132,7 +132,7 @@ extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegat
         cell.layer.shadowOpacity = 0.5
         cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: 8).cgPath
 
-        if (indexPath.item == 0) {
+        if indexPath.item == 0 {
             cell.type = .diningDollars
             if let diningDollars = diningBalance?.diningDollars {
                 cell.value = "$" + String(diningDollars)
@@ -141,7 +141,7 @@ extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegat
             }
             cell.backgroundColor = UIColor.init(red: 106, green: 188, blue: 143)
         }
-        if (indexPath.item == 1) {
+        if indexPath.item == 1 {
             cell.type = .swipes
             if let visits = diningBalance?.visits {
                 cell.value = String(visits)
@@ -150,7 +150,7 @@ extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegat
             }
             cell.backgroundColor = UIColor.init(red: 106, green: 144, blue: 188)
         }
-        if (indexPath.item == 2) {
+        if indexPath.item == 2 {
             cell.type = .guestSwipes
             if let guestVisits = diningBalance?.guestVisits {
                 cell.value = String(guestVisits)

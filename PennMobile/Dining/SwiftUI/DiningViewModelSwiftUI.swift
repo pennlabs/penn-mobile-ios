@@ -74,7 +74,7 @@ class DiningViewModelSwiftUI: ObservableObject {
     }
 
     func refreshBalance() {
-        if (UserDefaults.standard.hasDiningPlan()) {
+        if UserDefaults.standard.hasDiningPlan() {
             DiningAPI.instance.fetchDiningBalance { diningBalance in
                 if let diningBalance = diningBalance {
                     self.swipes = diningBalance.visits

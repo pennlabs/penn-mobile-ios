@@ -77,7 +77,7 @@ extension MoveableTableViewController {
             center?.y = locationInView.y
             cellSnapshot?.center = center!
 
-            if ((indexPath != nil) && (indexPath != initialIndexPath)) {
+            if (indexPath != nil) && (indexPath != initialIndexPath) {
                 rowMoved(from: initialIndexPath!, to: indexPath!)
                 tableView.moveRow(at: initialIndexPath!, to: indexPath!)
                 initialIndexPath = indexPath

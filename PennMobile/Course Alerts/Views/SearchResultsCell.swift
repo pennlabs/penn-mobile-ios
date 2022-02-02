@@ -36,7 +36,7 @@ class SearchResultsCell: UITableViewCell {
 // MARK: - Setup Cell
 extension SearchResultsCell {
     fileprivate func setupCell() {
-        if (detailLabel == nil || courseLabel == nil) {
+        if detailLabel == nil || courseLabel == nil {
             setupUI()
         } else {
             courseLabel.text = section.section

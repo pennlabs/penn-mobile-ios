@@ -90,7 +90,7 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == 0) {
+        if section == 0 {
             return profileInfo.count
         } else {
             return educationInfo.count
@@ -98,7 +98,7 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath.section == 0) {
+        if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePageTableViewCell.identifier, for: indexPath) as! ProfilePageTableViewCell
             cell.key = profileInfo[indexPath.row].text
             cell.info = profileInfo[indexPath.row].info

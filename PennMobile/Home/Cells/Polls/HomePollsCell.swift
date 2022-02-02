@@ -81,13 +81,13 @@ extension HomePollsCell {
         let h = diffComponents.hour
         let mm = diffComponents.minute
         ddlLabel.text = ""
-        if (d! > 0) {
+        if d! > 0 {
             ddlLabel.text = "\(d ?? 0)d"
         }
-        if (h! > 0) {
+        if h! > 0 {
             ddlLabel.text = "\(ddlLabel.text ?? "") \(h ?? 0) h"
         }
-        if (mm! > 0) {
+        if mm! > 0 {
             ddlLabel.text = "\(ddlLabel.text ?? "") \(mm ?? 0) m"
         }
 

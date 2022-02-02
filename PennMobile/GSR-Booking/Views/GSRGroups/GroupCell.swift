@@ -38,7 +38,7 @@ class GroupCell: UITableViewCell {
 extension GroupCell {
     fileprivate func setupCell() {
         // refactor!
-        if (groupIcon == nil || groupName == nil || activeLabel == nil) {
+        if groupIcon == nil || groupName == nil || activeLabel == nil {
             setupUI()
         } else {
             groupIcon.backgroundColor = group.color

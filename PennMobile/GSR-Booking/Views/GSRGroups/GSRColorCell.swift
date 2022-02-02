@@ -68,7 +68,7 @@ class GSRColorCell: UICollectionViewCell {
     }
 
     func toggleBorder() {
-        if (isSelected) {
+        if isSelected {
             colorView.layer.borderColor = borderColor.cgColor
         }
 
