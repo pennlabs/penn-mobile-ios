@@ -1,8 +1,10 @@
 disabled_rules: # rule identifiers turned on by default to exclude from running
+  - class_delegate_protocol
+  - weak_delegate
+    # Need to resolve
   - force_cast
   - force_try
   - line_length
-  - class_delegate_protocol
   - todo
   - identifier_name
   - function_parameter_count
@@ -14,4 +16,3 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - nesting
   - legacy_constructor
   - file_length
-  - weak_delegate
