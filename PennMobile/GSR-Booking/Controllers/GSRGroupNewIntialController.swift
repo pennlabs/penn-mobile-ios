@@ -89,18 +89,18 @@ class GSRGroupNewIntialController: UIViewController {
 
     @objc func textFieldDidChange(_ textField: UITextField) {
         if (textField.text != "" && textField.text != "New Group Name") {
-            createButton.isUserInteractionEnabled = true;
+            createButton.isUserInteractionEnabled = true
             if (chosenColor != nil) {
                 createButton.backgroundColor = chosenColor
             } else {
                 createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
             }
-            nameChanged = true;
+            nameChanged = true
 
         } else {
-            createButton.isUserInteractionEnabled = false;
+            createButton.isUserInteractionEnabled = false
             createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
-            nameChanged = false;
+            nameChanged = false
         }
     }
 
@@ -157,8 +157,8 @@ class GSRGroupNewIntialController: UIViewController {
         createButton.translatesAutoresizingMaskIntoConstraints = false
 
         //button unclickable until group name changed and not empty
-        createButton.isUserInteractionEnabled = false;
-        nameChanged = false;
+        createButton.isUserInteractionEnabled = false
+        nameChanged = false
     }
 
     func prepareColorLabel() {
@@ -186,7 +186,7 @@ class GSRGroupNewIntialController: UIViewController {
         colorCollectionView.showsHorizontalScrollIndicator = false
         colorCollectionView.delegate = self
         colorCollectionView.dataSource = self
-        colorCollectionView.allowsSelection = true;
+        colorCollectionView.allowsSelection = true
         colorCollectionView.allowsMultipleSelection = false
         colorCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
         view.addSubview(colorCollectionView)

@@ -70,7 +70,7 @@ extension GSRReservationsController {
         cell.contentView.isUserInteractionEnabled = false
         cell.reservation = reservations[indexPath.row]
         cell.delegate = self
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none;
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
 
