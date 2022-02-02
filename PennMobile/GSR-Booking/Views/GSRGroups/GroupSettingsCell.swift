@@ -67,7 +67,7 @@ extension GroupSettingsCell {
     fileprivate func prepareHolderView() {
         holderView = UIView()
         addSubview(holderView)
-        let inset:CGFloat = 14.0
+        let inset: CGFloat = 14.0
         _ = holderView.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: inset, leftConstant: inset, bottomConstant: inset, rightConstant: inset, widthConstant: 0, heightConstant: 0)
     }
 

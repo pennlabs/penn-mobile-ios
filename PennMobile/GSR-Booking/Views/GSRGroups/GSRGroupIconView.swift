@@ -11,7 +11,7 @@ import UIKit
 class GSRGroupIconView: UIView {
     //creates a circular icon with color and letter for icon
 
-    static let height : CGFloat = 63.0
+    static let height: CGFloat = 63.0
 
     fileprivate var firstLetterLbl: UILabel!
 

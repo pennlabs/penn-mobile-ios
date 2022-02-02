@@ -205,7 +205,7 @@ struct DailyAverageView_Previews: PreviewProvider {
 
     static let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
     static let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
-    static var decoder : JSONDecoder {
+    static var decoder: JSONDecoder {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         return decoder

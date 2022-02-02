@@ -16,7 +16,7 @@ class GroupHeaderCell: UITableViewCell {
     fileprivate var titleLabel: UILabel!
     fileprivate var memberCountLabel: UILabel!
 
-    fileprivate let inset : CGFloat = 14.0
+    fileprivate let inset: CGFloat = 14.0
 
     var groupColor: UIColor! {
         didSet {
@@ -58,7 +58,7 @@ extension GroupHeaderCell {
     }
 
     fileprivate func prepareGroupIcon() {
-        let height : CGFloat = 63.0
+        let height: CGFloat = 63.0
         groupIcon = GSRGroupIconView()
         groupIcon.layer.cornerRadius = height / 2.0 //half of height
         groupIcon.layer.masksToBounds = true

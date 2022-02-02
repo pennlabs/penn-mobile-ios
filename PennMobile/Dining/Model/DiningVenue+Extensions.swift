@@ -194,7 +194,7 @@ extension DiningVenue {
         return formattedHoursArray
     }
 
-    var statusString : String {
+    var statusString: String {
         if hasMealsToday {
             if isOpen {
                 if isClosingSoon {

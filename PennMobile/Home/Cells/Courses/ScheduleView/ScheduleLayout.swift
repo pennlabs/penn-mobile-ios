@@ -10,7 +10,7 @@ import UIKit
 
 protocol ScheduleLayoutDelegate {
     // 1. Method to ask the delegate for the height of the cell
-    func collectionView(collectionView:UICollectionView, heightForCellAtIndexPath indexPath: IndexPath, heightForHour: CGFloat) -> CGFloat
+    func collectionView(collectionView: UICollectionView, heightForCellAtIndexPath indexPath: IndexPath, heightForHour: CGFloat) -> CGFloat
     // 2. Method to ask the delegate for the width of the cell
     func collectionView(collectionView: UICollectionView, widthForCellAtIndexPath indexPath: IndexPath, width: CGFloat) -> CGFloat
 

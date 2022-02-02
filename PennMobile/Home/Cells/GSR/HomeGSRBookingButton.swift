@@ -11,9 +11,9 @@ import Foundation
 protocol HomeGSRBookingButtonDelegate {
     func handleBookingSelected(_ booking: GSRBooking)
 }
-class HomeGSRBookingButton : UIButton {
+class HomeGSRBookingButton: UIButton {
 
-    var booking : GSRBooking? {
+    var booking: GSRBooking? {
         didSet {
             self.isEnabled = (booking != nil)
             if isEnabled {
@@ -23,8 +23,8 @@ class HomeGSRBookingButton : UIButton {
             }
         }
     }
-    var delegate : HomeGSRBookingButtonDelegate?
-    var incrementLabel : UILabel!
+    var delegate: HomeGSRBookingButtonDelegate?
+    var incrementLabel: UILabel!
 
     convenience init(withIncrement increment: Int) {
         self.init()

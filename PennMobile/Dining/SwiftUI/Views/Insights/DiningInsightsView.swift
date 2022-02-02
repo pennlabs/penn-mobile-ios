@@ -15,7 +15,7 @@ struct DiningInsightsView: View {
 
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
 
-    @Binding var pickerIndex : Int
+    @Binding var pickerIndex: Int
     @State var isPresentingLoginSheet = false
     @State var loginFailure = false
 

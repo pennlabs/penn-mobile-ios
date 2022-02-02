@@ -13,7 +13,6 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - unused_optional_binding
   - opening_brace
   - cyclomatic_complexity
-  - colon
   - comment_spacing
   - control_statement
   - multiple_closures_with_trailing_closure

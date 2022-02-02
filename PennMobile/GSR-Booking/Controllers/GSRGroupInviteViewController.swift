@@ -17,8 +17,8 @@ class GSRGroupInviteViewController: UIViewController {
     fileprivate var sendInvitesButton: UIButton!
     fileprivate var tableView: UITableView!
 
-    fileprivate let disabledBtnColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:0.5)
-    fileprivate let enabledBtnColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:1)
+    fileprivate let disabledBtnColor = UIColor(red: 32/255.0, green: 156/255.0, blue: 238/255.0, alpha: 0.5)
+    fileprivate let enabledBtnColor = UIColor(red: 32/255.0, green: 156/255.0, blue: 238/255.0, alpha: 1)
 
     fileprivate var users = GSRInviteSearchResults()
     fileprivate var filteredUsers = GSRInviteSearchResults() {
@@ -81,8 +81,8 @@ class GSRGroupInviteViewController: UIViewController {
         inViteUsersLabel.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    @objc func cancelBtnAction(sender:UIButton!) {
-        dismiss(animated: true, completion:nil)
+    @objc func cancelBtnAction(sender: UIButton!) {
+        dismiss(animated: true, completion: nil)
     }
 
     func prepareSearchBar() {
@@ -99,7 +99,7 @@ class GSRGroupInviteViewController: UIViewController {
 
     func prepareSendInvitationButton() {
         sendInvitesButton = UIButton()
-        sendInvitesButton.backgroundColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:0.5)
+        sendInvitesButton.backgroundColor = UIColor(red: 32/255.0, green: 156/255.0, blue: 238/255.0, alpha: 0.5)
         sendInvitesButton.setTitle("Send Invites", for: .normal)
         sendInvitesButton.setTitleColor(UIColor.white, for: .normal)
         sendInvitesButton.titleLabel?.font =  UIFont.boldSystemFont(ofSize: 17)

@@ -20,10 +20,10 @@ struct GSRGroup: Decodable, Comparable {
     var reservations: [String]? //array of reservationID's
     var groupSettings: GSRGroupAccessSettings?
 
-    static let groupColors: [String : UIColor] = [
-        "Labs Blue" : UIColor.baseLabsBlue,
-        "College Green" : UIColor.baseGreen,
-        "Locust Yellow" : UIColor.baseYellow,
+    static let groupColors: [String: UIColor] = [
+        "Labs Blue": UIColor.baseLabsBlue,
+        "College Green": UIColor.baseGreen,
+        "Locust Yellow": UIColor.baseYellow,
         "Cheeto Orange": UIColor.baseOrange,
         "Gritty Orange": UIColor.baseOrange,
         "Red-ing Terminal": UIColor.baseRed,

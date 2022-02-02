@@ -51,7 +51,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccess
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let topSpace:CGFloat?
+        let topSpace: CGFloat?
         if #available(iOS 11.0, *) {
             topSpace = self.view.safeAreaInsets.top
         } else {

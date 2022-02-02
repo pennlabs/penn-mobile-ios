@@ -80,8 +80,8 @@ class GSRGroupInviteViewController: UIViewController {
         inviteUsersLabel.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    @objc func cancelBtnAction(sender:UIButton!) {
-        dismiss(animated: true, completion:nil)
+    @objc func cancelBtnAction(sender: UIButton!) {
+        dismiss(animated: true, completion: nil)
     }
 
     func prepareSearchBar() {

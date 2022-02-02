@@ -9,7 +9,7 @@
 import Foundation
 
 class MenuTableView: UITableView {
-    override var contentSize:CGSize {
+    override var contentSize: CGSize {
         didSet {
             self.invalidateIntrinsicContentSize()
         }

@@ -105,7 +105,7 @@ class GSRGroupNewIntialController: UIViewController {
         view.addSubview(groupForLabel)
         groupForLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         groupForLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        groupForLabel.topAnchor.constraint(equalTo:nameField.bottomAnchor, constant: 35).isActive = true
+        groupForLabel.topAnchor.constraint(equalTo: nameField.bottomAnchor, constant: 35).isActive = true
         groupForLabel.translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -190,7 +190,7 @@ class GSRGroupNewIntialController: UIViewController {
         colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    @objc func createGroupBtnAction(sender:UIButton!) {
+    @objc func createGroupBtnAction(sender: UIButton!) {
         //TODO: Consider adding appropriate error messages
         guard let name = nameField.text else {return}
         guard let color = colorLabel.text else {return}
@@ -207,9 +207,9 @@ class GSRGroupNewIntialController: UIViewController {
         }
     }
 
-    @objc func cancelBtnAction(sender:UIButton!) {
+    @objc func cancelBtnAction(sender: UIButton!) {
         self.delegate.fetchGroups()
-        dismiss(animated: true, completion:nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 

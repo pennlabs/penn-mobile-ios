@@ -221,7 +221,7 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController : DiningCellSettingsDelegate {
+extension HomeViewController: DiningCellSettingsDelegate {
     func saveSelection(for venueIds: [Int]) {
         guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
         if venueIds.count == 0 {

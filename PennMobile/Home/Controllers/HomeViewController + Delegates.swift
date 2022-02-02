@@ -47,7 +47,7 @@ extension HomeViewController: GSRBookable {
                                       preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (UIAlertAction) in
             self.handleBookingRequested(booking)
         }))
         present(alert, animated: true)

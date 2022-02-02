@@ -297,7 +297,7 @@ extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
             if building.lowercased().contains(searchText.lowercased()) {
                 currentResults[building] = laundryRooms
             } else {
-                var toAdd:[LaundryRoom]  = []
+                var toAdd: [LaundryRoom]  = []
                 for room in laundryRooms {
                     if room.name.lowercased().contains(searchText.lowercased()) {
                         toAdd.append(room)

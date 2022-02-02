@@ -25,7 +25,7 @@ struct DiningMenuSectionRow: View {
 
             Image(systemName: "chevron.right.circle")
                 .rotationEffect(.degrees(isExpanded ? -90 : 90))
-                .frame(width:28, alignment: .center)
+                .frame(width: 28, alignment: .center)
         }
         .contentShape(Rectangle())
         .padding(.bottom)
@@ -108,7 +108,7 @@ struct DiningStationItemRow: View {
                     Image(attribute.description)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 20.0, height:20)
+                        .frame(width: 20.0, height: 20)
 
                 }
                 Spacer()

@@ -71,7 +71,7 @@ struct BalanceLabelStyle: LabelStyle {
             configuration.title
                 .font(.system(size: 17, weight: .bold, design: .rounded))
             configuration.icon
-                .frame(width:20, height: 20)
+                .frame(width: 20, height: 20)
         }
     }
 }

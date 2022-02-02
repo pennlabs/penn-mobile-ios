@@ -12,7 +12,7 @@ import SwiftUI
 class DiningViewModelSwiftUI: ObservableObject {
     static let instance = DiningViewModelSwiftUI()
 
-    @Published var diningVenues: [DiningVenue.VenueType : [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
+    @Published var diningVenues: [DiningVenue.VenueType: [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
     @Published var diningInsights = DiningAPI.instance.getInsights()
     @Published var diningMenus = DiningAPI.instance.getMenus()
 
@@ -44,7 +44,7 @@ class DiningViewModelSwiftUI: ObservableObject {
                 switch result {
                 case .success(let diningVenues):
                     UserDefaults.standard.setLastDiningHoursRequest()
-                    var venuesDict = [DiningVenue.VenueType : [DiningVenue]]()
+                    var venuesDict = [DiningVenue.VenueType: [DiningVenue]]()
                     for type in DiningVenue.VenueType.allCases {
                         venuesDict[type] = diningVenues.document.venues.filter({ $0.venueType == type })
                     }

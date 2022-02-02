@@ -43,7 +43,7 @@ class SelectionCell: UICollectionViewCell, UINavigationBarDelegate {
 class NavigationBar: UINavigationBar {
 
     //set NavigationBar's height
-    var customHeight : CGFloat = 64
+    var customHeight: CGFloat = 64
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
 
@@ -56,7 +56,7 @@ class NavigationBar: UINavigationBar {
 
         self.tintColor = .black
 
-        frame = CGRect(x: frame.origin.x, y:  0, width: frame.size.width, height: customHeight)
+        frame = CGRect(x: frame.origin.x, y: 0, width: frame.size.width, height: customHeight)
 
         // title position (statusbar height / 2)
         setTitleVerticalPositionAdjustment(-10, for: UIBarMetrics.default)
@@ -333,7 +333,7 @@ extension HallSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
             if building.lowercased().contains(searchText.lowercased()) {
                 currentResults[building] = laundryHalls
             } else {
-                var toAdd:[LaundryHall]  = []
+                var toAdd: [LaundryHall]  = []
                 for hall in laundryHalls {
                     if hall.name.lowercased().contains(searchText.lowercased()) {
                         toAdd.append(hall)

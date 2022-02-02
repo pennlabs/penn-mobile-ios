@@ -51,7 +51,7 @@ extension NotificationRequestable where Self: UIViewController {
     }
 
     func registerPushNotification(_ completion: AuthorizedCompletion? = nil) {
-        UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]){ (granted, error) in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]){ (granted, error) in
             DispatchQueue.main.async {
                 if granted {
                     UIApplication.shared.registerForRemoteNotifications()

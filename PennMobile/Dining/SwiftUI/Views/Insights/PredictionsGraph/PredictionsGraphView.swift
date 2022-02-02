@@ -13,7 +13,7 @@ import SwiftUI
 
 // TODO: - Move these protocols to Protocols.swift
 protocol ClampableRange {
-    associatedtype Bound : Comparable
+    associatedtype Bound: Comparable
     var upperBound: Bound { get }
     var lowerBound: Bound { get }
 }

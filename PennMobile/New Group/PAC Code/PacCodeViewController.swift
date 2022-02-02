@@ -8,11 +8,11 @@
 
 import Foundation
 
-class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEnabled {
+class PacCodeViewController: UIViewController, ShowsAlertForError, IndicatorEnabled {
 
-    var pacCode : String?
+    var pacCode: String?
 
-    var digitLabel : UILabel {
+    var digitLabel: UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.heightAnchor.constraint(equalToConstant: 70).isActive = true
@@ -125,7 +125,7 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
 }
 
 // MARK: - Local Authentication
-extension PacCodeViewController : KeychainAccessible, LocallyAuthenticatable {
+extension PacCodeViewController: KeychainAccessible, LocallyAuthenticatable {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

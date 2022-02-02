@@ -52,7 +52,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         // GSR Notification
         if response.notification.request.content.categoryIdentifier == NotificationIdentifiers.upcomingGSRCategory,
-            let gsrReservation = userInfo["reservation"] as? [String:String] {
+            let gsrReservation = userInfo["reservation"] as? [String: String] {
             if response.actionIdentifier == NotificationIdentifiers.cancelGSRAction, let bookingID = gsrReservation["booking_id"] {
 
                 FirebaseAnalyticsManager.shared.trackEvent(action: "GSR Delete From Notification", result: "User Deleted GSR From Notification", content: "User Deleted GSR From Notification")

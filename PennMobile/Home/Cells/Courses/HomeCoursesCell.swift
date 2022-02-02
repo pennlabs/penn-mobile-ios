@@ -150,7 +150,7 @@ extension HomeCoursesCell: ScheduleTableDelegate {
         paragraphStyle.alignment = .center
 
         let attrString = NSMutableAttributedString(string: "Nothing planned. Enjoy the day off 🎉")
-        attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
         return attrString
     }
 
@@ -182,7 +182,7 @@ extension HomeCoursesCell {
         paragraphStyle.alignment = .center
 
         let attrString = NSMutableAttributedString(string: "Penn Mobile does not have access to your course schedule.")
-        attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+        attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
         return attrString
     }
 

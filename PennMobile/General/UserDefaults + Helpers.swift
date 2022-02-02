@@ -241,7 +241,7 @@ extension UserDefaults {
     func storeCookies() {
         guard let cookies = HTTPCookieStorage.shared.cookies else { return }
 
-        var cookieDict = [String : AnyObject]()
+        var cookieDict = [String: AnyObject]()
         for cookie in cookies {
             cookieDict[cookie.name + cookie.domain] = cookie.properties as AnyObject?
         }
@@ -253,7 +253,7 @@ extension UserDefaults {
         let cookiesStorage = HTTPCookieStorage.shared
         if let cookieDictionary = self.dictionary(forKey: UserDefaultsKeys.cookies.rawValue) {
             for (_, cookieProperties) in cookieDictionary {
-                if let cookie = HTTPCookie(properties: cookieProperties as! [HTTPCookiePropertyKey : Any] ) {
+                if let cookie = HTTPCookie(properties: cookieProperties as! [HTTPCookiePropertyKey: Any] ) {
                     cookiesStorage.setCookie(cookie)
                 }
             }
@@ -575,7 +575,7 @@ extension UserDefaults {
     }
 
     func getLastMenuRequest(id: Int) -> Date? {
-        let dict = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue)  as? [Int:Date]
+        let dict = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue)  as? [Int: Date]
 
         return dict?[id]
     }

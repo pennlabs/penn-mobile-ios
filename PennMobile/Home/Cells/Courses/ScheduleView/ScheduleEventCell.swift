@@ -20,7 +20,7 @@ class ScheduleEventCell: UICollectionViewCell {
             let attributedString = NSMutableAttributedString(string: str)
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 2 // Whatever line spacing you want in points
-            attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+            attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
             label.attributedText = attributedString
 
             imageView.isHidden = event.location == nil

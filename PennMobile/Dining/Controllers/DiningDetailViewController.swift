@@ -113,7 +113,7 @@ extension DiningDetailViewController: CellUpdateDelegate {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : BuildingCell
+        let cell: BuildingCell
         switch indexPath.section {
         case 0:
             cell = tableView.dequeueReusableCell(withIdentifier: BuildingHeaderCell.identifier, for: indexPath) as! BuildingHeaderCell

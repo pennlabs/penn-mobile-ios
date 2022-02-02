@@ -25,9 +25,9 @@ class BuildingHeaderCell: BuildingCell {
         }
     }
 
-    fileprivate var buildingTitleLabel : UILabel!
-    fileprivate var buildingDescriptionLabel : UILabel!
-    fileprivate var buildingHoursLabel : UILabel!
+    fileprivate var buildingTitleLabel: UILabel!
+    fileprivate var buildingDescriptionLabel: UILabel!
+    fileprivate var buildingHoursLabel: UILabel!
 
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

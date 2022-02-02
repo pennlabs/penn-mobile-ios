@@ -206,7 +206,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
 
     func getMatch(for pattern: String, in text: String) -> String {
         let regex = try! NSRegularExpression(pattern: pattern)
-        let result = regex.matches(in: text as String, range:NSMakeRange(0, text.utf16.count))
+        let result = regex.matches(in: text as String, range: NSMakeRange(0, text.utf16.count))
         let r = result[0].range(at: 1)
         let start = text.index(text.startIndex, offsetBy: r.location)
         let end = text.index(text.startIndex, offsetBy: r.location + r.length)

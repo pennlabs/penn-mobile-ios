@@ -12,7 +12,7 @@ class GSRManageGroupController: UIViewController {
 
     fileprivate var tableView: UITableView!
     fileprivate var viewModel: GSRManageGroupViewModel!
-    fileprivate var settings = [String:String]() //TODO: change the type
+    fileprivate var settings = [String: String]() //TODO: change the type
 
     var group: GSRGroup! //this will be nil until prepareViewModel called (perhaps, make it an optional)
 

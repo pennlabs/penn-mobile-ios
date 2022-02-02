@@ -128,8 +128,8 @@ extension DiningAPI {
         }
     }
 
-    func getSectionedVenues() -> [DiningVenue.VenueType : [DiningVenue]] {
-        var venuesDict = [DiningVenue.VenueType : [DiningVenue]]()
+    func getSectionedVenues() -> [DiningVenue.VenueType: [DiningVenue]] {
+        var venuesDict = [DiningVenue.VenueType: [DiningVenue]]()
         for type in DiningVenue.VenueType.allCases {
             venuesDict[type] = getVenues().filter({ $0.venueType == type })
         }
@@ -154,7 +154,7 @@ extension DiningAPI {
 
     func getMenus() -> [Int: DiningMenuAPIResponse] {
         if Storage.fileExists(DiningMenuAPIResponse.directory, in: .caches) {
-            return Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int:DiningMenuAPIResponse].self)
+            return Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int: DiningMenuAPIResponse].self)
         } else {
             return [:]
         }
@@ -171,7 +171,7 @@ extension DiningAPI {
 
     func saveToCache(id: Int, _ menu: DiningMenuAPIResponse) {
         if Storage.fileExists(DiningMenuAPIResponse.directory, in: .caches) {
-            var menus = Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int:DiningMenuAPIResponse].self)
+            var menus = Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int: DiningMenuAPIResponse].self)
 
             menus[id] = menu
 

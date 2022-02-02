@@ -16,7 +16,7 @@ final class HomeStudyRoomCell: UITableViewCell, HomeCellConformable {
     static var identifier = "studyRoomCell"
 
     fileprivate static let numberOfBookingCellRows = 2
-    fileprivate static let bookingRowHeight : CGFloat = 82
+    fileprivate static let bookingRowHeight: CGFloat = 82
 
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         return 163.0 + (bookingRowHeight * CGFloat(numberOfBookingCellRows))
@@ -101,7 +101,7 @@ extension HomeStudyRoomCell {
     }
 }
 
-extension HomeStudyRoomCell : HomeGSRBookingButtonDelegate {
+extension HomeStudyRoomCell: HomeGSRBookingButtonDelegate {
     func handleBookingSelected(_ booking: GSRBooking) {
         guard let delegate = delegate as? GSRBookingSelectable else { return }
         delegate.handleBookingSelected(booking)

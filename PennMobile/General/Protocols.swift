@@ -182,7 +182,7 @@ protocol LocallyAuthenticatable {
 
 extension LocallyAuthenticatable {
 
-    func requestAuthentication(cancelText : String, reasonText: String) {
+    func requestAuthentication(cancelText: String, reasonText: String) {
         let context = LAContext()
         context.localizedCancelTitle = cancelText
 

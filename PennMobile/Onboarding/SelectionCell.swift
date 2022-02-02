@@ -77,7 +77,7 @@ class SelectionCell: UICollectionViewCell, RoomSelectionViewDelegate {
 class NavigationBar: UINavigationBar {
 
     //set NavigationBar's height
-    var customHeight : CGFloat = 64
+    var customHeight: CGFloat = 64
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.width, height: customHeight)
@@ -88,7 +88,7 @@ class NavigationBar: UINavigationBar {
 
         self.tintColor = .black
 
-        frame = CGRect(x: frame.origin.x, y:  0, width: frame.size.width, height: customHeight)
+        frame = CGRect(x: frame.origin.x, y: 0, width: frame.size.width, height: customHeight)
 
         // title position (statusbar height / 2)
         setTitleVerticalPositionAdjustment(-10, for: UIBarMetrics.default)

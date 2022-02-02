@@ -288,7 +288,7 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
      }
 
     func getSwipeConfig(active: Bool, id: String) -> UISwipeActionsConfiguration {
-        let resubscribeAction = UIContextualAction(style: .normal, title:  "Activate", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let resubscribeAction = UIContextualAction(style: .normal, title: "Activate", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             CourseAlertNetworkManager.instance.updateRegistration(id: id, deleted: nil, autoResubscribe: nil, cancelled: nil, resubscribe: true, callback: {(success, error) in
                 DispatchQueue.main.async {
                     if success {
@@ -322,7 +322,7 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
         }
         cancelAction.backgroundColor = .baseBlue
 
-        let deleteAction = UIContextualAction(style: .normal, title:  "Delete", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+        let deleteAction = UIContextualAction(style: .normal, title: "Delete", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             CourseAlertNetworkManager.instance.updateRegistration(id: id, deleted: true, autoResubscribe: nil, cancelled: nil, resubscribe: nil, callback: {(success, error) in
                 DispatchQueue.main.async {
                     if success {

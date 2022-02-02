@@ -150,7 +150,7 @@ class RootViewController: UIViewController, NotificationRequestable {
 
         // Keep track locally of app sessions (for app review prompting)
         let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
-        UserDefaults.standard.set(sessionCount+1, forKey:"launchCount")
+        UserDefaults.standard.set(sessionCount+1, forKey: "launchCount")
         UserDefaults.standard.synchronize()
 
         // This code will ONLY present the review if we're not running Fastlane UI Automation (for screenshots)
@@ -323,7 +323,7 @@ extension RootViewController {
 }
 
 // MARK: - Enabling Two Factor Automation
-extension RootViewController : TwoFactorEnableDelegate {
+extension RootViewController: TwoFactorEnableDelegate {
 
     func handleEnable() {
         askForNotificationPermission()

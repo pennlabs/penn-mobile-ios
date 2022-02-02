@@ -454,7 +454,7 @@ extension String {
 extension String {
     func getMatches(for pattern: String) -> [String] {
         let regex = try! NSRegularExpression(pattern: pattern)
-        let result = regex.matches(in: self, range:NSMakeRange(0, self.utf16.count))
+        let result = regex.matches(in: self, range: NSMakeRange(0, self.utf16.count))
         var matches = [String]()
         for res in result {
             let r = res.range(at: 1)

@@ -210,7 +210,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 }
 
 extension GSRGroupNetworkManager {
-    func getSearchResults(searchText:String, _ callback: @escaping (_ results: [GSRInviteSearchResult]?) -> Void) {
+    func getSearchResults(searchText: String, _ callback: @escaping (_ results: [GSRInviteSearchResult]?) -> Void) {
         let urlStr = "http://api.pennlabs.org/studyspaces/user/search?query=\(searchText)"
         let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in

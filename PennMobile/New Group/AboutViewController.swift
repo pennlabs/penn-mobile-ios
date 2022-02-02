@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AboutViewController : UIViewController {
+class AboutViewController: UIViewController {
 
     var logo: UIImageView!
     var subtitle: UITextView!

@@ -55,7 +55,7 @@ struct BlankDiningBalanceView: View {
                 .shadow(color: Color.black.opacity(0.0), radius: 4, x: 2, y: 2)
             VStack(alignment: .trailing) {
                 HStack {
-                    Image(systemName:" ").font(Font.system(size: 24).weight(.bold))
+                    Image(systemName: " ").font(Font.system(size: 24).weight(.bold))
                     Spacer()
                     Text(" ")
                         .font(.system(size: 24, design: .rounded))

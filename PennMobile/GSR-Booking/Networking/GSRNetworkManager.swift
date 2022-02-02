@@ -80,8 +80,8 @@ class GSRNetworkManager: NSObject, Requestable {
         }
     }
 
-    private func parseLocations(json:JSON) -> [Int:String] {
-        var locations:[Int:String] = [:]
+    private func parseLocations(json: JSON) -> [Int: String] {
+        var locations: [Int: String] = [:]
         if let jsonArray = json["locations"].array {
             for json in jsonArray {
                 let id = json["id"].intValue

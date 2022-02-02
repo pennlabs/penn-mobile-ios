@@ -101,7 +101,7 @@ extension TwoFactorCell {
 
     private func prepareEnabledSwitch() {
         enabledSwitch = UISwitch()
-        enabledSwitch.addTarget(self, action:  #selector(enableSwitchToggled(_:)), for: .valueChanged)
+        enabledSwitch.addTarget(self, action: #selector(enableSwitchToggled(_:)), for: .valueChanged)
         self.addSubview(enabledSwitch)
         _ = enabledSwitch.anchor(self.topAnchor, left: nil, bottom: nil, right: self.rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 15, widthConstant: 0, heightConstant: 0)
     }

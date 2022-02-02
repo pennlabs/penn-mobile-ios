@@ -44,7 +44,7 @@ extension SHA256Hashable {
 
     private func commonCryptoHash(inputData: Data, encoding: SHA256Encoding) -> String {
         // https://www.agnosticdev.com/content/how-use-commoncrypto-apis-swift-5
-        var digest = [UInt8](repeating: 0, count:Int(CC_SHA256_DIGEST_LENGTH))
+        var digest = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         _ = inputData.withUnsafeBytes {
            CC_SHA256($0.baseAddress, UInt32(inputData.count), &digest)
         }
@@ -290,10 +290,10 @@ extension LabsLoginController {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Don't Allow", style: .default, handler:{ (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Don't Allow", style: .default, handler: { (UIAlertAction) in
             callback(false)
         }))
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler:{ (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             callback(true)
         }))
         present(alert, animated: true)
