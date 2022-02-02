@@ -46,14 +46,12 @@ struct GSRGroup: Decodable, Comparable {
         //call this method after initially decoding json data, and BEFORE
         // displaying groups in ManageGroupVC
         guard let members = members else { return }
-        for member in members {
-            if (member.pennKey == pennkey) {
-                let pennKeyActive = member.pennKeyActive
-                let notificationsOn = member.notificationsOn
-                let pennKeyActiveSetting = GSRGroupIndividualSetting(type: .pennkeyActive, isEnabled: pennKeyActive)
-                let notificationsOnSetting = GSRGroupIndividualSetting(type: .notificationsOn, isEnabled: notificationsOn)
-                userSettings = GSRGroupIndividualSettings(pennKeyActive: pennKeyActiveSetting, notificationsOn: notificationsOnSetting)
-            }
+        for member in members where member.pennKey == pennkey {
+            let pennKeyActive = member.pennKeyActive
+            let notificationsOn = member.notificationsOn
+            let pennKeyActiveSetting = GSRGroupIndividualSetting(type: .pennkeyActive, isEnabled: pennKeyActive)
+            let notificationsOnSetting = GSRGroupIndividualSetting(type: .notificationsOn, isEnabled: notificationsOn)
+            userSettings = GSRGroupIndividualSettings(pennKeyActive: pennKeyActiveSetting, notificationsOn: notificationsOnSetting)
         }
     }
 

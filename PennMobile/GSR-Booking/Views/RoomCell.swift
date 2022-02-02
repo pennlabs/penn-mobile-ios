@@ -104,13 +104,12 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
 
         let indexPaths = (collectionView.indexPathsForSelectedItems ?? []).sorted(by: {$0.item < $1.item})
 
-        for i in 1..<indexPaths.count {
-            if (indexPaths[i].item - indexPaths[i-1].item != 1) {
-                let deselectIndexPath = indexPaths.filter({ $0 != indexPath })
-                deselectIndexPath.forEach({ collectionView.deselectItem(at: $0, animated: true)})
-                collectionView.reloadItems(at: deselectIndexPath)
-                return
-            }
+        for i in 1..<indexPaths.count where
+            indexPaths[i].item - indexPaths[i-1].item != 1 {
+            let deselectIndexPath = indexPaths.filter({ $0 != indexPath })
+            deselectIndexPath.forEach({ collectionView.deselectItem(at: $0, animated: true)})
+            collectionView.reloadItems(at: deselectIndexPath)
+            return
         }
     }
 }

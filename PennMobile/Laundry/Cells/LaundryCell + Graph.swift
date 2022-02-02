@@ -173,10 +173,8 @@ extension LaundryCell: ScrollableGraphViewDataSource {
 
     @objc fileprivate func executeGraphAnimation() {
         if let usageData = usageData {
-            for i in self.graphData.indices {
-                if i < usageData.count {
-                    graphData[i] = usageData[i]
-                }
+            for i in self.graphData.indices where i < usageData.count {
+                graphData[i] = usageData[i]
             }
             scrollableGraphView?.reload()
         }

@@ -18,13 +18,11 @@ class FitnessFacilityData {
         schedules = [FitnessFacilityName: [FitnessSchedule]]()
         guard inputSchedules.schedules != nil else { return }
 
-        for schedule in inputSchedules.schedules! {
-            if schedule != nil {
-                if schedules[schedule!.name] != nil {
-                    schedules[schedule!.name]?.append(schedule!)
-                } else {
-                    schedules[schedule!.name] = [schedule!]
-                }
+        for schedule in inputSchedules.schedules! where schedule != nil {
+            if schedules[schedule!.name] != nil {
+                schedules[schedule!.name]?.append(schedule!)
+            } else {
+                schedules[schedule!.name] = [schedule!]
             }
         }
     }
