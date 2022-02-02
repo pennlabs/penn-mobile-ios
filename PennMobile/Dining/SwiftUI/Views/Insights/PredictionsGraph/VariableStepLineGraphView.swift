@@ -13,9 +13,9 @@ import SwiftUI
 
 @available(iOS 14, *)
 struct VariableStepLineGraphView: View {
-    
+
     private let graphHeight: CGFloat = 160.0
-    
+
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @State private var trimEnd: CGFloat = 0.0
     @GestureState private var dragActive = false
@@ -25,12 +25,12 @@ struct VariableStepLineGraphView: View {
     var yAxisLabels: [String]
     var lineColor: Color
     var predictedZeroPoint: PredictionsGraphView.YXDataPoint
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Spacer()
                 .frame(height: 20)
-            
+
             HStack {
                 // Y-Axis labels
                 VStack(alignment: .leading) {
@@ -42,10 +42,10 @@ struct VariableStepLineGraphView: View {
                     }
                 }
                 .frame(width: 40, height: self.graphHeight)
-                
+
                 GeometryReader { geometry in
                     ZStack {
-                        
+
                         VariableStepGraphPath(data: self.data).trim(from: 0, to: self.trimEnd).stroke(
                             style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round)
                         )
@@ -55,8 +55,8 @@ struct VariableStepLineGraphView: View {
                             .onAppear {
                                 self.trimEnd = 1.0
                         }
-                        
-                        
+
+
                         PredictionSlopePath(lastDataPoint: self.data.last!, predictionZeroPoint: self.predictedZeroPoint).stroke(
                             style: StrokeStyle(lineWidth: 2.0, lineCap: .round, lineJoin: .round, dash: [5], dashPhase: 5)
                         )
@@ -67,7 +67,7 @@ struct VariableStepLineGraphView: View {
                                 self.trimEnd = 1.0
                         }
                         .clipped()
-                        
+
                         Group {
                             Group {
                                 HStack(alignment: .center) {
@@ -80,7 +80,7 @@ struct VariableStepLineGraphView: View {
                             }
                             .frame(width: 140)
                             .offset(x: -70 + 5.5 + ((1.0 - 0.5) * geometry.size.width), y: -6 - geometry.size.height/2)
-                            
+
                             GraphEndpointPath(x: 1.0).stroke(
                                 style: StrokeStyle(lineWidth: 2.0, lineCap: .round, lineJoin: .round)
                             )
@@ -90,7 +90,7 @@ struct VariableStepLineGraphView: View {
                     }
                 }
                 .frame(height: self.graphHeight)
-                
+
                 Spacer()
                     .frame(width: 10)
             }

@@ -15,7 +15,7 @@ struct Degree: Codable, Hashable {
     let degreeCode: String
     let majors: Set<Major>
     let expectedGradTerm: String
-    
+
     var description: String {
         let majorStr = majors.map { $0.description }.joined(separator: "\n")
         return "\(schoolName) (\(schoolCode))\n\(degreeName) (\(degreeCode))\n\(majorStr)\n\(expectedGradTerm)"
@@ -25,7 +25,7 @@ struct Degree: Codable, Hashable {
 struct Major: Codable, Hashable {
     let name: String
     let code: String
-    
+
     enum CodingKeys: String, CodingKey {
         case name = "major_name"
         case code = "major_code"

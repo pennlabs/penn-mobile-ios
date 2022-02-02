@@ -82,7 +82,7 @@ extension Requestable {
             callback(dict, error, status)
         }
     }
-    
+
     internal func getRequestData(url: String, callback: @escaping (_ data: Data?,  _ error: Error?, _ status: Int?) -> ()) {
         request(method: .get, url: url, params: nil) { (data, dict, error, status) in
             callback(data, error, status)
@@ -94,15 +94,15 @@ extension Requestable {
             callback(data, error, status)
         }
     }
-    
+
     internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ data: Data?, _ json: NSDictionary?, _ error: Error?, _ status: Int?) -> ())? = nil)  {
         guard let url = URL(string: url) else {
             return
         }
-        
+
         let request = NSMutableURLRequest(url: url)
         request.cachePolicy = .reloadIgnoringCacheData
-        
+
         let deviceID = getDeviceID()
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         if let accountID = UserDefaults.standard.getAccountID() {
@@ -114,9 +114,9 @@ extension Requestable {
             request.setValue("super secret password", forHTTPHeaderField: "Authorization")
             request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
         }
-        
+
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
-            
+
             if let error = error {
                 // indicates that user is unable to connect to internet
                 callback?(nil, nil, error, nil)
@@ -136,7 +136,7 @@ extension Requestable {
                     callback?(nil, nil, nil, httpResponse.statusCode)
                 }
             }
-            
+
         })
         task.resume()
     }
@@ -153,7 +153,7 @@ extension Requestable {
         }
         return request
     }
-    
+
     internal func getAnalyticsPostRequest(url: String, params: [String: Any]?) -> NSMutableURLRequest {
         let request = getAnalyticsRequest(url: url)
         request.httpMethod = "POST"
@@ -162,7 +162,7 @@ extension Requestable {
         }
         return request
     }
-    
+
     internal func getPostString(params: [String: Any]) -> String {
         var data = [String]()
         for(key, value) in params {

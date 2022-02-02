@@ -10,11 +10,11 @@ import Foundation
 import XLPagerTabStrip
 
 class GSRTabController: ButtonBarPagerTabStripViewController {
-    
+
     fileprivate var ownContainerView: UIScrollView!
     fileprivate var barView: ButtonBarView!
     fileprivate var separatorLine: UIView!
-    
+
     override func viewDidLoad() {
         settings.style.buttonBarBackgroundColor = .uiBackground
         settings.style.buttonBarItemBackgroundColor = .uiBackground
@@ -25,7 +25,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarRightContentInset = 0
         settings.style.selectedBarHeight = 0
         edgesForExtendedLayout = []
-        
+
 //        let barView = ButtonBarView(frame: CGRect(x: 0.0, y: (88 + 0.0), width: self.view.bounds.width, height: 50.0), collectionViewLayout: UICollectionViewFlowLayout())
 //        self.barView = barView
 //        let separatorLine = UIView(frame: CGRect(x: 0.0, y: (88 + 50.0), width: self.view.bounds.width, height: 1.0))
@@ -37,7 +37,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
 //        self.view.addSubview(ownContainerView)
 //        self.buttonBarView = self.barView
 //        self.containerView = containerView
-        
+
         let barView = ButtonBarView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         self.barView = barView
         separatorLine = UIView()
@@ -49,24 +49,24 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         self.view.addSubview(ownContainerView)
         self.buttonBarView = self.barView
         self.containerView = containerView
-        
+
         _ = barView.anchor(self.view.safeAreaLayoutGuide.topAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
         _ = separatorLine.anchor(barView.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 1)
         _ = ownContainerView.anchor(separatorLine.bottomAnchor, left: self.view.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
+
         self.ownContainerView.isHidden = true
-        
+
         super.viewDidLoad()
-        
+
         changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
             oldCell?.label.textColor = .labelPrimary
             newCell?.label.textColor = .baseBlue
         }
-        
+
         view.backgroundColor = .uiBackground
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let topSpace:CGFloat?
@@ -79,16 +79,16 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
             self.ownContainerView.isHidden = false
         }
     }
-    
+
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child1 = GSRLocationsController()
         let child2 = GSRReservationsController()
-        
+
         if UserDefaults.standard.gsrGroupsEnabled() {
             let child3 = GSRGroupController()
             return [child1, child2, child3]
         }
-        
+
         return [child1, child2]
     }
 }

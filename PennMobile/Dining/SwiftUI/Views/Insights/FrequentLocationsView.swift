@@ -13,42 +13,42 @@ import SwiftUI
 
 @available(iOS 14, *)
 struct FrequentLocationsView: View {
-    
+
     enum LengthOfTime: Int, CaseIterable {
         case week, month, semester
     }
-    
+
     init(config: DiningInsightsAPIResponse.CardData.FrequentLocationsCardData) {
         data = config.data
         _portions = State(initialValue: FrequentLocationsView.computeTotal(with: config.data, for: 0))
     }
-    
+
     private var data: [FrequentLocation]
     @State private var portions: [Double]
-    
+
     @State private var colors: [Color] = [.orange, .yellow, .green, .blue, .pink, .purple, .red, .orange, .yellow, .green, .blue, .pink, .purple, .red, .orange, .yellow, .green, .blue, .pink, .purple, .red]
     @State private var lengthOfTime: Int = 0
-    
+
     static func computeTotal(with data: [FrequentLocation], for lengthOfTime: Int) -> [Double] {
         var sum = data.reduce(0.0) { (result, freq) -> Double in
             result + spending(at: freq, in: lengthOfTime)
         }
-        
+
         if sum == 0 {
             sum = 1
         }
-        
+
         var values = [Double]()
         for freq in data {
             values.append(spending(at: freq, in: lengthOfTime) / sum)
         }
         return values
     }
-    
+
     private static func spending(at location: FrequentLocation, in timeLength: Int) -> Double {
         spending(at: location, in: LengthOfTime(rawValue: timeLength) ?? .week)
     }
-    
+
     private static func spending(at location: FrequentLocation, in timeLength: LengthOfTime) -> Double {
         switch timeLength {
         case .week: return location.week
@@ -56,12 +56,12 @@ struct FrequentLocationsView: View {
         case .semester: return location.semester
         }
     }
-    
+
     private static func formattedSpending(at location: FrequentLocation, in timeLength: Int) -> String {
         let s = spending(at: location, in: LengthOfTime(rawValue: timeLength) ?? .week)
         return String(format: "$%.2f", s)
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Group {
@@ -107,11 +107,11 @@ struct FrequentLocationsView: View {
             }
         }.padding()
     }
-    
+
     struct PortionView: View {
         @Binding var portions: [Double]
         @Binding var colors: [Color]
-        
+
         var body: some View {
             GeometryReader { geometry in
                 HStack(spacing: 0) {

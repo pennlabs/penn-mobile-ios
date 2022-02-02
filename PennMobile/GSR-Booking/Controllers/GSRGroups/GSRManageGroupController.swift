@@ -9,21 +9,21 @@
 import UIKit
 
 class GSRManageGroupController: UIViewController {
-    
+
     fileprivate var tableView: UITableView!
     fileprivate var viewModel: GSRManageGroupViewModel!
     var group: GSRGroup?
     fileprivate let refreshControl = UIRefreshControl()
-    
+
     init(group: GSRGroup) {
         self.group = group
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     override func viewDidLoad() {
        super.viewDidLoad()
         prepareViewModel()
@@ -43,12 +43,12 @@ extension GSRManageGroupController {
         viewModel = GSRManageGroupViewModel(group: group)
         viewModel.delegate = self
     }
-    
+
      func prepareUI() {
         prepareNavBar()
         prepareTableView()
     }
-    
+
     private func prepareTableView() {
         tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = viewModel
@@ -65,17 +65,17 @@ extension GSRManageGroupController {
         tableView.tableFooterView = tableFooter
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(fetchGroup), for: .valueChanged)
-        
+
         view.addSubview(tableView)
         _ = tableView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
+
     }
-    
+
     private func prepareNavBar() {
         guard let groupName = group?.name else { return }
         self.title = groupName
     }
-    
+
 }
 
 // MARK: - ViewModelDelegate
@@ -87,7 +87,7 @@ extension GSRManageGroupController: GSRManageGroupViewModelDelegate {
         bookingController.group = group
         navigationController?.pushViewController(bookingController, animated: true)
     }
-    
+
     func inviteToGroup() {
         guard let gid = group?.id else { return }
         let inviteController = GSRGroupInviteViewController()
@@ -96,7 +96,7 @@ extension GSRManageGroupController: GSRManageGroupViewModelDelegate {
         inviteController.groupMembers = group?.members
         present(inviteController, animated: true, completion: nil)
     }
-    
+
     @objc func fetchGroup() {
         guard let gid = group?.id else { return }
         GSRGroupNetworkManager.instance.getGroup(groupid: gid) { (errMessage, group) in

@@ -11,11 +11,11 @@ import UIKit
 import FirebaseCore
 
 class SplashViewController: UIViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .uiBackground
-        
+
         if #available(iOS 15.0, *) {
             Task {
                 do {
@@ -23,7 +23,7 @@ class SplashViewController: UIViewController {
                     print(String(data: data, encoding: .utf8))
                 } catch {
                     print("error?")
-                    
+
                 }
                 switchToView()
             }
@@ -31,7 +31,7 @@ class SplashViewController: UIViewController {
             switchToView()
         }
     }
-    
+
     private func switchToView() {
         let loggedIn = UserDefaults.standard.getAccountID() != nil
         if loggedIn {

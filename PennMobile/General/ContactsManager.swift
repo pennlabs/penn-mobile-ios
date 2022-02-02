@@ -10,6 +10,6 @@ import UIKit
 
 @objc class ContactsManager: NSObject {
     static func track(_ name: String) {
-        
+
     }
 }

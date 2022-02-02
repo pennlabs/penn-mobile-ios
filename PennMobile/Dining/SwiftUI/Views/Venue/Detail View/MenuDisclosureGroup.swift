@@ -11,12 +11,12 @@ import SwiftUI
 struct DiningMenuSectionRow: View {
     @Binding var isExpanded: Bool
     let title: String
-    
+
     init(isExpanded: Binding<Bool>, title: String) {
         self.title = title.capitalizeMainWords()
         self._isExpanded = isExpanded
     }
-    
+
     var body: some View {
         HStack {
             Text(title)
@@ -43,7 +43,7 @@ struct DiningMenuRow: View {
     init (for diningMenu: DiningMenu) {
         self.diningMenu = diningMenu
     }
-    
+
     @State var isExpanded = false
     let diningMenu: DiningMenu
 
@@ -51,7 +51,7 @@ struct DiningMenuRow: View {
         VStack {
             DiningMenuSectionRow(isExpanded: $isExpanded, title: diningMenu.mealType)
                 .font(.system(size: 21, weight: .medium))
-            
+
             if isExpanded {
                 ForEach(diningMenu.diningStations, id: \.self) { diningStation in
                     DiningStationRow(for: diningStation)
@@ -68,7 +68,7 @@ struct DiningStationRow: View {
     init (for diningStation: DiningStation) {
         self.diningStation = diningStation
     }
-    
+
     @State var isExpanded = false
     let diningStation: DiningStation
 
@@ -76,7 +76,7 @@ struct DiningStationRow: View {
         VStack {
             DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.stationDescription)
                 .font(Font.system(size: 17))
-            
+
             if isExpanded {
                 ForEach(diningStation.diningStationItems, id: \.self) { diningStationItem in
                     DiningStationItemRow(for: diningStationItem)
@@ -85,36 +85,36 @@ struct DiningStationRow: View {
                 .transition(.moveAndFade)
             }
         }.clipped()
-        
+
     }
 }
 
 struct DiningStationItemRow: View {
-    
+
     init (for diningStationItem: DiningStationItem) {
         self.diningStationItem = diningStationItem
     }
-    
+
     let diningStationItem: DiningStationItem
-    
+
     var body: some View {
         VStack(alignment: .leading){
             HStack(alignment: .center) {
                 Text(diningStationItem.title.capitalizeMainWords())
                     .font(Font.system(size: 17))
-                
-                
+
+
                 ForEach(diningStationItem.tableAttribute.attributeDescriptions, id: \.self) { attribute in
                     //Unlike UIKit, image will simply not appear if it doesn't exist in assets
                     Image(attribute.description)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20.0,height:20)
-                    
+
                 }
                 Spacer()
             }.padding(.bottom, 3)
-            
+
             Text(diningStationItem.description)
                 .font(.system(size: 17, weight: .thin))
                 .fixedSize(horizontal: false, vertical: true)
@@ -128,11 +128,11 @@ extension AnyTransition {
         let insertion = AnyTransition
                             .opacity.animation(.easeInOut(duration: 0.7))
                             .combined(with: .move(edge: .top)).animation(.easeInOut)
-                    
+
         let removal = AnyTransition
             .opacity.animation(.easeInOut(duration: 0.1))
             .combined(with: .move(edge: .top)).animation(.easeInOut)
-        
+
         return .asymmetric(insertion: insertion, removal: removal)
     }
 }
@@ -141,7 +141,7 @@ extension AnyTransition {
 struct MenuDisclosureGroup_Previews: PreviewProvider {
     static var previews: some View {
         let diningVenues: DiningMenuAPIResponse = Bundle.main.decode("mock_menu.json")
-        
+
         return NavigationView {
             ScrollView {
                 VStack {
@@ -159,7 +159,7 @@ extension String {
         let nonCaptializingSet: Set = [
             "a", "an", "the", "for", "and", "nor", "but", "or", "yet", "so", "with", "at", "around", "by", "after", "along", "for", "from", "of", "on", "to", "with", "without"
         ]
-        
+
         return self.split(separator: " ").map({nonCaptializingSet.contains(String($0)) ? $0.lowercased() : $0.capitalized}).joined(separator: " ")
     }
 }

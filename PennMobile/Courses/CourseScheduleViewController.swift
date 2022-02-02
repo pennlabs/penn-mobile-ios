@@ -107,9 +107,9 @@ extension CourseScheduleViewController {
 extension CourseScheduleViewController {
 
     func handleNetworkCourseRefreshResult(_ result: Result<Set<Course>, NetworkingError>) {
-        
+
         let popVC : () -> Void = { self.navigationController?.popViewController(animated: true) }
-        
+
         showRefreshAlertForError(result: result, title: "courses", success: self.handleNetworkCourseRefreshCompletion(_:), noInternet: popVC, parsingError: popVC, authenticationError: self.handleAuthentication)
     }
 

@@ -19,13 +19,13 @@ enum RequestType {
 }
 
 class CourseAlertNetworkManager: NSObject, Requestable {
-    
+
     static let instance = CourseAlertNetworkManager()
-    
+
     let settingsURL = "https://penncoursealert.com/accounts/me/"
     let coursesURL = "https://penncoursealert.com/api/base/2021A/search/sections/"
     let registrationsURL = "https://penncoursealert.com/api/alert/registrations/"
-    
+
     func getSearchedCourses(searchText: String, _ callback: @escaping (_ results: [CourseSection]?) -> Void) {
         let urlStr = "\(coursesURL)?search=\(searchText)"
         let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
@@ -41,14 +41,14 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         }
         task.resume()
     }
-    
+
     func getRegistrations(callback: @escaping (_ registrations: [CourseAlert]?) -> ()) {
         makeGetRequestWithAccessToken(url: registrationsURL) { (data, _, error) in
             guard let data = data, error == nil  else {
                 callback(nil)
                 return
             }
-            
+
             guard let registrations = try? JSONDecoder().decode([CourseAlert].self, from: data) else {
                 callback(nil)
                 return
@@ -57,26 +57,26 @@ class CourseAlertNetworkManager: NSObject, Requestable {
             callback(registrations)
         }
     }
-    
+
     func getSettings(callback: @escaping (_ settings: CourseAlertSettings?) -> ()) {
         makeGetRequestWithAccessToken(url: settingsURL) { (data, _, error) in
             guard let data = data, error == nil  else {
                 callback(nil)
                 return
             }
-            
+
             guard let settings = try? JSONDecoder().decode(CourseAlertSettings.self, from: data) else {
                 callback(nil)
                 return
             }
-            
+
             UserDefaults.standard.set(.alertsThroughPennMobile, to: settings.profile.pushNotifications)
             UserDefaults.standard.set(.pennCourseAlerts, to: settings.profile.pushNotifications)
 
             callback(settings)
         }
     }
-    
+
     func updatePushNotifSettings(pushNotif: Bool, callback: @escaping (_ success: Bool, _ message: String, _ error: Error?) -> ()) {
         let params: [String: Any] = ["profile": ["push_notifications": pushNotif]]
         makeAuthenticatedRequest(url: settingsURL, requestType: RequestType.PATCH, params: params) { (data, status, error) in
@@ -84,16 +84,16 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 callback(false, "", error)
                 return
             }
-            
+
             guard data != nil else {
                 callback(false, "", error)
                 return
             }
-            
+
             callback(status.statusCode == 200, "DONE", error)
         }
     }
-    
+
     func createRegistration(section: String, autoResubscribe: Bool, callback: @escaping (_ success: Bool, _ response: String, _ error: Error?) -> ()) {
         let params: [String: Any] = ["section": section, "auto_resubscribe": autoResubscribe]
         makeAuthenticatedRequest(url: registrationsURL, requestType: RequestType.POST, params: params) { (data, status, error) in
@@ -101,21 +101,21 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 callback(false, "", error)
                 return
             }
-            
+
             guard let data = data else {
                 callback(false, "", error)
                 return
             }
-            
+
             guard let response = try? JSONDecoder().decode(Response.self, from: data) else {
                 callback(false, "", error)
                 return
             }
-            
+
             callback(status.statusCode == 201, response.message, error)
         }
     }
-    
+
     func updateRegistration(id: String, deleted: Bool?, autoResubscribe: Bool?, cancelled: Bool?, resubscribe: Bool?, callback: @escaping (_ success: Bool, _ error: Error?) -> ()) {
         var params: [String: Any] = [:]
         if let deleted = deleted {
@@ -130,22 +130,22 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         if let resubscribe = resubscribe {
             params.updateValue(resubscribe, forKey: "resubscribe")
         }
-        
+
         makeAuthenticatedRequest(url: "\(registrationsURL)\(id)/", requestType: RequestType.PUT, params: params) { (data, status, error) in
             guard let status = status as? HTTPURLResponse else {
                 callback(false, error)
                 return
             }
-            
+
             guard data != nil else {
                 callback(false, error)
                 return
             }
-            
+
             callback(status.statusCode == 200, error)
         }
     }
-    
+
 }
 
 // MARK: - General Networking Functions
@@ -156,38 +156,38 @@ extension CourseAlertNetworkManager {
                 callback(nil, nil, nil)
                 return
             }
-            
+
             let url = URL(string: url)!
             var request = URLRequest(url: url, accessToken: token)
             request.httpMethod = "GET"
-            
+
             let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
             task.resume()
         }
     }
-    
+
     fileprivate func makeAuthenticatedRequest(url: String, requestType: RequestType, params: [String: Any]?, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        
+
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             guard let token = token else {
                 callback(nil, nil, nil)
                 return
             }
-            
+
             self.getCSRFTokenCookie { (csrfToken) in
-                
+
                 guard let csrfToken = csrfToken else {
                     callback(nil, nil, nil)
                     return
                 }
-                
+
                 let url = URL(string: url)!
-                
+
                 let jar = HTTPCookieStorage.shared
                 let cookieHeaderField = ["Set-Cookie": "csrftoken=\(csrfToken)"]
                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: cookieHeaderField, for: url)
                 jar.setCookies(cookies, for: url, mainDocumentURL: url)
-                
+
                 var request = URLRequest(url: url, accessToken: token)
 
                 switch requestType {
@@ -198,7 +198,7 @@ extension CourseAlertNetworkManager {
                 case .PUT:
                     request.httpMethod = "PUT"
                 }
-                
+
                 if let params = params,
                     let httpBody = try? JSONSerialization.data(withJSONObject: params, options: .prettyPrinted) {
                     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -207,16 +207,16 @@ extension CourseAlertNetworkManager {
                     request.addValue("https://penncoursealert.com/api/", forHTTPHeaderField: "Referer")
                     request.httpBody = httpBody
                 }
-                
+
                 let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
                 task.resume()
-                
+
             }
-            
+
         }
-        
+
     }
-    
+
     fileprivate func getCSRFTokenCookie(_ callback: @escaping (_ csrfToken: String?) -> Void) {
         if let CSRFDict = (UserDefaults.standard.dictionary(forKey: "cookies"))?["csrftokenplatform.pennlabs.org"] as? [String: Any] {
             if let csrfToken = CSRFDict["Value"] as? String {
@@ -227,5 +227,5 @@ extension CourseAlertNetworkManager {
         }
         callback(nil)
     }
-    
+
 }

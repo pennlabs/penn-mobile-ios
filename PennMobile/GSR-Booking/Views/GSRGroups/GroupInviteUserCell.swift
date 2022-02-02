@@ -9,17 +9,17 @@
 import UIKit
 
 class GroupInviteUserCell: UITableViewCell {
-    
+
     static let cellHeight: CGFloat = 60
     static let identifier = "resultsCell"
-    
+
     fileprivate var checkMarkBtn: UIButton!
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -28,7 +28,7 @@ class GroupInviteUserCell: UITableViewCell {
 // MARK: - Setup Cell
 extension GroupInviteUserCell {
     fileprivate func setupCell() {
-        
+
     }
 }
 

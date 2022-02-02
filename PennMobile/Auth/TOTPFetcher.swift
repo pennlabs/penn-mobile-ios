@@ -13,7 +13,7 @@ class TOTPFetcher: NSObject {
 
     static let instance = TOTPFetcher()
     public var isFetching = false
-    
+
     private override init() {}
 
 //    func fetchAndSaveTOTPSecret(_ completion: ((_ secret: String?) -> Void)? = nil) {

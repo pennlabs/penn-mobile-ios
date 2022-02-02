@@ -17,7 +17,7 @@ extension IndicatorEnabled where Self: UITableViewController {
         tableView.isUserInteractionEnabled = false
         MBProgressHUD.showAdded(to: self.view, animated: true)
     }
-    
+
     func hideActivity() {
         tableView.isUserInteractionEnabled = true
         MBProgressHUD.hide(for: self.view, animated: true)
@@ -29,7 +29,7 @@ extension IndicatorEnabled where Self: UIViewController {
         view.isUserInteractionEnabled = false
         MBProgressHUD.showAdded(to: self.view, animated: true)
     }
-    
+
     func hideActivity() {
         view.isUserInteractionEnabled = true
         MBProgressHUD.hide(for: self.view, animated: true)
@@ -41,7 +41,7 @@ extension IndicatorEnabled where Self: UIView {
         self.isUserInteractionEnabled = false
         MBProgressHUD.showAdded(to: self, animated: true)
     }
-    
+
     func hideActivity() {
         self.isUserInteractionEnabled = true
         MBProgressHUD.hide(for: self, animated: true)
@@ -61,7 +61,7 @@ extension Trackable where Self: UIViewController {
 protocol URLOpenable {}
 
 extension URLOpenable {
-    
+
     //Source: https://stackoverflow.com/questions/38964264/openurl-in-ios10
     func open(scheme: String) {
         if let url = URL(string: scheme) {
@@ -82,13 +82,13 @@ extension URLOpenable {
 protocol HairlineRemovable {}
 
 extension HairlineRemovable {
-    
+
     func removeHairline(from view: UIView) {
         if let hairline = findHairlineImageViewUnder(view: view) {
             hairline.isHidden = true
         }
     }
-    
+
     //finds hairline underview if there is one
     private func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
         if view is UIImageView && view.bounds.size.height <= 1 {
@@ -135,16 +135,16 @@ extension ShowsAlertForError {
 
         case .failure(.parsingError):
             self.showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: parsingError)
-            
+
         case .failure(.serverError):
             self.showAlert(withMsg: "Penn's \(title) servers are currently not updating. We hope this will be fixed shortly.", title: "Uh oh!", completion: serverError)
-            
+
         case .failure(.jsonError):
             self.showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: jsonError)
 
         case .failure(.authenticationError):
             self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
-            
+
         case .failure(.other):
         self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
         }
@@ -183,7 +183,7 @@ protocol LocallyAuthenticatable {
 }
 
 extension LocallyAuthenticatable {
-    
+
     func requestAuthentication(cancelText : String, reasonText: String) {
         let context = LAContext()
         context.localizedCancelTitle = cancelText

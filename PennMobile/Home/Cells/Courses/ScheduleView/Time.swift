@@ -10,7 +10,7 @@ struct Time: Hashable {
     let hour: Int
     let minutes: Int
     let isAm: Bool
-        
+
     func rawMinutes() -> Int {
         if isAm && hour == 12 {
             return minutes
@@ -21,7 +21,7 @@ struct Time: Hashable {
         }
         return total
     }
-    
+
     var description: String {
         get {
             let am = isAm ? "AM" : "PM"

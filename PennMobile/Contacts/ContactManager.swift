@@ -9,7 +9,7 @@
 import Contacts
 
 extension SupportItem {
-    
+
     var cnContact: CNMutableContact {
         let contact = CNMutableContact()
         contact.givenName = self.contactName
@@ -21,13 +21,13 @@ extension SupportItem {
         }
         return contact
     }
-    
+
 }
 
 class ContactManager: NSObject {
-    
+
     static let shared = ContactManager()
-    
+
     func save(_ items: [SupportItem], callback: @escaping (_ success: Bool) -> Void) {
         let saveRequest = CNSaveRequest()
         let store = CNContactStore()
@@ -41,7 +41,7 @@ class ContactManager: NSObject {
             callback(false)
         }
     }
-    
+
     func delete(_ items: [SupportItem], callback: (_ success: Bool) -> Void) {
         var successful = true
         for item in items {
@@ -51,24 +51,24 @@ class ContactManager: NSObject {
         }
         callback(successful)
     }
-    
+
     func delete(_ item: SupportItem, callback2: (_ success: Bool) -> Void) {
         let store = CNContactStore()
         let predicate = CNContact.predicateForContacts(matchingName: item.contactName)
         let toFetch = [CNContactGivenNameKey] as [CNKeyDescriptor]
-        
+
         do {
             let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: toFetch)
             guard contacts.count > 0 else {
                 callback2(true) // no contacts found
                 return
             }
-            
+
             for contact in contacts {
                 let req = CNSaveRequest()
                 let mutableContact = contact.mutableCopy() as! CNMutableContact
                 req.delete(mutableContact)
-                
+
                 do {
                     try store.execute(req)
                     callback2(true) // successfully deleted user

@@ -9,11 +9,11 @@
 import Contacts
 
 @objc class ContactManager: NSObject {
-    
+
     static let shared = ContactManager()
-    
+
     private var contacts = [CNMutableContact]()
-    
+
     func addContacts(contacts: [SupportItem]) {
         for contact in contacts {
             let cnContact = CNMutableContact()

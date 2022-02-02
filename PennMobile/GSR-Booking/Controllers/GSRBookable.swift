@@ -19,7 +19,7 @@ extension GSRBookable where Self: UIViewController {
                 self.hideActivity()
                 let alertView = SCLAlertView()
                 var firebaseResult: FirebaseAnalyticsManager.EventResult
-                
+
                 switch result {
                 case .success:
                     alertView.showSuccess("Success!", subTitle: "You booked a space in \(booking.roomName). You should receive a confirmation email in the next few minutes.")
@@ -30,7 +30,7 @@ extension GSRBookable where Self: UIViewController {
                     alertView.showError("Uh oh!", subTitle: "You seem to have exceeded the booking limit for this venue.")
                     firebaseResult = .failed
                 }
-                
+
                 FirebaseAnalyticsManager.shared.trackEvent(action: .attemptBooking, result: firebaseResult, content: booking.roomName)
             }
         }

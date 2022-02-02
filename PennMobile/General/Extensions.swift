@@ -105,7 +105,7 @@ extension UIFont {
     static let secondaryTitleFont = UIFont.systemFont(ofSize: 11, weight: .medium)
 
     static let interiorTitleFont = UIFont.systemFont(ofSize: 17, weight: .medium)
-    
+
     static let pollsTitleFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
 
     static let primaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
@@ -115,9 +115,9 @@ extension UIFont {
     static let footerTransitionFont = UIFont.systemFont(ofSize: 10, weight: .semibold)
 
     static let gsrTimeIncrementFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
-    
+
     static let alertSettingsWarningFont = UIFont.systemFont(ofSize: 30, weight: .bold)
-    
+
 }
 
 extension UIBarButtonItem {
@@ -141,12 +141,12 @@ extension Date {
         }
         return 0
     }
-    
+
     func hoursFrom(date: Date) -> Int {
         let difference = Calendar.current.dateComponents([.hour], from: self, to: date)
         return difference.hour ?? 0
     }
-    
+
     func humanReadableDistanceFrom(_ date: Date) -> String {
         // Opens in 55m
         // Opens at 6pm
@@ -219,7 +219,7 @@ extension Date {
     func add(minutes: Int) -> Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
-    
+
     func add(months: Int) -> Date {
         return Calendar.current.date(byAdding: .month, value: months, to: self)!
     }
@@ -238,17 +238,17 @@ extension Date {
         return Calendar.current.date(from: comp)!
         // return self.add(minutes: -self.minutes)
     }
-    
+
     var month: Int {
         let values = Calendar.current.dateComponents([Calendar.Component.month], from: self)
         return values.month!
     }
-    
+
     var year: Int {
         let values = Calendar.current.dateComponents([Calendar.Component.year], from: self)
         return values.year!
     }
-        
+
     var roundedDownToHalfHour: Date {
         let roundedDownToHour = self.roundedDownToHour
         if roundedDownToHour.minutesFrom(date: self) >= 30 {
@@ -303,7 +303,7 @@ extension Date {
         }
         return dateStrings
     }
-    
+
     var adjustedFor11_59: Date {
         if self.minutes == 59 {
             return self.add(minutes: 1)
@@ -342,7 +342,7 @@ extension Date {
     static var midnightToday: Date {
         return midnightYesterday.tomorrow
     }
-    
+
     static var todayString: String {
         return Date.dayOfMonthFormatter.string(from: Date())
     }
@@ -367,7 +367,7 @@ extension DateFormatter {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         return dateFormatter
     }
-    
+
     static var iso8601Full: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
@@ -465,13 +465,13 @@ extension String {
         }
         return matches
     }
-    
+
     func removingRegexMatches(pattern: String, replaceWith: String = "") -> String {
         let regex = try! NSRegularExpression(pattern: pattern)
         let range = NSMakeRange(0, self.count)
         return regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: replaceWith)
     }
-    
+
     // Helper function inserted by Swift 4.2 migrator.
     fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
         guard let input = input else { return nil }
@@ -503,28 +503,28 @@ extension NSMutableAttributedString {
         append(boldString)
         return self
     }
-    
+
     @discardableResult func weighted(_ text: String, weight: UIFont.Weight, size: CGFloat) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: size, weight: weight)]
         let boldString = NSMutableAttributedString(string: text, attributes: attrs)
         append(boldString)
         return self
     }
-    
+
     @discardableResult func weightedColored(_ text: String, weight: UIFont.Weight, color: UIColor, size: CGFloat) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: size, weight: weight), NSAttributedString.Key.foregroundColor: color]
         let boldString = NSMutableAttributedString(string: text, attributes: attrs)
         append(boldString)
         return self
     }
-    
+
     @discardableResult func colored(_ text: String, color: UIColor) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [NSAttributedString.Key.foregroundColor: color]
         let colorString = NSMutableAttributedString(string: text, attributes: attrs)
         append(colorString)
         return self
     }
-    
+
     @discardableResult func normal(_ text: String) -> NSMutableAttributedString {
         let normal = NSAttributedString(string: text)
         append(normal)
@@ -539,22 +539,22 @@ extension Bundle {
         guard let url = self.url(forResource: file, withExtension: nil) else {
             fatalError("unable to find data")
         }
-        
+
         guard let data = try? Data(contentsOf: url) else {
             fatalError("Failed to load \(file) from bundle")
         }
-        
+
         let decoder = JSONDecoder()
-        
+
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat
-        
+
         decoder.dateDecodingStrategy = .formatted(formatter)
-        
+
         guard let decoded = try? decoder.decode(T.self, from: data) else {
             fatalError("Data does not conform to desired structure")
         }
-        
+
         return decoded
     }
 }

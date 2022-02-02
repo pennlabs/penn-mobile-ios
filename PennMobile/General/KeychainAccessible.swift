@@ -14,15 +14,15 @@ extension KeychainAccessible {
     private var pennkeyKeychainKey: String {
         "PennKey"
     }
-    
+
     private var passwordKeychainKey: String {
         "PennKey Password"
     }
-    
+
     private var pacCodeKeychainKey: String {
         "PAC Code"
     }
-    
+
     func getPennKey() -> String? {
         let secureStore = getWebLoginSecureStore()
         do {
@@ -31,7 +31,7 @@ extension KeychainAccessible {
             return nil
         }
     }
-    
+
     func getPassword() -> String? {
         let secureStore = getWebLoginSecureStore()
         do {
@@ -54,22 +54,22 @@ extension KeychainAccessible {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.setValue(pennkey, for: pennkeyKeychainKey)
     }
-    
+
     func savePassword(_ password: String) {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.setValue(password, for: passwordKeychainKey)
     }
-    
+
     func savePacCode(_ pacCode: String) {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.setValue(pacCode, for: pacCodeKeychainKey)
     }
-    
+
     func removePacCode() {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.removeValue(for: pacCodeKeychainKey)
     }
-    
+
     private func getWebLoginSecureStore() -> SecureStore {
         let genericPwdQueryable = GenericPasswordQueryable(service: "PennWebLogin")
         let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)

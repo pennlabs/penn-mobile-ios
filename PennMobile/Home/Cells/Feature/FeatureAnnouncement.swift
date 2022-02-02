@@ -16,7 +16,7 @@ class FeatureAnnouncement {
     let timestamp: String?
     let imageUrl: String
     let feature: Feature
-    
+
     init(source: String, title: String, description: String?, timestamp: String?, imageUrl: String, feature: Feature) {
         self.source = source
         self.title = title
@@ -36,11 +36,11 @@ extension FeatureAnnouncement {
             let featureStr = json["feature"].string else {
                 throw NetworkingError.jsonError
         }
-        
+
         guard let feature = Feature(rawValue: featureStr) else {
             throw NetworkingError.jsonError
         }
-        
+
         let description = json["description"].string
         let timestamp = json["timestamp"].string
         self.init(source: source, title: title, description: description, timestamp: timestamp, imageUrl: imageUrl, feature: feature)

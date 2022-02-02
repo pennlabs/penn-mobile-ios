@@ -11,7 +11,7 @@ import Foundation
 final class HomeItemTypes: ModularTableViewItemTypes {
     static let instance = HomeItemTypes()
     private init() {}
-    
+
     //let fling: HomeCellItem.Type = HomeFlingCellItem.self
     let dining: HomeCellItem.Type = HomeDiningCellItem.self
     let laundry: HomeCellItem.Type = HomeLaundryCellItem.self

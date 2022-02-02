@@ -9,33 +9,33 @@
 import UIKit
 
 class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, ShowsAlert, NotificationRequestable {
-    
+
     internal var rooms = [LaundryRoom]()
-    
+
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
 
     fileprivate var timer: Timer?
-    
+
     internal let allowMachineNotifications = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         screenName = "Laundry"
         tableView.backgroundView = nil
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.allowsSelection = false
         tableView.backgroundColor = .uiBackground
-        
+
         tableView.tableFooterView = getFooterViewForTable()
-        
+
         rooms = LaundryRoom.getPreferences()
-        
+
         registerHeadersAndCells()
         prepareRefreshControl()
-        
+
         // initialize navigation bar
 
         // Start indicator if there are cells that need to be loaded
@@ -43,12 +43,12 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
             showActivity()
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateInfo {
             self.hideActivity()
-            
+
             // Check if laundry is working
             LaundryAPIService.instance.checkIfWorking { (isWorking) in
                 DispatchQueue.main.async {
@@ -60,19 +60,19 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
             }
         }
     }
-    
+
     fileprivate func getFooterViewForTable() -> UIView {
         let v = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 30.0))
         v.backgroundColor = UIColor.clear
         return v
     }
-    
+
     fileprivate func getHeaderViewForTable() -> UIView {
         let v = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: 70.0))
         v.backgroundColor = UIColor.clear
         return v
     }
-    
+
     override func setupNavBar() {
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
@@ -97,7 +97,7 @@ extension LaundryTableViewController {
         //refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl?.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
     }
-    
+
     @objc fileprivate func handleRefresh(_ sender: Any) {
         updateInfo {
             self.refreshControl?.endRefreshing()
@@ -111,17 +111,17 @@ extension LaundryTableViewController {
         tableView.register(LaundryCell.self, forCellReuseIdentifier: laundryCell)
         tableView.register(AddLaundryCell.self, forCellReuseIdentifier: addLaundryCell)
     }
-    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return min(rooms.count + 1, 3)
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         if self.rooms.count > indexPath.section {
             let room = rooms[indexPath.section]
             let cell = tableView.dequeueReusableCell(withIdentifier: laundryCell) as! LaundryCell
@@ -137,11 +137,11 @@ extension LaundryTableViewController {
             return cell
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Use for cards 1/2 the size of the screen
         //return self.view.layoutMarginsGuide.layoutFrame.height / 2.0
-        
+
         // Use for cards of fixed size
         if indexPath.section >= rooms.count {
             return 80.0
@@ -149,7 +149,7 @@ extension LaundryTableViewController {
             return 418.0
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section >= rooms.count {
             return 80.0
@@ -239,11 +239,11 @@ extension LaundryTableViewController {
                 self.timer?.invalidate()
                 return
             }
-            
+
             for room in self.rooms {
                 room.decrementTimeRemaining(by: 1)
             }
-            
+
             LaundryNotificationCenter.shared.updateForExpiredNotifications {
                 DispatchQueue.main.async {
                     self.reloadVisibleMachineCells()
@@ -251,7 +251,7 @@ extension LaundryTableViewController {
             }
         })
     }
-    
+
     fileprivate func reloadVisibleMachineCells() {
         for cell in self.tableView.visibleCells {
             if let laundryCell = cell as? LaundryCell {

@@ -28,7 +28,7 @@ extension HomeViewController: GSRDeletable {
             }
         }
     }
-    
+
     func deleteReservation(_ reservation: GSRReservation) {
         deleteReservation(reservation.bookingId)
     }
@@ -42,7 +42,7 @@ extension HomeViewController: GSRBookable {
     func handleBookingSelected(_ booking: GSRBooking) {
         confirmBookingWanted(booking)
     }
-    
+
     private func confirmBookingWanted(_ booking: GSRBooking) {
         let message = "Booking \(booking.roomName) from \(booking.getLocalTimeString())"
         let alert = UIAlertController(title: "Confirm Booking",
@@ -55,7 +55,7 @@ extension HomeViewController: GSRBookable {
         }))
         present(alert, animated: true)
     }
-    
+
     private func handleBookingRequested(_ booking: GSRBooking) {
 //        if GSRUser.hasSavedUser() {
 //            booking.user = GSRUser.getUser()
@@ -80,7 +80,7 @@ extension HomeViewController {
             navigationController?.present(vc, animated: true)
             FirebaseAnalyticsManager.shared.trackEvent(action: .viewWebsite, result: .none, content: urlStr)
         }
-        
+
         if shouldLog {
             logInteraction(item: item)
         }
@@ -112,7 +112,7 @@ extension HomeViewController {
             }
 //        }
     }
-    
+
     func handleSettingsTapped(venues: [DiningVenue]) {
         let diningSettings = DiningCellSettingsController()
         diningSettings.setupFromVenues(venues: venues)
@@ -130,7 +130,7 @@ extension HomeViewController {
         mapVC.searchTerm = searchTerm
         self.navigationController?.pushViewController(mapVC, animated: true)
     }
-    
+
     // MARK: Course Refresh
     func handleCourseRefresh() {
         let message = "Has there been a change to your schedule? Would you like Penn Mobile to update your courses?"
@@ -146,7 +146,7 @@ extension HomeViewController {
         }))
         present(alert, animated: true)
     }
-    
+
     // MARK: Login to enable courses
     func handleLoggingIn() {
         let cwc = CoursesWebviewController()
@@ -170,7 +170,7 @@ extension HomeViewController: ShowsAlert {
         let nvc = UINavigationController(rootViewController: cwc)
         self.present(nvc, animated: true, completion: nil)
     }
-    
+
     fileprivate func handleNetworkCourseRefreshCompletion(_ result: Result<Set<Course>, NetworkingError>) {
         DispatchQueue.main.async {
             self.hideActivity()
@@ -193,7 +193,7 @@ extension HomeViewController: ShowsAlert {
             }
         }
     }
-    
+
     private func handleCourseRefresh(_ courses: Set<Course>?) {
         DispatchQueue.main.async {
             if let courses = courses, let courseItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.courses]).first as? HomeCoursesCellItem {
@@ -228,7 +228,7 @@ extension HomeViewController: FeatureNavigatable {
         let vc = ControllerModel.shared.viewController(for: feature)
         vc.title = feature.rawValue
         self.navigationController?.pushViewController(vc, animated: true)
-        
+
         logInteraction(item: item)
     }
 }

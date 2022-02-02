@@ -9,12 +9,12 @@
 import Foundation
 
 class CreateGroupCell: UITableViewCell {
-    
+
     static let cellHeight: CGFloat = 60
     static let identifier = "createGroupCell"
-    
+
     fileprivate var titleLabel: UILabel!
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         titleLabel = UILabel()
@@ -26,7 +26,7 @@ class CreateGroupCell: UITableViewCell {
         titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

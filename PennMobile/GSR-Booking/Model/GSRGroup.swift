@@ -15,11 +15,11 @@ struct GSRGroup: Decodable, Comparable {
     let owner: String?
     let members: [GSRGroupMember]?
     var userSettings: GSRGroupIndividualSettings?
-    
+
     //not used right now
     var reservations: [String]? //array of reservationID's
     var groupSettings: GSRGroupAccessSettings?
-    
+
     static let groupColors: [String : UIColor] = [
         "Labs Blue" : UIColor.baseLabsBlue,
         "College Green" : UIColor.baseGreen,
@@ -30,7 +30,7 @@ struct GSRGroup: Decodable, Comparable {
         "Baltimore Blue": UIColor.baseDarkBlue,
         "Pottruck Purple": UIColor.basePurple
     ]
-    
+
     static func parseColor(color: String) -> UIColor? {
         return GSRGroup.groupColors[color]
     }
@@ -40,7 +40,7 @@ struct GSRGroup: Decodable, Comparable {
         case pennkeyAllow = "pennkey_allow"
         case notifications
     }
-    
+
     fileprivate mutating func parseIndividualSettings(for pennkey: String) {
         //initializes the user settings based on the member data
         //call this method after initially decoding json data, and BEFORE
@@ -56,19 +56,19 @@ struct GSRGroup: Decodable, Comparable {
             }
         }
     }
-    
+
     public init(from decoder: Decoder) throws {
         let keyedContainer = try decoder.container(keyedBy: CodingKeys.self)
         let id: Int = try keyedContainer.decode(Int.self, forKey: .id)
         let name: String = try keyedContainer.decode(String.self, forKey: .name)
         let colorString: String = try keyedContainer.decode(String.self, forKey: .color)
         let owner: String? = try keyedContainer.decodeIfPresent(String.self, forKey: .owner)
-        
+
         self.id = id
         self.name = name
         self.color = GSRGroup.parseColor(color: colorString) ?? UIColor.baseBlue
         self.owner = owner
-        
+
         if let members: [GSRGroupMember] = try keyedContainer.decodeIfPresent([GSRGroupMember].self, forKey: .members) {
             self.members = members
             guard let pennkey = Account.getAccount()?.pennkey else { //this feels wrong :(
@@ -83,11 +83,11 @@ struct GSRGroup: Decodable, Comparable {
             self.userSettings = GSRGroupIndividualSettings(pennKeyActive: GSRGroupIndividualSetting(type: .pennkeyActive, isEnabled: pennKeyActive), notificationsOn: GSRGroupIndividualSetting(type: .notificationsOn, isEnabled: notifications))
         }
     }
-    
+
     static func < (lhs: GSRGroup, rhs: GSRGroup) -> Bool {
         return lhs.name.lowercased() < rhs.name.lowercased()
     }
-    
+
     static func == (lhs: GSRGroup, rhs: GSRGroup) -> Bool {
         return lhs.id == rhs.id
     }
@@ -143,7 +143,7 @@ struct GSRGroupMember: Codable {
     let pennKeyActive: Bool
     let notificationsOn: Bool
     let isAdmin: Bool
-    
+
     enum CodingKeys: String, CodingKey {
         case pennKey = "user"
         case first, last //this doesn't get used
@@ -151,17 +151,17 @@ struct GSRGroupMember: Codable {
         case notificationsOn = "notifications"
         case isAdmin = "type"
     }
-    
+
     public init(from decoder: Decoder) throws {
         let keyedContainer = try decoder.container(keyedBy: CodingKeys.self)
         let memberType = try keyedContainer.decode(String.self, forKey: .isAdmin)
         let pennKeyActive = try keyedContainer.decode(Bool.self, forKey: .pennKeyActive)
         let notificationsOn = try keyedContainer.decode(Bool.self, forKey: .notificationsOn)
-        
+
         self.isAdmin = (memberType == "A")
         self.pennKeyActive = pennKeyActive
         self.notificationsOn = notificationsOn
-        
+
         let user = try keyedContainer.decode(GSRGroupMemberUser.self, forKey: .pennKey)
         self.pennKey = user.pennKey
         self.first = user.first
@@ -173,7 +173,7 @@ struct GSRGroupMemberUser: Codable {
     let pennKey: String
     let first: String
     let last: String
-    
+
     enum CodingKeys: String, CodingKey {
         case pennKey = "username"
         case first = "first_name"
@@ -189,7 +189,7 @@ struct GSRGroupInvite: Codable {
     let notifications: Bool
     let id: Int
     let color: String
-    
+
     enum CodingKeys: String, CodingKey {
         case user, type, group
         case pennkeyAllow = "pennkey_allow"
@@ -202,7 +202,7 @@ struct GSRInviteUser: Codable {
     let pennkey: String
     let firstName: String
     let lastName: String
-    
+
     enum CodingKeys: String, CodingKey {
         case pennkey = "username"
         case firstName = "first_name"

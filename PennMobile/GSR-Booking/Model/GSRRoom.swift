@@ -26,7 +26,7 @@ extension Array where Element == GSRRoom {
                 max = lastEndTime
             }
         }
-        
+
         return (min, max)
     }
 }
@@ -71,7 +71,7 @@ extension GSRRoom {
                 currTime = newTimeSlot
             }
         }
-        
+
         return newTimes
     }
 }

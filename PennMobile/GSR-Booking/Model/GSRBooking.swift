@@ -14,7 +14,7 @@ struct GSRBooking: Codable {
     let endTime: Date
     let id: Int
     let roomName: String
-    
+
     func getLocalTimeString() -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")

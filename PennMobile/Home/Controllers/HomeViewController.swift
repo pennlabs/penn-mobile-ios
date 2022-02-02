@@ -68,16 +68,16 @@ class HomeViewController: GenericViewController {
             return self.displayTitle
         } else {
             let firstName = Account.getAccount()?.first
-            
+
             let intros = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"]
-            
+
             if let firstName = firstName, firstName != "" {
                 self.displayTitle = "\(intros.random!), \(firstName)!"
                 titleCacheTimestamp = Date()
             } else {
                 self.displayTitle = "\(intros.random!)!"
             }
-            
+
             return self.displayTitle
         }
     }
@@ -86,7 +86,7 @@ class HomeViewController: GenericViewController {
         displayTitle = nil
         tableViewModel = nil
     }
-    
+
     func clearCacheAndReload(animated: Bool) {
         if animated {
             self.startLoadingViewAnimation()
@@ -175,7 +175,7 @@ extension HomeViewController {
     func fetchViewModel(_ completion: @escaping () -> Void) {
         HomeAPIService.instance.fetchModel { model in
             self.setModel(model)
-            
+
             UIView.transition(with: self.tableView,
                               duration: 0.35,
                               options: .transitionCrossDissolve,
@@ -254,7 +254,7 @@ extension HomeViewController {
             }
         }
     }
-    
+
     // TODO: update GSR reservation cell immediately after a booking is made
 //    @objc fileprivate func addGSRReservation(_ sender: Notification) {
 //        guard let reservation = sender.object as? GSRReservation else { return }

@@ -10,12 +10,12 @@ import Foundation
 import SwiftSoup
 
 class PennInTouchNetworkManager: NSObject, PennAuthRequestable {
-    
+
     static let instance = PennInTouchNetworkManager()
-    
+
     internal let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     internal let degreeURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileAdvisors"
-    
+
     internal let shibbolethUrl = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do/Shibboleth.sso/SAML2/POST"
 }
 
@@ -74,7 +74,7 @@ extension PennInTouchNetworkManager {
         }
         return degrees
     }
-    
+
     private func splitNameCode(str: String) throws -> (name: String, code: String) {
         let split = str.split(separator: "(")
         if split.count != 2 {

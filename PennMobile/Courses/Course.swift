@@ -27,9 +27,9 @@ class Course: Codable, Hashable {
     let startTime: String
     let endTime: String
     let instructors: [String]
-    
+
     let meetingTimes: [CourseMeetingTime]?
-    
+
     init(name: String, term: String, dept: String, code: String, section: String, building: String?, room: String?, weekdays: String, startDate: String?, endDate: String?, startTime: String, endTime: String, instructors: [String], meetingTimes: [CourseMeetingTime]?) {
         self.name = name
         self.term = term
@@ -46,14 +46,14 @@ class Course: Codable, Hashable {
         self.endTime = endTime
         self.meetingTimes = meetingTimes
     }
-    
+
     var description: String {
         let instructorStr = instructors.joined(separator: ", ")
         var str = "\(term) \(name) \(dept)-\(code)-\(section) \(instructorStr) \(weekdays) \(startTime) \(endTime)"
         if let startDate = startDate, let endDate = endDate {
             str = " \(str) \(startDate) - \(endDate)"
         }
-        
+
         if let building = building, let room = room {
             str = "\(str) \(building) \(room)"
         }
@@ -64,18 +64,18 @@ class Course: Codable, Hashable {
         }
         return str
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(term)
         hasher.combine(dept)
         hasher.combine(code)
         hasher.combine(section)
     }
-    
+
     static func == (lhs: Course, rhs: Course) -> Bool {
         return lhs.term == rhs.term && lhs.dept == rhs.dept && lhs.code == rhs.code && lhs.section == rhs.section
     }
-    
+
     func getEvent() -> Event? {
         guard let startTime = getTime(from: startTime), let endTime = getTime(from: endTime) else { return nil }
         var location: String?
@@ -84,7 +84,7 @@ class Course: Codable, Hashable {
         }
         return Event(name: "\(dept)\(code)", location: location, startTime: startTime, endTime: endTime)
     }
-    
+
     private func getTime(from str: String) -> Time? {
         guard let hourStr = str.getMatches(for: "^(.*?):").first, let hour = Int(String(hourStr)) else { return nil }
         guard let minuteStr = str.getMatches(for: ":(.*?) ").first, let minutes = Int(String(minuteStr)) else { return nil }
@@ -97,28 +97,28 @@ extension Course {
     static var weekdayAbbreviations: [String] {
         return ["S", "M", "T", "W", "R", "F", "S"]
     }
-    
+
     static var weekdayFullName: [String] {
         return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     }
-    
+
     var isTaughtToday: Bool {
         get {
             return isTaughtInNDays(days: 0)
         }
     }
-    
+
     var isTaughtTomorrow: Bool {
         get {
             return isTaughtInNDays(days: 1)
         }
     }
-    
+
     func isTaughtInNDays(days: Int) -> Bool {
         let weekday = Date().integerDayOfWeek
         return isTaughtOnWeekday(weekday: (weekday + days) % 7)
     }
-    
+
     func isTaughtOnWeekday(weekday: Int) -> Bool {
         if let times = meetingTimes {
             let weekday = Course.weekdayAbbreviations[weekday]
@@ -127,7 +127,7 @@ extension Course {
             return weekdays.contains(Course.weekdayAbbreviations[weekday])
         }
     }
-    
+
     func hasSameMeetingTime(as course: Course) -> Bool {
         return startTime == course.startTime && endTime == course.endTime && building == course.building && room == course.room
     }
@@ -160,7 +160,7 @@ extension Array where Element == Course {
         }
         return courses
     }
-    
+
     private func weekdayMapping(for weekday: String) -> String {
         switch weekday {
         case "Monday":
@@ -189,7 +189,7 @@ extension Array where Element == Course {
             return ""
         }
     }
-    
+
     func equalsCourseEvents(_ courses: [Course]) -> Bool {
         for c1 in courses {
             var exists = false
@@ -199,12 +199,12 @@ extension Array where Element == Course {
                     exists = true
                 }
             }
-            
+
             if !exists {
                 return false
             }
         }
-        
+
         for c2 in self {
             var exists = false
             let courseCandidates = courses.filter { c2 == $0 }
@@ -213,7 +213,7 @@ extension Array where Element == Course {
                     exists = true
                 }
             }
-            
+
             if !exists {
                 return false
             }

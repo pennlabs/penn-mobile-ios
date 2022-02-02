@@ -2,7 +2,7 @@ import UIKit
 
 @IBDesignable
 open class RangeSlider: UIControl {
-    
+
     public typealias BeganTrackingCallback = () -> Void
     public typealias ValueChangedCallback = (_ minValue: Int, _ maxValue: Int) -> Void
     public typealias ValueFinishedChangingCallback = (_ minValue: Int, _ maxValue: Int) -> Void
@@ -23,7 +23,7 @@ open class RangeSlider: UIControl {
     fileprivate var valueFinishedChangingCallback: ValueFinishedChangingCallback?
     fileprivate var minValueDisplayTextGetter: MinValueDisplayTextGetter?
     fileprivate var maxValueDisplayTextGetter: MaxValueDisplayTextGetter?
-    
+
     var minValue: Int
     var maxValue: Int
     var thumbRadius: CGFloat
@@ -72,7 +72,7 @@ open class RangeSlider: UIControl {
             updateLayerFrames()
         }
     }
-    
+
     @IBInspectable open var displayWidth: CGFloat = 24.0 {
         didSet {
             updateLayerFrames()
@@ -179,15 +179,15 @@ open class RangeSlider: UIControl {
         self.maxValue = maxValue
         updateLayerFrames()
     }
-    
+
     open func setBeganTrackingCallback(_ callback: BeganTrackingCallback?) {
         self.beganTrackingCallback = callback
     }
-    
+
     open func setValueChangedCallback(_ callback: ValueChangedCallback?) {
         self.valueChangedCallback = callback
     }
-    
+
     open func setValueFinishedChangingCallback(_ callback: ValueFinishedChangingCallback?) {
         self.valueFinishedChangingCallback = callback
     }
@@ -223,7 +223,7 @@ open class RangeSlider: UIControl {
         maxValueDisplayLayer.contentsScale = UIScreen.main.scale
         layer.addSublayer(maxValueDisplayLayer)
     }
-    
+
     func updateLayerFrames() {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
@@ -268,7 +268,7 @@ open class RangeSlider: UIControl {
                                             y: displayLayerOffsetY,
                                             width: displayWidth,
                                             height: displayTextFontSize + 4)
-        
+
         if let maxValueDisplayText = maxValueDisplayTextGetter?(maxValue) {
             maxValueDisplayLayer.string = maxValueDisplayText
         } else {
@@ -291,12 +291,12 @@ open class RangeSlider: UIControl {
 
         return (bounds.width - thumbSize) * CGFloat(index) / CGFloat(count) + thumbRadius
     }
-    
+
     func reload() {
         updateLayerFrames()
         valueFinishedChangingCallback?(minValue, maxValue)
     }
-    
+
     open var isSliding: Bool {
         get {
             return !maxValueThumbLayer.isHighlight || !maxValueThumbLayer.isHighlight

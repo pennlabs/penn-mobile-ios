@@ -13,19 +13,19 @@ protocol TwoFactorWebviewDelegate {
 }
 
 class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
-    
+
     override var shouldLoadCookies: Bool {
         return false
     }
-    
+
     var completion: ((_ successful: Bool) -> Void)?
-    
+
     var delegate: TwoFactorEnableDelegate?
-    
+
     override var urlStr: String {
         return "https://twostep.apps.upenn.edu/twoFactor/twoFactorUi/app/UiMain.index"
     }
-    
+
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         self.showActivity()
         var completed = false

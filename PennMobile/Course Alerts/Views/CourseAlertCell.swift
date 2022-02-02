@@ -12,7 +12,7 @@ class CourseAlertCell: UITableViewCell {
 
     static let cellHeight: CGFloat = 100
     static let identifier = "courseAlertCell"
-    
+
     fileprivate var detailLabel: UILabel!
     fileprivate var courseLabel: UILabel!
     fileprivate var activeLabel: UILabel!
@@ -20,7 +20,7 @@ class CourseAlertCell: UITableViewCell {
     fileprivate var activeDot: UIView!
     fileprivate var statusDot: UIView!
     fileprivate var moreView: UIImageView!
-    
+
     var courseAlert: CourseAlert! {
         didSet {
             setupCell()
@@ -40,7 +40,7 @@ class CourseAlertCell: UITableViewCell {
 // MARK: - Setup Cell
 extension CourseAlertCell {
     fileprivate func setupCell() {
-        
+
         if detailLabel == nil || courseLabel == nil || courseStatusLabel == nil || activeLabel == nil || activeDot == nil || statusDot == nil || moreView == nil {
             setupUI()
         } else {
@@ -49,17 +49,17 @@ extension CourseAlertCell {
                 detailLabel.text = "One-Time Alert - Last Notified \(alertNotifDate)"
             }
             courseLabel.text = courseAlert.section
-            
+
             activeDot.backgroundColor = courseAlert.isActive ? UIColor.baseGreen : UIColor.grey1
             activeLabel.text = courseAlert.isActive ? "ACTIVE" : "INACTIVE"
             activeLabel.textColor = courseAlert.isActive ? UIColor.baseGreen : UIColor.grey1
-       
+
             statusDot.backgroundColor = courseAlert.sectionStatus == "O" ? UIColor.blueLight : UIColor.grey1
             statusDot.isHidden = !courseAlert.isActive
             courseStatusLabel.text = courseAlert.sectionStatus == "O" ? "COURSE OPEN" : "COURSE CLOSED"
             courseStatusLabel.textColor = courseAlert.sectionStatus == "O" ? UIColor.blueLight : UIColor.grey1
             courseStatusLabel.isHidden = !courseAlert.isActive
-            
+
         }
     }
 }
@@ -75,7 +75,7 @@ extension CourseAlertCell {
         prepareDetailLabel()
         prepareMoreView()
     }
-    
+
     fileprivate func prepareCourseLabel() {
         courseLabel = UILabel()
         courseLabel.font = UIFont.primaryTitleFont
@@ -84,7 +84,7 @@ extension CourseAlertCell {
         courseLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15).isActive = true
         courseLabel.topAnchor.constraint(equalTo: centerYAnchor, constant: -10).isActive = true
     }
-    
+
     fileprivate func prepareActiveDot() {
         activeDot = UIView()
         activeDot.layer.cornerRadius = 4
@@ -95,7 +95,7 @@ extension CourseAlertCell {
         activeDot.leadingAnchor.constraint(equalTo: courseLabel.leadingAnchor).isActive = true
         activeDot.topAnchor.constraint(equalTo: courseLabel.topAnchor, constant: -20).isActive = true
     }
-    
+
     fileprivate func prepareActiveLabel() {
         activeLabel = UILabel()
         activeLabel.font = UIFont.primaryInformationFont
@@ -104,7 +104,7 @@ extension CourseAlertCell {
         activeLabel.leadingAnchor.constraint(equalTo: activeDot.trailingAnchor, constant: 3).isActive = true
         activeLabel.centerYAnchor.constraint(equalTo: activeDot.centerYAnchor, constant: 0).isActive = true
     }
-    
+
     fileprivate func prepareStatusDot() {
         statusDot = UIView()
         statusDot.layer.cornerRadius = 4
@@ -115,7 +115,7 @@ extension CourseAlertCell {
         statusDot.leadingAnchor.constraint(equalTo: activeLabel.trailingAnchor, constant: 8).isActive = true
         statusDot.topAnchor.constraint(equalTo: courseLabel.topAnchor, constant: -20).isActive = true
     }
-    
+
     fileprivate func prepareCourseStatusLabel() {
         courseStatusLabel = UILabel()
         courseStatusLabel.font = UIFont.primaryInformationFont
@@ -124,7 +124,7 @@ extension CourseAlertCell {
         courseStatusLabel.leadingAnchor.constraint(equalTo: statusDot.trailingAnchor, constant: 3).isActive = true
         courseStatusLabel.centerYAnchor.constraint(equalTo: statusDot.centerYAnchor, constant: 0).isActive = true
     }
-    
+
     fileprivate func prepareDetailLabel() {
         detailLabel = UILabel()
         detailLabel.font = UIFont.secondaryInformationFont
@@ -134,7 +134,7 @@ extension CourseAlertCell {
         detailLabel.leadingAnchor.constraint(equalTo: courseLabel.leadingAnchor).isActive = true
         detailLabel.topAnchor.constraint(equalTo: courseLabel.bottomAnchor, constant: 6).isActive = true
     }
-    
+
     fileprivate func prepareMoreView() {
         moreView = UIImageView(image: UIImage(named: "More_Grey"))
         moreView.contentMode = .scaleAspectFit
@@ -146,5 +146,5 @@ extension CourseAlertCell {
         moreView.centerYAnchor.constraint(equalTo: courseLabel.centerYAnchor).isActive = true
         moreView.isHidden = true
     }
-    
+
 }

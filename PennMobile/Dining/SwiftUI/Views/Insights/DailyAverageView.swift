@@ -13,54 +13,54 @@ import SwiftUI
 
 @available(iOS 14, *)
 struct DailyAverageView: View {
-    
+
     init(config: DiningInsightsAPIResponse.CardData.DailyAverageCardData) {
         self.config = config
-        
+
         self.maxSpent = max((config.data.thisWeek.min()?.average ?? 0.0) * -1, (config.data.lastWeek.min()?.average ?? 0.0) * -1)
         if maxSpent == 0 { maxSpent = 1 }
-        
+
         // Make a local copy of maxSpent (for init/compiler reasons)
         let maxSpent = self.maxSpent
         self.thisWeekDollarData = config.data.thisWeek.map({CGFloat(($0.average * -1) / maxSpent)}).reversed()
         self.lastWeekDollarData = config.data.lastWeek.map({CGFloat(($0.average * -1) / maxSpent)}).reversed()
-        
+
         let dayFormatter = DateFormatter()
         dayFormatter.dateFormat = "EEEEE"
-        
+
         dayOfWeek = config.data.thisWeek.map({ dayFormatter.string(from: $0.date) }).reversed()
     }
-    
+
     let config: DiningInsightsAPIResponse.CardData.DailyAverageCardData
     @State private var selectedDataPoint: Int? = nil
-    
+
     private var maxSpent: Double
     private let thisWeekDollarData: [CGFloat]
     private let lastWeekDollarData: [CGFloat]
-    
+
     private let timeFrames = ["This Week", "Last Week"]
     @State private var timeFrame = "This Week"
     @State private var axisOffset: CGFloat = 0.0
-    
+
     private var data: [CGFloat] {
         return timeFrame == "This Week" ? thisWeekDollarData : lastWeekDollarData
     }
-    
+
     private var dayOfWeek: [String]
-    
+
     private var spacingForDollarData: CGFloat {
         return self.data.count <= 7 ? 6 : (self.data.count <= 33 ? 2 : 0)
     }
-    
+
     private var averageDollar: CGFloat {
         return (self.data.reduce(0, +) / CGFloat(self.data.count))
     }
-    
+
     private var formattedAverage: String {
         let spec = "%.2f"
         return String(format: "$\(spec)", Double(averageDollar) * maxSpent)
     }
-    
+
     private var formattedAverageForDay: String {
         let spec = "%.2f"
         if selectedDataPoint == nil {
@@ -69,7 +69,7 @@ struct DailyAverageView: View {
             return String(format: "$\(spec)", Double(self.data[self.selectedDataPoint!]) * maxSpent)
         }
     }
-    
+
     private var formattedDay: String {
         if selectedDataPoint == nil {
             return "Average"
@@ -81,7 +81,7 @@ struct DailyAverageView: View {
             return df.string(from: date)
         }
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             // Top labels
@@ -92,7 +92,7 @@ struct DailyAverageView: View {
                 Divider()
                 .padding([.top, .bottom])
             }
-            
+
             // Graph view
             Spacer()
             ZStack {
@@ -110,12 +110,12 @@ struct DailyAverageView: View {
                                     .offset(x: 0, y: self.axisOffset - 13)
                                 Text("\(self.selectedDataPoint == nil ? "/ day" : "")").font(Font.caption.weight(.bold)).foregroundColor(.gray)
                                     .offset(x: 0, y: self.axisOffset - 13)
-                                
+
                             }
                             .padding(.top, 8)
                         }
                         .frame(height: 110)
-                        
+
                     }
                     // Graph pillars and caption
                     HStack(alignment: .bottom, spacing: self.spacingForDollarData) {
@@ -148,7 +148,7 @@ struct DailyAverageView: View {
                     .offset(x: 0, y: self.axisOffset - 5)
                     .animation(.default)
             }
-            
+
             // Footer
             Picker("Pick a time frame", selection: self.$timeFrame.onChange({ _ in self.selectedDataPoint = nil})) {
                 ForEach(self.timeFrames, id: \.self) { time in
@@ -175,27 +175,27 @@ struct DailyAverageView: View {
 @available(iOS 14, *)
 struct GraphPath: Shape, Animatable {
     @State var data: [CGFloat]
-    
+
     var animatableData: [CGFloat] {
         get { return data }
         set { data = newValue }
     }
-    
+
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        
+
         guard data.count > 2 else { return path }
-        
+
         func point(at n: Int) -> CGPoint {
             return CGPoint(x: CGFloat(n) * (rect.maxX / CGFloat(data.count - 1)), y: rect.maxY - (rect.maxY * data[n]))
         }
-        
+
         path.move(to: point(at: 0))
-        
+
         for i in 1 ..< data.count {
             path.addLine(to: point(at: i))
         }
-        
+
         return path
     }
 }

@@ -89,7 +89,7 @@ class ControllerModel: NSObject {
             #endif
         }
     }
-    
+
     var moreIcons: [UIImage] {
         //keeping this #if DEBUG in case we want to remove course alerts from production
         //courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future

@@ -22,13 +22,13 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var colorPanel: UIView!
     fileprivate var createButton: UIButton!
     fileprivate var colorCollectionView: UICollectionView!
-    
+
     fileprivate var chosenColor: UIColor!
     fileprivate var nameChanged: Bool!
-    
+
     fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Gritty Orange", "Red-ing Terminal", "Baltimore Blue", "Potruck Purple"]
-    
-    
+
+
     weak var delegate: NewGroupInitialDelegate!
 
 
@@ -75,11 +75,11 @@ class GSRGroupNewIntialController: UIViewController {
         nameField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
         nameField.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
         nameField.translatesAutoresizingMaskIntoConstraints = false
-        
+
         nameField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        
+
     }
-    
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         if (textField.text != "" && textField.text != "New Group Name") {
             createButton.isUserInteractionEnabled = true;
@@ -90,7 +90,7 @@ class GSRGroupNewIntialController: UIViewController {
             }
             nameChanged = true;
             nameField.textColor = .labelPrimary
-            
+
         } else {
             createButton.isUserInteractionEnabled = false;
             createButton.backgroundColor = .grey4
@@ -150,7 +150,7 @@ class GSRGroupNewIntialController: UIViewController {
         createButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15).isActive = true
         createButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
         createButton.translatesAutoresizingMaskIntoConstraints = false
-        
+
         //button unclickable until group name changed and not empty
         createButton.isUserInteractionEnabled = false;
         nameChanged = false;
@@ -198,7 +198,7 @@ class GSRGroupNewIntialController: UIViewController {
         //TODO: Consider adding appropriate error messages
         guard let name = nameField.text else {return}
         guard let color = colorLabel.text else {return}
-        
+
         GSRGroupNetworkManager.instance.createGroup(name: name, color: color) { (success, groupID, errorMsg) in
             if success {
                 DispatchQueue.main.async {

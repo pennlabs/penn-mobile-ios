@@ -12,21 +12,21 @@ protocol RoomSelectionViewDelegate: AnyObject {
 }
 
 class RoomSelectionView: UIView, IndicatorEnabled {
-    
+
     // delegating function to pass value to LaundryOverhaulViewController
     weak var delegate: RoomSelectionViewDelegate?
-    
+
     let maxNumRooms = 3
-    
+
     public fileprivate(set) var chosenRooms = [LaundryRoom]()
-    
+
     // buildings and currentResult to update TableView
     fileprivate var buildings = [String: [LaundryRoom]]()
     fileprivate var currentResults = [String: [LaundryRoom]]()
-    
+
     // current sort for the headers
     fileprivate var currentSort: [String]!
-    
+
     // Views
     fileprivate var tableView: UITableView = UITableView()
     fileprivate lazy var searchBar = UISearchBar()
@@ -35,16 +35,16 @@ class RoomSelectionView: UIView, IndicatorEnabled {
         ev.isHidden = true
         return ev
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         // delegation
         searchBar.delegate = self
         self.tableView.delegate = self
-        self.tableView.dataSource = self        
+        self.tableView.dataSource = self
     }
-    
+
     public func prepare(with rooms: [LaundryRoom]?) {
         if let chosenRooms = rooms {
             self.chosenRooms = chosenRooms
@@ -55,7 +55,7 @@ class RoomSelectionView: UIView, IndicatorEnabled {
         setupCurrentSort()
         selectChosenRooms()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -75,7 +75,7 @@ extension RoomSelectionView {
         setUpTableView()
         setUpEmptyView()
     }
-    
+
     fileprivate func setUpSearchBar() {
         //searchBar.searchBarStyle = UISearchBar.Style.prominent
         searchBar.placeholder = "Search..."
@@ -88,18 +88,18 @@ extension RoomSelectionView {
         searchBar.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
         searchBar.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
-    
+
     fileprivate func setUpTableView() {
         self.tableView.rowHeight = 50
         _ = tableView.anchor(searchBar.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.tableView.allowsMultipleSelection = true
     }
-    
+
     fileprivate func setUpEmptyView() {
         _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
-    
+
     fileprivate func setupCurrentSort() {
         self.currentSort = sortHeaders(for: Array(buildings.keys))
     }
@@ -112,25 +112,25 @@ extension RoomSelectionView {
             let count1 = buildings[$0]!.filter({ (room) -> Bool in
                 return chosenRooms.contains(room)
             }).count
-            
+
             let count2 = buildings[$1]!.filter({ (room) -> Bool in
                 return chosenRooms.contains(room)
             }).count
-            
+
             if count1 == count2 {
                 return $0 == "Quad" // By default, make the quad appear first
             }
-            
+
             return count1 > count2
         }
     }
-    
+
     fileprivate func setupDictionaries() {
         guard let roomsDict: [Int: LaundryRoom] = LaundryAPIService.instance.idToRooms else {
             attemptToLoadDictionary()
             return
         }
-        
+
         for (_, room) in roomsDict {
             let building = room.building
             if building != "Unknown" {
@@ -143,13 +143,13 @@ extension RoomSelectionView {
                 }
             }
         }
-        
+
         for (building, rooms) in buildings {
             buildings[building] = rooms.sorted(by: { (room1, room2) -> Bool in
                 return room1.id < room2.id
             })
         }
-        
+
         for room in chosenRooms.reversed() {
             var arr = buildings[room.building]
             if let index = arr?.firstIndex(of: room) {
@@ -158,7 +158,7 @@ extension RoomSelectionView {
             arr?.insert(room, at: 0)
             buildings[room.building] = arr
         }
-        
+
         currentResults = buildings
     }
 }
@@ -172,7 +172,7 @@ extension RoomSelectionView {
             }
         }
     }
-    
+
     private func getCurrentIndex(for room: LaundryRoom) -> IndexPath? {
         if let section = currentSort.firstIndex(where: { (building) -> Bool in
             return building == room.building
@@ -183,7 +183,7 @@ extension RoomSelectionView {
         }
         return nil
     }
-    
+
     fileprivate func attemptToLoadDictionary() {
         showActivity()
         LaundryAPIService.instance.loadIds { (success) in
@@ -193,7 +193,7 @@ extension RoomSelectionView {
                     self.delegate?.handleFailureToLoadDictionary()
                     return
                 }
-                
+
                 self.setupDictionaries()
                 self.setupCurrentSort()
                 self.tableView.reloadData()
@@ -204,24 +204,24 @@ extension RoomSelectionView {
 
 // Mark: Functions implementing TableView
 extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return currentResults.count
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let key = currentSort[section]
         return currentResults[key]!.count
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return currentSort[section]
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath)
         let key = currentSort[indexPath.section]
@@ -237,25 +237,25 @@ extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return chosenRooms.count < maxNumRooms ? indexPath : nil
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let key = currentSort[indexPath.section]
         let room = currentResults[key]![indexPath.row]
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         chosenRooms.append(room)
-        
+
         if chosenRooms.count == maxNumRooms {
             tableView.reloadData()
             selectChosenRooms()
         }
-        
+
         delegate?.updateSelectedRooms(for: chosenRooms)
     }
-    
+
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let key = currentSort[indexPath.section]
         let room = currentResults[key]![indexPath.row]
@@ -263,14 +263,14 @@ extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
             chosenRooms.remove(at: index)
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
         }
-        
+
         if chosenRooms.count == maxNumRooms - 1 {
             tableView.reloadData()
             selectChosenRooms()
         }
         delegate?.updateSelectedRooms(for: chosenRooms)
     }
-    
+
     // Resigns the keyboard if up once the user starts to scroll through the listings
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if searchBar.isFirstResponder {
@@ -281,7 +281,7 @@ extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
 
 // Mark: Functions implementing SearchBar
 extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             currentResults = buildings
@@ -291,7 +291,7 @@ extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
             selectChosenRooms()
             return
         }
-        
+
         currentResults = [String: [LaundryRoom]]()
         for (building, laundryRooms) in buildings {
             if building.lowercased().contains(searchText.lowercased()) {
@@ -313,13 +313,13 @@ extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
         tableView.reloadData()
         selectChosenRooms()
     }
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if searchBar.isFirstResponder {
             searchBar.resignFirstResponder()
         }
     }
-    
+
 }
 
 // Mark: Functions implementing EmptyView

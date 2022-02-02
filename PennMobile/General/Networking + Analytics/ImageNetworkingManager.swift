@@ -11,7 +11,7 @@ import Kingfisher
 class ImageNetworkingManager {
     static let instance = ImageNetworkingManager()
     private init() {}
-    
+
     func downloadImage(imageUrl: String, _ callback: @escaping (_ image: UIImage?) -> Void) {
         ImageCache.default.retrieveImage(forKey: imageUrl) { (result) in
             if let imageCacheResult = try? result.get(),

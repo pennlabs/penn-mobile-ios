@@ -17,9 +17,9 @@ struct AlertBanner: View {
     init(for type: NetworkingError) {
         self.type = type
     }
-    
+
     var type: NetworkingError
-    
+
     var alertDescription: String {
         switch type {
         case .noInternet:
@@ -28,7 +28,7 @@ struct AlertBanner: View {
             return "Unable to connect to the API.\nPlease refresh and try again."
         }
     }
-    
+
     var body: some View {
         GeometryReader { geo in
             Text(self.alertDescription)
@@ -43,7 +43,7 @@ struct AlertBanner: View {
 @available(iOS 14, *)
 struct AlertModifier: ViewModifier {
     @Binding var type: NetworkingError?
-    
+
     var alertDescription: String {
         switch type {
         case .noInternet:
@@ -52,11 +52,11 @@ struct AlertModifier: ViewModifier {
             return "Unable to connect to the API.\nPlease refresh and try again."
         }
     }
-    
+
     func body(content: Content) -> some View {
         ZStack {
             content
-            
+
             if let type = type {
                 AlertBanner(for: type)
                     .animation(.easeInOut(duration: 1.0))

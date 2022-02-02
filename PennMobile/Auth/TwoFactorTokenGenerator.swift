@@ -56,7 +56,7 @@ class TwoFactorTokenGenerator: NSObject {
             return false
         }
     }
-    
+
     func clear() {
         let genericPwdQueryable = GenericPasswordQueryable(service: "PennWebLogin")
         let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)

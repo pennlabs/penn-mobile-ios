@@ -16,16 +16,16 @@ struct DiningBalanceView: View {
     let description: String
     let image: Image
     var balance: Double
-    
+
     // By default, remove trailing zeros
     var specifier: String = "%g"
     var color: Color = .blue
-    
+
     var formattedBalance: String {
         let b: Double = balance
         return String(format: "\(self.specifier)", b)
     }
-    
+
     var body: some View {
         CardView {
             VStack(alignment: .trailing) {

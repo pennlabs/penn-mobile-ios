@@ -20,7 +20,7 @@ extension HomeTableViewModel {
         guard let diningItem = diningItems.first as? HomeDiningCellItem else { return nil }
         return diningItem.venues.first
     }
-    
+
     func getItems(for itemTypes: [HomeCellItem.Type]) -> [HomeCellItem] {
         guard let allItems = self.items as? [HomeCellItem] else { return [] }
         let items = allItems.filter { (item) -> Bool in

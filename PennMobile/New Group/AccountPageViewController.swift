@@ -12,12 +12,12 @@ import UIKit
 class AccountPageViewController: UIViewController, ShowsAlertForError, UITableViewDelegate, UITableViewDataSource {
     var account: Account!
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
-    
+
     var profileInfo: [(text: String, info: String)] = []
     var educationInfo: [(text: String, info: String)] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         guard Account.isLoggedIn else {
             self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)})
@@ -27,7 +27,7 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
         setupProfileInfo()
         setupEducationInfo()
     }
-    
+
     func setupView() {
         self.title = "Account"
         view.backgroundColor = .uiGroupedBackground
@@ -42,26 +42,26 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
         tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
+
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 600
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
+
     func setupProfileInfo() {
         guard let firstName = account.first, let lastName = account.last else {
             return
         }
         profileInfo.append((text: "Name", info: "\(firstName) \(lastName)"))
         profileInfo.append((text: "Username", info: account.pennkey))
-        
+
         guard let email = account.email else {
             return
         }
         profileInfo.append((text: "Email", info: email))
     }
-    
+
     func setupEducationInfo() {
         guard let degrees = account.degrees else {
             return
@@ -83,12 +83,12 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
         if schoolsSet.count > 1 {
             educationInfo[1].text += "s"
         }
-        
+
         if majorsSet.count > 1 {
             educationInfo[2].text += "s"
         }
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == 0) {
             return profileInfo.count
@@ -96,7 +96,7 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
             return educationInfo.count
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.section == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePageTableViewCell.identifier, for: indexPath) as! ProfilePageTableViewCell
@@ -111,21 +111,21 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
             cell.selectionStyle = .none
             return cell
         }
-        
-        
+
+
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         2
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "PROFILE"
         }
         return "EDUCATION"
     }
-    
+
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == 0 {
             return "If your information is incorrect, please send an email to contact@pennlabs.org detailing your issue."

@@ -9,7 +9,7 @@
 import Foundation
 
 class ButtonWithImage: UIButton {
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         if imageView != nil {

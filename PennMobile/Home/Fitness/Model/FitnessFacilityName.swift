@@ -9,7 +9,7 @@
 import Foundation
 
 enum FitnessFacilityName: String, Codable {
-    
+
     // These names reflect what is given by the API, do not change. Customize name in getFacilityName()
     case sheerr =      "Sheerr Pool"
     case ringe =       "Penn Squash Center"
@@ -19,9 +19,9 @@ enum FitnessFacilityName: String, Codable {
     case pottruck =    "Pottruck"
     case rockwell =    "Pottruck Court"
     case unknown
-    
+
     static let all = [pottruck, fox, sheerr, climbing, ringe, rockwell, membership]
-    
+
     func getFacilityName() -> String {
         switch self {
         case .pottruck: return "Pottruck Fitness"
@@ -30,7 +30,7 @@ enum FitnessFacilityName: String, Codable {
         default: return self.rawValue
         }
     }
-    
+
     func getImageName() -> String? {
         switch self {
         case .sheerr: return "sheerr"

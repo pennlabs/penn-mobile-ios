@@ -11,7 +11,7 @@ import Foundation
 struct CalendarEvent: Codable, Equatable {
     let event: String
     let date: String
-    
+
     static func == (lhs: CalendarEvent, rhs: CalendarEvent) -> Bool {
         return lhs.event == rhs.event
     }

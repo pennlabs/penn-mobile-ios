@@ -10,13 +10,13 @@ import Foundation
 
 protocol LaundryMachineCellTappable: NotificationRequestable {
     var allowMachineNotifications: Bool { get }
-    func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void) 
+    func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void)
 }
 
 extension LaundryMachineCellTappable where Self: UIViewController {
     func handleMachineCellTapped(for machine: LaundryMachine, _ updateCellIfNeeded: @escaping () -> Void) {
         if !allowMachineNotifications { return }
-        
+
         if machine.isUnderNotification() {
             LaundryNotificationCenter.shared.removeOutstandingNotification(for: machine)
             updateCellIfNeeded()

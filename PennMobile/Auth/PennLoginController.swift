@@ -9,22 +9,22 @@ import Foundation
 import WebKit
 
 class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate, KeychainAccessible {
-    
+
     final private let loginURL = "https://weblogin.pennkey.upenn.edu/login"
     open var urlStr: String {
         return "https://weblogin.pennkey.upenn.edu/services/"
     }
-    
+
     open var pennkey: String?
     private var password: String?
-    
+
     final private var webView: WKWebView!
-        
+
     var shouldAutoNavigate: Bool = true
     var shouldLoadCookies: Bool {
         return true
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .uiBackground
@@ -32,14 +32,14 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
         WKWebsiteDataStore.createDataStoreWithSavedCookies { (dataStore) in
             self.configureAndLoad(wkDataStore: dataStore)
         }
-        
+
         navigationItem.title = "PennKey Login"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
-        
+
         self.pennkey = getPennKey()
         self.password = getPassword()
     }
-    
+
     func configureAndLoad(wkDataStore: WKWebsiteDataStore) {
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.websiteDataStore = shouldLoadCookies ? wkDataStore : .nonPersistent()
@@ -47,14 +47,14 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         self.view = webView
 
         let myURL = URL(string: self.urlStr)
         let myRequest = URLRequest(url: myURL!)
         self.webView.load(myRequest)
     }
-    
+
     func webView(
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
@@ -64,12 +64,12 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
             decisionHandler(.allow)
             return
         }
-        
+
         webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { (cookies) in
             cookies.forEach({ (cookie) in
                 HTTPCookieStorage.shared.setCookie(cookie)
             })
-            
+
             let hasReferer = request.allHTTPHeaderFields?["Referer"] != nil
             if self.isSuccessfulRedirect(url: url.absoluteString, hasReferer: hasReferer) {
                 // Webview has redirected to desired site.
@@ -97,13 +97,13 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
             }
         }
     }
-    
+
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         guard let response = navigationResponse.response as? HTTPURLResponse, let url = response.url else {
             decisionHandler(.allow)
             return
         }
-        
+
         if self.isSuccessfulRedirect(url: url.absoluteString, hasReferer: true), response.statusCode == 200 {
             self.handleSuccessfulNavigation(webView) { (policy) in
                 decisionHandler(policy == WKNavigationActionPolicy.allow ? WKNavigationResponsePolicy.allow : WKNavigationResponsePolicy.cancel)
@@ -112,7 +112,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
             decisionHandler(.allow)
         }
     }
-    
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard let url = webView.url else {
             return
@@ -130,7 +130,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
             self.trustDevice()
         }
     }
-    
+
     func autofillCredentials() {
         guard let pennkey = pennkey else { return }
         webView.evaluateJavaScript("document.getElementById('pennname').value = '\(pennkey)'") { (_, _) in
@@ -139,21 +139,21 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
         webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_, _) in
         }
     }
-    
+
     func trustDevice() {
         webView.evaluateJavaScript("document.getElementById('trustUA').value = 'true'") { (_, _) in
             self.webView.evaluateJavaScript("document.documentElement.outerHTML.toString()") { (_, _) in
             }
         }
     }
-    
+
     var handleCancel: (() -> Void)?
-    
+
     @objc fileprivate func cancel(_ sender: Any) {
         _ = self.resignFirstResponder()
         dismiss(animated: true, completion: self.handleCancel)
     }
-    
+
     // MARK: - Decide Policy Upon Completed Navigation
     // Note: This should be overridden when extending this class
     func handleSuccessfulNavigation(
@@ -171,7 +171,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
             }
         }
     }
-    
+
     // MARK: - Verify Successful Redirect
     func isSuccessfulRedirect(url: String, hasReferer: Bool) -> Bool {
         return url == self.urlStr && hasReferer

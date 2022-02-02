@@ -9,15 +9,15 @@ import Foundation
 import SwiftyJSON
 
 class LaundryAPIService: Requestable {
-    
+
     static let instance = LaundryAPIService()
-    
+
     fileprivate let laundryUrl = "https://pennmobile.org/api/laundry/rooms"
     fileprivate let idsUrl = "https://pennmobile.org/api/laundry/halls/ids"
     fileprivate let statusURL = "https://pennmobile.org/api/laundry/status"
-    
+
     public var idToRooms: [Int: LaundryRoom]?
-    
+
     // Prepare the service
     func prepare(_ completion: @escaping () -> Void) {
         if Storage.fileExists(LaundryRoom.directory, in: .caches) {
@@ -31,11 +31,11 @@ class LaundryAPIService: Requestable {
             }
         }
     }
-    
+
     func clearDirectory() {
         Storage.remove(LaundryRoom.directory, from: .caches)
     }
-    
+
     func loadIds(_ callback: @escaping (_ success: Bool) -> ()) {
         fetchIds { (dictionary) in
             self.idToRooms = dictionary
@@ -45,7 +45,7 @@ class LaundryAPIService: Requestable {
             callback(dictionary != nil)
         }
     }
-    
+
     private func fetchIds(callback: @escaping ([Int: LaundryRoom]?) -> ()) {
         getRequestData(url: idsUrl) { (data, error, statusCode) in
             if let data = data, let rooms = try? JSONDecoder().decode([LaundryRoom].self, from: data) {
@@ -76,7 +76,7 @@ extension LaundryAPIService {
             callback(rooms)
         }
     }
-    
+
     func fetchLaundryData(for rooms: [LaundryRoom], _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
         let ids: [Int] = rooms.map { $0.id }
         fetchLaundryData(for: ids, callback)

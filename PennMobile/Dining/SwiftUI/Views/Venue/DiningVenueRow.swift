@@ -11,13 +11,13 @@ import Kingfisher
 
 @available(iOS 14, *)
 struct DiningVenueRow: View {
-    
+
     init(for venue: DiningVenue) {
         self.venue = venue
     }
-    
+
     let venue: DiningVenue
-    
+
     var body: some View {
         HStack(spacing: 13) {
             KFImage(venue.imageURL)
@@ -26,12 +26,12 @@ struct DiningVenueRow: View {
                 .frame(width: 100, height: 64)
                 .background(Color.grey1)
                 .clipShape(RoundedRectangle(cornerRadius: 7))
-                
+
             VStack(alignment: .leading, spacing: 3) {
                 Label(venue.statusString, systemImage: venue.statusImageString)
                     .labelStyle(VenueStatusLabelStyle())
                     .modifier(StatusColorModifier(for: venue))
-                
+
                 Text(venue.name)
                     .font(.system(size: 17, weight: .medium))
                     .minimumScaleFactor(0.2)
@@ -69,13 +69,13 @@ struct DiningVenueRow: View {
 // MARK: - ViewModifiers
 @available(iOS 14, *)
 struct StatusColorModifier: ViewModifier {
-    
+
     init(for venue: DiningVenue) {
         self.venue = venue
     }
-    
+
     let venue: DiningVenue
-    
+
     func body(content: Content) -> some View {
         if venue.hasMealsToday && venue.isOpen {
             if venue.isClosingSoon {
@@ -113,7 +113,7 @@ struct VenueStatusLabelStyle: LabelStyle {
 struct DiningVenueRow_Previews: PreviewProvider {
     static var previews: some View {
         let diningVenues: DiningAPIResponse = Bundle.main.decode("sample-dining-venue.json")
-        
+
         return NavigationView {
             List {
                 NavigationLink(destination: Text("dfs")) {

@@ -30,13 +30,13 @@ class GSRGroupNewIntialController: UIViewController {
         UIColor.baseRed,
         UIColor.blueDarker
     ]
-    
+
     fileprivate var chosenColor: UIColor!
     fileprivate var nameChanged: Bool!
-    
+
     fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange","Red-ing Terminal", "Baltimore Blue", "Purple"]
-    
-    
+
+
     weak var delegate: NewGroupInitialDelegate!
 
 
@@ -85,11 +85,11 @@ class GSRGroupNewIntialController: UIViewController {
         nameField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
         nameField.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
         nameField.translatesAutoresizingMaskIntoConstraints = false
-        
+
         nameField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
-        
+
     }
-    
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         if (textField.text != "" && textField.text != "New Group Name") {
             createButton.isUserInteractionEnabled = true;
@@ -99,7 +99,7 @@ class GSRGroupNewIntialController: UIViewController {
                 createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
             }
             nameChanged = true;
-            
+
         } else {
             createButton.isUserInteractionEnabled = false;
             createButton.backgroundColor = UIColor.init(red: 216, green: 216, blue: 216)
@@ -158,7 +158,7 @@ class GSRGroupNewIntialController: UIViewController {
         createButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15).isActive = true
         createButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
         createButton.translatesAutoresizingMaskIntoConstraints = false
-        
+
         //button unclickable until group name changed and not empty
         createButton.isUserInteractionEnabled = false;
         nameChanged = false;
@@ -206,13 +206,13 @@ class GSRGroupNewIntialController: UIViewController {
         //TODO: Consider adding appropriate error messages
         guard let name = nameField.text else {return}
         guard let color = colorLabel.text else {return}
-        
+
         GSRGroupNetworkManager.instance.createGroup(name: name, color: color) { (success, errorMsg) in
             if success {
-                
+
                 // This reloads the groups on the GSRGroupController - this should be done after invites / end of the flow
                 // self.delegate.fetchGroups()
-                
+
                 DispatchQueue.main.async {
                     let controller = GSRGroupInviteViewController()
                     self.navigationController?.pushViewController(controller, animated: true)
@@ -278,13 +278,13 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
 }
 
 extension UIColor {
-    
+
     //for getting a lighter variant (using a multiplier)
     func borderColor(multiplier: CGFloat) -> UIColor {
         let rgba = self.rgba
         return UIColor(red: rgba.red * multiplier , green: rgba.green * multiplier, blue: rgba.blue * multiplier, alpha: rgba.alpha)
     }
-    
+
     //https://www.hackingwithswift.com/example-code/uicolor/how-to-read-the-red-green-blue-and-alpha-color-components-from-a-uicolor
     var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
         var red: CGFloat = 0

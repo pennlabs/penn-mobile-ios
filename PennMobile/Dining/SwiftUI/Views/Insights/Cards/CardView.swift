@@ -14,7 +14,7 @@ import SwiftUI
 @available(iOS 14, *)
 struct CardView<Content> : View where Content : View {
     let content: () -> Content
-    
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 14, style: .continuous)

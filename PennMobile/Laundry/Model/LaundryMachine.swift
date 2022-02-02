@@ -10,13 +10,13 @@ import Foundation
 import SwiftyJSON
 
 class LaundryMachine: Hashable {
-    
+
     enum Status: String {
         case open
         case running
         case offline
         case outOfOrder = "out_of_order"
-        
+
         static func parseStatus(for status: String) -> Status {
             if status == "Not online" {
                 return .offline
@@ -29,13 +29,13 @@ class LaundryMachine: Hashable {
             }
         }
     }
-    
+
     let id: Int
     let isWasher: Bool
     let roomName: String
     var status: Status
     var timeRemaining: Int
-        
+
     init(json: JSON, roomName: String) {
         self.roomName = roomName
         id = json["id"].intValue
@@ -43,19 +43,19 @@ class LaundryMachine: Hashable {
         status = Status(rawValue: statusStr) ?? Status.parseStatus(for: statusStr)
         timeRemaining = json["time_remaining"].intValue
         isWasher = json["type"].stringValue == "washer"
-        
+
         // Flag if website does not provide a time remaining
         if status == .running && timeRemaining == 0 {
             timeRemaining = -1
         }
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(roomName)
         hasher.combine(isWasher)
         hasher.combine(id)
     }
-    
+
     func isUnderNotification() -> Bool {
         return LaundryNotificationCenter.shared.isUnderNotification(for: self)
     }
@@ -79,7 +79,7 @@ extension LaundryMachine: Comparable {
             return lhs.timeRemaining < rhs.timeRemaining
         }
     }
-    
+
     static func == (lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
         return lhs.roomName == rhs.roomName
             && lhs.id == rhs.id
@@ -93,16 +93,16 @@ extension Array where Element == LaundryMachine {
         if self.count == 0 { return false }
         return self[0].status == .running
     }
-    
+
     func numberOpenMachines() -> Int {
         return filter { $0.status == .open }.count
     }
-    
+
     func decrementTimeRemaining(by minutes: Int) {
         forEach {
             if $0.status == .running {
                 $0.timeRemaining -= minutes
-                
+
                 if $0.timeRemaining == 0 {
                     $0.status = .open
                 }

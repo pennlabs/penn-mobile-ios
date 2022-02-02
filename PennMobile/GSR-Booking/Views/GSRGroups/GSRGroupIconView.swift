@@ -10,11 +10,11 @@ import UIKit
 
 class GSRGroupIconView: UIView {
     //creates a circular icon with color and letter for icon
-    
+
     static let height : CGFloat = 63.0
-    
+
     fileprivate var firstLetterLbl: UILabel!
-    
+
     var name: String! {
         didSet {
             if let lbl = firstLetterLbl {
@@ -22,33 +22,33 @@ class GSRGroupIconView: UIView {
             }
         }
     }
-    
+
     var groupColor: UIColor! {
         didSet {
             backgroundColor = groupColor
         }
     }
-    
+
     init() {
         super.init(frame: CGRect.zero)
         prepareUI()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+
+
 }
 
 // MARK - PREPARE UI
 extension GSRGroupIconView {
-    
+
     fileprivate func prepareUI() {
         prepareFirstLetterLbl()
         prepareConstraints()
     }
-    
+
     fileprivate func prepareFirstLetterLbl() {
         layer.cornerRadius = GSRGroupIconView.height / 2
         layer.masksToBounds = true
@@ -61,7 +61,7 @@ extension GSRGroupIconView {
         firstLetterLbl.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         firstLetterLbl.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
-    
+
     fileprivate func prepareConstraints() {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: 70).isActive = true

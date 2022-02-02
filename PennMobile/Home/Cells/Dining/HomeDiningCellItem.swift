@@ -10,21 +10,21 @@ import Foundation
 import SwiftyJSON
 
 final class HomeDiningCellItem: HomeCellItem {
-    
+
     static var jsonKey: String {
         return "dining"
     }
-    
+
     static var associatedCell: ModularTableViewCell.Type {
         return HomeDiningCell.self
     }
-    
+
     var venues: [DiningVenue]
-    
+
     init(for venues: [DiningVenue]) {
         self.venues = venues
     }
-    
+
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeDiningCellItem else { return false }
         return venues == item.venues

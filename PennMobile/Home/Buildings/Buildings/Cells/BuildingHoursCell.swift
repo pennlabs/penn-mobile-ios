@@ -9,28 +9,28 @@
 import UIKit
 
 class BuildingHoursCell: BuildingCell {
-    
+
     static let identifier = "BuildingHoursCell"
     static let cellHeight: CGFloat = 168
     static let numDays: Int = 7
-    
+
     var building: BuildingHoursDisplayable! {
         didSet {
             setupCell(with: building)
         }
     }
-    
+
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
     fileprivate var dayLabels: [UILabel]!
     fileprivate var hourLabels: [UILabel]!
-    
+
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareUI()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -38,11 +38,11 @@ class BuildingHoursCell: BuildingCell {
 
 // MARK: - Setup Cell
 extension BuildingHoursCell {
-    
+
     fileprivate func setupCell(with building: BuildingHoursDisplayable) {
         let weekdayArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         let timeStringsForWeek = building.getTimeStrings()
-        
+
         for day in 0 ..< BuildingHoursCell.numDays {
             let dayLabel = dayLabels[day]
             let hourLabel = hourLabels[day]
@@ -62,19 +62,19 @@ extension BuildingHoursCell {
 
 // MARK: - Initialize and Prepare UI
 extension BuildingHoursCell {
-    
+
     fileprivate func prepareUI() {
         prepareSafeArea()
-        
+
         dayLabels = [UILabel](); hourLabels = [UILabel]()
-        
+
         for _ in 0 ..< BuildingHoursCell.numDays {
             dayLabels.append(getDayLabel())
             hourLabels.append(getHourLabel())
         }
         layoutLabels()
     }
-    
+
     // MARK: Safe Area
     fileprivate func prepareSafeArea() {
         safeArea = getSafeAreaView()
@@ -86,16 +86,16 @@ extension BuildingHoursCell {
             safeArea.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -safeInsetValue)
         ])
     }
-    
+
     // MARK: Layout Labels
     fileprivate func layoutLabels() {
         for day in 0 ..< BuildingHoursCell.numDays {
             let dayLabel = dayLabels[day]
             let hourLabel = hourLabels[day]
-            
+
             addSubview(dayLabel)
             addSubview(hourLabel)
-            
+
             if day == 0 {
                 _ = dayLabel.anchor(safeArea.topAnchor, left: safeArea.leftAnchor, bottom: nil, right: nil)
                 _ = hourLabel.anchor(safeArea.topAnchor, left: dayLabel.rightAnchor, bottom: nil, right: safeArea.rightAnchor)
@@ -105,7 +105,7 @@ extension BuildingHoursCell {
             }
         }
     }
-    
+
     fileprivate func getDayLabel() -> UILabel{
         let label = UILabel()
         label.font = .secondaryInformationFont
@@ -114,7 +114,7 @@ extension BuildingHoursCell {
         label.text = "Day"
         return label
     }
-    
+
     fileprivate func getHourLabel() -> UILabel{
         let label = UILabel()
         label.font = .secondaryInformationFont
@@ -124,7 +124,7 @@ extension BuildingHoursCell {
         label.shrinkUntilFits()
         return label
     }
-    
+
     fileprivate func getSafeAreaView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

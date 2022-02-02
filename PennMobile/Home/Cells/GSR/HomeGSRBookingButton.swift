@@ -12,7 +12,7 @@ protocol HomeGSRBookingButtonDelegate {
     func handleBookingSelected(_ booking: GSRBooking)
 }
 class HomeGSRBookingButton : UIButton {
-    
+
     var booking : GSRBooking? {
         didSet {
             self.isEnabled = (booking != nil)
@@ -25,13 +25,13 @@ class HomeGSRBookingButton : UIButton {
     }
     var delegate : HomeGSRBookingButtonDelegate?
     var incrementLabel : UILabel!
-    
+
     convenience init(withIncrement increment: Int) {
         self.init()
         setupButton()
         setupIncrementLabel(increment)
     }
-    
+
     private func setupButton() {
         backgroundColor = .clear
         titleLabel?.font = .footerTransitionFont
@@ -43,7 +43,7 @@ class HomeGSRBookingButton : UIButton {
         setImage(UIImage(named: "Disabled-GSR"), for: .disabled)
         tintColor = .clear
     }
-    
+
     private func setupIncrementLabel(_ increment: Int) {
         incrementLabel = getIncrementLabel()
         switch increment {
@@ -52,13 +52,13 @@ class HomeGSRBookingButton : UIButton {
         default: incrementLabel.text = "90'"
         }
         self.addSubview(incrementLabel)
-        
+
         incrementLabel.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         incrementLabel.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
         incrementLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         incrementLabel.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 2).isActive = true
     }
-    
+
     fileprivate func getIncrementLabel() -> UILabel {
         let label = UILabel()
         label.font = .gsrTimeIncrementFont
@@ -67,7 +67,7 @@ class HomeGSRBookingButton : UIButton {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
-    
+
     @objc fileprivate func bookingButtonTapped() {
         if let booking = booking {
             delegate?.handleBookingSelected(booking)

@@ -9,14 +9,14 @@
 import UIKit
 
 class HomeNavigationController: UINavigationController {
-    
+
     fileprivate var bar: StatusBar?
     fileprivate var animateBarDispatchItem: DispatchWorkItem?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+
     // Adds a status bar and animates it down
     func addStatusBar(text: StatusBar.StatusBarText) {
         bar?.removeFromSuperview()
@@ -24,7 +24,7 @@ class HomeNavigationController: UINavigationController {
         setupBar(text: text)
         animateBarDown()
     }
-    
+
     func addPermanentStatusBar(text: StatusBar.StatusBarText) {
         bar?.removeFromSuperview()
         bar = StatusBar(text: text)
@@ -34,7 +34,7 @@ class HomeNavigationController: UINavigationController {
             self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(self.bar!.height))
         }
     }
-    
+
     fileprivate func animateBarDown() {
         guard bar != nil else { return }
         bar!.isHidden = false
@@ -42,7 +42,7 @@ class HomeNavigationController: UINavigationController {
         UIView.animate(withDuration: 0.4) {
             self.bar!.transform = CGAffineTransform(translationX: 0, y: CGFloat(self.bar!.height))
         }
-        
+
         // Make a dispatch item, and schedule it for 3 seconds in the future. The dispatch item becomes invalid if the view disappears.
         animateBarDispatchItem = DispatchWorkItem(block: {
             guard let bar = self.bar else { return }
@@ -53,7 +53,7 @@ class HomeNavigationController: UINavigationController {
         guard animateBarDispatchItem != nil else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5, execute: animateBarDispatchItem!)
     }
-    
+
     func hideBar(animated: Bool) {
         // Cancel any in-flight timers that would call hideBar() a second time upon returning to the screen
         if animateBarDispatchItem != nil {
@@ -72,7 +72,7 @@ class HomeNavigationController: UINavigationController {
             self.bar!.isHidden = true
         }
     }
-    
+
     func setupBar(text: StatusBar.StatusBarText) {
         self.view.insertSubview(bar!, belowSubview: self.navigationBar)
         bar!.translatesAutoresizingMaskIntoConstraints = false

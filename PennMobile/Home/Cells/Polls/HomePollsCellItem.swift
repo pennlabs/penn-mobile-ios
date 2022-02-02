@@ -18,25 +18,25 @@ final class HomePollsCellItem: HomeCellItem {
         let pollOption2 = PollOption(id: 2, optionText: "M&T Students", votes: 20, votesByYear: nil, votesBySchool: nil)
         let pollOption3 = PollOption(id: 3, optionText: "CIS Majors who are trying to transfer into Wharton", votes: 40, votesByYear: nil, votesBySchool: nil)
         let pollOption4 = PollOption(id: 4, optionText: "Armaan going to a Goldman info session", votes: 300, votesByYear: nil, votesBySchool: nil)
-        
+
         let dummyQuestion = PollQuestion(title: "Who is more of a snake?", source: "The Daily Pennsylvanian", ddl: ddl!, options: [pollOption1, pollOption2, pollOption3, pollOption4], totalVoteCount: 380, optionChosenId: nil)
         completion([HomePollsCellItem(pollQuestion:dummyQuestion)])
     }
-    
+
     static var associatedCell: ModularTableViewCell.Type {
         return HomePollsCell.self
     }
-    
+
     var pollQuestion: PollQuestion
-    
+
     init(pollQuestion: PollQuestion) {
         self.pollQuestion = pollQuestion
     }
-    
+
     func equals(item: ModularTableViewItem) -> Bool {
         return true
     }
-    
+
     static var jsonKey: String {
         return "polls"
     }

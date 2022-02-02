@@ -11,7 +11,7 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct DiningVenueDetailMenuView: View {
     var menus: [DiningMenu]
-    
+
     var body: some View {
         ForEach(menus, id: \.self) { menu in
             DiningMenuRow(for: menu)
@@ -23,7 +23,7 @@ struct DiningVenueDetailMenuView: View {
 @available(iOS 14.0, *)
 struct DiningVenueDetailMenuView_Previews: PreviewProvider {
     let diningVenues: DiningMenuAPIResponse = Bundle.main.decode("mock_menu.json")
-    
+
     static var previews: some View {
         return NavigationView {
             ScrollView {

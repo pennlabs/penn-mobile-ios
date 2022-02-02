@@ -10,7 +10,7 @@ import Foundation
 
 struct PennEvents: Codable {
     static let directory = "events.json"
-    
+
     let id: String
     let title: String
     let body: String
@@ -25,7 +25,7 @@ struct PennEvents: Codable {
     let allday: String
     var media_image: String
     let shortdate: String
-    
+
     var isAllDay: Bool {
         return allday == "All day"
     }

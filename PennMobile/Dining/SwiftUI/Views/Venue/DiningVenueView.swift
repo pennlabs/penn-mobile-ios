@@ -11,12 +11,12 @@ import SwiftUI
 @available(iOS 14, *)
 struct DiningVenueView: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
-    
+
     // Hack to deselect cells after popping navigation view
     // Will be removed once SwiftUI is Fixed
     @State private var selectedItem: String?
     @State private var listViewId = UUID()
-        
+
     var body: some View {
         List {
             ForEach(diningVM.ordering, id: \.self) { venueType in

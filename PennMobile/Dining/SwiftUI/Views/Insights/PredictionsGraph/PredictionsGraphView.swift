@@ -29,48 +29,48 @@ extension ClosedRange: ClampableRange {}
 //VariableStepLineGraphView.getSmoothedData(from: DiningTransaction.sampleData)
 @available(iOS 14, *)
 struct PredictionsGraphView: View {
-    
+
     init(config: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData) {
-        
+
         self.config = config
         data = PredictionsGraphView.getSmoothedData(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester)
-        
+
         axisLabelsYX = PredictionsGraphView.getAxisLabelsYX(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester)
-        
+
         balanceType = config.type.contains("swipes") ? .swipes : .dollars
-        
+
         predictedZeroPoint = PredictionsGraphView.getPredictionZeroPoint(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester, predictedZeroDate: config.predictedZeroDate)
     }
-    
+
     struct YXDataPoint {
         var y: CGFloat // Bound between 0 and 1
         var x: CGFloat // Bound between 0 and 1
     }
-    
+
     var config: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData
     var data: [YXDataPoint]
     var axisLabelsYX: ([String], [String])
     var balanceType: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.BalanceType
     var predictedZeroPoint: YXDataPoint
-    
+
     var formattedZeroDate: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM. d"
         return formatter.string(from: self.config.predictedZeroDate)
     }
-    
+
     var displayZeroDate: Bool {
         if config.predictedZeroDate > config.endOfSemester && config.semesterEndBalance != nil {
             return false
         }
         return true
     }
-    
+
     var formattedBalance: String {
         let b: Double = config.semesterEndBalance ?? 0
         return String(format: balanceType == .swipes ? "%g" : "%.2f", b)
     }
-    
+
     var helpText: String {
         if displayZeroDate {
             return "Based on your current balance and past behavior, we project you'll run out on this date."
@@ -78,7 +78,7 @@ struct PredictionsGraphView: View {
             return "Based on your past behavior, we project you'll end the semester with \(balanceType == .swipes ? "swipes" : "dollars") to spare."
         }
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Group {
@@ -93,7 +93,7 @@ struct PredictionsGraphView: View {
             VariableStepLineGraphView(data: self.data, lastPointPosition: self.data.last?.x ?? 0, xAxisLabels: axisLabelsYX.1, yAxisLabels: axisLabelsYX.0, lineColor: balanceType == .swipes ? .blue : .green, predictedZeroPoint: self.predictedZeroPoint)
             Divider()
             .padding([.top, .bottom])
-            
+
             HStack {
                 VStack(alignment: .leading) {
                     // "Leftover" Dollars, wasted dollars

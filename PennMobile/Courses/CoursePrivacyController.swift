@@ -13,12 +13,12 @@ import SwiftUI
 
 @available(iOS 13, *)
 class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
-    
+
     private var cancellable: Any?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let prompt = """
         Help us improve our course recommendation algorithms by sharing anonymized course enrollments with Penn Labs. You can change your decision later.
 
@@ -26,7 +26,7 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
 
         This allows Penn Labs to recommend courses to other students based on what you’ve taken, improving student life for everyone at Penn. That’s what we do 💖
         """
-        
+
         let delegate = PrivacyPermissionDelegate()
         self.cancellable = delegate.objectDidChange.sink { (delegate) in
             if let decision = delegate.userDecision {
@@ -44,20 +44,20 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
                 }
             }
         }
-        
+
         let childView = UIHostingController(rootView: PermissionView(delegate: delegate, title: "Share Courses", privacyString: prompt, affirmativeString: "Share Courses with Penn Labs", negativeString: "Don't Share", moreInfoString: "More about Penn Labs"))
-        
+
         addChild(childView)
         childView.view.frame = view.bounds
         view.addSubview(childView.view)
         childView.didMove(toParent: self)
     }
-    
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.modalPresentationStyle = .overFullScreen
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -100,7 +100,7 @@ extension CoursePrivacyController {
             }
         }
     }
-    
+
     fileprivate func declinePermission() {
         UserDefaults.standard.set(.anonymizedCourseSchedule, to: false)
         UserDBManager.shared.saveUserPrivacySettings()

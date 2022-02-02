@@ -95,7 +95,7 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
                     cell.setupCell(with: userSetting)
                     cell.delegate = self
                 }
-                
+
                 return cell
             }
 
@@ -143,11 +143,11 @@ extension GSRManageGroupViewModel: GroupManageButtonDelegate {
     func bookGroup() {
         delegate.beginBooking()
     }
-    
+
     func inviteGroup() {
         delegate.inviteToGroup()
     }
-    
+
     func leaveGroup() {
         print("Leave Group!")
     }

@@ -39,9 +39,9 @@ extension URLRequest {
 class OAuth2NetworkManager: NSObject {
     static let instance = OAuth2NetworkManager()
     private override init() {}
-    
+
     private var clientID = "CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN"
-    
+
     private var currentAccessToken: AccessToken?
 }
 
@@ -54,7 +54,7 @@ extension OAuth2NetworkManager {
         let url = URL(string: "https://platform.pennlabs.org/accounts/token/")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
+
         let params = [
             "code": code,
             "grant_type": "authorization_code",
@@ -62,10 +62,10 @@ extension OAuth2NetworkManager {
             "redirect_uri": "https://pennlabs.org/pennmobile/ios/callback/",
             "code_verifier": codeVerifier
         ]
-        
+
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
-        
+
         let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
                 let json = JSON(data)
@@ -96,26 +96,26 @@ extension OAuth2NetworkManager {
             self.refreshAccessToken(callback)
         }
     }
-    
+
     fileprivate func refreshAccessToken(_ callback: @escaping (_ accessToken: AccessToken?) -> Void ) {
         guard let refreshToken = self.getRefreshToken() else {
             callback(nil)
             return
         }
-        
+
         let url = URL(string: "https://platform.pennlabs.org/accounts/token/")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
+
         let params = [
             "refresh_token": refreshToken,
             "grant_type": "refresh_token",
             "client_id": clientID
         ]
-        
+
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
-        
+
         let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             DispatchQueue.global().async {
                 if let httpResponse = response as? HTTPURLResponse, let data = data {
@@ -138,7 +138,7 @@ extension OAuth2NetworkManager {
                                 callback(accessToken)
                                 return
                             }
-                            
+
                             // Clear refresh token and force user to log in
                             self.clearRefreshToken()
                         }
@@ -148,7 +148,7 @@ extension OAuth2NetworkManager {
             }
         }
         task.resume()
-        
+
     }
 }
 
@@ -158,14 +158,14 @@ extension OAuth2NetworkManager {
         let url = URL(string: "https://platform.pennlabs.org/accounts/introspect/")!
         var request = URLRequest(url: url, accessToken: accessToken)
         request.httpMethod = "POST"
-        
+
         let params = [
             "token": accessToken.value
         ]
-        
+
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
-        
+
         let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
                 let json = JSON(data)
@@ -188,49 +188,49 @@ extension OAuth2NetworkManager {
     private var service: String {
         return "LabsOAuth2"
     }
-    
+
     private var secureKey: String {
         return "Labs Refresh Token"
     }
-    
+
     fileprivate func saveRefreshToken(token: String) {
         let genericPwdQueryable =
             GenericPasswordQueryable(service: service)
         let secureStore =
             SecureStore(secureStoreQueryable: genericPwdQueryable)
-        
+
         try? secureStore.setValue(token, for: secureKey)
     }
-    
+
     fileprivate func getRefreshToken() -> String? {
         let genericPwdQueryable =
             GenericPasswordQueryable(service: service)
         let secureStore =
             SecureStore(secureStoreQueryable: genericPwdQueryable)
-        
+
         let refreshToken: String?
         do {
             refreshToken = try secureStore.getValue(for: secureKey)
         } catch {
             refreshToken = nil
         }
-        
+
         return refreshToken
     }
-    
+
     func clearRefreshToken() {
         let genericPwdQueryable =
             GenericPasswordQueryable(service: service)
         let secureStore =
             SecureStore(secureStoreQueryable: genericPwdQueryable)
-        
+
         try? secureStore.removeValue(for: secureKey)
     }
-    
+
     func clearCurrentAccessToken() {
         currentAccessToken = nil
     }
-    
+
     func hasRefreshToken() -> Bool {
         return getRefreshToken() != nil
     }

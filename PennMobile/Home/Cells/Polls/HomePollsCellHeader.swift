@@ -10,20 +10,20 @@ import UIKit
 import SnapKit
 
 class HomePollsCellHeader: UIView {
-    
+
     static let height: CGFloat = 63
 
     var secondaryTitleLabel: UILabel!
     var primaryTitleLabel: UILabel!
     private var dividerLine: UIView!
-    
+
     // Must be called after being added to a view
     func prepare() {
         prepareHeader(inside: self.superview ?? UIView())
         prepareTitleLabels()
         prepareDividerLine()
     }
-    
+
     // MARK: Header
     private func prepareHeader(inside safeArea: UIView) {
         self.snp.makeConstraints { (make) in
@@ -41,12 +41,12 @@ class HomePollsCellHeader: UIView {
 
         addSubview(secondaryTitleLabel)
         addSubview(primaryTitleLabel)
-        
+
         secondaryTitleLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(self)
             make.top.equalTo(self).offset(3)
         }
-        
+
         primaryTitleLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(self)
             make.top.equalTo(secondaryTitleLabel.snp.bottom).offset(4)
@@ -64,7 +64,7 @@ class HomePollsCellHeader: UIView {
             make.height.equalTo(2)
         }
     }
-    
+
     // MARK: - Lable Definitions
     private func getSecondaryLabel() -> UILabel {
         let label = UILabel()

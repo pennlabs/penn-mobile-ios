@@ -9,7 +9,7 @@
 import UIKit
 
 class BuildingImageCell: BuildingCell {
-    
+
     static let identifier = "BuildingImageCell"
     static let cellHeight: CGFloat = 188
 
@@ -26,14 +26,14 @@ class BuildingImageCell: BuildingCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareUI()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - Setup Cell
-extension BuildingImageCell { 
+extension BuildingImageCell {
     fileprivate func setupCell(with building: BuildingImageDisplayable) {
         buildingImageView.image = UIImage(named: building.getImage())
     }

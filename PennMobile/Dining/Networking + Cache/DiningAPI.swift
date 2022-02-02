@@ -10,24 +10,24 @@ import SwiftyJSON
 import Foundation
 
 class DiningAPI: Requestable {
-    
+
     static let instance = DiningAPI()
-    
+
     let diningUrl = "https://pennmobile.org/api/dining/venues/"
     let diningMenuUrl = "https://pennmobile.org/api/dining/daily_menu/"
     // TODO: Broken API, need to fetch locally
     let diningInsightsUrl = "https://pennmobile.org/api/dining/"
-    
+
     func fetchDiningHours(_ completion: @escaping (_ result: Result<DiningAPIResponse, NetworkingError>) -> Void) {
         getRequestData(url: diningUrl) { (data, error, statusCode) in
             if statusCode == nil {
                 return completion(.failure(.noInternet))
             }
-            
+
             if statusCode != 200 {
                 return completion(.failure(.serverError))
             }
-            
+
             guard let data = data else { return completion(.failure(.other)) }
 
             if let diningAPIResponse = try? JSONDecoder().decode(DiningAPIResponse.self, from: data) {
@@ -38,19 +38,19 @@ class DiningAPI: Requestable {
             }
         }
     }
-    
+
     func fetchDiningMenu(for id: Int, _ completion: @escaping (_ result: Result<DiningMenuAPIResponse, NetworkingError>) -> Void) {
         getRequestData(url: diningMenuUrl + "\(id)") { (data, error, statusCode) in
             if statusCode == nil {
                 return completion(.failure(.noInternet))
             }
-            
+
             if statusCode != 200 {
                 return completion(.failure(.serverError))
             }
-            
+
             guard let data = data else { return completion(.failure(.other)) }
-            
+
             if let diningMenuAPIResponse = try? JSONDecoder().decode(DiningMenuAPIResponse.self, from: data) {
                 self.saveToCache(id: id, diningMenuAPIResponse)
                 return completion(.success(diningMenuAPIResponse))
@@ -67,11 +67,11 @@ class DiningAPI: Requestable {
                 completion(.failure(.noInternet))
                 return
             }
-            
+
             let url = URL(string: self.diningInsightsUrl)!
             var request = URLRequest(url: url, accessToken: token)
             request.httpMethod = "GET"
-            
+
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 guard let data = data else {
                    if let error = error as? NetworkingError {
@@ -81,10 +81,10 @@ class DiningAPI: Requestable {
                    }
                    return
                 }
-                
+
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
-                
+
                 if let diningInsightsAPIResponse = try? decoder.decode(DiningInsightsAPIResponse.self, from: data) {
                     self.saveToCache(diningInsightsAPIResponse)
                     completion(.success(diningInsightsAPIResponse))
@@ -95,7 +95,7 @@ class DiningAPI: Requestable {
             task.resume()
         }
     }
-    
+
     func fetchDetailPageHTML(for venue: DiningVenue, _ completion: @escaping (_ html: String?) -> Void) {
         DispatchQueue.global(qos: .background).async {
             guard let url = venue.facilityURL else { return }
@@ -118,7 +118,7 @@ extension DiningAPI {
 
 // Dining Data Storage
 extension DiningAPI {
-    
+
     // MARK: - Get Methods
     func getVenues() -> [DiningVenue] {
         if Storage.fileExists(DiningVenue.directory, in: .caches) {
@@ -127,7 +127,7 @@ extension DiningAPI {
             return []
         }
     }
-    
+
     func getSectionedVenues() -> [DiningVenue.VenueType : [DiningVenue]] {
         var venuesDict = [DiningVenue.VenueType : [DiningVenue]]()
         for type in DiningVenue.VenueType.allCases {
@@ -135,15 +135,15 @@ extension DiningAPI {
         }
         return venuesDict
     }
-    
+
     func getVenues(with ids: Set<Int>) -> [DiningVenue] {
         return getVenues().filter({ ids.contains($0.id) })
     }
-    
+
     func getVenues(with ids: [Int]) -> [DiningVenue] {
         return getVenues().filter({ ids.contains($0.id) })
     }
-    
+
     func getInsights() -> DiningInsightsAPIResponse? {
         if Storage.fileExists(DiningInsightsAPIResponse.directory, in: .caches) {
             return Storage.retrieve(DiningInsightsAPIResponse.directory, from: .caches, as: DiningInsightsAPIResponse.self)
@@ -151,7 +151,7 @@ extension DiningAPI {
             return nil
         }
     }
-    
+
     func getMenus() -> [Int: DiningMenuAPIResponse] {
         if Storage.fileExists(DiningMenuAPIResponse.directory, in: .caches) {
             return Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int:DiningMenuAPIResponse].self)
@@ -159,22 +159,22 @@ extension DiningAPI {
             return [:]
         }
     }
-    
+
     // MARK: - Cache Methods
     func saveToCache(_ venues: [DiningVenue]) {
         Storage.store(venues, to: .caches, as: DiningVenue.directory)
     }
-    
+
     func saveToCache(_ insights: DiningInsightsAPIResponse) {
         Storage.store(insights, to: .caches, as: DiningInsightsAPIResponse.directory)
     }
-    
+
     func saveToCache(id: Int, _ menu: DiningMenuAPIResponse) {
         if Storage.fileExists(DiningMenuAPIResponse.directory, in: .caches) {
             var menus = Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int:DiningMenuAPIResponse].self)
-            
+
             menus[id] = menu
-            
+
             Storage.store(menus, to: .caches, as: DiningMenuAPIResponse.directory)
         } else {
             Storage.store([id: menu], to: .caches, as: DiningMenuAPIResponse.directory)

@@ -9,11 +9,11 @@
 import UIKit
 
 class MoreHeaderView: UIView {
-    
+
     var headerLabel = UILabel()
-    
+
     override func draw(_ rect: CGRect) {
-        
+
     }
 
 }

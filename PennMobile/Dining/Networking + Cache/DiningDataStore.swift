@@ -9,15 +9,15 @@
 import Foundation
 
 class DiningDataStore {
-    
+
     static let shared = DiningDataStore()
     private var response: DiningAPIResponse = DiningAPIResponse(document: .init(venues: []))
     private let dataStore: LocalJSONStore<DiningAPIResponse> = LocalJSONStore(storageType: .cache, filename: "venues.json")
-    
+
     private init() {
         _ = self.getVenues()
     }
-    
+
     // MARK: - Get Dining Venues (for UI)
     func getVenues() -> [DiningVenue] {
         if response.document.venues.isEmpty {
@@ -28,7 +28,7 @@ class DiningDataStore {
         }
         return response.document.venues
     }
-    
+
     /// Returns the same venues in the same order with updated hours
     func getVenues(for venueIDs: [Int]) -> [DiningVenue] {
         let idSet = Set(venueIDs)
@@ -41,7 +41,7 @@ class DiningDataStore {
         }
         return sortedUpdatedVenues
     }
-    
+
     func getSectionedVenues() -> [DiningVenue.VenueType: [DiningVenue]] {
         var venuesDict = [DiningVenue.VenueType: [DiningVenue]]()
         for type in DiningVenue.VenueType.allCases {
@@ -49,13 +49,13 @@ class DiningDataStore {
         }
         return venuesDict
     }
-    
+
     // MARK: - Cacheing
     func store(response: DiningAPIResponse) {
         self.response = response
         saveToCache(response)
     }
-    
+
     internal func saveToCache(_ response: DiningAPIResponse) {
         dataStore.save(response)
     }

@@ -13,10 +13,10 @@ class SearchResultsCell: UITableViewCell {
 
     static let cellHeight: CGFloat = 60
     static let identifier = "searchResultsCell"
-    
+
     fileprivate var detailLabel: UILabel!
     fileprivate var courseLabel: UILabel!
-    
+
     var section: CourseSection! {
         didSet {
             setupCell()
@@ -51,7 +51,7 @@ extension SearchResultsCell {
         prepareCourseLabel()
         prepareDetailLabel()
     }
-    
+
     fileprivate func prepareCourseLabel() {
         courseLabel = UILabel()
         courseLabel.font = UIFont.interiorTitleFont
@@ -60,7 +60,7 @@ extension SearchResultsCell {
         courseLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15).isActive = true
         courseLabel.topAnchor.constraint(equalTo: centerYAnchor, constant: -18).isActive = true
     }
-    
+
     fileprivate func prepareDetailLabel() {
         detailLabel = UILabel()
         detailLabel.font = UIFont.secondaryInformationFont
@@ -71,5 +71,5 @@ extension SearchResultsCell {
         detailLabel.topAnchor.constraint(equalTo: courseLabel.bottomAnchor, constant: 4).isActive = true
         detailLabel.widthAnchor.constraint(equalToConstant: 275).isActive = true
     }
-    
+
 }

@@ -38,7 +38,7 @@ extension UserDefaults {
         case lastDiningHoursRequest
         case lastMenuRequest
     }
-    
+
     func clearAll() {
         for key in UserDefaultsKeys.allCases {
             removeObject(forKey: key.rawValue)
@@ -334,7 +334,7 @@ extension UserDefaults {
         set(authedIn, forKey: UserDefaultsKeys.authedIntoShibboleth.rawValue)
         synchronize()
     }
-    
+
     func isAuthedIn() -> Bool {
         return bool(forKey: UserDefaultsKeys.authedIntoShibboleth.rawValue)
     }
@@ -346,14 +346,14 @@ extension UserDefaults {
         let currentResults = getHousingResults() ?? Array<HousingResult>()
         var newResults = currentResults.filter { $0.start != result.start }
         newResults.append(result)
-        
+
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(newResults) {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.housing.rawValue)
         }
         synchronize()
     }
-    
+
     func getHousingResults() -> Array<HousingResult>? {
         let decoder = JSONDecoder()
         if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.housing.rawValue) {
@@ -361,7 +361,7 @@ extension UserDefaults {
         }
         return nil
     }
-    
+
     func isOnCampus() -> Bool? {
         guard let results = getHousingResults() else {
             return nil
@@ -379,7 +379,7 @@ extension UserDefaults {
 
 // MARK: - Penn Course Alert Settings
 extension UserDefaults {
-    
+
     // MARK: Get and Save Preferences
     // Set values for each PCA option
     func set(_ PCAOption: PCAOption, to newValue: Bool) {
@@ -387,13 +387,13 @@ extension UserDefaults {
         prefs[PCAOption.rawValue] = newValue
         saveAll(PCAPreferences: prefs)
     }
-    
+
     // Get values for each PCA option (default to false if no preference exists)
     func getPreference(for option: PCAOption) -> Bool {
         let prefs = getAllPCAPreferences()
         return prefs[option.rawValue] ?? false
     }
-    
+
     // Fetch preferences from disk
     func getAllPCAPreferences() -> PCAPreferences {
         let decoder = JSONDecoder()
@@ -402,19 +402,19 @@ extension UserDefaults {
         }
         return .init()
     }
-    
+
     func saveAll(PCAPreferences: PCAPreferences) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(PCAPreferences) {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.PCAPreferences.rawValue)
         }
     }
-    
+
 }
 
 // MARK: - Privacy Settings
 extension UserDefaults {
-    
+
     // MARK: Get and Save Preferences
     // Set values for each privacy option
     func set(_ privacyOption: PrivacyOption, to newValue: Bool) {
@@ -422,13 +422,13 @@ extension UserDefaults {
         prefs[privacyOption.rawValue] = newValue
         saveAll(privacyPreferences: prefs)
     }
-    
+
     // Get values for each privacy option (default to false if no preference exists)
     func getPreference(for option: PrivacyOption) -> Bool {
         let prefs = getAllPrivacyPreferences()
         return prefs[option.rawValue] ?? option.defaultValue
     }
-    
+
     // Fetch preferences from disk
     func getAllPrivacyPreferences() -> PrivacyPreferences {
         let decoder = JSONDecoder()
@@ -437,7 +437,7 @@ extension UserDefaults {
         }
         return .init()
     }
-    
+
     // Save all privacy preferences to disk
     func saveAll(privacyPreferences: PrivacyPreferences) {
         let encoder = JSONEncoder()
@@ -449,19 +449,19 @@ extension UserDefaults {
     private func clearPrivacyPreferences() {
         removeObject(forKey: UserDefaultsKeys.privacyPreferences.rawValue)
     }
-    
+
     // MARK: Last Permission Request Date
     // Set values representing whether or not permission was requested for a given privacy option
     // This is not synced to the server, so we ask a user again if they ever delete the app or get a new phone
     func setLastDidAskPermission(for privacyOption: PrivacyOption) {
         UserDefaults.standard.set(Date(), forKey: privacyOption.didRequestKey)
     }
-    
+
     // Get the last date we asked for this option, or nil if we've never asked (on this installation)
     func getLastDidAskPermission(for privacyOption: PrivacyOption) -> Date? {
         UserDefaults.standard.value(forKey: privacyOption.didRequestKey) as? Date
     }
-    
+
     // MARK: Last Data Sharing Date
     // Set the last date we shared data corresponding to this option (ex: when did we last upload courses)
     func setLastShareDate(for privacyOption: PrivacyOption) {
@@ -471,7 +471,7 @@ extension UserDefaults {
     func getLastShareDate(for privacyOption: PrivacyOption) -> Date? {
         UserDefaults.standard.value(forKey: privacyOption.didShareKey) as? Date
     }
-    
+
     // MARK: Privacy Option UUID
     // Each privacy option has its own UUID, which is sent to the server along with any anonymous data to allow us to track that data over time, as well as delete it if requested by the user.
     func getPrivacyUUID(for privacyOption: PrivacyOption) -> String? {
@@ -496,13 +496,13 @@ extension UserDefaults {
         prefs[notificationOption.rawValue] = newValue
         saveAll(notificationPreferences: prefs)
     }
-    
+
     // Get values for each notification option (default to true if no preference exists)
     func getPreference(for option: NotificationOption) -> Bool {
         let prefs = getAllNotificationPreferences()
         return prefs[option.rawValue] ?? option.defaultValue
     }
-    
+
     // Fetch preferences from disk
     func getAllNotificationPreferences() -> NotificationPreferences {
         let decoder = JSONDecoder()
@@ -511,7 +511,7 @@ extension UserDefaults {
         }
         return .init()
     }
-    
+
     // Save all notification preferences to disk
     func saveAll(notificationPreferences: NotificationPreferences) {
         let encoder = JSONEncoder()
@@ -531,7 +531,7 @@ extension UserDefaults {
         set(gsrGroupsEnabled, forKey: UserDefaultsKeys.gsrGroupsEnabled.rawValue)
         synchronize()
     }
-    
+
     func gsrGroupsEnabled() -> Bool {
         return bool(forKey: UserDefaultsKeys.gsrGroupsEnabled.rawValue)
     }
@@ -543,7 +543,7 @@ extension UserDefaults {
     func getTwoFactorEnabledDate() -> Date? {
         return UserDefaults.standard.value(forKey: UserDefaultsKeys.totpEnabledDate.rawValue) as? Date
     }
-    
+
     func setTwoFactorEnabledDate(_ date: Date?) {
         UserDefaults.standard.set(date, forKey: UserDefaultsKeys.totpEnabledDate.rawValue)
     }
@@ -554,7 +554,7 @@ extension UserDefaults {
     func setLastDiningHoursRequest() {
         UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastDiningHoursRequest.rawValue)
     }
-    
+
     func getLastDiningHoursRequest() -> Date? {
         return UserDefaults.standard.value(forKey: UserDefaultsKeys.lastDiningHoursRequest.rawValue) as? Date
     }
@@ -565,7 +565,7 @@ extension UserDefaults {
 extension UserDefaults {
     func setLastMenuRequest(id: Int) {
         let dict: [Int: Date]? = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue) as? [Int: Date]
-        
+
         if var menuDateDict = dict {
             menuDateDict[id] = Date()
             UserDefaults.standard.set(menuDateDict, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
@@ -574,10 +574,10 @@ extension UserDefaults {
             UserDefaults.standard.set(menuDateDictInit, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
         }
     }
-    
+
     func getLastMenuRequest(id: Int) -> Date? {
         let dict = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue)  as? [Int:Date]
-        
+
         return dict?[id]
     }
 }

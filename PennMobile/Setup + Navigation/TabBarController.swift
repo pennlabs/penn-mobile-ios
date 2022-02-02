@@ -9,26 +9,26 @@ import Foundation
 import UIKit
 
 final class TabBarController: UITabBarController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         tabBar.standardAppearance = appearance
-        
+
         // Required to prevent tab bar's appearance from switching between light and dark mode
         if #available(iOS 15.0, *) {
             tabBar.scrollEdgeAppearance = appearance
         }
-        
+
         loadTabs()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
+
     func loadTabs() {
         ControllerModel.shared.viewControllers.forEach { (vc) in
             if vc is TabBarShowable {

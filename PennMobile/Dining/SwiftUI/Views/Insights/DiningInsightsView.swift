@@ -12,13 +12,13 @@ import SwiftUI
 
 @available(iOS 14, *)
 struct DiningInsightsView: View {
-    
+
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
-    
+
     @Binding var pickerIndex : Int
     @State var isPresentingLoginSheet = false
     @State var loginFailure = false
-        
+
     var body: some View {
         GeometryReader { geo in
             ZStack {
@@ -29,27 +29,27 @@ struct DiningInsightsView: View {
                                 if self.diningVM.diningInsights?.diningDollars != nil {
                                     DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: self.diningVM.diningInsights!.diningDollars!, specifier: "%.2f", color: .green)
                                 }
-                                
+
                                 if self.diningVM.diningInsights?.swipes != nil {
                                     DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(self.diningVM.diningInsights!.swipes!), specifier: "%g", color: .blue)
                                 }
                             }.padding(.bottom)
-                            
+
                             HStack {
                                 if self.diningVM.diningInsights?.guestSwipes != nil {
                                     DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(self.diningVM.diningInsights!.guestSwipes!), specifier: "%g", color: .purple)
                                 }
-                                
+
                                 BlankDiningBalanceView()
                             }.padding(.bottom)
                         }
-                        
+
 
                         if self.diningVM.diningInsights?.cards.predictionsGraphSwipes != nil {
                             CardView { PredictionsGraphView(config: self.diningVM.diningInsights!.cards.predictionsGraphSwipes!) }
                                 .padding(.bottom)
                         }
-                        
+
                         if self.diningVM.diningInsights?.cards.predictionsGraphDollars != nil {
                             CardView { PredictionsGraphView(config: self.diningVM.diningInsights!.cards.predictionsGraphDollars!) }
                                 .padding(.bottom)
@@ -59,7 +59,7 @@ struct DiningInsightsView: View {
                             CardView { RecentTransactionsView(config: self.diningVM.diningInsights!.cards.recentTransactions!) }
                                 .padding(.bottom)
                         }
-                        
+
                         if self.diningVM.diningInsights?.cards.frequentLocations != nil {
                             CardView { FrequentLocationsView(config: self.diningVM.diningInsights!.cards.frequentLocations!) }
                                 .padding(.bottom)
@@ -89,8 +89,8 @@ struct DiningInsightsView: View {
                     LabsLoginControllerSwiftUI(isShowing: self.$isPresentingLoginSheet, loginFailure: self.$loginFailure, handleError: { self.pickerIndex = 0 })
                         .environmentObject(diningVM)
                 }
-                
-                
+
+
                 // Ad-hoc method to adding acitivity indicator
                 // Will be replaced using Progress View after iOS 14 release
                 ActivityIndicatorView(animating: self.$diningVM.diningInsightsIsLoading, style: .large)
@@ -98,7 +98,7 @@ struct DiningInsightsView: View {
                         Alert(title: Text("Login Failure"), message: Text("Login failed please try again later"), dismissButton: .default(Text("Do something")))
                     }
             }
-            
+
         }
     }
 }

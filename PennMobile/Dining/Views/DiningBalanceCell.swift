@@ -9,32 +9,32 @@
 import Foundation
 
 class DiningBalanceCell: UITableViewCell {
-    
+
     static let identifier = "diningBalanceCell"
     static let cellHeight: CGFloat = 120
-    
+
     var diningBalance: DiningBalance? {
         didSet {
             setupCell(with: diningBalance)
         }
     }
-    
+
     weak var transactionCellDelegate: TransactionCellDelegate?
-    
+
     fileprivate let collectionCellId: String = "diningBalanceCollectionViewCell"
-    
+
     // MARK: - UI Elements
     fileprivate var balanceCollectionView: UICollectionView!
     fileprivate var balancesAsOfLabel: UILabel!
     fileprivate let safeInsetValue: CGFloat = 14
     fileprivate var safeArea: UIView!
-    
+
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareUI()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -57,13 +57,13 @@ extension DiningBalanceCell {
 
 // MARK: - Initialize and Layout UI Elements
 extension DiningBalanceCell {
-    
+
     fileprivate func prepareUI() {
         prepareSafeArea()
         prepareCollectionView()
         prepareBalancesAsOfLabel()
     }
-    
+
     fileprivate func prepareBalancesAsOfLabel() {
         balancesAsOfLabel = UILabel()
         balancesAsOfLabel.font = .secondaryTitleFont
@@ -75,7 +75,7 @@ extension DiningBalanceCell {
         balancesAsOfLabel.topAnchor.constraint(equalTo: balanceCollectionView.bottomAnchor, constant: 3).isActive = true
         balancesAsOfLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 14).isActive = true
     }
-    
+
     fileprivate func prepareCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -89,7 +89,7 @@ extension DiningBalanceCell {
         balanceCollectionView.delegate = self
         balanceCollectionView.dataSource = self
         balanceCollectionView.showsHorizontalScrollIndicator = false
-    
+
         balanceCollectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(balanceCollectionView)
         balanceCollectionView.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
@@ -97,13 +97,13 @@ extension DiningBalanceCell {
         balanceCollectionView.heightAnchor.constraint(equalToConstant: 95).isActive = true
         balanceCollectionView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
     }
-    
+
     // MARK: Safe Area
     fileprivate func prepareSafeArea() {
         safeArea = UIView()
         safeArea.translatesAutoresizingMaskIntoConstraints = false
         addSubview(safeArea)
-        
+
         safeArea.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         safeArea.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         safeArea.topAnchor.constraint(equalTo: topAnchor, constant: safeInsetValue / 2).isActive = true
@@ -114,15 +114,15 @@ extension DiningBalanceCell {
 // MARK: - CollectionView Delegate, Datasource
 
 extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellId, for: indexPath as IndexPath) as! DiningBalanceCollectionViewCell
         cell.layer.cornerRadius = 8
@@ -131,7 +131,7 @@ extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegat
         cell.layer.shadowColor = UIColor.grey1.cgColor
         cell.layer.shadowOpacity = 0.5
         cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: 8).cgPath
-        
+
         if (indexPath.item == 0) {
             cell.type = .diningDollars
             if let diningDollars = diningBalance?.diningDollars {
@@ -161,7 +161,7 @@ extension DiningBalanceCell: UICollectionViewDataSource, UICollectionViewDelegat
         }
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item  == 0 {
             transactionCellDelegate?.userDidSelect()

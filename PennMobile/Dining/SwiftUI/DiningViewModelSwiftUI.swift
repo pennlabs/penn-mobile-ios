@@ -11,36 +11,36 @@ import SwiftUI
 @available(iOS 14, *)
 class DiningViewModelSwiftUI: ObservableObject {
     static let instance = DiningViewModelSwiftUI()
-    
+
     @Published var diningVenues: [DiningVenue.VenueType : [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
     @Published var diningInsights = DiningAPI.instance.getInsights()
     @Published var diningMenus = DiningAPI.instance.getMenus()
-    
+
     @Published var diningVenuesIsLoading = false
     @Published var diningInsightsIsLoading = false
-    
+
     @Published var alertType: NetworkingError? = nil
-    
+
     @Published var swipes = 0
     @Published var diningDollars = 0.0
-    
+
     // MARK:- Venue Methods
     let ordering: [DiningVenue.VenueType] = [.dining, .retail]
-    
+
     init() {
         refreshVenues()
         refreshBalance()
     }
-    
+
     func refreshVenues() {
         let lastRequest = UserDefaults.standard.getLastDiningHoursRequest()
-        
+
         if lastRequest == nil || !lastRequest!.isToday {
             self.diningVenuesIsLoading = true
-            
+
             DiningAPI.instance.fetchDiningHours { result in
                 self.diningVenuesIsLoading = false
-                
+
                 switch result {
                 case .success(let diningVenues):
                     UserDefaults.standard.setLastDiningHoursRequest()
@@ -56,7 +56,7 @@ class DiningViewModelSwiftUI: ObservableObject {
             }
         }
     }
-    
+
     func refreshMenu(for id: Int) {
         let lastRequest = UserDefaults.standard.getLastMenuRequest(id: id)
         if lastRequest == nil || !lastRequest!.isToday {
@@ -72,7 +72,7 @@ class DiningViewModelSwiftUI: ObservableObject {
             }
         }
     }
-    
+
     func refreshBalance() {
         if (UserDefaults.standard.hasDiningPlan()) {
             DiningAPI.instance.fetchDiningBalance { diningBalance in
@@ -83,14 +83,14 @@ class DiningViewModelSwiftUI: ObservableObject {
             }
         }
     }
-    
+
     // MARK: - Insights
     func refreshInsights() {
         diningInsightsIsLoading = true
-        
+
         DiningAPI.instance.fetchDiningInsights { (result) in
             self.diningInsightsIsLoading = false
-            
+
             switch result {
             case .success(let diningInsights):
                 self.diningInsights = diningInsights

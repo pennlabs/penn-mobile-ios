@@ -13,7 +13,7 @@ protocol DiningCellSelectable {
     func handleSettingsTapped(venues: [DiningVenue])
 }
 
-final class HomeDiningCell: UITableViewCell, HomeCellConformable {    
+final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     var delegate: ModularTableViewCellDelegate!
     var item: ModularTableViewItem! {
         didSet {
@@ -112,18 +112,18 @@ extension HomeDiningCell {
         prepareSettingsButton()
         prepareTableView()
     }
-    
+
     // MARK: Safe Area and Header
     fileprivate func prepareSafeArea() {
         cardView.addSubview(safeArea)
         safeArea.prepare()
     }
-    
+
     fileprivate func prepareHeader() {
         safeArea.addSubview(header)
         header.prepare()
     }
-    
+
     // MARK: Settings Button
     fileprivate func prepareSettingsButton() {
         settingsButton = getSettingsButton()
@@ -139,7 +139,7 @@ extension HomeDiningCell {
     fileprivate func prepareTableView() {
         venueTableView = getVenueTableView()
         cardView.addSubview(venueTableView)
-        
+
         venueTableView.snp.makeConstraints { (make) in
             make.leading.equalTo(cardView)
             make.top.equalTo(header.snp.bottom).offset(pad)

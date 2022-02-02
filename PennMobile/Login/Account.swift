@@ -16,16 +16,16 @@ class Account: Codable {
     var email: String?
     var imageUrl: String?
     var affiliations: [String]?
-    
+
     var isStudent: Bool {
         return affiliations?.contains("student") ?? true
     }
-    
+
     var degrees: Set<Degree>?
     var courses: Set<Course>?
-    
+
     fileprivate static var account: Account?
-    
+
     init(user: OAuthUser) {
         self.first = user.firstName
         self.last = user.lastName
@@ -34,11 +34,11 @@ class Account: Codable {
         self.pennid = user.pennid
         self.affiliations = user.affiliation
     }
-    
+
     func isInWharton() -> Bool {
         return email?.contains("wharton") ?? false
     }
-    
+
     func setEmail() {
         guard let degrees = degrees else { return }
         var potentialEmail: String? = nil
@@ -59,7 +59,7 @@ class Account: Codable {
         }
         email = potentialEmail
     }
-    
+
     var description: String {
         var str = "\(first ?? "") \(last ?? "")"
         if let imageUrl = imageUrl {
@@ -80,19 +80,19 @@ class Account: Codable {
         }
         return str
     }
-    
+
     static func getAccount() -> Account? {
         if account == nil {
             account = UserDefaults.standard.getAccount()
         }
         return account
     }
-    
+
     static func saveAccount(_ thisAccount: Account) {
         UserDefaults.standard.saveAccount(thisAccount)
         account = thisAccount
     }
-    
+
     static func update(firstName: String? = nil, lastName: String? = nil, email: String? = nil) {
         guard let account = getAccount() else { return }
         if let firstName = firstName {
@@ -106,7 +106,7 @@ class Account: Codable {
         }
         saveAccount(account)
     }
-    
+
     static func clear() {
         UserDefaults.standard.clearAccount()
         account = nil
@@ -126,7 +126,7 @@ extension Account {
         let components = Calendar.current.dateComponents([.year], from: now)
         let january = Calendar.current.date(from: components)!
         let june = january.add(months: 5)
-        
+
         let year = components.year!
         let freshmanYear: Int
         if january <= now && now < june {
@@ -134,7 +134,7 @@ extension Account {
         } else {
             freshmanYear = year + 4
         }
-        
+
         if let degrees = degrees {
             for degree in degrees {
                 // Check if in undergrad

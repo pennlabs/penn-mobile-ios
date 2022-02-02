@@ -13,12 +13,12 @@ import SwiftUI
 
 @available(iOS 14, *)
 struct CardHeaderView: View {
-    
+
     let color: Color
     let icon: CardHeaderTitleView.IconType
     let title: String
     let subtitle: String
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             CardHeaderTitleView(color: color, icon: icon, title: title)
@@ -33,11 +33,11 @@ struct CardHeaderTitleView: View {
     enum IconType {
         case dollars, swipes, predictions
     }
-    
+
     let color: Color
     let icon: IconType
     let title: String
-    
+
     private func imageName(for icon: IconType) -> String {
         switch icon {
         case .dollars: return "dollarsign.circle.fill"
@@ -45,7 +45,7 @@ struct CardHeaderTitleView: View {
         case .predictions: return "wand.and.rays"
         }
     }
-    
+
     var body: some View {
         HStack {
             Image(systemName: imageName(for: icon))

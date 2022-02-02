@@ -9,7 +9,7 @@
 import Foundation
 
 struct CourseAlert: Decodable {
-    
+
     let id: Int
     let createdAt: String
     let originalCreatedAt: String
@@ -27,7 +27,7 @@ struct CourseAlert: Decodable {
     let isActive: Bool
     let isWaitingForClose: Bool
     let sectionStatus: String
-    
+
     enum CodingKeys: String, CodingKey {
         case id, section, user, deleted
         case createdAt = "created_at"
@@ -44,5 +44,5 @@ struct CourseAlert: Decodable {
         case isWaitingForClose = "is_waiting_for_close"
         case sectionStatus = "section_status"
     }
-    
+
 }

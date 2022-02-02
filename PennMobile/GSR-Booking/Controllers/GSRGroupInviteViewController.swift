@@ -9,17 +9,17 @@
 import UIKit
 
 class GSRGroupInviteViewController: UIViewController {
-    
+
     fileprivate var dummyLabel: UILabel!
     fileprivate var closeButton: UIButton!
     fileprivate var inViteUsersLabel: UILabel!
     fileprivate var searchBar: UISearchBar!
     fileprivate var sendInvitesButton: UIButton!
     fileprivate var tableView: UITableView!
-    
+
     fileprivate let disabledBtnColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:0.5)
     fileprivate let enabledBtnColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:1)
-    
+
     fileprivate var users = GSRInviteSearchResults()
     fileprivate var filteredUsers = GSRInviteSearchResults() {
         didSet {
@@ -29,31 +29,31 @@ class GSRGroupInviteViewController: UIViewController {
             print(filteredUsers)
         }
     }
-    
+
     fileprivate var isSearchBarEmpty: Bool {
       return searchBar.text?.isEmpty ?? true
     }
-    
+
     fileprivate var isFiltering: Bool {
       return !isSearchBarEmpty
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         prepareUI()
-        
+
         GSRGroupNetworkManager.instance.getAllUsers { (success, results) in
             if (success) {
                 self.users = results!
-                
+
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
             }
         }
     }
-    
+
     func prepareCloseButton() {
         closeButton = UIButton()
         view.addSubview(closeButton)
@@ -70,7 +70,7 @@ class GSRGroupInviteViewController: UIViewController {
         //closeButton.setImage(image: , for: UIControl.State.normal)
         closeButton.addTarget(self, action: #selector(cancelBtnAction), for: .touchUpInside)
     }
-    
+
     func prepareInviteUsersLabel() {
         inViteUsersLabel = UILabel()
         inViteUsersLabel.text = "Invite Users"
@@ -80,11 +80,11 @@ class GSRGroupInviteViewController: UIViewController {
         inViteUsersLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 79.5).isActive = true
         inViteUsersLabel.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     @objc func cancelBtnAction(sender:UIButton!) {
         dismiss(animated: true, completion:nil)
     }
-    
+
     func prepareSearchBar() {
         searchBar = UISearchBar()
         searchBar.delegate = self
@@ -96,7 +96,7 @@ class GSRGroupInviteViewController: UIViewController {
         searchBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         searchBar.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     func prepareSendInvitationButton() {
         sendInvitesButton = UIButton()
         sendInvitesButton.backgroundColor = UIColor(red:32/255.0, green:156/255.0, blue:238/255.0, alpha:0.5)
@@ -105,25 +105,25 @@ class GSRGroupInviteViewController: UIViewController {
         sendInvitesButton.titleLabel?.font =  UIFont.boldSystemFont(ofSize: 17)
         sendInvitesButton.layer.cornerRadius = 8
         sendInvitesButton.layer.masksToBounds = true
-        
+
         view.addSubview(sendInvitesButton)
         sendInvitesButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         sendInvitesButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 14).isActive = true
         sendInvitesButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -14).isActive = true
         sendInvitesButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         sendInvitesButton.translatesAutoresizingMaskIntoConstraints = false
-        
+
         sendInvitesButton.addTarget(self, action: #selector(didPressInviteBtn), for: .touchUpInside)
-        
+
         sendInvitesButton.isEnabled = false
 //        sendInvitesButton.isUserInteractionEnabled = false
     }
-    
+
     func prepareTableView() {
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        
+
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
@@ -145,22 +145,22 @@ extension GSRGroupInviteViewController {
 }
 
 extension GSRGroupInviteViewController: UITableViewDelegate {
-    
+
 }
 
 extension GSRGroupInviteViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
             return filteredUsers.count
         }
-        
+
         return users.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let user: GSRInviteSearchResult
@@ -172,10 +172,10 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
         cell.textLabel?.text = user.username
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
-        
+
         if cell.accessoryType == UITableViewCell.AccessoryType.checkmark {
             cell.accessoryType = .none
             filteredUsers = filteredUsers.filter {$0 != users[indexPath.row]}
@@ -183,7 +183,7 @@ extension GSRGroupInviteViewController: UITableViewDataSource {
             cell.accessoryType = .checkmark
             filteredUsers.append(users[indexPath.row])
         }
-        
+
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -193,7 +193,7 @@ extension GSRGroupInviteViewController {
       filteredUsers = users.filter { (user: GSRInviteSearchResult) -> Bool in
         return user.username.lowercased().contains(searchText.lowercased())
       }
-      
+
       tableView.reloadData()
     }
 }

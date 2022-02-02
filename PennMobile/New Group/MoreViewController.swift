@@ -9,11 +9,11 @@
 import UIKit
 
 class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccessible {
-    
+
     var account: Account?
-    
+
     fileprivate var barButton: UIBarButtonItem!
-    
+
     private var shouldShowProfile: Bool = false
 
     override func viewDidLoad() {
@@ -23,13 +23,13 @@ class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccess
         }
         setUpTableView()
         self.tableView.isHidden = true
-        
+
         barButton = UIBarButtonItem(title: Account.isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
         barButton.tintColor = UIColor.navigation
-        
+
         registerObserver()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if shouldShowProfile {
@@ -40,7 +40,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccess
         }
         tableView.reloadData()
     }
-    
+
     override func setupNavBar() {
         self.tabBarController?.title = "More"
         barButton = UIBarButtonItem(title: Account.isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
@@ -48,7 +48,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccess
         tabBarController?.navigationItem.leftBarButtonItem = nil
         tabBarController?.navigationItem.rightBarButtonItem = barButton
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let topSpace:CGFloat?
@@ -61,7 +61,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccess
             self.tableView.isHidden = false
         }
     }
-    
+
     func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -72,12 +72,12 @@ class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccess
         tableView.register(TwoFactorCell.self, forCellReuseIdentifier: TwoFactorCell.identifier)
         tableView.tableFooterView = UIView()
     }
-    
+
     fileprivate struct PennLink {
         let title: String
         let url: String
     }
-    
+
     fileprivate let pennLinks: [PennLink] = [
         PennLink(title: "Penn Labs", url: "https://pennlabs.org"),
         PennLink(title: "Penn Homepage", url: "https://upenn.edu"),
@@ -86,27 +86,27 @@ class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccess
         PennLink(title: "PennInTouch", url: "https://pennintouch.apps.upenn.edu"),
         PennLink(title: "PennPortal", url: "https://portal.apps.upenn.edu/penn_portal"),
         PennLink(title: "Share Your Feedback", url: "https://airtable.com/shrS98E3rj5Nw1wy6")]
-    
+
 }
 
 extension MoreViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Notification and privacy tabs aren't shown for users that aren't logged in
         let rows = [Account.isLoggedIn ? 5 : 3, ControllerModel.shared.moreOrder.count, pennLinks.count]
         return rows[section]
     }
-    
+
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = HeaderViewCell()
         let titles = ["ACCOUNT", "FEATURES", "LINKS"]
         headerView.setUpView(title: titles[section])
         return headerView
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
@@ -155,15 +155,15 @@ extension MoreViewController {
         }
         return UITableViewCell()
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (indexPath.section == 0 && indexPath.row == 4) ? TwoFactorCell.cellHeight : 50
     }
-    
+
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return (indexPath.section == 0 && indexPath.row == 4) ? TwoFactorCell.cellHeight : 50
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
@@ -197,7 +197,7 @@ extension MoreViewController {
             alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
                 DispatchQueue.main.async {
                     AppDelegate.shared.rootViewController.logout()
-                    
+
                     //If the user intentionally logs out, remove their PAC Code
                     self.removePacCode()
                 }
@@ -213,16 +213,16 @@ extension MoreViewController {
             present(nvc, animated: true, completion: nil)
         }
     }
-    
+
     func loginCompletion(_ successful: Bool) {
         if successful {
             if shouldShowProfile {
                 self.account = Account.getAccount()
             }
-            
+
             tableView.reloadData()
             tabBarController?.navigationItem.rightBarButtonItem?.title = "Logout"
-            
+
             // Clear cache so that home title updates with new first name
             guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
                 return
@@ -239,15 +239,15 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate, Tw
     func handleRefresh() {
         tableView.reloadData()
     }
-    
+
     func handleDismiss() {
         tableView.reloadData()
     }
-    
+
     func shouldWait() -> Bool {
         return false
     }
-    
+
     func handleEnable() {
         tableView.reloadData()
         let twc = TwoFactorWebviewController()
@@ -260,7 +260,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate, Tw
                 }))
                 self.present(alert, animated: true, completion: nil)
             }
-            
+
             self.tableView.reloadData()
         }
         let nvc = UINavigationController(rootViewController: twc)
@@ -268,7 +268,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate, Tw
             self.present(nvc, animated: true, completion: nil)
         }
     }
-    
+
     func handleEnableSwitch(enabled: Bool) {
         if enabled {
             if #available(iOS 13, *) {
@@ -281,24 +281,24 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate, Tw
                     self.tableView.reloadData()
                     alert.dismiss(animated: true, completion: nil)
                 }))
-                
+
                 alert.addAction(UIAlertAction(title: "Enable", style: .default, handler: { _ in
                     alert.dismiss(animated: true, completion: nil)
                     FirebaseAnalyticsManager.shared.trackEvent(action: .twoStep, result: .enabled, content: true)
                     self.handleEnable()
                 }))
-                
+
                 self.present(alert, animated: true, completion: nil)
             }
         } else {
             tableView.reloadData()
             let alert = UIAlertController(title: "Disabling Two-Factor Automation", message: "Are you sure you want to disable Two-Factor Automation? If you do, we will no longer be storing your unique key. To re-enable Two-Factor Automation, you will have to login again.", preferredStyle: .alert)
-            
+
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
                 self.tableView.reloadData()
                 alert.dismiss(animated: true, completion: nil)
             }))
-            
+
             alert.addAction(UIAlertAction(title: "Disable", style: .destructive, handler: { _ in
                 alert.dismiss(animated: true, completion: nil)
                 FirebaseAnalyticsManager.shared.trackEvent(action: .twoStep, result: .disabled, content: false)
@@ -315,7 +315,7 @@ extension MoreViewController {
     func registerObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleCodeFetched(_:)), name: Notification.Name(rawValue: "TOTPCodeFetched") , object: nil)
     }
-    
+
     @objc func handleCodeFetched(_ sender: Any?) {
         tableView.reloadData()
     }

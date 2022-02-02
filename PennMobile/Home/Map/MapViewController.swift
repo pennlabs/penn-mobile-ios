@@ -11,11 +11,11 @@ import MapKit
 import SwiftyJSON
 
 class MapViewController: UIViewController {
-    
+
     fileprivate var mapView: MKMapView?
-    
+
     var searchTerm: String?
-    
+
     var building: BuildingMapDisplayable? {
         didSet {
             guard let building = building else { return }
@@ -23,7 +23,7 @@ class MapViewController: UIViewController {
             self.annotation = building.getAnnotation()
         }
     }
-    
+
     var facility: FitnessFacilityName? {
         didSet {
             guard let facility = facility else { return }
@@ -31,7 +31,7 @@ class MapViewController: UIViewController {
             self.annotation = PennCoordinate.shared.getAnnotation(for: facility)
         }
     }
-    
+
     var region: MKCoordinateRegion = PennCoordinate.shared.getDefaultRegion(at: .far) {
         didSet {
             if let _ = mapView {
@@ -40,25 +40,25 @@ class MapViewController: UIViewController {
         }
     }
     var annotation: MKAnnotation?
-    
+
     lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.delegate = self
         return locationManager
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMap()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Penn Map"
-        
+
         guard let searchTerm = searchTerm else { return }
         self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
-        
+
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined, .denied:
@@ -71,7 +71,7 @@ class MapViewController: UIViewController {
             showCoordinates(searchTerm: searchTerm)
         }
     }
-    
+
     fileprivate func showCoordinates(searchTerm: String) {
         self.region = MKCoordinateRegion.init(center: PennCoordinate.shared.getDefault(), latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
         self.getCoordinates(for: searchTerm) { (coordinates, title) in
@@ -85,7 +85,7 @@ class MapViewController: UIViewController {
                         self.annotation = thisAnnotation
                         self.mapView?.addAnnotation(thisAnnotation)
                     }
-                    
+
                     if let annotation = self.annotation, self.hasLocationPermission() {
                         let userLoc = self.mapView!.userLocation
                         let newDistance = CLLocation(latitude: userLoc.coordinate.latitude, longitude: userLoc.coordinate.longitude).distance(from: CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude))
@@ -104,7 +104,7 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController {
-    
+
     fileprivate func setupMap() {
         mapView = getMapView()
         mapView?.showsUserLocation = true
@@ -119,7 +119,7 @@ extension MapViewController {
 }
 
 extension MapViewController {
-    
+
     fileprivate func getMapView() -> MKMapView {
         let mv = MKMapView(frame: view.frame)
         mv.setRegion(region, animated: false)

@@ -39,12 +39,12 @@ enum NotificationOption: String, Codable {
     case dailyMenuNotificationLunch
     case dailyMenuNotificationDinner
     case pennCourseAlerts
-    
+
     // Options to be actually shown to the user
     static let visibleOptions: [NotificationOption] = [
         .upcomingStudyRoomReminder, .diningBalanceSummary, .pennCourseAlerts, .universityEventAnnouncement, .pennMobileUpdateAnnouncement
     ]
-    
+
     var cellTitle: String? {
         switch self {
         case .pennCourseAlerts: return "Penn Course Alerts"
@@ -56,7 +56,7 @@ enum NotificationOption: String, Codable {
         default: return nil
         }
     }
-    
+
     var cellFooterDescription: String? {
         switch self {
         case .pennCourseAlerts: return "Receive notifications when courses open up."
