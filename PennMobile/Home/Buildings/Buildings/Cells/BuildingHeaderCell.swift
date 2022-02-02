@@ -112,4 +112,3 @@ extension BuildingHeaderCell {
         return label
     }
 }
-

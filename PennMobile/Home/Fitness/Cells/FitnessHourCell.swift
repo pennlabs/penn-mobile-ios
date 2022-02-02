@@ -200,4 +200,3 @@ extension FitnessHourCell {
         return label
     }
 }
-

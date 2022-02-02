@@ -94,4 +94,3 @@ extension GroupSettingsCell {
         isEnabledSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
     }
 }
-

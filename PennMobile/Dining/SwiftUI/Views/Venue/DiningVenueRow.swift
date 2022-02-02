@@ -133,4 +133,3 @@ struct DiningVenueRow_Previews: PreviewProvider {
         .preferredColorScheme(.light)
     }
 }
-

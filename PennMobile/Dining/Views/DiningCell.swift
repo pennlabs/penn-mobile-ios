@@ -188,4 +188,3 @@ extension DiningCell {
         return label
     }
 }
-

@@ -23,7 +23,6 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - nesting
   - legacy_constructor
   - redundant_optional_initialization
-  - trailing_newline
   - file_length
   - syntactic_sugar
   - for_where

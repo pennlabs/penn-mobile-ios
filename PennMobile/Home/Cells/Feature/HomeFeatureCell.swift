@@ -184,4 +184,3 @@ extension HomeFeatureCell {
         dateLabel.rightAnchor.constraint(equalTo: announcementImageView.rightAnchor, constant: -HomeFeatureCell.titleEdgeOffset).isActive = true
     }
 }
-

@@ -106,4 +106,3 @@ class GenericViewController: UIViewController, Trackable {
         self.navigationItem.leftBarButtonItem = nil
     }
 }
-

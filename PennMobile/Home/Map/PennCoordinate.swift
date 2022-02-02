@@ -110,4 +110,3 @@ extension PennCoordinate {
         return annotation
     }
 }
-

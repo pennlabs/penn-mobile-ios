@@ -127,4 +127,3 @@ extension HomeCalendarCell {
         return tableView
     }
 }
-

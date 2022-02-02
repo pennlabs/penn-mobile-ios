@@ -41,4 +41,3 @@ final class HomePollsCellItem: HomeCellItem {
         return "polls"
     }
 }
-
