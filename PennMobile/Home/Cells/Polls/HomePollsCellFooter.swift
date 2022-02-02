@@ -58,7 +58,6 @@ class HomePollsCellFooter: UIView {
         }
     }
 
-
     private func getNoteLabel() -> UILabel {
         let label = UILabel()
         label.font = .footerDescriptionFont

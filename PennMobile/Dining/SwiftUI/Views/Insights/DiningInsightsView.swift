@@ -44,7 +44,6 @@ struct DiningInsightsView: View {
                             }.padding(.bottom)
                         }
 
-
                         if self.diningVM.diningInsights?.cards.predictionsGraphSwipes != nil {
                             CardView { PredictionsGraphView(config: self.diningVM.diningInsights!.cards.predictionsGraphSwipes!) }
                                 .padding(.bottom)
@@ -89,7 +88,6 @@ struct DiningInsightsView: View {
                     LabsLoginControllerSwiftUI(isShowing: self.$isPresentingLoginSheet, loginFailure: self.$loginFailure, handleError: { self.pickerIndex = 0 })
                         .environmentObject(diningVM)
                 }
-
 
                 // Ad-hoc method to adding acitivity indicator
                 // Will be replaced using Progress View after iOS 14 release

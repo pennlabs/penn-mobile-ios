@@ -248,7 +248,6 @@ extension GSRController: GSRBookable {
                         self.present(nvc, animated: true, completion: nil)
                     }))
 
-
                     present(alertController, animated: true, completion: nil)
                 }
             }

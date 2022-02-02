@@ -256,7 +256,6 @@ open class RangeSlider: UIControl {
 
         minValueDisplayLayer.setNeedsDisplay()
 
-
         let maxValuePosition = position(maxValue) - thumbRadius
         maxValueThumbLayer.frame = CGRect(x: maxValuePosition,
                                           y: offsetY,

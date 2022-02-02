@@ -102,7 +102,6 @@ class GSRNetworkManager: NSObject, Requestable {
             let deviceID = getDeviceID()
             request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
 
-
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US_POSIX")
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"

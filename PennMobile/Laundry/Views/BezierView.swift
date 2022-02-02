@@ -85,7 +85,6 @@ class BezierView: UIView {
 
         let controlPoints = cubicCurveAlgorithm.controlPointsFromPoints(dataPoints: points)
 
-
         let linePath = UIBezierPath()
 
         for i in 0 ..< points.count {

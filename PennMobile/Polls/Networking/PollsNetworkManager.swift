@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class PollsNetworkManager: NSObject, Requestable {
 
     static let instance = PollsNetworkManager()

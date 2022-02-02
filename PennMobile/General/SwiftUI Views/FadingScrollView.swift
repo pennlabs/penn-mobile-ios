@@ -65,7 +65,6 @@ struct FadingScrollView<Content: View>: View {
                 }
             }
 
-
             if axes.contains(.horizontal) {
                 HStack {
                     fadeGradient(for: .horizontal, startPoint: .leading, endPoint: .trailing)

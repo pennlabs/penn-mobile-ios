@@ -40,7 +40,6 @@ public class Storage {
         }
     }
 
-
     /// Store an encodable struct to the specified directory on disk
     ///
     /// - Parameters:

@@ -253,7 +253,6 @@ extension HomeStudyRoomCell {
          }
     }
 
-
     /*// Mark: TableView
     fileprivate func prepareTableView() {
         studyRoomTableView = getStudyRoomTableView()

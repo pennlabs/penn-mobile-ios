@@ -560,7 +560,6 @@ extension UserDefaults {
     }
 }
 
-
 // MARK: - MenuRequest
 extension UserDefaults {
     func setLastMenuRequest(id: Int) {

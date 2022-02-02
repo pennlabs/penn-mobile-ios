@@ -27,7 +27,6 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - trailing_newline
   - file_length
   - syntactic_sugar
-  - vertical_whitespace
   - for_where
   - trailing_semicolon
   - weak_delegate

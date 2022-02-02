@@ -103,7 +103,6 @@ struct DiningStationItemRow: View {
                 Text(diningStationItem.title.capitalizeMainWords())
                     .font(Font.system(size: 17))
 
-
                 ForEach(diningStationItem.tableAttribute.attributeDescriptions, id: \.self) { attribute in
                     //Unlike UIKit, image will simply not appear if it doesn't exist in assets
                     Image(attribute.description)
@@ -121,7 +120,6 @@ struct DiningStationItemRow: View {
         }.padding(.bottom)
     }
 }
-
 
 extension AnyTransition {
     static var moveAndFade: AnyTransition {

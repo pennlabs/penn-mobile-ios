@@ -20,7 +20,6 @@ class GSRGroupInviteViewController: UIViewController {
     fileprivate let disabledBtnColor = UIColor.baseLabsBlue.withAlphaComponent(0.5)
     fileprivate let enabledBtnColor = UIColor.baseLabsBlue
 
-
     fileprivate var users = GSRInviteSearchResults()
     fileprivate var filteredUsers = GSRInviteSearchResults()
 
@@ -234,7 +233,6 @@ extension GSRGroupInviteViewController {
                 }
             }
         })
-
 
     }
 }

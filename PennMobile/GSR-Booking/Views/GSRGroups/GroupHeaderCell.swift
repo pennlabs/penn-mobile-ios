@@ -74,7 +74,6 @@ extension GroupHeaderCell {
         _ = titleLabel.anchor(nil, left: groupIcon.rightAnchor, bottom: groupIcon.bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 14.0, bottomConstant: 7.5, rightConstant: inset, widthConstant: 0, heightConstant: 30)
     }
 
-
     fileprivate func prepareMemberCountLabel() {
         memberCountLabel = UILabel()
         memberCountLabel.font = UIFont.systemFont(ofSize: 12.0, weight: .bold)

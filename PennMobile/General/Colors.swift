@@ -98,7 +98,6 @@ extension UIColor {
     }
 }
 
-
 import SwiftUI
 
 @available(iOS 14, *)

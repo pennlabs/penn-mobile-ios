@@ -28,9 +28,7 @@ class GSRGroupNewIntialController: UIViewController {
 
     fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Gritty Orange", "Red-ing Terminal", "Baltimore Blue", "Potruck Purple"]
 
-
     weak var delegate: NewGroupInitialDelegate!
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +57,6 @@ class GSRGroupNewIntialController: UIViewController {
         //closeButton.setImage(image: , for: UIControl.State.normal)
         closeButton.addTarget(self, action: #selector(cancelBtnAction), for: .touchUpInside)
     }
-
 
     func prepareNameField() {
         nameField = UITextField()
@@ -192,7 +189,6 @@ class GSRGroupNewIntialController: UIViewController {
         colorCollectionView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         colorCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
-
 
     @objc func createGroupBtnAction(sender:UIButton!) {
         //TODO: Consider adding appropriate error messages

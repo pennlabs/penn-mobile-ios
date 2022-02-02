@@ -154,7 +154,6 @@ extension HomeCoursesCell: ScheduleTableDelegate {
         return attrString
     }
 
-
     func handleEventTapped(_ event: Event) {
         guard let delegate = delegate as? BuildingMapSelectable,
             let course = (courses.filter { $0.getEvent() == event }).first,

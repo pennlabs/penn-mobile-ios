@@ -200,7 +200,6 @@ struct GraphPath: Shape, Animatable {
     }
 }
 
-
 @available(iOS 14, *)
 struct DailyAverageView_Previews: PreviewProvider {
 
@@ -219,7 +218,6 @@ struct DailyAverageView_Previews: PreviewProvider {
 
     }
 }
-
 
 // Ad-hoc solution to onChange effect of State
 // Will be replaced using .onChange modifier for state

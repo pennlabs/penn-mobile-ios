@@ -62,7 +62,6 @@ extension UniversityNotificationCell {
         centeredView.addSubview(dateLabel)
         addSubview(pennCrest)
 
-
         pennCrest.snp.makeConstraints { (make) in
             make.leading.equalTo(self).offset(pad)
             make.centerY.equalTo(self)

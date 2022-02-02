@@ -280,7 +280,6 @@ extension LaundryCell {
         bgView.addSubview(graphLabel)
         bgView.addSubview(graphDayLabel)
 
-
         bgView.addSubview(washersLabel)
         bgView.addSubview(dryersLabel)
 
@@ -420,7 +419,6 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }
-
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let machineArray = collectionView == washerCollectionView ? room.washers : room.dryers

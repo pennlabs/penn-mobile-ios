@@ -81,7 +81,6 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
         pacCodeSecurityInfoLabel.numberOfLines = 0
         pacCodeSecurityInfoLabel.textAlignment = .center
 
-
         view.addSubview(pacCodeSecurityInfoLabel)
         pacCodeSecurityInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         pacCodeSecurityInfoLabel.topAnchor.constraint(equalTo: pacCodeTitleLabel.bottomAnchor, constant: 20).isActive = true

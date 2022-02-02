@@ -40,7 +40,6 @@ class DiningCellSettingsController: UITableViewController {
         return allVenues.count
     }
 
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DiningVenueSettingsCell", for: indexPath)
         cell.selectionStyle = .none

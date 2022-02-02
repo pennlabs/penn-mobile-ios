@@ -20,7 +20,6 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
         }
     }
 
-
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomePollsCellItem else { return 0.0 }
         let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
@@ -41,7 +40,6 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
 
         return runningHeight + HomeCellHeader.height + HomePollsCellFooter.height + Padding.pad * 2.5
     }
-
 
     var pollQuestion: PollQuestion!
     var answer: Int?
@@ -148,7 +146,6 @@ extension HomePollsCell {
         }
     }
 
-
     // MARK: TableView
     fileprivate func prepareTableView() {
         responsesTableView = getTableView()
@@ -215,7 +212,6 @@ extension HomePollsCell: UITableViewDelegate {
         return label.frame.height + Padding.pad * 2
     }
 }
-
 
 extension HomePollsCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

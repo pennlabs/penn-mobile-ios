@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class GroupManageButtonCell: UITableViewCell {
 
     static let identifier = "gsrGroupManageButtonCell"

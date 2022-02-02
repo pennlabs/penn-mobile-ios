@@ -13,8 +13,6 @@ class GSRColorCell: UICollectionViewCell {
     static let identifier = "groupColorCell"
     var colorView: UIView!
 
-
-
 //    var timeSlot: GSRTimeSlot! {
 //        didSet {
 //            startLabel.text = format(date: timeSlot.startTime)
@@ -26,7 +24,6 @@ class GSRColorCell: UICollectionViewCell {
     var color: UIColor! {
         didSet {
             colorView.backgroundColor = color
-
 
             //colorView.layer.borderColor = borderColor.cgColor
         }

@@ -21,7 +21,6 @@ class GroupSettingsCell: UITableViewCell {
     var delegate: GSRGroupIndividualSettingDelegate?
     var userSetting: GSRGroupIndividualSetting!
 
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -95,5 +94,4 @@ extension GroupSettingsCell {
         isEnabledSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
     }
 }
-
 

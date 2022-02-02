@@ -128,5 +128,3 @@ extension HomeCalendarCell {
     }
 }
 
-
-

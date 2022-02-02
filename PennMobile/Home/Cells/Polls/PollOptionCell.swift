@@ -9,11 +9,9 @@
 import UIKit
 import SnapKit
 
-
 class PollOptionCell: UITableViewCell {
 
     static let identifier = "pollOptionCell"
-
 
     var question: String!
 
@@ -28,7 +26,6 @@ class PollOptionCell: UITableViewCell {
     }
 
     var chosen: Bool!
-
 
     // MARK: - UI Elements
     fileprivate var safeArea: UIView!

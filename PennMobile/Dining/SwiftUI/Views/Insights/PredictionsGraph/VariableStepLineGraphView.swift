@@ -56,7 +56,6 @@ struct VariableStepLineGraphView: View {
                                 self.trimEnd = 1.0
                         }
 
-
                         PredictionSlopePath(lastDataPoint: self.data.last!, predictionZeroPoint: self.predictedZeroPoint).stroke(
                             style: StrokeStyle(lineWidth: 2.0, lineCap: .round, lineJoin: .round, dash: [5], dashPhase: 5)
                         )

@@ -17,7 +17,6 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     let membershipURL = "https://studentlife.pennlabs.org/membership/"
     let inviteURL = "https://studentlife.pennlabs.org/membership/invite/"
 
-
 //    fileprivate static let pennKeyActiveSetting = GSRGroupIndividualSetting(title: "PennKey Permission", descr: "Anyone in this group can book a study room block using your PennKey.", isEnabled: false)
 //    fileprivate static let notificationOnSetting = GSRGroupIndividualSetting(title: "Notifications", descr: "You’ll receive a notification any time a room is booked by this group.", isEnabled: false)
 //    
@@ -36,9 +35,6 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 //        let lucy = GSRGroupMember(accountID: "1", pennKey: "yuewei", first: "Lucy", last: "Yuan", email: "yuewei@seas.upenn.edu", isBookingEnabled: false, isAdmin: false)
 //        return [daniel, rehaan, lucy]
 //    }
-
-
-
 
     func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
         let allGroupsURL = "\(userURL)me/"

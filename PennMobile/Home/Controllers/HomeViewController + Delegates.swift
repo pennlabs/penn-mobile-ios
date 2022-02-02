@@ -34,9 +34,6 @@ extension HomeViewController: GSRDeletable {
     }
 }
 
-
-
-
 // MARK: - GSR Quick Book Delegate
 extension HomeViewController: GSRBookable {
     func handleBookingSelected(_ booking: GSRBooking) {

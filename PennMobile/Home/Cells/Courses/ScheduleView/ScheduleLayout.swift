@@ -46,7 +46,6 @@ class ScheduleLayoutAttributes: UICollectionViewLayoutAttributes {
     }
 }
 
-
 class ScheduleLayout: UICollectionViewLayout {
     //1. Pinterest Layout Delegate
     var delegate: ScheduleLayoutDelegate!
@@ -116,7 +115,6 @@ class ScheduleLayout: UICollectionViewLayout {
             for item in 0 ..< collectionView!.numberOfItems(inSection: 1) {
 
                 let indexPath = IndexPath(item: item, section: 1)
-
 
                 // 3. Asks the delegate for the xOffset, yOffset, height, and width of the cell and calculates the cell frame.
                 let width = delegate.collectionView(collectionView: collectionView!, widthForCellAtIndexPath: indexPath, width: contentWidth - timeWidth) - cellPadding

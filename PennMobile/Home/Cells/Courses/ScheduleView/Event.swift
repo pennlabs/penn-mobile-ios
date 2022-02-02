@@ -152,7 +152,6 @@ class Event: Hashable {
 
         let event12 = Event(name: "Sleep", location: "Home", startTime: Time(hour: 6, minutes: 30, isAm: false), endTime: Time(hour: 8, minutes: 0, isAm: false))
 
-
         return [event1, event2, event3, event4, event5, event6, event7, event8, event9, event10, event11, event12]
     }()
 }
