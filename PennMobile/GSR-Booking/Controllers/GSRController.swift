@@ -237,7 +237,7 @@ extension GSRController: GSRBookable {
 
                     alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: {_ in }))
                     alertController.addAction(UIAlertAction(title: "Login", style: .default, handler: { _ in
-                        let llc = LabsLoginController { (success) in
+                        let llc = LabsLoginController { (_) in
                             DispatchQueue.main.async {
                                 self.submitBooking(for: GSRBooking(gid: gid, startTime: first.startTime, endTime: last.endTime, id: id, roomName: roomName))
                             }

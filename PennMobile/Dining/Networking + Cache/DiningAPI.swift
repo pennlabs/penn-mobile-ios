@@ -19,7 +19,7 @@ class DiningAPI: Requestable {
     let diningInsightsUrl = "https://pennmobile.org/api/dining/"
 
     func fetchDiningHours(_ completion: @escaping (_ result: Result<DiningAPIResponse, NetworkingError>) -> Void) {
-        getRequestData(url: diningUrl) { (data, error, statusCode) in
+        getRequestData(url: diningUrl) { (data, _, statusCode) in
             if statusCode == nil {
                 return completion(.failure(.noInternet))
             }
@@ -40,7 +40,7 @@ class DiningAPI: Requestable {
     }
 
     func fetchDiningMenu(for id: Int, _ completion: @escaping (_ result: Result<DiningMenuAPIResponse, NetworkingError>) -> Void) {
-        getRequestData(url: diningMenuUrl + "\(id)") { (data, error, statusCode) in
+        getRequestData(url: diningMenuUrl + "\(id)") { (data, _, statusCode) in
             if statusCode == nil {
                 return completion(.failure(.noInternet))
             }
@@ -72,7 +72,7 @@ class DiningAPI: Requestable {
             var request = URLRequest(url: url, accessToken: token)
             request.httpMethod = "GET"
 
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
                 guard let data = data else {
                    if let error = error as? NetworkingError {
                        completion(.failure(error))

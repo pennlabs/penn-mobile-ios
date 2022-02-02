@@ -17,7 +17,7 @@ extension PennInTouchNetworkManager {
 
     func getCourses(currentTermOnly: Bool = false, callback: @escaping ((_ result: Result<Set<Course>, NetworkingError>) -> Void)) {
         makeAuthRequest(targetUrl: courseURL, shibbolethUrl: shibbolethUrl) { (data, response, error) in
-            self.makeAuthRequest(targetUrl: self.courseURL, shibbolethUrl: self.shibbolethUrl) { (data, response, error) in
+            self.makeAuthRequest(targetUrl: self.courseURL, shibbolethUrl: self.shibbolethUrl) { (data, _, error) in
 
                 guard let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? else {
 
@@ -79,7 +79,7 @@ extension PennInTouchNetworkManager {
             ]
         request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
 
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {

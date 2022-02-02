@@ -141,7 +141,7 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
                 if account.email?.contains("wharton") ?? false {
                     UserDefaults.standard.set(isInWharton: true)
                 }
-                UserDBManager.shared.syncUserSettings { (success) in
+                UserDBManager.shared.syncUserSettings { (_) in
                     if UserDefaults.standard.getPreference(for: .academicIdentity) {
                         // Has permission to retrieve degrees
                         PennInTouchNetworkManager.instance.getDegrees { (degrees) in
@@ -239,9 +239,9 @@ extension LabsLoginController {
             UserDefaults.standard.set(hasDiningPlan: true)
         }
 
-        CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, error) in
+        CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, _) in
             guard let html = html else { return }
-            UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, balance) in
+            UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, _) in
                 if let hasDiningPlan = hasPlan {
                     UserDefaults.standard.set(hasDiningPlan: hasDiningPlan)
                 }
@@ -278,7 +278,7 @@ extension LabsLoginController {
     }
 
     fileprivate func getAndSaveNotificationAndPrivacyPreferences(_ completion: @escaping () -> Void) {
-        UserDBManager.shared.syncUserSettings { (success) in
+        UserDBManager.shared.syncUserSettings { (_) in
             completion()
         }
     }
@@ -290,10 +290,10 @@ extension LabsLoginController {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Don't Allow", style: .default, handler: { (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Don't Allow", style: .default, handler: { (_) in
             callback(false)
         }))
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
             callback(true)
         }))
         present(alert, animated: true)

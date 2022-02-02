@@ -166,7 +166,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
     // MARK: Get Reservatoins
     func getReservations(for sessionID: String, callback: @escaping ((_ reservations: [GSRReservation]?) -> Void)) {
         let url = "\(reservationURL)?sessionid=\(sessionID)"
-        getRequest(url: url) { (dict, error, _) in
+        getRequest(url: url) { (dict, _, _) in
             var reservations: [GSRReservation]?
             if let dict = dict {
                 let json = JSON(dict)

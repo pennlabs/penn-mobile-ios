@@ -58,7 +58,7 @@ extension PennCashNetworkManager: PennAuthRequestable {
     }
 
     private func getCid(_ callback: @escaping (_ cid: String?) -> Void) {
-        makeAuthRequest(targetUrl: loginUrl, shibbolethUrl: shibbolethUrl, { (data, response, error) in
+        makeAuthRequest(targetUrl: loginUrl, shibbolethUrl: shibbolethUrl, { (data, _, _) in
             if let data = data, let html = String(bytes: data, encoding: .utf8) {
                 let cidMatches = html.getMatches(for: "cid=(.*?)&")
                 if let cid = cidMatches.first {
@@ -72,7 +72,7 @@ extension PennCashNetworkManager: PennAuthRequestable {
 
     private func getSkey(cid: String, _ callback: @escaping (_ skey: String?) -> Void) {
         let url = "\(self.baseUrl)/login.php?cid=\(cid)&fullscreen=1&wason=/statementnew.php"
-        makeAuthRequest(targetUrl: url, shibbolethUrl: shibbolethUrl, { (data, response, error) in
+        makeAuthRequest(targetUrl: url, shibbolethUrl: shibbolethUrl, { (data, _, _) in
             if let data = data, let html = String(bytes: data, encoding: .utf8) {
                 let skeyMatches = html.getMatches(for: "skey=(.*?)\";")
                 if let skey = skeyMatches.first {
@@ -91,7 +91,7 @@ extension PennCashNetworkManager: PennAuthRequestable {
         }
 
         let url = "\(baseUrl)/login-check.php?skey=\(skey)"
-        makeAuthRequest(targetUrl: url, shibbolethUrl: shibbolethUrl) { (data, response, error) in
+        makeAuthRequest(targetUrl: url, shibbolethUrl: shibbolethUrl) { (data, _, _) in
             if let data = data, let html = String(bytes: data, encoding: .utf8) {
                 let isValidated = html.contains("<message>1</message>")
                 if isValidated {
@@ -111,7 +111,7 @@ extension PennCashNetworkManager: PennAuthRequestable {
         formatter.dateFormat = "yyyy-MM-dd"
         let dateStr = formatter.string(from: tomorrow)
         let csvUrl = "https://www.penncash.com/statementdetail.php?cid=\(cid)&skey=\(skey)&format=csv&startdate=2000-01-01&enddate=\(dateStr)&acct=14"
-        makeAuthRequest(targetUrl: csvUrl, shibbolethUrl: shibbolethUrl, { (data, response, error) in
+        makeAuthRequest(targetUrl: csvUrl, shibbolethUrl: shibbolethUrl, { (data, _, _) in
             callback(data)
         })
     }

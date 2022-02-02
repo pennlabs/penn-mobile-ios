@@ -115,7 +115,7 @@ extension CourseScheduleViewController {
 
     private func handleNetworkCourseRefreshCompletion(_ courses: Set<Course>) {
         if let accountID = UserDefaults.standard.getAccountID() {
-            UserDBManager.shared.saveCourses(courses, accountID: accountID, { (success) in
+            UserDBManager.shared.saveCourses(courses, accountID: accountID, { (_) in
                 self.assignModelAndRefreshTable(courses: courses)
             })
         } else {

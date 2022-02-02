@@ -58,7 +58,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
 
         super.viewDidLoad()
 
-        changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
+        changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, _: CGFloat, changeCurrentIndex: Bool, _: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
             oldCell?.label.textColor = .labelPrimary
             newCell?.label.textColor = .baseBlue

@@ -195,7 +195,7 @@ class GSRGroupNewIntialController: UIViewController {
         guard let name = nameField.text else {return}
         guard let color = colorLabel.text else {return}
 
-        GSRGroupNetworkManager.instance.createGroup(name: name, color: color) { (success, groupID, errorMsg) in
+        GSRGroupNetworkManager.instance.createGroup(name: name, color: color) { (success, groupID, _) in
             if success {
                 DispatchQueue.main.async {
                     let controller = GSRGroupInviteViewController()

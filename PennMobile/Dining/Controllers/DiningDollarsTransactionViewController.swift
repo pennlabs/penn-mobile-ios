@@ -36,7 +36,7 @@ class DiningDollarsTransactionViewController: GenericTableViewController, Reques
             if let data = data, let str = String(bytes: data, encoding: .utf8) {
                 UserDefaults.standard.setLastTransactionRequest()
                 UserDBManager.shared.saveTransactionData(csvStr: str) {
-                    self.fetchTransactionData { (results, error) in
+                    self.fetchTransactionData { (results, _) in
                         DispatchQueue.main.async {
                             self.hideActivity()
                             self.transactionHistory = results
@@ -45,7 +45,7 @@ class DiningDollarsTransactionViewController: GenericTableViewController, Reques
                     }
                 }
             } else {
-                self.fetchTransactionData { (results, error) in
+                self.fetchTransactionData { (results, _) in
                     DispatchQueue.main.async {
                         self.hideActivity()
                         self.transactionHistory = results
@@ -78,7 +78,7 @@ extension DiningDollarsTransactionViewController {
 // MARK: - API Request
 extension DiningDollarsTransactionViewController {
     func fetchTransactionData(_ completion: @escaping (_ transactions: [Transaction]?, _ error: Bool) -> Void) {
-        getRequestData(url: transactionUrl) { (data, error, statusCode) in
+        getRequestData(url: transactionUrl) { (data, error, _) in
             if error != nil {
                 print(error.debugDescription)
             }

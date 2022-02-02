@@ -100,7 +100,7 @@ struct FrequentLocationsView: View {
             .labelsHidden()
             .pickerStyle(SegmentedPickerStyle())
             .padding(.top)
-            .onReceive([self.lengthOfTime].publisher.first()) { (output) in
+            .onReceive([self.lengthOfTime].publisher.first()) { (_) in
                 withAnimation {
                     self.portions = FrequentLocationsView.computeTotal(with: self.data, for: self.lengthOfTime)
                 }

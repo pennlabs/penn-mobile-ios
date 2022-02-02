@@ -25,7 +25,7 @@ extension PennInTouchNetworkManager {
         makeAuthRequest(targetUrl: degreeURL, shibbolethUrl: shibbolethUrl) { (data, response, error) in
             let url = URL(string: self.degreeURL)!
             let request = URLRequest(url: url)
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
                         if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {

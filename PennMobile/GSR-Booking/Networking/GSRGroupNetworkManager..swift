@@ -39,7 +39,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     func getAllGroups(callback: @escaping ([GSRGroup]?) -> Void) {
         let allGroupsURL = "\(userURL)me/"
 
-        makeGetRequestWithAccessToken(url: allGroupsURL) { (data, response, error) in
+        makeGetRequestWithAccessToken(url: allGroupsURL) { (data, _, error) in
             guard let data = data, error == nil  else {
                 callback(nil)
                 return
@@ -58,7 +58,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
         let url = "\(groupsURL)\(groupid)/"
 
-        makeGetRequestWithAccessToken(url: url) { (data, response, error) in
+        makeGetRequestWithAccessToken(url: url) { (data, _, error) in
             if let error = error {
                 callback(error.localizedDescription, nil)
             } else if let data = data {
@@ -76,7 +76,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
     func inviteUsers(groupID: Int, pennkeys: [String], callback: @escaping (Bool, Error?) -> Void) {
         let params: [String: Any] = ["group": groupID, "user": pennkeys.joined(separator: ",")]
-        makePostRequestWithAccessToken(url: inviteURL, params: params) { (data, status, error) in
+        makePostRequestWithAccessToken(url: inviteURL, params: params) { (_, status, error) in
             guard let status = status as? HTTPURLResponse else {
                 callback(false, error)
                 return
@@ -104,7 +104,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
             params["allow"] = isEnabled
         }
 
-        makePostRequestWithAccessToken(url: url, params: params) { (data, response, error) in
+        makePostRequestWithAccessToken(url: url, params: params) { (_, response, error) in
             guard let status = response as? HTTPURLResponse else {
                 callback(false, error)
                 return
@@ -122,7 +122,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
 
         let params: [String: Any] = ["owner": pennkey, "name": name, "color": color]
-        makePostRequestWithAccessToken(url: groupsURL, params: params) { (data, status, error) in
+        makePostRequestWithAccessToken(url: groupsURL, params: params) { (data, _, error) in
             do {
                 if let data = data,
                     let jsonDict = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.fragmentsAllowed) as? NSDictionary,
@@ -139,7 +139,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
     }
 
     func getAllUsers(callback: @escaping (_ success: Bool, _ results: [GSRInviteSearchResult]?) -> Void) {
-        getRequestData(url: userURL) { (data, error, status) in
+        getRequestData(url: userURL) { (data, _, _) in
             guard let data = data else {
                 callback(false, nil)
                 return
@@ -197,7 +197,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
     func respondToInvite(invite: GSRGroupInvite, accept: Bool, callback: @escaping (_ success: Bool) -> Void) {
         let params = [String: Any]()
-        makePostRequestWithAccessToken(url: "\(membershipURL)\(invite.id)/\(accept ? "accept" : "decline")/", params: params) { (data, status, error) in
+        makePostRequestWithAccessToken(url: "\(membershipURL)\(invite.id)/\(accept ? "accept" : "decline")/", params: params) { (_, status, _) in
 
             guard let status = status as? HTTPURLResponse else {
                 callback(false)
@@ -213,7 +213,7 @@ extension GSRGroupNetworkManager {
     func getSearchResults(searchText: String, _ callback: @escaping (_ results: [GSRInviteSearchResult]?) -> Void) {
         let urlStr = "http://api.pennlabs.org/studyspaces/user/search?query=\(searchText)"
         let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
             if let data = data {
                 let json = JSON(data)
                 if let resultsData = try? json["results"].rawData() {

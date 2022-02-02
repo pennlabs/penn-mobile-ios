@@ -36,7 +36,7 @@ class NotificationViewController: GenericTableViewController, ShowsAlert, Indica
         super.viewDidAppear(animated)
         tableView.reloadData()
 
-        CourseAlertNetworkManager.instance.getSettings { (settings) in
+        CourseAlertNetworkManager.instance.getSettings { (_) in
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -109,7 +109,7 @@ extension NotificationViewController: NotificationViewControllerChangedPreferenc
     }
 
     func pushPCAPreferenceChange(toValue: Bool) {
-        CourseAlertNetworkManager.instance.updatePushNotifSettings(pushNotif: toValue, callback: {(success, response, error) in
+        CourseAlertNetworkManager.instance.updatePushNotifSettings(pushNotif: toValue, callback: {(success, response, _) in
             DispatchQueue.main.async {
                 self.hideActivity()
                 if success {

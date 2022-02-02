@@ -82,7 +82,7 @@ extension UserDBManager {
             let url = URL(string: "https://pennmobile.org/api/dining/preferences/")!
             let request = URLRequest(url: url, accessToken: token)
 
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
                 guard let data = data else {
                    if let error = error as? NetworkingError {
                        completion(.failure(error))
@@ -154,7 +154,7 @@ extension UserDBManager {
             let deviceID = getDeviceID()
             request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
 
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
                 if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
                     callback(rooms.compactMap { $0 as? Int })
                     return
@@ -171,7 +171,7 @@ extension UserDBManager {
     func parseAndSaveDiningBalanceHTML(html: String, _ completion: @escaping (_ hasDiningPlan: Bool?, _ balance: DiningBalance?) -> Void) {
         let url = "\(baseUrl)/dining/balance"
         let params = ["html": html]
-        makePostRequestWithAccessToken(url: url, params: params) { (data, response, error) in
+        makePostRequestWithAccessToken(url: url, params: params) { (data, _, _) in
             if let data = data {
                 let json = JSON(data)
                 if let hasPlan = json["hasPlan"].bool {
@@ -204,7 +204,7 @@ extension UserDBManager {
             let jsonData = try jsonEncoder.encode(account)
             request.httpBody = jsonData
 
-            let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, _) in
                 var accountID: String?
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
@@ -272,7 +272,7 @@ extension UserDBManager {
             let jsonData = try jsonEncoder.encode(courses)
             request.httpBody = jsonData
 
-            let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request, completionHandler: { (_, response, _) in
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
                         UserDefaults.standard.setLastShareDate(for: .anonymizedCourseSchedule)
@@ -291,7 +291,7 @@ extension UserDBManager {
     func deleteAnonymousCourses(_ completion: @escaping (_ success: Bool) -> Void) {
         var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/account/courses/private/delete", for: .anonymizedCourseSchedule)
         request.httpMethod = "POST"
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (_, response, _) in
             if let httpResponse = response as? HTTPURLResponse {
                 completion(httpResponse.statusCode == 200)
             } else {
@@ -356,7 +356,7 @@ extension UserDBManager {
             let jsonData = try? jsonEncoder.encode(housingResults)
             request.httpBody = jsonData
 
-            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
+            let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                     completion?(true)
                 } else {
@@ -408,7 +408,7 @@ extension UserDBManager {
             if let token = token {
                 let url = URL(string: urlRoute)!
                 let request = URLRequest(url: url, accessToken: token)
-                let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
                     if error == nil, let data = data, let settings = try? JSONDecoder().decode(CodableUserSettings.self, from: data) {
                         callback(true, settings.privacy, settings.notifications)
                     } else {
@@ -446,7 +446,7 @@ extension UserDBManager {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = payload
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
                 if let httpResponse = response as? HTTPURLResponse {
                     callback?(httpResponse.statusCode == 200)
                 } else {
@@ -505,7 +505,7 @@ extension UserDBManager {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = payload
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
                 if let httpResponse = response as? HTTPURLResponse {
                     callback(httpResponse.statusCode == 200)
                 } else {
@@ -561,7 +561,7 @@ extension UserDBManager {
             let jsonData = try? jsonEncoder.encode(degrees)
             request.httpBody = jsonData
 
-            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
+            let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
                     completion?(true)
                 } else {

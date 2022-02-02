@@ -15,7 +15,7 @@ class EventsAPI: Requestable {
     let eventsUrl = "https://penntoday.upenn.edu/events-feed?_format=json"
 
     func fetchEvents(_ completion: @escaping (_ result: Result<[PennEvents], NetworkingError>) -> Void) {
-        getRequestData(url: eventsUrl) { (data, error, statusCode) in
+        getRequestData(url: eventsUrl) { (data, _, statusCode) in
             if statusCode == nil {
                 return completion(.failure(.noInternet))
             }

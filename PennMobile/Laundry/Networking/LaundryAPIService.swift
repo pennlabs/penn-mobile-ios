@@ -47,7 +47,7 @@ class LaundryAPIService: Requestable {
     }
 
     private func fetchIds(callback: @escaping ([Int: LaundryRoom]?) -> Void) {
-        getRequestData(url: idsUrl) { (data, error, statusCode) in
+        getRequestData(url: idsUrl) { (data, _, _) in
             if let data = data, let rooms = try? JSONDecoder().decode([LaundryRoom].self, from: data) {
                 callback(Dictionary(uniqueKeysWithValues: rooms.map { ($0.id, $0) }))
             } else {
@@ -62,7 +62,7 @@ extension LaundryAPIService {
     func fetchLaundryData(for ids: [Int], _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
         let ids: String = ids.map { String($0) }.joined(separator: ",")
         let url = "\(laundryUrl)/\(ids)"
-        getRequest(url: url) { (dict, error, statusCode) in
+        getRequest(url: url) { (dict, _, _) in
             var rooms: [LaundryRoom]?
             if let dict = dict {
                 let json = JSON(dict)

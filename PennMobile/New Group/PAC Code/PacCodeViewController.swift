@@ -166,7 +166,7 @@ extension PacCodeViewController {
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
-        let refreshPacCode = UIAlertAction(title: "Yes", style: .default, handler: { (UIAlertAction) in
+        let refreshPacCode = UIAlertAction(title: "Yes", style: .default, handler: { (_) in
             self.handleNetworkPacCodeRefetch()
         })
 

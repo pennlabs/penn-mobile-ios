@@ -67,7 +67,7 @@ extension URLOpenable {
         if let url = URL(string: scheme) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
-                                          completionHandler: { (success) in
+                                          completionHandler: { (_) in
                                             // print("Open \(scheme): \(success)")
                 })
             } else {
@@ -189,7 +189,7 @@ extension LocallyAuthenticatable {
         // Check if we have the needed hardware support.
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonText ) { success, error in
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonText ) { success, _ in
 
                 if success {
                     // Move to the main thread because the user may request UI changes.

@@ -19,7 +19,7 @@ final class HomeGSRLocationsCellItem: HomeCellItem {
 
                 let request = URLRequest(url: URL(string: "https://pennmobile.org/api/gsr/recent/")!, accessToken: token)
 
-                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                let task = URLSession.shared.dataTask(with: request) { data, _, _ in
 
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase

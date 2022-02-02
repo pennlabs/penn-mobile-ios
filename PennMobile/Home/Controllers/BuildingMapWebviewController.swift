@@ -54,7 +54,7 @@ class BuildingMapWebviewController: UIViewController, WKUIDelegate, WKNavigation
     }
 
     func navigateWebview() {
-        webView.evaluateJavaScript("document.getElementById('searchText').value = \"\(searchTerm)\"") { (result, error) in
+        webView.evaluateJavaScript("document.getElementById('searchText').value = \"\(searchTerm)\"") { (result, _) in
             if result != nil {
                 self.webView.evaluateJavaScript("populateMapFromSearch();", completionHandler: nil)
                 self.webView.evaluateJavaScript("document.getElementById('backButton').remove(); var a = document.getElementById('header').querySelector('.Action'); a.remove(); a = document.getElementById('header').querySelector('.Action'); a.style.marginLeft = '10px'", completionHandler: nil)

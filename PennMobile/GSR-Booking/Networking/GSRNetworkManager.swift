@@ -22,7 +22,7 @@ class GSRNetworkManager: NSObject, Requestable {
     func getLocations (completion: @escaping (Result<[GSRLocation], NetworkingError>) -> Void) {
         let url = URL(string: self.locationsUrl)!
 
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { (data, response, _) in
             if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
 
                 let decoder = JSONDecoder()
@@ -59,7 +59,7 @@ class GSRNetworkManager: NSObject, Requestable {
 
             let request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
 
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
                 if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
                     do {
                         let decoder = JSONDecoder()
@@ -112,7 +112,7 @@ class GSRNetworkManager: NSObject, Requestable {
 
             request.httpBody = try? encoder.encode(booking)
 
-            let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (_, response, _) in
                 if let response = response as? HTTPURLResponse {
                     if response.statusCode == 200 {
                         completion(.success(()))
@@ -139,7 +139,7 @@ extension GSRNetworkManager {
             let url = URL(string: self.reservationURL)!
             let request = URLRequest(url: url, accessToken: token)
 
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
                 if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
 
                     let decoder = JSONDecoder()
@@ -175,7 +175,7 @@ extension GSRNetworkManager {
             request.httpMethod = "POST"
             request.httpBody = try? JSONSerialization.data(withJSONObject: ["booking_id": bookingId])
 
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
                 if let httpResponse = response as? HTTPURLResponse, data != nil, httpResponse.statusCode == 200 {
 
                     completion(.success(()))

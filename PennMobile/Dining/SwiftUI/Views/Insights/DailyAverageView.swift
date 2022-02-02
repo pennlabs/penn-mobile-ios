@@ -156,7 +156,7 @@ struct DailyAverageView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            .onReceive([self.timeFrame].publisher.first()) { (output) in
+            .onReceive([self.timeFrame].publisher.first()) { (_) in
                 withAnimation {
                     self.axisOffset = (self.selectedDataPoint == nil ? ((0.5 - self.averageDollar) * 110) : ((0.5 - self.data[self.selectedDataPoint!]) * 110))
                 }

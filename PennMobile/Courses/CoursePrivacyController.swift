@@ -72,7 +72,7 @@ extension CoursePrivacyController {
             DispatchQueue.main.async {
                 if let courses = try? result.get() {
                     // Save courses anonymously on database
-                    UserDBManager.shared.saveCoursesAnonymously(courses) { (success) in
+                    UserDBManager.shared.saveCoursesAnonymously(courses) { (_) in
                         DispatchQueue.main.async {
                             UserDefaults.standard.saveCourses(courses)
                             self.hideActivity()

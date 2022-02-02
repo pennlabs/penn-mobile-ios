@@ -47,7 +47,7 @@ extension HomeViewController: GSRBookable {
                                       preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
             self.handleBookingRequested(booking)
         }))
         present(alert, animated: true)
@@ -136,7 +136,7 @@ extension HomeViewController {
                                       preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
             // self.showCourseWebviewController()
             self.showActivity()
             PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true, callback: self.handleNetworkCourseRefreshCompletion(_:))
@@ -173,7 +173,7 @@ extension HomeViewController: ShowsAlert {
             self.hideActivity()
             if let courses = try? result.get() {
                 if let accountID = UserDefaults.standard.getAccountID() {
-                    UserDBManager.shared.saveCourses(courses, accountID: accountID, { (success) in
+                    UserDBManager.shared.saveCourses(courses, accountID: accountID, { (_) in
                         self.handleCourseRefresh(courses)
                     })
                 } else {

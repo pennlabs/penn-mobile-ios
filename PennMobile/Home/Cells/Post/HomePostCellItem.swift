@@ -17,7 +17,7 @@ final class HomePostCellItem: HomeCellItem {
 
             let url = URLRequest(url: URL(string: "https://pennmobile.org/api/portal/posts/browse/")!, accessToken: token)
 
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            let task = URLSession.shared.dataTask(with: url) { data, _, _ in
                 guard let data = data else { completion([]); return }
 
                 if let posts = try? JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([Post].self, from: data) {

@@ -57,7 +57,7 @@ extension DiningVenue {
         try container.encode(venueType, forKey: .venueType)
         try container.encodeIfPresent(facilityURL, forKey: .facilityURL)
         try container.encodeIfPresent(imageURL, forKey: .imageURL)
-        let mealsArray = meals.flatMap { (key, value) -> [MealsForDate] in [value] }
+        let mealsArray = meals.flatMap { (_, value) -> [MealsForDate] in [value] }
         try container.encode(mealsArray, forKey: .meals)
     }
 

@@ -16,7 +16,7 @@ class FitnessAPI: Requestable {
     let fitnessScheduleUrl = "https://api.pennlabs.org/fitness/schedule"
 
     func fetchFitnessHours(_ completion: @escaping (_ success: Bool, _ error: Bool) -> Void) {
-        getRequest(url: fitnessScheduleUrl) { (dictionary, error, statusCode) in
+        getRequest(url: fitnessScheduleUrl) { (dictionary, _, statusCode) in
             if statusCode == nil {
                 completion(false, false)
                 return

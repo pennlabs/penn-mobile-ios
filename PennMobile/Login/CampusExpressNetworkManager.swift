@@ -29,7 +29,7 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
     }
 
     func updateHousingData(_ completion: ((_ success: Bool) -> Void)? = nil) {
-        makeAuthRequest(targetUrl: housingUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
+        makeAuthRequest(targetUrl: housingUrl, shibbolethUrl: shibbolethUrl) { (data, _, _) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                 if let doc = try? SwiftSoup.parse(html as String), let htmlStr = ((try? doc.body()?.html()) as String??), let html = htmlStr {
                     UserDBManager.shared.saveHousingData(html: html) { (result) in
@@ -43,7 +43,7 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
     }
 
     func getDiningBalanceHTML(callback: @escaping (_ html: String?, _ error: Error?) -> Void) {
-        makeAuthRequest(targetUrl: diningUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
+        makeAuthRequest(targetUrl: diningUrl, shibbolethUrl: shibbolethUrl) { (data, _, error) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                 if let doc = try? SwiftSoup.parse(html as String), let htmlStr = ((try? doc.body()?.html()) as String??) {
                     callback(htmlStr, error)
@@ -55,7 +55,7 @@ extension CampusExpressNetworkManager: PennAuthRequestable {
     }
 
     func getDiningBalance(_ completion: @escaping (_ diningBalance: DiningBalance?) -> Void) {
-        makeAuthRequest(targetUrl: diningUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
+        makeAuthRequest(targetUrl: diningUrl, shibbolethUrl: shibbolethUrl) { (data, _, _) in
             if let data = data, let html = String(data: data, encoding: .utf8) {
                 if let doc = try? SwiftSoup.parse(html), let elementsText = try? doc.getElementsByClass("positive-value").text().split(separator: " "), elementsText.count >= 4 {
                     var diningBalance = elementsText[0]

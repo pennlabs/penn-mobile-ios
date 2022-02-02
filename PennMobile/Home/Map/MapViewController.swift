@@ -130,7 +130,7 @@ extension MapViewController {
 extension MapViewController {
     func getCoordinates(for searchTerm: String, _ callback: @escaping (_ coordinates: CLLocationCoordinate2D?, _ title: String?) -> Void) {
         let url = URL(string: "https://mobile.apps.upenn.edu/mobile/jsp/fast.do?webService=googleMapsSearch&searchTerm=\(searchTerm)")!
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
             if let data = data, let json = try? JSON(data: data), let locationJSON = json.arrayValue.first {
                 if let latitudeStr = locationJSON["latitude"].string, let longitudeStr = locationJSON["longitude"].string, let title = locationJSON["title"].string {
                     if let latitude = Double(latitudeStr), let longitude = Double(longitudeStr) {

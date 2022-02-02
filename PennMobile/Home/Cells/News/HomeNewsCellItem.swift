@@ -20,7 +20,7 @@ final class HomeNewsCellItem: HomeCellItem {
     }
 
     static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
-        let task = URLSession.shared.dataTask(with: URL(string: "https://pennmobile.org/api/penndata/news/")!) { data, response, error in
+        let task = URLSession.shared.dataTask(with: URL(string: "https://pennmobile.org/api/penndata/news/")!) { data, _, _ in
             guard let data = data else { completion([]); return }
 
             if let article = try? JSONDecoder().decode(NewsArticle.self, from: data) {

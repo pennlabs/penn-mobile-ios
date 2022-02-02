@@ -248,7 +248,7 @@ extension GSRGroupInviteViewController {
         startLoadingViewAnimation()
         let pennkeys = selectedUsers.map({$0.pennkey})
         if let groupID = groupID {
-            GSRGroupNetworkManager.instance.inviteUsers(groupID: groupID, pennkeys: pennkeys, callback: {(success, error) in
+            GSRGroupNetworkManager.instance.inviteUsers(groupID: groupID, pennkeys: pennkeys, callback: {(_, error) in
                 DispatchQueue.main.async {
                     self.stopLoadingViewAnimation()
 

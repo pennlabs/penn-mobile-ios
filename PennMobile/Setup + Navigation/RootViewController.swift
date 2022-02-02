@@ -191,7 +191,7 @@ class RootViewController: UIViewController, NotificationRequestable {
         addChild(new)
 
         transition(from: current, to: new, duration: 0.3, options: [.transitionCrossDissolve, .curveEaseOut], animations: {
-        }) { completed in
+        }) { _ in
             self.current.removeFromParent()
             new.didMove(toParent: self)
             self.current = new
@@ -203,7 +203,7 @@ class RootViewController: UIViewController, NotificationRequestable {
         current.willMove(toParent: nil)
         addChild(new)
         transition(from: current, to: new, duration: 0.2, options: [.transitionCrossDissolve], animations: {
-        }) { completed in
+        }) { _ in
             self.current.removeFromParent()
             new.didMove(toParent: self)
             self.current = new
