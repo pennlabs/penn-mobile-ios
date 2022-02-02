@@ -28,20 +28,24 @@ struct DiningBalanceView: View {
     
     var body: some View {
         CardView {
-            VStack(alignment: .trailing) {
                 HStack {
                     self.image.font(Font.system(size: 24).weight(.bold))
+                        .foregroundColor(self.color)
                     Spacer()
-                    Text(self.formattedBalance)
-                        .font(.system(size: 24, design: .rounded))
-                        .fontWeight(.bold)
+                    VStack(alignment: .trailing) {
+                        Text(self.formattedBalance)
+                            .font(.system(size: 20, design: .rounded))
+                            .fontWeight(.bold)
+                            .foregroundColor(self.color)
+                        Text(self.description)
+                            .font(.subheadline)
+                            .opacity(0.5)
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
+                    }
+                    
                 }
-                .foregroundColor(self.color)
-                Text(self.description)
-                    .font(.subheadline)
-                    .opacity(0.5)
-            }
-            .padding()
+                .padding()
         }
     }
 }

@@ -168,7 +168,7 @@ extension MoreViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                let targetController = AccountPageViewController()
+                let targetController = ProfilePageViewController()
                 navigationController?.pushViewController(targetController, animated: true)
             } else if indexPath.row == 1 {
                 let targetController = ControllerModel.shared.viewController(for: .pacCode)

@@ -177,7 +177,7 @@ class RootViewController: UIViewController, NotificationRequestable {
         switchToLogout()
     }
     
-    fileprivate func clearAccountData() {
+    func clearAccountData() {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         UserDefaults.standard.clearAll()
         OAuth2NetworkManager.instance.clearRefreshToken()

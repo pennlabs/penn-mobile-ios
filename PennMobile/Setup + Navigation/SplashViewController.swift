@@ -33,7 +33,7 @@ class SplashViewController: UIViewController {
     }
     
     private func switchToView() {
-        let loggedIn = UserDefaults.standard.getAccountID() != nil
+        let loggedIn = UserDefaults.standard.getAccount() != nil
         if loggedIn {
             AppDelegate.shared.rootViewController.showMainScreen()
         } else {

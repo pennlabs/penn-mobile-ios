@@ -185,6 +185,14 @@
 		6CAE43D82533740300BD0200 /* LocalJSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE43D72533740300BD0200 /* LocalJSONStore.swift */; };
 		6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */; };
 		6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */; };
+		6CEA518A27AB3623005D0E87 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEA518227AB3623005D0E87 /* ProfilePageViewController.swift */; };
+		6CEA518B27AB3623005D0E87 /* InfoTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEA518327AB3623005D0E87 /* InfoTableViewModel.swift */; };
+		6CEA518C27AB3623005D0E87 /* ProfilePageNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEA518527AB3623005D0E87 /* ProfilePageNetworkManager.swift */; };
+		6CEA518D27AB3623005D0E87 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEA518627AB3623005D0E87 /* InfoTableViewController.swift */; };
+		6CEA518E27AB3623005D0E87 /* ProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEA518727AB3623005D0E87 /* ProfilePageViewModel.swift */; };
+		6CEA518F27AB3623005D0E87 /* ProfilePageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEA518827AB3623005D0E87 /* ProfilePageTableViewCell.swift */; };
+		6CEA519027AB3623005D0E87 /* ProfilePictureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEA518927AB3623005D0E87 /* ProfilePictureTableViewCell.swift */; };
+		6CEA519227AB366B005D0E87 /* AnalyticsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEA519127AB366B005D0E87 /* AnalyticsCardView.swift */; };
 		6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */; };
 		6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */; };
 		8523A2902707B0FB0052F608 /* PennEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8523A28F2707B0FB0052F608 /* PennEventsTableViewController.swift */; };
@@ -249,8 +257,6 @@
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
-		E594463D2700EB5D002CF1CA /* AccountPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E594463C2700EB5D002CF1CA /* AccountPageViewController.swift */; };
-		E5BEF7162704C133009FCDD0 /* ProfilePageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BEF7152704C133009FCDD0 /* ProfilePageTableViewCell.swift */; };
 		EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */; };
 		EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */; };
 		EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */; };
@@ -525,6 +531,14 @@
 		6CAE43C52533731000BD0200 /* DiningInsightsAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningInsightsAPIResponse.swift; sourceTree = "<group>"; };
 		6CAE43D2253373B900BD0200 /* DiningMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningMenu.swift; sourceTree = "<group>"; };
 		6CAE43D72533740300BD0200 /* LocalJSONStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalJSONStore.swift; sourceTree = "<group>"; };
+		6CEA518227AB3623005D0E87 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
+		6CEA518327AB3623005D0E87 /* InfoTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewModel.swift; sourceTree = "<group>"; };
+		6CEA518527AB3623005D0E87 /* ProfilePageNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePageNetworkManager.swift; sourceTree = "<group>"; };
+		6CEA518627AB3623005D0E87 /* InfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
+		6CEA518727AB3623005D0E87 /* ProfilePageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePageViewModel.swift; sourceTree = "<group>"; };
+		6CEA518827AB3623005D0E87 /* ProfilePageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePageTableViewCell.swift; sourceTree = "<group>"; };
+		6CEA518927AB3623005D0E87 /* ProfilePictureTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePictureTableViewCell.swift; sourceTree = "<group>"; };
+		6CEA519127AB366B005D0E87 /* AnalyticsCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsCardView.swift; sourceTree = "<group>"; };
 		6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStudyRoomCell.swift; sourceTree = "<group>"; };
 		6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
 		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
@@ -593,8 +607,6 @@
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
 		CFDEBFEB2794599F175AD811 /* Pods_AutomatedScreenshotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutomatedScreenshotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E594463C2700EB5D002CF1CA /* AccountPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPageViewController.swift; sourceTree = "<group>"; };
-		E5BEF7152704C133009FCDD0 /* ProfilePageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageTableViewCell.swift; sourceTree = "<group>"; };
 		EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteCell.swift; sourceTree = "<group>"; };
 		EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCellItem.swift; sourceTree = "<group>"; };
 		EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCell.swift; sourceTree = "<group>"; };
@@ -1309,6 +1321,7 @@
 		6CAE435E253370E500BD0200 /* Insights */ = {
 			isa = PBXGroup;
 			children = (
+				6CEA519127AB366B005D0E87 /* AnalyticsCardView.swift */,
 				6CAE435F253370E500BD0200 /* FrequentLocationsView.swift */,
 				6CAE4360253370E500BD0200 /* RecentTransactionsView.swift */,
 				6CAE4361253370E500BD0200 /* DiningBalanceView.swift */,
@@ -1352,6 +1365,28 @@
 				6CAE4374253370E500BD0200 /* sample-dining-venue.json */,
 			);
 			path = Venue;
+			sourceTree = "<group>";
+		};
+		6CEA518127AB3623005D0E87 /* Profile Page */ = {
+			isa = PBXGroup;
+			children = (
+				6CEA518227AB3623005D0E87 /* ProfilePageViewController.swift */,
+				6CEA518327AB3623005D0E87 /* InfoTableViewModel.swift */,
+				6CEA518427AB3623005D0E87 /* Networking */,
+				6CEA518627AB3623005D0E87 /* InfoTableViewController.swift */,
+				6CEA518727AB3623005D0E87 /* ProfilePageViewModel.swift */,
+				6CEA518827AB3623005D0E87 /* ProfilePageTableViewCell.swift */,
+				6CEA518927AB3623005D0E87 /* ProfilePictureTableViewCell.swift */,
+			);
+			path = "Profile Page";
+			sourceTree = "<group>";
+		};
+		6CEA518427AB3623005D0E87 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				6CEA518527AB3623005D0E87 /* ProfilePageNetworkManager.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		6D2C4E8629C0A2D81734AD99 /* Frameworks */ = {
@@ -1581,10 +1616,9 @@
 		CF1CE9B8205D5BF100C51F46 /* More Tab */ = {
 			isa = PBXGroup;
 			children = (
+				6CEA518127AB3623005D0E87 /* Profile Page */,
 				C8C96F12241407320069D56A /* PAC Code */,
 				B6111DB320184C4A00DC7877 /* AboutViewController.swift */,
-				E594463C2700EB5D002CF1CA /* AccountPageViewController.swift */,
-				E5BEF7152704C133009FCDD0 /* ProfilePageTableViewCell.swift */,
 				CF1CE9B9205D5C3F00C51F46 /* MoreViewController.swift */,
 				CF1CE9BC205D664700C51F46 /* MoreCell.swift */,
 				CF1CE9C0205D683400C51F46 /* HeaderViewCell.swift */,
@@ -2052,6 +2086,7 @@
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
 				EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */,
+				6CEA518C27AB3623005D0E87 /* ProfilePageNetworkManager.swift in Sources */,
 				6CAE4382253370E500BD0200 /* DiningBalanceView.swift in Sources */,
 				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
@@ -2107,6 +2142,7 @@
 				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
+				6CEA518A27AB3623005D0E87 /* ProfilePageViewController.swift in Sources */,
 				6C6035F326E722890025FBC7 /* DiningVenueDetailLocationView.swift in Sources */,
 				F2562A3A2558E7B80021C92F /* CourseAlertCreateCell.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
@@ -2118,6 +2154,7 @@
 				6CAE43C62533731000BD0200 /* DiningInsightsAPIResponse.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
 				21ABE2AA223D7DEA00199D29 /* ScheduleTable.swift in Sources */,
+				6CEA518F27AB3623005D0E87 /* ProfilePageTableViewCell.swift in Sources */,
 				6C84D9E526293E680039C57F /* UIKit Views.swift in Sources */,
 				CF1CE9BA205D5C3F00C51F46 /* MoreViewController.swift in Sources */,
 				21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */,
@@ -2133,6 +2170,7 @@
 				F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				6CAE438D253370E600BD0200 /* DiningInsightsView.swift in Sources */,
+				6CEA519027AB3623005D0E87 /* ProfilePictureTableViewCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
 				97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */,
 				6CAA4B5627A763A400473CC6 /* HomePollsCellItem.swift in Sources */,
@@ -2177,6 +2215,7 @@
 				216640F31EBB86A300746B8E /* SupportItem.m in Sources */,
 				21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */,
 				EFE2D6F3239B11050020F6BF /* CreateGroupCell.swift in Sources */,
+				6CEA518D27AB3623005D0E87 /* InfoTableViewController.swift in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
 				212B8359222A331D00F835D6 /* Post.swift in Sources */,
 				B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */,
@@ -2230,6 +2269,7 @@
 				21A9D942224087980000444D /* CourseMeetingTime.swift in Sources */,
 				139139772388923F00C6C298 /* DiningDollarsTransactionViewController.swift in Sources */,
 				B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */,
+				6CEA518E27AB3623005D0E87 /* ProfilePageViewModel.swift in Sources */,
 				219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */,
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				2189C0A82027CE4B00771C1F /* ThumbLayer.swift in Sources */,
@@ -2269,7 +2309,6 @@
 				21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */,
-				E594463D2700EB5D002CF1CA /* AccountPageViewController.swift in Sources */,
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				6CAE4381253370E500BD0200 /* RecentTransactionsView.swift in Sources */,
 				F2562A3525583C5C0021C92F /* ButtonWithImage.swift in Sources */,
@@ -2290,9 +2329,11 @@
 				C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */,
 				B6FE7A02207BE29000F60838 /* HomeGSRBookingButton.swift in Sources */,
 				CF1CE9BD205D664700C51F46 /* MoreCell.swift in Sources */,
+				6CEA519227AB366B005D0E87 /* AnalyticsCardView.swift in Sources */,
 				97E79E092100DA1200D3D606 /* BuildingFoodMenuCell.swift in Sources */,
 				2138D55F22599D4700D67CA2 /* GSRGroup.swift in Sources */,
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
+				6CEA518B27AB3623005D0E87 /* InfoTableViewModel.swift in Sources */,
 				B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */,
 				21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */,
 				665F1FC523D261B100DC023E /* TwoFactorCell.swift in Sources */,
@@ -2304,7 +2345,6 @@
 				21B653BE2246F338001A97C5 /* CoursesWebviewController.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
 				216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */,
-				E5BEF7162704C133009FCDD0 /* ProfilePageTableViewCell.swift in Sources */,
 				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

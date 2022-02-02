@@ -16,14 +16,18 @@ struct DiningViewHeader: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     
     var body: some View {
-        HStack {
-            DiningViewHeaderDate()
-            
-            Spacer()
-            
-            DiningViewHeaderBalance()
-                .environmentObject(diningVM)
+        
+        VStack {
+            HStack {
+                DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: diningVM.diningDollars, specifier: "%.2f")
+                DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(diningVM.swipes), specifier: "%.0f")
+            }
+            HStack {
+                DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "person.2.fill"), balance: Double(diningVM.guestSwipes), specifier: "%.0f")
+                AnalyticsCardView(text: "Analytics")
+            }
         }
+        
     }
 }
 
