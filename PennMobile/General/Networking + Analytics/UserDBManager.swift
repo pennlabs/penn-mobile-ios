@@ -175,7 +175,7 @@ extension UserDBManager {
             if let data = data {
                 let json = JSON(data)
                 if let hasPlan = json["hasPlan"].bool {
-                    var balance: DiningBalance? = nil
+                    var balance: DiningBalance?
                     if let dollars = json["balance"]["dollars"].float,
                         let swipes = json["balance"]["swipes"].int,
                         let guestSwipes = json["balance"]["guest_swipes"].int {
@@ -205,7 +205,7 @@ extension UserDBManager {
             request.httpBody = jsonData
 
             let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
-                var accountID: String? = nil
+                var accountID: String?
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
                         if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {

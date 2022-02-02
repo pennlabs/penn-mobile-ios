@@ -41,7 +41,7 @@ class Account: Codable {
 
     func setEmail() {
         guard let degrees = degrees else { return }
-        var potentialEmail: String? = nil
+        var potentialEmail: String?
         for degree in degrees {
             switch degree.schoolCode {
             case "WH":

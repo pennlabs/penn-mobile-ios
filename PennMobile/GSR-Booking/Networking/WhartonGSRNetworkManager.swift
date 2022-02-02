@@ -69,7 +69,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
     func getAvailabilityWithoutSessionID(date: GSRDate, callback: @escaping ((_ rooms: [GSRRoom]?) -> Void)) {
         let url = "\(availUrlNoSessionID)?date=\(date.string)"
         getRequest(url: url) { (dict, _, _) in
-            var rooms: [GSRRoom]? = nil
+            var rooms: [GSRRoom]?
             if let dict = dict {
                 let json = JSON(dict)
                 rooms = try? self.parseAvailabilityJSON(json)

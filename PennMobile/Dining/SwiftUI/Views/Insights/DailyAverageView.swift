@@ -32,7 +32,7 @@ struct DailyAverageView: View {
     }
 
     let config: DiningInsightsAPIResponse.CardData.DailyAverageCardData
-    @State private var selectedDataPoint: Int? = nil
+    @State private var selectedDataPoint: Int?
 
     private var maxSpent: Double
     private let thisWeekDollarData: [CGFloat]

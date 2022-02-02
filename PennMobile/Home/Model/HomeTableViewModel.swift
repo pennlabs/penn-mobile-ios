@@ -37,7 +37,7 @@ extension HomeTableViewModel {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         let cellType = type(of: item) as! HomeCellItem.Type
-        var id: String? = nil
+        var id: String?
         if let identifiableItem = item as? LoggingIdentifiable {
             id = identifiableItem.id
         }

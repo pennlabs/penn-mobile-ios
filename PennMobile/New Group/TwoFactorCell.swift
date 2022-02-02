@@ -22,7 +22,7 @@ class TwoFactorCell: UITableViewCell {
         return code != nil || TOTPFetcher.instance.isFetching
     }
 
-    var code: String? = nil {
+    var code: String? {
         didSet {
             codeLabel.text = code
             enabledLabel.text = enabled ? "Enabled" : "Disabled"

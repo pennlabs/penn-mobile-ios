@@ -38,7 +38,7 @@ class GSRViewModel: NSObject {
     fileprivate var filteredRooms = [GSRRoom]()
 
     // MARK: Current Selection
-    fileprivate var selectedRoomId: Int? = nil
+    fileprivate var selectedRoomId: Int?
 
     // MARK: Delegate
     var delegate: GSRViewModelDelegate!

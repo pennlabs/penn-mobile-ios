@@ -16,8 +16,8 @@ struct GSRRoom: Codable {
 
 extension Array where Element == GSRRoom {
     func getMinMaxDates() -> (Date?, Date?) {
-        var min: Date? = nil
-        var max: Date? = nil
+        var min: Date?
+        var max: Date?
         for room in self {
             if let firstStartTime = room.availability.first?.startTime, min == nil || (firstStartTime < min!) {
                 min = firstStartTime

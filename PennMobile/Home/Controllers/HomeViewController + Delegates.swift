@@ -238,7 +238,7 @@ extension HomeViewController {
         }
         if let index = index {
             let cellType = type(of: item) as! HomeCellItem.Type
-            var id: String? = nil
+            var id: String?
             if let identifiableItem = item as? LoggingIdentifiable {
                 id = identifiableItem.id
             }

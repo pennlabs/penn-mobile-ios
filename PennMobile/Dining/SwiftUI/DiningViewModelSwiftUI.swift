@@ -19,7 +19,7 @@ class DiningViewModelSwiftUI: ObservableObject {
     @Published var diningVenuesIsLoading = false
     @Published var diningInsightsIsLoading = false
 
-    @Published var alertType: NetworkingError? = nil
+    @Published var alertType: NetworkingError?
 
     @Published var swipes = 0
     @Published var diningDollars = 0.0

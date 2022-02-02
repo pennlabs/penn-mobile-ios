@@ -17,6 +17,5 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - implicit_getter
   - nesting
   - legacy_constructor
-  - redundant_optional_initialization
   - file_length
   - weak_delegate
