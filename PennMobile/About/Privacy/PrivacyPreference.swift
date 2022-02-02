@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias PrivacyPreferences = Dictionary<String, Bool>
+typealias PrivacyPreferences = [String: Bool]
 
 /*
  Privacy preferences are stored in UserDefaults as a String:Bool mapping, where
@@ -91,7 +91,6 @@ enum PrivacyOption: String, CaseIterable {
         return "didShare_" + self.rawValue
     }
     
-    
     // This key is NOT cleared when UserDefaults is wiped.
     // A key used by UserDefaults to store a UUID which points to this user's anonymous data on the server for this option. This should never leave the device
     var privateIDKey: String? {
@@ -126,7 +125,7 @@ extension PrivacyOption {
                 }
             case .collegeHouse:
                 // Save the current semester and then save previous semesters stored in UserDefaults
-                CampusExpressNetworkManager.instance.updateHousingData { (success) in
+                CampusExpressNetworkManager.instance.updateHousingData { _ in
                     UserDBManager.shared.saveMultiyearHousingData()
                 }
             case .academicIdentity:

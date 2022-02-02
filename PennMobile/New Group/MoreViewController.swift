@@ -290,9 +290,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate, Tw
                 
                 self.present(alert, animated: true, completion: nil)
             }
-
-        }
-        else {
+        } else {
             tableView.reloadData()
             let alert = UIAlertController(title: "Disabling Two-Factor Automation", message: "Are you sure you want to disable Two-Factor Automation? If you do, we will no longer be storing your unique key. To re-enable Two-Factor Automation, you will have to login again.", preferredStyle: .alert)
             

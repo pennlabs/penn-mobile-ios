@@ -19,10 +19,8 @@ import Contacts
             let cnContact = CNMutableContact()
             cnContact.givenName = contact.name
             cnContact.phoneNumbers = [CNLabeledValue(
-                label:CNLabelPhoneNumberiPhone,
-                value:CNPhoneNumber(stringValue:"(408) 555-0126"))]
+                label: CNLabelPhoneNumberiPhone,
+                value: CNPhoneNumber(stringValue: "(408) 555-0126"))]
         }
     }
 }
-
-

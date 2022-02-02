@@ -63,7 +63,7 @@ class LaundryMachine: Hashable {
 
 // MARK: - Comparable
 extension LaundryMachine: Comparable {
-    static func <(lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
+    static func < (lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
         switch (lhs.status, rhs.status) {
         case (.running, .open):
             return true
@@ -80,7 +80,7 @@ extension LaundryMachine: Comparable {
         }
     }
     
-    static func ==(lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
+    static func == (lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
         return lhs.roomName == rhs.roomName
             && lhs.id == rhs.id
             && lhs.isWasher == rhs.isWasher

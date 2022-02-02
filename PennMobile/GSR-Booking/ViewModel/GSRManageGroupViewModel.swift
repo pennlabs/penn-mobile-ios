@@ -25,7 +25,7 @@ protocol GSRGroupIndividualSettingDelegate {
 }
 
 class GSRManageGroupViewModel: NSObject {
-    //store important data used by gsr group views
+    // store important data used by gsr group views
     fileprivate var group: GSRGroup!
 
     // MARK: Delegate
@@ -41,7 +41,7 @@ class GSRManageGroupViewModel: NSObject {
     }
 }
 
-//MARK: UITableViewDataSource
+// MARK: UITableViewDataSource
 extension GSRManageGroupViewModel: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
@@ -72,7 +72,7 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
         if section == 1 {
             return "Members"
         } else {
-            return " " //DO NOT REMOVE, otherwise extra space will appear
+            return " " // DO NOT REMOVE, otherwise extra space will appear
         }
     }
 
@@ -119,17 +119,14 @@ extension GSRManageGroupViewModel: UITableViewDataSource {
 
         return nil
     }
-    
-
-
 }
 
-//MARK: UITableViewDelegate
+// MARK: UITableViewDelegate
 extension GSRManageGroupViewModel: UITableViewDelegate {
 
 }
 
-//MARK: GSRGroupIndividualSettingDelegate
+// MARK: GSRGroupIndividualSettingDelegate
 extension GSRManageGroupViewModel: GSRGroupIndividualSettingDelegate {
     func updateSetting(setting: GSRGroupIndividualSetting) {
         GSRGroupNetworkManager.instance.updateIndividualSetting(groupID: group.id, settingType: setting.type, isEnabled: setting.isEnabled, callback: {(success, error) in

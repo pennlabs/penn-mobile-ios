@@ -110,7 +110,7 @@ class LaundryRoom: Codable {
 
 // MARK: - Equatable
 extension LaundryRoom: Equatable {
-    static func ==(lhs: LaundryRoom, rhs: LaundryRoom) -> Bool {
+    static func == (lhs: LaundryRoom, rhs: LaundryRoom) -> Bool {
         return lhs.id == rhs.id
     }
 }

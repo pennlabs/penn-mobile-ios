@@ -75,7 +75,7 @@ extension PennInTouchNetworkManager {
         
         let params = [
             "fastStart": "mobileChangeStudentScheduleTermData",
-            "term": term,
+            "term": term
             ]
         request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
         
@@ -121,8 +121,8 @@ extension PennInTouchNetworkManager {
             let meetingGroups = section.getMatches(for: "(<br>TBA |<br>[A-Z]+?&nbsp;.*?-.*?<\\/span>(?:.*?mobileSchedule\">.*?&nbsp; .*?&nbsp)?)")
             if name.count > 0 && code.count > 0 {
                 var meetingTimes = [CourseMeetingTime]()
-                var building: String? = nil
-                var room: String? = nil
+                var building: String?
+                var room: String?
                 var mainWeekdays = ""
                 var startTime: String = ""
                 var endTime: String = ""
@@ -178,8 +178,8 @@ extension PennInTouchNetworkManager {
                     endTime = mainMeeting.endTime
                 }
                 
-                var startDate: String? = nil
-                var endDate: String? = nil
+                var startDate: String?
+                var endDate: String?
                 if let startStr = startDates.first, let endStr = endDates.first {
                     let formatter = DateFormatter()
                     formatter.dateFormat = "MM/dd/yyyy"

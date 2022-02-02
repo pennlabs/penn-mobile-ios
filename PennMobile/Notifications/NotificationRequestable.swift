@@ -95,4 +95,3 @@ extension NotificationRequestable where Self: UIViewController {
     }
     
 }
-

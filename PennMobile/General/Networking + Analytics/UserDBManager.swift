@@ -217,8 +217,7 @@ extension UserDBManager {
                 completion(accountID)
             })
             task.resume()
-        }
-        catch {
+        } catch {
             completion(nil)
         }
     }
@@ -284,8 +283,7 @@ extension UserDBManager {
                 }
             })
             task.resume()
-        }
-        catch {
+        } catch {
             completion?(false)
         }
     }

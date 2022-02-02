@@ -21,8 +21,8 @@ struct FitnessSchedule: Codable {
     let hours: [FitnessScheduleOpenClose]
     
     enum CodingKeys : String, CodingKey {
-        case name = "name"
-        case hours = "hours"
+        case name
+        case hours
     }
     
     init(from decoder: Decoder) throws {

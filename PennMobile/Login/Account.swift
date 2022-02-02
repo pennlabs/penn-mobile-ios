@@ -49,13 +49,10 @@ class Account: Codable {
                 return
             case "EAS":
                 potentialEmail = "\(pennkey)@seas.upenn.edu"
-                break
             case "CAS", "SAS":
                 potentialEmail = "\(pennkey)@sas.upenn.edu"
-                break
             case "NURS":
                 potentialEmail = "\(pennkey)@nursing.upenn.edu"
-                break
             default:
                 break
             }

@@ -33,7 +33,6 @@ class SearchResultsCell: UITableViewCell {
     }
 }
 
-
 // MARK: - Setup Cell
 extension SearchResultsCell {
     fileprivate func setupCell() {
@@ -45,7 +44,6 @@ extension SearchResultsCell {
         }
     }
 }
-
 
 // MARK: - Setup UI
 extension SearchResultsCell {

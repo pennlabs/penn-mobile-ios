@@ -36,7 +36,7 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
             label.textAlignment = .left
             label.numberOfLines = 0
             label.sizeToFit()
-            runningHeight = runningHeight + label.frame.height + Padding.pad * 2
+            runningHeight += label.frame.height + Padding.pad * 2
         }
         
         return runningHeight + HomeCellHeader.height + HomePollsCellFooter.height + Padding.pad * 2.5

@@ -32,10 +32,8 @@ extension DiningVenue {
     
     var isOpen: Bool {
         guard let mealsToday = mealsToday else { return false }
-        for meal in mealsToday.meals {
-            if meal.isCurrentlyServing {
-                return true
-            }
+        for meal in mealsToday.meals where meal.isCurrentlyServing {
+            return true
         }
         return false
     }
@@ -98,7 +96,7 @@ extension DiningVenue {
     
     // MARK: - Formatted Hours
     var humanFormattedHoursStringForToday: String {
-        guard let _ = mealsToday else { return "" }
+        guard mealsToday != nil else { return "" }
         return formattedHoursStringFor(Date())
     }
     
@@ -151,7 +149,7 @@ extension DiningVenue {
     }
     
     var humanFormattedHoursArrayForToday: [String] {
-        guard let _ = mealsToday else { return [] }
+        guard mealsToday != nil else { return [] }
         return formattedHoursArrayFor(Date())
     }
     

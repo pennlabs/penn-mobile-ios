@@ -173,7 +173,7 @@ extension CourseAlertCreateController: ShowsAlert, CourseSearchDelegate {
         } else {
             CourseAlertNetworkManager.instance.getSearchedCourses(searchText: searchBar.text ?? "") { (results) in
                 if let results = results {
-                    if (results.count == 1) {
+                    if results.count == 1 {
                         self.sectionToAlert = results[0]
                         self.registerAlert(section: results[0])
                     } else {
@@ -192,7 +192,7 @@ extension CourseAlertCreateController: ShowsAlert, CourseSearchDelegate {
     }
     
     fileprivate func registerAlert(section: CourseSection) {
-        CourseAlertNetworkManager.instance.createRegistration(section: section.section, autoResubscribe: alertSwitch.isOn, callback: {(success, response, error) in
+        CourseAlertNetworkManager.instance.createRegistration(section: section.section, autoResubscribe: alertSwitch.isOn, callback: {(success, response, _) in
             DispatchQueue.main.async {
                 if success {
                     self.showAlert(withMsg: response, title: "Success!", completion: self.handleCancel)
@@ -213,7 +213,6 @@ extension CourseAlertCreateController: ShowsAlert, CourseSearchDelegate {
     
 }
 
-
 // MARK: - Popover Functions
 extension CourseAlertCreateController: UIPopoverPresentationControllerDelegate {
     
@@ -223,7 +222,7 @@ extension CourseAlertCreateController: UIPopoverPresentationControllerDelegate {
         if searchText.count >= 3 {
             CourseAlertNetworkManager.instance.getSearchedCourses(searchText: searchText) { (results) in
                 if let results = results {
-                    if (results.count > 0) {
+                    if results.count > 0 {
                         DispatchQueue.main.async {
                             self.searchResults.updateWithResults(results: results)
                             let searchResultsVC = self.searchResults.popoverPresentationController
@@ -252,7 +251,7 @@ extension CourseAlertCreateController: UIPopoverPresentationControllerDelegate {
         
     }
     
-    func hideResultsPopover(){
+    func hideResultsPopover() {
         DispatchQueue.main.async {
             if self.searchResults.isVisible && !self.searchResults.isBeingDismissed {
                 self.searchResults.dismiss(animated: true, completion: nil)

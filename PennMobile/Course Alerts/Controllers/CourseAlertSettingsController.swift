@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 protocol CourseAlertSettingsChangedPreference: AnyObject {
     func allowChange() -> Bool
     func changed(option: PCAOption, toValue: Bool)
@@ -82,7 +81,7 @@ extension CourseAlertSettingsController: CourseAlertSettingsChangedPreference {
         UserDefaults.standard.set(option, to: toValue)
         UserDefaults.standard.set(.pennCourseAlerts, to: toValue)
         
-        CourseAlertNetworkManager.instance.updatePushNotifSettings(pushNotif: toValue, callback: {(success, response, error) in
+        CourseAlertNetworkManager.instance.updatePushNotifSettings(pushNotif: toValue, callback: {(success, response, _) in
             DispatchQueue.main.async {
                 if success {
                     self.showAlert(withMsg: "\(option.cellTitle ?? "") \(toValue ? "enabled" : "disabled")", title: "Preference Saved", completion: nil)

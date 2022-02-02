@@ -76,11 +76,11 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
                 self.handleSuccessfulNavigation(webView, decisionHandler: decisionHandler)
             } else {
                 if url.absoluteString.contains("password") {
-                    webView.evaluateJavaScript("document.getElementById('pennname').value;") { (result, error) in
+                    webView.evaluateJavaScript("document.getElementById('pennname').value;") { (result, _) in
                         if let pennkey = result as? String {
-                            webView.evaluateJavaScript("document.getElementById('password').value;") { (result, error) in
+                            webView.evaluateJavaScript("document.getElementById('password').value;") { (result, _) in
                                 if let password = result as? String {
-                                    if(!pennkey.isEmpty && !password.isEmpty) {
+                                    if !pennkey.isEmpty && !password.isEmpty {
                                         self.pennkey = pennkey
                                         self.password = password
                                     }
@@ -133,21 +133,21 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate,
     
     func autofillCredentials() {
         guard let pennkey = pennkey else { return }
-        webView.evaluateJavaScript("document.getElementById('pennname').value = '\(pennkey)'") { (_,_) in
+        webView.evaluateJavaScript("document.getElementById('pennname').value = '\(pennkey)'") { (_, _) in
         }
         guard let password = password else { return }
-        webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_,_) in
+        webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_, _) in
         }
     }
     
     func trustDevice() {
-        webView.evaluateJavaScript("document.getElementById('trustUA').value = 'true'") { (res, err) in
-            self.webView.evaluateJavaScript("document.documentElement.outerHTML.toString()") { (html, error) in
+        webView.evaluateJavaScript("document.getElementById('trustUA').value = 'true'") { (_, _) in
+            self.webView.evaluateJavaScript("document.documentElement.outerHTML.toString()") { (_, _) in
             }
         }
     }
     
-    var handleCancel: (() -> Void)? = nil
+    var handleCancel: (() -> Void)?
     
     @objc fileprivate func cancel(_ sender: Any) {
         _ = self.resignFirstResponder()

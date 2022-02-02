@@ -187,4 +187,3 @@ extension OnboardingController: SelectionCellDelegate {
         terminateOnboarding()
     }
 }
-

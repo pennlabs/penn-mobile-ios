@@ -38,20 +38,20 @@ class ContactCell: UITableViewCell {
     
     private lazy var phoneButton: UIButton = {
         let phoneImage = UIImage(named: "phone.png")
-        let b = UIButton(type: .custom)
-        b.translatesAutoresizingMaskIntoConstraints = false
-        b.setImage(phoneImage, for: .normal)
-        b.addTarget(self, action: #selector(handleCall(_:)), for: .touchUpInside)
-        b.isUserInteractionEnabled = true
-        return b
+        let phoneButton = UIButton(type: .custom)
+        phoneButton.translatesAutoresizingMaskIntoConstraints = false
+        phoneButton.setImage(phoneImage, for: .normal)
+        phoneButton.addTarget(self, action: #selector(handleCall(_:)), for: .touchUpInside)
+        phoneButton.isUserInteractionEnabled = true
+        return phoneButton
     }()
     
     private let contactNameLabel: UILabel = {
-        let l = UILabel()
-        l.font = UIFont(name: "HelveticaNeue", size: 18)
-        l.text = "Penn Walk"
-        l.translatesAutoresizingMaskIntoConstraints = false
-        return l
+        let contactLabel = UILabel()
+        contactLabel.font = UIFont(name: "HelveticaNeue", size: 18)
+        contactLabel.text = "Penn Walk"
+        contactLabel.translatesAutoresizingMaskIntoConstraints = false
+        return contactLabel
     }()
     
     weak var delegate: ContactCellDelegate?

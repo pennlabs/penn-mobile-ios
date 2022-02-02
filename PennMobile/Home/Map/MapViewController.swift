@@ -61,16 +61,11 @@ class MapViewController: UIViewController {
         
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
-            case .notDetermined:
+            case .notDetermined, .denied:
                 // Do nothing, handle in didChangeAuthorization delegate function
                 self.locationManager.requestWhenInUseAuthorization()
-                break
-            case .denied:
-                self.locationManager.requestWhenInUseAuthorization()
-                break
             default:
                 showCoordinates(searchTerm: searchTerm)
-                break
             }
         } else {
             showCoordinates(searchTerm: searchTerm)

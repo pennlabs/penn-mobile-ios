@@ -49,7 +49,6 @@ class GSRDateHandler {
 //  Created by Yagil Burowski on 15/09/2016.
 //  Copyright © 2016 Yagil Burowski. All rights reserved.
 //
-import Foundation
 
 extension Calendar {
     func dateRange(startDate: Foundation.Date, endDate: Foundation.Date, stepUnits: NSCalendar.Unit, stepValue: Int) -> DateRange {

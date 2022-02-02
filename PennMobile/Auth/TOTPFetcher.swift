@@ -6,7 +6,7 @@
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
 import Foundation
-//import WKZombie
+// import WKZombie
 import WebKit
 
 class TOTPFetcher: NSObject {
@@ -186,7 +186,7 @@ class TOTPFetcher: NSObject {
 extension WKWebsiteDataStore {
     static func createDataStoreWithSavedCookies(_ callback: @escaping (WKWebsiteDataStore) -> Void) {
         let wkDataStore = WKWebsiteDataStore.nonPersistent()
-        let sharedCookies: Array<HTTPCookie> = HTTPCookieStorage.shared.cookies ?? []
+        let sharedCookies: [HTTPCookie] = HTTPCookieStorage.shared.cookies ?? []
         let dispatchGroup = DispatchGroup()
 
         if sharedCookies.count > 0 {

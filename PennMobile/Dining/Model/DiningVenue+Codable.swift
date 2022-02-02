@@ -27,8 +27,8 @@ extension DiningVenue {
         let venueType = try container.decode(VenueType.self, forKey: .venueType)
         
         // Decode optional URLs
-        var facilityURL: URL? = nil
-        var imageURL: URL? = nil
+        var facilityURL: URL?
+        var imageURL: URL?
         let facilityURLString = try container.decodeIfPresent(String.self, forKey: .facilityURL)
         if facilityURLString != nil {
             facilityURL = URL(string: facilityURLString!)
@@ -39,7 +39,7 @@ extension DiningVenue {
         }
         
         // Create a mapping from date string to MealsForDate for that date
-        var mealsDict: Dictionary<String, MealsForDate> = .init()
+        var mealsDict: [String: MealsForDate] = .init()
         if let mealsArray = try container.decodeIfPresent(Array<MealsForDate>.self, forKey: .meals) {
             // Decoding from fresh API values
             for m in mealsArray {
@@ -153,9 +153,9 @@ extension DiningVenue.MealsForDate.Meal {
     }
     
     enum CodingKeys: String, CodingKey {
-        case open = "open"
-        case close = "close"
-        case type = "type"
+        case open
+        case close
+        case type
     }
 }
 
@@ -202,4 +202,3 @@ extension DiningVenue.MealsForDate.Meal {
         return formatter
     }
 }
-

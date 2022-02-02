@@ -26,10 +26,10 @@ class CourseAlertNetworkManager: NSObject, Requestable {
     let coursesURL = "https://penncoursealert.com/api/base/2021A/search/sections/"
     let registrationsURL = "https://penncoursealert.com/api/alert/registrations/"
     
-    func getSearchedCourses(searchText:String, _ callback: @escaping (_ results: [CourseSection]?) -> ()) {
+    func getSearchedCourses(searchText: String, _ callback: @escaping (_ results: [CourseSection]?) -> Void) {
         let urlStr = "\(coursesURL)?search=\(searchText)"
         let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
             if let data = data {
                 if let sectionsData = try? JSON(data).rawData() {
                     let results = try? JSONDecoder().decode([CourseSection].self, from: sectionsData)
@@ -43,7 +43,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
     }
     
     func getRegistrations(callback: @escaping (_ registrations: [CourseAlert]?) -> ()) {
-        makeGetRequestWithAccessToken(url: registrationsURL) { (data, response, error) in
+        makeGetRequestWithAccessToken(url: registrationsURL) { (data, _, error) in
             guard let data = data, error == nil  else {
                 callback(nil)
                 return
@@ -59,7 +59,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
     }
     
     func getSettings(callback: @escaping (_ settings: CourseAlertSettings?) -> ()) {
-        makeGetRequestWithAccessToken(url: settingsURL) { (data, response, error) in
+        makeGetRequestWithAccessToken(url: settingsURL) { (data, _, error) in
             guard let data = data, error == nil  else {
                 callback(nil)
                 return
@@ -78,7 +78,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
     }
     
     func updatePushNotifSettings(pushNotif: Bool, callback: @escaping (_ success: Bool, _ message: String, _ error: Error?) -> ()) {
-        let params: [String: Any] = ["profile": ["push_notifications":pushNotif]]
+        let params: [String: Any] = ["profile": ["push_notifications": pushNotif]]
         makeAuthenticatedRequest(url: settingsURL, requestType: RequestType.PATCH, params: params) { (data, status, error) in
             guard let status = status as? HTTPURLResponse else {
                 callback(false, "", error)
@@ -147,9 +147,6 @@ class CourseAlertNetworkManager: NSObject, Requestable {
     }
     
 }
-
-
-
 
 // MARK: - General Networking Functions
 extension CourseAlertNetworkManager {
@@ -221,7 +218,7 @@ extension CourseAlertNetworkManager {
     }
     
     fileprivate func getCSRFTokenCookie(_ callback: @escaping (_ csrfToken: String?) -> Void) {
-        if let CSRFDict = (UserDefaults.standard.dictionary(forKey: "cookies"))?["csrftokenplatform.pennlabs.org"] as? Dictionary<String, Any> {
+        if let CSRFDict = (UserDefaults.standard.dictionary(forKey: "cookies"))?["csrftokenplatform.pennlabs.org"] as? [String: Any] {
             if let csrfToken = CSRFDict["Value"] as? String {
                 callback(csrfToken)
             } else {

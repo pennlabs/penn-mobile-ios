@@ -80,7 +80,7 @@ extension CourseScheduleViewController {
             if (Account.isLoggedIn) {
                 handleCourseRefresh()
             } else {
-                self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
+                self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true) })
             }
         }
     }
@@ -152,7 +152,7 @@ extension CourseScheduleViewController {
         if successful {
             handleCourseRefresh()
         } else {
-            showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) } )
+            showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) })
         }
     }
 }

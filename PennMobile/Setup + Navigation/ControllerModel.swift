@@ -124,10 +124,8 @@ class ControllerModel: NSObject {
     }
 
     func visibleVCIndex() -> IndexPath {
-        for vc in viewControllers {
-            if vc.isVisible {
-                return IndexPath(row: viewControllers.firstIndex(of: vc)!, section: 0)
-            }
+        for vc in viewControllers where vc.isVisible {
+            return IndexPath(row: viewControllers.firstIndex(of: vc)!, section: 0)
         }
         return IndexPath(row: 0, section: 0)
     }

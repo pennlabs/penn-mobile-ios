@@ -575,8 +575,7 @@ extension URL {
 }
 
 extension JSONDecoder {
-    convenience init(keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy,
-         dateDecodingStrategy: JSONDecoder.DateDecodingStrategy) {
+    convenience init(keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy, dateDecodingStrategy: JSONDecoder.DateDecodingStrategy) {
         self.init()
         self.keyDecodingStrategy = keyDecodingStrategy
         self.dateDecodingStrategy = dateDecodingStrategy

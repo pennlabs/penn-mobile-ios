@@ -20,7 +20,7 @@ class AccountPageViewController: UIViewController, ShowsAlertForError, UITableVi
         
         setupView()
         guard Account.isLoggedIn else {
-            self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
+            self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)})
             return
         }
         setupTableView()

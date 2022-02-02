@@ -81,7 +81,7 @@ extension CourseAlertController: FetchPCADataProtocol {
             if let registrations = registrations {
                 self.alerts = registrations
                 DispatchQueue.main.async {
-                    if(self.tableView != nil){
+                    if self.tableView != nil {
                         self.refreshControl.endRefreshing()
                         self.tableView.reloadData(with: .automatic)
                     }
@@ -191,7 +191,6 @@ extension CourseAlertController {
         openSettingsButton.centerXAnchor.constraint(equalTo: manageSettingsView.centerXAnchor).isActive = true
         openSettingsButton.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 20).isActive = true
 
-        
         manageSettingsView.isHidden = true
     }
     
@@ -225,7 +224,7 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == alerts.count {
-            if (alerts.count == 0) {
+            if alerts.count == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ZeroCourseAlertsCell.identifier, for: indexPath) as! ZeroCourseAlertsCell
                 cell.selectionStyle = .none
                 cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
@@ -248,7 +247,7 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == alerts.count {
-            if (alerts.count == 0) {
+            if alerts.count == 0 {
                 return ZeroCourseAlertsCell.cellHeight
             }
             return CourseAlertCreateCell.cellHeight
@@ -306,7 +305,7 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
         }
         resubscribeAction.backgroundColor = .baseBlue
         
-        let cancelAction = UIContextualAction(style: .normal, title:  "Cancel", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let cancelAction = UIContextualAction(style: .normal, title: "Cancel", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             CourseAlertNetworkManager.instance.updateRegistration(id: id, deleted: nil, autoResubscribe: nil, cancelled: true, resubscribe: nil, callback: {(success, error) in
                 DispatchQueue.main.async {
                     if success {
@@ -323,7 +322,7 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
         }
         cancelAction.backgroundColor = .baseBlue
         
-        let deleteAction = UIContextualAction(style: .normal, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let deleteAction = UIContextualAction(style: .normal, title:  "Delete", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             CourseAlertNetworkManager.instance.updateRegistration(id: id, deleted: true, autoResubscribe: nil, cancelled: nil, resubscribe: nil, callback: {(success, error) in
                 DispatchQueue.main.async {
                     if success {
@@ -376,7 +375,6 @@ extension CourseAlertController {
     }
     
 }
-
 
 extension UITableView {
     func reloadData(with animation: UITableView.RowAnimation) {

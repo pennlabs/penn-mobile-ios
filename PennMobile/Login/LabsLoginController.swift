@@ -271,7 +271,7 @@ extension LabsLoginController {
             switch result {
             case .success(let pacCode):
                 self.savePacCode(pacCode)
-            case .failure(_):
+            case .failure:
                 return
             }
         }

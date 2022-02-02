@@ -67,8 +67,7 @@ extension URLOpenable {
         if let url = URL(string: scheme) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
-                                          completionHandler: {
-                                            (success) in
+                                          completionHandler: { (success) in
                                             //print("Open \(scheme): \(success)")
                 })
             } else {
@@ -121,7 +120,7 @@ extension ShowsAlert where Self: UIViewController {
     }
 }
 
-protocol ShowsAlertForError : ShowsAlert {
+protocol ShowsAlertForError: ShowsAlert {
     func showRefreshAlertForError<T>(result: Result<T, NetworkingError>, title: String, success: @escaping (T) -> Void, noInternet: (() -> Void)?, parsingError: (() -> Void)?, serverError: (() -> Void)?, jsonError: (() -> Void)?, authenticationError: (() -> Void)?, other: (() -> Void)?)
 }
 
@@ -155,7 +154,7 @@ extension ShowsAlertForError {
 
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+private func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
 

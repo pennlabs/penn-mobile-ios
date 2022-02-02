@@ -72,7 +72,7 @@ extension BuildingMapCell {
             mapView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             mapView.topAnchor.constraint(equalTo: safeArea.topAnchor),
             mapView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            mapView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+            mapView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
             ])
     }
     

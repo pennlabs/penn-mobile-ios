@@ -28,8 +28,7 @@ class ZeroCourseAlertsCell: UITableViewCell {
         noAlertsLabel.translatesAutoresizingMaskIntoConstraints = false
         noAlertsLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         noAlertsLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -50).isActive = true
-        
-        
+
         titleLabel = UILabel()
         titleLabel.text = "Create Alert"
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)

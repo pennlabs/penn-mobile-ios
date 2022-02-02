@@ -14,7 +14,7 @@ protocol DiningViewModelDelegate: DiningBalanceRefreshable {
 
 class DiningViewModel: NSObject {
     let ordering: [DiningVenue.VenueType] = [.dining, .retail]
-    var venues: [DiningVenue.VenueType : [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
+    var venues: [DiningVenue.VenueType: [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
     var balance: DiningBalance?
     
     let balancesHeader = "Dining Balance"

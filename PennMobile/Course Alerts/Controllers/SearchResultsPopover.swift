@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol CourseSearchDelegate {
-    func selectSection(section : CourseSection)
+    func selectSection(section: CourseSection)
 }
 
 class SearchResultsPopover: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -18,7 +18,7 @@ class SearchResultsPopover: UIViewController, UITableViewDelegate, UITableViewDa
     var tableView = UITableView()
     var results: [CourseSection] = []
     
-    var delegate : CourseSearchDelegate?
+    var delegate: CourseSearchDelegate?
     
     func updateWithResults(results: [CourseSection]) {
         self.results = results
@@ -63,7 +63,5 @@ class SearchResultsPopover: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return SearchResultsCell.cellHeight
     }
-    
-    
-}
 
+}

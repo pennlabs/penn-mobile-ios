@@ -100,7 +100,6 @@ extension GSRLocationsController: TabBarShowable {
     }
 }
 
-
 extension GSRTabController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "GSR_Grey")
@@ -132,4 +131,3 @@ extension MoreViewController: TabBarShowable {
         return UITabBarItem(title: "More", image: normalImage, selectedImage: selectedImage)
     }
 }
-

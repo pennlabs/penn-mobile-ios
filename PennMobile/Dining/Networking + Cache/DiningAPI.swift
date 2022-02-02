@@ -59,7 +59,6 @@ class DiningAPI: Requestable {
             }
         }
     }
-    
 
     func fetchDiningInsights(_ completion: @escaping (_ result: Result<DiningInsightsAPIResponse, NetworkingError>) -> Void ) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in

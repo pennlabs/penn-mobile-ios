@@ -44,7 +44,7 @@ class Event: Hashable {
     /// - Parameters:
     ///   - lhs: A value to compare.
     ///   - rhs: Another value to compare.
-    public static func ==(lhs: Event, rhs: Event) -> Bool {
+    public static func == (lhs: Event, rhs: Event) -> Bool {
         return lhs.name == rhs.name && lhs.location == rhs.location && lhs.startTime == rhs.startTime && lhs.endTime == rhs.endTime
     }
     

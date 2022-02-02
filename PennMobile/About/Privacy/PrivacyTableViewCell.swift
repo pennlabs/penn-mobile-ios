@@ -12,7 +12,7 @@ class PrivacyTableViewCell: UITableViewCell {
     
     static let identifier = "privacyCell"
     
-    weak var changePreferenceDelegate: PrivacyViewControllerChangedPreference? = nil
+    weak var changePreferenceDelegate: PrivacyViewControllerChangedPreference?
     
     fileprivate var privacyOption: PrivacyOption?
     fileprivate var label: UILabel!

@@ -59,7 +59,7 @@ class Course: Codable, Hashable {
         }
         if let meetingTimes = meetingTimes {
             for meeting in meetingTimes {
-                str = str + "\n\(meeting.description)"
+                str += "\n\(meeting.description)"
             }
         }
         return str
@@ -78,7 +78,7 @@ class Course: Codable, Hashable {
     
     func getEvent() -> Event? {
         guard let startTime = getTime(from: startTime), let endTime = getTime(from: endTime) else { return nil }
-        var location: String? = nil
+        var location: String?
         if let building = building, let room = room {
             location = "\(building) \(room)"
         }
@@ -152,11 +152,9 @@ extension Array where Element == Course {
         let weekdayAbbr = weekdayMapping(for: fullWeekday)
         for course in self {
             if let meetingTimes = course.meetingTimes {
-                for meetingTime in meetingTimes {
-                    if meetingTime.weekday == weekdayAbbr {
-                        let courseEvent = Course(name: course.name, term: course.term, dept: course.dept, code: course.code, section: course.section, building: meetingTime.building, room: meetingTime.room, weekdays: weekdayAbbr, startDate: course.startDate, endDate: course.endDate, startTime: meetingTime.startTime, endTime: meetingTime.endTime, instructors: course.instructors, meetingTimes: nil)
-                        courses.append(courseEvent)
-                    }
+                for meetingTime in meetingTimes where meetingTime.weekday == weekdayAbbr {
+                    let courseEvent = Course(name: course.name, term: course.term, dept: course.dept, code: course.code, section: course.section, building: meetingTime.building, room: meetingTime.room, weekdays: weekdayAbbr, startDate: course.startDate, endDate: course.endDate, startTime: meetingTime.startTime, endTime: meetingTime.endTime, instructors: course.instructors, meetingTimes: nil)
+                    courses.append(courseEvent)
                 }
             }
         }

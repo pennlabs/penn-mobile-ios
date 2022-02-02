@@ -60,13 +60,13 @@ extension OAuth2NetworkManager {
             "grant_type": "authorization_code",
             "client_id": clientID,
             "redirect_uri": "https://pennlabs.org/pennmobile/ios/callback/",
-            "code_verifier": codeVerifier,
+            "code_verifier": codeVerifier
         ]
         
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
                 let json = JSON(data)
                 let expiresIn = json["expires_in"].intValue
@@ -110,13 +110,13 @@ extension OAuth2NetworkManager {
         let params = [
             "refresh_token": refreshToken,
             "grant_type": "refresh_token",
-            "client_id": clientID,
+            "client_id": clientID
         ]
         
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             DispatchQueue.global().async {
                 if let httpResponse = response as? HTTPURLResponse, let data = data {
                     if httpResponse.statusCode == 200 {
@@ -160,13 +160,13 @@ extension OAuth2NetworkManager {
         request.httpMethod = "POST"
         
         let params = [
-            "token": accessToken.value,
+            "token": accessToken.value
         ]
         
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
                 let json = JSON(data)
                 if let userData = try? json["user"].rawData() {
@@ -240,7 +240,7 @@ extension OAuth2NetworkManager {
 extension String {
     static func randomString(length: Int) -> String {
       let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-      return String((0..<length).map{ _ in letters.randomElement()! })
+      return String((0..<length).map { _ in letters.randomElement()! })
     }
 }
 
@@ -252,7 +252,7 @@ extension String {
             if let strValue = value as? String {
                 let escapedValue = strValue.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
                 return "\(escapedKey)=\(escapedValue)"
-            } else if let arr = value as? Array<Any> {
+            } else if let arr = value as? [Any] {
                 let str = arr.map { String(describing: $0).addingPercentEncoding(withAllowedCharacters: characterSet) ?? "" }.joined(separator: ",")
                 return "\(escapedKey)=\(str)"
             } else {

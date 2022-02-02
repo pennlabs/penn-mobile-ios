@@ -42,8 +42,8 @@ class DiningDataStore {
         return sortedUpdatedVenues
     }
     
-    func getSectionedVenues() -> [DiningVenue.VenueType : [DiningVenue]] {
-        var venuesDict = [DiningVenue.VenueType : [DiningVenue]]()
+    func getSectionedVenues() -> [DiningVenue.VenueType: [DiningVenue]] {
+        var venuesDict = [DiningVenue.VenueType: [DiningVenue]]()
         for type in DiningVenue.VenueType.allCases {
             venuesDict[type] = getVenues().filter({ $0.venueType == type })
         }

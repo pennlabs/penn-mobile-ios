@@ -95,7 +95,7 @@ extension PennAuthRequestable {
         let params: [String: String] = [
             "j_username": pennkey,
             "j_password": password,
-            "_eventId_proceed": "",
+            "_eventId_proceed": ""
         ]
         
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -108,13 +108,12 @@ extension PennAuthRequestable {
         let encodedParams = parameterArray.joined(separator: "&")
         request.httpBody = encodedParams.data(using: String.Encoding.utf8)
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
 
-                if(html.contains("two-step-form")){
+                if html.contains("two-step-form") {
                     self.makeRequestWithTwoFac(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
-                }
-                else {
+                } else {
                     self.makeRequestWithShibboleth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
                 }
             } else {
@@ -165,7 +164,7 @@ extension PennAuthRequestable {
         task.resume()
     }
 
-    private func makeRequestWithTwoFac(targetUrl: String, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void){
+    private func makeRequestWithTwoFac(targetUrl: String, shibbolethUrl: String, html: String, _ completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         
         guard let passcode = html.getMatches(for: "name=\"passcode\" value=\"(.*?)\"").first,
         let required = html.getMatches(for: "name=\"required\" value=\"(.*?)\"").first,
@@ -203,7 +202,7 @@ extension PennAuthRequestable {
         let encodedParams = parameterArray.joined(separator: "&")
         request.httpBody = encodedParams.data(using: String.Encoding.utf8)
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
             if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                 self.makeRequestWithShibboleth(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl, html: html as String, completionHandler)
             } else {

@@ -34,8 +34,7 @@ class TwoFactorCell: UITableViewCell {
             if code == nil {
                 if enabled {
                     codeLabel.text = "Fetching code..."
-                }
-                else {
+                } else {
                     codeLabel.text = "––––––"
                 }
             }
@@ -92,8 +91,7 @@ extension TwoFactorCell {
         codeLabel.textAlignment = .left
         if let code = code {
             codeLabel.text = code
-        }
-        else {
+        } else {
             codeLabel.text = "––––––"
         }
         

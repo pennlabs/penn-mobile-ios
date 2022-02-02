@@ -7,7 +7,7 @@
 //
 import Foundation
 
-typealias PCAPreferences = Dictionary<String, Bool>
+typealias PCAPreferences = [String: Bool]
 
 enum PCAOption: String, Codable {
     case alertsThroughPennMobile
@@ -34,8 +34,8 @@ enum PCAOption: String, Codable {
     
     var defaultValue: Bool {
         switch self {
-            case .alertsThroughPennMobile: return false
-            default: return false
+        case .alertsThroughPennMobile: return false
+        default: return false
         }
     }
 }

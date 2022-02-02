@@ -360,8 +360,7 @@ extension RootViewController : TwoFactorEnableDelegate {
                     vc.delegate = self
                     self.current.present(vc, animated: true)
                 }
-            }
-            else {
+            } else {
                 askForNotificationPermission()
             }
         } else {

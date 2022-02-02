@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias NotificationPreferences = Dictionary<String, Bool>
+typealias NotificationPreferences = [String: Bool]
 
 /*
  Notification preferences are stored in UserDefaults as a String:Bool mapping, where

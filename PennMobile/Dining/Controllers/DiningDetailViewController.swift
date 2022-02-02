@@ -30,7 +30,7 @@ class DiningDetailViewController: UITableViewController {
     }
     
     var menuCellExpanded = false
-    var requestedCellHeights: Dictionary<String, CGFloat> = [
+    var requestedCellHeights: [String: CGFloat] = [
         BuildingHeaderCell.identifier: BuildingHeaderCell.cellHeight,
         BuildingImageCell.identifier: BuildingImageCell.cellHeight,
         BuildingMapCell.identifier: BuildingMapCell.cellHeight,
@@ -71,7 +71,6 @@ extension DiningDetailViewController {
         }
     }
 }
-
 
 // MARK: - Setup and Update UI
 extension DiningDetailViewController {

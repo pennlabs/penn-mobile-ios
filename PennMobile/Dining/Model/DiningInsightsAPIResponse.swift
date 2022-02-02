@@ -80,7 +80,6 @@ struct FrequentLocation: Codable {
     let semester: Double
 }
 
-
 // MARK: Recent Transactions Card
 extension DiningInsightsAPIResponse.CardData {
     struct RecentTransactionsCardData: Codable {

@@ -24,7 +24,7 @@ extension TOTPNetworkManager: PennAuthRequestable {
     }
     
     func login(_ completion: @escaping () -> Void) {
-        makeAuthRequest(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl) { (data, response, error) in
+        makeAuthRequest(targetUrl: targetUrl, shibbolethUrl: shibbolethUrl) { (_, _, _) in
             completion()
         }
     }

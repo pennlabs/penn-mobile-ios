@@ -37,12 +37,11 @@ class CourseAlertCell: UITableViewCell {
     }
 }
 
-
 // MARK: - Setup Cell
 extension CourseAlertCell {
     fileprivate func setupCell() {
         
-        if (detailLabel == nil || courseLabel == nil || courseStatusLabel == nil || activeLabel == nil || activeDot == nil || statusDot == nil || moreView == nil) {
+        if detailLabel == nil || courseLabel == nil || courseStatusLabel == nil || activeLabel == nil || activeDot == nil || statusDot == nil || moreView == nil {
             setupUI()
         } else {
             detailLabel.text = "One-Time Alert"
@@ -64,7 +63,6 @@ extension CourseAlertCell {
         }
     }
 }
-
 
 // MARK: - Setup UI
 extension CourseAlertCell {

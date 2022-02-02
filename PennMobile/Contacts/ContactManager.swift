@@ -14,8 +14,8 @@ extension SupportItem {
         let contact = CNMutableContact()
         contact.givenName = self.contactName
         contact.phoneNumbers = [CNLabeledValue(
-            label:CNLabelPhoneNumberiPhone,
-            value:CNPhoneNumber(stringValue: self.phoneFiltered))]
+            label: CNLabelPhoneNumberiPhone,
+            value: CNPhoneNumber(stringValue: self.phoneFiltered))]
         if let desc = self.descriptionText {
             contact.note = desc
         }
@@ -32,7 +32,7 @@ class ContactManager: NSObject {
         let saveRequest = CNSaveRequest()
         let store = CNContactStore()
         for item in items {
-            saveRequest.add(item.cnContact, toContainerWithIdentifier:nil)
+            saveRequest.add(item.cnContact, toContainerWithIdentifier: nil)
         }
         do {
             try store.execute(saveRequest)
@@ -57,10 +57,10 @@ class ContactManager: NSObject {
         let predicate = CNContact.predicateForContacts(matchingName: item.contactName)
         let toFetch = [CNContactGivenNameKey] as [CNKeyDescriptor]
         
-        do{
+        do {
             let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: toFetch)
-            guard contacts.count > 0 else{
-                callback2(true) //no contacts found
+            guard contacts.count > 0 else {
+                callback2(true) // no contacts found
                 return
             }
             
@@ -71,7 +71,7 @@ class ContactManager: NSObject {
                 
                 do {
                     try store.execute(req)
-                    callback2(true) //successfully deleted user
+                    callback2(true) // successfully deleted user
                 } catch {
                     callback2(false)
                 }
@@ -81,5 +81,3 @@ class ContactManager: NSObject {
         }
     }
 }
-
-

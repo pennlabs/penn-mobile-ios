@@ -150,7 +150,7 @@ extension PacCodeViewController : KeychainAccessible, LocallyAuthenticatable {
                 handleNetworkPacCodeRefetch()
             }
         } else {
-            self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
+            self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)})
         }
     }
     
@@ -217,7 +217,7 @@ extension PacCodeViewController {
         if successful {
             handleNetworkPacCodeRefetch()
         } else {
-            showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) } )
+            showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) })
         }
     }
 

@@ -22,7 +22,7 @@ public class SAConfettiView: UIView {
     public var colors: [UIColor]!
     public var intensity: Float!
     public var type: ConfettiType!
-    private var active :Bool!
+    private var active: Bool!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -47,7 +47,7 @@ public class SAConfettiView: UIView {
     
     public func startConfetti() {
         emitter = CAEmitterLayer()
-        emitter.birthRate = emitter.birthRate * 2
+        emitter.birthRate *= 2
         
         emitter.emitterPosition = CGPoint(x: frame.size.width / 2.0, y: 0)
         emitter.emitterShape = CAEmitterLayerEmitterShape.line

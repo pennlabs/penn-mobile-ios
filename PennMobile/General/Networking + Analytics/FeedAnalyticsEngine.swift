@@ -166,8 +166,7 @@ extension FeedAnalyticsManager {
             
             let task = URLSession.shared.dataTask(with: request)
             task.resume()
-        }
-        catch {
+        } catch {
         }
     }
 }
