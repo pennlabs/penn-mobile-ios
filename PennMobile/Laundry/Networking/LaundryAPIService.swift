@@ -36,7 +36,7 @@ class LaundryAPIService: Requestable {
         Storage.remove(LaundryRoom.directory, from: .caches)
     }
 
-    func loadIds(_ callback: @escaping (_ success: Bool) -> ()) {
+    func loadIds(_ callback: @escaping (_ success: Bool) -> Void) {
         fetchIds { (dictionary) in
             self.idToRooms = dictionary
             if let dict = dictionary {
@@ -46,7 +46,7 @@ class LaundryAPIService: Requestable {
         }
     }
 
-    private func fetchIds(callback: @escaping ([Int: LaundryRoom]?) -> ()) {
+    private func fetchIds(callback: @escaping ([Int: LaundryRoom]?) -> Void) {
         getRequestData(url: idsUrl) { (data, error, statusCode) in
             if let data = data, let rooms = try? JSONDecoder().decode([LaundryRoom].self, from: data) {
                 callback(Dictionary(uniqueKeysWithValues: rooms.map{ ($0.id, $0) }))

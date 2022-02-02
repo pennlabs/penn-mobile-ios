@@ -38,7 +38,7 @@ class BezierView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.layer.sublayers?.forEach({ (layer: CALayer) -> () in
+        self.layer.sublayers?.forEach({ (layer: CALayer) -> Void in
             layer.removeFromSuperlayer()
         })
         pointLayers.removeAll()

@@ -42,7 +42,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         task.resume()
     }
 
-    func getRegistrations(callback: @escaping (_ registrations: [CourseAlert]?) -> ()) {
+    func getRegistrations(callback: @escaping (_ registrations: [CourseAlert]?) -> Void) {
         makeGetRequestWithAccessToken(url: registrationsURL) { (data, _, error) in
             guard let data = data, error == nil  else {
                 callback(nil)
@@ -58,7 +58,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         }
     }
 
-    func getSettings(callback: @escaping (_ settings: CourseAlertSettings?) -> ()) {
+    func getSettings(callback: @escaping (_ settings: CourseAlertSettings?) -> Void) {
         makeGetRequestWithAccessToken(url: settingsURL) { (data, _, error) in
             guard let data = data, error == nil  else {
                 callback(nil)
@@ -77,7 +77,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         }
     }
 
-    func updatePushNotifSettings(pushNotif: Bool, callback: @escaping (_ success: Bool, _ message: String, _ error: Error?) -> ()) {
+    func updatePushNotifSettings(pushNotif: Bool, callback: @escaping (_ success: Bool, _ message: String, _ error: Error?) -> Void) {
         let params: [String: Any] = ["profile": ["push_notifications": pushNotif]]
         makeAuthenticatedRequest(url: settingsURL, requestType: RequestType.PATCH, params: params) { (data, status, error) in
             guard let status = status as? HTTPURLResponse else {
@@ -94,7 +94,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         }
     }
 
-    func createRegistration(section: String, autoResubscribe: Bool, callback: @escaping (_ success: Bool, _ response: String, _ error: Error?) -> ()) {
+    func createRegistration(section: String, autoResubscribe: Bool, callback: @escaping (_ success: Bool, _ response: String, _ error: Error?) -> Void) {
         let params: [String: Any] = ["section": section, "auto_resubscribe": autoResubscribe]
         makeAuthenticatedRequest(url: registrationsURL, requestType: RequestType.POST, params: params) { (data, status, error) in
             guard let status = status as? HTTPURLResponse else {
@@ -116,7 +116,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         }
     }
 
-    func updateRegistration(id: String, deleted: Bool?, autoResubscribe: Bool?, cancelled: Bool?, resubscribe: Bool?, callback: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+    func updateRegistration(id: String, deleted: Bool?, autoResubscribe: Bool?, cancelled: Bool?, resubscribe: Bool?, callback: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         var params: [String: Any] = [:]
         if let deleted = deleted {
             params.updateValue(deleted, forKey: "deleted")

@@ -15,7 +15,7 @@ class PollsNetworkManager: NSObject, Requestable {
     let optionsURL = "https://studentlife.pennlabs.org/options/"
     let votesURL = "https://studentlife.pennlabs.org/votes/"
 
-    func getActivePolls(callback: @escaping ([PollQuestion]?) -> ()) {
+    func getActivePolls(callback: @escaping ([PollQuestion]?) -> Void) {
 
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
@@ -31,11 +31,11 @@ class PollsNetworkManager: NSObject, Requestable {
     }
 
     /// TODO: Implement
-    func getArchivedPolls(callback: @escaping ([PollQuestion]?) ->()) {
+    func getArchivedPolls(callback: @escaping ([PollQuestion]?) -> Void) {
         return
     }
 
-    func answerPoll(withId id: String, response: Int, callback: @escaping ( _ success: Bool, _ errorMsg: String?) -> ()) {
+    func answerPoll(withId id: String, response: Int, callback: @escaping ( _ success: Bool, _ errorMsg: String?) -> Void) {
         return
     }
 }

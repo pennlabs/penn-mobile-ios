@@ -77,25 +77,25 @@ extension Method: CustomStringConvertible {
 protocol Requestable {}
 
 extension Requestable {
-    internal func getRequest(url: String, callback: @escaping (_ json: NSDictionary?,  _ error: Error?, _ status: Int?) -> ()) {
+    internal func getRequest(url: String, callback: @escaping (_ json: NSDictionary?,  _ error: Error?, _ status: Int?) -> Void) {
         request(method: .get, url: url, params: nil) { (data, dict, error, status) in
             callback(dict, error, status)
         }
     }
 
-    internal func getRequestData(url: String, callback: @escaping (_ data: Data?,  _ error: Error?, _ status: Int?) -> ()) {
+    internal func getRequestData(url: String, callback: @escaping (_ data: Data?,  _ error: Error?, _ status: Int?) -> Void) {
         request(method: .get, url: url, params: nil) { (data, dict, error, status) in
             callback(data, error, status)
         }
     }
 
-    internal func postRequestData(url: String, params: [NSString: Any]? = nil, callback: @escaping (_ data: Data?,  _ error: Error?, _ status: Int?) -> ()) {
+    internal func postRequestData(url: String, params: [NSString: Any]? = nil, callback: @escaping (_ data: Data?,  _ error: Error?, _ status: Int?) -> Void) {
         request(method: .post, url: url, params: params) { (data, _, error, status) in
             callback(data, error, status)
         }
     }
 
-    internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ data: Data?, _ json: NSDictionary?, _ error: Error?, _ status: Int?) -> ())? = nil)  {
+    internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ data: Data?, _ json: NSDictionary?, _ error: Error?, _ status: Int?) -> Void)? = nil)  {
         guard let url = URL(string: url) else {
             return
         }

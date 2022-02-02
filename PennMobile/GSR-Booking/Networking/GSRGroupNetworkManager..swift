@@ -36,7 +36,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 //        return [daniel, rehaan, lucy]
 //    }
 
-    func getAllGroups(callback: @escaping ([GSRGroup]?) -> ()) {
+    func getAllGroups(callback: @escaping ([GSRGroup]?) -> Void) {
         let allGroupsURL = "\(userURL)me/"
 
         makeGetRequestWithAccessToken(url: allGroupsURL) { (data, response, error) in
@@ -54,7 +54,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
 
-    func getGroup(groupid: Int, callback: @escaping (_ errMessage: String?, _ group: GSRGroup?) -> ()) {
+    func getGroup(groupid: Int, callback: @escaping (_ errMessage: String?, _ group: GSRGroup?) -> Void) {
 
         let url = "\(groupsURL)\(groupid)/"
 
@@ -74,7 +74,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
 
-    func inviteUsers(groupID: Int, pennkeys: [String], callback: @escaping (Bool, Error?) -> ()) {
+    func inviteUsers(groupID: Int, pennkeys: [String], callback: @escaping (Bool, Error?) -> Void) {
         let params: [String: Any] = ["group": groupID, "user": pennkeys.joined(separator: ",")]
         makePostRequestWithAccessToken(url: inviteURL, params: params) { (data, status, error) in
             guard let status = status as? HTTPURLResponse else {
@@ -85,7 +85,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
 
-    func updateIndividualSetting(groupID: Int, settingType: GSRGroupIndividualSettingType, isEnabled: Bool, callback: @escaping (Bool, Error?) -> ()) {
+    func updateIndividualSetting(groupID: Int, settingType: GSRGroupIndividualSettingType, isEnabled: Bool, callback: @escaping (Bool, Error?) -> Void) {
 
         guard let pennkey = Account.getAccount()?.pennkey else {
             print("User is not signed in")
@@ -113,7 +113,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
 
-    func createGroup(name: String, color: String, callback: @escaping (_ success: Bool, _ groupID: Int?, _ errorMsg: String?) -> ()) {
+    func createGroup(name: String, color: String, callback: @escaping (_ success: Bool, _ groupID: Int?, _ errorMsg: String?) -> Void) {
 
         guard let pennkey = Account.getAccount()?.pennkey else {
             print("User is not signed in")
@@ -138,7 +138,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
 
-    func getAllUsers(callback: @escaping (_ success: Bool, _ results: [GSRInviteSearchResult]?) -> ()) {
+    func getAllUsers(callback: @escaping (_ success: Bool, _ results: [GSRInviteSearchResult]?) -> Void) {
         getRequestData(url: userURL) { (data, error, status) in
             guard let data = data else {
                 callback(false, nil)
@@ -157,7 +157,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
 
-    func getInvites(callback: @escaping (_ success: Bool, _ invites: [GSRGroupInvite], _ error: Error?) -> ()) {
+    func getInvites(callback: @escaping (_ success: Bool, _ invites: [GSRGroupInvite], _ error: Error?) -> Void) {
         var invites = GSRGroupInvites()
         guard let pennkey = Account.getAccount()?.pennkey else {
             print("User is not signed in")
@@ -195,7 +195,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
         }
     }
 
-    func respondToInvite(invite: GSRGroupInvite, accept: Bool, callback: @escaping (_ success: Bool) -> ()) {
+    func respondToInvite(invite: GSRGroupInvite, accept: Bool, callback: @escaping (_ success: Bool) -> Void) {
         let params = [String: Any]()
         makePostRequestWithAccessToken(url: "\(membershipURL)\(invite.id)/\(accept ? "accept" : "decline")/", params: params) { (data, status, error) in
 
@@ -210,7 +210,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 }
 
 extension GSRGroupNetworkManager {
-    func getSearchResults(searchText:String, _ callback: @escaping (_ results: [GSRInviteSearchResult]?) -> ()) {
+    func getSearchResults(searchText:String, _ callback: @escaping (_ results: [GSRInviteSearchResult]?) -> Void) {
         let urlStr = "http://api.pennlabs.org/studyspaces/user/search?query=\(searchText)"
         let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
