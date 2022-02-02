@@ -38,7 +38,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                 callback(nil)
             } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
-                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                    if let data = data, NSString(data: data, encoding: String.Encoding.utf8.rawValue) != nil {
                         if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
                             // data recieved and parsed successfully
                             if let dict = json {
@@ -190,7 +190,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                 callback(false, "Unable to connect to the Internet.")
             } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
-                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                    if let data = data, NSString(data: data, encoding: String.Encoding.utf8.rawValue) != nil {
                         let json = JSON(data)
                         let success = json["result"].string != nil
                         let errorMsg = json["error"].string

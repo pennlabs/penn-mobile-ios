@@ -60,21 +60,21 @@ extension BookingRowCell {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "h:m"
 
-        if let _ = options.0 {
+        if options.0 != nil {
             bookingLabels.0!.text = formatter.string(from: options.0!.startTime)
             bookingButtons.0!.isEnabled = true
         } else {
             bookingLabels.0!.text = ""
             bookingButtons.0!.isEnabled = false
         }
-        if let _ = options.1 {
+        if options.1 != nil {
             bookingLabels.1!.text = formatter.string(from: options.1!.startTime)
             bookingButtons.1!.isEnabled = true
         } else {
             bookingLabels.1!.text = ""
             bookingButtons.1!.isEnabled = false
         }
-        if let _ = options.2 {
+        if options.2 != nil {
             bookingLabels.2!.text = formatter.string(from: options.0!.startTime)
             bookingButtons.2!.isEnabled = true
         } else {

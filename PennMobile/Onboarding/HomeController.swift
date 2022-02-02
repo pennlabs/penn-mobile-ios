@@ -18,7 +18,7 @@ class HomeController: UIViewController {
 
         let imageView = UIImageView(image: UIImage(named: "home"))
 
-        //64 pixels: 20 for status bar, 44 for navigation bar
+        // 64 pixels: 20 for status bar, 44 for navigation bar
         view.addSubview(imageView)
         _ = imageView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 64, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }

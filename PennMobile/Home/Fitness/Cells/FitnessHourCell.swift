@@ -51,7 +51,9 @@ extension FitnessHourCell {
         statusLabel.text = ""
         statusLabel.textColor = .labelSecondary
         statusLabel.font = .secondaryInformationFont
-        if let _ = name.getImageName() { venueImageView.image = UIImage(named: name.getImageName()!) }
+        if let imageName = name.getImageName() {
+            venueImageView.image = UIImage(named: imageName)
+        }
     }
 
     fileprivate func setupCell(with schedule: FitnessSchedule?) {

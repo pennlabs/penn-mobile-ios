@@ -91,7 +91,7 @@ extension HomeStudyRoomCell {
         for row in 0..<HomeStudyRoomCell.numberOfBookingCellRows {
             for n in 0..<3 {
                 bookingButtons[row][n].booking = bookingOptions?[row][n]
-                if let _ = bookingOptions, bookingOptions![row][n] != nil {
+                if let bookingOptions = bookingOptions, bookingOptions[row][n] != nil {
 //                    bookingButtonTimeLabels[row][n].text = formatter.string(from: (bookingOptions![row][n]?.start)!)
                 } else {
                     bookingButtonTimeLabels[row][n].text = ""

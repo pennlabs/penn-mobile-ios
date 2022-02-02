@@ -208,7 +208,7 @@ extension UserDBManager {
                 var accountID: String?
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
-                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                        if let data = data, NSString(data: data, encoding: String.Encoding.utf8.rawValue) != nil {
                             let json = JSON(data)
                             accountID = json["account_id"].string
                         }

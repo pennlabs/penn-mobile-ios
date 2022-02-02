@@ -34,9 +34,7 @@ class MapViewController: UIViewController {
 
     var region: MKCoordinateRegion = PennCoordinate.shared.getDefaultRegion(at: .far) {
         didSet {
-            if let _ = mapView {
-                mapView?.setRegion(region, animated: false)
-            }
+            mapView?.setRegion(region, animated: false)
         }
     }
     var annotation: MKAnnotation?

@@ -28,7 +28,7 @@ final class HomeGSRCellItem: HomeCellItem {
     var bookingOptions: [[GSRBooking?]]?
 
     func equals(item: ModularTableViewItem) -> Bool {
-        guard let _ = item as? HomeGSRCellItem else { return false }
+        guard item is HomeGSRCellItem else { return false }
         return true
     }
 
