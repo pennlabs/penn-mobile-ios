@@ -8,7 +8,6 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - function_parameter_count
   - function_body_length
   - large_tuple
-  - orphaned_doc_comment
   - unused_closure_parameter
   - unused_optional_binding
   - opening_brace

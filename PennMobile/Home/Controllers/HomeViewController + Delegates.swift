@@ -57,7 +57,7 @@ extension HomeViewController: GSRBookable {
 //        if GSRUser.hasSavedUser() {
 //            booking.user = GSRUser.getUser()
 //            submitBooking(for: booking) { (completion) in
-////                self.fetchCellData(for: [HomeItemTypes.instance.studyRoomBooking])
+//                self.fetchCellData(for: [HomeItemTypes.instance.studyRoomBooking])
 //            }
 //        } else {
 //            let glc = GSRLoginController()

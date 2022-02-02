@@ -161,10 +161,6 @@ struct DailyAverageView: View {
                     self.axisOffset = (self.selectedDataPoint == nil ? ((0.5 - self.averageDollar) * 110) : ((0.5 - self.data[self.selectedDataPoint!]) * 110))
                 }
             }
-////             Fix for ad-hoc bindinding created
-//            .onChange(of: timeFrame) {
-//                  self.selectedDataPoint = nil
-//            }
             .padding(.top)
         }
         .frame(height: 318)
