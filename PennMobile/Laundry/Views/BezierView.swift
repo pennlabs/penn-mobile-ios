@@ -49,7 +49,7 @@ class BezierView: UIView {
         animateLayers()
     }
 
-    private func drawPoints(){
+    private func drawPoints() {
 
         guard let points = dataPoints else {
             return

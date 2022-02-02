@@ -95,7 +95,7 @@ extension Requestable {
         }
     }
 
-    internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ data: Data?, _ json: NSDictionary?, _ error: Error?, _ status: Int?) -> Void)? = nil)  {
+    internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ data: Data?, _ json: NSDictionary?, _ error: Error?, _ status: Int?) -> Void)? = nil) {
         guard let url = URL(string: url) else {
             return
         }

@@ -70,7 +70,7 @@ extension CoursePrivacyController {
         showActivity()
         PennInTouchNetworkManager.instance.getCourses { (result) in
             DispatchQueue.main.async {
-                if let courses = try? result.get()  {
+                if let courses = try? result.get() {
                     // Save courses anonymously on database
                     UserDBManager.shared.saveCoursesAnonymously(courses) { (success) in
                         DispatchQueue.main.async {

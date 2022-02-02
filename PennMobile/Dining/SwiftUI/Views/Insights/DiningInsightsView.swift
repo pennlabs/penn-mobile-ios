@@ -80,7 +80,7 @@ struct DiningInsightsView: View {
                     Alert(title: Text("Login Error"), message: Text("Please Login to Use this Feature"),
                           primaryButton: .default(Text("Login")) {
                             self.isPresentingLoginSheet.toggle()
-                        }, secondaryButton: .cancel{
+                        }, secondaryButton: .cancel {
                             self.pickerIndex = 0
                         })
                 }

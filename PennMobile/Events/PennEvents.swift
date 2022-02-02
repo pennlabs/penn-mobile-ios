@@ -31,7 +31,7 @@ struct PennEvents: Codable {
     }
 }
 
-struct StringOrBool: Codable{
+struct StringOrBool: Codable {
     var value: String?
       init(from decoder: Decoder) throws {
         if let string = try? String(from: decoder) {

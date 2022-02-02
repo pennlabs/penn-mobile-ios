@@ -331,7 +331,7 @@ extension Date {
         return formatter.date(from: dateStr)!
     }
 
-    static var midnightYesterday: Date  {
+    static var midnightYesterday: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -348,7 +348,7 @@ extension Date {
     }
 }
 
-extension LazyMapCollection  {
+extension LazyMapCollection {
     func toArray() -> [Element] {
         return Array(self)
     }
@@ -444,7 +444,7 @@ extension Dictionary where Key == String, Value == String {
 
 extension String {
     // https://stackoverflow.com/questions/34262863/how-to-calculate-height-of-a-string
-    func dynamicHeight(font: UIFont, width: CGFloat) -> CGFloat{
+    func dynamicHeight(font: UIFont, width: CGFloat) -> CGFloat {
         let calString = NSString(string: self)
         let textSize = calString.boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font]), context: nil)
         return textSize.height

@@ -35,7 +35,7 @@ class EventsAPI: Requestable {
 
             decoder.dateDecodingStrategy = .formatted(formatter)
 
-            if let events = try? decoder.decode([PennEvents].self, from: data){
+            if let events = try? decoder.decode([PennEvents].self, from: data) {
                 self.saveToCache(events)
                 completion(.success(events))
             } else {

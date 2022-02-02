@@ -158,7 +158,7 @@ extension CourseScheduleViewController {
 }
 
 // MARK: - ModularTableViewDelegate
-extension CourseScheduleViewController: CourseScheduleCellDelegate{
+extension CourseScheduleViewController: CourseScheduleCellDelegate {
     func handleBuildingSelected(searchTerm: String) {
         let mapVC = MapViewController()
         mapVC.searchTerm = searchTerm

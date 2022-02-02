@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GSRGroupUser: Decodable{
+struct GSRGroupUser: Decodable {
     let pennkey: String!
     let groups: [GSRGroup]?
 

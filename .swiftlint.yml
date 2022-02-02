@@ -10,7 +10,6 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - large_tuple
   - unused_closure_parameter
   - unused_optional_binding
-  - opening_brace
   - cyclomatic_complexity
   - comment_spacing
   - control_statement

@@ -55,7 +55,7 @@ class RoomCell: UITableViewCell {
     }
 
     func getSelectTimes() -> [GSRTimeSlot] {
-        (collectionView.indexPathsForSelectedItems ?? []).map( {
+        (collectionView.indexPathsForSelectedItems ?? []).map({
             return room.availability[$0.item]
         })
     }

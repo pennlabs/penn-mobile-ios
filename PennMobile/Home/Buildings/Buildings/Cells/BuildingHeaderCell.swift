@@ -104,7 +104,7 @@ extension BuildingHeaderCell {
         return label
     }
 
-    fileprivate func getBuildingHoursLabel() -> UILabel{
+    fileprivate func getBuildingHoursLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryInformationFont
         label.textColor = .baseYellow

@@ -8,14 +8,12 @@
 import Foundation
 import UIKit
 
-struct CubicCurveSegment
-{
+struct CubicCurveSegment {
     let controlPoint1: CGPoint
     let controlPoint2: CGPoint
 }
 
-class CubicCurveAlgorithm
-{
+class CubicCurveAlgorithm {
     private var firstControlPoints: [CGPoint?] = []
     private var secondControlPoints: [CGPoint?] = []
 
@@ -138,7 +136,7 @@ class CubicCurveAlgorithm
                 if i == count-1 {
                     let P3 = dataPoints[i+1]
 
-                    guard let P1 = firstControlPoints[i] else{
+                    guard let P1 = firstControlPoints[i] else {
                         continue
                     }
 

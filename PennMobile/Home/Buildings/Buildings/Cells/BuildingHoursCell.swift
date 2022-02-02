@@ -106,7 +106,7 @@ extension BuildingHoursCell {
         }
     }
 
-    fileprivate func getDayLabel() -> UILabel{
+    fileprivate func getDayLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryInformationFont
         label.textColor = UIColor.labelPrimary
@@ -115,7 +115,7 @@ extension BuildingHoursCell {
         return label
     }
 
-    fileprivate func getHourLabel() -> UILabel{
+    fileprivate func getHourLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryInformationFont
         label.textColor = UIColor.labelPrimary

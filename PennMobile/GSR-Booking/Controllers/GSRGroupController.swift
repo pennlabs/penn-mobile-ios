@@ -99,7 +99,7 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
 }
 
 // MARK: NewGroupInitialDelegate
-extension GSRGroupController: NewGroupInitialDelegate{
+extension GSRGroupController: NewGroupInitialDelegate {
     @objc func fetchGroups() {
         GSRGroupNetworkManager.instance.getAllGroups { (groups) in
             if let groups = groups {

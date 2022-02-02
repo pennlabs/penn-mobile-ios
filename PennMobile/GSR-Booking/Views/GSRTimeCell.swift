@@ -20,8 +20,8 @@ class GSRTimeCell: UICollectionViewCell {
         }
     }
 
-    override var isSelected: Bool{
-        didSet{
+    override var isSelected: Bool {
+        didSet {
             if !timeSlot.isAvailable {
                 backgroundColor = UIColor.labelSecondary
             } else {

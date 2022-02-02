@@ -98,7 +98,7 @@ struct DiningStationItemRow: View {
     let diningStationItem: DiningStationItem
 
     var body: some View {
-        VStack(alignment: .leading){
+        VStack(alignment: .leading) {
             HStack(alignment: .center) {
                 Text(diningStationItem.title.capitalizeMainWords())
                     .font(Font.system(size: 17))
