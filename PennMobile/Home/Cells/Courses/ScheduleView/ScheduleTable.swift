@@ -295,17 +295,17 @@ extension ScheduleTable: ScheduleLayoutDelegate {
         }
     }
 
-    //returns all conflicting events, including the event itself, when most conflicting events occur
+    // returns all conflicting events, including the event itself, when most conflicting events occur
     private func maxConflictingEvents(for event: Event) -> [Event] {
-        return [event]//event.getMaxConflictingEvents(for: events)
+        return [event]// event.getMaxConflictingEvents(for: events)
     }
 
     private func maximumNumberConflictingEvents(for event: Event) -> Int {
-        //return maxConflictingEvents(for: event).count
+        // return maxConflictingEvents(for: event).count
         return maxConflictingEvents(for: event).count
     }
 
-    //returns the minimum startTime
+    // returns the minimum startTime
     internal static func minimumStartTime(for events: [Event]) -> Time {
         var minStartTime = Time(hour: 11, minutes: 59, isAm: false)
         for event in events {

@@ -60,7 +60,7 @@ extension GroupHeaderCell {
     fileprivate func prepareGroupIcon() {
         let height: CGFloat = 63.0
         groupIcon = GSRGroupIconView()
-        groupIcon.layer.cornerRadius = height / 2.0 //half of height
+        groupIcon.layer.cornerRadius = height / 2.0 // half of height
         groupIcon.layer.masksToBounds = true
         addSubview(groupIcon)
         _ = groupIcon.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 26.0, leftConstant: inset, bottomConstant: 26.0, rightConstant: 0, widthConstant: height, heightConstant: height)

@@ -198,7 +198,7 @@ extension MoreViewController {
                 DispatchQueue.main.async {
                     AppDelegate.shared.rootViewController.logout()
 
-                    //If the user intentionally logs out, remove their PAC Code
+                    // If the user intentionally logs out, remove their PAC Code
                     self.removePacCode()
                 }
             }))

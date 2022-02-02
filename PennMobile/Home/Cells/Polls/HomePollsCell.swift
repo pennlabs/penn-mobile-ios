@@ -197,7 +197,7 @@ extension HomePollsCell: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //return PollOptionCell.cellHeight
+        // return PollOptionCell.cellHeight
 
         let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: maxWidth, height: CGFloat.greatestFiniteMagnitude))

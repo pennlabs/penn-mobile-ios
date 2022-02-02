@@ -6,10 +6,10 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 //
-//import Foundation
-//import SwiftyJSON
+// import Foundation
+// import SwiftyJSON
 //
-//final class FlingPerformer {
+// final class FlingPerformer {
 //    let name: String
 //    let imageUrl: String
 //    let description: String
@@ -44,10 +44,10 @@
 //        
 //        return FlingPerformer(name: name, imageUrl: imageUrl, description: description, startTime: startTime, endTime: endTime, website: "http://www.penndischord.com/")
 //    }
-//}
+// }
 //
 // MARK: - JSON Parsing
-//extension FlingPerformer {
+// extension FlingPerformer {
 //    convenience init(json: JSON) throws {
 //        guard let name = json["name"].string,
 //            let description = json["description"].string,
@@ -75,9 +75,9 @@
 //        
 //        self.init(name: name, imageUrl: imageUrl, description: description, startTime: startTime, endTime: endTime, website: website)
 //    }
-//}
+// }
 //
-//extension FlingPerformer: Equatable {
+// extension FlingPerformer: Equatable {
 //    static func == (lhs: FlingPerformer, rhs: FlingPerformer) -> Bool {
 //        return lhs.name == rhs.name
 //            && lhs.imageUrl == rhs.imageUrl
@@ -86,9 +86,9 @@
 //            && lhs.endTime == rhs.endTime
 //            && lhs.website == rhs.website
 //    }
-//}
+// }
 //
-//extension Array where Element == FlingPerformer {
+// extension Array where Element == FlingPerformer {
 //    func equals(_ arr: [FlingPerformer]) -> Bool {
 //        if arr.count != count {
 //            return false
@@ -101,4 +101,4 @@
 //        }
 //        return true
 //    }
-//}
+// }

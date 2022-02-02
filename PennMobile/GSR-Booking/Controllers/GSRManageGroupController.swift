@@ -12,9 +12,9 @@ class GSRManageGroupController: UIViewController {
 
     fileprivate var tableView: UITableView!
     fileprivate var viewModel: GSRManageGroupViewModel!
-    fileprivate var settings = [String: String]() //TODO: change the type
+    fileprivate var settings = [String: String]() // TODO: change the type
 
-    var group: GSRGroup! //this will be nil until prepareViewModel called (perhaps, make it an optional)
+    var group: GSRGroup! // this will be nil until prepareViewModel called (perhaps, make it an optional)
 
     init(group: GSRGroup) {
         self.group = group
@@ -33,7 +33,7 @@ class GSRManageGroupController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
        super.viewWillAppear(animated)
-        //TODO: potentially update the data again here
+        // TODO: potentially update the data again here
         GSRGroupNetworkManager.instance.getGroup(groupid: group.id) { (group) in
             if let group = group {
                 self.group = group

@@ -16,8 +16,8 @@ struct GSRGroup: Decodable, Comparable {
     let members: [GSRGroupMember]?
     var userSettings: GSRGroupIndividualSettings?
 
-    //not used right now
-    var reservations: [String]? //array of reservationID's
+    // not used right now
+    var reservations: [String]? // array of reservationID's
     var groupSettings: GSRGroupAccessSettings?
 
     static let groupColors: [String: UIColor] = [
@@ -42,8 +42,8 @@ struct GSRGroup: Decodable, Comparable {
     }
 
     fileprivate mutating func parseIndividualSettings(for pennkey: String) {
-        //initializes the user settings based on the member data
-        //call this method after initially decoding json data, and BEFORE
+        // initializes the user settings based on the member data
+        // call this method after initially decoding json data, and BEFORE
         // displaying groups in ManageGroupVC
         guard let members = members else { return }
         for member in members where member.pennKey == pennkey {
@@ -69,7 +69,7 @@ struct GSRGroup: Decodable, Comparable {
 
         if let members: [GSRGroupMember] = try keyedContainer.decodeIfPresent([GSRGroupMember].self, forKey: .members) {
             self.members = members
-            guard let pennkey = Account.getAccount()?.pennkey else { //this feels wrong :(
+            guard let pennkey = Account.getAccount()?.pennkey else { // this feels wrong :(
                 print("user not signed in")
                 return
             }
@@ -119,17 +119,17 @@ struct GSRGroupIndividualSetting: Codable {
     var isEnabled: Bool
 }
 
-struct GSRGroupIndividualSettings: Codable { //specific to a user within a group
+struct GSRGroupIndividualSettings: Codable { // specific to a user within a group
     var pennKeyActive: GSRGroupIndividualSetting
     var notificationsOn: GSRGroupIndividualSetting
 }
 
-struct GSRGroupAccessSettings: Codable { //general to all users within a group
+struct GSRGroupAccessSettings: Codable { // general to all users within a group
     var booking: GSRGroupAccessPermissions
     var invitation: GSRGroupAccessPermissions
 }
 
-enum GSRGroupAccessPermissions: String, Codable { //who has access
+enum GSRGroupAccessPermissions: String, Codable { // who has access
     case everyone
     case owner
 }
@@ -144,7 +144,7 @@ struct GSRGroupMember: Codable {
 
     enum CodingKeys: String, CodingKey {
         case pennKey = "user"
-        case first, last //this doesn't get used
+        case first, last // this doesn't get used
         case pennKeyActive = "pennkey_allow"
         case notificationsOn = "notifications"
         case isAdmin = "type"

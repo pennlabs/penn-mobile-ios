@@ -25,7 +25,7 @@ class GSRColorCell: UICollectionViewCell {
         didSet {
             colorView.backgroundColor = color
 
-            //colorView.layer.borderColor = borderColor.cgColor
+            // colorView.layer.borderColor = borderColor.cgColor
         }
     }
 
@@ -58,7 +58,7 @@ class GSRColorCell: UICollectionViewCell {
             borderColor = UIColor(red: 32, green: 156, blue: 238, alpha:0.8)
         }
         */
-        //borderColor = colorView.backgroundColor?.withAlphaComponent(0.8)
+        // borderColor = colorView.backgroundColor?.withAlphaComponent(0.8)
 
 //        colorView.layer.borderColor = borderColor.cgColor
         addSubview(colorView)

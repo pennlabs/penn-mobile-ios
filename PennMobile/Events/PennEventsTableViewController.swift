@@ -15,7 +15,7 @@ class PennEventsTableViewController: GenericTableViewController, IndicatorEnable
     let dateKey = "dateKey"
 
     override func viewDidAppear(_ animated: Bool) {
-        //attempt to fetch date from UserDefaults
+        // attempt to fetch date from UserDefaults
         if let date = UserDefaults.standard.object(forKey: dateKey) as? Date {
             if date.isToday {
                 events = Storage.retrieve(PennEvents.directory, from: .documents, as: [PennEvents].self)

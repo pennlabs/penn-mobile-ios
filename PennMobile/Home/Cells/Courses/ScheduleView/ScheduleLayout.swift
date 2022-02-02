@@ -47,10 +47,10 @@ class ScheduleLayoutAttributes: UICollectionViewLayoutAttributes {
 }
 
 class ScheduleLayout: UICollectionViewLayout {
-    //1. Pinterest Layout Delegate
+    // 1. Pinterest Layout Delegate
     var delegate: ScheduleLayoutDelegate!
 
-    //2. Configurable properties
+    // 2. Configurable properties
     private var cellPadding: CGFloat {
         get {
             return delegate.getPadding()
@@ -68,10 +68,10 @@ class ScheduleLayout: UICollectionViewLayout {
         }
     }
 
-    //3. Array to keep a cache of attributes.
+    // 3. Array to keep a cache of attributes.
     private var cache = [UICollectionViewLayoutAttributes]()
 
-    //4. Content height and size
+    // 4. Content height and size
     private var timeHeight: CGFloat = 12.0
     private var contentHeight: CGFloat = 0.0
     private var contentWidth: CGFloat {
@@ -79,9 +79,9 @@ class ScheduleLayout: UICollectionViewLayout {
         return collectionView!.bounds.width - (insets.left + insets.right)
     }
 
-    //5. Colors to be used in cells
+    // 5. Colors to be used in cells
     private var colors: [UIColor] = {
-        return [UIColor.blueLight, UIColor.orangeLight, UIColor.purpleLight, UIColor.greenLight, UIColor.yellowLight, UIColor.redLight] //.shuffle()
+        return [UIColor.blueLight, UIColor.orangeLight, UIColor.purpleLight, UIColor.greenLight, UIColor.yellowLight, UIColor.redLight] // .shuffle()
     }()
 
     override class var layoutAttributesClass: AnyClass {
@@ -89,7 +89,7 @@ class ScheduleLayout: UICollectionViewLayout {
     }
 
     override func prepare() {
-        //1. Only calculate once
+        // 1. Only calculate once
         if cache.isEmpty {
 
             // 2. Iterates through the list of items in the first section
@@ -122,7 +122,7 @@ class ScheduleLayout: UICollectionViewLayout {
                 let xOffset = delegate.collectionView(collectionView: collectionView!, xOffsetForCellAtIndexPath: indexPath, width: contentWidth - timeWidth) + timeWidth
                 let yOffset = delegate.collectionView(collectionView: collectionView!, yOffsetForCellAtIndexPath: indexPath, heightForHour: contentHeightForHour) + timeHeight - 2.0
 
-                //print("x: \(xOffset), y: \(yOffset), width: \(width), height: \(height)")
+                // print("x: \(xOffset), y: \(yOffset), width: \(width), height: \(height)")
 
                 let frame = CGRect(x: xOffset, y: yOffset, width: width, height: height)
 

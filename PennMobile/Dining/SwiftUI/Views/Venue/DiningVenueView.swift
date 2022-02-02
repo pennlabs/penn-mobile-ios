@@ -57,7 +57,7 @@ struct CustomHeader: View {
         .padding()
         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         .background(Color(UIColor.uiBackground))
-        //Default Text Case for Header is Caps Lock
+        // Default Text Case for Header is Caps Lock
         .textCase(nil)
     }
 }

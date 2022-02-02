@@ -137,7 +137,7 @@ extension HomeViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (UIAlertAction) in
-            //self.showCourseWebviewController()
+            // self.showCourseWebviewController()
             self.showActivity()
             PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true, callback: self.handleNetworkCourseRefreshCompletion(_:))
         }))

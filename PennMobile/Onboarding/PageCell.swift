@@ -66,7 +66,7 @@ class PageCell: UICollectionViewCell {
         iv.backgroundColor = .white
         iv.contentMode = .scaleAspectFit
         iv.image = #imageLiteral(resourceName: "Onboard 1")
-        iv.clipsToBounds = false //clips image so same size as screen
+        iv.clipsToBounds = false // clips image so same size as screen
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()

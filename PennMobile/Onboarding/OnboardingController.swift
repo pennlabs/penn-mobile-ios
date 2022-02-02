@@ -18,14 +18,14 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
 
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal //makes cells swipe horizontally
-        layout.minimumLineSpacing = 0 //decreases gap between cells
+        layout.scrollDirection = .horizontal // makes cells swipe horizontally
+        layout.minimumLineSpacing = 0 // decreases gap between cells
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.showsHorizontalScrollIndicator = false
         cv.backgroundColor = .white
         cv.dataSource = self
         cv.delegate = self
-        cv.isPagingEnabled = true //makes the cells snap (paging behavior)
+        cv.isPagingEnabled = true // makes the cells snap (paging behavior)
         return cv
     }()
 
@@ -40,7 +40,7 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
         let thirdPage = OnboardingPage(title: "Choose up to three rooms", message: "We'll remember them! You can always edit your selection later.", imageName: "Onboard 3", showConfetti: false, isFullScreen: true)
 
        return [firstPage, secondPage, thirdPage]
-    }() //creates empty array (don't have to use optionals)
+    }() // creates empty array (don't have to use optionals)
 
     lazy var pageControl: UIPageControl = {
         let pc = UIPageControl()
@@ -102,7 +102,7 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
 
         collectionView.anchorToTop(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
 
-        pageControlBottomAnchor = pageControl.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 40)[1] //full width, dots center to middle //[1] -> accesses second anchor (bottom anchor)
+        pageControlBottomAnchor = pageControl.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 40)[1] // full width, dots center to middle //[1] -> accesses second anchor (bottom anchor)
 
         skipButtonTopAnchor = skipButton.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 16, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 60, heightConstant: 50).first
 
@@ -119,22 +119,22 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        view.endEditing(true) //whenever you scroll collection view, keyboard goes away
+        view.endEditing(true) // whenever you scroll collection view, keyboard goes away
     }
 
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 
-        let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width) //tells you x-value of collection view
-        pageControl.currentPage = pageNumber //change the dots
+        let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width) // tells you x-value of collection view
+        pageControl.currentPage = pageNumber // change the dots
 
-        //print(pageNumber) //use x-value to determine which page you are on
+        // print(pageNumber) //use x-value to determine which page you are on
         moveOffscreen(pageNumber: pageNumber)
     }
 
     fileprivate func moveOffscreen(pageNumber: Int) {
-        //we are on the last page
+        // we are on the last page
         if pageNumber == pages.count {
-            pageControlBottomAnchor?.constant = 40 //off the screen
+            pageControlBottomAnchor?.constant = 40 // off the screen
             nextButtonTopAnchor?.constant = -40
             skipButtonTopAnchor?.constant = -40
         } else {
@@ -143,10 +143,10 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
             skipButtonTopAnchor?.constant = 16
         }
 
-        //accelerating animation (looks native)
+        // accelerating animation (looks native)
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
 
-            self.view.layoutIfNeeded() //need to call if want to animate constraint change
+            self.view.layoutIfNeeded() // need to call if want to animate constraint change
 
         }, completion: nil)
     }
@@ -172,7 +172,7 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height) //makes cell size of frame
+        return CGSize(width: view.frame.width, height: view.frame.height) // makes cell size of frame
     }
 }
 

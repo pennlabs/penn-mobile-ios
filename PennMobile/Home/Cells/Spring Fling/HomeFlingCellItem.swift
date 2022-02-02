@@ -6,10 +6,10 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 //
-//import Foundation
-//import SwiftyJSON
+// import Foundation
+// import SwiftyJSON
 //
-//final class HomeFlingCellItem: HomeCellItem {
+// final class HomeFlingCellItem: HomeCellItem {
 //
 //    static var jsonKey: String {
 //        return "fling"
@@ -35,28 +35,28 @@
 //        guard let item = item as? HomeFlingCellItem else { return false }
 //        return performer.name == item.performer.name
 //    }
-//}
+// }
 //
 // MARK: - HomeAPIRequestable
-//extension HomeFlingCellItem: HomeAPIRequestable {
+// extension HomeFlingCellItem: HomeAPIRequestable {
 //    func fetchData(_ completion: @escaping () -> Void) {
 //        ImageNetworkingManager.instance.downloadImage(imageUrl: performer.imageUrl) { (image) in
 //            self.image = image
 //            completion()
 //        }
 //    }
-//}
+// }
 //
 // MARK: - JSON Parsing
-//extension HomeFlingCellItem {
+// extension HomeFlingCellItem {
 //    convenience init(json: JSON) throws {
 //        let performer = try FlingPerformer(json: json)
 //        self.init(performer: performer)
 //    }
-//}
+// }
 //
 // MARK: - Sorting
-//extension HomeFlingCellItem: Comparable {
+// extension HomeFlingCellItem: Comparable {
 //    static func <(lhs: HomeFlingCellItem, rhs: HomeFlingCellItem) -> Bool {
 //        let now = Date()
 //        if (lhs.performer.endTime > now && rhs.performer.endTime > now) || (lhs.performer.endTime < now && rhs.performer.endTime < now) {
@@ -68,10 +68,10 @@
 //    static func ==(lhs: HomeFlingCellItem, rhs: HomeFlingCellItem) -> Bool {
 //        return lhs.performer.name == rhs.performer.name && lhs.performer.startTime == rhs.performer.startTime
 //    }
-//}
+// }
 //
-//extension Array where Element == HomeFlingCellItem {
+// extension Array where Element == HomeFlingCellItem {
 //    func equals(_ items: [HomeFlingCellItem]) -> Bool {
 //        return self.map { $0.performer }.equals(items.map { $0.performer })
 //    }
-//}
+// }

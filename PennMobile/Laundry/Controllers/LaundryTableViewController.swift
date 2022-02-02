@@ -84,7 +84,7 @@ extension LaundryTableViewController {
     @objc fileprivate func handleEditPressed() {
         let roomselectionVC = RoomSelectionViewController()
         roomselectionVC.delegate = self
-        roomselectionVC.chosenRooms = rooms //provide selected ids here
+        roomselectionVC.chosenRooms = rooms // provide selected ids here
         let nvc = UINavigationController(rootViewController: roomselectionVC)
         showDetailViewController(nvc, sender: nil)
     }
@@ -94,7 +94,7 @@ extension LaundryTableViewController {
 extension LaundryTableViewController {
     fileprivate func prepareRefreshControl() {
         refreshControl = UIRefreshControl()
-        //refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        // refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl?.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
     }
 
@@ -140,7 +140,7 @@ extension LaundryTableViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Use for cards 1/2 the size of the screen
-        //return self.view.layoutMarginsGuide.layoutFrame.height / 2.0
+        // return self.view.layoutMarginsGuide.layoutFrame.height / 2.0
 
         // Use for cards of fixed size
         if indexPath.section >= rooms.count {

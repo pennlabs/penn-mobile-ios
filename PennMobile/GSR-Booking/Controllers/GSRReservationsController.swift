@@ -110,7 +110,7 @@ extension GSRReservationsController: ReservationCellDelegate {
 }
 
 // MARK: Login Button
-//extension GSRReservationsController {
+// extension GSRReservationsController {
 //    func prepareLoginButton() {
 //        barButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
 //        barButton.tintColor = UIColor.navigation
@@ -150,4 +150,4 @@ extension GSRReservationsController: ReservationCellDelegate {
 //            present(nvc, animated: true, completion: nil)
 //        }
 //    }
-//}
+// }

@@ -12,7 +12,7 @@ class MoveableTableViewController: UITableViewController {
     public typealias FinishedMovingCallback = () -> Void
 
     fileprivate var longpress: UILongPressGestureRecognizer!
-    fileprivate var initialIndexPath: IndexPath? //for movable cell
+    fileprivate var initialIndexPath: IndexPath? // for movable cell
     fileprivate var cellSnapshot: UIView?
     fileprivate var finishedMovingCallback: FinishedMovingCallback?
 

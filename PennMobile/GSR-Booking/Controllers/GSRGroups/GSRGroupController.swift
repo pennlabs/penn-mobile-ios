@@ -8,7 +8,7 @@
 
 import Foundation
 
-//group gsrs!
+// group gsrs!
 class GSRGroupController: GenericViewController {
 
     fileprivate var groups = [GSRGroup]() {
@@ -35,7 +35,7 @@ extension GSRGroupController {
     fileprivate func setupUI() {
         setupTableView()
 
-        //Add swipe up to refresh to Table View
+        // Add swipe up to refresh to Table View
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(fetchGroups), for: .valueChanged)
     }

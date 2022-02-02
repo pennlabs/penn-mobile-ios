@@ -89,7 +89,7 @@ extension NotificationViewController: NotificationViewControllerChangedPreferenc
         UserDBManager.shared.saveUserNotificationSettings { (success) in
             DispatchQueue.main.asyncAfter(deadline: deadline) {
                 if success {
-                    //Push to pca backend if changing pca preference
+                    // Push to pca backend if changing pca preference
                     if option == .pennCourseAlerts {
                         self.pushPCAPreferenceChange(toValue: toValue)
                     } else {

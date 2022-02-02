@@ -55,7 +55,7 @@ class Event: Hashable {
         hasher.combine(endTime)
     }
 
-    //returns all conflicting events, including itself
+    // returns all conflicting events, including itself
     public func getAllConflictingEvents(for events: [Event]) -> [Event] {
         var conflictingEvents = [Event]()
 
@@ -67,7 +67,7 @@ class Event: Hashable {
         return conflictingEvents
     }
 
-    //returns all conflicting events, including the event itself, when most conflicting events occur
+    // returns all conflicting events, including the event itself, when most conflicting events occur
     public func getMaxConflictingEvents(for events: [Event]) -> [Event] {
         var maxEvents: [Event] = []
 
@@ -112,7 +112,7 @@ class Event: Hashable {
             let raw1 = event1.startTime.rawMinutes()
             let raw2 = event2.startTime.rawMinutes()
 
-            //sort by latest event first
+            // sort by latest event first
             if raw1 == raw2 {
                 return event1.endTime.rawMinutes() > event2.endTime.rawMinutes()
             }
@@ -126,7 +126,7 @@ class Event: Hashable {
         return Event.getApprovable(for: sortedEvents)
     }
 
-    //Events for Agenda Cell
+    // Events for Agenda Cell
     static let mockEvents: [Event] = {
         let event1 = Event(name: "LGST101", location: "SHDH 211", startTime: Time(hour: 8, minutes: 0, isAm: true), endTime: Time(hour: 9, minutes: 0, isAm: true))
 

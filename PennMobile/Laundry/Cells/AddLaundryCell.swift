@@ -33,13 +33,13 @@ class AddLaundryCell: UITableViewCell {
         bg.layer.cornerRadius = 15.0
 
         // border
-        //bg.layer.borderWidth = 0.0
+        // bg.layer.borderWidth = 0.0
         bg.layer.borderWidth = 1.0
         bg.layer.borderColor = UIColor.clear.cgColor
 
         // shadow
         bg.layer.shadowColor = UIColor.clear.cgColor
-        //bg.layer.shadowColor = UIColor.clear.cgColor
+        // bg.layer.shadowColor = UIColor.clear.cgColor
 
         bg.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         bg.layer.shadowOpacity = 0.25

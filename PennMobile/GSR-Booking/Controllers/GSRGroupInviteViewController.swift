@@ -5,7 +5,7 @@
 //  Created by Lucy Yuewei Yuan on 11/3/19.
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
-//Users/lucyyyw/Desktop/pennlabs/penn-mobile-ios/PennMobile/GSR-Booking/Controllers/GSRLocationsController.swift
+// Users/lucyyyw/Desktop/pennlabs/penn-mobile-ios/PennMobile/GSR-Booking/Controllers/GSRLocationsController.swift
 import UIKit
 
 class GSRGroupInviteViewController: UIViewController {
@@ -67,7 +67,7 @@ class GSRGroupInviteViewController: UIViewController {
         closeButton.layer.masksToBounds = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.setTitle("x", for: UIControl.State.normal)
-        //closeButton.setImage(image: , for: UIControl.State.normal)
+        // closeButton.setImage(image: , for: UIControl.State.normal)
         closeButton.addTarget(self, action: #selector(cancelBtnAction), for: .touchUpInside)
     }
 

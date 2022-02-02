@@ -76,7 +76,7 @@ class HomePollsCellHeader: UIView {
 
     private func getPrimaryLabel() -> UILabel {
         let label = UILabel()
-        label.font = .pollsTitleFont //primaryTitleFont
+        label.font = .pollsTitleFont // primaryTitleFont
         label.textColor = .labelPrimary
         label.textAlignment = .left
         return label

@@ -150,7 +150,7 @@ class AboutViewController: UIViewController {
 
         view.addSubview(scrollView)
 
-        //add constraints to scrollView
+        // add constraints to scrollView
         scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -158,7 +158,7 @@ class AboutViewController: UIViewController {
 
         scrollView.addSubview(stackView)
 
-        //add constraints to stackView
+        // add constraints to stackView
         stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
         stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true

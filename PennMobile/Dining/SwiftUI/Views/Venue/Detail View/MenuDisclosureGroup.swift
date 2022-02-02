@@ -104,7 +104,7 @@ struct DiningStationItemRow: View {
                     .font(Font.system(size: 17))
 
                 ForEach(diningStationItem.tableAttribute.attributeDescriptions, id: \.self) { attribute in
-                    //Unlike UIKit, image will simply not appear if it doesn't exist in assets
+                    // Unlike UIKit, image will simply not appear if it doesn't exist in assets
                     Image(attribute.description)
                         .resizable()
                         .scaledToFit()

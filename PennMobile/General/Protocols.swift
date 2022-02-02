@@ -62,18 +62,18 @@ protocol URLOpenable {}
 
 extension URLOpenable {
 
-    //Source: https://stackoverflow.com/questions/38964264/openurl-in-ios10
+    // Source: https://stackoverflow.com/questions/38964264/openurl-in-ios10
     func open(scheme: String) {
         if let url = URL(string: scheme) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
                                           completionHandler: { (success) in
-                                            //print("Open \(scheme): \(success)")
+                                            // print("Open \(scheme): \(success)")
                 })
             } else {
                 _ = UIApplication.shared.openURL(url)
-                //let success = UIApplication.shared.openURL(url)
-                //print("Open \(scheme): \(success)")
+                // let success = UIApplication.shared.openURL(url)
+                // print("Open \(scheme): \(success)")
             }
         }
     }
@@ -89,7 +89,7 @@ extension HairlineRemovable {
         }
     }
 
-    //finds hairline underview if there is one
+    // finds hairline underview if there is one
     private func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
         if view is UIImageView && view.bounds.size.height <= 1 {
             return view as? UIImageView

@@ -6,9 +6,9 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 //
-//import Foundation
+// import Foundation
 //
-//final class HomeFlingCell: UITableViewCell, HomeCellConformable {    
+// final class HomeFlingCell: UITableViewCell, HomeCellConformable {    
 //    static var identifier: String = "flingCell"
 //    
 //    var delegate: ModularTableViewCellDelegate!
@@ -74,10 +74,10 @@
 //    required init?(coder aDecoder: NSCoder) {
 //        fatalError("init(coder:) has not been implemented")
 //    }
-//}
+// }
 //
 // MARK: - Setup Item
-//extension HomeFlingCell {
+// extension HomeFlingCell {
 //    fileprivate func setupCell(with item: HomeFlingCellItem) {
 //        self.performer = item.performer
 //        self.performerImageView.image = item.image
@@ -104,10 +104,10 @@
 //        
 //        return "\(prelude) at \(formatter.string(from: performer.startTime))"
 //    }
-//}
+// }
 //
 // MARK: - Gesture Recognizer
-//extension HomeFlingCell {
+// extension HomeFlingCell {
 //    fileprivate func getTapGestureRecognizer() -> UITapGestureRecognizer {
 //        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapped(_:)))
 //        tapGestureRecognizer.numberOfTapsRequired = 1
@@ -118,10 +118,10 @@
 //        guard let website = performer.website, let delegate = delegate as? URLSelectable else { return }
 //        delegate.handleUrlPressed(urlStr: website, title: performer.name, item: self.item, shouldLog: true)
 //    }
-//}
+// }
 //
 // MARK: - Prepare UI
-//extension HomeFlingCell {
+// extension HomeFlingCell {
 //    fileprivate func prepareUI() {
 //        prepareImageView()
 //        preparePerformerLabel()
@@ -195,4 +195,4 @@
 //        _ = moreButton.anchor(nil, left: nil, bottom: nil, right: performerLabel.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
 //        moreButton.centerYAnchor.constraint(equalTo: dateLabel.centerYAnchor).isActive = true
 //    }
-//}
+// }

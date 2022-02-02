@@ -6,10 +6,10 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 //
-//import Foundation
-//import SwiftyJSON
+// import Foundation
+// import SwiftyJSON
 //
-//final class FlingNetworkManager: Requestable {
+// final class FlingNetworkManager: Requestable {
 //    static let instance = FlingNetworkManager()
 //    private init() {}
 //
@@ -25,9 +25,9 @@
 //            completion(model)
 //        }
 //    }
-//}
+// }
 //
-//extension FlingTableViewModel {
+// extension FlingTableViewModel {
 //    convenience init(json: JSON) throws {
 //        self.init()
 //
@@ -48,4 +48,4 @@
 //        flingItems.sort()
 //        self.items = flingItems
 //    }
-//}
+// }

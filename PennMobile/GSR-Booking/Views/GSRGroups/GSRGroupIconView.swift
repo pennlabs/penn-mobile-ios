@@ -9,7 +9,7 @@
 import UIKit
 
 class GSRGroupIconView: UIView {
-    //creates a circular icon with color and letter for icon
+    // creates a circular icon with color and letter for icon
 
     static let height: CGFloat = 63.0
 

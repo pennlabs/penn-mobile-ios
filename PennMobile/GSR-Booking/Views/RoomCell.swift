@@ -80,7 +80,7 @@ extension RoomCell: UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         return CGSize(width: size, height: size)
     }
 
-    //only enable selection for available rooms
+    // only enable selection for available rooms
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         let timeSlot = room.availability[indexPath.row]
         return timeSlot.isAvailable

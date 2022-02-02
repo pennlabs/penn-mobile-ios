@@ -40,7 +40,7 @@ class WhartonGSRNetworkManager: NSObject, Requestable {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                         if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                            //data recieved and parsed successfully
+                            // data recieved and parsed successfully
                             if let dict = json {
                                 let json = JSON(dict)
                                 do {

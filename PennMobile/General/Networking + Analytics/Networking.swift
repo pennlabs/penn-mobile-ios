@@ -124,15 +124,15 @@ extension Requestable {
                 if httpResponse.statusCode == 200 {
                     if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                         if let json = ((try? JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary) as NSDictionary??) {
-                            //data recieved and parsed successfully
+                            // data recieved and parsed successfully
                             callback?(data, json, nil, 200)
                         }
                     } else {
-                        //could not serialize json
+                        // could not serialize json
                         callback?(nil, nil, nil, 200)
                     }
                 } else {
-                    //response code is not 200
+                    // response code is not 200
                     callback?(nil, nil, nil, httpResponse.statusCode)
                 }
             }

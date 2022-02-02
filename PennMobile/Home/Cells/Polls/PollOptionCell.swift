@@ -182,7 +182,7 @@ extension PollOptionCell {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.sizeToFit()
-        //PollOptionCell.cellHeight = label.frame.height + Padding.pad * 2
+        // PollOptionCell.cellHeight = label.frame.height + Padding.pad * 2
         return label
     }
 

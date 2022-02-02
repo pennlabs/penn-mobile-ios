@@ -42,7 +42,7 @@ class SelectionCell: UICollectionViewCell, UINavigationBarDelegate {
 
 class NavigationBar: UINavigationBar {
 
-    //set NavigationBar's height
+    // set NavigationBar's height
     var customHeight: CGFloat = 64
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {

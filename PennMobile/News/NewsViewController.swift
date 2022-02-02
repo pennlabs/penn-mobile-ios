@@ -24,7 +24,7 @@ class NewsViewController: GenericViewController, HairlineRemovable {
     }
 
     override func setupNavBar() {
-        //removes hairline from bottom of navbar
+        // removes hairline from bottom of navbar
         if let navbar = navigationController?.navigationBar {
             removeHairline(from: navbar)
         }

@@ -333,7 +333,7 @@ extension HomeStudyRoomCell {
         let button = UIButton()
         button.setTitleColor(.navigation, for: .normal)
         button.setTitleColor(.labelSecondary, for: .highlighted)
-        //button.setTitle("See more ❯", for: .normal)
+        // button.setTitle("See more ❯", for: .normal)
         button.titleLabel?.font = .footerTransitionFont
         button.addTarget(self, action: #selector(transitionButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false

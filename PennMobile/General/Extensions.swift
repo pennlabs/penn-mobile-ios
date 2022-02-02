@@ -161,7 +161,7 @@ extension Date {
         return result
     }
 
-    //returns date in local time
+    // returns date in local time
     static var currentLocalDate: Date {
         return Date().localTime
     }
@@ -483,7 +483,7 @@ extension String {
     }
 }
 
-//slicing Penn Events API image source urls
+// slicing Penn Events API image source urls
 extension String {
     //https://stackoverflow.com/questions/31725424/swift-get-string-between-2-strings-in-a-string
     func slice(from: String, to: String) -> String? {

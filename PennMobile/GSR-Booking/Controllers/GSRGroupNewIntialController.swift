@@ -46,7 +46,7 @@ class GSRGroupNewIntialController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         colorCollectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
-        //collectionView(colorCollectionView, didSelectItemAt: IndexPath(item: 0, section:0))
+        // collectionView(colorCollectionView, didSelectItemAt: IndexPath(item: 0, section:0))
 
     }
     func prepareCloseButton() {
@@ -62,7 +62,7 @@ class GSRGroupNewIntialController: UIViewController {
         closeButton.layer.masksToBounds = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.setTitle("x", for: UIControl.State.normal)
-        //closeButton.setImage(image: , for: UIControl.State.normal)
+        // closeButton.setImage(image: , for: UIControl.State.normal)
         closeButton.addTarget(self, action: #selector(cancelBtnAction), for: .touchUpInside)
     }
 
@@ -71,7 +71,7 @@ class GSRGroupNewIntialController: UIViewController {
         nameField.placeholder = "New Group Name"
         nameField.textColor = UIColor.init(red: 216, green: 216, blue: 216)
         nameField.font = UIFont.boldSystemFont(ofSize: 24)
-        //rgb 18 39 75
+        // rgb 18 39 75
         nameField.textColor = UIColor(r: 18/255, g: 39/255, b: 75/255)
         nameField.keyboardType = .alphabet
         nameField.textAlignment = .natural
@@ -156,7 +156,7 @@ class GSRGroupNewIntialController: UIViewController {
         createButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -15).isActive = true
         createButton.translatesAutoresizingMaskIntoConstraints = false
 
-        //button unclickable until group name changed and not empty
+        // button unclickable until group name changed and not empty
         createButton.isUserInteractionEnabled = false
         nameChanged = false
     }
@@ -199,7 +199,7 @@ class GSRGroupNewIntialController: UIViewController {
     }
 
     @objc func createGroupBtnAction(sender: UIButton!) {
-        //TODO: Consider adding appropriate error messages
+        // TODO: Consider adding appropriate error messages
         guard let name = nameField.text else {return}
         guard let color = colorLabel.text else {return}
 
@@ -275,7 +275,7 @@ extension GSRGroupNewIntialController: UICollectionViewDelegate, UICollectionVie
 
 extension UIColor {
 
-    //for getting a lighter variant (using a multiplier)
+    // for getting a lighter variant (using a multiplier)
     func borderColor(multiplier: CGFloat) -> UIColor {
         let rgba = self.rgba
         return UIColor(red: rgba.red * multiplier, green: rgba.green * multiplier, blue: rgba.blue * multiplier, alpha: rgba.alpha)
@@ -289,7 +289,7 @@ extension UIColor {
         var alpha: CGFloat = 0
         getRed(&red, green: &green, blue: &blue, alpha: &alpha)
 
-        //returns rgba colors.
+        // returns rgba colors.
         return (red, green, blue, alpha)
     }
 }
