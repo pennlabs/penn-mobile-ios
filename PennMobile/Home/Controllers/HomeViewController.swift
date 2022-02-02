@@ -274,6 +274,6 @@ extension HomeViewController {
 // MARK: - Register for Notifications
 extension HomeViewController {
     func registerForNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(updateLaundryItemForPreferences(_:)), name: Notification.Name(rawValue: "LaundryUpdateNotification") , object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLaundryItemForPreferences(_:)), name: Notification.Name(rawValue: "LaundryUpdateNotification"), object: nil)
     }
 }

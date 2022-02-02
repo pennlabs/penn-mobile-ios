@@ -23,7 +23,7 @@ extension PredictionsGraphView {
         var xLabels: [String] = []
         var yLabels: [String] = []
 
-        guard sos < eos else { return ([" "],[" "]) }
+        guard sos < eos else { return ([" "], [" "]) }
 
         // Generate Y Axis Labels
         let maxDollarValue = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0

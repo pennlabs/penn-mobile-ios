@@ -59,7 +59,7 @@ class LaundryAPIService: Requestable {
 
 // MARK: - Fetch API
 extension LaundryAPIService {
-    func fetchLaundryData(for ids: [Int],  _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
+    func fetchLaundryData(for ids: [Int], _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
         let ids: String = ids.map { String($0) }.joined(separator: ",")
         let url = "\(laundryUrl)/\(ids)"
         getRequest(url: url) { (dict, error, statusCode) in

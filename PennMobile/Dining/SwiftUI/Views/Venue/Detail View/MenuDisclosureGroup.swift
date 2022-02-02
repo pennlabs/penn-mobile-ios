@@ -108,7 +108,7 @@ struct DiningStationItemRow: View {
                     Image(attribute.description)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 20.0,height:20)
+                        .frame(width: 20.0, height:20)
 
                 }
                 Spacer()

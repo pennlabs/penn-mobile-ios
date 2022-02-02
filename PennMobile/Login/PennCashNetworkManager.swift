@@ -84,7 +84,7 @@ extension PennCashNetworkManager: PennAuthRequestable {
         })
     }
 
-    private func validateSkey(skey: String, startTime: Date, timeLimit: TimeInterval,  _ callback: @escaping (_ isValidated: Bool) -> Void) {
+    private func validateSkey(skey: String, startTime: Date, timeLimit: TimeInterval, _ callback: @escaping (_ isValidated: Bool) -> Void) {
         if Date().timeIntervalSince(startTime) > timeLimit {
             callback(false)
             return

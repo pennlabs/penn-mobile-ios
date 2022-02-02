@@ -110,10 +110,10 @@ class GSRGroupNewIntialController: UIViewController {
     }
 
     func prepareSegmentedControl() {
-        let items = ["Friends","Classmates","Club"]
+        let items = ["Friends", "Classmates", "Club"]
         barView = UISegmentedControl(items: items)
-        let font = UIFont.systemFont(ofSize: 14,weight: .semibold)
-        barView.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.labelPrimary, NSAttributedString.Key.font: font] ,for: .normal)
+        let font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        barView.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.labelPrimary, NSAttributedString.Key.font: font], for: .normal)
         barView.backgroundColor = .uiBackgroundSecondary
         barView.layer.borderWidth = 1
         barView.layer.borderColor = UIColor.uiBackgroundSecondary.cgColor

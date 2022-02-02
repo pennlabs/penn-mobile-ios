@@ -34,7 +34,7 @@ class GSRGroupNewIntialController: UIViewController {
     fileprivate var chosenColor: UIColor!
     fileprivate var nameChanged: Bool!
 
-    fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange","Red-ing Terminal", "Baltimore Blue", "Purple"]
+    fileprivate var colorNames: [String] = ["Labs Blue", "College Green", "Locust Yellow", "Cheeto Orange", "Red-ing Terminal", "Baltimore Blue", "Purple"]
 
     weak var delegate: NewGroupInitialDelegate!
 
@@ -278,7 +278,7 @@ extension UIColor {
     //for getting a lighter variant (using a multiplier)
     func borderColor(multiplier: CGFloat) -> UIColor {
         let rgba = self.rgba
-        return UIColor(red: rgba.red * multiplier , green: rgba.green * multiplier, blue: rgba.blue * multiplier, alpha: rgba.alpha)
+        return UIColor(red: rgba.red * multiplier, green: rgba.green * multiplier, blue: rgba.blue * multiplier, alpha: rgba.alpha)
     }
 
     //https://www.hackingwithswift.com/example-code/uicolor/how-to-read-the-red-green-blue-and-alpha-color-components-from-a-uicolor

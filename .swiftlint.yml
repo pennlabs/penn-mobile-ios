@@ -15,7 +15,6 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - cyclomatic_complexity
   - colon
   - comment_spacing
-  - comma
   - control_statement
   - multiple_closures_with_trailing_closure
   - implicit_getter

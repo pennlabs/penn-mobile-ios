@@ -83,7 +83,7 @@ extension UIColor {
     //for getting a lighter variant (using a multiplier)
     func borderColor(multiplier: CGFloat) -> UIColor {
         let rgba = self.rgba
-        return UIColor(red: rgba.red * multiplier , green: rgba.green * multiplier, blue: rgba.blue * multiplier, alpha: rgba.alpha)
+        return UIColor(red: rgba.red * multiplier, green: rgba.green * multiplier, blue: rgba.blue * multiplier, alpha: rgba.alpha)
     }
 
     var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
