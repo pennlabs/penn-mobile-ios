@@ -37,7 +37,7 @@
 //    }
 //}
 //
-//// MARK: - HomeAPIRequestable
+// MARK: - HomeAPIRequestable
 //extension HomeFlingCellItem: HomeAPIRequestable {
 //    func fetchData(_ completion: @escaping () -> Void) {
 //        ImageNetworkingManager.instance.downloadImage(imageUrl: performer.imageUrl) { (image) in
@@ -47,7 +47,7 @@
 //    }
 //}
 //
-//// MARK: - JSON Parsing
+// MARK: - JSON Parsing
 //extension HomeFlingCellItem {
 //    convenience init(json: JSON) throws {
 //        let performer = try FlingPerformer(json: json)
@@ -55,7 +55,7 @@
 //    }
 //}
 //
-//// MARK: - Sorting
+// MARK: - Sorting
 //extension HomeFlingCellItem: Comparable {
 //    static func <(lhs: HomeFlingCellItem, rhs: HomeFlingCellItem) -> Bool {
 //        let now = Date()

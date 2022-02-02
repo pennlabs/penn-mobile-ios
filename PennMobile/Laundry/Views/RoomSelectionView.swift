@@ -61,7 +61,7 @@ class RoomSelectionView: UIView, IndicatorEnabled {
     }
 }
 
-// Mark: - Setup
+// MARK: - Setup
 extension RoomSelectionView {
     fileprivate func setUpView() {
         self.backgroundColor = UIColor.uiBackground
@@ -105,7 +105,7 @@ extension RoomSelectionView {
     }
 }
 
-// Mark: - Sorting
+// MARK: - Sorting
 extension RoomSelectionView {
     fileprivate func sortHeaders(for headers: [String]) -> [String] {
         return headers.sorted {
@@ -163,7 +163,7 @@ extension RoomSelectionView {
     }
 }
 
-// Mark: - room Selection
+// MARK: - room Selection
 extension RoomSelectionView {
     public func selectChosenRooms() {
         for room in chosenRooms {
@@ -202,7 +202,7 @@ extension RoomSelectionView {
     }
 }
 
-// Mark: Functions implementing TableView
+// MARK: Functions implementing TableView
 extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -279,7 +279,7 @@ extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// Mark: Functions implementing SearchBar
+// MARK: Functions implementing SearchBar
 extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -322,7 +322,7 @@ extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
 
 }
 
-// Mark: Functions implementing EmptyView
+// MARK: Functions implementing EmptyView
 extension RoomSelectionView {
     internal func showEmptyViewIfNeeded() {
         emptyView.isHidden = !currentResults.isEmpty

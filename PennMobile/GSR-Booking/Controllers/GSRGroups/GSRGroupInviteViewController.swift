@@ -137,7 +137,7 @@ class GSRGroupInviteViewController: UIViewController {
     }
 }
 
-//Mark: Setup UI
+// MARK: Setup UI
 extension GSRGroupInviteViewController {
     fileprivate func prepareUI() {
         prepareCloseButton()

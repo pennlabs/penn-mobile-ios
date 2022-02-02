@@ -65,7 +65,7 @@ extension RoomSelectionViewController: RoomSelectionViewDelegate {
     }
 }
 
-// Mark: Hall selection
+// MARK: Hall selection
 extension RoomSelectionViewController {
     @objc fileprivate func handleSave() {
         let rooms = selectionView.chosenRooms

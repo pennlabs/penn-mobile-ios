@@ -310,7 +310,7 @@ extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate, Tw
         }
     }
 }
-//MARK: - TOTP Code Observer
+// MARK: - TOTP Code Observer
 extension MoreViewController {
     func registerObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleCodeFetched(_:)), name: Notification.Name(rawValue: "TOTPCodeFetched") , object: nil)

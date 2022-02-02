@@ -41,7 +41,7 @@ class ContactsTableViewController: GenericTableViewController, ShowsAlert {
     }
 }
 
-// Mark: - TableView Datasource
+// MARK: - TableView Datasource
 extension ContactsTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
@@ -87,7 +87,7 @@ extension ContactsTableViewController {
     }
 }
 
-// Mark: - add/remove UI button logic
+// MARK: - add/remove UI button logic
 extension ContactsTableViewController {
     @objc fileprivate func addRemove(_ sender: UIBarButtonItem) {
         if UserDefaults.standard.bool(forKey: "Contacts added") {
@@ -104,7 +104,7 @@ extension ContactsTableViewController {
     }
 }
 
-// Mark: - ContactManager logic
+// MARK: - ContactManager logic
 extension ContactsTableViewController {
     fileprivate func addContacts() {
         ContactManager.shared.save(contacts) { (success) in
@@ -151,7 +151,7 @@ extension ContactsTableViewController {
     }
 }
 
-// Mark: ContactCellDelegate
+// MARK: ContactCellDelegate
 extension ContactsTableViewController: ContactCellDelegate {
     func call(number: String) {
         guard let number = URL(string: "tel://" + number) else { return }

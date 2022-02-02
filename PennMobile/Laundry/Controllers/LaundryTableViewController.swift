@@ -105,7 +105,7 @@ extension LaundryTableViewController {
     }
 }
 
-//MARK: - Set up table view
+// MARK: - Set up table view
 extension LaundryTableViewController {
     fileprivate func registerHeadersAndCells() {
         tableView.register(LaundryCell.self, forCellReuseIdentifier: laundryCell)

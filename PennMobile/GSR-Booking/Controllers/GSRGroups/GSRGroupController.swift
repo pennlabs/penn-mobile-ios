@@ -101,7 +101,7 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
 
 }
 
-//MARK: NewGroupInitialDelegate
+// MARK: NewGroupInitialDelegate
 extension GSRGroupController: NewGroupInitialDelegate{
     @objc func fetchGroups() {
         GSRGroupNetworkManager.instance.getAllGroups { (groups) in

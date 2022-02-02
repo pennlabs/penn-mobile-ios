@@ -24,7 +24,7 @@ class DiningViewModelSwiftUI: ObservableObject {
     @Published var swipes = 0
     @Published var diningDollars = 0.0
 
-    // MARK:- Venue Methods
+    // MARK: - Venue Methods
     let ordering: [DiningVenue.VenueType] = [.dining, .retail]
 
     init() {

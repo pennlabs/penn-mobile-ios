@@ -83,7 +83,7 @@ extension LaundryGraphView {
     }
 }
 
-// Mark: - UIScrollViewDelegate
+// MARK: - UIScrollViewDelegate
 extension LaundryGraphView: UIScrollViewDelegate {
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         animateGraph()

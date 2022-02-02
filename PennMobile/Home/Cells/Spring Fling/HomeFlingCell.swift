@@ -76,7 +76,7 @@
 //    }
 //}
 //
-//// MARK: - Setup Item
+// MARK: - Setup Item
 //extension HomeFlingCell {
 //    fileprivate func setupCell(with item: HomeFlingCellItem) {
 //        self.performer = item.performer
@@ -106,7 +106,7 @@
 //    }
 //}
 //
-//// MARK: - Gesture Recognizer
+// MARK: - Gesture Recognizer
 //extension HomeFlingCell {
 //    fileprivate func getTapGestureRecognizer() -> UITapGestureRecognizer {
 //        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapped(_:)))
@@ -120,7 +120,7 @@
 //    }
 //}
 //
-//// MARK: - Prepare UI
+// MARK: - Prepare UI
 //extension HomeFlingCell {
 //    fileprivate func prepareUI() {
 //        prepareImageView()

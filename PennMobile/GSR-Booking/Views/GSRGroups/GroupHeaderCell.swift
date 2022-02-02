@@ -48,7 +48,7 @@ class GroupHeaderCell: UITableViewCell {
 
 }
 
-// MARK - UI
+// MARK: - UI
 extension GroupHeaderCell {
     fileprivate func prepareUI() {
         prepareGroupIcon()

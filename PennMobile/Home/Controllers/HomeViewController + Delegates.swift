@@ -247,7 +247,7 @@ extension HomeViewController {
     }
 }
 
-//MARK: - Invite delegate
+// MARK: - Invite delegate
 extension HomeViewController: GSRInviteSelectable {
     func handleInviteSelected(_ invite: GSRGroupInvite, _ accept: Bool) {
         GSRGroupNetworkManager.instance.respondToInvite(invite: invite, accept: accept) { (success) in

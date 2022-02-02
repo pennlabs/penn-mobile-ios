@@ -252,20 +252,6 @@ extension HomeStudyRoomCell {
             rowLabel.centerYAnchor.constraint(equalTo: bookingButtons[row][0].centerYAnchor).isActive = true
          }
     }
-
-    /*// Mark: TableView
-    fileprivate func prepareTableView() {
-        studyRoomTableView = getStudyRoomTableView()
-        
-        cardView.addSubview(studyRoomTableView)
-        
-        studyRoomTableView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
-        studyRoomTableView.topAnchor.constraint(equalTo: dividerLine.bottomAnchor,
-                                                constant: safeInsetValue).isActive = true
-        studyRoomTableView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
-        studyRoomTableView.bottomAnchor.constraint(equalTo: footerDescriptionLabel.topAnchor,
-                                                   constant: -safeInsetValue).isActive = true
-    }*/
 }
 
 // MARK: - Define UI Elements

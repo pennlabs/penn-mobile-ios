@@ -49,7 +49,7 @@ final class HomeCoursesCell: UITableViewCell, HomeCellConformable {
     fileprivate var enableCoursesView: UIView!
     fileprivate var enableCourseLabel: UILabel!
 
-    // Mark: - Init
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()

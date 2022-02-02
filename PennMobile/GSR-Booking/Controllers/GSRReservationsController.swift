@@ -109,7 +109,7 @@ extension GSRReservationsController: ReservationCellDelegate {
     }
 }
 
-//// MARK: Login Button
+// MARK: Login Button
 //extension GSRReservationsController {
 //    func prepareLoginButton() {
 //        barButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))

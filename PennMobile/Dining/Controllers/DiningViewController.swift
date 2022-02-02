@@ -57,7 +57,7 @@ class DiningViewController: GenericTableViewController {
     }
 }
 
-//Mark: Networking to retrieve today's times
+// MARK: Networking to retrieve today's times
 extension DiningViewController {
     fileprivate func fetchDiningHours() {
         DiningAPI.instance.fetchDiningHours { (result) in
@@ -172,7 +172,7 @@ extension DiningViewController: DiningViewModelDelegate {
     }
 }
 
-//MARK: - TransactionCellDelegate
+// MARK: - TransactionCellDelegate
 extension DiningViewController: TransactionCellDelegate {
     func userDidSelect() {
         let vc = DiningDollarsTransactionViewController()

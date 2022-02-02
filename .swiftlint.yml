@@ -9,7 +9,6 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - function_body_length
   - large_tuple
   - void_return
-  - mark
   - orphaned_doc_comment
   - unused_closure_parameter
   - unused_optional_binding

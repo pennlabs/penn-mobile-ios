@@ -56,7 +56,7 @@ class DiningDetailViewController: UITableViewController {
     }
 }
 
-//Mark: Networking to retrieve today's menus
+// MARK: Networking to retrieve today's menus
 extension DiningDetailViewController {
     fileprivate func fetchDiningMenus() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true

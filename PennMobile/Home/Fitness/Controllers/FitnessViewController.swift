@@ -39,7 +39,7 @@ class FitnessViewController: GenericTableViewController {
     }
 }
 
-//Mark: Networking to retrieve today's times
+// MARK: Networking to retrieve today's times
 extension FitnessViewController {
     fileprivate func fetchFitnessHours() {
         FitnessAPI.instance.fetchFitnessHours { (success, error) in

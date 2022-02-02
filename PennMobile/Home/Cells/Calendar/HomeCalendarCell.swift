@@ -34,7 +34,7 @@ final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
 
     fileprivate var calendarEventTableView: UITableView!
 
-    // Mark: - Init
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()

@@ -137,7 +137,7 @@ extension PollOptionCell {
         }
     }
 
-    //MARK: percentage shadow
+    // MARK: percentage shadow
     fileprivate func preparePercentageShadowView() {
         percentageShadow = UIView()
         percentageShadow.layer.cornerRadius = 10

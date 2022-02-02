@@ -38,7 +38,7 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     fileprivate var settingsButton: UIButton!
     fileprivate var venueTableView: UITableView!
 
-    // Mark: - Init
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()

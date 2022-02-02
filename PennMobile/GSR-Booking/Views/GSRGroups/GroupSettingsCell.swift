@@ -50,7 +50,7 @@ class GroupSettingsCell: UITableViewCell {
     }
 }
 
-//MARK: - Setup UI
+// MARK: - Setup UI
 extension GroupSettingsCell {
 
     fileprivate func prepareUI() {

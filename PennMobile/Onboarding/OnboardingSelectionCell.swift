@@ -120,7 +120,7 @@ class HallSelectionView: UIView {
 
 }
 
-// Mark: Select chosen halls
+// MARK: Select chosen halls
 extension HallSelectionView {
     fileprivate func updateSelectedHalls() {
         for hall in chosenHalls {
@@ -142,7 +142,7 @@ extension HallSelectionView {
     }
 }
 
-// Mark: Sorting algorithm
+// MARK: Sorting algorithm
 extension HallSelectionView {
     fileprivate func sortHeaders(for headers: [String]) -> [String] {
         return headers.sorted {
@@ -163,7 +163,7 @@ extension HallSelectionView {
     }
 }
 
-// Mark: Functions to Set Up View, Gesture Recognizer, Dictionaries, and Sorted Headers
+// MARK: Functions to Set Up View, Gesture Recognizer, Dictionaries, and Sorted Headers
 extension HallSelectionView {
     fileprivate func setUpView() {
         self.backgroundColor = UIColor.white
@@ -243,7 +243,7 @@ extension HallSelectionView {
     }
 }
 
-// Mark: Functions implementing TableView
+// MARK: Functions implementing TableView
 extension HallSelectionView: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -315,7 +315,7 @@ extension HallSelectionView: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// Mark: Functions implementing SearchBar
+// MARK: Functions implementing SearchBar
 extension HallSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -358,7 +358,7 @@ extension HallSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
 
 }
 
-// Mark: Functions implementing EmptyView
+// MARK: Functions implementing EmptyView
 extension HallSelectionView {
     internal func showEmptyViewIfNeeded() {
         emptyView.isHidden = !currentResults.isEmpty

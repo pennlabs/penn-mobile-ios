@@ -26,7 +26,7 @@ class GroupIndividualSettingView: UIView {
 
 }
 
-//MARK: Setup UI
+// MARK: Setup UI
 extension GroupIndividualSettingView {
     fileprivate func prepareUI(_ title: String, _ description: String, _ isEnabled: Bool) {
         prepareTitleLabel()

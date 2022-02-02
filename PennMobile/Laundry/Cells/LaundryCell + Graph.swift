@@ -189,7 +189,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
     }
 }
 
-// Mark: - UIScrollViewDelegate
+// MARK: - UIScrollViewDelegate
 
 extension LaundryCell: UIScrollViewDelegate {
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {

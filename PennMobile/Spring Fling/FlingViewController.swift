@@ -199,7 +199,7 @@
 //
 //}
 //
-//// MARK: - Networking
+// MARK: - Networking
 //extension FlingViewController {
 //    func fetchViewModel(_ completion: @escaping () -> Void) {
 //        FlingNetworkManager.instance.fetchModel { (model) in
@@ -251,7 +251,7 @@
 //    }
 //}
 //
-//// MARK: - ModularTableViewDelegate
+// MARK: - ModularTableViewDelegate
 //extension FlingViewController: FlingCellDelegate {
 //    func handleUrlPressed(urlStr: String, title: String, item: ModularTableViewItem, shouldLog: Bool) {
 //        checkInWebview = SFSafariViewController(url: URL(string: checkInUrl)!)
@@ -260,7 +260,7 @@
 //    }
 //}
 //
-//// MARK: - Check In
+// MARK: - Check In
 //extension FlingViewController {
 //    fileprivate func prepareCheckInButton() {
 //        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Check-In", style: .done, target: self, action: #selector(handleCheckInButtonPressed(_:)))
@@ -272,7 +272,7 @@
 //    }
 //}
 //
-//// MARK: - Map Image
+// MARK: - Map Image
 //extension FlingViewController {
 //    fileprivate func prepareMapImageView() {
 //        mapImageView = ZoomImageView()
@@ -286,7 +286,7 @@
 //    }
 //}
 //
-//// MARK: - Prepare TableViews
+// MARK: - Prepare TableViews
 //extension FlingViewController {
 //    func prepareScheduleTableView() {
 //        scheduleTableView = UITableView()

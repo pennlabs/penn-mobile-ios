@@ -213,7 +213,7 @@ class GSRGroupNewIntialController: UIViewController {
     }
 }
 
-//Mark: Setup UI
+// MARK: Setup UI
 extension GSRGroupNewIntialController {
     fileprivate func prepareUI() {
         prepareCloseButton()

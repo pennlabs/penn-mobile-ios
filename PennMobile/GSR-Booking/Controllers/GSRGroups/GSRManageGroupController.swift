@@ -36,7 +36,7 @@ class GSRManageGroupController: UIViewController {
     }
 }
 
-//MARK: UI Stuff
+// MARK: UI Stuff
 extension GSRManageGroupController {
     func prepareViewModel() {
         guard let group = group else { return }

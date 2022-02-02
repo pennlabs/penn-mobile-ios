@@ -57,7 +57,7 @@ extension BuildingImageCell {
     }
 }
 
-//MARK: - Define UI Elements
+// MARK: - Define UI Elements
 extension BuildingImageCell {
     fileprivate func getBuildingImageView() -> UIImageView {
         let imageView = UIImageView()

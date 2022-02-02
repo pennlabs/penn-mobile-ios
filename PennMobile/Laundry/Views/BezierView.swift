@@ -17,7 +17,7 @@ class BezierView: UIView {
     let kStrokeAnimationKey = "StrokeAnimationKey"
     let kFadeAnimationKey = "FadeAnimationKey"
 
-    //MARK: Public members
+    // MARK: Public members
     weak var dataSource: BezierViewDataSource?
 
     var lineColor = UIColor(red: 233.0/255.0, green: 98.0/255.0, blue: 101.0/255.0, alpha: 1.0)
@@ -27,7 +27,7 @@ class BezierView: UIView {
     var pointLayers = [CAShapeLayer]()
     var lineLayer = CAShapeLayer()
 
-    //MARK: Private members
+    // MARK: Private members
 
     private var dataPoints: [CGPoint]? {
         return self.dataSource?.bezierViewDataPoints(bezierView: self)

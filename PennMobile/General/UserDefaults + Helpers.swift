@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-//MARK: UserDefaultsKeys
+// MARK: UserDefaultsKeys
 extension UserDefaults {
     enum UserDefaultsKeys: String, CaseIterable {
         case account

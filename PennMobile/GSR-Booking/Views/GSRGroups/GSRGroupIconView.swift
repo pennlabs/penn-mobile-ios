@@ -40,7 +40,7 @@ class GSRGroupIconView: UIView {
 
 }
 
-// MARK - PREPARE UI
+// MARK: - PREPARE UI
 extension GSRGroupIconView {
 
     fileprivate func prepareUI() {

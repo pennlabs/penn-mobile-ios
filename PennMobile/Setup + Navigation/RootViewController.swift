@@ -322,7 +322,7 @@ extension RootViewController {
     }
 }
 
-//MARK: - Enabling Two Factor Automation
+// MARK: - Enabling Two Factor Automation
 extension RootViewController : TwoFactorEnableDelegate {
 
     func handleEnable() {
