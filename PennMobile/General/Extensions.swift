@@ -105,6 +105,8 @@ extension UIFont {
     static let secondaryTitleFont = UIFont.systemFont(ofSize: 11, weight: .medium)
 
     static let interiorTitleFont = UIFont.systemFont(ofSize: 17, weight: .medium)
+    
+    static let pollsTitleFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
 
     static let primaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
     static let secondaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -365,6 +367,15 @@ extension DateFormatter {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         return dateFormatter
     }
+    
+    static var iso8601Full: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }
 }
 
 public extension Collection {
@@ -473,6 +484,18 @@ extension String {
     }
 }
 
+//slicing Penn Events API image source urls
+extension String {
+    //https://stackoverflow.com/questions/31725424/swift-get-string-between-2-strings-in-a-string
+    func slice(from: String, to: String) -> String? {
+        return (range(of: from)?.upperBound).flatMap { substringFrom in
+            (range(of: to, range: substringFrom..<endIndex)?.lowerBound).map { substringTo in
+                String(self[substringFrom..<substringTo])
+            }
+        }
+    }
+}
+
 extension NSMutableAttributedString {
     @discardableResult func bold(_ text: String, size: CGFloat) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: size, weight: .bold)]
@@ -548,5 +571,14 @@ extension URL {
         urlComponents.queryItems = queryItems
 
         self = urlComponents.url!
+    }
+}
+
+extension JSONDecoder {
+    convenience init(keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy,
+         dateDecodingStrategy: JSONDecoder.DateDecodingStrategy) {
+        self.init()
+        self.keyDecodingStrategy = keyDecodingStrategy
+        self.dateDecodingStrategy = dateDecodingStrategy
     }
 }

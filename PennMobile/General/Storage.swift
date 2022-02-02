@@ -73,6 +73,7 @@ public class Storage {
         let url = getURL(for: directory).appendingPathComponent(fileName, isDirectory: false)
         
         if !FileManager.default.fileExists(atPath: url.path) {
+            clear(directory)
             fatalError("File at path \(url.path) does not exist!")
         }
         
@@ -82,9 +83,11 @@ public class Storage {
                 let model = try decoder.decode(type, from: data)
                 return model
             } catch {
+                clear(directory)
                 fatalError(error.localizedDescription)
             }
         } else {
+            clear(directory)
             fatalError("No data at \(url.path)!")
         }
     }

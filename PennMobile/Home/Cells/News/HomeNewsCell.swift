@@ -92,7 +92,7 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
 extension HomeNewsCell {
     fileprivate func setupCell(with item: HomeNewsCellItem) {
         self.article = item.article
-        self.articleImageView.image = item.image
+        self.articleImageView.kf.setImage(with: URL(string: item.article.imageurl))
         self.sourceLabel.text = article.source
         self.titleLabel.text = article.title
         self.subtitleLabel?.text = article.subtitle
@@ -111,7 +111,7 @@ extension HomeNewsCell {
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? URLSelectable else { return }
         FirebaseAnalyticsManager.shared.trackEvent(action: "News Cell Pressed", result: article.title, content: "")
-        delegate.handleUrlPressed(urlStr: article.articleUrl, title: article.source, item: self.item, shouldLog: true)
+        delegate.handleUrlPressed(urlStr: article.link, title: article.source, item: self.item, shouldLog: true)
     }
 }
 
