@@ -489,6 +489,8 @@
 		6C6035F226E722890025FBC7 /* mock_menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mock_menu.json; sourceTree = "<group>"; };
 		6C6035F926E722E60025FBC7 /* GSRAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRAPIResponse.swift; sourceTree = "<group>"; };
 		6C6035FB26E723240025FBC7 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		6C6420AC27AAED2B0096CBA9 /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
+		6C6420AD27AAED2C0096CBA9 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		6C84D9E426293E680039C57F /* UIKit Views.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit Views.swift"; sourceTree = "<group>"; };
 		6C88FE9325337476006F4587 /* DiningViewControllerSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewControllerSwiftUI.swift; sourceTree = "<group>"; };
 		6CAA4B4927A7639600473CC6 /* PollsNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollsNetworkManager.swift; sourceTree = "<group>"; };
@@ -858,6 +860,8 @@
 			children = (
 				6C3F194127A32C29007BCB4F /* GoogleService-Info.plist */,
 				2166406F1EBADADA00746B8E /* Info.plist */,
+				6C6420AC27AAED2B0096CBA9 /* PennMobile-Bridging-Header.h */,
+				6C6420AD27AAED2C0096CBA9 /* PrefixHeader.pch */,
 			);
 			path = Supporting_Files;
 			sourceTree = "<group>";
