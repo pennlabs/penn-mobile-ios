@@ -13,7 +13,7 @@ class LaundryNotificationCenter {
 
     static let shared = LaundryNotificationCenter()
 
-    private var identifiers = Dictionary<LaundryMachine, String>()
+    private var identifiers = [LaundryMachine: String]()
 
     func prepare() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
@@ -59,7 +59,7 @@ class LaundryNotificationCenter {
 
     func updateForExpiredNotifications(_ completion: @escaping () -> Void) {
         UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
-            var newIdentifiers = Dictionary<LaundryMachine, String>()
+            var newIdentifiers = [LaundryMachine: String]()
             for (machine, identifier) in self.identifiers {
                 if requests.contains(where: { (request) -> Bool in
                     request.identifier == identifier

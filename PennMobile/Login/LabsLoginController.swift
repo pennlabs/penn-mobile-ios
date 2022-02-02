@@ -29,7 +29,7 @@ extension SHA256Hashable {
                 let digest = SHA256.hash(data: inputData)
                 switch encoding {
                 case .base64:
-                    return Data(Array<UInt8>(digest.makeIterator())).base64EncodedString()
+                    return Data([UInt8](digest.makeIterator())).base64EncodedString()
                 case .hex:
                     return digest.compactMap { String(format: "%02x", $0) }.joined()
                 }
@@ -51,7 +51,7 @@ extension SHA256Hashable {
 
         switch encoding {
         case .base64:
-            return Data(Array<UInt8>(digest.makeIterator())).base64EncodedString()
+            return Data([UInt8](digest.makeIterator())).base64EncodedString()
         case .hex:
             return digest.compactMap { String(format: "%02x", $0) }.joined()
         }

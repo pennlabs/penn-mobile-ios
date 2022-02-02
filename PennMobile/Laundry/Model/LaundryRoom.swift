@@ -25,7 +25,7 @@ class LaundryRoom: Codable {
     var washers = [LaundryMachine]()
     var dryers = [LaundryMachine]()
 
-    var usageData: Array<Double>! = nil
+    var usageData: [Double]! = nil
 
     init(id: Int, name: String, building: String) {
         self.id = id
@@ -45,7 +45,7 @@ class LaundryRoom: Codable {
         let usageJSON = json["usage_data"]
         guard let washerData = usageJSON["washer_data"].dictionary, let dryerData = usageJSON["dryer_data"].dictionary else { return }
 
-        usageData = Array<Double>(repeating: 0, count: 27)
+        usageData = [Double](repeating: 0, count: 27)
         washerData.forEach { (key, val) in
             usageData[Int(key)!] = val.doubleValue
         }

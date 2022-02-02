@@ -29,7 +29,7 @@ class FeedAnalyticsManager: NSObject, Requestable {
 
     fileprivate let analyticsUrl = "http://api.pennlabs.org/feed/analytics"
 
-    fileprivate var mostRecentEvent = Dictionary<FeedAnalyticsEvent, Date>() // Keeps track of the last time a cell was tracked
+    fileprivate var mostRecentEvent = [FeedAnalyticsEvent: Date]() // Keeps track of the last time a cell was tracked
     fileprivate var eventsToSend = Set<FeedAnalyticsEvent>()
 
     fileprivate var batchTimer: Timer!

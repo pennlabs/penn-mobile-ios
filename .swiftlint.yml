@@ -24,7 +24,6 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - legacy_constructor
   - redundant_optional_initialization
   - file_length
-  - syntactic_sugar
   - for_where
   - trailing_semicolon
   - weak_delegate

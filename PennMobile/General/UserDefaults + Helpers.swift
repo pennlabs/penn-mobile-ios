@@ -343,7 +343,7 @@ extension UserDefaults {
 // MARK: - Housing
 extension UserDefaults {
     func saveHousingResult(_ result: HousingResult) {
-        let currentResults = getHousingResults() ?? Array<HousingResult>()
+        let currentResults = getHousingResults() ?? [HousingResult]()
         var newResults = currentResults.filter { $0.start != result.start }
         newResults.append(result)
 
@@ -354,7 +354,7 @@ extension UserDefaults {
         synchronize()
     }
 
-    func getHousingResults() -> Array<HousingResult>? {
+    func getHousingResults() -> [HousingResult]? {
         let decoder = JSONDecoder()
         if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.housing.rawValue) {
             return try? decoder.decode(Array<HousingResult>.self, from: decodedData)

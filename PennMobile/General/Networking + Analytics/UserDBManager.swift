@@ -434,7 +434,7 @@ extension UserDBManager {
         saveUserSettingsDictionary(route: urlRoute, params: params, callback)
     }
 
-    private func saveUserSettingsDictionary(route: String, params: Dictionary<String, Bool>, _ callback: ((_ success: Bool) -> Void)?) {
+    private func saveUserSettingsDictionary(route: String, params: [String: Bool], _ callback: ((_ success: Bool) -> Void)?) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             guard let token = token, let payload = try? JSONEncoder().encode(params) else {
                 callback?(false)

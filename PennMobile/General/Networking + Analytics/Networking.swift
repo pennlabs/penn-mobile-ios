@@ -166,7 +166,7 @@ extension Requestable {
     internal func getPostString(params: [String: Any]) -> String {
         var data = [String]()
         for(key, value) in params {
-            if let arr = value as? Array<Any> {
+            if let arr = value as? [Any] {
                 let str = arr.map { String(describing: $0) }.joined(separator: ",")
                 data.append(key + "=\(str)")
             }

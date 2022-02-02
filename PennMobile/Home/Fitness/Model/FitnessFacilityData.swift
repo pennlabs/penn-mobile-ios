@@ -12,10 +12,10 @@ class FitnessFacilityData {
 
     static let shared = FitnessFacilityData()
 
-    fileprivate var schedules = Dictionary<FitnessFacilityName, [FitnessSchedule]>()
+    fileprivate var schedules = [FitnessFacilityName: [FitnessSchedule]]()
 
     func load(inputSchedules: FitnessSchedules) {
-        schedules = Dictionary<FitnessFacilityName, [FitnessSchedule]>()
+        schedules = [FitnessFacilityName: [FitnessSchedule]]()
         guard inputSchedules.schedules != nil else { return }
 
         for schedule in inputSchedules.schedules! {
@@ -53,6 +53,6 @@ class FitnessFacilityData {
     }
 
     func clearSchedules() {
-        schedules = Dictionary<FitnessFacilityName, [FitnessSchedule]>()
+        schedules = [FitnessFacilityName: [FitnessSchedule]]()
     }
 }

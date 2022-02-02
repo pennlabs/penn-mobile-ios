@@ -31,7 +31,7 @@ class LaundryCell: UITableViewCell {
         }
     }
 
-    var usageData: Array<Double>!
+    var usageData: [Double]!
     var graphData = Array(repeating: 0.0, count: LaundryCell.numberOfDataPointsInGraph)
 
     // Number of datapoints displayed in the graph
