@@ -266,8 +266,6 @@ extension CourseAlertCreateController: UITableViewDelegate, UITableViewDataSourc
 extension CourseAlertCreateController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        showActivity()
-        
         self.searchResults = []
         self.resultsTableView.reloadData()
         
@@ -291,17 +289,22 @@ extension CourseAlertCreateController: UISearchBarDelegate {
         mostRecentSearch = searchText
         
         if (searchText == "") {
+            hideAllActivity()
             searchPromptView.isHidden = false
             noResultsView.isHidden = true
         } else {
             searchPromptView.isHidden = true
             noResultsView.isHidden = true
             
+            showActivity(isUserInteractionEnabled: true)
+            
             CourseAlertNetworkManager.instance.getSearchedCourses(searchText: searchText) { (results) in
                 if (searchText == self.mostRecentSearch) {
+                    DispatchQueue.main.async {
+                        self.hideAllActivity()
+                    }
                     if let results = results {
                         DispatchQueue.main.async {
-                            self.hideActivity()
                             self.searchResults = results
                             if (results.isEmpty) {
                                 self.noResultsView.isHidden = false

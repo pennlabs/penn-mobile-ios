@@ -25,14 +25,19 @@ extension IndicatorEnabled where Self: UITableViewController {
 }
 
 extension IndicatorEnabled where Self: UIViewController {
-    func showActivity() {
-        view.isUserInteractionEnabled = false
+    func showActivity(isUserInteractionEnabled: Bool = false) {
+        view.isUserInteractionEnabled = isUserInteractionEnabled
         MBProgressHUD.showAdded(to: self.view, animated: true)
     }
     
     func hideActivity() {
         view.isUserInteractionEnabled = true
         MBProgressHUD.hide(for: self.view, animated: true)
+    }
+    
+    func hideAllActivity() {
+        view.isUserInteractionEnabled = true
+        MBProgressHUD.hideAllHUDs(for: self.view, animated: true)
     }
 }
 
