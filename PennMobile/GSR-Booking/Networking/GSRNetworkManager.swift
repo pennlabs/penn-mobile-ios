@@ -153,6 +153,8 @@ extension GSRNetworkManager {
                     } catch {
                         completion(.failure(.parsingError))
                     }
+                } else {
+                    completion(.failure(.other))
                 }
             }
             
