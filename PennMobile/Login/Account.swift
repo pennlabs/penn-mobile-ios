@@ -23,7 +23,7 @@ struct Account: Codable, Hashable {
     var isStudent: Bool {
         return groups.contains("student")
     }
-    
+
     var isInWharton: Bool {
         return student.school.contains(where: { $0.id == 12 })
     }
@@ -61,6 +61,9 @@ extension Account {
     
     static func clear() {
         UserDefaults.standard.clearAccount()
+        KeychainAccessible.instance.removePennKey()
+        KeychainAccessible.instance.removePassword()
+        KeychainAccessible.instance.removePacCode()
     }
     
     static func saveAccount(_ thisAccount: Account) {

@@ -105,6 +105,17 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func handleDefaultLogin(decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        let account = Account(pennid: 12345678, firstName: "Ben", lastName: "Franklin", username: "bfranklin", email: "benfrank@wharton.upenn.edu", student: Student(major: [], school: []), groups: [], emails: [])
+        Account.saveAccount(account)
+        
+        OAuth2NetworkManager.instance.saveAccessToken(accessToken: AccessToken(value: "root", expiration: Calendar.current.date(byAdding: .month, value: 1, to: Date())!))
+        OAuth2NetworkManager.instance.saveRefreshToken(token: "123456789")
+        decisionHandler(.cancel)
+        self.dismiss(successful: true)
+    }
+    
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard shouldRetrieveRefreshToken else {
             // Refresh token does not to be retrieved. Dismiss controller immediately.
@@ -252,7 +263,7 @@ extension LabsLoginController {
         PacCodeNetworkManager.instance.getPacCode { result in
             switch result {
             case .success(let pacCode):
-                self.savePacCode(pacCode)
+                KeychainAccessible.instance.savePacCode(pacCode)
             case .failure(_):
                 return
             }

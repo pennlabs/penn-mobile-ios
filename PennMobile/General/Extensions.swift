@@ -450,9 +450,7 @@ extension String {
         let textSize = calString.boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font]), context: nil)
         return textSize.height
     }
-}
 
-extension String {
     func getMatches(for pattern: String) -> [String] {
         let regex = try! NSRegularExpression(pattern: pattern)
         let result = regex.matches(in: self, range:NSMakeRange(0, self.utf16.count))
@@ -481,6 +479,30 @@ extension String {
     // Helper function inserted by Swift 4.2 migrator.
     fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
         return input.rawValue
+    }
+    
+    // https://sarunw.com/posts/how-to-compare-two-app-version-strings-in-swift/
+    func versionCompare(_ otherVersion: String) -> ComparisonResult {
+        let versionDelimiter = "."
+
+        var versionComponents = self.components(separatedBy: versionDelimiter) // <1>
+        var otherVersionComponents = otherVersion.components(separatedBy: versionDelimiter)
+
+        let zeroDiff = versionComponents.count - otherVersionComponents.count // <2>
+
+        if zeroDiff == 0 { // <3>
+            // Same format, compare normally
+            return self.compare(otherVersion, options: .numeric)
+        } else {
+            let zeros = Array(repeating: "0", count: abs(zeroDiff)) // <4>
+            if zeroDiff > 0 {
+                otherVersionComponents.append(contentsOf: zeros) // <5>
+            } else {
+                versionComponents.append(contentsOf: zeros)
+            }
+            return versionComponents.joined(separator: versionDelimiter)
+                .compare(otherVersionComponents.joined(separator: versionDelimiter), options: .numeric) // <6>
+        }
     }
 }
 

@@ -126,7 +126,7 @@ class PacCodeViewController : UIViewController, ShowsAlertForError, IndicatorEna
 }
 
 // MARK: - Local Authentication
-extension PacCodeViewController : KeychainAccessible, LocallyAuthenticatable {
+extension PacCodeViewController: LocallyAuthenticatable {
         
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -142,7 +142,7 @@ extension PacCodeViewController : KeychainAccessible, LocallyAuthenticatable {
     
     func handleAuthenticationSuccess() {
         if Account.isLoggedIn {
-            if let pacCode = getPacCode() {
+            if let pacCode = KeychainAccessible.instance.getPacCode() {
                 self.pacCode = pacCode
                 updatePACCode()
             } else {
@@ -195,7 +195,7 @@ extension PacCodeViewController {
     }
     
     fileprivate func handleNetworkPacCodeRefreshCompletion(_ pacCode: String) {
-        self.savePacCode(pacCode)
+        KeychainAccessible.instance.savePacCode(pacCode)
         self.pacCode = pacCode
     }
     
