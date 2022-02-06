@@ -9,10 +9,11 @@
 import Foundation
 import UIKit
 import StoreKit
+import SwiftyJSON
 
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
 class RootViewController: UIViewController, NotificationRequestable {
-    private var current: UIViewController
+    var current: UIViewController
     
     private var lastLoginAttempt: Date?
         
@@ -29,21 +30,6 @@ class RootViewController: UIViewController, NotificationRequestable {
         
         if UserDefaults.standard.isNewAppVersion() {
             UserDefaults.standard.setAppVersion()
-            // Save laundry rooms with account ID (available starting in 6.1)
-            if let rooms = UserDefaults.standard.getLaundryPreferences() {
-                UserDBManager.shared.saveLaundryPreferences(for: rooms)
-            }
-            
-            if UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) {
-                // Update course anonymization key if privacy option is TRUE
-                // Pennkey-Password key has been updated to be option-specific
-                UserDBManager.shared.updateAnonymizationKeys()
-            }
-        }
-                        
-        if shouldRequireLogin() {
-            // Logged in and should require login
-            clearAccountData()
         }
         
         addChild(current)
@@ -51,9 +37,21 @@ class RootViewController: UIViewController, NotificationRequestable {
         view.addSubview(current.view)
         current.didMove(toParent: self)
         
-        UserDefaults.standard.restoreCookies()
-        
-        self.applicationWillEnterForeground()
+        if #available(iOS 15.0, *) {
+            Task {
+                if let (data, _) = try? await URLSession.shared.data(from: URL(string: "https://itunes.apple.com/lookup?bundleId=org.pennlabs.PennMobile")!),
+                   let data = try? JSON(data: data),
+                   let version = try? data["result"][0]["version"],
+                   let minimumOsVersion = try? data["results"][0]["minimumOsVersion"] {
+                    
+                }
+                showMainScreen()
+                applicationWillEnterForeground()
+            }
+        } else {
+            showMainScreen()
+            applicationWillEnterForeground()
+        }
     }
     
     func applicationWillEnterForeground() {
