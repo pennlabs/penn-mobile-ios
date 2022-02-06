@@ -470,6 +470,7 @@ extension String {
         return input.rawValue
     }
     
+    // https://sarunw.com/posts/how-to-compare-two-app-version-strings-in-swift/
     func versionCompare(_ otherVersion: String) -> ComparisonResult {
         let versionDelimiter = "."
 
