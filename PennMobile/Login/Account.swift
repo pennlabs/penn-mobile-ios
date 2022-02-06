@@ -1,174 +1,76 @@
+////
+////  Account.swift
+////  PennMobile
+////
+////  Created by Josh Doman on 2/24/19.
+////  Copyright © 2019 PennLabs. All rights reserved.
+////
 //
-//  Account.swift
-//  PennMobile
-//
-//  Created by Josh Doman on 2/24/19.
-//  Copyright © 2019 PennLabs. All rights reserved.
-//
-
 import Foundation
 
-class Account: Codable {
-    var first: String?
-    var last: String?
-    var pennkey: String
+struct Account: Codable, Hashable {
     var pennid: Int
+    var firstName: String?
+    var lastName: String?
+    var username: String
     var email: String?
-    var imageUrl: String?
-    var affiliations: [String]?
+    var student: Student
+    // var imageUrl: String?
+    
+    var groups: [String]
+    var emails: [Email]
     
     var isStudent: Bool {
-        return affiliations?.contains("student") ?? true
+        return groups.contains("student")
     }
-    
-    var degrees: Set<Degree>?
-    var courses: Set<Course>?
-    
-    fileprivate static var account: Account?
-    
-    init(user: OAuthUser) {
-        self.first = user.firstName
-        self.last = user.lastName
-        self.pennkey = user.username
-        self.email = user.email
-        self.pennid = user.pennid
-        self.affiliations = user.affiliation
-    }
-    
-    init(first: String, last: String, pennkey: String, email: String, pennid: Int, affiliations: [String]) {
-        self.first = first
-        self.last = last
-        self.pennkey = pennkey
-        self.email = email
-        self.pennid = pennid
-        self.affiliations = affiliations
-    }
-    
-    func isInWharton() -> Bool {
-        return email?.contains("wharton") ?? false
-    }
-    
-    func setEmail() {
-        guard let degrees = degrees else { return }
-        var potentialEmail: String? = nil
-        for degree in degrees {
-            switch degree.schoolCode {
-            case "WH":
-                email = "\(pennkey)@wharton.upenn.edu"
-                return
-            case "EAS":
-                potentialEmail = "\(pennkey)@seas.upenn.edu"
-                break
-            case "CAS", "SAS":
-                potentialEmail = "\(pennkey)@sas.upenn.edu"
-                break
-            case "NURS":
-                potentialEmail = "\(pennkey)@nursing.upenn.edu"
-                break
-            default:
-                break
-            }
-        }
-        email = potentialEmail
-    }
-    
-    var description: String {
-        var str = "\(first ?? "") \(last ?? "")"
-        if let imageUrl = imageUrl {
-            str = "\(str)\n\(imageUrl)"
-        }
-        if let email = email {
-            str = "\(str)\n\(email)"
-        }
-        if let degrees = degrees {
-            for degree in degrees {
-                str = "\(str)\n\(degree.description)"
-            }
-        }
-        if let courses = courses {
-            for course in courses {
-                str = "\(str)\n\(course.description)"
-            }
-        }
-        return str
-    }
-    
-    static func getAccount() -> Account? {
-        if account == nil {
-            account = UserDefaults.standard.getAccount()
-        }
-        return account
-    }
-    
-    static func saveAccount(_ thisAccount: Account) {
-        UserDefaults.standard.saveAccount(thisAccount)
-        account = thisAccount
-    }
-    
-    static func update(firstName: String? = nil, lastName: String? = nil, email: String? = nil) {
-        guard let account = getAccount() else { return }
-        if let firstName = firstName {
-            account.first = firstName
-        }
-        if let lastName = lastName {
-            account.last = lastName
-        }
-        if let email = email {
-            account.email = email
-        }
-        saveAccount(account)
+
+    var isInWharton: Bool {
+        return student.school.contains(where: { $0.id == 12 })
     }
 }
 
+struct Student: Codable, Hashable {
+    var major: [Major]
+    var school: [School]
+    var graduationYear: Int?
+}
+
+struct Email: Codable, Hashable {
+    var id: Int
+    var value: String
+    var primary: Bool
+    var verified: Bool
+}
+
+struct School: Codable, Hashable {
+    var id: Int
+    var name: String
+}
+
+struct Major: Codable, Hashable {
+    var id: Int
+    var name: String
+    var degreeType: String
+}
+
+// MARK: - Static Functions
 extension Account {
+    static var isLoggedIn: Bool {
+        OAuth2NetworkManager.instance.hasRefreshToken() && getAccount() != nil
+    }
+    
     static func clear() {
         UserDefaults.standard.clearAccount()
         KeychainAccessible.instance.removePennKey()
         KeychainAccessible.instance.removePassword()
         KeychainAccessible.instance.removePacCode()
-        account = nil
     }
-}
-
-extension Account: Equatable {
-    static func == (lhs: Account, rhs: Account) -> Bool {
-        return lhs.first == rhs.first && lhs.last == rhs.last && lhs.imageUrl == rhs.imageUrl
-                && lhs.pennkey == rhs.pennkey && lhs.email == rhs.email
+    
+    static func saveAccount(_ thisAccount: Account) {
+        UserDefaults.standard.saveAccount(thisAccount)
     }
-}
-
-extension Account {
-    func isFreshman() -> Bool {
-        let now = Date()
-        let components = Calendar.current.dateComponents([.year], from: now)
-        let january = Calendar.current.date(from: components)!
-        let june = january.add(months: 5)
-        
-        let year = components.year!
-        let freshmanYear: Int
-        if january <= now && now < june {
-            freshmanYear = year + 3
-        } else {
-            freshmanYear = year + 4
-        }
-        
-        if let degrees = degrees {
-            for degree in degrees {
-                // Check if in undergrad
-                if ["WH", "EAS", "COL", "NUR"].contains(degree.schoolCode) {
-                    if degree.expectedGradTerm == "Spring \(freshmanYear)" {
-                        return true
-                    }
-                }
-            }
-        }
-        return false
-    }
-}
-
-// MARK: - Logged In
-extension Account {
-    static var isLoggedIn: Bool {
-        OAuth2NetworkManager.instance.hasRefreshToken()
+    
+    static func getAccount() -> Account? {
+        return UserDefaults.standard.getAccount()
     }
 }

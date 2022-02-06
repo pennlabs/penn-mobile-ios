@@ -19,6 +19,19 @@ struct DiningVenueView: View {
         
     var body: some View {
         List {
+            //Option 1: Just have the dining view header as an item in the list
+            //DiningViewHeader()
+            
+            //Options 2 & 3: Put the Dining View header in a section with "Dining Balance" header
+            Section(header: CustomHeader(name: "Dining Balance"), content: {
+                
+                //Option 2: Have DiningViewHeader() be the header of an empty section
+                Section(header: DiningViewHeader(), content: {})
+                
+                //Option 3: Have DiningViewHeader() as content in the "Dining Balance" Section
+                //DiningViewHeader()
+            })
+       
             ForEach(diningVM.ordering, id: \.self) { venueType in
                 Section(header: CustomHeader(name: venueType.fullDisplayName)) {
                     ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
@@ -30,6 +43,7 @@ struct DiningVenueView: View {
                 }
             }
         }
+        .background(Color(UIColor.uiBackground))
         // Hack to deselect items
         .id(listViewId)
         .onAppear {

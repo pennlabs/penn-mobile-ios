@@ -47,11 +47,9 @@ class LaundryAPIService: Requestable {
     }
     
     private func fetchIds(callback: @escaping ([Int: LaundryRoom]?) -> ()) {
-        getRequest(url: idsUrl) { (dictionary, error, statusCode) in
-            if let dict = dictionary {
-                let json = JSON(dict)
-                let hallsDictionary = try? Dictionary<Int, LaundryRoom>(json: json)
-                callback(hallsDictionary)
+        getRequestData(url: idsUrl) { (data, error, statusCode) in
+            if let data = data, let rooms = try? JSONDecoder().decode([LaundryRoom].self, from: data) {
+                callback(Dictionary(uniqueKeysWithValues: rooms.map{ ($0.id, $0) }))
             } else {
                 callback(nil)
             }

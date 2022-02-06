@@ -106,7 +106,9 @@ extension HomePostCell {
         self.sourceLabel.text = post.source
         self.titleLabel.text = post.title
         self.subtitleLabel?.text = post.subtitle
-        self.dateLabel.text = post.createdDate
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd"
+        self.dateLabel.text = dateFormatter.string(from: post.createdDate) + " - " + dateFormatter.string(from: post.expireDate)
         
         if item.post.source == nil {
             titleTopConstraintToSource.isActive = false

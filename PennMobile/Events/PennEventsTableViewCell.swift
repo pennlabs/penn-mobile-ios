@@ -58,7 +58,7 @@ class PennEventsTableViewCell: UITableViewCell {
         view.backgroundColor = .clear
         view.numberOfLines = 0
 
-        view.textColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1)
+        view.textColor = UIColor.label
         view.font = UIFont(name: "SFProText-Regular", size: 30)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -68,7 +68,7 @@ class PennEventsTableViewCell: UITableViewCell {
         var view = UILabel()
         view.backgroundColor = .clear
         view.font = UIFont(name: "Helvetica", size: 12)
-        view.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+        view.textColor = UIColor.secondaryLabel
         view.numberOfLines = 3
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

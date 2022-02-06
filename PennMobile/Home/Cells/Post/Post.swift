@@ -14,6 +14,8 @@ struct Post: Codable {
     let subtitle: String?
     let postUrl: String?
     let imageUrl: String
-    let createdDate: String?
+    let createdDate: Date
+    let startDate: Date
+    let expireDate: Date
     let source: String?
 }
