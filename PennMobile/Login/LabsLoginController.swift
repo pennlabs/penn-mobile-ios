@@ -106,15 +106,13 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
     }
     
     override func handleDefaultLogin(decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        decisionHandler(.allow)
         
-        //Dummy data:
-        let account = Account(first: "Ben", last: "Franklin", pennkey: "benfrank", email: "benfrank@wharton.upenn.edu", pennid: 12345678, affiliations: [])
-        UserDefaults.standard.saveAccount(account)
+        let account = Account(first: "Ben", last: "Franklin", pennkey: "bfranklin", email: "benfrank@wharton.upenn.edu", pennid: 12345678, affiliations: [])
+        Account.saveAccount(account)
         
-        OAuth2NetworkManager.instance.saveAccessToken(accessToken: AccessToken(value: "root", expiration: Calendar.current.date(byAdding: .year, value: 1, to: Date())!))
+        OAuth2NetworkManager.instance.saveAccessToken(accessToken: AccessToken(value: "root", expiration: Calendar.current.date(byAdding: .month, value: 1, to: Date())!))
         OAuth2NetworkManager.instance.saveRefreshToken(token: "123456789")
-        
+        decisionHandler(.cancel)
         self.dismiss(successful: true)
     }
     
