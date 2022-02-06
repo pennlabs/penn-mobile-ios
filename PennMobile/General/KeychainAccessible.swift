@@ -23,6 +23,10 @@ extension KeychainAccessible {
         "PAC Code"
     }
     
+    private var diningTokenKeychainKey: String {
+        "Dining Token"
+    }
+    
     func getPennKey() -> String? {
         let secureStore = getWebLoginSecureStore()
         do {
@@ -75,4 +79,19 @@ extension KeychainAccessible {
         let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)
         return secureStore
     }
+    
+    func saveDiningToken(_ diningToken: String) {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.setValue(diningToken, for: diningTokenKeychainKey)
+    }
+    
+    func getDiningToken() -> String? {
+        let secureStore = getWebLoginSecureStore()
+        do {
+            return try secureStore.getValue(for: diningTokenKeychainKey)
+        } catch {
+            return nil
+        }
+    }
+    
 }

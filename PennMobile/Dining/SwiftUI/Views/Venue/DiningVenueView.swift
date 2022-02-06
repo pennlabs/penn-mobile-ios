@@ -16,24 +16,15 @@ struct DiningVenueView: View {
     // Will be removed once SwiftUI is Fixed
     @State private var selectedItem: String?
     @State private var listViewId = UUID()
-        
+    
     var body: some View {
         List {
-            //Option 1: Just have the dining view header as an item in the list
-            //DiningViewHeader()
-            
-            //Options 2 & 3: Put the Dining View header in a section with "Dining Balance" header
-            Section(header: CustomHeader(name: "Dining Balance"), content: {
-                
-                //Option 2: Have DiningViewHeader() be the header of an empty section
+            Section(header: CustomHeader(name: "Dining Balance", refreshButton: true), content: {
                 Section(header: DiningViewHeader(), content: {})
-                
-                //Option 3: Have DiningViewHeader() as content in the "Dining Balance" Section
-                //DiningViewHeader()
             })
        
             ForEach(diningVM.ordering, id: \.self) { venueType in
-                Section(header: CustomHeader(name: venueType.fullDisplayName)) {
+                Section(header: CustomHeader(name: venueType.fullDisplayName, refreshButton: false)) {
                     ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
                         NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM), tag: "\(venue.id)", selection: $selectedItem) {
                             DiningVenueRow(for: venue)
@@ -54,19 +45,28 @@ struct DiningVenueView: View {
                 listViewId = UUID()
             }
         }
+        .listStyle(.plain)
     }
 }
 
-@available(iOS 14, *)
 struct CustomHeader: View {
 
     let name: String
+    let refreshButton: Bool
 
     var body: some View {
         HStack {
             Text(name)
                 .font(.system(size: 21, weight: .semibold))
+                .foregroundColor(.primary)
             Spacer()
+            if(refreshButton) {
+                Button(action: {
+                    print("Hi")
+                }, label: {
+                    Image(systemName: "arrow.counterclockwise")
+                })
+            }
         }
         .padding()
         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -79,6 +79,6 @@ struct CustomHeader: View {
 @available(iOS 14, *)
 struct DiningVenueView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomHeader(name: "new")
+        CustomHeader(name: "new", refreshButton: false)
     }
 }

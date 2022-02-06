@@ -37,6 +37,7 @@ extension UserDefaults {
         case totpEnabledDate
         case lastDiningHoursRequest
         case lastMenuRequest
+        case diningTokenExpiration
     }
     
     func clearAll() {
@@ -579,5 +580,17 @@ extension UserDefaults {
         let dict = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue)  as? [Int:Date]
         
         return dict?[id]
+    }
+}
+
+// MARK: - Dining Token Expiration
+extension UserDefaults {
+    func setDiningTokenExpiration(_ diningTokenExpiration: Date) {
+        UserDefaults.standard.set(diningTokenExpiration, forKey: UserDefaultsKeys.diningTokenExpiration.rawValue)
+    }
+    
+    func getDiningTokenExpiration() -> Date? {
+        let result = UserDefaults.standard.value(forKey: UserDefaultsKeys.diningTokenExpiration.rawValue)
+        return result as? Date
     }
 }

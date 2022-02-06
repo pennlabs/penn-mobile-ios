@@ -13,9 +13,8 @@ struct AnalyticsCardView: View {
     var color: Color = .blue
     
     var body: some View {
-        
-            NavigationLink(destination: Text("Hello, Jong Min"), label: {
-                CardView {
+        NavigationLink(destination: DiningAnalyticsView()) {
+            CardView {
                 HStack {
                     Text(self.text)
                         .font(.system(size: 24, design: .rounded))
@@ -25,8 +24,8 @@ struct AnalyticsCardView: View {
                 }
                 .padding()
                 .foregroundColor(self.color).font(Font.system(size: 24).weight(.bold))
-                }
-            })
+            }
+        }
     }
 }
 

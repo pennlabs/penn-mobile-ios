@@ -217,14 +217,6 @@ extension OAuth2NetworkManager {
     }
 }
 
-// Source: https://stackoverflow.com/questions/26845307/generate-random-alphanumeric-string-in-swift/33860834
-extension String {
-    static func randomString(length: Int) -> String {
-      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-      return String((0..<length).map{ _ in letters.randomElement()! })
-    }
-}
-
 extension String {
     static func getPostString(params: [String: Any]) -> String {
         let characterSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
