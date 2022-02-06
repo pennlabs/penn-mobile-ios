@@ -59,12 +59,15 @@ class RootViewController: UIViewController, NotificationRequestable {
             if Account.isLoggedIn && shouldRequireLogin() {
                 // If user is logged in but login is required, clear user data and switch to logout
                 clearAccountData()
-                self.switchToLogout()
+                switchToLogout()
+                return
             } else if !Account.isLoggedIn {
                 // If user is not logged in, switch to logout but don't clear user data
-                self.switchToLogout()
+                switchToLogout()
+                return
             } else {
                 // Refresh current VC
+                UserDefaults.standard.restoreCookies()
                 ControllerModel.shared.visibleVC().viewWillAppear(true)
             }
         }
@@ -82,7 +85,7 @@ class RootViewController: UIViewController, NotificationRequestable {
                 }
             }
         }
-        
+
         if shouldShareCourses() {
             // Share user's courses. Do not fetch previous semesters if the current semester has been fetched.
             let savedCourses = UserDefaults.standard.getCourses()
@@ -91,32 +94,6 @@ class RootViewController: UIViewController, NotificationRequestable {
                 if let courses = try? result.get() {
                     UserDefaults.standard.saveCourses(courses)
                     UserDBManager.shared.saveCoursesAnonymously(courses)
-                }
-            }
-        }
-        
-        if shouldRefetchCode() {
-             //Request to fetch Two Factor Code again if the app failed to fetch it last time
-            //TODO: uncomment this next section if you want to reenable wkzombie 2FA
-//            DispatchQueue.main.async {
-//                let alert = UIAlertController(title: "Two-Step Code Not Fetched", message: "We were unable to fetch your Two-Step code last time. Do you want to try again?", preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
-//                    alert.dismiss(animated: true, completion: nil)
-//                    UserDefaults.standard.setTwoFactorEnabledDate(nil);
-//                }))
-//
-//                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-//                    TOTPFetcher.instance.fetchAndSaveTOTPSecret()
-//                }))
-//
-//                self.current.present(alert, animated: true, completion: nil)
-//            }
-        } else if #available(iOS 13, *) {
-            if shouldRequestCoursePermission() {
-                // Request permission, then share courses if granted
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    let vc = CoursePrivacyController()
-                    self.current.present(vc, animated: true)
                 }
             }
         }
@@ -170,12 +147,7 @@ class RootViewController: UIViewController, NotificationRequestable {
         homeVC.clearCache()
     }
     
-    func logout() {
-        clearAccountData()
-        switchToLogout()
-    }
-    
-    fileprivate func clearAccountData() {
+    func clearAccountData() {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         UserDefaults.standard.clearAll()
         OAuth2NetworkManager.instance.clearRefreshToken()
