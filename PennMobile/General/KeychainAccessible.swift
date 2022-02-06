@@ -8,9 +8,10 @@
 
 import Foundation
 
-protocol KeychainAccessible {}
-
-extension KeychainAccessible {
+class KeychainAccessible {
+    
+    static let instance = KeychainAccessible()
+    
     private var pennkeyKeychainKey: String {
         "PennKey"
     }
@@ -55,9 +56,19 @@ extension KeychainAccessible {
         try? secureStore.setValue(pennkey, for: pennkeyKeychainKey)
     }
     
+    func removePennKey() {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.removeValue(for: pennkeyKeychainKey)
+    }
+    
     func savePassword(_ password: String) {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.setValue(password, for: passwordKeychainKey)
+    }
+    
+    func removePassword() {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.removeValue(for: passwordKeychainKey)
     }
     
     func savePacCode(_ pacCode: String) {

@@ -283,7 +283,7 @@ extension LabsLoginController {
         PacCodeNetworkManager.instance.getPacCode { result in
             switch result {
             case .success(let pacCode):
-                self.savePacCode(pacCode)
+                KeychainAccessible.instance.savePacCode(pacCode)
             case .failure(_):
                 return
             }
