@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-#platform :ios
+platform :ios, '14.0'
 
 inhibit_all_warnings!
 
@@ -31,7 +31,7 @@ end
 post_install do |pi|
     pi.pods_project.targets.each do |t|
       t.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
         config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = "YES"
       end
     end
