@@ -7,131 +7,64 @@
 //
 import Foundation
 
-class CourseAlertController: GenericViewController {
+class CourseAlertController: GenericViewController, ShowsAlertForError, IndicatorEnabled {
 
     fileprivate var alerts = [CourseAlert]() {
         didSet {
             alerts.sort(by: { $0.updatedAt > $1.updatedAt })
             alerts.sort(by: { $0.isActive && !$1.isActive })
             DispatchQueue.main.async {
-                self.updateMainView()
+                self.tableView.reloadData()
             }
         }
     }
 
     fileprivate var tableView: UITableView!
-    fileprivate var createAlert: ButtonWithImage!
     fileprivate let refreshControl = UIRefreshControl()
-    fileprivate var loadingView: UIActivityIndicatorView!
-
-    fileprivate lazy var alertSettings: UIBarButtonItem = {
-        if #available(iOS 13.0, *) {
-            return UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(openSettings(_:)))
-        } else {
-            return UIBarButtonItem(image: UIImage(named: "settings"), style: .done, target: self, action: #selector(openSettings(_:)))
-        }
-    }()
-
     fileprivate var manageSettingsView = UIView()
-    fileprivate var loginView = UIView()
-
-    fileprivate var enabled = false {
-        didSet {
-            DispatchQueue.main.async {
-                self.updateMainView()
-            }
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Penn Course Alert"
-        navigationItem.rightBarButtonItem = alertSettings
-
         setupUI()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        loginView.isHidden = Account.isLoggedIn
-        manageSettingsView.isHidden = true
-        tableView.isHidden = true
-        alertSettings.isEnabled = Account.isLoggedIn
-
-        setupLoadingView()
-        startLoadingViewAnimation()
-
-        if !Account.isLoggedIn {
-            stopLoadingViewAnimation()
+        if Account.isLoggedIn {
+            if UserDefaults.standard.getPreference(for: .pennCourseAlerts) {
+                manageSettingsView.isHidden = true
+                tableView.isHidden = false
+            } else {
+                fetchAlerts()
+                manageSettingsView.isHidden = false
+                tableView.isHidden = true
+            }
+        } else {
+            self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)})
         }
-
-        fetchAlerts()
-        fetchSettings()
-
     }
-
-}
-
-// MARK: - Fetch Functions
-extension CourseAlertController: FetchPCADataProtocol {
 
     @objc func fetchAlerts() {
         CourseAlertNetworkManager.instance.getRegistrations { (registrations) in
-            if let registrations = registrations {
-                self.alerts = registrations
-                DispatchQueue.main.async {
-                    if self.tableView != nil {
-                        self.refreshControl.endRefreshing()
-                        self.tableView.reloadData(with: .automatic)
-                    }
+            DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+                if let registrations = registrations {
+                    self.alerts = registrations
                 }
             }
         }
     }
-
-    func fetchSettings() {
-        CourseAlertNetworkManager.instance.getSettings { (settings) in
-            if let settings = settings {
-                self.enabled = settings.profile.pushNotifications
-            }
-        }
-    }
-
 }
 
 // MARK: - UI Functions
 extension CourseAlertController {
-
     fileprivate func setupUI() {
         setupTableView()
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(fetchAlerts), for: .valueChanged)
         setupManageSettingsPage()
-        setupLoginPage()
-    }
-
-    func setupLoadingView() {
-        loadingView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
-        loadingView.color = .black
-        loadingView.isHidden = false
-        view.addSubview(loadingView)
-        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    func startLoadingViewAnimation() {
-        if loadingView != nil && !loadingView.isHidden {
-            loadingView.startAnimating()
-        }
-    }
-
-    func stopLoadingViewAnimation() {
-        if loadingView != nil && !loadingView.isHidden {
-            loadingView.isHidden = true
-            loadingView.stopAnimating()
-        }
     }
 
     fileprivate func setupTableView() {
@@ -149,8 +82,6 @@ extension CourseAlertController {
     }
 
     fileprivate func setupManageSettingsPage() {
-
-        manageSettingsView.backgroundColor = .white
         view.addSubview(manageSettingsView)
         _ = manageSettingsView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
 
@@ -190,30 +121,7 @@ extension CourseAlertController {
         openSettingsButton.translatesAutoresizingMaskIntoConstraints = false
         openSettingsButton.centerXAnchor.constraint(equalTo: manageSettingsView.centerXAnchor).isActive = true
         openSettingsButton.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 20).isActive = true
-
-        manageSettingsView.isHidden = true
     }
-
-    fileprivate func setupLoginPage() {
-
-        loginView.backgroundColor = .white
-        view.addSubview(loginView)
-        _ = loginView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-
-        let noAlertsLabel = UILabel()
-        noAlertsLabel.text = "Log in to Use This Feature."
-        noAlertsLabel.font = UIFont.avenirMedium
-        noAlertsLabel.textColor = .lightGray
-
-        loginView.addSubview(noAlertsLabel)
-
-        noAlertsLabel.translatesAutoresizingMaskIntoConstraints = false
-        noAlertsLabel.centerXAnchor.constraint(equalTo: loginView.centerXAnchor).isActive = true
-        noAlertsLabel.centerYAnchor.constraint(equalTo: loginView.centerYAnchor, constant: -50).isActive = true
-
-        loginView.isHidden = true
-    }
-
 }
 
 // MARK: - TableView Functions
@@ -259,10 +167,10 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == alerts.count {
             let controller = CourseAlertCreateController()
-            controller.delegate = self
             let navigationVC = UINavigationController(rootViewController: controller)
             controller.navigationController?.navigationBar.isHidden = true
             tableView.deselectRow(at: indexPath, animated: true)
+            navigationVC.presentationController?.delegate = self
             present(navigationVC, animated: true, completion: nil)
         }
     }
@@ -298,11 +206,8 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
             })
             success(true)
         })
-        if #available(iOS 13.0, *) {
-            resubscribeAction.image = UIImage(systemName: "bell.fill")
-        } else {
-            resubscribeAction.image = UIImage(named: "bell")
-        }
+
+        resubscribeAction.image = UIImage(systemName: "bell.fill")
         resubscribeAction.backgroundColor = .baseBlue
 
         let cancelAction = UIContextualAction(style: .normal, title: "Cancel", handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
@@ -315,11 +220,9 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
             })
             success(true)
         })
-        if #available(iOS 13.0, *) {
-            cancelAction.image = UIImage(systemName: "bell.slash.fill")
-        } else {
-            cancelAction.image = UIImage(named: "bell")
-        }
+
+        cancelAction.image = UIImage(systemName: "bell.slash.fill")
+
         cancelAction.backgroundColor = .baseBlue
 
         let deleteAction = UIContextualAction(style: .normal, title: "Delete", handler: { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
@@ -332,11 +235,8 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
             })
             success(true)
         })
-        if #available(iOS 13.0, *) {
-            deleteAction.image = UIImage(systemName: "trash.fill")
-        } else {
-            deleteAction.image = UIImage(named: "x_button_selected")
-        }
+
+        deleteAction.image = UIImage(systemName: "trash.fill")
         deleteAction.backgroundColor = .baseRed
 
         if active {
@@ -350,30 +250,19 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: - Other Util. Functions
 extension CourseAlertController {
-
-    func updateMainView() {
-        self.startLoadingViewAnimation()
-        manageSettingsView.isHidden = enabled
-        tableView.isHidden = !enabled
-        self.view.bringSubviewToFront(manageSettingsView)
-        DispatchQueue.main.async {
-            self.stopLoadingViewAnimation()
-        }
-    }
-
     @objc fileprivate func openSettings(_ sender: UIBarButtonItem) {
-        let settingsController = CourseAlertSettingsController()
-        self.navigationController?.pushViewController(settingsController, animated: true)
+        let notificationController = UINavigationController(rootViewController: ControllerModel.shared.viewController(for: .notifications))
+        notificationController.title = "Notification Preferences"
+        notificationController.presentationController?.delegate = self
+        self.navigationController?.present(notificationController, animated: true, completion: {})
     }
+}
 
-    @objc fileprivate func openCreateAlertController(_ sender: UITapGestureRecognizer) {
-        let controller = CourseAlertCreateController()
-        controller.delegate = self
-        let navigationVC = UINavigationController(rootViewController: controller)
-        controller.navigationController?.navigationBar.isHidden = true
-        present(navigationVC, animated: true, completion: nil)
+// Refresh view on modal dismissal. Handles the case of changing notification preferences and addition of course
+extension CourseAlertController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.viewWillAppear(true)
     }
-
 }
 
 extension UITableView {

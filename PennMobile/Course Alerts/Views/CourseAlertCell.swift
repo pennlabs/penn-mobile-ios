@@ -44,10 +44,24 @@ extension CourseAlertCell {
         if detailLabel == nil || courseLabel == nil || courseStatusLabel == nil || activeLabel == nil || activeDot == nil || statusDot == nil || moreView == nil {
             setupUI()
         } else {
-            detailLabel.text = "One-Time Alert"
-            if let alertNotifDate = courseAlert.notificationSentAt {
-                detailLabel.text = "One-Time Alert - Last Notified \(alertNotifDate)"
+            detailLabel.text = "Alert Until Cancelled"
+            if !courseAlert.autoResubscribe {
+                detailLabel.text = "One-Time Alert"
+                if var alertNotifDateString = courseAlert.notificationSentAt {
+                    if let index = (alertNotifDateString.range(of: ".")?.lowerBound) {
+                        alertNotifDateString = String(alertNotifDateString.prefix(upTo: index))
+                    }
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+                    if let alertNotifDate = dateFormatter.date(from: alertNotifDateString) {
+                        dateFormatter.dateFormat = "MM/dd/YY"
+                        detailLabel.text = "One-Time Alert - Last Notified on \(dateFormatter.string(from: alertNotifDate))"
+                    } else {
+                        detailLabel.text = "One-Time Alert"
+                    }
+                }
             }
+
             courseLabel.text = courseAlert.section
 
             activeDot.backgroundColor = courseAlert.isActive ? UIColor.baseGreen : UIColor.grey1
@@ -59,7 +73,6 @@ extension CourseAlertCell {
             courseStatusLabel.text = courseAlert.sectionStatus == "O" ? "COURSE OPEN" : "COURSE CLOSED"
             courseStatusLabel.textColor = courseAlert.sectionStatus == "O" ? UIColor.blueLight : UIColor.grey1
             courseStatusLabel.isHidden = !courseAlert.isActive
-
         }
     }
 }

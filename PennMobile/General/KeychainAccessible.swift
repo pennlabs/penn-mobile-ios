@@ -8,9 +8,10 @@
 
 import Foundation
 
-protocol KeychainAccessible {}
+class KeychainAccessible {
 
-extension KeychainAccessible {
+    static let instance = KeychainAccessible()
+
     private var pennkeyKeychainKey: String {
         "PennKey"
     }
@@ -21,6 +22,10 @@ extension KeychainAccessible {
 
     private var pacCodeKeychainKey: String {
         "PAC Code"
+    }
+
+    private var diningTokenKeychainKey: String {
+        "Dining Token"
     }
 
     func getPennKey() -> String? {
@@ -55,9 +60,19 @@ extension KeychainAccessible {
         try? secureStore.setValue(pennkey, for: pennkeyKeychainKey)
     }
 
+    func removePennKey() {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.removeValue(for: pennkeyKeychainKey)
+    }
+
     func savePassword(_ password: String) {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.setValue(password, for: passwordKeychainKey)
+    }
+
+    func removePassword() {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.removeValue(for: passwordKeychainKey)
     }
 
     func savePacCode(_ pacCode: String) {
@@ -75,4 +90,24 @@ extension KeychainAccessible {
         let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)
         return secureStore
     }
+
+    func saveDiningToken(_ diningToken: String) {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.setValue(diningToken, for: diningTokenKeychainKey)
+    }
+
+    func getDiningToken() -> String? {
+        let secureStore = getWebLoginSecureStore()
+        do {
+            return try secureStore.getValue(for: diningTokenKeychainKey)
+        } catch {
+            return nil
+        }
+    }
+
+    func removeDiningToken() {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.removeValue(for: diningTokenKeychainKey)
+    }
+
 }

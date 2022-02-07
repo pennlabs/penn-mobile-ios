@@ -53,9 +53,6 @@ extension LoginController {
         if successful {
             // Login Successful
             AppDelegate.shared.rootViewController.switchToMainScreen()
-
-            AppDelegate.shared.rootViewController.requestPermissions()
-
         } else {
             // Failed to retrieve Account from Platform (possibly down)
             if !self.isFirstAttempt {
@@ -80,6 +77,7 @@ extension LoginController {
 
     @objc fileprivate func handleSkip(_ sender: Any) {
         AppDelegate.shared.rootViewController.switchToMainScreen()
+        AppDelegate.shared.rootViewController.clearAccountData()
         FirebaseAnalyticsManager.shared.trackEvent(action: "Selected Continue as Guest", result: "Selected Continue as Guest", content: "Selected Continue as Guest")
     }
 }

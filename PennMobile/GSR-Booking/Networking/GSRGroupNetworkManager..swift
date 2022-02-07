@@ -87,7 +87,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
     func updateIndividualSetting(groupID: Int, settingType: GSRGroupIndividualSettingType, isEnabled: Bool, callback: @escaping (Bool, Error?) -> Void) {
 
-        guard let pennkey = Account.getAccount()?.pennkey else {
+        guard let pennkey = Account.getAccount()?.username else {
             print("User is not signed in")
             return
         }
@@ -115,7 +115,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
     func createGroup(name: String, color: String, callback: @escaping (_ success: Bool, _ groupID: Int?, _ errorMsg: String?) -> Void) {
 
-        guard let pennkey = Account.getAccount()?.pennkey else {
+        guard let pennkey = Account.getAccount()?.username else {
             print("User is not signed in")
             callback(false, nil, "user is not signed in")
             return
@@ -159,7 +159,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
 
     func getInvites(callback: @escaping (_ success: Bool, _ invites: [GSRGroupInvite], _ error: Error?) -> Void) {
         var invites = GSRGroupInvites()
-        guard let pennkey = Account.getAccount()?.pennkey else {
+        guard let pennkey = Account.getAccount()?.username else {
             print("User is not signed in")
             callback(false, invites, nil)
             return

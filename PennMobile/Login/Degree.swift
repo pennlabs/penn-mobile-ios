@@ -17,21 +17,21 @@ struct Degree: Codable, Hashable {
     let expectedGradTerm: String
 
     var description: String {
-        let majorStr = majors.map { $0.description }.joined(separator: "\n")
+        let majorStr = majors.map { $0.name }.joined(separator: "\n")
         return "\(schoolName) (\(schoolCode))\n\(degreeName) (\(degreeCode))\n\(majorStr)\n\(expectedGradTerm)"
     }
 }
 
-struct Major: Codable, Hashable {
-    let name: String
-    let code: String
-
-    enum CodingKeys: String, CodingKey {
-        case name = "major_name"
-        case code = "major_code"
-    }
-
-    var description: String {
-        return "\(name) (\(code))"
-    }
-}
+// struct Major: Codable, Hashable {
+//    let name: String
+//    let code: String
+//
+//    enum CodingKeys: String, CodingKey {
+//        case name = "major_name"
+//        case code = "major_code"
+//    }
+//
+//    var description: String {
+//        return "\(name) (\(code))"
+//    }
+// }

@@ -44,8 +44,6 @@ extension NotificationRequestable where Self: UIViewController {
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
             if settings.authorizationStatus == .authorized {
                 self.registerPushNotification()
-            } else if settings.authorizationStatus == .denied {
-                UserDBManager.shared.clearPushNotificationDeviceToken()
             }
         })
     }

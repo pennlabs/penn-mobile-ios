@@ -105,6 +105,17 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func handleDefaultLogin(decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        let account = Account(pennid: 12345678, firstName: "Ben", lastName: "Franklin", username: "bfranklin", email: "benfrank@wharton.upenn.edu", student: Student(major: [], school: []), groups: [], emails: [])
+        Account.saveAccount(account)
+
+        OAuth2NetworkManager.instance.saveAccessToken(accessToken: AccessToken(value: "root", expiration: Calendar.current.date(byAdding: .month, value: 1, to: Date())!))
+        OAuth2NetworkManager.instance.saveRefreshToken(token: "123456789")
+        decisionHandler(.cancel)
+        self.dismiss(successful: true)
+    }
+
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard shouldRetrieveRefreshToken else {
             // Refresh token does not to be retrieved. Dismiss controller immediately.
@@ -131,32 +142,18 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
                 self.dismiss(successful: true)
                 return
             }
-            OAuth2NetworkManager.instance.retrieveAccount(accessToken: accessToken) { (user) in
-                guard let user = user else {
+            OAuth2NetworkManager.instance.retrieveAccount(accessToken: accessToken) { (account) in
+                guard let account = account else {
                     self.dismiss(successful: false)
                     return
                 }
-                let account = Account(user: user)
+
                 UserDefaults.standard.saveAccount(account)
-                if account.email?.contains("wharton") ?? false {
-                    UserDefaults.standard.set(isInWharton: true)
-                }
+                UserDefaults.standard.set(isInWharton: account.isInWharton)
+
                 UserDBManager.shared.syncUserSettings { (_) in
-                    if UserDefaults.standard.getPreference(for: .academicIdentity) {
-                        // Has permission to retrieve degrees
-                        PennInTouchNetworkManager.instance.getDegrees { (degrees) in
-                            account.degrees = degrees
-                            if let degrees = degrees {
-                                UserDefaults.standard.set(isInWharton: degrees.hasDegreeInWharton())
-                            }
-                            self.saveAccount(account) {
-                                self.dismiss(successful: true)
-                            }
-                        }
-                    } else {
-                        self.saveAccount(account) {
-                            self.dismiss(successful: true)
-                        }
+                    self.saveAccount(account) {
+                        self.dismiss(successful: true)
                     }
                 }
             }
@@ -235,10 +232,6 @@ extension LabsLoginController {
     }
 
     fileprivate func getDiningBalance() {
-        if let student = Account.getAccount(), student.isFreshman() {
-            UserDefaults.standard.set(hasDiningPlan: true)
-        }
-
         CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, _) in
             guard let html = html else { return }
             UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, _) in
@@ -270,7 +263,7 @@ extension LabsLoginController {
         PacCodeNetworkManager.instance.getPacCode { result in
             switch result {
             case .success(let pacCode):
-                self.savePacCode(pacCode)
+                KeychainAccessible.instance.savePacCode(pacCode)
             case .failure:
                 return
             }

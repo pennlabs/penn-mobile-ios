@@ -26,7 +26,7 @@ class NotificationViewController: GenericTableViewController, ShowsAlert, Indica
         self.tableView = UITableView(frame: .zero, style: .grouped)
 
         self.title = "Notifications"
-        self.registerHeadersAndCells(for: tableView)
+        tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: NotificationTableViewCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsSelection = false
@@ -35,12 +35,6 @@ class NotificationViewController: GenericTableViewController, ShowsAlert, Indica
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
-
-        CourseAlertNetworkManager.instance.getSettings { (_) in
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
 
         #if !targetEnvironment(simulator)
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
@@ -113,7 +107,7 @@ extension NotificationViewController: NotificationViewControllerChangedPreferenc
             DispatchQueue.main.async {
                 self.hideActivity()
                 if success {
-                    UserDefaults.standard.set(.alertsThroughPennMobile, to: toValue)
+//                    UserDefaults.standard.set(.alertsThroughPennMobile, to: toValue)
                 } else if !response.isEmpty {
                     self.showAlert(withMsg: "Could not save notification preference. Please make sure you have an internet connection and try again.", title: "Error", completion: {
                         UserDefaults.standard.set(.pennCourseAlerts, to: !toValue)
@@ -148,10 +142,6 @@ extension NotificationViewController {
         cell.contentView.isUserInteractionEnabled = false
 
         return cell
-    }
-
-    func registerHeadersAndCells(for tableView: UITableView) {
-        tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: NotificationTableViewCell.identifier)
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -19,8 +19,12 @@ struct DiningVenueView: View {
 
     var body: some View {
         List {
+            Section(header: CustomHeader(name: "Dining Balance", refreshButton: true), content: {
+                Section(header: DiningViewHeader(), content: {})
+            })
+
             ForEach(diningVM.ordering, id: \.self) { venueType in
-                Section(header: CustomHeader(name: venueType.fullDisplayName)) {
+                Section(header: CustomHeader(name: venueType.fullDisplayName, refreshButton: false)) {
                     ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
                         NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM), tag: "\(venue.id)", selection: $selectedItem) {
                             DiningVenueRow(for: venue)
@@ -30,6 +34,7 @@ struct DiningVenueView: View {
                 }
             }
         }
+        .background(Color(UIColor.uiBackground))
         // Hack to deselect items
         .id(listViewId)
         .onAppear {
@@ -40,19 +45,28 @@ struct DiningVenueView: View {
                 listViewId = UUID()
             }
         }
+        .listStyle(.plain)
     }
 }
 
-@available(iOS 14, *)
 struct CustomHeader: View {
 
     let name: String
+    let refreshButton: Bool
 
     var body: some View {
         HStack {
             Text(name)
                 .font(.system(size: 21, weight: .semibold))
+                .foregroundColor(.primary)
             Spacer()
+            if refreshButton {
+                Button(action: {
+                    print("Hi")
+                }, label: {
+                    Image(systemName: "arrow.counterclockwise")
+                })
+            }
         }
         .padding()
         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -62,9 +76,8 @@ struct CustomHeader: View {
     }
 }
 
-@available(iOS 14, *)
 struct DiningVenueView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomHeader(name: "new")
+        CustomHeader(name: "new", refreshButton: false)
     }
 }

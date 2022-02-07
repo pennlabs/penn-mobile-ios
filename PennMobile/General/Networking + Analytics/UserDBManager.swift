@@ -18,7 +18,7 @@ func getDeviceID() -> String {
     #endif
 }
 
-class UserDBManager: NSObject, Requestable, KeychainAccessible, SHA256Hashable {
+class UserDBManager: NSObject, Requestable, SHA256Hashable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
 
@@ -58,7 +58,7 @@ class UserDBManager: NSObject, Requestable, KeychainAccessible, SHA256Hashable {
     fileprivate func getAnonymousPrivacyRequest(url: String, for privacyOption: PrivacyOption) -> URLRequest {
         let url = URL(string: url)!
         var request = URLRequest(url: url)
-        guard let pennkey = getPennKey(), let password = getPassword(), let privateUUID = privacyOption.privateUUID else {
+        guard let pennkey = KeychainAccessible.instance.getPennKey(), let password = KeychainAccessible.instance.getPassword(), let privateUUID = privacyOption.privateUUID else {
             return request
         }
         let passwordHash = hash(string: pennkey + "-" + password + "-" + privacyOption.rawValue, encoding: .hex)

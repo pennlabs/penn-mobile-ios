@@ -14,13 +14,8 @@ struct DiningView: View {
 
     var body: some View {
         return
-            VStack(spacing: 0) {
-                DiningViewHeader()
-                    .padding()
-
                 DiningVenueView()
-            }
-            .environmentObject(diningVM)
+                    .environmentObject(diningVM)
     }
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MoreViewController: GenericTableViewController, ShowsAlert, KeychainAccessible {
+class MoreViewController: GenericTableViewController, ShowsAlert {
 
     var account: Account?
 
@@ -168,7 +168,7 @@ extension MoreViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                let targetController = AccountPageViewController()
+                let targetController = ProfilePageViewController()
                 navigationController?.pushViewController(targetController, animated: true)
             } else if indexPath.row == 1 {
                 let targetController = ControllerModel.shared.viewController(for: .pacCode)
@@ -196,10 +196,8 @@ extension MoreViewController {
             alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
                 DispatchQueue.main.async {
-                    AppDelegate.shared.rootViewController.logout()
-
-                    // If the user intentionally logs out, remove their PAC Code
-                    self.removePacCode()
+                    AppDelegate.shared.rootViewController.clearAccountData()
+                    AppDelegate.shared.rootViewController.switchToLogout()
                 }
             }))
             present(alertController, animated: true, completion: nil)

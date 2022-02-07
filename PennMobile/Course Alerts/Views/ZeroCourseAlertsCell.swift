@@ -39,11 +39,7 @@ class ZeroCourseAlertsCell: UITableViewCell {
         titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor, constant: -12).isActive = true
 
         alertSymbol = UIImageView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
-        if #available(iOS 13.0, *) {
-            alertSymbol.image = UIImage(systemName: "bell.fill")
-        } else {
-            alertSymbol.image = UIImage(named: "bell")
-        }
+        alertSymbol.image = UIImage(systemName: "bell.fill")
         alertSymbol.tintColor = .baseLabsBlue
 
         addSubview(alertSymbol)
