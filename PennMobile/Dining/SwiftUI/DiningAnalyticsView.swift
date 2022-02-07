@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct DiningAnalyticsView: View, KeychainAccessible {
+struct DiningAnalyticsView: View {
     
     @State var alertIsShowing = false;
     @State var alertAccepted = false;

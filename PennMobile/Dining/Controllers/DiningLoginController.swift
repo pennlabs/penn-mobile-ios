@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate, SHA256Hashable, KeychainAccessible {
+class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate, SHA256Hashable {
     
     final private var webView: WKWebView!
     
@@ -82,7 +82,7 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
                     guard let data = data else { decisionHandler(.allow); return }
                     
                     if let token = try? decoder.decode(DiningToken.self, from: data) {
-                        saveDiningToken(token.value)
+                        KeychainAccessible.instance.saveDiningToken(token.value)
                         UserDefaults.standard.setDiningTokenExpiration(token.expirationDate)
                         delegate.dismissDiningLoginController()
                     }
@@ -105,7 +105,7 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
         }
         
         if url.absoluteString.contains("https://weblogin.pennkey.upenn.edu/") {
-            guard let pennkey = getPennKey(), let password = getPassword() else { return }
+            guard let pennkey = KeychainAccessible.instance.getPennKey(), let password = KeychainAccessible.instance.getPassword() else { return }
             webView.evaluateJavaScript("document.getElementById('pennname').value = '\(pennkey)'") { (_,error) in
                 webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_,_) in
                 }
