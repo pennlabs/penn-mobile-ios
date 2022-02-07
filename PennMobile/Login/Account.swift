@@ -64,6 +64,7 @@ extension Account {
         KeychainAccessible.instance.removePennKey()
         KeychainAccessible.instance.removePassword()
         KeychainAccessible.instance.removePacCode()
+        KeychainAccessible.instance.removeDiningToken()
     }
     
     static func saveAccount(_ thisAccount: Account) {
