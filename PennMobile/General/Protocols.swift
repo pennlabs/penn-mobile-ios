@@ -25,14 +25,19 @@ extension IndicatorEnabled where Self: UITableViewController {
 }
 
 extension IndicatorEnabled where Self: UIViewController {
-    func showActivity() {
-        view.isUserInteractionEnabled = false
+    func showActivity(isUserInteractionEnabled: Bool = false) {
+        view.isUserInteractionEnabled = isUserInteractionEnabled
         MBProgressHUD.showAdded(to: self.view, animated: true)
     }
     
     func hideActivity() {
         view.isUserInteractionEnabled = true
         MBProgressHUD.hide(for: self.view, animated: true)
+    }
+    
+    func hideAllActivity() {
+        view.isUserInteractionEnabled = true
+        MBProgressHUD.hideAllHUDs(for: self.view, animated: true)
     }
 }
 
@@ -107,6 +112,7 @@ extension HairlineRemovable {
 
 protocol ShowsAlert {
     func showAlert(withMsg: String, title: String, completion: (() -> Void)?)
+    func showOption(withMsg: String, title: String, onAccept: (() -> Void)?, onCancel: (() -> Void)?)
 }
 
 extension ShowsAlert where Self: UIViewController {
@@ -114,6 +120,21 @@ extension ShowsAlert where Self: UIViewController {
         let alertController = UIAlertController(title: title, message: withMsg, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (_) in
             if let completion = completion {
+                completion()
+            }
+        }))
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showOption(withMsg: String, title: String = "Error", onAccept: (() -> Void)?, onCancel: (() -> Void)?) {
+        let alertController = UIAlertController(title: title, message: withMsg, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { (_) in
+            if let completion = onCancel {
+                completion()
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+            if let completion = onAccept {
                 completion()
             }
         }))

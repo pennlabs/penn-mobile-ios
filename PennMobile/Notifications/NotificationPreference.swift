@@ -59,7 +59,7 @@ enum NotificationOption: String, Codable {
     
     var cellFooterDescription: String? {
         switch self {
-        case .pennCourseAlerts: return "Receive notifications when courses open up."
+        case .pennCourseAlerts: return "Receive notifications from Penn Course Alert."
         case .upcomingStudyRoomReminder: return "Notifications about your upcoming GSR bookings, sent 10 minutes from the start of booking. Includes the room and duration. Long press the notification to cancel your booking."
         case .laundryMachineCycleComplete:
             return "Notifications about laundry cycles. Tap on a laundry machine with time remaining to set the notification."
@@ -70,10 +70,11 @@ enum NotificationOption: String, Codable {
         default: return nil
         }
     }
+    
     var defaultValue: Bool {
         switch self {
         case .diningBalanceSummary: return UserDefaults.standard.hasDiningPlan()
-        case .pennCourseAlerts: return UserDefaults.standard.getPreference(for: .alertsThroughPennMobile)
+        case .pennCourseAlerts: return UserDefaults.standard.getPreference(for: .pennCourseAlerts)
         default: return true
         }
     }
