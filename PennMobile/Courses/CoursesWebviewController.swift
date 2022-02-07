@@ -10,14 +10,14 @@ import Foundation
 import WebKit
 
 class CoursesWebviewController: PennLoginController, IndicatorEnabled {
-    
+
     var currentTermOnly = true
     var completion: ((_ courses: Set<Course>?) -> Void)!
-    
+
     override var urlStr: String {
         return "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     }
-    
+
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         self.showActivity()
         PennInTouchNetworkManager.instance.getCourses(currentTermOnly: self.currentTermOnly) { (result) in
@@ -41,7 +41,7 @@ class CoursesWebviewController: PennLoginController, IndicatorEnabled {
             }
         }
     }
-    
+
     private func saveCoursesAndDismiss(_ courses: Set<Course>?) {
         if let courses = courses, let accountID = UserDefaults.standard.getAccountID() {
             UserDBManager.shared.saveCourses(courses, accountID: accountID) { (_) in

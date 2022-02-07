@@ -9,15 +9,15 @@
 import Foundation
 import SwiftSoup
 
-class PennEventsTableViewController: GenericTableViewController, IndicatorEnabled{
-    
+class PennEventsTableViewController: GenericTableViewController, IndicatorEnabled {
+
     var events: [PennEvents] = []
     let dateKey = "dateKey"
-    
+
     override func viewDidAppear(_ animated: Bool) {
-        //attempt to fetch date from UserDefaults
+        // attempt to fetch date from UserDefaults
         if let date = UserDefaults.standard.object(forKey: dateKey) as? Date {
-            if date.isToday{
+            if date.isToday {
                 events = Storage.retrieve(PennEvents.directory, from: .documents, as: [PennEvents].self)
                 tableView.reloadData()
             } else {
@@ -28,9 +28,9 @@ class PennEventsTableViewController: GenericTableViewController, IndicatorEnable
             fetchEvents()
             UserDefaults.standard.set(Date(), forKey: dateKey)
         }
-        
+
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(PennEventsTableViewCell.self, forCellReuseIdentifier: "PennEventsTableViewCell")
@@ -42,8 +42,8 @@ class PennEventsTableViewController: GenericTableViewController, IndicatorEnable
 }
 
 // MARK: - Networking to retrieve events
-extension PennEventsTableViewController{
-    fileprivate func fetchEvents(){
+extension PennEventsTableViewController {
+    fileprivate func fetchEvents() {
         EventsAPI.instance.fetchEvents { (result) in
             DispatchQueue.main.async {
                 switch result {
@@ -63,15 +63,15 @@ extension PennEventsTableViewController{
 }
 
 // MARK: - TableView Datasource
-extension PennEventsTableViewController{
+extension PennEventsTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return events.count
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PennEventsTableViewCell", for: indexPath) as! PennEventsTableViewCell
         cell.pennEvent = events[indexPath.row]

@@ -9,37 +9,37 @@
 import UIKit
 
 final class HomeReservationsCell: UITableViewCell, HomeCellConformable {
-    
+
     static var identifier: String = "reservationsCell"
     var delegate: ModularTableViewCellDelegate!
-    
+
     var item: ModularTableViewItem! {
         didSet {
             guard let item = item as? HomeReservationsCellItem else { return }
             setupCell(with: item)
         }
     }
-    
+
     var reservations: [GSRReservation]?
-    
+
     // MARK: - UI Elements
     var cardView: UIView! = UIView()
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
     fileprivate var header: HomeCellHeader = HomeCellHeader()
     fileprivate var reservationTableView: UITableView!
-    
+
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeReservationsCellItem else { return 0.0 }
         return (CGFloat(item.reservations.count) * ReservationCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 3)
     }
-    
-    // Mark: - Init
+
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
         prepareUI()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -60,7 +60,7 @@ extension HomeReservationsCell: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return reservations?.count ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReservationCell.identifier, for: indexPath) as! ReservationCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
@@ -70,7 +70,7 @@ extension HomeReservationsCell: UITableViewDataSource, UITableViewDelegate {
         cell.delegate = self
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return ReservationCell.cellHeight
     }
@@ -83,23 +83,23 @@ extension HomeReservationsCell {
         prepareHeader()
         prepareTableView()
     }
-    
+
     // MARK: Safe Area and Header
     fileprivate func prepareSafeArea() {
         cardView.addSubview(safeArea)
         safeArea.prepare()
     }
-    
+
     fileprivate func prepareHeader() {
         safeArea.addSubview(header)
         header.prepare()
     }
-    
+
     // MARK: TableView
     fileprivate func prepareTableView() {
         reservationTableView = getReservationTableView()
         cardView.addSubview(reservationTableView)
-        
+
         reservationTableView.snp.makeConstraints { (make) in
             make.leading.equalTo(cardView)
             make.top.equalTo(header.snp.bottom).offset(pad)

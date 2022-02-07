@@ -15,7 +15,7 @@ final class ModularTableView: UITableView {
             self.delegate = model
         }
     }
-    
+
     func registerTableView(for types: ModularTableViewItemTypes) {
         types.registerCells(for: self)
     }

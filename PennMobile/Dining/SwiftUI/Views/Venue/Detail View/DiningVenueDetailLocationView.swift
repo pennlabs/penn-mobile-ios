@@ -11,11 +11,11 @@ import MapKit
 
 @available(iOS 14.0, *)
 struct DiningVenueDetailLocationView: View {
-    
+
     @State private var region: MKCoordinateRegion
     let venue: DiningVenue
     let mapHeight: CGFloat
-    
+
     init(for venue: DiningVenue, screenHeight: CGFloat) {
         self.venue = venue
         mapHeight = screenHeight - 20

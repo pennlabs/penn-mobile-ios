@@ -77,32 +77,32 @@ extension Method: CustomStringConvertible {
 protocol Requestable {}
 
 extension Requestable {
-    internal func getRequest(url: String, callback: @escaping (_ json: NSDictionary?,  _ error: Error?, _ status: Int?) -> ()) {
-        request(method: .get, url: url, params: nil) { (data, dict, error, status) in
+    internal func getRequest(url: String, callback: @escaping (_ json: NSDictionary?, _ error: Error?, _ status: Int?) -> Void) {
+        request(method: .get, url: url, params: nil) { (_, dict, error, status) in
             callback(dict, error, status)
         }
     }
-    
-    internal func getRequestData(url: String, callback: @escaping (_ data: Data?,  _ error: Error?, _ status: Int?) -> ()) {
-        request(method: .get, url: url, params: nil) { (data, dict, error, status) in
+
+    internal func getRequestData(url: String, callback: @escaping (_ data: Data?, _ error: Error?, _ status: Int?) -> Void) {
+        request(method: .get, url: url, params: nil) { (data, _, error, status) in
             callback(data, error, status)
         }
     }
 
-    internal func postRequestData(url: String, params: [NSString: Any]? = nil, callback: @escaping (_ data: Data?,  _ error: Error?, _ status: Int?) -> ()) {
+    internal func postRequestData(url: String, params: [NSString: Any]? = nil, callback: @escaping (_ data: Data?, _ error: Error?, _ status: Int?) -> Void) {
         request(method: .post, url: url, params: params) { (data, _, error, status) in
             callback(data, error, status)
         }
     }
-    
-    internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ data: Data?, _ json: NSDictionary?, _ error: Error?, _ status: Int?) -> ())? = nil)  {
+
+    internal func request(method: Method, url: String, params: [NSString: Any]? = nil, callback: ((_ data: Data?, _ json: NSDictionary?, _ error: Error?, _ status: Int?) -> Void)? = nil) {
         guard let url = URL(string: url) else {
             return
         }
-        
+
         let request = NSMutableURLRequest(url: url)
         request.cachePolicy = .reloadIgnoringCacheData
-        
+
         let deviceID = getDeviceID()
         request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         if let accountID = UserDefaults.standard.getAccountID() {
@@ -114,29 +114,29 @@ extension Requestable {
             request.setValue("super secret password", forHTTPHeaderField: "Authorization")
             request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: JSONSerialization.WritingOptions.prettyPrinted)
         }
-        
+
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
-            
+
             if let error = error {
                 // indicates that user is unable to connect to internet
                 callback?(nil, nil, error, nil)
             } else if let httpResponse = response as? HTTPURLResponse {
                 if httpResponse.statusCode == 200 {
-                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
+                    if let data = data, NSString(data: data, encoding: String.Encoding.utf8.rawValue) != nil {
                         if let json = ((try? JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary) as NSDictionary??) {
-                            //data recieved and parsed successfully
+                            // data recieved and parsed successfully
                             callback?(data, json, nil, 200)
                         }
                     } else {
-                        //could not serialize json
+                        // could not serialize json
                         callback?(nil, nil, nil, 200)
                     }
                 } else {
-                    //response code is not 200
+                    // response code is not 200
                     callback?(nil, nil, nil, httpResponse.statusCode)
                 }
             }
-            
+
         })
         task.resume()
     }
@@ -153,7 +153,7 @@ extension Requestable {
         }
         return request
     }
-    
+
     internal func getAnalyticsPostRequest(url: String, params: [String: Any]?) -> NSMutableURLRequest {
         let request = getAnalyticsRequest(url: url)
         request.httpMethod = "POST"
@@ -162,11 +162,11 @@ extension Requestable {
         }
         return request
     }
-    
+
     internal func getPostString(params: [String: Any]) -> String {
         var data = [String]()
         for(key, value) in params {
-            if let arr = value as? Array<Any> {
+            if let arr = value as? [Any] {
                 let str = arr.map { String(describing: $0) }.joined(separator: ",")
                 data.append(key + "=\(str)")
             }

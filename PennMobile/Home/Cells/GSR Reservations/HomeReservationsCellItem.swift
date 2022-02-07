@@ -13,7 +13,7 @@ final class HomeReservationsCellItem: HomeCellItem {
     static var associatedCell: ModularTableViewCell.Type {
         return HomeReservationsCell.self
     }
-    
+
     static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
         GSRNetworkManager.instance.getReservations { result in
             switch result {
@@ -28,18 +28,18 @@ final class HomeReservationsCellItem: HomeCellItem {
             }
         }
     }
-    
+
     var reservations: [GSRReservation]
-    
+
     init(for reservations: [GSRReservation]) {
         self.reservations = reservations
     }
-    
+
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeReservationsCellItem else { return false }
         return reservations == item.reservations
     }
-    
+
     static var jsonKey: String {
         return "reservations"
     }

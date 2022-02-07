@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct DiningAnalyticsView: View {
-    
-    @State var alertIsShowing = false;
-    @State var alertAccepted = false;
+
+    @State var alertIsShowing = false
+    @State var alertAccepted = false
     @Environment(\.presentationMode) var presentationMode
-    
+
     var body: some View {
-        
+
         Text("This is the dining analytics view")
             .sheet(isPresented: $alertAccepted) {
                 DiningLoginNavigationView(showSheetView: self.$alertAccepted)

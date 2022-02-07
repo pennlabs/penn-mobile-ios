@@ -22,57 +22,55 @@ class InfoTableViewModel: NSObject {
     var selectedSchools = Set<School>()
     var filteredMajors = [Major]()
     var selectedMajors = Set<Major>()
-    
+
     var delegate: InfoTableViewModelDelegate!
     var isMajors = true
-    
+
     override init() {
         super.init()
         prepareSchools()
         prepareMajors()
 
     }
-    
+
     func updateAccount() {
-        
-        
+
         var account = Account.getAccount()!
         var student = account.student
-        
-        if (isMajors) {
+
+        if isMajors {
             student.major = Array(selectedMajors)
         } else {
             student.school = Array(selectedSchools)
         }
-        
+
         account.student = student
-        
+
         Account.saveAccount(account)
-        
+
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(account) {
             OAuth2NetworkManager.instance.getAccessToken { (token) in
                 guard let token = token else { return }
-                
+
                 var request = URLRequest(url: URL(string: "https://platform.pennlabs.org/accounts/me")!, accessToken: token)
                 request.addValue("application/json", forHTTPHeaderField: "Content-Type")
                 request.httpBody = data
                 request.httpMethod = "PATCH"
-                
+
                 let str = String(decoding: data, as: UTF8.self)
                 print(str)
-                
-                let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, error in
+
+                let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ in
                     print(response)
                     print(String(decoding: data!, as: UTF8.self))
-                     
+
                 })
                 task.resume()
             }
         }
     }
 
-    
     func prepareSchools() {
         DispatchQueue.main.async {
             ProfilePageNetworkManager.instance.getSchools { result in
@@ -88,7 +86,7 @@ class InfoTableViewModel: NSObject {
             }
         }
     }
-    
+
     func prepareMajors() {
         DispatchQueue.main.async {
             ProfilePageNetworkManager.instance.getMajors { result in
@@ -104,7 +102,7 @@ class InfoTableViewModel: NSObject {
             }
         }
     }
-    
+
 }
 
 extension InfoTableViewModel: UITableViewDelegate, UITableViewDataSource {
@@ -114,7 +112,7 @@ extension InfoTableViewModel: UITableViewDelegate, UITableViewDataSource {
         }
         return filteredSchools.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         var content = cell.defaultContentConfiguration()
@@ -126,7 +124,7 @@ extension InfoTableViewModel: UITableViewDelegate, UITableViewDataSource {
                 cell.accessoryType = .none
             }
         } else {
-            
+
             content.text = filteredSchools[indexPath.row].name
             if selectedSchools.contains(filteredSchools[indexPath.row]) {
                 cell.accessoryType = .checkmark
@@ -137,10 +135,10 @@ extension InfoTableViewModel: UITableViewDelegate, UITableViewDataSource {
         cell.contentConfiguration = content
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        //TODO: Fix this - it has a lot of repeated code
+
+        // TODO: Fix this - it has a lot of repeated code
         if isMajors {
             if selectedMajors.contains(filteredMajors[indexPath.row]) {
                 selectedMajors.remove(filteredMajors[indexPath.row])
@@ -159,14 +157,13 @@ extension InfoTableViewModel: UITableViewDelegate, UITableViewDataSource {
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        
+
     }
-    
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return nil
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

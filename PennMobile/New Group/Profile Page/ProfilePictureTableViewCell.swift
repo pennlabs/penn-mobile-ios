@@ -9,7 +9,7 @@ import UIKit
 
 class ProfilePictureTableViewCell: UITableViewCell {
     static let identifier = "profilePictureCell"
-    
+
     var account: Account! {
         didSet {
             guard let firstName = account.firstName, let lastName = account.lastName else {
@@ -24,19 +24,19 @@ class ProfilePictureTableViewCell: UITableViewCell {
             profilePic.kf.setImage(with: URL(string: imageUrl))
         }
     }
-    
+
     var profilePicImage: UIImage? {
         willSet {
             profilePic.image = newValue
         }
     }
-    
+
     var profilePic = UIImageView()
-    
+
     fileprivate var imageSize: Double = 60
     fileprivate var nameLabel = UILabel()
     fileprivate var placeholder = UIView()
-    
+
     var tempLabel = UILabel()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,11 +44,11 @@ class ProfilePictureTableViewCell: UITableViewCell {
         self.prepareImage()
         self.prepareLabel()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func preparePlaceholder() {
         placeholder.backgroundColor = .baseBlue
         contentView.addSubview(placeholder)
@@ -79,14 +79,14 @@ class ProfilePictureTableViewCell: UITableViewCell {
         profilePic.contentMode = .scaleAspectFill
         profilePic.clipsToBounds = true
     }
-    
+
     func prepareLabel() {
         nameLabel.font = UIFont.systemFont(ofSize: 20.0)
         contentView.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.leadingAnchor.constraint(equalTo: profilePic.trailingAnchor, constant: pad).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor).isActive = true
-        
+
     }
 
 }

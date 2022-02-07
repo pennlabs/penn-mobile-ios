@@ -15,27 +15,27 @@ protocol NotificationViewControllerChangedPreference: AnyObject {
 }
 
 class NotificationViewController: GenericTableViewController, ShowsAlert, IndicatorEnabled, NotificationRequestable {
-    
+
     let displayedPrefs = NotificationOption.visibleOptions
-    
+
     var notificationsEnabled = true
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.tableView = UITableView(frame: .zero, style: .grouped)
-        
+
         self.title = "Notifications"
         tableView.register(NotificationTableViewCell.self, forCellReuseIdentifier: NotificationTableViewCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsSelection = false
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
-        
+
         #if !targetEnvironment(simulator)
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
             if settings.authorizationStatus == .notDetermined || settings.authorizationStatus == .denied {
@@ -67,23 +67,23 @@ extension NotificationViewController: NotificationViewControllerChangedPreferenc
             self.showAlert(withMsg: "You must log in to access this feature.", title: "Login Required", completion: nil)
         }
     }
-    
+
     func allowChange() -> Bool {
         Account.isLoggedIn && notificationsEnabled
     }
-    
+
     func changed(option: NotificationOption, toValue: Bool) {
         // Save change to local storage (user defaults)
         UserDefaults.standard.set(option, to: toValue)
-        
+
         // Upload change to the Penn Mobile server. If this fails, reverse the change.
         self.showActivity()
         let deadline = DispatchTime.now() + 1
-        
+
         UserDBManager.shared.saveUserNotificationSettings { (success) in
             DispatchQueue.main.asyncAfter(deadline: deadline) {
                 if success {
-                    //Push to pca backend if changing pca preference
+                    // Push to pca backend if changing pca preference
                     if option == .pennCourseAlerts {
                         self.pushPCAPreferenceChange(toValue: toValue)
                     } else {
@@ -101,9 +101,9 @@ extension NotificationViewController: NotificationViewControllerChangedPreferenc
             }
         }
     }
-    
+
     func pushPCAPreferenceChange(toValue: Bool) {
-        CourseAlertNetworkManager.instance.updatePushNotifSettings(pushNotif: toValue, callback: {(success, response, error) in
+        CourseAlertNetworkManager.instance.updatePushNotifSettings(pushNotif: toValue, callback: {(success, response, _) in
             DispatchQueue.main.async {
                 self.hideActivity()
                 if success {
@@ -117,37 +117,37 @@ extension NotificationViewController: NotificationViewControllerChangedPreferenc
             }
         })
     }
-    
+
 }
 
 // MARK: - UITableViewDataSource
 extension NotificationViewController {
-    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return displayedPrefs.count
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NotificationTableViewCell.identifier) as! NotificationTableViewCell
-        
+
         let option = displayedPrefs[indexPath.section]
         let currentValue: Bool = Account.isLoggedIn && notificationsEnabled ? UserDefaults.standard.getPreference(for: option) : false
-        
+
         cell.setup(with: option, isEnabled: currentValue)
         cell.delegate = self
         cell.contentView.isUserInteractionEnabled = false
-        
+
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64.0
     }
-    
+
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return displayedPrefs[section].cellFooterDescription
     }

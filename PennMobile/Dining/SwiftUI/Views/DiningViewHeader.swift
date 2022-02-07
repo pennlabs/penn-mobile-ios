@@ -12,12 +12,12 @@ import SwiftUI
 
 @available(iOS 14, *)
 struct DiningViewHeader: View {
-    
+
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @State var alertIsPresented = false
-    
+
     var body: some View {
-        
+
         VStack {
             HStack {
                 DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: diningVM.diningDollars, specifier: "%.2f")
@@ -28,7 +28,7 @@ struct DiningViewHeader: View {
                 AnalyticsCardView(text: "Analytics")
             }
         }
-        
+
     }
 }
 
@@ -39,14 +39,14 @@ struct DiningViewHeaderDate: View {
         dateFormatter.dateFormat = "EEEE, MMMM d"
         return dateFormatter.string(from: Date()).uppercased()
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(dateString)
                 .font(.system(.caption))
                 .fontWeight(.bold)
                 .foregroundColor(.gray)
-            
+
             Text("Dining")
                 .font(.system(.title))
                 .fontWeight(.bold)
@@ -57,12 +57,12 @@ struct DiningViewHeaderDate: View {
 @available(iOS 14, *)
 struct DiningViewHeaderBalance: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
-    
+
     var body: some View {
         VStack(alignment: .trailing, spacing: 5) {
             Label("\(diningVM.swipes)", systemImage: "creditcard.fill")
                 .labelStyle(BalanceLabelStyle())
-            
+
             Label("\(String(format: "%.2f", diningVM.diningDollars))", systemImage: "dollarsign.circle.fill")
                 .labelStyle(BalanceLabelStyle())
         }
@@ -76,7 +76,7 @@ struct BalanceLabelStyle: LabelStyle {
             configuration.title
                 .font(.system(size: 17, weight: .bold, design: .rounded))
             configuration.icon
-                .frame(width:20, height: 20)
+                .frame(width: 20, height: 20)
         }
     }
 }
@@ -89,7 +89,7 @@ struct DiningViewHeader_Previews: PreviewProvider {
             HStack {
                 DiningViewHeaderDate()
                     .padding()
-            
+
                 Spacer()
             }
             Spacer()

@@ -11,18 +11,18 @@ import SwiftUI
 @available(iOS 14, *)
 struct DiningVenueView: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
-    
+
     // Hack to deselect cells after popping navigation view
     // Will be removed once SwiftUI is Fixed
     @State private var selectedItem: String?
     @State private var listViewId = UUID()
-    
+
     var body: some View {
         List {
             Section(header: CustomHeader(name: "Dining Balance", refreshButton: true), content: {
                 Section(header: DiningViewHeader(), content: {})
             })
-       
+
             ForEach(diningVM.ordering, id: \.self) { venueType in
                 Section(header: CustomHeader(name: venueType.fullDisplayName, refreshButton: false)) {
                     ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
@@ -60,7 +60,7 @@ struct CustomHeader: View {
                 .font(.system(size: 21, weight: .semibold))
                 .foregroundColor(.primary)
             Spacer()
-            if(refreshButton) {
+            if refreshButton {
                 Button(action: {
                     print("Hi")
                 }, label: {
@@ -71,7 +71,7 @@ struct CustomHeader: View {
         .padding()
         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         .background(Color(UIColor.uiBackground))
-        //Default Text Case for Header is Caps Lock
+        // Default Text Case for Header is Caps Lock
         .textCase(nil)
     }
 }

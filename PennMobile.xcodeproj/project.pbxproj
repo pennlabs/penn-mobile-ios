@@ -1802,6 +1802,7 @@
 				F2568A6E2411F20E00561295 /* Embed App Extensions */,
 				CAF133B2272BB899064B2A46 /* [CP] Embed Pods Frameworks */,
 				6CE12F9326E82DED00284D9F /* ShellScript */,
+				6C6420B327AAF1130096CBA9 /* Linter */,
 			);
 			buildRules = (
 			);
@@ -2010,6 +2011,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		6C6420B327AAF1130096CBA9 /* Linter */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Linter;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint PennMobile/*\n";
 		};
 		6CE12F9326E82DED00284D9F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

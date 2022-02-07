@@ -22,7 +22,7 @@ struct Degree: Codable, Hashable {
     }
 }
 
-//struct Major: Codable, Hashable {
+// struct Major: Codable, Hashable {
 //    let name: String
 //    let code: String
 //
@@ -34,4 +34,4 @@ struct Degree: Codable, Hashable {
 //    var description: String {
 //        return "\(name) (\(code))"
 //    }
-//}
+// }

@@ -16,7 +16,7 @@ import Combine
 class PrivacyPermissionDelegate: ObservableObject {
     var objectWillChange = PassthroughSubject<PrivacyPermissionDelegate, Never>()
     var objectDidChange = PassthroughSubject<PrivacyPermissionDelegate, Never>()
-    
+
     var userDecision: PermissionView.Choice? {
         willSet {
             objectWillChange.send(self)

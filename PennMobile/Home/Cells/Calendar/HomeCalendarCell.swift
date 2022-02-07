@@ -10,37 +10,37 @@ import UIKit
 
 final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
     var delegate: ModularTableViewCellDelegate!
-    
+
     static var identifier: String = "calendarCell"
-    
+
     var item: ModularTableViewItem! {
         didSet {
             guard let item = item as? HomeCalendarCellItem else { return }
             setupCell(with: item)
         }
     }
-    
+
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeCalendarCellItem else { return 0.0 }
         // cell height = (venues * venueHeight) + header + footer + cellInset
         return (CGFloat(item.events.count) * UniversityNotificationCell.cellHeight) + HomeCellHeader.height + (Padding.pad * 3)
     }
-    
+
     var events: [CalendarEvent]?
-    
+
     var cardView: UIView! = UIView()
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
     fileprivate var header: HomeCellHeader = HomeCellHeader()
 
     fileprivate var calendarEventTableView: UITableView!
-    
-    // Mark: - Init
+
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
         prepareUI()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -61,7 +61,7 @@ extension HomeCalendarCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return events?.count ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UniversityNotificationCell.identifier, for: indexPath) as! UniversityNotificationCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
@@ -73,7 +73,7 @@ extension HomeCalendarCell: UITableViewDataSource {
 
 // MARK: - Initialize & Layout UI Elements
 extension HomeCalendarCell {
-    
+
     fileprivate func prepareUI() {
         prepareSafeArea()
         prepareHeader()
@@ -90,12 +90,12 @@ extension HomeCalendarCell {
         safeArea.addSubview(header)
         header.prepare()
     }
-    
+
     // MARK: TableView
     fileprivate func prepareTableView() {
         calendarEventTableView = getEventTableView()
         cardView.addSubview(calendarEventTableView)
-        
+
         calendarEventTableView.snp.makeConstraints { (make) in
             make.leading.equalTo(cardView)
             make.trailing.equalTo(cardView)
@@ -107,7 +107,7 @@ extension HomeCalendarCell {
 
 // MARK: - UITableViewDelegate
 extension HomeCalendarCell: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UniversityNotificationCell.cellHeight
     }
@@ -115,7 +115,7 @@ extension HomeCalendarCell: UITableViewDelegate {
 
 // MARK: - Define UI Elements
 extension HomeCalendarCell {
-    
+
     fileprivate func getEventTableView() -> UITableView {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
@@ -127,6 +127,3 @@ extension HomeCalendarCell {
         return tableView
     }
 }
-
-
-

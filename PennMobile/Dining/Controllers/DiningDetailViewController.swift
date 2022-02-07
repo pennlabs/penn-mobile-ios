@@ -9,7 +9,7 @@
 import UIKit
 
 class DiningDetailViewController: UITableViewController {
-    
+
     var venue: DiningVenue! {
         didSet {
             fetchDiningMenus()
@@ -20,24 +20,24 @@ class DiningDetailViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Override the default table view with a grouped style
         self.tableView = UITableView(frame: self.tableView.frame, style: .grouped)
         tableView.separatorStyle = .none
-        
+
         registerHeadersAndCells(for: self.tableView)
         self.view.backgroundColor = .white
     }
-    
+
     var menuCellExpanded = false
-    var requestedCellHeights: Dictionary<String, CGFloat> = [
+    var requestedCellHeights: [String: CGFloat] = [
         BuildingHeaderCell.identifier: BuildingHeaderCell.cellHeight,
         BuildingImageCell.identifier: BuildingImageCell.cellHeight,
         BuildingMapCell.identifier: BuildingMapCell.cellHeight,
         BuildingHoursCell.identifier: BuildingHoursCell.cellHeight,
         BuildingFoodMenuCell.identifier: BuildingFoodMenuCell.cellHeight
     ]
-    
+
     override func viewWillAppear(_ animated: Bool) {
         setupNavBar()
         super.viewDidAppear(animated)
@@ -48,7 +48,7 @@ class DiningDetailViewController: UITableViewController {
         barButton.tintColor = UIColor.navigation
         self.navigationItem.rightBarButtonItem = barButton
     }
-    
+
     @objc fileprivate func handleBarButtonPressed(_ sender: Any) {
         if let urlString = DiningDetailModel.getUrl(for: venue.name), let url = URL(string: urlString) {
             UIApplication.shared.open(url, options: [:])
@@ -56,11 +56,11 @@ class DiningDetailViewController: UITableViewController {
     }
 }
 
-//Mark: Networking to retrieve today's menus
+// MARK: Networking to retrieve today's menus
 extension DiningDetailViewController {
     fileprivate func fetchDiningMenus() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
+
         DiningMenuAPI.instance.fetchDiningMenu(for: venue.name) { (success) in
             DispatchQueue.main.async {
                 if success {
@@ -72,7 +72,6 @@ extension DiningDetailViewController {
     }
 }
 
-
 // MARK: - Setup and Update UI
 extension DiningDetailViewController {
 
@@ -83,7 +82,7 @@ extension DiningDetailViewController {
 
 // MARK: - UITableViewDataSource
 extension DiningDetailViewController: CellUpdateDelegate {
-    
+
     func cellRequiresNewLayout(with height: CGFloat, for cell: String) {
         requestedCellHeights[cell] = height
         tableView.reloadData()
@@ -92,7 +91,7 @@ extension DiningDetailViewController: CellUpdateDelegate {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return (venue.meals != nil) ? 5 : 4
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -112,9 +111,9 @@ extension DiningDetailViewController: CellUpdateDelegate {
         default: return 0
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : BuildingCell
+        let cell: BuildingCell
         switch indexPath.section {
         case 0:
             cell = tableView.dequeueReusableCell(withIdentifier: BuildingHeaderCell.identifier, for: indexPath) as! BuildingHeaderCell
@@ -145,7 +144,7 @@ extension DiningDetailViewController: CellUpdateDelegate {
 
         return cell
     }
-    
+
     func registerHeadersAndCells(for tableView: UITableView) {
         tableView.register(BuildingHeaderCell.self, forCellReuseIdentifier: BuildingHeaderCell.identifier)
         tableView.register(BuildingImageCell.self, forCellReuseIdentifier: BuildingImageCell.identifier)
@@ -153,9 +152,9 @@ extension DiningDetailViewController: CellUpdateDelegate {
         tableView.register(BuildingFoodMenuCell.self, forCellReuseIdentifier: BuildingFoodMenuCell.identifier)
         tableView.register(BuildingMapCell.self, forCellReuseIdentifier: BuildingMapCell.identifier)
     }
-    
+
     // Section headers
-    
+
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0: return 0.0
@@ -166,7 +165,7 @@ extension DiningDetailViewController: CellUpdateDelegate {
         default: return 0.0
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
         case 0: return nil
@@ -182,7 +181,7 @@ extension DiningDetailViewController: CellUpdateDelegate {
         default: return nil
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.0
     }
@@ -190,19 +189,19 @@ extension DiningDetailViewController: CellUpdateDelegate {
 
 // MARK: - UITableViewDelegate
 extension DiningDetailViewController {
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         if let cell = tableView.cellForRow(at: indexPath) as? BuildingMapCell {
             let mapViewController = MapViewController()
             navigationController?.pushViewController(mapViewController, animated: true)
             mapViewController.building = cell.building
         }
-        
+
         if let cell = tableView.cellForRow(at: indexPath) as? BuildingFoodMenuCell {
             menuCellExpanded = !menuCellExpanded
-            
+
             if menuCellExpanded {
                 requestedCellHeights[BuildingFoodMenuCell.identifier] = cell.getMenuRequiredHeight()
             } else {

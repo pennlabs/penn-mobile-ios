@@ -10,22 +10,22 @@ import Foundation
 import SwiftSoup
 
 class PennInTouchNetworkManager: NSObject, PennAuthRequestable {
-    
+
     static let instance = PennInTouchNetworkManager()
-    
+
     internal let baseURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do"
     internal let degreeURL = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do?fastStart=mobileAdvisors"
-    
+
     internal let shibbolethUrl = "https://pennintouch.apps.upenn.edu/pennInTouch/jsp/fast2.do/Shibboleth.sso/SAML2/POST"
 }
 
 // MARK: - Degrees
 extension PennInTouchNetworkManager {
     func getDegrees(callback: @escaping ((_ degrees: Set<Degree>?) -> Void)) {
-        makeAuthRequest(targetUrl: degreeURL, shibbolethUrl: shibbolethUrl) { (data, response, error) in
+        makeAuthRequest(targetUrl: degreeURL, shibbolethUrl: shibbolethUrl) { (data, response, _) in
             let url = URL(string: self.degreeURL)!
             let request = URLRequest(url: url)
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
                         if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
@@ -75,7 +75,7 @@ extension PennInTouchNetworkManager {
 //        }
         return degrees
     }
-    
+
     private func splitNameCode(str: String) throws -> (name: String, code: String) {
         let split = str.split(separator: "(")
         if split.count != 2 {

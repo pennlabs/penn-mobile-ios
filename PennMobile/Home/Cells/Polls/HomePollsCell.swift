@@ -12,21 +12,20 @@ import UIKit
 final class HomePollsCell: UITableViewCell, HomeCellConformable {
     var delegate: ModularTableViewCellDelegate!
     static var identifier: String = "pollsCell"
-    
+
     var item: ModularTableViewItem! {
         didSet {
             guard let item = item as? HomePollsCellItem else { return }
             setupCell(with: item)
         }
     }
-    
-    
+
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomePollsCellItem else { return 0.0 }
         let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
-        
+
         var runningHeight = CGFloat(0)
-        
+
         for i in 1...item.pollQuestion.options.count {
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: maxWidth, height: CGFloat.greatestFiniteMagnitude))
             label.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -36,16 +35,15 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
             label.textAlignment = .left
             label.numberOfLines = 0
             label.sizeToFit()
-            runningHeight = runningHeight + label.frame.height + Padding.pad * 2
+            runningHeight += label.frame.height + Padding.pad * 2
         }
-        
+
         return runningHeight + HomeCellHeader.height + HomePollsCellFooter.height + Padding.pad * 2.5
     }
-        
 
     var pollQuestion: PollQuestion!
     var answer: Int?
-    
+
     // MARK: - UI Elements
     var cardView: UIView! = UIView()
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
@@ -54,14 +52,14 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     fileprivate var responsesTableView: UITableView!
     fileprivate var voteCountLabel: UILabel!
     fileprivate var ddlLabel: UILabel!
-    
+
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         prepareHomeCell()
         prepareUI()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -83,13 +81,13 @@ extension HomePollsCell {
         let h = diffComponents.hour
         let mm = diffComponents.minute
         ddlLabel.text = ""
-        if (d! > 0) {
+        if d! > 0 {
             ddlLabel.text = "\(d ?? 0)d"
         }
-        if (h! > 0) {
+        if h! > 0 {
             ddlLabel.text = "\(ddlLabel.text ?? "") \(h ?? 0) h"
         }
-        if (mm! > 0) {
+        if mm! > 0 {
             ddlLabel.text = "\(ddlLabel.text ?? "") \(mm ?? 0) m"
         }
 
@@ -107,23 +105,23 @@ extension HomePollsCell {
         prepareDdlLabel()
         prepareTableView()
     }
-    
+
     // MARK: Safe Area and Header
     fileprivate func prepareSafeArea() {
         cardView.addSubview(safeArea)
         safeArea.prepare()
     }
-    
+
     fileprivate func prepareHeader() {
         safeArea.addSubview(header)
         header.prepare()
     }
-    
+
     fileprivate func prepareFooter() {
         safeArea.addSubview(footer)
         footer.prepare()
     }
-    
+
     // MARK: Vote Count Label
     fileprivate func prepareVoteCountLabel() {
         voteCountLabel = getVoteCountLabel()
@@ -133,7 +131,7 @@ extension HomePollsCell {
             make.top.equalTo(header.primaryTitleLabel.snp.bottom).offset(3)
         }
     }
-    
+
     // MARK: DDL Label
     fileprivate func prepareDdlLabel() {
         ddlLabel = getDdlLabel()
@@ -147,7 +145,6 @@ extension HomePollsCell {
             make.top.equalTo(safeArea)
         }
     }
-    
 
     // MARK: TableView
     fileprivate func prepareTableView() {
@@ -175,36 +172,36 @@ extension HomePollsCell: UITableViewDelegate {
 
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Deselect and prohibit user from selecting another cell
         tableView.deselectRow(at: indexPath, animated: false)
         tableView.isUserInteractionEnabled = false
-        
+
         // Change selected cell to chosen
         let chosenCell = (tableView.cellForRow(at: indexPath) as! PollOptionCell)
         chosenCell.response += 1
         chosenCell.chosen = true
-        
+
         // Update cells to reflect question answered
         for cell in tableView.visibleCells as! [PollOptionCell] {
             cell.answered = true
             cell.totalResponses += 1
         }
-        
+
         // Update model
         pollQuestion.optionChosenId = pollQuestion.options[indexPath.row].id
-        
+
         // TODO: Update UserDefaults to reflect changees
-        
+
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //return PollOptionCell.cellHeight
-        
+        // return PollOptionCell.cellHeight
+
         let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: maxWidth, height: CGFloat.greatestFiniteMagnitude))
-        
+
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.text = pollQuestion.options[indexPath.row].optionText
         label.font = .primaryInformationFont
@@ -216,7 +213,6 @@ extension HomePollsCell: UITableViewDelegate {
     }
 }
 
-
 extension HomePollsCell: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pollQuestion?.options.count ?? 0
@@ -224,7 +220,7 @@ extension HomePollsCell: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PollOptionCell.identifier, for: indexPath) as! PollOptionCell
-        
+
         return cell
     }
 }
@@ -240,7 +236,7 @@ extension HomePollsCell {
         tableView.register(PollOptionCell.self, forCellReuseIdentifier: PollOptionCell.identifier)
         return tableView
     }
-    
+
     private func getVoteCountLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryTitleFont
@@ -248,7 +244,7 @@ extension HomePollsCell {
         label.textAlignment = .left
         return label
     }
-    
+
     private func getDdlLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryTitleFont

@@ -20,7 +20,7 @@ extension ModularTableViewModel: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = items[indexPath.row]
         let identifier = item.cellIdentifier
@@ -38,7 +38,7 @@ extension ModularTableViewModel: UITableViewDelegate {
         let item = items[indexPath.row]
         return item.cellHeight
     }
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         let item = items[indexPath.row]
         return item.cellHeight

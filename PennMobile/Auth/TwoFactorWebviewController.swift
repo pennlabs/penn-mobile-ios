@@ -13,24 +13,24 @@ protocol TwoFactorWebviewDelegate {
 }
 
 class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
-    
+
     override var shouldLoadCookies: Bool {
         return false
     }
-    
-    var completion : ((_ successful: Bool) -> Void)? = nil
-    
-    var delegate : TwoFactorEnableDelegate?
-    
+
+    var completion: ((_ successful: Bool) -> Void)?
+
+    var delegate: TwoFactorEnableDelegate?
+
     override var urlStr: String {
         return "https://twostep.apps.upenn.edu/twoFactor/twoFactorUi/app/UiMain.index"
     }
-    
+
     override func handleSuccessfulNavigation(_ webView: WKWebView, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         self.showActivity()
         var completed = false
         decisionHandler(.cancel)
-        //TODO: Uncomment to reenable 2FA
+        // TODO: Uncomment to reenable 2FA
 //        TOTPFetcher.instance.fetchAndSaveTOTPSecret { (secret) in
 //            DispatchQueue.main.async {
 //                if !completed {
@@ -41,7 +41,7 @@ class TwoFactorWebviewController: PennLoginController, IndicatorEnabled {
 //                self.completion?(secret != nil)
 //            }
 //        }
-        //Hide the screen after 5 seconds, but continue fetching the code in the background
+        // Hide the screen after 5 seconds, but continue fetching the code in the background
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             if !completed {
                 self.hideActivity()

@@ -11,7 +11,7 @@ import SwiftUI
 struct AnalyticsCardView: View {
     var text: String
     var color: Color = .blue
-    
+
     var body: some View {
         NavigationLink(destination: DiningAnalyticsView()) {
             CardView {

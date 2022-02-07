@@ -14,12 +14,12 @@ struct DiningToken: Codable {
             expirationDate = Date().advanced(by: .init(expiration))
         }
     }
-    
+
     var expirationDate = Date()
-    
+
     enum CodingKeys: String, CodingKey {
         case value = "access_token"
         case expiration = "expires_in"
     }
-    
+
 }

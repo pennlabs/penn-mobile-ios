@@ -16,10 +16,10 @@ struct Account: Codable, Hashable {
     var email: String?
     var student: Student
     // var imageUrl: String?
-    
+
     var groups: [String]
     var emails: [Email]
-    
+
     var isStudent: Bool {
         return groups.contains("student")
     }
@@ -58,7 +58,7 @@ extension Account {
     static var isLoggedIn: Bool {
         OAuth2NetworkManager.instance.hasRefreshToken() && getAccount() != nil
     }
-    
+
     static func clear() {
         UserDefaults.standard.clearAccount()
         KeychainAccessible.instance.removePennKey()
@@ -66,11 +66,11 @@ extension Account {
         KeychainAccessible.instance.removePacCode()
         KeychainAccessible.instance.removeDiningToken()
     }
-    
+
     static func saveAccount(_ thisAccount: Account) {
         UserDefaults.standard.saveAccount(thisAccount)
     }
-    
+
     static func getAccount() -> Account? {
         return UserDefaults.standard.getAccount()
     }

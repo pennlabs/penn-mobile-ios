@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class HomeCellSafeArea: UIView {
-    
+
     // Must be called after being added to a view
     func prepare() {
         let inside = self.superview ?? UIView()
@@ -21,5 +21,5 @@ class HomeCellSafeArea: UIView {
             make.bottom.equalTo(inside).offset(-pad)
         }
     }
-    
+
 }

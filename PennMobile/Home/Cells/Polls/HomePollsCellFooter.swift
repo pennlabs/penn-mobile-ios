@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class HomePollsCellFooter: UIView {
-    
+
     static let height: CGFloat = 16
     var noteLabel: UILabel!
     private var dividerLine: UIView!
@@ -21,7 +21,7 @@ class HomePollsCellFooter: UIView {
         prepareNoteLabel()
         prepareDividerLine()
     }
-    
+
     // MARK: Footer
     private func prepareFooter(inside safeArea: UIView) {
         self.snp.makeConstraints { (make) in
@@ -34,11 +34,11 @@ class HomePollsCellFooter: UIView {
 
     // MARK: Labels
     private func prepareNoteLabel() {
-        
+
         noteLabel = getNoteLabel()
 
         addSubview(noteLabel)
-        
+
         noteLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(self)
             make.bottom.equalTo(self).offset(3)
@@ -57,7 +57,6 @@ class HomePollsCellFooter: UIView {
             make.height.equalTo(2)
         }
     }
-
 
     private func getNoteLabel() -> UILabel {
         let label = UILabel()

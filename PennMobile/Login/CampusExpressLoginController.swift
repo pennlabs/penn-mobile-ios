@@ -10,7 +10,7 @@ import Foundation
 import WebKit
 
 class CampusExpressLoginController: PennLoginController {
-        
+
     override var urlStr: String {
         return "https://prod.campusexpress.upenn.edu/mainmenu.jsp"
     }

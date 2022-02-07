@@ -13,18 +13,18 @@ import SwiftUI
 
 @available(iOS 14, *)
 extension PredictionsGraphView {
-    
+
     static let xAxisLabelCount = 4
     static let yAxisLabelCount = 5
-    
+
     // Compute axis labels
     static func getAxisLabelsYX(from trans: [DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.DiningBalance], startOfSemester sos: Date, endOfSemester eos: Date) -> ([String], [String]) {
-        
+
         var xLabels: [String] = []
         var yLabels: [String] = []
-        
-        guard sos < eos else { return ([" "],[" "]) }
-        
+
+        guard sos < eos else { return ([" "], [" "]) }
+
         // Generate Y Axis Labels
         let maxDollarValue = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0
         let dollarStep = (maxDollarValue / Double(yAxisLabelCount - 1))
@@ -32,7 +32,7 @@ extension PredictionsGraphView {
             let yAxisLabel = "\(Int(dollarStep * Double(yAxisLabelCount - i - 1)))"
             yLabels.append(yAxisLabel)
         }
-        
+
         // Generate X Axis Labels
         let semester = sos.distance(to: eos)
         let semesterStep = semester / Double(xAxisLabelCount - 1)

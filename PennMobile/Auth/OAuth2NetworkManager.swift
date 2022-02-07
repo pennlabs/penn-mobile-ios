@@ -30,9 +30,9 @@ extension URLRequest {
 class OAuth2NetworkManager: NSObject {
     static let instance = OAuth2NetworkManager()
     private override init() {}
-    
+
     private var clientID = "CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN"
-    
+
     private var currentAccessToken: AccessToken?
 }
 
@@ -45,19 +45,19 @@ extension OAuth2NetworkManager {
         let url = URL(string: "https://platform.pennlabs.org/accounts/token/")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
+
         let params = [
             "code": code,
             "grant_type": "authorization_code",
             "client_id": clientID,
             "redirect_uri": "https://pennlabs.org/pennmobile/ios/callback/",
-            "code_verifier": codeVerifier,
+            "code_verifier": codeVerifier
         ]
-        
+
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
                 let json = JSON(data)
                 let expiresIn = json["expires_in"].intValue
@@ -87,31 +87,31 @@ extension OAuth2NetworkManager {
             self.refreshAccessToken(callback)
         }
     }
-    
+
     func saveAccessToken(accessToken: AccessToken) {
         self.currentAccessToken = accessToken
     }
-    
+
     fileprivate func refreshAccessToken(_ callback: @escaping (_ accessToken: AccessToken?) -> Void ) {
         guard let refreshToken = self.getRefreshToken() else {
             callback(nil)
             return
         }
-        
+
         let url = URL(string: "https://platform.pennlabs.org/accounts/token/")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
+
         let params = [
             "refresh_token": refreshToken,
             "grant_type": "refresh_token",
-            "client_id": clientID,
+            "client_id": clientID
         ]
-        
+
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             DispatchQueue.global().async {
                 if let httpResponse = response as? HTTPURLResponse, let data = data {
                     if httpResponse.statusCode == 200 {
@@ -133,7 +133,7 @@ extension OAuth2NetworkManager {
                                 callback(accessToken)
                                 return
                             }
-                            
+
                             // Clear refresh token and force user to log in
                             self.clearRefreshToken()
                         }
@@ -143,7 +143,7 @@ extension OAuth2NetworkManager {
             }
         }
         task.resume()
-        
+
     }
 }
 
@@ -152,12 +152,12 @@ extension OAuth2NetworkManager {
     func retrieveAccount(accessToken: AccessToken, _ callback: @escaping (_ user: Account?) -> Void) {
         let url = URL(string: "https://platform.pennlabs.org/accounts/me/")!
         let request = URLRequest(url: url, accessToken: accessToken)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                
+
                 let user = try? decoder.decode(Account.self, from: data)
                 callback(user)
                 return
@@ -173,49 +173,49 @@ extension OAuth2NetworkManager {
     private var service: String {
         return "LabsOAuth2"
     }
-    
+
     private var secureKey: String {
         return "Labs Refresh Token"
     }
-    
+
     func saveRefreshToken(token: String) {
         let genericPwdQueryable =
             GenericPasswordQueryable(service: service)
         let secureStore =
             SecureStore(secureStoreQueryable: genericPwdQueryable)
-        
+
         try? secureStore.setValue(token, for: secureKey)
     }
-    
+
     fileprivate func getRefreshToken() -> String? {
         let genericPwdQueryable =
             GenericPasswordQueryable(service: service)
         let secureStore =
             SecureStore(secureStoreQueryable: genericPwdQueryable)
-        
+
         let refreshToken: String?
         do {
             refreshToken = try secureStore.getValue(for: secureKey)
         } catch {
             refreshToken = nil
         }
-        
+
         return refreshToken
     }
-    
+
     func clearRefreshToken() {
         let genericPwdQueryable =
             GenericPasswordQueryable(service: service)
         let secureStore =
             SecureStore(secureStoreQueryable: genericPwdQueryable)
-        
+
         try? secureStore.removeValue(for: secureKey)
     }
-    
+
     func clearCurrentAccessToken() {
         currentAccessToken = nil
     }
-    
+
     func hasRefreshToken() -> Bool {
         return getRefreshToken() != nil
     }
@@ -229,7 +229,7 @@ extension String {
             if let strValue = value as? String {
                 let escapedValue = strValue.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
                 return "\(escapedKey)=\(escapedValue)"
-            } else if let arr = value as? Array<Any> {
+            } else if let arr = value as? [Any] {
                 let str = arr.map { String(describing: $0).addingPercentEncoding(withAllowedCharacters: characterSet) ?? "" }.joined(separator: ",")
                 return "\(escapedKey)=\(str)"
             } else {

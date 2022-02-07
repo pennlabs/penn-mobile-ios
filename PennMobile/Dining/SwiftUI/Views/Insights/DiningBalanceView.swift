@@ -16,16 +16,16 @@ struct DiningBalanceView: View {
     let description: String
     let image: Image
     var balance: Double
-    
+
     // By default, remove trailing zeros
     var specifier: String = "%g"
     var color: Color = .blue
-    
+
     var formattedBalance: String {
         let b: Double = balance
         return String(format: "\(self.specifier)", b)
     }
-    
+
     var body: some View {
         CardView {
                 HStack {
@@ -43,7 +43,7 @@ struct DiningBalanceView: View {
                             .minimumScaleFactor(0.5)
                             .lineLimit(1)
                     }
-                    
+
                 }
                 .padding()
         }
@@ -59,7 +59,7 @@ struct BlankDiningBalanceView: View {
                 .shadow(color: Color.black.opacity(0.0), radius: 4, x: 2, y: 2)
             VStack(alignment: .trailing) {
                 HStack {
-                    Image(systemName:" ").font(Font.system(size: 24).weight(.bold))
+                    Image(systemName: " ").font(Font.system(size: 24).weight(.bold))
                     Spacer()
                     Text(" ")
                         .font(.system(size: 24, design: .rounded))

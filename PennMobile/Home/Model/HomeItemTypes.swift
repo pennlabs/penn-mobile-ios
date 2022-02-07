@@ -11,8 +11,8 @@ import Foundation
 final class HomeItemTypes: ModularTableViewItemTypes {
     static let instance = HomeItemTypes()
     private init() {}
-    
-    //let fling: HomeCellItem.Type = HomeFlingCellItem.self
+
+    // let fling: HomeCellItem.Type = HomeFlingCellItem.self
     let dining: HomeCellItem.Type = HomeDiningCellItem.self
     let laundry: HomeCellItem.Type = HomeLaundryCellItem.self
     let studyRoomBooking: HomeCellItem.Type = HomeGSRCellItem.self
@@ -25,7 +25,7 @@ final class HomeItemTypes: ModularTableViewItemTypes {
     let gsrLocations: HomeCellItem.Type = HomeGSRLocationsCellItem.self
     let invites: HomeCellItem.Type =  HomeGroupInvitesCellItem.self
     let polls: HomeCellItem.Type = HomePollsCellItem.self
-    //let update: HomeCellItem.Type = HomeUpdateCellItem.self
+    // let update: HomeCellItem.Type = HomeUpdateCellItem.self
 }
 
 // MARK: - JSON Parsing

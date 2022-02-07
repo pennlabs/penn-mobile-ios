@@ -12,23 +12,23 @@ import FirebaseAnalytics
 
 @available(iOS 14, *)
 struct DiningVenueDetailView: View {
-    
+
     init(for venue: DiningVenue) {
         self.venue = venue
     }
-    
+
     private let venue: DiningVenue
     private let sectionTitle = ["Menu", "Hours", "Location"]
-    
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @State private var pickerIndex = 0
-    
+
     var body: some View {
         GeometryReader { fullGeo in
             let imageHeight = fullGeo.size.height * 4/9
             let statusBarHeight = fullGeo.safeAreaInsets.top
-            
+
             ScrollView {
                 GeometryReader { geometry in
                     let minY = geometry.frame(in: .global).minY
@@ -42,9 +42,9 @@ struct DiningVenueDetailView: View {
                             .offset(y: min(0, minY) * -2/3)
                             .allowsHitTesting(false)
                             .clipped()
-                        
+
                         LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
-                        
+
                         VStack(alignment: .leading) {
                             Button(action: {
                                 presentationMode.wrappedValue.dismiss()
@@ -72,7 +72,7 @@ struct DiningVenueDetailView: View {
                             DefaultNavigationBar(title: venue.name)
                                 .frame(height: 44 + statusBarHeight)
                                 .opacity(Double(-1/20 * (remain - (64 + statusBarHeight))))
-                            
+
                             Spacer()
                         }.offset(y: -min(0, minY))
                     }
@@ -80,7 +80,7 @@ struct DiningVenueDetailView: View {
                 }
                 .frame(height: imageHeight)
                 .zIndex(2)
-                
+
                 VStack(spacing: 10) {
                     Picker("Section", selection: self.$pickerIndex) {
                         ForEach(0 ..< self.sectionTitle.count) {
@@ -88,9 +88,9 @@ struct DiningVenueDetailView: View {
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
-                    
+
                     Divider()
-                    
+
                     VStack {
                         if self.pickerIndex == 0 {
                             DiningVenueDetailMenuView(menus: diningVM.diningMenus[venue.id]?.document.menuDocument.menus ?? [])
@@ -99,7 +99,7 @@ struct DiningVenueDetailView: View {
                         } else {
                             DiningVenueDetailLocationView(for: venue, screenHeight: fullGeo.size.width)
                         }
-                        
+
                         Spacer()
                     }.frame(minHeight: fullGeo.size.height - 80)
                 }.padding(.horizontal)
@@ -116,18 +116,18 @@ struct DiningVenueDetailView: View {
 
 @available(iOS 14.0, *)
 struct DefaultNavigationBar: View {
-    
+
     @Environment(\.presentationMode) var presentationMode
 
     var title: String
-   
+
     var body: some View {
         ZStack(alignment: .bottom) {
             VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
-            
+
             VStack {
                 Spacer()
-                
+
                 HStack {
                     Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
@@ -136,11 +136,11 @@ struct DefaultNavigationBar: View {
                             .frame(width: 75, height: 44, alignment: .center)
                             .contentShape(Rectangle())
                     }
-                    
+
                     Spacer()
                 }
             }
-            
+
             VStack {
                 Spacer()
                 Text(title)

@@ -10,11 +10,11 @@ import SwiftUI
 
 @available(iOS 14, *)
 struct DiningVenueDetailHoursView: View {
-    
+
     init(for venue: DiningVenue) {
         self.venue = venue
     }
-    
+
     let venue: DiningVenue
 
     var body: some View {
@@ -23,10 +23,10 @@ struct DiningVenueDetailHoursView: View {
             ForEach(0..<7) { duration in
                 let dateInt = (7 - Date().integerDayOfWeek + duration) % 7
                 let date = Date().dateIn(days: dateInt)
-                
+
                 Text("\(date.dayOfWeek)")
                     .font(duration == Date().integerDayOfWeek ? .system(size: 18, weight: .bold): .system(size: 18, weight: .regular))
-                
+
                 HStack {
                     ForEach(venue.formattedHoursArrayFor(date), id: \.self) { hours in
                         Text(hours)
@@ -36,7 +36,7 @@ struct DiningVenueDetailHoursView: View {
                             .background(Color.grey5)
                             .clipShape(RoundedRectangle(cornerRadius: 6))
                     }
-                    
+
                     Spacer()
                 }.offset(y: -4)
             }

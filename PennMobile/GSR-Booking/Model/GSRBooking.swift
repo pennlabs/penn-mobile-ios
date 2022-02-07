@@ -14,7 +14,7 @@ struct GSRBooking: Codable {
     let endTime: Date
     let id: Int
     let roomName: String
-    
+
     func getLocalTimeString() -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -25,7 +25,7 @@ struct GSRBooking: Codable {
     }
 }
 
-//class GSRBooking {
+// class GSRBooking {
 //    let location: GSRLocation
 //    let roomId: Int
 //    let start: Date
@@ -59,9 +59,9 @@ struct GSRBooking: Codable {
 //    func getRoomName() -> String {
 //        if name != nil { return name! } else { return location.name }
 //    }
-//}
+// }
 //
-//class GSRGroupBooking: GSRBooking {
+// class GSRGroupBooking: GSRBooking {
 //    var gsrGroup: GSRGroup!
 //
 //    init(location: GSRLocation, roomId: Int, start: Date, end: Date, gsrGroup: GSRGroup) {
@@ -69,6 +69,6 @@ struct GSRBooking: Codable {
 //        self.gsrGroup = gsrGroup
 //        self.groupName = gsrGroup.name
 //    }
-//}
+// }
 //
-//typealias GSRGroupBookings = [GSRGroupBooking]
+// typealias GSRGroupBookings = [GSRGroupBooking]

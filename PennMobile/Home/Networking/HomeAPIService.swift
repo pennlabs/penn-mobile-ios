@@ -14,9 +14,9 @@ final class HomeAPIService: Requestable {
 
     func fetchModel(_ completion: @escaping ((HomeTableViewModel) -> Void)) {
         let group = DispatchGroup()
-        
+
         let model = HomeTableViewModel()
-        
+
         // Fetch HomeCellItem for all HomeItemTypes
         for item in HomeItemTypes.instance.getAllTypes() {
             group.enter()
@@ -24,11 +24,11 @@ final class HomeAPIService: Requestable {
                 item.forEach { i in
                     model.items.append(i)
                 }
-                
+
                 group.leave()
             }
         }
-        
+
         group.enter()
         var rankingDict: [String: Int] = [:]
         getRequestData(url: "https://pennmobile.org/api/penndata/order/") { (data, _, _) in
@@ -38,16 +38,16 @@ final class HomeAPIService: Requestable {
                     rankingDict[cell] = ranking
                 }
             }
-            
+
             group.leave()
         }
-        
+
         // Handle completion of model after it is done
         group.notify(queue: .main) {
             if let homeItems = model.items as? [HomeCellItem] {
                 model.items = homeItems.sorted(by: {rankingDict[$0.cellIdentifier] ?? -1 > rankingDict[$1.cellIdentifier] ?? -1})
             }
-            
+
             completion(model)
         }
     }

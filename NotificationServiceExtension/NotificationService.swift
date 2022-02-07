@@ -20,12 +20,12 @@ class NotificationService: UNNotificationServiceExtension {
         defer {
             contentHandler(bestAttemptContent ?? request.content)
         }
-        
+
         // Category identifiers are defined in AppDelegate+NotificationExtension.swift
         if request.content.categoryIdentifier == "UPCOMING_GSR" {
-            if let reservation = request.content.userInfo["reservation"] as? [String:String],
+            if let reservation = request.content.userInfo["reservation"] as? [String: String],
                 let urlString = reservation["image_url"] {
-                
+
                 // Create an image attachment by downloading the image at specified URL
                 if let attachment = request.getImageAttachment(with: urlString) {
                     bestAttemptContent?.attachments = [attachment]
@@ -33,7 +33,7 @@ class NotificationService: UNNotificationServiceExtension {
             }
         }
     }
-    
+
     override func serviceExtensionTimeWillExpire() {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.

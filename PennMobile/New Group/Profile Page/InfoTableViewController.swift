@@ -9,12 +9,12 @@
 import UIKit
 
 class InfoTableViewController: UIViewController {
-    
+
     let tableView = UITableView(frame: .zero)
     let searchController = UISearchController(searchResultsController: nil)
     var viewModel: InfoTableViewModel!
     var isMajors = true
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,14 +23,13 @@ class InfoTableViewController: UIViewController {
         setupTableView()
         setupSearchController()
     }
-    
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchController.dismiss(animated: false)
         viewModel.updateAccount()
     }
-    
+
     func setupView() {
         if isMajors {
             self.title = "Majors"
@@ -39,7 +38,7 @@ class InfoTableViewController: UIViewController {
         }
         view.backgroundColor = .uiGroupedBackground
     }
-    
+
     func setupViewModel() {
         viewModel = InfoTableViewModel()
         viewModel.isMajors = self.isMajors
@@ -48,9 +47,9 @@ class InfoTableViewController: UIViewController {
         tableView.dataSource = viewModel
         searchController.searchResultsUpdater = viewModel
     }
-    
+
     func setupTableView() {
-        
+
         view.addSubview(tableView)
         tableView.keyboardDismissMode = .onDrag
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
@@ -60,11 +59,11 @@ class InfoTableViewController: UIViewController {
         tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
+
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 600
     }
-    
+
     func setupSearchController() {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.sizeToFit()
@@ -79,6 +78,5 @@ extension InfoTableViewController: InfoTableViewModelDelegate {
             self.tableView.reloadData()
         }
     }
-    
-    
+
 }

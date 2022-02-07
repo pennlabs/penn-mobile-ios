@@ -9,9 +9,9 @@
 import UIKit
 
 class LaundryPageView: UIView {
-    
+
     var pageIndex = 0
-    
+
     /*
     var room: LaundryRoom! {
         didSet {

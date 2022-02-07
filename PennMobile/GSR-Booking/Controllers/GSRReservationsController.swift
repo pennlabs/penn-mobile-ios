@@ -24,16 +24,16 @@ class GSRReservationsController: GenericTableViewController, ShowsAlert, Indicat
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.tableHeaderView = UIView()
-        
+
         self.title = "Your Bookings"
         self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchData()
     }
-    
+
     func fetchData() {
         if self.reservations.isEmpty {
             self.showActivity()
@@ -41,7 +41,7 @@ class GSRReservationsController: GenericTableViewController, ShowsAlert, Indicat
         GSRNetworkManager.instance.getReservations { result in
             DispatchQueue.main.async {
                 self.hideActivity()
-                
+
                 if let reservations = try? result.get() {
                     self.reservations = reservations
                     self.tableView.dataSource = self
@@ -61,7 +61,7 @@ extension GSRReservationsController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (self.reservations.count == 0) {
+        if self.reservations.count == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: NoReservationsCell.identifier, for: indexPath) as! NoReservationsCell
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: UIScreen.main.bounds.width)
             return cell
@@ -70,7 +70,7 @@ extension GSRReservationsController {
         cell.contentView.isUserInteractionEnabled = false
         cell.reservation = reservations[indexPath.row]
         cell.delegate = self
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none;
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
 
@@ -96,7 +96,7 @@ extension GSRReservationsController: ReservationCellDelegate {
             }
         }
     }
-    
+
     func confirmDelete(_ callback: @escaping () -> Void) {
         let alertController = UIAlertController(title: "Are you sure?", message: "Please confirm that you wish to delete this booking.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
@@ -109,8 +109,8 @@ extension GSRReservationsController: ReservationCellDelegate {
     }
 }
 
-//// MARK: Login Button
-//extension GSRReservationsController {
+// MARK: Login Button
+// extension GSRReservationsController {
 //    func prepareLoginButton() {
 //        barButton = UIBarButtonItem(title: "Login", style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
 //        barButton.tintColor = UIColor.navigation
@@ -150,4 +150,4 @@ extension GSRReservationsController: ReservationCellDelegate {
 //            present(nvc, animated: true, completion: nil)
 //        }
 //    }
-//}
+// }

@@ -8,7 +8,7 @@
 import Foundation
 import OneTimePassword
 import Base32
-class TwoFactorTokenGenerator: NSObject{
+class TwoFactorTokenGenerator: NSObject {
 
     static let instance = TwoFactorTokenGenerator()
     private override init() {}
@@ -50,14 +50,13 @@ class TwoFactorTokenGenerator: NSObject{
     func isEnabled() -> Bool {
         let genericPwdQueryable = GenericPasswordQueryable(service: "PennWebLogin")
         let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)
-        if let _ = ((try? secureStore.getValue(for: "TOTPSecret")) as String??) {
+        if ((try? secureStore.getValue(for: "TOTPSecret")) as String??) != nil {
             return true
-        }
-        else {
+        } else {
             return false
         }
     }
-    
+
     func clear() {
         let genericPwdQueryable = GenericPasswordQueryable(service: "PennWebLogin")
         let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)

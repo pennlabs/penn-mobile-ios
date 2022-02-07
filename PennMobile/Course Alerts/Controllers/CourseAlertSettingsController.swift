@@ -9,14 +9,13 @@
 import Foundation
 import UIKit
 
-
 protocol CourseAlertSettingsChangedPreference: AnyObject {
     func allowChange() -> Bool
     func changed(option: PCAOption, toValue: Bool)
     func requestChange(option: PCAOption, toValue: Bool)
 }
 //
-//class CourseAlertSettingsController: GenericTableViewController, ShowsAlert, IndicatorEnabled, NotificationRequestable {
+// class CourseAlertSettingsController: GenericTableViewController, ShowsAlert, IndicatorEnabled, NotificationRequestable {
 //
 //    let displayedSettings = PCAOption.visibleOptions
 //
@@ -50,11 +49,11 @@ protocol CourseAlertSettingsChangedPreference: AnyObject {
 //        })
 //        #endif
 //    }
-//}
+// }
 //
-//// MARK: - Did Change Preference
+// MARK: - Did Change Preference
 //
-//extension CourseAlertSettingsController: CourseAlertSettingsChangedPreference {
+// extension CourseAlertSettingsController: CourseAlertSettingsChangedPreference {
 //    func requestChange(option: PCAOption, toValue: Bool) {
 //
 //        if Account.isLoggedIn {
@@ -98,10 +97,10 @@ protocol CourseAlertSettingsChangedPreference: AnyObject {
 //
 //    }
 //
-//}
+// }
 //
-//// MARK: - UITableViewDataSource
-//extension CourseAlertSettingsController {
+// MARK: - UITableViewDataSource
+// extension CourseAlertSettingsController {
 //
 //    override func numberOfSections(in tableView: UITableView) -> Int {
 //        return displayedSettings.count
@@ -134,4 +133,4 @@ protocol CourseAlertSettingsChangedPreference: AnyObject {
 //    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 //        return displayedSettings[section].cellFooterDescription
 //    }
-//}
+// }

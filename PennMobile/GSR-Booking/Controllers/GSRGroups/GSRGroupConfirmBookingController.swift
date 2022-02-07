@@ -9,10 +9,10 @@
 import UIKit
 
 class GSRGroupConfirmBookingController: UIViewController {
-    
+
     var group: GSRGroup!
 //    var booking: GSRGroupBooking!
-    
+
     fileprivate var titleLabel: UILabel!
     fileprivate var groupLabel: UILabel!
     fileprivate var closeButton: UIButton!
@@ -30,31 +30,31 @@ extension GSRGroupConfirmBookingController {
         prepareGroupLabel()
         prepareCloseButton()
     }
-    
+
     func prepareTitleLabel() {
         titleLabel = UILabel()
         titleLabel.text = "Confirm Booking"
         titleLabel.font = .boldSystemFont(ofSize: 28)
         titleLabel.textColor = .baseDarkBlue
-        
+
         view.addSubview(titleLabel)
         titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 32).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -14).isActive = true
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     func prepareGroupLabel() {
         groupLabel = UILabel()
         groupLabel.attributedText = NSMutableAttributedString().weightedColored("Booking as ", weight: .light, color: .grey1, size: 18).weightedColored(group.name, weight: .bold, color: group.color, size: 18)
-        
+
         view.addSubview(groupLabel)
         groupLabel.translatesAutoresizingMaskIntoConstraints = false
         groupLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
         groupLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-    
+
     }
-    
+
     func prepareCloseButton() {
         closeButton = UIButton()
         view.addSubview(closeButton)

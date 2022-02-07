@@ -10,29 +10,29 @@ import UIKit
 import Kingfisher
 
 class GSRLocationCell: UITableViewCell {
-    
+
     static let identifier = "locationCell"
     static let cellHeight: CGFloat = 110
-    
+
     var location: GSRLocation! {
         didSet {
             locationLabel.text = location.name
-           
+
             buildingImageView.kf.setImage(with: URL(string: location.imageUrl)!)
         }
     }
-        
+
     // MARK: - UI Elements
     fileprivate var safeArea: UIView!
     fileprivate var locationLabel: UILabel!
     fileprivate var serviceLabel: UILabel!
     fileprivate var buildingImageView: UIImageView!
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.prepareUI()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -47,12 +47,12 @@ extension GSRLocationCell {
         prepareImageView()
         prepareLabels()
     }
-    
+
     // MARK: Safe Area
     fileprivate func prepareSafeArea() {
         safeArea = UIView()
         addSubview(safeArea)
-        
+
         safeArea.snp.makeConstraints { (make) in
             make.leading.equalTo(self).offset(pad)
             make.trailing.equalTo(self).offset(-pad * 2)
@@ -60,12 +60,12 @@ extension GSRLocationCell {
             make.bottom.equalTo(self).offset(-pad)
         }
     }
-    
+
     // MARK: ImageView
     fileprivate func prepareImageView() {
         buildingImageView = getBuildingImageView()
         addSubview(buildingImageView)
-        
+
         buildingImageView.snp.makeConstraints { (make) in
             make.width.equalTo(134)
             make.height.equalTo(86)
@@ -73,7 +73,7 @@ extension GSRLocationCell {
             make.centerY.equalTo(safeArea)
         }
     }
-    
+
     // MARK: Labels
     fileprivate func prepareLabels() {
         locationLabel = getLocationLabel()
@@ -89,7 +89,7 @@ extension GSRLocationCell {
 
 // MARK: - Define UI Elements
 extension GSRLocationCell {
-    
+
     fileprivate func getBuildingImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.backgroundColor = .grey2
@@ -98,7 +98,7 @@ extension GSRLocationCell {
         imageView.layer.cornerRadius = 5.0
         return imageView
     }
-    
+
     fileprivate func getLocationLabel() -> UILabel {
         let label = UILabel()
         label.font = .interiorTitleFont

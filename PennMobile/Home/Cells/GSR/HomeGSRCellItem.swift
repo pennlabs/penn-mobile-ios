@@ -21,17 +21,17 @@ final class HomeGSRCellItem: HomeCellItem {
     var title: String {
         return "Study Room Booking"
     }
-    
+
     init() {
     }
-    
+
     var bookingOptions: [[GSRBooking?]]?
-    
+
     func equals(item: ModularTableViewItem) -> Bool {
-        guard let _ = item as? HomeGSRCellItem else { return false }
+        guard item is HomeGSRCellItem else { return false }
         return true
     }
-    
+
     static var jsonKey: String {
         return "studyRoomBooking"
     }

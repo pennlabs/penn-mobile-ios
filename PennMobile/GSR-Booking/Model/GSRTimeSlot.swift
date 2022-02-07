@@ -12,7 +12,7 @@ struct GSRTimeSlot: Codable, Equatable {
     let startTime: Date
     let endTime: Date
     var isAvailable: Bool = true
-    
+
     enum CodingKeys: CodingKey {
         case startTime
         case endTime

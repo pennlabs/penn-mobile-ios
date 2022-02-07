@@ -11,25 +11,25 @@ import Foundation
 final class HomeNewsCellItem: HomeCellItem {
     static var jsonKey = "news"
     static var associatedCell: ModularTableViewCell.Type = HomeNewsCell.self
-    
+
     let article: NewsArticle
     var showSubtitle = false
-    
+
     init(for article: NewsArticle) {
         self.article = article
     }
-    
+
     static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
-        let task = URLSession.shared.dataTask(with: URL(string: "https://pennmobile.org/api/penndata/news/")!) { data, response, error in
+        let task = URLSession.shared.dataTask(with: URL(string: "https://pennmobile.org/api/penndata/news/")!) { data, _, _ in
             guard let data = data else { completion([]); return }
-            
+
             if let article = try? JSONDecoder().decode(NewsArticle.self, from: data) {
                 completion([HomeNewsCellItem(for: article)])
             } else {
                 completion([])
             }
         }
-        
+
         task.resume()
     }
 

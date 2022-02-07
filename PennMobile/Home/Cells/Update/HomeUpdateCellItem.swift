@@ -8,7 +8,7 @@
 
 import Foundation
 //
-//class HomeUpdateCellItem: HomeCellItem {
+// class HomeUpdateCellItem: HomeCellItem {
 //    static var jsonKey = "update"
 //    
 //    static var associatedCell: ModularTableViewCell.Type
@@ -20,4 +20,4 @@ import Foundation
 //    func equals(item: ModularTableViewItem) -> Bool {
 //        return true
 //    }
-//}
+// }

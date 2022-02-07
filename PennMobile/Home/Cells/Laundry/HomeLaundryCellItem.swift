@@ -13,7 +13,7 @@ final class HomeLaundryCellItem: HomeCellItem {
     static var associatedCell: ModularTableViewCell.Type {
         return HomeLaundryCell.self
     }
-    
+
     static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
         UserDBManager.shared.getLaundryPreferences { result in
             if let ids = result, ids.count > 0 {
@@ -29,22 +29,22 @@ final class HomeLaundryCellItem: HomeCellItem {
             }
         }
     }
-    
+
     var room: LaundryRoom
-    
+
     init(room: LaundryRoom) {
         self.room = room
     }
-    
+
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeLaundryCellItem else { return false }
         return room == item.room
     }
-    
+
     static var jsonKey: String {
         return "laundry"
     }
-    
+
     static func getItem(for json: JSON?) -> HomeCellItem? {
         guard let json = json else { return nil }
         return try? HomeLaundryCellItem(json: json)

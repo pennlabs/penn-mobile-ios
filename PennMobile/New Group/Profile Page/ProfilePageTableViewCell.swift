@@ -27,17 +27,17 @@ class ProfilePageTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.prepareUI()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     fileprivate func prepareUI() {
         backgroundColor = .uiGroupedBackgroundSecondary
         prepareKeyLabel()
         prepareInfoLabel()
     }
-    
+
     fileprivate func prepareKeyLabel() {
         self.contentView.addSubview(keyLabel)
         keyLabel.numberOfLines = 1
@@ -47,7 +47,7 @@ class ProfilePageTableViewCell: UITableViewCell {
         keyLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20).isActive = true
         keyLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.35).isActive = true
     }
-    
+
     fileprivate func prepareInfoLabel() {
         self.contentView.addSubview(infoLabel)
         infoLabel.textAlignment = .right
@@ -58,5 +58,5 @@ class ProfilePageTableViewCell: UITableViewCell {
         infoLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20.0).isActive = true
         infoLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.65).isActive = true
     }
-    
+
 }

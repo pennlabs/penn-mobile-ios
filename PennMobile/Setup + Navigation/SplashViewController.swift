@@ -11,7 +11,7 @@ import UIKit
 import FirebaseCore
 
 class SplashViewController: UIViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .uiBackground

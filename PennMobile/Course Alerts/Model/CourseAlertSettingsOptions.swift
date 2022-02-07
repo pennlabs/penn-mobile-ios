@@ -7,15 +7,15 @@
 //
 import Foundation
 
-typealias PCAPreferences = Dictionary<String, Bool>
+typealias PCAPreferences = [String: Bool]
 
 enum PCAOption: String, Codable {
     case alertsThroughPennMobile
     case alertsThroughEmail
     case classCloseAlerts
-    
+
     static let visibleOptions: [PCAOption] = [.alertsThroughPennMobile]
-    
+
     var cellTitle: String? {
         switch self {
         case .alertsThroughPennMobile: return "Send alerts through Penn Mobile"
@@ -23,7 +23,7 @@ enum PCAOption: String, Codable {
         case .classCloseAlerts: return "Send notifications when classes close"
         }
     }
-    
+
     var cellFooterDescription: String? {
         switch self {
         case .alertsThroughPennMobile: return "Alert notifications through Penn Mobile are faster than SMS alerts and can help unclutter your text messages."
@@ -31,11 +31,11 @@ enum PCAOption: String, Codable {
         case .classCloseAlerts: return "Alert notifications through Penn Mobile are faster than SMS alerts and can help unclutter your text messages."
         }
     }
-    
+
     var defaultValue: Bool {
         switch self {
-            case .alertsThroughPennMobile: return false
-            default: return false
+        case .alertsThroughPennMobile: return false
+        default: return false
         }
     }
 }

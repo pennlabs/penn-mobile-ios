@@ -60,8 +60,8 @@ class ControllerModel: NSObject {
         vcDictionary[.pacCode] = PacCodeViewController()
         vcDictionary[.courseAlerts] = CourseAlertController()
         vcDictionary[.events] = PennEventsTableViewController()
-        //vcDictionary[.fitness] = FitnessViewController()
-        //vcDictionary[.fling] = FlingViewController()
+        // vcDictionary[.fitness] = FitnessViewController()
+        // vcDictionary[.fling] = FlingViewController()
     }
 
     var viewControllers: [UIViewController] {
@@ -80,8 +80,8 @@ class ControllerModel: NSObject {
     // Features order in MoreViewController:
     var moreOrder: [Feature] {
         get {
-            //keeping this #if DEBUG in case we want to remove course alerts from production
-            //courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
+            // keeping this #if DEBUG in case we want to remove course alerts from production
+            // courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
             #if DEBUG
             return [.news, .contacts, .courseSchedule, .courseAlerts, .events, .about]
             #else
@@ -89,10 +89,10 @@ class ControllerModel: NSObject {
             #endif
         }
     }
-    
+
     var moreIcons: [UIImage] {
-        //keeping this #if DEBUG in case we want to remove course alerts from production
-        //courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
+        // keeping this #if DEBUG in case we want to remove course alerts from production
+        // courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
         get {
             #if DEBUG
                 return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "logo-small")]
@@ -119,15 +119,13 @@ class ControllerModel: NSObject {
     }
 
     var firstFeature: Feature {
-        //return UserDefaults.standard.isOnboarded() ? orderedFeatures[0] : .laundry
+        // return UserDefaults.standard.isOnboarded() ? orderedFeatures[0] : .laundry
         return orderedFeatures[0]
     }
 
     func visibleVCIndex() -> IndexPath {
-        for vc in viewControllers {
-            if vc.isVisible {
-                return IndexPath(row: viewControllers.firstIndex(of: vc)!, section: 0)
-            }
+        for vc in viewControllers where vc.isVisible {
+            return IndexPath(row: viewControllers.firstIndex(of: vc)!, section: 0)
         }
         return IndexPath(row: 0, section: 0)
     }
