@@ -9,7 +9,7 @@
 import Foundation
 struct DiningToken: Codable {
     let value: String
-    var expiration: Int {
+    private var expiration: Int {
         didSet {
             expirationDate = Date().advanced(by: .init(expiration))
         }

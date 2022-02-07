@@ -105,8 +105,9 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
         }
         
         if url.absoluteString.contains("https://weblogin.pennkey.upenn.edu/") {
-            webView.evaluateJavaScript("document.getElementById('pennname').value = 'aanten'") { (_,error) in
-                webView.evaluateJavaScript("document.getElementById('password').value = '4Eq6Thx3kFx88f@!'") { (_,_) in
+            guard let pennkey = getPennKey(), let password = getPassword() else { return }
+            webView.evaluateJavaScript("document.getElementById('pennname').value = '\(pennkey)'") { (_,error) in
+                webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_,_) in
                 }
             }
         }

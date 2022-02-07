@@ -94,4 +94,9 @@ extension KeychainAccessible {
         }
     }
     
+    func removeDiningToken() {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.removeValue(for: diningTokenKeychainKey)
+    }
+    
 }

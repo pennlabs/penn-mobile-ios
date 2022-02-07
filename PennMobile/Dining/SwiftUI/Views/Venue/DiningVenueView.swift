@@ -76,7 +76,6 @@ struct CustomHeader: View {
     }
 }
 
-@available(iOS 14, *)
 struct DiningVenueView_Previews: PreviewProvider {
     static var previews: some View {
         CustomHeader(name: "new", refreshButton: false)
