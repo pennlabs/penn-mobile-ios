@@ -14,6 +14,7 @@ import SwiftUI
 struct DiningViewHeader: View {
     
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
+    @State var alertIsPresented = false
     
     var body: some View {
         

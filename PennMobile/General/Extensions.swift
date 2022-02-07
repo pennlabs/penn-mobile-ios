@@ -518,6 +518,14 @@ extension String {
     }
 }
 
+// Source: https://stackoverflow.com/questions/26845307/generate-random-alphanumeric-string-in-swift/33860834
+extension String {
+    static func randomString(length: Int) -> String {
+      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+}
+
 extension NSMutableAttributedString {
     @discardableResult func bold(_ text: String, size: CGFloat) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: size, weight: .bold)]
@@ -593,6 +601,15 @@ extension URL {
         urlComponents.queryItems = queryItems
 
         self = urlComponents.url!
+    }
+    
+    public var queryParameters: [String: String] {
+        guard
+            let components = URLComponents(url: self, resolvingAgainstBaseURL: true),
+            let queryItems = components.queryItems else { return [:] }
+        return queryItems.reduce(into: [String: String]()) { (result, item) in
+            result[item.name] = item.value
+        }
     }
 }
 
