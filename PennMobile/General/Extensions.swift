@@ -105,6 +105,8 @@ extension UIFont {
     static let secondaryTitleFont = UIFont.systemFont(ofSize: 11, weight: .medium)
 
     static let interiorTitleFont = UIFont.systemFont(ofSize: 17, weight: .medium)
+    
+    static let pollsTitleFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
 
     static let primaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
     static let secondaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -365,6 +367,15 @@ extension DateFormatter {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         return dateFormatter
     }
+    
+    static var iso8601Full: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }
 }
 
 public extension Collection {
@@ -439,9 +450,7 @@ extension String {
         let textSize = calString.boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.font): font]), context: nil)
         return textSize.height
     }
-}
 
-extension String {
     func getMatches(for pattern: String) -> [String] {
         let regex = try! NSRegularExpression(pattern: pattern)
         let result = regex.matches(in: self, range:NSMakeRange(0, self.utf16.count))
@@ -470,6 +479,42 @@ extension String {
     // Helper function inserted by Swift 4.2 migrator.
     fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
         return input.rawValue
+    }
+    
+    // https://sarunw.com/posts/how-to-compare-two-app-version-strings-in-swift/
+    func versionCompare(_ otherVersion: String) -> ComparisonResult {
+        let versionDelimiter = "."
+
+        var versionComponents = self.components(separatedBy: versionDelimiter) // <1>
+        var otherVersionComponents = otherVersion.components(separatedBy: versionDelimiter)
+
+        let zeroDiff = versionComponents.count - otherVersionComponents.count // <2>
+
+        if zeroDiff == 0 { // <3>
+            // Same format, compare normally
+            return self.compare(otherVersion, options: .numeric)
+        } else {
+            let zeros = Array(repeating: "0", count: abs(zeroDiff)) // <4>
+            if zeroDiff > 0 {
+                otherVersionComponents.append(contentsOf: zeros) // <5>
+            } else {
+                versionComponents.append(contentsOf: zeros)
+            }
+            return versionComponents.joined(separator: versionDelimiter)
+                .compare(otherVersionComponents.joined(separator: versionDelimiter), options: .numeric) // <6>
+        }
+    }
+}
+
+//slicing Penn Events API image source urls
+extension String {
+    //https://stackoverflow.com/questions/31725424/swift-get-string-between-2-strings-in-a-string
+    func slice(from: String, to: String) -> String? {
+        return (range(of: from)?.upperBound).flatMap { substringFrom in
+            (range(of: to, range: substringFrom..<endIndex)?.lowerBound).map { substringTo in
+                String(self[substringFrom..<substringTo])
+            }
+        }
     }
 }
 
@@ -565,5 +610,14 @@ extension URL {
         return queryItems.reduce(into: [String: String]()) { (result, item) in
             result[item.name] = item.value
         }
+    }
+}
+
+extension JSONDecoder {
+    convenience init(keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy,
+         dateDecodingStrategy: JSONDecoder.DateDecodingStrategy) {
+        self.init()
+        self.keyDecodingStrategy = keyDecodingStrategy
+        self.dateDecodingStrategy = dateDecodingStrategy
     }
 }

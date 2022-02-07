@@ -98,7 +98,7 @@ extension ProfilePageViewModel: UITableViewDelegate, UITableViewDataSource {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePictureTableViewCell.identifier, for: indexPath) as! ProfilePictureTableViewCell
                 cell.account = account
-//                cell.accessoryType = .disclosureIndicator
+                cell.accessoryType = .disclosureIndicator
                 cell.selectionStyle = .none
                 return cell
             }
@@ -106,15 +106,15 @@ extension ProfilePageViewModel: UITableViewDelegate, UITableViewDataSource {
             cell.key = profileInfo[indexPath.row-1].text
             cell.info = profileInfo[indexPath.row-1].info
             cell.selectionStyle = .none
-//            cell.accessoryType = .none
+            cell.accessoryType = .none
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePageTableViewCell.identifier, for: indexPath) as! ProfilePageTableViewCell
             cell.key = educationInfo[indexPath.row].text
             cell.info = educationInfo[indexPath.row].info
             if indexPath.row > 0 {
-//                cell.accessoryType = .disclosureIndicator
-                //cell.selectionStyle = .default
+                cell.accessoryType = .disclosureIndicator
+                cell.selectionStyle = .default
                 cell.selectionStyle = .none
             } else {
                 cell.selectionStyle = .none
@@ -143,16 +143,16 @@ extension ProfilePageViewModel: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        if indexPath.row == 0 && indexPath.section == 0 {
-//            delegate.presentImagePicker()
-//        }
-//        if indexPath.row == 1 && indexPath.section == 1 {
-//            delegate.presentTableView(isMajors: false)
-//        }
-//        if indexPath.row == 2 && indexPath.section == 1 {
-//            delegate.presentTableView(isMajors: true)
-//        }
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row == 0 && indexPath.section == 0 {
+            delegate.presentImagePicker()
+        }
+        if indexPath.row == 1 && indexPath.section == 1 {
+            delegate.presentTableView(isMajors: false)
+        }
+        if indexPath.row == 2 && indexPath.section == 1 {
+            delegate.presentTableView(isMajors: true)
+        }
     }
 
 }

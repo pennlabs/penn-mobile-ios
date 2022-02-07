@@ -14,16 +14,6 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
-        switchToView()
-    }
-    
-    private func switchToView() {
-        let loggedIn = UserDefaults.standard.getAccount() != nil
-        if loggedIn {
-            AppDelegate.shared.rootViewController.showMainScreen()
-        } else {
-            AppDelegate.shared.rootViewController.showLoginScreen()
-        }
+        view.backgroundColor = .uiBackground
     }
 }

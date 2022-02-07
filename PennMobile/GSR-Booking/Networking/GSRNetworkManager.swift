@@ -48,7 +48,6 @@ class GSRNetworkManager: NSObject, Requestable {
             var url = URL(string: "\(self.availUrl)")!
             url.appendPathComponent(lid)
             url.appendPathComponent("\(gid)")
-//            print(url)
             
             if let startDate = startDate {
                 url.appendQueryItem(name: "start", value: startDate)
@@ -154,6 +153,8 @@ extension GSRNetworkManager {
                     } catch {
                         completion(.failure(.parsingError))
                     }
+                } else {
+                    completion(.failure(.other))
                 }
             }
             
@@ -188,44 +189,5 @@ extension GSRNetworkManager {
             
             task.resume()
         }
-    }
-    
-    func deleteReservation(bookingID: String, sessionID: String?, callback: @escaping (_ success: Bool, _ errorMsg: String?) -> Void) {
-        let url = URL(string: cancelURL)!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let deviceID = getDeviceID()
-        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
-        
-        var params = ["booking_id": bookingID]
-        
-        if let sessionID = sessionID {
-            params["sessionid"] = sessionID
-        }
-        
-        request.httpBody = params.stringFromHttpParameters().data(using: String.Encoding.utf8)
-        let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
-            
-            if error != nil {
-                callback(false, "Unable to connect to the Internet.")
-            } else if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                        let json = JSON(data)
-                        if let result = json["result"].array?.first {
-                            let success = result["cancelled"].boolValue
-                            let errorMsg = result["error"].string
-                            callback(success, errorMsg)
-                            return
-                        } else if let errorMsg = json["error"].string {
-                            callback(false, errorMsg)
-                            return
-                        }
-                    }
-                }
-                callback(false, "Something went wrong. Please try again.")
-            }
-        })
-        task.resume()
     }
 }

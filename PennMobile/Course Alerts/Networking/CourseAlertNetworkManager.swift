@@ -21,13 +21,26 @@ enum RequestType {
 class CourseAlertNetworkManager: NSObject, Requestable {
     
     static let instance = CourseAlertNetworkManager()
-    
+            
     let settingsURL = "https://penncoursealert.com/accounts/me/"
-    let coursesURL = "https://penncoursealert.com/api/base/2021A/search/sections/"
+    let coursesURL = "https://penncoursealert.com/api/base/"
     let registrationsURL = "https://penncoursealert.com/api/alert/registrations/"
     
     func getSearchedCourses(searchText:String, _ callback: @escaping (_ results: [CourseSection]?) -> ()) {
-        let urlStr = "\(coursesURL)?search=\(searchText)"
+        
+        let year = Calendar.current.component(.year, from: Date())
+        let month = Calendar.current.component(.month, from: Date())
+        let semester: String
+        
+        if (month < 5) {
+            semester = "A"
+        } else if (month < 9) {
+            semester = "B"
+        } else {
+            semester = "C"
+        }
+        
+        let urlStr = "\(coursesURL)\(year)\(semester)/search/sections/?search=\(searchText)"
         let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let data = data {
@@ -70,7 +83,6 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 return
             }
             
-            UserDefaults.standard.set(.alertsThroughPennMobile, to: settings.profile.pushNotifications)
             UserDefaults.standard.set(.pennCourseAlerts, to: settings.profile.pushNotifications)
 
             callback(settings)

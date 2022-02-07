@@ -6,7 +6,7 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import SwiftyJSON
 
 func getDeviceID() -> String {
@@ -18,7 +18,7 @@ func getDeviceID() -> String {
     #endif
 }
 
-class UserDBManager: NSObject, Requestable, KeychainAccessible, SHA256Hashable {
+class UserDBManager: NSObject, Requestable, SHA256Hashable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
     
@@ -58,7 +58,7 @@ class UserDBManager: NSObject, Requestable, KeychainAccessible, SHA256Hashable {
     fileprivate func getAnonymousPrivacyRequest(url: String, for privacyOption: PrivacyOption) -> URLRequest {
         let url = URL(string: url)!
         var request = URLRequest(url: url)
-        guard let pennkey = getPennKey(), let password = getPassword(), let privateUUID = privacyOption.privateUUID else {
+        guard let pennkey = KeychainAccessible.instance.getPennKey(), let password = KeychainAccessible.instance.getPassword(), let privateUUID = privacyOption.privateUUID else {
             return request
         }
         let passwordHash = hash(string: pennkey + "-" + password + "-" + privacyOption.rawValue, encoding: .hex)
@@ -71,18 +71,46 @@ class UserDBManager: NSObject, Requestable, KeychainAccessible, SHA256Hashable {
 
 // MARK: - Dining
 extension UserDBManager {
+    func fetchDiningPreferences(_ completion: @escaping(_ result: Result<[DiningVenue], NetworkingError>) -> Void) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                // TODO: - Add network error handling for OAuth2
+                completion(.failure(.authenticationError))
+                return
+            }
+            
+            let url = URL(string: "https://pennmobile.org/api/dining/preferences/")!
+            let request = URLRequest(url: url, accessToken: token)
+        
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                guard let data = data else {
+                   if let error = error as? NetworkingError {
+                       completion(.failure(error))
+                   } else {
+                       completion(.failure(.other))
+                   }
+                   return
+                }
+                
+                let diningVenueIds = JSON(data)["preferences"].arrayValue.map({ $0["venue_id"].int! })
+                let diningVenues = DiningAPI.instance.getVenues(with: diningVenueIds)
+                completion(.success(diningVenues))
+                
+            }
+            
+            task.resume()
+        }
+    }
+    
     func saveDiningPreference(for venueIds: [Int]) {
-        let url = "\(baseUrl)/dining/preferences"
-        let params = ["venues": venueIds]
+        let url = "https://pennmobile.org/api/dining/preferences/"
 
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             let url = URL(string: url)!
             var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
             request.httpMethod = "POST"
-            request.httpBody = String.getPostString(params: params).data(using: .utf8)
-            
-            let deviceID = getDeviceID()
-            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
+            request.httpBody = try? JSON(["venues": venueIds]).rawData()
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
             let task = URLSession.shared.dataTask(with: request)
             task.resume()
@@ -98,14 +126,16 @@ extension UserDBManager {
     }
     
     func saveLaundryPreferences(for ids: [Int]) {
-        let url = "\(baseUrl)/laundry/preferences"
+        let url = "https://pennmobile.org/api/laundry/preferences/"
         let params = ["rooms": ids]
 
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             let url = URL(string: url)!
             var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
             request.httpMethod = "POST"
-            request.httpBody = String.getPostString(params: params).data(using: .utf8)
+            
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSON(params).rawData()
             
             let deviceID = getDeviceID()
             request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
@@ -116,7 +146,7 @@ extension UserDBManager {
     }
     
     func getLaundryPreferences(_ callback: @escaping (_ rooms: [Int]?) -> Void) {
-        let url = "\(baseUrl)/laundry/preferences"
+        let url = "https://pennmobile.org/api/laundry/preferences/"
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             let url = URL(string: url)!
             var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
