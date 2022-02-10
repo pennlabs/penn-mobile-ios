@@ -1,10 +1,10 @@
-////
-////  Account.swift
-////  PennMobile
-////
-////  Created by Josh Doman on 2/24/19.
-////  Copyright © 2019 PennLabs. All rights reserved.
-////
+//
+//  Account.swift
+//  PennMobile
+//
+//  Created by Josh Doman on 2/24/19.
+//  Copyright © 2019 PennLabs. All rights reserved.
+//
 //
 import Foundation
 
