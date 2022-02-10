@@ -31,7 +31,7 @@ class OAuth2NetworkManager: NSObject {
     static let instance = OAuth2NetworkManager()
     private override init() {}
 
-    private var clientID = "CJmaheeaQ5bJhRL0xxlxK3b8VEbLb3dMfUAvI2TN"
+    private var clientID = InfoPlistEnvironment.labsOauthClientId
 
     private var currentAccessToken: AccessToken?
 }
