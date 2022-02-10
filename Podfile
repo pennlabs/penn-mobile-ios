@@ -20,12 +20,13 @@ pod 'SwiftLint'
 #pod 'WKZombie', :git => 'https://github.com/pennlabs/WKZombie.git', :commit => '536f6e8aa0e8438fe711fff6420908bc67edb056'
 pod 'OneTimePassword', '~> 3.2'
 
-    target 'AutomatedScreenshotUITests' do
-        inherit! :search_paths
-        # Pods for testing
-        pod 'SimulatorStatusMagic'
-    end
 
+end
+
+target 'AutomatedScreenshotUITests' do
+    #inherit! :search_paths
+    # Pods for testing
+    pod 'SimulatorStatusMagic'
 end
 
 post_install do |pi|
