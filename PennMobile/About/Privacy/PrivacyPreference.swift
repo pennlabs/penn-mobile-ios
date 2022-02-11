@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias PrivacyPreferences = Dictionary<String, Bool>
+typealias PrivacyPreferences = [String: Bool]
 
 /*
  Privacy preferences are stored in UserDefaults as a String:Bool mapping, where
@@ -30,17 +30,17 @@ enum PrivacyOption: String, CaseIterable {
     case diningBalanceAndHistory
     case collegeHouse
     case academicIdentity
-    
+
     // Options to be actually shown to the user
     static let visibleOptions: [PrivacyOption] = [
         .anonymizedCourseSchedule, .collegeHouse, .academicIdentity
     ]
-    
+
     // Options that required the use of anonymized data
     static let anonymizedOptions: [PrivacyOption] = [
         .anonymizedCourseSchedule
     ]
-    
+
     var cellTitle: String {
         switch self {
         case .anonymizedCourseSchedule: return "Anonymized course schedule"
@@ -49,7 +49,7 @@ enum PrivacyOption: String, CaseIterable {
         case .academicIdentity: return "Academic identity"
         }
     }
-    
+
     var cellFooterDescription: String {
         switch self {
         case .anonymizedCourseSchedule: return "Other Penn Labs products aggregate past schedules to provide course recommendations to students. Your data is anonymized before entering our dataset."
@@ -59,7 +59,7 @@ enum PrivacyOption: String, CaseIterable {
         case .academicIdentity: return "Your school and graduation year is used to present you with more relevant events on the homepage. For example, the 2022 Class Board may wish to alert all '22 users about an upcoming giveaway."
         }
     }
-    
+
     var defaultValue: Bool {
         switch self {
         case .diningBalanceAndHistory: return UserDefaults.standard.hasDiningPlan()
@@ -68,7 +68,7 @@ enum PrivacyOption: String, CaseIterable {
         default: return false
         }
     }
-    
+
     var requiresAuth: Bool {
         switch self {
         case .anonymizedCourseSchedule: return true
@@ -77,21 +77,20 @@ enum PrivacyOption: String, CaseIterable {
         default: return false
         }
     }
-    
+
     // MARK: User Defaults Keys
     // These keys ARE cleared when UserDefaults is wiped.
-    
+
     // A key used by UserDefaults to tell if and when we've asked for this privacy option
     var didRequestKey: String {
         return "didRequest_" + self.rawValue
     }
-    
+
     // A key used by UserDefaults to tell if and when we've shared data for this option
     var didShareKey: String {
         return "didShare_" + self.rawValue
     }
-    
-    
+
     // This key is NOT cleared when UserDefaults is wiped.
     // A key used by UserDefaults to store a UUID which points to this user's anonymous data on the server for this option. This should never leave the device
     var privateIDKey: String? {
@@ -99,7 +98,7 @@ enum PrivacyOption: String, CaseIterable {
         guard let accountId = UserDefaults.standard.getAccountID() else { return nil }
         return "privateID_" + self.rawValue + "_" + accountId
     }
-    
+
     var privateUUID: String? {
         UserDefaults.standard.getPrivacyUUID(for: self)
     }
@@ -115,7 +114,7 @@ extension PrivacyOption {
                 completion(false)
                 return
             }
-            
+
             switch self {
             case .anonymizedCourseSchedule:
                 PennInTouchNetworkManager.instance.getCourses { (result) in
@@ -126,7 +125,7 @@ extension PrivacyOption {
                 }
             case .collegeHouse:
                 // Save the current semester and then save previous semesters stored in UserDefaults
-                CampusExpressNetworkManager.instance.updateHousingData { (success) in
+                CampusExpressNetworkManager.instance.updateHousingData { _ in
                     UserDBManager.shared.saveMultiyearHousingData()
                 }
             case .academicIdentity:
@@ -138,12 +137,12 @@ extension PrivacyOption {
                 }
             default: break
             }
-            
+
             // Privacy setting successfully saved even if data not able to be fetched, so return success
             completion(true)
         }
     }
-    
+
     func removePermission(_ completion: @escaping (_ success: Bool) -> Void) {
         UserDefaults.standard.set(self, to: false)
         UserDBManager.shared.saveUserPrivacySettings { (successSave) in
@@ -153,7 +152,7 @@ extension PrivacyOption {
                 completion(false)
                 return
             }
-            
+
             switch self {
             case .anonymizedCourseSchedule:
                 UserDefaults.standard.removeObject(forKey: self.didShareKey)

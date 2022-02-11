@@ -11,7 +11,7 @@ import Foundation
 protocol GSRDeletable: IndicatorEnabled, ShowsAlert {}
 
 extension GSRDeletable where Self: UIViewController {
-    
+
     func deleteReservation(_ bookingId: String, _ callback: @escaping (_ success: Bool) -> Void) {
         confirmDelete {
             self.showActivity()
@@ -29,11 +29,11 @@ extension GSRDeletable where Self: UIViewController {
             }
         }
     }
-    
+
     func deleteReservation(_ reservation: GSRReservation, _ callback: @escaping (_ success: Bool) -> Void) {
         deleteReservation(reservation.bookingId, callback)
     }
-    
+
     func confirmDelete(_ callback: @escaping () -> Void) {
         let alertController = UIAlertController(title: "Are you sure?", message: "Please confirm that you wish to delete this booking.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))

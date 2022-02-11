@@ -14,39 +14,39 @@ import Combine
 
 @available(iOS 13, *)
 struct PermissionView: View {
-    
+
     enum Choice {
         case affirmative, negative, moreInfo
     }
-    
+
     @ObservedObject var delegate: PrivacyPermissionDelegate
     let title: String
     let privacyString: String
     let affirmativeString: String
     let negativeString: String
     let moreInfoString: String
-    
+
     var body: some View {
         VStack(alignment: .center, spacing: 17) {
-            
+
             Image("pennmobile")
                 .resizable()
                 .frame(minWidth: 45, maxWidth: 70, minHeight: 45, maxHeight: 70)
                 .scaledToFit()
                 .padding(.bottom, 17)
                 .padding(.top, 30)
-            
+
             Text(title)
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
-            
+
             Text(privacyString)
                 .padding()
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.8)
                 .layoutPriority(1)
-            
+
             Button(action: moreAboutLabs) {
                 HStack {
                     Text(moreInfoString)
@@ -54,22 +54,22 @@ struct PermissionView: View {
                 }
                 .font(.system(size: 17, weight: .semibold))
             }
-            
+
             Spacer()
 
             FullButton(action: shareCourses, content: Text(affirmativeString), foreground: .white, background: .blue)
             FullButton(action: doNotShareCourses, content: Text(negativeString), foreground: .primary, background: .clear)
         }
     }
-    
+
     func moreAboutLabs() {
         delegate.userDecision = .moreInfo
     }
-    
+
     func shareCourses() {
         delegate.userDecision = .affirmative
     }
-    
+
     func doNotShareCourses() {
         delegate.userDecision = .negative
     }
@@ -81,7 +81,7 @@ struct FullButton: View {
     var content: Text
     var foreground: Color? = .white
     var background: Color? = .blue
-    
+
     var body: some View {
         Button(action: action) {
             content

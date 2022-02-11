@@ -8,7 +8,7 @@
 
 import Foundation
 
-//group gsrs!
+// group gsrs!
 class GSRGroupController: GenericViewController {
 
     fileprivate var groups = [GSRGroup]() {
@@ -34,8 +34,8 @@ class GSRGroupController: GenericViewController {
 extension GSRGroupController {
     fileprivate func setupUI() {
         setupTableView()
-        
-        //Add swipe up to refresh to Table View
+
+        // Add swipe up to refresh to Table View
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(fetchGroups), for: .valueChanged)
     }
@@ -101,8 +101,8 @@ extension GSRGroupController: UITableViewDataSource, UITableViewDelegate {
 
 }
 
-//MARK: NewGroupInitialDelegate
-extension GSRGroupController: NewGroupInitialDelegate{
+// MARK: NewGroupInitialDelegate
+extension GSRGroupController: NewGroupInitialDelegate {
     @objc func fetchGroups() {
         GSRGroupNetworkManager.instance.getAllGroups { (groups) in
             if let groups = groups {

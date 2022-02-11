@@ -9,50 +9,50 @@ import Foundation
 import SwiftyJSON
 
 class LaundryRoom: Codable {
-    
-    static let directory = "laundryHallData.json"
-    
-    enum CodingKeys: CodingKey {
-        case id
+
+    static let directory = "laundryHallData-v2.json"
+
+    enum CodingKeys: String, CodingKey {
+        case id = "hall_id"
         case name
-        case building
+        case building = "location"
     }
-    
+
     let id: Int
     let name: String
     let building: String
-    
+
     var washers = [LaundryMachine]()
     var dryers = [LaundryMachine]()
-    
-    var usageData: Array<Double>! = nil
-    
+
+    var usageData: [Double]! = nil
+
     init(id: Int, name: String, building: String) {
         self.id = id
         self.name = name
         self.building = building
     }
-    
+
     init(json: JSON) {
         self.id = json["id"].intValue
         self.name = json["hall_name"].string ?? "Unknown"
         self.building = json["location"].string ?? "Unknown"
-        
+
         let runningMachines = json["machines"]["details"].arrayValue.map { LaundryMachine(json: $0, roomName: name) }
         washers = runningMachines.filter { $0.isWasher }.sorted()
         dryers = runningMachines.filter { !$0.isWasher }.sorted()
-        
+
         let usageJSON = json["usage_data"]
         guard let washerData = usageJSON["washer_data"].dictionary, let dryerData = usageJSON["dryer_data"].dictionary else { return }
-        
-        usageData = Array<Double>(repeating: 0, count: 27)
+
+        usageData = [Double](repeating: 0, count: 27)
         washerData.forEach { (key, val) in
             usageData[Int(key)!] = val.doubleValue
         }
         dryerData.forEach { (key, val) in
             usageData[Int(key)!] += val.doubleValue
         }
-        
+
         let dataMax = usageData.max()!
         let dataMin = usageData.min()!
         if dataMin == dataMax {
@@ -63,20 +63,20 @@ class LaundryRoom: Codable {
             }
         }
     }
-    
+
     static func getLaundryHall(for id: Int) -> LaundryRoom? {
         return LaundryAPIService.instance.idToRooms?[id]
     }
-    
+
     static func setPreferences(for ids: [Int]) {
         UserDefaults.standard.setLaundryPreferences(to: ids)
     }
-    
+
     static func setPreferences(for halls: [LaundryRoom]) {
         let ids = halls.map { $0.id }
         LaundryRoom.setPreferences(for: ids)
     }
-    
+
     static func getPreferences() -> [LaundryRoom] {
         if UIApplication.isRunningFastlaneTest {
             var halls = [LaundryRoom]()
@@ -99,7 +99,7 @@ class LaundryRoom: Codable {
             return [LaundryRoom]()
         }
     }
-    
+
     func decrementTimeRemaining(by minutes: Int) {
         washers.decrementTimeRemaining(by: minutes)
         dryers.decrementTimeRemaining(by: minutes)
@@ -110,7 +110,7 @@ class LaundryRoom: Codable {
 
 // MARK: - Equatable
 extension LaundryRoom: Equatable {
-    static func ==(lhs: LaundryRoom, rhs: LaundryRoom) -> Bool {
+    static func == (lhs: LaundryRoom, rhs: LaundryRoom) -> Bool {
         return lhs.id == rhs.id
     }
 }

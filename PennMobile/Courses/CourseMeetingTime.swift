@@ -14,7 +14,7 @@ struct CourseMeetingTime: Codable {
     let weekday: String
     let startTime: String
     let endTime: String
-    
+
     var description: String {
         var str = "\(weekday) \(startTime) \(endTime)"
         if let room = room {

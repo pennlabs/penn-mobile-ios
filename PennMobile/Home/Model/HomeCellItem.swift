@@ -20,7 +20,6 @@ extension HomeCellItem {
     }
 }
 
-
 protocol LoggingIdentifiable where Self: HomeCellItem {
     var id: String { get }
 }

@@ -11,13 +11,13 @@ import SwiftyJSON
 
 class GSRLocationModel {
     static let shared = GSRLocationModel()
-    
+
     fileprivate var locations = [GSRLocation]()
-    
+
     func getLocations() -> [GSRLocation] {
         return locations
     }
-    
+
     func getLocationName(for lid: String, gid: Int?) -> String {
         for location in locations {
             if location.lid == lid && location.gid == gid {
@@ -26,7 +26,7 @@ class GSRLocationModel {
         }
         return ""
     }
-    
+
     func prepare() {
         DispatchQueue.main.async {
             GSRNetworkManager.instance.getLocations { result in

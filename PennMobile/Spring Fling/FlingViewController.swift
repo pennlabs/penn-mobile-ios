@@ -1,20 +1,20 @@
-////
-////  FlingViewController.swift
-////  PennMobile
-////
-////  Created by Josh Doman on 3/10/18.
-////  Copyright © 2018 PennLabs. All rights reserved.
-////
 //
-//import Foundation
-//import ZoomImageView
-//import SafariServices
+//  FlingViewController.swift
+//  PennMobile
 //
-//protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
+//  Created by Josh Doman on 3/10/18.
+//  Copyright © 2018 PennLabs. All rights reserved.
 //
-//final class FlingTableViewModel: ModularTableViewModel {}
 //
-//final class FlingViewController: GenericViewController, HairlineRemovable, IndicatorEnabled {
+// import Foundation
+// import ZoomImageView
+// import SafariServices
+//
+// protocol FlingCellDelegate: ModularTableViewCellDelegate, URLSelectable {}
+//
+// final class FlingTableViewModel: ModularTableViewModel {}
+//
+// final class FlingViewController: GenericViewController, HairlineRemovable, IndicatorEnabled {
 //
 //    fileprivate var performersTableView: ModularTableView!
 //    fileprivate var scheduleTableView: UITableView!
@@ -95,9 +95,9 @@
 //        scheduleTableView.isHidden = segment.selectedSegmentIndex == 1 ? false : true
 //        mapImageView.isHidden = segment.selectedSegmentIndex == 2 ? false : true
 //    }
-//}
+// }
 //
-//extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
+// extension FlingViewController: UITableViewDelegate, UITableViewDataSource {
 //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return performers.count
 //    }
@@ -197,10 +197,10 @@
 //        }
 //    }
 //
-//}
+// }
 //
-//// MARK: - Networking
-//extension FlingViewController {
+// MARK: - Networking
+// extension FlingViewController {
 //    func fetchViewModel(_ completion: @escaping () -> Void) {
 //        FlingNetworkManager.instance.fetchModel { (model) in
 //            guard let model = model else { return }
@@ -249,19 +249,19 @@
 //        }
 //        performers.sort(by: { ($0.startTime < $1.startTime) })
 //    }
-//}
+// }
 //
-//// MARK: - ModularTableViewDelegate
-//extension FlingViewController: FlingCellDelegate {
+// MARK: - ModularTableViewDelegate
+// extension FlingViewController: FlingCellDelegate {
 //    func handleUrlPressed(urlStr: String, title: String, item: ModularTableViewItem, shouldLog: Bool) {
 //        checkInWebview = SFSafariViewController(url: URL(string: checkInUrl)!)
 //        navigationController?.present(checkInWebview, animated: true)
 //        FirebaseAnalyticsManager.shared.trackEvent(action: "Fling Check-In", result: "Fling Check-In", content: "Fling Check-In")
 //    }
-//}
+// }
 //
-//// MARK: - Check In
-//extension FlingViewController {
+// MARK: - Check In
+// extension FlingViewController {
 //    fileprivate func prepareCheckInButton() {
 //        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Check-In", style: .done, target: self, action: #selector(handleCheckInButtonPressed(_:)))
 //    }
@@ -270,10 +270,10 @@
 //        checkInWebview = SFSafariViewController(url: URL(string: checkInUrl)!)
 //        navigationController?.present(checkInWebview, animated: true)
 //    }
-//}
+// }
 //
-//// MARK: - Map Image
-//extension FlingViewController {
+// MARK: - Map Image
+// extension FlingViewController {
 //    fileprivate func prepareMapImageView() {
 //        mapImageView = ZoomImageView()
 //        mapImageView.image = UIImage(named: "Fling_Map")
@@ -284,10 +284,10 @@
 //        mapImageView.topAnchor.constraint(equalTo: headerToolbar.bottomAnchor, constant: 0).isActive = true
 //        mapImageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
 //    }
-//}
+// }
 //
-//// MARK: - Prepare TableViews
-//extension FlingViewController {
+// MARK: - Prepare TableViews
+// extension FlingViewController {
 //    func prepareScheduleTableView() {
 //        scheduleTableView = UITableView()
 //        scheduleTableView.backgroundColor = .uiBackground
@@ -336,7 +336,7 @@
 //
 //        HomeItemTypes.instance.registerCells(for: performersTableView)
 //    }
-//}
+// }
 //
 //
 //

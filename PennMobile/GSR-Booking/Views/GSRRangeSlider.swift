@@ -18,22 +18,22 @@ protocol GSRRangeSliderDelegate {
 class GSRRangeSlider: RangeSlider {
     fileprivate var startDate = Date.midnightYesterday
     fileprivate var endDate = Date.midnightToday
-    
+
     fileprivate var minDate = Date.midnightYesterday
     fileprivate var maxDate = Date.midnightToday
-    
+
     var delegate: GSRRangeSliderDelegate?
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
         setupCallbacks()
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Reload
     override func reload() {
         guard let start = delegate?.getMinDate(), let end = delegate?.getMaxDate() else { return }
@@ -50,7 +50,7 @@ extension GSRRangeSlider {
         self.thumbSize = 24.0
         self.displayTextFontSize = 14.0
     }
-    
+
     fileprivate func setupCallbacks() {
         self.setMinValueDisplayTextGetter { (minValue) -> String? in
             return self.delegate!.existsNonEmptyRoom() ? self.getStringTimeFromValue(minValue) : ""
@@ -67,7 +67,7 @@ extension GSRRangeSlider {
             self.delegate!.parseData(startDate: self.minDate, endDate: self.maxDate)
         }
     }
-    
+
     private func getStringTimeFromValue(_ val: Int) -> String? {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mma"

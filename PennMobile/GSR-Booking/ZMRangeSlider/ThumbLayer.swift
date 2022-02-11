@@ -10,8 +10,8 @@ class ThumbLayer: CALayer {
 
     weak var rangeSlider: RangeSlider?
 
-    var thumbTint : CGColor = UIColor.gray.cgColor
-   
+    var thumbTint: CGColor = UIColor.gray.cgColor
+
     override func draw(in ctx: CGContext) {
         guard let slider = rangeSlider else {
             return

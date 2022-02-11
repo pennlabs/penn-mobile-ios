@@ -9,15 +9,15 @@
 import UIKit
 
 @objc class AnnouncementHeaderView: UITableViewHeaderFooterView {
-    
+
     static let headerHeight: CGFloat = 40
-    
+
     var announcement: String? {
         didSet {
             label.text = announcement
         }
     }
-    
+
     private lazy var label: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Light", size: 17)
@@ -27,19 +27,19 @@ import UIKit
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        
+
         contentView.backgroundColor = .baseBlue
-        
+
         addSubview(label)
         label.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

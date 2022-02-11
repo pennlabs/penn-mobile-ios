@@ -10,15 +10,15 @@ import Foundation
 import UserNotifications
 
 class LaundryNotificationCenter {
-    
+
     static let shared = LaundryNotificationCenter()
-    
-    private var identifiers = Dictionary<LaundryMachine, String>()
-    
+
+    private var identifiers = [LaundryMachine: String]()
+
     func prepare() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
-    
+
     func notifyWithMessage(for machine: LaundryMachine, title: String?, message: String?, completion: @escaping (_ success: Bool) -> Void) {
         let center = UNUserNotificationCenter.current()
         let minutes = machine.timeRemaining
@@ -27,7 +27,7 @@ class LaundryNotificationCenter {
                 completion(false)
                 return
             }
-            
+
             if granted {
                 let content = UNMutableNotificationContent()
                 if let title = title {
@@ -38,28 +38,28 @@ class LaundryNotificationCenter {
                     content.body = NSString.localizedUserNotificationString(forKey:
                         message, arguments: nil)
                 }
-                
+
                 // Deliver the notification when minutes expire.
                 content.sound = UNNotificationSound.default
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(60 * minutes),
                                                                 repeats: false)
-                
+
                 // Schedule the notification.
                 let identifier = "\(machine.hashValue)-\(Date().timeIntervalSince1970)"
                 let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
                 let center = UNUserNotificationCenter.current()
                 center.add(request, withCompletionHandler: nil)
-                
+
                 self.identifiers[machine] = identifier
             }
-            
+
             completion(granted)
         }
     }
-    
+
     func updateForExpiredNotifications(_ completion: @escaping () -> Void) {
         UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
-            var newIdentifiers = Dictionary<LaundryMachine, String>()
+            var newIdentifiers = [LaundryMachine: String]()
             for (machine, identifier) in self.identifiers {
                 if requests.contains(where: { (request) -> Bool in
                     request.identifier == identifier
@@ -71,13 +71,13 @@ class LaundryNotificationCenter {
             completion()
         }
     }
-    
+
     func removeOutstandingNotification(for machine: LaundryMachine) {
         guard let identifier = identifiers[machine] else { return }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
         identifiers.removeValue(forKey: machine)
     }
-    
+
     func isUnderNotification(for machine: LaundryMachine) -> Bool {
         return identifiers[machine] != nil
     }

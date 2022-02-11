@@ -31,19 +31,19 @@ struct FadingScrollView<Content: View>: View {
             ScrollView(axes, showsIndicators: showsIndicators) {
                 // Pad the content depending on the axes so that bottom or trailing
                 // part of the content isn't faded when scrolling all the way to the end.
-                
+
                 if axes == .vertical {
                     Spacer(minLength: fadeDistance)
-                    
+
                     content
-                    
+
                     Spacer(minLength: fadeDistance)
                 } else if axes == .horizontal {
                     HStack(spacing: 0) {
                         Spacer(minLength: fadeDistance)
 
                         content
-                        
+
                         Spacer(minLength: fadeDistance)
                     }
                 }
@@ -55,16 +55,15 @@ struct FadingScrollView<Content: View>: View {
                         .frame(height: fadeDistance)
                         // SwiftUI internally not working
                         .allowsHitTesting(false)
-                    
+
                     Spacer()
-                    
+
                     fadeGradient(for: .vertical, startPoint: .bottom, endPoint: .top)
                         .frame(height: fadeDistance)
                         // SwiftUI internally not working
                         .allowsHitTesting(false)
                 }
             }
-
 
             if axes.contains(.horizontal) {
                 HStack {

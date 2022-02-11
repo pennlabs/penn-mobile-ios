@@ -13,10 +13,10 @@ protocol ReservationCellDelegate {
 }
 
 class ReservationCell: UITableViewCell {
-    
+
     static let identifier = "reservationCell"
     static let cellHeight: CGFloat = 110
-    
+
     var reservation: GSRReservation! {
         didSet {
             locationLabel.text = String(reservation.roomName.split(separator: ":").first ?? "")
@@ -24,22 +24,22 @@ class ReservationCell: UITableViewCell {
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM d, YYYY"
             dateLabel.text = formatter.string(from: reservation.start)
-            
+
             formatter.dateFormat = "h:mm a"
             let startStr = formatter.string(from: reservation.start)
             let endStr = formatter.string(from: reservation.end)
             timeLabel.text = "\(startStr) - \(endStr)"
-            
+
             buildingImageView.kf.setImage(with: URL(string: reservation.gsr.imageUrl))
         }
     }
-    
+
     var delegate: ReservationCellDelegate!
-    
+
     @objc func handleDeletePressed(_ sender: Any) {
         self.delegate.deleteReservation(reservation)
     }
-    
+
     // MARK: - UI Elements
     fileprivate var safeArea: UIView!
     fileprivate var locationLabel: UILabel!
@@ -47,12 +47,12 @@ class ReservationCell: UITableViewCell {
     fileprivate var timeLabel: UILabel!
     fileprivate var deleteButton: UIButton!
     fileprivate var buildingImageView: UIImageView!
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.prepareUI()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -67,12 +67,12 @@ extension ReservationCell {
         prepareImageView()
         prepareLabelsAndButton()
     }
-    
+
     // MARK: Safe Area
     fileprivate func prepareSafeArea() {
         safeArea = UIView()
         addSubview(safeArea)
-        
+
         safeArea.snp.makeConstraints { (make) in
             make.leading.equalTo(self).offset(pad)
             make.trailing.equalTo(self).offset(-pad * 2)
@@ -80,12 +80,12 @@ extension ReservationCell {
             make.bottom.equalTo(self).offset(-pad)
         }
     }
-    
+
     // MARK: ImageView
     fileprivate func prepareImageView() {
         buildingImageView = getBuildingImageView()
         addSubview(buildingImageView)
-        
+
         buildingImageView.snp.makeConstraints { (make) in
             make.width.equalTo(134)
             make.height.equalTo(86)
@@ -93,7 +93,7 @@ extension ReservationCell {
             make.centerY.equalTo(safeArea)
         }
     }
-    
+
     // MARK: Labels
     fileprivate func prepareLabelsAndButton() {
         locationLabel = getLocationLabel()
@@ -104,25 +104,25 @@ extension ReservationCell {
         addSubview(dateLabel)
         deleteButton = getDeleteButton()
         addSubview(deleteButton)
-        
+
         locationLabel.snp.makeConstraints { (make) in
             make.top.equalTo(buildingImageView.snp.top).offset(-2)
             make.leading.equalTo(buildingImageView.snp.trailing).offset(pad)
             make.trailing.equalTo(safeArea)
         }
-        
+
         dateLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(locationLabel.snp.leading)
             make.top.equalTo(locationLabel.snp.bottom).offset(3)
             make.trailing.equalTo(safeArea)
         }
-        
+
         timeLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(locationLabel.snp.leading)
             make.top.equalTo(dateLabel.snp.bottom).offset(3)
             make.trailing.equalTo(safeArea)
         }
-        
+
         deleteButton.snp.makeConstraints { (make) in
             make.width.equalTo(94)
             make.height.equalTo(24)
@@ -130,7 +130,7 @@ extension ReservationCell {
             make.bottom.equalTo(buildingImageView.snp.bottom)
         }
     }
-    
+
     fileprivate func getBuildingImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.backgroundColor = .grey2
@@ -139,7 +139,7 @@ extension ReservationCell {
         imageView.layer.cornerRadius = 5.0
         return imageView
     }
-    
+
     fileprivate func getLocationLabel() -> UILabel {
         let label = UILabel()
         label.font = .interiorTitleFont
@@ -148,7 +148,7 @@ extension ReservationCell {
         label.shrinkUntilFits()
         return label
     }
-    
+
     fileprivate func getTimeOrDateLabel() -> UILabel {
         let label = UILabel()
         label.font = .secondaryInformationFont
@@ -158,7 +158,7 @@ extension ReservationCell {
         label.shrinkUntilFits()
         return label
     }
-    
+
     private func getDeleteButton() -> UIButton {
         let button = UIButton(type: .system)
         button.setTitle("Delete", for: .normal)

@@ -9,55 +9,55 @@
 import WebKit
 
 class DiningViewController: GenericTableViewController {
-        
+
     fileprivate var viewModel = DiningViewModel()
     fileprivate var isReturningFromLogin: Bool = false
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView.separatorStyle = .none
         tableView.dataSource = self
-        
+
         self.screenName = "Dining"
-        
+
         viewModel.transactionCellDelegate = self
-        
+
         viewModel.delegate = self
         viewModel.registerHeadersAndCells(for: tableView)
-        
+
         tableView.dataSource = viewModel
         tableView.delegate = viewModel
         prepareRefreshControl()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchDiningHours()
         fetchBalance()
-        
+
         if viewModel.venues[.dining]?.isEmpty ?? true {
             viewModel.refresh()
             tableView.reloadData()
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         refreshControl?.endRefreshing()
     }
-    
+
     override func setupNavBar() {
         super.setupNavBar()
         self.tabBarController?.title = "Dining"
     }
 }
 
-//Mark: Networking to retrieve today's times
+// MARK: Networking to retrieve today's times
 extension DiningViewController {
     fileprivate func fetchDiningHours() {
         DiningAPI.instance.fetchDiningHours { (result) in
@@ -72,14 +72,14 @@ extension DiningViewController {
                         self.navigationVC?.addStatusBar(text: .noInternet)
                     }
                 }
-                
+
                 self.viewModel.venues = DiningAPI.instance.getSectionedVenues()
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
             }
         }
     }
-    
+
     func fetchBalance() {
         self.viewModel.showActivity = true
         DiningAPI.instance.fetchDiningBalance { (diningBalance) in
@@ -91,7 +91,7 @@ extension DiningViewController {
             }
         }
     }
-    
+
     func updateBalanceIfNeeded() {
         if let balance = self.viewModel.balance, balance.lastUpdated.hoursFrom(date: Date()) < 12 && !isReturningFromLogin {
             // Do not fetch balance if the last balance was fetched less than 12 hours ago or if balance is being refetched in refreshBalance()
@@ -100,11 +100,11 @@ extension DiningViewController {
         }
         updateBalanceFromCampusExpress()
     }
-    
+
     func updateBalanceFromCampusExpress(requestLoginOnFail: Bool = false) {
         // Do nothing if network call is being made
         if self.viewModel.showActivity { return }
-        
+
         self.viewModel.showActivity = true
         self.tableView.reloadData()
         CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, error) in
@@ -124,7 +124,7 @@ extension DiningViewController {
                 DispatchQueue.main.async {
                     self.viewModel.showActivity = false
                     self.tableView.reloadData()
-                    
+
                     if requestLoginOnFail {
                         let wasReturningFromLogin = self.isReturningFromLogin
                         if let error = error as? NetworkingError, error == NetworkingError.authenticationError && !self.isReturningFromLogin {
@@ -132,7 +132,7 @@ extension DiningViewController {
                             // Request user to log in again
                             self.showLoginController()
                         }
-                        
+
                         if wasReturningFromLogin {
                             self.isReturningFromLogin = false
                         }
@@ -149,7 +149,7 @@ extension DiningViewController {
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(handleRefreshControl(_:)), for: .valueChanged)
     }
-    
+
     @objc fileprivate func handleRefreshControl(_ sender: Any) {
         fetchDiningHours()
         if UserDefaults.standard.hasDiningPlan() {
@@ -160,7 +160,7 @@ extension DiningViewController {
 
 // MARK: - DiningViewModelDelegate
 extension DiningViewController: DiningViewModelDelegate {
-    func handleSelection(for venue: DiningVenue) {        
+    func handleSelection(for venue: DiningVenue) {
         if let url = venue.facilityURL {
             let vc = UIViewController()
             let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -172,7 +172,7 @@ extension DiningViewController: DiningViewModelDelegate {
     }
 }
 
-//MARK: - TransactionCellDelegate
+// MARK: - TransactionCellDelegate
 extension DiningViewController: TransactionCellDelegate {
     func userDidSelect() {
         let vc = DiningDollarsTransactionViewController()

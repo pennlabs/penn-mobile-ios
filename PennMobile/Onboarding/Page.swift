@@ -9,11 +9,11 @@
 import Foundation
 
 struct OnboardingPage {
-    
+
     let title: String
     let message: String
     let imageName: String
     let showConfetti: Bool
     let isFullScreen: Bool
-    
+
 }

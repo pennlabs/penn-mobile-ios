@@ -28,21 +28,18 @@ extension HomeViewController: GSRDeletable {
             }
         }
     }
-    
+
     func deleteReservation(_ reservation: GSRReservation) {
         deleteReservation(reservation.bookingId)
     }
 }
-
-
-
 
 // MARK: - GSR Quick Book Delegate
 extension HomeViewController: GSRBookable {
     func handleBookingSelected(_ booking: GSRBooking) {
         confirmBookingWanted(booking)
     }
-    
+
     private func confirmBookingWanted(_ booking: GSRBooking) {
         let message = "Booking \(booking.roomName) from \(booking.getLocalTimeString())"
         let alert = UIAlertController(title: "Confirm Booking",
@@ -50,17 +47,17 @@ extension HomeViewController: GSRBookable {
                                       preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler:{ (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
             self.handleBookingRequested(booking)
         }))
         present(alert, animated: true)
     }
-    
+
     private func handleBookingRequested(_ booking: GSRBooking) {
 //        if GSRUser.hasSavedUser() {
 //            booking.user = GSRUser.getUser()
 //            submitBooking(for: booking) { (completion) in
-////                self.fetchCellData(for: [HomeItemTypes.instance.studyRoomBooking])
+//                self.fetchCellData(for: [HomeItemTypes.instance.studyRoomBooking])
 //            }
 //        } else {
 //            let glc = GSRLoginController()
@@ -80,7 +77,7 @@ extension HomeViewController {
             navigationController?.present(vc, animated: true)
             FirebaseAnalyticsManager.shared.trackEvent(action: .viewWebsite, result: .none, content: urlStr)
         }
-        
+
         if shouldLog {
             logInteraction(item: item)
         }
@@ -112,7 +109,7 @@ extension HomeViewController {
             }
 //        }
     }
-    
+
     func handleSettingsTapped(venues: [DiningVenue]) {
         let diningSettings = DiningCellSettingsController()
         diningSettings.setupFromVenues(venues: venues)
@@ -130,7 +127,7 @@ extension HomeViewController {
         mapVC.searchTerm = searchTerm
         self.navigationController?.pushViewController(mapVC, animated: true)
     }
-    
+
     // MARK: Course Refresh
     func handleCourseRefresh() {
         let message = "Has there been a change to your schedule? Would you like Penn Mobile to update your courses?"
@@ -139,14 +136,14 @@ extension HomeViewController {
                                       preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler:{ (UIAlertAction) in
-            //self.showCourseWebviewController()
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
+            // self.showCourseWebviewController()
             self.showActivity()
             PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true, callback: self.handleNetworkCourseRefreshCompletion(_:))
         }))
         present(alert, animated: true)
     }
-    
+
     // MARK: Login to enable courses
     func handleLoggingIn() {
         let cwc = CoursesWebviewController()
@@ -170,13 +167,13 @@ extension HomeViewController: ShowsAlert {
         let nvc = UINavigationController(rootViewController: cwc)
         self.present(nvc, animated: true, completion: nil)
     }
-    
+
     fileprivate func handleNetworkCourseRefreshCompletion(_ result: Result<Set<Course>, NetworkingError>) {
         DispatchQueue.main.async {
             self.hideActivity()
             if let courses = try? result.get() {
                 if let accountID = UserDefaults.standard.getAccountID() {
-                    UserDBManager.shared.saveCourses(courses, accountID: accountID, { (success) in
+                    UserDBManager.shared.saveCourses(courses, accountID: accountID, { (_) in
                         self.handleCourseRefresh(courses)
                     })
                 } else {
@@ -193,7 +190,7 @@ extension HomeViewController: ShowsAlert {
             }
         }
     }
-    
+
     private func handleCourseRefresh(_ courses: Set<Course>?) {
         DispatchQueue.main.async {
             if let courses = courses, let courseItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.courses]).first as? HomeCoursesCellItem {
@@ -228,7 +225,7 @@ extension HomeViewController: FeatureNavigatable {
         let vc = ControllerModel.shared.viewController(for: feature)
         vc.title = feature.rawValue
         self.navigationController?.pushViewController(vc, animated: true)
-        
+
         logInteraction(item: item)
     }
 }
@@ -241,7 +238,7 @@ extension HomeViewController {
         }
         if let index = index {
             let cellType = type(of: item) as! HomeCellItem.Type
-            var id: String? = nil
+            var id: String?
             if let identifiableItem = item as? LoggingIdentifiable {
                 id = identifiableItem.id
             }
@@ -250,7 +247,7 @@ extension HomeViewController {
     }
 }
 
-//MARK: - Invite delegate
+// MARK: - Invite delegate
 extension HomeViewController: GSRInviteSelectable {
     func handleInviteSelected(_ invite: GSRGroupInvite, _ accept: Bool) {
         GSRGroupNetworkManager.instance.respondToInvite(invite: invite, accept: accept) { (success) in

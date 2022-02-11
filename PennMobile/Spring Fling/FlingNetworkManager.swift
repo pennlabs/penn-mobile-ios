@@ -1,15 +1,15 @@
-////
-////  FlingNetworkManager.swift
-////  PennMobile
-////
-////  Created by Josh Doman on 3/16/18.
-////  Copyright © 2018 PennLabs. All rights reserved.
-////
 //
-//import Foundation
-//import SwiftyJSON
+//  FlingNetworkManager.swift
+//  PennMobile
 //
-//final class FlingNetworkManager: Requestable {
+//  Created by Josh Doman on 3/16/18.
+//  Copyright © 2018 PennLabs. All rights reserved.
+//
+//
+// import Foundation
+// import SwiftyJSON
+//
+// final class FlingNetworkManager: Requestable {
 //    static let instance = FlingNetworkManager()
 //    private init() {}
 //
@@ -25,9 +25,9 @@
 //            completion(model)
 //        }
 //    }
-//}
+// }
 //
-//extension FlingTableViewModel {
+// extension FlingTableViewModel {
 //    convenience init(json: JSON) throws {
 //        self.init()
 //
@@ -48,4 +48,4 @@
 //        flingItems.sort()
 //        self.items = flingItems
 //    }
-//}
+// }

@@ -13,13 +13,13 @@ protocol RoomSelectionVCDelegate: AnyObject {
 }
 
 class RoomSelectionViewController: UIViewController, ShowsAlert, Trackable {
-    
+
     weak var delegate: RoomSelectionVCDelegate?
-    
+
     fileprivate let maxNumHalls = 3
-    
+
     var chosenRooms = [LaundryRoom]()
-    
+
     // Views
     fileprivate lazy var selectionView: RoomSelectionView = {
         let hsv = RoomSelectionView(frame: .zero)
@@ -29,14 +29,14 @@ class RoomSelectionViewController: UIViewController, ShowsAlert, Trackable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         navigationItem.title = "\(chosenRooms.count)/\(maxNumHalls) Chosen"
         self.navigationController?.navigationBar.tintColor = UIColor.navigation
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
-        
+
         view.backgroundColor = .uiBackground
-        
+
         view.addSubview(selectionView)
         selectionView.anchorToTop(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         if #available(iOS 11.0, *) {
@@ -44,10 +44,10 @@ class RoomSelectionViewController: UIViewController, ShowsAlert, Trackable {
         } else {
             selectionView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0).isActive = true
         }
-        
+
         trackScreen("Hall Selection")
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.title = "\(chosenRooms.count)/\(maxNumHalls) Chosen"
@@ -59,13 +59,13 @@ extension RoomSelectionViewController: RoomSelectionViewDelegate {
     func updateSelectedRooms(for rooms: [LaundryRoom]) {
         navigationItem.title = "\(rooms.count)/\(selectionView.maxNumRooms) Chosen"
     }
-    
+
     func handleFailureToLoadDictionary() {
         self.showAlert(withMsg: "Try quitting and restarting the app.", title: "Network API Failed", completion: nil)
     }
 }
 
-// Mark: Hall selection
+// MARK: Hall selection
 extension RoomSelectionViewController {
     @objc fileprivate func handleSave() {
         let rooms = selectionView.chosenRooms

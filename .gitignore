@@ -28,3 +28,7 @@ parse/config/global.json
 
 #Fastlane
 fastlane
+
+#Config
+Config/*
+!Config/.gitkeep

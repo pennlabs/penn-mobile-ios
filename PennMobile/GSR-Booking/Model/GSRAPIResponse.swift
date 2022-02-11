@@ -12,7 +12,7 @@ struct GSRAvailabilityAPIResponse: Codable {
     let name: String
     let gid: Int
     let rooms: [GSRRoom]
-    
+
     enum CodingKeys: CodingKey {
         case name
         case gid

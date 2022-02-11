@@ -9,15 +9,15 @@ import UIKit
 import FirebaseAnalytics
 
 class FirebaseAnalyticsManager: NSObject {
-    
+
     static let shared = FirebaseAnalyticsManager()
     private override init() {}
-    
+
     func trackScreen(_ name: String) {
         Analytics.logEvent(AnalyticsEventScreenView,
                            parameters: [AnalyticsParameterScreenName: name])
     }
-    
+
     func trackEvent(action: EventAction, result: EventResult, content: Any) {
         Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
             AnalyticsParameterItemID: action.rawValue,
@@ -25,7 +25,7 @@ class FirebaseAnalyticsManager: NSObject {
             AnalyticsParameterContentType: content
             ])
     }
-    
+
     func trackEvent(action: String, result: String, content: Any) {
         Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
             AnalyticsParameterItemID: action,
@@ -33,7 +33,7 @@ class FirebaseAnalyticsManager: NSObject {
             AnalyticsParameterContentType: content
             ])
     }
-    
+
     enum EventAction: String {
         case viewWebsite = "HomeWebsite"
         case attemptBooking = "Booking"
@@ -42,7 +42,7 @@ class FirebaseAnalyticsManager: NSObject {
         case twoStep = "TwoStep"
         case twoStepRetrieval = "TwoStepRetrieval"
     }
-    
+
     enum EventResult: String {
         case cancelled = "Cancelled"
         case success = "Success"

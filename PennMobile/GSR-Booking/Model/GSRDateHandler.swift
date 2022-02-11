@@ -19,15 +19,15 @@ class GSRDateHandler {
         var dates = [GSRDate]()
         var cal = Calendar.current
         cal.timeZone = TimeZone(abbreviation: "EST")!
-        
+
         let startDate = cal.startOfDay(for: Date())
         let endDate = startDate.dateIn(days: 6)
-        
+
         let dateRange = cal.dateRange(startDate: startDate,
                                       endDate: endDate,
                                       stepUnits: .day,
                                       stepValue: 1)
-        
+
         for date in dateRange {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -41,7 +41,6 @@ class GSRDateHandler {
     }
 }
 
-
 //
 //  NSDateExtension.swift
 //  GSR
@@ -49,7 +48,6 @@ class GSRDateHandler {
 //  Created by Yagil Burowski on 15/09/2016.
 //  Copyright © 2016 Yagil Burowski. All rights reserved.
 //
-import Foundation
 
 extension Calendar {
     func dateRange(startDate: Foundation.Date, endDate: Foundation.Date, stepUnits: NSCalendar.Unit, stepValue: Int) -> DateRange {
@@ -59,22 +57,22 @@ extension Calendar {
 }
 
 struct DateRange: Sequence {
-    
+
     var calendar: Calendar
     var startDate: Foundation.Date
     var endDate: Foundation.Date
     var stepUnits: NSCalendar.Unit
     var stepValue: Int
     fileprivate var multiplier: Int
-    
+
     func makeIterator() -> Iterator {
         return Iterator(range: self)
     }
-    
+
     struct Iterator: IteratorProtocol {
-        
+
         var range: DateRange
-        
+
         mutating func next() -> Foundation.Date? {
             guard let nextDate = (range.calendar as NSCalendar).date(byAdding: range.stepUnits,
                                                                      value: range.stepValue * range.multiplier,

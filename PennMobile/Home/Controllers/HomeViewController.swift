@@ -67,17 +67,17 @@ class HomeViewController: GenericViewController {
         if titleCacheTimestamp.minutesFrom(date: now) <= 60 && self.displayTitle != nil {
             return self.displayTitle
         } else {
-            let firstName = Account.getAccount()?.first
-            
+            let firstName = Account.getAccount()?.firstName
+
             let intros = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"]
-            
+
             if let firstName = firstName, firstName != "" {
                 self.displayTitle = "\(intros.random!), \(firstName)!"
                 titleCacheTimestamp = Date()
             } else {
                 self.displayTitle = "\(intros.random!)!"
             }
-            
+
             return self.displayTitle
         }
     }
@@ -86,7 +86,7 @@ class HomeViewController: GenericViewController {
         displayTitle = nil
         tableViewModel = nil
     }
-    
+
     func clearCacheAndReload(animated: Bool) {
         if animated {
             self.startLoadingViewAnimation()
@@ -175,7 +175,7 @@ extension HomeViewController {
     func fetchViewModel(_ completion: @escaping () -> Void) {
         HomeAPIService.instance.fetchModel { model in
             self.setModel(model)
-            
+
             UIView.transition(with: self.tableView,
                               duration: 0.35,
                               options: .transitionCrossDissolve,
@@ -221,7 +221,7 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController : DiningCellSettingsDelegate {
+extension HomeViewController: DiningCellSettingsDelegate {
     func saveSelection(for venueIds: [Int]) {
         guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
         if venueIds.count == 0 {
@@ -254,7 +254,7 @@ extension HomeViewController {
             }
         }
     }
-    
+
     // TODO: update GSR reservation cell immediately after a booking is made
 //    @objc fileprivate func addGSRReservation(_ sender: Notification) {
 //        guard let reservation = sender.object as? GSRReservation else { return }
@@ -274,6 +274,6 @@ extension HomeViewController {
 // MARK: - Register for Notifications
 extension HomeViewController {
     func registerForNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(updateLaundryItemForPreferences(_:)), name: Notification.Name(rawValue: "LaundryUpdateNotification") , object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLaundryItemForPreferences(_:)), name: Notification.Name(rawValue: "LaundryUpdateNotification"), object: nil)
     }
 }

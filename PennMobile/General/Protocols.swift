@@ -17,7 +17,7 @@ extension IndicatorEnabled where Self: UITableViewController {
         tableView.isUserInteractionEnabled = false
         MBProgressHUD.showAdded(to: self.view, animated: true)
     }
-    
+
     func hideActivity() {
         tableView.isUserInteractionEnabled = true
         MBProgressHUD.hide(for: self.view, animated: true)
@@ -25,14 +25,19 @@ extension IndicatorEnabled where Self: UITableViewController {
 }
 
 extension IndicatorEnabled where Self: UIViewController {
-    func showActivity() {
-        view.isUserInteractionEnabled = false
+    func showActivity(isUserInteractionEnabled: Bool = false) {
+        view.isUserInteractionEnabled = isUserInteractionEnabled
         MBProgressHUD.showAdded(to: self.view, animated: true)
     }
-    
+
     func hideActivity() {
         view.isUserInteractionEnabled = true
         MBProgressHUD.hide(for: self.view, animated: true)
+    }
+
+    func hideAllActivity() {
+        view.isUserInteractionEnabled = true
+        MBProgressHUD.hideAllHUDs(for: self.view, animated: true)
     }
 }
 
@@ -41,7 +46,7 @@ extension IndicatorEnabled where Self: UIView {
         self.isUserInteractionEnabled = false
         MBProgressHUD.showAdded(to: self, animated: true)
     }
-    
+
     func hideActivity() {
         self.isUserInteractionEnabled = true
         MBProgressHUD.hide(for: self, animated: true)
@@ -61,20 +66,19 @@ extension Trackable where Self: UIViewController {
 protocol URLOpenable {}
 
 extension URLOpenable {
-    
-    //Source: https://stackoverflow.com/questions/38964264/openurl-in-ios10
+
+    // Source: https://stackoverflow.com/questions/38964264/openurl-in-ios10
     func open(scheme: String) {
         if let url = URL(string: scheme) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
-                                          completionHandler: {
-                                            (success) in
-                                            //print("Open \(scheme): \(success)")
+                                          completionHandler: { (_) in
+                                            // print("Open \(scheme): \(success)")
                 })
             } else {
                 _ = UIApplication.shared.openURL(url)
-                //let success = UIApplication.shared.openURL(url)
-                //print("Open \(scheme): \(success)")
+                // let success = UIApplication.shared.openURL(url)
+                // print("Open \(scheme): \(success)")
             }
         }
     }
@@ -83,14 +87,14 @@ extension URLOpenable {
 protocol HairlineRemovable {}
 
 extension HairlineRemovable {
-    
+
     func removeHairline(from view: UIView) {
         if let hairline = findHairlineImageViewUnder(view: view) {
             hairline.isHidden = true
         }
     }
-    
-    //finds hairline underview if there is one
+
+    // finds hairline underview if there is one
     private func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
         if view is UIImageView && view.bounds.size.height <= 1 {
             return view as? UIImageView
@@ -107,6 +111,7 @@ extension HairlineRemovable {
 
 protocol ShowsAlert {
     func showAlert(withMsg: String, title: String, completion: (() -> Void)?)
+    func showOption(withMsg: String, title: String, onAccept: (() -> Void)?, onCancel: (() -> Void)?)
 }
 
 extension ShowsAlert where Self: UIViewController {
@@ -119,9 +124,24 @@ extension ShowsAlert where Self: UIViewController {
         }))
         present(alertController, animated: true, completion: nil)
     }
+
+    func showOption(withMsg: String, title: String = "Error", onAccept: (() -> Void)?, onCancel: (() -> Void)?) {
+        let alertController = UIAlertController(title: title, message: withMsg, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { (_) in
+            if let completion = onCancel {
+                completion()
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+            if let completion = onAccept {
+                completion()
+            }
+        }))
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
-protocol ShowsAlertForError : ShowsAlert {
+protocol ShowsAlertForError: ShowsAlert {
     func showRefreshAlertForError<T>(result: Result<T, NetworkingError>, title: String, success: @escaping (T) -> Void, noInternet: (() -> Void)?, parsingError: (() -> Void)?, serverError: (() -> Void)?, jsonError: (() -> Void)?, authenticationError: (() -> Void)?, other: (() -> Void)?)
 }
 
@@ -136,26 +156,24 @@ extension ShowsAlertForError {
 
         case .failure(.parsingError):
             self.showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: parsingError)
-            
+
         case .failure(.serverError):
             self.showAlert(withMsg: "Penn's \(title) servers are currently not updating. We hope this will be fixed shortly.", title: "Uh oh!", completion: serverError)
-            
+
         case .failure(.jsonError):
             self.showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: jsonError)
 
         case .failure(.authenticationError):
             self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
-            
+
         case .failure(.other):
         self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
         }
     }
 }
 
-
-
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+private func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
 
@@ -184,15 +202,15 @@ protocol LocallyAuthenticatable {
 }
 
 extension LocallyAuthenticatable {
-    
-    func requestAuthentication(cancelText : String, reasonText: String) {
+
+    func requestAuthentication(cancelText: String, reasonText: String) {
         let context = LAContext()
         context.localizedCancelTitle = cancelText
 
         // Check if we have the needed hardware support.
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonText ) { success, error in
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reasonText ) { success, _ in
 
                 if success {
                     // Move to the main thread because the user may request UI changes.

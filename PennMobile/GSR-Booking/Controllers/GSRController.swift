@@ -20,11 +20,11 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
     fileprivate var barButton: UIBarButtonItem!
     fileprivate var bookingsBarButton: UIBarButtonItem!
     fileprivate var limitedAccessLabel: UILabel!
-    
+
     var group: GSRGroup?
-    
+
     var barButtonTitle = "Submit"
-    
+
     var currentDay = Date()
 
     fileprivate var viewModel: GSRViewModel!
@@ -35,7 +35,7 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
         super.viewDidLoad()
         prepareViewModel()
         prepareUI()
-        
+
         let index = viewModel.getLocationIndex(startingLocation)
         self.pickerView.selectRow(index, inComponent: 1, animated: true)
     }
@@ -51,13 +51,13 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
         if group != nil {
             barButtonTitle = "Review"
         }
-        
+
         barButton = UIBarButtonItem(title: barButtonTitle, style: .done, target: self, action: #selector(handleBarButtonPressed(_:)))
         barButton.tintColor = UIColor.navigation
 
         bookingsBarButton = UIBarButtonItem(title: "Bookings", style: .done, target: self, action: #selector(handleBookingsBarButtonPressed(_:)))
         bookingsBarButton.tintColor = UIColor.navigation
-        
+
         if let tabBarController = tabBarController {
             tabBarController.title = "Study Room Booking"
             tabBarController.navigationItem.leftBarButtonItem = bookingsBarButton
@@ -108,7 +108,7 @@ extension GSRController {
         view.addSubview(tableView)
         _ = tableView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
-    
+
     private func prepareClosedView() {
         closedView = GSRClosedView()
         closedView.isHidden = true
@@ -116,13 +116,13 @@ extension GSRController {
         view.addSubview(closedView)
         _ = closedView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
-    
+
     private func prepareLimitedAccessLabel() {
         limitedAccessLabel = UILabel()
         limitedAccessLabel.isHidden = true
         limitedAccessLabel.numberOfLines = 0
         limitedAccessLabel.textAlignment = .center
-        
+
         view.addSubview(limitedAccessLabel)
         limitedAccessLabel.translatesAutoresizingMaskIntoConstraints = false
         limitedAccessLabel.topAnchor.constraint(equalTo: rangeSlider.topAnchor, constant: Padding.pad).isActive = true
@@ -146,12 +146,12 @@ extension GSRController: GSRViewModelDelegate {
     func resetDataForCell(at indexPath: IndexPath) {
         (tableView.cellForRow(at: indexPath) as? RoomCell)?.resetSelection()
     }
-    
+
     func fetchData() {
         let location = viewModel.getSelectedLocation()
         let date = viewModel.getSelectedDate()
         self.showActivity()
-        
+
         GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: date.string) { result in
             DispatchQueue.main.async {
                 self.limitedAccessLabel.isHidden = true
@@ -171,7 +171,7 @@ extension GSRController: GSRViewModelDelegate {
                             self.limitedAccessLabel.text = "You need to log in with a Wharton pennkey to access Wharton GSRs"
                             return
                         }
-                        
+
                         if Account.isLoggedIn && !UserDefaults.standard.isInWharton() {
                             self.limitedAccessLabel.isHidden = false
                             self.tableView.isHidden = true
@@ -214,16 +214,16 @@ extension GSRController: GSRBookable {
             let gid = viewModel.getSelectedLocation().gid
             let roomName = viewModel.getSelectRoomName() ?? ""
             let times = (tableView.cellForRow(at: roomIndexPath) as? RoomCell)?.getSelectTimes() ?? []
-             
+
             if times.count == 0 {
                 showAlert(withMsg: "Please select a timeslot to book.", title: "Empty Selection", completion: nil)
             }
-            
+
             let sorted = times.sorted(by: {$0.startTime < $1.startTime})
-            
+
             let first = sorted.first!
             let last = sorted.last!
-            
+
             // wharton prevents booking more than 90 minutes
             if gid == 1 && times.count > 3 {
                 showAlert(withMsg: "You cannot book for more than 90 minutes for Wharton GSRs", title: "Invalid Selection", completion: nil)
@@ -234,21 +234,20 @@ extension GSRController: GSRBookable {
                     submitBooking(for: GSRBooking(gid: gid, startTime: first.startTime, endTime: last.endTime, id: id, roomName: roomName))
                 } else {
                     let alertController = UIAlertController(title: "Login Error", message: "Please login to book GSRs", preferredStyle: .alert)
-                    
+
                     alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: {_ in }))
                     alertController.addAction(UIAlertAction(title: "Login", style: .default, handler: { _ in
-                        let llc = LabsLoginController { (success) in
+                        let llc = LabsLoginController { (_) in
                             DispatchQueue.main.async {
                                 self.submitBooking(for: GSRBooking(gid: gid, startTime: first.startTime, endTime: last.endTime, id: id, roomName: roomName))
                             }
                         }
-                        
+
                         let nvc = UINavigationController(rootViewController: llc)
-                        
+
                         self.present(nvc, animated: true, completion: nil)
                     }))
-                    
-                    
+
                     present(alertController, animated: true, completion: nil)
                 }
             }
@@ -256,20 +255,20 @@ extension GSRController: GSRBookable {
             showAlert(withMsg: "Please select a timeslot to book.", title: "Empty Selection", completion: nil)
         }
     }
-    
+
     func getBooking() -> GSRBooking? {
         if let id = viewModel.getSelectedRoomId(), let roomIndexPath = viewModel.getSelectedRoomIdIndexPath() {
             let gid = viewModel.getSelectedLocation().gid
             let roomName = viewModel.getSelectRoomName() ?? ""
             let times = (tableView.cellForRow(at: roomIndexPath) as? RoomCell)?.getSelectTimes() ?? []
-             
+
             if times.count == 0 {
                 return nil
             }
-            
+
             let first = times.first!
             let last = times.last!
-            
+
             // wharton prevents booking more than 90 minutes
             if gid == 1 && times.count > 3 {
                 showAlert(withMsg: "You cannot book for more than 90 minutes for Wharton GSRs", title: "Invalid Selection", completion: nil)
@@ -278,10 +277,10 @@ extension GSRController: GSRBookable {
                 showAlert(withMsg: "You cannot book for more than 120 minutes for Library GSRs", title: "Invalid Selection", completion: nil)
                 return nil
             }
-            
+
             return GSRBooking(gid: gid, startTime: first.startTime, endTime: last.endTime, id: id, roomName: roomName)
         }
-        
+
         return nil
     }
 

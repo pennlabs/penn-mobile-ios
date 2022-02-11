@@ -10,11 +10,12 @@ import Foundation
 
 // Top level structure of Dining API response
 struct DiningAPIResponse: Codable {
-    let document: Document
-    struct Document: Codable {
-        let venues: [DiningVenue]
-        enum CodingKeys: String, CodingKey {
-            case venues = "venue"
-        }
+    let document: DiningDocument
+}
+
+struct DiningDocument: Codable {
+    let venues: [DiningVenue]
+    enum CodingKeys: String, CodingKey {
+        case venues = "venue"
     }
 }

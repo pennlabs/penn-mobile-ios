@@ -11,16 +11,11 @@ import SwiftUI
 @available(iOS 14, *)
 struct DiningView: View {
     @StateObject var diningVM = DiningViewModelSwiftUI.instance
-    
+
     var body: some View {
         return
-            VStack(spacing: 0) {
-                DiningViewHeader()
-                    .padding()
-                
                 DiningVenueView()
-            }
-            .environmentObject(diningVM)
+                    .environmentObject(diningVM)
     }
 }
 

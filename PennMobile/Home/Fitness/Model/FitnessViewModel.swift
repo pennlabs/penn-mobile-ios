@@ -9,25 +9,25 @@
 import UIKit
 
 class FitnessViewModel: NSObject {
-    
+
     let facilities: [FitnessFacilityName] = FitnessFacilityName.all
-    
+
     var pottruckFacilities: [FitnessFacilityName] {
         get {
             return [.pottruck, .sheerr, .rockwell, .climbing, .membership]
         }
     }
-    
+
     var otherFacilities: [FitnessFacilityName] {
         get {
             return [.fox, .ringe]
         }
     }
-    
+
     func getPottruckFacility(for row: Int) -> FitnessSchedule? {
         return FitnessFacilityData.shared.getScheduleForToday(for: pottruckFacilities[row])
     }
-    
+
     func getOtherFacility(for row: Int) -> FitnessSchedule? {
         return FitnessFacilityData.shared.getScheduleForToday(for: otherFacilities[row])
     }

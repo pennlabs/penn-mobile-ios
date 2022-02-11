@@ -77,10 +77,10 @@ extension CourseScheduleViewController {
         if let courses = UserDefaults.standard.getCourses() {
             assignModelAndRefreshTable(courses: courses)
         } else {
-            if (Account.isLoggedIn) {
+            if Account.isLoggedIn {
                 handleCourseRefresh()
             } else {
-                self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true)} )
+                self.showAlert(withMsg: "Please login to use this feature", title: "Login Error", completion: { self.navigationController?.popViewController(animated: true) })
             }
         }
     }
@@ -107,15 +107,15 @@ extension CourseScheduleViewController {
 extension CourseScheduleViewController {
 
     func handleNetworkCourseRefreshResult(_ result: Result<Set<Course>, NetworkingError>) {
-        
+
         let popVC : () -> Void = { self.navigationController?.popViewController(animated: true) }
-        
+
         showRefreshAlertForError(result: result, title: "courses", success: self.handleNetworkCourseRefreshCompletion(_:), noInternet: popVC, parsingError: popVC, authenticationError: self.handleAuthentication)
     }
 
     private func handleNetworkCourseRefreshCompletion(_ courses: Set<Course>) {
         if let accountID = UserDefaults.standard.getAccountID() {
-            UserDBManager.shared.saveCourses(courses, accountID: accountID, { (success) in
+            UserDBManager.shared.saveCourses(courses, accountID: accountID, { (_) in
                 self.assignModelAndRefreshTable(courses: courses)
             })
         } else {
@@ -152,13 +152,13 @@ extension CourseScheduleViewController {
         if successful {
             handleCourseRefresh()
         } else {
-            showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) } )
+            showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: { self.navigationController?.popViewController(animated: true) })
         }
     }
 }
 
 // MARK: - ModularTableViewDelegate
-extension CourseScheduleViewController: CourseScheduleCellDelegate{
+extension CourseScheduleViewController: CourseScheduleCellDelegate {
     func handleBuildingSelected(searchTerm: String) {
         let mapVC = MapViewController()
         mapVC.searchTerm = searchTerm

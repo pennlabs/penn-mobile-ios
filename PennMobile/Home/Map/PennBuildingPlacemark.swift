@@ -10,13 +10,13 @@ import Foundation
 import MapKit
 
 class PennBuildingPlacemark: MKPlacemark {
-    
+
     init(coordinate: CLLocationCoordinate2D, venue: DiningVenueName) {
         self.title = DiningVenueName.getVenueName(for: venue)
         self.subtitle = "Penn Dining"
         super.init(coordinate: coordinate)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

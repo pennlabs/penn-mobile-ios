@@ -10,12 +10,12 @@ import UIKit
 
 class MoveableTableViewController: UITableViewController {
     public typealias FinishedMovingCallback = () -> Void
-    
+
     fileprivate var longpress: UILongPressGestureRecognizer!
-    fileprivate var initialIndexPath: IndexPath? //for movable cell
+    fileprivate var initialIndexPath: IndexPath? // for movable cell
     fileprivate var cellSnapshot: UIView?
     fileprivate var finishedMovingCallback: FinishedMovingCallback?
-    
+
     var isMoveable: Bool = false {
         didSet {
             if isMoveable {
@@ -26,9 +26,9 @@ class MoveableTableViewController: UITableViewController {
             }
         }
     }
-    
+
     internal func rowMoved(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {}
-    
+
     internal func setFinishedMovingCell(_ callback: FinishedMovingCallback?) {
         self.finishedMovingCallback = callback
     }
@@ -38,18 +38,18 @@ class MoveableTableViewController: UITableViewController {
 // source: https://github.com/Task-Hero/TaskHero-iOS/blob/master/TaskHero/HomeViewController.swift
 
 extension MoveableTableViewController {
-    
+
     fileprivate func addLongPressGesture() {
         if longpress == nil {
             longpress = UILongPressGestureRecognizer(target: self, action: #selector(onLongPressGesture(sender:)))
             tableView.addGestureRecognizer(longpress)
         }
     }
-    
+
     @objc fileprivate func onLongPressGesture(sender: UILongPressGestureRecognizer) {
         let locationInView = sender.location(in: tableView)
         let indexPath = tableView.indexPathForRow(at: locationInView)
-        
+
         if sender.state == .began {
             if indexPath != nil {
                 initialIndexPath = indexPath
@@ -59,7 +59,7 @@ extension MoveableTableViewController {
                 cellSnapshot?.center = center!
                 cellSnapshot?.alpha = 0.0
                 tableView.addSubview(cellSnapshot!)
-                
+
                 UIView.animate(withDuration: 0.25, animations: { () -> Void in
                     center?.y = locationInView.y
                     self.cellSnapshot?.center = center!
@@ -76,8 +76,8 @@ extension MoveableTableViewController {
             var center = cellSnapshot?.center
             center?.y = locationInView.y
             cellSnapshot?.center = center!
-            
-            if ((indexPath != nil) && (indexPath != initialIndexPath)) {
+
+            if (indexPath != nil) && (indexPath != initialIndexPath) {
                 rowMoved(from: initialIndexPath!, to: indexPath!)
                 tableView.moveRow(at: initialIndexPath!, to: indexPath!)
                 initialIndexPath = indexPath
@@ -101,13 +101,13 @@ extension MoveableTableViewController {
             finishedMovingCallback?()
         }
     }
-    
+
     fileprivate func snapshotOfCell(inputView: UIView) -> UIView {
         UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
         inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
+
         let cellSnapshot = UIImageView(image: image)
         cellSnapshot.layer.masksToBounds = false
         cellSnapshot.layer.cornerRadius = 0.0

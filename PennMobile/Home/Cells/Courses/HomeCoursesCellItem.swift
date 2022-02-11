@@ -13,17 +13,17 @@ final class HomeCoursesCellItem: HomeCellItem {
     let weekday: String
     var courses: [Course]
     var isOnHomeScreen: Bool
-    
+
     init(weekday: String, courses: [Course], isOnHomeScreen: Bool) {
         self.weekday = weekday
         self.courses = courses.sorted()
         self.isOnHomeScreen = isOnHomeScreen
     }
-    
+
     static var jsonKey: String {
         return "courses"
     }
-    
+
     static var associatedCell: ModularTableViewCell.Type {
         return HomeCoursesCell.self
     }
@@ -47,7 +47,7 @@ final class HomeCoursesCellItem: HomeCellItem {
             return completion([])
         }
     }
-    
+
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeCoursesCellItem else { return false }
         return weekday == item.weekday
@@ -65,17 +65,17 @@ extension Set where Element == Course {
         let coursesWithoutDate = self.filter { $0.startDate == nil || $0.endDate == nil }.filter { $0.term == term }
         return coursesWithDate.union(coursesWithoutDate)
     }
-    
+
     var taughtToday: Set<Course> {
         let courses = self.enrolledIn.filter { $0.isTaughtToday }.map { $0.getCourseWithCorrectTime(days: 0) }.flatMap { $0 }
         return Set(courses)
     }
-    
+
     var taughtTomorrow: Set<Course> {
         let courses = self.enrolledIn.filter { $0.isTaughtTomorrow }.map { $0.getCourseWithCorrectTime(days: 1) }.flatMap { $0 }
         return Set(courses)
     }
-    
+
     var hasUpcomingCourse: Bool {
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
@@ -108,7 +108,7 @@ extension Course {
             return courses
         }
     }
-    
+
     func copy(startTime: String, endTime: String) -> Course {
         return Course(name: self.name, term: self.term, dept: self.dept, code: self.code, section: self.section, building: self.building, room: self.room, weekdays: self.weekdays, startDate: self.startDate, endDate: self.endDate, startTime: startTime, endTime: endTime, instructors: self.instructors, meetingTimes: nil)
     }

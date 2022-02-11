@@ -9,12 +9,10 @@
 import UIKit
 
 class GSRColorCell: UICollectionViewCell {
-    
+
     static let identifier = "groupColorCell"
     var colorView: UIView!
-    
 
-    
 //    var timeSlot: GSRTimeSlot! {
 //        didSet {
 //            startLabel.text = format(date: timeSlot.startTime)
@@ -22,28 +20,27 @@ class GSRColorCell: UICollectionViewCell {
 //            backgroundColor = timeSlot.isAvailable ? UIColor.interactionGreen : UIColor.secondaryInformationGrey
 //        }
 //    }
-    
+
     var color: UIColor! {
         didSet {
             colorView.backgroundColor = color
-            
-            
-            //colorView.layer.borderColor = borderColor.cgColor
+
+            // colorView.layer.borderColor = borderColor.cgColor
         }
     }
-    
+
     var borderColor: UIColor! /*{
         didSet {
             colorView.layer.borderColor = borderColor.cgColor;
         }
         
     }*/
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
-    
+
     private func setupView() {
         colorView = UIView()
         colorView.translatesAutoresizingMaskIntoConstraints = false
@@ -61,23 +58,23 @@ class GSRColorCell: UICollectionViewCell {
             borderColor = UIColor(red: 32, green: 156, blue: 238, alpha:0.8)
         }
         */
-        //borderColor = colorView.backgroundColor?.withAlphaComponent(0.8)
-        
+        // borderColor = colorView.backgroundColor?.withAlphaComponent(0.8)
+
 //        colorView.layer.borderColor = borderColor.cgColor
         addSubview(colorView)
-        
+
         colorView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         colorView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
-    
+
     func toggleBorder() {
-        if (isSelected) {
+        if isSelected {
             colorView.layer.borderColor = borderColor.cgColor
         }
-        
+
         colorView.layer.borderWidth = isSelected ? 4 : 0
     }
-    
+
     required init?(coder: NSCoder) {
 //        fatalError("init(coder:) has not been implemented")
         super.init(coder: coder)

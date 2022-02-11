@@ -29,31 +29,31 @@ struct ActivityIndicatorView: UIViewRepresentable  {
 
 @available(iOS 14, *)
 struct LabsLoginControllerSwiftUI: UIViewControllerRepresentable {
-    
+
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @Binding var isShowing: Bool
     @Binding var loginFailure: Bool
     var handleError: () -> Void
-    
+
     func makeUIViewController(context: Context) -> UINavigationController {
         let llc = LabsLoginController { (success) in
             DispatchQueue.main.async {
                 self.loginCompletion(success)
             }
         }
-        
+
         llc.handleCancel = {
             self.handleError()
         }
-        
+
         return UINavigationController(rootViewController: llc)
     }
-    
+
     func updateUIViewController(_ navigationController: UINavigationController, context: Context) {}
-    
+
     fileprivate func loginCompletion(_ successful: Bool) {
         isShowing = false
-        
+
         if successful {
             diningVM.refreshInsights()
         } else {

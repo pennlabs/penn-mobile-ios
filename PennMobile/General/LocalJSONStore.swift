@@ -11,16 +11,16 @@ import Foundation
 // MARK: - LocalJSONStore
 // This class can be used by any Codable struct as a simple cacheing layer. Check out DiningDataStore.swift for an example.
 // "filename" is just the name of the cache file
-class LocalJSONStore<T> where T : Codable {
+class LocalJSONStore<T> where T: Codable {
     let storageType: DataStoreType
     let filename: String
-    
+
     init(storageType: DataStoreType, filename: String) {
         self.storageType = storageType
         self.filename = filename
         ensureFolderExists()
     }
-    
+
     // MARK: - Saving
     func save(_ object: T) {
         do {
@@ -31,7 +31,7 @@ class LocalJSONStore<T> where T : Codable {
             print("CACHE ERROR: \(e)")
         }
     }
-    
+
     // MARK: - Loading
     var storedValue: T? {
         guard FileManager.default.fileExists(atPath: fileURL.path) else {
@@ -46,16 +46,16 @@ class LocalJSONStore<T> where T : Codable {
             return nil
         }
     }
-    
+
     // MARK: - Helpers
     private var folder: URL {
         return storageType.folder
     }
-    
+
     private var fileURL: URL {
         return folder.appendingPathComponent(filename)
     }
-    
+
     private func ensureFolderExists() {
         let fileManager = FileManager.default
         var isDir: ObjCBool = false

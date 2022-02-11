@@ -8,21 +8,26 @@
 
 import Foundation
 
-protocol KeychainAccessible {}
+class KeychainAccessible {
 
-extension KeychainAccessible {
+    static let instance = KeychainAccessible()
+
     private var pennkeyKeychainKey: String {
         "PennKey"
     }
-    
+
     private var passwordKeychainKey: String {
         "PennKey Password"
     }
-    
+
     private var pacCodeKeychainKey: String {
         "PAC Code"
     }
-    
+
+    private var diningTokenKeychainKey: String {
+        "Dining Token"
+    }
+
     func getPennKey() -> String? {
         let secureStore = getWebLoginSecureStore()
         do {
@@ -31,7 +36,7 @@ extension KeychainAccessible {
             return nil
         }
     }
-    
+
     func getPassword() -> String? {
         let secureStore = getWebLoginSecureStore()
         do {
@@ -54,25 +59,55 @@ extension KeychainAccessible {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.setValue(pennkey, for: pennkeyKeychainKey)
     }
-    
+
+    func removePennKey() {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.removeValue(for: pennkeyKeychainKey)
+    }
+
     func savePassword(_ password: String) {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.setValue(password, for: passwordKeychainKey)
     }
-    
+
+    func removePassword() {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.removeValue(for: passwordKeychainKey)
+    }
+
     func savePacCode(_ pacCode: String) {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.setValue(pacCode, for: pacCodeKeychainKey)
     }
-    
+
     func removePacCode() {
         let secureStore = getWebLoginSecureStore()
         try? secureStore.removeValue(for: pacCodeKeychainKey)
     }
-    
+
     private func getWebLoginSecureStore() -> SecureStore {
         let genericPwdQueryable = GenericPasswordQueryable(service: "PennWebLogin")
         let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)
         return secureStore
     }
+
+    func saveDiningToken(_ diningToken: String) {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.setValue(diningToken, for: diningTokenKeychainKey)
+    }
+
+    func getDiningToken() -> String? {
+        let secureStore = getWebLoginSecureStore()
+        do {
+            return try secureStore.getValue(for: diningTokenKeychainKey)
+        } catch {
+            return nil
+        }
+    }
+
+    func removeDiningToken() {
+        let secureStore = getWebLoginSecureStore()
+        try? secureStore.removeValue(for: diningTokenKeychainKey)
+    }
+
 }

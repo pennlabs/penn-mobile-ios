@@ -8,8 +8,8 @@
 
 import Foundation
 
-class AboutViewController : UIViewController {
-    
+class AboutViewController: UIViewController {
+
     var logo: UIImageView!
     var subtitle: UITextView!
     var descriptionTextView: UITextView!
@@ -19,10 +19,10 @@ class AboutViewController : UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = .uiBackground
         self.title = "About"
-        
+
         setupLogo()
         setupSubtitle()
         setupDescription()
@@ -31,7 +31,7 @@ class AboutViewController : UIViewController {
         setupCopyrightLabel()
         setupStack()
     }
-    
+
     // MARK: set up logo and informational text
     func setupLogo() {
         let logoImage: UIImage = UIImage(named: "logotype") ?? UIImage()
@@ -41,32 +41,32 @@ class AboutViewController : UIViewController {
         logo.widthAnchor.constraint(equalToConstant: 230.0).isActive = true
         logo.heightAnchor.constraint(equalToConstant: 129.0).isActive = true
     }
-    
+
     func setupSubtitle() {
         subtitle = UITextView()
         subtitle.isEditable = false
         subtitle.isSelectable = false
         subtitle.textContainer.maximumNumberOfLines = 0
-        
+
         let str = "Hi, we’re Penn Labs: a team of student software engineers, product designers, and business developers."
         let font = UIFont.systemFont(ofSize: 18)
         let boldFont = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        
+
         let attributedString = NSMutableAttributedString(string: str, attributes: [.font: font])
         attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(10, 9))
         attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(39, 18))
         attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(58, 18))
         attributedString.addAttribute(NSAttributedString.Key.font, value: boldFont, range: NSMakeRange(81, 20))
-        
+
         subtitle.attributedText = attributedString
         subtitle.textColor = UIColor.labelPrimary
         subtitle.textAlignment = .center
         subtitle.isScrollEnabled = false
-        
+
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         subtitle.widthAnchor.constraint(equalToConstant: 280.0).isActive = true
     }
-    
+
     func setupDescription() {
         descriptionTextView = UITextView()
         descriptionTextView.isEditable = false
@@ -80,16 +80,16 @@ class AboutViewController : UIViewController {
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         descriptionTextView.widthAnchor.constraint(equalToConstant: 280.0).isActive = true
     }
-    
+
     // MARK: set up learn more button
-    
+
     func setupButton() {
         learnMoreButton = UIButton()
         learnMoreButton.backgroundColor = .baseBlue
         learnMoreButton.titleLabel?.font =  .systemFont(ofSize: 16, weight: .semibold)
         learnMoreButton.setTitle("Learn More", for: [])
         learnMoreButton.setTitleColor(UIColor.white, for: [])
-        
+
         learnMoreButton.layer.cornerRadius = 36.0/2
         learnMoreButton.layer.masksToBounds = true
         learnMoreButton.translatesAutoresizingMaskIntoConstraints = false
@@ -97,13 +97,13 @@ class AboutViewController : UIViewController {
         learnMoreButton.widthAnchor.constraint(equalToConstant: 132.0).isActive = true
         learnMoreButton.addTarget(self, action: #selector(didTapLearnMoreButton), for: .touchUpInside)
     }
-    
+
     @objc func didTapLearnMoreButton(sender: UIButton!) {
         if let url = URL(string: "https://pennlabs.org") {
             UIApplication.shared.open(url, options: [:])
         }
     }
-    
+
     func setUpMadeWithLoveLabel() {
         madeWithLoveLabel = UILabel()
         madeWithLoveLabel.font = .systemFont(ofSize: 18, weight: .medium)
@@ -113,7 +113,7 @@ class AboutViewController : UIViewController {
         madeWithLoveLabel.translatesAutoresizingMaskIntoConstraints = false
         madeWithLoveLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
-    
+
     func setupCopyrightLabel() {
         let now = Date()
         copyrightLabel = UILabel()
@@ -124,41 +124,41 @@ class AboutViewController : UIViewController {
         copyrightLabel.translatesAutoresizingMaskIntoConstraints = false
         copyrightLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
-    
+
     // MARK: set up scroll view and stack view
     func setupStack() {
         let space = UIView()
         space.translatesAutoresizingMaskIntoConstraints = false
         space.widthAnchor.constraint(equalToConstant: 1.0).isActive = true
         space.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
-        
+
         let smallSpace = UIView()
         space.translatesAutoresizingMaskIntoConstraints = false
         space.widthAnchor.constraint(equalToConstant: 1.0).isActive = true
         space.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
-        
+
         let stackView = UIStackView(arrangedSubviews: [space, logo, subtitle, descriptionTextView, learnMoreButton, smallSpace, madeWithLoveLabel, copyrightLabel])
-        
+
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.spacing = 20
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         view.addSubview(scrollView)
-        
-        //add constraints to scrollView
+
+        // add constraints to scrollView
         scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
+
         scrollView.addSubview(stackView)
-        
-        //add constraints to stackView
+
+        // add constraints to stackView
         stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
         stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true

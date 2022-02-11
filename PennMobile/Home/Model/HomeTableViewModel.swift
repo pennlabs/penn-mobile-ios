@@ -20,7 +20,7 @@ extension HomeTableViewModel {
         guard let diningItem = diningItems.first as? HomeDiningCellItem else { return nil }
         return diningItem.venues.first
     }
-    
+
     func getItems(for itemTypes: [HomeCellItem.Type]) -> [HomeCellItem] {
         guard let allItems = self.items as? [HomeCellItem] else { return [] }
         let items = allItems.filter { (item) -> Bool in
@@ -37,7 +37,7 @@ extension HomeTableViewModel {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         let cellType = type(of: item) as! HomeCellItem.Type
-        var id: String? = nil
+        var id: String?
         if let identifiableItem = item as? LoggingIdentifiable {
             id = identifiableItem.id
         }
