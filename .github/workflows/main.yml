@@ -30,13 +30,7 @@ jobs:
       - name: Create fastlane API key json
         run: |
           cat << EOF > api_key.json
-          {
-            "key_id": "YB62BFTN48",
-            "issuer_id": "69a6de6f-64eb-47e3-e053-5b8c7c11a4d1",
-            "key": "${{ secrets.APP_STORE_CONENCT_API_KEY }}",
-            "duration": 1200, 
-            "in_house": false 
-          }
+          ${{ secrets.FASTLANE_JSON_KEY }}
           EOF
       - name: Cache CocoaPods
         uses: actions/cache@v2
