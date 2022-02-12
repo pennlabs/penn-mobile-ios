@@ -22,6 +22,11 @@ jobs:
           APP_NAME = Penn Mobile
           APP_BUNDLE_ID = org.pennlabs.PennMobile
           EOF
+      - name: CREATE GoogleService-Info.plist
+        run: |
+          cat << EOF > PennMobile/Supporting_Files/GoogleService-Info.plist 
+          ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
+          EOF
       - name: Create fastlane API key json
         run: |
           cat << EOF > api_key.json
