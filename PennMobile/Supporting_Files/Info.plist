@@ -33,7 +33,7 @@
 		<dict/>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>6642</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LABS_OAUTH_CLIENT_ID</key>
