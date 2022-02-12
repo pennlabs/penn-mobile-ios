@@ -47,6 +47,14 @@ Capture and frame new screenshots
 
 
 
+### ios ci_beta
+
+```sh
+[bundle exec] fastlane ios ci_beta
+```
+
+
+
 ### ios deployBeta
 
 ```sh
