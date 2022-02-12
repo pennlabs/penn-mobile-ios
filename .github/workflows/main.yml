@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   workflow_dispatch:
 
@@ -22,11 +22,22 @@ jobs:
           APP_NAME = Penn Mobile
           APP_BUNDLE_ID = org.pennlabs.PennMobile
           EOF
+      - name: Create fastlane API key json
+        run: |
+          cat << EOF > api_key.json
+          {
+            "key_id": "YB62BFTN48",
+            "issuer_id": "69a6de6f-64eb-47e3-e053-5b8c7c11a4d1",
+            "key": ${{ secrets.APP_STORE_CONENCT_API_KEY }}
+            "duration": 1200, # optional (maximum 1200)
+            "in_house": false # optional but may be required if using match/sigh
+          }
+          EOF
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
-          bundler-cache: true 
+          bundler-cache: true
       - name: Download pods
         run: bundle exec pod install
       - name: Linter
