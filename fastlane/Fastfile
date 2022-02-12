@@ -49,7 +49,7 @@ platform :ios do
       build_number: latest_testflight_build_number(api_key_path: "api_key.json", app_identifier: "org.pennlabs.PennMobile") + 1
     })
     build_app(scheme: "PennMobile")
-    pilot(app_identifier: "org.pennlabs.PennMobile", api_key_path: "api_key.json", distribute_external: true, groups: "Penn Labs", reject_build_waiting_for_review: true, change_log: ${{ github.event.commits[0].message }})
+    pilot(app_identifier: "org.pennlabs.PennMobile", api_key_path: "api_key.json", distribute_external: true, groups: "Penn Labs", reject_build_waiting_for_review: true, change_log: github.event.commits[0].message)
   end
   
   lane :deployBeta do
