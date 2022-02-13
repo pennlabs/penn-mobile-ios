@@ -26,8 +26,6 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
 
         barButton = UIBarButtonItem(title: Account.isLoggedIn ? "Logout" : "Login", style: .done, target: self, action: #selector(handleLoginLogout(_:)))
         barButton.tintColor = UIColor.navigation
-
-        registerObserver()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -69,7 +67,6 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         tableView.separatorStyle = .singleLine
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more-with-icon")
-        tableView.register(TwoFactorCell.self, forCellReuseIdentifier: TwoFactorCell.identifier)
         tableView.tableFooterView = UIView()
     }
 
@@ -96,7 +93,7 @@ extension MoreViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Notification and privacy tabs aren't shown for users that aren't logged in
-        let rows = [Account.isLoggedIn ? 5 : 3, ControllerModel.shared.moreOrder.count, pennLinks.count]
+        let rows = [Account.isLoggedIn ? 4 : 3, ControllerModel.shared.moreOrder.count, pennLinks.count]
         return rows[section]
     }
 
@@ -130,13 +127,6 @@ extension MoreViewController {
                     cell.accessoryType = .disclosureIndicator
                     return cell
                 }
-            } else {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: TwoFactorCell.identifier) as? TwoFactorCell {
-                    cell.code = TwoFactorTokenGenerator.instance.generate()
-                    cell.backgroundColor = .uiGroupedBackgroundSecondary
-                    cell.delegate = self
-                    return cell
-                }
             }
         } else if indexPath.section == 1 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more-with-icon") as? MoreCell {
@@ -157,11 +147,11 @@ extension MoreViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (indexPath.section == 0 && indexPath.row == 4) ? TwoFactorCell.cellHeight : 50
+        return 50
     }
 
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (indexPath.section == 0 && indexPath.row == 4) ? TwoFactorCell.cellHeight : 50
+        return 50
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -229,92 +219,5 @@ extension MoreViewController {
         } else {
             showAlert(withMsg: "Something went wrong. Please try again.", title: "Uh oh!", completion: nil)
         }
-    }
-}
-
-// MARK: - TwoFactorCellDelegate
-extension MoreViewController: TwoFactorCellDelegate, TwoFactorEnableDelegate, TwoFactorWebviewDelegate {
-    func handleRefresh() {
-        tableView.reloadData()
-    }
-
-    func handleDismiss() {
-        tableView.reloadData()
-    }
-
-    func shouldWait() -> Bool {
-        return false
-    }
-
-    func handleEnable() {
-        tableView.reloadData()
-        let twc = TwoFactorWebviewController()
-        twc.delegate = self
-        twc.completion = { (successful) in
-            if !successful {
-                let alert = UIAlertController(title: "Server Error", message: "We were unable to retrieve your unique Two-Factor code.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { _ in
-                    alert.dismiss(animated: true, completion: nil)
-                }))
-                self.present(alert, animated: true, completion: nil)
-            }
-
-            self.tableView.reloadData()
-        }
-        let nvc = UINavigationController(rootViewController: twc)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.present(nvc, animated: true, completion: nil)
-        }
-    }
-
-    func handleEnableSwitch(enabled: Bool) {
-        if enabled {
-            if #available(iOS 13, *) {
-                let vc = TwoFactorEnableController()
-                vc.delegate = self
-                self.present(vc, animated: true)
-            } else {
-                let alert = UIAlertController(title: "Two-Step Verification", message: "Enable this feature to remain logged in to Penn Mobile. Otherwise, you may have to log in again every 2-3 weeks. You can change your decision later in the More tab. Penn Mobile will become a Two-Step PennKey verification app. You can use it to generate one-time codes to log in to Penn resources. The TOTP token we use to generate codes will never leave this device. It will be stored in your iPhone's secure enclave.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-                    self.tableView.reloadData()
-                    alert.dismiss(animated: true, completion: nil)
-                }))
-
-                alert.addAction(UIAlertAction(title: "Enable", style: .default, handler: { _ in
-                    alert.dismiss(animated: true, completion: nil)
-                    FirebaseAnalyticsManager.shared.trackEvent(action: .twoStep, result: .enabled, content: true)
-                    self.handleEnable()
-                }))
-
-                self.present(alert, animated: true, completion: nil)
-            }
-        } else {
-            tableView.reloadData()
-            let alert = UIAlertController(title: "Disabling Two-Factor Automation", message: "Are you sure you want to disable Two-Factor Automation? If you do, we will no longer be storing your unique key. To re-enable Two-Factor Automation, you will have to login again.", preferredStyle: .alert)
-
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-                self.tableView.reloadData()
-                alert.dismiss(animated: true, completion: nil)
-            }))
-
-            alert.addAction(UIAlertAction(title: "Disable", style: .destructive, handler: { _ in
-                alert.dismiss(animated: true, completion: nil)
-                FirebaseAnalyticsManager.shared.trackEvent(action: .twoStep, result: .disabled, content: false)
-                TwoFactorTokenGenerator.instance.clear()
-                self.tableView.reloadData()
-            }))
-
-            present(alert, animated: true, completion: nil)
-        }
-    }
-}
-// MARK: - TOTP Code Observer
-extension MoreViewController {
-    func registerObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleCodeFetched(_:)), name: Notification.Name(rawValue: "TOTPCodeFetched"), object: nil)
-    }
-
-    @objc func handleCodeFetched(_ sender: Any?) {
-        tableView.reloadData()
     }
 }
