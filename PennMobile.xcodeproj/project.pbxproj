@@ -147,6 +147,10 @@
 		6C44198627B99CA400993028 /* ProfilePictureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44197827B99CA400993028 /* ProfilePictureTableViewCell.swift */; };
 		6C44198727B99CA400993028 /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44197927B99CA400993028 /* HeaderViewCell.swift */; };
 		6C44198827B99CA400993028 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44197A27B99CA400993028 /* AboutViewController.swift */; };
+		6C44198E27B9A0E400993028 /* PennEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44198A27B9A0E400993028 /* PennEventsTableViewCell.swift */; };
+		6C44198F27B9A0E400993028 /* EventsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44198B27B9A0E400993028 /* EventsAPI.swift */; };
+		6C44199027B9A0E400993028 /* PennEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44198C27B9A0E400993028 /* PennEvents.swift */; };
+		6C44199127B9A0E400993028 /* PennEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44198D27B9A0E400993028 /* PennEventsTableViewController.swift */; };
 		6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */; };
 		6C6035FA26E722E60025FBC7 /* GSRAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035F926E722E60025FBC7 /* GSRAPIResponse.swift */; };
 		6C6035FC26E723240025FBC7 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035FB26E723240025FBC7 /* EmptyView.swift */; };
@@ -201,10 +205,6 @@
 		6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */; };
 		6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */; };
 		6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */; };
-		8523A2902707B0FB0052F608 /* PennEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8523A28F2707B0FB0052F608 /* PennEventsTableViewController.swift */; };
-		8523A2952707B31E0052F608 /* PennEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8523A2942707B31E0052F608 /* PennEventsTableViewCell.swift */; };
-		8523A29F2707B68B0052F608 /* EventsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8523A29E2707B68B0052F608 /* EventsAPI.swift */; };
-		8523A2AF2707B88A0052F608 /* PennEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8523A2AE2707B88A0052F608 /* PennEvents.swift */; };
 		97AA806923D26BC700C23488 /* DiningBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806423D26BC700C23488 /* DiningBalanceCell.swift */; };
 		97AA806A23D26BC700C23488 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */; };
 		97AA806B23D26BC700C23488 /* DiningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806623D26BC700C23488 /* DiningHeaderView.swift */; };
@@ -488,6 +488,10 @@
 		6C44197827B99CA400993028 /* ProfilePictureTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePictureTableViewCell.swift; sourceTree = "<group>"; };
 		6C44197927B99CA400993028 /* HeaderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderViewCell.swift; sourceTree = "<group>"; };
 		6C44197A27B99CA400993028 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		6C44198A27B9A0E400993028 /* PennEventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennEventsTableViewCell.swift; sourceTree = "<group>"; };
+		6C44198B27B9A0E400993028 /* EventsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsAPI.swift; sourceTree = "<group>"; };
+		6C44198C27B9A0E400993028 /* PennEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennEvents.swift; sourceTree = "<group>"; };
+		6C44198D27B9A0E400993028 /* PennEventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennEventsTableViewController.swift; sourceTree = "<group>"; };
 		6C6035F926E722E60025FBC7 /* GSRAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRAPIResponse.swift; sourceTree = "<group>"; };
 		6C6035FB26E723240025FBC7 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		6C6420AC27AAED2B0096CBA9 /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -542,10 +546,6 @@
 		6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStudyRoomCell.swift; sourceTree = "<group>"; };
 		6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
 		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
-		8523A28F2707B0FB0052F608 /* PennEventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsTableViewController.swift; sourceTree = "<group>"; };
-		8523A2942707B31E0052F608 /* PennEventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsTableViewCell.swift; sourceTree = "<group>"; };
-		8523A29E2707B68B0052F608 /* EventsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsAPI.swift; sourceTree = "<group>"; };
-		8523A2AE2707B88A0052F608 /* PennEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEvents.swift; sourceTree = "<group>"; };
 		97AA806423D26BC700C23488 /* DiningBalanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalanceCell.swift; sourceTree = "<group>"; };
 		97AA806523D26BC700C23488 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		97AA806623D26BC700C23488 /* DiningHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningHeaderView.swift; sourceTree = "<group>"; };
@@ -844,7 +844,7 @@
 				6CAA4B4727A7639600473CC6 /* Polls */,
 				216640D31EBB80FD00746B8E /* News */,
 				6C44196927B99CA400993028 /* More Tab */,
-				8523A28E2707B0790052F608 /* Events */,
+				6C44198927B9A0E400993028 /* Events */,
 				216640EE1EBB867600746B8E /* Contacts */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
 			);
@@ -1275,6 +1275,17 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		6C44198927B9A0E400993028 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				6C44198A27B9A0E400993028 /* PennEventsTableViewCell.swift */,
+				6C44198B27B9A0E400993028 /* EventsAPI.swift */,
+				6C44198C27B9A0E400993028 /* PennEvents.swift */,
+				6C44198D27B9A0E400993028 /* PennEventsTableViewController.swift */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
 		6CAA4B4727A7639600473CC6 /* Polls */ = {
 			isa = PBXGroup;
 			children = (
@@ -1415,17 +1426,6 @@
 				22D5D1D7F760F28A27C06241 /* libPods-AutomatedScreenshotUITests.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		8523A28E2707B0790052F608 /* Events */ = {
-			isa = PBXGroup;
-			children = (
-				8523A28F2707B0FB0052F608 /* PennEventsTableViewController.swift */,
-				8523A2942707B31E0052F608 /* PennEventsTableViewCell.swift */,
-				8523A29E2707B68B0052F608 /* EventsAPI.swift */,
-				8523A2AE2707B88A0052F608 /* PennEvents.swift */,
-			);
-			path = Events;
 			sourceTree = "<group>";
 		};
 		97AA806323D26BC700C23488 /* Views */ = {
@@ -2068,9 +2068,11 @@
 				2138D559225998A300D67CA2 /* GSRGroupController.swift in Sources */,
 				217A783D204D97B6004F1227 /* ModularTableViewModel.swift in Sources */,
 				EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */,
+				6C44198F27B9A0E400993028 /* EventsAPI.swift in Sources */,
 				21879B1E1FB3FF54003CF552 /* Storage.swift in Sources */,
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				F2568A7A2413637D00561295 /* HomeCellSafeArea.swift in Sources */,
+				6C44198E27B9A0E400993028 /* PennEventsTableViewCell.swift in Sources */,
 				6C44198027B99CA400993028 /* ProfilePageViewController.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21B8BBB4222318BE00EBC1D0 /* PennInTouchNetworkManager.swift in Sources */,
@@ -2078,7 +2080,6 @@
 				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
 				F23CC0BF235E3F610007317A /* DiningVenue+Codable.swift in Sources */,
 				F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */,
-				8523A2AF2707B88A0052F608 /* PennEvents.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
 				6C369A1526E39BC100721CA1 /* (null) in Sources */,
 				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
@@ -2112,7 +2113,6 @@
 				F2562A3A2558E7B80021C92F /* CourseAlertCreateCell.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
 				F2F4C92023611EB900816456 /* Colors.swift in Sources */,
-				8523A29F2707B68B0052F608 /* EventsAPI.swift in Sources */,
 				F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */,
 				6CAE43C62533731000BD0200 /* DiningInsightsAPIResponse.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
@@ -2189,6 +2189,7 @@
 				6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */,
 				21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */,
 				21ABE2AF223D7E2B00199D29 /* Time.swift in Sources */,
+				6C44199027B9A0E400993028 /* PennEvents.swift in Sources */,
 				21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */,
 				EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */,
 				6CC88D6027B1BF51006896F6 /* CardHeaderView.swift in Sources */,
@@ -2254,7 +2255,6 @@
 				21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
 				C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */,
-				8523A2902707B0FB0052F608 /* PennEventsTableViewController.swift in Sources */,
 				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,
 				F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */,
 				97AA806C23D26BC700C23488 /* DiningCell.swift in Sources */,
@@ -2277,7 +2277,6 @@
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
 				EFE2D6FB239B12270020F6BF /* GSRGroupNewIntialController.swift in Sources */,
-				8523A2952707B31E0052F608 /* PennEventsTableViewCell.swift in Sources */,
 				21ECADA11F2FFE0600569883 /* UserDefaults + Helpers.swift in Sources */,
 				97E79E142100E1FA00D3D606 /* FitnessViewController.swift in Sources */,
 				21B556172224FDC500D80F61 /* RootViewController.swift in Sources */,
@@ -2302,6 +2301,7 @@
 				6CC88D6A27B1BF51006896F6 /* DiningView.swift in Sources */,
 				F2E3FE242595A99500518961 /* CourseSection.swift in Sources */,
 				C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */,
+				6C44199127B9A0E400993028 /* PennEventsTableViewController.swift in Sources */,
 				6CC88D6F27B1BF51006896F6 /* DiningVenueDetailMenuView.swift in Sources */,
 				6C44198427B99CA400993028 /* ProfilePageViewModel.swift in Sources */,
 				EFE2D6F1239B11050020F6BF /* GroupManageButtonCell.swift in Sources */,
