@@ -187,3 +187,26 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         return url == self.urlStr && hasReferer
     }
 }
+
+extension WKWebsiteDataStore {
+    static func createDataStoreWithSavedCookies(_ callback: @escaping (WKWebsiteDataStore) -> Void) {
+        let wkDataStore = WKWebsiteDataStore.nonPersistent()
+        let sharedCookies: [HTTPCookie] = HTTPCookieStorage.shared.cookies ?? []
+        let dispatchGroup = DispatchGroup()
+
+        if sharedCookies.count > 0 {
+            for cookie in sharedCookies {
+                dispatchGroup.enter()
+                wkDataStore.httpCookieStore.setCookie(cookie) {
+                    dispatchGroup.leave()
+                }
+            }
+
+            dispatchGroup.notify(queue: DispatchQueue.main) {
+                callback(wkDataStore)
+            }
+        } else {
+            callback(wkDataStore)
+        }
+    }
+}
