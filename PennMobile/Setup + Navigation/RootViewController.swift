@@ -12,7 +12,7 @@ import StoreKit
 import SwiftyJSON
 
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
-class RootViewController: UIViewController, NotificationRequestable {
+class RootViewController: UIViewController, NotificationRequestable, ShowsAlert {
     var current: UIViewController
 
     private var lastLoginAttempt: Date?
@@ -43,7 +43,16 @@ class RootViewController: UIViewController, NotificationRequestable {
                    let data = try? JSON(data: data),
                    let version = try? data["result"][0]["version"],
                    let minimumOsVersion = try? data["results"][0]["minimumOsVersion"] {
-
+                    let appVersion = UserDefaults.standard.getAppVersion()
+                    print(appVersion)
+                    if true {
+                        showOption(withMsg: "New version of PennMobile available.", title: "Update available", onAccept: {
+                            guard let url = URL(string: "itms-apps://apps.apple.com/us/app/penn-mobile/id944829399") else { return }
+                            UIApplication.shared.open(url)
+                        }, onCancel: {
+                            
+                        })
+                    }
                 }
                 showMainScreen()
                 applicationWillEnterForeground()
