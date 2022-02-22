@@ -60,7 +60,7 @@ class ControllerModel: NSObject {
         vcDictionary[.pacCode] = PacCodeViewController()
         vcDictionary[.courseAlerts] = CourseAlertController()
         vcDictionary[.events] = PennEventsTableViewController()
-        // vcDictionary[.fitness] = FitnessViewController()
+        vcDictionary[.fitness] = FitnessViewController()
         // vcDictionary[.fling] = FlingViewController()
     }
 
@@ -83,9 +83,9 @@ class ControllerModel: NSObject {
             // keeping this #if DEBUG in case we want to remove course alerts from production
             // courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
             #if DEBUG
-            return [.news, .contacts, .courseSchedule, .courseAlerts, .events, .about]
+            return [.news, .contacts, .courseSchedule, .courseAlerts, .events, .fitness, .about]
             #else
-            return [.news, .contacts, .courseSchedule, .events, .about]
+            return [.news, .contacts, .courseSchedule, .events, .fitness, .about]
             #endif
         }
     }
@@ -95,9 +95,9 @@ class ControllerModel: NSObject {
         // courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
         get {
             #if DEBUG
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "logo-small")]
+                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "Fitness"), #imageLiteral(resourceName: "logo-small")]
             #else
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "logo-small")]
+                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "Fitness"), #imageLiteral(resourceName: "logo-small")]
             #endif
         }
     }
