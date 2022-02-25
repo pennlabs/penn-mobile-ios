@@ -8,11 +8,6 @@
 
 import Foundation
 
-enum GSRService: String {
-    case wharton
-    case libcal
-}
-
 struct GSRReservation: Codable, Equatable {
     let bookingId: String
     let gsr: GSRLocation

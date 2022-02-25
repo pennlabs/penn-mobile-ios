@@ -152,6 +152,11 @@ extension GSRController: GSRViewModelDelegate {
         let date = viewModel.getSelectedDate()
         self.showActivity()
 
+        if !Account.isLoggedIn {
+            self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: {self.navigationController?.popViewController(animated: true)})
+            return
+        }
+
         GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: date.string) { result in
             DispatchQueue.main.async {
                 self.limitedAccessLabel.isHidden = true
@@ -164,18 +169,9 @@ extension GSRController: GSRViewModelDelegate {
                     self.rangeSlider.reload()
                     self.refreshBarButton()
                 case .failure:
-                    if location.gid == 1 {
-                        if !Account.isLoggedIn {
-                            self.limitedAccessLabel.isHidden = false
-                            self.tableView.isHidden = true
-                            self.limitedAccessLabel.text = "You need to log in with a Wharton pennkey to access Wharton GSRs"
-                            return
-                        }
-
-                        if Account.isLoggedIn && !UserDefaults.standard.isInWharton() {
-                            self.limitedAccessLabel.isHidden = false
-                            self.tableView.isHidden = true
-                            self.limitedAccessLabel.text = "You need to have a Wharton pennkey to access Wharton GSRs"
+                    if location.kind == .wharton {
+                        if !UserDefaults.standard.isInWharton() {
+                            self.showAlert(withMsg: "You need to have a Wharton pennkey to access Wharton GSRs", title: "Error", completion: { self.navigationController?.popViewController(animated: true)})
                             return
                         }
                     }
