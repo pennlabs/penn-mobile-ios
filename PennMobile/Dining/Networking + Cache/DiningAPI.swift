@@ -16,6 +16,7 @@ class DiningAPI: Requestable {
     let diningUrl = "https://pennmobile.org/api/dining/venues/"
     let diningMenuUrl = "https://pennmobile.org/api/dining/daily_menu/"
     // TODO: Broken API, need to fetch locally
+
     let diningInsightsUrl = "https://pennmobile.org/api/dining/"
 
     func fetchDiningHours(_ completion: @escaping (_ result: Result<DiningAPIResponse, NetworkingError>) -> Void) {
@@ -105,17 +106,6 @@ class DiningAPI: Requestable {
     }
 }
 
-// MARK: - Dining Balance API
-extension DiningAPI {
-    func fetchDiningBalance(_ completion: @escaping (_ diningBalance: DiningBalance?) -> Void) {
-        if Account.isLoggedIn {
-            CampusExpressNetworkManager.instance.getDiningBalance(completion)
-        } else {
-            completion(DiningBalance(diningDollars: 0, visits: 0, guestVisits: 0, lastUpdated: Date()))
-        }
-    }
-}
-
 // Dining Data Storage
 extension DiningAPI {
 
@@ -179,5 +169,26 @@ extension DiningAPI {
         } else {
             Storage.store([id: menu], to: .caches, as: DiningMenuAPIResponse.directory)
         }
+    }
+}
+
+// MARK: Dining Balance
+extension DiningAPI {
+    func getdiningBalance(diningToken: String, _ callback: @escaping (_ balance: DiningBalance?) -> Void) {
+        let url = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/dining/currentBalance")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(diningToken, forHTTPHeaderField: "x-authorization")
+        let task = URLSession.shared.dataTask(with: request) { (data, response, _ ) in
+            if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let balance = try? decoder.decode(DiningBalance.self, from: data)
+                callback(balance)
+                return
+            }
+            callback(nil)
+        }
+        task.resume()
     }
 }

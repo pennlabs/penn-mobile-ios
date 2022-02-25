@@ -13,19 +13,19 @@ struct AnalyticsCardView: View {
     var color: Color = .blue
 
     var body: some View {
-        NavigationLink(destination: DiningAnalyticsView()) {
+        // NavigationLink(destination: DiningAnalyticsView()) {
             CardView {
                 HStack {
                     Text(self.text)
-                        .font(.system(size: 24, design: .rounded))
+                        .font(.system(size: 20, design: .rounded))
                         .bold()
-                    Spacer()
-                    Image(systemName: "chevron.right")
+                    // Spacer()
+                    // Image(systemName: "chevron.right")
                 }
                 .padding()
                 .foregroundColor(self.color).font(Font.system(size: 24).weight(.bold))
             }
-        }
+        // }
     }
 }
 

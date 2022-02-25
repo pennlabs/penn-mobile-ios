@@ -16,15 +16,28 @@ struct DiningVenueView: View {
     // Will be removed once SwiftUI is Fixed
     @State private var selectedItem: String?
     @State private var listViewId = UUID()
+    @State var alertIsShowing = false
+    @State var alertAccepted = false
+    @Environment(\.presentationMode) var presentationMode
+    func showCorrectAlert () -> Alert {
+        if !Account.isLoggedIn {
+            return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok")))
+        } else {
+            return Alert(title: Text("\"Penn Mobile\" requires you to login to Campus Express to use this feature."),
+                         message: Text("\(Account.isLoggedIn ? "" : "It is recommended you login first on the More tab. ")Would you like to continue to campus express?"),
+                         primaryButton: .default(Text("Continue"), action: {alertAccepted = true}),
+                         secondaryButton: .cancel({ presentationMode.wrappedValue.dismiss() }))
+        }
+    }
 
     var body: some View {
         List {
-            Section(header: CustomHeader(name: "Dining Balance", refreshButton: true), content: {
+            Section(header: CustomHeader(name: "Dining Balance", alertIsShowing: $alertIsShowing, refreshButton: true), content: {
                 Section(header: DiningViewHeader(), content: {})
             })
 
             ForEach(diningVM.ordering, id: \.self) { venueType in
-                Section(header: CustomHeader(name: venueType.fullDisplayName, refreshButton: false)) {
+                Section(header: CustomHeader(name: venueType.fullDisplayName)) {
                     ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
                         NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM), tag: "\(venue.id)", selection: $selectedItem) {
                             DiningVenueRow(for: venue)
@@ -46,13 +59,20 @@ struct DiningVenueView: View {
             }
         }
         .listStyle(.plain)
+        .sheet(isPresented: $alertAccepted) {
+            DiningLoginNavigationView(showSheetView: self.$alertAccepted)
+        }
+        .alert(isPresented: $alertIsShowing) {
+            showCorrectAlert()
+        }
     }
 }
 
 struct CustomHeader: View {
 
     let name: String
-    let refreshButton: Bool
+    var alertIsShowing: Binding<Bool>?
+    var refreshButton = false
 
     var body: some View {
         HStack {
@@ -62,7 +82,11 @@ struct CustomHeader: View {
             Spacer()
             if refreshButton {
                 Button(action: {
-                    print("Hi")
+                    guard KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() > diningExpiration else {
+                        alertIsShowing!.wrappedValue = true
+                        return
+                    }
+                    DiningViewModelSwiftUI.instance.refreshBalance()
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")
                 })
@@ -73,11 +97,5 @@ struct CustomHeader: View {
         .background(Color(UIColor.uiBackground))
         // Default Text Case for Header is Caps Lock
         .textCase(nil)
-    }
-}
-
-struct DiningVenueView_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomHeader(name: "new", refreshButton: false)
     }
 }

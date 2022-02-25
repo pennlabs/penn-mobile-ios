@@ -1,16 +1,16 @@
 //
-//  DiningBalances.swift
+//  DiningBalance.swift
 //  PennMobile
 //
-//  Created by Marta García Ferreiro on 3/31/19.
-//  Copyright © 2019 PennLabs. All rights reserved.
+//  Created by Andrew Antenberg on 2/20/22.
+//  Copyright © 2022 PennLabs. All rights reserved.
 //
 
 import Foundation
 
 struct DiningBalance: Codable {
-    let diningDollars: Float
-    let visits: Int
+    let diningDollars: String
+    let regularVisits: Int
     let guestVisits: Int
-    let lastUpdated: Date
+    let addOnVisits: Int
 }

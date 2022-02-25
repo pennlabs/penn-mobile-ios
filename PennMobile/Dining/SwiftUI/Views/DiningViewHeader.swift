@@ -20,12 +20,12 @@ struct DiningViewHeader: View {
 
         VStack {
             HStack {
-                DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: diningVM.diningDollars, specifier: "%.2f")
-                DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(diningVM.swipes), specifier: "%.0f")
+                DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: diningVM.diningDollars, specifier: "%.2f", dollarSign: true)
+                DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(diningVM.swipes), specifier: "%.0f", dollarSign: false)
             }
             HStack {
-                DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "person.2.fill"), balance: Double(diningVM.guestSwipes), specifier: "%.0f")
-                AnalyticsCardView(text: "Analytics")
+                DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "person.2.fill"), balance: Double(diningVM.guestSwipes), specifier: "%.0f", dollarSign: false)
+                AnalyticsCardView(text: "Coming Soon!")
             }
         }
 

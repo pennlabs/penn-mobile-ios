@@ -67,13 +67,13 @@ extension HomeViewController: TabBarShowable {
     }
 }*/
 
-extension DiningViewController: TabBarShowable {
+/*extension DiningViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Dining_Grey")
         let selectedImage = UIImage(named: "Dining_Blue")
         return UITabBarItem(title: "Dining", image: normalImage, selectedImage: selectedImage)
     }
-}
+}*/
 
 @available(iOS 14, *)
 extension DiningViewControllerSwiftUI: TabBarShowable {

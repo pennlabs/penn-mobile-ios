@@ -206,7 +206,6 @@ extension LabsLoginController {
                         if UserDefaults.standard.getPreference(for: .collegeHouse) {
                             CampusExpressNetworkManager.instance.updateHousingData()
                         }
-                        self.getDiningBalance()
                         self.getDiningTransactions()
                         self.getAndSaveLaundryPreferences()
                         self.getPacCode()
@@ -230,17 +229,6 @@ extension LabsLoginController {
                 UserDefaults.standard.saveCourses(courses)
             }
             UserDefaults.standard.storeCookies()
-        }
-    }
-
-    fileprivate func getDiningBalance() {
-        CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, _) in
-            guard let html = html else { return }
-            UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, _) in
-                if let hasDiningPlan = hasPlan {
-                    UserDefaults.standard.set(hasDiningPlan: hasDiningPlan)
-                }
-            }
         }
     }
 

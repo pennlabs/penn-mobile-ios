@@ -38,6 +38,7 @@ extension UserDefaults {
         case lastDiningHoursRequest
         case lastMenuRequest
         case diningTokenExpiration
+        case diningBalance
     }
 
     func clearAll() {
@@ -556,5 +557,29 @@ extension UserDefaults {
     func getDiningTokenExpiration() -> Date? {
         let result = UserDefaults.standard.value(forKey: UserDefaultsKeys.diningTokenExpiration.rawValue)
         return result as? Date
+    }
+    func clearDiningTokenExpiration() {
+        removeObject(forKey: UserDefaultsKeys.diningTokenExpiration.rawValue)
+    }
+}
+
+// MARK: - Current Dining Balance Object
+extension UserDefaults {
+    func setdiningBalance(_ diningBalance: DiningBalance) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(diningBalance) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.diningBalance.rawValue)
+        }
+        synchronize()
+    }
+    func getdiningBalance() -> DiningBalance? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.diningBalance.rawValue) {
+            return try? decoder.decode(DiningBalance.self, from: decodedData)
+        }
+        return nil
+    }
+    func clearDiningBalance() {
+        removeObject(forKey: UserDefaultsKeys.diningBalance.rawValue)
     }
 }

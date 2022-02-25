@@ -27,17 +27,17 @@ struct DiningInsightsView: View {
                         VStack {
                             HStack {
                                 if self.diningVM.diningInsights?.diningDollars != nil {
-                                    DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: self.diningVM.diningInsights!.diningDollars!, specifier: "%.2f", color: .green)
+                                    DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: self.diningVM.diningInsights!.diningDollars!, specifier: "%.2f", color: .green, dollarSign: true)
                                 }
 
                                 if self.diningVM.diningInsights?.swipes != nil {
-                                    DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(self.diningVM.diningInsights!.swipes!), specifier: "%g", color: .blue)
+                                    DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(self.diningVM.diningInsights!.swipes!), specifier: "%g", color: .blue, dollarSign: false)
                                 }
                             }.padding(.bottom)
 
                             HStack {
                                 if self.diningVM.diningInsights?.guestSwipes != nil {
-                                    DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(self.diningVM.diningInsights!.guestSwipes!), specifier: "%g", color: .purple)
+                                    DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(self.diningVM.diningInsights!.guestSwipes!), specifier: "%g", color: .purple, dollarSign: false)
                                 }
 
                                 BlankDiningBalanceView()

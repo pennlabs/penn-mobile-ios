@@ -20,10 +20,11 @@ struct DiningBalanceView: View {
     // By default, remove trailing zeros
     var specifier: String = "%g"
     var color: Color = .blue
+    var dollarSign: Bool
 
     var formattedBalance: String {
         let b: Double = balance
-        return String(format: "\(self.specifier)", b)
+        return (dollarSign ? "$" : "") + String(format: "\(self.specifier)", b)
     }
 
     var body: some View {
@@ -77,6 +78,6 @@ struct BlankDiningBalanceView: View {
 @available(iOS 14.0, *)
 struct DiningBalanceView_Previews: PreviewProvider {
     static var previews: some View {
-        DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f")
+        DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f", dollarSign: true)
     }
 }

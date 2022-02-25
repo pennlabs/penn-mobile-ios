@@ -42,7 +42,6 @@ class ProfilePageViewModel: NSObject {
                     self.setupProfileInfo()
                     self.setupEducationInfo()
                     DispatchQueue.main.async {
-                        print("reloaded")
                         (self.delegate as? ProfilePageViewController)?.tableView.reloadData()
                     }
                 }
