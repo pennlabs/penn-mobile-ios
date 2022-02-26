@@ -39,27 +39,38 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
 
         if #available(iOS 15.0, *) {
             Task {
-                if let (data, _) = try? await URLSession.shared.data(from: URL(string: "https://itunes.apple.com/lookup?bundleId=org.pennlabs.PennMobile")!),
+                if let (data, _) = try? await URLSession.shared.data(from: URL(string: "https://itunesl.apple.com/lookup?bundleId=org.pennlabs.PennMobile")!),
                    let data = try? JSON(data: data),
-                   let version = try? data["result"][0]["version"],
-                   let minimumOsVersion = try? data["results"][0]["minimumOsVersion"] {
+                   let version = data["results"][0]["version"].string,
+                   let minimumOsVersion = data["results"][0]["minimumOsVersion"].int {
                     let appVersion = UserDefaults.standard.getAppVersion()
-                    print(appVersion)
-                    if true {
-                        showOption(withMsg: "New version of PennMobile available.", title: "Update available", onAccept: {
+                    if appVersion.versionCompare(version) == .orderedAscending {
+                        showOption(withMsg: "New version of PennMobile available for iOS version greater than \(minimumOsVersion). The app may not be fully functional on older versions.", title: "Update available", onAccept: {
                             guard let url = URL(string: "itms-apps://apps.apple.com/us/app/penn-mobile/id944829399") else { return }
                             UIApplication.shared.open(url)
                         }, onCancel: {
-                            
+                            self.showMainScreen()
+                            self.applicationWillEnterForeground()
                         })
+                    } else {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            self.showMainScreen()
+                            self.applicationWillEnterForeground()
+                        }
+                    }
+                } else {
+                    // No network request, simply go to home
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.showMainScreen()
+                        self.applicationWillEnterForeground()
                     }
                 }
-                showMainScreen()
-                applicationWillEnterForeground()
             }
         } else {
-            showMainScreen()
-            applicationWillEnterForeground()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.showMainScreen()
+                self.applicationWillEnterForeground()
+            }
         }
     }
 
