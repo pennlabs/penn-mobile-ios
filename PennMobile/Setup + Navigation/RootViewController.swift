@@ -39,7 +39,7 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
 
         if #available(iOS 15.0, *) {
             Task {
-                if let (data, _) = try? await URLSession.shared.data(from: URL(string: "https://itunesl.apple.com/lookup?bundleId=org.pennlabs.PennMobile")!),
+                if let (data, _) = try? await URLSession.shared.data(from: URL(string: "https://itunes.apple.com/lookup?bundleId=org.pennlabs.PennMobile")!),
                    let data = try? JSON(data: data),
                    let version = data["results"][0]["version"].string,
                    let minimumOsVersion = data["results"][0]["minimumOsVersion"].int {
