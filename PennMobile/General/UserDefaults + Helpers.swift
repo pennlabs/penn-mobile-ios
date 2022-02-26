@@ -572,7 +572,7 @@ extension UserDefaults {
         }
         synchronize()
     }
-    func getdiningBalance() -> DiningBalance? {
+    func getDiningBalance() -> DiningBalance? {
         let decoder = JSONDecoder()
         if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.diningBalance.rawValue) {
             return try? decoder.decode(DiningBalance.self, from: decodedData)

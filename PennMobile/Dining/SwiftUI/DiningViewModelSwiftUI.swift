@@ -21,10 +21,7 @@ class DiningViewModelSwiftUI: ObservableObject {
 
     @Published var alertType: NetworkingError?
 
-    @Published var swipes = UserDefaults.standard.getdiningBalance()?.regularVisits ?? 0
-    @Published var diningDollars = Double(UserDefaults.standard.getdiningBalance()?.diningDollars ?? "0.0")!
-    @Published var guestSwipes = UserDefaults.standard.getdiningBalance()?.guestVisits ?? 0
-
+    @Published var diningBalance = UserDefaults.standard.getDiningBalance() ?? DiningBalance(diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
     // MARK: - Venue Methods
     let ordering: [DiningVenue.VenueType] = [.dining, .retail]
 
@@ -54,7 +51,6 @@ class DiningViewModelSwiftUI: ObservableObject {
                     }
                     self.diningVenues = venuesDict
                 case .failure(let error):
-                    print("loading failure")
                     self.alertType = error
                     self.diningVenuesIsLoading = false
                 }
@@ -81,19 +77,15 @@ class DiningViewModelSwiftUI: ObservableObject {
     func refreshBalance() {
             guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
                 UserDefaults.standard.clearDiningBalance()
-                self.swipes = 0
-                self.diningDollars = 0.0
-                self.guestSwipes = 0
+                self.diningBalance = DiningBalance(diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
                 return
             }
-            DiningAPI.instance.getdiningBalance(diningToken: diningToken) { balance in
+            DiningAPI.instance.getDiningBalance(diningToken: diningToken) { balance in
                 guard let balance = balance else {
                     return
                 }
                 UserDefaults.standard.setdiningBalance(balance)
-                self.swipes = balance.regularVisits
-                self.diningDollars = Double(balance.diningDollars)!
-                self.guestSwipes = balance.guestVisits
+                self.diningBalance = balance
             }
     }
 

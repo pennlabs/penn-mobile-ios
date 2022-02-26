@@ -20,11 +20,11 @@ struct DiningViewHeader: View {
 
         VStack {
             HStack {
-                DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: diningVM.diningDollars, specifier: "%.2f", dollarSign: true)
-                DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(diningVM.swipes), specifier: "%.0f", dollarSign: false)
+                DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: Double(diningVM.diningBalance.diningDollars)!, specifier: "%.2f", dollarSign: true)
+                DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(diningVM.diningBalance.regularVisits), specifier: "%.0f")
             }
             HStack {
-                DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "person.2.fill"), balance: Double(diningVM.guestSwipes), specifier: "%.0f", dollarSign: false)
+                DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "person.2.fill"), balance: Double(diningVM.diningBalance.guestVisits), specifier: "%.0f")
                 AnalyticsCardView(text: "Coming Soon!")
             }
         }
@@ -60,10 +60,10 @@ struct DiningViewHeaderBalance: View {
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 5) {
-            Label("\(diningVM.swipes)", systemImage: "creditcard.fill")
+            Label("\(diningVM.diningBalance.regularVisits)", systemImage: "creditcard.fill")
                 .labelStyle(BalanceLabelStyle())
 
-            Label("\(String(format: "%.2f", diningVM.diningDollars))", systemImage: "dollarsign.circle.fill")
+            Label("\(String(format: "%.2f", Double(diningVM.diningBalance.diningDollars)!))", systemImage: "dollarsign.circle.fill")
                 .labelStyle(BalanceLabelStyle())
         }
     }

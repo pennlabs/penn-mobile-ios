@@ -20,7 +20,7 @@ struct DiningBalanceView: View {
     // By default, remove trailing zeros
     var specifier: String = "%g"
     var color: Color = .blue
-    var dollarSign: Bool
+    var dollarSign = false
 
     var formattedBalance: String {
         let b: Double = balance

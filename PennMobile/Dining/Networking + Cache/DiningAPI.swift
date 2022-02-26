@@ -174,7 +174,7 @@ extension DiningAPI {
 
 // MARK: Dining Balance
 extension DiningAPI {
-    func getdiningBalance(diningToken: String, _ callback: @escaping (_ balance: DiningBalance?) -> Void) {
+    func getDiningBalance(diningToken: String, _ callback: @escaping (_ balance: DiningBalance?) -> Void) {
         let url = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/dining/currentBalance")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
