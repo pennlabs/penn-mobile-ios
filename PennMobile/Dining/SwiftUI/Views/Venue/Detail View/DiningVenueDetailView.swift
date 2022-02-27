@@ -10,7 +10,6 @@ import SwiftUI
 import Kingfisher
 import FirebaseAnalytics
 
-@available(iOS 14, *)
 struct DiningVenueDetailView: View {
 
     init(for venue: DiningVenue) {
@@ -114,7 +113,6 @@ struct DiningVenueDetailView: View {
     }
 }
 
-@available(iOS 14.0, *)
 struct DefaultNavigationBar: View {
 
     @Environment(\.presentationMode) var presentationMode
@@ -150,7 +148,6 @@ struct DefaultNavigationBar: View {
     }
 }
 
-@available(iOS 14, *)
 struct DiningVenueDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let path = Bundle.main.path(forResource: "sample-dining-venue", ofType: "json")

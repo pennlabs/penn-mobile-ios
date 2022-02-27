@@ -127,10 +127,8 @@ extension HomeFeatureCell {
 
     private func prepareImageView() {
         announcementImageView = UIImageView()
-        if #available(iOS 11.0, *) {
-            announcementImageView.layer.cornerRadius = cardView.layer.cornerRadius
-            announcementImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        }
+        announcementImageView.layer.cornerRadius = cardView.layer.cornerRadius
+        announcementImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         announcementImageView.clipsToBounds = true
         announcementImageView.contentMode = .scaleAspectFill
 

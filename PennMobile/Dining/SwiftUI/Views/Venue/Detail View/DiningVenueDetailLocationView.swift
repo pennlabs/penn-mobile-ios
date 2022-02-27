@@ -9,7 +9,6 @@
 import SwiftUI
 import MapKit
 
-@available(iOS 14.0, *)
 struct DiningVenueDetailLocationView: View {
 
     @State private var region: MKCoordinateRegion
@@ -30,7 +29,6 @@ struct DiningVenueDetailLocationView: View {
     }
 }
 
-@available(iOS 14.0, *)
 struct DiningVenueDetailLocationView_Previews: PreviewProvider {
     static var previews: some View {
         let path = Bundle.main.path(forResource: "sample-dining-venue", ofType: "json")

@@ -10,7 +10,6 @@
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 struct DiningInsightsView: View {
 
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI

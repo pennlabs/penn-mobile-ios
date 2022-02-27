@@ -9,7 +9,6 @@
 import SwiftUI
 import Kingfisher
 
-@available(iOS 14, *)
 struct DiningVenueRow: View {
 
     init(for venue: DiningVenue) {
@@ -67,7 +66,6 @@ struct DiningVenueRow: View {
 }
 
 // MARK: - ViewModifiers
-@available(iOS 14, *)
 struct StatusColorModifier: ViewModifier {
 
     init(for venue: DiningVenue) {
@@ -98,7 +96,6 @@ struct StatusColorModifier: ViewModifier {
     }
 }
 
-@available(iOS 14, *)
 struct VenueStatusLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 4) {
@@ -109,7 +106,6 @@ struct VenueStatusLabelStyle: LabelStyle {
     }
 }
 
-@available(iOS 14, *)
 struct DiningVenueRow_Previews: PreviewProvider {
     static var previews: some View {
         let diningVenues: DiningAPIResponse = Bundle.main.decode("sample-dining-venue.json")

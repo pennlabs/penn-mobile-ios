@@ -12,7 +12,6 @@ import SwiftUI
 
 // https://trailingclosure.com/notification-banner-using-swiftui/
 
-@available(iOS 14, *)
 struct AlertBanner: View {
     init(for type: NetworkingError) {
         self.type = type
@@ -40,7 +39,6 @@ struct AlertBanner: View {
     }
 }
 
-@available(iOS 14, *)
 struct AlertModifier: ViewModifier {
     @Binding var type: NetworkingError?
 
@@ -78,7 +76,6 @@ struct AlertModifier: ViewModifier {
     }
 }
 
-@available(iOS 14, *)
 extension View {
     func alert(show type: Binding<NetworkingError?>) -> some View {
         self.modifier(AlertModifier(type: type))

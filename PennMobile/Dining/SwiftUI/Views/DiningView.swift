@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 14, *)
 struct DiningView: View {
     @StateObject var diningVM = DiningViewModelSwiftUI.instance
 
@@ -19,7 +18,6 @@ struct DiningView: View {
     }
 }
 
-@available(iOS 14, *)
 struct DiningView_Previews: PreviewProvider {
     static var previews: some View {
         DiningView()

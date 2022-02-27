@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct DiningVenueDetailMenuView: View {
     var menus: [DiningMenu]
 
@@ -20,7 +19,6 @@ struct DiningVenueDetailMenuView: View {
     }
 }
 
-@available(iOS 14.0, *)
 struct DiningVenueDetailMenuView_Previews: PreviewProvider {
     let diningVenues: DiningMenuAPIResponse = Bundle.main.decode("mock_menu.json")
 

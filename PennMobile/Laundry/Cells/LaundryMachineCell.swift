@@ -28,11 +28,8 @@ class LaundryMachineCell: UICollectionViewCell {
 
     private let bellView: UIImageView = {
         let iv = UIImageView()
-        if #available(iOS 13.0, *) {
-            iv.image = UIImage(named: "bell")?.withTintColor(.baseYellow)
-        } else {
-            iv.image = UIImage(named: "bell")
-        }
+        iv.image = UIImage(named: "bell")?.withTintColor(.baseYellow)
+
         iv.isHidden = true
         return iv
     }()

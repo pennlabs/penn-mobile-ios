@@ -39,11 +39,7 @@ class RoomSelectionViewController: UIViewController, ShowsAlert, Trackable {
 
         view.addSubview(selectionView)
         selectionView.anchorToTop(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
-        if #available(iOS 11.0, *) {
-            selectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-        } else {
-            selectionView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        }
+        selectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
 
         trackScreen("Hall Selection")
     }

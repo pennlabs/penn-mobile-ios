@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 extension PredictionsGraphView {
 
     // Compute graph data

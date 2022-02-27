@@ -27,7 +27,6 @@ extension ClosedRange: ClampableRange {}
 // END TODO
 
 // VariableStepLineGraphView.getSmoothedData(from: DiningTransaction.sampleData)
-@available(iOS 14, *)
 struct PredictionsGraphView: View {
 
     init(config: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData) {

@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 struct DailyAverageView: View {
 
     init(config: DiningInsightsAPIResponse.CardData.DailyAverageCardData) {
@@ -168,7 +167,6 @@ struct DailyAverageView: View {
     }
 }
 
-@available(iOS 14, *)
 struct GraphPath: Shape, Animatable {
     @State var data: [CGFloat]
 
@@ -196,7 +194,6 @@ struct GraphPath: Shape, Animatable {
     }
 }
 
-@available(iOS 14, *)
 struct DailyAverageView_Previews: PreviewProvider {
 
     static let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
@@ -217,7 +214,7 @@ struct DailyAverageView_Previews: PreviewProvider {
 
 // Ad-hoc solution to onChange effect of State
 // Will be replaced using .onChange modifier for state
-@available(iOS 14, *)
+
 extension Binding {
     func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
         return Binding(

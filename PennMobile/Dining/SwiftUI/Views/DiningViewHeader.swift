@@ -10,7 +10,6 @@
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 struct DiningViewHeader: View {
 
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
@@ -20,7 +19,7 @@ struct DiningViewHeader: View {
 
         VStack {
             HStack {
-                DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: Double(diningVM.diningBalance.diningDollars)!, specifier: "%.2f", dollarSign: true)
+                DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: Double(diningVM.diningBalance.diningDollars) ?? 0.0, specifier: "%.2f", dollarSign: true)
                 DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(diningVM.diningBalance.regularVisits), specifier: "%.0f")
             }
             HStack {
@@ -32,7 +31,6 @@ struct DiningViewHeader: View {
     }
 }
 
-@available(iOS 14, *)
 struct DiningViewHeaderDate: View {
     var dateString: String {
         let dateFormatter = DateFormatter()
@@ -54,7 +52,6 @@ struct DiningViewHeaderDate: View {
     }
 }
 
-@available(iOS 14, *)
 struct DiningViewHeaderBalance: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
 
@@ -63,13 +60,12 @@ struct DiningViewHeaderBalance: View {
             Label("\(diningVM.diningBalance.regularVisits)", systemImage: "creditcard.fill")
                 .labelStyle(BalanceLabelStyle())
 
-            Label("\(String(format: "%.2f", Double(diningVM.diningBalance.diningDollars)!))", systemImage: "dollarsign.circle.fill")
+            Label("\(String(format: "%.2f", Double(diningVM.diningBalance.diningDollars) ?? 0.0))", systemImage: "dollarsign.circle.fill")
                 .labelStyle(BalanceLabelStyle())
         }
     }
 }
 
-@available(iOS 14, *)
 struct BalanceLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack {
@@ -81,7 +77,6 @@ struct BalanceLabelStyle: LabelStyle {
     }
 }
 
-@available(iOS 14, *)
 struct DiningViewHeader_Previews: PreviewProvider {
     static var previews: some View {
         VStack {

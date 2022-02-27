@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 struct RecentTransactionsView: View {
 
     init(config: DiningInsightsAPIResponse.CardData.RecentTransactionsCardData) {

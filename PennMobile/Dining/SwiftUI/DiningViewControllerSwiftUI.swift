@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 14, *)
 class DiningViewControllerSwiftUI: GenericViewController {
 
     override func viewDidLoad() {
