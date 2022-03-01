@@ -26,7 +26,6 @@ class DiningViewModelSwiftUI: ObservableObject {
 
     init() {
         refreshVenues()
-        refreshBalance()
     }
 
     func refreshVenues() {
@@ -79,6 +78,8 @@ class DiningViewModelSwiftUI: ObservableObject {
                 self.diningBalance = DiningBalance(diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
                 return
             }
+        
+        print(diningToken)
             DiningAPI.instance.getDiningBalance(diningToken: diningToken) { balance in
                 guard let balance = balance else {
                     return

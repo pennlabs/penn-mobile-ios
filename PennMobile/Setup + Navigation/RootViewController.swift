@@ -115,7 +115,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
 
         UserDBManager.shared.getWhartonStatus { result in
             if let isWharton = try? result.get() {
-                print(isWharton)
                 UserDefaults.standard.set(isInWharton: isWharton)
             }
         }
