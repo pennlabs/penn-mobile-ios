@@ -276,6 +276,32 @@ extension UserDBManager {
         })
         task.resume()
     }
+
+    func getWhartonStatus(_ completion: @escaping (_ result: Result<Bool, NetworkingError>) -> Void) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                completion(.failure(.authenticationError))
+                return
+            }
+
+            let url = URL(string: "https://pennmobile.org/api/gsr/wharton/")!
+            let request = URLRequest(url: url, accessToken: token)
+
+            let task = URLSession.shared.dataTask(with: request) { data, _, _ in
+                guard let data = data else {
+                    completion(.failure(.serverError))
+                    return
+                }
+
+                if let isWharton = try? JSON(data: data)["is_wharton"].bool {
+                    completion(.success(isWharton))
+                } else {
+                    completion(.failure(.serverError))
+                }
+            }
+            task.resume()
+        }
+    }
 }
 
 // MARK: - Transaction Data
