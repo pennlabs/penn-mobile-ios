@@ -52,11 +52,11 @@ extension LoginController {
     func loginCompletion(_ successful: Bool) {
         if successful {
             // Login Successful
-            AppDelegate.shared.rootViewController.switchToMainScreen()
+            AppDelegate.shared.rootViewController.applicationWillEnterForeground()
         } else {
             // Failed to retrieve Account from Platform (possibly down)
             if !self.isFirstAttempt {
-                AppDelegate.shared.rootViewController.switchToMainScreen()
+                AppDelegate.shared.rootViewController.applicationWillEnterForeground()
             } else {
                 self.isFirstAttempt = false
             }
