@@ -70,16 +70,10 @@ extension URLOpenable {
     // Source: https://stackoverflow.com/questions/38964264/openurl-in-ios10
     func open(scheme: String) {
         if let url = URL(string: scheme) {
-            if #available(iOS 10, *) {
-                UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
-                                          completionHandler: { (_) in
-                                            // print("Open \(scheme): \(success)")
-                })
-            } else {
-                _ = UIApplication.shared.openURL(url)
-                // let success = UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]),
+                                      completionHandler: { (_) in
                 // print("Open \(scheme): \(success)")
-            }
+            })
         }
     }
 }
@@ -167,14 +161,14 @@ extension ShowsAlertForError {
             self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
 
         case .failure(.other):
-        self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
+            self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
         }
     }
 }
 
 // Helper function inserted by Swift 4.2 migrator.
 private func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
 
 protocol LocationPermissionRequestable: CLLocationManagerDelegate {}

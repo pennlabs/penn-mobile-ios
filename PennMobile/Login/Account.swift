@@ -61,6 +61,7 @@ extension Account {
 
     static func clear() {
         UserDefaults.standard.clearAccount()
+        UserDefaults.standard.clearDiningBalance()
         KeychainAccessible.instance.removePennKey()
         KeychainAccessible.instance.removePassword()
         KeychainAccessible.instance.removePacCode()

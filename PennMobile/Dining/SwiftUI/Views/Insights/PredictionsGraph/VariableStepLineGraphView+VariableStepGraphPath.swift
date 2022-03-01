@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 extension VariableStepLineGraphView {
     struct VariableStepGraphPath: Shape, Animatable {
         @State var data: [PredictionsGraphView.YXDataPoint]

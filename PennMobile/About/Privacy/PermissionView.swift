@@ -12,7 +12,6 @@ import SwiftUI
 import Combine
 #endif
 
-@available(iOS 13, *)
 struct PermissionView: View {
 
     enum Choice {
@@ -75,7 +74,6 @@ struct PermissionView: View {
     }
 }
 
-@available(iOS 13, *)
 struct FullButton: View {
     var action: () -> Void
     var content: Text
@@ -96,7 +94,6 @@ struct FullButton: View {
 }
 
 #if DEBUG
-@available(iOS 13, *)
 struct PermissionView_Previews: PreviewProvider {
     static var previews: some View {
         PermissionView(delegate: PrivacyPermissionDelegate(), title: "Share Courses", privacyString: "privacy string", affirmativeString: "Share Courses with Penn Labs", negativeString: "Don't Share", moreInfoString: "More about Penn Labs")
@@ -109,7 +106,6 @@ struct PermissionView_Previews: PreviewProvider {
  
  // !!!! VERY IMPORTANT: "cancellable" should be an optional var of type "Any". This keeps the subsciption from being deallocated.
  
- if #available(iOS 13, *) {
      let prompt = """
      Help us improve our course recommendation algorithms by sharing  anonymized course enrollments with Penn Labs. You can change your decision later.
      No course enrollments are ever associated with your name, PennKey, or email.
@@ -130,8 +126,5 @@ struct PermissionView_Previews: PreviewProvider {
              //vc.dismiss(animated: true, completion: nil)
          }
      }
- } else {
-     // Fallback on earlier versions
- }
  
  */

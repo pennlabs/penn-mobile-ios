@@ -10,27 +10,40 @@ import SwiftUI
 
 struct DiningAnalyticsView: View {
 
-    @State var alertIsShowing = false
-    @State var alertAccepted = false
+    @State var showMissingDiningTokenAlert = false
+    @State var showDiningLoginView = false
+    @State var notLoggedInAlertShowing = false
     @Environment(\.presentationMode) var presentationMode
+
+    func showCorrectAlert () -> Alert {
+        if !Account.isLoggedIn {
+            return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok")))
+        } else {
+            return Alert(title: Text("\"Penn Mobile\" requires you to login to Campus Express to use this feature."),
+                         message: Text("Would you like to continue to campus express?"),
+                         primaryButton: .default(Text("Continue"), action: {showDiningLoginView = true}),
+                         secondaryButton: .cancel({ presentationMode.wrappedValue.dismiss() }))
+        }
+    }
 
     var body: some View {
 
         Text("This is the dining analytics view")
-            .sheet(isPresented: $alertAccepted) {
-                DiningLoginNavigationView(showSheetView: self.$alertAccepted)
+            .sheet(isPresented: $showDiningLoginView) {
+                DiningLoginNavigationView()
             }
             .onAppear {
                 guard let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() > diningExpiration else {
-                    alertIsShowing = true
+                    if Account.isLoggedIn {
+                        showMissingDiningTokenAlert = true
+                    } else {
+                        notLoggedInAlertShowing = true
+                    }
                     return
                 }
             }
-            .alert(isPresented: $alertIsShowing) {
-                Alert(title: Text("\"Penn Mobile\" reqires you to login to Campus Express to use this feature."),
-                      message: Text("Would you like to continue?"),
-                      primaryButton: .default(Text("Continue"), action: {alertAccepted = true}),
-                      secondaryButton: .cancel({ presentationMode.wrappedValue.dismiss() }))
+            .alert(isPresented: $showMissingDiningTokenAlert) {
+                showCorrectAlert()
             }
     }
 }

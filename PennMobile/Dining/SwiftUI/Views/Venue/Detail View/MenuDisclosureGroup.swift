@@ -135,7 +135,6 @@ extension AnyTransition {
     }
 }
 
-@available(iOS 14, *)
 struct MenuDisclosureGroup_Previews: PreviewProvider {
     static var previews: some View {
         let diningVenues: DiningMenuAPIResponse = Bundle.main.decode("mock_menu.json")

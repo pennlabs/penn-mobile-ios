@@ -24,29 +24,24 @@ protocol SHA256Hashable {}
 extension SHA256Hashable {
     func hash(string: String, encoding: SHA256Encoding) -> String {
         let inputData = Data(string.utf8)
-        #if canImport(CryptoKit)
-            if #available(iOS 13, *) {
-                let digest = SHA256.hash(data: inputData)
-                switch encoding {
-                case .base64:
-                    return Data([UInt8](digest.makeIterator())).base64EncodedString()
-                case .hex:
-                    return digest.compactMap { String(format: "%02x", $0) }.joined()
-                }
-            } else {
-                // CryptoKit not available until iOS 13
-                return commonCryptoHash(inputData: inputData, encoding: encoding)
-            }
-        #else
-            return commonCryptoHash(inputData: inputData, encoding: encoding)
-        #endif
+#if canImport(CryptoKit)
+        let digest = SHA256.hash(data: inputData)
+        switch encoding {
+        case .base64:
+            return Data([UInt8](digest.makeIterator())).base64EncodedString()
+        case .hex:
+            return digest.compactMap { String(format: "%02x", $0) }.joined()
+        }
+#else
+        return commonCryptoHash(inputData: inputData, encoding: encoding)
+#endif
     }
 
     private func commonCryptoHash(inputData: Data, encoding: SHA256Encoding) -> String {
         // https://www.agnosticdev.com/content/how-use-commoncrypto-apis-swift-5
         var digest = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         _ = inputData.withUnsafeBytes {
-           CC_SHA256($0.baseAddress, UInt32(inputData.count), &digest)
+            CC_SHA256($0.baseAddress, UInt32(inputData.count), &digest)
         }
 
         switch encoding {
@@ -206,7 +201,6 @@ extension LabsLoginController {
                         if UserDefaults.standard.getPreference(for: .collegeHouse) {
                             CampusExpressNetworkManager.instance.updateHousingData()
                         }
-                        self.getDiningBalance()
                         self.getDiningTransactions()
                         self.getAndSaveLaundryPreferences()
                         self.getPacCode()
@@ -230,17 +224,6 @@ extension LabsLoginController {
                 UserDefaults.standard.saveCourses(courses)
             }
             UserDefaults.standard.storeCookies()
-        }
-    }
-
-    fileprivate func getDiningBalance() {
-        CampusExpressNetworkManager.instance.getDiningBalanceHTML { (html, _) in
-            guard let html = html else { return }
-            UserDBManager.shared.parseAndSaveDiningBalanceHTML(html: html) { (hasPlan, _) in
-                if let hasDiningPlan = hasPlan {
-                    UserDefaults.standard.set(hasDiningPlan: hasDiningPlan)
-                }
-            }
         }
     }
 

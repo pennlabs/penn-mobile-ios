@@ -166,30 +166,6 @@ extension UserDBManager {
     }
 }
 
-// MARK: - Dining Balance
-extension UserDBManager {
-    func parseAndSaveDiningBalanceHTML(html: String, _ completion: @escaping (_ hasDiningPlan: Bool?, _ balance: DiningBalance?) -> Void) {
-        let url = "\(baseUrl)/dining/balance"
-        let params = ["html": html]
-        makePostRequestWithAccessToken(url: url, params: params) { (data, _, _) in
-            if let data = data {
-                let json = JSON(data)
-                if let hasPlan = json["hasPlan"].bool {
-                    var balance: DiningBalance?
-                    if let dollars = json["balance"]["dollars"].float,
-                        let swipes = json["balance"]["swipes"].int,
-                        let guestSwipes = json["balance"]["guest_swipes"].int {
-                        balance = DiningBalance(diningDollars: dollars, visits: swipes, guestVisits: guestSwipes, lastUpdated: Date())
-                    }
-                    completion(hasPlan, balance)
-                    return
-                }
-            }
-            completion(nil, nil)
-        }
-    }
-}
-
 // MARK: - Student Account
 extension UserDBManager {
     func saveAccount(_ account: Account, _ completion: @escaping (_ accountID: String?) -> Void) {

@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 13, *)
 class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
 
     private var cancellable: Any?
@@ -64,7 +63,7 @@ class CoursePrivacyController: UIViewController, IndicatorEnabled, URLOpenable {
 }
 
 // MARK: - Networking
-@available(iOS 13, *)
+
 extension CoursePrivacyController {
     fileprivate func fetchAndSaveCourses(shouldRequestLoginOnFail: Bool = true) {
         showActivity()

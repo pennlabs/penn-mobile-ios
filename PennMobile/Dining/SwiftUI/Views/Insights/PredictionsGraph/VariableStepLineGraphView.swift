@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 struct VariableStepLineGraphView: View {
 
     private let graphHeight: CGFloat = 160.0

@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 struct CardView<Content>: View where Content: View {
     let content: () -> Content
 
@@ -25,7 +24,6 @@ struct CardView<Content>: View where Content: View {
     }
 }
 
-@available(iOS 14, *)
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         CardView {

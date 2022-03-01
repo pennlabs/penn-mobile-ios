@@ -132,10 +132,8 @@
 //    
 //    private func prepareImageView() {
 //        performerImageView = UIImageView()
-//        if #available(iOS 11.0, *) {
-//            performerImageView.layer.cornerRadius = cardView.layer.cornerRadius
-//            performerImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-//        }
+//        performerImageView.layer.cornerRadius = cardView.layer.cornerRadius
+//        performerImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 //        performerImageView.clipsToBounds = true
 //        performerImageView.contentMode = .scaleAspectFill
 //        

@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 struct FrequentLocationsView: View {
 
     enum LengthOfTime: Int, CaseIterable {
@@ -126,7 +125,6 @@ struct FrequentLocationsView: View {
     }
 }
 
-@available(iOS 14.0, *)
 struct FrequentLocationsView_Previews: PreviewProvider {
     static let path = Bundle.main.path(forResource: "example-dining-stats", ofType: "json")
     static let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)

@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 extension VariableStepLineGraphView {
 
     struct PredictionSlopePath: Shape, Animatable {

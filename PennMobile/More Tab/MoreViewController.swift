@@ -50,11 +50,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let topSpace: CGFloat?
-        if #available(iOS 11.0, *) {
-            topSpace = self.view.safeAreaInsets.top
-        } else {
-            topSpace = self.topLayoutGuide.length
-        }
+        topSpace = self.view.safeAreaInsets.top
         if let topSpace = topSpace, topSpace > 0 {
             self.tableView.isHidden = false
         }

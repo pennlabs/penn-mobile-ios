@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-@available(iOS 14, *)
 class DiningViewModelSwiftUI: ObservableObject {
     static let instance = DiningViewModelSwiftUI()
 
@@ -21,10 +20,7 @@ class DiningViewModelSwiftUI: ObservableObject {
 
     @Published var alertType: NetworkingError?
 
-    @Published var swipes = 0
-    @Published var diningDollars = 0.0
-    @Published var guestSwipes = 0
-
+    @Published var diningBalance = UserDefaults.standard.getDiningBalance() ?? DiningBalance(diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
     // MARK: - Venue Methods
     let ordering: [DiningVenue.VenueType] = [.dining, .retail]
 
@@ -36,7 +32,10 @@ class DiningViewModelSwiftUI: ObservableObject {
     func refreshVenues() {
         let lastRequest = UserDefaults.standard.getLastDiningHoursRequest()
 
-        if lastRequest == nil || !lastRequest!.isToday {
+        // Sometimes when building the app, dining venue list is empty, but because it has refreshed within the day, it does not refresh again. Now, refreshes if the list of venues is completely empty
+        if lastRequest == nil || !lastRequest!.isToday || diningVenues.filter({ _, value in
+            !value.isEmpty
+        }).isEmpty {
             self.diningVenuesIsLoading = true
 
             DiningAPI.instance.fetchDiningHours { result in
@@ -75,14 +74,18 @@ class DiningViewModelSwiftUI: ObservableObject {
     }
 
     func refreshBalance() {
-        if UserDefaults.standard.hasDiningPlan() {
-            DiningAPI.instance.fetchDiningBalance { diningBalance in
-                if let diningBalance = diningBalance {
-                    self.swipes = diningBalance.visits
-                    self.diningDollars = Double(diningBalance.diningDollars)
-                }
+            guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
+                UserDefaults.standard.clearDiningBalance()
+                self.diningBalance = DiningBalance(diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
+                return
             }
-        }
+            DiningAPI.instance.getDiningBalance(diningToken: diningToken) { balance in
+                guard let balance = balance else {
+                    return
+                }
+                UserDefaults.standard.setdiningBalance(balance)
+                self.diningBalance = balance
+            }
     }
 
     // MARK: - Insights
