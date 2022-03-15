@@ -40,8 +40,9 @@ class DiningAPI: Requestable {
         }
     }
 
-    func fetchDiningMenu(for id: Int, _ completion: @escaping (_ result: Result<DiningMenuAPIResponse, NetworkingError>) -> Void) {
-        getRequestData(url: diningMenuUrl + "\(id)") { (data, _, statusCode) in
+    func fetchDiningMenu(for id: Int, at date: Date = Date(), _ completion: @escaping (_ result: Result<DiningMenuAPIResponse, NetworkingError>) -> Void) {
+        print(Date.dayOfMonthFormatter.string(from: date))
+        postRequestData(url: diningMenuUrl + "\(id)/", params: ["date": Date.dayOfMonthFormatter.string(from: date)]) { (data, _, statusCode) in
             if statusCode == nil {
                 return completion(.failure(.noInternet))
             }

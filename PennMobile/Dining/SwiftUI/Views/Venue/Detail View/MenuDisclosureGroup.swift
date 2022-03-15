@@ -44,7 +44,7 @@ struct DiningMenuRow: View {
         self.diningMenu = diningMenu
     }
 
-    @State var isExpanded = false
+    @State var isExpanded = true
     let diningMenu: DiningMenu
 
     var body: some View {
@@ -105,7 +105,9 @@ struct DiningStationItemRow: View {
 
                 ForEach(diningStationItem.tableAttribute.attributeDescriptions, id: \.self) { attribute in
                     // Unlike UIKit, image will simply not appear if it doesn't exist in assets
-                    Image(attribute.description)
+                    // Hack as image set doesn't allow slashes
+                    let description = attribute.description == "Wheat/Gluten" ? "Wheat" : attribute.description
+                    Image(description)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20.0, height: 20)
@@ -142,7 +144,7 @@ struct MenuDisclosureGroup_Previews: PreviewProvider {
         return NavigationView {
             ScrollView {
                 VStack {
-                    DiningVenueDetailMenuView(menus: diningVenues.document.menuDocument.menus)
+                    DiningVenueDetailMenuView(menus: diningVenues.document.menuDocument.menus, id: 1)
                     Spacer()
                 }
             }.navigationTitle("Dining")
