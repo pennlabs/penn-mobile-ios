@@ -15,7 +15,7 @@ class NativeNewsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         let title = UILabel()
-        title.text = "Hello there"
+        title.text = article.data.labsArticle.abstract
         title.font = UIFont.preferredFont(forTextStyle: .title2)
         title.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(title)

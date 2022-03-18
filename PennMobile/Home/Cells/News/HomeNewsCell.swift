@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol NewsArticleSelectable {
+    func handleSelectedArticle(_ article: NewsArticle)
+}
+
 final class HomeNewsCell: UITableViewCell, HomeCellConformable {
     static var identifier: String = "homeNewsCell"
 
@@ -109,9 +113,11 @@ extension HomeNewsCell {
     }
 
     @objc fileprivate func handleTapped(_ sender: Any) {
-        guard let delegate = delegate as? FeatureNavigatable else { return }
+        guard let delegate = delegate as? NewsArticleSelectable else { return }
         FirebaseAnalyticsManager.shared.trackEvent(action: "News Cell Pressed", result: article.data.labsArticle.headline, content: "")
-        delegate.navigateToFeature(feature: .headlineNews, item: self.item)
+//        (delegate as? NewsArticleSelectable).
+//        delegate.navigateToFeature(feature: .headlineNews, item: self.item)
+        delegate.handleSelectedArticle(article)
 //        delegate.handleUrlPressed(urlStr: article.link, title: article.source, item: self.item, shouldLog: true)
     }
 }
