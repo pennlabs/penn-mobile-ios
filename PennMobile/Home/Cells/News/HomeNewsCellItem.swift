@@ -20,28 +20,26 @@ final class HomeNewsCellItem: HomeCellItem {
     }
 
     static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
-        let task = URLSession.shared.dataTask(with: URL(string: "https://pennmobile.org/api/penndata/news/")!) { data, _, _ in
-            guard let data = data else { completion([]); return }
-
+        let task = URLSession.shared.dataTask(with: URL(string: "https://labs-graphql-295919.ue.r.appspot.com/graphql?query=%7BlabsArticle%7Bslug,headline,abstract,published_at,authors%7Bname%7D,dominantMedia%7BimageUrl,authors%7Bname%7D%7D,tag,content%7D%7D")!) { data, _, _ in
+            guard let data = data else { completion([]); return }          
             if let article = try? JSONDecoder().decode(NewsArticle.self, from: data) {
                 completion([HomeNewsCellItem(for: article)])
             } else {
                 completion([])
             }
         }
-
         task.resume()
     }
 
     func equals(item: ModularTableViewItem) -> Bool {
         guard let item = item as? HomeNewsCellItem else { return false }
-        return article.title == item.article.title
+        return article.data.labsArticle.headline == item.article.data.labsArticle.headline
     }
 }
 
 // MARK: - Logging ID
 extension HomeNewsCellItem: LoggingIdentifiable {
     var id: String {
-        return article.link
+        return article.data.labsArticle.slug
     }
 }

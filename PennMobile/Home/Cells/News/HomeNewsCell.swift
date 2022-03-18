@@ -43,21 +43,21 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
         let width: CGFloat = UIScreen.main.bounds.width - (2 * HomeViewController.edgeSpacing) - (2 * Padding.pad)
 
         let titleHeight: CGFloat
-        if let height = titleHeightDictionary[item.article.title] {
+        if let height = titleHeightDictionary[item.article.data.labsArticle.headline] {
             titleHeight = height
         } else {
-            titleHeight = item.article.title.dynamicHeight(font: titleFont, width: width)
-            titleHeightDictionary[item.article.title] = titleHeight
+            titleHeight = item.article.data.labsArticle.headline.dynamicHeight(font: titleFont, width: width)
+            titleHeightDictionary[item.article.data.labsArticle.headline] = titleHeight
         }
 
         let subtitleHeight: CGFloat
         if !item.showSubtitle {
             subtitleHeight = 0
-        } else if let height = subtitleHeightDictionary[item.article.subtitle] {
+        } else if let height = subtitleHeightDictionary[item.article.data.labsArticle.abstract] {
             subtitleHeight = height
         } else {
-            subtitleHeight = item.article.subtitle.dynamicHeight(font: subtitleFont, width: width) + 4
-            subtitleHeightDictionary[item.article.subtitle] = subtitleHeight
+            subtitleHeight = item.article.data.labsArticle.abstract.dynamicHeight(font: subtitleFont, width: width) + 4
+            subtitleHeightDictionary[item.article.data.labsArticle.abstract] = subtitleHeight
         }
         let height = imageHeight + titleHeight + subtitleHeight + (5 * Padding.pad)
         return height
@@ -92,11 +92,11 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
 extension HomeNewsCell {
     fileprivate func setupCell(with item: HomeNewsCellItem) {
         self.article = item.article
-        self.articleImageView.kf.setImage(with: URL(string: item.article.imageurl))
-        self.sourceLabel.text = article.source
-        self.titleLabel.text = article.title
-        self.subtitleLabel?.text = article.subtitle
-        self.dateLabel.text = article.timestamp
+        self.articleImageView.kf.setImage(with: URL(string: item.article.data.labsArticle.dominantMedia.imageUrl))
+        self.sourceLabel.text = "The Daily Pennsylvanian"
+        self.titleLabel.text = article.data.labsArticle.headline
+        self.subtitleLabel?.text = article.data.labsArticle.abstract
+        self.dateLabel.text = article.data.labsArticle.published_at
     }
 }
 
@@ -109,9 +109,10 @@ extension HomeNewsCell {
     }
 
     @objc fileprivate func handleTapped(_ sender: Any) {
-        guard let delegate = delegate as? URLSelectable else { return }
-        FirebaseAnalyticsManager.shared.trackEvent(action: "News Cell Pressed", result: article.title, content: "")
-        delegate.handleUrlPressed(urlStr: article.link, title: article.source, item: self.item, shouldLog: true)
+        guard let delegate = delegate as? FeatureNavigatable else { return }
+        FirebaseAnalyticsManager.shared.trackEvent(action: "News Cell Pressed", result: article.data.labsArticle.headline, content: "")
+        delegate.navigateToFeature(feature: .headlineNews, item: self.item)
+//        delegate.handleUrlPressed(urlStr: article.link, title: article.source, item: self.item, shouldLog: true)
     }
 }
 
