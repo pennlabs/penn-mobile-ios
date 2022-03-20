@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftSoup
 
 protocol NewsArticleSelectable {
     func handleSelectedArticle(_ article: NewsArticle)
@@ -99,7 +100,13 @@ extension HomeNewsCell {
         self.articleImageView.kf.setImage(with: URL(string: item.article.data.labsArticle.dominantMedia.imageUrl))
         self.sourceLabel.text = "The Daily Pennsylvanian"
         self.titleLabel.text = article.data.labsArticle.headline
-        self.subtitleLabel?.text = article.data.labsArticle.abstract
+        do {
+            let html = article.data.labsArticle.abstract
+            let doc: Document = try SwiftSoup.parse(html)
+            try self.subtitleLabel?.text = doc.text()
+        } catch {
+            print(error)
+        }
         self.dateLabel.text = article.data.labsArticle.published_at
     }
 }
