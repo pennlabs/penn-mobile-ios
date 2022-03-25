@@ -11,25 +11,53 @@ import SwiftSoup
 
 class NativeNewsViewController: UIViewController {
     var article: NewsArticle!
-    let content = UILabel()
+    let scrollView = UIScrollView()
+    let contentView = UIView()
+    let body = UILabel()
     let titleLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        prepareScrollView()
+        prepareContentView()
         preparetitleLabel()
         prepareBodyText()
     }
+    
+    func prepareScrollView() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ])
+    }
+    
+    func prepareContentView() {
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(contentView)
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: 1000)
+        ])
+    }
+    
     func preparetitleLabel() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = article.data.labsArticle.headline
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.numberOfLines = 0
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title2)
-        view.addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor)
+            titleLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            titleLabel.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
     
@@ -37,18 +65,21 @@ class NativeNewsViewController: UIViewController {
         do {
             let html = article.data.labsArticle.content
             let doc: Document = try SwiftSoup.parse(html)
-            try content.text = doc.text()
+            try body.text = doc.text()
         } catch {
             print(error)
         }
-        content.translatesAutoresizingMaskIntoConstraints = false
-        content.lineBreakMode = .byWordWrapping
-        content.numberOfLines = 0
-        view.addSubview(content)
+        body.translatesAutoresizingMaskIntoConstraints = false
+        body.lineBreakMode = .byWordWrapping
+        body.numberOfLines = 0
+        contentView.addSubview(body)
         NSLayoutConstraint.activate([
-            content.topAnchor.constraint(equalTo: titleLabel.layoutMarginsGuide.bottomAnchor),
-            content.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            content.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor)
+            body.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            body.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            body.widthAnchor.constraint(equalTo: view.widthAnchor),
+            body.heightAnchor.constraint(equalToConstant: 1000),
+            body.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
+            
         ])
     }
 }
