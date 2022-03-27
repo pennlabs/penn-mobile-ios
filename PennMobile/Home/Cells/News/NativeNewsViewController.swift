@@ -8,78 +8,114 @@
 
 import Foundation
 import SwiftSoup
+import UIKit
 
 class NativeNewsViewController: UIViewController {
     var article: NewsArticle!
     let scrollView = UIScrollView()
-    let contentView = UIView()
+    let contentView = UIStackView()
     let body = UILabel()
     let titleLabel = UILabel()
-    
+    let authorLabel = UILabel()
+    let imageView = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         prepareScrollView()
         prepareContentView()
-        preparetitleLabel()
+        prepareTitleLabel()
+        prepareAuthorLabel()
+        prepareImageView()
         prepareBodyText()
     }
-    
     func prepareScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor)
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+            scrollView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor)
         ])
     }
-    
     func prepareContentView() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.axis = NSLayoutConstraint.Axis.vertical
+        contentView.distribution = UIStackView.Distribution.equalSpacing
+        contentView.alignment = UIStackView.Alignment.leading
+        contentView.spacing = 16.0
         scrollView.addSubview(contentView)
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: 1000)
+            contentView.leadingAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
     }
-    
-    func preparetitleLabel() {
+    func prepareTitleLabel() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = article.data.labsArticle.headline
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.numberOfLines = 0
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title2)
-        contentView.addSubview(titleLabel)
+        contentView.addArrangedSubview(titleLabel)
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            titleLabel.widthAnchor.constraint(equalTo: view.widthAnchor)
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor)
         ])
+    }
+    func prepareAuthorLabel() {
+        authorLabel.translatesAutoresizingMaskIntoConstraints = false
+        authorLabel.text = "By "
+        for author in article.data.labsArticle.authors {
+            authorLabel.text? += author.name
+        }
+        authorLabel.lineBreakMode = .byWordWrapping
+        authorLabel.numberOfLines = 0
+        authorLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+        contentView.addArrangedSubview(authorLabel)
+        NSLayoutConstraint.activate([
+            authorLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            authorLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor)
+        ])
+    }
+    func prepareImageView() {
+        imageView.kf.setImage(with: URL(string: article.data.labsArticle.dominantMedia.imageUrl))
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addArrangedSubview(imageView)
+        _ = imageView.anchor(nil, left: contentView.layoutMarginsGuide.leftAnchor, bottom: nil, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: contentView.layoutMarginsGuide.layoutFrame.width, heightConstant: contentView.layoutMarginsGuide.layoutFrame.width * 0.6)
+//        NSLayoutConstraint.activate([
+//            imageView.widthAnchor.constraint(equalTo: contentView.layoutMarginsGuide.widthAnchor),
+//            imageView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+//            imageView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+//            imageView.heightAnchor.constraint(equalTo: <#T##NSLayoutAnchor<NSLayoutDimension>#>)
+//        ])
     }
     
     func prepareBodyText() {
         do {
             let html = article.data.labsArticle.content
             let doc: Document = try SwiftSoup.parse(html)
-            try body.text = doc.text()
+            var element = try doc.select("p").first()!
+            body.text = ""
+            while true {
+                guard let sibling = try element.nextElementSibling() else { break }
+                if sibling.tagName() != "p" { break }
+                body.text! += try sibling.text() + "\n \n"
+                element = sibling
+            }
         } catch {
             print(error)
         }
         body.translatesAutoresizingMaskIntoConstraints = false
         body.lineBreakMode = .byWordWrapping
         body.numberOfLines = 0
-        contentView.addSubview(body)
+        contentView.addArrangedSubview(body)
         NSLayoutConstraint.activate([
-            body.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-            body.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            body.widthAnchor.constraint(equalTo: view.widthAnchor),
-            body.heightAnchor.constraint(equalToConstant: 1000),
-            body.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-            
+            body.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            body.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor)
         ])
     }
 }

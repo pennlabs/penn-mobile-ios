@@ -122,10 +122,7 @@ extension HomeNewsCell {
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? NewsArticleSelectable else { return }
         FirebaseAnalyticsManager.shared.trackEvent(action: "News Cell Pressed", result: article.data.labsArticle.headline, content: "")
-//        (delegate as? NewsArticleSelectable).
-//        delegate.navigateToFeature(feature: .headlineNews, item: self.item)
         delegate.handleSelectedArticle(article)
-//        delegate.handleUrlPressed(urlStr: article.link, title: article.source, item: self.item, shouldLog: true)
     }
 }
 
