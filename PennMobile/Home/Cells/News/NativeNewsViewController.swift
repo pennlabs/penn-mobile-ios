@@ -66,10 +66,12 @@ class NativeNewsViewController: UIViewController {
     }
     func prepareAuthorLabel() {
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
-        authorLabel.text = "By "
+        authorLabel.text = ""
         for author in article.data.labsArticle.authors {
-            authorLabel.text? += author.name
+            authorLabel.text! += author.name + ", "
         }
+        authorLabel.text?.removeLast(2)
+        authorLabel.text! += " | " + article.data.labsArticle.published_at
         authorLabel.lineBreakMode = .byWordWrapping
         authorLabel.numberOfLines = 0
         authorLabel.font = UIFont.preferredFont(forTextStyle: .title3)
@@ -86,12 +88,6 @@ class NativeNewsViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addArrangedSubview(imageView)
         _ = imageView.anchor(nil, left: contentView.layoutMarginsGuide.leftAnchor, bottom: nil, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: contentView.layoutMarginsGuide.layoutFrame.width, heightConstant: contentView.layoutMarginsGuide.layoutFrame.width * 0.6)
-//        NSLayoutConstraint.activate([
-//            imageView.widthAnchor.constraint(equalTo: contentView.layoutMarginsGuide.widthAnchor),
-//            imageView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-//            imageView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-//            imageView.heightAnchor.constraint(equalTo: <#T##NSLayoutAnchor<NSLayoutDimension>#>)
-//        ])
     }
     
     func prepareBodyText() {
