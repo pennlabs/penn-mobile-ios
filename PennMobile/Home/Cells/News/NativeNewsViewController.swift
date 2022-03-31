@@ -89,29 +89,36 @@ class NativeNewsViewController: UIViewController {
         contentView.addArrangedSubview(imageView)
         _ = imageView.anchor(nil, left: contentView.layoutMarginsGuide.leftAnchor, bottom: nil, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: contentView.layoutMarginsGuide.layoutFrame.width, heightConstant: contentView.layoutMarginsGuide.layoutFrame.width * 0.6)
     }
-    
+
     func prepareBodyText() {
-        do {
-            let html = article.data.labsArticle.content
-            let doc: Document = try SwiftSoup.parse(html)
-            var element = try doc.select("p").first()!
-            body.text = ""
-            while true {
-                guard let sibling = try element.nextElementSibling() else { break }
-                if sibling.tagName() != "p" { break }
-                body.text! += try sibling.text() + "\n \n"
-                element = sibling
+        var bodyViews: [UIView] = []
+        let html = article.data.labsArticle.content
+        if let doc = try? SwiftSoup.parse(html), let elements = doc.body()?.children() {
+            for element in elements {
+                switch element.tagName() {
+                case "p":
+                    let paragraphTextView = UITextView()
+                    paragraphTextView.isScrollEnabled = false
+                    paragraphTextView.isEditable = false
+                    paragraphTextView.attributedText = try? element.html().htmlToAttributedString
+                    paragraphTextView.textColor = .label
+                    paragraphTextView.font = .preferredFont(forTextStyle: .body, compatibleWith: .current)
+                    bodyViews.append(paragraphTextView)
+                default:
+                    // TODO: Images
+                    print("default")
+                }
             }
-        } catch {
-            print(error)
         }
-        body.translatesAutoresizingMaskIntoConstraints = false
-        body.lineBreakMode = .byWordWrapping
-        body.numberOfLines = 0
-        contentView.addArrangedSubview(body)
-        NSLayoutConstraint.activate([
-            body.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            body.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor)
-        ])
+
+        for bodyView in bodyViews {
+            bodyView.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addArrangedSubview(bodyView)
+            NSLayoutConstraint.activate([
+                bodyView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+                bodyView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor)
+            ])
+            bodyView.sizeToFit()
+        }
     }
 }
