@@ -69,6 +69,21 @@ class UserDBManager: NSObject, Requestable, SHA256Hashable {
     }
 }
 
+// MARK: - Backend Login
+extension UserDBManager {
+    func loginToBackend() {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else { return }
+
+            let url = URL(string: "https://pennmobile.org/api/login")!
+            let request = URLRequest(url: url, accessToken: token)
+
+            let task = URLSession.shared.dataTask(with: request)
+            task.resume()
+        }
+    }
+}
+
 // MARK: - Dining
 extension UserDBManager {
     func fetchDiningPreferences(_ completion: @escaping(_ result: Result<[DiningVenue], NetworkingError>) -> Void) {
