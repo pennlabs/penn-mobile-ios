@@ -57,7 +57,7 @@ class NativeNewsViewController: UIViewController {
         titleLabel.text = article.data.labsArticle.headline
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.numberOfLines = 0
-        titleLabel.font = UIFont.preferredFont(forTextStyle: .title2)
+        titleLabel.font = UIFont.primaryTitleFont
         contentView.addArrangedSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
@@ -74,7 +74,7 @@ class NativeNewsViewController: UIViewController {
         authorLabel.text! += " | " + article.data.labsArticle.published_at
         authorLabel.lineBreakMode = .byWordWrapping
         authorLabel.numberOfLines = 0
-        authorLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+        authorLabel.font = UIFont.primaryInformationFont
         contentView.addArrangedSubview(authorLabel)
         NSLayoutConstraint.activate([
             authorLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
