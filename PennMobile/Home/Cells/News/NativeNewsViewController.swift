@@ -102,10 +102,20 @@ class NativeNewsViewController: UIViewController {
                     paragraphTextView.isEditable = false
                     paragraphTextView.attributedText = try? element.html().htmlToAttributedString
                     paragraphTextView.textColor = .label
-                    paragraphTextView.font = .preferredFont(forTextStyle: .body, compatibleWith: .current)
+                    paragraphTextView.font = UIFont.primaryInformationFont
                     bodyViews.append(paragraphTextView)
+                    // TODO: Implement in-text images.
+//                case "img":
+//                    let imageView = UIImageView()
+//                    // Need to check how the source of the image is stored
+//                    try? imageView.kf.setImage(with: URL(string: element.attr("src")))
+//                    imageView.clipsToBounds = true
+//                    imageView.contentMode = .scaleAspectFill
+//                    imageView.translatesAutoresizingMaskIntoConstraints = false
+//                    bodyViews.append(imageView)
+//                    // Not sure if these constraints will work
+//                    _ = imageView.anchor(nil, left: contentView.layoutMarginsGuide.leftAnchor, bottom: nil, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: contentView.layoutMarginsGuide.layoutFrame.width, heightConstant: contentView.layoutMarginsGuide.layoutFrame.width * 0.6)
                 default:
-                    // TODO: Images
                     print("default")
                 }
             }
