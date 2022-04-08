@@ -57,7 +57,7 @@ class NativeNewsViewController: UIViewController {
         titleLabel.text = article.data.labsArticle.headline
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.numberOfLines = 0
-        titleLabel.font = UIFont.primaryTitleFont
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .title1, compatibleWith: .current)
         contentView.addArrangedSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
@@ -74,7 +74,7 @@ class NativeNewsViewController: UIViewController {
         authorLabel.text! += " | " + article.data.labsArticle.published_at
         authorLabel.lineBreakMode = .byWordWrapping
         authorLabel.numberOfLines = 0
-        authorLabel.font = UIFont.primaryInformationFont
+        authorLabel.font = UIFont.preferredFont(forTextStyle: .headline, compatibleWith: .current)
         contentView.addArrangedSubview(authorLabel)
         NSLayoutConstraint.activate([
             authorLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
@@ -102,7 +102,7 @@ class NativeNewsViewController: UIViewController {
                     paragraphTextView.isEditable = false
                     paragraphTextView.attributedText = try? element.html().htmlToAttributedString
                     paragraphTextView.textColor = .label
-                    paragraphTextView.font = UIFont.primaryInformationFont
+                    paragraphTextView.font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: .current)
                     bodyViews.append(paragraphTextView)
                     // TODO: Implement in-text images.
 //                case "img":
