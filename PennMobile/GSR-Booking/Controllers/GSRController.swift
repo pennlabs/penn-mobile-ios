@@ -15,7 +15,7 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
     // MARK: UI Elements
     fileprivate var tableView: UITableView!
     fileprivate var rangeSlider: GSRRangeSlider!
-    fileprivate var pickerView: UIPickerView!
+    fileprivate var datePickerView: UIStackView!
     fileprivate var closedView: GSRClosedView!
     fileprivate var barButton: UIBarButtonItem!
     fileprivate var bookingsBarButton: UIBarButtonItem!
@@ -37,7 +37,7 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
         prepareUI()
 
         let index = viewModel.getLocationIndex(startingLocation)
-        self.pickerView.selectRow(index, inComponent: 1, animated: true)
+//        self.pickerView.selectRow(index, inComponent: 1, animated: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +63,7 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
             tabBarController.navigationItem.leftBarButtonItem = bookingsBarButton
             tabBarController.navigationItem.rightBarButtonItem = barButton
         } else {
-            self.title = "Tap to book"
+            self.title = viewModel.getSelectedLocation().name
             self.navigationItem.rightBarButtonItem = barButton
         }
     }
@@ -72,30 +72,60 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
 // MARK: - Setup UI
 extension GSRController {
     fileprivate func prepareUI() {
-        preparePickerView()
+        prepareDatePickerView()
         prepareRangeSlider()
         prepareTableView()
         prepareClosedView()
         prepareLimitedAccessLabel()
     }
-
-    private func preparePickerView() {
-        pickerView = UIPickerView(frame: .zero)
-        pickerView.translatesAutoresizingMaskIntoConstraints = false
-        pickerView.delegate = viewModel
-        pickerView.dataSource = viewModel
-
-        view.addSubview(pickerView)
-        pickerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
-        pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    private func prepareDatePickerView() {
+        datePickerView = UIStackView()
+        datePickerView.translatesAutoresizingMaskIntoConstraints = false
+        datePickerView.axis = .horizontal
+        datePickerView.distribution = .fillProportionally
+        datePickerView.alignment = .fill
+        prepareDateButtons()
+        view.addSubview(datePickerView)
+        datePickerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        datePickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        datePickerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     }
-
+    private func prepareDateButtons() {
+        let todayButton = UIButton()
+        let today = Date()
+        let tomorrow = today.tomorrow
+        todayButton.setImage(UIImage(systemName: today.dayInMonth + ".square.fill"), for: .normal)
+        todayButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
+        todayButton.imageView?.widthAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
+        todayButton.imageView?.heightAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
+        todayButton.addTarget(self, action: #selector(setToday(_:)), for: .touchUpInside)
+        let tomorrowButton = UIButton()
+        tomorrowButton.setImage(UIImage(systemName: tomorrow.dayInMonth + ".square.fill"), for: .normal)
+        tomorrowButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
+        tomorrowButton.imageView?.widthAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
+        tomorrowButton.imageView?.heightAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
+        tomorrowButton.addTarget(self, action: #selector(setTomorrow(_:)), for: .touchUpInside)
+        let dateButton = UIButton()
+        dateButton.setImage(UIImage(systemName: "calendar"), for: .normal)
+        dateButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
+        dateButton.imageView?.widthAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
+        dateButton.imageView?.heightAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
+        datePickerView.addArrangedSubview(todayButton)
+        datePickerView.addArrangedSubview(tomorrowButton)
+        datePickerView.addArrangedSubview(dateButton)
+    }
+    @objc func setToday(_ sender: UIButton?) {
+        viewModel.setDate(daysFromToday: 0)
+    }
+    @objc func setTomorrow(_ sender: UIButton?) {
+        viewModel.setDate(daysFromToday:1)
+    }
     private func prepareRangeSlider() {
         rangeSlider = GSRRangeSlider()
         rangeSlider.delegate = viewModel
 
         view.addSubview(rangeSlider)
-        _ = rangeSlider.anchor(pickerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 30)
+        _ = rangeSlider.anchor(datePickerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 20, bottomConstant: 0, rightConstant: 20, widthConstant: 0, heightConstant: 30)
     }
 
     private func prepareTableView() {
@@ -296,7 +326,7 @@ extension GSRController {
         if !currentDay.isToday {
             currentDay = Date()
             viewModel.updateDates()
-            pickerView.reloadAllComponents()
+//            pickerView.reloadAllComponents()
         }
     }
 }

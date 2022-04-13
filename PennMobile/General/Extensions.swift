@@ -271,6 +271,12 @@ extension Date {
         dateFormatter.dateFormat = "EEEE" // Monday, Friday, etc.
         return dateFormatter.string(from: Date())
     }
+    
+    var dayInMonth: String {
+        let df = DateFormatter()
+        df.dateFormat = "d"
+        return df.string(from: self)
+    }
 
     var dayOfWeek: String {
         let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]

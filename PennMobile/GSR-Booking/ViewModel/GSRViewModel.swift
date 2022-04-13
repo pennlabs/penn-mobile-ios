@@ -238,6 +238,14 @@ extension GSRViewModel {
     }
 }
 
+// MARK: - Data setter methods (ask about this)
+extension GSRViewModel {
+    func setDate(daysFromToday: Int) {
+        self.selectedDate = dates[daysFromToday]
+        delegate!.fetchData()
+    }
+}
+
 // MARK: - Select Location
 extension GSRViewModel {
     func getLocationIndex(_ location: GSRLocation) -> Int {

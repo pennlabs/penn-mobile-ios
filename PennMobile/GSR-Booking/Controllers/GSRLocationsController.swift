@@ -70,7 +70,7 @@ extension GSRLocationsController: UITableViewDataSource, UITableViewDelegate {
         let gc = GSRController()
         gc.group = group
         gc.startingLocation = location
-        gc.title = "Tap to book"
+        gc.title = location.name
         navigationController?.pushViewController(gc, animated: true)
     }
 }
