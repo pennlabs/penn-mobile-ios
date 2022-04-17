@@ -22,6 +22,7 @@ protocol GSRViewModelDelegate: ShowsAlert {
     func refreshDataUI()
     func fetchData()
     func resetDataForCell(at indexPath: IndexPath)
+    func resetButtons()
 }
 
 class GSRViewModel: NSObject {
@@ -58,37 +59,37 @@ class GSRViewModel: NSObject {
 }
 
 // MARK: - UIPickerViewDelegate, UIPickerViewDataSource
-extension GSRViewModel: UIPickerViewDataSource, UIPickerViewDelegate {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2
-    }
-
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return component == 0 ? dates.count : locations.count
-    }
-
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if component == 0 {
-            selectedDate = dates[row]
-        } else if component == 1 {
-            selectedLocation = locations[row]
-        }
-        delegate!.fetchData()
-    }
-
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if component == 0 {
-            if row == 0 {
-                return "Today"
-            } else if row == 1 {
-                return "Tomorrow"
-            }
-            return dates[row].dayOfWeek
-        } else {
-            return locations[row].name
-        }
-    }
-}
+//extension GSRViewModel: UIPickerViewDataSource, UIPickerViewDelegate {
+//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//        return 2
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return component == 0 ? dates.count : locations.count
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        if component == 0 {
+//            selectedDate = dates[row]
+//        } else if component == 1 {
+//            selectedLocation = locations[row]
+//        }
+//        delegate!.fetchData()
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        if component == 0 {
+//            if row == 0 {
+//                return "Today"
+//            } else if row == 1 {
+//                return "Tomorrow"
+//            }
+//            return dates[row].dayOfWeek
+//        } else {
+//            return locations[row].name
+//        }
+//    }
+//}
 
 // MARK: - UITableViewDataSource
 extension GSRViewModel: UITableViewDataSource {
@@ -211,6 +212,10 @@ extension GSRViewModel: GSRRangeSliderDelegate {
 extension GSRViewModel {
     func getSelectedLocation() -> GSRLocation {
         return selectedLocation
+    }
+    
+    func getDates() -> [GSRDate] {
+        return dates
     }
 
     func getSelectedDate() -> GSRDate {

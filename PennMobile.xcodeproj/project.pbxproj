@@ -2486,7 +2486,7 @@
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2521,7 +2521,7 @@
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

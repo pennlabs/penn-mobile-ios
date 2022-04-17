@@ -82,43 +82,59 @@ extension GSRController {
         datePickerView = UIStackView()
         datePickerView.translatesAutoresizingMaskIntoConstraints = false
         datePickerView.axis = .horizontal
-        datePickerView.distribution = .fillProportionally
+        datePickerView.distribution = .fillEqually
         datePickerView.alignment = .fill
         prepareDateButtons()
         view.addSubview(datePickerView)
         datePickerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         datePickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        datePickerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        datePickerView.widthAnchor.constraint(equalToConstant: view.frame.width - 2 * pad).isActive = true
     }
-    private func prepareDateButtons() {
-        let todayButton = UIButton()
+    func prepareDateButtons() {
         let today = Date()
-        let tomorrow = today.tomorrow
-        todayButton.setImage(UIImage(systemName: today.dayInMonth + ".square.fill"), for: .normal)
-        todayButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
-        todayButton.imageView?.widthAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
-        todayButton.imageView?.heightAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
-        todayButton.addTarget(self, action: #selector(setToday(_:)), for: .touchUpInside)
-        let tomorrowButton = UIButton()
-        tomorrowButton.setImage(UIImage(systemName: tomorrow.dayInMonth + ".square.fill"), for: .normal)
-        tomorrowButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
-        tomorrowButton.imageView?.widthAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
-        tomorrowButton.imageView?.heightAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
-        tomorrowButton.addTarget(self, action: #selector(setTomorrow(_:)), for: .touchUpInside)
-        let dateButton = UIButton()
-        dateButton.setImage(UIImage(systemName: "calendar"), for: .normal)
-        dateButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
-        dateButton.imageView?.widthAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
-        dateButton.imageView?.heightAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
-        datePickerView.addArrangedSubview(todayButton)
-        datePickerView.addArrangedSubview(tomorrowButton)
-        datePickerView.addArrangedSubview(dateButton)
+        let todayButtonView = makeDayButton(title: "Today", icon: today.dayInMonth + ".square.fill", buttonSelector: #selector(setToday(_:)))
+        let tomorrowButtonView = makeDayButton(title: "Tomorrow", icon: today.tomorrow.dayInMonth + ".square.fill", buttonSelector: #selector(setTomorrow(_:)))
+        let dateButtonView = makeDayButton(title: "Date", icon: "calendar", buttonSelector: #selector(setToday(_:)))
+        datePickerView.addArrangedSubview(todayButtonView)
+        datePickerView.addArrangedSubview(tomorrowButtonView)
+        datePickerView.addArrangedSubview(dateButtonView)
+    }
+
+    func makeDayButton(title: String, icon: String, buttonSelector: Selector) -> UIView {
+        let dayButton = UIButton()
+        dayButton.translatesAutoresizingMaskIntoConstraints = false
+        dayButton.setImage(UIImage(systemName: icon), for: .normal)
+        dayButton.imageView?.tintColor = .systemPink
+        dayButton.addTarget(self, action: buttonSelector, for: .touchUpInside)
+
+        let dayButtonLabel = UILabel()
+        dayButtonLabel.translatesAutoresizingMaskIntoConstraints = false
+        dayButtonLabel.text = title
+        dayButtonLabel.textAlignment = .center
+
+        let dayButtonWrapper = UIView()
+        dayButtonWrapper.addSubview(dayButton)
+        dayButtonWrapper.addSubview(dayButtonLabel)
+
+        dayButtonWrapper.widthAnchor.constraint(equalToConstant: view.frame.width / 3).isActive = true
+        dayButtonWrapper.heightAnchor.constraint(equalToConstant: view.frame.width / 3).isActive = true
+
+        dayButtonLabel.topAnchor.constraint(equalTo: dayButton.bottomAnchor).isActive = true
+        dayButtonLabel.centerXAnchor.constraint(equalTo: dayButtonWrapper.centerXAnchor).isActive = true
+
+        dayButton.centerYAnchor.constraint(equalTo: dayButtonWrapper.centerYAnchor).isActive = true
+        dayButton.centerXAnchor.constraint(equalTo: dayButtonWrapper.centerXAnchor).isActive = true
+
+        dayButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
+        dayButton.imageView?.widthAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
+        dayButton.imageView?.heightAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
+        return dayButtonWrapper
     }
     @objc func setToday(_ sender: UIButton?) {
         viewModel.setDate(daysFromToday: 0)
     }
     @objc func setTomorrow(_ sender: UIButton?) {
-        viewModel.setDate(daysFromToday:1)
+        viewModel.setDate(daysFromToday: 1)
     }
     private func prepareRangeSlider() {
         rangeSlider = GSRRangeSlider()
@@ -219,6 +235,10 @@ extension GSRController: GSRViewModelDelegate {
         tableView.isHidden = !viewModel.existsTimeSlot()
         closedView.isHidden = viewModel.existsTimeSlot()
         self.tableView.reloadData()
+    }
+    // TODO: Make this boi
+    func resetButtons() {
+            
     }
 }
 
