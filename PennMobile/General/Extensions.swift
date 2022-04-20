@@ -329,6 +329,10 @@ extension Date {
     var isToday: Bool {
         return Calendar.current.isDateInToday(self)
     }
+    
+    var isTomorrow: Bool {
+        return Calendar.current.isDateInTomorrow(self)
+    }
 
     static func midnight(for dateStr: String) -> Date {
         let formatter = DateFormatter()

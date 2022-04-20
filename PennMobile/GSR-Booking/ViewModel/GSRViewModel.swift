@@ -28,9 +28,8 @@ protocol GSRViewModelDelegate: ShowsAlert {
 class GSRViewModel: NSObject {
 
     // MARK: Dates + Locations
-    fileprivate var dates = GSRDateHandler.generateDates()
     fileprivate let locations = GSRLocationModel.shared.getLocations()
-    fileprivate lazy var selectedDate = self.dates[0]
+    fileprivate lazy var selectedDate: Date = Date()
 //    fileprivate lazy var selectedLocation = self.locations[0]
     fileprivate var selectedLocation: GSRLocation
 
@@ -138,7 +137,7 @@ extension GSRViewModel {
     }
 
     func updateDates() {
-        dates = GSRDateHandler.generateDates()
+        selectedDate = Date()
     }
 }
 
@@ -196,7 +195,7 @@ extension GSRViewModel: GSRRangeSliderDelegate {
 
     // If today, return current time. Otherwise, return earliest available time
     func getMinDate() -> Date? {
-        if selectedDate.day == dates[0].day {
+        if selectedDate.isToday {
             return Date().roundedDownToHalfHour
         } else {
             return allRooms.getMinMaxDates().0
@@ -214,11 +213,11 @@ extension GSRViewModel {
         return selectedLocation
     }
     
-    func getDates() -> [GSRDate] {
-        return dates
-    }
+//    func getDates() -> [GSRDate] {
+//        return dates
+//    }
 
-    func getSelectedDate() -> GSRDate {
+    func getSelectedDate() -> Date {
         return selectedDate
     }
 
@@ -245,8 +244,8 @@ extension GSRViewModel {
 
 // MARK: - Data setter methods (ask about this)
 extension GSRViewModel {
-    func setDate(daysFromToday: Int) {
-        self.selectedDate = dates[daysFromToday]
+    func setDate(date: Date) {
+        self.selectedDate = date
         delegate!.fetchData()
     }
 }

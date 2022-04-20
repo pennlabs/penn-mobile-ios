@@ -21,6 +21,10 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
     fileprivate var bookingsBarButton: UIBarButtonItem!
     fileprivate var limitedAccessLabel: UILabel!
 
+    fileprivate var todayButton: UIButton!
+    fileprivate var tomorrowButton: UIButton!
+    fileprivate var dateButton: UIButton!
+
     var group: GSRGroup?
 
     var barButtonTitle = "Submit"
@@ -78,6 +82,7 @@ extension GSRController {
         prepareClosedView()
         prepareLimitedAccessLabel()
     }
+
     private func prepareDatePickerView() {
         datePickerView = UIStackView()
         datePickerView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,17 +95,21 @@ extension GSRController {
         datePickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         datePickerView.widthAnchor.constraint(equalToConstant: view.frame.width - 2 * pad).isActive = true
     }
+
     func prepareDateButtons() {
         let today = Date()
-        let todayButtonView = makeDayButton(title: "Today", icon: today.dayInMonth + ".square.fill", buttonSelector: #selector(setToday(_:)))
-        let tomorrowButtonView = makeDayButton(title: "Tomorrow", icon: today.tomorrow.dayInMonth + ".square.fill", buttonSelector: #selector(setTomorrow(_:)))
-        let dateButtonView = makeDayButton(title: "Date", icon: "calendar", buttonSelector: #selector(setToday(_:)))
+        let (todayButtonView, todayButton) = makeDayButton(title: "Today", icon: today.dayInMonth + ".square.fill", buttonSelector: #selector(setToday(_:)))
+        self.todayButton = todayButton
+        let (tomorrowButtonView, tomorrowButton) = makeDayButton(title: "Tomorrow", icon: today.tomorrow.dayInMonth + ".square.fill", buttonSelector: #selector(setTomorrow(_:)))
+        self.tomorrowButton = tomorrowButton
+        let (dateButtonView, dateButton) = makeDayButton(title: "Date", icon: "calendar", buttonSelector: #selector(setToday(_:)))
+        self.dateButton = dateButton
         datePickerView.addArrangedSubview(todayButtonView)
         datePickerView.addArrangedSubview(tomorrowButtonView)
         datePickerView.addArrangedSubview(dateButtonView)
     }
 
-    func makeDayButton(title: String, icon: String, buttonSelector: Selector) -> UIView {
+    func makeDayButton(title: String, icon: String, buttonSelector: Selector) -> (UIView, UIButton) {
         let dayButton = UIButton()
         dayButton.translatesAutoresizingMaskIntoConstraints = false
         dayButton.setImage(UIImage(systemName: icon), for: .normal)
@@ -117,7 +126,7 @@ extension GSRController {
         dayButtonWrapper.addSubview(dayButtonLabel)
 
         dayButtonWrapper.widthAnchor.constraint(equalToConstant: view.frame.width / 3).isActive = true
-        dayButtonWrapper.heightAnchor.constraint(equalToConstant: view.frame.width / 3).isActive = true
+        dayButtonWrapper.heightAnchor.constraint(equalToConstant: view.frame.width * 7 / 24).isActive = true
 
         dayButtonLabel.topAnchor.constraint(equalTo: dayButton.bottomAnchor).isActive = true
         dayButtonLabel.centerXAnchor.constraint(equalTo: dayButtonWrapper.centerXAnchor).isActive = true
@@ -128,14 +137,19 @@ extension GSRController {
         dayButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
         dayButton.imageView?.widthAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
         dayButton.imageView?.heightAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.width/8).isActive = true
-        return dayButtonWrapper
+        return (dayButtonWrapper, dayButton)
     }
+
     @objc func setToday(_ sender: UIButton?) {
-        viewModel.setDate(daysFromToday: 0)
+        viewModel.setDate(date: Date())
+        resetButtons()
     }
+
     @objc func setTomorrow(_ sender: UIButton?) {
-        viewModel.setDate(daysFromToday: 1)
+        viewModel.setDate(date: Date().tomorrow)
+        resetButtons()
     }
+
     private func prepareRangeSlider() {
         rangeSlider = GSRRangeSlider()
         rangeSlider.delegate = viewModel
@@ -197,8 +211,13 @@ extension GSRController: GSRViewModelDelegate {
         let location = viewModel.getSelectedLocation()
         let date = viewModel.getSelectedDate()
         self.showActivity()
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(abbreviation: "EST")!
+        formatter.dateFormat = "yyyy-MM-dd"
+        let dateString = formatter.string(from: date)
 
-        GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: date.string) { result in
+        GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: dateString) { result in
             DispatchQueue.main.async {
                 self.limitedAccessLabel.isHidden = true
                 self.tableView.isHidden = false
@@ -238,7 +257,16 @@ extension GSRController: GSRViewModelDelegate {
     }
     // TODO: Make this boi
     func resetButtons() {
-            
+        todayButton.imageView?.tintColor = .systemPink
+        tomorrowButton.imageView?.tintColor = .systemPink
+        dateButton.imageView?.tintColor = .systemPink
+        if (viewModel.getSelectedDate().isToday) {
+            todayButton.imageView?.tintColor = .systemBlue
+        } else if (viewModel.getSelectedDate().isTomorrow) {
+            tomorrowButton.imageView?.tintColor = .systemBlue
+        } else {
+            dateButton.imageView?.tintColor = .systemBlue
+        }
     }
 }
 
