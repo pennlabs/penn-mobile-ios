@@ -18,6 +18,8 @@ class NativeNewsViewController: UIViewController {
     let titleLabel = UILabel()
     let authorLabel = UILabel()
     let imageView = UIImageView()
+    let imageCaptionView = UILabel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -28,6 +30,7 @@ class NativeNewsViewController: UIViewController {
         prepareImageView()
         prepareBodyText()
     }
+
     func prepareScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
@@ -38,6 +41,7 @@ class NativeNewsViewController: UIViewController {
             scrollView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor)
         ])
     }
+
     func prepareContentView() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.axis = NSLayoutConstraint.Axis.vertical
@@ -52,6 +56,7 @@ class NativeNewsViewController: UIViewController {
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
     }
+
     func prepareTitleLabel() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = article.data.labsArticle.headline
@@ -64,6 +69,7 @@ class NativeNewsViewController: UIViewController {
             titleLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor)
         ])
     }
+
     func prepareAuthorLabel() {
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
         authorLabel.text = ""
@@ -81,6 +87,7 @@ class NativeNewsViewController: UIViewController {
             authorLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor)
         ])
     }
+
     func prepareImageView() {
         imageView.kf.setImage(with: URL(string: article.data.labsArticle.dominantMedia.imageUrl))
         imageView.clipsToBounds = true
@@ -88,6 +95,22 @@ class NativeNewsViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addArrangedSubview(imageView)
         _ = imageView.anchor(nil, left: contentView.layoutMarginsGuide.leftAnchor, bottom: nil, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: contentView.layoutMarginsGuide.layoutFrame.width, heightConstant: contentView.layoutMarginsGuide.layoutFrame.width * 0.6)
+
+        imageCaptionView.translatesAutoresizingMaskIntoConstraints = false
+        imageCaptionView.text = ""
+        for author in article.data.labsArticle.dominantMedia.authors {
+            imageCaptionView.text! += author.name + ", "
+        }
+        imageCaptionView.text?.removeLast(2)
+        imageCaptionView.lineBreakMode = .byWordWrapping
+        imageCaptionView.numberOfLines = 0
+        imageCaptionView.font = UIFont.preferredFont(forTextStyle: .caption1, compatibleWith: .current)
+        contentView.addArrangedSubview(imageCaptionView)
+        NSLayoutConstraint.activate([
+            imageCaptionView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            imageCaptionView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor)
+        ])
+        imageCaptionView.sizeToFit()
     }
 
     func prepareBodyText() {
@@ -104,17 +127,32 @@ class NativeNewsViewController: UIViewController {
                     paragraphTextView.textColor = .label
                     paragraphTextView.font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: .current)
                     bodyViews.append(paragraphTextView)
-                    // TODO: Implement in-text images.
-//                case "img":
-//                    let imageView = UIImageView()
-//                    // Need to check how the source of the image is stored
-//                    try? imageView.kf.setImage(with: URL(string: element.attr("src")))
-//                    imageView.clipsToBounds = true
-//                    imageView.contentMode = .scaleAspectFill
-//                    imageView.translatesAutoresizingMaskIntoConstraints = false
-//                    bodyViews.append(imageView)
-//                    // Not sure if these constraints will work
-//                    _ = imageView.anchor(nil, left: contentView.layoutMarginsGuide.leftAnchor, bottom: nil, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: contentView.layoutMarginsGuide.layoutFrame.width, heightConstant: contentView.layoutMarginsGuide.layoutFrame.width * 0.6)
+                // TODO: Implement in-text images.
+                case "figure":
+                    print("figure")
+                    for subelement in element.children() {
+                        switch subelement.tagName() {
+                        case "img":
+                            let imageView = UIImageView()
+                            // Need to check how the source of the image is stored
+                            try? imageView.kf.setImage(with: URL(string: subelement.attr("src")))
+                            try? print(subelement.attr("src"))
+                            imageView.clipsToBounds = true
+                            imageView.contentMode = .scaleAspectFill
+                            imageView.translatesAutoresizingMaskIntoConstraints = false
+                            bodyViews.append(imageView)
+                        case "figcaption":
+                            let paragraphTextView = UITextView()
+                            paragraphTextView.isScrollEnabled = false
+                            paragraphTextView.isEditable = false
+                            paragraphTextView.attributedText = try? subelement.html().htmlToAttributedString
+                            paragraphTextView.textColor = .label
+                            paragraphTextView.font = UIFont.preferredFont(forTextStyle: .caption1, compatibleWith: .current)
+                            bodyViews.append(paragraphTextView)
+                        default:
+                            print("subelement default")
+                        }
+                    }
                 default:
                     print("default")
                 }
@@ -128,6 +166,9 @@ class NativeNewsViewController: UIViewController {
                 bodyView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
                 bodyView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor)
             ])
+            if bodyView is UIImageView {
+                _ = bodyView.anchor(nil, left: contentView.layoutMarginsGuide.leftAnchor, bottom: nil, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: contentView.layoutMarginsGuide.layoutFrame.width, heightConstant: contentView.layoutMarginsGuide.layoutFrame.width * 0.6)
+            }
             bodyView.sizeToFit()
         }
     }
