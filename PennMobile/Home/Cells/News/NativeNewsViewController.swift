@@ -19,6 +19,7 @@ class NativeNewsViewController: UIViewController {
     let authorLabel = UILabel()
     let imageView = UIImageView()
     let imageCaptionView = UILabel()
+    let readMoreButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class NativeNewsViewController: UIViewController {
         prepareAuthorLabel()
         prepareImageView()
         prepareBodyText()
+        prepareReadMoreButton()
     }
 
     func prepareScrollView() {
@@ -171,5 +173,17 @@ class NativeNewsViewController: UIViewController {
             }
             bodyView.sizeToFit()
         }
+    }
+
+    func prepareReadMoreButton() {
+        readMoreButton.setTitle("Read more on DP+", for: .normal)
+        contentView.addArrangedSubview(readMoreButton)
+        readMoreButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, compatibleWith: .current)
+        readMoreButton.setTitleColor(.black, for: .normal)
+        NSLayoutConstraint.activate([
+            readMoreButton.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            readMoreButton.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+            readMoreButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+        ])
     }
 }
