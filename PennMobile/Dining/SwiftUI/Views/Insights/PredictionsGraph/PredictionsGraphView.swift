@@ -7,67 +7,52 @@
 //
 
 import Foundation
-#if canImport(SwiftUI)
 import SwiftUI
-#endif
 
-// TODO: - Move these protocols to Protocols.swift
-protocol ClampableRange {
-    associatedtype Bound: Comparable
-    var upperBound: Bound { get }
-    var lowerBound: Bound { get }
-}
-extension ClampableRange {
-    func clamp(_ value: Bound) -> Bound {
-        return min(max(lowerBound, value), upperBound)
-    }
-}
-extension Range: ClampableRange {}
-extension ClosedRange: ClampableRange {}
-// END TODO
-
-// VariableStepLineGraphView.getSmoothedData(from: DiningTransaction.sampleData)
 struct PredictionsGraphView: View {
 
-    init(config: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData) {
+    @Binding var data: [PredictionsGraphView.YXDataPoint]
+    @Binding var predictedZeroDate: Date
+    @Binding var predictedSemesterEndValue: Double
+    @Binding var axisLabelsYX: ([String], [String])
+    @Binding var predictedZeroPoint: YXDataPoint
 
-        self.config = config
-        data = PredictionsGraphView.getSmoothedData(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester)
-
-        axisLabelsYX = PredictionsGraphView.getAxisLabelsYX(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester)
-
-        balanceType = config.type.contains("swipes") ? .swipes : .dollars
-
-        predictedZeroPoint = PredictionsGraphView.getPredictionZeroPoint(from: config.data, startOfSemester: config.startOfSemester, endOfSemester: config.endOfSemester, predictedZeroDate: config.predictedZeroDate)
+    enum BalanceType {
+        case swipes
+        case dollars
     }
 
-    struct YXDataPoint {
+    let startOfSemester: Date = Date.startOfSemester
+    let endOfSemester: Date = Date.endOfSemester
+
+    var formattedZeroDate: String
+    var displayZeroDate: Bool
+    init(type: String, data: Binding<[PredictionsGraphView.YXDataPoint]>, predictedZeroDate: Binding<Date>, predictedSemesterEndValue: Binding<Double>, axisLabelsYX: Binding<([String],[String])>, predictedZeroPoint: Binding<PredictionsGraphView.YXDataPoint>) {
+        self._data = data
+        self._predictedZeroDate = predictedZeroDate
+        self._predictedSemesterEndValue = predictedSemesterEndValue
+        self._axisLabelsYX = axisLabelsYX
+        self._predictedZeroPoint = predictedZeroPoint
+
+        balanceType = type.contains("swipes") ? .swipes : .dollars
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM. d"
+        self.formattedZeroDate = formatter.string(from: predictedZeroDate.wrappedValue)
+
+        displayZeroDate = endOfSemester >= predictedZeroDate.wrappedValue
+
+    }
+
+    struct YXDataPoint: Codable {
         var y: CGFloat // Bound between 0 and 1
         var x: CGFloat // Bound between 0 and 1
     }
-
-    var config: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData
-    var data: [YXDataPoint]
-    var axisLabelsYX: ([String], [String])
-    var balanceType: DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.BalanceType
-    var predictedZeroPoint: YXDataPoint
-
-    var formattedZeroDate: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM. d"
-        return formatter.string(from: self.config.predictedZeroDate)
-    }
-
-    var displayZeroDate: Bool {
-        if config.predictedZeroDate > config.endOfSemester && config.semesterEndBalance != nil {
-            return false
-        }
-        return true
-    }
+    var balanceType: PredictionsGraphView.BalanceType
 
     var formattedBalance: String {
-        let b: Double = config.semesterEndBalance ?? 0
-        return String(format: balanceType == .swipes ? "%g" : "%.2f", b)
+        let b: Double = predictedSemesterEndValue
+        return String(format: balanceType == .swipes ? "%.0f" : "%.2f", b)
     }
 
     var helpText: String {
@@ -82,14 +67,10 @@ struct PredictionsGraphView: View {
         VStack(alignment: .leading) {
             Group {
                 CardHeaderTitleView(color: balanceType == .swipes ? .blue : .green, icon: .predictions, title: "\(balanceType == .swipes ? "Swipes" : "Dining Dollars") Predictions")
-                Text("Log into Penn Mobile often to get more accurate predictions.")
-                .fontWeight(.medium)
-                .lineLimit(nil)
-                .frame(height: 44)
             }
             Divider()
                 .padding([.top, .bottom])
-            VariableStepLineGraphView(data: self.data, lastPointPosition: self.data.last?.x ?? 0, xAxisLabels: axisLabelsYX.1, yAxisLabels: axisLabelsYX.0, lineColor: balanceType == .swipes ? .blue : .green, predictedZeroPoint: self.predictedZeroPoint)
+            VariableStepLineGraphView(data: $data, lastPointPosition: $data.wrappedValue.last?.x ?? 0, xAxisLabels: $axisLabelsYX.1, yAxisLabels: $axisLabelsYX.0, lineColor: balanceType == .swipes ? .blue : .green, predictedZeroPoint: $predictedZeroPoint)
             Divider()
             .padding([.top, .bottom])
 

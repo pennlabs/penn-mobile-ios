@@ -14,7 +14,7 @@ import SwiftUI
 extension PredictionsGraphView {
 
     // Compute graph data
-    static func getSmoothedData(from trans: [DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.DiningBalance], startOfSemester sos: Date, endOfSemester eos: Date) -> [YXDataPoint] {
+    static func getSmoothedData(from trans: [DiningAnalyticsBalance], startOfSemester sos: Date, endOfSemester eos: Date) -> [YXDataPoint] {
 
         guard sos < eos else { return [] }
 
@@ -27,7 +27,7 @@ extension PredictionsGraphView {
         return yxPoints
     }
 
-    static func getPredictionZeroPoint(from trans: [DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.DiningBalance], startOfSemester sos: Date, endOfSemester eos: Date, predictedZeroDate zpd: Date) -> PredictionsGraphView.YXDataPoint {
+    static func getPredictionZeroPoint(startOfSemester sos: Date, endOfSemester eos: Date, predictedZeroDate zpd: Date) -> PredictionsGraphView.YXDataPoint {
 
         guard sos < eos else { return .init(y: 0.0, x: 0.0) }
 

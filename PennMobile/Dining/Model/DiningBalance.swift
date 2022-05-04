@@ -9,6 +9,7 @@
 import Foundation
 
 struct DiningBalance: Codable {
+    let date: String
     let diningDollars: String
     let regularVisits: Int
     let guestVisits: Int

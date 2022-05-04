@@ -10,6 +10,7 @@ import SwiftUI
 
 struct DiningVenueView: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
+    @StateObject var diningAnalyticsViewModel = DiningAnalyticsViewModel()
 
     // Hack to deselect cells after popping navigation view
     // Will be removed once SwiftUI is Fixed
@@ -17,12 +18,12 @@ struct DiningVenueView: View {
     @State private var listViewId = UUID()
     var body: some View {
         List {
-            Section(header: CustomHeader(name: "Dining Balance", refreshButton: true), content: {
-                Section(header: DiningViewHeader(), content: {})
+            Section(header: CustomHeader(name: "Dining Balance", refreshButton: true).environmentObject(diningAnalyticsViewModel), content: {
+                Section(header: DiningViewHeader().environmentObject(diningAnalyticsViewModel), content: {})
             })
 
             ForEach(diningVM.ordering, id: \.self) { venueType in
-                Section(header: CustomHeader(name: venueType.fullDisplayName)) {
+                Section(header: CustomHeader(name: venueType.fullDisplayName).environmentObject(diningAnalyticsViewModel)) {
                     ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
                         NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM), tag: "\(venue.id)", selection: $selectedItem) {
                             DiningVenueRow(for: venue)
@@ -55,6 +56,7 @@ struct CustomHeader: View {
     @State var showMissingDiningTokenAlert = false
     @State var showDiningLoginView = false
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
     func showCorrectAlert () -> Alert {
         if !Account.isLoggedIn {
             return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok")))
@@ -74,7 +76,8 @@ struct CustomHeader: View {
             Spacer()
             if refreshButton {
                 Button(action: {
-                    guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() > diningExpiration else {
+                    guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
+                        print("Should show alert")
                         showMissingDiningTokenAlert = true
                         return
                     }
@@ -91,6 +94,7 @@ struct CustomHeader: View {
         .textCase(nil)
         .sheet(isPresented: $showDiningLoginView) {
             DiningLoginNavigationView()
+                .environmentObject(diningAnalyticsViewModel)
         }
 
         // Note: The Alert view is soon to be deprecated, but .alert(_:isPresented:presenting:actions:message:) is available in iOS15+

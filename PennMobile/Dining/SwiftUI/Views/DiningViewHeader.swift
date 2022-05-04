@@ -13,6 +13,7 @@ import SwiftUI
 struct DiningViewHeader: View {
 
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
+    @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
     @State var alertIsPresented = false
 
     var body: some View {
@@ -24,7 +25,8 @@ struct DiningViewHeader: View {
             }
             HStack {
                 DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "person.2.fill"), balance: Double(diningVM.diningBalance.guestVisits), specifier: "%.0f")
-                AnalyticsCardView(text: "Coming Soon!")
+                AnalyticsCardView(text: "Analytics!")
+                    .environmentObject(diningAnalyticsViewModel)
             }
         }
 

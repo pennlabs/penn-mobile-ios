@@ -174,7 +174,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         OAuth2NetworkManager.instance.clearRefreshToken()
         OAuth2NetworkManager.instance.clearCurrentAccessToken()
         Account.clear()
-        Storage.remove(DiningInsightsAPIResponse.directory, from: .caches)
     }
 
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {

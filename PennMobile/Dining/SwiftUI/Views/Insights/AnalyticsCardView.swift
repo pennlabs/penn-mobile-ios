@@ -11,21 +11,23 @@ import SwiftUI
 struct AnalyticsCardView: View {
     var text: String
     var color: Color = .blue
+    @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
 
     var body: some View {
-        // NavigationLink(destination: DiningAnalyticsView()) {
+        NavigationLink(destination: DiningAnalyticsView()
+            .environmentObject(diningAnalyticsViewModel)) {
             CardView {
                 HStack {
                     Text(self.text)
                         .font(.system(size: 20, design: .rounded))
                         .bold()
-                    // Spacer()
-                    // Image(systemName: "chevron.right")
+                    Spacer()
+                    Image(systemName: "chevron.right")
                 }
                 .padding()
                 .foregroundColor(self.color).font(Font.system(size: 24).weight(.bold))
             }
-        // }
+        }
     }
 }
 

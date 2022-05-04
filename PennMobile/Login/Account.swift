@@ -66,6 +66,8 @@ extension Account {
         KeychainAccessible.instance.removePassword()
         KeychainAccessible.instance.removePacCode()
         KeychainAccessible.instance.removeDiningToken()
+        Storage.remove(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .documents)
+        Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .documents)
     }
 
     static func saveAccount(_ thisAccount: Account) {

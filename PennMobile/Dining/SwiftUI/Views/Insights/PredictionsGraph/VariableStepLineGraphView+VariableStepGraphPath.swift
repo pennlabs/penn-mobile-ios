@@ -7,13 +7,11 @@
 //
 
 import Foundation
-#if canImport(SwiftUI)
 import SwiftUI
-#endif
 
 extension VariableStepLineGraphView {
     struct VariableStepGraphPath: Shape, Animatable {
-        @State var data: [PredictionsGraphView.YXDataPoint]
+        @Binding var data: [PredictionsGraphView.YXDataPoint]
 
         var animatableData: [PredictionsGraphView.YXDataPoint] {
             get { return data }
