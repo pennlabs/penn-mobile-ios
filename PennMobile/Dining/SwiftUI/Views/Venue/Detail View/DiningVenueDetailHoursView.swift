@@ -42,14 +42,3 @@ struct DiningVenueDetailHoursView: View {
         }
     }
 }
-
-struct DiningVenueDetailHoursView_Previews: PreviewProvider {
-    static var previews: some View {
-        let path = Bundle.main.path(forResource: "sample-dining-venue", ofType: "json")
-        let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        let diningVenues = try! decoder.decode(DiningAPIResponse.self, from: data)
-        return DiningVenueDetailHoursView(for: diningVenues.document.venues[0]).padding()
-    }
-}

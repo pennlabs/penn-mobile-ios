@@ -19,7 +19,7 @@ class DiningAPI: Requestable {
 
     let diningInsightsUrl = "https://pennmobile.org/api/dining/"
 
-    func fetchDiningHours(_ completion: @escaping (_ result: Result<DiningAPIResponse, NetworkingError>) -> Void) {
+    func fetchDiningHours(_ completion: @escaping (_ result: Result<[DiningVenue], NetworkingError>) -> Void) {
         getRequestData(url: diningUrl) { (data, _, statusCode) in
             if statusCode == nil {
                 return completion(.failure(.noInternet))
@@ -29,11 +29,14 @@ class DiningAPI: Requestable {
                 return completion(.failure(.serverError))
             }
 
-            guard let data = data else { return completion(.failure(.other)) }
+            let decoder = JSONDecoder()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            decoder.dateDecodingStrategy = .formatted(dateFormatter)
 
-            if let diningAPIResponse = try? JSONDecoder().decode(DiningAPIResponse.self, from: data) {
-                self.saveToCache(diningAPIResponse.document.venues)
-                return completion(.success(diningAPIResponse))
+            if let data = data, let diningVenues = try? decoder.decode([DiningVenue].self, from: data) {
+                self.saveToCache(diningVenues)
+                return completion(.success(diningVenues))
             } else {
                 return completion(.failure(.parsingError))
             }
@@ -41,25 +44,7 @@ class DiningAPI: Requestable {
     }
 
     func fetchDiningMenu(for id: Int, at date: Date = Date(), _ completion: @escaping (_ result: Result<DiningMenuAPIResponse, NetworkingError>) -> Void) {
-        print(Date.dayOfMonthFormatter.string(from: date))
-        postRequestData(url: diningMenuUrl + "\(id)/", params: ["date": Date.dayOfMonthFormatter.string(from: date)]) { (data, _, statusCode) in
-            if statusCode == nil {
-                return completion(.failure(.noInternet))
-            }
-
-            if statusCode != 200 {
-                return completion(.failure(.serverError))
-            }
-
-            guard let data = data else { return completion(.failure(.other)) }
-
-            if let diningMenuAPIResponse = try? JSONDecoder().decode(DiningMenuAPIResponse.self, from: data) {
-                self.saveToCache(id: id, diningMenuAPIResponse)
-                return completion(.success(diningMenuAPIResponse))
-            } else {
-                return completion(.failure(.parsingError))
-            }
-        }
+        return completion(.failure(.parsingError))
     }
 
     func fetchDiningInsights(_ completion: @escaping (_ result: Result<DiningInsightsAPIResponse, NetworkingError>) -> Void ) {
@@ -97,19 +82,10 @@ class DiningAPI: Requestable {
             task.resume()
         }
     }
-
-    func fetchDetailPageHTML(for venue: DiningVenue, _ completion: @escaping (_ html: String?) -> Void) {
-        DispatchQueue.global(qos: .background).async {
-            guard let url = venue.facilityURL else { return }
-            let html = try? String(contentsOf: url, encoding: .ascii)
-            completion(html)
-        }
-    }
 }
 
 // Dining Data Storage
 extension DiningAPI {
-
     // MARK: - Get Methods
     func getVenues() -> [DiningVenue] {
         if Storage.fileExists(DiningVenue.directory, in: .caches) {
@@ -119,19 +95,15 @@ extension DiningAPI {
         }
     }
 
-    func getSectionedVenues() -> [DiningVenue.VenueType: [DiningVenue]] {
-        var venuesDict = [DiningVenue.VenueType: [DiningVenue]]()
-        for type in DiningVenue.VenueType.allCases {
+    func getSectionedVenues() -> [VenueType: [DiningVenue]] {
+        var venuesDict = [VenueType: [DiningVenue]]()
+        for type in VenueType.allCases {
             venuesDict[type] = getVenues().filter({ $0.venueType == type })
         }
         return venuesDict
     }
 
-    func getVenues(with ids: Set<Int>) -> [DiningVenue] {
-        return getVenues().filter({ ids.contains($0.id) })
-    }
-
-    func getVenues(with ids: [Int]) -> [DiningVenue] {
+    func getVenues<T: Collection>(with ids: T) -> [DiningVenue] where T.Element == Int {
         return getVenues().filter({ ids.contains($0.id) })
     }
 

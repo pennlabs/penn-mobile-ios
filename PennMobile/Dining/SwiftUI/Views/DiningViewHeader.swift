@@ -76,18 +76,3 @@ struct BalanceLabelStyle: LabelStyle {
         }
     }
 }
-
-struct DiningViewHeader_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Spacer()
-            HStack {
-                DiningViewHeaderDate()
-                    .padding()
-
-                Spacer()
-            }
-            Spacer()
-        }
-    }
-}

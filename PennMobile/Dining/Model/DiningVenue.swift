@@ -9,30 +9,40 @@
 import Foundation
 
 struct DiningVenue: Codable, Equatable, Identifiable {
-
-    static let directory = "diningVenue.json"
+    static let directory = "diningVenue-v2.json"
 
     let id: Int
     let name: String
-    let venueType: VenueType
-    let facilityURL: URL?
-    let imageURL: URL?
-    let meals: [String: MealsForDate]
+    let image: URL?
+    let days: [Day]
 
-    struct MealsForDate: Codable, Equatable {
-        let date: String
-        let meals: [Meal]
-
-        struct Meal: Codable, Equatable {
-            let open: Date
-            let close: Date
-            let type: String
+    var venueType: VenueType {
+        switch id {
+        case 593, 636, 637, 638, 1442, 747:
+            return .dining
+        default:
+            return .retail
         }
     }
+}
 
-    enum VenueType: String, Codable, CaseIterable {
-        case dining = "residential"
-        case retail = "retail"
-        case unknown = "unknown"
+struct Day: Codable, Equatable {
+    let date: String
+    let meals: [Meal]
+
+    enum CodingKeys: String, CodingKey {
+        case date
+        case meals = "dayparts"
     }
+}
+
+struct Meal: Codable, Equatable {
+    let starttime: Date
+    let endtime: Date
+    let label: String
+}
+
+enum VenueType: CaseIterable {
+    case dining
+    case retail
 }
