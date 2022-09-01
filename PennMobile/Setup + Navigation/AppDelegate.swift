@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Register to receive delegate actions from rich notifications
         UNUserNotificationCenter.current().delegate = self
+        UIApplication.shared.registerForRemoteNotifications()
 
         FirebaseApp.configure()
         ControllerModel.shared.prepare()
