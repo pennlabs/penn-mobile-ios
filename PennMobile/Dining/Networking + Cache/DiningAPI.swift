@@ -147,7 +147,7 @@ extension DiningAPI {
 
 // MARK: Past Dining Balances
 extension DiningAPI {
-    func getPastDiningBalances(diningToken: String, startDate: String, _ callback: @escaping (_ balances: PastDiningBalances?) -> Void) {
+    func getPastDiningBalances(diningToken: String, startDate: String, _ callback: @escaping (_ balances: [DiningBalance]?) -> Void) {
         var url = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/dining/pastBalances")!
         let formatter = Date.dayOfMonthFormatter
         let endDate = formatter.string(from: Calendar.current.date(byAdding: .day, value: -1, to: Date().localTime)!)
@@ -161,7 +161,7 @@ extension DiningAPI {
             if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let balance = try? decoder.decode(PastDiningBalances.self, from: data)
+                let balance = try? decoder.decode([DiningBalance].self, from: data)
                 callback(balance)
                 return
             }

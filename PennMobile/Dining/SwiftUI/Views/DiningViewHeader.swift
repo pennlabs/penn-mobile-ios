@@ -25,7 +25,7 @@ struct DiningViewHeader: View {
             }
             HStack {
                 DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "person.2.fill"), balance: Double(diningVM.diningBalance.guestVisits), specifier: "%.0f")
-                AnalyticsCardView(text: "Analytics!")
+                AnalyticsCardView(text: "Analytics")
                     .environmentObject(diningAnalyticsViewModel)
             }
         }

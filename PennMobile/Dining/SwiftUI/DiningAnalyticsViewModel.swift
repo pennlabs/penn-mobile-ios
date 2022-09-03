@@ -62,8 +62,8 @@ class DiningAnalyticsViewModel: ObservableObject {
                 return
             }
             if startDateStr != self.formatter.string(from: Date()) {
-                let newDollarHistory = balances.balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.diningDollars) ?? 0.0)})
-                let newSwipeHistory = balances.balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.regularVisits))})
+                let newDollarHistory = balances.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.diningDollars) ?? 0.0)})
+                let newSwipeHistory = balances.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.regularVisits))})
                 self.swipeHistory.append(contentsOf: newSwipeHistory)
                 self.dollarHistory.append(contentsOf: newDollarHistory)
                 Storage.store(self.swipeHistory, to: .documents, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
