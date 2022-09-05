@@ -129,16 +129,13 @@ class NativeNewsViewController: UIViewController {
                     paragraphTextView.textColor = .label
                     paragraphTextView.font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: .current)
                     bodyViews.append(paragraphTextView)
-                // TODO: Implement in-text images.
                 case "figure":
-                    print("figure")
                     for subelement in element.children() {
                         switch subelement.tagName() {
                         case "img":
                             let imageView = UIImageView()
                             // Need to check how the source of the image is stored
                             try? imageView.kf.setImage(with: URL(string: subelement.attr("src")))
-                            try? print(subelement.attr("src"))
                             imageView.clipsToBounds = true
                             imageView.contentMode = .scaleAspectFill
                             imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -176,14 +173,31 @@ class NativeNewsViewController: UIViewController {
     }
 
     func prepareReadMoreButton() {
+        let dpLogo = UIImageView()
+        dpLogo.image = UIImage(named: "dpPlusLogo")
+        dpLogo.clipsToBounds = true
+        dpLogo.contentMode = .scaleAspectFit
+        dpLogo.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addArrangedSubview(dpLogo)
+
+        _ = dpLogo.anchor(nil, left: contentView.layoutMarginsGuide.leftAnchor, bottom: nil, right: contentView.layoutMarginsGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: contentView.layoutMarginsGuide.layoutFrame.width * 0.4, heightConstant: contentView.layoutMarginsGuide.layoutFrame.width * 0.4)
+
         readMoreButton.setTitle("Read more on DP+", for: .normal)
         contentView.addArrangedSubview(readMoreButton)
         readMoreButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline, compatibleWith: .current)
-        readMoreButton.setTitleColor(.black, for: .normal)
+        readMoreButton.setTitleColor(.labelPrimary, for: .normal)
+        readMoreButton.addTarget(self, action: #selector(readMore), for: .touchUpInside)
         NSLayoutConstraint.activate([
             readMoreButton.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
             readMoreButton.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             readMoreButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
+    }
+
+    @objc func readMore() {
+        if let url = URL(string: "itms-apps://apple.com/app/id1550818171"), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+
     }
 }
