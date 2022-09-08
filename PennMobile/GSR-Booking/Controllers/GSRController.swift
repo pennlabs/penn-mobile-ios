@@ -23,7 +23,7 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
 
     fileprivate var todayButton: UIButton!
     fileprivate var tomorrowButton: UIButton!
-    fileprivate var dateButton: UIButton!
+    fileprivate var dateButton: UIDatePicker!
 
     var group: GSRGroup?
 
@@ -102,11 +102,19 @@ extension GSRController {
         self.todayButton = todayButton
         let (tomorrowButtonView, tomorrowButton) = makeDayButton(title: "Tomorrow", icon: today.tomorrow.dayInMonth + ".square.fill", buttonSelector: #selector(setTomorrow(_:)))
         self.tomorrowButton = tomorrowButton
-        let (dateButtonView, dateButton) = makeDayButton(title: "Date", icon: "calendar", buttonSelector: #selector(setToday(_:)))
-        self.dateButton = dateButton
+//        let (dateButtonView, dateButton) = makeDayButton(title: "Date", icon: "calendar", buttonSelector: #selector(setDate(_:)))
+//        self.dateButton = dateButton
+        dateButton = UIDatePicker()
+        dateButton.datePickerMode = .date
+        dateButton.minimumDate = today
+        dateButton.maximumDate = today.dateIn(days: 7)
+        dateButton.addTarget(self, action: #selector(setDate(_:)), for: .valueChanged)
+        
         datePickerView.addArrangedSubview(todayButtonView)
         datePickerView.addArrangedSubview(tomorrowButtonView)
-        datePickerView.addArrangedSubview(dateButtonView)
+//        datePickerView.addArrangedSubview(dateButtonView)
+        datePickerView.addArrangedSubview(dateButton)
+        resetButtons()
     }
 
     func makeDayButton(title: String, icon: String, buttonSelector: Selector) -> (UIView, UIButton) {
@@ -147,6 +155,11 @@ extension GSRController {
 
     @objc func setTomorrow(_ sender: UIButton?) {
         viewModel.setDate(date: Date().tomorrow)
+        resetButtons()
+    }
+    
+    @objc func setDate(_ sender: UIDatePicker) {
+        viewModel.setDate(date: sender.date)
         resetButtons()
     }
 
@@ -259,13 +272,15 @@ extension GSRController: GSRViewModelDelegate {
     func resetButtons() {
         todayButton.imageView?.tintColor = .systemPink
         tomorrowButton.imageView?.tintColor = .systemPink
-        dateButton.imageView?.tintColor = .systemPink
-        if (viewModel.getSelectedDate().isToday) {
+//        dateButton.imageView?.tintColor = .systemPink
+        if viewModel.getSelectedDate().isToday {
             todayButton.imageView?.tintColor = .systemBlue
-        } else if (viewModel.getSelectedDate().isTomorrow) {
+            dateButton.setDate(Date(), animated: true)
+        } else if viewModel.getSelectedDate().isTomorrow {
             tomorrowButton.imageView?.tintColor = .systemBlue
+            dateButton.setDate(Date().tomorrow, animated: true)
         } else {
-            dateButton.imageView?.tintColor = .systemBlue
+//            dateButton.imageView?.tintColor = .systemBlue
         }
     }
 }
