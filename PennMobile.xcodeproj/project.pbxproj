@@ -2415,6 +2415,7 @@
 			baseConfigurationReference = 6CDC501127B5BCC700698235 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CF_BUNDLE_SHORT_VERSION_STRING = 6.8.0;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2451,6 +2452,7 @@
 			baseConfigurationReference = 6C392E3827B5BE1C0097640B /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CF_BUNDLE_SHORT_VERSION_STRING = 6.8.0;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
