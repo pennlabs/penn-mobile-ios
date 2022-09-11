@@ -46,42 +46,6 @@ class DiningAPI: Requestable {
     func fetchDiningMenu(for id: Int, at date: Date = Date(), _ completion: @escaping (_ result: Result<DiningMenuAPIResponse, NetworkingError>) -> Void) {
         return completion(.failure(.parsingError))
     }
-
-    func fetchDiningInsights(_ completion: @escaping (_ result: Result<DiningInsightsAPIResponse, NetworkingError>) -> Void ) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                // TODO: - Add network error handling for OAuth2
-                completion(.failure(.noInternet))
-                return
-            }
-
-            let url = URL(string: self.diningInsightsUrl)!
-            var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "GET"
-
-            let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
-                guard let data = data else {
-                   if let error = error as? NetworkingError {
-                       completion(.failure(error))
-                   } else {
-                       completion(.failure(.other))
-                   }
-                   return
-                }
-
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
-
-                if let diningInsightsAPIResponse = try? decoder.decode(DiningInsightsAPIResponse.self, from: data) {
-                    self.saveToCache(diningInsightsAPIResponse)
-                    completion(.success(diningInsightsAPIResponse))
-                } else {
-                    completion(.failure(.parsingError))
-                }
-            }
-            task.resume()
-        }
-    }
 }
 
 // Dining Data Storage
@@ -107,14 +71,6 @@ extension DiningAPI {
         return getVenues().filter({ ids.contains($0.id) })
     }
 
-    func getInsights() -> DiningInsightsAPIResponse? {
-        if Storage.fileExists(DiningInsightsAPIResponse.directory, in: .caches) {
-            return Storage.retrieve(DiningInsightsAPIResponse.directory, from: .caches, as: DiningInsightsAPIResponse.self)
-        } else {
-            return nil
-        }
-    }
-
     func getMenus() -> [Int: DiningMenuAPIResponse] {
         if Storage.fileExists(DiningMenuAPIResponse.directory, in: .caches) {
             return Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int: DiningMenuAPIResponse].self)
@@ -126,10 +82,6 @@ extension DiningAPI {
     // MARK: - Cache Methods
     func saveToCache(_ venues: [DiningVenue]) {
         Storage.store(venues, to: .caches, as: DiningVenue.directory)
-    }
-
-    func saveToCache(_ insights: DiningInsightsAPIResponse) {
-        Storage.store(insights, to: .caches, as: DiningInsightsAPIResponse.directory)
     }
 
     func saveToCache(id: Int, _ menu: DiningMenuAPIResponse) {
@@ -158,6 +110,32 @@ extension DiningAPI {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let balance = try? decoder.decode(DiningBalance.self, from: data)
                 callback(balance)
+                return
+            }
+            callback(nil)
+        }
+        task.resume()
+    }
+}
+
+// MARK: Past Dining Balances
+extension DiningAPI {
+    func getPastDiningBalances(diningToken: String, startDate: String, _ callback: @escaping (_ balances: [DiningBalance]?) -> Void) {
+        var url = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/dining/pastBalances")!
+        let formatter = Date.dayOfMonthFormatter
+        let endDate = formatter.string(from: Calendar.current.date(byAdding: .day, value: -1, to: Date().localTime)!)
+        url.appendQueryItem(name: "start_date", value: startDate)
+        url.appendQueryItem(name: "end_date", value: endDate)
+        UserDefaults.standard.setNextAnalyticsStartDate(formatter.string(from: Date()))
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(diningToken, forHTTPHeaderField: "x-authorization")
+        let task = URLSession.shared.dataTask(with: request) { (data, response, _ ) in
+            if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let balance = try? decoder.decode(PastDiningBalances.self, from: data)
+                callback(balance?.balanceList)
                 return
             }
             callback(nil)

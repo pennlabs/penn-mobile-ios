@@ -13,15 +13,12 @@ class DiningViewModelSwiftUI: ObservableObject {
     static let instance = DiningViewModelSwiftUI()
 
     @Published var diningVenues: [VenueType: [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
-    @Published var diningInsights = DiningAPI.instance.getInsights()
     @Published var diningMenus = DiningAPI.instance.getMenus()
 
     @Published var diningVenuesIsLoading = false
-    @Published var diningInsightsIsLoading = false
-
     @Published var alertType: NetworkingError?
 
-    @Published var diningBalance = UserDefaults.standard.getDiningBalance() ?? DiningBalance(diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
+    @Published var diningBalance = UserDefaults.standard.getDiningBalance() ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
     // MARK: - Venue Methods
     let ordering: [VenueType] = [.dining, .retail]
 
@@ -83,33 +80,15 @@ class DiningViewModelSwiftUI: ObservableObject {
     func refreshBalance() {
         guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
             UserDefaults.standard.clearDiningBalance()
-            self.diningBalance = DiningBalance(diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
+            self.diningBalance = DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
             return
         }
-
         DiningAPI.instance.getDiningBalance(diningToken: diningToken) { balance in
             guard let balance = balance else {
                 return
             }
             UserDefaults.standard.setdiningBalance(balance)
             self.diningBalance = balance
-        }
-    }
-
-    // MARK: - Insights
-    func refreshInsights() {
-        diningInsightsIsLoading = true
-
-        DiningAPI.instance.fetchDiningInsights { (result) in
-            self.diningInsightsIsLoading = false
-
-            switch result {
-            case .success(let diningInsights):
-                self.diningInsights = diningInsights
-            case .failure(let error):
-                self.alertType = error
-                self.diningInsights = nil
-            }
         }
     }
 }

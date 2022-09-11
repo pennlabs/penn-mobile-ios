@@ -39,6 +39,9 @@ extension UserDefaults {
         case lastMenuRequest
         case diningTokenExpiration
         case diningBalance
+        case nextAnalyticsStartDate
+        case firstDollarsBalance
+        case firstSwipesBalance
     }
 
     func clearAll() {
@@ -581,5 +584,52 @@ extension UserDefaults {
     }
     func clearDiningBalance() {
         removeObject(forKey: UserDefaultsKeys.diningBalance.rawValue)
+    }
+}
+
+// MARK: - Last dining analytics end date called
+extension UserDefaults {
+    func setNextAnalyticsStartDate(_ date: String) {
+        set(date, forKey: UserDefaultsKeys.nextAnalyticsStartDate.rawValue)
+        synchronize()
+    }
+
+    func getNextAnalyticsStartDate() -> String? {
+        return string(forKey: UserDefaultsKeys.nextAnalyticsStartDate.rawValue)
+    }
+
+    func clearNextAnalyticsStartDateDate() {
+        removeObject(forKey: UserDefaultsKeys.nextAnalyticsStartDate.rawValue)
+    }
+
+}
+
+extension UserDefaults {
+    func setFirstDollarsBalance(_ balance: Double) {
+        set(balance, forKey: UserDefaultsKeys.firstDollarsBalance.rawValue)
+        synchronize()
+    }
+    
+    func getFirstDollarsBalance() -> Double? {
+        return double(forKey: UserDefaultsKeys.firstDollarsBalance.rawValue)
+    }
+    
+    func clearFirstDollarsBalance() {
+        removeObject(forKey: UserDefaultsKeys.firstDollarsBalance.rawValue)
+    }
+}
+
+extension UserDefaults {
+    func setFirstSwipesBalance(_ balance: Double) {
+        set(balance, forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
+        synchronize()
+    }
+    
+    func getFirstSwipesBalance() -> Double? {
+        return double(forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
+    }
+    
+    func clearFirstSwipesBalance() {
+        removeObject(forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
     }
 }

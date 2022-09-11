@@ -342,6 +342,20 @@ extension Date {
     static var todayString: String {
         return Date.dayOfMonthFormatter.string(from: Date())
     }
+    
+    static var startOfSemester: Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: "2022-08-30")!
+        
+    }
+    
+    static var endOfSemester: Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: "2022-12-22")!
+        
+    }
 }
 
 extension LazyMapCollection {

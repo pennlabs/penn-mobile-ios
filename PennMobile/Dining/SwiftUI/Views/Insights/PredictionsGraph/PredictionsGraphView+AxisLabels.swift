@@ -7,9 +7,7 @@
 //
 
 import Foundation
-#if canImport(SwiftUI)
 import SwiftUI
-#endif
 
 extension PredictionsGraphView {
 
@@ -17,7 +15,7 @@ extension PredictionsGraphView {
     static let yAxisLabelCount = 5
 
     // Compute axis labels
-    static func getAxisLabelsYX(from trans: [DiningInsightsAPIResponse.CardData.PredictionsGraphCardData.DiningBalance], startOfSemester sos: Date, endOfSemester eos: Date) -> ([String], [String]) {
+    static func getAxisLabelsYX(from trans: [DiningAnalyticsBalance], startOfSemester sos: Date, endOfSemester eos: Date) -> ([String], [String]) {
 
         var xLabels: [String] = []
         var yLabels: [String] = []

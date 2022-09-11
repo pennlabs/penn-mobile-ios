@@ -9,13 +9,12 @@
 import Foundation
 struct DiningToken: Codable {
     let value: String
-    private var expiration: Int {
-        didSet {
-            expirationDate = Date().advanced(by: .init(expiration))
-        }
-    }
+    let expiration: Int
 
-    var expirationDate = Date()
+    var expirationDate: Date {
+        Date().advanced(by: .init(expiration))
+    }
+        
 
     enum CodingKeys: String, CodingKey {
         case value = "access_token"
