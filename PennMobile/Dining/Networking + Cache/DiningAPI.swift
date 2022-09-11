@@ -161,8 +161,8 @@ extension DiningAPI {
             if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let balance = try? decoder.decode([DiningBalance].self, from: data)
-                callback(balance)
+                let balance = try? decoder.decode(PastDiningBalances.self, from: data)
+                callback(balance?.balanceList)
                 return
             }
             callback(nil)

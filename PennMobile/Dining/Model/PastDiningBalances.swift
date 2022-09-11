@@ -6,8 +6,8 @@
 //  Copyright © 2022 PennLabs. All rights reserved.
 //
 
-//import Foundation
-//
-//struct PastDiningBalances: Codable {
-//    let balanceList: [DiningBalance]
-//}
+import Foundation
+
+struct PastDiningBalances: Codable {
+    let balanceList: [DiningBalance]
+}
