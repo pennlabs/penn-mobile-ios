@@ -69,7 +69,9 @@ class DiningAnalyticsViewModel: ObservableObject {
                 Storage.store(self.swipeHistory, to: .documents, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
                 Storage.store(self.dollarHistory, to: .documents, as: DiningAnalyticsViewModel.dollarHistoryDirectory)
             }
-            let firstDollarBalance = self.dollarHistory.first!, lastDollarBalance = self.dollarHistory.last!
+            guard let firstDollarBalance = self.dollarHistory.first, let lastDollarBalance = self.dollarHistory.last else {
+                return
+            }
             self.dollarPredictedZeroDate = self.predictZeroDate(firstBalance: firstDollarBalance, lastBalance: lastDollarBalance)
             self.predictedDollarSemesterEndBalance = self.predictSemesterEndBalance(firstBalance: firstDollarBalance, lastBalance: lastDollarBalance)
             self.dollarAxisLabel = self.getAxisLabelsYX(from: self.dollarHistory)

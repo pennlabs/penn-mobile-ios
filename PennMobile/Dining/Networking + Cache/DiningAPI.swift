@@ -46,41 +46,6 @@ class DiningAPI: Requestable {
     func fetchDiningMenu(for id: Int, at date: Date = Date(), _ completion: @escaping (_ result: Result<DiningMenuAPIResponse, NetworkingError>) -> Void) {
         return completion(.failure(.parsingError))
     }
-
-    func fetchDiningInsights(_ completion: @escaping (_ result: Result<DiningInsightsAPIResponse, NetworkingError>) -> Void ) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                // TODO: - Add network error handling for OAuth2
-                completion(.failure(.noInternet))
-                return
-            }
-
-            let url = URL(string: self.diningInsightsUrl)!
-            var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "GET"
-
-            let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
-                guard let data = data else {
-                   if let error = error as? NetworkingError {
-                       completion(.failure(error))
-                   } else {
-                       completion(.failure(.other))
-                   }
-                   return
-                }
-
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
-
-                if let diningInsightsAPIResponse = try? decoder.decode(DiningInsightsAPIResponse.self, from: data) {
-                    self.saveToCache(diningInsightsAPIResponse)
-                    completion(.success(diningInsightsAPIResponse))
-                } else {
-                    completion(.failure(.parsingError))
-                }
-            }
-        }
-    }
 }
 
 // Dining Data Storage
