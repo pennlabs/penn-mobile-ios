@@ -27,12 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Register to receive delegate actions from rich notifications
         UNUserNotificationCenter.current().delegate = self
+        UIApplication.shared.registerForRemoteNotifications()
 
         FirebaseApp.configure()
         ControllerModel.shared.prepare()
         LaundryNotificationCenter.shared.prepare()
         GSRLocationModel.shared.prepare()
         LaundryAPIService.instance.prepare {}
+        UserDBManager.shared.loginToBackend()
 
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = RootViewController()

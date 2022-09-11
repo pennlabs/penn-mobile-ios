@@ -34,7 +34,7 @@ struct DiningVenueDetailView: View {
                     let remain = imageHeight + minY
 
                     ZStack(alignment: .bottomLeading) {
-                        KFImage(self.venue.imageURL)
+                        KFImage(self.venue.image)
                             .resizable()
                             .scaledToFill()
                             .frame(width: geometry.size.width, height: imageHeight + max(0, minY))
@@ -145,23 +145,6 @@ struct DefaultNavigationBar: View {
                     .frame(height: 44)
             }
         }
-    }
-}
-
-struct DiningVenueDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        let path = Bundle.main.path(forResource: "sample-dining-venue", ofType: "json")
-        let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        let diningVenues = try! decoder.decode(DiningAPIResponse.self, from: data)
-
-        return
-            NavigationView {
-                DiningVenueDetailView(for: diningVenues.document.venues[0])
-            .preferredColorScheme(.dark)
-            .environmentObject(DiningViewModelSwiftUI())
-            }
     }
 }
 

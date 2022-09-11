@@ -12,7 +12,7 @@ import SwiftUI
 class DiningViewModelSwiftUI: ObservableObject {
     static let instance = DiningViewModelSwiftUI()
 
-    @Published var diningVenues: [DiningVenue.VenueType: [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
+    @Published var diningVenues: [VenueType: [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
     @Published var diningMenus = DiningAPI.instance.getMenus()
 
     @Published var diningVenuesIsLoading = false
@@ -20,7 +20,7 @@ class DiningViewModelSwiftUI: ObservableObject {
 
     @Published var diningBalance = UserDefaults.standard.getDiningBalance() ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
     // MARK: - Venue Methods
-    let ordering: [DiningVenue.VenueType] = [.dining, .retail]
+    let ordering: [VenueType] = [.dining, .retail]
 
     init() {
         refreshVenues()
@@ -28,26 +28,24 @@ class DiningViewModelSwiftUI: ObservableObject {
 
     func refreshVenues() {
         let lastRequest = UserDefaults.standard.getLastDiningHoursRequest()
-
         // Sometimes when building the app, dining venue list is empty, but because it has refreshed within the day, it does not refresh again. Now, refreshes if the list of venues is completely empty
         if lastRequest == nil || !lastRequest!.isToday || diningVenues.isEmpty {
             self.diningVenuesIsLoading = true
 
             DiningAPI.instance.fetchDiningHours { result in
-                self.diningVenuesIsLoading = false
-
                 switch result {
                 case .success(let diningVenues):
                     UserDefaults.standard.setLastDiningHoursRequest()
-                    var venuesDict = [DiningVenue.VenueType: [DiningVenue]]()
-                    for type in DiningVenue.VenueType.allCases {
-                        venuesDict[type] = diningVenues.document.venues.filter({ $0.venueType == type })
+                    var venuesDict = [VenueType: [DiningVenue]]()
+                    for type in VenueType.allCases {
+                        venuesDict[type] = diningVenues.filter({ $0.venueType == type })
                     }
                     self.diningVenues = venuesDict
                 case .failure(let error):
                     self.alertType = error
-                    self.diningVenuesIsLoading = false
                 }
+
+                self.diningVenuesIsLoading = false
             }
         }
     }

@@ -12,10 +12,6 @@ struct DiningVenueView: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @StateObject var diningAnalyticsViewModel = DiningAnalyticsViewModel()
 
-    // Hack to deselect cells after popping navigation view
-    // Will be removed once SwiftUI is Fixed
-    @State private var selectedItem: String?
-    @State private var listViewId = UUID()
     var body: some View {
         List {
             Section(header: CustomHeader(name: "Dining Balance", refreshButton: true).environmentObject(diningAnalyticsViewModel), content: {
@@ -25,7 +21,7 @@ struct DiningVenueView: View {
             ForEach(diningVM.ordering, id: \.self) { venueType in
                 Section(header: CustomHeader(name: venueType.fullDisplayName).environmentObject(diningAnalyticsViewModel)) {
                     ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
-                        NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM), tag: "\(venue.id)", selection: $selectedItem) {
+                        NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM)) {
                             DiningVenueRow(for: venue)
                                 .padding(.vertical, 4)
                         }
@@ -33,16 +29,9 @@ struct DiningVenueView: View {
                 }
             }
         }
-        .background(Color(UIColor.uiBackground))
-        // Hack to deselect items
-        .id(listViewId)
         .onAppear {
             diningVM.refreshVenues()
             diningVM.refreshBalance()
-            if selectedItem != nil {
-                selectedItem = nil
-                listViewId = UUID()
-            }
         }
         .listStyle(.plain)
     }

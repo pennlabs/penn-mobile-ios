@@ -21,10 +21,12 @@ struct DiningVenueDetailMenuView: View {
             diningVM.refreshMenu(for: id, at: newMenuDate)
         }
 
-        ForEach(menus, id: \.self) { menu in
-            DiningMenuRow(for: menu)
-                .transition(.opacity)
-        }
+        Text("Penn has recently changed the process in which Penn Labs can access menu data. We are working as fast as possible to fix this. We apologize for the inconvenience.")
+
+//        ForEach(menus, id: \.self) { menu in
+//            DiningMenuRow(for: menu)
+//                .transition(.opacity)
+//        }
     }
 }
 

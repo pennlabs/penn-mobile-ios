@@ -513,6 +513,19 @@ extension String {
                 .compare(otherVersionComponents.joined(separator: versionDelimiter), options: .numeric) // <6>
         }
     }
+
+    // https://stackoverflow.com/questions/37048759/swift-display-html-data-in-a-label-or-textview
+    var htmlToAttributedString: NSAttributedString? {
+        guard let data = data(using: .utf8) else { return nil }
+        do {
+            return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding:String.Encoding.utf8.rawValue], documentAttributes: nil)
+        } catch {
+            return nil
+        }
+    }
+    var htmlToString: String {
+        return htmlToAttributedString?.string ?? ""
+    }
 }
 
 // slicing Penn Events API image source urls

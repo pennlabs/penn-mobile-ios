@@ -33,7 +33,7 @@
 		<dict/>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>6642</string>
+	<string>6648</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LABS_OAUTH_CLIENT_ID</key>
@@ -55,6 +55,10 @@
 	<string>Enable to show your current location on the map</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Give Penn Mobile access to your photos to change your profile picutre</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

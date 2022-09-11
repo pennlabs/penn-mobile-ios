@@ -28,14 +28,3 @@ struct DiningVenueDetailLocationView: View {
         .frame(height: mapHeight)
     }
 }
-
-struct DiningVenueDetailLocationView_Previews: PreviewProvider {
-    static var previews: some View {
-        let path = Bundle.main.path(forResource: "sample-dining-venue", ofType: "json")
-        let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        let diningVenues = try! decoder.decode(DiningAPIResponse.self, from: data)
-        return DiningVenueDetailLocationView(for: diningVenues.document.venues[0], screenHeight: 600).padding(.horizontal, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
-    }
-}

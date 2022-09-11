@@ -21,6 +21,7 @@ enum Feature: String {
     case fitness = "Fitness"
     case map = "Map"
     case news = "News"
+    case headlineNews = "Headline News"
     case contacts = "Penn Contacts"
     case events = "Penn Events"
     case about = "About"
@@ -56,6 +57,7 @@ class ControllerModel: NSObject {
         vcDictionary[.pacCode] = PacCodeViewController()
         vcDictionary[.courseAlerts] = CourseAlertController()
         vcDictionary[.events] = PennEventsTableViewController()
+        vcDictionary[.headlineNews] = NativeNewsViewController()
         vcDictionary[.fitness] = FitnessViewController()
         // vcDictionary[.fling] = FlingViewController()
     }
