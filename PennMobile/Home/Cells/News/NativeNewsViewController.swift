@@ -127,7 +127,14 @@ class NativeNewsViewController: UIViewController {
                     paragraphTextView.isEditable = false
                     paragraphTextView.attributedText = try? element.html().htmlToAttributedString
                     paragraphTextView.textColor = .label
-                    paragraphTextView.font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: .current)
+                    let subTag = element.children().first()?.tagName()
+                    if subTag == "em" && (try? element.children().first()?.html()) != "" {
+                        paragraphTextView.font = UIFont.preferredFont(forTextStyle: .headline, compatibleWith: .current)
+                    } else if subTag == "strong" && (try? element.children().first()?.html()) != "" {
+                        paragraphTextView.font = UIFont.preferredFont(forTextStyle: .title2, compatibleWith: .current)
+                    } else {
+                        paragraphTextView.font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: .current)
+                    }
                     bodyViews.append(paragraphTextView)
                 case "figure":
                     for subelement in element.children() {
