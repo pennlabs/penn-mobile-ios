@@ -78,7 +78,9 @@ class NativeNewsViewController: UIViewController {
         for author in article.data.labsArticle.authors {
             authorLabel.text! += author.name + ", "
         }
-        authorLabel.text?.removeLast(2)
+        if authorLabel.text != "" {
+            authorLabel.text?.removeLast(2)
+        }
         authorLabel.text! += " | " + article.data.labsArticle.published_at
         authorLabel.lineBreakMode = .byWordWrapping
         authorLabel.numberOfLines = 0
@@ -103,7 +105,9 @@ class NativeNewsViewController: UIViewController {
         for author in article.data.labsArticle.dominantMedia.authors {
             imageCaptionView.text! += author.name + ", "
         }
-        imageCaptionView.text?.removeLast(2)
+        if imageCaptionView.text != "" {
+            imageCaptionView.text?.removeLast(2)
+        }
         imageCaptionView.lineBreakMode = .byWordWrapping
         imageCaptionView.numberOfLines = 0
         imageCaptionView.font = UIFont.preferredFont(forTextStyle: .caption1, compatibleWith: .current)
