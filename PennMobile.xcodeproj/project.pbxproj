@@ -866,8 +866,6 @@
 			isa = PBXGroup;
 			children = (
 				6CC88D7A27B1BFB0006896F6 /* DiningToken.swift */,
-				F23CC0BC235E3F390007317A /* DiningAPIResponse.swift */,
-				6CAE43C52533731000BD0200 /* DiningInsightsAPIResponse.swift */,
 				E515B36227C2B97500AAE0D8 /* DiningBalance.swift */,
 				E50676E927EE1C73009A776E /* PastDiningBalances.swift */,
 				F23CC0BA235E3EF10007317A /* DiningVenue.swift */,
@@ -2401,7 +2399,7 @@
 			baseConfigurationReference = 6CDC501127B5BCC700698235 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CF_BUNDLE_SHORT_VERSION_STRING = 6.8.0;
+				CF_BUNDLE_SHORT_VERSION_STRING = 6.8.1;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2438,7 +2436,7 @@
 			baseConfigurationReference = 6C392E3827B5BE1C0097640B /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CF_BUNDLE_SHORT_VERSION_STRING = 6.8.0;
+				CF_BUNDLE_SHORT_VERSION_STRING = 6.8.1;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
