@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct PreferencesView: View {
+    // Update tab preferences: UserDefaults.standard.setTabPreferences([.home, .dining, .fitness, .laundry, .more]) + REFRESH
+    
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }

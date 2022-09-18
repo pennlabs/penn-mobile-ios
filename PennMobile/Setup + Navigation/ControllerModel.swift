@@ -60,9 +60,6 @@ class ControllerModel: NSObject {
         vcDictionary[.headlineNews] = NativeNewsViewController()
         vcDictionary[.fitness] = FitnessViewController()
         // vcDictionary[.fling] = FlingViewController()
-
-        // UPDATING TAB PREFERENCES!
-        UserDefaults.standard.setTabPreferences([.home, .dining, .fitness, .laundry, .more])
     }
 
     var viewControllers: [UIViewController] {
