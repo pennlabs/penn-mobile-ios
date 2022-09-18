@@ -270,6 +270,7 @@
 		EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */; };
 		EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */; };
 		EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */; };
+		F206DDB328D78A85008F572F /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F206DDB228D78A85008F572F /* PreferencesView.swift */; };
 		F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */; };
 		F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */; };
 		F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */; };
@@ -601,6 +602,7 @@
 		EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRManageGroupController.swift; sourceTree = "<group>"; };
 		EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworkManager..swift; sourceTree = "<group>"; };
 		EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupUser.swift; sourceTree = "<group>"; };
+		F206DDB228D78A85008F572F /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPreference.swift; sourceTree = "<group>"; };
 		F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreference.swift; sourceTree = "<group>"; };
@@ -817,6 +819,7 @@
 				B654BAE81F801F030038B9D5 /* Laundry */,
 				21D5E06523B68F0E00B331CC /* Housing */,
 				212304C52054ED9900958CE0 /* Spring Fling */,
+				F206DDB128D78A6C008F572F /* Preferences */,
 				6CAA4B4727A7639600473CC6 /* Polls */,
 				216640D31EBB80FD00746B8E /* News */,
 				6C6FE1B727B9B8CB0093FD13 /* More Tab */,
@@ -1628,6 +1631,14 @@
 			path = GSRGroups;
 			sourceTree = "<group>";
 		};
+		F206DDB128D78A6C008F572F /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				F206DDB228D78A85008F572F /* PreferencesView.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		F212BE7D23B6ACC800ED46A1 /* Privacy */ = {
 			isa = PBXGroup;
 			children = (
@@ -2047,6 +2058,7 @@
 				21D5E07623BD45F400B331CC /* KeychainAccessible.swift in Sources */,
 				6C6FE1D327B9B8CB0093FD13 /* ProfilePageTableViewCell.swift in Sources */,
 				21470EBC223DD34200019C10 /* ScheduleEventCell.swift in Sources */,
+				F206DDB328D78A85008F572F /* PreferencesView.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
 				217A783B204D97AC004F1227 /* ModularTableView.swift in Sources */,

@@ -39,6 +39,7 @@ extension UserDefaults {
         case lastMenuRequest
         case diningTokenExpiration
         case diningBalance
+        case tabPreferences
     }
 
     func clearAll() {
@@ -581,5 +582,19 @@ extension UserDefaults {
     }
     func clearDiningBalance() {
         removeObject(forKey: UserDefaultsKeys.diningBalance.rawValue)
+    }
+}
+
+// MARK: - Tab Preferences
+extension UserDefaults {
+    func setTabPreferences(_ tabs: [Feature]) {
+        UserDefaults.standard.set(tabs.map { $0.rawValue }, forKey: UserDefaultsKeys.tabPreferences.rawValue)
+    }
+
+    func getTabPreferences() -> [Feature] {
+        if let tabPreferenceTitles = UserDefaults.standard.value(forKey: UserDefaultsKeys.tabPreferences.rawValue) as? [String] {
+            return tabPreferenceTitles.map { Feature(rawValue: $0)! }
+        }
+        return [.home, .dining, .studyRoomBooking, .laundry, .more]
     }
 }
