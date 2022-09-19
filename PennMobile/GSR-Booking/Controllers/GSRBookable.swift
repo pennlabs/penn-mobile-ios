@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import SCLAlertView
 
-protocol GSRBookable: IndicatorEnabled {}
+protocol GSRBookable: IndicatorEnabled, ShowsAlert {}
 
 extension GSRBookable where Self: UIViewController {
     func submitBooking(for booking: GSRBooking) {
@@ -17,17 +16,16 @@ extension GSRBookable where Self: UIViewController {
         GSRNetworkManager.instance.makeBooking(for: booking) { result in
             DispatchQueue.main.async {
                 self.hideActivity()
-                let alertView = SCLAlertView()
                 var firebaseResult: FirebaseAnalyticsManager.EventResult
 
                 switch result {
                 case .success:
-                    alertView.showSuccess("Success!", subTitle: "You booked a space in \(booking.roomName). You should receive a confirmation email in the next few minutes.")
+                    self.showAlert(withMsg: "You booked a space in \(booking.roomName). You should receive a confirmation email in the next few minutes.", title: "Success!", completion: nil)
                     firebaseResult = .success
                     guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
                     homeVC.clearCache()
                 case .failure:
-                    alertView.showError("Uh oh!", subTitle: "You seem to have exceeded the booking limit for this venue.")
+                    self.showAlert(withMsg: "You seem to have exceeded the booking limit for this venue.", title: "Uh oh!", completion: nil)
                     firebaseResult = .failed
                 }
 

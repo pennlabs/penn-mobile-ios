@@ -8,7 +8,6 @@
 
 import UIKit
 import WebKit
-import SCLAlertView
 
 class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
 
