@@ -27,8 +27,7 @@ class DiningViewModelSwiftUI: ObservableObject {
         // Sometimes when building the app, dining venue list is empty, but because it has refreshed within the day, it does not refresh again. Now, refreshes if the list of venues is completely empty
         if lastRequest == nil || !lastRequest!.isToday || diningVenues.isEmpty {
             self.diningVenuesIsLoading = true
-            let result = await DiningAPI.instance.fetchDiningHoursAsync()
-            
+            let result = await DiningAPI.instance.fetchDiningHours()
             switch result {
             case .success(let diningVenues):
                 UserDefaults.standard.setLastDiningHoursRequest()
@@ -40,7 +39,7 @@ class DiningViewModelSwiftUI: ObservableObject {
             case .failure(let error):
                 self.alertType = error
             }
-            
+
             self.diningVenuesIsLoading = false
         }
     }
