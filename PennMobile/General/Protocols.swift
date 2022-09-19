@@ -6,50 +6,66 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
-import MBProgressHUD
 import CoreLocation
 import LocalAuthentication
 
 protocol IndicatorEnabled {}
 
-extension IndicatorEnabled where Self: UITableViewController {
-    func showActivity() {
-        tableView.isUserInteractionEnabled = false
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-    }
-
-    func hideActivity() {
-        tableView.isUserInteractionEnabled = true
-        MBProgressHUD.hide(for: self.view, animated: true)
-    }
-}
-
 extension IndicatorEnabled where Self: UIViewController {
     func showActivity(isUserInteractionEnabled: Bool = false) {
-        view.isUserInteractionEnabled = isUserInteractionEnabled
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+        view.isUserInteractionEnabled = false
+
+        if let activityIndicator = findActivity() {
+            activityIndicator.startAnimating()
+        } else {
+            let activityIndicator = UIActivityIndicatorView(style: .large)
+            activityIndicator.startAnimating()
+            view.addSubview(activityIndicator)
+
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+            ])
+        }
     }
 
     func hideActivity() {
         view.isUserInteractionEnabled = true
-        MBProgressHUD.hide(for: self.view, animated: true)
+        findActivity()?.stopAnimating()
     }
 
-    func hideAllActivity() {
-        view.isUserInteractionEnabled = true
-        MBProgressHUD.hideAllHUDs(for: self.view, animated: true)
+    func findActivity() -> UIActivityIndicatorView? {
+        return view.subviews.compactMap { $0 as? UIActivityIndicatorView }.first
     }
 }
 
 extension IndicatorEnabled where Self: UIView {
-    func showActivity() {
+    func showActivity(isUserInteractionEnabled: Bool = false) {
         self.isUserInteractionEnabled = false
-        MBProgressHUD.showAdded(to: self, animated: true)
+
+        if let activityIndicator = findActivity() {
+            activityIndicator.startAnimating()
+        } else {
+            let activityIndicator = UIActivityIndicatorView(style: .large)
+            activityIndicator.startAnimating()
+            self.addSubview(activityIndicator)
+
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                activityIndicator.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor)
+            ])
+        }
     }
 
     func hideActivity() {
         self.isUserInteractionEnabled = true
-        MBProgressHUD.hide(for: self, animated: true)
+        findActivity()?.stopAnimating()
+    }
+
+    func findActivity() -> UIActivityIndicatorView? {
+        return self.subviews.compactMap { $0 as? UIActivityIndicatorView }.first
     }
 }
 
