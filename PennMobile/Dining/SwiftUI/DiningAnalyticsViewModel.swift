@@ -16,8 +16,6 @@ struct DiningAnalyticsBalance: Codable {
 }
 
 class DiningAnalyticsViewModel: ObservableObject {
-    
-    // Question: Clear storage on logout?
     static let dollarHistoryDirectory = "diningAnalyticsDollarData"
     static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
     @Published var dollarHistory: [DiningAnalyticsBalance] = Storage.fileExists(dollarHistoryDirectory, in: .documents) ? Storage.retrieve(dollarHistoryDirectory, from: .documents, as: [DiningAnalyticsBalance].self) : []

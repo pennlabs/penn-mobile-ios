@@ -27,7 +27,7 @@ struct PredictionsGraphView: View {
 
     var formattedZeroDate: String
     var displayZeroDate: Bool
-    init(type: String, data: Binding<[PredictionsGraphView.YXDataPoint]>, predictedZeroDate: Binding<Date>, predictedSemesterEndValue: Binding<Double>, axisLabelsYX: Binding<([String],[String])>, predictedZeroPoint: Binding<PredictionsGraphView.YXDataPoint>) {
+    init(type: String, data: Binding<[PredictionsGraphView.YXDataPoint]>, predictedZeroDate: Binding<Date>, predictedSemesterEndValue: Binding<Double>, axisLabelsYX: Binding<([String], [String])>, predictedZeroPoint: Binding<PredictionsGraphView.YXDataPoint>) {
         self._data = data
         self._predictedZeroDate = predictedZeroDate
         self._predictedSemesterEndValue = predictedSemesterEndValue

@@ -32,13 +32,13 @@ struct DiningAnalyticsView: View {
             // one directional Binding, setter does not work
             set: {  _ in }
         )
-        
+
         let swipeXYHistory = Binding(
             get: { getSmoothedData(from: diningAnalyticsViewModel.swipeHistory) },
             // one directional Binding, setter does not work
             set: {  _ in }
         )
-        
+
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 Text("Dining Analytics")
@@ -58,7 +58,7 @@ struct DiningAnalyticsView: View {
             .padding()
         }
         .onAppear {
-            guard Account.isLoggedIn, let _ = KeychainAccessible.instance.getDiningToken(), let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
+            guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
                 showMissingDiningTokenAlert = true
                 return
             }
@@ -76,7 +76,6 @@ struct DiningAnalyticsView: View {
 
 extension DiningAnalyticsView {
     func getSmoothedData(from trans: [DiningAnalyticsBalance]) -> [PredictionsGraphView.YXDataPoint] {
-        
         let sos = Date.startOfSemester
         let eos = Date.endOfSemester
 

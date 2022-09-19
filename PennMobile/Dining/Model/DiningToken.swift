@@ -14,7 +14,6 @@ struct DiningToken: Codable {
     var expirationDate: Date {
         Date().advanced(by: .init(expiration))
     }
-        
 
     enum CodingKeys: String, CodingKey {
         case value = "access_token"
