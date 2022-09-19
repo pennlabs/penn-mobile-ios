@@ -22,31 +22,26 @@ class DiningViewModelSwiftUI: ObservableObject {
     // MARK: - Venue Methods
     let ordering: [VenueType] = [.dining, .retail]
 
-    init() {
-        refreshVenues()
-    }
-
-    func refreshVenues() {
+    func refreshVenues() async {
         let lastRequest = UserDefaults.standard.getLastDiningHoursRequest()
         // Sometimes when building the app, dining venue list is empty, but because it has refreshed within the day, it does not refresh again. Now, refreshes if the list of venues is completely empty
         if lastRequest == nil || !lastRequest!.isToday || diningVenues.isEmpty {
             self.diningVenuesIsLoading = true
-
-            DiningAPI.instance.fetchDiningHours { result in
-                switch result {
-                case .success(let diningVenues):
-                    UserDefaults.standard.setLastDiningHoursRequest()
-                    var venuesDict = [VenueType: [DiningVenue]]()
-                    for type in VenueType.allCases {
-                        venuesDict[type] = diningVenues.filter({ $0.venueType == type })
-                    }
-                    self.diningVenues = venuesDict
-                case .failure(let error):
-                    self.alertType = error
+            let result = await DiningAPI.instance.fetchDiningHoursAsync()
+            
+            switch result {
+            case .success(let diningVenues):
+                UserDefaults.standard.setLastDiningHoursRequest()
+                var venuesDict = [VenueType: [DiningVenue]]()
+                for type in VenueType.allCases {
+                    venuesDict[type] = diningVenues.filter({ $0.venueType == type })
                 }
-
-                self.diningVenuesIsLoading = false
+                self.diningVenues = venuesDict
+            case .failure(let error):
+                self.alertType = error
             }
+            
+            self.diningVenuesIsLoading = false
         }
     }
 

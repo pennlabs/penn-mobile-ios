@@ -29,8 +29,10 @@ struct DiningVenueView: View {
                 }
             }
         }
+        .task {
+            await diningVM.refreshVenues()
+        }
         .onAppear {
-            diningVM.refreshVenues()
             diningVM.refreshBalance()
         }
         .listStyle(.plain)

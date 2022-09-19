@@ -19,6 +19,24 @@ class DiningAPI: Requestable {
 
     let diningInsightsUrl = "https://pennmobile.org/api/dining/"
 
+    func fetchDiningHoursAsync() async -> Result<[DiningVenue], NetworkingError> {
+        guard let (data, _) = try? await URLSession.shared.data(from: URL(string: diningUrl)!) else {
+            return .failure(.serverError)
+        }
+
+        let decoder = JSONDecoder()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+
+        if let diningVenues = try? decoder.decode([DiningVenue].self, from: data) {
+            self.saveToCache(diningVenues)
+            return .success(diningVenues)
+        } else {
+            return .failure(.parsingError)
+        }
+    }
+
     func fetchDiningHours(_ completion: @escaping (_ result: Result<[DiningVenue], NetworkingError>) -> Void) {
         getRequestData(url: diningUrl) { (data, _, statusCode) in
             if statusCode == nil {
