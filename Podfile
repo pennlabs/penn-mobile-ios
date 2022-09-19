@@ -15,11 +15,6 @@ pod 'ScrollableGraphView'
 pod 'XLPagerTabStrip', '~> 9.0' # Only used for GSR, should be deleted
 pod 'SwiftLint'
 
-# WKZombie should be moved to SPM eventually, but something is broken with the current SPM implementation
-#pod 'WKZombie', :git => 'https://github.com/pennlabs/WKZombie.git', :commit => '536f6e8aa0e8438fe711fff6420908bc67edb056'
-pod 'OneTimePassword', '~> 3.2'
-
-
 end
 
 target 'AutomatedScreenshotUITests' do
