@@ -9,7 +9,6 @@ target 'PennMobile' do
 
     # Pods for PennMobile
 
-pod 'MBProgressHUD', '~> 0.8' # old objc library, should be replaced
 pod 'SCLAlertView'
 pod 'ScrollableGraphView'
 

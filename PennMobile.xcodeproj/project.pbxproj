@@ -128,8 +128,8 @@
 		56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */; };
 		6C11C08026F842CF00407C04 /* HomeUpdateCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C11C07F26F842CF00407C04 /* HomeUpdateCellItem.swift */; };
 		6C1991BB27B5C73800BBB402 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1991BA27B5C73800BBB402 /* Environment.swift */; };
-		6C23AF9526E57903002F60F0 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6C369A1526E39BC100721CA1 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		6C23AF9526E57903002F60F0 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		6C369A1526E39BC100721CA1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		6C3F194227A32C29007BCB4F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C3F194127A32C29007BCB4F /* GoogleService-Info.plist */; };
 		6C44198E27B9A0E400993028 /* PennEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44198A27B9A0E400993028 /* PennEventsTableViewCell.swift */; };
 		6C44198F27B9A0E400993028 /* EventsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44198B27B9A0E400993028 /* EventsAPI.swift */; };
@@ -1825,8 +1825,8 @@
 				F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON.git" */,
+				6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
@@ -1947,7 +1947,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Base32/Base32.framework",
-				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/OneTimePassword/OneTimePassword.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/ScrollableGraphView/ScrollableGraphView.framework",
@@ -1956,7 +1955,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Base32.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OneTimePassword.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScrollableGraphView.framework",
@@ -2034,7 +2032,7 @@
 				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
 				F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */,
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
-				6C369A1526E39BC100721CA1 /* (null) in Sources */,
+				6C369A1526E39BC100721CA1 /* BuildFile in Sources */,
 				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
 				21D5E07623BD45F400B331CC /* KeychainAccessible.swift in Sources */,
 				6C6FE1D327B9B8CB0093FD13 /* ProfilePageTableViewCell.swift in Sources */,
@@ -2148,7 +2146,7 @@
 				EF6329A22409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift in Sources */,
 				6CC88D7627B1BF51006896F6 /* DiningLoginNavigationView.swift in Sources */,
 				21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */,
-				6C23AF9526E57903002F60F0 /* (null) in Sources */,
+				6C23AF9526E57903002F60F0 /* BuildFile in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
@@ -2557,7 +2555,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+		6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
 			requirement = {
@@ -2565,7 +2563,7 @@
 				minimumVersion = 5.0.1;
 			};
 		};
-		6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -2602,7 +2600,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON.git" */;
 			productName = SwiftyJSON;
 		};
 		6CA1ACDA271D2D5000EDB967 /* Kingfisher */ = {
@@ -2612,12 +2610,12 @@
 		};
 		6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseAnalytics;
 		};
 		6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseCrashlytics;
 		};
 		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
