@@ -609,11 +609,11 @@ extension UserDefaults {
         set(balance, forKey: UserDefaultsKeys.firstDollarsBalance.rawValue)
         synchronize()
     }
-    
+
     func getFirstDollarsBalance() -> Double? {
         return double(forKey: UserDefaultsKeys.firstDollarsBalance.rawValue)
     }
-    
+
     func clearFirstDollarsBalance() {
         removeObject(forKey: UserDefaultsKeys.firstDollarsBalance.rawValue)
     }
@@ -624,11 +624,11 @@ extension UserDefaults {
         set(balance, forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
         synchronize()
     }
-    
+
     func getFirstSwipesBalance() -> Double? {
         return double(forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
     }
-    
+
     func clearFirstSwipesBalance() {
         removeObject(forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
     }
