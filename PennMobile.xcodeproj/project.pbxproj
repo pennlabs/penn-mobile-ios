@@ -313,14 +313,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F2568A6E2411F20E00561295 /* Embed App Extensions */ = {
+		F2568A6E2411F20E00561295 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -1740,7 +1740,7 @@
 				2166405C1EBADADA00746B8E /* Sources */,
 				2166405D1EBADADA00746B8E /* Frameworks */,
 				2166405E1EBADADA00746B8E /* Resources */,
-				F2568A6E2411F20E00561295 /* Embed App Extensions */,
+				F2568A6E2411F20E00561295 /* Embed Foundation Extensions */,
 				CAF133B2272BB899064B2A46 /* [CP] Embed Pods Frameworks */,
 				6CE12F9326E82DED00284D9F /* ShellScript */,
 				6C6420B327AAF1130096CBA9 /* Linter */,
@@ -1788,7 +1788,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
 					2166405F1EBADADA00746B8E = {
