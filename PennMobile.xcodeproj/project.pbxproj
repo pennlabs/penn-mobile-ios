@@ -269,6 +269,7 @@
 		EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */; };
 		EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */; };
 		F206DDB328D78A85008F572F /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F206DDB228D78A85008F572F /* PreferencesView.swift */; };
+		F206DDB528DE5BF0008F572F /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F206DDB428DE5BF0008F572F /* PreferencesViewController.swift */; };
 		F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */; };
 		F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */; };
 		F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */; };
@@ -599,6 +600,7 @@
 		EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworkManager..swift; sourceTree = "<group>"; };
 		EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupUser.swift; sourceTree = "<group>"; };
 		F206DDB228D78A85008F572F /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		F206DDB428DE5BF0008F572F /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPreference.swift; sourceTree = "<group>"; };
 		F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreference.swift; sourceTree = "<group>"; };
@@ -1629,6 +1631,7 @@
 			isa = PBXGroup;
 			children = (
 				F206DDB228D78A85008F572F /* PreferencesView.swift */,
+				F206DDB428DE5BF0008F572F /* PreferencesViewController.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -1997,6 +2000,7 @@
 				EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */,
 				EFE2D6F8239B120E0020F6BF /* GSRManageGroupViewModel.swift in Sources */,
 				B6665A182071E63800F49A9C /* TabBarController.swift in Sources */,
+				F206DDB528DE5BF0008F572F /* PreferencesViewController.swift in Sources */,
 				21B649202236F2F300AC5B7F /* HomeCoursesCell.swift in Sources */,
 				21A6B6D222162702003A357D /* GSRReservation.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,

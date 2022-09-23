@@ -89,7 +89,7 @@ extension MoreViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Notification and privacy tabs aren't shown for users that aren't logged in
-        let rows = [Account.isLoggedIn ? 4 : 3, ControllerModel.shared.moreOrder.count, pennLinks.count]
+        let rows = [Account.isLoggedIn ? 5 : 4, ControllerModel.shared.moreOrder.count, pennLinks.count]
         return rows[section]
     }
 
@@ -116,9 +116,16 @@ extension MoreViewController {
                     cell.accessoryType = .disclosureIndicator
                     return cell
                 }
-            } else if indexPath.row <= 3 {
+            } else if indexPath.row == 2 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
-                    cell.setUpView(with: indexPath.row == 2 ? "Notifications" : "Privacy")
+                    cell.setUpView(with: "Preferences")
+                    cell.backgroundColor = .uiGroupedBackgroundSecondary
+                    cell.accessoryType = .disclosureIndicator
+                    return cell
+                }
+            } else if indexPath.row <= 4 {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
+                    cell.setUpView(with: indexPath.row == 3 ? "Notifications" : "Privacy")
                     cell.backgroundColor = .uiGroupedBackgroundSecondary
                     cell.accessoryType = .disclosureIndicator
                     return cell
@@ -159,8 +166,11 @@ extension MoreViewController {
             } else if indexPath.row == 1 {
                 let targetController = ControllerModel.shared.viewController(for: .pacCode)
                 navigationController?.pushViewController(targetController, animated: true)
-            } else if indexPath.row <= 3 {
-                let targetController = ControllerModel.shared.viewController(for: indexPath.row == 2 ? .notifications : .privacy)
+            } else if indexPath.row == 2 {
+                let targetController = ControllerModel.shared.viewController(for: .preferences)
+                navigationController?.pushViewController(targetController, animated: true)
+            } else if indexPath.row <= 4 {
+                let targetController = ControllerModel.shared.viewController(for: indexPath.row == 3 ? .notifications : .privacy)
                 navigationController?.pushViewController(targetController, animated: true)
             }
         } else if indexPath.section == 1 {

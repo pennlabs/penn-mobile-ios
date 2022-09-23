@@ -28,6 +28,7 @@ enum Feature: String {
     case fling = "Spring Fling"
     case event = "Event"
     case privacy = "Privacy"
+    case preferences = "Preferences"
     case notifications = "Notifications"
     case courseSchedule = "Course Schedule"
     case pacCode = "PAC Code"
@@ -52,6 +53,7 @@ class ControllerModel: NSObject {
         vcDictionary[.contacts] = ContactsTableViewController()
         vcDictionary[.about] = AboutViewController()
         vcDictionary[.notifications] = NotificationViewController()
+        vcDictionary[.preferences] = PreferencesViewController()
         vcDictionary[.privacy] = PrivacyViewController()
         vcDictionary[.courseSchedule] = CourseScheduleViewController()
         vcDictionary[.pacCode] = PacCodeViewController()
