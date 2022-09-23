@@ -60,6 +60,9 @@ class ControllerModel: NSObject {
         vcDictionary[.headlineNews] = NativeNewsViewController()
         vcDictionary[.fitness] = FitnessViewController()
         // vcDictionary[.fling] = FlingViewController()
+
+        // UPDATING TAB PREFERENCES!
+        UserDefaults.standard.setTabPreferences([.home, .dining, .fitness, .laundry, .more])
     }
 
     var viewControllers: [UIViewController] {
@@ -71,7 +74,7 @@ class ControllerModel: NSObject {
     // Features order in tab bar
     var orderedFeatures: [Feature] {
         get {
-            return [.home, .dining, .studyRoomBooking, .laundry, .more]
+            return UserDefaults.standard.getTabPreferences()
         }
     }
 
@@ -81,9 +84,9 @@ class ControllerModel: NSObject {
             // keeping this #if DEBUG in case we want to remove course alerts from production
             // courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
             #if DEBUG
-            return [.news, .contacts, .courseSchedule, .courseAlerts, .events, .fitness, .about]
+                return [.news, .contacts, .courseSchedule, .courseAlerts, .events, .fitness, .about]
             #else
-            return [.news, .contacts, .courseSchedule, .events, .fitness, .about]
+                return [.news, .contacts, .courseSchedule, .events, .fitness, .about]
             #endif
         }
     }
