@@ -31,6 +31,6 @@ class NotificationsViewControllerSwiftUI: GenericViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.tabBarController?.title = "Notifications"
+        self.title = "Notifications"
     }
 }
