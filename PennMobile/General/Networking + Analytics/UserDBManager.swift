@@ -425,6 +425,30 @@ extension UserDBManager {
         }
     }
 
+    func updateNotificationSetting(service: String, enabled: Bool, _ callback: ((_ success: Bool) -> Void)?) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token, let payload = try? JSONSerialization.data(withJSONObject: ["service": service, "enabled": enabled]) else {
+                callback?(false)
+                return
+            }
+
+            let url = URL(string: "https://pennmobile.org/api/user/notifications/settings/")!
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = payload
+
+            let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
+                if let httpResponse = response as? HTTPURLResponse {
+                    callback?(httpResponse.statusCode == 200 || httpResponse.statusCode == 201)
+                } else {
+                    callback?(false)
+                }
+            }
+            task.resume()
+        }
+    }
+
     // TO-DO: Remove/update below functions with api/user/privacy/settings/ route
     func syncUserSettings(_ callback: @escaping (_ success: Bool) -> Void) {
         self.fetchUserSettings { (success, privacySettings, notificationSettings) in

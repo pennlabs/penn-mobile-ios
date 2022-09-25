@@ -29,6 +29,11 @@ struct NotificationsView: View {
                     if NotificationSetting.visibleOptions.contains($setting.id) {
                         Section(footer: Text(setting.description!)) {
                             Toggle(setting.title!, isOn: $setting.enabled)
+                                .onChange(of: setting.enabled) { value in
+                                    UserDBManager.shared.updateNotificationSetting(service: $setting.id, enabled: value) { result in
+                                        print(result)
+                                    }
+                                }
                         }
                     }
                 }
