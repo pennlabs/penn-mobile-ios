@@ -398,6 +398,34 @@ extension UserDBManager {
 
 // MARK: - Privacy and Notification Settings
 extension UserDBManager {
+    func fetchNotificationSettings(_ completion: @escaping (_ result: Result<[NotificationSetting], NetworkingError>) -> Void) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                completion(.failure(.authenticationError))
+                return
+            }
+
+            let url = URL(string: "https://pennmobile.org/api/user/notifications/settings/")!
+            let request = URLRequest(url: url, accessToken: token)
+
+            let task = URLSession.shared.dataTask(with: request) { data, _, _ in
+                guard let data = data else {
+                    completion(.failure(.serverError))
+                    return
+                }
+
+                let decoder = JSONDecoder()
+                if let notifSettings = try? decoder.decode([NotificationSetting].self, from: data) {
+                    completion(.success(notifSettings))
+                } else {
+                    completion(.failure(.parsingError))
+                }
+            }
+            task.resume()
+        }
+    }
+
+    // TO-DO: Remove/update below functions with api/user/privacy/settings/ route
     func syncUserSettings(_ callback: @escaping (_ success: Bool) -> Void) {
         self.fetchUserSettings { (success, privacySettings, notificationSettings) in
             if success {

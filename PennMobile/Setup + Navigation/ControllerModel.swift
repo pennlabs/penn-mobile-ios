@@ -51,7 +51,7 @@ class ControllerModel: NSObject {
         vcDictionary[.news] = NewsViewController()
         vcDictionary[.contacts] = ContactsTableViewController()
         vcDictionary[.about] = AboutViewController()
-        vcDictionary[.notifications] = NotificationViewController()
+        vcDictionary[.notifications] = NotificationsViewControllerSwiftUI()
         vcDictionary[.privacy] = PrivacyViewController()
         vcDictionary[.courseSchedule] = CourseScheduleViewController()
         vcDictionary[.pacCode] = PacCodeViewController()
