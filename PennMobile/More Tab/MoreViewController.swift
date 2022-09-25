@@ -89,7 +89,7 @@ extension MoreViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Notification and privacy tabs aren't shown for users that aren't logged in
-        let rows = [Account.isLoggedIn ? 5 : 4, ControllerModel.shared.moreOrder.count, pennLinks.count]
+        let rows = [Account.isLoggedIn ? 5 : 4, ControllerModel.shared.moreFeatures.count, pennLinks.count]
         return rows[section]
     }
 
@@ -133,7 +133,7 @@ extension MoreViewController {
             }
         } else if indexPath.section == 1 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more-with-icon") as? MoreCell {
-                cell.setUpView(with: ControllerModel.shared.moreOrder[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
+                cell.setUpView(with: ControllerModel.shared.moreFeatures[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
                 cell.backgroundColor = .uiGroupedBackgroundSecondary
                 cell.accessoryType = .disclosureIndicator
                 return cell
@@ -174,7 +174,7 @@ extension MoreViewController {
                 navigationController?.pushViewController(targetController, animated: true)
             }
         } else if indexPath.section == 1 {
-            let targetController = ControllerModel.shared.viewController(for: ControllerModel.shared.moreOrder[indexPath.row])
+            let targetController = ControllerModel.shared.viewController(for: ControllerModel.shared.moreFeatures[indexPath.row])
             navigationController?.pushViewController(targetController, animated: true)
         } else if indexPath.section == 2 {
             if let url = URL(string: pennLinks[indexPath.row].url) {

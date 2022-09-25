@@ -9,10 +9,18 @@
 import SwiftUI
 
 struct PreferencesView: View {
-    // Update tab preferences: UserDefaults.standard.setTabPreferences([.home, .dining, .fitness, .laundry, .more]) + REFRESH
-    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            Button("Update tabs!") {
+                setTabPreferences(tabPreferences: [.dining, .studyRoomBooking, .laundry])
+            }
+        }
+    }
+}
+
+extension PreferencesView {
+    func setTabPreferences(tabPreferences: [Feature]) {
+        UserDefaults.standard.setTabPreferences([.home] + tabPreferences + [.more])
     }
 }
 
