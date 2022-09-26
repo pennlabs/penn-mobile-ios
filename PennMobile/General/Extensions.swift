@@ -418,6 +418,17 @@ extension Optional {
     func nullUnwrap() -> Any {
         return self == nil ? "null" : self!
     }
+
+    /// Unwraps an optional and throws an error if it is nil.
+    ///
+    /// https://www.avanderlee.com/swift/unwrap-or-throw/
+    func unwrap(orThrow error: Error) throws -> Wrapped {
+        if let self {
+            return self
+        } else {
+            throw error
+        }
+    }
 }
 
 extension UILabel {

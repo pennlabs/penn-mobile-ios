@@ -25,6 +25,20 @@ class CourseScheduleViewController: GenericViewController, IndicatorEnabled, Sho
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchViewModel()
+
+        // For now, fetch the data when this is loaded
+        // and print it to the console.
+        #if DEBUG
+        Task {
+            do {
+                let studentData = try await PathAtPennNetworkManager.instance.fetchStudentData()
+                print("=== STUDENT DATA ===")
+                print("\(studentData.reg)")
+            } catch let e {
+                print("Couldn't load student data: \(e)")
+            }
+        }
+        #endif
     }
 }
 
