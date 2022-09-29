@@ -31,9 +31,11 @@ class CourseScheduleViewController: GenericViewController, IndicatorEnabled, Sho
         #if DEBUG
         Task {
             do {
-                let studentData = try await PathAtPennNetworkManager.instance.fetchStudentData()
-                print("=== STUDENT DATA ===")
-                print("\(studentData.reg)")
+                let courses = try await PathAtPennNetworkManager.instance.fetchCourses()
+                print("=== COURSES ===")
+                courses.forEach {
+                    print($0)
+                }
             } catch let e {
                 print("Couldn't load student data: \(e)")
             }
@@ -122,7 +124,7 @@ extension CourseScheduleViewController {
 
     func handleNetworkCourseRefreshResult(_ result: Result<Set<Course>, NetworkingError>) {
 
-        let popVC : () -> Void = { self.navigationController?.popViewController(animated: true) }
+        let popVC: () -> Void = { self.navigationController?.popViewController(animated: true) }
 
         showRefreshAlertForError(result: result, title: "courses", success: self.handleNetworkCourseRefreshCompletion(_:), noInternet: popVC, parsingError: popVC, authenticationError: self.handleAuthentication)
     }
