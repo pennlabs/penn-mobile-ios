@@ -440,6 +440,21 @@ extension UILabel {
     }
 }
 
+extension Sequence {
+    /// Maps an array to an array of transformed values, fetched asynchronously in parallel.
+    func asyncMap<T>(_ transform: @escaping (Element) async throws -> T) async rethrows -> [T] {
+        try await withThrowingTaskGroup(of: T.self) { group in
+            forEach { element in
+                group.addTask {
+                    try await transform(element)
+                }
+            }
+
+            return try await group.reduce(into: []) { $0.append($1) }
+        }
+    }
+}
+
 extension Dictionary where Key == String, Value == String {
 
     /// Build string representation of HTTP parameter dictionary of keys and objects

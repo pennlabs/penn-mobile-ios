@@ -40,6 +40,9 @@ extension PathAtPennNetworkManager {
         let (data, _) = try await URLSession.shared.data(from: PathAtPennNetworkManager.oauthURL)
         let str = try String(data: data, encoding: .utf8).unwrap(orThrow: PathAtPennError.corruptString)
         let matches = str.getMatches(for: "value: \"(.*)\"")
+        if matches.isEmpty {
+            print(str)
+        }
         let token = try matches.first.unwrap(orThrow: PathAtPennError.noTokenFound)
 
         return token
@@ -49,20 +52,35 @@ extension PathAtPennNetworkManager {
 // MARK: - Student Data
 
 extension PathAtPennNetworkManager {
-    struct StudentData: Codable {
-        var reg: [String: [String]]
+    struct StudentData: Decodable {
+        let reg: [String: [String]]
     }
 
-    struct CourseData: Codable {
-        var code: String
-        var no: String
-        var title: String
-        var meetingTimes: String
-        var instr: String
+    struct SectionData: Decodable {
+        let crn: String
+        let meetingTimes: String
+        let start_date: Date
+        let end_date: Date
+    }
+
+    struct CourseData: Decodable {
+        let crn: String
+        let code: String
+        let section: String
+        let title: String
+        let meeting_html: String
+        let instructordetail_html: String
+        let allInGroup: [SectionData]
     }
 
     static private let studentDataURL = URL(string: "https://courses.upenn.edu/api/?page=sisproxy&action=studentdata")!
-    static private let courseSearchURL = URL(string: "https://courses.upenn.edu/api/?page=fose&route=search")!
+    static private let courseDetailsURL = URL(string: "https://courses.upenn.edu/api/?page=fose&route=details")!
+
+    static private let decoder: JSONDecoder = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return JSONDecoder(keyDecodingStrategy: .useDefaultKeys, dateDecodingStrategy: .formatted(formatter))
+    }()
 
     func fetchStudentData() async throws -> StudentData {
         let token = try await getToken()
@@ -88,28 +106,17 @@ extension PathAtPennNetworkManager {
         let jsonString = try matches.first.unwrap(orThrow: PathAtPennError.noStudentData)
         let jsonData = try jsonString.data(using: .utf8).unwrap(orThrow: PathAtPennError.corruptString)
 
-        return try JSONDecoder().decode(StudentData.self, from: jsonData)
+        return try PathAtPennNetworkManager.decoder.decode(StudentData.self, from: jsonData)
     }
 
-    func fetchCourses(srcdb: String, crns: [Int]) async throws -> [CourseData] {
+    func fetchCourse(srcdb: String, crn: String) async throws -> CourseData? {
         struct CourseRequest: Encodable {
-            var other: Other
-            var criteria: [Criteria]
-
-            struct Other: Encodable {
-                var srcdb: String
-            }
-
-            struct Criteria: Encodable {
-                let field = "crn"
-                var value: String
-            }
+            var srcdb: String
+            var group: String
+            var key: String
         }
 
-        let crnString = crns.map { String($0) }.joined(separator: ",")
-        let requestInfo = CourseRequest(
-            other: CourseRequest.Other(srcdb: srcdb),
-            criteria: [CourseRequest.Criteria(value: crnString)])
+        let requestInfo = CourseRequest(srcdb: srcdb, group: "crn:\(crn)", key: "crn:\(crn)")
 
         // Ah, the joys of URL-encoded JSON
         let requestData = try String(data: JSONEncoder().encode(requestInfo), encoding: .utf8).flatMap {
@@ -118,7 +125,7 @@ extension PathAtPennNetworkManager {
             $0.data(using: .utf8)
         }.unwrap(orThrow: PathAtPennError.corruptString)
 
-        var request = URLRequest(url: PathAtPennNetworkManager.courseSearchURL)
+        var request = URLRequest(url: PathAtPennNetworkManager.courseDetailsURL)
         request.httpMethod = "POST"
         request.httpBody = requestData
 
@@ -131,30 +138,23 @@ extension PathAtPennNetworkManager {
             throw PathAtPennError.unexpectedStatus(response.statusCode)
         }
 
-        struct CourseSearchResults: Decodable {
-            var results: [CourseData]
-        }
-
-        return try JSONDecoder().decode(CourseSearchResults.self, from: data).results
+        print(String(data: data, encoding: .utf8)!)
+        return try PathAtPennNetworkManager.decoder.decode(CourseData?.self, from: data)
     }
 
     func fetchCourses() async throws -> [CourseData] {
         let reg = try await fetchStudentData().reg
 
-        return try await withThrowingTaskGroup(of: [CourseData].self) { group in
-            for (srcdb, descriptors) in reg {
-                let crns = descriptors.compactMap {
-                    $0.split(separator: "|").first
-                }.compactMap {
-                    Int($0)
-                }
+        return try await reg.asyncMap {
+            let (srcdb, descriptors) = $0
 
-                group.addTask {
-                    try await self.fetchCourses(srcdb: srcdb, crns: crns)
-                }
+            let crns = descriptors.compactMap {
+                $0.split(separator: "|").first
             }
 
-            return try await group.reduce(into: []) { $0 += $1 }
-        }
+            return try await crns.asyncMap { crn in
+                try await self.fetchCourse(srcdb: srcdb, crn: String(crn))
+            }.compactMap { $0 }
+        }.flatMap { $0 }
     }
 }
