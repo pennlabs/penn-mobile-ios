@@ -138,7 +138,6 @@ extension PathAtPennNetworkManager {
             throw PathAtPennError.unexpectedStatus(response.statusCode)
         }
 
-        print(String(data: data, encoding: .utf8)!)
         return try PathAtPennNetworkManager.decoder.decode(CourseData?.self, from: data)
     }
 
