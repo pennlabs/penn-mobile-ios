@@ -109,33 +109,34 @@ class GenericViewController: UIViewController, Trackable {
 }
 
 class GenericSwiftUIViewController<Content: View>: GenericViewController {
-    open func makeSwiftUIView() -> Content {
+    open var content: Content {
         fatalError("makeSwiftUIView() not implemented")
     }
-    
+
     open var tabTitle: String? {
         nil
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let hostingController = UIHostingController(rootView: CoursesView())
-        
+
+        let hostingController = UIHostingController(rootView: content)
+
         view.backgroundColor = .uiBackground
+        title = tabTitle
         screenName = tabTitle
-        
+
         addChild(hostingController)
         view.addSubview(hostingController.view)
         hostingController.didMove(toParent: self)
-        
+
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         hostingController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         hostingController.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         hostingController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.title = tabTitle
