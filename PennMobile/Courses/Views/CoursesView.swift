@@ -15,7 +15,7 @@ struct WeekView: View {
         let entries = courses.flatMap { course in course.meetingTimes?.map {
             CourseScheduleEntry(course: course, meetingTime: $0)
         } ?? [] }
-        
+
         return ScrollView {
             LazyVStack {
                 ForEach([2, 3, 4, 5, 6, 7, 1], id: \.self) { day in

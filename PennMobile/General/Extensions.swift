@@ -267,7 +267,7 @@ extension Date {
         dateFormatter.dateFormat = "EEEE" // Monday, Friday, etc.
         return dateFormatter.string(from: Date())
     }
-    
+
     static let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
     var dayOfWeek: String {

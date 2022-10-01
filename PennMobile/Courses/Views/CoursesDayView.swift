@@ -16,7 +16,7 @@ struct CourseScheduleEntry {
 struct CoursesDayView: View {
     var day: Int
     var entries: [CourseScheduleEntry]
-    
+
     var body: some View {
         let sortedEntries = entries.sorted {
             // TODO: Find a better way to sort this for accessibility reasons
@@ -28,9 +28,9 @@ struct CoursesDayView: View {
                 return $0.course.crn < $1.course.crn
             }
         }
-        
+
         let title = Date.weekdayArray[day - 1]
-        
+
         return VStack(alignment: .leading, spacing: 8) {
             Text(title).font(.title2).fontWeight(.medium)
             if sortedEntries.isEmpty {
@@ -42,7 +42,7 @@ struct CoursesDayView: View {
             } else {
                 ForEach(Array(sortedEntries.enumerated()), id: \.0) { entry in
                     let course = entry.1.course
-                    
+
                     Text(course.code).fontWeight(.bold) + Text(" - \(course.title)") + Text(" (\(course.section))").foregroundColor(.secondary)
                 }
             }
