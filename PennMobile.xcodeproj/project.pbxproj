@@ -189,6 +189,7 @@
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9928E7999A00CE1638 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9828E7999A00CE1638 /* Course.swift */; };
 		89459B9B28E799AA00CE1638 /* CoursesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9A28E799AA00CE1638 /* CoursesModel.swift */; };
+		89459B9D28E7E8A600CE1638 /* CoursesDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9C28E7E8A600CE1638 /* CoursesDayView.swift */; };
 		89B454DF28E1161B00BC918B /* PathAtPennNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */; };
 		89DCBEC628E791B70029F784 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCBEC528E791B70029F784 /* CoursesViewController.swift */; };
 		97AA806C23D26BC700C23488 /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806723D26BC700C23488 /* DiningCell.swift */; };
@@ -507,6 +508,7 @@
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9828E7999A00CE1638 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		89459B9A28E799AA00CE1638 /* CoursesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesModel.swift; sourceTree = "<group>"; };
+		89459B9C28E7E8A600CE1638 /* CoursesDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayView.swift; sourceTree = "<group>"; };
 		89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAtPennNetworkManager.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		89DCBEC528E791B70029F784 /* CoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
 		97AA806723D26BC700C23488 /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
@@ -1357,6 +1359,7 @@
 		89DCBEC428E791A60029F784 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				89459B9C28E7E8A600CE1638 /* CoursesDayView.swift */,
 				89459B9328E7935E00CE1638 /* CoursesView.swift */,
 				89DCBEC528E791B70029F784 /* CoursesViewController.swift */,
 			);
@@ -2005,6 +2008,7 @@
 				6C6FE1D327B9B8CB0093FD13 /* ProfilePageTableViewCell.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
+				89459B9D28E7E8A600CE1638 /* CoursesDayView.swift in Sources */,
 				217A783B204D97AC004F1227 /* ModularTableView.swift in Sources */,
 				216640CC1EBADCA400746B8E /* Extensions.swift in Sources */,
 				21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */,

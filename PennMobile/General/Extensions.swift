@@ -267,14 +267,15 @@ extension Date {
         dateFormatter.dateFormat = "EEEE" // Monday, Friday, etc.
         return dateFormatter.string(from: Date())
     }
+    
+    static let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
     var dayOfWeek: String {
-        let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
         myCalendar.timeZone = TimeZone(abbreviation: "EST")!
         let myComponents = myCalendar.components(.weekday, from: self)
         let weekDay = myComponents.weekday!
-        return weekdayArray[weekDay-1]
+        return Date.weekdayArray[weekDay-1]
     }
 
     var integerDayOfWeek: Int {
