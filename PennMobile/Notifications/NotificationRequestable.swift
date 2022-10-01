@@ -12,10 +12,11 @@ import SCLAlertView
 
 protocol NotificationRequestable {}
 
-extension NotificationRequestable where Self: UIViewController {
+extension NotificationRequestable {
 
     internal typealias AuthorizedCompletion = (_ granted: Bool) -> Void
 
+    // TO-DO: Remove
     func requestNotification (_ completion: AuthorizedCompletion? = nil) {
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
             if settings.authorizationStatus == .notDetermined {
@@ -59,6 +60,7 @@ extension NotificationRequestable where Self: UIViewController {
         }
     }
 
+    // TO-DO: Remove
     func alertForDecline(_ completion: AuthorizedCompletion?) {
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
         let alertView = SCLAlertView(appearance: appearance)
@@ -81,6 +83,7 @@ extension NotificationRequestable where Self: UIViewController {
         alertView.showSuccess("Turn On Notifications", subTitle: "Go to Settings -> PennMobile -> Notification -> Turn On Notifications")
     }
 
+    // TO-DO: Remove
     func alertForDetermination(_ completion: AuthorizedCompletion?) {
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
         let alertView = SCLAlertView(appearance: appearance)
