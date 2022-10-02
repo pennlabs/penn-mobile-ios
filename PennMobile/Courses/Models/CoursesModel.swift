@@ -14,7 +14,7 @@ class CoursesModel: ObservableObject {
     private static let cacheFileName = "coursesCache"
 
     private func fetchCoursesFromNetwork() async throws -> [Course] {
-        let courseData = try await PathAtPennNetworkManager.instance.fetchCourses()
+        let courseData = try await PathAtPennNetworkManager.instance.fetchStudentCourses()
         return courseData.map { Course($0) }
     }
 

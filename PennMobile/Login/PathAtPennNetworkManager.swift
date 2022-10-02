@@ -141,7 +141,7 @@ extension PathAtPennNetworkManager {
         return try PathAtPennNetworkManager.decoder.decode(CourseData?.self, from: data)
     }
 
-    func fetchCourses() async throws -> [CourseData] {
+    func fetchStudentCourses() async throws -> [CourseData] {
         let reg = try await fetchStudentData().reg
 
         return try await reg.asyncMap {

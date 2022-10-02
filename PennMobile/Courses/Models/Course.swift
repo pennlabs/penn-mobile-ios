@@ -9,52 +9,70 @@
 import Foundation
 import SwiftSoup
 
+private func getTimeInt(pathAtPennString: String) throws -> Int {
+    let time = try Int(pathAtPennString).unwrap(orThrow: Course.ConversionError.invalidTimeString)
+
+    let hour = time / 100
+    guard (0..<24).contains(hour) else {
+        throw Course.ConversionError.invalidTimeString
+    }
+
+    let minute = time % 100
+    guard (0..<60).contains(minute) else {
+        throw Course.ConversionError.invalidTimeString
+    }
+
+    return hour * 60 + minute
+}
+
+/// A time that a course meets.
 struct MeetingTime: Codable {
+    /// Weekday of the meeting time.
+    ///
+    /// 1 corresponds to Sunday, 7 corresponds to Saturday.
     var weekday: Int
-    var startTime: DateComponents
-    var endTime: DateComponents
+
+    /// Time that the meeting time starts, in minutes after midnight.
+    var startTime: Int
+
+    /// Time that the meeting time ends, in minutes after midnight.
+    var endTime: Int
 }
 
 struct Course: Codable {
+    /// Identifier of this course on Path@Penn.
     var crn: String
+
+    /// The course's short code (for example, CIS 1200.)
     var code: String
+
+    /// The course's long title.
     var title: String
+
+    /// The course's section number.
     var section: String
+
+    /// The course's instructors.
     var instructors: [String]
 
+    /// The course's location.
+    ///
+    /// Generally in the format "BUILDING ROOM".
     var location: String?
 
+    /// The start date of the course.
     var startDate: Date?
+
+    /// The end date of the course.
     var endDate: Date?
 
+    /// An array of meeting times for the course.
     var meetingTimes: [MeetingTime]?
 }
 
+// Literally here so SwiftUI is happy
 extension Course: Identifiable {
     var id: String { crn }
-}
-
-private extension DateComponents {
-    init(weekday: Int, pathAtPennString: String) throws {
-        let time = try Int(pathAtPennString).unwrap(orThrow: Course.ConversionError.invalidTimeString)
-
-        let hours = time / 100
-        guard (0..<24).contains(hours) else {
-            throw Course.ConversionError.invalidTimeString
-        }
-
-        let minutes = time % 100
-        guard (0..<60).contains(minutes) else {
-            throw Course.ConversionError.invalidTimeString
-        }
-
-        self.init(
-            calendar: Calendar(identifier: .gregorian),
-            timeZone: TimeZone(identifier: "America/New_York"),
-            hour: hours,
-            minute: minutes,
-            weekday: weekday)
-    }
 }
 
 extension Course {
@@ -63,6 +81,7 @@ extension Course {
         case invalidTimeString
     }
 
+    /// Initializes a course from Path@Penn data.
     init(_ data: PathAtPennNetworkManager.CourseData) {
         crn = data.crn
         code = data.code
@@ -110,8 +129,8 @@ extension Course {
                     let weekday = (dayInt + 2) % 7
 
                     do {
-                        let start = try DateComponents(weekday: weekday, pathAtPennString: time.start_time)
-                        let end = try DateComponents(weekday: weekday, pathAtPennString: time.end_time)
+                        let start = try getTimeInt(pathAtPennString: time.start_time)
+                        let end = try getTimeInt(pathAtPennString: time.end_time)
                         return MeetingTime(weekday: weekday, startTime: start, endTime: end)
                     } catch let error {
                         print("Couldn't parse start/end times: \(error)")

@@ -8,13 +8,29 @@
 
 import SwiftUI
 
+private let colors: [Color] = [.redLight, .orangeLight, .yellowLight, .greenLight, .blueLight, .purpleLight]
+
+/// View for the weekly schedule, assuming courses have been loaded.
 struct WeekView: View {
     var courses: [Course]
 
     var body: some View {
-        let entries = courses.flatMap { course in course.meetingTimes?.map {
-            CourseScheduleEntry(course: course, meetingTime: $0)
-        } ?? [] }
+        var codesToColors = [String: Color]()
+        var colorsUsed = 0
+        let entries = courses.flatMap { course in
+            let color: Color
+            if let theColor = codesToColors[course.code] {
+                color = theColor
+            } else {
+                color = colors[colorsUsed % colors.count]
+                colorsUsed += 1
+                codesToColors[course.code] = color
+            }
+
+            return course.meetingTimes?.map {
+                CourseScheduleEntry(course: course, meetingTime: $0, color: color)
+            } ?? []
+        }
 
         return ScrollView {
             LazyVStack {
@@ -26,6 +42,7 @@ struct WeekView: View {
     }
 }
 
+/// View for the Course Schedule page.
 struct CoursesView: View {
     @EnvironmentObject var coursesModel: CoursesModel
     @State var date = Date()

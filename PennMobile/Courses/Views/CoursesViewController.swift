@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/// Simple wrapper around ``CoursesView``.
 class CoursesViewController: GenericSwiftUIViewController<AnyView> {
     override var content: AnyView {
         AnyView(CoursesView().environmentObject(CoursesModel.shared))

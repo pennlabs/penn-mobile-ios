@@ -108,11 +108,16 @@ class GenericViewController: UIViewController, Trackable {
     }
 }
 
+/// ``GenericViewController`` instance that uses a SwiftUI view for its content.
+///
+/// To use this view controller, subclass and override ``content`` and ``tabTitle``.
 class GenericSwiftUIViewController<Content: View>: GenericViewController {
+    /// Content of the view controller.
     open var content: Content {
         fatalError("makeSwiftUIView() not implemented")
     }
 
+    /// Title of the view controller, displayed in the tab bar and navigation bar.
     open var tabTitle: String? {
         nil
     }
