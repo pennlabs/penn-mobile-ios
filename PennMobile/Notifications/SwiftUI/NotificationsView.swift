@@ -9,14 +9,13 @@
 import SwiftUI
 
 struct NotificationsView: View, NotificationRequestable {
-//    @State var notificationSettings: [NotificationSetting] = []
-    @State var shouldShowError = false
     @State var areNotificationsEnabled = false
     @State var areNotificationsUndetermined = false
     @State var areNotificationsDenied = false
     @Environment(\.dismiss) var dismiss
-    
+
     @StateObject var notificationViewModel = NotificationViewModel.instance
+    @StateObject var shouldShowError = NotificationViewModel.instance
 
     var body: some View {
         Form {
@@ -25,23 +24,23 @@ struct NotificationsView: View, NotificationRequestable {
                     Section(footer: Text($setting.id.description)) {
                         Toggle($setting.id.title, isOn: $setting.enabled)
                             .onChange(of: $setting.enabled.wrappedValue) { value in
-                                requestChange(service: $setting.id.rawValue, toValue: value)
+                                Task.init(operation: { await notificationViewModel.requestChange(service: setting, toValue: value) })
                             }
                     }
                 }
             }
         }.onAppear {
             if !Account.isLoggedIn {
-                shouldShowError = true
+                notificationViewModel.shouldShowError = true
             }
-            #if !targetEnvironment(simulator)
+
             UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { (settings) in
                 if settings.authorizationStatus == .notDetermined {
                     areNotificationsUndetermined = true
-                    shouldShowError = true
+                    notificationViewModel.shouldShowError = true
                 } else if settings.authorizationStatus == .denied {
                     areNotificationsDenied = true
-                    shouldShowError = true
+                    notificationViewModel.shouldShowError = true
                 } else if settings.authorizationStatus == .authorized {
                     areNotificationsEnabled = true
                     DispatchQueue.main.async {
@@ -49,8 +48,7 @@ struct NotificationsView: View, NotificationRequestable {
                     }
                 }
             })
-            #endif
-        }.alert(isPresented: $shouldShowError) {
+        }.alert(isPresented: $notificationViewModel.shouldShowError) {
             showError()
         }.task {
             await notificationViewModel.fetchNotificationSettings()
@@ -99,15 +97,6 @@ extension NotificationsView {
             }
         ))
     }
-
-    func requestChange(service: String, toValue: Bool) {
-        UserDBManager.shared.updateNotificationSetting(service: service, enabled: toValue) { result in
-            if !result {
-                shouldShowError = true
-            }
-        }
-    }
-
 }
 
 struct NotificationsView_Previews: PreviewProvider {
