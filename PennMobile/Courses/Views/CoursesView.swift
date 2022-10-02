@@ -35,7 +35,7 @@ struct WeekView: View {
         }
 
         return ScrollView {
-            LazyVStack {
+            VStack {
                 ForEach([2, 3, 4, 5, 6, 7, 1], id: \.self) { day in
                     CoursesDayView(day: day, entries: entries.filter { $0.meetingTime.weekday == day })
                 }
