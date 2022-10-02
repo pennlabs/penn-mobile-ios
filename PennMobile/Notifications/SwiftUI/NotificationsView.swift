@@ -9,16 +9,18 @@
 import SwiftUI
 
 struct NotificationsView: View, NotificationRequestable {
-    @State var notificationSettings: [NotificationSetting] = []
+//    @State var notificationSettings: [NotificationSetting] = []
     @State var shouldShowError = false
     @State var areNotificationsEnabled = false
     @State var areNotificationsUndetermined = false
     @State var areNotificationsDenied = false
     @Environment(\.dismiss) var dismiss
+    
+    @StateObject var notificationViewModel = NotificationViewModel.instance
 
     var body: some View {
         Form {
-            ForEach($notificationSettings) { $setting in
+            ForEach($notificationViewModel.notificationSettings) { $setting in
                 if NotificationPreference.visibleOptions.contains($setting.id) {
                     Section(footer: Text($setting.id.description)) {
                         Toggle($setting.id.title, isOn: $setting.enabled)
@@ -51,13 +53,7 @@ struct NotificationsView: View, NotificationRequestable {
         }.alert(isPresented: $shouldShowError) {
             showError()
         }.task {
-            UserDBManager.shared.fetchNotificationSettings { result in
-                if let notifSettings = try? result.get() {
-                    notificationSettings = notifSettings
-                } else {
-                    shouldShowError = true
-                }
-            }
+            await notificationViewModel.fetchNotificationSettings()
         }
     }
 }
