@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Manages the fetching of courses.
 class CoursesModel: ObservableObject {
     static let shared = CoursesModel()
 
@@ -18,8 +19,12 @@ class CoursesModel: ObservableObject {
         return courseData.map { Course($0) }
     }
 
+    /// Result of the last fetch. nil if unfetched.
     @Published var coursesResult: Result<[Course], Error>?
 
+    /// Fetches courses from the cache or from the network, and stores the result into ``coursesResult``.
+    /// - Parameter forceNetwork: Whether to force a refresh from the network.
+    /// - Returns: List of fetched courses.
     func fetchCourses(forceNetwork: Bool = false) async throws -> [Course] {
         if let courses = try? coursesResult?.get(), !forceNetwork {
             return courses

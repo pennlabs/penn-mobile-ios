@@ -17,18 +17,20 @@ struct WeekView: View {
     var body: some View {
         var codesToColors = [String: Color]()
         var colorsUsed = 0
-        let entries = courses.flatMap { course in
+        courses.sorted { $0.code < $1.code }.forEach {
             let color: Color
-            if let theColor = codesToColors[course.code] {
+            if let theColor = codesToColors[$0.code] {
                 color = theColor
             } else {
                 color = colors[colorsUsed % colors.count]
                 colorsUsed += 1
-                codesToColors[course.code] = color
+                codesToColors[$0.code] = color
             }
+        }
 
-            return course.meetingTimes?.map {
-                CourseScheduleEntry(course: course, meetingTime: $0, color: color)
+        let entries = courses.flatMap { course in
+            course.meetingTimes?.map {
+                CourseScheduleEntry(course: course, meetingTime: $0, color: codesToColors[course.code]!)
             } ?? []
         }
 
@@ -69,9 +71,7 @@ struct CoursesView: View {
         }.task {
             _ = try? await coursesModel.fetchCourses()
         }.refreshable {
-            Task {
-                _ = try? await coursesModel.fetchCourses(forceNetwork: true)
-            }
+            _ = try? await coursesModel.fetchCourses(forceNetwork: true)
         }.navigationTitle("Course Schedule")
     }
 }
