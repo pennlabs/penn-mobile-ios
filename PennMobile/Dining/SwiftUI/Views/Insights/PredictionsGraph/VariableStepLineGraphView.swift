@@ -76,7 +76,7 @@ struct VariableStepLineGraphView: View {
                                 .font(.caption)
                             }
                             .frame(width: 140)
-                            .offset(x: -70 + 5.5 + ((1.0 - 0.5) * geometry.size.width), y: -6 - geometry.size.height/2)
+                            .offset(x: -70 + 5.5 + 1.65 + ((1.0 - 0.5) * geometry.size.width), y: -6 - geometry.size.height/2)
 
                             GraphEndpointPath(x: 1.0).stroke(
                                 style: StrokeStyle(lineWidth: 2.0, lineCap: .round, lineJoin: .round)
@@ -99,6 +99,7 @@ struct VariableStepLineGraphView: View {
                     if label != xAxisLabels.first { Spacer() }
                     Text(label)
                         .font(.subheadline)
+                        .fixedSize()
                         .opacity(0.5)
                 }
             }
