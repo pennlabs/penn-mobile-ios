@@ -14,19 +14,17 @@ struct NotificationsView: View, NotificationRequestable {
     @State var areNotificationsEnabled = false
     @State var areNotificationsUndetermined = false
     @State var areNotificationsDenied = false
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         Form {
-            if Account.isLoggedIn && areNotificationsEnabled {
-                ForEach($notificationSettings) { $setting in
-                    if let preference = NotificationPreference(rawValue: $setting.id), NotificationPreference.visibleOptions.contains(preference) {
-                        Section(footer: Text(preference.description!)) {
-                            Toggle(preference.title!, isOn: $setting.enabled)
-                                .onChange(of: setting.enabled) { value in
-                                    requestChange(service: $setting.id, toValue: value)
-                                }
-                        }
+            ForEach($notificationSettings) { $setting in
+                if NotificationPreference.visibleOptions.contains($setting.id) {
+                    Section(footer: Text($setting.id.description)) {
+                        Toggle($setting.id.title, isOn: $setting.enabled)
+                            .onChange(of: $setting.enabled.wrappedValue) { value in
+                                requestChange(service: $setting.id.rawValue, toValue: value)
+                            }
                     }
                 }
             }
@@ -73,15 +71,15 @@ extension NotificationsView {
         } else if areNotificationsUndetermined {
             return showNotificationsUndeterminedError()
         }
-        return Alert(title: Text("Unexpected Error"), message: Text("Please make sure you have an internet connection and try again."), dismissButton: .default(Text("Ok"), action: { presentationMode.wrappedValue.dismiss() }))
+        return Alert(title: Text("Unexpected Error"), message: Text("Please make sure you have an internet connection and try again."), dismissButton: .default(Text("Ok"), action: { dismiss() }))
     }
 
     func showLoginError() -> Alert {
-        return Alert(title: Text("Login Required"), message: Text("Please login on the \"More\" tab to access this feature."), dismissButton: .default(Text("Ok"), action: { presentationMode.wrappedValue.dismiss() }))
+        return Alert(title: Text("Login Required"), message: Text("Please login on the \"More\" tab to access this feature."), dismissButton: .default(Text("Ok"), action: { dismiss() }))
     }
 
     func showNotificationsUndeterminedError() -> Alert {
-        return Alert(title: Text("Enable Notifications"), message: Text("Receive monthly dining plan progress updates, laundry alerts, and information about new features."), primaryButton: .default(Text("Don't Allow"), action: { presentationMode.wrappedValue.dismiss() }), secondaryButton: .default(Text("OK"), action: {
+        return Alert(title: Text("Enable Notifications"), message: Text("Receive monthly dining plan progress updates, laundry alerts, and information about new features."), primaryButton: .default(Text("Don't Allow"), action: { dismiss() }), secondaryButton: .default(Text("OK"), action: {
                 registerPushNotification { (granted) in
                     DispatchQueue.main.async {
                         if granted {
@@ -89,7 +87,7 @@ extension NotificationsView {
                             areNotificationsUndetermined = false
                             areNotificationsDenied = false
                         } else {
-                            presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }
                     }
                 }
@@ -98,7 +96,7 @@ extension NotificationsView {
     }
 
     func showNotificationsDeniedError() -> Alert {
-        return Alert(title: Text("Turn On Notifications"), message: Text("Go to Settings -> Notifications -> PennMobile -> Allow Notifications."), primaryButton: .default(Text("Don't Allow"), action: { presentationMode.wrappedValue.dismiss() }), secondaryButton: .default(Text("Allow"), action: {
+        return Alert(title: Text("Turn On Notifications"), message: Text("Go to Settings -> Notifications -> PennMobile -> Allow Notifications."), primaryButton: .default(Text("Don't Allow"), action: { dismiss() }), secondaryButton: .default(Text("Allow"), action: {
                 if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                     UIApplication.shared.open(appSettings)
                 }

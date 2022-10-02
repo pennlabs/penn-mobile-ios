@@ -9,7 +9,7 @@
 import Foundation
 
 struct NotificationSetting: Codable, Identifiable {
-    let id: String
+    let id: NotificationPreference
     var enabled: Bool
 
     enum CodingKeys: String, CodingKey {
@@ -18,7 +18,7 @@ struct NotificationSetting: Codable, Identifiable {
     }
 }
 
-enum NotificationPreference: String {
+enum NotificationPreference: String, Codable {
     case LAUNDRY
     case UNIVERSITY
     case DINING
@@ -35,7 +35,7 @@ enum NotificationPreference: String {
     // Options to be actually shown to the user
     static let visibleOptions: Set<NotificationPreference> = [.LAUNDRY, .UNIVERSITY, .DINING, .GSR_BOOKING, .PENN_MOBILE]
 
-    var title: String? {
+    var title: String {
         switch self {
         case .LAUNDRY: return "Laundry notifications"
         case .UNIVERSITY: return "University notifications"
@@ -43,11 +43,11 @@ enum NotificationPreference: String {
         case .GSR_BOOKING: return "GSR booking notifications"
         case .PENN_MOBILE: return "App update notifications"
         default:
-            return nil
+            return "N/A"
         }
     }
 
-    var description: String? {
+    var description: String {
         switch self {
         case .LAUNDRY:
             return "Notifications about laundry cycles. Tap on a laundry machine with time remaining to set the notification."
@@ -60,7 +60,7 @@ enum NotificationPreference: String {
         case .PENN_MOBILE:
             return "Get notified about major updates to Penn Mobile."
         default:
-            return nil
+            return "N/A"
         }
     }
 }
