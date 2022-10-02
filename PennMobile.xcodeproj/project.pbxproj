@@ -268,6 +268,9 @@
 		EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */; };
 		EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */; };
 		EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */; };
+		F20D93F128E0B86F00930434 /* NotificationsViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20D93F028E0B86F00930434 /* NotificationsViewControllerSwiftUI.swift */; };
+		F20D93F328E0B88800930434 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20D93F228E0B88800930434 /* NotificationsView.swift */; };
+		F20D93F528E0BC0700930434 /* NotificationsSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20D93F428E0BC0700930434 /* NotificationsSetting.swift */; };
 		F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */; };
 		F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */; };
 		F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */; };
@@ -297,6 +300,7 @@
 		F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */; };
 		F2B8C40C252C58E600922D08 /* GSRClosedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B8C40B252C58E600922D08 /* GSRClosedView.swift */; };
 		F2C7E5F5259EE1CA0043A98A /* CourseAlertSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C7E5F4259EE1CA0043A98A /* CourseAlertSettings.swift */; };
+		F2D416C528E9F8C800F50CAB /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D416C428E9F8C800F50CAB /* NotificationViewModel.swift */; };
 		F2DD593D259817EC0085CC22 /* SearchResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DD593C259817EC0085CC22 /* SearchResultsCell.swift */; };
 		F2E3FE242595A99500518961 /* CourseSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E3FE232595A99500518961 /* CourseSection.swift */; };
 		F2F4C92023611EB900816456 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
@@ -597,6 +601,9 @@
 		EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRManageGroupController.swift; sourceTree = "<group>"; };
 		EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworkManager..swift; sourceTree = "<group>"; };
 		EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupUser.swift; sourceTree = "<group>"; };
+		F20D93F028E0B86F00930434 /* NotificationsViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewControllerSwiftUI.swift; sourceTree = "<group>"; };
+		F20D93F228E0B88800930434 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
+		F20D93F428E0BC0700930434 /* NotificationsSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSetting.swift; sourceTree = "<group>"; };
 		F212BE7E23B6ACF100ED46A1 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		F212BE8023B6C77900ED46A1 /* PrivacyPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPreference.swift; sourceTree = "<group>"; };
 		F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreference.swift; sourceTree = "<group>"; };
@@ -629,6 +636,7 @@
 		F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+NotificationExtension.swift"; sourceTree = "<group>"; };
 		F2B8C40B252C58E600922D08 /* GSRClosedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRClosedView.swift; sourceTree = "<group>"; };
 		F2C7E5F4259EE1CA0043A98A /* CourseAlertSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertSettings.swift; sourceTree = "<group>"; };
+		F2D416C428E9F8C800F50CAB /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		F2DD593C259817EC0085CC22 /* SearchResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsCell.swift; sourceTree = "<group>"; };
 		F2E3FE232595A99500518961 /* CourseSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSection.swift; sourceTree = "<group>"; };
 		F2F4C91F23611EB900816456 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -1622,6 +1630,24 @@
 			path = GSRGroups;
 			sourceTree = "<group>";
 		};
+		F20D93EF28E0B83900930434 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				F20D93F028E0B86F00930434 /* NotificationsViewControllerSwiftUI.swift */,
+				F20D93F228E0B88800930434 /* NotificationsView.swift */,
+				F2D416C428E9F8C800F50CAB /* NotificationViewModel.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		F20D93F628E0BC0F00930434 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F20D93F428E0BC0700930434 /* NotificationsSetting.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		F212BE7D23B6ACC800ED46A1 /* Privacy */ = {
 			isa = PBXGroup;
 			children = (
@@ -1638,6 +1664,8 @@
 		F212BE8223B6C88A00ED46A1 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				F20D93F628E0BC0F00930434 /* Model */,
+				F20D93EF28E0B83900930434 /* SwiftUI */,
 				2180D22F2013F3B4008C94CF /* NotificationRequestable.swift */,
 				F212BE8323B6C8A200ED46A1 /* NotificationPreference.swift */,
 				F212BE8723B71C7100ED46A1 /* NotificationsTableViewController.swift */,
@@ -2145,6 +2173,7 @@
 				6CC88D7627B1BF51006896F6 /* DiningLoginNavigationView.swift in Sources */,
 				21D5E07423BCFE0300B331CC /* CoursePrivacyController.swift in Sources */,
 				6C23AF9526E57903002F60F0 /* (null) in Sources */,
+				F2D416C528E9F8C800F50CAB /* NotificationViewModel.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				21ABE2A9223D7DEA00199D29 /* ScheduleLayout.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
@@ -2153,9 +2182,11 @@
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				F2562A262551F6D40021C92F /* CourseAlertSettingsController.swift in Sources */,
+				F20D93F128E0B86F00930434 /* NotificationsViewControllerSwiftUI.swift in Sources */,
 				C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */,
 				F2562A2B255830AB0021C92F /* CourseAlertSettingsCell.swift in Sources */,
 				219F01F91FB8AC22006BBC4E /* RoomSelectionView.swift in Sources */,
+				F20D93F528E0BC0700930434 /* NotificationsSetting.swift in Sources */,
 				21B8BBB622231F9F00EBC1D0 /* Account.swift in Sources */,
 				C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */,
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
@@ -2249,6 +2280,7 @@
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
 				216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */,
 				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,
+				F20D93F328E0B88800930434 /* NotificationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

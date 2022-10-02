@@ -19,14 +19,14 @@ public enum Method {
     case other(method: String)
 }
 
-enum NetworkingError: String, LocalizedError {
+enum NetworkingError: String, Error {
     case noInternet
     case parsingError
     case serverError
     case jsonError = "JSON error"
     case authenticationError = "Unable to authenticate"
     case other
-    var localizedDescription: String { return NSLocalizedString(self.rawValue, comment: "") }
+    var localizedDescription: String { self.rawValue }
 }
 
 extension Method {
