@@ -60,6 +60,7 @@ struct CoursesView: View {
                     // TODO: Present PennLoginController
                     Text("We couldn't load your courses. Try logging out and logging back in.")
                 }
+                .multilineTextAlignment(.center)
                 .foregroundColor(.red)
                 .padding()
             case .some(.success(let courses)):
