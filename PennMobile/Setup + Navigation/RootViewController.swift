@@ -101,18 +101,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
             }
         }
 
-        if shouldShareCourses() {
-            // Share user's courses. Do not fetch previous semesters if the current semester has been fetched.
-            let savedCourses = UserDefaults.standard.getCourses()
-            let fetchCurrentTermOnly = savedCourses?.contains { $0.term == Course.currentTerm } ?? false
-            PennInTouchNetworkManager.instance.getCourses(currentTermOnly: fetchCurrentTermOnly) { (result) in
-                if let courses = try? result.get() {
-                    UserDefaults.standard.saveCourses(courses)
-                    UserDBManager.shared.saveCoursesAnonymously(courses)
-                }
-            }
-        }
-
         UserDBManager.shared.getWhartonStatus { result in
             if let isWharton = try? result.get() {
                 UserDefaults.standard.set(isInWharton: isWharton)

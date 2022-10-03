@@ -268,13 +268,14 @@ extension Date {
         return dateFormatter.string(from: Date())
     }
 
+    static let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
     var dayOfWeek: String {
-        let weekdayArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
         myCalendar.timeZone = TimeZone(abbreviation: "EST")!
         let myComponents = myCalendar.components(.weekday, from: self)
         let weekDay = myComponents.weekday!
-        return weekdayArray[weekDay-1]
+        return Date.weekdayArray[weekDay-1]
     }
 
     var integerDayOfWeek: Int {
@@ -418,6 +419,17 @@ extension Optional {
     func nullUnwrap() -> Any {
         return self == nil ? "null" : self!
     }
+
+    /// Unwraps an optional and throws an error if it is nil.
+    ///
+    /// https://www.avanderlee.com/swift/unwrap-or-throw/
+    func unwrap(orThrow error: Error) throws -> Wrapped {
+        if let self {
+            return self
+        } else {
+            throw error
+        }
+    }
 }
 
 extension UILabel {
@@ -426,6 +438,21 @@ extension UILabel {
         self.adjustsFontSizeToFitWidth = true
         self.minimumScaleFactor = 0.3
         self.numberOfLines = 1
+    }
+}
+
+extension Sequence {
+    /// Maps an array to an array of transformed values, fetched asynchronously in parallel.
+    func asyncMap<T>(_ transform: @escaping (Element) async throws -> T) async rethrows -> [T] {
+        try await withThrowingTaskGroup(of: T.self) { group in
+            forEach { element in
+                group.addTask {
+                    try await transform(element)
+                }
+            }
+
+            return try await group.reduce(into: []) { $0.append($1) }
+        }
     }
 }
 

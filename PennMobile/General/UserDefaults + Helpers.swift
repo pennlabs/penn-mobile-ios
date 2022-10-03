@@ -168,22 +168,6 @@ extension UserDefaults {
 
 // MARK: - Courses
 extension UserDefaults {
-    func saveCourses(_ courses: Set<Course>) {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(courses) {
-            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.courses.rawValue)
-        }
-        synchronize()
-    }
-
-    func getCourses() -> Set<Course>? {
-        let decoder = JSONDecoder()
-        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.courses.rawValue) {
-            return try? decoder.decode(Set<Course>.self, from: decodedData)
-        }
-        return nil
-    }
-
     func clearCourses() {
         removeObject(forKey: UserDefaultsKeys.courses.rawValue)
     }

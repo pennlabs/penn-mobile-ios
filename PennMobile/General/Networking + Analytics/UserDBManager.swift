@@ -213,72 +213,6 @@ extension UserDBManager {
         }
     }
 
-    func saveCourses(_ courses: Set<Course>, accountID: String, _ completion: ((_ success: Bool) -> Void)? = nil) {
-        completion?(true)
-//        let jsonEncoder = JSONEncoder()
-//        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
-//        do {
-//            let url = URL(string: "\(baseUrl)/account/courses")!
-//            var request = URLRequest(url: url)
-//            request.httpMethod = "POST"
-//            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//            let coursesObj = CoursesJSON(accountID: accountID, courses: courses)
-//            let jsonData = try jsonEncoder.encode(coursesObj)
-//            request.httpBody = jsonData
-//
-//            let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
-//                var success = false
-//                if let httpResponse = response as? HTTPURLResponse {
-//                    if httpResponse.statusCode == 200 {
-//                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-//                            let json = JSON(data)
-//                            success = json["success"].boolValue
-//                        }
-//                    } else {
-//                        if let data = data, let _ = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-//                            let json = JSON(data)
-//                            let error = json["error"].stringValue
-//                            print(error)
-//                        }
-//                    }
-//                }
-//                completion?(success)
-//            })
-//            task.resume()
-//        }
-//        catch {
-//            completion?(false)
-//        }
-    }
-
-    func saveCoursesAnonymously(_ courses: Set<Course>, _ completion: ((_ success: Bool) -> Void)? = nil) {
-        let jsonEncoder = JSONEncoder()
-        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
-        do {
-            var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/account/courses/private/save", for: .anonymizedCourseSchedule)
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-            let jsonData = try jsonEncoder.encode(courses)
-            request.httpBody = jsonData
-
-            let task = URLSession.shared.dataTask(with: request, completionHandler: { (_, response, _) in
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
-                        UserDefaults.standard.setLastShareDate(for: .anonymizedCourseSchedule)
-                    }
-                    completion?(httpResponse.statusCode == 200)
-                } else {
-                    completion?(false)
-                }
-            })
-            task.resume()
-        } catch {
-            completion?(false)
-        }
-    }
-
     func deleteAnonymousCourses(_ completion: @escaping (_ success: Bool) -> Void) {
         var request = getAnonymousPrivacyRequest(url: "\(baseUrl)/account/courses/private/delete", for: .anonymizedCourseSchedule)
         request.httpMethod = "POST"
@@ -544,44 +478,6 @@ extension UserDBManager {
         let url = "\(baseUrl)/notifications/register"
         makePostRequestWithAccessToken(url: url, params: [:]) { (_, _, _) in
             completion?()
-        }
-    }
-}
-
-// MARK: - Anonymized Courses
-extension UserDBManager {
-    func saveCourses(_ courses: Set<Course>, _ callback: @escaping (_ success: Bool) -> Void) {
-        guard UserDefaults.standard.getPreference(for: .anonymizedCourseSchedule) else {
-            // We don't have permission! Do not upload anon courses.
-            callback(false)
-            return
-        }
-        let route = "\(baseUrl)/account/courses"
-        let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
-
-        // TODO: Make this uuid string saved somewhere.
-        let codableCourses = CoursesJSON(id: UUID().uuidString, courses: courses)
-
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token, let payload = try? encoder.encode(codableCourses) else {
-                callback(false)
-                return
-            }
-
-            let url = URL(string: route)!
-            var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = payload
-            let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
-                if let httpResponse = response as? HTTPURLResponse {
-                    callback(httpResponse.statusCode == 200)
-                } else {
-                    callback(false)
-                }
-            }
-            task.resume()
         }
     }
 }
