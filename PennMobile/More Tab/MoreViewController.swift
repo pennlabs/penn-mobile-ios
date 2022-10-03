@@ -61,6 +61,8 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         tableView.dataSource = self
         tableView.backgroundColor = UIColor.uiGroupedBackground
         tableView.separatorStyle = .singleLine
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 50
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more-with-icon")
         tableView.tableFooterView = UIView()
@@ -140,14 +142,6 @@ extension MoreViewController {
             }
         }
         return UITableViewCell()
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-    }
-
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
