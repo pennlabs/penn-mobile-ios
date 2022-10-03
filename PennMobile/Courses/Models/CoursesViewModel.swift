@@ -9,8 +9,8 @@
 import Foundation
 
 /// Manages the fetching of courses.
-class CoursesModel: ObservableObject {
-    static let shared = CoursesModel()
+class CoursesViewModel: ObservableObject {
+    static let shared = CoursesViewModel()
 
     private static let cacheFileName = "coursesCache"
 
@@ -30,8 +30,8 @@ class CoursesModel: ObservableObject {
             return courses
         }
 
-        if !forceNetwork && Storage.fileExists(CoursesModel.cacheFileName, in: .caches) {
-            let courses = Storage.retrieve(CoursesModel.cacheFileName, from: .caches, as: [Course].self)
+        if !forceNetwork && Storage.fileExists(CoursesViewModel.cacheFileName, in: .caches) {
+            let courses = Storage.retrieve(CoursesViewModel.cacheFileName, from: .caches, as: [Course].self)
             coursesResult = .success(courses)
             return courses
         }
@@ -39,7 +39,7 @@ class CoursesModel: ObservableObject {
         do {
             let courses = try await fetchCoursesFromNetwork()
             coursesResult = .success(courses)
-            Storage.store(courses, to: .caches, as: CoursesModel.cacheFileName)
+            Storage.store(courses, to: .caches, as: CoursesViewModel.cacheFileName)
             return courses
         } catch let error {
             coursesResult = .failure(error)

@@ -9,17 +9,19 @@
 import Foundation
 import SwiftSoup
 
-private func getTimeInt(pathAtPennString: String) throws -> Int {
-    let time = try Int(pathAtPennString).unwrap(orThrow: Course.ConversionError.invalidTimeString)
+private func getTimeInt(pathAtPennString: String) -> Int? {
+    guard let time = Int(pathAtPennString) else {
+        return nil
+    }
 
     let hour = time / 100
     guard (0..<24).contains(hour) else {
-        throw Course.ConversionError.invalidTimeString
+        return nil
     }
 
     let minute = time % 100
     guard (0..<60).contains(minute) else {
-        throw Course.ConversionError.invalidTimeString
+        return nil
     }
 
     return hour * 60 + minute
@@ -76,11 +78,6 @@ extension Course: Identifiable {
 }
 
 extension Course {
-    enum ConversionError: Error {
-        case invalidWeekday
-        case invalidTimeString
-    }
-
     /// Initializes a course from Path@Penn data.
     init(_ data: PathAtPennNetworkManager.CourseData) {
         crn = data.crn
@@ -88,23 +85,13 @@ extension Course {
         title = data.title
         section = data.section
 
-        do {
-            let instructorHTML = try SwiftSoup.parse(data.instructordetail_html)
-            let divs = try instructorHTML.select("div")
-            instructors = try divs.map { try $0.text(trimAndNormaliseWhitespace: true) }
-        } catch let error {
-            instructors = []
-            print("Couldn't parse instructors: \(error)")
-        }
+        let instructorHTML = try? SwiftSoup.parse(data.instructordetail_html)
+        let divs = try? instructorHTML?.select("div")
+        instructors = (try? divs?.map { try $0.text(trimAndNormaliseWhitespace: true) }) ?? []
 
-        do {
-            let meetingHTML = try SwiftSoup.parse(data.meeting_html)
-            let a = try meetingHTML.select("a").first()
-            location = try a?.text(trimAndNormaliseWhitespace: true)
-        } catch let error {
-            location = nil
-            print("Couldn't parse meeting HTML: \(error)")
-        }
+        let meetingHTML = try? SwiftSoup.parse(data.meeting_html)
+        let a = try? meetingHTML?.select("a").first()
+        location = try? a?.text(trimAndNormaliseWhitespace: true)
 
         struct PathAtPennMeetingTime: Decodable {
             var meet_day: String
@@ -128,14 +115,12 @@ extension Course {
                     }
                     let weekday = (dayInt + 2) % 7
 
-                    do {
-                        let start = try getTimeInt(pathAtPennString: time.start_time)
-                        let end = try getTimeInt(pathAtPennString: time.end_time)
-                        return MeetingTime(weekday: weekday, startTime: start, endTime: end)
-                    } catch let error {
-                        print("Couldn't parse start/end times: \(error)")
+                    guard let start = getTimeInt(pathAtPennString: time.start_time),
+                          let end = getTimeInt(pathAtPennString: time.end_time) else {
                         return nil
                     }
+
+                    return MeetingTime(weekday: weekday, startTime: start, endTime: end)
                 }
             } catch let error {
                 meetingTimes = []

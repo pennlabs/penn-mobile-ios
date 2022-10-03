@@ -40,9 +40,6 @@ extension PathAtPennNetworkManager {
         let (data, _) = try await URLSession.shared.data(from: PathAtPennNetworkManager.oauthURL)
         let str = try String(data: data, encoding: .utf8).unwrap(orThrow: PathAtPennError.corruptString)
         let matches = str.getMatches(for: "value: \"(.*)\"")
-        if matches.isEmpty {
-            print(str)
-        }
         let token = try matches.first.unwrap(orThrow: PathAtPennError.noTokenFound)
 
         return token

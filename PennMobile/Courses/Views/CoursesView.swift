@@ -46,19 +46,22 @@ struct WeekView: View {
 
 /// View for the Course Schedule page.
 struct CoursesView: View {
-    @EnvironmentObject var coursesModel: CoursesModel
+    @EnvironmentObject var coursesViewModel: CoursesViewModel
     @State var date = Date()
 
     var body: some View {
         Group {
-            switch coursesModel.coursesResult {
+            switch coursesViewModel.coursesResult {
             case .none:
                 ProgressView("Loading")
             case .some(.failure):
                 VStack(spacing: 8) {
                     Text("Uh oh!").font(.largeTitle).fontWeight(.bold)
-                    Text("We couldn't load your courses. Try again later.")
-                }.foregroundColor(.red)
+                    // TODO: Present PennLoginController
+                    Text("We couldn't load your courses. Try logging out and logging back in.")
+                }
+                .foregroundColor(.red)
+                .padding()
             case .some(.success(let courses)):
                 WeekView(courses: courses.filter {
                     if let start = $0.startDate, let end = $0.endDate {
@@ -69,9 +72,9 @@ struct CoursesView: View {
                 })
             }
         }.task {
-            _ = try? await coursesModel.fetchCourses()
+            _ = try? await coursesViewModel.fetchCourses()
         }.refreshable {
-            _ = try? await coursesModel.fetchCourses(forceNetwork: true)
+            _ = try? await coursesViewModel.fetchCourses(forceNetwork: true)
         }.navigationTitle("Course Schedule")
     }
 }
