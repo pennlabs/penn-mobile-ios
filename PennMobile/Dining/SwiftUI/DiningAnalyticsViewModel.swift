@@ -89,25 +89,35 @@ class DiningAnalyticsViewModel: ObservableObject {
         }
     }
     func getPredictions(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance) -> (slope: Double, predictedZeroDate: Date, predictedEndBalance: Double) {
-        if firstBalance.date == lastBalance.date {
-            let zeroDate = Calendar.current.date(byAdding: .day, value: 1, to: Date.endOfSemester)!
-            return (Double.infinity, zeroDate, lastBalance.balance)
-        } else if firstBalance.balance == lastBalance.balance {
+        if firstBalance.date == lastBalance.date || firstBalance.balance == lastBalance.balance {
             let zeroDate = Calendar.current.date(byAdding: .day, value: 1, to: Date.endOfSemester)!
             return (Double(0.0), zeroDate, lastBalance.balance)
         } else {
-            let yIntercept = firstBalance.balance
-            var slope = (lastBalance.balance - firstBalance.balance) / Double(Calendar.current.dateComponents([.day], from: firstBalance.date, to: lastBalance.date).day!)
-            let offset = -yIntercept / slope
-            let zeroDate = Calendar.current.date(byAdding: .day, value: Int(offset), to: firstBalance.date)!
-            let diffInDays = Calendar.current.dateComponents([.day], from: firstBalance.date, to: Date.endOfSemester).day!
-            let endBalance = ((slope * Double(diffInDays)) + yIntercept)
+            // This is the slope needed to calculate zeroDate and endBalance
+            var slope = self.getSlope(firstBalance: firstBalance, lastBalance: lastBalance)
+            let zeroDate = self.predictZeroDate(firstBalance: firstBalance, lastBalance: lastBalance, slope: slope)
+            let endBalance = self.predictSemesterEndBalance(firstBalance: firstBalance, lastBalance: lastBalance, slope: slope)
             let fullSemester = firstBalance.date.distance(to: Date.endOfSemester)
             let fullZeroDistance = firstBalance.date.distance(to: zeroDate)
             let deltaX = fullZeroDistance / fullSemester
-            slope = -1 / deltaX // Resetting slope for graph format
+            slope = -1 / deltaX // Resetting slope to different value for graph format
             return (slope, zeroDate, endBalance)
         }
+    }
+    func getSlope(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance) -> Double {
+        let balanceDiff = lastBalance.balance - firstBalance.balance
+        let timeDiff = Double(Calendar.current.dateComponents([.day], from: firstBalance.date, to: lastBalance.date).day!)
+        return balanceDiff / timeDiff
+    }
+    func predictZeroDate(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance, slope: Double) -> Date {
+        let offset = -firstBalance.balance / slope
+        let zeroDate = Calendar.current.date(byAdding: .day, value: Int(offset), to: firstBalance.date)!
+        return zeroDate
+    }
+    func predictSemesterEndBalance(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance, slope: Double) -> Double {
+        let diffInDays = Calendar.current.dateComponents([.day], from: firstBalance.date, to: Date.endOfSemester).day!
+        let endBalance = (slope * Double(diffInDays)) + firstBalance.balance
+        return endBalance
     }
     // Compute axis labels
     func getAxisLabelsYX(from trans: [DiningAnalyticsBalance]) -> ([String], [String]) {

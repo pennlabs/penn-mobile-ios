@@ -31,12 +31,7 @@ extension VariableStepLineGraphView {
                 x: lastDataPoint.x * rect.maxX,
                 y: rect.maxY - (rect.maxY * lastDataPoint.y)
             ))
-            if slope == 0 {
-                path.addLine(to: CGPoint(
-                    x: rect.maxX,
-                    y: rect.maxY - (rect.maxY * lastDataPoint.y)
-                ))
-            } else if slope.isInfinite {
+            if slope.isInfinite {
                 path.addLine(to: CGPoint(
                     x: rect.maxX,
                     y: rect.maxY - (rect.maxY * lastDataPoint.y)
