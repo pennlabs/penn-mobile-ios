@@ -21,7 +21,7 @@ struct VariableStepLineGraphView: View {
     @Binding var xAxisLabels: [String]
     @Binding var yAxisLabels: [String]
     var lineColor: Color
-    @Binding var predictedZeroPoint: PredictionsGraphView.YXDataPoint
+    @Binding var slope: Double
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -54,7 +54,7 @@ struct VariableStepLineGraphView: View {
                                 self.trimEnd = 1.0
                         }
 
-                        PredictionSlopePath(lastDataPoint: self.data.last ?? PredictionsGraphView.YXDataPoint.init(y: 20, x: 20), predictionZeroPoint: self.predictedZeroPoint).stroke(
+                        PredictionSlopePath(lastDataPoint: self.data.last ?? PredictionsGraphView.YXDataPoint.init(y: 20, x: 20), slope: self.slope).stroke(
                             style: StrokeStyle(lineWidth: 2.0, lineCap: .round, lineJoin: .round, dash: [5], dashPhase: 5)
                         )
                             .foregroundColor(.gray)
@@ -76,7 +76,7 @@ struct VariableStepLineGraphView: View {
                                 .font(.caption)
                             }
                             .frame(width: 140)
-                            .offset(x: -70 + 5.5 + ((1.0 - 0.5) * geometry.size.width), y: -6 - geometry.size.height/2)
+                            .offset(x: -70 + 5.5 + 1.65 + ((1.0 - 0.5) * geometry.size.width), y: -6 - geometry.size.height/2)
 
                             GraphEndpointPath(x: 1.0).stroke(
                                 style: StrokeStyle(lineWidth: 2.0, lineCap: .round, lineJoin: .round)
@@ -99,6 +99,7 @@ struct VariableStepLineGraphView: View {
                     if label != xAxisLabels.first { Spacer() }
                     Text(label)
                         .font(.subheadline)
+                        .fixedSize()
                         .opacity(0.5)
                 }
             }

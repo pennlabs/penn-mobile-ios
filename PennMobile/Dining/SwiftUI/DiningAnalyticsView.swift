@@ -46,11 +46,11 @@ struct DiningAnalyticsView: View {
                     .bold()
                 if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
                     CardView {
-                        PredictionsGraphView(type: "dollars", data: dollarXYHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.dollarAxisLabel, predictedZeroPoint: $diningAnalyticsViewModel.predictedDollarZeroPoint)
+                        PredictionsGraphView(type: "dollars", data: dollarXYHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.dollarAxisLabel, slope: $diningAnalyticsViewModel.dollarSlope)
                     }
                     CardView {
                         PredictionsGraphView(type: "swipes", data:
-                                                swipeXYHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.swipeAxisLabel, predictedZeroPoint: $diningAnalyticsViewModel.predictedSwipesZeroPoint)
+                                                swipeXYHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.swipeAxisLabel, slope: $diningAnalyticsViewModel.swipeSlope)
                     }
                     Spacer()
                 }
