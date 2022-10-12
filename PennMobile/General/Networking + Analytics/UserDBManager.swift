@@ -464,8 +464,13 @@ extension UserDBManager {
 // MARK: - Push Notifications
 extension UserDBManager {
     func savePushNotificationDeviceToken(deviceToken: String, _ completion: (() -> Void)? = nil) {
-        let url = "\(baseUrl)/notifications/register"
-        var params: [String: Any] = ["ios_token": deviceToken]
+        let url = "https://pennmobile.org/user/notifications/tokens/"
+        var params: [String: Any] = [
+            "kind": "IOS",
+            "token": deviceToken,
+            "dev": false
+        ]
+        
         #if DEBUG
             params["dev"] = true
         #endif
