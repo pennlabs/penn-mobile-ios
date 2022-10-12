@@ -66,14 +66,6 @@ struct DiningVenueDetailView: View {
                                 .minimumScaleFactor(0.2)
                                 .lineLimit(1)
                         }.opacity(1 - Double(minY)/60)
-
-                        VStack {
-                            DefaultNavigationBar(title: venue.name)
-                                .frame(height: 44 + statusBarHeight)
-                                .opacity(Double(-1/20 * (remain - (64 + statusBarHeight))))
-
-                            Spacer()
-                        }.offset(y: -min(0, minY))
                     }
                     .offset(y: -max(0, minY))
                 }
@@ -108,41 +100,6 @@ struct DiningVenueDetailView: View {
             .onAppear {
                 FirebaseAnalyticsManager.shared.trackScreen("Venue Detail View")
                 diningVM.refreshMenu(for: venue.id)
-            }
-        }
-    }
-}
-
-struct DefaultNavigationBar: View {
-
-    @Environment(\.presentationMode) var presentationMode
-
-    var title: String
-
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
-
-            VStack {
-                Spacer()
-
-                HStack {
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Text("Back")
-                            .frame(width: 75, height: 44, alignment: .center)
-                            .contentShape(Rectangle())
-                    }
-
-                    Spacer()
-                }
-            }
-
-            VStack {
-                Spacer()
-                Text(title)
-                    .frame(height: 44)
             }
         }
     }
