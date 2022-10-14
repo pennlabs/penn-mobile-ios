@@ -7,11 +7,13 @@
 //
 
 import SwiftUI
+import WebKit
 
 struct DiningVenueDetailMenuView: View {
     var menus: [DiningMenu]
     var id: Int
     @State var menuDate = Date()
+    @State private var showMenu = false
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
 
     var body: some View {
@@ -28,7 +30,9 @@ struct DiningVenueDetailMenuView: View {
         //            DiningMenuRow(for: menu)
         //                .transition(.opacity)
         //        }
-        Link(destination: URL(string: DiningVenue.menuUrlDict[id] ?? "https://university-of-pennsylvania.cafebonappetit.com/")!) {
+        Button {
+            showMenu.toggle()
+        } label: {
             CardView {
                 HStack {
                     Text("Menu")
@@ -40,9 +44,12 @@ struct DiningVenueDetailMenuView: View {
                 .padding()
                 .foregroundColor(.blue).font(Font.system(size: 24).weight(.bold))
             }
+            .frame(height: 24)
+            .padding([.top])
         }
-        .frame(height: 24)
-        .padding([.top])
+        .sheet(isPresented: $showMenu) {
+            MenuWebView(url: URL(string: DiningVenue.menuUrlDict[id] ?? "https://university-of-pennsylvania.cafebonappetit.com/")!)
+        }
     }
 }
 
@@ -59,5 +66,15 @@ struct DiningVenueDetailMenuView_Previews: PreviewProvider {
             }.navigationTitle("Dining")
             .padding()
         }
+    }
+}
+
+struct MenuWebView: UIViewRepresentable {
+    let url: URL
+    func makeUIView(context: Context) -> WKWebView {
+        return WKWebView()
+    }
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.load(URLRequest(url: url))
     }
 }
