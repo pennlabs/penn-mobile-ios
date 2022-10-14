@@ -9,13 +9,9 @@
 import Foundation
 
 struct NotificationSetting: Codable, Identifiable {
-    let id: NotificationPreference
+    let id: Int
+    let service: NotificationPreference
     var enabled: Bool
-
-    enum CodingKeys: String, CodingKey {
-        case enabled
-        case id = "service"
-    }
 }
 
 enum NotificationPreference: String, Codable {

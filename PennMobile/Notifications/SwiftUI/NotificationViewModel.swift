@@ -23,7 +23,7 @@ class NotificationViewModel: ObservableObject {
     }
 
     func requestChange(service: NotificationSetting, toValue: Bool) async {
-        UserDBManager.shared.updateNotificationSetting(service: service.id.rawValue, enabled: toValue) { result in
+        UserDBManager.shared.updateNotificationSetting(id: service.id, service: service.service.rawValue, enabled: toValue) { result in
             if !result {
                 self.shouldShowError = true
             }

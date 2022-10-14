@@ -359,16 +359,16 @@ extension UserDBManager {
         }
     }
 
-    func updateNotificationSetting(service: String, enabled: Bool, _ callback: ((_ success: Bool) -> Void)?) {
+    func updateNotificationSetting(id: Int, service: String, enabled: Bool, _ callback: ((_ success: Bool) -> Void)?) {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             guard let token = token, let payload = try? JSONSerialization.data(withJSONObject: ["service": service, "enabled": enabled]) else {
                 callback?(false)
                 return
             }
 
-            let url = URL(string: "https://pennmobile.org/api/user/notifications/settings/")!
+            let url = URL(string: "https://pennmobile.org/api/user/notifications/settings/\(id)/")!
             var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "POST"
+            request.httpMethod = "PATCH"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = payload
 
