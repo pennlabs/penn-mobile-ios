@@ -20,9 +20,9 @@ struct NotificationsView: View, NotificationRequestable {
     var body: some View {
         Form {
             ForEach($notificationViewModel.notificationSettings) { $setting in
-                if NotificationPreference.visibleOptions.contains($setting.id) {
-                    Section(footer: Text($setting.id.description)) {
-                        Toggle($setting.id.title, isOn: $setting.enabled)
+                if NotificationPreference.visibleOptions.contains(setting.service) {
+                    Section(footer: Text(setting.service.description)) {
+                        Toggle(setting.service.title, isOn: $setting.enabled)
                             .onChange(of: $setting.enabled.wrappedValue) { value in
                                 Task.init(operation: { await notificationViewModel.requestChange(service: setting, toValue: value) })
                             }
