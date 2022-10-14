@@ -470,7 +470,7 @@ extension UserDBManager {
             "token": deviceToken,
             "dev": false
         ]
-        
+
         #if DEBUG
             params["dev"] = true
         #endif

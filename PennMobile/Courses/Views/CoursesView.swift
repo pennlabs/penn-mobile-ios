@@ -48,21 +48,26 @@ struct WeekView: View {
 struct CoursesView: View {
     @EnvironmentObject var coursesViewModel: CoursesViewModel
     @State var date = Date()
+    @State var isPresentingLoginSheet = false
 
     var body: some View {
         Group {
             switch coursesViewModel.coursesResult {
             case .none:
                 ProgressView("Loading")
-            case .some(.failure):
+            case .some(.failure(let error)):
                 VStack(spacing: 8) {
                     Text("Uh oh!").font(.largeTitle).fontWeight(.bold)
-                    // TODO: Present PennLoginController
                     Text("We couldn't load your courses. Try logging out and logging back in.")
                 }
                 .multilineTextAlignment(.center)
                 .foregroundColor(.red)
                 .padding()
+                .onAppear {
+                    if case PathAtPennError.noTokenFound = error {
+                        isPresentingLoginSheet = true
+                    }
+                }
             case .some(.success(let courses)):
                 WeekView(courses: courses.filter {
                     if let start = $0.startDate, let end = $0.endDate {
@@ -76,6 +81,14 @@ struct CoursesView: View {
             _ = try? await coursesViewModel.fetchCourses()
         }.refreshable {
             _ = try? await coursesViewModel.fetchCourses(forceNetwork: true)
+        }.sheet(isPresented: $isPresentingLoginSheet) {
+            LabsLoginView { success in
+                if success {
+                    Task {
+                        try? await coursesViewModel.fetchCourses(forceNetwork: true)
+                    }
+                }
+            }
         }.navigationTitle("Course Schedule")
     }
 }
