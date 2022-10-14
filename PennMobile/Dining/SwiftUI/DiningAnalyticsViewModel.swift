@@ -29,7 +29,7 @@ class DiningAnalyticsViewModel: ObservableObject {
     @Published var dollarAxisLabel: ([String], [String]) = ([], [])
     @Published var dollarSlope: Double = 0.0
     @Published var swipeSlope: Double = 0.0
-    
+
     var yIntercept = 0.0
     var slope = 0.0
     let formatter = DateFormatter()
