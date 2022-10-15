@@ -46,7 +46,6 @@ platform :ios do
 
   lane :ci_beta do
     ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
-    xcversion(version: "14.0.2")
     increment_build_number({
       build_number: latest_testflight_build_number(api_key_path: "api_key.json", app_identifier: "org.pennlabs.PennMobile") + 1
     })
