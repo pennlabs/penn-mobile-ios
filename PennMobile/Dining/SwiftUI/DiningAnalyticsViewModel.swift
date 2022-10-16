@@ -47,7 +47,7 @@ class DiningAnalyticsViewModel: ObservableObject {
             Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .documents)
         }
     }
-    func refresh() {
+    func refresh() async {
         guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
             return
         }
@@ -56,13 +56,14 @@ class DiningAnalyticsViewModel: ObservableObject {
             startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
         }
         let startDateStr = formatter.string(from: startDate)
-        DiningAPI.instance.getPastDiningBalances(diningToken: diningToken, startDate: startDateStr) { (balances) in
-            guard let balances = balances else {
-                return
-            }
+        let balances = await DiningAPI.instance.getPastDiningBalances(diningToken: diningToken, startDate: startDateStr)
+        switch balances {
+        case .failure(_):
+            return
+        case .success(let balanceList):
             if startDateStr != self.formatter.string(from: Date()) {
-                let newDollarHistory = balances.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.diningDollars) ?? 0.0)})
-                let newSwipeHistory = balances.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.regularVisits))})
+                let newDollarHistory = balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.diningDollars) ?? 0.0)})
+                let newSwipeHistory = balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.regularVisits))})
                 self.swipeHistory.append(contentsOf: newSwipeHistory)
                 self.dollarHistory.append(contentsOf: newDollarHistory)
                 Storage.store(self.swipeHistory, to: .documents, as: DiningAnalyticsViewModel.swipeHistoryDirectory)

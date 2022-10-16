@@ -93,28 +93,27 @@ extension DiningAPI {
 
 // MARK: Dining Balance
 extension DiningAPI {
-    func getDiningBalance(diningToken: String, _ callback: @escaping (_ balance: DiningBalance?) -> Void) {
+    func getDiningBalance(diningToken: String) async -> Result<DiningBalance, NetworkingError> {
         let url = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/dining/currentBalance")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue(diningToken, forHTTPHeaderField: "x-authorization")
-        let task = URLSession.shared.dataTask(with: request) { (data, response, _ ) in
-            if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let balance = try? decoder.decode(DiningBalance.self, from: data)
-                callback(balance)
-                return
-            }
-            callback(nil)
+        guard let (data, response) = try? await URLSession.shared.data(for: request), let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            return .failure(.serverError)
         }
-        task.resume()
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        if let balance = try? decoder.decode(DiningBalance.self, from: data) {
+            return .success(balance)
+        } else {
+            return .failure(.parsingError)
+        }
     }
 }
 
 // MARK: Past Dining Balances
 extension DiningAPI {
-    func getPastDiningBalances(diningToken: String, startDate: String, _ callback: @escaping (_ balances: [DiningBalance]?) -> Void) {
+    func getPastDiningBalances(diningToken: String, startDate: String) async -> Result<[DiningBalance], NetworkingError> {
         var url = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/dining/pastBalances")!
         let formatter = Date.dayOfMonthFormatter
         let endDate = formatter.string(from: Calendar.current.date(byAdding: .day, value: -1, to: Date().localTime)!)
@@ -124,16 +123,15 @@ extension DiningAPI {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue(diningToken, forHTTPHeaderField: "x-authorization")
-        let task = URLSession.shared.dataTask(with: request) { (data, response, _ ) in
-            if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let balance = try? decoder.decode(PastDiningBalances.self, from: data)
-                callback(balance?.balanceList)
-                return
-            }
-            callback(nil)
+        guard let (data, response) = try? await URLSession.shared.data(for: request), let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            return .failure(.serverError)
         }
-        task.resume()
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        if let decodedBalances = try? decoder.decode(PastDiningBalances.self, from: data) {
+            return .success(decodedBalances.balanceList)
+        } else {
+            return .failure(.parsingError)
+        }
     }
 }

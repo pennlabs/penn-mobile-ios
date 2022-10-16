@@ -31,11 +31,9 @@ struct DiningVenueView: View {
         }
         .task {
             await diningVM.refreshVenues()
+            await diningVM.refreshBalance()
         }
         .navigationBarHidden(false)
-        .onAppear {
-            diningVM.refreshBalance()
-        }
         .listStyle(.plain)
     }
 }
@@ -61,7 +59,7 @@ struct CustomHeader: View {
     }
 
     var body: some View {
-        HStack {
+        ZStack {
             Text(name)
                 .font(.system(size: 21, weight: .semibold))
                 .foregroundColor(.primary)
@@ -73,7 +71,9 @@ struct CustomHeader: View {
                         showMissingDiningTokenAlert = true
                         return
                     }
-                    DiningViewModelSwiftUI.instance.refreshBalance()
+                    Task.init() {
+                        await DiningViewModelSwiftUI.instance.refreshBalance()
+                    }
                 }, label: {
                     Image(systemName: "arrow.counterclockwise")
                 })
