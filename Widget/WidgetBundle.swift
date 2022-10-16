@@ -9,15 +9,11 @@
 import WidgetKit
 import SwiftUI
 
-struct EmptyWidget: Widget {
-    var body: some WidgetConfiguration {
-        EmptyWidgetConfiguration()
-    }
-}
-
 @main
 struct LabsWidgetBundle: WidgetBundle {
     var body: some Widget {
-        EmptyWidget()
+        if #available(iOS 16.1, *) {
+            LaundryLiveActivity()
+        }
     }
 }

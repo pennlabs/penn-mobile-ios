@@ -8,6 +8,7 @@
 
 import Foundation
 import UserNotifications
+import ActivityKit
 
 class LaundryNotificationCenter {
 
@@ -22,6 +23,11 @@ class LaundryNotificationCenter {
     func notifyWithMessage(for machine: LaundryMachine, title: String?, message: String?, completion: @escaping (_ success: Bool) -> Void) {
         let center = UNUserNotificationCenter.current()
         let minutes = machine.timeRemaining
+        
+        if #available(iOS 16.1, *) {
+            _ = try? Activity.request(attributes: LaundryAttributes(machine: machine, dateComplete: Date(timeIntervalSinceNow: TimeInterval(60 * minutes))), contentState: LaundryAttributes.ContentState())
+        }
+        
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             if error != nil {
                 completion(false)
@@ -76,9 +82,25 @@ class LaundryNotificationCenter {
         guard let identifier = identifiers[machine] else { return }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
         identifiers.removeValue(forKey: machine)
+        
+        if #available(iOS 16.1, *) {
+            Activity<LaundryAttributes>.activities.forEach { activity in
+                if activity.attributes.machine.id == machine.id {
+                    Task {
+                        await activity.end(using: nil, dismissalPolicy: .immediate)
+                    }
+                }
+            }
+        }
     }
 
     func isUnderNotification(for machine: LaundryMachine) -> Bool {
         return identifiers[machine] != nil
+    }
+}
+
+extension LaundryMachine {
+    func isUnderNotification() -> Bool {
+        return LaundryNotificationCenter.shared.isUnderNotification(for: self)
     }
 }
