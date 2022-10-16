@@ -185,6 +185,13 @@
 		6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */; };
 		6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */; };
 		8766844128CBE907005CAD32 /* NativeNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8766844028CBE907005CAD32 /* NativeNewsViewController.swift */; };
+		891CCBAB28FC97E800A48903 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 891CCBAA28FC97E800A48903 /* .gitkeep */; };
+		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
+		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
+		8932693A28FC75A5003D4BF9 /* WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932693928FC75A5003D4BF9 /* WidgetBundle.swift */; };
+		8932694028FC75A6003D4BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8932693F28FC75A6003D4BF9 /* Assets.xcassets */; };
+		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 8932694C28FC79FB003D4BF9 /* SwiftyJSON */; };
 		89459B9428E7935E00CE1638 /* CoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9328E7935E00CE1638 /* CoursesView.swift */; };
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9928E7999A00CE1638 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9828E7999A00CE1638 /* Course.swift */; };
@@ -300,6 +307,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8932694228FC75A6003D4BF9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 216640581EBADADA00746B8E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8932693228FC75A5003D4BF9;
+			remoteInfo = WidgetExtension;
+		};
 		F230FB13225809E900760499 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 216640581EBADADA00746B8E /* Project object */;
@@ -316,6 +330,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -509,6 +524,13 @@
 		6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
 		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		8766844028CBE907005CAD32 /* NativeNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeNewsViewController.swift; sourceTree = "<group>"; };
+		891CCBAA28FC97E800A48903 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		8932693928FC75A5003D4BF9 /* WidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBundle.swift; sourceTree = "<group>"; };
+		8932693F28FC75A6003D4BF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8932694128FC75A6003D4BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89459B9328E7935E00CE1638 /* CoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesView.swift; sourceTree = "<group>"; };
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9828E7999A00CE1638 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -643,6 +665,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8932693028FC75A5003D4BF9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */,
+				8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */,
+				8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F230FB0B225809E900760499 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -766,9 +798,11 @@
 				6C392E3727B5BDF20097640B /* Config */,
 				B6B1E089214442A200CCBBCD /* fastlane */,
 				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
+				8932694928FC7991003D4BF9 /* Shared */,
 				216640621EBADADA00746B8E /* PennMobile */,
 				2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */,
 				F2568A672411F20E00561295 /* NotificationServiceExtension */,
+				8932693828FC75A5003D4BF9 /* Widget */,
 				216640611EBADADA00746B8E /* Products */,
 				F5E2CE9A9024AE8E28992A5E /* Pods */,
 				6D2C4E8629C0A2D81734AD99 /* Frameworks */,
@@ -780,6 +814,7 @@
 			children = (
 				216640601EBADADA00746B8E /* PennMobile.app */,
 				F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */,
+				8932693328FC75A5003D4BF9 /* WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1354,8 +1389,28 @@
 			children = (
 				BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */,
 				22D5D1D7F760F28A27C06241 /* libPods-AutomatedScreenshotUITests.a */,
+				8932693428FC75A5003D4BF9 /* WidgetKit.framework */,
+				8932693628FC75A5003D4BF9 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8932693828FC75A5003D4BF9 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				8932693928FC75A5003D4BF9 /* WidgetBundle.swift */,
+				8932693F28FC75A6003D4BF9 /* Assets.xcassets */,
+				8932694128FC75A6003D4BF9 /* Info.plist */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		8932694928FC7991003D4BF9 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				891CCBAA28FC97E800A48903 /* .gitkeep */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		89459B9728E7998D00CE1638 /* Models */ = {
@@ -1755,6 +1810,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8932694328FC75A6003D4BF9 /* PBXTargetDependency */,
 			);
 			name = PennMobile;
 			packageProductDependencies = (
@@ -1768,6 +1824,26 @@
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
 			productType = "com.apple.product-type.application";
+		};
+		8932693228FC75A5003D4BF9 /* WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8932694728FC75A6003D4BF9 /* Build configuration list for PBXNativeTarget "WidgetExtension" */;
+			buildPhases = (
+				8932692F28FC75A5003D4BF9 /* Sources */,
+				8932693028FC75A5003D4BF9 /* Frameworks */,
+				8932693128FC75A5003D4BF9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WidgetExtension;
+			packageProductDependencies = (
+				8932694C28FC79FB003D4BF9 /* SwiftyJSON */,
+			);
+			productName = WidgetExtension;
+			productReference = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		F230FB0D225809E900760499 /* AutomatedScreenshotUITests */ = {
 			isa = PBXNativeTarget;
@@ -1794,7 +1870,7 @@
 		216640581EBADADA00746B8E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
@@ -1809,6 +1885,9 @@
 								enabled = 1;
 							};
 						};
+					};
+					8932693228FC75A5003D4BF9 = {
+						CreatedOnToolsVersion = 14.1;
 					};
 					F230FB0D225809E900760499 = {
 						CreatedOnToolsVersion = 10.1;
@@ -1841,6 +1920,7 @@
 			targets = (
 				2166405F1EBADADA00746B8E /* PennMobile */,
 				F230FB0D225809E900760499 /* AutomatedScreenshotUITests */,
+				8932693228FC75A5003D4BF9 /* WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1852,8 +1932,17 @@
 			files = (
 				6CC88D7327B1BF51006896F6 /* mock_menu.json in Resources */,
 				6CC88D6D27B1BF51006896F6 /* sample-dining-venue.json in Resources */,
+				891CCBAB28FC97E800A48903 /* .gitkeep in Resources */,
 				6C3F194227A32C29007BCB4F /* GoogleService-Info.plist in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8932693128FC75A5003D4BF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8932694028FC75A6003D4BF9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2256,6 +2345,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8932692F28FC75A5003D4BF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8932693A28FC75A5003D4BF9 /* WidgetBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F230FB0A225809E900760499 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2268,6 +2365,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8932694328FC75A6003D4BF9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8932693228FC75A5003D4BF9 /* WidgetExtension */;
+			targetProxy = 8932694228FC75A6003D4BF9 /* PBXContainerItemProxy */;
+		};
 		F230FB14225809E900760499 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2166405F1EBADADA00746B8E /* PennMobile */;
@@ -2398,6 +2500,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6CDC501127B5BCC700698235 /* Development.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
@@ -2434,6 +2537,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6C392E3827B5BE1C0097640B /* Release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
@@ -2460,6 +2564,79 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "Penn Mobile - Distribution";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8932694528FC75A6003D4BF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6CDC501127B5BCC700698235 /* Development.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = navigation;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VU59R57FGM;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 PennLabs. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8932694628FC75A6003D4BF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C392E3827B5BE1C0097640B /* Release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = navigation;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 PennLabs. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2543,6 +2720,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		8932694728FC75A6003D4BF9 /* Build configuration list for PBXNativeTarget "WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8932694528FC75A6003D4BF9 /* Debug */,
+				8932694628FC75A6003D4BF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F230FB15225809E900760499 /* Build configuration list for PBXNativeTarget "AutomatedScreenshotUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2617,6 +2803,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		8932694C28FC79FB003D4BF9 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
 		};
 		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
