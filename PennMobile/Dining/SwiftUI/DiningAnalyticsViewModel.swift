@@ -29,7 +29,7 @@ class DiningAnalyticsViewModel: ObservableObject {
     @Published var dollarAxisLabel: ([String], [String]) = ([], [])
     @Published var dollarSlope: Double = 0.0
     @Published var swipeSlope: Double = 0.0
-    
+
     var yIntercept = 0.0
     var slope = 0.0
     let formatter = DateFormatter()
@@ -56,6 +56,10 @@ class DiningAnalyticsViewModel: ObservableObject {
             startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
         }
         let startDateStr = formatter.string(from: startDate)
+        var planStartDate: Date?
+        DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken) { (startDate) in
+            planStartDate = startDate
+        }
         DiningAPI.instance.getPastDiningBalances(diningToken: diningToken, startDate: startDateStr) { (balances) in
             guard let balances = balances else {
                 return
@@ -72,16 +76,20 @@ class DiningAnalyticsViewModel: ObservableObject {
                   let lastSwipeBalance = self.swipeHistory.last else {
                 return
             }
-            guard let maxDollarBalance = (self.dollarHistory.max { $0.balance < $1.balance }),
-                  let maxSwipeBalance = (self.swipeHistory.max { $0.balance < $1.balance }) else {
+            guard var startDollarBalance = (self.dollarHistory.max { $0.balance < $1.balance }),
+                  var startSwipeBalance = (self.swipeHistory.max { $0.balance < $1.balance }) else {
                 return
             }
-            let dollarPredictions = self.getPredictions(firstBalance: maxDollarBalance, lastBalance: lastDollarBalance)
+            if planStartDate != nil {
+                startDollarBalance = (self.dollarHistory.first { $0.date == planStartDate }) ?? startDollarBalance
+                startSwipeBalance = (self.swipeHistory.first { $0.date == planStartDate }) ?? startSwipeBalance
+            }
+            let dollarPredictions = self.getPredictions(firstBalance: startDollarBalance, lastBalance: lastDollarBalance)
             self.dollarSlope = dollarPredictions.slope
             self.dollarPredictedZeroDate = dollarPredictions.predictedZeroDate
             self.predictedDollarSemesterEndBalance = dollarPredictions.predictedEndBalance
             self.dollarAxisLabel = self.getAxisLabelsYX(from: self.dollarHistory)
-            let swipePredictions = self.getPredictions(firstBalance: maxSwipeBalance, lastBalance: lastSwipeBalance)
+            let swipePredictions = self.getPredictions(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance)
             self.swipeSlope = swipePredictions.slope
             self.swipesPredictedZeroDate = swipePredictions.predictedZeroDate
             self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
