@@ -56,6 +56,7 @@ class DiningAnalyticsViewModel: ObservableObject {
             startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
         }
         let startDateStr = formatter.string(from: startDate)
+        let planStartDate = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
         DiningAPI.instance.getPastDiningBalances(diningToken: diningToken, startDate: startDateStr) { (balances) in
             guard let balances = balances else {
                 return
@@ -78,7 +79,6 @@ class DiningAnalyticsViewModel: ObservableObject {
             }
             let maxDollarBalance = startDollarBalance
             let maxSwipeBalance = startSwipeBalance
-            let planStartDate = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
             switch planStartDate {
             case .success(let date):
                 startDollarBalance = (self.dollarHistory.first { $0.date == date }) ?? startDollarBalance
