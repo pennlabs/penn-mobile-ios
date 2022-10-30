@@ -72,7 +72,12 @@ private let hourFormatter: DateFormatter = {
     formatter.setLocalizedDateFormatFromTemplate("hh")
     return formatter
 }()
-private let hourSize: CGFloat = 48
+private let timeFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.timeZone = timezone
+    formatter.timeStyle = .short
+    return formatter
+}()
 private let textWidth: CGFloat = 40
 
 private func getLineOpacity(time: Int) -> Double {
@@ -85,34 +90,54 @@ private func getLineOpacity(time: Int) -> Double {
     }
 }
 
+private func formatTime(_ time: Int) -> String {
+    let components = DateComponents(calendar: calendar, timeZone: timezone, hour: time / 60, minute: time % 60)
+    guard let date = calendar.date(from: components) else {
+        return ""
+    }
+    return timeFormatter.string(from: date)
+}
+
 /// View that displays a daily schedule of courses.
 struct ScheduleView: View {
     var entries: [CourseScheduleEntry]
+    var minTime: Int?
+    var maxTime: Int?
+    var hourSize: CGFloat = 48
+    var hourLabels = HourLabel.external
+    var showSections = true
+    
+    struct HourLabel: OptionSet {
+        var rawValue: UInt8
+        
+        static let external = HourLabel(rawValue: 1 << 0)
+        static let inline = HourLabel(rawValue: 1 << 1)
+    }
 
     var body: some View {
-        let minTime = Int(floor(Double(entries.map { $0.meetingTime.startTime }.min()!) / 60)) * 60
-        let maxTime = Int(ceil(Double(entries.map { $0.meetingTime.endTime }.max()!) / 60)) * 60
+        let minTime = minTime ?? Int(floor(Double(entries.map { $0.meetingTime.startTime }.min()!) / 60)) * 60
+        let maxTime = maxTime ?? Int(ceil(Double(entries.map { $0.meetingTime.endTime }.max()!) / 60)) * 60
 
         return ZStack(alignment: .top) {
             VStack(spacing: 0) {
                 ForEach(Array(stride(from: minTime, through: maxTime, by: 15)), id: \.self) { time in
                     HStack(spacing: 0) {
-                        Group {
-                            if time % 60 == 0 {
-                                let components = DateComponents(calendar: calendar, timeZone: timezone, hour: time / 60)
-                                if let date = calendar.date(from: components), let str = hourFormatter.string(from: date) {
-                                    Text(str).font(.caption)
+                        if hourLabels.contains(.external) {
+                            Group {
+                                if time % 60 == 0 {
+                                    let components = DateComponents(calendar: calendar, timeZone: timezone, hour: time / 60)
+                                    if let date = calendar.date(from: components), let str = hourFormatter.string(from: date) {
+                                        Text(str).font(.caption)
+                                    } else {
+                                        Spacer()
+                                    }
                                 } else {
                                     Spacer()
                                 }
-                            } else {
-                                Spacer()
-                            }
-                        }.padding(.trailing, 4).frame(width: textWidth, alignment: .trailing)
-
-                        VStack {
-                            Rectangle().fill(Color.primary).frame(height: 1).opacity(getLineOpacity(time: time))
+                            }.padding(.trailing, 4).frame(width: textWidth, alignment: .trailing)
                         }
+                        
+                        Rectangle().fill(Color.primary).frame(height: 1).opacity(getLineOpacity(time: time))
                     }.frame(height: hourSize / 4)
                 }
             }.foregroundColor(.secondary)
@@ -125,11 +150,17 @@ struct ScheduleView: View {
                         (
                             Text(course.code).fontWeight(.medium) + Text(": \(course.title)")
                         ).font(.callout).lineLimit(1)
-                        Spacer(minLength: 8)
-                        Text(course.section).fontWeight(.medium)
+                        if showSections {
+                            Spacer(minLength: 8)
+                            Text(course.section).fontWeight(.medium)
+                        }
                     }.font(.callout)
                     if let location = course.location {
                         Text(location).font(.caption)
+                    }
+                    if hourLabels.contains(.inline) {
+                        Spacer()
+                        Text("\(formatTime(meetingTime.startTime))-\(formatTime(meetingTime.endTime))").font(.caption2)
                     }
                 }
                 .font(.callout)
@@ -139,7 +170,7 @@ struct ScheduleView: View {
                 .frame(height: CGFloat(meetingTime.endTime - meetingTime.startTime) / 60 * hourSize, alignment: .top)
                 .background(entry.color)
                 .cornerRadius(4)
-                .padding(.leading, textWidth)
+                .padding(.leading, hourLabels.contains(.external) ? textWidth : 0)
                 .offset(y: (CGFloat(meetingTime.startTime - minTime) / 60 + 1 / 4 / 2) * hourSize)
             }
         }

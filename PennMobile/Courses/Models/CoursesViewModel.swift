@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftSoup
+import WidgetKit
 
 private func getTimeInt(pathAtPennString: String) -> Int? {
     guard let time = Int(pathAtPennString) else {
@@ -88,8 +89,6 @@ extension Course {
 class CoursesViewModel: ObservableObject {
     static let shared = CoursesViewModel()
 
-    private static let cacheFileName = "coursesCache"
-
     private func fetchCoursesFromNetwork() async throws -> [Course] {
         let courseData = try await PathAtPennNetworkManager.instance.fetchStudentCourses()
         return courseData.map { Course($0) }
@@ -106,16 +105,23 @@ class CoursesViewModel: ObservableObject {
             return courses
         }
 
-        if !forceNetwork && Storage.fileExists(CoursesViewModel.cacheFileName, in: .caches) {
-            let courses = Storage.retrieve(CoursesViewModel.cacheFileName, from: .caches, as: [Course].self)
-            coursesResult = .success(courses)
-            return courses
+        if !forceNetwork && Storage.fileExists(Course.cacheFileName, in: .groupCaches) {
+            do {
+                let courses = try Storage.retrieveThrowing(Course.cacheFileName, from: .groupCaches, as: [Course].self)
+                coursesResult = .success(courses)
+                return courses
+            } catch let error {
+                print("Couldn't load courses from cache: \(error)")
+            }
         }
 
         do {
             let courses = try await fetchCoursesFromNetwork()
             coursesResult = .success(courses)
-            Storage.store(courses, to: .caches, as: CoursesViewModel.cacheFileName)
+            Storage.store(courses, to: .groupCaches, as: Course.cacheFileName)
+            WidgetKind.courseWidgets.forEach {
+                WidgetCenter.shared.reloadTimelines(ofKind: $0)
+            }
             return courses
         } catch let error {
             coursesResult = .failure(error)

@@ -9,31 +9,60 @@
 import WidgetKit
 import SwiftUI
 
+private struct CelebrationView: View {
+    var weekday: Int
+    var hadClassesToday: Bool
+    
+    var text: Text {
+        if weekday == 6 {
+            return Text("It's the weekend! 🥳")
+        } else if weekday == 1 || weekday == 7 {
+            return Text("Enjoy your weekend! 🎉")
+        } else if hadClassesToday {
+            return Text("You have no classes today 🎉")
+        } else {
+            return Text("You have no more classes today 🎉")
+        }
+    }
+    
+    var body: some View {
+        text
+            .fontWeight(.medium)
+            .multilineTextAlignment(.center)
+            .foregroundColor(.secondary)
+    }
+}
+
 private struct CoursesDayWidgetSchedule: View {
     var entry: CoursesEntry
     
+    @Environment(\.widgetFamily) var widgetFamily
+    
+    var isSmall: Bool {
+        widgetFamily == .systemSmall
+    }
+    
     var body: some View {
         Group {
-            if let courses = entry.courses {
+            if let courses = entry.courses?.filterByDate(entry.date), !courses.isEmpty {
                 let scheduleEntries = courses.entries(for: entry.weekday)
                 if scheduleEntries.isEmpty {
-                    Text("You have no classes today 🎉")
-                    .fontWeight(.medium)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.secondary)
+                    CelebrationView(weekday: entry.weekday, hadClassesToday: false)
                 } else if !scheduleEntries.contains(where: {
                     entry.time < $0.meetingTime.endTime
                 }) {
-                    Text("You have no more classes today 🎉")
-                    .fontWeight(.medium)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.secondary)
+                    CelebrationView(weekday: entry.weekday, hadClassesToday: true)
                 } else {
+                    let minTime = scheduleEntries.filter {
+                        entry.time < $0.meetingTime.endTime
+                    }.map { $0.meetingTime.startTime }.min()!
                     Rectangle()
                         .fill(.clear)
                         .overlay(alignment: .top) {
-                            ScheduleView(entries: scheduleEntries)
+                            ScheduleView(entries: scheduleEntries, minTime: minTime - (widgetFamily == .systemLarge ? 0 : 15), maxTime: 24 * 60, hourSize: isSmall ? 64 : 48, hourLabels: isSmall ? .inline : [.inline, .external], showSections: !isSmall)
+                                .privacySensitive()
                         }
+                        .clipShape(Rectangle())
                         
                 }
             } else {
@@ -72,6 +101,20 @@ struct CoursesDayWidgetView: View {
     
     @Environment(\.widgetFamily) var widgetFamily
     
+    var courseCount: Int? {
+        guard let courses = entry.courses?.filterByDate(entry.date), !courses.isEmpty else {
+            return nil
+        }
+        
+        return courses.entries(for: entry.weekday).count
+    }
+    
+    var showCourseCountInSmall: Bool {
+        return entry.courses?.filterByDate(entry.date).entries(for: entry.weekday).contains(where: {
+            entry.time < $0.meetingTime.endTime
+        }) ?? false
+    }
+    
     var body: some View {
         Group {
             switch widgetFamily {
@@ -79,8 +122,11 @@ struct CoursesDayWidgetView: View {
                 VStack {
                     Text("\(entry.date, formatter: CoursesDayWidgetView.dateFormatter)")
                         .fontWeight(.medium)
+                    if let courseCount {
+                        Text("\(courseCount) today").font(.subheadline).foregroundColor(.secondary)
+                    }
                     CoursesDayWidgetSchedule(entry: entry)
-                }
+                }.padding([.horizontal, .top])
             case .systemMedium:
                 HStack(alignment: .top) {
                     VStack {
@@ -89,20 +135,38 @@ struct CoursesDayWidgetView: View {
                             .textCase(.uppercase)
                         Text("\(entry.date, formatter: CoursesDayWidgetView.dateNumberFormatter)")
                             .font(.largeTitle)
-                    }.frame(minWidth: 50, alignment: .leading)
+                        if let courseCount {
+                            Spacer()
+                            Group {
+                                Text("\(courseCount)").fontWeight(.medium).font(.title2)
+                                Text("Today").font(.caption).textCase(.uppercase)
+                            }.foregroundColor(.secondary)
+                        }
+                    }.frame(minWidth: 50, alignment: .leading).padding(.vertical)
                     CoursesDayWidgetSchedule(entry: entry)
-                }
+                }.padding(.horizontal)
             case .systemSmall:
-                CoursesDayWidgetSchedule(entry: entry)
+                let schedule = CoursesDayWidgetSchedule(entry: entry).padding(.horizontal, 8)
+                if let courseCount, showCourseCountInSmall {
+                    schedule
+                    .mask(alignment: .bottom) {
+                        LinearGradient(colors: [.black.opacity(0.1), .black], startPoint: UnitPoint(x: 0.5, y: 1.0), endPoint: UnitPoint(x: 0.5, y: 0.7))
+                    }
+                    .overlay(alignment: .bottom) {
+                        Text("\(courseCount) today").fontWeight(.medium).padding(.bottom, 8)
+                    }
+                } else {
+                    schedule
+                }
             default:
                 Text("Unsupported")
             }
-        }.padding()
+        }
     }
 }
 
 struct CoursesDayWidget: Widget {
-    static let kind = "Courses"
+    static let kind = WidgetKind.coursesDay
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: CoursesDayWidget.kind, provider: CoursesProvider()) { entry in
@@ -125,7 +189,9 @@ struct CoursesDayWidget_Preview: PreviewProvider {
             CoursesDayWidgetView(entry: CoursesEntry(date: Course.calendar.startOfDay(for: Date()), courses: dummyCourses))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
                 .previewDisplayName("Dummy courses")
-            CoursesDayWidgetView(entry: CoursesEntry(date: Date(), courses: []))
+            CoursesDayWidgetView(entry: CoursesEntry(date: Date(), courses: [
+                Course(crn: "234234", code: "sdf", title: "sdf", section: "sdf", instructors: [], startDate: .distantPast, endDate: .distantFuture)
+            ]))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
                 .previewDisplayName("No courses")
             CoursesDayWidgetView(entry: CoursesEntry(date: Date(), courses: nil))

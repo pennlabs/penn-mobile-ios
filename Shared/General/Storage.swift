@@ -20,24 +20,62 @@ public class Storage {
 
         // Data that can be downloaded again or regenerated should be stored in the <Application_Home>/Library/Caches directory. Examples of files you should put in the Caches directory include database cache files and downloadable content, such as that used by magazine, newspaper, and map applications.
         case caches
+        
+        // Data that is user-generated or cannot be recreated, and is shared with other apps and extensions in the Penn Mobile app group.
+        case groupDocuments
+        
+        // Data that can be downloaded again or regenerated, and is shared with other apps and extensions in the Penn Mobile app group.
+        case groupCaches
+        
+        // The search path directory to use.
+        var searchPathDirectory: FileManager.SearchPathDirectory? {
+            switch self {
+            case .documents:
+                return .documentDirectory
+            case .caches:
+                return .cachesDirectory
+            default:
+                return nil
+            }
+        }
+        
+        // Whether the directory belongs to the App Group.
+        var isInGroup: Bool {
+            switch self {
+            case .groupCaches, .groupDocuments:
+                return true
+            default:
+                return false
+            }
+        }
+        
+        // Path components to append to the container directory.
+        var pathComponent: String {
+            switch self {
+            case .caches, .groupCaches:
+                return "Library/Caches"
+            case .documents, .groupDocuments:
+                return "Documents"
+            }
+        }
     }
+    
+    /// App Group ID
+    static let appGroupID = "group.org.pennlabs.PennMobile"
 
     /// Returns URL constructed from specified directory
     static fileprivate func getURL(for directory: Directory) -> URL {
-        var searchPathDirectory: FileManager.SearchPathDirectory
-
-        switch directory {
-        case .documents:
-            searchPathDirectory = .documentDirectory
-        case .caches:
-            searchPathDirectory = .cachesDirectory
-        }
-
-        if let url = FileManager.default.urls(for: searchPathDirectory, in: .userDomainMask).first {
-            return url
+        if directory.isInGroup {
+            if let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID)?.appendingPathComponent(directory.pathComponent) {
+                return url
+            }
         } else {
-            fatalError("Could not create URL for specified directory!")
+            if let url = FileManager.default.urls(for: directory.searchPathDirectory!, in: .userDomainMask).first {
+                return url
+            }
         }
+        
+        fatalError("Could not create URL for specified directory!")
     }
 
     /// Store an encodable struct to the specified directory on disk
@@ -89,6 +127,19 @@ public class Storage {
             clear(directory)
             fatalError("No data at \(url.path)!")
         }
+    }
+    
+    /// Retrieve and convert a struct from a file on disk, throwing if an error occurs.
+    ///
+    /// - Parameters:
+    ///   - fileName: name of the file where struct data is stored
+    ///   - directory: directory where struct data is stored
+    ///   - type: struct type (i.e. Message.self)
+    /// - Returns: decoded struct model(s) of data
+    static func retrieveThrowing<T: Decodable>(_ fileName: String, from directory: Directory, as type: T.Type) throws -> T {
+        let url = getURL(for: directory).appendingPathComponent(fileName, isDirectory: false)
+        let data = try Data(contentsOf: url)
+        return try JSONDecoder().decode(type, from: data)
     }
 
     /// Remove all files at specified directory

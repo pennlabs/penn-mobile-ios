@@ -35,6 +35,8 @@ struct Course: Codable {
         return calendar
     }()
     
+    static let cacheFileName = "coursesCache"
+    
     /// Identifier of this course on Path@Penn.
     var crn: String
 

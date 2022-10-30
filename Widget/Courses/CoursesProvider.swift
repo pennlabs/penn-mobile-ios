@@ -13,7 +13,7 @@ struct CoursesEntry: TimelineEntry {
     let courses: [Course]?
     
     var weekday: Int {
-        Course.calendar.component(.weekday, from: date) + 1
+        Course.calendar.component(.weekday, from: date)
     }
     
     var time: Int {
@@ -22,12 +22,44 @@ struct CoursesEntry: TimelineEntry {
 }
 
 struct CoursesProvider: TimelineProvider {
+    func getCourses() -> [Course]? {
+        do {
+            return try Storage.retrieveThrowing(Course.cacheFileName, from: .groupCaches, as: [Course].self)
+        } catch let error {
+            print("Couldn't load courses: \(error)")
+            return nil
+        }
+    }
+    
     func getSnapshot(in context: Context, completion: @escaping (CoursesEntry) -> Void) {
-        completion(CoursesEntry(date: Date(), courses: nil))
+        completion(CoursesEntry(date: Date(), courses: getCourses()))
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<CoursesEntry>) -> Void) {
-        completion(Timeline(entries: [CoursesEntry(date: Date(), courses: nil)], policy: .never))
+        let today = Course.calendar.startOfDay(for: Date())
+        let tomorrow = Course.calendar.date(byAdding: .day, value: 1, to: today)!
+        let courses = getCourses()
+        let dates: Set<Date>
+        
+        if let courses {
+            let weekday = Course.calendar.component(.weekday, from: today)
+            let times = courses.flatMap {
+                $0.meetingTimes?.filter {
+                    $0.weekday == weekday
+                }.flatMap {
+                    [$0.startTime, $0.endTime]
+                } ?? []
+            }.sorted()
+            dates = Set([today] + times.compactMap {
+                Course.calendar.date(bySettingHour: $0 / 60, minute: $0 % 60, second: 0, of: today)
+            } + [tomorrow])
+        } else {
+            dates = [today, tomorrow]
+        }
+        
+        completion(Timeline(entries: dates.sorted().map {
+            CoursesEntry(date: $0, courses: courses)
+        }, policy: .atEnd))
     }
     
     func placeholder(in context: Context) -> CoursesEntry {

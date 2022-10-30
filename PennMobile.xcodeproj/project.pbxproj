@@ -206,6 +206,9 @@
 		89EA2624290EEEA2008F26CF /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2623290EEEA2008F26CF /* ScheduleView.swift */; };
 		89EA2625290EEEB3008F26CF /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2623290EEEA2008F26CF /* ScheduleView.swift */; };
 		89EA2627290EF0AB008F26CF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F4C91F23611EB900816456 /* Colors.swift */; };
+		89EA2628290F1731008F26CF /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21879B1D1FB3FF54003CF552 /* Storage.swift */; };
+		89EA262A290F18FF008F26CF /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2629290F18FF008F26CF /* WidgetKind.swift */; };
+		89EA262B290F1902008F26CF /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2629290F18FF008F26CF /* WidgetKind.swift */; };
 		97AA806C23D26BC700C23488 /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806723D26BC700C23488 /* DiningCell.swift */; };
 		97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */; };
 		97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFC2100DA1200D3D606 /* BuildingCell.swift */; };
@@ -548,6 +551,8 @@
 		89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayWidget.swift; sourceTree = "<group>"; };
 		89EA2620290EE3E9008F26CF /* CoursesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesProvider.swift; sourceTree = "<group>"; };
 		89EA2623290EEEA2008F26CF /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		89EA2629290F18FF008F26CF /* WidgetKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetKind.swift; sourceTree = "<group>"; };
+		89EA262C290F2667008F26CF /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
 		97AA806723D26BC700C23488 /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
 		97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupIconView.swift; sourceTree = "<group>"; };
 		97E79DFC2100DA1200D3D606 /* BuildingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingCell.swift; sourceTree = SOURCE_ROOT; };
@@ -804,6 +809,7 @@
 		216640571EBADADA00746B8E = {
 			isa = PBXGroup;
 			children = (
+				89EA262C290F2667008F26CF /* WidgetExtension.entitlements */,
 				6C392E3727B5BDF20097640B /* Config */,
 				B6B1E089214442A200CCBBCD /* fastlane */,
 				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
@@ -941,7 +947,6 @@
 				216640C91EBADCA400746B8E /* Extensions.swift */,
 				2190FD341EC625BB00EC683C /* Protocols.swift */,
 				2188C6D6223C7E8300F18D90 /* SecureStore.swift */,
-				21879B1D1FB3FF54003CF552 /* Storage.swift */,
 				21D5E07523BD45F400B331CC /* KeychainAccessible.swift */,
 				21ECADA01F2FFE0600569883 /* UserDefaults + Helpers.swift */,
 			);
@@ -1464,6 +1469,8 @@
 			isa = PBXGroup;
 			children = (
 				F2F4C91F23611EB900816456 /* Colors.swift */,
+				21879B1D1FB3FF54003CF552 /* Storage.swift */,
+				89EA2629290F18FF008F26CF /* WidgetKind.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -2351,6 +2358,7 @@
 				B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				6CAA4B5527A763A400473CC6 /* PollOptionCell.swift in Sources */,
+				89EA262A290F18FF008F26CF /* WidgetKind.swift in Sources */,
 				6CC88D6127B1BF51006896F6 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
@@ -2387,9 +2395,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				89EA2625290EEEB3008F26CF /* ScheduleView.swift in Sources */,
+				89EA2628290F1731008F26CF /* Storage.swift in Sources */,
 				89EA2627290EF0AB008F26CF /* Colors.swift in Sources */,
 				89EA261B290EDF02008F26CF /* Course.swift in Sources */,
 				8932693A28FC75A5003D4BF9 /* WidgetBundle.swift in Sources */,
+				89EA262B290F1902008F26CF /* WidgetKind.swift in Sources */,
 				89EA261E290EDFA7008F26CF /* CoursesDayWidget.swift in Sources */,
 				89EA2622290EE3FD008F26CF /* CoursesProvider.swift in Sources */,
 			);
@@ -2547,7 +2557,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6655;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VU59R57FGM;
@@ -2567,7 +2577,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Penn Mobile - Development";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2620,6 +2630,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = WidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2657,6 +2668,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = WidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
