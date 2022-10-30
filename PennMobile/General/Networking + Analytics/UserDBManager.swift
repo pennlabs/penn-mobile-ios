@@ -46,7 +46,7 @@ class UserDBManager: NSObject, Requestable, SHA256Hashable {
             task.resume()
         }
     }
-
+    
     /**
       Returns a URLRequest configured for making anonymous requests. The server matches either the pennkey-password hash or the private UUID in the DB to find the anonymous account ID, updating the identifiers if the password of device changes.
      
@@ -463,8 +463,44 @@ extension UserDBManager {
 
 // MARK: - Push Notifications
 extension UserDBManager {
-    func savePushNotificationDeviceToken(deviceToken: String, _ completion: (() -> Void)? = nil) {
-        let url = "https://pennmobile.org/user/notifications/tokens/"
+    // Gets the notification token information using the access token.
+    func getNotificationId(_ completion: @escaping (_ result: Result<[GetNotificationID], NetworkingError>) -> Void) {
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            guard let token = token else {
+                completion(.failure(.authenticationError))
+                return
+            }
+            let url = URL(string: "https://pennmobile.org/api/user/notifications/tokens/")!
+            var params: [String: Any] = [
+                "dev": false
+            ]
+
+            #if DEBUG
+                params["dev"] = true
+            #endif
+
+            let request = URLRequest(url: url, accessToken: token)
+            let task = URLSession.shared.dataTask(with: request) { data, _, _ in
+                guard let data = data else {
+                    completion(.failure(.serverError))
+                    return
+                }
+
+                let decoder = JSONDecoder()
+                if let response = try?
+                    decoder.decode([GetNotificationID].self, from: data) {
+                    completion(.success(response))
+                } else {
+                    completion(.failure(.parsingError))
+                }
+            }
+            task.resume()
+        }
+    }
+        
+    // Updates device token.
+    func savePushNotificationDeviceToken(deviceToken: String, notifId: Int, _ completion: (() -> Void)? = nil) {
+        let url = "https://pennmobile.org/api/user/notifications/tokens/\(String(notifId))"
         var params: [String: Any] = [
             "kind": "IOS",
             "token": deviceToken,

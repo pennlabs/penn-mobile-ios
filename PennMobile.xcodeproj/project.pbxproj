@@ -185,6 +185,7 @@
 		6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */; };
 		6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */; };
 		8766844128CBE907005CAD32 /* NativeNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8766844028CBE907005CAD32 /* NativeNewsViewController.swift */; };
+		87FE6479290EE4BE00AFADF6 /* NotificationAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */; };
 		89459B9428E7935E00CE1638 /* CoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9328E7935E00CE1638 /* CoursesView.swift */; };
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9928E7999A00CE1638 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9828E7999A00CE1638 /* Course.swift */; };
@@ -509,6 +510,7 @@
 		6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
 		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		8766844028CBE907005CAD32 /* NativeNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeNewsViewController.swift; sourceTree = "<group>"; };
+		87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPIModel.swift; sourceTree = "<group>"; };
 		89459B9328E7935E00CE1638 /* CoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesView.swift; sourceTree = "<group>"; };
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9828E7999A00CE1638 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -1623,6 +1625,7 @@
 			isa = PBXGroup;
 			children = (
 				F20D93F428E0BC0700930434 /* NotificationsSetting.swift */,
+				87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2154,6 +2157,7 @@
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				F2562A262551F6D40021C92F /* CourseAlertSettingsController.swift in Sources */,
+				87FE6479290EE4BE00AFADF6 /* NotificationAPIModel.swift in Sources */,
 				F20D93F128E0B86F00930434 /* NotificationsViewControllerSwiftUI.swift in Sources */,
 				C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */,
 				F2562A2B255830AB0021C92F /* CourseAlertSettingsCell.swift in Sources */,
