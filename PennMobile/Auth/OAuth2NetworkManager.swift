@@ -81,7 +81,6 @@ extension OAuth2NetworkManager {
         // dev token that expires in a year
         // use until auth is back up
         if let accessToken = self.currentAccessToken, Date() < accessToken.expiration {
-            print(accessToken)
             callback(accessToken)
         } else {
             self.currentAccessToken = nil
