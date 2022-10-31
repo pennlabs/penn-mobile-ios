@@ -172,4 +172,21 @@ public class Storage {
         let url = getURL(for: directory).appendingPathComponent(fileName, isDirectory: false)
         return FileManager.default.fileExists(atPath: url.path)
     }
+    
+    /// Migrate the given file containing the given type to the given directory, if it does not already exist there.
+    /// Returns whether the migration happened and succeeded.
+    static func migrate<T: Codable>(fileName: String, of type: T.Type, from: Storage.Directory, to: Storage.Directory) -> Bool {
+        if !fileExists(fileName, in: to) && fileExists(fileName, in: from) {
+            do {
+                let record = try retrieveThrowing(fileName, from: from, as: type)
+                store(record, to: to, as: fileName)
+                remove(fileName, from: from)
+                return true
+            } catch let error {
+                print("Couldn't migrate \(fileName): \(error)")
+            }
+        }
+        
+        return false
+    }
 }

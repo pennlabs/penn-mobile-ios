@@ -118,26 +118,9 @@ private func convertFromUIBackgroundTaskIdentifier(_ input: UIBackgroundTaskIden
 	return input.rawValue
 }
 
-// Migrate any needed data to the group container.
-// Returns whether the migration happened and succeeded.
-func migrate<T: Codable>(fileName: String, of type: T.Type, from: Storage.Directory, to: Storage.Directory) -> Bool {
-    if !Storage.fileExists(fileName, in: to) && Storage.fileExists(fileName, in: from) {
-        do {
-            let record = try Storage.retrieveThrowing(fileName, from: from, as: type)
-            Storage.store(record, to: to, as: fileName)
-            Storage.remove(fileName, from: from)
-            return true
-        } catch let error {
-            print("Couldn't migrate \(fileName): \(error)")
-        }
-    }
-    
-    return false
-}
-
 // Migration of data to group container
 func migrateDataToGroupContainer() {
-    if migrate(fileName: Course.cacheFileName, of: [Course].self, from: .caches, to: .groupCaches) {
+    if Storage.migrate(fileName: Course.cacheFileName, of: [Course].self, from: .caches, to: .groupCaches) {
         print("Migrated course data.")
         WidgetKind.courseWidgets.forEach {
             WidgetCenter.shared.reloadTimelines(ofKind: $0)
