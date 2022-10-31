@@ -21,7 +21,7 @@ extension WidgetBackgroundType: View {
             }
         }
     }
-    
+
     var prefersGrayscaleContent: Bool {
         self == .gradient
     }

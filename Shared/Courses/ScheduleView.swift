@@ -40,12 +40,12 @@ extension Array where Element == Course {
                 codesToColors[$0.code] = color
             }
         }
-        
+
         return map {
             codesToColors[$0.code]!
         }
     }
-    
+
     func filterByDate(_ date: Date) -> [Course] {
         filter {
             if let start = $0.startDate, let end = $0.endDate {
@@ -55,7 +55,7 @@ extension Array where Element == Course {
             }
         }
     }
-    
+
     func entries(for weekday: Int) -> [CourseScheduleEntry] {
         zip(self, computeColorAssignments()).flatMap {
             let (course, color) = $0
@@ -107,14 +107,14 @@ struct ScheduleView: View {
     var hourLabels = HourLabel.external
     var showSections = true
     var showColors = true
-    
+
     struct HourLabel: OptionSet {
         var rawValue: UInt8
-        
+
         static let external = HourLabel(rawValue: 1 << 0)
         static let inline = HourLabel(rawValue: 1 << 1)
     }
-    
+
     func mask(minTime: Int, maxTime: Int) -> some View {
         return ZStack(alignment: .top) {
             ForEach(entries) { entry in
@@ -152,13 +152,13 @@ struct ScheduleView: View {
                                 }
                             }.padding(.trailing, 4).frame(width: textWidth, alignment: .trailing)
                         }
-                        
+
                         Rectangle().fill(Color.primary).frame(height: 1).opacity(getLineOpacity(time: time))
                     }.frame(height: hourSize / 4)
                 }
             }
             .foregroundColor(.secondary)
-            
+
             // https://www.fivestars.blog/articles/reverse-masks-how-to/
             if showColors {
                 hourLines
@@ -169,7 +169,7 @@ struct ScheduleView: View {
                     }
                 }
             }
-            
+
             ForEach(entries) { entry in
                 let course = entry.course
                 let meetingTime = entry.meetingTime

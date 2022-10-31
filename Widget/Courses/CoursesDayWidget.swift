@@ -13,7 +13,7 @@ extension ConfigureCoursesDayWidgetIntent: ConfigurationRepresenting {
     struct Configuration {
         let background: WidgetBackgroundType
     }
-    
+
     var configuration: Configuration {
         return Configuration(background: background)
     }
@@ -22,7 +22,7 @@ extension ConfigureCoursesDayWidgetIntent: ConfigurationRepresenting {
 private struct CelebrationView: View {
     var weekday: Int
     var hadClassesToday: Bool
-    
+
     var text: Text {
         if weekday == 6 {
             return Text("It's the weekend! 🥳")
@@ -34,7 +34,7 @@ private struct CelebrationView: View {
             return Text("You have no classes today 🎉")
         }
     }
-    
+
     var body: some View {
         text
             .fontWeight(.medium)
@@ -45,14 +45,14 @@ private struct CelebrationView: View {
 
 private struct CoursesDayWidgetSchedule: View {
     var entry: CoursesEntry<ConfigureCoursesDayWidgetIntent.Configuration>
-    
+
     @Environment(\.widgetFamily) var widgetFamily
     @Environment(\.redactionReasons) var redactionReasons
-    
+
     var isSmall: Bool {
         widgetFamily == .systemSmall
     }
-    
+
     var body: some View {
         Group {
             if let courses = entry.courses?.filterByDate(entry.date), !courses.isEmpty {
@@ -74,7 +74,7 @@ private struct CoursesDayWidgetSchedule: View {
                                 .privacySensitive()
                         }
                         .clipShape(Rectangle())
-                        
+
                 }
             } else {
                 (Text("Go to ") + Text("More › Course Schedule").fontWeight(.bold) + Text(" to see your courses on this widget.")).multilineTextAlignment(.center)
@@ -86,7 +86,7 @@ private struct CoursesDayWidgetSchedule: View {
 
 struct CoursesDayWidgetView: View {
     var entry: CoursesEntry<ConfigureCoursesDayWidgetIntent.Configuration>
-    
+
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.calendar = Course.calendar
@@ -95,7 +95,7 @@ struct CoursesDayWidgetView: View {
         formatter.timeStyle = .none
         return formatter
     }()
-    
+
     static let dayOfWeekFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.calendar = Course.calendar
@@ -103,29 +103,29 @@ struct CoursesDayWidgetView: View {
         formatter.setLocalizedDateFormatFromTemplate("EE")
         return formatter
     }()
-    
+
     static let dateNumberFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.setLocalizedDateFormatFromTemplate("dd")
         return formatter
     }()
-    
+
     @Environment(\.widgetFamily) var widgetFamily
-    
+
     var courseCount: Int? {
         guard let courses = entry.courses?.filterByDate(entry.date), !courses.isEmpty else {
             return nil
         }
-        
+
         return courses.entries(for: entry.weekday).count
     }
-    
+
     var showCourseCountInSmall: Bool {
         return entry.courses?.filterByDate(entry.date).entries(for: entry.weekday).contains(where: {
             entry.time < $0.meetingTime.endTime
         }) ?? false
     }
-    
+
     var body: some View {
         Group {
             switch widgetFamily {

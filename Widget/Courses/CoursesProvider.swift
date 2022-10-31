@@ -13,11 +13,11 @@ struct CoursesEntry<Configuration>: TimelineEntry {
     let date: Date
     let courses: [Course]?
     let configuration: Configuration
-    
+
     var weekday: Int {
         Course.calendar.component(.weekday, from: date)
     }
-    
+
     var time: Int {
         Course.calendar.component(.hour, from: date) * 60 + Course.calendar.component(.minute, from: date)
     }
@@ -47,7 +47,7 @@ private func timeline<Configuration>(configuration: Configuration) -> Timeline<C
     let tomorrow = Course.calendar.date(byAdding: .day, value: 1, to: today)!
     let courses = getCourses()
     let dates: Set<Date>
-    
+
     if let courses {
         let weekday = Course.calendar.component(.weekday, from: today)
         let times = courses.flatMap {
@@ -63,7 +63,7 @@ private func timeline<Configuration>(configuration: Configuration) -> Timeline<C
     } else {
         dates = [today, tomorrow]
     }
-    
+
     return Timeline(entries: dates.sorted().map {
         CoursesEntry(date: $0, courses: courses, configuration: configuration)
     }, policy: .atEnd)
@@ -73,11 +73,11 @@ struct CoursesProvider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (CoursesEntry<Void>) -> Void) {
         completion(snapshot(configuration: ()))
     }
-    
+
     func getTimeline(in context: Context, completion: @escaping (Timeline<CoursesEntry<Void>>) -> Void) {
         completion(timeline(configuration: ()))
     }
-    
+
     func placeholder(in context: Context) -> CoursesEntry<Void> {
         CoursesEntry(date: Date(), courses: nil)
     }
@@ -89,11 +89,11 @@ struct IntentCoursesProvider<Intent: INIntent & ConfigurationRepresenting>: Inte
     func getSnapshot(for intent: Intent, in context: Context, completion: @escaping (CoursesEntry<Intent.Configuration>) -> Void) {
         completion(snapshot(configuration: intent.configuration))
     }
-    
+
     func getTimeline(for intent: Intent, in context: Context, completion: @escaping (Timeline<CoursesEntry<Intent.Configuration>>) -> Void) {
         completion(timeline(configuration: intent.configuration))
     }
-    
+
     func placeholder(in context: Context) -> CoursesEntry<Intent.Configuration> {
         CoursesEntry(date: Date(), courses: nil, configuration: placeholderConfiguration)
     }

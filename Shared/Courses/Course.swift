@@ -25,7 +25,7 @@ struct MeetingTime: Codable {
 struct Course: Codable {
     /// Time zone to use in course calculations.
     static let timezone = TimeZone(identifier: "EST")
-    
+
     /// Calendar to use in course calculations.
     static let calendar: Calendar = {
         var calendar = Calendar(identifier: .gregorian)
@@ -34,9 +34,9 @@ struct Course: Codable {
         }
         return calendar
     }()
-    
+
     static let cacheFileName = "coursesCache"
-    
+
     /// Identifier of this course on Path@Penn.
     var crn: String
 
@@ -84,7 +84,7 @@ extension Course {
         let meetingTimes = (1...7).map {
             MeetingTime(weekday: $0, startTime: startHour * 60 + startMinute, endTime: endHour * 60 + endMinute)
         }
-        
+
         self.init(crn: UUID().uuidString,
                   code: code,
                   title: title,

@@ -8,7 +8,7 @@
 
 enum WidgetKind {
     static let coursesDay = "org.pennlabs.PennMobile.widgets.courses.day"
-    
+
     static let courseWidgets = [
         coursesDay
     ]

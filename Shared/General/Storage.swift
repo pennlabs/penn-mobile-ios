@@ -20,13 +20,13 @@ public class Storage {
 
         // Data that can be downloaded again or regenerated should be stored in the <Application_Home>/Library/Caches directory. Examples of files you should put in the Caches directory include database cache files and downloadable content, such as that used by magazine, newspaper, and map applications.
         case caches
-        
+
         // Data that is user-generated or cannot be recreated, and is shared with other apps and extensions in the Penn Mobile app group.
         case groupDocuments
-        
+
         // Data that can be downloaded again or regenerated, and is shared with other apps and extensions in the Penn Mobile app group.
         case groupCaches
-        
+
         // The search path directory to use.
         var searchPathDirectory: FileManager.SearchPathDirectory? {
             switch self {
@@ -38,7 +38,7 @@ public class Storage {
                 return nil
             }
         }
-        
+
         // Whether the directory belongs to the App Group.
         var isInGroup: Bool {
             switch self {
@@ -48,7 +48,7 @@ public class Storage {
                 return false
             }
         }
-        
+
         // Path components to append to the container directory.
         var pathComponent: String {
             switch self {
@@ -59,7 +59,7 @@ public class Storage {
             }
         }
     }
-    
+
     /// App Group ID
     static let appGroupID = "group.org.pennlabs.PennMobile"
 
@@ -74,7 +74,7 @@ public class Storage {
                 return url
             }
         }
-        
+
         fatalError("Could not create URL for specified directory!")
     }
 
@@ -128,7 +128,7 @@ public class Storage {
             fatalError("No data at \(url.path)!")
         }
     }
-    
+
     /// Retrieve and convert a struct from a file on disk, throwing if an error occurs.
     ///
     /// - Parameters:
@@ -172,7 +172,7 @@ public class Storage {
         let url = getURL(for: directory).appendingPathComponent(fileName, isDirectory: false)
         return FileManager.default.fileExists(atPath: url.path)
     }
-    
+
     /// Migrate the given file containing the given type to the given directory, if it does not already exist there.
     /// Returns whether the migration happened and succeeded.
     static func migrate<T: Codable>(fileName: String, of type: T.Type, from: Storage.Directory, to: Storage.Directory) -> Bool {
@@ -186,7 +186,7 @@ public class Storage {
                 print("Couldn't migrate \(fileName): \(error)")
             }
         }
-        
+
         return false
     }
 }

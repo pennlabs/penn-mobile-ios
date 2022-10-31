@@ -10,6 +10,6 @@ import Foundation
 
 protocol ConfigurationRepresenting {
     associatedtype Configuration
-    
+
     var configuration: Configuration { get }
 }
