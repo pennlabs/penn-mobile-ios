@@ -77,7 +77,7 @@ private struct CoursesDayWidgetSchedule: View {
 
                 }
             } else {
-                (Text("Go to ") + Text("More › Course Schedule").fontWeight(.bold) + Text(" to see your courses on this widget.")).multilineTextAlignment(.center)
+                (Text("Go to ") + Text("More › Course Schedule").fontWeight(.bold) + Text(" to use this widget.")).multilineTextAlignment(.center)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
