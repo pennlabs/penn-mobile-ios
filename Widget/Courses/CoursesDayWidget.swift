@@ -47,6 +47,7 @@ private struct CoursesDayWidgetSchedule: View {
     var entry: CoursesEntry<ConfigureCoursesDayWidgetIntent.Configuration>
     
     @Environment(\.widgetFamily) var widgetFamily
+    @Environment(\.redactionReasons) var redactionReasons
     
     var isSmall: Bool {
         widgetFamily == .systemSmall
@@ -76,7 +77,7 @@ private struct CoursesDayWidgetSchedule: View {
                         
                 }
             } else {
-                Text("Open the Penn Mobile app to see your courses on this widget.").multilineTextAlignment(.center)
+                (Text("Go to ") + Text("More › Course Schedule").fontWeight(.bold) + Text(" to see your courses on this widget.")).multilineTextAlignment(.center)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -198,7 +199,7 @@ private let dummyCourses = [
 struct CoursesDayWidget_Preview: PreviewProvider {
     static var previews: some View {
         Group {
-            let configuration = ConfigureCoursesDayWidgetIntent.Configuration(background: .gradient)
+            let configuration = ConfigureCoursesDayWidgetIntent.Configuration(background: .whiteGray)
             CoursesDayWidgetView(entry: CoursesEntry(date: Course.calendar.startOfDay(for: Date()), courses: dummyCourses, configuration: configuration))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
                 .previewDisplayName("Dummy courses")
