@@ -106,6 +106,7 @@ struct ScheduleView: View {
     var hourSize: CGFloat = 48
     var hourLabels = HourLabel.external
     var showSections = true
+    var showColors = true
     
     struct HourLabel: OptionSet {
         var rawValue: UInt8
@@ -113,13 +114,28 @@ struct ScheduleView: View {
         static let external = HourLabel(rawValue: 1 << 0)
         static let inline = HourLabel(rawValue: 1 << 1)
     }
+    
+    func mask(minTime: Int, maxTime: Int) -> some View {
+        return ZStack(alignment: .top) {
+            ForEach(entries) { entry in
+                let meetingTime = entry.meetingTime
+
+                Spacer()
+                .frame(height: CGFloat(meetingTime.endTime - meetingTime.startTime) / 60 * hourSize, alignment: .top)
+                .background(Color.black)
+                .cornerRadius(4)
+                .padding(.leading, hourLabels.contains(.external) ? textWidth : 0)
+                .offset(y: (CGFloat(meetingTime.startTime - minTime) / 60 + 1 / 4 / 2) * hourSize)
+            }
+        }
+    }
 
     var body: some View {
         let minTime = minTime ?? Int(floor(Double(entries.map { $0.meetingTime.startTime }.min()!) / 60)) * 60
         let maxTime = maxTime ?? Int(ceil(Double(entries.map { $0.meetingTime.endTime }.max()!) / 60)) * 60
 
         return ZStack(alignment: .top) {
-            VStack(spacing: 0) {
+            let hourLines = VStack(spacing: 0) {
                 ForEach(Array(stride(from: minTime, through: maxTime, by: 15)), id: \.self) { time in
                     HStack(spacing: 0) {
                         if hourLabels.contains(.external) {
@@ -140,7 +156,20 @@ struct ScheduleView: View {
                         Rectangle().fill(Color.primary).frame(height: 1).opacity(getLineOpacity(time: time))
                     }.frame(height: hourSize / 4)
                 }
-            }.foregroundColor(.secondary)
+            }
+            .foregroundColor(.secondary)
+            
+            // https://www.fivestars.blog/articles/reverse-masks-how-to/
+            if showColors {
+                hourLines
+            } else {
+                hourLines.mask(alignment: .top) {
+                    Rectangle().overlay(alignment: .top) {
+                        mask(minTime: minTime, maxTime: maxTime).blendMode(.destinationOut)
+                    }
+                }
+            }
+            
             ForEach(entries) { entry in
                 let course = entry.course
                 let meetingTime = entry.meetingTime
@@ -168,7 +197,7 @@ struct ScheduleView: View {
                 .padding(.horizontal, 6)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .frame(height: CGFloat(meetingTime.endTime - meetingTime.startTime) / 60 * hourSize, alignment: .top)
-                .background(entry.color)
+                .background(showColors ? entry.color : Color.primary.opacity(0.1))
                 .cornerRadius(4)
                 .padding(.leading, hourLabels.contains(.external) ? textWidth : 0)
                 .offset(y: (CGFloat(meetingTime.startTime - minTime) / 60 + 1 / 4 / 2) * hourSize)

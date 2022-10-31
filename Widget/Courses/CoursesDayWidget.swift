@@ -9,6 +9,16 @@
 import WidgetKit
 import SwiftUI
 
+extension ConfigureCoursesDayWidgetIntent: ConfigurationRepresenting {
+    struct Configuration {
+        let background: WidgetBackgroundType
+    }
+    
+    var configuration: Configuration {
+        return Configuration(background: background)
+    }
+}
+
 private struct CelebrationView: View {
     var weekday: Int
     var hadClassesToday: Bool
@@ -19,9 +29,9 @@ private struct CelebrationView: View {
         } else if weekday == 1 || weekday == 7 {
             return Text("Enjoy your weekend! 🎉")
         } else if hadClassesToday {
-            return Text("You have no classes today 🎉")
-        } else {
             return Text("You have no more classes today 🎉")
+        } else {
+            return Text("You have no classes today 🎉")
         }
     }
     
@@ -34,7 +44,7 @@ private struct CelebrationView: View {
 }
 
 private struct CoursesDayWidgetSchedule: View {
-    var entry: CoursesEntry
+    var entry: CoursesEntry<ConfigureCoursesDayWidgetIntent.Configuration>
     
     @Environment(\.widgetFamily) var widgetFamily
     
@@ -59,7 +69,7 @@ private struct CoursesDayWidgetSchedule: View {
                     Rectangle()
                         .fill(.clear)
                         .overlay(alignment: .top) {
-                            ScheduleView(entries: scheduleEntries, minTime: minTime - (widgetFamily == .systemLarge ? 0 : 15), maxTime: 24 * 60, hourSize: isSmall ? 64 : 48, hourLabels: isSmall ? .inline : [.inline, .external], showSections: !isSmall)
+                            ScheduleView(entries: scheduleEntries, minTime: minTime - (widgetFamily == .systemLarge ? 0 : 15), maxTime: 24 * 60, hourSize: isSmall ? 64 : 48, hourLabels: isSmall ? .inline : [.inline, .external], showSections: !isSmall, showColors: !entry.configuration.background.prefersGrayscaleContent)
                                 .privacySensitive()
                         }
                         .clipShape(Rectangle())
@@ -74,7 +84,7 @@ private struct CoursesDayWidgetSchedule: View {
 }
 
 struct CoursesDayWidgetView: View {
-    var entry: CoursesEntry
+    var entry: CoursesEntry<ConfigureCoursesDayWidgetIntent.Configuration>
     
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -150,7 +160,7 @@ struct CoursesDayWidgetView: View {
                 if let courseCount, showCourseCountInSmall {
                     schedule
                     .mask(alignment: .bottom) {
-                        LinearGradient(colors: [.black.opacity(0.1), .black], startPoint: UnitPoint(x: 0.5, y: 1.0), endPoint: UnitPoint(x: 0.5, y: 0.7))
+                        LinearGradient(colors: [.black.opacity(0.1), .black], startPoint: UnitPoint(x: 0.5, y: 1.0), endPoint: UnitPoint(x: 0.5, y: 0.6))
                     }
                     .overlay(alignment: .bottom) {
                         Text("\(courseCount) today").fontWeight(.medium).padding(.bottom, 8)
@@ -162,14 +172,16 @@ struct CoursesDayWidgetView: View {
                 Text("Unsupported")
             }
         }
+        .background(entry.configuration.background)
     }
 }
 
 struct CoursesDayWidget: Widget {
-    static let kind = WidgetKind.coursesDay
-    
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: CoursesDayWidget.kind, provider: CoursesProvider()) { entry in
+        let provider = IntentCoursesProvider<ConfigureCoursesDayWidgetIntent>(placeholderConfiguration: .init(background: .unknown))
+        return IntentConfiguration(kind: WidgetKind.coursesDay,
+                            intent: ConfigureCoursesDayWidgetIntent.self,
+                            provider: provider) { entry in
             CoursesDayWidgetView(entry: entry)
         }
         .configurationDisplayName("Course Schedule")
@@ -186,15 +198,16 @@ private let dummyCourses = [
 struct CoursesDayWidget_Preview: PreviewProvider {
     static var previews: some View {
         Group {
-            CoursesDayWidgetView(entry: CoursesEntry(date: Course.calendar.startOfDay(for: Date()), courses: dummyCourses))
+            let configuration = ConfigureCoursesDayWidgetIntent.Configuration(background: .gradient)
+            CoursesDayWidgetView(entry: CoursesEntry(date: Course.calendar.startOfDay(for: Date()), courses: dummyCourses, configuration: configuration))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
                 .previewDisplayName("Dummy courses")
             CoursesDayWidgetView(entry: CoursesEntry(date: Date(), courses: [
                 Course(crn: "234234", code: "sdf", title: "sdf", section: "sdf", instructors: [], startDate: .distantPast, endDate: .distantFuture)
-            ]))
+            ], configuration: configuration))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
                 .previewDisplayName("No courses")
-            CoursesDayWidgetView(entry: CoursesEntry(date: Date(), courses: nil))
+            CoursesDayWidgetView(entry: CoursesEntry(date: Date(), courses: nil, configuration: configuration))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
                 .previewDisplayName("Prompt to open")
         }
