@@ -185,8 +185,8 @@ struct CoursesDayWidget: Widget {
                             provider: provider) { entry in
             CoursesDayWidgetView(entry: entry)
         }
-        .configurationDisplayName("Course Schedule")
-        .description("Your upcoming courses, at a glance.")
+        .configurationDisplayName("Today's Classes")
+        .description("Your upcoming classes for the day, at a glance.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
