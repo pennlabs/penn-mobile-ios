@@ -29,9 +29,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         let token = tokenParts.joined()
 
-        UserDBManager.shared.getNotificationId() { result in
+        UserDBManager.shared.getNotificationId { result in
             if let getIdResp = try? result.get()[0] {
-                var notificationId: Int = getIdResp.id
+                let notificationId: Int = getIdResp.id
                 UserDBManager.shared.savePushNotificationDeviceToken(deviceToken: token, notifId: notificationId)
                 }
             }

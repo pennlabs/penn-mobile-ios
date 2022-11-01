@@ -497,10 +497,10 @@ extension UserDBManager {
             task.resume()
         }
     }
-        
+
     // Updates device token.
     func savePushNotificationDeviceToken(deviceToken: String, notifId: Int, _ completion: (() -> Void)? = nil) {
-        let url = "https://pennmobile.org/api/user/notifications/tokens/\(String(notifId))"
+        let url = "https://pennmobile.org/api/user/notifications/tokens/\(notifId)"
         var params: [String: Any] = [
             "kind": "IOS",
             "token": deviceToken,
