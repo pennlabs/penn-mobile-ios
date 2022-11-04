@@ -10,11 +10,11 @@ import Foundation
 
 struct NotificationSetting: Codable, Identifiable {
     let id: Int
-    let service: NotificationPreference
+    let service: NotificationType
     var enabled: Bool
 }
 
-enum NotificationPreference: String, Codable {
+enum NotificationType: String, Codable {
     case LAUNDRY
     case UNIVERSITY
     case DINING
@@ -29,7 +29,7 @@ enum NotificationPreference: String, Codable {
     case CFA
 
     // Options to be actually shown to the user
-    static let visibleOptions: Set<NotificationPreference> = [.LAUNDRY, .UNIVERSITY, .DINING, .GSR_BOOKING, .PENN_MOBILE]
+    static let visibleOptions: Set<NotificationType> = [.LAUNDRY, .UNIVERSITY, .DINING, .GSR_BOOKING, .PENN_MOBILE]
 
     var title: String {
         switch self {
@@ -59,4 +59,36 @@ enum NotificationPreference: String, Codable {
             return "N/A"
         }
     }
+    
+    var actions: [UNNotificationAction] {
+        switch self {
+        case .GSR_BOOKING:
+            let cancelGSRBookingAction = UNNotificationAction(identifier: NotificationAction.cancelGSRBooking.rawValue, title: "Cancel Booking", options: [.foreground])
+            let shareGSRBookingAction = UNNotificationAction(identifier: NotificationAction.shareGSRBooking.rawValue, title: "Share", options: [.foreground])
+            return [cancelGSRBookingAction, shareGSRBookingAction]
+        default:
+            return []
+        }
+    }
+    
+    var category: UNNotificationCategory {
+        switch self {
+        case .GSR_BOOKING:
+            return UNNotificationCategory(
+                identifier: NotificationType.GSR_BOOKING.rawValue,
+                actions: NotificationType.GSR_BOOKING.actions,
+                intentIdentifiers: [],
+                hiddenPreviewsBodyPlaceholder: "Upcoming GSR",
+                options: []
+            )
+        default:
+            return UNNotificationCategory(identifier: "", actions: [], intentIdentifiers: [])
+        }
+    }
+}
+
+enum NotificationAction: String, Codable {
+    case shareGSRBooking
+    case cancelGSRBooking
+    
 }
