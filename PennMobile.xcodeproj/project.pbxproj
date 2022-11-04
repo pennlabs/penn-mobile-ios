@@ -2572,7 +2572,7 @@
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6655;
+				CURRENT_PROJECT_VERSION = 6656;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				EXCLUDED_ARCHS = "";
@@ -2609,8 +2609,9 @@
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 6655;
+				CURRENT_PROJECT_VERSION = 6656;
 				DEVELOPMENT_TEAM = VU59R57FGM;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU59R57FGM;
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
@@ -2629,6 +2630,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "Penn Mobile - Distribution";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Penn Mobile - Distribution";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2647,7 +2649,7 @@
 				CODE_SIGN_ENTITLEMENTS = WidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6656;
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2686,8 +2688,9 @@
 				CODE_SIGN_ENTITLEMENTS = WidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6656;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU59R57FGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
@@ -2705,6 +2708,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Penn Mobile Widget - Distribution";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
