@@ -24,7 +24,7 @@ struct MeetingTime: Codable {
 
 struct Course: Codable {
     /// Time zone to use in course calculations.
-    static let timezone = TimeZone(identifier: "EST")
+    static let timezone = TimeZone(identifier: "America/New_York")
 
     /// Calendar to use in course calculations.
     static let calendar: Calendar = {
