@@ -71,18 +71,19 @@ class DiningViewModelSwiftUI: ObservableObject {
         }
     }
 
-    func refreshBalance() {
+    func refreshBalance() async {
         guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
             UserDefaults.standard.clearDiningBalance()
             self.diningBalance = DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
             return
         }
-        DiningAPI.instance.getDiningBalance(diningToken: diningToken) { balance in
-            guard let balance = balance else {
-                return
-            }
+        let result = await DiningAPI.instance.getDiningBalance(diningToken: diningToken)
+        switch result {
+        case .success(let balance):
             UserDefaults.standard.setdiningBalance(balance)
             self.diningBalance = balance
+        case .failure(_):
+            return
         }
     }
 }
