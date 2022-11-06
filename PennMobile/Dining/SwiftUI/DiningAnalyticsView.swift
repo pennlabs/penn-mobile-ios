@@ -80,7 +80,7 @@ struct DiningAnalyticsView: View {
                 showMissingDiningTokenAlert = true
                 return
             }
-            await diningAnalyticsViewModel.refresh()
+            await diningAnalyticsViewModel.refresh(refreshWidgets: true)
         }
         .alert(isPresented: $showMissingDiningTokenAlert) {
             showCorrectAlert()

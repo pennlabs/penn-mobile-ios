@@ -58,6 +58,7 @@
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>ConfigureCoursesDayWidgetIntent</string>
+		<string>ConfigureDiningAnalyticsHomeWidgetIntent</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
