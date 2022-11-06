@@ -31,6 +31,7 @@ private var cachedSwipes: BalanceDetails<Int>?
 private var cachedDollars: BalanceDetails<Double>?
 private var lastFetchDate: Date?
 private var refreshTask: Task<Void, Never>?
+private let cacheAge: TimeInterval = 15 * 60
 
 private func refresh() async {
     guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
@@ -70,8 +71,9 @@ private func refresh() async {
 }
 
 private func snapshot<Configuration>(configuration: Configuration) async -> DiningAnalyticsEntry<Configuration> {
-    if refreshTask == nil {
+    if refreshTask == nil || (lastFetchDate != nil && Date().timeIntervalSince(lastFetchDate!) > cacheAge) {
         refreshTask = Task {
+            lastFetchDate = Date()
             await refresh()
         }
     }
