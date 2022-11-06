@@ -56,7 +56,7 @@ class DiningAnalyticsViewModel: ObservableObject {
             startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
         }
         let startDateStr = formatter.string(from: startDate)
-        let planStartDate = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
+        let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
         DiningAPI.instance.getPastDiningBalances(diningToken: diningToken, startDate: startDateStr) { (balances) in
             guard let balances = balances else {
                 return
@@ -80,23 +80,21 @@ class DiningAnalyticsViewModel: ObservableObject {
             // If no dining plan found, refresh will return, these are just placeholders
             var startDollarBalance = maxDollarBalance
             var startSwipeBalance = maxSwipeBalance
-            switch planStartDate {
-            case .failure(_):
+            switch planStartDateResult {
+            case .failure:
                 return
-            case .success(let date):
+            case .success(let planStartDate):
                 // If dining plan found, start prediction from the date dining plan started
-                startDollarBalance = (self.dollarHistory.first { $0.date == date }) ?? startDollarBalance
-                startSwipeBalance = (self.swipeHistory.first { $0.date == date }) ?? startSwipeBalance
+                startDollarBalance = (self.dollarHistory.first { $0.date == planStartDate }) ?? startDollarBalance
+                startSwipeBalance = (self.swipeHistory.first { $0.date == planStartDate }) ?? startSwipeBalance
                 // However, it's possible that people recharged dining dollars (swipes maybe?), and if so, predict from this date (most recent increase)
                 for (i, day) in self.dollarHistory.enumerated() {
-                    if i > 0 && Calendar.current.compare(day.date, to: date, toGranularity: .day) == ComparisonResult.orderedDescending
-                        && day.balance > self.dollarHistory[i - 1].balance {
+                    if i != 0 && day.date > planStartDate && day.balance > self.dollarHistory[i - 1].balance {
                         startDollarBalance = day
                     }
                 }
                 for (i, day) in self.swipeHistory.enumerated() {
-                    if i > 0 && Calendar.current.compare(day.date, to: date, toGranularity: .day) == ComparisonResult.orderedDescending
-                        && day.balance > self.swipeHistory[i - 1].balance {
+                    if i != 0 && day.date > planStartDate && day.balance > self.swipeHistory[i - 1].balance {
                         startSwipeBalance = day
                     }
                 }
