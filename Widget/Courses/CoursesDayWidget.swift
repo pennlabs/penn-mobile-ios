@@ -106,7 +106,7 @@ struct CoursesDayWidgetView: View {
 
     static let dateNumberFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.setLocalizedDateFormatFromTemplate("dd")
+        formatter.setLocalizedDateFormatFromTemplate("d")
         return formatter
     }()
 
