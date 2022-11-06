@@ -47,6 +47,7 @@ struct DiningAnalyticsView: View {
                         Text("No Dining\nPlan Found\n ")
                             .multilineTextAlignment(.center)
                             .font(.system(size: 48, weight: .regular))
+                            .foregroundColor(.black)
                             .opacity(0.6)
                     }
                 } else {
