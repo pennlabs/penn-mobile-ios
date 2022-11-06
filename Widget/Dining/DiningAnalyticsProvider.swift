@@ -29,6 +29,7 @@ struct DiningAnalyticsEntry<Configuration>: TimelineEntry {
 
 private var cachedSwipes: BalanceDetails<Int>?
 private var cachedDollars: BalanceDetails<Double>?
+private var lastFetchDate: Date?
 private var refreshTask: Task<Void, Never>?
 
 private func refresh() async {

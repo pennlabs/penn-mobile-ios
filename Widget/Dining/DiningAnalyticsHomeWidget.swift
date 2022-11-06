@@ -58,13 +58,13 @@ extension DiningAnalyticsAuxiliaryStatistic {
     var shortTitle: LocalizedStringKey {
         switch self {
         case .unknown, .projectedEnd:
-            return "extra"
+            return "End of Term Projections"
         case .remaining:
-            return "left"
+            return "Remaining"
         case .used:
-            return "used"
+            return "Used"
         case .total:
-            return "total"
+            return "Total"
         }
     }
 }
@@ -94,59 +94,60 @@ struct DiningAnalyticsHomeWidgetView: View {
     var body: some View {
         Group {
             if let swipes = entry.swipes, let dollars = entry.dollars {
-                HStack(spacing: 5) {
-                    VStack {
-                        Label {
-                            Text("Swipes")
-                        } icon: {
-                            Image(systemName: "creditcard")
-                        }
-                        .labelStyle(IconOnlyLabelStyle())
-                        .foregroundColor(swipeColor)
-                        .frame(height: iconHeight)
-                        .unredacted()
-                        MeterView(current: Double(swipes.used), maximum: Double(swipes.total), style: swipeColor) {
-                            VStack {
-                                Text("\(entry.configuration.meterType.getMetric(in: swipes))").fontWeight(.bold).multilineTextAlignment(.center).privacySensitive()
-                                Text(entry.configuration.meterType.subtitle).font(.caption2)
-                            }
-                        }
-                        .frame(width: meterSize, height: meterSize)
+                VStack {
+                    HStack(spacing: 5) {
                         VStack {
-                            Text("\(entry.configuration.auxiliaryStatistic.getMetric(in: swipes))").lineLimit(1).font(.subheadline).privacySensitive()
-                            Text(entry.configuration.auxiliaryStatistic.shortTitle).font(.caption2).foregroundColor(.secondary)
-                        }
-                    }
-                    VStack {
-                        Label {
-                            Text("Dining Dollars")
-                        } icon: {
-                            Image(systemName: "dollarsign")
-                        }
-                        .labelStyle(IconOnlyLabelStyle())
-                        .foregroundColor(dollarColor)
-                        .frame(height: iconHeight)
-                        .unredacted()
-                        MeterView(current: Double(dollars.used), maximum: Double(dollars.total), style: dollarColor) {
-                            VStack {
-                                let metric = entry.configuration.meterType.getMetric(in: dollars)
-                                if metric < 1000 {
-                                    (
-                                        Text("\(Int(metric))").fontWeight(.bold) +
-                                        Text(".\(String(format: "%02d", Int(metric * 100) % 100))").fontWeight(.medium).font(.caption2)
-                                    ).lineLimit(1).privacySensitive()
-                                } else {
-                                    Text("\(Int(metric))").fontWeight(.bold).multilineTextAlignment(.center).privacySensitive()
+                            Label {
+                                Text("Swipes")
+                            } icon: {
+                                Image(systemName: "creditcard")
+                            }
+                            .labelStyle(IconOnlyLabelStyle())
+                            .foregroundColor(swipeColor)
+                            .frame(height: iconHeight)
+                            .unredacted()
+                            MeterView(current: Double(swipes.used), maximum: Double(swipes.total), style: swipeColor) {
+                                VStack {
+                                    Text("\(entry.configuration.meterType.getMetric(in: swipes))").fontWeight(.bold).multilineTextAlignment(.center).privacySensitive()
+                                    Text(entry.configuration.meterType.subtitle).font(.caption2)
                                 }
-                                Text(entry.configuration.meterType.subtitle).font(.caption2)
                             }
+                            .frame(width: meterSize, height: meterSize)
                         }
-                        .frame(width: meterSize, height: meterSize)
                         VStack {
-                            Text("\(entry.configuration.auxiliaryStatistic.getMetric(in: dollars), format: .currency(code: "USD"))").lineLimit(1).font(.subheadline).privacySensitive()
-                            Text(entry.configuration.auxiliaryStatistic.shortTitle).font(.caption2).foregroundColor(.secondary)
+                            Label {
+                                Text("Dining Dollars")
+                            } icon: {
+                                Image(systemName: "dollarsign")
+                            }
+                            .labelStyle(IconOnlyLabelStyle())
+                            .foregroundColor(dollarColor)
+                            .frame(height: iconHeight)
+                            .unredacted()
+                            MeterView(current: Double(dollars.used), maximum: Double(dollars.total), style: dollarColor) {
+                                VStack {
+                                    let metric = entry.configuration.meterType.getMetric(in: dollars)
+                                    if metric < 1000 {
+                                        (
+                                            Text("\(Int(metric))").fontWeight(.bold) +
+                                            Text(".\(String(format: "%02d", Int(metric * 100) % 100))").fontWeight(.medium).font(.caption2)
+                                        ).lineLimit(1).privacySensitive()
+                                    } else {
+                                        Text("\(Int(metric))").fontWeight(.bold).multilineTextAlignment(.center).privacySensitive()
+                                    }
+                                    Text(entry.configuration.meterType.subtitle).font(.caption2)
+                                }
+                            }
+                            .frame(width: meterSize, height: meterSize)
                         }
                     }
+                    .padding(.bottom, 4)
+                    Text(entry.configuration.auxiliaryStatistic.shortTitle).font(.caption2).foregroundColor(.secondary).unredacted()
+                    HStack(spacing: 5) {
+                        let swipes = entry.configuration.auxiliaryStatistic.getMetric(in: swipes)
+                        let dollars = entry.configuration.auxiliaryStatistic.getMetric(in: dollars)
+                        Text("\(swipes) \(swipes == 1 ? "swipe" : "swipes"), \(dollars, format: .currency(code: "USD"))").fontWeight(.medium).font(.caption).privacySensitive()
+                    }.multilineTextAlignment(.center)
                 }
             } else {
                 (Text("Go to ") + Text("Dining › Analytics").fontWeight(.bold) + Text(" to use this widget.")).multilineTextAlignment(.center).padding()
@@ -178,7 +179,7 @@ struct DiningAnalyticsHomeWidget_Preview: PreviewProvider {
             DiningAnalyticsHomeWidgetView(entry: DiningAnalyticsEntry(date: Date(), configuration: configuration, swipes: BalanceDetails(remaining: 20, total: 100, projectedEnd: 5), dollars: BalanceDetails(remaining: 206.29, total: 250, projectedEnd: 10)))
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
                 .previewDisplayName("Average user")
-            DiningAnalyticsHomeWidgetView(entry: DiningAnalyticsEntry(date: Date(), configuration: configuration, swipes: BalanceDetails(remaining: 0, total: 100, projectedEnd: 0), dollars: BalanceDetails(remaining: 0, total: 250, projectedEnd: 0)))
+            DiningAnalyticsHomeWidgetView(entry: DiningAnalyticsEntry(date: Date(), configuration: configuration, swipes: BalanceDetails(remaining: 0, total: 100, projectedEnd: 1), dollars: BalanceDetails(remaining: 0, total: 250, projectedEnd: 0)))
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
                 .previewDisplayName("Overspender")
             DiningAnalyticsHomeWidgetView(entry: DiningAnalyticsEntry(date: Date(), configuration: configuration, swipes: BalanceDetails(remaining: 1000, total: 100, projectedEnd: 10000), dollars: BalanceDetails(remaining: 1000, total: 250, projectedEnd: 1000)))
