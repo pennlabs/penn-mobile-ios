@@ -113,7 +113,7 @@ struct DiningAnalyticsHomeWidgetView: View {
                         }
                         .frame(width: meterSize, height: meterSize)
                         VStack {
-                            Text("\(entry.configuration.auxiliaryStatistic.getMetric(in: swipes))").lineLimit(1).font(.subheadline)
+                            Text("\(entry.configuration.auxiliaryStatistic.getMetric(in: swipes))").lineLimit(1).font(.subheadline).privacySensitive()
                             Text(entry.configuration.auxiliaryStatistic.shortTitle).font(.caption2).foregroundColor(.secondary)
                         }
                     }
@@ -143,7 +143,7 @@ struct DiningAnalyticsHomeWidgetView: View {
                         }
                         .frame(width: meterSize, height: meterSize)
                         VStack {
-                            Text("\(entry.configuration.auxiliaryStatistic.getMetric(in: dollars), format: .currency(code: "USD"))").lineLimit(1).font(.subheadline)
+                            Text("\(entry.configuration.auxiliaryStatistic.getMetric(in: dollars), format: .currency(code: "USD"))").lineLimit(1).font(.subheadline).privacySensitive()
                             Text(entry.configuration.auxiliaryStatistic.shortTitle).font(.caption2).foregroundColor(.secondary)
                         }
                     }
