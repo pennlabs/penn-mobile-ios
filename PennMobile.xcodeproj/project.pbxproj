@@ -185,6 +185,8 @@
 		6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */; };
 		6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */; };
 		8766844128CBE907005CAD32 /* NativeNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8766844028CBE907005CAD32 /* NativeNewsViewController.swift */; };
+		876AB698291835250077E1AB /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876AB697291835250077E1AB /* NotificationService.swift */; };
+		876AB69C291835250077E1AB /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 876AB695291835250077E1AB /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		89459B9428E7935E00CE1638 /* CoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9328E7935E00CE1638 /* CoursesView.swift */; };
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9928E7999A00CE1638 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9828E7999A00CE1638 /* Course.swift */; };
@@ -300,6 +302,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		876AB69A291835250077E1AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 216640581EBADADA00746B8E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 876AB694291835250077E1AB;
+			remoteInfo = NotificationServiceExtension;
+		};
 		F230FB13225809E900760499 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 216640581EBADADA00746B8E /* Project object */;
@@ -312,13 +321,14 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		F2568A6E2411F20E00561295 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				876AB69C291835250077E1AB /* NotificationServiceExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -509,6 +519,9 @@
 		6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
 		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		8766844028CBE907005CAD32 /* NativeNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeNewsViewController.swift; sourceTree = "<group>"; };
+		876AB695291835250077E1AB /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		876AB697291835250077E1AB /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		876AB699291835250077E1AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89459B9328E7935E00CE1638 /* CoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesView.swift; sourceTree = "<group>"; };
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9828E7999A00CE1638 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -643,6 +656,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		876AB692291835250077E1AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F230FB0B225809E900760499 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -768,7 +788,8 @@
 				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
 				216640621EBADADA00746B8E /* PennMobile */,
 				2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */,
-				F2568A672411F20E00561295 /* NotificationServiceExtension */,
+				F2568A672411F20E00561295 /* NotificationServiceExtensionOld */,
+				876AB696291835250077E1AB /* NotificationServiceExtension */,
 				216640611EBADADA00746B8E /* Products */,
 				F5E2CE9A9024AE8E28992A5E /* Pods */,
 				6D2C4E8629C0A2D81734AD99 /* Frameworks */,
@@ -780,6 +801,7 @@
 			children = (
 				216640601EBADADA00746B8E /* PennMobile.app */,
 				F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */,
+				876AB695291835250077E1AB /* NotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1358,6 +1380,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		876AB696291835250077E1AB /* NotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				876AB697291835250077E1AB /* NotificationService.swift */,
+				876AB699291835250077E1AB /* Info.plist */,
+			);
+			path = NotificationServiceExtension;
+			sourceTree = "<group>";
+		};
 		89459B9728E7998D00CE1638 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1663,14 +1694,14 @@
 			path = AutomatedScreenshotUITests;
 			sourceTree = "<group>";
 		};
-		F2568A672411F20E00561295 /* NotificationServiceExtension */ = {
+		F2568A672411F20E00561295 /* NotificationServiceExtensionOld */ = {
 			isa = PBXGroup;
 			children = (
 				F2568A682411F20E00561295 /* NotificationService.swift */,
 				F2568A722411F26500561295 /* NotificationService+ImageCacheing.swift */,
 				F2568A6A2411F20E00561295 /* Info.plist */,
 			);
-			path = NotificationServiceExtension;
+			path = NotificationServiceExtensionOld;
 			sourceTree = "<group>";
 		};
 		F2770AD525438422001EA1DD /* Course Alerts */ = {
@@ -1755,6 +1786,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				876AB69B291835250077E1AB /* PBXTargetDependency */,
 			);
 			name = PennMobile;
 			packageProductDependencies = (
@@ -1768,6 +1800,23 @@
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
 			productType = "com.apple.product-type.application";
+		};
+		876AB694291835250077E1AB /* NotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 876AB69D291835260077E1AB /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */;
+			buildPhases = (
+				876AB691291835250077E1AB /* Sources */,
+				876AB692291835250077E1AB /* Frameworks */,
+				876AB693291835250077E1AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationServiceExtension;
+			productName = NotificationServiceExtension;
+			productReference = 876AB695291835250077E1AB /* NotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		F230FB0D225809E900760499 /* AutomatedScreenshotUITests */ = {
 			isa = PBXNativeTarget;
@@ -1794,7 +1843,7 @@
 		216640581EBADADA00746B8E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
@@ -1809,6 +1858,9 @@
 								enabled = 1;
 							};
 						};
+					};
+					876AB694291835250077E1AB = {
+						CreatedOnToolsVersion = 14.1;
 					};
 					F230FB0D225809E900760499 = {
 						CreatedOnToolsVersion = 10.1;
@@ -1841,6 +1893,7 @@
 			targets = (
 				2166405F1EBADADA00746B8E /* PennMobile */,
 				F230FB0D225809E900760499 /* AutomatedScreenshotUITests */,
+				876AB694291835250077E1AB /* NotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1854,6 +1907,13 @@
 				6CC88D6D27B1BF51006896F6 /* sample-dining-venue.json in Resources */,
 				6C3F194227A32C29007BCB4F /* GoogleService-Info.plist in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		876AB693291835250077E1AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2256,6 +2316,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		876AB691291835250077E1AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				876AB698291835250077E1AB /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F230FB0A225809E900760499 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2268,6 +2336,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		876AB69B291835250077E1AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 876AB694291835250077E1AB /* NotificationServiceExtension */;
+			targetProxy = 876AB69A291835250077E1AB /* PBXContainerItemProxy */;
+		};
 		F230FB14225809E900760499 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2166405F1EBADADA00746B8E /* PennMobile */;
@@ -2398,14 +2471,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6CDC501127B5BCC700698235 /* Development.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 6655;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = VU59R57FGM;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU59R57FGM;
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
@@ -2422,7 +2498,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Penn Mobile - Development";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Penn Mobile - Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2434,6 +2511,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6C392E3827B5BE1C0097640B /* Release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
@@ -2460,6 +2538,72 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "Penn Mobile - Distribution";
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		876AB69E291835260077E1AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8H598YQX66;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 PennLabs. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile.NotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		876AB69F291835260077E1AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VU59R57FGM;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 PennLabs. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pennlabs.PennMobile.NotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2539,6 +2683,15 @@
 			buildConfigurations = (
 				2166407E1EBADADA00746B8E /* Debug */,
 				2166407F1EBADADA00746B8E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		876AB69D291835260077E1AB /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				876AB69E291835260077E1AB /* Debug */,
+				876AB69F291835260077E1AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

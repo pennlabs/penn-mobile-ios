@@ -14,7 +14,7 @@ struct NotificationSetting: Codable, Identifiable {
     var enabled: Bool
 }
 
-enum NotificationType: String, Codable {
+public enum NotificationType: String, Codable {
     case LAUNDRY
     case UNIVERSITY
     case DINING
@@ -59,7 +59,7 @@ enum NotificationType: String, Codable {
             return "N/A"
         }
     }
-    
+
     var actions: [UNNotificationAction] {
         switch self {
         case .GSR_BOOKING:
@@ -70,7 +70,7 @@ enum NotificationType: String, Codable {
             return []
         }
     }
-    
+
     var category: UNNotificationCategory {
         switch self {
         case .GSR_BOOKING:
@@ -90,5 +90,5 @@ enum NotificationType: String, Codable {
 enum NotificationAction: String, Codable {
     case shareGSRBooking
     case cancelGSRBooking
-    
+
 }

@@ -16,8 +16,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let tokenParts = deviceToken.map { data -> String in
             return String(format: "%02.2hhx", data)
         }
-
+        
         let token = tokenParts.joined()
+        print(token)
         UserDBManager.shared.savePushNotificationDeviceToken(deviceToken: token)
 
         UNUserNotificationCenter.current().setNotificationCategories([NotificationType.GSR_BOOKING.category])
@@ -37,6 +38,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping () -> Void) {
 
         let userInfo = response.notification.request.content.userInfo
+        print("Content" + response.notification.request.content.title)
+        // MARK: GSR Notifications
+            if response.notification.request.content.categoryIdentifier == NotificationType.GSR_BOOKING.rawValue {
+                print("entered")
+            }
 
         // GSR Notification
 //        if response.notification.request.content.categoryIdentifier == NotificationIdentifiers.upcomingGSRCategory,
