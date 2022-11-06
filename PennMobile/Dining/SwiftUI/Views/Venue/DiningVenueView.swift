@@ -59,7 +59,7 @@ struct CustomHeader: View {
     }
 
     var body: some View {
-        ZStack {
+        HStack {
             Text(name)
                 .font(.system(size: 21, weight: .semibold))
                 .foregroundColor(.primary)
