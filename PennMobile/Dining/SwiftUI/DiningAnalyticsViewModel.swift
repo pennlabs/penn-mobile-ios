@@ -80,7 +80,6 @@ class DiningAnalyticsViewModel: ObservableObject {
             // If no dining plan found, refresh will return, these are just placeholders
             var startDollarBalance = maxDollarBalance
             var startSwipeBalance = maxSwipeBalance
-            let planStartDate = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
             switch planStartDate {
             case .failure(_):
                 return
