@@ -84,6 +84,7 @@ struct CoursesView: View {
         }.sheet(isPresented: $isPresentingLoginSheet) {
             LabsLoginView { success in
                 if success {
+                    coursesViewModel.coursesResult = nil
                     Task {
                         try? await coursesViewModel.fetchCourses(forceNetwork: true)
                     }
