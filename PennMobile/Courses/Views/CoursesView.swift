@@ -8,29 +8,15 @@
 
 import SwiftUI
 
-private let colors: [Color] = [.redLight, .orangeLight, .yellowLight, .greenLight, .blueLight, .purpleLight]
-
 /// View for the weekly schedule, assuming courses have been loaded.
 struct WeekView: View {
     var courses: [Course]
 
     var body: some View {
-        var codesToColors = [String: Color]()
-        var colorsUsed = 0
-        courses.sorted { $0.code < $1.code }.forEach {
-            let color: Color
-            if let theColor = codesToColors[$0.code] {
-                color = theColor
-            } else {
-                color = colors[colorsUsed % colors.count]
-                colorsUsed += 1
-                codesToColors[$0.code] = color
-            }
-        }
-
-        let entries = courses.flatMap { course in
-            course.meetingTimes?.map {
-                CourseScheduleEntry(course: course, meetingTime: $0, color: codesToColors[course.code]!)
+        let entries = zip(courses, courses.computeColorAssignments()).flatMap {
+            let (course, color) = $0
+            return course.meetingTimes?.map {
+                CourseScheduleEntry(course: course, meetingTime: $0, color: color)
             } ?? []
         }
 
@@ -69,13 +55,7 @@ struct CoursesView: View {
                     }
                 }
             case .some(.success(let courses)):
-                WeekView(courses: courses.filter {
-                    if let start = $0.startDate, let end = $0.endDate {
-                        return start <= date && date <= end.addingTimeInterval(24 * 60 * 60)
-                    } else {
-                        return false
-                    }
-                })
+                WeekView(courses: courses.filterByDate(date))
             }
         }.task {
             _ = try? await coursesViewModel.fetchCourses()
