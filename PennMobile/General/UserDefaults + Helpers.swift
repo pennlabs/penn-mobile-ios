@@ -571,23 +571,6 @@ extension UserDefaults {
     }
 }
 
-// MARK: - Last dining analytics end date called
-extension UserDefaults {
-    func setNextAnalyticsStartDate(_ date: String) {
-        set(date, forKey: UserDefaultsKeys.nextAnalyticsStartDate.rawValue)
-        synchronize()
-    }
-
-    func getNextAnalyticsStartDate() -> String? {
-        return string(forKey: UserDefaultsKeys.nextAnalyticsStartDate.rawValue)
-    }
-
-    func clearNextAnalyticsStartDateDate() {
-        removeObject(forKey: UserDefaultsKeys.nextAnalyticsStartDate.rawValue)
-    }
-
-}
-
 extension UserDefaults {
     func setFirstDollarsBalance(_ balance: Double) {
         set(balance, forKey: UserDefaultsKeys.firstDollarsBalance.rawValue)

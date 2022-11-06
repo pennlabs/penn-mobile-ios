@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import XLPagerTabStrip
 import SwiftUI
 
 struct DiningAnalyticsBalance: Codable {
@@ -94,7 +93,7 @@ class DiningAnalyticsViewModel: ObservableObject {
             let zeroDate = Calendar.current.date(byAdding: .day, value: 1, to: Date.endOfSemester)!
             return (Double(0.0), zeroDate, lastBalance.balance)
         } else {
-            // This is the slope needed to calculate zeroDate and endBalance
+            // This is the slope needµed to calculate zeroDate and endBalance
             var slope = self.getSlope(firstBalance: firstBalance, lastBalance: lastBalance)
             let zeroDate = self.predictZeroDate(firstBalance: firstBalance, lastBalance: lastBalance, slope: slope)
             let endBalance = self.predictSemesterEndBalance(firstBalance: firstBalance, lastBalance: lastBalance, slope: slope)
