@@ -57,12 +57,12 @@ struct DiningAnalyticsView: View {
             }
             .padding()
         }
-        .onAppear {
+        .task {
             guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
                 showMissingDiningTokenAlert = true
                 return
             }
-            diningAnalyticsViewModel.refresh()
+            await diningAnalyticsViewModel.refresh()
         }
         .alert(isPresented: $showMissingDiningTokenAlert) {
             showCorrectAlert()

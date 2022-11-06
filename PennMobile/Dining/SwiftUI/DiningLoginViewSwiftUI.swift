@@ -33,7 +33,9 @@ struct DiningLoginViewSwiftUI: UIViewControllerRepresentable {
         func dismissDiningLoginController() {
             parent.presentationMode.wrappedValue.dismiss()
             DiningViewModelSwiftUI.instance.refreshBalance()
-            parent.diningAnalyticsViewModel.refresh()
+            Task.init() {
+                await parent.diningAnalyticsViewModel.refresh()
+            }
         }
     }
 

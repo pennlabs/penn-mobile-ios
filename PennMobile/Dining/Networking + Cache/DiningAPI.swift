@@ -137,3 +137,25 @@ extension DiningAPI {
         task.resume()
     }
 }
+
+// MARK: Current Dining Plan Start Date
+extension DiningAPI {
+    func getDiningPlanStartDate(diningToken: String) async -> Result<Date, NetworkingError> {
+        let url = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/dining/currentPlan")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(diningToken, forHTTPHeaderField: "x-authorization")
+        guard let (data, response) = try? await URLSession.shared.data(for: request), let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            return .failure(.serverError)
+        }
+        let decoder = JSONDecoder()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        if let plan = try? decoder.decode(DiningPlan.self, from: data) {
+            return .success(plan.start_date)
+        } else {
+            return .failure(.parsingError)
+        }
+    }
+}

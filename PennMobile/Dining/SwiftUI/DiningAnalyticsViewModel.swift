@@ -47,7 +47,7 @@ class DiningAnalyticsViewModel: ObservableObject {
             Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .documents)
         }
     }
-    func refresh() {
+    func refresh() async {
         guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
             return
         }
@@ -56,6 +56,7 @@ class DiningAnalyticsViewModel: ObservableObject {
             startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
         }
         let startDateStr = formatter.string(from: startDate)
+        let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
         DiningAPI.instance.getPastDiningBalances(diningToken: diningToken, startDate: startDateStr) { (balances) in
             guard let balances = balances else {
                 return
@@ -76,19 +77,41 @@ class DiningAnalyticsViewModel: ObservableObject {
                   let maxSwipeBalance = (self.swipeHistory.max { $0.balance < $1.balance }) else {
                 return
             }
-            let dollarPredictions = self.getPredictions(firstBalance: maxDollarBalance, lastBalance: lastDollarBalance)
+            // If no dining plan found, refresh will return, these are just placeholders
+            var startDollarBalance = maxDollarBalance
+            var startSwipeBalance = maxSwipeBalance
+            switch planStartDateResult {
+            case .failure:
+                return
+            case .success(let planStartDate):
+                // If dining plan found, start prediction from the date dining plan started
+                startDollarBalance = (self.dollarHistory.first { $0.date == planStartDate }) ?? startDollarBalance
+                startSwipeBalance = (self.swipeHistory.first { $0.date == planStartDate }) ?? startSwipeBalance
+                // However, it's possible that people recharged dining dollars (swipes maybe?), and if so, predict from this date (most recent increase)
+                for (i, day) in self.dollarHistory.enumerated() {
+                    if i != 0 && day.date > planStartDate && day.balance > self.dollarHistory[i - 1].balance {
+                        startDollarBalance = day
+                    }
+                }
+                for (i, day) in self.swipeHistory.enumerated() {
+                    if i != 0 && day.date > planStartDate && day.balance > self.swipeHistory[i - 1].balance {
+                        startSwipeBalance = day
+                    }
+                }
+            }
+            let dollarPredictions = self.getPredictions(firstBalance: startDollarBalance, lastBalance: lastDollarBalance, maxBalance: maxDollarBalance)
             self.dollarSlope = dollarPredictions.slope
             self.dollarPredictedZeroDate = dollarPredictions.predictedZeroDate
             self.predictedDollarSemesterEndBalance = dollarPredictions.predictedEndBalance
             self.dollarAxisLabel = self.getAxisLabelsYX(from: self.dollarHistory)
-            let swipePredictions = self.getPredictions(firstBalance: maxSwipeBalance, lastBalance: lastSwipeBalance)
+            let swipePredictions = self.getPredictions(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: maxSwipeBalance)
             self.swipeSlope = swipePredictions.slope
             self.swipesPredictedZeroDate = swipePredictions.predictedZeroDate
             self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
             self.swipeAxisLabel = self.getAxisLabelsYX(from: self.swipeHistory)
         }
     }
-    func getPredictions(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance) -> (slope: Double, predictedZeroDate: Date, predictedEndBalance: Double) {
+    func getPredictions(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance, maxBalance: DiningAnalyticsBalance) -> (slope: Double, predictedZeroDate: Date, predictedEndBalance: Double) {
         if firstBalance.date == lastBalance.date || firstBalance.balance == lastBalance.balance {
             let zeroDate = Calendar.current.date(byAdding: .day, value: 1, to: Date.endOfSemester)!
             return (Double(0.0), zeroDate, lastBalance.balance)
@@ -97,10 +120,11 @@ class DiningAnalyticsViewModel: ObservableObject {
             var slope = self.getSlope(firstBalance: firstBalance, lastBalance: lastBalance)
             let zeroDate = self.predictZeroDate(firstBalance: firstBalance, lastBalance: lastBalance, slope: slope)
             let endBalance = self.predictSemesterEndBalance(firstBalance: firstBalance, lastBalance: lastBalance, slope: slope)
-            let fullSemester = firstBalance.date.distance(to: Date.endOfSemester)
+            let fullSemester = Date.startOfSemester.distance(to: Date.endOfSemester)
             let fullZeroDistance = firstBalance.date.distance(to: zeroDate)
             let deltaX = fullZeroDistance / fullSemester
-            slope = -1 / deltaX // Resetting slope to different value for graph format
+            let deltaY = firstBalance.balance / maxBalance.balance
+            slope = -deltaY / deltaX // Resetting slope to different value for graph format
             return (slope, zeroDate, endBalance)
         }
     }
