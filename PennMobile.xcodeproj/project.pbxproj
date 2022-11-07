@@ -186,6 +186,7 @@
 		6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */; };
 		6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */; };
 		8766844128CBE907005CAD32 /* NativeNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8766844028CBE907005CAD32 /* NativeNewsViewController.swift */; };
+		87FE6479290EE4BE00AFADF6 /* NotificationAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */; };
 		891CCBAB28FC97E800A48903 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 891CCBAA28FC97E800A48903 /* .gitkeep */; };
 		89325390290F98E7006EE62C /* ConfigurationRepresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932538E290F98BD006EE62C /* ConfigurationRepresenting.swift */; };
 		89325393291025A8006EE62C /* WidgetBackgroundTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */; };
@@ -539,6 +540,7 @@
 		6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
 		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		8766844028CBE907005CAD32 /* NativeNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeNewsViewController.swift; sourceTree = "<group>"; };
+		87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPIModel.swift; sourceTree = "<group>"; };
 		891CCBAA28FC97E800A48903 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8932538E290F98BD006EE62C /* ConfigurationRepresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationRepresenting.swift; sourceTree = "<group>"; };
 		893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBackgroundTypeExtensions.swift; sourceTree = "<group>"; };
@@ -1734,6 +1736,7 @@
 			isa = PBXGroup;
 			children = (
 				F20D93F428E0BC0700930434 /* NotificationsSetting.swift */,
+				87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2301,6 +2304,7 @@
 				214C23B21F2FEE150004487C /* Networking.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				F2562A262551F6D40021C92F /* CourseAlertSettingsController.swift in Sources */,
+				87FE6479290EE4BE00AFADF6 /* NotificationAPIModel.swift in Sources */,
 				F20D93F128E0B86F00930434 /* NotificationsViewControllerSwiftUI.swift in Sources */,
 				89EA2624290EEEA2008F26CF /* ScheduleView.swift in Sources */,
 				C11DFA2F219F8A65000FC573 /* CalendarAPI.swift in Sources */,
