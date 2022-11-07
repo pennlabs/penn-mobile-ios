@@ -25,9 +25,7 @@ class DiningAPI: Requestable {
         }
 
         let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        decoder.dateDecodingStrategy = .iso8601
 
         if let diningVenues = try? decoder.decode([DiningVenue].self, from: data) {
             self.saveToCache(diningVenues)
