@@ -32,30 +32,49 @@ struct DiningAnalyticsView: View {
             // one directional Binding, setter does not work
             set: {  _ in }
         )
-
         let swipeXYHistory = Binding(
             get: { getSmoothedData(from: diningAnalyticsViewModel.swipeHistory) },
             // one directional Binding, setter does not work
             set: {  _ in }
         )
-
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Dining Analytics")
-                    .font(.system(size: 32))
-                    .bold()
-                if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
-                    CardView {
-                        PredictionsGraphView(type: "dollars", data: dollarXYHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.dollarAxisLabel, slope: $diningAnalyticsViewModel.dollarSlope)
+        HStack {
+            if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
+                if swipeXYHistory.wrappedValue.isEmpty && dollarXYHistory.wrappedValue.isEmpty {
+                    ZStack {
+                        Image("DiningAnalyticsBackground")
+                            .resizable()
+                            .ignoresSafeArea()
+                        Text("No Dining\nPlan Found\n ")
+                            .multilineTextAlignment(.center)
+                            .font(.system(size: 48, weight: .regular))
+                            .foregroundColor(.black)
+                            .opacity(0.6)
                     }
-                    CardView {
-                        PredictionsGraphView(type: "swipes", data:
-                                                swipeXYHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.swipeAxisLabel, slope: $diningAnalyticsViewModel.swipeSlope)
+                } else {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Dining Analytics")
+                                .font(.system(size: 32))
+                                .bold()
+                            // Only show dollar history view if there is data for the graph
+                            if !dollarXYHistory.wrappedValue.isEmpty {
+                                CardView {
+                                    PredictionsGraphView(type: "dollars", data: dollarXYHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.dollarAxisLabel, slope: $diningAnalyticsViewModel.dollarSlope)
+                                }
+                            }
+                            // Only show swipe history view if there is data for the graph
+                            if !swipeXYHistory.wrappedValue.isEmpty {
+                                CardView {
+                                    PredictionsGraphView(type: "swipes", data:
+                                                            swipeXYHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.swipeAxisLabel, slope: $diningAnalyticsViewModel.swipeSlope)
+                                }
+                            }
+                            Spacer()
+                        }
+                        .padding()
                     }
-                    Spacer()
                 }
             }
-            .padding()
         }
         .task {
             guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
@@ -78,7 +97,7 @@ extension DiningAnalyticsView {
     func getSmoothedData(from trans: [DiningAnalyticsBalance]) -> [PredictionsGraphView.YXDataPoint] {
         let sos = Date.startOfSemester
         let eos = Date.endOfSemester
-
+        
         let totalLength = eos.distance(to: sos)
         let maxDollarValue = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0
         let yxPoints: [PredictionsGraphView.YXDataPoint] = trans.map { (t) -> PredictionsGraphView.YXDataPoint in
