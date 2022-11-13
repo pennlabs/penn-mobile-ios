@@ -35,7 +35,6 @@ class DiningAPI: Requestable {
     }
 
     func fetchDiningMenus(at date: Date = Date()) async -> Result<[MenuList], NetworkingError> {
-        print("GetMenusFromAPI")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateStr = dateFormatter.string(from: date)
@@ -78,7 +77,6 @@ extension DiningAPI {
     }
     
     func getMenus() -> [Int: MenuList] {
-        print("GetMenusFromCache")
         if Storage.fileExists(MenuList.directory, in: .caches) {
             return Storage.retrieve(MenuList.directory, from: .caches, as: [Int: MenuList].self)
         } else {
@@ -104,7 +102,6 @@ extension DiningAPI {
     }
     
     func saveAllMenusToCache(menus: [Int: MenuList]) {
-        print("SaveMenusToCache")
         for (id, menu) in menus {
             self.saveMenuToCache(id: id, menu)
         }

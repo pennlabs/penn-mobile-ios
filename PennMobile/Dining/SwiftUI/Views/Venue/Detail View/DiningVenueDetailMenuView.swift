@@ -57,13 +57,10 @@ struct DiningVenueDetailMenuView: View {
         if venue == nil {
             return false
         }
-        print("Venue: " + venue!.name)
-        print("Type: " + menuType)
         if !Calendar.current.isDate(menuDate, inSameDayAs: Date()) {
             return false
         }
         guard let meal = venue!.currentOrNearestMeal else { return false }
-        print(meal.label)
         return meal.label == menuType
     }
 }
