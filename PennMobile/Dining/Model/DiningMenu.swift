@@ -17,8 +17,8 @@ struct MenuList: Codable {
 struct DiningMenu: Codable, Hashable {
     let venueInfo: VenueInfo
     let date: Date
-    let startTime: Date
-    let endTime: Date
+    let startTime: String
+    let endTime: String
     let stations: [DiningStation]
     let service: String
 
