@@ -44,29 +44,26 @@ class DiningViewModelSwiftUI: ObservableObject {
         }
     }
 
-    func refreshMenu(for id: Int, at date: Date = Date()) {
-        let lastRequest = UserDefaults.standard.getLastMenuRequest(id: id)
-        if  Calendar.current.isDate(date, inSameDayAs: Date()) && (lastRequest == nil || !lastRequest!.isToday) {
-            DiningAPI.instance.fetchDiningMenu(for: id) { result in
-                switch result {
-                case .success(let diningMenu):
-                    withAnimation {
-                        self.diningMenus[id] = diningMenu
+    func refreshMenus(cache: Bool?, at date: Date = Date()) async {
+        let lastRequest = UserDefaults.standard.getLastCachedMenuRequest()
+        if diningMenus.isEmpty || !Calendar.current.isDate(date, inSameDayAs: Date()) || (lastRequest == nil || !lastRequest!.isToday) {
+            let result = await DiningAPI.instance.fetchDiningMenus(at: date)
+            switch result {
+            case .success(let response):
+                withAnimation {
+                    for id in DiningVenue.menuUrlDict.keys {
+                        self.diningMenus[id] = MenuList(menus: [])
                     }
-                case .failure(let error):
-                    self.alertType = error
-                }
-            }
-        } else {
-            DiningAPI.instance.fetchDiningMenu(for: id, at: date) { result in
-                switch result {
-                case .success(let diningMenu):
-                    withAnimation {
-                        self.diningMenus[id] = diningMenu
+                    for venueMenus in response {
+                        self.diningMenus[venueMenus.menus[0].venueInfo.id] = venueMenus
                     }
-                case .failure(let error):
-                    self.alertType = error
                 }
+                if cache != nil && cache! {
+                    DiningAPI.instance.saveAllMenusToCache(menus: self.diningMenus)
+                    UserDefaults.standard.setLastCachedMenuRequest(date)
+                }
+            case .failure(let error):
+                self.alertType = error
             }
         }
     }
