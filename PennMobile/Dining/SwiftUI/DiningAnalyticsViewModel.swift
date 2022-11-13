@@ -58,7 +58,7 @@ class DiningAnalyticsViewModel: ObservableObject {
         let startDateStr = formatter.string(from: startDate)
         let balances = await DiningAPI.instance.getPastDiningBalances(diningToken: diningToken, startDate: startDateStr)
         switch balances {
-        case .failure(_):
+        case .failure:
             return
         case .success(let balanceList):
             if startDateStr != self.formatter.string(from: Date()) {
