@@ -20,15 +20,13 @@ struct DiningMenuSectionRow: View {
     var body: some View {
         HStack {
             Text(title)
-
             Spacer()
-
             Image(systemName: "chevron.right.circle")
                 .rotationEffect(.degrees(isExpanded ? -90 : 90))
                 .frame(width: 28, alignment: .center)
         }
         .contentShape(Rectangle())
-        .padding(.bottom)
+        .padding([.top])
         .onTapGesture {
             FirebaseAnalyticsManager.shared.trackEvent(action: "Open Menu", result: title, content: "")
             withAnimation {
@@ -39,21 +37,15 @@ struct DiningMenuSectionRow: View {
 }
 
 struct DiningMenuRow: View {
-
-    init (for diningMenu: DiningMenu) {
-        self.diningMenu = diningMenu
-    }
-
-    @State var isExpanded = true
-    let diningMenu: DiningMenu
-
+    var diningMenu: DiningMenu
+    @State var isExpanded = false
     var body: some View {
-        VStack {
-            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningMenu.mealType)
+        VStack(spacing: 0) {
+            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningMenu.service)
                 .font(.system(size: 21, weight: .medium))
 
             if isExpanded {
-                ForEach(diningMenu.diningStations, id: \.self) { diningStation in
+                ForEach(diningMenu.stations, id: \.self) { diningStation in
                     DiningStationRow(for: diningStation)
                 }
                 .padding(.leading)
@@ -74,13 +66,12 @@ struct DiningStationRow: View {
 
     var body: some View {
         VStack {
-            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.stationDescription)
+            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.name)
                 .font(Font.system(size: 17))
-
             if isExpanded {
-                ForEach(diningStation.diningStationItems, id: \.self) { diningStationItem in
+                Spacer(minLength: 10)
+                ForEach(diningStation.items, id: \.self) { diningStationItem in
                     DiningStationItemRow(for: diningStationItem)
-                        .padding(.leading)
                 }
                 .transition(.moveAndFade)
             }
@@ -96,30 +87,34 @@ struct DiningStationItemRow: View {
     }
 
     let diningStationItem: DiningStationItem
+    @State private var showDetails = false
 
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack(alignment: .center) {
-                Text(diningStationItem.title.capitalizeMainWords())
-                    .font(Font.system(size: 17))
-
-                ForEach(diningStationItem.tableAttribute.attributeDescriptions, id: \.self) { attribute in
-                    // Unlike UIKit, image will simply not appear if it doesn't exist in assets
-                    // Hack as image set doesn't allow slashes
-                    let description = attribute.description == "Wheat/Gluten" ? "Wheat" : attribute.description
-                    Image(description)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20.0, height: 20)
-
+        Button {
+            showDetails.toggle()
+        } label: {
+            HStack {
+                Text(diningStationItem.name.capitalizeMainWords())
+                    .font(.system(size: 17, weight: .thin))
+                Spacer()
+                Image(systemName: "info.circle")
+                    .frame(width: 28, alignment: .center)
+            }
+        }
+        .sheet(isPresented: $showDetails) {
+            VStack {
+                Text("Description")
+                Text(diningStationItem.desc)
+                    .font(.system(size: 17, weight: .thin))
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer()
+                Text("Ingredients")
+                ForEach(diningStationItem.ingredients.components(separatedBy: ", "), id: \.self) { attribute in
+                    Text(attribute)
                 }
                 Spacer()
-            }.padding(.bottom, 3)
-
-            Text(diningStationItem.description)
-                .font(.system(size: 17, weight: .thin))
-                .fixedSize(horizontal: false, vertical: true)
-        }.padding(.bottom)
+            }
+        }
     }
 }
 
@@ -139,12 +134,12 @@ extension AnyTransition {
 
 struct MenuDisclosureGroup_Previews: PreviewProvider {
     static var previews: some View {
-        let diningVenues: DiningMenuAPIResponse = Bundle.main.decode("mock_menu.json")
+        let diningVenues: MenuList = Bundle.main.decode("mock_menu.json")
 
         return NavigationView {
             ScrollView {
                 VStack {
-                    DiningVenueDetailMenuView(menus: diningVenues.document.menuDocument.menus, id: 1)
+                    DiningVenueDetailMenuView(menus: diningVenues.menus, id: 1)
                     Spacer()
                 }
             }.navigationTitle("Dining")
