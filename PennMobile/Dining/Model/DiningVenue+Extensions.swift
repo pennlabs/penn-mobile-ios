@@ -70,6 +70,10 @@ extension DiningVenue {
     var currentOrNearestMealIndex: Int {
         return self.mealsToday?.meals.firstIndex(where: { $0.isCurrentlyServing }) ?? self.mealsToday?.meals.firstIndex(where: { $0.starttime > Date() }) ?? 0
     }
+    
+    var currentOrNearestMeal: Meal? {
+        return self.mealsToday?.meals.first(where: { $0.isCurrentlyServing }) ?? (self.mealsToday?.meals.first(where: { $0.starttime > Date() }) ?? nil)
+    }
 
     var hasMealsToday: Bool {
         return mealsToday != nil
