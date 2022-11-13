@@ -10,6 +10,8 @@ import UIKit
 import UserNotifications
 import Firebase
 import StoreKit
+import SwiftUI
+import WidgetKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = RootViewController()
         self.window?.makeKeyAndVisible()
+
+        migrateDataToGroupContainer()
 
         return true
     }
@@ -112,4 +116,14 @@ extension AppDelegate {
 // Helper function inserted by Swift 4.2 migrator.
 private func convertFromUIBackgroundTaskIdentifier(_ input: UIBackgroundTaskIdentifier) -> Int {
 	return input.rawValue
+}
+
+// Migration of data to group container
+func migrateDataToGroupContainer() {
+    if Storage.migrate(fileName: Course.cacheFileName, of: [Course].self, from: .caches, to: .groupCaches) {
+        print("Migrated course data.")
+        WidgetKind.courseWidgets.forEach {
+            WidgetCenter.shared.reloadTimelines(ofKind: $0)
+        }
+    }
 }
