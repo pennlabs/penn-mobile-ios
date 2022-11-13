@@ -61,7 +61,6 @@ class DiningAnalyticsViewModel: ObservableObject {
         case .failure:
             return
         case .success(let balanceList):
-            let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
             if startDateStr != self.formatter.string(from: Date()) {
                 let newDollarHistory = balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.diningDollars) ?? 0.0)})
                 let newSwipeHistory = balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.regularVisits))})
@@ -81,6 +80,7 @@ class DiningAnalyticsViewModel: ObservableObject {
             // If no dining plan found, refresh will return, these are just placeholders
             var startDollarBalance = maxDollarBalance
             var startSwipeBalance = maxSwipeBalance
+            let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
             switch planStartDateResult {
             case .failure:
                 return
