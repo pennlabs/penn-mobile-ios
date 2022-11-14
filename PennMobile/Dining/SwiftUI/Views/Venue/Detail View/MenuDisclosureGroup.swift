@@ -90,29 +90,72 @@ struct DiningStationItemRow: View {
     @State private var showDetails = false
 
     var body: some View {
+        let name = diningStationItem.name.capitalizeMainWords()
         Button {
             showDetails.toggle()
         } label: {
             HStack {
-                Text(diningStationItem.name.capitalizeMainWords())
-                    .font(.system(size: 17, weight: .thin))
+                Text(name)
+                    .font(.system(size: 17))
+                    .lineLimit(1)
                 Spacer()
                 Image(systemName: "info.circle")
                     .frame(width: 28, alignment: .center)
             }
+            .padding([.leading])
         }
+        .buttonStyle(.plain)
         .sheet(isPresented: $showDetails) {
-            VStack {
-                Text("Description")
-                Text(diningStationItem.desc)
-                    .font(.system(size: 17, weight: .thin))
-                    .fixedSize(horizontal: false, vertical: true)
+            ItemView(name: name, description: diningStationItem.desc, ingredients: diningStationItem.ingredients.components(separatedBy: ", "))
+        }
+    }
+}
+
+struct ItemView: View {
+    let name: String
+    let description: String
+    let ingredients: [String]
+    var body: some View {
+        VStack(alignment: .center) {
+            Text(name)
+                .font(.title)
+                .padding()
+            Divider()
+            if description == "" && ingredients.count == 0 {
+                Text("No details")
+                    .padding()
                 Spacer()
-                Text("Ingredients")
-                ForEach(diningStationItem.ingredients.components(separatedBy: ", "), id: \.self) { attribute in
-                    Text(attribute)
+            } else {
+                VStack(spacing: 10) {
+                    if description != "" {
+                        VStack {
+                            Text("Description")
+                                .font(.system(size: 21, weight: .medium))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Text(description.capitalizeFirstLetter())
+                                .font(.system(size: 17))
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding([.leading])
+                        }
+                        .padding()
+                    }
+                    if ingredients.count != 0 {
+                        VStack {
+                            Text("Ingredients")
+                                .font(.system(size: 21, weight: .medium))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            ForEach(ingredients, id: \.self) { attribute in
+                                Text("• " + attribute.capitalizeFirstLetter())
+                                    .font(.system(size: 17))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding([.leading])
+                            }
+                            Spacer()
+                        }
+                        .padding()
+                    }
                 }
-                Spacer()
             }
         }
     }
@@ -155,5 +198,8 @@ extension String {
         ]
 
         return self.split(separator: " ").map({nonCaptializingSet.contains(String($0)) ? $0.lowercased() : $0.capitalized}).joined(separator: " ")
+    }
+    func capitalizeFirstLetter() -> String {
+        return self.prefix(1).capitalized + self.dropFirst()
     }
 }
