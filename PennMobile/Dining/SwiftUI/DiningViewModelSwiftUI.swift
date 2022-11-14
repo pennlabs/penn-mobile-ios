@@ -65,6 +65,9 @@ class DiningViewModelSwiftUI: ObservableObject {
             case .failure(let error):
                 self.alertType = error
             }
+        } else {
+            // getting menus from cache
+            self.diningMenus = DiningAPI.instance.getMenus()
         }
     }
 

@@ -121,7 +121,7 @@ struct ItemView: View {
                 .font(.title)
                 .padding()
             Divider()
-            if description == "" && ingredients.count == 0 {
+            if description == "" && (ingredients.count == 0 || (ingredients.count == 1 && ingredients[0] == "")) {
                 Text("No details")
                     .padding()
                 Spacer()
@@ -140,7 +140,7 @@ struct ItemView: View {
                         }
                         .padding()
                     }
-                    if ingredients.count != 0 {
+                    if ingredients.count != 0 && (ingredients.count != 1 || ingredients[0] != "") {
                         VStack {
                             Text("Ingredients")
                                 .font(.system(size: 21, weight: .medium))
@@ -151,10 +151,10 @@ struct ItemView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding([.leading])
                             }
-                            Spacer()
                         }
                         .padding()
                     }
+                    Spacer()
                 }
             }
         }
