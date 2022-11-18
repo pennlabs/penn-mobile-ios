@@ -126,7 +126,7 @@ func migrateDataToGroupContainer() {
             WidgetCenter.shared.reloadTimelines(ofKind: $0)
         }
     }
-    
+
     if Storage.migrate(fileName: DiningAnalyticsViewModel.dollarHistoryDirectory, of: [DiningAnalyticsBalance].self, from: .documents, to: .groupDocuments) || Storage.migrate(fileName: DiningAnalyticsViewModel.swipeHistoryDirectory, of: [DiningAnalyticsBalance].self, from: .documents, to: .groupDocuments) {
         print("Migrated dining analytics data.")
         WidgetKind.diningAnalyticsWidgets.forEach {

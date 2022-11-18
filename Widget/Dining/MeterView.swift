@@ -14,7 +14,7 @@ struct MeterView<S: ShapeStyle, Content: View>: View {
     var style: S
     var lineWidth: CGFloat
     var content: Content
-    
+
     init(current: Double, maximum: Double, style: S = Color.primary, lineWidth: CGFloat = 4, @ViewBuilder content: () -> Content) {
         self.current = current
         self.maximum = maximum
@@ -22,10 +22,10 @@ struct MeterView<S: ShapeStyle, Content: View>: View {
         self.lineWidth = lineWidth
         self.content = content()
     }
-    
+
     var body: some View {
         ZStack {
-            GeometryReader { proxy in
+            GeometryReader { _ in
                 Rectangle()
                 .fill(style)
                 .mask(alignment: .center) {

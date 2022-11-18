@@ -109,7 +109,7 @@ class DiningAnalyticsViewModel: ObservableObject {
         var startDollarBalance = maxDollarBalance
         var startSwipeBalance = maxSwipeBalance
         guard let planStartDate else { return }
-        
+
         // If dining plan found, start prediction from the date dining plan started
         startDollarBalance = (self.dollarHistory.first { $0.date == planStartDate }) ?? startDollarBalance
         startSwipeBalance = (self.swipeHistory.first { $0.date == planStartDate }) ?? startSwipeBalance
@@ -124,7 +124,7 @@ class DiningAnalyticsViewModel: ObservableObject {
                 startSwipeBalance = day
             }
         }
-        
+
         let dollarPredictions = self.getPredictions(firstBalance: startDollarBalance, lastBalance: lastDollarBalance, maxBalance: maxDollarBalance)
         self.dollarSlope = dollarPredictions.slope
         self.dollarPredictedZeroDate = dollarPredictions.predictedZeroDate

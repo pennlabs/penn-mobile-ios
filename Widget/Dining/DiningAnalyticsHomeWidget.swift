@@ -14,7 +14,7 @@ extension ConfigureDiningAnalyticsHomeWidgetIntent: ConfigurationRepresenting {
         let background: WidgetBackgroundType
         let meterType: DiningAnalyticsMeterType
         let auxiliaryStatistic: DiningAnalyticsAuxiliaryStatistic
-        
+
         var swipeColor: Color {
             if background.prefersGrayscaleContent {
                 return Color.primary
@@ -22,7 +22,7 @@ extension ConfigureDiningAnalyticsHomeWidgetIntent: ConfigurationRepresenting {
                 return Color.green
             }
         }
-        
+
         var dollarColor: Color {
             if background.prefersGrayscaleContent {
                 return Color.primary
@@ -46,7 +46,7 @@ extension DiningAnalyticsMeterType {
             return balance.used
         }
     }
-    
+
     var shortTitle: LocalizedStringKey {
         switch self {
         case .unknown, .remaining:
@@ -55,7 +55,7 @@ extension DiningAnalyticsMeterType {
             return "used"
         }
     }
-    
+
     var longTitle: LocalizedStringKey {
         switch self {
         case .unknown, .remaining:
@@ -79,7 +79,7 @@ extension DiningAnalyticsAuxiliaryStatistic {
             return balance.total
         }
     }
-    
+
     var label: LocalizedStringKey {
         switch self {
         case .unknown, .projectedEnd:
@@ -98,10 +98,10 @@ private struct DiningAnalyticsSmall: View {
     var swipes: BalanceDetails<Int>
     var dollars: BalanceDetails<Double>
     var configuration: ConfigureDiningAnalyticsHomeWidgetIntent.Configuration
-    
+
     let iconHeight: CGFloat = 20
     let meterSize: CGFloat = 70
-    
+
     var body: some View {
         VStack {
             HStack(spacing: 5) {
@@ -165,10 +165,10 @@ private struct DiningAnalyticsSummary: View {
     var swipes: BalanceDetails<Int>
     var dollars: BalanceDetails<Double>
     var configuration: ConfigureDiningAnalyticsHomeWidgetIntent.Configuration
-    
+
     let meterSize: CGFloat = 100
     let meterLineWidth: CGFloat = 6
-    
+
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .leading) {
@@ -203,7 +203,7 @@ private struct DiningAnalyticsSummary: View {
                     Text("Swipes").fontWeight(.medium).font(.caption)
                     Text("\(configuration.auxiliaryStatistic.getMetric(in: swipes))").fontWeight(.bold)
                 }
-                
+
                 VStack(alignment: .leading) {
                     Text("Dollars").fontWeight(.medium).font(.caption)
                     Text("\(configuration.auxiliaryStatistic.getMetric(in: dollars), format: .currency(code: "USD"))").fontWeight(.bold)
@@ -213,37 +213,11 @@ private struct DiningAnalyticsSummary: View {
     }
 }
 
-private struct DiningAnalyticsMedium: View {
-    var swipes: BalanceDetails<Int>
-    var dollars: BalanceDetails<Double>
-    var configuration: ConfigureDiningAnalyticsHomeWidgetIntent.Configuration
-    
-    var body: some View {
-        DiningAnalyticsSummary(swipes: swipes, dollars: dollars, configuration: configuration)
-            .padding(.horizontal, 20)
-    }
-}
-
-private struct DiningAnalyticsLarge: View {
-    var swipes: BalanceDetails<Int>
-    var dollars: BalanceDetails<Double>
-    var configuration: ConfigureDiningAnalyticsHomeWidgetIntent.Configuration
-    
-    var body: some View {
-        VStack(spacing: 12) {
-            Text("Graph").frame(maxWidth: .infinity, maxHeight: .infinity).background(.gray)
-            DiningAnalyticsSummary(swipes: swipes, dollars: dollars, configuration: configuration)
-        }
-        .padding(16)
-    }
-}
-
-
 struct DiningAnalyticsHomeWidgetView: View {
     var entry: DiningAnalyticsEntry<ConfigureDiningAnalyticsHomeWidgetIntent.Configuration>
-    
+
     @Environment(\.widgetFamily) var widgetFamily
-    
+
     var body: some View {
         Group {
             if let swipes = entry.swipes, let dollars = entry.dollars {
@@ -251,7 +225,8 @@ struct DiningAnalyticsHomeWidgetView: View {
                 case .systemSmall:
                     DiningAnalyticsSmall(swipes: swipes, dollars: dollars, configuration: entry.configuration)
                 case .systemMedium:
-                    DiningAnalyticsMedium(swipes: swipes, dollars: dollars, configuration: entry.configuration)
+                    DiningAnalyticsSummary(swipes: swipes, dollars: dollars, configuration: entry.configuration)
+                        .padding(.horizontal, 20)
                 default:
                     Text("Unsupported")
                 }

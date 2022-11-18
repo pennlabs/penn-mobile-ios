@@ -13,7 +13,7 @@ struct BalanceDetails<Balance: AdditiveArithmetic & Comparable> {
     var remaining: Balance
     var total: Balance
     var projectedEnd: Balance
-    
+
     var used: Balance {
         max(.zero, total - remaining)
     }
@@ -22,7 +22,7 @@ struct BalanceDetails<Balance: AdditiveArithmetic & Comparable> {
 struct DiningAnalyticsEntry<Configuration>: TimelineEntry {
     let date: Date
     let configuration: Configuration
-    
+
     let swipes: BalanceDetails<Int>?
     let dollars: BalanceDetails<Double>?
 }
@@ -37,12 +37,12 @@ private func refresh() async {
     guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
         return
     }
-    
+
     let model = DiningAnalyticsViewModel()
     let modelRefreshTask = Task {
         await model.refresh()
     }
-    
+
     let balancesTask = Task {
         do {
             return try await Optional(DiningAPI.instance.getDiningBalance(diningToken: diningToken).get())
@@ -51,17 +51,17 @@ private func refresh() async {
             return nil
         }
     }
-    
+
     await modelRefreshTask.value
     guard let balances = await balancesTask.value else {
         return
     }
-    
+
     let remainingSwipes = balances.regularVisits
     let totalSwipes = max(remainingSwipes, model.swipeHistory.max().map { Int($0.balance) } ?? 0)
     let projectedSwipes = Int(model.predictedSwipesSemesterEndBalance)
     cachedSwipes = BalanceDetails(remaining: remainingSwipes, total: totalSwipes, projectedEnd: projectedSwipes)
-    
+
     guard let remainingDollars = Double(balances.diningDollars) else {
         return
     }
@@ -77,9 +77,9 @@ private func snapshot<Configuration>(configuration: Configuration) async -> Dini
             await refresh()
         }
     }
-    
+
     await refreshTask!.value
-    
+
     return DiningAnalyticsEntry(date: Date(), configuration: configuration, swipes: cachedSwipes, dollars: cachedDollars)
 }
 
