@@ -155,7 +155,7 @@ private struct DiningAnalyticsSmall: View {
             HStack(spacing: 5) {
                 let swipes = configuration.auxiliaryStatistic.getMetric(in: swipes)
                 let dollars = configuration.auxiliaryStatistic.getMetric(in: dollars)
-                Text("\(swipes) \(swipes == 1 ? "swipe" : "swipes"), \(dollars, format: .currency(code: "USD"))").fontWeight(.medium).font(.caption).privacySensitive()
+                Text("\(swipes) \(swipes == 1 || swipes == -1 ? "swipe" : "swipes"), \(dollars, format: .currency(code: "USD"))").fontWeight(.medium).font(.caption).privacySensitive()
             }.multilineTextAlignment(.center)
         }
     }
