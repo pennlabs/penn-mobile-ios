@@ -1459,6 +1459,20 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		8994583529283F5400D96545 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6CC88D7A27B1BFB0006896F6 /* DiningToken.swift */,
+				E515B36227C2B97500AAE0D8 /* DiningBalance.swift */,
+				E50676E927EE1C73009A776E /* PastDiningBalances.swift */,
+				F23CC0BA235E3EF10007317A /* DiningVenue.swift */,
+				F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */,
+				6CAE43D2253373B900BD0200 /* DiningMenu.swift */,
+				894AA4562928375100B0A052 /* DiningPlan.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		89CA727129171E2400CF72FE /* Dining */ = {
 			isa = PBXGroup;
 			children = (
@@ -1472,15 +1486,9 @@
 		89CA727429171FBE00CF72FE /* Dining */ = {
 			isa = PBXGroup;
 			children = (
-				6CC88D7A27B1BFB0006896F6 /* DiningToken.swift */,
-				E515B36227C2B97500AAE0D8 /* DiningBalance.swift */,
-				E50676E927EE1C73009A776E /* PastDiningBalances.swift */,
-				F23CC0BA235E3EF10007317A /* DiningVenue.swift */,
-				F23CC0C0235E3F8A0007317A /* DiningVenue+Extensions.swift */,
-				6CAE43D2253373B900BD0200 /* DiningMenu.swift */,
-				894AA4562928375100B0A052 /* DiningPlan.swift */,
 				E50676EB27F0CA39009A776E /* DiningAnalyticsViewModel.swift */,
 				211DFE531F36A02C00CB73E4 /* DiningAPI.swift */,
+				8994583529283F5400D96545 /* Models */,
 			);
 			path = Dining;
 			sourceTree = "<group>";

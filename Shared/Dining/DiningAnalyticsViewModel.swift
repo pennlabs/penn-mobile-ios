@@ -170,10 +170,18 @@ class DiningAnalyticsViewModel: ObservableObject {
         return endBalance
     }
     // Compute axis labels
-    func getAxisLabelsYX(from trans: [DiningAnalyticsBalance]) -> ([String], [String]) {
+    static func getAxisLabelsX() -> [String] {
         let xAxisLabelCount = 4
+        let semester = Date.startOfSemester.distance(to: Date.endOfSemester)
+        let semesterStep = semester / Double(xAxisLabelCount - 1)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M/d"
+        return stride(from: 0, to: Double(xAxisLabelCount), by: 1).map {
+            dateFormatter.string(from: Date.startOfSemester.advanced(by: semesterStep * $0))
+        }
+    }
+    func getAxisLabelsYX(from trans: [DiningAnalyticsBalance]) -> ([String], [String]) {
         let yAxisLabelCount = 5
-        var xLabels: [String] = []
         var yLabels: [String] = []
 
         // Generate Y Axis Labels
@@ -184,16 +192,6 @@ class DiningAnalyticsViewModel: ObservableObject {
             yLabels.append(yAxisLabel)
         }
 
-        // Generate X Axis Labels
-        let semester = Date.startOfSemester.distance(to: Date.endOfSemester)
-        let semesterStep = semester / Double(xAxisLabelCount - 1)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "M/d"
-        for i in 0 ..< xAxisLabelCount {
-            let dateForLabel = Date.startOfSemester.advanced(by: semesterStep * Double(i))
-            xLabels.append(dateFormatter.string(from: dateForLabel))
-        }
-
-        return (yLabels, xLabels)
+        return (yLabels, DiningAnalyticsViewModel.getAxisLabelsX())
     }
 }

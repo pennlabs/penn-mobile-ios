@@ -230,7 +230,7 @@ private struct DiningAnalyticsLarge: View {
     var configuration: ConfigureDiningAnalyticsHomeWidgetIntent.Configuration
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 12) {
             Text("Graph").frame(maxWidth: .infinity, maxHeight: .infinity).background(.gray)
             DiningAnalyticsSummary(swipes: swipes, dollars: dollars, configuration: configuration)
         }
@@ -252,8 +252,6 @@ struct DiningAnalyticsHomeWidgetView: View {
                     DiningAnalyticsSmall(swipes: swipes, dollars: dollars, configuration: entry.configuration)
                 case .systemMedium:
                     DiningAnalyticsMedium(swipes: swipes, dollars: dollars, configuration: entry.configuration)
-                case .systemLarge:
-                    DiningAnalyticsLarge(swipes: swipes, dollars: dollars, configuration: entry.configuration)
                 default:
                     Text("Unsupported")
                 }
