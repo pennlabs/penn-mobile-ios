@@ -25,9 +25,7 @@ class DiningAPI {
         }
 
         let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        decoder.dateDecodingStrategy = .iso8601
 
         if let diningVenues = try? decoder.decode([DiningVenue].self, from: data) {
             self.saveToCache(diningVenues)
@@ -129,6 +127,28 @@ extension DiningAPI {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         if let decodedBalances = try? decoder.decode(PastDiningBalances.self, from: data) {
             return .success(decodedBalances.balanceList)
+        } else {
+            return .failure(.parsingError)
+        }
+    }
+}
+
+// MARK: Current Dining Plan Start Date
+extension DiningAPI {
+    func getDiningPlanStartDate(diningToken: String) async -> Result<Date, NetworkingError> {
+        let url = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/dining/currentPlan")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(diningToken, forHTTPHeaderField: "x-authorization")
+        guard let (data, response) = try? await URLSession.shared.data(for: request), let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            return .failure(.serverError)
+        }
+        let decoder = JSONDecoder()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        if let plan = try? decoder.decode(DiningPlan.self, from: data) {
+            return .success(plan.start_date)
         } else {
             return .failure(.parsingError)
         }

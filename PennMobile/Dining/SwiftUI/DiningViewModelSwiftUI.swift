@@ -82,7 +82,7 @@ class DiningViewModelSwiftUI: ObservableObject {
         case .success(let balance):
             UserDefaults.standard.setdiningBalance(balance)
             self.diningBalance = balance
-        case .failure(_):
+        case .failure:
             return
         }
     }
