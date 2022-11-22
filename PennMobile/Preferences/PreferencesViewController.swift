@@ -31,7 +31,7 @@ class PreferencesViewController: GenericViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.tabBarController?.title = "Preferences"
+        self.title = "Preferences"
     }
 }
 
