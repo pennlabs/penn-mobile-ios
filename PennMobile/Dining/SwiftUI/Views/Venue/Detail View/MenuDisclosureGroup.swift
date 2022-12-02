@@ -93,8 +93,8 @@ struct DiningStationItemRow: View {
         self._isExpanded = State(initialValue: isExpanded)
         self.diningStationItem = diningStationItem
         // This is only necessary because backend has duplicate ingredients, and some ingredients match item name exactly
-        // Also should take into account parenthesis, but not implemented yet
-        self.ingredients = Array(Set(diningStationItem.ingredients.components(separatedBy: ", ")))
+        // Regex for commas (this matches all commas not inside parenthesis): ,\s*(?=[^)]*(?:\(|$))
+        self.ingredients = Array(Set(diningStationItem.ingredients.split(usingRegex: ",\\s*(?=[^)]*(?:\\(|$))")))
             .filter {
                 $0 != "" &&
                 $0 != diningStationItem.name &&
@@ -211,5 +211,16 @@ struct Line: Shape {
        path.move(to: CGPoint(x: 0, y: 0))
        path.addLine(to: CGPoint(x: rect.width, y: 0))
        return path
+    }
+}
+
+// Used for splitting string by regex expression
+extension String {
+    func split(usingRegex pattern: String) -> [String] {
+        // Crashes when you pass invalid pattern
+        let regex = try! NSRegularExpression(pattern: pattern)
+        let matches = regex.matches(in: self, range: NSRange(0..<utf16.count))
+        let ranges = [startIndex..<startIndex] + matches.map{Range($0.range, in: self)!} + [endIndex..<endIndex]
+        return (0...matches.count).map {String(self[ranges[$0].upperBound..<ranges[$0+1].lowerBound])}
     }
 }
