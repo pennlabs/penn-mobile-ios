@@ -133,4 +133,18 @@ func migrateDataToGroupContainer() {
             WidgetCenter.shared.reloadTimelines(ofKind: $0)
         }
     }
+
+    // Migrate dining balances if a dining balance file doesn't already exist.
+    if let diningBalance = (UserDefaults.standard as SwiftCompilerSilencing).getDiningBalance() {
+        if !Storage.fileExists(DiningBalance.directory, in: .groupCaches) {
+            Storage.store(diningBalance, to: .groupCaches, as: DiningBalance.directory)
+        }
+        UserDefaults.standard.clearDiningBalance()
+    }
 }
+
+private protocol SwiftCompilerSilencing {
+    func getDiningBalance() -> DiningBalance?
+}
+
+extension UserDefaults: SwiftCompilerSilencing {}

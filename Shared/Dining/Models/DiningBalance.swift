@@ -9,6 +9,8 @@
 import Foundation
 
 struct DiningBalance: Codable {
+    static let directory = "diningBalance.json"
+
     let date: String
     let diningDollars: String
     let regularVisits: Int

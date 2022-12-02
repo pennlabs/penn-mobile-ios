@@ -45,10 +45,12 @@ private func refresh() async {
 
     let balancesTask = Task {
         do {
-            return try await Optional(DiningAPI.instance.getDiningBalance(diningToken: diningToken).get())
+            let balances = try await Optional(DiningAPI.instance.getDiningBalance(diningToken: diningToken).get())
+            Storage.store(balances, to: .groupCaches, as: DiningBalance.directory)
+            return balances
         } catch let error {
             print("Couldn't fetch dining balances: \(error)")
-            return nil
+            return try? Storage.retrieveThrowing(DiningBalance.directory, from: .groupCaches, as: DiningBalance.self)
         }
     }
 
