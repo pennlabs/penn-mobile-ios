@@ -198,7 +198,7 @@ extension String {
             "a", "an", "the", "for", "and", "nor", "but", "or", "yet", "so", "with", "at", "around", "by", "after", "along", "for", "from", "of", "on", "to", "with", "without"
         ]
 
-        return self.split(separator: " ").map({nonCaptializingSet.contains(String($0)) ? $0.lowercased() : $0.capitalized}).joined(separator: " ")
+        return self.split(separator: " ").map({nonCaptializingSet.contains(String($0)) ? $0.lowercased() : $0.capitalized}).joined(separator: " ").capitalizeFirstLetter()
     }
     func capitalizeFirstLetter() -> String {
         return self.prefix(1).capitalized + self.dropFirst()
