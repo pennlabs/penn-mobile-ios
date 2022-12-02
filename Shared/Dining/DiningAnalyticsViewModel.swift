@@ -75,10 +75,6 @@ class DiningAnalyticsViewModel: ObservableObject {
         case .failure:
             return
         case .success(let balanceList):
-            let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
-            if let planStartDate = try? planStartDateResult.get() {
-                self.planStartDate = planStartDate
-            }
             if startDateStr != self.formatter.string(from: Date()) {
                 let newDollarHistory = balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.diningDollars) ?? 0.0)})
                 let newSwipeHistory = balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.regularVisits))})
@@ -87,12 +83,16 @@ class DiningAnalyticsViewModel: ObservableObject {
                 Storage.store(self.swipeHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
                 Storage.store(self.dollarHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.dollarHistoryDirectory)
             }
-            populateAxesAndPredictions()
             if refreshWidgets {
                 WidgetKind.diningAnalyticsWidgets.forEach {
                     WidgetCenter.shared.reloadTimelines(ofKind: $0)
                 }
             }
+            let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
+            if let planStartDate = try? planStartDateResult.get() {
+                self.planStartDate = planStartDate
+            }
+            populateAxesAndPredictions()
         }
     }
 
@@ -101,8 +101,8 @@ class DiningAnalyticsViewModel: ObservableObject {
               let lastSwipeBalance = self.swipeHistory.last else {
             return
         }
-        guard let maxDollarBalance = self.dollarHistory.max(),
-              let maxSwipeBalance = self.swipeHistory.max() else {
+        guard let maxDollarBalance = (self.dollarHistory.max { $0.balance < $1.balance }),
+              let maxSwipeBalance = (self.swipeHistory.max { $0.balance < $1.balance }) else {
             return
         }
         // If no dining plan found, refresh will return, these are just placeholders

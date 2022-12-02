@@ -84,7 +84,7 @@ struct DiningVenueDetailView: View {
 
                     VStack {
                         if self.pickerIndex == 0 {
-                            DiningVenueDetailMenuView(menus: diningVM.diningMenus[venue.id]?.document.menuDocument.menus ?? [], id: venue.id)
+                            DiningVenueDetailMenuView(menus: diningVM.diningMenus[venue.id]?.menus ?? [], id: venue.id, venue: venue)
                         } else if self.pickerIndex == 1 {
                             DiningVenueDetailHoursView(for: venue)
                         } else {
@@ -99,7 +99,6 @@ struct DiningVenueDetailView: View {
             .navigationBarHidden(true)
             .onAppear {
                 FirebaseAnalyticsManager.shared.trackScreen("Venue Detail View")
-                diningVM.refreshMenu(for: venue.id)
             }
         }
     }

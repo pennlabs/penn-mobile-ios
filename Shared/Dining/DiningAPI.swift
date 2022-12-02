@@ -14,8 +14,7 @@ class DiningAPI {
     static let instance = DiningAPI()
 
     let diningUrl = "https://pennmobile.org/api/dining/venues/"
-    let diningMenuUrl = "https://pennmobile.org/api/dining/daily_menu/"
-    // TODO: Broken API, need to fetch locally
+    let diningMenuUrl = "https://pennmobile.org/api/dining/menus/"
 
     let diningInsightsUrl = "https://pennmobile.org/api/dining/"
 
@@ -35,8 +34,22 @@ class DiningAPI {
         }
     }
 
-    func fetchDiningMenu(for id: Int, at date: Date = Date(), _ completion: @escaping (_ result: Result<DiningMenuAPIResponse, NetworkingError>) -> Void) {
-        return completion(.failure(.parsingError))
+    func fetchDiningMenus(at date: Date = Date()) async -> Result<[MenuList], NetworkingError> {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateStr = dateFormatter.string(from: date)
+        guard let (data, _) = try? await URLSession.shared.data(from: URL(string: diningMenuUrl + dateStr + "/")!) else {
+            return .failure(.serverError)
+        }
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        if let diningMenus = try? decoder.decode([DiningMenu].self, from: data) {
+            let menus: [Int: [DiningMenu]] = Dictionary(grouping: diningMenus, by: { $0.venueInfo.id })
+            let result = menus.values.map { MenuList(menus: $0) }
+            return .success(result)
+        } else {
+            return .failure(.parsingError)
+        }
     }
 }
 
@@ -62,10 +75,10 @@ extension DiningAPI {
     func getVenues<T: Collection>(with ids: T) -> [DiningVenue] where T.Element == Int {
         return getVenues().filter({ ids.contains($0.id) })
     }
-
-    func getMenus() -> [Int: DiningMenuAPIResponse] {
-        if Storage.fileExists(DiningMenuAPIResponse.directory, in: .caches) {
-            return Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int: DiningMenuAPIResponse].self)
+    
+    func getMenus() -> [Int: MenuList] {
+        if Storage.fileExists(MenuList.directory, in: .caches) {
+            return Storage.retrieve(MenuList.directory, from: .caches, as: [Int: MenuList].self)
         } else {
             return [:]
         }
@@ -76,15 +89,21 @@ extension DiningAPI {
         Storage.store(venues, to: .caches, as: DiningVenue.directory)
     }
 
-    func saveToCache(id: Int, _ menu: DiningMenuAPIResponse) {
-        if Storage.fileExists(DiningMenuAPIResponse.directory, in: .caches) {
-            var menus = Storage.retrieve(DiningMenuAPIResponse.directory, from: .caches, as: [Int: DiningMenuAPIResponse].self)
+    func saveMenuToCache(id: Int, _ menu: MenuList) {
+        if Storage.fileExists(MenuList.directory, in: .caches) {
+            var menus = Storage.retrieve(MenuList.directory, from: .caches, as: [Int: MenuList].self)
 
             menus[id] = menu
 
-            Storage.store(menus, to: .caches, as: DiningMenuAPIResponse.directory)
+            Storage.store(menus, to: .caches, as: MenuList.directory)
         } else {
-            Storage.store([id: menu], to: .caches, as: DiningMenuAPIResponse.directory)
+            Storage.store([id: menu], to: .caches, as: MenuList.directory)
+        }
+    }
+    
+    func saveAllMenusToCache(menus: [Int: MenuList]) {
+        for (id, menu) in menus {
+            self.saveMenuToCache(id: id, menu)
         }
     }
 }

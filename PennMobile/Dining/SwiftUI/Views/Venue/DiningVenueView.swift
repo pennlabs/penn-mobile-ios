@@ -32,6 +32,7 @@ struct DiningVenueView: View {
         .task {
             await diningVM.refreshVenues()
             await diningVM.refreshBalance()
+            await diningVM.refreshMenus(cache: true)
         }
         .navigationBarHidden(false)
         .listStyle(.plain)

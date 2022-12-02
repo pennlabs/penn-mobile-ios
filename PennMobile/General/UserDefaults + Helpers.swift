@@ -516,22 +516,12 @@ extension UserDefaults {
 
 // MARK: - MenuRequest
 extension UserDefaults {
-    func setLastMenuRequest(id: Int) {
-        let dict: [Int: Date]? = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue) as? [Int: Date]
-
-        if var menuDateDict = dict {
-            menuDateDict[id] = Date()
-            UserDefaults.standard.set(menuDateDict, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
-        } else {
-            let menuDateDictInit = [id: Date()]
-            UserDefaults.standard.set(menuDateDictInit, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
-        }
+    func setLastCachedMenuRequest(_ date: Date) {
+        UserDefaults.standard.set(date, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
     }
 
-    func getLastMenuRequest(id: Int) -> Date? {
-        let dict = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue)  as? [Int: Date]
-
-        return dict?[id]
+    func getLastCachedMenuRequest() -> Date? {
+        return UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue) as? Date
     }
 }
 
