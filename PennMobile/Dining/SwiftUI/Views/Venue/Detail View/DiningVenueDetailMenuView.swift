@@ -13,16 +13,39 @@ struct DiningVenueDetailMenuView: View {
     var menus: [DiningMenu]
     var id: Int
     var venue: DiningVenue?
-    @State var menuDate = Date()
-    @State private var showMenu = false
+    @State var menuDate: Date
+    @State private var menuIndex: Int
+    @State private var showMenu: Bool
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
+    init(menus: [DiningMenu], id: Int, venue: DiningVenue? = nil, menuDate: Date = Date(), showMenu: Bool = false) {
+        self.menus = menus
+        self.id = id
+        self.venue = venue
+        _showMenu = State(initialValue: showMenu)
+        _menuDate = State(initialValue: menuDate)
+        _menuIndex = State(initialValue: 0)
+        _menuIndex = State(initialValue: self.getIndex())
+    }
+    func getIndex() -> Int {
+        var inx = 0
+        if self.venue != nil && Calendar.current.isDate(self.menuDate, inSameDayAs: Date()) {
+            if let meal = self.venue!.currentOrNearestMeal {
+                inx = self.menus.firstIndex { $0.service == meal.label } ?? inx
+            }
+        }
+        return inx
+    }
 
     var body: some View {
         DatePicker(selection: $menuDate, in: Date()...Date().addingTimeInterval(86400 * 6), displayedComponents: .date) {
             Text("Menu date")
         }.onChange(of: menuDate) { newMenuDate in
+            menuIndex = 0
             Task.init() {
                 await diningVM.refreshMenus(cache: false, at: newMenuDate)
+            }
+            if Calendar.current.isDate(newMenuDate, inSameDayAs: Date()) {
+                menuIndex = getIndex()
             }
         }
         VStack {
@@ -46,22 +69,17 @@ struct DiningVenueDetailMenuView: View {
             .sheet(isPresented: $showMenu) {
                 MenuWebView(url: URL(string: DiningVenue.menuUrlDict[id] ?? "https://university-of-pennsylvania.cafebonappetit.com/")!)
             }
-            ForEach(menus, id: \.self) { menu in
-                DiningMenuRow(diningMenu: menu, isExpanded: isOpen(menuType: menu.service))
+            if menus.count > 0 {
+                Picker("Menu", selection: self.$menuIndex) {
+                    ForEach(0 ..< menus.count, id: \.self) {
+                        Text(menus[$0].service)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                DiningMenuRow(diningMenu: menus[menuIndex])
                     .transition(.opacity)
-            } // if change from no menu to has menu, doesn't switch
-            // or if error happens, need to refresh menu on load also
+            }
         }
-    }
-    func isOpen(menuType: String) -> Bool {
-        if venue == nil {
-            return false
-        }
-        if !Calendar.current.isDate(menuDate, inSameDayAs: Date()) {
-            return false
-        }
-        guard let meal = venue!.currentOrNearestMeal else { return false }
-        return meal.label == menuType
     }
 }
 

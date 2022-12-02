@@ -8,6 +8,54 @@
 
 import SwiftUI
 
+struct DiningMenuRow: View {
+    var diningMenu: DiningMenu
+
+    var body: some View {
+        VStack(spacing: 0) {
+            ForEach(diningMenu.stations, id: \.self) { diningStation in
+                DiningStationRow(for: diningStation)
+            }
+        }
+        .background(Color.grey7.cornerRadius(8))
+    }
+}
+
+struct DiningStationRow: View {
+    @State var isExpanded = false
+    let diningStation: DiningStation
+    init (for diningStation: DiningStation) {
+        self.diningStation = diningStation
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.name)
+                .font(Font.system(size: 17))
+                .padding()
+                .background(Color.uiCardBackground.cornerRadius(8))
+                .shadow(color: Color.black.opacity(0.2), radius: 4, x: 2, y: 2)
+            if isExpanded {
+                VStack {
+                    ForEach(diningStation.items, id: \.self) { diningStationItem in
+                        DiningStationItemRow(isExpanded: false, for: diningStationItem)
+                            .padding([.leading, .trailing])
+                        if diningStationItem != diningStation.items.last {
+                            Line()
+                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                .frame(height: 1)
+                                .foregroundColor(Color.grey5)
+                        }
+                    }
+                    .transition(.moveAndFade)
+                }
+                .padding([.top, .bottom])
+            }
+        }
+        .background(Color.grey7.cornerRadius(8))
+    }
+}
+
 struct DiningMenuSectionRow: View {
     @Binding var isExpanded: Bool
     let title: String
@@ -21,12 +69,11 @@ struct DiningMenuSectionRow: View {
         HStack {
             Text(title)
             Spacer()
-            Image(systemName: "chevron.right.circle")
+            Image(systemName: "chevron.right")
                 .rotationEffect(.degrees(isExpanded ? -90 : 90))
                 .frame(width: 28, alignment: .center)
         }
         .contentShape(Rectangle())
-        .padding([.top])
         .onTapGesture {
             FirebaseAnalyticsManager.shared.trackEvent(action: "Open Menu", result: title, content: "")
             withAnimation {
@@ -36,77 +83,52 @@ struct DiningMenuSectionRow: View {
     }
 }
 
-struct DiningMenuRow: View {
-    var diningMenu: DiningMenu
-    @State var isExpanded = false
-    var body: some View {
-        VStack(spacing: 0) {
-            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningMenu.service)
-                .font(.system(size: 21, weight: .medium))
-
-            if isExpanded {
-                ForEach(diningMenu.stations, id: \.self) { diningStation in
-                    DiningStationRow(for: diningStation)
-                }
-                .padding(.leading)
-                .transition(.moveAndFade)
-            }
-        }.clipped()
-    }
-}
-
-struct DiningStationRow: View {
-
-    init (for diningStation: DiningStation) {
-        self.diningStation = diningStation
-    }
-
-    @State var isExpanded = false
-    let diningStation: DiningStation
-
-    var body: some View {
-        VStack {
-            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.name)
-                .font(Font.system(size: 17))
-            if isExpanded {
-                Spacer(minLength: 10)
-                ForEach(diningStation.items, id: \.self) { diningStationItem in
-                    DiningStationItemRow(for: diningStationItem)
-                }
-                .transition(.moveAndFade)
-            }
-        }.clipped()
-
-    }
-}
-
 struct DiningStationItemRow: View {
 
-    init (for diningStationItem: DiningStationItem) {
-        self.diningStationItem = diningStationItem
-    }
-
     let diningStationItem: DiningStationItem
-    @State private var showDetails = false
+    @State var isExpanded: Bool
+    let ingredients: [String]
+
+    init (isExpanded: Bool, for diningStationItem: DiningStationItem) {
+        self._isExpanded = State(initialValue: isExpanded)
+        self.diningStationItem = diningStationItem
+        // This is only necessary because backend has duplicate ingredients, and some ingredients match item name exactly
+        // Also should take into account parenthesis, but not implemented yet
+        self.ingredients = Array(Set(diningStationItem.ingredients.components(separatedBy: ", ")))
+            .filter {
+                $0 != "" &&
+                $0 != diningStationItem.name &&
+                $0 != diningStationItem.name + "s" &&
+                $0 != diningStationItem.name + "es" &&
+                $0 != diningStationItem.name.dropLast() + "ies" &&
+                !diningStationItem.name.lowercased().contains($0.lowercased())
+            }
+    }
 
     var body: some View {
         let name = diningStationItem.name.capitalizeMainWords()
-        Button {
-            showDetails.toggle()
-        } label: {
+        if diningStationItem.desc != "" || ingredients.count > 0 {
             HStack {
                 Text(name)
-                    .font(.system(size: 17))
-                    .lineLimit(1)
                 Spacer()
-                Image(systemName: "info.circle")
+                Image(systemName: "chevron.right")
+                    .rotationEffect(.degrees(isExpanded ? -90 : 90))
                     .frame(width: 28, alignment: .center)
             }
-            .padding([.leading])
-        }
-        .buttonStyle(.plain)
-        .sheet(isPresented: $showDetails) {
-            ItemView(name: name, description: diningStationItem.desc, ingredients: diningStationItem.ingredients.components(separatedBy: ", "))
+            .contentShape(Rectangle())
+            .onTapGesture {
+                withAnimation {
+                    isExpanded.toggle()
+                }
+            }
+            if isExpanded {
+                ItemView(name: name, description: diningStationItem.desc, ingredients: ingredients)
+            }
+        } else {
+            HStack {
+                Text(name)
+                Spacer()
+            }
         }
     }
 }
@@ -117,44 +139,23 @@ struct ItemView: View {
     let ingredients: [String]
     var body: some View {
         VStack(alignment: .center) {
-            Text(name)
-                .font(.title)
-                .padding()
-            Divider()
-            if description == "" && (ingredients.count == 0 || (ingredients.count == 1 && ingredients[0] == "")) {
-                Text("No details")
-                    .padding()
-                Spacer()
-            } else {
-                VStack(spacing: 10) {
-                    if description != "" {
-                        VStack {
-                            Text("Description")
-                                .font(.system(size: 21, weight: .medium))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            Text(description.capitalizeFirstLetter())
+            VStack(spacing: 0) {
+                if description != "" {
+                    Text(description.capitalizeFirstLetter())
+                        .font(.system(size: 17))
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding([.leading])
+                }
+                if ingredients.count != 0 {
+                    VStack {
+                        ForEach(ingredients, id: \.self) { attribute in
+                            Text("• " + attribute.capitalizeFirstLetter())
                                 .font(.system(size: 17))
-                                .fixedSize(horizontal: false, vertical: true)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding([.leading])
                         }
-                        .padding()
                     }
-                    if ingredients.count != 0 && (ingredients.count != 1 || ingredients[0] != "") {
-                        VStack {
-                            Text("Ingredients")
-                                .font(.system(size: 21, weight: .medium))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            ForEach(ingredients, id: \.self) { attribute in
-                                Text("• " + attribute.capitalizeFirstLetter())
-                                    .font(.system(size: 17))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding([.leading])
-                            }
-                        }
-                        .padding()
-                    }
-                    Spacer()
                 }
             }
         }
@@ -201,5 +202,14 @@ extension String {
     }
     func capitalizeFirstLetter() -> String {
         return self.prefix(1).capitalized + self.dropFirst()
+    }
+}
+
+struct Line: Shape {
+    func path(in rect: CGRect) -> Path {
+       var path = Path()
+       path.move(to: CGPoint(x: 0, y: 0))
+       path.addLine(to: CGPoint(x: rect.width, y: 0))
+       return path
     }
 }
