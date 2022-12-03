@@ -124,6 +124,7 @@ extension Color {
     static var grey4 = Color("grey4")
     static var grey5 = Color("grey5")
     static var grey6 = Color("grey6")
+    static var grey7 = Color("grey7")
 
     // MARK: - Secondary Palette
     static var baseBlue = Color("baseBlue")
