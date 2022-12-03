@@ -81,7 +81,7 @@ struct DiningAnalyticsView: View {
                 showMissingDiningTokenAlert = true
                 return
             }
-            await diningAnalyticsViewModel.refresh()
+            await diningAnalyticsViewModel.refresh(refreshWidgets: true)
         }
         .alert(isPresented: $showMissingDiningTokenAlert) {
             showCorrectAlert()
@@ -97,7 +97,7 @@ extension DiningAnalyticsView {
     func getSmoothedData(from trans: [DiningAnalyticsBalance]) -> [PredictionsGraphView.YXDataPoint] {
         let sos = Date.startOfSemester
         let eos = Date.endOfSemester
-        
+
         let totalLength = eos.distance(to: sos)
         let maxDollarValue = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0
         let yxPoints: [PredictionsGraphView.YXDataPoint] = trans.map { (t) -> PredictionsGraphView.YXDataPoint in

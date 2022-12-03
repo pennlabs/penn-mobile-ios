@@ -72,7 +72,7 @@ struct CustomHeader: View {
                         showMissingDiningTokenAlert = true
                         return
                     }
-                    Task.init() {
+                    Task.init {
                         await DiningViewModelSwiftUI.instance.refreshBalance()
                     }
                 }, label: {

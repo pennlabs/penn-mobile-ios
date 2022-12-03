@@ -542,6 +542,7 @@ extension UserDefaults {
 
 // MARK: - Current Dining Balance Object
 extension UserDefaults {
+    @available(*, deprecated)
     func setdiningBalance(_ diningBalance: DiningBalance) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(diningBalance) {
@@ -549,6 +550,7 @@ extension UserDefaults {
         }
         synchronize()
     }
+    @available(*, deprecated)
     func getDiningBalance() -> DiningBalance? {
         let decoder = JSONDecoder()
         if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.diningBalance.rawValue) {
@@ -559,23 +561,6 @@ extension UserDefaults {
     func clearDiningBalance() {
         removeObject(forKey: UserDefaultsKeys.diningBalance.rawValue)
     }
-}
-
-// MARK: - Last dining analytics end date called
-extension UserDefaults {
-    func setNextAnalyticsStartDate(_ date: String) {
-        set(date, forKey: UserDefaultsKeys.nextAnalyticsStartDate.rawValue)
-        synchronize()
-    }
-
-    func getNextAnalyticsStartDate() -> String? {
-        return string(forKey: UserDefaultsKeys.nextAnalyticsStartDate.rawValue)
-    }
-
-    func clearNextAnalyticsStartDateDate() {
-        removeObject(forKey: UserDefaultsKeys.nextAnalyticsStartDate.rawValue)
-    }
-
 }
 
 extension UserDefaults {

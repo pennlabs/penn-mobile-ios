@@ -7,19 +7,32 @@
 //
 
 import Foundation
-import XLPagerTabStrip
 import SwiftUI
+import WidgetKit
 
-struct DiningAnalyticsBalance: Codable {
+struct DiningAnalyticsBalance: Codable, Equatable {
     let date: Date
     let balance: Double
+}
+
+extension DiningAnalyticsBalance: Comparable {
+    static func <(lhs: DiningAnalyticsBalance, rhs: DiningAnalyticsBalance) -> Bool {
+        if lhs.balance < rhs.balance {
+            return true
+        } else if lhs.balance > rhs.balance {
+            return false
+        } else {
+            return lhs.date < rhs.date
+        }
+    }
 }
 
 class DiningAnalyticsViewModel: ObservableObject {
     static let dollarHistoryDirectory = "diningAnalyticsDollarData"
     static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
-    @Published var dollarHistory: [DiningAnalyticsBalance] = Storage.fileExists(dollarHistoryDirectory, in: .documents) ? Storage.retrieve(dollarHistoryDirectory, from: .documents, as: [DiningAnalyticsBalance].self) : []
-    @Published var swipeHistory: [DiningAnalyticsBalance] = Storage.fileExists(swipeHistoryDirectory, in: .documents) ? Storage.retrieve(swipeHistoryDirectory, from: .documents, as: [DiningAnalyticsBalance].self) : []
+    @Published var dollarHistory: [DiningAnalyticsBalance] = Storage.fileExists(dollarHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(dollarHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
+    @Published var swipeHistory: [DiningAnalyticsBalance] = Storage.fileExists(swipeHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(swipeHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
+    @Published var planStartDate: Date?
 
     @Published var dollarPredictedZeroDate: Date = Date.endOfSemester
     @Published var predictedDollarSemesterEndBalance: Double = 0
@@ -37,17 +50,18 @@ class DiningAnalyticsViewModel: ObservableObject {
     init() {
         formatter.dateFormat = "yyyy-MM-dd"
         clearStorageIfNewSemester()
+        populateAxesAndPredictions()
     }
     func clearStorageIfNewSemester() {
-        if Storage.fileExists(DiningAnalyticsViewModel.dollarHistoryDirectory, in: .documents), let nextAnalyticsStartDate = Storage.retrieve(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .documents, as: [DiningAnalyticsBalance].self).last?.date,
+        if Storage.fileExists(DiningAnalyticsViewModel.dollarHistoryDirectory, in: .groupDocuments), let nextAnalyticsStartDate = Storage.retrieve(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self).last?.date,
             nextAnalyticsStartDate < Date.startOfSemester {
             self.dollarHistory = []
             self.swipeHistory = []
-            Storage.remove(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .documents)
-            Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .documents)
+            Storage.remove(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .groupDocuments)
+            Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .groupDocuments)
         }
     }
-    func refresh() async {
+    func refresh(refreshWidgets: Bool = false) async {
         guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
             return
         }
@@ -66,52 +80,63 @@ class DiningAnalyticsViewModel: ObservableObject {
                 let newSwipeHistory = balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.regularVisits))})
                 self.swipeHistory.append(contentsOf: newSwipeHistory)
                 self.dollarHistory.append(contentsOf: newDollarHistory)
-                Storage.store(self.swipeHistory, to: .documents, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
-                Storage.store(self.dollarHistory, to: .documents, as: DiningAnalyticsViewModel.dollarHistoryDirectory)
+                Storage.store(self.swipeHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
+                Storage.store(self.dollarHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.dollarHistoryDirectory)
             }
-            guard let lastDollarBalance = self.dollarHistory.last,
-                  let lastSwipeBalance = self.swipeHistory.last else {
-                return
+            if refreshWidgets {
+                WidgetKind.diningAnalyticsWidgets.forEach {
+                    WidgetCenter.shared.reloadTimelines(ofKind: $0)
+                }
             }
-            guard let maxDollarBalance = (self.dollarHistory.max { $0.balance < $1.balance }),
-                  let maxSwipeBalance = (self.swipeHistory.max { $0.balance < $1.balance }) else {
-                return
-            }
-            // If no dining plan found, refresh will return, these are just placeholders
-            var startDollarBalance = maxDollarBalance
-            var startSwipeBalance = maxSwipeBalance
             let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
-            switch planStartDateResult {
-            case .failure:
-                return
-            case .success(let planStartDate):
-                // If dining plan found, start prediction from the date dining plan started
-                startDollarBalance = (self.dollarHistory.first { $0.date == planStartDate }) ?? startDollarBalance
-                startSwipeBalance = (self.swipeHistory.first { $0.date == planStartDate }) ?? startSwipeBalance
-                // However, it's possible that people recharged dining dollars (swipes maybe?), and if so, predict from this date (most recent increase)
-                for (i, day) in self.dollarHistory.enumerated() {
-                    if i != 0 && day.date > planStartDate && day.balance > self.dollarHistory[i - 1].balance {
-                        startDollarBalance = day
-                    }
-                }
-                for (i, day) in self.swipeHistory.enumerated() {
-                    if i != 0 && day.date > planStartDate && day.balance > self.swipeHistory[i - 1].balance {
-                        startSwipeBalance = day
-                    }
-                }
+            if let planStartDate = try? planStartDateResult.get() {
+                self.planStartDate = planStartDate
             }
-            let dollarPredictions = self.getPredictions(firstBalance: startDollarBalance, lastBalance: lastDollarBalance, maxBalance: maxDollarBalance)
-            self.dollarSlope = dollarPredictions.slope
-            self.dollarPredictedZeroDate = dollarPredictions.predictedZeroDate
-            self.predictedDollarSemesterEndBalance = dollarPredictions.predictedEndBalance
-            self.dollarAxisLabel = self.getAxisLabelsYX(from: self.dollarHistory)
-            let swipePredictions = self.getPredictions(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: maxSwipeBalance)
-            self.swipeSlope = swipePredictions.slope
-            self.swipesPredictedZeroDate = swipePredictions.predictedZeroDate
-            self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
-            self.swipeAxisLabel = self.getAxisLabelsYX(from: self.swipeHistory)
+            populateAxesAndPredictions()
         }
     }
+
+    func populateAxesAndPredictions() {
+        guard let lastDollarBalance = self.dollarHistory.last,
+              let lastSwipeBalance = self.swipeHistory.last else {
+            return
+        }
+        guard let maxDollarBalance = (self.dollarHistory.max { $0.balance < $1.balance }),
+              let maxSwipeBalance = (self.swipeHistory.max { $0.balance < $1.balance }) else {
+            return
+        }
+        // If no dining plan found, refresh will return, these are just placeholders
+        var startDollarBalance = maxDollarBalance
+        var startSwipeBalance = maxSwipeBalance
+        guard let planStartDate else { return }
+
+        // If dining plan found, start prediction from the date dining plan started
+        startDollarBalance = (self.dollarHistory.first { $0.date == planStartDate }) ?? startDollarBalance
+        startSwipeBalance = (self.swipeHistory.first { $0.date == planStartDate }) ?? startSwipeBalance
+        // However, it's possible that people recharged dining dollars (swipes maybe?), and if so, predict from this date (most recent increase)
+        for (i, day) in self.dollarHistory.enumerated() {
+            if i != 0 && day.date > planStartDate && day.balance > self.dollarHistory[i - 1].balance {
+                startDollarBalance = day
+            }
+        }
+        for (i, day) in self.swipeHistory.enumerated() {
+            if i != 0 && day.date > planStartDate && day.balance > self.swipeHistory[i - 1].balance {
+                startSwipeBalance = day
+            }
+        }
+
+        let dollarPredictions = self.getPredictions(firstBalance: startDollarBalance, lastBalance: lastDollarBalance, maxBalance: maxDollarBalance)
+        self.dollarSlope = dollarPredictions.slope
+        self.dollarPredictedZeroDate = dollarPredictions.predictedZeroDate
+        self.predictedDollarSemesterEndBalance = dollarPredictions.predictedEndBalance
+        self.dollarAxisLabel = self.getAxisLabelsYX(from: self.dollarHistory)
+        let swipePredictions = self.getPredictions(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: maxSwipeBalance)
+        self.swipeSlope = swipePredictions.slope
+        self.swipesPredictedZeroDate = swipePredictions.predictedZeroDate
+        self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
+        self.swipeAxisLabel = self.getAxisLabelsYX(from: self.swipeHistory)
+    }
+
     func getPredictions(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance, maxBalance: DiningAnalyticsBalance) -> (slope: Double, predictedZeroDate: Date, predictedEndBalance: Double) {
         if firstBalance.date == lastBalance.date || firstBalance.balance == lastBalance.balance {
             let zeroDate = Calendar.current.date(byAdding: .day, value: 1, to: Date.endOfSemester)!
@@ -145,10 +170,18 @@ class DiningAnalyticsViewModel: ObservableObject {
         return endBalance
     }
     // Compute axis labels
-    func getAxisLabelsYX(from trans: [DiningAnalyticsBalance]) -> ([String], [String]) {
+    static func getAxisLabelsX() -> [String] {
         let xAxisLabelCount = 4
+        let semester = Date.startOfSemester.distance(to: Date.endOfSemester)
+        let semesterStep = semester / Double(xAxisLabelCount - 1)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M/d"
+        return stride(from: 0, to: Double(xAxisLabelCount), by: 1).map {
+            dateFormatter.string(from: Date.startOfSemester.advanced(by: semesterStep * $0))
+        }
+    }
+    func getAxisLabelsYX(from trans: [DiningAnalyticsBalance]) -> ([String], [String]) {
         let yAxisLabelCount = 5
-        var xLabels: [String] = []
         var yLabels: [String] = []
 
         // Generate Y Axis Labels
@@ -159,16 +192,6 @@ class DiningAnalyticsViewModel: ObservableObject {
             yLabels.append(yAxisLabel)
         }
 
-        // Generate X Axis Labels
-        let semester = Date.startOfSemester.distance(to: Date.endOfSemester)
-        let semesterStep = semester / Double(xAxisLabelCount - 1)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "M/d"
-        for i in 0 ..< xAxisLabelCount {
-            let dateForLabel = Date.startOfSemester.advanced(by: semesterStep * Double(i))
-            xLabels.append(dateFormatter.string(from: dateForLabel))
-        }
-
-        return (yLabels, xLabels)
+        return (yLabels, DiningAnalyticsViewModel.getAxisLabelsX())
     }
 }

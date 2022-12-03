@@ -12,4 +12,10 @@ enum WidgetKind {
     static let courseWidgets = [
         coursesDay
     ]
+
+    static let diningAnalyticsHome = "org.pennlabs.PennMobile.widgets.dininganalytics.home"
+
+    static let diningAnalyticsWidgets = [
+        diningAnalyticsHome
+    ]
 }

@@ -9,7 +9,7 @@
 import SwiftyJSON
 import Foundation
 
-class DiningAPI: Requestable {
+class DiningAPI {
 
     static let instance = DiningAPI()
 
@@ -136,7 +136,6 @@ extension DiningAPI {
         let endDate = formatter.string(from: Calendar.current.date(byAdding: .day, value: -1, to: Date().localTime)!)
         url.appendQueryItem(name: "start_date", value: startDate)
         url.appendQueryItem(name: "end_date", value: endDate)
-        UserDefaults.standard.setNextAnalyticsStartDate(formatter.string(from: Date()))
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue(diningToken, forHTTPHeaderField: "x-authorization")

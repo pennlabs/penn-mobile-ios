@@ -18,7 +18,7 @@ class DiningViewModelSwiftUI: ObservableObject {
     @Published var diningVenuesIsLoading = false
     @Published var alertType: NetworkingError?
 
-    @Published var diningBalance = UserDefaults.standard.getDiningBalance() ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
+    @Published var diningBalance = (try? Storage.retrieveThrowing(DiningBalance.directory, from: .groupCaches, as: DiningBalance.self)) ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
     // MARK: - Venue Methods
     let ordering: [VenueType] = [.dining, .retail]
 
@@ -80,7 +80,7 @@ class DiningViewModelSwiftUI: ObservableObject {
         let result = await DiningAPI.instance.getDiningBalance(diningToken: diningToken)
         switch result {
         case .success(let balance):
-            UserDefaults.standard.setdiningBalance(balance)
+            Storage.store(balance, to: .groupCaches, as: DiningBalance.directory)
             self.diningBalance = balance
         case .failure:
             return

@@ -46,7 +46,7 @@ class UserDBManager: NSObject, Requestable, SHA256Hashable {
             task.resume()
         }
     }
-    
+
     /**
       Returns a URLRequest configured for making anonymous requests. The server matches either the pennkey-password hash or the private UUID in the DB to find the anonymous account ID, updating the identifiers if the password of device changes.
      
