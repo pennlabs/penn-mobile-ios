@@ -169,7 +169,7 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>F14SzM</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>22C5033e</string>
+	<string>22C5050e</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
 	<string>14B47b</string>
 	<key>INIntentDefinitionToolsVersion</key>
@@ -179,6 +179,8 @@
 		<dict>
 			<key>INIntentCategory</key>
 			<string>information</string>
+			<key>INIntentDescription</key>
+			<string>Change settings for the Courses Day widget.</string>
 			<key>INIntentDescriptionID</key>
 			<string>BdAkd1</string>
 			<key>INIntentEligibleForWidgets</key>
@@ -284,6 +286,8 @@
 		<dict>
 			<key>INIntentCategory</key>
 			<string>information</string>
+			<key>INIntentDescription</key>
+			<string>Change settings for the Dining Analytics widget.</string>
 			<key>INIntentDescriptionID</key>
 			<string>cuJDUc</string>
 			<key>INIntentEligibleForWidgets</key>
