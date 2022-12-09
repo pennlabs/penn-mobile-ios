@@ -85,18 +85,21 @@ public class Storage {
     ///   - directory: where to store the struct
     ///   - fileName: what to name the file where the struct data will be stored
     static func store<T: Encodable>(_ object: T, to directory: Directory, as fileName: String) {
+        try! storeThrowing(object, to: directory, as: fileName)
+    }
+    
+    /// Store an encodable struct to the specified directory on disk, throwing if an error occurs.
+    ///
+    /// - Parameters:
+    ///   - object: the encodable struct to store
+    ///   - directory: where to store the struct
+    ///   - fileName: what to name the file where the struct data will be stored
+    static func storeThrowing<T: Encodable>(_ object: T, to directory: Directory, as fileName: String) throws {
         let url = getURL(for: directory).appendingPathComponent(fileName, isDirectory: false)
-
         let encoder = JSONEncoder()
-        do {
-            let data = try encoder.encode(object)
-            if FileManager.default.fileExists(atPath: url.path) {
-                try FileManager.default.removeItem(at: url)
-            }
-            FileManager.default.createFile(atPath: url.path, contents: data, attributes: nil)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        let data = try encoder.encode(object)
+        try data.write(to: url)
     }
 
     /// Retrieve and convert a struct from a file on disk

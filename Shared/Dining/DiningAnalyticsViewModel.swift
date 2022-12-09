@@ -80,8 +80,8 @@ class DiningAnalyticsViewModel: ObservableObject {
                 let newSwipeHistory = balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.regularVisits))})
                 self.swipeHistory.append(contentsOf: newSwipeHistory)
                 self.dollarHistory.append(contentsOf: newDollarHistory)
-                Storage.store(self.swipeHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
-                Storage.store(self.dollarHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.dollarHistoryDirectory)
+                try? Storage.storeThrowing(self.swipeHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
+                try? Storage.storeThrowing(self.dollarHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.dollarHistoryDirectory)
             }
             if refreshWidgets {
                 WidgetKind.diningAnalyticsWidgets.forEach {
