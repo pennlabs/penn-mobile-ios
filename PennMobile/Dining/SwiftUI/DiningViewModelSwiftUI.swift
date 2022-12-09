@@ -80,7 +80,7 @@ class DiningViewModelSwiftUI: ObservableObject {
         let result = await DiningAPI.instance.getDiningBalance(diningToken: diningToken)
         switch result {
         case .success(let balance):
-            Storage.store(balance, to: .groupCaches, as: DiningBalance.directory)
+            try? Storage.storeThrowing(balance, to: .groupCaches, as: DiningBalance.directory)
             self.diningBalance = balance
         case .failure:
             return
