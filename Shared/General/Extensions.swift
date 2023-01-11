@@ -347,14 +347,14 @@ extension Date {
     static var startOfSemester: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.date(from: "2022-08-30")!
+        return formatter.date(from: "2023-01-11")!
 
     }
 
     static var endOfSemester: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.date(from: "2022-12-22")!
+        return formatter.date(from: "2023-05-09")!
     }
 }
 
