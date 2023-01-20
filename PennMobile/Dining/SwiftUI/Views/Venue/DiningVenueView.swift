@@ -11,7 +11,7 @@ import SwiftUI
 struct DiningVenueView: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @StateObject var diningAnalyticsViewModel = DiningAnalyticsViewModel()
-
+    
     var body: some View {
         List {
             Section(header: CustomHeader(name: "Dining Balance", refreshButton: true).environmentObject(diningAnalyticsViewModel), content: {
@@ -33,7 +33,6 @@ struct DiningVenueView: View {
             await diningVM.refreshVenues()
             await diningVM.refreshBalance()
             await diningVM.refreshMenus(cache: true)
-            await diningAnalyticsViewModel.refresh(refreshWidgets: true)
         }
         .navigationBarHidden(false)
         .listStyle(.plain)

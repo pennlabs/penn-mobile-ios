@@ -50,7 +50,9 @@ class DiningAnalyticsViewModel: ObservableObject {
     init() {
         formatter.dateFormat = "yyyy-MM-dd"
         clearStorageIfNewSemester()
-        populateAxesAndPredictions()
+        Task {
+            await refresh(refreshWidgets: true)
+        }
     }
     func clearStorageIfNewSemester() {
         if Storage.fileExists(DiningAnalyticsViewModel.dollarHistoryDirectory, in: .groupDocuments), let nextAnalyticsStartDate = Storage.retrieve(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self).last?.date,
