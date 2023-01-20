@@ -141,6 +141,7 @@ struct CustomHeader: View {
                         .imageScale(.large)
                         .rotationEffect(reduceMotion ? .zero : buttonAngle)
                         .opacity(reduceMotion ? 1 + (buttonAngle.degrees / 360) : (isRefreshing ? 0.5 : 1))
+                        .accessibilityLabel(Text(isRefreshing ? "Refreshing" : "Refresh"))
                 })
             default:
                 Group {}
