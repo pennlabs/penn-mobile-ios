@@ -84,6 +84,7 @@ struct CustomHeader: View {
     @State var showDiningLoginView = false
     @State var buttonAngle: Angle = .zero
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
     func showCorrectAlert () -> Alert {
         if !Account.isLoggedIn {
@@ -98,7 +99,7 @@ struct CustomHeader: View {
 
     func animateButton(refreshing brrrr: Bool) {
         if brrrr {
-            withAnimation(.linear(duration: 1).repeatForever(autoreverses: Int.random(in: 0..<50) == 0)) {
+            withAnimation(.linear(duration: 1).repeatForever(autoreverses: reduceMotion || Int.random(in: 0..<50) == 0)) {
                 buttonAngle = .degrees(-360)
             }
         } else {
@@ -136,7 +137,10 @@ struct CustomHeader: View {
 
                     refresh()
                 }, label: {
-                    Image(systemName: "arrow.counterclockwise.circle.fill").imageScale(.large).rotationEffect(buttonAngle)
+                    Image(systemName: "arrow.counterclockwise.circle.fill")
+                        .imageScale(.large)
+                        .rotationEffect(reduceMotion ? .zero : buttonAngle)
+                        .opacity(reduceMotion ? 1 + (buttonAngle.degrees / 360) : (isRefreshing ? 0.5 : 1))
                 })
             default:
                 Group {}
