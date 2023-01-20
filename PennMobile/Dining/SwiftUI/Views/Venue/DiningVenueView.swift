@@ -98,8 +98,8 @@ struct CustomHeader: View {
 
     func animateButton(refreshing brrrr: Bool) {
         if brrrr {
-            withAnimation(.linear(duration: 1).repeatForever(autoreverses: true)) {
-                buttonAngle = .degrees(360)
+            withAnimation(.linear(duration: 1).repeatForever(autoreverses: Int.random(in: 0..<50) == 0)) {
+                buttonAngle = .degrees(-360)
             }
         } else {
             withAnimation {
@@ -136,8 +136,8 @@ struct CustomHeader: View {
 
                     refresh()
                 }, label: {
-                    Image(systemName: "arrow.counterclockwise")
-                }).rotationEffect(buttonAngle)
+                    Image(systemName: "arrow.counterclockwise.circle.fill").imageScale(.large).rotationEffect(buttonAngle)
+                })
             default:
                 Group {}
             }
