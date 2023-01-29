@@ -25,13 +25,30 @@ struct DiningVenueView: View {
         }
 
         refreshState = .refreshing(Task {
-            await diningVM.refreshVenues()
-            await diningVM.refreshBalance()
-            await diningVM.refreshMenus(cache: true)
-
-            // Only refresh widgets once
-            await diningAnalyticsViewModel.refresh(refreshWidgets: widgetsNeedRefresh)
-            widgetsNeedRefresh = false
+            let venueTask = Task {
+                await diningVM.refreshVenues()
+            }
+            
+            let balanceTask = Task {
+                await diningVM.refreshBalance()
+            }
+            
+            let menuTask = Task {
+                await diningVM.refreshMenus(cache: true)
+            }
+            
+            let analyticsTask = Task {
+                // Only refresh widgets once
+                await diningAnalyticsViewModel.refresh(refreshWidgets: widgetsNeedRefresh)
+                if !Task.isCancelled {
+                    widgetsNeedRefresh = false
+                }
+            }
+            
+            await venueTask.value
+            await balanceTask.value
+            await menuTask.value
+            await analyticsTask.value
 
             refreshState = .refreshed
         })
