@@ -33,11 +33,11 @@ private var lastFetchDate: Date?
 private var refreshTask: Task<Void, Never>?
 private let cacheAge: TimeInterval = 15 * 60
 
-private func refresh() async {
-    guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
-        return
-    }
+private enum DiningAnalyticsProviderError: Error {
+    case noDiningToken
+}
 
+private func refresh() async {
     let model = DiningAnalyticsViewModel()
     let modelRefreshTask = Task {
         await model.refresh()
@@ -45,6 +45,10 @@ private func refresh() async {
 
     let balancesTask = Task {
         do {
+            guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
+                throw DiningAnalyticsProviderError.noDiningToken
+            }
+            
             let balances = try await Optional(DiningAPI.instance.getDiningBalance(diningToken: diningToken).get())
             try? Storage.storeThrowing(balances, to: .groupCaches, as: DiningBalance.directory)
             return balances
