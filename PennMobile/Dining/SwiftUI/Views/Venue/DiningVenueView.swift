@@ -97,8 +97,8 @@ struct CustomHeader: View {
         }
     }
 
-    func animateButton(refreshing brrrr: Bool) {
-        if brrrr {
+    func animateButton(refreshing: Bool) {
+        if refreshing {
             withAnimation(.linear(duration: 1).repeatForever(autoreverses: reduceMotion || Int.random(in: 0..<50) == 0)) {
                 buttonAngle = .degrees(-360)
             }
@@ -159,8 +159,8 @@ struct CustomHeader: View {
         .onAppear {
             animateButton(refreshing: isRefreshing)
         }
-        .onChange(of: isRefreshing) { brrrr in
-            animateButton(refreshing: brrrr)
+        .onChange(of: isRefreshing) { refreshing in
+            animateButton(refreshing: refreshing)
         }
 
         // Note: The Alert view is soon to be deprecated, but .alert(_:isPresented:presenting:actions:message:) is available in iOS15+
