@@ -27,7 +27,9 @@ class InfoTableViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchController.dismiss(animated: false)
-        viewModel.updateAccount()
+        Task {
+            await viewModel.updateAccount()
+        }
     }
 
     func setupView() {

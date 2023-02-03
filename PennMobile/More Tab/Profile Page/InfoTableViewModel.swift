@@ -33,8 +33,7 @@ class InfoTableViewModel: NSObject {
 
     }
 
-    func updateAccount() {
-
+    func updateAccount() async {
         var account = Account.getAccount()!
         var student = account.student
 
@@ -47,28 +46,51 @@ class InfoTableViewModel: NSObject {
         account.student = student
 
         Account.saveAccount(account)
+        
+        account.email = nil
+        account.emails = []
 
         let encoder = JSONEncoder()
-        if let data = try? encoder.encode(account) {
-            OAuth2NetworkManager.instance.getAccessToken { (token) in
-                guard let token = token else { return }
-
-                var request = URLRequest(url: URL(string: "https://platform.pennlabs.org/accounts/me")!, accessToken: token)
-                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.httpBody = data
-                request.httpMethod = "PATCH"
-
-                let str = String(decoding: data, as: UTF8.self)
-                print(str)
-
-                let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ in
-                    print(response)
-                    print(String(decoding: data!, as: UTF8.self))
-
-                })
-                task.resume()
-            }
+        guard let data = try? encoder.encode(account) else {
+            return
         }
+        
+        guard let token = await OAuth2NetworkManager.instance.getAccessToken() else {
+            return
+        }
+        
+        let url = URL(string: "https://platform.pennlabs.org/accounts/me")!
+        // TODO: Break this out into a separate utility
+        let csrfToken: String
+        if let cookie = HTTPCookieStorage.shared.cookies(for: url)?.first(where: { $0.name == "csrftoken" }) {
+            csrfToken = cookie.value
+        } else {
+            // TODO: Get a new CSRF token
+            return
+        }
+
+        var request = URLRequest(url: URL(string: "https://platform.pennlabs.org/accounts/me")!, accessToken: token)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(csrfToken, forHTTPHeaderField: "X-CSRFToken")
+        request.httpBody = data
+        request.httpMethod = "PATCH"
+
+        let str = String(decoding: data, as: UTF8.self)
+        print(str)
+        
+        let response: URLResponse
+        let responseData: Data
+
+        do {
+            (responseData, response) = try await URLSession.shared.data(for: request)
+        } catch let error {
+            // TODO: Make good
+            print(error)
+            return
+        }
+        
+        print(response)
+        print(String(data: responseData, encoding: .utf8) ?? "(invalid data)")
     }
 
     func prepareSchools() {

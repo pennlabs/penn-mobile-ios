@@ -141,18 +141,18 @@ extension ProfilePageViewModel: UITableViewDelegate, UITableViewDataSource {
         return nil
     }
 
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        if indexPath.row == 0 && indexPath.section == 0 {
-//            delegate.presentImagePicker()
-//        }
-//        if indexPath.row == 1 && indexPath.section == 1 {
-//            delegate.presentTableView(isMajors: false)
-//        }
-//        if indexPath.row == 2 && indexPath.section == 1 {
-//            delegate.presentTableView(isMajors: true)
-//        }
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row == 0 && indexPath.section == 0 {
+            delegate.presentImagePicker()
+        }
+        if indexPath.row == 1 && indexPath.section == 1 {
+            delegate.presentTableView(isMajors: false)
+        }
+        if indexPath.row == 2 && indexPath.section == 1 {
+            delegate.presentTableView(isMajors: true)
+        }
+    }
 
 }
 

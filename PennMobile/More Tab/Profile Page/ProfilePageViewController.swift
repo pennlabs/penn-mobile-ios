@@ -76,7 +76,55 @@ extension ProfilePageViewController: ProfilePageViewModelDelegate {
     func imageSelected(_ image: UIImage) {
         if let cell = tableView.cellForRow(at: .init(row: 0, section: 0)) as? ProfilePictureTableViewCell {
             cell.profilePicImage = image
+            // TODO: Find a better place to put this
+            Task {
+                guard let imageData = image.jpegData(compressionQuality: 0.5) else {
+                    return
+                }
+                
+                guard let token = await OAuth2NetworkManager.instance.getAccessToken() else {
+                    return
+                }
+                
+                let url = URL(string: "https://platform.pennlabs.org/accounts/me")!
+                // TODO: Break this out into a separate utility
+                let csrfToken: String
+                if let cookie = HTTPCookieStorage.shared.cookies(for: url)?.first(where: { $0.name == "csrftoken" }) {
+                    csrfToken = cookie.value
+                } else {
+                    // TODO: Get a new CSRF token
+                    return
+                }
 
+                var request = URLRequest(url: URL(string: "https://platform.pennlabs.org/accounts/me")!, accessToken: token)
+                let boundary = "---------------------------------thisboundarybetternotappearinanyonesimagedata"
+                request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+                request.addValue(csrfToken, forHTTPHeaderField: "X-CSRFToken")
+                request.httpMethod = "PATCH"
+                
+                var requestData = Data()
+                requestData.append("\(boundary)\r\n".data(using: .utf8)!)
+                requestData.append("Content-Type: image/jpeg\r\n".data(using: .utf8)!)
+                requestData.append("Content-Disposition: form-data; name=profile_pic\r\n".data(using: .utf8)!)
+                requestData.append("\r\n".data(using: .utf8)!)
+                print(String(data: requestData, encoding: .utf8)!)
+                requestData.append(imageData)
+                request.httpBody = requestData
+                
+                let response: URLResponse
+                let responseData: Data
+
+                do {
+                    (responseData, response) = try await URLSession.shared.data(for: request)
+                } catch let error {
+                    // TODO: Make good
+                    print(error)
+                    return
+                }
+                
+                print(response)
+                print(String(data: responseData, encoding: .utf8) ?? "(invalid data)")
+            }
         }
     }
 }
