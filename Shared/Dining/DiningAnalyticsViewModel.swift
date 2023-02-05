@@ -10,9 +10,10 @@ import Foundation
 import SwiftUI
 import WidgetKit
 
-struct DiningAnalyticsBalance: Codable, Equatable {
+struct DiningAnalyticsBalance: Codable, Equatable, Identifiable {
     let date: Date
     let balance: Double
+    var id: Date {date}
 }
 
 extension DiningAnalyticsBalance: Comparable {
