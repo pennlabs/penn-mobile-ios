@@ -34,7 +34,6 @@ struct DiningStationRow: View {
                 .font(Font.system(size: 17))
                 .padding()
                 .background(Color.uiCardBackground.cornerRadius(8))
-                .shadow(color: Color.black.opacity(0.2), radius: 4, x: 2, y: 2)
             if isExpanded {
                 VStack {
                     ForEach(diningStation.items, id: \.self) { diningStationItem in
