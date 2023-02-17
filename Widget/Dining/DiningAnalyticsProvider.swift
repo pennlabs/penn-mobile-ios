@@ -13,6 +13,7 @@ struct BalanceDetails<Balance: AdditiveArithmetic & Comparable> {
     var remaining: Balance
     var total: Balance
     var projectedEnd: Balance
+    var projectedEndDate: Date?
 
     var used: Balance {
         max(.zero, total - remaining)
@@ -67,6 +68,9 @@ private func refresh() async {
     let totalSwipes = max(remainingSwipes, model.swipeHistory.max().map { Int($0.balance) } ?? 0)
     let projectedSwipes = Int(model.predictedSwipesSemesterEndBalance)
     cachedSwipes = BalanceDetails(remaining: remainingSwipes, total: totalSwipes, projectedEnd: projectedSwipes)
+    if projectedSwipes <= 0 {
+        cachedSwipes?.projectedEndDate = model.swipesPredictedZeroDate
+    }
 
     guard let remainingDollars = Double(balances.diningDollars) else {
         return
@@ -74,6 +78,9 @@ private func refresh() async {
     let totalDollars = max(remainingDollars, model.dollarHistory.max()?.balance ?? 0)
     let projectedDollars = model.predictedDollarSemesterEndBalance
     cachedDollars = BalanceDetails(remaining: remainingDollars, total: totalDollars, projectedEnd: projectedDollars)
+    if projectedDollars <= 0 {
+        cachedDollars?.projectedEndDate = model.dollarPredictedZeroDate
+    }
 }
 
 private func snapshot<Configuration>(configuration: Configuration) async -> DiningAnalyticsEntry<Configuration> {
