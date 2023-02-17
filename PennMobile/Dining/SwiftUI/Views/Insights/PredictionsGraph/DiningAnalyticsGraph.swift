@@ -115,10 +115,10 @@ struct AnalyticsGraph: View {
                                         // Get the x (date) and y (balance) value from the tap location (balance from tap location, not line location
                                         let (date, _) = proxy.value(at: location, as: (Date, Double).self) ?? (start, 0)
                                         // Get the actual balance at date, from non predicted data
-                                        var balance = data.last(where: {Calendar.current.isDate($0.date, inSameDayAs: date)})?.balance ?? -1.0
+                                        var balance = data.last(where: {$0.date <= date})?.balance ?? -1.0
                                         isPrediction = false
                                         // Get actual balance at date, from predicted data
-                                        if balance == -1.0 && predictionLineData.count != 0 && predictionLineData[0].date < date {
+                                        if predictionLineData.count != 0 && predictionLineData[0].date < date {
                                             // Ensuring prediction line exists and is valid
                                             if let predStart = proxy.position(for: (x: predictionLineData[0].date, y: predictionLineData[0].balance)),
                                                let predEnd = proxy.position(for: (x: predictionLineData[1].date, y: predictionLineData[1].balance)) {
