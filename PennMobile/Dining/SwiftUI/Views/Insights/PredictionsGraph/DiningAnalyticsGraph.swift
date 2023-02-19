@@ -27,6 +27,7 @@ struct AnalyticsGraph: View {
     var yAxisLabelCount: Int = 4
     @Binding var predictedZeroDate: Date
     @Binding var predictedSemesterEndValue: Double
+    @State var feedbackGenerator: UIImpactFeedbackGenerator?
     var balanceFormat: String
     var displayZeroDate: Bool {
         end >= predictedZeroDate
@@ -154,8 +155,21 @@ struct AnalyticsGraph: View {
                 if showInfo {
                     ZoomInfo(location: tapLocation, date: tapDate, balance: tapBalance, balanceFormat: balanceFormat, color: isPrediction ? Color.gray : color)
                 }
+            }.onChange(of: infoDateFormatter.calendar.dateComponents([.year, .month, .day], from: tapDate)) { _ in
+                triggerHaptic()
+            }.onChange(of: showInfo) { showInfo in
+                if showInfo {
+                    feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                    triggerHaptic()
+                } else {
+                    feedbackGenerator = nil
+                }
             }
         }
+    }
+    func triggerHaptic() {
+        feedbackGenerator?.impactOccurred(intensity: 0.4 + max(0, min(tapBalance / maxY, 1)) * 0.6)
+        feedbackGenerator?.prepare()
     }
     func getXLabels(xAxisLabelCount: Int = 5) -> [Date] {
         var xLabels: [Date] = []
