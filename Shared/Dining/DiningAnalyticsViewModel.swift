@@ -98,6 +98,7 @@ class DiningAnalyticsViewModel: ObservableObject {
     }
 
     func populateAxesAndPredictions() {
+        filterData()
         guard let lastDollarBalance = self.dollarHistory.last,
               let lastSwipeBalance = self.swipeHistory.last else {
             return
@@ -136,6 +137,23 @@ class DiningAnalyticsViewModel: ObservableObject {
         self.swipesPredictedZeroDate = swipePredictions.predictedZeroDate
         self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
         self.swipeAxisLabel = self.getAxisLabelsYX(from: self.swipeHistory)
+    }
+    
+    func filterData() {
+        if self.dollarHistory.count >= 2 {
+            for i in 1..<(self.dollarHistory.count - 1) {
+                if self.dollarHistory[i].balance == 0 && self.dollarHistory[i - 1].balance > 0 && self.dollarHistory[i + 1].balance > 0 {
+                    self.dollarHistory.remove(at: i)
+                }
+            }
+        }
+        if self.swipeHistory.count >= 2 {
+            for i in 1..<(self.swipeHistory.count - 1) {
+                if self.swipeHistory[i].balance == 0 && self.swipeHistory[i - 1].balance > 0 && self.swipeHistory[i + 1].balance > 0 {
+                    self.swipeHistory.remove(at: i)
+                }
+            }
+        }
     }
 
     func getPredictions(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance, maxBalance: DiningAnalyticsBalance) -> (slope: Double, predictedZeroDate: Date, predictedEndBalance: Double) {
