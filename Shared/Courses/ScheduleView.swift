@@ -142,7 +142,8 @@ struct ScheduleView: View {
                             Group {
                                 if time % 60 == 0 {
                                     let components = DateComponents(calendar: calendar, timeZone: timezone, hour: time / 60)
-                                    if let date = calendar.date(from: components), let str = hourFormatter.string(from: date) {
+                                    if let date = calendar.date(from: components) {
+                                        let str = hourFormatter.string(from: date)
                                         Text(str).font(.caption)
                                     } else {
                                         Spacer()
