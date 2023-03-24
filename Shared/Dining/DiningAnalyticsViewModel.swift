@@ -31,9 +31,10 @@ extension DiningAnalyticsBalance: Comparable {
 class DiningAnalyticsViewModel: ObservableObject {
     static let dollarHistoryDirectory = "diningAnalyticsDollarData"
     static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
+    static let planStartDateDirectory = "diningAnalyticsPlanStartDate"
     @Published var dollarHistory: [DiningAnalyticsBalance] = Storage.fileExists(dollarHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(dollarHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
     @Published var swipeHistory: [DiningAnalyticsBalance] = Storage.fileExists(swipeHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(swipeHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
-    @Published var planStartDate: Date?
+    @Published var planStartDate: Date? = try? Storage.retrieveThrowing(planStartDateDirectory, from: .groupDocuments, as: Date.self)
 
     @Published var dollarPredictedZeroDate: Date = Date.endOfSemester
     @Published var predictedDollarSemesterEndBalance: Double = 0
@@ -58,8 +59,10 @@ class DiningAnalyticsViewModel: ObservableObject {
             nextAnalyticsStartDate < Date.startOfSemester {
             self.dollarHistory = []
             self.swipeHistory = []
+            self.planStartDate = nil
             Storage.remove(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .groupDocuments)
             Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .groupDocuments)
+            Storage.remove(DiningAnalyticsViewModel.planStartDateDirectory, from: .groupDocuments)
         }
     }
     func refresh(refreshWidgets: Bool = false) async {
@@ -84,14 +87,15 @@ class DiningAnalyticsViewModel: ObservableObject {
                 try? Storage.storeThrowing(self.swipeHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
                 try? Storage.storeThrowing(self.dollarHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.dollarHistoryDirectory)
             }
+            let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
+            if let planStartDate = try? planStartDateResult.get() {
+                self.planStartDate = planStartDate
+                try? Storage.storeThrowing(planStartDate, to: .groupDocuments, as: Self.planStartDateDirectory)
+            }
             if refreshWidgets {
                 WidgetKind.diningAnalyticsWidgets.forEach {
                     WidgetCenter.shared.reloadTimelines(ofKind: $0)
                 }
-            }
-            let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
-            if let planStartDate = try? planStartDateResult.get() {
-                self.planStartDate = planStartDate
             }
             populateAxesAndPredictions()
         }
