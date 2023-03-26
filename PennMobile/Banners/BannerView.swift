@@ -16,7 +16,7 @@ extension BannerDescription: View {
             .aspectRatio(contentMode: .fill)
             .accessibilityLabel(Text(text))
     }
-    
+
     var body: some View {
         Group {
             if let action {
@@ -35,14 +35,14 @@ extension BannerDescription: View {
 struct BannerView: View {
     static let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
     static let height: CGFloat = 96
-    
+
     @EnvironmentObject var viewModel: BannerViewModel
     @State var banner: BannerDescription?
-    
+
     func selectBanner() {
         banner = viewModel.banners.random
     }
-    
+
     var body: some View {
         Group {
             if let banner {

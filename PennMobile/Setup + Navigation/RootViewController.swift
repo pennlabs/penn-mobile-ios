@@ -15,9 +15,9 @@ import SwiftUI
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
 class RootViewController: UIViewController, NotificationRequestable, ShowsAlert {
     static let userEngagementMessageDelay: TimeInterval = 60
-    
+
     var current: UIViewController
-    
+
     var bannerController: UIHostingController<AnyView>?
     weak var bottomConstraint: NSLayoutConstraint?
     var userEngagementMessageTimer: Timer?
@@ -31,14 +31,14 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         self.current = SplashViewController()
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     func applyConstraints(to child: UIView) {
         bottomConstraint = child.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor).first {
             $0.firstAnchor == view.bottomAnchor || $0.secondAnchor == view.bottomAnchor
         }
         updateConstraintsForBanners()
     }
-    
+
     func updateConstraintsForBanners() {
         if bannerController != nil {
             bottomConstraint?.constant = -BannerView.height
@@ -46,7 +46,7 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
             bottomConstraint?.constant = 0
         }
     }
-    
+
     func displayBannersIfNeeded() {
         if BannerViewModel.shared.shouldDisplayBanners() {
             BannerViewModel.shared.fetchBannersIfNeeded()
@@ -58,22 +58,22 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
                 addChild(bannerController!)
                 view.addSubview(bannerController!.view)
                 _ = bannerController!.view.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: BannerView.height)
-                
+
                 // Also set up user engagement messages
                 userEngagementMessageTimer = Timer.scheduledTimer(withTimeInterval: RootViewController.userEngagementMessageDelay, repeats: true) { [weak self] _ in
                     self?.displayUserEngagementMessage()
                 }
             }
         }
-        
+
         updateConstraintsForBanners()
     }
-    
+
     func displayUserEngagementMessage() {
         guard let message = BannerViewModel.shared.userEngagementMessages.random else {
             return
         }
-        
+
         let alert = UIAlertController(title: message.primary, message: message.secondary, preferredStyle: .alert)
         if !message.actions.isEmpty {
             message.actions.forEach { action in
@@ -81,10 +81,10 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
                     UIApplication.shared.open(action.url)
                 })
             }
-            
+
             alert.addAction(UIAlertAction(title: "Close", style: .cancel))
         }
-        
+
         present(alert, animated: true)
     }
 
@@ -100,7 +100,7 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         view.addSubview(current.view)
         applyConstraints(to: current.view)
         current.didMove(toParent: self)
-        
+
         if #available(iOS 15, *) {
             Task {
                 if let (data, _) = try? await URLSession.shared.data(from: URL(string: "https://itunes.apple.com/lookup?bundleId=org.pennlabs.PennMobile")!),
@@ -178,7 +178,7 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         #if !targetEnvironment(simulator)
             updatePushNotificationToken()
         #endif
-        
+
         displayBannersIfNeeded()
     }
 

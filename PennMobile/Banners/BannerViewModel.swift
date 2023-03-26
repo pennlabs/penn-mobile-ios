@@ -19,53 +19,53 @@ class BannerViewModel: ObservableObject {
         url: getDefaultBannerURL(),
         cacheMaxAge: 60 * 60
     )
-    
+
     @Published var banners: [BannerDescription] = []
     @Published var userEngagementMessages: [UserEngagementMessageDescription] = []
     private var isFetching = false
     private var lastSuccessfulFetch: Date?
-    
+
     let url: URL
     let cacheMaxAge: TimeInterval
-    
+
     init(url: URL, cacheMaxAge: TimeInterval) {
         self.url = url
         self.cacheMaxAge = cacheMaxAge
     }
-    
+
     let decoder = {
         let decoder = JSONDecoder()
         decoder.allowsJSON5 = true
         return decoder
     }()
-    
+
     func shouldDisplayBanners(on date: Date = Date()) -> Bool {
         #if DEBUG
         if ProcessInfo.processInfo.environment["FORCE_BANNERS"] != nil {
             return true
         }
         #endif
-        
+
         let calendar = Calendar(identifier: .gregorian)
         let components = calendar.dateComponents(in: TimeZone.current, from: date)
-        
+
         return components.year == 2023 && components.month == 4 && components.day == 1
     }
-    
+
     func fetchBannersIfNeeded() {
         if isFetching {
             return
         }
-        
+
         if let lastSuccessfulFetch, -lastSuccessfulFetch.timeIntervalSinceNow < cacheMaxAge {
             return
         }
-        
+
         struct BannerResponse: Decodable {
             let assets: [BannerDescription]
             let strings: [UserEngagementMessageDescription]
         }
-        
+
         isFetching = true
         Task {
             do {
@@ -78,7 +78,7 @@ class BannerViewModel: ObservableObject {
                 lastSuccessfulFetch = nil
                 print("Failed to load banners: \(error)")
             }
-            
+
             isFetching = false
         }
     }
