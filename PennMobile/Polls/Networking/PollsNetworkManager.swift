@@ -16,7 +16,6 @@ class PollsNetworkManager: NSObject, Requestable {
     let pollURL = URL(string: "https://pennmobile.org/api/portal/polls/browse/")
     let votesURL = URL(string: "https://pennmobile.org/api/portal/votes/")
     let recentsURL = URL(string: "https://pennmobile.org/api/portal/votes/recent/")
-    // let token = AccessToken(value: "E6Illoslo8JFc7IJWG9Xe9kEsTsu2R", expiration: Date())
 
     func getActivePolls(callback: @escaping ([PollQuestion]?) -> Void) {
 
