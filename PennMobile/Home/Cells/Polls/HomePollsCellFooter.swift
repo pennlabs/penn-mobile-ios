@@ -28,6 +28,7 @@ class HomePollsCellFooter: UIView {
             make.leading.equalTo(safeArea)
             make.bottom.equalTo(safeArea)
             make.trailing.equalTo(safeArea)
+          // make.top.equalTo()
             make.height.equalTo(HomePollsCellFooter.height)
         }
     }
