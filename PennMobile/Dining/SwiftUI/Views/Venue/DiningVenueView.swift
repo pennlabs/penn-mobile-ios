@@ -64,6 +64,10 @@ struct DiningVenueView: View {
         }
 
         return List {
+            if BannerViewModel.shared.shouldDisplayBanners() {
+                BannerView().environmentObject(BannerViewModel.shared)
+            }
+            
             Section(header: CustomHeader(name: "Dining Balance", refreshConfiguration: refreshConfiguration).environmentObject(diningAnalyticsViewModel), content: {
                 Section(header: DiningViewHeader().environmentObject(diningAnalyticsViewModel), content: {})
             })
