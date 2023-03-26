@@ -14,9 +14,13 @@ import SwiftUI
 
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
 class RootViewController: UIViewController, NotificationRequestable, ShowsAlert {
+    static let userEngagementMessageDelay: TimeInterval = 60
+    
     var current: UIViewController
+    
     var bannerController: UIHostingController<AnyView>?
     weak var bottomConstraint: NSLayoutConstraint?
+    var userEngagementMessageTimer: Timer?
 
     private var lastLoginAttempt: Date?
 
@@ -45,6 +49,7 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     
     func displayBannersIfNeeded() {
         if BannerViewModel.shared.shouldDisplayBanners() {
+            BannerViewModel.shared.fetchBannersIfNeeded()
             if bannerController == nil {
                 bannerController = UIHostingController(rootView: AnyView(
                     BannerView().environmentObject(BannerViewModel.shared)
@@ -53,10 +58,34 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
                 addChild(bannerController!)
                 view.addSubview(bannerController!.view)
                 _ = bannerController!.view.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: BannerView.height)
+                
+                // Also set up user engagement messages
+                userEngagementMessageTimer = Timer.scheduledTimer(withTimeInterval: RootViewController.userEngagementMessageDelay, repeats: true) { [weak self] _ in
+                    self?.displayUserEngagementMessage()
+                }
             }
         }
         
         updateConstraintsForBanners()
+    }
+    
+    func displayUserEngagementMessage() {
+        guard let message = BannerViewModel.shared.userEngagementMessages.random else {
+            return
+        }
+        
+        let alert = UIAlertController(title: message.primary, message: message.secondary, preferredStyle: .alert)
+        if !message.actions.isEmpty {
+            message.actions.forEach { action in
+                alert.addAction(UIAlertAction(title: action.title, style: .default) { _ in
+                    UIApplication.shared.open(action.url)
+                })
+            }
+            
+            alert.addAction(UIAlertAction(title: "Close", style: .cancel))
+        }
+        
+        present(alert, animated: true)
     }
 
     override func viewDidLoad() {

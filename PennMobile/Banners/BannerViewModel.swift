@@ -21,6 +21,7 @@ class BannerViewModel: ObservableObject {
     )
     
     @Published var banners: [BannerDescription] = []
+    @Published var userEngagementMessages: [UserEngagementMessageDescription] = []
     private var isFetching = false
     private var lastSuccessfulFetch: Date?
     
@@ -62,14 +63,16 @@ class BannerViewModel: ObservableObject {
         
         struct BannerResponse: Decodable {
             let assets: [BannerDescription]
+            let strings: [UserEngagementMessageDescription]
         }
         
-        print("Fetching banners!")
         isFetching = true
         Task {
             do {
                 let (data, _) = try await URLSession(configuration: .ephemeral).data(from: url)
-                banners = try decoder.decode(BannerResponse.self, from: data).assets
+                let response = try decoder.decode(BannerResponse.self, from: data)
+                banners = response.assets
+                userEngagementMessages = response.strings
                 lastSuccessfulFetch = Date()
             } catch let error {
                 lastSuccessfulFetch = nil
