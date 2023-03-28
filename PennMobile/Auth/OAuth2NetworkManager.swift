@@ -38,12 +38,13 @@ class OAuth2NetworkManager: NSObject {
 
 // MARK: - Initiate Authentication
 extension OAuth2NetworkManager {
+    static let tokenURL = URL(string: "https://pennmobile.org/api/accounts/token/")!
+    
     /// Input: One-time code from login
     /// Output: Temporary access token
     /// Saves refresh token in keychain for future use
     func initiateAuthentication(code: String, codeVerifier: String, _ callback: @escaping (_ accessToken: AccessToken?) -> Void) {
-        let url = URL(string: "https://platform.pennlabs.org/accounts/token/")!
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: Self.tokenURL)
         request.httpMethod = "POST"
 
         let params = [
@@ -98,8 +99,7 @@ extension OAuth2NetworkManager {
             return
         }
 
-        let url = URL(string: "https://platform.pennlabs.org/accounts/token/")!
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: Self.tokenURL)
         request.httpMethod = "POST"
 
         let params = [
