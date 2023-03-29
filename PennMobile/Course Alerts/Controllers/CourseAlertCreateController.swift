@@ -288,7 +288,7 @@ extension CourseAlertCreateController: UISearchBarDelegate {
         mostRecentSearch = searchText
 
         if searchText == "" {
-            hideAllActivity()
+            hideActivity()
             searchPromptView.isHidden = false
             noResultsView.isHidden = true
         } else {
@@ -298,10 +298,8 @@ extension CourseAlertCreateController: UISearchBarDelegate {
             showActivity(isUserInteractionEnabled: true)
 
             CourseAlertNetworkManager.instance.getSearchedCourses(searchText: searchText) { (results) in
+                self.hideActivity()
                 if searchText == self.mostRecentSearch {
-                    DispatchQueue.main.async {
-                        self.hideAllActivity()
-                    }
                     if let results = results {
                         DispatchQueue.main.async {
                             self.searchResults = results

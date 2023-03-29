@@ -38,6 +38,10 @@ extension UserDefaults {
         case lastDiningHoursRequest
         case lastMenuRequest
         case diningTokenExpiration
+        case diningBalance
+        case nextAnalyticsStartDate
+        case firstDollarsBalance
+        case firstSwipesBalance
     }
 
     func clearAll() {
@@ -164,22 +168,6 @@ extension UserDefaults {
 
 // MARK: - Courses
 extension UserDefaults {
-    func saveCourses(_ courses: Set<Course>) {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(courses) {
-            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.courses.rawValue)
-        }
-        synchronize()
-    }
-
-    func getCourses() -> Set<Course>? {
-        let decoder = JSONDecoder()
-        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.courses.rawValue) {
-            return try? decoder.decode(Set<Course>.self, from: decodedData)
-        }
-        return nil
-    }
-
     func clearCourses() {
         removeObject(forKey: UserDefaultsKeys.courses.rawValue)
     }
@@ -528,22 +516,12 @@ extension UserDefaults {
 
 // MARK: - MenuRequest
 extension UserDefaults {
-    func setLastMenuRequest(id: Int) {
-        let dict: [Int: Date]? = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue) as? [Int: Date]
-
-        if var menuDateDict = dict {
-            menuDateDict[id] = Date()
-            UserDefaults.standard.set(menuDateDict, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
-        } else {
-            let menuDateDictInit = [id: Date()]
-            UserDefaults.standard.set(menuDateDictInit, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
-        }
+    func setLastCachedMenuRequest(_ date: Date) {
+        UserDefaults.standard.set(date, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
     }
 
-    func getLastMenuRequest(id: Int) -> Date? {
-        let dict = UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue)  as? [Int: Date]
-
-        return dict?[id]
+    func getLastCachedMenuRequest() -> Date? {
+        return UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue) as? Date
     }
 }
 
@@ -556,5 +534,61 @@ extension UserDefaults {
     func getDiningTokenExpiration() -> Date? {
         let result = UserDefaults.standard.value(forKey: UserDefaultsKeys.diningTokenExpiration.rawValue)
         return result as? Date
+    }
+    func clearDiningTokenExpiration() {
+        removeObject(forKey: UserDefaultsKeys.diningTokenExpiration.rawValue)
+    }
+}
+
+// MARK: - Current Dining Balance Object
+extension UserDefaults {
+    @available(*, deprecated)
+    func setdiningBalance(_ diningBalance: DiningBalance) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(diningBalance) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.diningBalance.rawValue)
+        }
+        synchronize()
+    }
+    @available(*, deprecated)
+    func getDiningBalance() -> DiningBalance? {
+        let decoder = JSONDecoder()
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.diningBalance.rawValue) {
+            return try? decoder.decode(DiningBalance.self, from: decodedData)
+        }
+        return nil
+    }
+    func clearDiningBalance() {
+        removeObject(forKey: UserDefaultsKeys.diningBalance.rawValue)
+    }
+}
+
+extension UserDefaults {
+    func setFirstDollarsBalance(_ balance: Double) {
+        set(balance, forKey: UserDefaultsKeys.firstDollarsBalance.rawValue)
+        synchronize()
+    }
+
+    func getFirstDollarsBalance() -> Double? {
+        return double(forKey: UserDefaultsKeys.firstDollarsBalance.rawValue)
+    }
+
+    func clearFirstDollarsBalance() {
+        removeObject(forKey: UserDefaultsKeys.firstDollarsBalance.rawValue)
+    }
+}
+
+extension UserDefaults {
+    func setFirstSwipesBalance(_ balance: Double) {
+        set(balance, forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
+        synchronize()
+    }
+
+    func getFirstSwipesBalance() -> Double? {
+        return double(forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
+    }
+
+    func clearFirstSwipesBalance() {
+        removeObject(forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
     }
 }

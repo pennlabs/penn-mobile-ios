@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14.0, *)
 struct DiningBalanceView: View {
     let description: String
     let image: Image
@@ -20,10 +19,11 @@ struct DiningBalanceView: View {
     // By default, remove trailing zeros
     var specifier: String = "%g"
     var color: Color = .blue
+    var dollarSign = false
 
     var formattedBalance: String {
         let b: Double = balance
-        return String(format: "\(self.specifier)", b)
+        return (dollarSign ? "$" : "") + String(format: "\(self.specifier)", b)
     }
 
     var body: some View {
@@ -50,7 +50,6 @@ struct DiningBalanceView: View {
     }
 }
 
-@available(iOS 14.0, *)
 struct BlankDiningBalanceView: View {
     var body: some View {
         ZStack {
@@ -74,9 +73,8 @@ struct BlankDiningBalanceView: View {
     }
 }
 
-@available(iOS 14.0, *)
 struct DiningBalanceView_Previews: PreviewProvider {
     static var previews: some View {
-        DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f")
+        DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: 427.84, specifier: "%.2f", dollarSign: true)
     }
 }

@@ -10,29 +10,29 @@
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 struct DiningViewHeader: View {
 
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
+    @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
     @State var alertIsPresented = false
 
     var body: some View {
 
         VStack {
             HStack {
-                DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: diningVM.diningDollars, specifier: "%.2f")
-                DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(diningVM.swipes), specifier: "%.0f")
+                DiningBalanceView(description: "Dining Dollars", image: Image(systemName: "dollarsign.circle.fill"), balance: Double(diningVM.diningBalance.diningDollars) ?? 0.0, specifier: "%.2f", dollarSign: true)
+                DiningBalanceView(description: "Swipes", image: Image(systemName: "creditcard.fill"), balance: Double(diningVM.diningBalance.regularVisits), specifier: "%.0f")
             }
             HStack {
-                DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "person.2.fill"), balance: Double(diningVM.guestSwipes), specifier: "%.0f")
+                DiningBalanceView(description: "Guest Swipes", image: Image(systemName: "person.2.fill"), balance: Double(diningVM.diningBalance.guestVisits), specifier: "%.0f")
                 AnalyticsCardView(text: "Analytics")
+                    .environmentObject(diningAnalyticsViewModel)
             }
         }
 
     }
 }
 
-@available(iOS 14, *)
 struct DiningViewHeaderDate: View {
     var dateString: String {
         let dateFormatter = DateFormatter()
@@ -54,22 +54,20 @@ struct DiningViewHeaderDate: View {
     }
 }
 
-@available(iOS 14, *)
 struct DiningViewHeaderBalance: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 5) {
-            Label("\(diningVM.swipes)", systemImage: "creditcard.fill")
+            Label("\(diningVM.diningBalance.regularVisits)", systemImage: "creditcard.fill")
                 .labelStyle(BalanceLabelStyle())
 
-            Label("\(String(format: "%.2f", diningVM.diningDollars))", systemImage: "dollarsign.circle.fill")
+            Label("\(String(format: "%.2f", Double(diningVM.diningBalance.diningDollars) ?? 0.0))", systemImage: "dollarsign.circle.fill")
                 .labelStyle(BalanceLabelStyle())
         }
     }
 }
 
-@available(iOS 14, *)
 struct BalanceLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack {
@@ -77,22 +75,6 @@ struct BalanceLabelStyle: LabelStyle {
                 .font(.system(size: 17, weight: .bold, design: .rounded))
             configuration.icon
                 .frame(width: 20, height: 20)
-        }
-    }
-}
-
-@available(iOS 14, *)
-struct DiningViewHeader_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Spacer()
-            HStack {
-                DiningViewHeaderDate()
-                    .padding()
-
-                Spacer()
-            }
-            Spacer()
         }
     }
 }

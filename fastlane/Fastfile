@@ -45,10 +45,19 @@ platform :ios do
   end
 
   lane :ci_beta do
+    ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
     increment_build_number({
       build_number: latest_testflight_build_number(api_key_path: "api_key.json", app_identifier: "org.pennlabs.PennMobile") + 1
     })
-    build_app(scheme: "PennMobile")
+    build_app(
+        scheme: "PennMobile",
+        export_options: {
+            provisioningProfiles: {
+                "org.pennlabs.PennMobile" => "Penn Mobile - Distribution",
+                "org.pennlabs.PennMobile.Widget" => "Penn Mobile Widget - Distribution"
+            }
+        }
+    )
     pilot(app_identifier: "org.pennlabs.PennMobile", api_key_path: "api_key.json", distribute_external: true, groups: "Penn Labs", changelog: "test CI")
   end
   

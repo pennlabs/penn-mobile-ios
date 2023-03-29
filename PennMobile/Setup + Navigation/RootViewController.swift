@@ -37,7 +37,7 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         view.addSubview(current.view)
         current.didMove(toParent: self)
 
-        if #available(iOS 15.0, *) {
+        if #available(iOS 15, *) {
             Task {
                 if let (data, _) = try? await URLSession.shared.data(from: URL(string: "https://itunes.apple.com/lookup?bundleId=org.pennlabs.PennMobile")!),
                    let data = try? JSON(data: data),
@@ -49,47 +49,42 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
                             guard let url = URL(string: "itms-apps://apps.apple.com/us/app/penn-mobile/id944829399") else { return }
                             UIApplication.shared.open(url)
                         }, onCancel: {
-                            self.showMainScreen()
                             self.applicationWillEnterForeground()
                         })
                     } else {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            self.showMainScreen()
                             self.applicationWillEnterForeground()
                         }
                     }
                 } else {
                     // No network request, simply go to home
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.showMainScreen()
                         self.applicationWillEnterForeground()
                     }
                 }
             }
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.showMainScreen()
                 self.applicationWillEnterForeground()
             }
         }
     }
 
     func applicationWillEnterForeground() {
-        if self.current is HomeNavigationController {
-            if Account.isLoggedIn && shouldRequireLogin() {
-                // If user is logged in but login is required, clear user data and switch to logout
-                clearAccountData()
-                switchToLogout()
-                return
-            } else if !Account.isLoggedIn {
-                // If user is not logged in, switch to logout but don't clear user data
-                switchToLogout()
-                return
-            } else {
-                // Refresh current VC
-                UserDefaults.standard.restoreCookies()
-                ControllerModel.shared.visibleVC().viewWillAppear(true)
-            }
+        if Account.isLoggedIn && shouldRequireLogin() {
+            // If user is logged in but login is required, clear user data and switch to logout
+            clearAccountData()
+            switchToLogout()
+            return
+        } else if !Account.isLoggedIn {
+            // If user is not logged in, switch to logout but don't clear user data
+            switchToLogout()
+            return
+        } else {
+            // Refresh current VC
+            UserDefaults.standard.restoreCookies()
+            switchToMainScreen()
+            ControllerModel.shared.visibleVC().viewWillAppear(true)
         }
 
         // Fetch transaction data at least once a week, starting on Sundays
@@ -106,15 +101,9 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
             }
         }
 
-        if shouldShareCourses() {
-            // Share user's courses. Do not fetch previous semesters if the current semester has been fetched.
-            let savedCourses = UserDefaults.standard.getCourses()
-            let fetchCurrentTermOnly = savedCourses?.contains { $0.term == Course.currentTerm } ?? false
-            PennInTouchNetworkManager.instance.getCourses(currentTermOnly: fetchCurrentTermOnly) { (result) in
-                if let courses = try? result.get() {
-                    UserDefaults.standard.saveCourses(courses)
-                    UserDBManager.shared.saveCoursesAnonymously(courses)
-                }
+        UserDBManager.shared.getWhartonStatus { result in
+            if let isWharton = try? result.get() {
+                UserDefaults.standard.set(isInWharton: isWharton)
             }
         }
 
@@ -173,7 +162,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         OAuth2NetworkManager.instance.clearRefreshToken()
         OAuth2NetworkManager.instance.clearCurrentAccessToken()
         Account.clear()
-        Storage.remove(DiningInsightsAPIResponse.directory, from: .caches)
     }
 
     private func animateFadeTransition(to new: UIViewController, completion: (() -> Void)? = nil) {

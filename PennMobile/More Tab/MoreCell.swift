@@ -13,7 +13,7 @@ class MoreCell: UITableViewCell {
     var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .labelPrimary
-        label.font = UIFont(name: "HelveticaNeue-Light", size: 19)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         return label
     }()
 
@@ -36,7 +36,8 @@ class MoreCell: UITableViewCell {
         titleLabel.text = page.rawValue
         self.addSubview(iconImage)
         self.addSubview(titleLabel)
-        _ = iconImage.anchor(self.topAnchor, left: self.leftAnchor, bottom: self.bottomAnchor, right: nil, topConstant: 10, leftConstant: 15, bottomConstant: 10, rightConstant: 0, widthConstant: 30, heightConstant: 0)
+        iconImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        _ = iconImage.anchor(left: self.leftAnchor, leftConstant: 15, widthConstant: 30, heightConstant: 30)
         _ = titleLabel.anchor(self.topAnchor, left: iconImage.rightAnchor, bottom: self.bottomAnchor, right: self.rightAnchor, topConstant: 12, leftConstant: 10, bottomConstant: 12, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 

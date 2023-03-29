@@ -50,11 +50,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let topSpace: CGFloat?
-        if #available(iOS 11.0, *) {
-            topSpace = self.view.safeAreaInsets.top
-        } else {
-            topSpace = self.topLayoutGuide.length
-        }
+        topSpace = self.view.safeAreaInsets.top
         if let topSpace = topSpace, topSpace > 0 {
             self.tableView.isHidden = false
         }
@@ -65,6 +61,8 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         tableView.dataSource = self
         tableView.backgroundColor = UIColor.uiGroupedBackground
         tableView.separatorStyle = .singleLine
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 50
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more")
         tableView.register(MoreCell.self, forCellReuseIdentifier: "more-with-icon")
         tableView.tableFooterView = UIView()
@@ -80,7 +78,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         PennLink(title: "Penn Homepage", url: "https://upenn.edu"),
         PennLink(title: "CampusExpress", url: "https://prod.campusexpress.upenn.edu"),
         PennLink(title: "Canvas", url: "https://canvas.upenn.edu"),
-        PennLink(title: "PennInTouch", url: "https://pennintouch.apps.upenn.edu"),
+        PennLink(title: "Path@Penn", url: "https://path.at.upenn.edu"),
         PennLink(title: "PennPortal", url: "https://portal.apps.upenn.edu/penn_portal"),
         PennLink(title: "Share Your Feedback", url: "https://airtable.com/shrS98E3rj5Nw1wy6")]
 
@@ -144,14 +142,6 @@ extension MoreViewController {
             }
         }
         return UITableViewCell()
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-    }
-
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

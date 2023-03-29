@@ -1,17 +1,11 @@
 PODS:
-  - Base32 (1.1.2)
-  - MBProgressHUD (0.9.2)
-  - OneTimePassword (3.2.0):
-    - Base32 (~> 1.1.2)
   - SCLAlertView (0.8)
   - ScrollableGraphView (4.0.6)
-  - SimulatorStatusMagic (2.4.1)
+  - SimulatorStatusMagic (2.6)
   - SwiftLint (0.46.2)
   - XLPagerTabStrip (9.0.0)
 
 DEPENDENCIES:
-  - MBProgressHUD (~> 0.8)
-  - OneTimePassword (~> 3.2)
   - SCLAlertView
   - ScrollableGraphView
   - SimulatorStatusMagic
@@ -20,9 +14,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Base32
-    - MBProgressHUD
-    - OneTimePassword
     - SCLAlertView
     - ScrollableGraphView
     - SimulatorStatusMagic
@@ -30,15 +21,12 @@ SPEC REPOS:
     - XLPagerTabStrip
 
 SPEC CHECKSUMS:
-  Base32: 163c298644d184e89ca4e00a996bad6bf5166390
-  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  OneTimePassword: c00ecc908e67e6c5bfda9d50b0b2e4696d0b066e
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
-  SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
+  SimulatorStatusMagic: 9f5294c12ca99c6cadb243a60362a66000df540c
   SwiftLint: 6bc52a21f0fd44cab9aa2dc8e534fb9f5e3ec507
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 05e121a8dc16cbe950cb78b65ab09d0cc64dae82
+PODFILE CHECKSUM: 6d8dc007bb6bb126706682f352c74cf12107f577
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

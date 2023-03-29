@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
 
@@ -27,7 +28,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
 
         let token = tokenParts.joined()
-        UserDBManager.shared.savePushNotificationDeviceToken(deviceToken: token)
+
+        UserDBManager.shared.getNotificationId { result in
+            if let getIdResp = try? result.get()[0] {
+                let notificationId: Int = getIdResp.id
+                UserDBManager.shared.savePushNotificationDeviceToken(deviceToken: token, notifId: notificationId)
+                }
+            }
 
         // Setup rich notification categories
         let cancelGSRBookingAction = UNNotificationAction(identifier: NotificationIdentifiers.cancelGSRAction, title: "Cancel Booking", options: [.foreground])
@@ -41,6 +48,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             options: [])
 
         UNUserNotificationCenter.current().setNotificationCategories([upcomingGSRCategory])
+    }
+
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async -> UIBackgroundFetchResult {
+        if let (_, _) = try? await URLSession.shared.data(from: URL(string: "https://pennmobile.org/api/")!) {
+            return .newData
+        } else {
+            return .failed
+        }
     }
 
     func userNotificationCenter(

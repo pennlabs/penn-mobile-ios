@@ -12,8 +12,7 @@ import WebKit
 
 struct DiningLoginViewSwiftUI: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
-
-    var navigationViewInstance: DiningLoginNavigationView
+    @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
 
     func makeUIViewController(context: Context) -> DiningLoginController {
         let diningLoginController = DiningLoginController()
@@ -33,6 +32,10 @@ struct DiningLoginViewSwiftUI: UIViewControllerRepresentable {
 
         func dismissDiningLoginController() {
             parent.presentationMode.wrappedValue.dismiss()
+            Task.init {
+                await DiningViewModelSwiftUI.instance.refreshBalance()
+                await parent.diningAnalyticsViewModel.refresh()
+            }
         }
     }
 

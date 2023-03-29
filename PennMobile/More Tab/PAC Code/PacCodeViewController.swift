@@ -188,7 +188,7 @@ extension PacCodeViewController {
 
     fileprivate func handleNetworkPacCodeResult(_ result: Result<String, NetworkingError>) {
 
-        let popVC : () -> Void = { self.navigationController?.popViewController(animated: true) }
+        let popVC: () -> Void = { self.navigationController?.popViewController(animated: true) }
 
         showRefreshAlertForError(result: result, title: "PAC Code", success: self.handleNetworkPacCodeRefreshCompletion(_:), noInternet: popVC, parsingError: popVC, authenticationError: self.handleAuthenticationError)
     }

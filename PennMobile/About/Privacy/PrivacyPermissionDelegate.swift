@@ -12,7 +12,6 @@ import SwiftUI
 import Combine
 #endif
 
-@available(iOS 13, *)
 class PrivacyPermissionDelegate: ObservableObject {
     var objectWillChange = PassthroughSubject<PrivacyPermissionDelegate, Never>()
     var objectDidChange = PassthroughSubject<PrivacyPermissionDelegate, Never>()

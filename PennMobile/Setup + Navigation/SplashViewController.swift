@@ -24,6 +24,5 @@ class SplashViewController: UIViewController {
         imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: view.frame.width/5*2).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: view.frame.width/5*2).isActive = true
-        
     }
 }

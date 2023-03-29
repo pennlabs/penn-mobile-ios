@@ -94,20 +94,9 @@ extension HomeViewController {
 // MARK: - Dining Delegate
 extension HomeViewController {
     func handleVenueSelected(_ venue: DiningVenue) {
-        // TODO: Release Dining Redesign
-//        if #available(iOS 14, *) {
-//            let hostingView = UIHostingController(rootView: DiningVenueDetailView(for: venue).environmentObject(DiningViewModelSwiftUI.instance))
-//            self.navigationController?.pushViewController(hostingView, animated: true)
-//        } else {
-            if let url = venue.facilityURL {
-                let vc = UIViewController()
-                let webView = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-                webView.load(URLRequest(url: url))
-                vc.view.addSubview(webView)
-                vc.title = venue.name
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-//        }
+        let hostingView = UIHostingController(rootView: DiningVenueDetailView(for: venue)
+                                                            .environmentObject(DiningViewModelSwiftUI.instance))
+        navigationController?.pushViewController(hostingView, animated: true)
     }
 
     func handleSettingsTapped(venues: [DiningVenue]) {
@@ -119,97 +108,6 @@ extension HomeViewController {
     }
 }
 
-// MARK: - Course Delegate
-extension HomeViewController {
-    func handleBuildingSelected(searchTerm: String) {
-        //        let bmwc = BuildingMapWebviewController(searchTerm: searchTerm)
-        let mapVC = MapViewController()
-        mapVC.searchTerm = searchTerm
-        self.navigationController?.pushViewController(mapVC, animated: true)
-    }
-
-    // MARK: Course Refresh
-    func handleCourseRefresh() {
-        let message = "Has there been a change to your schedule? Would you like Penn Mobile to update your courses?"
-        let alert = UIAlertController(title: "Update Courses",
-                                      message: message,
-                                      preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(cancelAction)
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
-            // self.showCourseWebviewController()
-            self.showActivity()
-            PennInTouchNetworkManager.instance.getCourses(currentTermOnly: true, callback: self.handleNetworkCourseRefreshCompletion(_:))
-        }))
-        present(alert, animated: true)
-    }
-
-    // MARK: Login to enable courses
-    func handleLoggingIn() {
-        let cwc = CoursesWebviewController()
-        cwc.currentTermOnly = false
-        self.tableViewModel = nil
-        cwc.completion = { courses in
-            if courses != nil {
-                UserDefaults.standard.setCoursePermission(true)
-            }
-        }
-        let nvc = UINavigationController(rootViewController: cwc)
-        self.present(nvc, animated: true, completion: nil)
-    }
-}
-
-// MARK: - Course Refreshing
-extension HomeViewController: ShowsAlert {
-    fileprivate func showCourseWebviewController() {
-        let cwc = CoursesWebviewController()
-        cwc.completion = self.handleCourseRefresh(_:)
-        let nvc = UINavigationController(rootViewController: cwc)
-        self.present(nvc, animated: true, completion: nil)
-    }
-
-    fileprivate func handleNetworkCourseRefreshCompletion(_ result: Result<Set<Course>, NetworkingError>) {
-        DispatchQueue.main.async {
-            self.hideActivity()
-            if let courses = try? result.get() {
-                if let accountID = UserDefaults.standard.getAccountID() {
-                    UserDBManager.shared.saveCourses(courses, accountID: accountID, { (_) in
-                        self.handleCourseRefresh(courses)
-                    })
-                } else {
-                    self.handleCourseRefresh(courses)
-                }
-                if let currentCourses = UserDefaults.standard.getCourses() {
-                    let term = Course.currentTerm
-                    let currentCoursesMinusTerm = currentCourses.filter { $0.term != term }
-                    let newCourses = currentCoursesMinusTerm.union(courses)
-                    UserDefaults.standard.saveCourses(newCourses)
-                }
-            } else {
-                self.showCourseWebviewController()
-            }
-        }
-    }
-
-    private func handleCourseRefresh(_ courses: Set<Course>?) {
-        DispatchQueue.main.async {
-            if let courses = courses, let courseItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.courses]).first as? HomeCoursesCellItem {
-                let taughtToday = courses.taughtToday
-                let taughtTomorrow = courses.taughtTomorrow
-                if taughtToday.isEmpty && taughtTomorrow.isEmpty {
-                    self.removeItem(courseItem)
-                } else {
-                    courseItem.courses = courseItem.weekday == "Today" ? Array(taughtToday) : Array(taughtTomorrow)
-                    self.reloadItem(courseItem)
-                }
-                self.showAlert(withMsg: "Your courses have been updated.", title: "Success!", completion: nil)
-            } else {
-                self.showAlert(withMsg: "Unable to access your courses. Please try again later.", title: "Uh oh!", completion: nil)
-            }
-        }
-    }
-}
-
 extension HomeViewController: GSRLocationSelectable {
     func handleSelectedLocation(_ location: GSRLocation) {
         let gc = GSRController()
@@ -217,6 +115,15 @@ extension HomeViewController: GSRLocationSelectable {
         gc.title = "Study Room Booking"
         navigationController?.pushViewController(gc, animated: true)
         FirebaseAnalyticsManager.shared.trackEvent(action: "Tap Home GSR Location", result: "Tap Home GSR Location", content: "View \(location.name)")
+    }
+}
+
+extension HomeViewController: NewsArticleSelectable {
+    func handleSelectedArticle(_ article: NewsArticle) {
+        let nvc = NativeNewsViewController()
+        nvc.article = article
+        nvc.title = "News"
+        navigationController?.pushViewController(nvc, animated: true)
     }
 }
 

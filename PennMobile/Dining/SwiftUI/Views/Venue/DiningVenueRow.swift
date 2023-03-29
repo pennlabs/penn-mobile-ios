@@ -9,7 +9,6 @@
 import SwiftUI
 import Kingfisher
 
-@available(iOS 14, *)
 struct DiningVenueRow: View {
 
     init(for venue: DiningVenue) {
@@ -20,7 +19,7 @@ struct DiningVenueRow: View {
 
     var body: some View {
         HStack(spacing: 13) {
-            KFImage(venue.imageURL)
+            KFImage(venue.image)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 100, height: 64)
@@ -67,7 +66,6 @@ struct DiningVenueRow: View {
 }
 
 // MARK: - ViewModifiers
-@available(iOS 14, *)
 struct StatusColorModifier: ViewModifier {
 
     init(for venue: DiningVenue) {
@@ -81,16 +79,7 @@ struct StatusColorModifier: ViewModifier {
             if venue.isClosingSoon {
                 return content.foregroundColor(Color.red)
             } else {
-                switch venue.venueType {
-                case .dining:
-                    if venue.isMainDiningTimes {
-                        return content.foregroundColor(Color.green)
-                    } else {
-                        return content.foregroundColor(Color.yellow)
-                    }
-                default:
-                    return content.foregroundColor(Color.green)
-                }
+                return content.foregroundColor(Color.green)
             }
         } else {
             return content.foregroundColor(Color.gray)
@@ -98,7 +87,6 @@ struct StatusColorModifier: ViewModifier {
     }
 }
 
-@available(iOS 14, *)
 struct VenueStatusLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 4) {
@@ -106,30 +94,5 @@ struct VenueStatusLabelStyle: LabelStyle {
             configuration.title.font(.system(size: 11, weight: .semibold))
             Spacer()
         }
-    }
-}
-
-@available(iOS 14, *)
-struct DiningVenueRow_Previews: PreviewProvider {
-    static var previews: some View {
-        let diningVenues: DiningAPIResponse = Bundle.main.decode("sample-dining-venue.json")
-
-        return NavigationView {
-            List {
-                NavigationLink(destination: Text("dfs")) {
-                    DiningVenueRow(for: diningVenues.document.venues[0])
-                }
-                NavigationLink(destination: Text("dfs")) {
-                    DiningVenueRow(for: diningVenues.document.venues[1])
-                }
-                NavigationLink(destination: Text("dfs")) {
-                    DiningVenueRow(for: diningVenues.document.venues[2])
-                }
-                NavigationLink(destination: Text("dfs")) {
-                    DiningVenueRow(for: diningVenues.document.venues[3])
-                }
-            }
-        }
-        .preferredColorScheme(.light)
     }
 }

@@ -11,15 +11,14 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 extension VariableStepLineGraphView {
 
     struct PredictionSlopePath: Shape, Animatable {
         // This should be the last data point before prediction line begins
         @State var lastDataPoint: PredictionsGraphView.YXDataPoint
 
-        // Calculated day balance will reach 0, computed by the server. X may exceed 1.0 if the zero date is past the end of the semester
-        @State var predictionZeroPoint: PredictionsGraphView.YXDataPoint
+        // Slope of line to be drawn from lastDataPoint
+        @State var slope: Double = 0.0
 
         var animatableData: PredictionsGraphView.YXDataPoint {
             get { return lastDataPoint }
@@ -28,16 +27,22 @@ extension VariableStepLineGraphView {
 
         func path(in rect: CGRect) -> Path {
             var path = Path()
-
             path.move(to: CGPoint(
                 x: lastDataPoint.x * rect.maxX,
                 y: rect.maxY - (rect.maxY * lastDataPoint.y)
             ))
-
-            path.addLine(to: CGPoint(
-                x: predictionZeroPoint.x * rect.maxX,
-                y: rect.maxY - (rect.maxY * predictionZeroPoint.y)
-            ))
+            if slope.isInfinite {
+                // This case should never actually execute, but it's caught just in case to prevent undefined behavior
+                path.addLine(to: CGPoint(
+                    x: rect.maxX,
+                    y: rect.maxY - (rect.maxY * lastDataPoint.y)
+                ))
+            } else {
+                path.addLine(to: CGPoint(
+                    x: rect.maxX,
+                    y: rect.maxY * (1 - lastDataPoint.y - slope * (1 - lastDataPoint.x))
+                ))
+            }
 
             return path
         }

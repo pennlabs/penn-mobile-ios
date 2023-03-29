@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
+      - name: Select Xcode 14.1
+        # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
+        run: sudo xcode-select -s '/Applications/Xcode_14.1.app/Contents/Developer'
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Create Config File
@@ -47,7 +50,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6
+          ruby-version: '2.6.8'
           bundler-cache: true
       - name: Download pods
         run: bundle exec pod install
@@ -58,16 +61,19 @@ jobs:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          BUILD_PROVISION_PROFILE_WIDGET_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_WIDGET_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
           PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          PP_WIDGET_PATH=$RUNNER_TEMP/build_pp_widget.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
           echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_WIDGET_BASE64" | base64 --decode --output $PP_WIDGET_PATH
 
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
@@ -81,5 +87,6 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_WIDGET_PATH ~/Library/MobileDevice/Provisioning\ Profiles
       - name: Build app
         run: bundle exec fastlane ci_beta

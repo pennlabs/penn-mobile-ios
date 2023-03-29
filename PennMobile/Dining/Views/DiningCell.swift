@@ -47,7 +47,7 @@ class DiningCell: UITableViewCell {
 extension DiningCell {
     fileprivate func setupCell(with venue: DiningVenue) {
         backgroundColor = .clear
-        venueImageView.kf.setImage(with: venue.imageURL)
+        venueImageView.kf.setImage(with: venue.image)
         titleLabel.text = venue.name
         updateTimeLabel(with: venue)
 
@@ -55,7 +55,7 @@ extension DiningCell {
             if let meal = venue.currentMeal {
                 if meal.isLight {
                     // Label will read: "Light Lunch" or "Light Breakfast"
-                    statusLabel.text = meal.type
+                    statusLabel.text = meal.label
                     statusLabel.textColor = .baseYellow
                     statusLabel.font = .primaryInformationFont
                 } else {
@@ -64,7 +64,7 @@ extension DiningCell {
                     statusLabel.font = .primaryInformationFont
                 }
             } else if let nextMeal = venue.nextMeal {
-                statusLabel.text = "Opens \(Date().humanReadableDistanceFrom(nextMeal.open))"
+                statusLabel.text = "Opens \(Date().humanReadableDistanceFrom(nextMeal.starttime))"
                 statusLabel.textColor = .labelSecondary
                 statusLabel.font = .secondaryInformationFont
             } else {

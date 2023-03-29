@@ -9,17 +9,19 @@
 import SwiftUI
 
 struct DiningLoginNavigationView: View {
-    @Binding var showSheetView: Bool
-//    @Binding var
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
+
     var body: some View {
         NavigationView {
-            DiningLoginViewSwiftUI(navigationViewInstance: self)
+            DiningLoginViewSwiftUI()
                 .navigationBarTitle(Text("Login"), displayMode: .inline)
                                 .navigationBarItems(trailing: Button(action: {
-                                    self.showSheetView = false
+                                    presentationMode.wrappedValue.dismiss()
                                 }) {
                                     Text("Cancel")
                                 })
+                                .environmentObject(diningAnalyticsViewModel)
         }
     }
 }

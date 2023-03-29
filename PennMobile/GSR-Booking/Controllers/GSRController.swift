@@ -8,7 +8,6 @@
 
 import UIKit
 import WebKit
-import SCLAlertView
 
 class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
 
@@ -154,28 +153,24 @@ extension GSRController: GSRViewModelDelegate {
 
         if !Account.isLoggedIn {
             self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: {self.navigationController?.popViewController(animated: true)})
-            return
-        }
-
-        GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: date.string) { result in
-            DispatchQueue.main.async {
-                self.limitedAccessLabel.isHidden = true
-                self.tableView.isHidden = false
-                self.hideActivity()
-                switch result {
-                case .success(let rooms):
-                    self.viewModel.updateData(with: rooms)
-                    self.refreshDataUI()
-                    self.rangeSlider.reload()
-                    self.refreshBarButton()
-                case .failure:
-                    if location.kind == .wharton {
-                        if !UserDefaults.standard.isInWharton() {
-                            self.showAlert(withMsg: "You need to have a Wharton pennkey to access Wharton GSRs", title: "Error", completion: { self.navigationController?.popViewController(animated: true)})
-                            return
-                        }
+        } else if location.kind == .wharton && !UserDefaults.standard.isInWharton() {
+            self.showAlert(withMsg: "You need to have a Wharton pennkey to access Wharton GSRs", title: "Error", completion: { self.navigationController?.popViewController(animated: true)
+            })
+        } else {
+            GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: date.string) { result in
+                DispatchQueue.main.async {
+                    self.limitedAccessLabel.isHidden = true
+                    self.tableView.isHidden = false
+                    self.hideActivity()
+                    switch result {
+                    case .success(let rooms):
+                        self.viewModel.updateData(with: rooms)
+                        self.refreshDataUI()
+                        self.rangeSlider.reload()
+                        self.refreshBarButton()
+                    case .failure:
+                        self.navigationVC?.addStatusBar(text: .apiError)
                     }
-                    self.navigationVC?.addStatusBar(text: .apiError)
                 }
             }
         }

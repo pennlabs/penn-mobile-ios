@@ -10,7 +10,6 @@ import SwiftUI
 import Kingfisher
 import FirebaseAnalytics
 
-@available(iOS 14, *)
 struct DiningVenueDetailView: View {
 
     init(for venue: DiningVenue) {
@@ -35,7 +34,7 @@ struct DiningVenueDetailView: View {
                     let remain = imageHeight + minY
 
                     ZStack(alignment: .bottomLeading) {
-                        KFImage(self.venue.imageURL)
+                        KFImage(self.venue.image)
                             .resizable()
                             .scaledToFill()
                             .frame(width: geometry.size.width, height: imageHeight + max(0, minY))
@@ -67,14 +66,6 @@ struct DiningVenueDetailView: View {
                                 .minimumScaleFactor(0.2)
                                 .lineLimit(1)
                         }.opacity(1 - Double(minY)/60)
-
-                        VStack {
-                            DefaultNavigationBar(title: venue.name)
-                                .frame(height: 44 + statusBarHeight)
-                                .opacity(Double(-1/20 * (remain - (64 + statusBarHeight))))
-
-                            Spacer()
-                        }.offset(y: -min(0, minY))
                     }
                     .offset(y: -max(0, minY))
                 }
@@ -93,7 +84,7 @@ struct DiningVenueDetailView: View {
 
                     VStack {
                         if self.pickerIndex == 0 {
-                            DiningVenueDetailMenuView(menus: diningVM.diningMenus[venue.id]?.document.menuDocument.menus ?? [])
+                            DiningVenueDetailMenuView(menus: diningVM.diningMenus[venue.id]?.menus ?? [], id: venue.id, venue: venue)
                         } else if self.pickerIndex == 1 {
                             DiningVenueDetailHoursView(for: venue)
                         } else {
@@ -108,63 +99,8 @@ struct DiningVenueDetailView: View {
             .navigationBarHidden(true)
             .onAppear {
                 FirebaseAnalyticsManager.shared.trackScreen("Venue Detail View")
-                diningVM.refreshMenu(for: venue.id)
             }
         }
-    }
-}
-
-@available(iOS 14.0, *)
-struct DefaultNavigationBar: View {
-
-    @Environment(\.presentationMode) var presentationMode
-
-    var title: String
-
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            VisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
-
-            VStack {
-                Spacer()
-
-                HStack {
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Text("Back")
-                            .frame(width: 75, height: 44, alignment: .center)
-                            .contentShape(Rectangle())
-                    }
-
-                    Spacer()
-                }
-            }
-
-            VStack {
-                Spacer()
-                Text(title)
-                    .frame(height: 44)
-            }
-        }
-    }
-}
-
-@available(iOS 14, *)
-struct DiningVenueDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        let path = Bundle.main.path(forResource: "sample-dining-venue", ofType: "json")
-        let data = try! Data(contentsOf: URL(fileURLWithPath: path!), options: .mappedIfSafe)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        let diningVenues = try! decoder.decode(DiningAPIResponse.self, from: data)
-
-        return
-            NavigationView {
-                DiningVenueDetailView(for: diningVenues.document.venues[0])
-            .preferredColorScheme(.dark)
-            .environmentObject(DiningViewModelSwiftUI())
-            }
     }
 }
 

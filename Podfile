@@ -9,17 +9,11 @@ target 'PennMobile' do
 
     # Pods for PennMobile
 
-pod 'MBProgressHUD', '~> 0.8' # old objc library, should be replaced
 pod 'SCLAlertView'
 pod 'ScrollableGraphView'
 
 pod 'XLPagerTabStrip', '~> 9.0' # Only used for GSR, should be deleted
 pod 'SwiftLint'
-
-# WKZombie should be moved to SPM eventually, but something is broken with the current SPM implementation
-#pod 'WKZombie', :git => 'https://github.com/pennlabs/WKZombie.git', :commit => '536f6e8aa0e8438fe711fff6420908bc67edb056'
-pod 'OneTimePassword', '~> 3.2'
-
 
 end
 
@@ -32,6 +26,9 @@ end
 post_install do |pi|
     pi.pods_project.targets.each do |t|
       t.build_configurations.each do |config|
+        config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
+        config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
+        config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
         config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = "YES"
       end

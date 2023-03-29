@@ -11,7 +11,6 @@ import Foundation
 import SwiftUI
 #endif
 
-@available(iOS 14, *)
 struct CardHeaderView: View {
 
     let color: Color
@@ -28,7 +27,6 @@ struct CardHeaderView: View {
     }
 }
 
-@available(iOS 14, *)
 struct CardHeaderTitleView: View {
     enum IconType {
         case dollars, swipes, predictions
@@ -56,7 +54,6 @@ struct CardHeaderTitleView: View {
     }
 }
 
-@available(iOS 14, *)
 struct CardHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         CardHeaderView(color: .blue, icon: .predictions, title: "Predictions", subtitle: "These are your predictions! Pretty cool that they even wrap onto new lines.")

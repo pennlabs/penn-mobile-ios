@@ -21,6 +21,7 @@ enum Feature: String {
     case fitness = "Fitness"
     case map = "Map"
     case news = "News"
+    case headlineNews = "Headline News"
     case contacts = "Penn Contacts"
     case events = "Penn Events"
     case about = "About"
@@ -43,11 +44,7 @@ class ControllerModel: NSObject {
     func prepare() {
         vcDictionary = [Feature: UIViewController]()
         vcDictionary[.home] = HomeViewController()
-//        if #available(iOS 14, *) {
-//            vcDictionary[.dining] = DiningViewControllerSwiftUI()
-//        } else {
-            vcDictionary[.dining] = DiningViewController()
-//        }
+        vcDictionary[.dining] = DiningViewControllerSwiftUI()
         vcDictionary[.studyRoomBooking] = GSRTabController()
         vcDictionary[.laundry] = LaundryTableViewController()
         vcDictionary[.more] = MoreViewController()
@@ -55,12 +52,13 @@ class ControllerModel: NSObject {
         vcDictionary[.news] = NewsViewController()
         vcDictionary[.contacts] = ContactsTableViewController()
         vcDictionary[.about] = AboutViewController()
-        vcDictionary[.notifications] = NotificationViewController()
+        vcDictionary[.notifications] = NotificationsViewControllerSwiftUI()
         vcDictionary[.privacy] = PrivacyViewController()
-        vcDictionary[.courseSchedule] = CourseScheduleViewController()
+        vcDictionary[.courseSchedule] = CoursesViewController()
         vcDictionary[.pacCode] = PacCodeViewController()
         vcDictionary[.courseAlerts] = CourseAlertController()
         vcDictionary[.events] = PennEventsTableViewController()
+        vcDictionary[.headlineNews] = NativeNewsViewController()
         vcDictionary[.fitness] = FitnessViewController()
         // vcDictionary[.fling] = FlingViewController()
         vcDictionary[.polls] = PollsViewController()

@@ -72,10 +72,6 @@ enum NotificationOption: String, Codable {
     }
 
     var defaultValue: Bool {
-        switch self {
-        case .diningBalanceSummary: return UserDefaults.standard.hasDiningPlan()
-        case .pennCourseAlerts: return UserDefaults.standard.getPreference(for: .pennCourseAlerts)
-        default: return true
-        }
+        return false
     }
 }
