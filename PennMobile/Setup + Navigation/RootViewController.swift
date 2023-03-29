@@ -135,6 +135,8 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     }
 
     func applicationWillEnterForeground() {
+        displayBannersIfNeeded()
+        
         if Account.isLoggedIn && shouldRequireLogin() {
             // If user is logged in but login is required, clear user data and switch to logout
             clearAccountData()
@@ -178,8 +180,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         #if !targetEnvironment(simulator)
             updatePushNotificationToken()
         #endif
-
-        displayBannersIfNeeded()
     }
 
     func showLoginScreen() {
