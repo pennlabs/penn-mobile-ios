@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class PollsNetworkManager: NSObject, Requestable {
 
-    static let id = "id"
+    static let id = UIDevice.current.identifierForVendor?.uuidString
     static let instance = PollsNetworkManager()
     let pollURL = URL(string: "https://pennmobile.org/api/portal/polls/browse/")
     let votesURL = URL(string: "https://pennmobile.org/api/portal/votes/")
