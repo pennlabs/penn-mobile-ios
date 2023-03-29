@@ -126,7 +126,7 @@ extension OAuth2NetworkManager {
                         return
                     } else if httpResponse.statusCode == 400 {
                         let json = JSON(data)
-                        if json["error"].stringValue == "invalid_grant" {
+                        if json["detail"].stringValue == "Invalid parameters" {
                             // This refresh token is invalid.
                             if let accessToken = self.currentAccessToken, refreshToken != self.getRefreshToken() {
                                 // Access token has been refreshed in another network call while we were waiting and current refresh token is not the same one we used
