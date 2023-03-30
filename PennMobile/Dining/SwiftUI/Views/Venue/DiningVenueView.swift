@@ -28,15 +28,15 @@ struct DiningVenueView: View {
             let venueTask = Task {
                 await diningVM.refreshVenues()
             }
-            
+
             let balanceTask = Task {
                 await diningVM.refreshBalance()
             }
-            
+
             let menuTask = Task {
                 await diningVM.refreshMenus(cache: true)
             }
-            
+
             let analyticsTask = Task {
                 // Only refresh widgets once
                 await diningAnalyticsViewModel.refresh(refreshWidgets: widgetsNeedRefresh)
@@ -44,7 +44,7 @@ struct DiningVenueView: View {
                     widgetsNeedRefresh = false
                 }
             }
-            
+
             await venueTask.value
             await balanceTask.value
             await menuTask.value
@@ -64,6 +64,10 @@ struct DiningVenueView: View {
         }
 
         return List {
+            if BannerViewModel.shared.shouldDisplayBanners() {
+                BannerView().environmentObject(BannerViewModel.shared)
+            }
+
             Section(header: CustomHeader(name: "Dining Balance", refreshConfiguration: refreshConfiguration).environmentObject(diningAnalyticsViewModel), content: {
                 Section(header: DiningViewHeader().environmentObject(diningAnalyticsViewModel), content: {})
             })
