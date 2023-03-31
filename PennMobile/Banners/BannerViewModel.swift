@@ -49,7 +49,7 @@ class BannerViewModel: ObservableObject {
         let calendar = Calendar(identifier: .gregorian)
         let components = calendar.dateComponents(in: TimeZone.current, from: date)
 
-        return components.year == 2023 && components.month == 4 && components.day == 1
+        return components.year == 2023 && components.month == 4 && components.day <= 3
     }
 
     func fetchBannersIfNeeded() {
