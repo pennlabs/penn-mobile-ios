@@ -25,7 +25,6 @@ class PollsNetworkManager: NSObject, Requestable {
                callback(nil)
                return
            }
-            print(token)
             var request = URLRequest(url: self.pollURL!, accessToken: token)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": PollsNetworkManager.id])
