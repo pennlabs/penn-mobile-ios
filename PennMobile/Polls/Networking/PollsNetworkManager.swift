@@ -32,8 +32,7 @@ class PollsNetworkManager: NSObject, Requestable {
             request.httpMethod = "POST"
 
             let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
-                if let polls = try? JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([PollQuestion].self, from: data!) {
-                    print(polls)
+                if let data, let polls = try? JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([PollQuestion].self, from: data) {
                     callback(polls)
                 } else {
                     callback([])

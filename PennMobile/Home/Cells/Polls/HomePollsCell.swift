@@ -26,20 +26,11 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomePollsCellItem else { return 0.0 }
         let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
+        var totalHeight: CGFloat = 63 + HomePollsCellFooter.height + 28 + 8
 
-        for i in 1...item.pollQuestion.options.count {
-            let label = UILabel(frame: CGRect(x: 0, y: 0, width: maxWidth, height: CGFloat.greatestFiniteMagnitude))
-            label.lineBreakMode = NSLineBreakMode.byWordWrapping
-            label.text = item.pollQuestion.options[i-1].choice
-            label.font = .primaryInformationFont
-            label.textColor = .labelPrimary
-            label.textAlignment = .left
-            label.numberOfLines = 0
-            label.sizeToFit()
+        for i in 0..<item.pollQuestion.options.count {
+            totalHeight += height(forOption: item.pollQuestion.options[i])
         }
-        
-        let numOptions = item.pollQuestion.options.count
-        let totalHeight = 63 + Int(HomePollsCellFooter.height) + numOptions*53 + 28 + 8
 
         return CGFloat(totalHeight)
     }
@@ -142,6 +133,7 @@ extension HomePollsCell {
     // MARK: TableView
     fileprivate func prepareTableView() {
         responsesTableView = getTableView()
+        responsesTableView.backgroundColor = .uiCardBackground
         responsesTableView.rowHeight = UITableView.automaticDimension
         cardView.addSubview(responsesTableView)
         responsesTableView.snp.makeConstraints { (make) in
@@ -186,19 +178,23 @@ extension HomePollsCell: UITableViewDelegate {
             }
         }
     }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    
+    static func height(forOption option: PollOption) -> CGFloat {
         let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: maxWidth, height: CGFloat.greatestFiniteMagnitude))
 
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.text = pollQuestion.options[indexPath.row].choice
+        label.text = option.choice
         label.font = .primaryInformationFont
         label.textColor = .labelPrimary
         label.textAlignment = .left
         label.numberOfLines = 0
         label.sizeToFit()
         return label.frame.height + Padding.pad * 1 + 22
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        HomePollsCell.height(forOption: pollQuestion.options[indexPath.row])
     }
 }
 

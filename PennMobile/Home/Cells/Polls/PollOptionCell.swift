@@ -15,16 +15,10 @@ class PollOptionCell: UITableViewCell {
     var totalResponses: Int!
 
     var chosen: Bool = false
-    var answered: Bool! {
-         didSet {
-            print("changed answered")
-           // setupCell()
-        }
-    }
+    var answered: Bool!
 
     var pollOption: PollOption! {
         didSet {
-            print("pollOption")
             setupCell()
         }
     }
@@ -110,7 +104,6 @@ extension PollOptionCell {
             anim.startAnimation()
 
         } else {
-            print("hrere")
             percentageLabel.text = ""
             voteLabel.text = ""
             percentageShadow.backgroundColor = .greenLighter
