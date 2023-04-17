@@ -111,7 +111,6 @@
 		21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */; };
 		21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */; };
 		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
-		4C45D78227E794DC00484A94 /* PollsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C45D78127E794DC00484A94 /* PollsViewController.swift */; };
 		426A0B51299034910066C7B7 /* DiningAnalyticsGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */; };
 		426A0B52299034910066C7B7 /* DiningAnalyticsGraphBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */; };
 		56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */; };
@@ -486,7 +485,6 @@
 		22D5D1D7F760F28A27C06241 /* libPods-AutomatedScreenshotUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AutomatedScreenshotUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F8A024230F1E8D7BA9410B4 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		407FC3CFC29C6496A17C99C2 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
-		4C45D78127E794DC00484A94 /* PollsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsViewController.swift; sourceTree = "<group>"; };
 		425E281A28FF5EE200218F50 /* DiningPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningPlan.swift; sourceTree = "<group>"; };
 		426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraph.swift; sourceTree = "<group>"; };
 		426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraphBox.swift; sourceTree = "<group>"; };
@@ -1197,14 +1195,6 @@
 			path = "Spring Fling";
 			sourceTree = "<group>";
 		};
-		4C45D78027E794B800484A94 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				4C45D78127E794DC00484A94 /* PollsViewController.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		66E8ECA32381CA6C00945BEA /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -1293,7 +1283,6 @@
 		6CAA4B4727A7639600473CC6 /* Polls */ = {
 			isa = PBXGroup;
 			children = (
-				4C45D78027E794B800484A94 /* Views */,
 				6CAA4B4827A7639600473CC6 /* Networking */,
 				6CAA4B4A27A7639600473CC6 /* Model */,
 			);
@@ -2209,7 +2198,6 @@
 				6CC88D6427B1BF51006896F6 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */,
 				EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */,
 				EFE2D6F8239B120E0020F6BF /* GSRManageGroupViewModel.swift in Sources */,
-				4C45D78227E794DC00484A94 /* PollsViewController.swift in Sources */,
 				B6665A182071E63800F49A9C /* TabBarController.swift in Sources */,
 				21A6B6D222162702003A357D /* GSRReservation.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
