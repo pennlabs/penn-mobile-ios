@@ -25,7 +25,7 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
 
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomePollsCellItem else { return 0.0 }
-        let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
+//        let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
         var totalHeight: CGFloat = 63 + HomePollsCellFooter.height + 28 + 8
 
         for i in 0..<item.pollQuestion.options.count {
@@ -171,14 +171,14 @@ extension HomePollsCell: UITableViewDelegate {
                     self.pollQuestion.optionChosenId = self.pollQuestion.options[indexPath.row].id
                 }
 
-                // TODO: Send Network Request to reflect changees
+                // TODO: Send Network Request to reflect changes
             } else {
                 print("not changing chosen")
                 // TODO: Show error
             }
         }
     }
-    
+
     static func height(forOption option: PollOption) -> CGFloat {
         let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: maxWidth, height: CGFloat.greatestFiniteMagnitude))
@@ -244,5 +244,3 @@ extension HomePollsCell {
         return label
     }
 }
-
-// UI Stack View
