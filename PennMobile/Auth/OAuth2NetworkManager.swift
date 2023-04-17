@@ -39,7 +39,7 @@ class OAuth2NetworkManager: NSObject {
 // MARK: - Initiate Authentication
 extension OAuth2NetworkManager {
     static let tokenURL = URL(string: "https://pennmobile.org/api/accounts/token/")!
-    
+
     /// Input: One-time code from login
     /// Output: Temporary access token
     /// Saves refresh token in keychain for future use
