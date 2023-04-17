@@ -11,8 +11,6 @@ import SnapKit
 
 class HomePollsCellHeader: UIView {
 
- //   static let height: CGFloat = 80
-
     var secondaryTitleLabel: UILabel!
     var primaryTitleLabel: UILabel!
     var voteCountLabel: UILabel!
@@ -58,12 +56,10 @@ class HomePollsCellHeader: UIView {
     func prepareVoteCountLabel() {
         voteCountLabel = getVoteCountLabel()
         addSubview(voteCountLabel)
-        // cardView.addSubview(voteCountLabel)
         voteCountLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(self)
             make.top.equalTo(primaryTitleLabel.snp.bottom).offset(3)
             make.trailing.equalTo(self)
-            // make.bottom.equalTo(dividerLine.snp.bottom).offset(3)
         }
     }
     private func getVoteCountLabel() -> UILabel {
@@ -98,7 +94,7 @@ class HomePollsCellHeader: UIView {
 
     private func getPrimaryLabel() -> UILabel {
         let label = UILabel()
-        label.font = .pollsTitleFont // primaryTitleFont
+        label.font = .pollsTitleFont
         label.textColor = .labelPrimary
         label.textAlignment = .left
         label.numberOfLines = 0

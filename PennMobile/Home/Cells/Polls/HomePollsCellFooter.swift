@@ -14,7 +14,7 @@ class HomePollsCellFooter: UIView {
     static let height: CGFloat = 16
     var noteLabel: UILabel!
     private var dividerLine: UIView!
-//    
+
     // Must be called after being added to a view
     func prepare() {
         prepareFooter(inside: self.superview ?? UIView())
@@ -28,7 +28,6 @@ class HomePollsCellFooter: UIView {
             make.leading.equalTo(safeArea)
             make.bottom.equalTo(safeArea)
             make.trailing.equalTo(safeArea)
-          // make.top.equalTo()
             make.height.equalTo(HomePollsCellFooter.height)
         }
     }
