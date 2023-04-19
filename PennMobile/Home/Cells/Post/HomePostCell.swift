@@ -136,8 +136,13 @@ extension HomePostCell {
 
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? URLSelectable, let url = post.postUrl else { return }
-        let title = url.replacingOccurrences(of: "http://", with: "").replacingOccurrences(of: "https://", with: "").split(separator: "/").first!
-        delegate.handleUrlPressed(urlStr: url, title: String(title), item: self.item, shouldLog: true)
+        if url.starts(with: "tel:") {
+            guard let phone = URL(string: "tel://" + url.dropFirst(4)) else { return }
+            UIApplication.shared.open(phone)
+        } else {
+            let title = url.replacingOccurrences(of: "http://", with: "").replacingOccurrences(of: "https://", with: "").split(separator: "/").first!
+            delegate.handleUrlPressed(urlStr: url, title: String(title), item: self.item, shouldLog: true)
+        }
     }
 }
 
