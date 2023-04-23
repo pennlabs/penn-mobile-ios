@@ -18,7 +18,7 @@ class DiningViewModelSwiftUI: ObservableObject {
     @Published var diningVenuesIsLoading = false
     @Published var alertType: NetworkingError?
 
-    @Published var diningBalance = UserDefaults.standard.getDiningBalance() ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
+    @Published var diningBalance = (try? Storage.retrieveThrowing(DiningBalance.directory, from: .groupCaches, as: DiningBalance.self)) ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
     // MARK: - Venue Methods
     let ordering: [VenueType] = [.dining, .retail]
 
@@ -44,45 +44,46 @@ class DiningViewModelSwiftUI: ObservableObject {
         }
     }
 
-    func refreshMenu(for id: Int, at date: Date = Date()) {
-        let lastRequest = UserDefaults.standard.getLastMenuRequest(id: id)
-        if  Calendar.current.isDate(date, inSameDayAs: Date()) && (lastRequest == nil || !lastRequest!.isToday) {
-            DiningAPI.instance.fetchDiningMenu(for: id) { result in
-                switch result {
-                case .success(let diningMenu):
-                    withAnimation {
-                        self.diningMenus[id] = diningMenu
+    func refreshMenus(cache: Bool?, at date: Date = Date()) async {
+        let lastRequest = UserDefaults.standard.getLastCachedMenuRequest()
+        if diningMenus.isEmpty || !Calendar.current.isDate(date, inSameDayAs: Date()) || (lastRequest == nil || !lastRequest!.isToday) {
+            let result = await DiningAPI.instance.fetchDiningMenus(at: date)
+            switch result {
+            case .success(let response):
+                withAnimation {
+                    for id in DiningVenue.menuUrlDict.keys {
+                        self.diningMenus[id] = MenuList(menus: [])
                     }
-                case .failure(let error):
-                    self.alertType = error
+                    for venueMenus in response {
+                        self.diningMenus[venueMenus.menus[0].venueInfo.id] = venueMenus
+                    }
                 }
+                if cache != nil && cache! {
+                    DiningAPI.instance.saveAllMenusToCache(menus: self.diningMenus)
+                    UserDefaults.standard.setLastCachedMenuRequest(date)
+                }
+            case .failure(let error):
+                self.alertType = error
             }
         } else {
-            DiningAPI.instance.fetchDiningMenu(for: id, at: date) { result in
-                switch result {
-                case .success(let diningMenu):
-                    withAnimation {
-                        self.diningMenus[id] = diningMenu
-                    }
-                case .failure(let error):
-                    self.alertType = error
-                }
-            }
+            // getting menus from cache
+            self.diningMenus = DiningAPI.instance.getMenus()
         }
     }
 
-    func refreshBalance() {
+    func refreshBalance() async {
         guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
             UserDefaults.standard.clearDiningBalance()
             self.diningBalance = DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
             return
         }
-        DiningAPI.instance.getDiningBalance(diningToken: diningToken) { balance in
-            guard let balance = balance else {
-                return
-            }
-            UserDefaults.standard.setdiningBalance(balance)
+        let result = await DiningAPI.instance.getDiningBalance(diningToken: diningToken)
+        switch result {
+        case .success(let balance):
+            try? Storage.storeThrowing(balance, to: .groupCaches, as: DiningBalance.directory)
             self.diningBalance = balance
+        case .failure:
+            return
         }
     }
 }

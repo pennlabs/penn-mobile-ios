@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class GenericTableViewController: UITableViewController, Trackable {
 
@@ -104,5 +105,45 @@ class GenericViewController: UIViewController, Trackable {
 
     func removeMenuButton() {
         self.navigationItem.leftBarButtonItem = nil
+    }
+}
+
+/// ``GenericViewController`` instance that uses a SwiftUI view for its content.
+///
+/// To use this view controller, subclass and override ``content`` and ``tabTitle``.
+class GenericSwiftUIViewController<Content: View>: GenericViewController {
+    /// Content of the view controller.
+    open var content: Content {
+        fatalError("makeSwiftUIView() not implemented")
+    }
+
+    /// Title of the view controller, displayed in the tab bar and navigation bar.
+    open var tabTitle: String? {
+        nil
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let hostingController = UIHostingController(rootView: content)
+
+        view.backgroundColor = .uiBackground
+        title = tabTitle
+        screenName = tabTitle
+
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: self)
+
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.title = tabTitle
     }
 }

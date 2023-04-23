@@ -27,17 +27,4 @@ extension PredictionsGraphView {
         return yxPoints
     }
 
-    static func getPredictionZeroPoint(startOfSemester sos: Date, endOfSemester eos: Date, predictedZeroDate zpd: Date) -> PredictionsGraphView.YXDataPoint {
-
-        guard sos < eos else { return .init(y: 0.0, x: 0.0) }
-
-        let fullSemester = sos.distance(to: eos)
-        let fullZeroDistance = sos.distance(to: zpd)
-
-        // x value, may be > 1 if the zero date is past end of semester
-        let x = (fullZeroDistance / fullSemester)
-
-        // y value is always zero
-        return .init(y: 0.0, x: CGFloat(x))
-    }
 }

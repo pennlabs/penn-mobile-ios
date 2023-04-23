@@ -21,7 +21,6 @@ final class HomeItemTypes: ModularTableViewItemTypes {
     let post: HomeCellItem.Type = HomePostCellItem.self
     let feature: HomeCellItem.Type = HomeFeatureCellItem.self
     let reservations: HomeCellItem.Type = HomeReservationsCellItem.self
-    let courses: HomeCellItem.Type = HomeCoursesCellItem.self
     let gsrLocations: HomeCellItem.Type = HomeGSRLocationsCellItem.self
     let invites: HomeCellItem.Type =  HomeGroupInvitesCellItem.self
 //    let polls: HomeCellItem.Type = HomePollsCellItem.self

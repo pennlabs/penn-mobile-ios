@@ -8,6 +8,53 @@
 
 import SwiftUI
 
+struct DiningMenuRow: View {
+    var diningMenu: DiningMenu
+
+    var body: some View {
+        VStack(spacing: 0) {
+            ForEach(diningMenu.stations, id: \.self) { diningStation in
+                DiningStationRow(for: diningStation)
+            }
+        }
+        .background(Color.grey7.cornerRadius(8))
+    }
+}
+
+struct DiningStationRow: View {
+    @State var isExpanded = false
+    let diningStation: DiningStation
+    init (for diningStation: DiningStation) {
+        self.diningStation = diningStation
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.name)
+                .font(Font.system(size: 17))
+                .padding()
+                .background(Color.uiCardBackground.cornerRadius(8))
+            if isExpanded {
+                VStack {
+                    ForEach(diningStation.items, id: \.self) { diningStationItem in
+                        DiningStationItemRow(isExpanded: false, for: diningStationItem)
+                            .padding([.leading, .trailing])
+                        if diningStationItem != diningStation.items.last {
+                            Line()
+                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                                .frame(height: 1)
+                                .foregroundColor(Color.grey5)
+                        }
+                    }
+                    .transition(.moveAndFade)
+                }
+                .padding([.top, .bottom])
+            }
+        }
+        .background(Color.grey7.cornerRadius(8))
+    }
+}
+
 struct DiningMenuSectionRow: View {
     @Binding var isExpanded: Bool
     let title: String
@@ -20,15 +67,12 @@ struct DiningMenuSectionRow: View {
     var body: some View {
         HStack {
             Text(title)
-
             Spacer()
-
-            Image(systemName: "chevron.right.circle")
+            Image(systemName: "chevron.right")
                 .rotationEffect(.degrees(isExpanded ? -90 : 90))
                 .frame(width: 28, alignment: .center)
         }
         .contentShape(Rectangle())
-        .padding(.bottom)
         .onTapGesture {
             FirebaseAnalyticsManager.shared.trackEvent(action: "Open Menu", result: title, content: "")
             withAnimation {
@@ -38,88 +82,82 @@ struct DiningMenuSectionRow: View {
     }
 }
 
-struct DiningMenuRow: View {
-
-    init (for diningMenu: DiningMenu) {
-        self.diningMenu = diningMenu
-    }
-
-    @State var isExpanded = true
-    let diningMenu: DiningMenu
-
-    var body: some View {
-        VStack {
-            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningMenu.mealType)
-                .font(.system(size: 21, weight: .medium))
-
-            if isExpanded {
-                ForEach(diningMenu.diningStations, id: \.self) { diningStation in
-                    DiningStationRow(for: diningStation)
-                }
-                .padding(.leading)
-                .transition(.moveAndFade)
-            }
-        }.clipped()
-    }
-}
-
-struct DiningStationRow: View {
-
-    init (for diningStation: DiningStation) {
-        self.diningStation = diningStation
-    }
-
-    @State var isExpanded = false
-    let diningStation: DiningStation
-
-    var body: some View {
-        VStack {
-            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.stationDescription)
-                .font(Font.system(size: 17))
-
-            if isExpanded {
-                ForEach(diningStation.diningStationItems, id: \.self) { diningStationItem in
-                    DiningStationItemRow(for: diningStationItem)
-                        .padding(.leading)
-                }
-                .transition(.moveAndFade)
-            }
-        }.clipped()
-
-    }
-}
-
 struct DiningStationItemRow: View {
 
-    init (for diningStationItem: DiningStationItem) {
+    let diningStationItem: DiningStationItem
+    @State var isExpanded: Bool
+    let ingredients: [String]
+
+    init (isExpanded: Bool, for diningStationItem: DiningStationItem) {
+        self._isExpanded = State(initialValue: isExpanded)
         self.diningStationItem = diningStationItem
+        // This is only necessary because backend has duplicate ingredients, and some ingredients match item name exactly
+        // Regex for commas (this matches all commas not inside parenthesis): ,\s*(?=[^)]*(?:\(|$))
+        self.ingredients = Array(Set(diningStationItem.ingredients.split(usingRegex: ",\\s*(?=[^)]*(?:\\(|$))")))
+            .filter {
+                $0 != "" &&
+                $0 != diningStationItem.name &&
+                $0 != diningStationItem.name + "s" &&
+                $0 != diningStationItem.name + "es" &&
+                $0 != diningStationItem.name.dropLast() + "ies" &&
+                !diningStationItem.name.lowercased().contains($0.lowercased())
+            }
     }
 
-    let diningStationItem: DiningStationItem
-
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack(alignment: .center) {
-                Text(diningStationItem.title.capitalizeMainWords())
-                    .font(Font.system(size: 17))
-
-                ForEach(diningStationItem.tableAttribute.attributeDescriptions, id: \.self) { attribute in
-                    // Unlike UIKit, image will simply not appear if it doesn't exist in assets
-                    // Hack as image set doesn't allow slashes
-                    let description = attribute.description == "Wheat/Gluten" ? "Wheat" : attribute.description
-                    Image(description)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20.0, height: 20)
-
-                }
+        let name = diningStationItem.name.capitalizeMainWords()
+        if diningStationItem.desc != "" || ingredients.count > 0 {
+            HStack {
+                Text(name)
                 Spacer()
-            }.padding(.bottom, 3)
+                Image(systemName: "chevron.right")
+                    .rotationEffect(.degrees(isExpanded ? -90 : 90))
+                    .frame(width: 28, alignment: .center)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                withAnimation {
+                    isExpanded.toggle()
+                }
+            }
+            if isExpanded {
+                ItemView(name: name, description: diningStationItem.desc, ingredients: ingredients)
+            }
+        } else {
+            HStack {
+                Text(name)
+                Spacer()
+            }
+        }
+    }
+}
 
-            Text(diningStationItem.description)
-                .font(.system(size: 17, weight: .thin))
-                .fixedSize(horizontal: false, vertical: true)
-        }.padding(.bottom)
+struct ItemView: View {
+    let name: String
+    let description: String
+    let ingredients: [String]
+    var body: some View {
+        VStack(alignment: .center) {
+            VStack(spacing: 0) {
+                if description != "" {
+                    Text(description.capitalizeFirstLetter())
+                        .font(.system(size: 17))
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding([.leading])
+                }
+                if ingredients.count != 0 {
+                    VStack {
+                        ForEach(ingredients, id: \.self) { attribute in
+                            Text("• " + attribute.capitalizeFirstLetter())
+                                .font(.system(size: 17))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding([.leading])
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -139,12 +177,12 @@ extension AnyTransition {
 
 struct MenuDisclosureGroup_Previews: PreviewProvider {
     static var previews: some View {
-        let diningVenues: DiningMenuAPIResponse = Bundle.main.decode("mock_menu.json")
+        let diningVenues: MenuList = Bundle.main.decode("mock_menu.json")
 
         return NavigationView {
             ScrollView {
                 VStack {
-                    DiningVenueDetailMenuView(menus: diningVenues.document.menuDocument.menus, id: 1)
+                    DiningVenueDetailMenuView(menus: diningVenues.menus, id: 1)
                     Spacer()
                 }
             }.navigationTitle("Dining")
@@ -159,6 +197,26 @@ extension String {
             "a", "an", "the", "for", "and", "nor", "but", "or", "yet", "so", "with", "at", "around", "by", "after", "along", "for", "from", "of", "on", "to", "with", "without"
         ]
 
-        return self.split(separator: " ").map({nonCaptializingSet.contains(String($0)) ? $0.lowercased() : $0.capitalized}).joined(separator: " ")
+        return self.split(separator: " ").map({nonCaptializingSet.contains(String($0)) ? $0.lowercased() : $0.capitalized}).joined(separator: " ").capitalizeFirstLetter()
+    }
+    func capitalizeFirstLetter() -> String {
+        return self.prefix(1).capitalized + self.dropFirst()
+    }
+    // Used for splitting string by regex expression
+    func split(usingRegex pattern: String) -> [String] {
+        // Crashes when you pass invalid pattern
+        let regex = try! NSRegularExpression(pattern: pattern)
+        let matches = regex.matches(in: self, range: NSRange(0..<utf16.count))
+        let ranges = [startIndex..<startIndex] + matches.map{Range($0.range, in: self)!} + [endIndex..<endIndex]
+        return (0...matches.count).map {String(self[ranges[$0].upperBound..<ranges[$0+1].lowerBound])}
+    }
+}
+
+struct Line: Shape {
+    func path(in rect: CGRect) -> Path {
+       var path = Path()
+       path.move(to: CGPoint(x: 0, y: 0))
+       path.addLine(to: CGPoint(x: rect.width, y: 0))
+       return path
     }
 }
