@@ -13,7 +13,6 @@ import StoreKit
 import SwiftUI
 import WidgetKit
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -37,10 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GSRLocationModel.shared.prepare()
         LaundryAPIService.instance.prepare {}
         UserDBManager.shared.loginToBackend()
-
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = RootViewController()
-        self.window?.makeKeyAndVisible()
 
         migrateDataToGroupContainer()
 
@@ -85,13 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        rootViewController.applicationWillEnterForeground()
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-    }
-
     func applicationDidBecomeActive(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
     }
@@ -99,17 +87,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: OnboardingDelegate {
     func handleFinishedOnboarding() {
-    }
-}
-
-// Global access of rootview to handle navigations
-extension AppDelegate {
-    static var shared: AppDelegate {
-        return UIApplication.shared.delegate as! AppDelegate
-    }
-
-    var rootViewController: RootViewController {
-        return window!.rootViewController as! RootViewController
     }
 }
 

@@ -73,7 +73,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 FirebaseAnalyticsManager.shared.trackEvent(action: "GSR Delete From Notification", result: "User Deleted GSR From Notification", content: "User Deleted GSR From Notification")
 
                 // This makes the rootVC go to home screen
-                rootViewController.showMainScreen()
+                // rootViewController.showMainScreen()
                 // We use HomeVC's "delete res" method
                 guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
                 homeVC.deleteReservation(bookingID)
@@ -102,10 +102,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
                 let textToShare = [text]
                 let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-                activityViewController.popoverPresentationController?.sourceView = self.rootViewController.view
+                // activityViewController.popoverPresentationController?.sourceView = self.rootViewController.view
                 // exclude some activity types from the list (optional)
-                activityViewController.excludedActivityTypes = [ .airDrop ]
-                self.rootViewController.present(activityViewController, animated: true, completion: nil)
+                // activityViewController.excludedActivityTypes = [ .airDrop ]
+                // self.rootViewController.present(activityViewController, animated: true, completion: nil)
             }
         }
 

@@ -186,8 +186,9 @@ extension MoreViewController {
             alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
                 DispatchQueue.main.async {
-                    AppDelegate.shared.rootViewController.clearAccountData()
-                    AppDelegate.shared.rootViewController.switchToLogout()
+                    fatalError("Unimplemented")
+                    // AppDelegate.shared.rootViewController.clearAccountData()
+                    // AppDelegate.shared.rootViewController.switchToLogout()
                 }
             }))
             present(alertController, animated: true, completion: nil)

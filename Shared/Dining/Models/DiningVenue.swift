@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DiningVenue: Codable, Equatable, Identifiable {
+struct DiningVenue: Codable, Equatable, Identifiable, Hashable {
     static let directory = "diningVenue-v2.json"
     static let menuUrlDict: [Int: String] = [593: "https://university-of-pennsylvania.cafebonappetit.com/cafe/1920-commons/",
                                            636: "https://university-of-pennsylvania.cafebonappetit.com/cafe/hill-house/",
@@ -41,7 +41,7 @@ struct DiningVenue: Codable, Equatable, Identifiable {
     }
 }
 
-struct Day: Codable, Equatable {
+struct Day: Codable, Equatable, Hashable {
     let date: String
     let meals: [Meal]
 
@@ -51,7 +51,7 @@ struct Day: Codable, Equatable {
     }
 }
 
-struct Meal: Codable, Equatable {
+struct Meal: Codable, Equatable, Hashable {
     let starttime: Date
     let endtime: Date
     let label: String

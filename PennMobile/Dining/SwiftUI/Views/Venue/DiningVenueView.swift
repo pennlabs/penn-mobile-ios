@@ -13,6 +13,10 @@ struct DiningVenueView: View {
         case refreshing(Task<Void, Never>?)
         case refreshed
     }
+    
+    enum Subscreen {
+        case analytics
+    }
 
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @StateObject var diningAnalyticsViewModel = DiningAnalyticsViewModel()
@@ -71,13 +75,22 @@ struct DiningVenueView: View {
             ForEach(diningVM.ordering, id: \.self) { venueType in
                 Section(header: CustomHeader(name: venueType.fullDisplayName).environmentObject(diningAnalyticsViewModel)) {
                     ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
-                        NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM)) {
+                        NavigationLink(value: venue) {
                             DiningVenueRow(for: venue)
                                 .padding(.vertical, 4)
                         }
                     }
                 }
             }
+        }
+        .navigationDestination(for: Subscreen.self) { screen in
+            switch screen {
+            case .analytics:
+                return DiningAnalyticsView().environmentObject(diningAnalyticsViewModel)
+            }
+        }
+        .navigationDestination(for: DiningVenue.self) { venue in
+            DiningVenueDetailView(for: venue).environmentObject(diningVM)
         }
         .onAppear {
             triggerRefresh()

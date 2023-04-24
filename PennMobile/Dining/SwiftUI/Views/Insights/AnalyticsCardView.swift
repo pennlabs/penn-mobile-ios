@@ -14,8 +14,7 @@ struct AnalyticsCardView: View {
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
 
     var body: some View {
-        NavigationLink(destination: DiningAnalyticsView()
-            .environmentObject(diningAnalyticsViewModel)) {
+        NavigationLink(value: DiningVenueView.Subscreen.analytics) {
             CardView {
                 HStack {
                     Text(self.text)

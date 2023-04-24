@@ -52,11 +52,13 @@ extension LoginController {
     func loginCompletion(_ successful: Bool) {
         if successful {
             // Login Successful
-            AppDelegate.shared.rootViewController.applicationWillEnterForeground()
+            fatalError("Unimplemented")
+            // AppDelegate.shared.rootViewController.applicationWillEnterForeground()
         } else {
             // Failed to retrieve Account from Platform (possibly down)
             if !self.isFirstAttempt {
-                AppDelegate.shared.rootViewController.applicationWillEnterForeground()
+                fatalError("Unimplemented")
+                // AppDelegate.shared.rootViewController.applicationWillEnterForeground()
             } else {
                 self.isFirstAttempt = false
             }
@@ -76,8 +78,9 @@ extension LoginController {
     }
 
     @objc fileprivate func handleSkip(_ sender: Any) {
-        AppDelegate.shared.rootViewController.switchToMainScreen()
-        AppDelegate.shared.rootViewController.clearAccountData()
+        fatalError("Unimplemented")
+        // AppDelegate.shared.rootViewController.switchToMainScreen()
+        // AppDelegate.shared.rootViewController.clearAccountData()
         FirebaseAnalyticsManager.shared.trackEvent(action: "Selected Continue as Guest", result: "Selected Continue as Guest", content: "Selected Continue as Guest")
     }
 }

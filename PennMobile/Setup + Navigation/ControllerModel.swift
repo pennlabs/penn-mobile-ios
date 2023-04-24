@@ -12,7 +12,7 @@ protocol TransitionDelegate {
     func handleTransition(to feature: Feature)
 }
 
-enum Feature: String {
+enum Feature: String, Hashable {
     case home = "Home"
     case dining = "Dining"
     case studyRoomBooking = "Study Room Booking"
