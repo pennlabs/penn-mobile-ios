@@ -32,9 +32,10 @@ class FitnessAPI: Requestable {
         }
     }
     
-    func fetchFitnessPastData(roomID: Int, date: Date = Date(), num_samples: Int = 3, group_by: String = "week", field: String = "count") async -> Result<FitnessRoomData, NetworkingError> {
+    func fetchFitnessPastData(roomID: Int, drate: Date = Date(), num_samples: Int = 3, group_by: String = "week", field: String = "count") async -> Result<FitnessRoomData, NetworkingError> {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.date(from: "2023-04-04")!
         let dateString = dateFormatter.string(from: date)
         let urlString = fitnessDetailUrl + "\(roomID)/?date=\(dateString)&num_samples=\(num_samples)&group_by=\(group_by)&field=\(field)"
         guard let (data, _) = try? await URLSession.shared.data(from: URL(string: urlString)!) else {

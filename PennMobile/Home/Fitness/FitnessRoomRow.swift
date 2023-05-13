@@ -70,7 +70,19 @@ struct FitnessRoomRow: View {
             if isExpanded {
                 VStack {
                     CardView {
-                        FitnessGraph(data: room.data?.usage ?? [:])
+                        VStack {
+                            HStack(spacing: 0) {
+                                Text("\(formatHour(date: Date())): ")
+                                    .font(.system(size: 16, weight: .medium))
+                                    .foregroundColor(Color.blue)
+                                Text(getBusyString())
+                                    .font(.system(size: 16, weight: .light))
+                                    .foregroundColor(Color.labelPrimary)
+                                Spacer()
+                            }
+                            FitnessGraph(room: room)
+                        }
+                        .padding()
                     }
                     HStack {
                         CardView {
@@ -83,13 +95,16 @@ struct FitnessRoomRow: View {
                             MeterView(current: room.capacity, maximum: 100.0, style: Color.blue, lineWidth: meterLineWidth) {
                                 VStack {
                                     Text("\(room.capacity, specifier: "%.2f")%")
+                                    Text("capacity")
+                                        .font(.system(size: 10, weight: .light, design: .default))
                                 }
                             }
                             .frame(width: meterSize, height: meterSize)
+                            .padding()
                         }
-                        .padding()
                     }
                 }
+                .padding(.top)
             }
         }
         .onTapGesture {
@@ -119,5 +134,24 @@ struct FitnessRoomRow: View {
         let timesString = "\(open) - \(close)"
 
         return timesString
+    }
+    
+    func formatHour(date: Date = Date()) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h a"
+        return formatter.string(from: date)
+    }
+    
+    func getBusyString(date: Date = Date()) -> String {
+        if date < room.open || date > room.close {
+            return "Closed"
+        }
+        if room.capacity < 0.05 {
+            return "Empty"
+        } else if room.capacity < 0.2 {
+            return "Slightly busy"
+        } else {
+            return "Busy"
+        }
     }
 }

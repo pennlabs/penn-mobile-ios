@@ -42,19 +42,19 @@ class FitnessViewController: GenericTableViewController {
 // MARK: Networking to retrieve today's times
 extension FitnessViewController {
     fileprivate func fetchFitnessHours() {
-        FitnessAPI.instance.fetchFitnessHours { (success, error) in
-            DispatchQueue.main.async {
-                if !success {
-                    if error {
-                        self.navigationVC?.addStatusBar(text: .apiError)
-                    } else {
-                        self.navigationVC?.addStatusBar(text: .noInternet)
-                    }
-                }
-                self.tableView.reloadData()
-                self.refreshControl?.endRefreshing()
-            }
-        }
+//        FitnessAPI.instance.fetchFitnessHours { (success, error) in
+//            DispatchQueue.main.async {
+//                if !success {
+//                    if error {
+//                        self.navigationVC?.addStatusBar(text: .apiError)
+//                    } else {
+//                        self.navigationVC?.addStatusBar(text: .noInternet)
+//                    }
+//                }
+//                self.tableView.reloadData()
+//                self.refreshControl?.endRefreshing()
+//            }
+//        }
     }
 }
 
