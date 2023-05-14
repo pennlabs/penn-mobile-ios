@@ -10,11 +10,6 @@ import SwiftUI
 import Kingfisher
 
 struct FitnessRoomRow: View {
-
-    init(for room: FitnessRoom) {
-        self.room = room
-    }
-
     let room: FitnessRoom
     var isOpen: Bool {
         let date = Date()
@@ -90,7 +85,9 @@ struct FitnessRoomRow: View {
                                 Text("Last updated")
                                 Text(formattedLastUpdated(date: room.last_updated))
                             }
+                            .padding()
                         }
+                        .frame(height: meterSize + 32)
                         CardView {
                             MeterView(current: room.capacity, maximum: 100.0, style: Color.blue, lineWidth: meterLineWidth) {
                                 VStack {
@@ -102,6 +99,7 @@ struct FitnessRoomRow: View {
                             .frame(width: meterSize, height: meterSize)
                             .padding()
                         }
+                        .frame(width: meterSize + 32, height: meterSize + 32) // 32 is padding on both sides
                     }
                 }
                 .padding(.top)
@@ -146,12 +144,18 @@ struct FitnessRoomRow: View {
         if date < room.open || date > room.close {
             return "Closed"
         }
-        if room.capacity < 0.05 {
+        if room.capacity == 0.0 {
             return "Empty"
-        } else if room.capacity < 0.2 {
+        } else if room.capacity < 10.0 {
+            return "Not very busy"
+        } else if room.capacity < 30.0 {
             return "Slightly busy"
+        } else if room.capacity < 60.0 {
+            return "Pretty busy"
+        } else if room.capacity < 90.0 {
+            return "Extremely busy"
         } else {
-            return "Busy"
+            return "Packed"
         }
     }
 }

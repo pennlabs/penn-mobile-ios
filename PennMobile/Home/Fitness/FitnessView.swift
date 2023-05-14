@@ -10,16 +10,40 @@ import SwiftUI
 
 struct FitnessView: View {
     @State var rooms: [FitnessRoom] = []
+    @State var showFitnessSettings = false
+    @StateObject var favoritesList = FavoritesList()
 
     var body: some View {
         return List {
-            Text("Fitness")
-                .font(.system(size: 21, weight: .semibold))
-                .foregroundColor(.primary)
-
+            HStack {
+                Text("Favorites")
+                    .font(.system(size: 21, weight: .semibold))
+                    .foregroundColor(.primary)
+                Spacer()
+                Button {
+                    showFitnessSettings.toggle()
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                        .foregroundColor(Color.grey1)
+                }
+            }
             ForEach(rooms) { room in
-                FitnessRoomRow(for: room)
-                    .padding(.vertical, 4)
+                if favoritesList.favorites.contains(room.id) {
+                    FitnessRoomRow(room: room)
+                        .padding(.vertical, 4)
+                }
+            }
+            HStack {
+                Text("Others")
+                    .font(.system(size: 21, weight: .semibold))
+                    .foregroundColor(.primary)
+                Spacer()
+            }
+            ForEach(rooms) { room in
+                if !favoritesList.favorites.contains(room.id) {
+                    FitnessRoomRow(room: room)
+                        .padding(.vertical, 4)
+                }
             }
         }
         .task {
@@ -27,6 +51,9 @@ struct FitnessView: View {
         }
         .navigationBarHidden(false)
         .listStyle(.plain)
+        .sheet(isPresented: $showFitnessSettings) {
+            FitnessSelectView(showFitnessSettings: $showFitnessSettings, favoritesList: favoritesList, rooms: rooms, selections: getSelections())
+        }
     }
     
     func triggerRefresh() async {
@@ -43,10 +70,45 @@ struct FitnessView: View {
             }
         }
     }
+    
+    func getSelections() -> [Int: Bool] {
+        var selections = [Int: Bool]()
+        for room in rooms {
+            selections[room.id] = favoritesList.favorites.contains(room.id)
+        }
+        return selections
+    }
 }
 
 struct FitnessView_Previews: PreviewProvider {
     static var previews: some View {
         FitnessView()
+    }
+}
+
+extension FitnessRoom {
+    static func setPreferences(for ids: [Int]) {
+        UserDefaults.standard.setFitnessPreferences(to: ids)
+        UserDBManager.shared.saveFitnessPreferences(for: ids)
+    }
+
+    static func setPreferences(for rooms: [FitnessRoom]) {
+        let ids = rooms.map { $0.id }
+        FitnessRoom.setPreferences(for: ids)
+    }
+
+    static func getPreferences() -> [Int] {
+        if let ids = UserDefaults.standard.getFitnessPreferences() {
+            return ids
+        }
+        return []
+    }
+}
+
+class FavoritesList: ObservableObject {
+    @Published var favorites: [Int] = []
+    
+    init() {
+        self.favorites = FitnessRoom.getPreferences()
     }
 }

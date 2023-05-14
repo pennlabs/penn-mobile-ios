@@ -18,6 +18,7 @@ extension UserDefaults {
         case controllerSettings
         case sessionCount
         case laundryPreferences
+        case fitnessPreferences
         case isOnboarded
         case appVersion
         case cookies
@@ -128,6 +129,18 @@ extension UserDefaults {
 
     func getLaundryPreferences() -> [Int]? {
         return array(forKey: UserDefaultsKeys.laundryPreferences.rawValue) as? [Int]
+    }
+}
+
+// MARK: Fitness Preferences
+extension UserDefaults {
+    func setFitnessPreferences(to ids: [Int]) {
+        set(ids, forKey: UserDefaultsKeys.fitnessPreferences.rawValue)
+        synchronize()
+    }
+
+    func getFitnessPreferences() -> [Int]? {
+        return array(forKey: UserDefaultsKeys.fitnessPreferences.rawValue) as? [Int]
     }
 }
 

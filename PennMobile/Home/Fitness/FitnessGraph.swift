@@ -21,20 +21,21 @@ struct FitnessGraph: View {
                         x: .value("Hour", $0.date, unit: .hour),
                         y: .value("Value", $0.value)
                     )
-                    .foregroundStyle(Color.blue.gradient)
+                    .foregroundStyle(Date().hour == $0.date.hour ? Color.blue.gradient : Color.blue.opacity(0.5).gradient)
                     .cornerRadius(5)
                 }
             }
             .chartYAxis(.hidden)
             .chartXAxis {
-                AxisMarks(values: .automatic(desiredCount: 4, roundLowerBound: true, roundUpperBound: true)) { value in
-                    AxisValueLabel(anchor: .top, collisionResolution: .disabled) {
+                AxisMarks(preset: .aligned, values: .automatic(desiredCount: 4, roundLowerBound: true, roundUpperBound: true)) { value in
+                    AxisValueLabel(centered: true, anchor: .top, collisionResolution: .disabled) {
                         Text(fitnessAxesDateFormatter.string(from: value.as(Date.self)!))
                             .foregroundColor(Color.labelPrimary)
+                            .background(Color.green)
                     }
                 }
             }
-            .chartXScale(domain: tempCnv(date: room.open)...tempCnv(date: room.close), range: .plotDimension(padding: 20))
+            .chartXScale(domain: tempCnv(date: room.open)...tempCnv(date: room.close), range: .plotDimension(padding: 10))
             .frame(height: graphHeight)
         }
     }
@@ -48,13 +49,6 @@ struct FitnessGraph: View {
         dateComponents.hour = date.hour
         dateComponents.minute = 0
         dateComponents.second = 0
-        if room.id == 3 {
-            print("MAX: \(room.data?.usageHours.filter({ $0.value > 0 }).min(by: { $0.date.hour < $1.date.hour })!.date.hour)")
-            print("MAX: \(room.data?.usageHours.filter({ $0.value > 0 }).max(by: { $0.date.hour < $1.date.hour })!.date.hour)")
-            print("HOUR: \(date.hour)")
-            print(room.data?.usageHours.count)
-            //room.data?.usageHours.map { print("\($0.date.hour)\t\($0.value)") }
-        }
         return calendar.date(from: dateComponents)!
     }
 }

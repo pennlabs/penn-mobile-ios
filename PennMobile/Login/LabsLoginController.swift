@@ -203,6 +203,7 @@ extension LabsLoginController {
                         }
                         self.getDiningTransactions()
                         self.getAndSaveLaundryPreferences()
+                        self.getAndSaveFitnessPreferences()
                         self.getPacCode()
                     }
                 }
@@ -226,6 +227,14 @@ extension LabsLoginController {
         UserDBManager.shared.getLaundryPreferences { rooms in
             if let rooms = rooms {
                 UserDefaults.standard.setLaundryPreferences(to: rooms)
+            }
+        }
+    }
+    
+    fileprivate func getAndSaveFitnessPreferences() {
+        UserDBManager.shared.getFitnessPreferences { rooms in
+            if let rooms = rooms {
+                UserDefaults.standard.setFitnessPreferences(to: rooms)
             }
         }
     }
