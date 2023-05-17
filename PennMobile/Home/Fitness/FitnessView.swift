@@ -14,7 +14,7 @@ struct FitnessView: View {
     @StateObject var favoritesList = FavoritesList()
 
     var body: some View {
-        return List {
+        ScrollView {
             HStack {
                 Text("Favorites")
                     .font(.system(size: 21, weight: .semibold))
@@ -27,9 +27,11 @@ struct FitnessView: View {
                         .foregroundColor(Color.grey1)
                 }
             }
+            .modifier(ListRowModifier())
             ForEach(rooms) { room in
                 if favoritesList.favorites.contains(room.id) {
                     FitnessRoomRow(room: room)
+                        .modifier(ListRowModifier())
                         .padding(.vertical, 4)
                 }
             }
@@ -39,9 +41,11 @@ struct FitnessView: View {
                     .foregroundColor(.primary)
                 Spacer()
             }
+            .modifier(ListRowModifier())
             ForEach(rooms) { room in
                 if !favoritesList.favorites.contains(room.id) {
                     FitnessRoomRow(room: room)
+                        .modifier(ListRowModifier())
                         .padding(.vertical, 4)
                 }
             }
@@ -110,5 +114,15 @@ class FavoritesList: ObservableObject {
     
     init() {
         self.favorites = FitnessRoom.getPreferences()
+    }
+}
+
+struct ListRowModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        Group {
+            content
+                .padding([.leading, .trailing])
+            Divider()
+        }
     }
 }

@@ -103,6 +103,7 @@ struct FitnessRoomRow: View {
                     }
                 }
                 .padding(.top)
+                .animation(.easeInOut)
             }
         }
         .onTapGesture {
