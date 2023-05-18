@@ -11,6 +11,7 @@ import Charts
 
 struct FitnessGraph: View {
     private let graphHeight: CGFloat = 100.0
+    private let padding: CGFloat = 10.0
     var room: FitnessRoom
     
     var body: some View {
@@ -22,20 +23,31 @@ struct FitnessGraph: View {
                         y: .value("Value", $0.value)
                     )
                     .foregroundStyle(Date().hour == $0.date.hour ? Color.blue.gradient : Color.blue.opacity(0.5).gradient)
-                    .cornerRadius(5)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .offset(x: -padding)
                 }
+                RuleMark(
+                    y: .value("Axis", 0)
+                )
+                .lineStyle(StrokeStyle(lineWidth: 1))
+                .foregroundStyle(Color.labelPrimary)
+                .offset(y: 6)
             }
             .chartYAxis(.hidden)
             .chartXAxis {
                 AxisMarks(preset: .aligned, values: .automatic(desiredCount: 4, roundLowerBound: true, roundUpperBound: true)) { value in
-                    AxisValueLabel(centered: true, anchor: .top, collisionResolution: .disabled) {
+                    AxisGridLine()
+                        .offset(x: -padding)
+                    AxisTick()
+                        .offset(x: -padding)
+                    AxisValueLabel(anchor: .top, collisionResolution: .disabled) {
                         Text(fitnessAxesDateFormatter.string(from: value.as(Date.self)!))
                             .foregroundColor(Color.labelPrimary)
-                            .background(Color.green)
                     }
+                    .offset(x: -padding, y: 6)
                 }
             }
-            .chartXScale(domain: tempCnv(date: room.open)...tempCnv(date: room.close), range: .plotDimension(padding: 10))
+            .chartXScale(domain: tempCnv(date: room.open)...tempCnv(date: room.close), range: .plotDimension(padding: padding * 2))
             .frame(height: graphHeight)
         }
     }
