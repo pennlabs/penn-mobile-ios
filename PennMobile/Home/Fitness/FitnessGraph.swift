@@ -13,6 +13,22 @@ struct FitnessGraph: View {
     private let graphHeight: CGFloat = 100.0
     private let padding: CGFloat = 10.0
     var room: FitnessRoom
+    var hours: (Date, Date) {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        let weekdayIndex = (calendar.component(.weekday, from: currentDate) + 5) % 7
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm:ss"
+        
+        let openTime = timeFormatter.date(from: room.open[weekdayIndex])!
+        let closeTime = timeFormatter.date(from: room.close[weekdayIndex])!
+
+        let openDate = calendar.date(bySettingHour: openTime.hour, minute: openTime.minutes, second: 0, of: currentDate)!
+        let closeDate = calendar.date(bySettingHour: closeTime.hour, minute: closeTime.minutes, second: 0, of: currentDate)!
+        
+        return (openDate, closeDate)
+    }
     
     var body: some View {
         if #available(iOS 16.0, *) {
@@ -47,7 +63,7 @@ struct FitnessGraph: View {
                     .offset(x: -padding, y: 6)
                 }
             }
-            .chartXScale(domain: tempCnv(date: room.open)...tempCnv(date: room.close), range: .plotDimension(padding: padding * 2))
+            .chartXScale(domain: tempCnv(date: hours.0)...tempCnv(date: hours.1), range: .plotDimension(padding: padding * 2))
             .frame(height: graphHeight)
         }
     }

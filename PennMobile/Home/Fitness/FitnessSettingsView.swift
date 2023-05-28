@@ -55,6 +55,26 @@ struct FitnessSelectRowView: View {
     var room: FitnessRoom
     var isSelected: Bool
     var action: () -> Void
+    var hours: (Date, Date) {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        let weekdayIndex = (calendar.component(.weekday, from: currentDate) + 5) % 7
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm:ss"
+        
+        let openTime = timeFormatter.date(from: room.open[weekdayIndex])!
+        let closeTime = timeFormatter.date(from: room.close[weekdayIndex])!
+
+        let openDate = calendar.date(bySettingHour: openTime.hour, minute: openTime.minutes, second: 0, of: currentDate)!
+        let closeDate = calendar.date(bySettingHour: closeTime.hour, minute: closeTime.minutes, second: 0, of: currentDate)!
+        
+        return (openDate, closeDate)
+    }
+    var isOpen: Bool {
+        let date = Date()
+        return hours.0 < date && date < hours.1
+    }
 
     var body: some View {
         Button(action: action) {
@@ -74,8 +94,6 @@ struct FitnessSelectRowView: View {
                     
                     GeometryReader { geo in
                         HStack(spacing: 6) {
-                            let date = Date()
-                            let isOpen = date >= room.open && date <= room.close
                             Text(isOpen ? "Open" : "Closed")
                                 .font(.system(size: 14, weight: .light, design: .default))
                                 .padding(.vertical, 3)
@@ -84,8 +102,9 @@ struct FitnessSelectRowView: View {
                                 .background(isOpen ? Color.greenLight : Color.redLight)
                                 .clipShape(RoundedRectangle(cornerRadius: 6))
                                 .frame(height: geo.frame(in: .global).height)
-                            Text(formattedHours(open: room.open, close: room.close))
+                            Text(FitnessRoomRow.formattedHours(open: hours.0, close: hours.1, includeEmptyMinutes: false))
                                 .font(.system(size: 14, weight: .light, design: .default))
+                                .lineLimit(1)
                                 .padding(.vertical, 3)
                                 .padding(.horizontal, 6)
                                 .foregroundColor(Color.labelPrimary)
@@ -97,27 +116,10 @@ struct FitnessSelectRowView: View {
                 }
                 .frame(height: 64)
                 if isSelected {
-                    Spacer()
                     Image(systemName: "checkmark")
                         .foregroundColor(.blue)
                 }
             }
         }
-    }
-    
-    // TODO: DELETE THIS REDUNDENCY
-    func formattedHours(open: Date, close: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(abbreviation: "EST")
-        formatter.dateFormat = "h:mma"
-        formatter.amSymbol = "am"
-        formatter.pmSymbol = "pm"
-        
-        let open = formatter.string(from: open)
-        let close = formatter.string(from: close)
-        let timesString = "\(open) - \(close)"
-
-        return timesString
     }
 }

@@ -115,6 +115,7 @@
 		421B03CB29E23665003AE6DC /* MeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA72962917584000CF72FE /* MeterView.swift */; };
 		421B03CC29E24E8F003AE6DC /* MeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA72962917584000CF72FE /* MeterView.swift */; };
 		421B03CE29E25E92003AE6DC /* FitnessGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B03CD29E25E92003AE6DC /* FitnessGraph.swift */; };
+		422C896E2A0FE8C000A7135C /* FitnessSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C896D2A0FE8C000A7135C /* FitnessSettingsView.swift */; };
 		426A0B51299034910066C7B7 /* DiningAnalyticsGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */; };
 		426A0B52299034910066C7B7 /* DiningAnalyticsGraphBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */; };
 		42D9237129E0C69200E9E18E /* FitnessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237029E0C69200E9E18E /* FitnessModel.swift */; };
@@ -497,6 +498,7 @@
 		407FC3CFC29C6496A17C99C2 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		421B03C929E22035003AE6DC /* FitnessRoomRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessRoomRow.swift; sourceTree = "<group>"; };
 		421B03CD29E25E92003AE6DC /* FitnessGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessGraph.swift; sourceTree = "<group>"; };
+		422C896D2A0FE8C000A7135C /* FitnessSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessSettingsView.swift; sourceTree = "<group>"; };
 		425E281A28FF5EE200218F50 /* DiningPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningPlan.swift; sourceTree = "<group>"; };
 		426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraph.swift; sourceTree = "<group>"; };
 		426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraphBox.swift; sourceTree = "<group>"; };
@@ -1596,6 +1598,7 @@
 				421B03CD29E25E92003AE6DC /* FitnessGraph.swift */,
 				42D9237029E0C69200E9E18E /* FitnessModel.swift */,
 				97E79E152100E33100D3D606 /* FitnessAPI.swift */,
+				422C896D2A0FE8C000A7135C /* FitnessSettingsView.swift */,
 				97E79E0B2100DC5900D3D606 /* Cells */,
 				97E79E0C2100DC6200D3D606 /* Controllers */,
 				97E79E0D2100DC6F00D3D606 /* Model */,
@@ -2455,6 +2458,7 @@
 				6CAA4B5727A763A400473CC6 /* HomePollsCell.swift in Sources */,
 				F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */,
 				F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */,
+				422C896E2A0FE8C000A7135C /* FitnessSettingsView.swift in Sources */,
 				2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */,
 				21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,

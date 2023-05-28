@@ -11,13 +11,29 @@ import Kingfisher
 
 struct FitnessRoomRow: View {
     let room: FitnessRoom
-    var isOpen: Bool {
-        let date = Date()
-        return date >= room.open && date <= room.close
-    }
     @State var isExpanded = false
     let meterSize: CGFloat = 80
     let meterLineWidth: CGFloat = 6
+    var weekdayIndex: Int = (Calendar.current.component(.weekday, from: Date()) + 5) % 7
+    var hours: (Date, Date) {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm:ss"
+        
+        let openTime = timeFormatter.date(from: room.open[weekdayIndex])!
+        let closeTime = timeFormatter.date(from: room.close[weekdayIndex])!
+
+        let openDate = calendar.date(bySettingHour: openTime.hour, minute: openTime.minutes, second: 0, of: currentDate)!
+        let closeDate = calendar.date(bySettingHour: closeTime.hour, minute: closeTime.minutes, second: 0, of: currentDate)!
+        
+        return (openDate, closeDate)
+    }
+    var isOpen: Bool {
+        let date = Date()
+        return hours.0 < date && date < hours.1
+    }
 
     var body: some View {
         VStack {
@@ -45,7 +61,7 @@ struct FitnessRoomRow: View {
                                 .background(isOpen ? Color.greenLight : Color.redLight)
                                 .clipShape(RoundedRectangle(cornerRadius: 6))
                                 .frame(height: geo.frame(in: .global).height)
-                            Text(formattedHours(open: room.open, close: room.close))
+                            Text(FitnessRoomRow.formattedHours(open: hours.0, close: hours.1))
                                 .font(.system(size: 14, weight: .light, design: .default))
                                 .padding(.vertical, 3)
                                 .padding(.horizontal, 6)
@@ -81,9 +97,19 @@ struct FitnessRoomRow: View {
                     }
                     HStack {
                         CardView {
-                            VStack {
-                                Text("Last updated")
-                                Text(formattedLastUpdated(date: room.last_updated))
+                            VStack(spacing: 10) {
+                                //Text("Last updated")
+                                //Text(formattedLastUpdated(date: room.last_updated))
+                                ForEach(calculateWeeklyHours(open: room.open, close: room.close), id: \.self.0) { value in
+                                    let inRange = value.0 <= weekdayIndex && weekdayIndex <= value.1
+                                    HStack {
+                                        Text(formatWeeklyHours(start: value.0, end: value.1))
+                                        Spacer()
+                                        Text(value.2)
+                                    }
+                                    .font(.system(size: 16, weight: inRange ? .medium : .light))
+                                    .foregroundColor(inRange ? Color.blue : Color.labelPrimary)
+                                }
                             }
                             .padding()
                         }
@@ -103,7 +129,7 @@ struct FitnessRoomRow: View {
                     }
                 }
                 .padding(.top)
-                .animation(.easeInOut)
+                .animation(.easeInOut, value: isExpanded)
             }
         }
         .onTapGesture {
@@ -113,26 +139,24 @@ struct FitnessRoomRow: View {
         }
     }
     
+    static func formattedHours(open: Date, close: Date, space: Bool = true, includeEmptyMinutes: Bool = true) -> String {
+        let formatter = DateFormatter()
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
+
+        formatter.dateFormat = (includeEmptyMinutes || open.minutes != 0) ? "h:mma" : "ha"
+        let open = formatter.string(from: open)
+        formatter.dateFormat = (includeEmptyMinutes || close.minutes != 0) ? "h:mma" : "ha"
+        let close = formatter.string(from: close)
+
+        return space ? "\(open) - \(close)" : "\(open)-\(close)"
+    }
+    
     func formattedLastUpdated(date: Date) -> String {
         let interval = -date.timeIntervalSinceNow
         let hours = Int(interval / 3600)
         let minutes = Int((interval - 3600 * Double(hours)) / 60)
         return "\(hours) hours and \(minutes) minutes ago"
-    }
-    
-    func formattedHours(open: Date, close: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(abbreviation: "EST")
-        formatter.dateFormat = "h:mma"
-        formatter.amSymbol = "am"
-        formatter.pmSymbol = "pm"
-        
-        let open = formatter.string(from: open)
-        let close = formatter.string(from: close)
-        let timesString = "\(open) - \(close)"
-
-        return timesString
     }
     
     func formatHour(date: Date = Date()) -> String {
@@ -142,7 +166,7 @@ struct FitnessRoomRow: View {
     }
     
     func getBusyString(date: Date = Date()) -> String {
-        if date < room.open || date > room.close {
+        if date < hours.0 || date > hours.1 {
             return "Closed"
         }
         if room.capacity == 0.0 {
@@ -157,6 +181,37 @@ struct FitnessRoomRow: View {
             return "Extremely busy"
         } else {
             return "Packed"
+        }
+    }
+    
+    func calculateWeeklyHours(open: [String], close: [String]) -> [(Int, Int, String)] {
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm:ss"
+        
+        var hours = [(Int, Int, String)]()
+        for i in 0..<7 {
+            if i != 0 && open[i] == open[i - 1] && close[i] == close[i - 1] {
+                hours[hours.count - 1].1 += 1
+            } else {
+                let openTime = timeFormatter.date(from: open[i])!
+                let closeTime = timeFormatter.date(from: close[i])!
+                hours.append((i, i, FitnessRoomRow.formattedHours(open: openTime, close: closeTime, space: false, includeEmptyMinutes: false)))
+            }
+        }
+        if hours.count > 1 && hours[0].2 == hours[hours.count - 1].2 {
+            hours[0].0 = hours[hours.count - 1].0
+            hours.removeLast()
+        }
+        let currentLoc = hours.firstIndex { $0.0 <= weekdayIndex && weekdayIndex <= $0.1 }!
+        return Array((hours[currentLoc..<hours.count] + hours[0..<currentLoc]).prefix(3))
+    }
+    
+    func formatWeeklyHours(start: Int, end: Int) -> String {
+        let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        if start == end {
+            return weekdays[start]
+        } else {
+            return weekdays[start].prefix(3) + " - " + weekdays[end].prefix(3)
         }
     }
 }

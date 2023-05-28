@@ -14,8 +14,8 @@ struct FitnessRoom: Codable, Equatable, Identifiable {
     let last_updated: Date // "2023-04-07T12:32:34-04:00"
     let count: Int
     let capacity: Double
-    let open: Date
-    let close: Date
+    let open: [String]
+    let close: [String]
     var data: FitnessRoomData?
 }
 
