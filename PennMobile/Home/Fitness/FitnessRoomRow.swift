@@ -82,14 +82,18 @@ struct FitnessRoomRow: View {
                 VStack {
                     CardView {
                         VStack {
-                            HStack(spacing: 0) {
-                                Text("\(formatHour(date: Date())): ")
+                            HStack(alignment: .bottom, spacing: 0) {
+                                Text("\(formatHour(date: Date())) ")
                                     .font(.system(size: 16, weight: .medium))
                                     .foregroundColor(Color.blue)
                                 Text(getBusyString())
                                     .font(.system(size: 16, weight: .light))
                                     .foregroundColor(Color.labelPrimary)
                                 Spacer()
+                                Text(formattedLastUpdated(date: room.last_updated))
+                                    .font(.system(size: 12, weight: .light))
+                                    .foregroundColor(Color.labelSecondary)
+                                    .lineLimit(1)
                             }
                             FitnessGraph(room: room)
                         }
@@ -98,8 +102,6 @@ struct FitnessRoomRow: View {
                     HStack {
                         CardView {
                             VStack(spacing: 10) {
-                                //Text("Last updated")
-                                //Text(formattedLastUpdated(date: room.last_updated))
                                 ForEach(calculateWeeklyHours(open: room.open, close: room.close), id: \.self.0) { value in
                                     let inRange = value.0 <= weekdayIndex && weekdayIndex <= value.1
                                     HStack {
@@ -156,7 +158,7 @@ struct FitnessRoomRow: View {
         let interval = -date.timeIntervalSinceNow
         let hours = Int(interval / 3600)
         let minutes = Int((interval - 3600 * Double(hours)) / 60)
-        return "\(hours) hours and \(minutes) minutes ago"
+        return "Updated \(hours)h \(minutes)m ago"
     }
     
     func formatHour(date: Date = Date()) -> String {

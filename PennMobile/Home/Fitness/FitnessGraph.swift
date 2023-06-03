@@ -50,6 +50,7 @@ struct FitnessGraph: View {
                 .offset(y: 6)
             }
             .chartYAxis(.hidden)
+            .chartYScale(domain: 0...(room.data?.usageHours.max { $0.value < $1.value }?.value ?? 100))
             .chartXAxis {
                 AxisMarks(preset: .aligned, values: .automatic(desiredCount: 4, roundLowerBound: true, roundUpperBound: true)) { value in
                     AxisGridLine()
@@ -63,21 +64,9 @@ struct FitnessGraph: View {
                     .offset(x: -padding, y: 6)
                 }
             }
-            .chartXScale(domain: tempCnv(date: hours.0)...tempCnv(date: hours.1), range: .plotDimension(padding: padding * 2))
+            .chartXScale(domain: (hours.0)...(hours.1), range: .plotDimension(padding: padding * 2))
             .frame(height: graphHeight)
         }
-    }
-    
-    func tempCnv(date: Date) -> Date {
-        let calendar = Calendar(identifier: .gregorian)
-        var dateComponents = DateComponents()
-        dateComponents.year = 2023
-        dateComponents.month = 4
-        dateComponents.day = 4
-        dateComponents.hour = date.hour
-        dateComponents.minute = 0
-        dateComponents.second = 0
-        return calendar.date(from: dateComponents)!
     }
 }
 
