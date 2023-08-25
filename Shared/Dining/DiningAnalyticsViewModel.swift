@@ -145,18 +145,24 @@ class DiningAnalyticsViewModel: ObservableObject {
     
     func filterData() {
         if self.dollarHistory.count >= 2 {
-            for i in 1..<(self.dollarHistory.count - 1) {
-                if self.dollarHistory[i].balance == 0 && self.dollarHistory[i - 1].balance > 0 && self.dollarHistory[i + 1].balance > 0 {
-                    self.dollarHistory.remove(at: i)
+            self.dollarHistory = self.dollarHistory.enumerated().filter { index, dollar in
+                guard index > 0 && index < self.dollarHistory.count - 1 else {
+                    return true
                 }
-            }
+                let previousBalance = self.dollarHistory[index - 1].balance
+                let nextBalance = self.dollarHistory[index + 1].balance
+                return dollar.balance != 0 || previousBalance <= 0 || nextBalance <= 0
+            }.map { $0.element }
         }
         if self.swipeHistory.count >= 2 {
-            for i in 1..<(self.swipeHistory.count - 1) {
-                if self.swipeHistory[i].balance == 0 && self.swipeHistory[i - 1].balance > 0 && self.swipeHistory[i + 1].balance > 0 {
-                    self.swipeHistory.remove(at: i)
+            self.swipeHistory = self.swipeHistory.enumerated().filter { index, swipe in
+                guard index > 0 && index < self.swipeHistory.count - 1 else {
+                    return true
                 }
-            }
+                let previousBalance = self.swipeHistory[index - 1].balance
+                let nextBalance = self.swipeHistory[index + 1].balance
+                return swipe.balance != 0 || previousBalance <= 0 || nextBalance <= 0
+            }.map { $0.element }
         }
     }
 
