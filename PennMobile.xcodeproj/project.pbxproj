@@ -193,9 +193,13 @@
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932693A28FC75A5003D4BF9 /* WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932693928FC75A5003D4BF9 /* WidgetBundle.swift */; };
+		8932693C28FC75A5003D4BF9 /* LaundryLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932693B28FC75A5003D4BF9 /* LaundryLiveActivity.swift */; };
 		8932694028FC75A6003D4BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8932693F28FC75A6003D4BF9 /* Assets.xcassets */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8932694B28FC79AA003D4BF9 /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D3D200ED954002F33CA /* LaundryMachine.swift */; };
 		8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 8932694C28FC79FB003D4BF9 /* SwiftyJSON */; };
+		8932694F28FC7A8D003D4BF9 /* LaundryAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932694E28FC7A8D003D4BF9 /* LaundryAttributes.swift */; };
+		8932695028FC7A8D003D4BF9 /* LaundryAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932694E28FC7A8D003D4BF9 /* LaundryAttributes.swift */; };
 		89459B9428E7935E00CE1638 /* CoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9328E7935E00CE1638 /* CoursesView.swift */; };
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9928E7999A00CE1638 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9828E7999A00CE1638 /* Course.swift */; };
@@ -569,8 +573,10 @@
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		8932693928FC75A5003D4BF9 /* WidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBundle.swift; sourceTree = "<group>"; };
+		8932693B28FC75A5003D4BF9 /* LaundryLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryLiveActivity.swift; sourceTree = "<group>"; };
 		8932693F28FC75A6003D4BF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8932694128FC75A6003D4BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8932694E28FC7A8D003D4BF9 /* LaundryAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryAttributes.swift; sourceTree = "<group>"; };
 		89459B9328E7935E00CE1638 /* CoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesView.swift; sourceTree = "<group>"; };
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9828E7999A00CE1638 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -1430,6 +1436,7 @@
 				893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */,
 				89EA261F290EE39E008F26CF /* Courses */,
 				89CA727129171E2400CF72FE /* Dining */,
+				8932693B28FC75A5003D4BF9 /* LaundryLiveActivity.swift */,
 				8932693F28FC75A6003D4BF9 /* Assets.xcassets */,
 				8932694128FC75A6003D4BF9 /* Info.plist */,
 			);
@@ -1445,8 +1452,18 @@
 				89CA72882917213800CF72FE /* Networking + Analytics */,
 				89EA261A290EDEFA008F26CF /* Courses */,
 				89CA727429171FBE00CF72FE /* Dining */,
+				8932694A28FC7999003D4BF9 /* Laundry */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		8932694A28FC7999003D4BF9 /* Laundry */ = {
+			isa = PBXGroup;
+			children = (
+				8932694E28FC7A8D003D4BF9 /* LaundryAttributes.swift */,
+				21640D3D200ED954002F33CA /* LaundryMachine.swift */,
+			);
+			path = Laundry;
 			sourceTree = "<group>";
 		};
 		89459B9728E7998D00CE1638 /* Models */ = {
@@ -1685,7 +1702,6 @@
 		B654BAEB1F801F470038B9D5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				21640D3D200ED954002F33CA /* LaundryMachine.swift */,
 				B650C5631FA43FC600922E98 /* LaundryRoom.swift */,
 				219F01FA1FBE9739006BBC4E /* LaundryNotificationCenter.swift */,
 			);
@@ -2049,7 +2065,6 @@
 			files = (
 				6CC88D7327B1BF51006896F6 /* mock_menu.json in Resources */,
 				6CC88D6D27B1BF51006896F6 /* sample-dining-venue.json in Resources */,
-				891CCBAB28FC97E800A48903 /* .gitkeep in Resources */,
 				6C3F194227A32C29007BCB4F /* GoogleService-Info.plist in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
@@ -2454,6 +2469,7 @@
 				97E79E092100DA1200D3D606 /* BuildingFoodMenuCell.swift in Sources */,
 				2138D55F22599D4700D67CA2 /* GSRGroup.swift in Sources */,
 				CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */,
+				8932694F28FC7A8D003D4BF9 /* LaundryAttributes.swift in Sources */,
 				B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */,
 				21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */,
 				21737FD923A31205002DCD07 /* OAuth2NetworkManager.swift in Sources */,
@@ -2485,6 +2501,9 @@
 				89EA261B290EDF02008F26CF /* Course.swift in Sources */,
 				894AA4582928375100B0A052 /* DiningPlan.swift in Sources */,
 				89CA727529171FCB00CF72FE /* DiningAnalyticsViewModel.swift in Sources */,
+				8932695028FC7A8D003D4BF9 /* LaundryAttributes.swift in Sources */,
+				8932693C28FC75A5003D4BF9 /* LaundryLiveActivity.swift in Sources */,
+				8932694B28FC79AA003D4BF9 /* LaundryMachine.swift in Sources */,
 				8932693A28FC75A5003D4BF9 /* WidgetBundle.swift in Sources */,
 				89CA72822917209000CF72FE /* PastDiningBalances.swift in Sources */,
 				89CA72862917209000CF72FE /* DiningVenue.swift in Sources */,
