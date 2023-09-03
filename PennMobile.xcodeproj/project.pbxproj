@@ -187,7 +187,6 @@
 		6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */; };
 		8766844128CBE907005CAD32 /* NativeNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8766844028CBE907005CAD32 /* NativeNewsViewController.swift */; };
 		87FE6479290EE4BE00AFADF6 /* NotificationAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */; };
-		890DDBC62AA2E4B6006815A3 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890DDBC42AA2E499006815A3 /* ViewExtensions.swift */; };
 		891CCBAB28FC97E800A48903 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 891CCBAA28FC97E800A48903 /* .gitkeep */; };
 		89325390290F98E7006EE62C /* ConfigurationRepresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932538E290F98BD006EE62C /* ConfigurationRepresenting.swift */; };
 		89325393291025A8006EE62C /* WidgetBackgroundTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */; };
@@ -563,7 +562,6 @@
 		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		8766844028CBE907005CAD32 /* NativeNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeNewsViewController.swift; sourceTree = "<group>"; };
 		87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPIModel.swift; sourceTree = "<group>"; };
-		890DDBC42AA2E499006815A3 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		891CCBAA28FC97E800A48903 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8932538E290F98BD006EE62C /* ConfigurationRepresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationRepresenting.swift; sourceTree = "<group>"; };
 		893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBackgroundTypeExtensions.swift; sourceTree = "<group>"; };
@@ -1430,7 +1428,6 @@
 				8932693928FC75A5003D4BF9 /* WidgetBundle.swift */,
 				8932538E290F98BD006EE62C /* ConfigurationRepresenting.swift */,
 				893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */,
-				890DDBC42AA2E499006815A3 /* ViewExtensions.swift */,
 				89EA261F290EE39E008F26CF /* Courses */,
 				89CA727129171E2400CF72FE /* Dining */,
 				8932693F28FC75A6003D4BF9 /* Assets.xcassets */,
@@ -2500,7 +2497,6 @@
 				89EA2622290EE3FD008F26CF /* CoursesProvider.swift in Sources */,
 				89CA72852917209000CF72FE /* DiningMenu.swift in Sources */,
 				89CA727F2917202700CF72FE /* DiningAPI.swift in Sources */,
-				890DDBC62AA2E4B6006815A3 /* ViewExtensions.swift in Sources */,
 				89CA727A2917201C00CF72FE /* Extensions.swift in Sources */,
 				89CA729829175C9C00CF72FE /* MeterView.swift in Sources */,
 				89CA72832917209000CF72FE /* DiningToken.swift in Sources */,

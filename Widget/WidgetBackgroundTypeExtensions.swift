@@ -8,15 +8,17 @@
 
 import SwiftUI
 
-extension WidgetBackgroundType: ShapeStyle, @unchecked Sendable {
-    public func resolve(in environment: EnvironmentValues) -> some ShapeStyle {
-        switch self {
-        case .unknown, .whiteGray:
-            return AnyShapeStyle(Color.uiCardBackground)
-        case .whiteBlack:
-            return AnyShapeStyle(Color("White/Black"))
-        case .gradient:
-            return AnyShapeStyle(LinearGradient(colors: [Color("Gradient1"), Color("Gradient2")], startPoint: .bottomLeading, endPoint: .top))
+extension WidgetBackgroundType: View {
+    public var body: some View {
+        Group {
+            switch self {
+            case .unknown, .whiteGray:
+                Color.uiCardBackground
+            case .whiteBlack:
+                Color("White/Black")
+            case .gradient:
+                LinearGradient(colors: [Color("Gradient1"), Color("Gradient2")], startPoint: .bottomLeading, endPoint: .top)
+            }
         }
     }
 
