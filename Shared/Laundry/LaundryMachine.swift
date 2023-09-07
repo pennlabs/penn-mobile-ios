@@ -9,9 +9,9 @@
 import Foundation
 import SwiftyJSON
 
-class LaundryMachine: Hashable {
+class LaundryMachine: Hashable, Codable {
 
-    enum Status: String {
+    enum Status: String, Codable {
         case open
         case running
         case offline
@@ -35,29 +35,32 @@ class LaundryMachine: Hashable {
     let roomName: String
     var status: Status
     var timeRemaining: Int
-
-    init(json: JSON, roomName: String) {
+    
+    init(id: Int, isWasher: Bool, roomName: String, status: Status, timeRemaining: Int) {
+        self.id = id
+        self.isWasher = isWasher
         self.roomName = roomName
-        id = json["id"].intValue
-        let statusStr = json["status"].stringValue
-        status = Status(rawValue: statusStr) ?? Status.parseStatus(for: statusStr)
-        timeRemaining = json["time_remaining"].intValue
-        isWasher = json["type"].stringValue == "washer"
+        self.status = status
+        self.timeRemaining = timeRemaining
+    }
 
+    convenience init(json: JSON, roomName: String) {
+        let statusStr = json["status"].stringValue
+        let status = Status(rawValue: statusStr) ?? Status.parseStatus(for: statusStr)
+        var timeRemaining = json["time_remaining"].intValue
+        
         // Flag if website does not provide a time remaining
         if status == .running && timeRemaining == 0 {
             timeRemaining = -1
         }
+        
+        self.init(id: json["id"].intValue, isWasher: json["type"].stringValue == "washer", roomName: roomName, status: status, timeRemaining: timeRemaining)
     }
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(roomName)
         hasher.combine(isWasher)
         hasher.combine(id)
-    }
-
-    func isUnderNotification() -> Bool {
-        return LaundryNotificationCenter.shared.isUnderNotification(for: self)
     }
 }
 
