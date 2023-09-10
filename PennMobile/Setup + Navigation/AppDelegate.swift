@@ -113,11 +113,6 @@ extension AppDelegate {
     }
 }
 
-// Helper function inserted by Swift 4.2 migrator.
-private func convertFromUIBackgroundTaskIdentifier(_ input: UIBackgroundTaskIdentifier) -> Int {
-	return input.rawValue
-}
-
 // Migration of data to group container
 func migrateDataToGroupContainer() {
     if Storage.migrate(fileName: Course.cacheFileName, of: [Course].self, from: .caches, to: .groupCaches) {
