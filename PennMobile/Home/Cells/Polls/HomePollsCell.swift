@@ -66,7 +66,7 @@ extension HomePollsCell {
     fileprivate func setupCell(with pollQuestion: PollQuestion) {
         header.secondaryTitleLabel.text = "Poll FROM \(pollQuestion.clubCode)"
         header.primaryTitleLabel.text = pollQuestion.question
-        header.voteCountLabel.text = "\(pollQuestion.totalVoteCount) Votes"
+        header.voteCountLabel.text = "\(pollQuestion.totalVoteCount) Vote\(pollQuestion.totalVoteCount != 1 ? "s" : "")"
         setupDdlLabel(with: pollQuestion.expireDate)
     }
 

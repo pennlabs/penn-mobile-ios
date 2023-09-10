@@ -67,7 +67,7 @@ extension PollOptionCell {
             }
 
             // Same thing for vote label
-            voteLabel.text = "\(self.pollOption.voteCount) Votes"
+            voteLabel.text = "\(self.pollOption.voteCount) Vote\(self.pollOption.voteCount != 1 ? "s" : "")"
             safeArea.addSubview(voteLabel)
 
             voteLabel.snp.makeConstraints { make in
