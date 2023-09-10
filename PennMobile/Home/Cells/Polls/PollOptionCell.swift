@@ -12,20 +12,16 @@ import SnapKit
 class PollOptionCell: UITableViewCell {
 
     static let identifier = "pollOptionCell"
-
-    var question: String!
-
-    var response: Int!
-
     var totalResponses: Int!
 
-    var answered: Bool! {
+    var chosen: Bool = false
+    var answered: Bool!
+
+    var pollOption: PollOption! {
         didSet {
             setupCell()
         }
     }
-
-    var chosen: Bool!
 
     // MARK: - UI Elements
     fileprivate var safeArea: UIView!
@@ -52,15 +48,14 @@ extension PollOptionCell {
 
     fileprivate func setupCell() {
         backgroundColor = .clear
-        self.questionLabel.text = self.question
+        self.questionLabel.text = self.pollOption.choice
+        let maxWidth = CGFloat(0.85) * UIScreen.main.bounds.width
 
-        if self.answered == true {
-            let maxWidth = CGFloat(0.8) * UIScreen.main.bounds.width
-            let frac = CGFloat(self.response) / CGFloat(self.totalResponses)
+        if self.answered {
+            let frac = CGFloat(pollOption.voteCount) / CGFloat(self.totalResponses)
             let width = frac * maxWidth
 
             // Create percentage label and attach them to safeAreaView
-            percentageLabel = getPercentageLabel()
             percentageLabel.text = "\((frac * 100).rounded())%"
             safeArea.addSubview(percentageLabel)
 
@@ -72,8 +67,7 @@ extension PollOptionCell {
             }
 
             // Same thing for vote label
-            voteLabel = getVotesLabel()
-            voteLabel.text = self.response != nil ? "\(self.response!) Votes" : ""
+            voteLabel.text = "\(self.pollOption.voteCount) Vote\(self.pollOption.voteCount != 1 ? "s" : "")"
             safeArea.addSubview(voteLabel)
 
             voteLabel.snp.makeConstraints { make in
@@ -109,7 +103,17 @@ extension PollOptionCell {
 
             anim.startAnimation()
 
-    }
+        } else {
+            percentageLabel.text = ""
+            voteLabel.text = ""
+            percentageShadow.backgroundColor = .greenLighter
+            percentageShadow.snp.remakeConstraints {(make) in
+                make.leading.equalTo(safeArea)
+                make.top.equalTo(safeArea).offset(-2)
+                make.width.equalTo(maxWidth)
+                make.bottom.equalTo(safeArea).offset(2)
+            }
+        }
     }
 
 }
@@ -118,10 +122,10 @@ extension PollOptionCell {
 extension PollOptionCell {
 
     fileprivate func prepareUI() {
-        self.accessoryType = .disclosureIndicator
         preparePercentageShadowView()
         prepareLabels()
-
+        percentageLabel = getPercentageLabel()
+        voteLabel = getVotesLabel()
     }
 
     // MARK: Safe Area
@@ -131,9 +135,9 @@ extension PollOptionCell {
 
         safeArea.snp.makeConstraints { (make) in
             make.leading.equalTo(self).offset(pad)
-            make.trailing.equalTo(self).offset(-pad * 2)
-            make.top.equalTo(self).offset(pad)
-            make.bottom.equalTo(self).offset(-pad)
+            make.trailing.equalTo(self).offset(-pad * 1)
+            make.top.equalTo(self).offset(8)
+            make.bottom.equalTo(self).offset(-8)
         }
     }
 
