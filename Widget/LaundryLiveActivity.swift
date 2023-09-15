@@ -21,7 +21,7 @@ struct LaundryLiveActivityView: View {
                 Text(timerInterval: Date.now...attributes.dateComplete, showsHours: false).font(.largeTitle).fontWeight(.bold)
             }
             Spacer()
-            Image(systemName: attributes.machine.isWasher ? "drop" : "tshirt").resizable().scaledToFit().frame(height: 60).fontWeight(.light).foregroundColor(attributes.machine.isWasher ? Color("baseBlue") : Color("baseRed"))
+            Image(systemName: attributes.machine.isWasher ? "washer" : "dryer").resizable().scaledToFit().frame(height: 60).fontWeight(.light).foregroundColor(attributes.machine.isWasher ? Color("baseBlue") : Color("baseRed"))
                 .accessibilityLabel(attributes.machine.isWasher ? Text("Washing") : Text("Drying"))
         }
     }
@@ -70,11 +70,11 @@ struct LaundryLiveActivity: Widget {
                     LaundryLiveActivityView(attributes: context.attributes)
                 }
             } compactLeading: {
-                Image(systemName: context.attributes.machine.isWasher ? "drop" : "tshirt").foregroundColor(color)
+                Image(systemName: context.attributes.machine.isWasher ? "washer" : "dryer").foregroundColor(color)
             } compactTrailing: {
-                Text(timerInterval: Date.now...context.attributes.dateComplete, showsHours: false).fontWeight(.medium).foregroundColor(color).frame(width: 50, alignment: .trailing)
+                Text(timerInterval: Date.now...context.attributes.dateComplete, showsHours: false).fontWeight(.medium).foregroundColor(color).frame(width: 42).multilineTextAlignment(.center)
             } minimal: {
-                Image(systemName: context.attributes.machine.isWasher ? "drop" : "tshirt").foregroundColor(color)
+                Image(systemName: context.attributes.machine.isWasher ? "washer" : "dryer").foregroundColor(color)
             }
             .keylineTint(color)
         }
