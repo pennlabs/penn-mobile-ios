@@ -24,14 +24,9 @@ struct RootView: View {
         Group {
             switch authManager.state {
             case .guest, .loggedIn:
-                NavigationView {
-                    TabBarControllerView()
-                        .edgesIgnoringSafeArea(.all)
-                }
-                    .transition(.opacity)
+                MainTabView().transition(.opacity)
             case .loggedOut:
-                LoggedOutView()
-                    .transition(.opacity)
+                LoggedOutView().transition(.opacity)
             default:
                 fatalError("Unhandled auth manager state: \(authManager.state)")
             }
