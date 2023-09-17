@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 import StoreKit
 import SwiftyJSON
 
@@ -117,8 +118,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     }
 
     func showLoginScreen() {
-        let loginController = LoginController()
-        moveto(controller: loginController)
     }
 
     func showMainScreen() {
@@ -146,14 +145,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     }
 
     func switchToLogout() {
-        let loginController = LoginController()
-        animateDismissTransition(to: loginController)
-
-        // Clear cache so that home title updates with new first name
-        guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
-            return
-        }
-        homeVC.clearCache()
     }
 
     func clearAccountData() {

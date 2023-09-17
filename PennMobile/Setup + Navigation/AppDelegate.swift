@@ -13,39 +13,9 @@ import StoreKit
 import SwiftUI
 import WidgetKit
 
-@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
     var tabBarController: TabBarController!
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UserDefaults.standard.set(gsrGroupsEnabled: false)
-
-        #if DEBUG
-            FirebaseConfiguration.shared.setLoggerLevel(.min)
-            UserDefaults.standard.set(gsrGroupsEnabled: true)
-        #endif
-
-        // Register to receive delegate actions from rich notifications
-        UNUserNotificationCenter.current().delegate = self
-        UIApplication.shared.registerForRemoteNotifications()
-
-        FirebaseApp.configure()
-        ControllerModel.shared.prepare()
-        LaundryNotificationCenter.shared.prepare()
-        GSRLocationModel.shared.prepare()
-        LaundryAPIService.instance.prepare {}
-        UserDBManager.shared.loginToBackend()
-
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = RootViewController()
-        self.window?.makeKeyAndVisible()
-
-        migrateDataToGroupContainer()
-
-        return true
-    }
 
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -104,12 +74,13 @@ extension AppDelegate: OnboardingDelegate {
 
 // Global access of rootview to handle navigations
 extension AppDelegate {
+    @available(*, deprecated, message: "Do not use AppDelegate as a singleton")
     static var shared: AppDelegate {
-        return UIApplication.shared.delegate as! AppDelegate
+        fatalError("Could not get AppDelegate")
     }
 
     var rootViewController: RootViewController {
-        return window!.rootViewController as! RootViewController
+        fatalError("Could not get rootViewController")
     }
 }
 
