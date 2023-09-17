@@ -21,8 +21,8 @@ enum FeatureIdentifier: Hashable {
     case about
 }
 
-struct AppFeature {
-    let identifier: FeatureIdentifier
+struct AppFeature: Identifiable {
+    let id: FeatureIdentifier
     let shortName: LocalizedStringKey
     let longName: LocalizedStringKey
     let color: Color
@@ -34,8 +34,8 @@ struct AppFeature {
         case system(String)
     }
     
-    init<Content: View>(_ identifier: FeatureIdentifier, shortName: LocalizedStringKey, longName: LocalizedStringKey, color: Color, image: FeatureImage, @ViewBuilder content: () -> Content) {
-        self.identifier = identifier
+    init<Content: View>(_ id: FeatureIdentifier, shortName: LocalizedStringKey, longName: LocalizedStringKey, color: Color, image: FeatureImage, @ViewBuilder content: () -> Content) {
+        self.id = id
         self.shortName = shortName
         self.longName = longName
         self.color = color
@@ -43,36 +43,42 @@ struct AppFeature {
         self.content = AnyView(content())
     }
     
-    init<ViewController: UIViewController>(_ identifier: FeatureIdentifier, shortName: LocalizedStringKey, longName: LocalizedStringKey, color: Color, image: FeatureImage, controller: ViewController.Type) {
-        self.init(identifier, shortName: shortName, longName: longName, color: color, image: image) {
-            ViewControllerView<ViewController>()
-                .edgesIgnoringSafeArea(.all)
+    init<ViewController: UIViewController>(_ id: FeatureIdentifier, shortName: LocalizedStringKey, longName: LocalizedStringKey, color: Color, image: FeatureImage, controller: ViewController.Type) {
+        self.init(id, shortName: shortName, longName: longName, color: color, image: image) {
+            NavigationStack {
+                ViewControllerView<ViewController>()
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationTitle(Text(longName))
+            }
         }
     }
     
-    init<Content: View>(_ identifier: FeatureIdentifier, name: LocalizedStringKey, color: Color, image: FeatureImage, @ViewBuilder content: () -> Content) {
-        self.init(identifier, shortName: name, longName: name, color: color, image: image, content: content)
+    init<Content: View>(_ id: FeatureIdentifier, name: LocalizedStringKey, color: Color, image: FeatureImage, @ViewBuilder content: () -> Content) {
+        self.init(id, shortName: name, longName: name, color: color, image: image, content: content)
     }
     
-    init<ViewController: UIViewController>(_ identifier: FeatureIdentifier, name: LocalizedStringKey, color: Color, image: FeatureImage, controller: ViewController.Type) {
-        self.init(identifier, shortName: name, longName: name, color: color, image: image, controller: controller)
+    init<ViewController: UIViewController>(_ id: FeatureIdentifier, name: LocalizedStringKey, color: Color, image: FeatureImage, controller: ViewController.Type) {
+        self.init(id, shortName: name, longName: name, color: color, image: image, controller: controller)
     }
     
     struct ViewControllerView<ViewController: UIViewController>: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> UINavigationController {
-            UINavigationController(rootViewController: ViewController())
+        func makeUIViewController(context: Context) -> ViewController {
+            ViewController()
         }
         
-        func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {}
+        func updateUIViewController(_ uiViewController: ViewController, context: Context) {}
     }
 }
 
 let features: [AppFeature] = [
     AppFeature(.dining, name: "Dining", color: .baseOrange, image: .app("Dining_Grey")) {
-        DiningView()
+        NavigationStack {
+            DiningView()
+                .navigationTitle(Text("Dining"))
+        }
     },
     AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey"), controller: GSRTabController.self),
-    AppFeature(.laundry, name: "Laundry", color: .baseBlue, image: .app("Laundry_Grey"), controller: LaundryTableViewController.self)
+    AppFeature(.laundry, name: "Laundry", color: .baseBlue, image: .app("Laundry_Grey"), controller: LaundryTableViewController.self),
 ]
 
 let tabBarFeatures: [FeatureIdentifier] = [.dining, .gsr, .laundry]

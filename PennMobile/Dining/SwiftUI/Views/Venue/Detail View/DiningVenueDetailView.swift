@@ -43,29 +43,6 @@ struct DiningVenueDetailView: View {
                             .clipped()
 
                         LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
-
-                        VStack(alignment: .leading) {
-                            Button(action: {
-                                presentationMode.wrappedValue.dismiss()
-                            }) {
-                                Image(systemName: "chevron.left")
-                                    .font(.system(size: 20, weight: .light))
-                            }
-                            .foregroundColor(.white)
-                            .padding(10)
-                            .background(Circle().opacity(0.8).foregroundColor(.black))
-                            .position(x: 40, y: statusBarHeight + 22)
-                            .offset(y: -min(0, minY))
-
-                            Spacer()
-
-                            Text(venue.name)
-                                .padding()
-                                .foregroundColor(.white)
-                                .font(.system(size: 40, weight: .bold))
-                                .minimumScaleFactor(0.2)
-                                .lineLimit(1)
-                        }.opacity(1 - Double(minY)/60)
                     }
                     .offset(y: -max(0, minY))
                 }
@@ -96,7 +73,7 @@ struct DiningVenueDetailView: View {
                 }.padding(.horizontal)
             }
             .edgesIgnoringSafeArea(.all)
-            .navigationBarHidden(true)
+            .navigationTitle(Text(venue.name))
             .onAppear {
                 FirebaseAnalyticsManager.shared.trackScreen("Venue Detail View")
             }

@@ -74,9 +74,8 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     }
 
     override func setupNavBar() {
-        tabBarController?.title = "Laundry"
-        tabBarController?.navigationItem.leftBarButtonItem = nil
-        tabBarController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
+        navigationController?.navigationItem.leftBarButtonItem = nil
+        navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleEditPressed))
     }
 }
 

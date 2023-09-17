@@ -82,7 +82,6 @@ struct DiningVenueView: View {
         .onAppear {
             triggerRefresh()
         }
-        .navigationBarHidden(false)
         .listStyle(.plain)
     }
 }
