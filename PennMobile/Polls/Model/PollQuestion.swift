@@ -25,6 +25,7 @@ struct PollQuestion: Codable {
     let id: Int
     let question: String
     let clubCode: String
+    let createdDate: Date
     let startDate: Date
     let expireDate: Date
     let multiselect: Bool
@@ -34,4 +35,12 @@ struct PollQuestion: Codable {
         options.reduce(0, { $0 + $1.voteCount })
     }
     var optionChosenId: Int?
+}
+
+struct PollPost: Codable {
+    let id: Int
+    let idHash: UUID
+    let poll: PollQuestion
+    let pollOptions: [PollOption]
+    //let createdDate: Date
 }

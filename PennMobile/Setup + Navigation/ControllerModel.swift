@@ -32,6 +32,7 @@ enum Feature: String {
     case courseSchedule = "Course Schedule"
     case pacCode = "PAC Code"
     case courseAlerts = "Penn Course Alert"
+    case polls = "Polls"
 }
 
 class ControllerModel: NSObject {
@@ -59,6 +60,7 @@ class ControllerModel: NSObject {
         vcDictionary[.events] = PennEventsTableViewController()
         vcDictionary[.headlineNews] = NativeNewsViewController()
         vcDictionary[.fitness] = FitnessViewController()
+        vcDictionary[.polls] = PollsViewController()
         // vcDictionary[.fling] = FlingViewController()
     }
 
@@ -81,9 +83,9 @@ class ControllerModel: NSObject {
             // keeping this #if DEBUG in case we want to remove course alerts from production
             // courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
             #if DEBUG
-            return [.news, .contacts, .courseSchedule, .courseAlerts, .events, .fitness, .about]
+            return [.news, .contacts, .courseSchedule, .courseAlerts, .events, .polls, .fitness, .about]
             #else
-            return [.news, .contacts, .courseSchedule, .events, .fitness, .about]
+            return [.news, .contacts, .courseSchedule, .events, .polls, .fitness, .about]
             #endif
         }
     }
@@ -93,9 +95,9 @@ class ControllerModel: NSObject {
         // courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
         get {
             #if DEBUG
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "Fitness"), #imageLiteral(resourceName: "logo-small")]
+                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "card"), #imageLiteral(resourceName: "Fitness"), #imageLiteral(resourceName: "logo-small")]
             #else
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "Fitness"), #imageLiteral(resourceName: "logo-small")]
+                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "card"), #imageLiteral(resourceName: "Fitness"), #imageLiteral(resourceName: "logo-small")]
             #endif
         }
     }

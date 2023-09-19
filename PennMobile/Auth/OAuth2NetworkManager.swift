@@ -94,6 +94,14 @@ extension OAuth2NetworkManager {
             }
         }
     }
+    
+    func getAccessTokenAsync() async -> AccessToken? {
+        return await withCheckedContinuation { continuation in
+            getAccessToken { accessToken in
+                continuation.resume(returning: accessToken)
+            }
+        }
+    }
 
     func saveAccessToken(accessToken: AccessToken) {
         OAuth2NetworkManager.authQueue.sync {
