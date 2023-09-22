@@ -11,6 +11,7 @@ import Foundation
 struct FitnessRoom: Codable, Equatable, Identifiable {
     let id: Int
     let name: String
+    let image_url: URL?
     let last_updated: Date // "2023-04-07T12:32:34-04:00"
     let count: Int
     let capacity: Double

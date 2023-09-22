@@ -38,7 +38,7 @@ struct FitnessRoomRow: View {
     var body: some View {
         VStack {
             HStack(spacing: 13) {
-                Image("pottruck")
+                KFImage(room.image_url)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 100, height: 64)
