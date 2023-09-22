@@ -39,9 +39,10 @@ struct HomePollsCellWrapper: UIViewRepresentable {
         let cell = HomePollsCell()
         cell.pollQuestion = pollQuestion
         cell.isUserInteractionEnabled = false
-        for cell in cell.tableView.visibleCells as! [PollOptionCell] {
-            cell.answered = true
-        }
+        // do something with vote data
+//        for cell in cell.tableView.visibleCells as! [PollOptionCell] {
+//            cell.answered = true
+//        }
         return cell
     }
 
