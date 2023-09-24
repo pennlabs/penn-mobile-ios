@@ -212,8 +212,6 @@
 		894AA4572928375100B0A052 /* DiningPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894AA4562928375100B0A052 /* DiningPlan.swift */; };
 		894AA4582928375100B0A052 /* DiningPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894AA4562928375100B0A052 /* DiningPlan.swift */; };
 		895C75E628FA165100A329A0 /* LabsLoginSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */; };
-		8987C8FB29CE59C3004E9A99 /* UIHostingController+SafeAreaDisabling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8987C8FA29CE59C3004E9A99 /* UIHostingController+SafeAreaDisabling.swift */; };
-		8987C8FD29CE5A8B004E9A99 /* BannerDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8987C8FC29CE5A8B004E9A99 /* BannerDescription.swift */; };
 		89B454DF28E1161B00BC918B /* PathAtPennNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */; };
 		89CA727529171FCB00CF72FE /* DiningAnalyticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50676EB27F0CA39009A776E /* DiningAnalyticsViewModel.swift */; };
 		89CA72792917201C00CF72FE /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2629290F18FF008F26CF /* WidgetKind.swift */; };
@@ -236,8 +234,6 @@
 		89CA729129174CF900CF72FE /* DiningAnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA727229171E3900CF72FE /* DiningAnalyticsProvider.swift */; };
 		89CA72952917541C00CF72FE /* DiningAnalyticsHomeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA7292291753DF00CF72FE /* DiningAnalyticsHomeWidget.swift */; };
 		89DCBEC628E791B70029F784 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCBEC528E791B70029F784 /* CoursesViewController.swift */; };
-		89DF550A29CE49A900EF03F7 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF550929CE49A900EF03F7 /* BannerViewModel.swift */; };
-		89DF550C29CE4BDF00EF03F7 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF550B29CE4BDF00EF03F7 /* BannerView.swift */; };
 		89EA261B290EDF02008F26CF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9828E7999A00CE1638 /* Course.swift */; };
 		89EA261E290EDFA7008F26CF /* CoursesDayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */; };
 		89EA2622290EE3FD008F26CF /* CoursesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2620290EE3E9008F26CF /* CoursesProvider.swift */; };
@@ -595,8 +591,6 @@
 		89459B9C28E7E8A600CE1638 /* CoursesDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayView.swift; sourceTree = "<group>"; };
 		894AA4562928375100B0A052 /* DiningPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningPlan.swift; sourceTree = "<group>"; };
 		895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsLoginSwiftUI.swift; sourceTree = "<group>"; };
-		8987C8FA29CE59C3004E9A99 /* UIHostingController+SafeAreaDisabling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIHostingController+SafeAreaDisabling.swift"; sourceTree = "<group>"; };
-		8987C8FC29CE5A8B004E9A99 /* BannerDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerDescription.swift; sourceTree = "<group>"; };
 		89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAtPennNetworkManager.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		89CA727229171E3900CF72FE /* DiningAnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsProvider.swift; sourceTree = "<group>"; };
 		89CA72892917214700CF72FE /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
@@ -605,8 +599,6 @@
 		89CA7292291753DF00CF72FE /* DiningAnalyticsHomeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsHomeWidget.swift; sourceTree = "<group>"; };
 		89CA72962917584000CF72FE /* MeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
 		89DCBEC528E791B70029F784 /* CoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
-		89DF550929CE49A900EF03F7 /* BannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
-		89DF550B29CE4BDF00EF03F7 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayWidget.swift; sourceTree = "<group>"; };
 		89EA2620290EE3E9008F26CF /* CoursesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesProvider.swift; sourceTree = "<group>"; };
 		89EA2623290EEEA2008F26CF /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
@@ -898,7 +890,6 @@
 			isa = PBXGroup;
 			children = (
 				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
-				89DF550829CE499B00EF03F7 /* Banners */,
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
 				21ECADA21F30146B00569883 /* Networking + Analytics */,
 				216640C71EBADC9D00746B8E /* General */,
@@ -1536,17 +1527,6 @@
 				89DCBEC528E791B70029F784 /* CoursesViewController.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		89DF550829CE499B00EF03F7 /* Banners */ = {
-			isa = PBXGroup;
-			children = (
-				89DF550929CE49A900EF03F7 /* BannerViewModel.swift */,
-				89DF550B29CE4BDF00EF03F7 /* BannerView.swift */,
-				8987C8FC29CE5A8B004E9A99 /* BannerDescription.swift */,
-				8987C8FA29CE59C3004E9A99 /* UIHostingController+SafeAreaDisabling.swift */,
-			);
-			path = Banners;
 			sourceTree = "<group>";
 		};
 		89EA261A290EDEFA008F26CF /* Courses */ = {
@@ -2440,7 +2420,6 @@
 				6CAE4351253370B300BD0200 /* FadingScrollView.swift in Sources */,
 				B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */,
 				219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */,
-				89DF550A29CE49A900EF03F7 /* BannerViewModel.swift in Sources */,
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				2189C0A82027CE4B00771C1F /* ThumbLayer.swift in Sources */,
 				21B653B92245EB67001A97C5 /* PennAuthRequestable.swift in Sources */,
@@ -2453,7 +2432,6 @@
 				2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */,
 				211DFE541F36A02C00CB73E4 /* DiningAPI.swift in Sources */,
 				6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */,
-				89DF550C29CE4BDF00EF03F7 /* BannerView.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
 				6CAA4B5727A763A400473CC6 /* HomePollsCell.swift in Sources */,
 				F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */,
@@ -2462,7 +2440,6 @@
 				2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */,
 				21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */,
 				2189C0912027CE2E00771C1F /* GSRViewModel.swift in Sources */,
-				8987C8FD29CE5A8B004E9A99 /* BannerDescription.swift in Sources */,
 				C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */,
 				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,
 				F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */,
@@ -2704,7 +2681,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CF_BUNDLE_SHORT_VERSION_STRING = 7.3.2;
+				CF_BUNDLE_SHORT_VERSION_STRING = 7.3.4;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2742,7 +2719,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CF_BUNDLE_SHORT_VERSION_STRING = 7.3.2;
+				CF_BUNDLE_SHORT_VERSION_STRING = 7.3.4;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
