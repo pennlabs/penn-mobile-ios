@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennSharedCode
 
 struct DiningMenuRow: View {
     var diningMenu: DiningMenu

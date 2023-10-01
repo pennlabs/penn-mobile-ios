@@ -8,6 +8,7 @@
 
 #if canImport(SwiftUI)
 import SwiftUI
+import PennSharedCode
 #endif
 
 // https://trailingclosure.com/notification-banner-using-swiftui/

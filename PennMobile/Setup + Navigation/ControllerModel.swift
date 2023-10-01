@@ -7,6 +7,7 @@
 //
 import Foundation
 import UIKit
+import PennSharedCode
 
 protocol TransitionDelegate {
     func handleTransition(to feature: Feature)

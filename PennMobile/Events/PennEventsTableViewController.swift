@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftSoup
+import PennSharedCode
 
 class PennEventsTableViewController: GenericTableViewController, IndicatorEnabled {
 

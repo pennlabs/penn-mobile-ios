@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftSoup
+import PennSharedCode
 
 protocol NewsArticleSelectable {
     func handleSelectedArticle(_ article: NewsArticle)

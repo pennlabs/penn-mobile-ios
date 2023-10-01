@@ -8,6 +8,7 @@
 
 import WidgetKit
 import Intents
+import PennSharedCode
 
 struct CoursesEntry<Configuration>: TimelineEntry {
     let date: Date

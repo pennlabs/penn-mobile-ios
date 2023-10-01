@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PennSharedCode
 
 final class HomeCalendarCell: UITableViewCell, HomeCellConformable {
     var delegate: ModularTableViewCellDelegate!

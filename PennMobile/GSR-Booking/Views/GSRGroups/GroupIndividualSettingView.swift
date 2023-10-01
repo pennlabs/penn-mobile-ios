@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PennSharedCode
 
 class GroupIndividualSettingView: UIView {
 

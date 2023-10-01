@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennSharedCode
 
 struct AnalyticsCardView: View {
     var text: String

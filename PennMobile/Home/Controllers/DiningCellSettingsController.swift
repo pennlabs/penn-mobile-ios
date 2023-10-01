@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PennSharedCode
 
 protocol DiningCellSettingsDelegate {
     func saveSelection(for venueIds: [Int])

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PennSharedCode
 
 class AboutViewController: UIViewController {
 

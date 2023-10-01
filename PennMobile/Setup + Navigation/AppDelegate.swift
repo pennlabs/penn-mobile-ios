@@ -12,6 +12,7 @@ import Firebase
 import StoreKit
 import SwiftUI
 import WidgetKit
+import PennSharedCode
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

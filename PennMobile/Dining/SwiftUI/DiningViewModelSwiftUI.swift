@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import PennSharedCode
 
 class DiningViewModelSwiftUI: ObservableObject {
     static let instance = DiningViewModelSwiftUI()

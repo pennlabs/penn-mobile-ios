@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennSharedCode
 
 struct GraphView: View {
     enum BalanceType {

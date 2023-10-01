@@ -8,6 +8,7 @@
 
 import CoreLocation
 import LocalAuthentication
+import PennSharedCode
 
 protocol IndicatorEnabled {}
 

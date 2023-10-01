@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PennSharedCode
 
 class PacCodeViewController: UIViewController, ShowsAlertForError, IndicatorEnabled {
 

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import PennSharedCode
+
 protocol GSRGroupInviteCellDelegate {
     func acceptInvite(invite: GSRGroupInvite)
     func declineInvite(invite: GSRGroupInvite)

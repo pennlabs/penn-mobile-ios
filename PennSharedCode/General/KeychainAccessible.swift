@@ -8,27 +8,27 @@
 
 import Foundation
 
-class KeychainAccessible {
+public class KeychainAccessible {
 
-    static let instance = KeychainAccessible()
+    public static let instance = KeychainAccessible()
 
-    var pennkeyKeychainKey: String {
+    public var pennkeyKeychainKey: String {
         "PennKey"
     }
 
-    var passwordKeychainKey: String {
+    public var passwordKeychainKey: String {
         "PennKey Password"
     }
 
-    var pacCodeKeychainKey: String {
+    public var pacCodeKeychainKey: String {
         "PAC Code"
     }
 
-    var diningTokenKeychainKey: String {
+    public var diningTokenKeychainKey: String {
         "Dining Token"
     }
 
-    func getPennKey() -> String? {
+    public func getPennKey() -> String? {
         let secureStore = getWebLoginSecureStore()
         do {
             return try secureStore.getValue(for: pennkeyKeychainKey)
@@ -37,7 +37,7 @@ class KeychainAccessible {
         }
     }
 
-    func getPassword() -> String? {
+    public func getPassword() -> String? {
         let secureStore = getWebLoginSecureStore()
         do {
             return try secureStore.getValue(for: passwordKeychainKey)
@@ -46,7 +46,7 @@ class KeychainAccessible {
         }
     }
 
-    func getPacCode() -> String? {
+    public func getPacCode() -> String? {
         let secureStore = getWebLoginSecureStore()
         do {
             return try secureStore.getValue(for: pacCodeKeychainKey)
@@ -55,13 +55,13 @@ class KeychainAccessible {
         }
     }
 
-    func getWebLoginSecureStore() -> SecureStore {
+    public func getWebLoginSecureStore() -> SecureStore {
         let genericPwdQueryable = GenericPasswordQueryable(service: "PennWebLogin")
         let secureStore = SecureStore(secureStoreQueryable: genericPwdQueryable)
         return secureStore
     }
 
-    func getDiningToken() -> String? {
+    public func getDiningToken() -> String? {
         let secureStore = getWebLoginSecureStore()
         do {
             return try secureStore.getValue(for: diningTokenKeychainKey)

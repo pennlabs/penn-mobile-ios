@@ -7,6 +7,7 @@
 //
 import Foundation
 import UIKit
+import PennSharedCode
 
 protocol DiningCellSelectable {
     func handleVenueSelected(_ venue: DiningVenue)

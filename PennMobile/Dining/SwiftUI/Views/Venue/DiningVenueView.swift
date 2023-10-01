@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennSharedCode
 
 struct DiningVenueView: View {
     enum RefreshState {

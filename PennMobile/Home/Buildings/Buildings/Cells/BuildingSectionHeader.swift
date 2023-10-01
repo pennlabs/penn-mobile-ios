@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PennSharedCode
 
 class BuildingSectionHeader: UITableViewHeaderFooterView {
 

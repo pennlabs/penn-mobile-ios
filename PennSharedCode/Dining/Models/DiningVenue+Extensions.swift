@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - VenueType
-extension VenueType {
+public extension VenueType {
     var fullDisplayName: String {
         switch self {
         case .dining: return "Dining Halls"
@@ -19,7 +19,7 @@ extension VenueType {
 }
 
 // MARK: - DiningVenue
-extension DiningVenue {
+public extension DiningVenue {
 
     // MARK: - Defaults
     static let defaultVenueIds: [Int] = [593, 636, 1442]
@@ -252,7 +252,7 @@ extension DiningVenue {
 }
 
 // MARK: - Meal
-extension Meal {
+public extension Meal {
     var isCurrentlyServing: Bool {
         let now = Date()
         return (self.starttime <= now && self.endtime > now)

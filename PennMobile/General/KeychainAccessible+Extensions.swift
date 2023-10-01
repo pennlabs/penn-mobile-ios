@@ -6,6 +6,8 @@
 //  Copyright © 2022 PennLabs. All rights reserved.
 //
 
+import PennSharedCode
+
 extension KeychainAccessible {
 
     func savePennKey(_ pennkey: String) {

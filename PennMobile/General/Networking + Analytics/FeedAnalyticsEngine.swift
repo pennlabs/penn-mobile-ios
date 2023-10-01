@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PennSharedCode
 
 class FeedAnalyticsManager: NSObject, Requestable {
     var dryRun: Bool {

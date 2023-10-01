@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PennSharedCode
 
 protocol GSRInviteSelectable {
     func handleInviteSelected(_ invite: GSRGroupInvite, _ accept: Bool)

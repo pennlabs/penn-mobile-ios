@@ -8,6 +8,7 @@
 
 import WidgetKit
 import SwiftUI
+import PennSharedCode
 
 extension ConfigureDiningAnalyticsHomeWidgetIntent: ConfigurationRepresenting {
     struct Configuration {

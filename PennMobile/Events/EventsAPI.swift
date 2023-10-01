@@ -8,6 +8,7 @@
 
 import SwiftyJSON
 import Foundation
+import PennSharedCode
 
 class EventsAPI: Requestable {
     static let instance = EventsAPI()

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import PennSharedCode
 
 class LoginController: UIViewController, ShowsAlert {
 

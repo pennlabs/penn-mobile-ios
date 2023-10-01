@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import PennSharedCode
 
 final class HomeDiningCellItem: HomeCellItem {
 

@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import PennSharedCode
 
 class ProfilePageNetworkManager: NSObject, Requestable {
 

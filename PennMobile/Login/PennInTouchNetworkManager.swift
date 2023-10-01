@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftSoup
+import PennSharedCode
 
 class PennInTouchNetworkManager: NSObject, PennAuthRequestable {
 

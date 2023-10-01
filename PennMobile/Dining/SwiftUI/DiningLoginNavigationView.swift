@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennSharedCode
 
 struct DiningLoginNavigationView: View {
     @Environment(\.presentationMode) var presentationMode

@@ -13,6 +13,7 @@ import SwiftyJSON
 import CryptoKit
 #endif
 import CommonCrypto
+import PennSharedCode
 
 enum SHA256Encoding {
     case base64

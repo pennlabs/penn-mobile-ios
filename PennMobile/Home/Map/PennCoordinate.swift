@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import PennSharedCode
 
 enum PennCoordinateScale: Double {
     case close = 150.0

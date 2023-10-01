@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import PennSharedCode
 
 protocol GSRLocationSelectable {
     func handleSelectedLocation(_ location: GSRLocation)

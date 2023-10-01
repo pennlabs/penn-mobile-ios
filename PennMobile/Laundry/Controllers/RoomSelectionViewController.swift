@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PennSharedCode
 
 protocol RoomSelectionVCDelegate: AnyObject {
     func saveSelection(for rooms: [LaundryRoom])
