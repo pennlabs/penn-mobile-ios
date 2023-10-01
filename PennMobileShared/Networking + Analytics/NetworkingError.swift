@@ -6,7 +6,7 @@
 //  Copyright © 2022 PennLabs. All rights reserved.
 //
 
-enum NetworkingError: String, Error {
+public enum NetworkingError: String, Error {
     case noInternet
     case parsingError
     case serverError

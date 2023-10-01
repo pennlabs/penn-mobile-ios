@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 /// View for the weekly schedule, assuming courses have been loaded.
 struct WeekView: View {
