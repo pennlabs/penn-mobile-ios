@@ -7,15 +7,15 @@
 //
 
 import Foundation
-struct DiningToken: Codable {
-    let value: String
-    let expiration: Int
+public struct DiningToken: Codable {
+    public let value: String
+    public let expiration: Int
 
-    var expirationDate: Date {
+    public var expirationDate: Date {
         Date().advanced(by: .init(expiration))
     }
 
-    enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case value = "access_token"
         case expiration = "expires_in"
     }

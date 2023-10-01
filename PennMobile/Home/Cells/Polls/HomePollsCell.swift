@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import PennMobileShared
 
 final class HomePollsCell: UITableViewCell, HomeCellConformable {
     var delegate: ModularTableViewCellDelegate!

@@ -11,14 +11,20 @@ import SwiftUI
 private let colors: [Color] = [.redLight, .orangeLight, .yellowLight, .greenLight, .blueLight, .purpleLight]
 
 /// Entry to display in the schedule view.
-struct CourseScheduleEntry: Identifiable {
-    let id = UUID()
-    var course: Course
-    var meetingTime: MeetingTime
-    var color: Color
+public struct CourseScheduleEntry: Identifiable {
+    public let id = UUID()
+    public var course: Course
+    public var meetingTime: MeetingTime
+    public var color: Color
+    
+    public init(course: Course, meetingTime: MeetingTime, color: Color) {
+        self.course = course
+        self.meetingTime = meetingTime
+        self.color = color
+    }
 }
 
-extension Course {
+public extension Course {
     func entries(for weekday: Int, color: Color) -> [CourseScheduleEntry] {
         meetingTimes?.filter { $0.weekday == weekday }.map {
             CourseScheduleEntry(course: self, meetingTime: $0, color: color)
@@ -26,7 +32,7 @@ extension Course {
     }
 }
 
-extension Array where Element == Course {
+public extension Array where Element == Course {
     func computeColorAssignments() -> [Color] {
         var codesToColors = [String: Color]()
         var colorsUsed = 0
@@ -99,20 +105,33 @@ private func formatTime(_ time: Int) -> String {
 }
 
 /// View that displays a daily schedule of courses.
-struct ScheduleView: View {
-    var entries: [CourseScheduleEntry]
-    var minTime: Int?
-    var maxTime: Int?
-    var hourSize: CGFloat = 48
-    var hourLabels = HourLabel.external
-    var showSections = true
-    var showColors = true
+public struct ScheduleView: View {
+    public var entries: [CourseScheduleEntry]
+    public var minTime: Int?
+    public var maxTime: Int?
+    public var hourSize: CGFloat = 48
+    public var hourLabels = HourLabel.external
+    public var showSections = true
+    public var showColors = true
+    
+    public init(entries: [CourseScheduleEntry], minTime: Int? = nil, maxTime: Int? = nil, hourSize: CGFloat = 48, hourLabels: ScheduleView.HourLabel = HourLabel.external, showSections: Bool = true, showColors: Bool = true) {
+        self.entries = entries
+        self.minTime = minTime
+        self.maxTime = maxTime
+        self.hourSize = hourSize
+        self.hourLabels = hourLabels
+        self.showSections = showSections
+        self.showColors = showColors
+    }
 
-    struct HourLabel: OptionSet {
-        var rawValue: UInt8
+    public struct HourLabel: OptionSet {
+        public var rawValue: UInt8
+        public init(rawValue: UInt8) {
+            self.rawValue = rawValue
+        }
 
-        static let external = HourLabel(rawValue: 1 << 0)
-        static let inline = HourLabel(rawValue: 1 << 1)
+        public static let external = HourLabel(rawValue: 1 << 0)
+        public static let inline = HourLabel(rawValue: 1 << 1)
     }
 
     func mask(minTime: Int, maxTime: Int) -> some View {
@@ -130,7 +149,7 @@ struct ScheduleView: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         let minTime = minTime ?? Int(floor(Double(entries.map { $0.meetingTime.startTime }.min()!) / 60)) * 60
         let maxTime = maxTime ?? Int(ceil(Double(entries.map { $0.meetingTime.endTime }.max()!) / 60)) * 60
 

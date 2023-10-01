@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import PennMobileShared
 
 class PollsNetworkManager: NSObject, Requestable {
     static let id = UIDevice.current.identifierForVendor?.uuidString ?? ""

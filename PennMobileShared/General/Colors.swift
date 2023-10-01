@@ -12,13 +12,14 @@ import UIKit
 These colors correspond with color themes defined in Assets.xcassets. Each color variable has a dark and light variant, which the system automatically switches depending on the UI mode (light or dark). They are defined in the Asset catalog to avoid backward compatibility issues with pre-iOS 13 versions. Defining them here would result in verbose code and lots of #ifavailible statements.
 */
 
-extension UIColor {
+public extension UIColor {
 
     // MARK: - UI Palette
     static let navigation = UIColor(named: "navigation")!
     static let uiCardBackground = UIColor(named: "uiCardBackground")!
     static let uiGroupedBackground = UIColor(named: "uiGroupedBackground")!
     static let uiGroupedBackgroundSecondary = UIColor(named: "uiGroupedBackgroundSecondary")!
+    
     static let uiBackground = UIColor(named: "uiBackground")!
     static let uiBackgroundSecondary = UIColor(named: "uiBackgroundSecondary")!
     static let labelPrimary = UIColor(named: "labelPrimary")!
@@ -78,7 +79,7 @@ extension UIColor {
     static let yellowDarker = UIColor(named: "yellowDarker")!
 }
 
-extension UIColor {
+public extension UIColor {
 
     // for getting a lighter variant (using a multiplier)
     func borderColor(multiplier: CGFloat) -> UIColor {
@@ -100,7 +101,7 @@ extension UIColor {
 
 import SwiftUI
 
-extension Color {
+public extension Color {
     // MARK: - UI Palette
     static let navigation = Color("navigation")
     static let uiCardBackground = Color("uiCardBackground")
