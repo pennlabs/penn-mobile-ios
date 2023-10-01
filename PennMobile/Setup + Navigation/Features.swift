@@ -79,6 +79,15 @@ let features: [AppFeature] = [
     },
     AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey"), controller: GSRTabController.self),
     AppFeature(.laundry, name: "Laundry", color: .baseBlue, image: .app("Laundry_Grey"), controller: LaundryTableViewController.self),
+    AppFeature(.news, name: "News", color: .baseRed, image: .system("newspaper"), controller: NewsViewController.self),
+    AppFeature(.contacts, shortName: "Contacts", longName: "Penn Contacts", color: .baseYellow, image: .system("phone.fill"), controller: ContactsTableViewController.self),
+    AppFeature(.courseSchedule, shortName: "Courses", longName: "Course Schedule", color: .basePurple, image: .system("calendar")) {
+        CoursesView().environmentObject(CoursesViewModel.shared)
+    },
+    AppFeature(.pennCourseAlert, shortName: "PCA", longName: "Penn Course Alert", color: .baseLabsBlue, image: .system("bell.fill"), controller: CourseAlertController.self),
+    AppFeature(.events, shortName: "Events", longName: "Penn Events", color: .baseGreen, image: .system("ticket"), controller: PennEventsTableViewController.self),
+    AppFeature(.fitness, name: "Fitness", color: .baseRed, image: .system("dumbbell.fill"), controller: FitnessViewController.self),
+    AppFeature(.about, name: "About", color: .baseBlue, image: .system("info.circle"), controller: AboutViewController.self)
 ]
 
 let tabBarFeatures: [FeatureIdentifier] = [.dining, .gsr, .laundry]
