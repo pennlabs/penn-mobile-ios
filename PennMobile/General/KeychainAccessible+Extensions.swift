@@ -6,7 +6,7 @@
 //  Copyright © 2022 PennLabs. All rights reserved.
 //
 
-import PennSharedCode
+import PennMobileShared
 
 extension KeychainAccessible {
 

@@ -8,7 +8,7 @@
 
 import WidgetKit
 import Intents
-import PennSharedCode
+import PennMobileShared
 
 struct BalanceDetails<Balance: AdditiveArithmetic & Comparable> {
     var remaining: Balance

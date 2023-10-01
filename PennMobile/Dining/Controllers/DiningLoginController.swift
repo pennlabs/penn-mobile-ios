@@ -8,7 +8,7 @@
 
 import Foundation
 import WebKit
-import PennSharedCode
+import PennMobileShared
 
 class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate, SHA256Hashable {
 

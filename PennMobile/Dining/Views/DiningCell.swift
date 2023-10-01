@@ -7,7 +7,7 @@
 //
 import UIKit
 import SnapKit
-import PennSharedCode
+import PennMobileShared
 
 class DiningCell: UITableViewCell {
 

@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Charts
-import PennSharedCode
+import PennMobileShared
 
 /*
 Things we can remove once we switch to only supporting iOS 16:

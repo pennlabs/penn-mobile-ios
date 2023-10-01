@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Kingfisher
-import PennSharedCode
+import PennMobileShared
 
 struct DiningVenueRow: View {
 

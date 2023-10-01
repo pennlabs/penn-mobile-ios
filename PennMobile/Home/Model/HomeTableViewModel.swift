@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import PennSharedCode
+import PennMobileShared
 
 protocol HomeViewModelDelegate: HomeCellDelegate {}
 

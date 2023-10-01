@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import PennSharedCode
+import PennMobileShared
 
 struct DiningVenueDetailHoursView: View {
 

@@ -9,7 +9,7 @@
 import SwiftUI
 import Kingfisher
 import FirebaseAnalytics
-import PennSharedCode
+import PennMobileShared
 
 struct DiningVenueDetailView: View {
 

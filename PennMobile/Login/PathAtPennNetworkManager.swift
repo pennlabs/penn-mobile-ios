@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftSoup
-import PennSharedCode
+import PennMobileShared
 
 enum PathAtPennError: Error {
     /// The data was a malformed string.

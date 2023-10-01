@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftyJSON
-import PennSharedCode
+import PennMobileShared
 
 struct AccessToken: Codable {
     let value: String

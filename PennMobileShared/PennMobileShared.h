@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 //! Project version number for PennSharedCode.
-FOUNDATION_EXPORT double PennSharedCodeVersionNumber;
+FOUNDATION_EXPORT double PennMobileSharedVersionNumber;
 
 //! Project version string for PennSharedCode.
-FOUNDATION_EXPORT const unsigned char PennSharedCodeVersionString[];
+FOUNDATION_EXPORT const unsigned char PennMobileSharedVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <PennSharedCode/PublicHeader.h>
 

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftSoup
 import WidgetKit
-import PennSharedCode
+import PennMobileShared
 
 private func getTimeInt(pathAtPennString: String) -> Int? {
     guard let time = Int(pathAtPennString) else {

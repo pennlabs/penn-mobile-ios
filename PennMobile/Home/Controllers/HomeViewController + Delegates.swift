@@ -10,7 +10,7 @@ import Foundation
 import WebKit
 import SafariServices
 import SwiftUI
-import PennSharedCode
+import PennMobileShared
 
 extension HomeViewController: HomeViewModelDelegate {}
 

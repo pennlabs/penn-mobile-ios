@@ -8,7 +8,7 @@
 
 import SwiftyJSON
 import Foundation
-import PennSharedCode
+import PennMobileShared
 
 class EventsAPI: Requestable {
     static let instance = EventsAPI()

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import PennSharedCode
+import PennMobileShared
 
 class BuildingSectionHeader: UITableViewHeaderFooterView {
 

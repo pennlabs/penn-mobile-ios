@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import PennSharedCode
+import PennMobileShared
 
 /// View that displays courses in a given day. Formats the title of the day and puts it in a ``CardView``.
 struct CoursesDayView: View {

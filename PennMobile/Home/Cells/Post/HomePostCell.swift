@@ -8,7 +8,7 @@
 
 import Foundation
 import Kingfisher
-import PennSharedCode
+import PennMobileShared
 
 final class HomePostCell: UITableViewCell, HomeCellConformable {
     static var identifier: String = "homePostCell"

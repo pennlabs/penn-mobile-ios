@@ -7,7 +7,7 @@
 //
 
 import SwiftSoup
-import PennSharedCode
+import PennMobileShared
 
 class PacCodeNetworkManager {
     static let instance = PacCodeNetworkManager()

@@ -8,7 +8,7 @@
 
 import SwiftUI
 import WebKit
-import PennSharedCode
+import PennMobileShared
 
 struct DiningVenueDetailMenuView: View {
     var menus: [DiningMenu]

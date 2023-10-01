@@ -7,7 +7,7 @@
 //
 import Foundation
 import SwiftyJSON
-import PennSharedCode
+import PennMobileShared
 
 class LaundryAPIService: Requestable {
 

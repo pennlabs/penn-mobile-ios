@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import SwiftUI
-import PennSharedCode
+import PennMobileShared
 
 final class HomePollsCell: UITableViewCell, HomeCellConformable {
     var delegate: ModularTableViewCellDelegate!

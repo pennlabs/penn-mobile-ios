@@ -8,7 +8,7 @@
 
 import Foundation
 import WebKit
-import PennSharedCode
+import PennMobileShared
 
 // MARK: UserDefaultsKeys
 extension UserDefaults {

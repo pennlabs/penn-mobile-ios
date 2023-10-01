@@ -178,9 +178,9 @@
 		6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */; };
 		6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */; };
 		6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */; };
-		6E4D82192AC8C91C009AB78E /* PennSharedCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E4D82182AC8C91C009AB78E /* PennSharedCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6E4D821C2AC8C91C009AB78E /* PennSharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennSharedCode.framework */; };
-		6E4D821D2AC8C91C009AB78E /* PennSharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennSharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6E4D82192AC8C91C009AB78E /* PennMobileShared.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E4D82182AC8C91C009AB78E /* PennMobileShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E4D821C2AC8C91C009AB78E /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
+		6E4D821D2AC8C91C009AB78E /* PennMobileShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E5159E12AC8C9D5004B3F41 /* DiningBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5159CF2AC8C9D4004B3F41 /* DiningBalance.swift */; };
 		6E5159E22AC8C9D5004B3F41 /* WidgetKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5159D02AC8C9D4004B3F41 /* WidgetKind.swift */; };
 		6E5159E32AC8C9D5004B3F41 /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5159D12AC8C9D4004B3F41 /* KeychainAccessible.swift */; };
@@ -199,8 +199,8 @@
 		6E5159F02AC8C9D5004B3F41 /* DiningMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5159DE2AC8C9D5004B3F41 /* DiningMenu.swift */; };
 		6E5159F12AC8C9D5004B3F41 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5159DF2AC8C9D5004B3F41 /* Storage.swift */; };
 		6E5159F22AC8C9D5004B3F41 /* DiningToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5159E02AC8C9D5004B3F41 /* DiningToken.swift */; };
-		6E5159F32AC8CA1B004B3F41 /* PennSharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennSharedCode.framework */; };
-		6E5159F42AC8CA1B004B3F41 /* PennSharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennSharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
+		6E5159F42AC8CA1B004B3F41 /* PennMobileShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6E903D382AC9C67000F2D384 /* ImageNetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E903D372AC9C67000F2D384 /* ImageNetworkingManager.swift */; };
 		8766844128CBE907005CAD32 /* NativeNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8766844028CBE907005CAD32 /* NativeNewsViewController.swift */; };
@@ -369,7 +369,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6E4D821D2AC8C91C009AB78E /* PennSharedCode.framework in Embed Frameworks */,
+				6E4D821D2AC8C91C009AB78E /* PennMobileShared.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,7 +380,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6E5159F42AC8CA1B004B3F41 /* PennSharedCode.framework in Embed Frameworks */,
+				6E5159F42AC8CA1B004B3F41 /* PennMobileShared.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -578,8 +578,8 @@
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6CFA06F526E8352F00944B8E /* HomeStudyRoomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeStudyRoomCell.swift; sourceTree = "<group>"; };
 		6CFA06F726E8355400944B8E /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
-		6E4D82162AC8C91C009AB78E /* PennSharedCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennSharedCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E4D82182AC8C91C009AB78E /* PennSharedCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PennSharedCode.h; sourceTree = "<group>"; };
+		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E4D82182AC8C91C009AB78E /* PennMobileShared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PennMobileShared.h; sourceTree = "<group>"; };
 		6E5159CF2AC8C9D4004B3F41 /* DiningBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningBalance.swift; sourceTree = "<group>"; };
 		6E5159D02AC8C9D4004B3F41 /* WidgetKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetKind.swift; sourceTree = "<group>"; };
 		6E5159D12AC8C9D4004B3F41 /* KeychainAccessible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
@@ -744,7 +744,7 @@
 				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
 				56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */,
-				6E4D821C2AC8C91C009AB78E /* PennSharedCode.framework in Frameworks */,
+				6E4D821C2AC8C91C009AB78E /* PennMobileShared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,7 +763,7 @@
 				8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */,
 				8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */,
 				8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */,
-				6E5159F32AC8CA1B004B3F41 /* PennSharedCode.framework in Frameworks */,
+				6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -891,7 +891,7 @@
 				6C392E3727B5BDF20097640B /* Config */,
 				B6B1E089214442A200CCBBCD /* fastlane */,
 				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
-				6E4D82172AC8C91C009AB78E /* PennSharedCode */,
+				6E4D82172AC8C91C009AB78E /* PennMobileShared */,
 				8932694928FC7991003D4BF9 /* Shared */,
 				216640621EBADADA00746B8E /* PennMobile */,
 				2190FD2E1EBBC8BA00EC683C /* Assets.xcassets */,
@@ -910,7 +910,7 @@
 				216640601EBADADA00746B8E /* PennMobile.app */,
 				F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */,
 				8932693328FC75A5003D4BF9 /* WidgetExtension.appex */,
-				6E4D82162AC8C91C009AB78E /* PennSharedCode.framework */,
+				6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1464,16 +1464,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6E4D82172AC8C91C009AB78E /* PennSharedCode */ = {
+		6E4D82172AC8C91C009AB78E /* PennMobileShared */ = {
 			isa = PBXGroup;
 			children = (
 				6E903D392AC9C7E300F2D384 /* General */,
 				6E903D3A2AC9C80A00F2D384 /* Networking + Analytics */,
 				6E903D3B2AC9C81D00F2D384 /* Courses */,
 				6E903D3C2AC9C82D00F2D384 /* Dining */,
-				6E4D82182AC8C91C009AB78E /* PennSharedCode.h */,
+				6E4D82182AC8C91C009AB78E /* PennMobileShared.h */,
 			);
-			path = PennSharedCode;
+			path = PennMobileShared;
 			sourceTree = "<group>";
 		};
 		6E903D392AC9C7E300F2D384 /* General */ = {
@@ -1966,7 +1966,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E4D82192AC8C91C009AB78E /* PennSharedCode.h in Headers */,
+				6E4D82192AC8C91C009AB78E /* PennMobileShared.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2006,9 +2006,9 @@
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6E4D82152AC8C91C009AB78E /* PennSharedCode */ = {
+		6E4D82152AC8C91C009AB78E /* PennMobileShared */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6E4D82212AC8C91C009AB78E /* Build configuration list for PBXNativeTarget "PennSharedCode" */;
+			buildConfigurationList = 6E4D82212AC8C91C009AB78E /* Build configuration list for PBXNativeTarget "PennMobileShared" */;
 			buildPhases = (
 				6E4D82112AC8C91C009AB78E /* Headers */,
 				6E4D82122AC8C91C009AB78E /* Sources */,
@@ -2019,12 +2019,12 @@
 			);
 			dependencies = (
 			);
-			name = PennSharedCode;
+			name = PennMobileShared;
 			packageProductDependencies = (
 				6E5159F82AC8D88A004B3F41 /* SwiftyJSON */,
 			);
 			productName = PennSharedCode;
-			productReference = 6E4D82162AC8C91C009AB78E /* PennSharedCode.framework */;
+			productReference = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8932693228FC75A5003D4BF9 /* WidgetExtension */ = {
@@ -2129,7 +2129,7 @@
 				2166405F1EBADADA00746B8E /* PennMobile */,
 				F230FB0D225809E900760499 /* AutomatedScreenshotUITests */,
 				8932693228FC75A5003D4BF9 /* WidgetExtension */,
-				6E4D82152AC8C91C009AB78E /* PennSharedCode */,
+				6E4D82152AC8C91C009AB78E /* PennMobileShared */,
 			);
 		};
 /* End PBXProject section */
@@ -2609,12 +2609,12 @@
 /* Begin PBXTargetDependency section */
 		6E4D821B2AC8C91C009AB78E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6E4D82152AC8C91C009AB78E /* PennSharedCode */;
+			target = 6E4D82152AC8C91C009AB78E /* PennMobileShared */;
 			targetProxy = 6E4D821A2AC8C91C009AB78E /* PBXContainerItemProxy */;
 		};
 		6E5159F62AC8CA1B004B3F41 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6E4D82152AC8C91C009AB78E /* PennSharedCode */;
+			target = 6E4D82152AC8C91C009AB78E /* PennMobileShared */;
 			targetProxy = 6E5159F52AC8CA1B004B3F41 /* PBXContainerItemProxy */;
 		};
 		8932694328FC75A6003D4BF9 /* PBXTargetDependency */ = {
@@ -2834,10 +2834,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = VU59R57FGM;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2859,8 +2859,9 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = georgebotros.PennSharedCode;
+				PRODUCT_BUNDLE_IDENTIFIER = org.PennLabs.PennMobileShared;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2881,10 +2882,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = VU59R57FGM;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2905,8 +2906,9 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = georgebotros.PennSharedCode;
+				PRODUCT_BUNDLE_IDENTIFIER = org.PennLabs.PennMobileShared;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -3073,7 +3075,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6E4D82212AC8C91C009AB78E /* Build configuration list for PBXNativeTarget "PennSharedCode" */ = {
+		6E4D82212AC8C91C009AB78E /* Build configuration list for PBXNativeTarget "PennMobileShared" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6E4D821F2AC8C91C009AB78E /* Debug */,

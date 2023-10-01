@@ -8,7 +8,7 @@
 
 #if canImport(SwiftUI)
 import SwiftUI
-import PennSharedCode
+import PennMobileShared
 #endif
 
 struct DiningViewHeader: View {
