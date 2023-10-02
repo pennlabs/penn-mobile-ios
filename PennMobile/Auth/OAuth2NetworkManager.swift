@@ -35,7 +35,7 @@ class OAuth2NetworkManager: NSObject {
     private var clientID = InfoPlistEnvironment.labsOauthClientId
 
     private var currentAccessToken: AccessToken?
-    
+
     static let authQueue = DispatchQueue(label: "org.pennlabs.PennMobile.authqueue")
 }
 

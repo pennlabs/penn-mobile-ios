@@ -14,5 +14,6 @@ struct LabsWidgetBundle: WidgetBundle {
     var body: some Widget {
         DiningAnalyticsHomeWidget()
         CoursesDayWidget()
+        DiningHoursWidget()
     }
 }

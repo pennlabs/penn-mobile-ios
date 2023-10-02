@@ -35,7 +35,7 @@ final class HomeDiningCellItem: HomeCellItem {
         UserDBManager.shared.fetchDiningPreferences { result in
             if let venues = try? result.get() {
                 if venues.count == 0 {
-                    completion([HomeDiningCellItem(for: DiningAPI.instance.getVenues(with: DiningVenue.defaultVenueIds))])
+                    completion([HomeDiningCellItem(for: DiningAPI.instance.getVenues(with: DiningAPI.defaultVenueIds))])
                 } else {
                     completion([HomeDiningCellItem(for: venues)])
                 }

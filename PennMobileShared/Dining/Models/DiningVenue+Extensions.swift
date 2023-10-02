@@ -21,9 +21,6 @@ public extension VenueType {
 // MARK: - DiningVenue
 public extension DiningVenue {
 
-    // MARK: - Defaults
-    static let defaultVenueIds: [Int] = [593, 636, 1442]
-
     // MARK: - Venue Status
     var mealsToday: Day? {
         let dateFormatter = DateFormatter()

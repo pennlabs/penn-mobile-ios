@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import PennMobileShared
+import WidgetKit
 
 func getDeviceID() -> String {
     let deviceID = UIDevice.current.identifierForVendor!.uuidString
@@ -127,6 +128,13 @@ extension UserDBManager {
             request.httpMethod = "POST"
             request.httpBody = try? JSON(["venues": venueIds]).rawData()
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            // Cache a user's favorite dining halls for use by dining hours widget.
+            let diningVenues = DiningAPI.instance.getVenues(with: venueIds)
+            Storage.store(diningVenues, to: .groupCaches, as: DiningAPI.cacheFileName)
+            WidgetKind.diningHoursWidgets.forEach {
+                WidgetCenter.shared.reloadTimelines(ofKind: $0)
+            }
 
             let task = URLSession.shared.dataTask(with: request)
             task.resume()

@@ -123,12 +123,23 @@ func migrateDataToGroupContainer() {
         }
     }
 
+    if Storage.migrate(fileName: DiningAPI.directory, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
+        print("Migrated course data.")
+    }
+
     if Storage.migrate(fileName: DiningAnalyticsViewModel.dollarHistoryDirectory, of: [DiningAnalyticsBalance].self, from: .documents, to: .groupDocuments) || Storage.migrate(fileName: DiningAnalyticsViewModel.swipeHistoryDirectory, of: [DiningAnalyticsBalance].self, from: .documents, to: .groupDocuments) {
         print("Migrated dining analytics data.")
         WidgetKind.diningAnalyticsWidgets.forEach {
             WidgetCenter.shared.reloadTimelines(ofKind: $0)
         }
     }
+
+    if Storage.migrate(fileName: DiningAPI.cacheFileName, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
+       print("Migrated dining favorites data.")
+        WidgetKind.diningHoursWidgets.forEach {
+            WidgetCenter.shared.reloadTimelines(ofKind: $0)
+        }
+   }
 
     // Migrate dining balances if a dining balance file doesn't already exist.
     if let diningBalance = (UserDefaults.standard as SwiftCompilerSilencing).getDiningBalance() {
