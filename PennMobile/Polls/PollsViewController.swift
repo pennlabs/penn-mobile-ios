@@ -16,7 +16,8 @@ class PollsViewController: GenericViewController {
         let hostingView = UIHostingController(rootView: PollsView())
 
         view.backgroundColor = .uiBackground
-        self.screenName = "Polls SwiftUI"
+        self.screenName = "Poll History"
+        self.title = "Poll History"
 
         addChild(hostingView)
         view.addSubview(hostingView.view)
@@ -32,6 +33,6 @@ class PollsViewController: GenericViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.tabBarController?.title = "Fitness"
+        self.tabBarController?.title = "Poll History"
     }
 }
