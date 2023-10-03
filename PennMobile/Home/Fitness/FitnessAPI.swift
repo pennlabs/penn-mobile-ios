@@ -73,4 +73,13 @@ class FitnessAPI: Requestable {
             return .success(updatedRooms.sorted(by: { $0.name < $1.name }))
         }
     }
+    
+    // Other facilities for future reference
+    // sheerr     =  "Sheerr Pool"
+    // ringe      =  "Penn Squash Center", "Ringe"
+    // climbing   =  "Climbing Wall"
+    // membership =  "Membership"
+    // fox        =  "Fox Fitness"
+    // pottruck   =  "Pottruck", "Pottruck Fitness"
+    // rockwell   =  "Pottruck Court", "Rockwell"
 }

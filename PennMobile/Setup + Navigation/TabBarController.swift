@@ -106,7 +106,7 @@ extension LaundryTableViewController: TabBarShowable {
     }
 }
 
-extension FitnessViewControllerSwiftUI: TabBarShowable {
+extension FitnessViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Fitness_Grey")
         let selectedImage = UIImage(named: "Fitness_Blue")

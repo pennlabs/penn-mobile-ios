@@ -246,19 +246,12 @@
 		97E79E072100DA1200D3D606 /* BuildingImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E002100DA1200D3D606 /* BuildingImageCell.swift */; };
 		97E79E082100DA1200D3D606 /* BuildingHoursCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E012100DA1200D3D606 /* BuildingHoursCell.swift */; };
 		97E79E092100DA1200D3D606 /* BuildingFoodMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E022100DA1200D3D606 /* BuildingFoodMenuCell.swift */; };
-		97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E0F2100DD5000D3D606 /* FitnessHourCell.swift */; };
-		97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E112100DE0C00D3D606 /* FitnessModels.swift */; };
-		97E79E142100E1FA00D3D606 /* FitnessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E132100E1FA00D3D606 /* FitnessViewController.swift */; };
 		97E79E162100E33100D3D606 /* FitnessAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E152100E33100D3D606 /* FitnessAPI.swift */; };
-		97E79E182100E4AA00D3D606 /* FitnessFacilityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E172100E4AA00D3D606 /* FitnessFacilityData.swift */; };
-		97E79E1A2100E51A00D3D606 /* FitnessFacilityName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E192100E51A00D3D606 /* FitnessFacilityName.swift */; };
-		97E79E1C2100F32E00D3D606 /* FitnessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79E1B2100F32E00D3D606 /* FitnessViewModel.swift */; };
 		AD220CD2B82D72B87DBF87BC /* libPods-AutomatedScreenshotUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D5D1D7F760F28A27C06241 /* libPods-AutomatedScreenshotUITests.a */; };
 		B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */; };
 		B62875EB2115302200FB2873 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875EA2115302200FB2873 /* MapViewController.swift */; };
 		B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875EC2115433100FB2873 /* PennCoordinate.swift */; };
 		B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62875F82118F95300FB2873 /* BuildingProtocol.swift */; };
-		B64830A2213C939200FD2B17 /* FitnessHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64830A1213C939200FD2B17 /* FitnessHeaderView.swift */; };
 		B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5631FA43FC600922E98 /* LaundryRoom.swift */; };
 		B650C5681FA44C2100922E98 /* LaundryMachineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */; };
 		B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */; };
@@ -650,18 +643,11 @@
 		97E79E002100DA1200D3D606 /* BuildingImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingImageCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingImageCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79E012100DA1200D3D606 /* BuildingHoursCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingHoursCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingHoursCell.swift; sourceTree = SOURCE_ROOT; };
 		97E79E022100DA1200D3D606 /* BuildingFoodMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingFoodMenuCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingFoodMenuCell.swift; sourceTree = SOURCE_ROOT; };
-		97E79E0F2100DD5000D3D606 /* FitnessHourCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessHourCell.swift; sourceTree = "<group>"; };
-		97E79E112100DE0C00D3D606 /* FitnessModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessModels.swift; sourceTree = "<group>"; };
-		97E79E132100E1FA00D3D606 /* FitnessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewController.swift; sourceTree = "<group>"; };
 		97E79E152100E33100D3D606 /* FitnessAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessAPI.swift; sourceTree = "<group>"; };
-		97E79E172100E4AA00D3D606 /* FitnessFacilityData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityData.swift; sourceTree = "<group>"; };
-		97E79E192100E51A00D3D606 /* FitnessFacilityName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessFacilityName.swift; sourceTree = "<group>"; };
-		97E79E1B2100F32E00D3D606 /* FitnessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewModel.swift; sourceTree = "<group>"; };
 		B6040A351F8F24D900E4B783 /* AddLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLaundryCell.swift; sourceTree = "<group>"; };
 		B62875EA2115302200FB2873 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B62875EC2115433100FB2873 /* PennCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCoordinate.swift; sourceTree = "<group>"; };
 		B62875F82118F95300FB2873 /* BuildingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingProtocol.swift; sourceTree = "<group>"; };
-		B64830A1213C939200FD2B17 /* FitnessHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessHeaderView.swift; sourceTree = "<group>"; };
 		B650C5631FA43FC600922E98 /* LaundryRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryRoom.swift; sourceTree = "<group>"; };
 		B650C5671FA44C2100922E98 /* LaundryMachineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachineCell.swift; sourceTree = "<group>"; };
 		B654BAED1F801F830038B9D5 /* LaundryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryTableViewController.swift; sourceTree = "<group>"; };
@@ -1631,48 +1617,9 @@
 				42D9237029E0C69200E9E18E /* FitnessModel.swift */,
 				97E79E152100E33100D3D606 /* FitnessAPI.swift */,
 				422C896D2A0FE8C000A7135C /* FitnessSettingsView.swift */,
-				97E79E0B2100DC5900D3D606 /* Cells */,
-				97E79E0C2100DC6200D3D606 /* Controllers */,
-				97E79E0D2100DC6F00D3D606 /* Model */,
-				97E79E0E2100DC7600D3D606 /* Networking */,
 			);
 			name = Fitness;
 			path = Home/Fitness;
-			sourceTree = "<group>";
-		};
-		97E79E0B2100DC5900D3D606 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				97E79E0F2100DD5000D3D606 /* FitnessHourCell.swift */,
-				B64830A1213C939200FD2B17 /* FitnessHeaderView.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		97E79E0C2100DC6200D3D606 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				97E79E132100E1FA00D3D606 /* FitnessViewController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		97E79E0D2100DC6F00D3D606 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				97E79E112100DE0C00D3D606 /* FitnessModels.swift */,
-				97E79E172100E4AA00D3D606 /* FitnessFacilityData.swift */,
-				97E79E192100E51A00D3D606 /* FitnessFacilityName.swift */,
-				97E79E1B2100F32E00D3D606 /* FitnessViewModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		97E79E0E2100DC7600D3D606 /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Networking;
 			sourceTree = "<group>";
 		};
 		B62875E82112591700FB2873 /* Buildings */ = {
@@ -2310,7 +2257,6 @@
 				219F01F41FB7CCFA006BBC4E /* SAConfettiView.swift in Sources */,
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				6CC88D5F27B1BF51006896F6 /* CardView.swift in Sources */,
-				97E79E1C2100F32E00D3D606 /* FitnessViewModel.swift in Sources */,
 				214E254922480818004CB9C4 /* GSRDeletable.swift in Sources */,
 				F2770AEF2545E3B0001EA1DD /* CourseAlertNetworkManager.swift in Sources */,
 				6CC88D6427B1BF51006896F6 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */,
@@ -2337,7 +2283,6 @@
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
 				EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */,
 				6C6FE1CA27B9B8CB0093FD13 /* MoreViewController.swift in Sources */,
-				97E79E122100DE0C00D3D606 /* FitnessModels.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				89459B9B28E799AA00CE1638 /* CoursesViewModel.swift in Sources */,
@@ -2402,7 +2347,6 @@
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
 				21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */,
-				97E79E182100E4AA00D3D606 /* FitnessFacilityData.swift in Sources */,
 				F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
@@ -2424,7 +2368,6 @@
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
 				6CC88D7727B1BF51006896F6 /* DiningAnalyticsView.swift in Sources */,
 				F2770AEA2545E39D001EA1DD /* CourseAlertCreateController.swift in Sources */,
-				97E79E1A2100E51A00D3D606 /* FitnessFacilityName.swift in Sources */,
 				6CC88D7427B1BF51006896F6 /* DiningViewModelSwiftUI.swift in Sources */,
 				97E79E082100DA1200D3D606 /* BuildingHoursCell.swift in Sources */,
 				6CC88D6727B1BF51006896F6 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */,
@@ -2542,9 +2485,7 @@
 				EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */,
 				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				6E903D382AC9C67000F2D384 /* ImageNetworkingManager.swift in Sources */,
-				97E79E102100DD5000D3D606 /* FitnessHourCell.swift in Sources */,
 				EFE2D6FB239B12270020F6BF /* GSRGroupNewIntialController.swift in Sources */,
-				97E79E142100E1FA00D3D606 /* FitnessViewController.swift in Sources */,
 				21B556172224FDC500D80F61 /* RootViewController.swift in Sources */,
 				B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
@@ -2553,7 +2494,6 @@
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
-				B64830A2213C939200FD2B17 /* FitnessHeaderView.swift in Sources */,
 				6CC88D7527B1BF51006896F6 /* DiningViewControllerSwiftUI.swift in Sources */,
 				C11DFA3521BB5782000FC573 /* UniversityNotificationCell.swift in Sources */,
 				6C6FE1CD27B9B8CB0093FD13 /* MoreHeaderView.swift in Sources */,

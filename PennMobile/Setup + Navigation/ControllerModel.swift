@@ -59,7 +59,7 @@ class ControllerModel: NSObject {
         vcDictionary[.courseAlerts] = CourseAlertController()
         vcDictionary[.events] = PennEventsTableViewController()
         vcDictionary[.headlineNews] = NativeNewsViewController()
-        vcDictionary[.fitness] = FitnessViewControllerSwiftUI()
+        vcDictionary[.fitness] = FitnessViewController()
         // vcDictionary[.fling] = FlingViewController()
     }
 
@@ -72,7 +72,7 @@ class ControllerModel: NSObject {
     // Features order in tab bar
     var orderedFeatures: [Feature] {
         get {
-            return [.home, .dining, .studyRoomBooking, .fitness, .laundry, .more]
+            return [.home, .dining, .studyRoomBooking, .laundry, .more]
         }
     }
 

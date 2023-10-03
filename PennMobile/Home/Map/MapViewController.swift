@@ -24,14 +24,6 @@ class MapViewController: UIViewController {
         }
     }
 
-    var facility: FitnessFacilityName? {
-        didSet {
-            guard let facility = facility else { return }
-            self.region = PennCoordinate.shared.getRegion(for: facility, at: .close)
-            self.annotation = PennCoordinate.shared.getAnnotation(for: facility)
-        }
-    }
-
     var region: MKCoordinateRegion = PennCoordinate.shared.getDefaultRegion(at: .far) {
         didSet {
             mapView?.setRegion(region, animated: false)

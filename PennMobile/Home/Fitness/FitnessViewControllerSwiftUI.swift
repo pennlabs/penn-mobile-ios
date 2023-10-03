@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class FitnessViewControllerSwiftUI: GenericViewController {
+class FitnessViewController: GenericViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
