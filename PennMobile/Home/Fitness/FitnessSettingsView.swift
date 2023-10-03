@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct FitnessSelectView: View {
     @Binding var showFitnessSettings: Bool
@@ -79,7 +80,7 @@ struct FitnessSelectRowView: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 13) {
-                Image("pottruck")
+                KFImage(room.image_url)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 100, height: 64)
