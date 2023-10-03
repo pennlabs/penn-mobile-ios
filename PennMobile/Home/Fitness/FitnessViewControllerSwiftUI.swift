@@ -16,7 +16,8 @@ class FitnessViewControllerSwiftUI: GenericViewController {
         let hostingView = UIHostingController(rootView: FitnessView())
 
         view.backgroundColor = .uiBackground
-        self.screenName = "Fitness SwiftUI"
+        self.screenName = "Fitness"
+        self.title = "Fitness"
 
         addChild(hostingView)
         view.addSubview(hostingView.view)

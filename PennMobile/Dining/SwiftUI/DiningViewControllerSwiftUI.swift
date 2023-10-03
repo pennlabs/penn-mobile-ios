@@ -16,7 +16,8 @@ class DiningViewControllerSwiftUI: GenericViewController {
         let hostingView = UIHostingController(rootView: DiningView())
 
         view.backgroundColor = .uiBackground
-        self.screenName = "Dining SwiftUI"
+        self.screenName = "Dining"
+        self.title = "Dining"
 
         addChild(hostingView)
         view.addSubview(hostingView.view)
