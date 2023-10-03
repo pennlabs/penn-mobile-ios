@@ -296,6 +296,8 @@
 		EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */; };
 		EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */; };
 		EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */; };
+		F206DDB328D78A85008F572F /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F206DDB228D78A85008F572F /* PreferencesView.swift */; };
+		F206DDB528DE5BF0008F572F /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F206DDB428DE5BF0008F572F /* PreferencesViewController.swift */; };
 		F20D93F128E0B86F00930434 /* NotificationsViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20D93F028E0B86F00930434 /* NotificationsViewControllerSwiftUI.swift */; };
 		F20D93F328E0B88800930434 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20D93F228E0B88800930434 /* NotificationsView.swift */; };
 		F20D93F528E0BC0700930434 /* NotificationsSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20D93F428E0BC0700930434 /* NotificationsSetting.swift */; };
@@ -694,6 +696,8 @@
 		EFE2D6FA239B12260020F6BF /* GSRManageGroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRManageGroupController.swift; sourceTree = "<group>"; };
 		EFE2D6FD239B12380020F6BF /* GSRGroupNetworkManager..swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworkManager..swift; sourceTree = "<group>"; };
 		EFE2D6FF239B124D0020F6BF /* GSRGroupUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRGroupUser.swift; sourceTree = "<group>"; };
+		F206DDB228D78A85008F572F /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		F206DDB428DE5BF0008F572F /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		F20D93F028E0B86F00930434 /* NotificationsViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewControllerSwiftUI.swift; sourceTree = "<group>"; };
 		F20D93F228E0B88800930434 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		F20D93F428E0BC0700930434 /* NotificationsSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSetting.swift; sourceTree = "<group>"; };
@@ -937,6 +941,7 @@
 				B654BAE81F801F030038B9D5 /* Laundry */,
 				21D5E06523B68F0E00B331CC /* Housing */,
 				212304C52054ED9900958CE0 /* Spring Fling */,
+				F206DDB128D78A6C008F572F /* Preferences */,
 				6CAA4B4727A7639600473CC6 /* Polls */,
 				216640D31EBB80FD00746B8E /* News */,
 				6C6FE1B727B9B8CB0093FD13 /* More Tab */,
@@ -1831,6 +1836,15 @@
 			path = GSRGroups;
 			sourceTree = "<group>";
 		};
+		F206DDB128D78A6C008F572F /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				F206DDB228D78A85008F572F /* PreferencesView.swift */,
+				F206DDB428DE5BF0008F572F /* PreferencesViewController.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		F20D93EF28E0B83900930434 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -2297,6 +2311,7 @@
 				EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */,
 				EFE2D6F8239B120E0020F6BF /* GSRManageGroupViewModel.swift in Sources */,
 				B6665A182071E63800F49A9C /* TabBarController.swift in Sources */,
+				F206DDB528DE5BF0008F572F /* PreferencesViewController.swift in Sources */,
 				21A6B6D222162702003A357D /* GSRReservation.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
 				2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */,
@@ -2341,6 +2356,7 @@
 				6C369A1526E39BC100721CA1 /* (null) in Sources */,
 				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
 				6C6FE1D327B9B8CB0093FD13 /* ProfilePageTableViewCell.swift in Sources */,
+				F206DDB328D78A85008F572F /* PreferencesView.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,
 				2189C09C2027CE4100771C1F /* GSRDateHandler.swift in Sources */,
 				89459B9D28E7E8A600CE1638 /* CoursesDayView.swift in Sources */,

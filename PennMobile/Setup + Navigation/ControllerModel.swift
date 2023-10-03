@@ -29,6 +29,7 @@ enum Feature: String {
     case fling = "Spring Fling"
     case event = "Event"
     case privacy = "Privacy"
+    case preferences = "Preferences"
     case notifications = "Notifications"
     case courseSchedule = "Course Schedule"
     case pacCode = "PAC Code"
@@ -38,6 +39,11 @@ enum Feature: String {
 class ControllerModel: NSObject {
 
     static var shared = ControllerModel()
+
+    // Features that can be added to the tab bar
+    var dynamicFeatures: [Feature] = [.dining, .studyRoomBooking, .laundry, .news, .contacts, .courseSchedule, .events, .fitness]
+
+    var featureIcons: [Feature: UIImage]! = [.dining: #imageLiteral(resourceName: "Dining"), .studyRoomBooking: #imageLiteral(resourceName: "GSR"), .laundry: #imageLiteral(resourceName: "Laundry"), .news: #imageLiteral(resourceName: "News"), .contacts: #imageLiteral(resourceName: "Contacts"), .courseSchedule: #imageLiteral(resourceName: "Calendar Light"), .events: #imageLiteral(resourceName: "Event"), .fitness: #imageLiteral(resourceName: "Fitness"), .courseAlerts: #imageLiteral(resourceName: "PCA"), .about: #imageLiteral(resourceName: "logo-small")]
 
     var vcDictionary: [Feature: UIViewController]!
 
@@ -53,6 +59,7 @@ class ControllerModel: NSObject {
         vcDictionary[.contacts] = ContactsTableViewController()
         vcDictionary[.about] = AboutViewController()
         vcDictionary[.notifications] = NotificationsViewControllerSwiftUI()
+        vcDictionary[.preferences] = PreferencesViewController()
         vcDictionary[.privacy] = PrivacyViewController()
         vcDictionary[.courseSchedule] = CoursesViewController()
         vcDictionary[.pacCode] = PacCodeViewController()
@@ -64,45 +71,34 @@ class ControllerModel: NSObject {
     }
 
     var viewControllers: [UIViewController] {
-        return orderedFeatures.map { (title) -> UIViewController in
+        return tabFeatures.map { (title) -> UIViewController in
             return vcDictionary[title]!
         }
     }
 
-    // Features order in tab bar
-    var orderedFeatures: [Feature] {
+    // Features in tab bar
+    var tabFeatures: [Feature] {
         get {
-            return [.home, .dining, .studyRoomBooking, .laundry, .more]
+            return UserDefaults.standard.getTabPreferences()
         }
     }
 
-    // Features order in MoreViewController:
-    var moreOrder: [Feature] {
+    // Features in MoreViewController:
+    var moreFeatures: [Feature] {
         get {
-            // keeping this #if DEBUG in case we want to remove course alerts from production
-            // courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
-            #if DEBUG
-            return [.news, .contacts, .courseSchedule, .courseAlerts, .events, .fitness, .about]
-            #else
-            return [.news, .contacts, .courseSchedule, .events, .fitness, .about]
-            #endif
+            let tabPreferences = UserDefaults.standard.getTabPreferences()
+            return dynamicFeatures.filter { !tabPreferences.contains($0) } + [.about]
         }
     }
 
     var moreIcons: [UIImage] {
-        // keeping this #if DEBUG in case we want to remove course alerts from production
-        // courseAlerts should only show up in testflight but we should NEVER show in production, need to manually remove it in the future
         get {
-            #if DEBUG
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "PCA"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "Fitness"), #imageLiteral(resourceName: "logo-small")]
-            #else
-                return [#imageLiteral(resourceName: "News"), #imageLiteral(resourceName: "Contacts"), #imageLiteral(resourceName: "Calendar Light"), #imageLiteral(resourceName: "Event"), #imageLiteral(resourceName: "Fitness"), #imageLiteral(resourceName: "logo-small")]
-            #endif
+            return moreFeatures.map { featureIcons[$0] ?? #imageLiteral(resourceName: "logo-small") }
         }
     }
 
     var displayNames: [String] {
-        return orderedFeatures.map { $0.rawValue }
+        return tabFeatures.map { $0.rawValue }
     }
 
     func viewController(for controller: Feature) -> UIViewController {
@@ -118,8 +114,8 @@ class ControllerModel: NSObject {
     }
 
     var firstFeature: Feature {
-        // return UserDefaults.standard.isOnboarded() ? orderedFeatures[0] : .laundry
-        return orderedFeatures[0]
+        // return UserDefaults.standard.isOnboarded() ? tabFeatures[0] : .laundry
+        return tabFeatures[0]
     }
 
     func visibleVCIndex() -> IndexPath {
@@ -130,7 +126,7 @@ class ControllerModel: NSObject {
     }
 
     func visibleFeature() -> Feature {
-        return orderedFeatures[visibleVCIndex().row]
+        return tabFeatures[visibleVCIndex().row]
     }
 
     func visibleVC() -> UIViewController {
