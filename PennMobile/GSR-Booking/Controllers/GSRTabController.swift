@@ -24,7 +24,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0
         settings.style.selectedBarHeight = 0
-        edgesForExtendedLayout = []
+        // edgesForExtendedLayout = []
 
 //        let barView = ButtonBarView(frame: CGRect(x: 0.0, y: (88 + 0.0), width: self.view.bounds.width, height: 50.0), collectionViewLayout: UICollectionViewFlowLayout())
 //        self.barView = barView
