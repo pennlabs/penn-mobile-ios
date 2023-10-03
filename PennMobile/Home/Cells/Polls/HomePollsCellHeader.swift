@@ -11,16 +11,16 @@ import SnapKit
 
 class HomePollsCellHeader: UIView {
 
-    static let height: CGFloat = 63
-
     var secondaryTitleLabel: UILabel!
     var primaryTitleLabel: UILabel!
+    var voteCountLabel: UILabel!
     private var dividerLine: UIView!
 
     // Must be called after being added to a view
     func prepare() {
         prepareHeader(inside: self.superview ?? UIView())
         prepareTitleLabels()
+        prepareVoteCountLabel()
         prepareDividerLine()
     }
 
@@ -50,7 +50,24 @@ class HomePollsCellHeader: UIView {
         primaryTitleLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(self)
             make.top.equalTo(secondaryTitleLabel.snp.bottom).offset(4)
+            make.trailing.equalTo(self)
         }
+    }
+    func prepareVoteCountLabel() {
+        voteCountLabel = getVoteCountLabel()
+        addSubview(voteCountLabel)
+        voteCountLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(self)
+            make.top.equalTo(primaryTitleLabel.snp.bottom).offset(3)
+            make.trailing.equalTo(self)
+        }
+    }
+    private func getVoteCountLabel() -> UILabel {
+        let label = UILabel()
+        label.font = .secondaryTitleFont
+        label.textColor = .labelSecondary
+        label.textAlignment = .left
+        return label
     }
 
     // MARK: Divider Line
@@ -60,6 +77,7 @@ class HomePollsCellHeader: UIView {
         dividerLine.snp.makeConstraints { (make) in
             make.leading.equalTo(self)
             make.trailing.equalTo(self)
+            make.top.equalTo(voteCountLabel.snp.top).offset(15)
             make.bottom.equalTo(self)
             make.height.equalTo(2)
         }
@@ -76,9 +94,11 @@ class HomePollsCellHeader: UIView {
 
     private func getPrimaryLabel() -> UILabel {
         let label = UILabel()
-        label.font = .pollsTitleFont // primaryTitleFont
+        label.font = .pollsTitleFont
         label.textColor = .labelPrimary
         label.textAlignment = .left
+        label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
         return label
     }
 

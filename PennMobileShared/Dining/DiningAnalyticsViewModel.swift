@@ -10,14 +10,19 @@ import Foundation
 import SwiftUI
 import WidgetKit
 
-struct DiningAnalyticsBalance: Codable, Equatable, Identifiable {
-    let date: Date
-    let balance: Double
-    var id: Date {date}
+public struct DiningAnalyticsBalance: Codable, Equatable, Identifiable {
+    public let date: Date
+    public let balance: Double
+    public var id: Date {date}
+    
+    public init(date: Date, balance: Double) {
+        self.date = date
+        self.balance = balance
+    }
 }
 
 extension DiningAnalyticsBalance: Comparable {
-    static func <(lhs: DiningAnalyticsBalance, rhs: DiningAnalyticsBalance) -> Bool {
+    public static func <(lhs: DiningAnalyticsBalance, rhs: DiningAnalyticsBalance) -> Bool {
         if lhs.balance < rhs.balance {
             return true
         } else if lhs.balance > rhs.balance {
@@ -28,28 +33,28 @@ extension DiningAnalyticsBalance: Comparable {
     }
 }
 
-class DiningAnalyticsViewModel: ObservableObject {
-    static let dollarHistoryDirectory = "diningAnalyticsDollarData"
-    static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
-    static let planStartDateDirectory = "diningAnalyticsPlanStartDate"
-    @Published var dollarHistory: [DiningAnalyticsBalance] = Storage.fileExists(dollarHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(dollarHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
-    @Published var swipeHistory: [DiningAnalyticsBalance] = Storage.fileExists(swipeHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(swipeHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
-    @Published var planStartDate: Date? = try? Storage.retrieveThrowing(planStartDateDirectory, from: .groupDocuments, as: Date.self)
+public class DiningAnalyticsViewModel: ObservableObject {
+    public static let dollarHistoryDirectory = "diningAnalyticsDollarData"
+    public static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
+    public static let planStartDateDirectory = "diningAnalyticsPlanStartDate"
+    @Published public var dollarHistory: [DiningAnalyticsBalance] = Storage.fileExists(dollarHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(dollarHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
+    @Published public var swipeHistory: [DiningAnalyticsBalance] = Storage.fileExists(swipeHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(swipeHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
+    @Published public var planStartDate: Date? = try? Storage.retrieveThrowing(planStartDateDirectory, from: .groupDocuments, as: Date.self)
 
-    @Published var dollarPredictedZeroDate: Date = Date.endOfSemester
-    @Published var predictedDollarSemesterEndBalance: Double = 0
-    @Published var swipesPredictedZeroDate: Date = Date.endOfSemester
-    @Published var predictedSwipesSemesterEndBalance: Double = 0
-    @Published var swipeAxisLabel: ([String], [String]) = ([], [])
-    @Published var dollarAxisLabel: ([String], [String]) = ([], [])
-    @Published var dollarSlope: Double = 0.0
-    @Published var swipeSlope: Double = 0.0
+    @Published public var dollarPredictedZeroDate: Date = Date.endOfSemester
+    @Published public var predictedDollarSemesterEndBalance: Double = 0
+    @Published public var swipesPredictedZeroDate: Date = Date.endOfSemester
+    @Published public var predictedSwipesSemesterEndBalance: Double = 0
+    @Published public var swipeAxisLabel: ([String], [String]) = ([], [])
+    @Published public var dollarAxisLabel: ([String], [String]) = ([], [])
+    @Published public var dollarSlope: Double = 0.0
+    @Published public var swipeSlope: Double = 0.0
 
     var yIntercept = 0.0
     var slope = 0.0
     let formatter = DateFormatter()
 
-    init() {
+    public init() {
         formatter.dateFormat = "yyyy-MM-dd"
         clearStorageIfNewSemester()
         populateAxesAndPredictions()
@@ -65,7 +70,7 @@ class DiningAnalyticsViewModel: ObservableObject {
             Storage.remove(DiningAnalyticsViewModel.planStartDateDirectory, from: .groupDocuments)
         }
     }
-    func refresh(refreshWidgets: Bool = false) async {
+    public func refresh(refreshWidgets: Bool = false) async {
         guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
             return
         }

@@ -12,30 +12,26 @@ import SwiftyJSON
 struct PollDemographicResult: Codable {
     let demographic: String
     let votes: Int
-
 }
 
 struct PollOption: Codable {
     let id: Int
-    let optionText: String
-    let votes: Int
-    let votesByYear: [PollDemographicResult]?
-    let votesBySchool: [PollDemographicResult]?
+    let poll: Int
+    let choice: String
+    var voteCount: Int
 }
 
 struct PollQuestion: Codable {
-    let title: String
-    let source: String
-    let ddl: Date
-    let options: [PollOption]
-    let totalVoteCount: Int
-    var optionChosenId: Int?
-
-    enum CodingKeys: String, CodingKey {
-        case title = "question"
-        case source = "orgAuthor"
-        case ddl = "expiration"
-        case options, totalVoteCount, optionChosenId
+    let id: Int
+    let question: String
+    let clubCode: String
+    let startDate: Date
+    let expireDate: Date
+    let multiselect: Bool
+    let clubComment: String?
+    var options: [PollOption]
+    var totalVoteCount: Int {
+        options.reduce(0, { $0 + $1.voteCount })
     }
-
+    var optionChosenId: Int?
 }

@@ -9,16 +9,16 @@
 import SwiftyJSON
 import Foundation
 
-class DiningAPI {
+public class DiningAPI {
 
-    static let instance = DiningAPI()
+    public static let instance = DiningAPI()
 
     let diningUrl = "https://pennmobile.org/api/dining/venues/"
     let diningMenuUrl = "https://pennmobile.org/api/dining/menus/"
 
     let diningInsightsUrl = "https://pennmobile.org/api/dining/"
 
-    func fetchDiningHours() async -> Result<[DiningVenue], NetworkingError> {
+    public func fetchDiningHours() async -> Result<[DiningVenue], NetworkingError> {
         guard let (data, _) = try? await URLSession.shared.data(from: URL(string: diningUrl)!) else {
             return .failure(.serverError)
         }
@@ -36,7 +36,7 @@ class DiningAPI {
         }
     }
 
-    func fetchDiningMenus(at date: Date = Date()) async -> Result<[MenuList], NetworkingError> {
+    public func fetchDiningMenus(at date: Date = Date()) async -> Result<[MenuList], NetworkingError> {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateStr = dateFormatter.string(from: date)
@@ -56,7 +56,7 @@ class DiningAPI {
 }
 
 // Dining Data Storage
-extension DiningAPI {
+public extension DiningAPI {
     // MARK: - Get Methods
     func getVenues() -> [DiningVenue] {
         if Storage.fileExists(DiningVenue.directory, in: .caches) {
@@ -112,7 +112,7 @@ extension DiningAPI {
 
 // MARK: Dining Balance
 extension DiningAPI {
-    func getDiningBalance(diningToken: String) async -> Result<DiningBalance, NetworkingError> {
+    public func getDiningBalance(diningToken: String) async -> Result<DiningBalance, NetworkingError> {
         let url = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/dining/currentBalance")!
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

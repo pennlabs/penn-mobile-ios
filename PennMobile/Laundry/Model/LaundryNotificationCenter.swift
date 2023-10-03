@@ -9,6 +9,7 @@
 import Foundation
 import UserNotifications
 import ActivityKit
+import PennMobileShared
 
 class LaundryNotificationCenter {
 

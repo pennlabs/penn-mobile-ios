@@ -14,7 +14,7 @@ public class Storage {
 
     fileprivate init() { }
 
-    enum Directory {
+    public enum Directory {
         // Only documents and other data that is user-generated, or that cannot otherwise be recreated by your application, should be stored in the <Application_Home>/Documents directory and will be automatically backed up by iCloud.
         case documents
 
@@ -84,7 +84,7 @@ public class Storage {
     ///   - object: the encodable struct to store
     ///   - directory: where to store the struct
     ///   - fileName: what to name the file where the struct data will be stored
-    static func store<T: Encodable>(_ object: T, to directory: Directory, as fileName: String) {
+    public static func store<T: Encodable>(_ object: T, to directory: Directory, as fileName: String) {
         try! storeThrowing(object, to: directory, as: fileName)
     }
     
@@ -94,7 +94,7 @@ public class Storage {
     ///   - object: the encodable struct to store
     ///   - directory: where to store the struct
     ///   - fileName: what to name the file where the struct data will be stored
-    static func storeThrowing<T: Encodable>(_ object: T, to directory: Directory, as fileName: String) throws {
+    public static func storeThrowing<T: Encodable>(_ object: T, to directory: Directory, as fileName: String) throws {
         let url = getURL(for: directory).appendingPathComponent(fileName, isDirectory: false)
         let encoder = JSONEncoder()
         try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
@@ -109,7 +109,7 @@ public class Storage {
     ///   - directory: directory where struct data is stored
     ///   - type: struct type (i.e. Message.self)
     /// - Returns: decoded struct model(s) of data
-    static func retrieve<T: Decodable>(_ fileName: String, from directory: Directory, as type: T.Type) -> T {
+    public static func retrieve<T: Decodable>(_ fileName: String, from directory: Directory, as type: T.Type) -> T {
         let url = getURL(for: directory).appendingPathComponent(fileName, isDirectory: false)
 
         if !FileManager.default.fileExists(atPath: url.path) {
@@ -139,7 +139,7 @@ public class Storage {
     ///   - directory: directory where struct data is stored
     ///   - type: struct type (i.e. Message.self)
     /// - Returns: decoded struct model(s) of data
-    static func retrieveThrowing<T: Decodable>(_ fileName: String, from directory: Directory, as type: T.Type) throws -> T {
+    public static func retrieveThrowing<T: Decodable>(_ fileName: String, from directory: Directory, as type: T.Type) throws -> T {
         let url = getURL(for: directory).appendingPathComponent(fileName, isDirectory: false)
         let data = try Data(contentsOf: url)
         return try JSONDecoder().decode(type, from: data)
@@ -159,7 +159,7 @@ public class Storage {
     }
 
     /// Remove specified file from specified directory
-    static func remove(_ fileName: String, from directory: Directory) {
+    public static func remove(_ fileName: String, from directory: Directory) {
         let url = getURL(for: directory).appendingPathComponent(fileName, isDirectory: false)
         if FileManager.default.fileExists(atPath: url.path) {
             do {
@@ -171,14 +171,14 @@ public class Storage {
     }
 
     /// Returns BOOL indicating whether file exists at specified directory with specified file name
-    static func fileExists(_ fileName: String, in directory: Directory) -> Bool {
+    public static func fileExists(_ fileName: String, in directory: Directory) -> Bool {
         let url = getURL(for: directory).appendingPathComponent(fileName, isDirectory: false)
         return FileManager.default.fileExists(atPath: url.path)
     }
 
     /// Migrate the given file containing the given type to the given directory, if it does not already exist there.
     /// Returns whether the migration happened and succeeded.
-    static func migrate<T: Codable>(fileName: String, of type: T.Type, from: Storage.Directory, to: Storage.Directory) -> Bool {
+    public static func migrate<T: Codable>(fileName: String, of type: T.Type, from: Storage.Directory, to: Storage.Directory) -> Bool {
         if !fileExists(fileName, in: to) && fileExists(fileName, in: from) {
             do {
                 let record = try retrieveThrowing(fileName, from: from, as: type)

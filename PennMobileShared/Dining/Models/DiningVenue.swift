@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct DiningVenue: Codable, Equatable, Identifiable {
-    static let directory = "diningVenue-v2.json"
-    static let menuUrlDict: [Int: String] = [593: "https://university-of-pennsylvania.cafebonappetit.com/cafe/1920-commons/",
+public struct DiningVenue: Codable, Equatable, Identifiable {
+    public static let directory = "diningVenue-v2.json"
+    public static let menuUrlDict: [Int: String] = [593: "https://university-of-pennsylvania.cafebonappetit.com/cafe/1920-commons/",
                                            636: "https://university-of-pennsylvania.cafebonappetit.com/cafe/hill-house/",
                                            637: "https://university-of-pennsylvania.cafebonappetit.com/cafe/kings-court-english-house/",
                                            638: "https://university-of-pennsylvania.cafebonappetit.com/cafe/falk-dining-commons/",
@@ -26,12 +26,12 @@ struct DiningVenue: Codable, Equatable, Identifiable {
                                            1464004: "https://university-of-pennsylvania.cafebonappetit.com/cafe/quaker-kitchen/",
                                            1464009: "https://university-of-pennsylvania.cafebonappetit.com/cafe/cafe-west/"]
 
-    let id: Int
-    let name: String
-    let image: URL?
-    let days: [Day]
+    public let id: Int
+    public let name: String
+    public let image: URL?
+    public let days: [Day]
 
-    var venueType: VenueType {
+    public var venueType: VenueType {
         switch id {
         case 593, 636, 637, 638, 1442, 747:
             return .dining
@@ -41,7 +41,7 @@ struct DiningVenue: Codable, Equatable, Identifiable {
     }
 }
 
-struct Day: Codable, Equatable {
+public struct Day: Codable, Equatable {
     let date: String
     let meals: [Meal]
 
@@ -51,13 +51,13 @@ struct Day: Codable, Equatable {
     }
 }
 
-struct Meal: Codable, Equatable {
-    let starttime: Date
-    let endtime: Date
-    let label: String
+public struct Meal: Codable, Equatable {
+    public let starttime: Date
+    public let endtime: Date
+    public let label: String
 }
 
-enum VenueType: CaseIterable {
+public enum VenueType: CaseIterable {
     case dining
     case retail
 }

@@ -9,6 +9,7 @@
 import ActivityKit
 import WidgetKit
 import SwiftUI
+import PennMobileShared
 
 extension LaundryMachine {
     var iconColor: Color {

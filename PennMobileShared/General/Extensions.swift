@@ -13,11 +13,11 @@ extension UIApplication {
     }
 }
 
-class Padding {
-    static let pad: CGFloat = 14.0
+public class Padding {
+    public static let pad: CGFloat = 14.0
 }
 
-extension UIView {
+public extension UIView {
     var pad: CGFloat { return Padding.pad }
 }
 
@@ -25,7 +25,7 @@ extension UIViewController {
     var pad: CGFloat { return Padding.pad }
 }
 
-extension UIView {
+public extension UIView {
     func anchorToTop(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil) {
 
         anchorWithConstantsToTop(top, left: left, bottom: bottom, right: right, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
@@ -72,7 +72,7 @@ extension UIView {
     }
 }
 
-extension UIColor {
+public extension UIColor {
 
     convenience init(r: CGFloat, g: CGFloat, b: CGFloat) {
         self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
@@ -96,23 +96,23 @@ extension UIColor {
 }
 
 extension UIFont {
-    static let avenirMedium = UIFont.systemFont(ofSize: 21, weight: .regular)
-    static let primaryTitleFont = UIFont.systemFont(ofSize: 21, weight: .semibold)
-    static let secondaryTitleFont = UIFont.systemFont(ofSize: 11, weight: .medium)
+    public static let avenirMedium = UIFont.systemFont(ofSize: 21, weight: .regular)
+    public static let primaryTitleFont = UIFont.systemFont(ofSize: 21, weight: .semibold)
+    public static let secondaryTitleFont = UIFont.systemFont(ofSize: 11, weight: .medium)
 
-    static let interiorTitleFont = UIFont.systemFont(ofSize: 17, weight: .medium)
+    public static let interiorTitleFont = UIFont.systemFont(ofSize: 17, weight: .medium)
 
-    static let pollsTitleFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
+    public static let pollsTitleFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
 
-    static let primaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
-    static let secondaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .regular)
+    public static let primaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
+    public static let secondaryInformationFont = UIFont.systemFont(ofSize: 14, weight: .regular)
 
-    static let footerDescriptionFont = UIFont.systemFont(ofSize: 10, weight: .regular)
-    static let footerTransitionFont = UIFont.systemFont(ofSize: 10, weight: .semibold)
+    public static let footerDescriptionFont = UIFont.systemFont(ofSize: 10, weight: .regular)
+    public static let footerTransitionFont = UIFont.systemFont(ofSize: 10, weight: .semibold)
 
-    static let gsrTimeIncrementFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
+    public static let gsrTimeIncrementFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
 
-    static let alertSettingsWarningFont = UIFont.systemFont(ofSize: 30, weight: .bold)
+    public static let alertSettingsWarningFont = UIFont.systemFont(ofSize: 30, weight: .bold)
 
 }
 
@@ -129,7 +129,7 @@ extension UIBarButtonItem {
     }
 }
 
-extension Date {
+public extension Date {
     func minutesFrom(date: Date) -> Int {
         let difference = Calendar.current.dateComponents([.hour, .minute], from: self, to: date)
         if let hour = difference.hour, let minute = difference.minute {
@@ -358,19 +358,19 @@ extension Date {
     }
 }
 
-extension LazyMapCollection {
+public extension LazyMapCollection {
     func toArray() -> [Element] {
         return Array(self)
     }
 }
 
-extension UIViewController {
+public extension UIViewController {
     var isVisible: Bool {
         return self.isViewLoaded && self.view.window != nil
     }
 }
 
-extension DateFormatter {
+public extension DateFormatter {
     static var yyyyMMdd: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -415,7 +415,7 @@ public extension MutableCollection where Index == Int {
     }
 }
 
-extension Optional {
+public extension Optional {
     func nullUnwrap() -> Any {
         return self == nil ? "null" : self!
     }
@@ -432,7 +432,7 @@ extension Optional {
     }
 }
 
-extension UILabel {
+public extension UILabel {
     func shrinkUntilFits() {
         self.allowsDefaultTighteningForTruncation = true
         self.adjustsFontSizeToFitWidth = true
@@ -441,7 +441,7 @@ extension UILabel {
     }
 }
 
-extension Sequence {
+public extension Sequence {
     /// Maps an array to an array of transformed values, fetched asynchronously in parallel.
     func asyncMap<T>(_ transform: @escaping (Element) async throws -> T) async rethrows -> [T] {
         try await withThrowingTaskGroup(of: T.self) { group in
@@ -478,7 +478,7 @@ extension Dictionary where Key == String, Value == String {
 
 }
 
-extension String {
+public extension String {
     // https://stackoverflow.com/questions/34262863/how-to-calculate-height-of-a-string
     func dynamicHeight(font: UIFont, width: CGFloat) -> CGFloat {
         let calString = NSString(string: self)
@@ -555,7 +555,7 @@ extension String {
 }
 
 // slicing Penn Events API image source urls
-extension String {
+public extension String {
     //https://stackoverflow.com/questions/31725424/swift-get-string-between-2-strings-in-a-string
     func slice(from: String, to: String) -> String? {
         return (range(of: from)?.upperBound).flatMap { substringFrom in
@@ -567,7 +567,7 @@ extension String {
 }
 
 // Source: https://stackoverflow.com/questions/26845307/generate-random-alphanumeric-string-in-swift/33860834
-extension String {
+public extension String {
     static func randomString(length: Int) -> String {
       let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
       return String((0..<length).map { _ in letters.randomElement()! })
@@ -589,7 +589,7 @@ extension NSMutableAttributedString {
         return self
     }
 
-    @discardableResult func weightedColored(_ text: String, weight: UIFont.Weight, color: UIColor, size: CGFloat) -> NSMutableAttributedString {
+    @discardableResult public func weightedColored(_ text: String, weight: UIFont.Weight, color: UIColor, size: CGFloat) -> NSMutableAttributedString {
         let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: size, weight: weight), NSAttributedString.Key.foregroundColor: color]
         let boldString = NSMutableAttributedString(string: text, attributes: attrs)
         append(boldString)
@@ -612,7 +612,7 @@ extension NSMutableAttributedString {
 
 // Decodes .json data for SwiftUI Previews
 // https://www.hackingwithswift.com/books/ios-swiftui/using-generics-to-load-any-kind-of-codable-data
-extension Bundle {
+public extension Bundle {
     func decode<T: Codable>(_ file: String, dateFormat: String? = nil) -> T {
         guard let url = self.url(forResource: file, withExtension: nil) else {
             fatalError("unable to find data")
@@ -637,7 +637,7 @@ extension Bundle {
     }
 }
 
-extension URL {
+public extension URL {
     mutating func appendQueryItem(name: String, value: String?) {
         guard var urlComponents = URLComponents(string: absoluteString) else { return }
 
@@ -651,7 +651,7 @@ extension URL {
         self = urlComponents.url!
     }
 
-    public var queryParameters: [String: String] {
+    var queryParameters: [String: String] {
         guard
             let components = URLComponents(url: self, resolvingAgainstBaseURL: true),
             let queryItems = components.queryItems else { return [:] }
@@ -661,7 +661,7 @@ extension URL {
     }
 }
 
-extension JSONDecoder {
+public extension JSONDecoder {
     convenience init(keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy, dateDecodingStrategy: JSONDecoder.DateDecodingStrategy) {
         self.init()
         self.keyDecodingStrategy = keyDecodingStrategy

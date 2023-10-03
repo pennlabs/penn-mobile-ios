@@ -7,6 +7,7 @@
 //
 import Foundation
 import WebKit
+import PennMobileShared
 
 class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
