@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import WebKit
+import PennMobileShared
 
 struct DiningLoginViewSwiftUI: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
@@ -32,8 +33,10 @@ struct DiningLoginViewSwiftUI: UIViewControllerRepresentable {
 
         func dismissDiningLoginController() {
             parent.presentationMode.wrappedValue.dismiss()
-            DiningViewModelSwiftUI.instance.refreshBalance()
-            parent.diningAnalyticsViewModel.refresh()
+            Task.init {
+                await DiningViewModelSwiftUI.instance.refreshBalance()
+                await parent.diningAnalyticsViewModel.refresh()
+            }
         }
     }
 

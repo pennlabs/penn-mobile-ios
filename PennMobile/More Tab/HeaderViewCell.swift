@@ -13,7 +13,7 @@ class HeaderViewCell: UITableViewCell {
     var headerLabel: UILabel = {
         let headerLabel = UILabel()
         headerLabel.textColor = .labelSecondary
-        headerLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        headerLabel.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: UIFont.systemFont(ofSize: 17, weight: .bold))
         return headerLabel
     }()
 

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct DiningAnalyticsView: View {
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
@@ -25,51 +26,124 @@ struct DiningAnalyticsView: View {
         }
     }
     var body: some View {
-        let dollarXYHistory = Binding(
-            get: {
-                getSmoothedData(from: diningAnalyticsViewModel.dollarHistory)
-            },
-            // one directional Binding, setter does not work
-            set: {  _ in }
-        )
-
-        let swipeXYHistory = Binding(
-            get: { getSmoothedData(from: diningAnalyticsViewModel.swipeHistory) },
-            // one directional Binding, setter does not work
-            set: {  _ in }
-        )
-
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Dining Analytics")
-                    .font(.system(size: 32))
-                    .bold()
+        if #available(iOS 16.0, *) {
+            let dollarHistory = $diningAnalyticsViewModel.dollarHistory
+            let swipeHistory = $diningAnalyticsViewModel.swipeHistory
+            HStack {
                 if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
-                    CardView {
-                        PredictionsGraphView(type: "dollars", data: dollarXYHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.dollarAxisLabel, predictedZeroPoint: $diningAnalyticsViewModel.predictedDollarZeroPoint)
+                    if dollarHistory.wrappedValue.isEmpty && swipeHistory.wrappedValue.isEmpty {
+                        ZStack {
+                            Image("DiningAnalyticsBackground")
+                                .resizable()
+                                .ignoresSafeArea()
+                            Text("No Dining\nPlan Found\n ")
+                                .multilineTextAlignment(.center)
+                                .font(.system(size: 48, weight: .regular))
+                                .foregroundColor(.black)
+                                .opacity(0.6)
+                        }
+                    } else {
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 20) {
+                                Text("Dining Analytics")
+                                    .font(.system(size: 32))
+                                    .bold()
+                                // Only show dollar history view if there is data for the graph
+                                if !dollarHistory.wrappedValue.isEmpty {
+                                    CardView {
+                                        GraphView(type: .dollars, data: dollarHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance)
+                                    }
+                                }
+                                // Only show swipe history view if there is data for the graph
+                                if !swipeHistory.wrappedValue.isEmpty {
+                                    CardView {
+                                        GraphView(type: .swipes, data: swipeHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance)
+                                    }
+                                }
+                                Spacer()
+                            }
+                            .padding()
+                        }
                     }
-                    CardView {
-                        PredictionsGraphView(type: "swipes", data:
-                                                swipeXYHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.swipeAxisLabel, predictedZeroPoint: $diningAnalyticsViewModel.predictedSwipesZeroPoint)
-                    }
-                    Spacer()
                 }
             }
-            .padding()
-        }
-        .onAppear {
-            guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
-                showMissingDiningTokenAlert = true
-                return
+            .task {
+                guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
+                    showMissingDiningTokenAlert = true
+                    return
+                }
             }
-            diningAnalyticsViewModel.refresh()
-        }
-        .alert(isPresented: $showMissingDiningTokenAlert) {
-            showCorrectAlert()
-        }
-        .sheet(isPresented: $showDiningLoginView) {
-            DiningLoginNavigationView()
-                .environmentObject(diningAnalyticsViewModel)
+            .alert(isPresented: $showMissingDiningTokenAlert) {
+                showCorrectAlert()
+            }
+            .sheet(isPresented: $showDiningLoginView) {
+                DiningLoginNavigationView()
+                    .environmentObject(diningAnalyticsViewModel)
+            }
+        } else {
+            let dollarXYHistory = Binding(
+                get: {
+                    getSmoothedData(from: diningAnalyticsViewModel.dollarHistory)
+                },
+                // one directional Binding, setter does not work
+                set: {  _ in }
+            )
+            let swipeXYHistory = Binding(
+                get: { getSmoothedData(from: diningAnalyticsViewModel.swipeHistory) },
+                // one directional Binding, setter does not work
+                set: {  _ in }
+            )
+            HStack {
+                if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
+                    if swipeXYHistory.wrappedValue.isEmpty && dollarXYHistory.wrappedValue.isEmpty {
+                        ZStack {
+                            Image("DiningAnalyticsBackground")
+                                .resizable()
+                                .ignoresSafeArea()
+                            Text("No Dining\nPlan Found\n ")
+                                .multilineTextAlignment(.center)
+                                .font(.system(size: 48, weight: .regular))
+                                .foregroundColor(.black)
+                                .opacity(0.6)
+                        }
+                    } else {
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 20) {
+                                Text("Dining Analytics")
+                                    .font(.system(size: 32))
+                                    .bold()
+                                // Only show dollar history view if there is data for the graph
+                                if !dollarXYHistory.wrappedValue.isEmpty {
+                                    CardView {
+                                        PredictionsGraphView(type: "dollars", data: dollarXYHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.dollarAxisLabel, slope: $diningAnalyticsViewModel.dollarSlope)
+                                    }
+                                }
+                                // Only show swipe history view if there is data for the graph
+                                if !swipeXYHistory.wrappedValue.isEmpty {
+                                    CardView {
+                                        PredictionsGraphView(type: "swipes", data: swipeXYHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.swipeAxisLabel, slope: $diningAnalyticsViewModel.swipeSlope)
+                                    }
+                                }
+                                Spacer()
+                            }
+                            .padding()
+                        }
+                    }
+                }
+            }
+            .task {
+                guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
+                    showMissingDiningTokenAlert = true
+                    return
+                }
+            }
+            .alert(isPresented: $showMissingDiningTokenAlert) {
+                showCorrectAlert()
+            }
+            .sheet(isPresented: $showDiningLoginView) {
+                DiningLoginNavigationView()
+                    .environmentObject(diningAnalyticsViewModel)
+            }
         }
     }
 }

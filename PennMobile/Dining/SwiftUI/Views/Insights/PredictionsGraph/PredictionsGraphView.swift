@@ -15,7 +15,7 @@ struct PredictionsGraphView: View {
     @Binding var predictedZeroDate: Date
     @Binding var predictedSemesterEndValue: Double
     @Binding var axisLabelsYX: ([String], [String])
-    @Binding var predictedZeroPoint: YXDataPoint
+    @Binding var slope: Double
 
     enum BalanceType {
         case swipes
@@ -27,12 +27,12 @@ struct PredictionsGraphView: View {
 
     var formattedZeroDate: String
     var displayZeroDate: Bool
-    init(type: String, data: Binding<[PredictionsGraphView.YXDataPoint]>, predictedZeroDate: Binding<Date>, predictedSemesterEndValue: Binding<Double>, axisLabelsYX: Binding<([String], [String])>, predictedZeroPoint: Binding<PredictionsGraphView.YXDataPoint>) {
+    init(type: String, data: Binding<[PredictionsGraphView.YXDataPoint]>, predictedZeroDate: Binding<Date>, predictedSemesterEndValue: Binding<Double>, axisLabelsYX: Binding<([String], [String])>, slope: Binding<Double>) {
         self._data = data
         self._predictedZeroDate = predictedZeroDate
         self._predictedSemesterEndValue = predictedSemesterEndValue
         self._axisLabelsYX = axisLabelsYX
-        self._predictedZeroPoint = predictedZeroPoint
+        self._slope = slope
 
         balanceType = type.contains("swipes") ? .swipes : .dollars
 
@@ -70,7 +70,7 @@ struct PredictionsGraphView: View {
             }
             Divider()
                 .padding([.top, .bottom])
-            VariableStepLineGraphView(data: $data, lastPointPosition: $data.wrappedValue.last?.x ?? 0, xAxisLabels: $axisLabelsYX.1, yAxisLabels: $axisLabelsYX.0, lineColor: balanceType == .swipes ? .blue : .green, predictedZeroPoint: $predictedZeroPoint)
+            VariableStepLineGraphView(data: $data, lastPointPosition: $data.wrappedValue.last?.x ?? 0, xAxisLabels: $axisLabelsYX.1, yAxisLabels: $axisLabelsYX.0, lineColor: balanceType == .swipes ? .blue : .green, slope: $slope)
             Divider()
             .padding([.top, .bottom])
 
@@ -79,7 +79,7 @@ struct PredictionsGraphView: View {
                     // "Leftover" Dollars, wasted dollars
                     Text(displayZeroDate ? ("Out of \(balanceType == .swipes ? "Swipes" : "Dollars")") : "Extra Balance")
                         .font(.caption)
-                    Text(displayZeroDate ? "\(self.formattedZeroDate)" : "\(formattedBalance)\(balanceType == .swipes ? " Swipes" : " Dollars")")
+                    Text(displayZeroDate ? "\(self.formattedZeroDate)" : (balanceType == .swipes ? "\(formattedBalance) Swipes" : "$\(formattedBalance)"))
                         .font(Font.system(size: 21, weight: .bold, design: .rounded))
                     Spacer()
                 }

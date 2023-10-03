@@ -7,14 +7,65 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct DiningVenueView: View {
+    enum RefreshState {
+        case refreshing(Task<Void, Never>?)
+        case refreshed
+    }
+
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @StateObject var diningAnalyticsViewModel = DiningAnalyticsViewModel()
+    @State var refreshState = RefreshState.refreshing(nil)
+    @State var widgetsNeedRefresh = true
+
+    func triggerRefresh() {
+        if case .refreshing(let task) = refreshState {
+            task?.cancel()
+        }
+
+        refreshState = .refreshing(Task {
+            let venueTask = Task {
+                await diningVM.refreshVenues()
+            }
+            
+            let balanceTask = Task {
+                await diningVM.refreshBalance()
+            }
+            
+            let menuTask = Task {
+                await diningVM.refreshMenus(cache: true)
+            }
+            
+            let analyticsTask = Task {
+                // Only refresh widgets once
+                await diningAnalyticsViewModel.refresh(refreshWidgets: widgetsNeedRefresh)
+                if !Task.isCancelled {
+                    widgetsNeedRefresh = false
+                }
+            }
+            
+            await venueTask.value
+            await balanceTask.value
+            await menuTask.value
+            await analyticsTask.value
+
+            refreshState = .refreshed
+        })
+    }
 
     var body: some View {
-        List {
-            Section(header: CustomHeader(name: "Dining Balance", refreshButton: true).environmentObject(diningAnalyticsViewModel), content: {
+        let refreshConfiguration: CustomHeader.RefreshConfiguration
+        switch refreshState {
+        case .refreshed:
+            refreshConfiguration = .refreshed(triggerRefresh)
+        default:
+            refreshConfiguration = .refreshing
+        }
+
+        return List {
+            Section(header: CustomHeader(name: "Dining Balance", refreshConfiguration: refreshConfiguration).environmentObject(diningAnalyticsViewModel), content: {
                 Section(header: DiningViewHeader().environmentObject(diningAnalyticsViewModel), content: {})
             })
 
@@ -29,24 +80,29 @@ struct DiningVenueView: View {
                 }
             }
         }
-        .task {
-            await diningVM.refreshVenues()
-        }
         .onAppear {
-            diningVM.refreshBalance()
+            triggerRefresh()
         }
+        .navigationBarHidden(false)
         .listStyle(.plain)
     }
 }
 
 struct CustomHeader: View {
+    enum RefreshConfiguration {
+        case noRefresh
+        case refreshing
+        case refreshed(() -> Void)
+    }
 
     let name: String
-    var refreshButton = false
+    var refreshConfiguration = RefreshConfiguration.noRefresh
     @State var didError = false
     @State var showMissingDiningTokenAlert = false
     @State var showDiningLoginView = false
+    @State var buttonAngle: Angle = .zero
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
     func showCorrectAlert () -> Alert {
         if !Account.isLoggedIn {
@@ -59,23 +115,54 @@ struct CustomHeader: View {
         }
     }
 
+    func animateButton(refreshing: Bool) {
+        if refreshing {
+            withAnimation(.linear(duration: 1).repeatForever(autoreverses: reduceMotion || Int.random(in: 0..<50) == 0)) {
+                buttonAngle = .degrees(-360)
+            }
+        } else {
+            withAnimation {
+                buttonAngle = .zero
+            }
+        }
+    }
+
     var body: some View {
-        HStack {
+        let isRefreshing: Bool
+        if case .refreshing = refreshConfiguration {
+            isRefreshing = true
+        } else {
+            isRefreshing = false
+        }
+
+        return HStack {
             Text(name)
                 .font(.system(size: 21, weight: .semibold))
                 .foregroundColor(.primary)
             Spacer()
-            if refreshButton {
+            switch refreshConfiguration {
+            case .refreshed, .refreshing:
                 Button(action: {
+                    guard case .refreshed(let refresh) = refreshConfiguration else {
+                        return
+                    }
+
                     guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
                         print("Should show alert")
                         showMissingDiningTokenAlert = true
                         return
                     }
-                    DiningViewModelSwiftUI.instance.refreshBalance()
+
+                    refresh()
                 }, label: {
-                    Image(systemName: "arrow.counterclockwise")
+                    Image(systemName: "arrow.counterclockwise.circle.fill")
+                        .imageScale(.large)
+                        .rotationEffect(reduceMotion ? .zero : buttonAngle)
+                        .opacity(reduceMotion ? 1 + (buttonAngle.degrees / 360) : (isRefreshing ? 0.5 : 1))
+                        .accessibilityLabel(Text(isRefreshing ? "Refreshing" : "Refresh"))
                 })
+            default:
+                Group {}
             }
         }
         .padding()
@@ -86,6 +173,12 @@ struct CustomHeader: View {
         .sheet(isPresented: $showDiningLoginView) {
             DiningLoginNavigationView()
                 .environmentObject(diningAnalyticsViewModel)
+        }
+        .onAppear {
+            animateButton(refreshing: isRefreshing)
+        }
+        .onChange(of: isRefreshing) { refreshing in
+            animateButton(refreshing: refreshing)
         }
 
         // Note: The Alert view is soon to be deprecated, but .alert(_:isPresented:presenting:actions:message:) is available in iOS15+

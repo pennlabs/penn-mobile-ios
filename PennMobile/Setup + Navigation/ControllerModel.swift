@@ -7,6 +7,7 @@
 //
 import Foundation
 import UIKit
+import PennMobileShared
 
 protocol TransitionDelegate {
     func handleTransition(to feature: Feature)
@@ -57,10 +58,10 @@ class ControllerModel: NSObject {
         vcDictionary[.news] = NewsViewController()
         vcDictionary[.contacts] = ContactsTableViewController()
         vcDictionary[.about] = AboutViewController()
-        vcDictionary[.notifications] = NotificationViewController()
+        vcDictionary[.notifications] = NotificationsViewControllerSwiftUI()
         vcDictionary[.preferences] = PreferencesViewController()
         vcDictionary[.privacy] = PrivacyViewController()
-        vcDictionary[.courseSchedule] = CourseScheduleViewController()
+        vcDictionary[.courseSchedule] = CoursesViewController()
         vcDictionary[.pacCode] = PacCodeViewController()
         vcDictionary[.courseAlerts] = CourseAlertController()
         vcDictionary[.events] = PennEventsTableViewController()

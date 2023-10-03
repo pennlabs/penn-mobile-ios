@@ -14,9 +14,6 @@ protocol HomeCellDelegate: ModularTableViewCellDelegate,
     GSRBookingSelectable,
     URLSelectable,
     ReservationCellDelegate,
-    BuildingMapSelectable,
-    CourseRefreshable,
-    CourseLoginable,
     FeatureNavigatable,
     GSRInviteSelectable {}
 

@@ -12,7 +12,7 @@ import SCLAlertView
 
 protocol NotificationRequestable {}
 
-extension NotificationRequestable where Self: UIViewController {
+extension NotificationRequestable {
 
     internal typealias AuthorizedCompletion = (_ granted: Bool) -> Void
 

@@ -7,6 +7,7 @@
 //
 //
 import Foundation
+import PennMobileShared
 
 struct Account: Codable, Hashable {
     var pennid: Int
@@ -68,6 +69,8 @@ extension Account {
         KeychainAccessible.instance.removeDiningToken()
         Storage.remove(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .documents)
         Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .documents)
+        Storage.remove(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .groupDocuments)
+        Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .groupDocuments)
     }
 
     static func saveAccount(_ thisAccount: Account) {

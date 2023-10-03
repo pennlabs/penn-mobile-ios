@@ -116,13 +116,6 @@ extension PrivacyOption {
             }
 
             switch self {
-            case .anonymizedCourseSchedule:
-                PennInTouchNetworkManager.instance.getCourses { (result) in
-                    if let courses = try? result.get() {
-                        UserDefaults.standard.setLastShareDate(for: self)
-                        UserDBManager.shared.saveCoursesAnonymously(courses)
-                    }
-                }
             case .collegeHouse:
                 // Save the current semester and then save previous semesters stored in UserDefaults
                 CampusExpressNetworkManager.instance.updateHousingData { _ in
