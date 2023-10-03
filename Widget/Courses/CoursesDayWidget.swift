@@ -8,6 +8,7 @@
 
 import WidgetKit
 import SwiftUI
+import PennMobileShared
 
 extension ConfigureCoursesDayWidgetIntent: ConfigurationRepresenting {
     struct Configuration {
@@ -173,7 +174,7 @@ struct CoursesDayWidgetView: View {
                 Text("Unsupported")
             }
         }
-        .background(entry.configuration.background)
+        .widgetBackground(entry.configuration.background)
     }
 }
 
@@ -188,6 +189,7 @@ struct CoursesDayWidget: Widget {
         .configurationDisplayName("Today's Classes")
         .description("Your upcoming classes for the day, at a glance.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .contentMarginsDisabled()
     }
 }
 

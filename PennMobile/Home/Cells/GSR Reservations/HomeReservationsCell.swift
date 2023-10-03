@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PennMobileShared
 
 final class HomeReservationsCell: UITableViewCell, HomeCellConformable {
 

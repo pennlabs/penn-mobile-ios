@@ -9,25 +9,31 @@
 import Foundation
 
 /// A time that a course meets.
-struct MeetingTime: Codable {
+public struct MeetingTime: Codable {
     /// Weekday of the meeting time.
     ///
     /// 1 corresponds to Sunday, 7 corresponds to Saturday.
-    var weekday: Int
+    public var weekday: Int
 
     /// Time that the meeting time starts, in minutes after midnight.
-    var startTime: Int
+    public var startTime: Int
 
     /// Time that the meeting time ends, in minutes after midnight.
-    var endTime: Int
+    public var endTime: Int
+    
+    public init(weekday: Int, startTime: Int, endTime: Int) {
+        self.weekday = weekday
+        self.startTime = startTime
+        self.endTime = endTime
+    }
 }
 
-struct Course: Codable {
+public struct Course: Codable {
     /// Time zone to use in course calculations.
-    static let timezone = TimeZone(identifier: "America/New_York")
+    public static let timezone = TimeZone(identifier: "America/New_York")
 
     /// Calendar to use in course calculations.
-    static let calendar: Calendar = {
+    public static let calendar: Calendar = {
         var calendar = Calendar(identifier: .gregorian)
         if let timezone {
             calendar.timeZone = timezone
@@ -35,44 +41,65 @@ struct Course: Codable {
         return calendar
     }()
 
-    static let cacheFileName = "coursesCache"
+    public static let cacheFileName = "coursesCache"
 
     /// Identifier of this course on Path@Penn.
-    var crn: String
+    public var crn: String
 
     /// The course's short code (for example, CIS 1200.)
-    var code: String
+    public var code: String
 
     /// The course's long title.
-    var title: String
+    public var title: String
 
     /// The course's section number.
-    var section: String
+    public var section: String
 
     /// The course's instructors.
-    var instructors: [String]
+    public var instructors: [String]
 
     /// The course's location.
     ///
     /// Generally in the format "BUILDING ROOM".
-    var location: String?
+    public var location: String?
 
     /// The start date of the course.
-    var startDate: Date?
+    public var startDate: Date?
 
     /// The end date of the course.
-    var endDate: Date?
+    public var endDate: Date?
 
     /// An array of meeting times for the course.
-    var meetingTimes: [MeetingTime]?
+    public var meetingTimes: [MeetingTime]?
+    
+    public init(crn: String,
+                code: String,
+                title: String,
+                section: String,
+                instructors: [String],
+                location: String? = nil,
+                startDate: Date?,
+                endDate: Date?,
+                meetingTimes: [MeetingTime]? = nil) {
+        
+        self.crn = UUID().uuidString
+        self.code = code
+        self.title = title
+        self.section = section
+        self.instructors = []
+        self.location = location
+        self.startDate = Date.distantPast
+        self.endDate = Date.distantFuture
+        self.meetingTimes = meetingTimes
+    }
 }
 
 // Literally here so SwiftUI is happy
 extension Course: Identifiable {
-    var id: String { crn }
+    public var id: String { crn }
 }
 
-extension Course {
+public extension Course {
     init(dummyCourseWithCode code: String,
          title: String,
          section: String,

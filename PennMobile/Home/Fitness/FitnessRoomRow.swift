@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Kingfisher
+import PennMobileShared
 
 struct FitnessRoomRow: View {
     let room: FitnessRoom

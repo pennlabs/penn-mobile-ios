@@ -8,6 +8,7 @@
 
 import SwiftUI
 import MapKit
+import PennMobileShared
 
 struct DiningVenueDetailLocationView: View {
 

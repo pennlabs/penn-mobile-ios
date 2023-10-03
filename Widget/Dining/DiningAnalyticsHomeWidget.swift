@@ -8,6 +8,7 @@
 
 import WidgetKit
 import SwiftUI
+import PennMobileShared
 
 extension ConfigureDiningAnalyticsHomeWidgetIntent: ConfigurationRepresenting {
     struct Configuration {
@@ -237,12 +238,12 @@ private struct DiningAnalyticsSummary: View {
                 Text(configuration.auxiliaryStatistic.label).fontWeight(.medium).foregroundColor(.secondary).font(.caption).lineLimit(2)
                 VStack(alignment: .leading) {
                     Text("Swipes").fontWeight(.medium).font(.caption)
-                    Text(formatSwipes(statistic: configuration.auxiliaryStatistic, in: swipes, includeUnits: false)).fontWeight(.bold)
+                    Text(formatSwipes(statistic: configuration.auxiliaryStatistic, in: swipes, includeUnits: false)).fontWeight(.bold).fixedSize()
                 }
 
                 VStack(alignment: .leading) {
                     Text("Dollars").fontWeight(.medium).font(.caption)
-                    Text(formatDollars(statistic: configuration.auxiliaryStatistic, in: dollars)).fontWeight(.bold)
+                    Text(formatDollars(statistic: configuration.auxiliaryStatistic, in: dollars)).fontWeight(.bold).fixedSize()
                 }
             }
         }
@@ -261,18 +262,18 @@ struct DiningAnalyticsHomeWidgetView: View {
                 case .systemSmall:
                     DiningAnalyticsSmall(swipes: swipes, dollars: dollars, configuration: entry.configuration)
                 case .systemMedium:
-                    DiningAnalyticsSummary(swipes: swipes, dollars: dollars, configuration: entry.configuration)
-                        .padding(.horizontal, 20)
+                    DiningAnalyticsSummary(swipes: swipes, dollars: dollars, configuration: entry.configuration).widgetPadding(.horizontal, 20)
                 default:
                     Text("Unsupported")
                 }
             } else {
-                (Text("Go to ") + Text("Dining › Analytics").fontWeight(.bold) + Text(" to use this widget.")).multilineTextAlignment(.center).padding()
+                (Text("Go to ") + Text("Dining › Analytics").fontWeight(.bold) + Text(" to use this widget.")).multilineTextAlignment(.center)
+                    .widgetPadding()
             }
         }
         .lineLimit(1)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(entry.configuration.background)
+        .widgetBackground(entry.configuration.background)
     }
 }
 

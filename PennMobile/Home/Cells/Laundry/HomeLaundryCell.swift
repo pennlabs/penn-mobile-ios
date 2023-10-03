@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import PennMobileShared
 
 final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     static var identifier: String = "laundryCell"

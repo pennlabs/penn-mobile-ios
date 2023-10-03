@@ -9,6 +9,7 @@
 import Foundation
 import SwiftSoup
 import WidgetKit
+import PennMobileShared
 
 private func getTimeInt(pathAtPennString: String) -> Int? {
     guard let time = Int(pathAtPennString) else {
@@ -31,24 +32,28 @@ private func getTimeInt(pathAtPennString: String) -> Int? {
 extension Course {
     /// Initializes a course from Path@Penn data.
     init(_ data: PathAtPennNetworkManager.CourseData) {
-        crn = data.crn
-        code = data.code
-        title = data.title
-        section = data.section
+        var crn = data.crn
+        var code = data.code
+        var title = data.title
+        var section = data.section
 
         let instructorHTML = try? SwiftSoup.parse(data.instructordetail_html)
         let divs = try? instructorHTML?.select("div")
-        instructors = (try? divs?.map { try $0.text(trimAndNormaliseWhitespace: true) }) ?? []
+        var instructors = (try? divs?.map { try $0.text(trimAndNormaliseWhitespace: true) }) ?? []
 
         let meetingHTML = try? SwiftSoup.parse(data.meeting_html)
         let a = try? meetingHTML?.select("a").first()
-        location = try? a?.text(trimAndNormaliseWhitespace: true)
+        var location = try? a?.text(trimAndNormaliseWhitespace: true)
 
         struct PathAtPennMeetingTime: Decodable {
             var meet_day: String
             var start_time: String
             var end_time: String
         }
+        
+        var meetingTimes: [MeetingTime]?
+        var startDate: Date?
+        var endDate: Date?
 
         if let sectionData = data.allInGroup.first(where: { $0.crn == data.crn }) {
             startDate = sectionData.start_date
@@ -82,6 +87,8 @@ extension Course {
             endDate = nil
             meetingTimes = nil
         }
+        
+        self.init(crn: crn, code: code, title: title, section: section, instructors: instructors, startDate: startDate, endDate: endDate, meetingTimes: meetingTimes)
     }
 }
 

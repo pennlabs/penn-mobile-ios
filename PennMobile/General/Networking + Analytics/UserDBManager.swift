@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import PennMobileShared
 
 func getDeviceID() -> String {
     let deviceID = UIDevice.current.identifierForVendor!.uuidString
