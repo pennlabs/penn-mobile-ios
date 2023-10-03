@@ -49,6 +49,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         self.view.addSubview(ownContainerView)
         self.buttonBarView = self.barView
         self.containerView = containerView
+        self.title = "Study Room Booking"
 
         _ = barView.anchor(self.view.safeAreaLayoutGuide.topAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
         _ = separatorLine.anchor(barView.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 1)
