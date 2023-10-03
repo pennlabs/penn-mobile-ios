@@ -65,6 +65,7 @@ extension HomeViewController: TabBarShowable {
         return UITabBarItem(title: "Fling", image: normalImage, selectedImage: selectedImage)
     }
 }*/
+
 extension DiningViewControllerSwiftUI: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Dining_Grey")
@@ -102,6 +103,38 @@ extension LaundryTableViewController: TabBarShowable {
         let normalImage = UIImage(named: "Laundry_Grey")
         let selectedImage = UIImage(named: "Laundry_Blue")
         return UITabBarItem(title: "Laundry", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension ContactsTableViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Contacts_Grey")
+        let selectedImage = UIImage(named: "Contacts_Blue")
+        return UITabBarItem(title: "Contacts", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension PennEventsTableViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Events_Grey")
+        let selectedImage = UIImage(named: "Events_Blue")
+        return UITabBarItem(title: "Events", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension CoursesViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Calendar_Grey")
+        let selectedImage = UIImage(named: "Calendar_Blue")
+        return UITabBarItem(title: "Schedule", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension NewsViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "News_Grey")
+        let selectedImage = UIImage(named: "News_Blue")
+        return UITabBarItem(title: "News", image: normalImage, selectedImage: selectedImage)
     }
 }
 
