@@ -32,6 +32,7 @@ struct LoggedOutView: View {
                 }
                 .buttonStyle(LoginButtonStyle(isProminent: false))
             }
+            .disabled(authManager.state != .loggedOut)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {

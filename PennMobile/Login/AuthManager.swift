@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-enum AuthState {
+enum AuthState: Equatable {
     case notDetermined
     case loggedOut
     case guest
