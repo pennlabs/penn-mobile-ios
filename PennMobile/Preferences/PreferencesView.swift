@@ -9,11 +9,10 @@
 import SwiftUI
 
 struct PreferencesView: View {
-    @State private var editMode = EditMode.inactive
     @State private var allFeatures = ControllerModel.shared.dynamicFeatures
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Section {
                     ForEach(allFeatures.indices, id: \.self) { i in
@@ -26,16 +25,21 @@ struct PreferencesView: View {
                             Text(allFeatures[i].rawValue)
                                 .foregroundColor(i < 3 ? .primary : .secondary)
                         }
-                        .padding(.vertical, 6)
                     }
                     .onMove(perform: move)
                 } header: {
-                    Text("Tab Bar")
-                } footer: {
-                    Text("Choose which features appear in the tab bar. The remaining ones can still be found on the More tab.")
+                    Text("Drag a feature to the top to pin it.")
+                        .foregroundStyle(.primary)
+                        .textCase(nil)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 8)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity)
                 }
             }
             .environment(\.editMode, Binding.constant(EditMode.active))
+            .navigationTitle("Edit Features")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
             let currentTabFeatures = Array(UserDefaults.standard.getTabPreferences()[1...3])

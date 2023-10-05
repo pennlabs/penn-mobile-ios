@@ -8,17 +8,17 @@
 
 import SwiftUI
 
-enum FeatureIdentifier: Hashable {
-    case dining
-    case gsr
-    case laundry
-    case fitness
-    case news
-    case contacts
-    case courseSchedule
-    case pennCourseAlert
-    case events
-    case about
+enum FeatureIdentifier: String, Hashable {
+    case dining = "Dining"
+    case gsr = "Study Room Booking"
+    case laundry = "Laundry"
+    case fitness = "Fitness"
+    case news = "News"
+    case contacts = "Penn Contacts"
+    case courseSchedule = "Course Schedule"
+    case pennCourseAlert = "Penn Course Alert"
+    case events = "Events"
+    case about = "About"
 }
 
 struct AppFeature: Identifiable {
@@ -70,6 +70,17 @@ struct AppFeature: Identifiable {
     }
 }
 
+extension AppFeature.FeatureImage: View {
+    var body: some View {
+        switch self {
+        case .app(let name):
+            Image(name).resizable()
+        case .system(let systemName):
+            Image(systemName: systemName).resizable()
+        }
+    }
+}
+
 let features: [AppFeature] = [
     AppFeature(.dining, name: "Dining", color: .baseOrange, image: .app("Dining_Grey")) {
         NavigationStack {
@@ -89,5 +100,3 @@ let features: [AppFeature] = [
     AppFeature(.fitness, name: "Fitness", color: .baseRed, image: .system("dumbbell.fill"), controller: FitnessViewController.self),
     AppFeature(.about, name: "About", color: .baseBlue, image: .system("info.circle"), controller: AboutViewController.self)
 ]
-
-let tabBarFeatures: [FeatureIdentifier] = [.dining, .gsr, .laundry]

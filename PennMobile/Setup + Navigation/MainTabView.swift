@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @State var tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
+    
     var body: some View {
         TabView {
             Text("Home")
@@ -29,16 +31,7 @@ struct MainTabView: View {
             }
             
             NavigationStack {
-                List {
-                    ForEach(features) { feature in
-                        NavigationLink {
-                            feature.content
-                        } label: {
-                            Text(feature.longName)
-                        }
-                    }
-                }
-                .navigationTitle(Text("More"))
+                MoreView(features: features.filter { !tabBarFeatures.contains($0.id) })
             }
                 .tabItem {
                     Label("More", image: "More_Grey")
@@ -68,6 +61,8 @@ struct MainTabView: View {
 
             // Send saved unsent events
             FeedAnalyticsManager.shared.sendSavedEvents()
+        }.onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in
+            tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
         }
     }
     

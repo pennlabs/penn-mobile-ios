@@ -607,4 +607,12 @@ extension UserDefaults {
         }
         return [.home, .dining, .studyRoomBooking, .laundry, .more]
     }
+    
+    func getTabBarFeatureIdentifiers() -> [FeatureIdentifier] {
+        if let tabPreferenceTitles = UserDefaults.standard.value(forKey: UserDefaultsKeys.tabPreferences.rawValue) as? [String] {
+            return tabPreferenceTitles.compactMap { FeatureIdentifier(rawValue: $0) }
+        }
+        
+        return [.dining, .gsr, .laundry]
+    }
 }
