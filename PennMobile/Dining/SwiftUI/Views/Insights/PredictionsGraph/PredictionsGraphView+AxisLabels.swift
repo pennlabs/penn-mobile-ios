@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import PennMobileShared
 
 extension PredictionsGraphView {
 

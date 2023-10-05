@@ -9,6 +9,7 @@
 import UIKit
 import Kingfisher
 import SwiftSoup
+import PennMobileShared
 
 class PennEventsTableViewCell: UITableViewCell {
 

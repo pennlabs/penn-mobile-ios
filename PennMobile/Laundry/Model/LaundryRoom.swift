@@ -7,6 +7,7 @@
 //
 import Foundation
 import SwiftyJSON
+import PennMobileShared
 
 class LaundryRoom: Codable {
 

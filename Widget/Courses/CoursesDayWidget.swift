@@ -8,6 +8,7 @@
 
 import WidgetKit
 import SwiftUI
+import PennMobileShared
 
 extension ConfigureCoursesDayWidgetIntent: ConfigurationRepresenting {
     struct Configuration {

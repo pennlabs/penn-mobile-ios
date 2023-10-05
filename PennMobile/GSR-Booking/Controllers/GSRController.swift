@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import PennMobileShared
 
 class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
 

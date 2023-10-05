@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import WebKit
+import PennMobileShared
 
 struct DiningLoginViewSwiftUI: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode

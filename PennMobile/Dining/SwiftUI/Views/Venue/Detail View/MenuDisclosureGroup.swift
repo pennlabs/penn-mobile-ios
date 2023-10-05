@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct DiningMenuRow: View {
     var diningMenu: DiningMenu

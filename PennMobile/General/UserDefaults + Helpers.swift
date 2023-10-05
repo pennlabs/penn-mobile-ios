@@ -8,6 +8,7 @@
 
 import Foundation
 import WebKit
+import PennMobileShared
 
 // MARK: UserDefaultsKeys
 extension UserDefaults {
@@ -42,6 +43,7 @@ extension UserDefaults {
         case nextAnalyticsStartDate
         case firstDollarsBalance
         case firstSwipesBalance
+        case tabPreferences
     }
 
     func clearAll() {
@@ -590,5 +592,19 @@ extension UserDefaults {
 
     func clearFirstSwipesBalance() {
         removeObject(forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
+    }
+}
+
+// MARK: - Tab Preferences
+extension UserDefaults {
+    func setTabPreferences(_ tabs: [Feature]) {
+        UserDefaults.standard.set(tabs.map { $0.rawValue }, forKey: UserDefaultsKeys.tabPreferences.rawValue)
+    }
+
+    func getTabPreferences() -> [Feature] {
+        if let tabPreferenceTitles = UserDefaults.standard.value(forKey: UserDefaultsKeys.tabPreferences.rawValue) as? [String] {
+            return tabPreferenceTitles.map { Feature(rawValue: $0)! }
+        }
+        return [.home, .dining, .studyRoomBooking, .laundry, .more]
     }
 }

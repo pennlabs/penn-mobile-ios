@@ -23,6 +23,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
         super.viewDidLoad()
 
         screenName = "Laundry"
+        self.title = "Laundry"
         tableView.backgroundView = nil
         tableView.separatorStyle = .none
         tableView.dataSource = self
