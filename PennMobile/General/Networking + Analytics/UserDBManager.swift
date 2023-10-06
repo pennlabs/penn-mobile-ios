@@ -116,6 +116,15 @@ extension UserDBManager {
             task.resume()
         }
     }
+        
+    // Returns result because function that uses this isn't throwing
+    func fetchDiningPreferences() async -> Result<[DiningVenue], NetworkingError> {
+        return await withCheckedContinuation { continuation in
+            self.fetchDiningPreferences { result in
+                continuation.resume(returning: result)
+            }
+        }
+    }
 
     func saveDiningPreference(for venueIds: [Int]) {
         let url = "https://pennmobile.org/api/dining/preferences/"

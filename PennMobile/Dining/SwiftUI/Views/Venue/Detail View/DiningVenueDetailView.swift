@@ -32,6 +32,7 @@ struct DiningVenueDetailView: View {
                 GeometryReader { geometry in
                     let minY = geometry.frame(in: .global).minY
                     let remain = imageHeight + minY
+                    let isFavorite = diningVM.favoriteVenues.contains { $0.id == venue.id }
 
                     ZStack(alignment: .bottomLeading) {
                         KFImage(self.venue.image)
@@ -45,17 +46,31 @@ struct DiningVenueDetailView: View {
                         LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
 
                         VStack(alignment: .leading) {
-                            Button(action: {
-                                presentationMode.wrappedValue.dismiss()
-                            }) {
-                                Image(systemName: "chevron.left")
-                                    .font(.system(size: 20, weight: .light))
+                            HStack {
+                                Button(action: {
+                                    presentationMode.wrappedValue.dismiss()
+                                }) {
+                                    Image(systemName: "chevron.left")
+                                        .font(.system(size: 20, weight: .light))
+                                }
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(Circle().opacity(0.8).foregroundColor(.black))
+                                .position(x: 40, y: statusBarHeight + 22)
+                                .offset(y: -min(0, minY))
+                                
+                                Spacer()
+                                
+                                Button(action: isFavorite ? { diningVM.removeVenueFromFavorites(venue: venue) } : { diningVM.addVenueToFavorites(venue: venue) }) {
+                                    Image(systemName: isFavorite ? "star.fill" : "star")
+                                        .font(.system(size: 20, weight: .light))
+                                }
+                                .foregroundColor(.yellow)
+                                .padding(8)
+                                .background(Circle().opacity(0.8).foregroundColor(.black))
+                                .position(x: 150, y: statusBarHeight + 22)
+                                .offset(y: -min(0, minY))
                             }
-                            .foregroundColor(.white)
-                            .padding(10)
-                            .background(Circle().opacity(0.8).foregroundColor(.black))
-                            .position(x: 40, y: statusBarHeight + 22)
-                            .offset(y: -min(0, minY))
 
                             Spacer()
 
